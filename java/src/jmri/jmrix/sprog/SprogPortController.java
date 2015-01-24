@@ -12,11 +12,13 @@ public abstract class SprogPortController extends jmri.jmrix.AbstractSerialPortC
 
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to SprogTrafficController classes, who in turn will deal in messages.
-    protected SprogSystemConnectionMemo adaptermemo = null;
+    protected SprogPortController(SprogSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
     
     @Override
     public SprogSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (SprogSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

@@ -12,13 +12,14 @@ import java.io.DataOutputStream;
  * @version			$Revision$
  */
 public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortController {
-	// base class. Implementations will provide InputStream and OutputStream
-	// objects to MrcTrafficController classes, who in turn will deal in messages.
+    // base class. Implementations will provide InputStream and OutputStream
+    // objects to MrcTrafficController classes, who in turn will deal in messages.
+    protected MrcPortController(MrcSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
     
 	// check that this object is ready to operate
 	abstract public boolean status();
-    
-    protected MrcSystemConnectionMemo adaptermemo = null;
     
     // returns the InputStream from the port
     public abstract DataInputStream getInputStream();
@@ -32,10 +33,7 @@ public abstract class MrcPortController extends jmri.jmrix.AbstractSerialPortCon
     
     @Override
     public MrcSystemConnectionMemo getSystemConnectionMemo() {
-        if (adaptermemo == null) {
-            adaptermemo = new MrcSystemConnectionMemo();
-        }
-        return adaptermemo;
+        return (MrcSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

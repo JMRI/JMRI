@@ -2,20 +2,19 @@
 
 package jmri.jmrix.sprog.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogPortController;
-import jmri.jmrix.sprog.SprogTrafficController;
-import jmri.jmrix.sprog.SprogConstants.SprogMode;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.SprogPortController;
+import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import jmri.jmrix.sprog.SprogTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Sprog system.
@@ -37,16 +36,14 @@ import jmri.jmrix.SystemConnectionMemo;
 public class SerialDriverAdapter extends SprogPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super();
-        adaptermemo = new SprogSystemConnectionMemo(SprogMode.SERVICE);
+        super(new SprogSystemConnectionMemo(SprogMode.SERVICE));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        adaptermemo.setUserName("SPROG");
+        this.getSystemConnectionMemo().setUserName("SPROG");
     }
     
     public SerialDriverAdapter(SprogMode sm){
-        super();
-        adaptermemo = new SprogSystemConnectionMemo(sm);
-        adaptermemo.setUserName("SPROG");
+        super(new SprogSystemConnectionMemo(sm));
+        this.getSystemConnectionMemo().setUserName("SPROG");
     }
     
     SerialPort activeSerialPort = null;
@@ -190,12 +187,12 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
         // connect to the traffic controller
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
-        control.setAdapterMemo(adaptermemo);
+        control.setAdapterMemo(this.getSystemConnectionMemo());
         
-        adaptermemo.setSprogMode(SprogMode.SERVICE);
-        adaptermemo.setSprogTrafficController(control);
-        adaptermemo.configureCommandStation();
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setSprogMode(SprogMode.SERVICE);
+        this.getSystemConnectionMemo().setSprogTrafficController(control);
+        this.getSystemConnectionMemo().configureCommandStation();
+        this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.sprog.ActiveFlag.setActive();
 
@@ -204,17 +201,10 @@ public class SerialDriverAdapter extends SprogPortController implements jmri.jmr
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
                 justification="temporary until mult-system; only set when disposed")
     public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
+        super.dispose();
         mInstance = null;
     }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
-
-    @Override
-    public SprogSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
-    }
 
 }

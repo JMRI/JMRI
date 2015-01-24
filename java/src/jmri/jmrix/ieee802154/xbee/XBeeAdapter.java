@@ -2,16 +2,14 @@
 
 package jmri.jmrix.ieee802154.xbee;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.rapplogic.xbee.XBeeConnection;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-
-import com.rapplogic.xbee.XBeeConnection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial comm port.
@@ -22,7 +20,7 @@ import com.rapplogic.xbee.XBeeConnection;
 public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriverAdapter implements jmri.jmrix.SerialPortAdapter, XBeeConnection, SerialPortEventListener {
 
     public XBeeAdapter(){
-      super();
+        super(new XBeeConnectionMemo());
     }
 
     @Override
@@ -190,14 +188,11 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
         log.debug("configure() called.");
         XBeeTrafficController tc = new XBeeTrafficController() ;
 
-        if(adaptermemo==null)
-            adaptermemo=new XBeeConnectionMemo();
-
         // connect to the traffic controller
-        adaptermemo.setTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);
+        this.getSystemConnectionMemo().setTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         //tc.setXBee(xbee);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
@@ -217,10 +212,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
 
     @Override 
     public XBeeConnectionMemo getSystemConnectionMemo(){
-        if (adaptermemo == null)
-           adaptermemo= new XBeeConnectionMemo();
-        return (XBeeConnectionMemo) adaptermemo;
-
+        return (XBeeConnectionMemo) super.getSystemConnectionMemo();
     }
 
     protected String [] validSpeeds = new String[]{"1,200 baud","2,400 baud",

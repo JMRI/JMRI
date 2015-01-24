@@ -2,19 +2,17 @@
 
 package jmri.jmrix.qsi.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.qsi.QsiPortController;
-import jmri.jmrix.qsi.QsiTrafficController;
-import jmri.jmrix.qsi.QsiSystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.qsi.QsiPortController;
+import jmri.jmrix.qsi.QsiSystemConnectionMemo;
+import jmri.jmrix.qsi.QsiTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the QSI system.
@@ -34,8 +32,7 @@ import gnu.io.SerialPort;
 public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super();
-        adaptermemo = new QsiSystemConnectionMemo();
+        super(new QsiSystemConnectionMemo());
     }
 
     SerialPort activeSerialPort = null;
@@ -125,12 +122,12 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
      */
     public void configure() {
     
-        adaptermemo.setQsiTrafficController(QsiTrafficController.instance());
+        this.getSystemConnectionMemo().setQsiTrafficController(QsiTrafficController.instance());
         // connect to the traffic controller
         QsiTrafficController.instance().connectPort(this);
 
         //jmri.jmrix.qsi.QsiProgrammer.instance();  // create Programmer in InstanceManager
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         
         sinkThread = new Thread(QsiTrafficController.instance());
         sinkThread.start();

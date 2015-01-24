@@ -11,13 +11,13 @@ package jmri.jmrix.nce;
 public abstract class NceNetworkPortController extends jmri.jmrix.AbstractNetworkPortController {
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to NceTrafficController classes, who in turn will deal in messages.
-    protected NceSystemConnectionMemo adaptermemo = null;
-    
+    protected NceNetworkPortController(NceSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
+
     @Override
-    public NceSystemConnectionMemo getSystemConnectionMemo() { 
-    	if (adaptermemo == null)
-    		adaptermemo = new NceSystemConnectionMemo();
-    	return adaptermemo; 
+    public NceSystemConnectionMemo getSystemConnectionMemo() {
+    	return (NceSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

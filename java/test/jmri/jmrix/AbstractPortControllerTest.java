@@ -4,8 +4,6 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -40,15 +38,49 @@ public class AbstractPortControllerTest extends TestCase {
     }
 
     public void setUp() {
-        apc = new AbstractPortController() {
-            public  DataInputStream getInputStream() { return null; }
-            public  DataOutputStream getOutputStream() { return null; }
-            public String getCurrentPortName() { return "";}
-            public void dispose() {}
-            public void recover() {}
-            public SystemConnectionMemo getSystemConnectionMemo() { return null; }
-            public void connect() {}
-            public void configure() {}
-        };
+        apc = new AbstractPortControllerScaffold();
+    }
+
+    public static class AbstractPortControllerScaffold extends AbstractPortController {
+
+        public AbstractPortControllerScaffold() {
+            super(null);
+        }
+        
+        @Override
+        public DataInputStream getInputStream() {
+            return null;
+        }
+
+        @Override
+        public DataOutputStream getOutputStream() {
+            return null;
+        }
+
+        @Override
+        public String getCurrentPortName() {
+            return "";
+        }
+
+        @Override
+        public void dispose() {
+        }
+
+        @Override
+        public void recover() {
+        }
+
+        @Override
+        public SystemConnectionMemo getSystemConnectionMemo() {
+            return null;
+        }
+
+        @Override
+        public void connect() {
+        }
+
+        @Override
+        public void configure() {
+        }
     }
 }

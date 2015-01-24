@@ -17,7 +17,6 @@ import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Provide access to C/MRI via a serial comm port.
@@ -28,6 +27,10 @@ import jmri.jmrix.SystemConnectionMemo;
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
+
+    public SerialDriverAdapter() {
+        super(null);
+    }
 
     public String openPort(String portName, String appName)  {
         try {
@@ -268,10 +271,5 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return null; // Maple does not use a SystemConnectionMemo
-    }
 
 }

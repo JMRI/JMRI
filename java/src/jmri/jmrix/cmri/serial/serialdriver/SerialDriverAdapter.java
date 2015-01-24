@@ -2,22 +2,19 @@
 
 package jmri.jmrix.cmri.serial.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.cmri.serial.SerialPortController;
-import jmri.jmrix.cmri.serial.SerialSensorManager;
-import jmri.jmrix.cmri.serial.SerialTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import jmri.jmrix.SystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.cmri.serial.SerialPortController;
+import jmri.jmrix.cmri.serial.SerialSensorManager;
+import jmri.jmrix.cmri.serial.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to C/MRI via a serial comm port.
@@ -27,6 +24,10 @@ import jmri.jmrix.SystemConnectionMemo;
  */
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
+    public SerialDriverAdapter() {
+        super (null);
+    }
+    
     SerialPort activeSerialPort = null;
 
     public String openPort(String portName, String appName)  {
@@ -268,10 +269,5 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return null; // C/MRI does not have a SystemConnectionMemo
-    }
 
 }

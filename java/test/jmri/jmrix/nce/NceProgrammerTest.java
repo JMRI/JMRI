@@ -2,22 +2,18 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
-import jmri.*;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.util.*;
-
-import junit.framework.Test;
+import java.util.Vector;
+import jmri.JmriException;
+import jmri.managers.DefaultProgrammerManager;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.nce.NceProgrammer;
-import jmri.managers.DefaultProgrammerManager;
+import org.apache.log4j.Logger;
 
 /**
  * JUnit tests for the NceProgrammer class
@@ -453,6 +449,7 @@ public class NceProgrammerTest extends TestCase {
 	    public String[] validBaudRates() { return null; }
 
             protected NcePortControllerScaffold() throws Exception {
+                super(null);
 			PipedInputStream tempPipe;
 			tempPipe = new PipedInputStream();
 			tostream = new DataInputStream(tempPipe);

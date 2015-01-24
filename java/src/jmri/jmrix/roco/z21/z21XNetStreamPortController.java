@@ -6,7 +6,6 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 
 /**
  * Override default XPressNet classes to use z21 specific versions.
@@ -30,10 +29,9 @@ public class z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
               jmri.jmrix.lenz.LenzCommandStation());
         packets.connectPort(this);
 
-        ((XNetSystemConnectionMemo)adaptermemo).setXNetTrafficController(packets);
+        this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new z21XNetInitializationManager(
-            (XNetSystemConnectionMemo)adaptermemo);
+        new z21XNetInitializationManager(this.getSystemConnectionMemo());
 
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

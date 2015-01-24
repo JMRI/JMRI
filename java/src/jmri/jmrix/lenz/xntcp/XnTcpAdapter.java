@@ -2,17 +2,26 @@
 
 package jmri.jmrix.lenz.xntcp;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.net.SocketException;
+import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
+import java.util.Vector;
+import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
-
-import java.io.*;
-import java.util.*;
-import java.net.*;
-import jmri.jmrix.ConnectionStatus;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to XPressNet via a XnTcp interface attached on the Ethernet port.
@@ -243,8 +252,8 @@ public class XnTcpAdapter extends XNetNetworkPortController implements jmri.jmri
             // connect to a packetizing traffic controller
             XNetTrafficController packets = new XnTcpXNetPacketizer(new LenzCommandStation());
             packets.connectPort(this);
-            adaptermemo.setXNetTrafficController(packets);
-            new XNetInitializationManager(adaptermemo);
+            this.getSystemConnectionMemo().setXNetTrafficController(packets);
+            new XNetInitializationManager(this.getSystemConnectionMemo());
 		
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	}

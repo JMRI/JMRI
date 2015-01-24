@@ -2,24 +2,21 @@
 
 package jmri.jmrix.lenz.hornbyelite;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetSerialPortController;
-import jmri.jmrix.lenz.XNetTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.util.Vector;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.Vector;
+import jmri.jmrix.lenz.XNetPacketizer;
+import jmri.jmrix.lenz.XNetSerialPortController;
+import jmri.jmrix.lenz.XNetTrafficController;
 import jmri.util.SerialUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to XPressNet via the Hornby Elite's built in USB port.
@@ -181,9 +178,9 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         
         // start operation
         // packets.startThreads();
-        adaptermemo.setXNetTrafficController(packets); 
+        this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new EliteXNetInitializationManager(adaptermemo);
+        new EliteXNetInitializationManager(this.getSystemConnectionMemo());
 	
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

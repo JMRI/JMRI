@@ -2,14 +2,14 @@
 
 package jmri.jmrix.loconet.hexfile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.*;
-import jmri.util.JmriJFrame;
-
 import javax.swing.BoxLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Frame to inject LocoNet messages from a hex file
@@ -160,29 +160,29 @@ public class HexFileFrame extends JmriJFrame {
         connected = true;
 
         // create memo
-        port.getAdapterMemo().setLnTrafficController(packets);
+        port.getSystemConnectionMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        port.getAdapterMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,   // full featured by default
+        port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,   // full featured by default
                                             false, false);
-        port.getAdapterMemo().configureManagers();
-        LnSensorManager LnSensorManager = (LnSensorManager)port.getAdapterMemo().getSensorManager();
+        port.getSystemConnectionMemo().configureManagers();
+        LnSensorManager LnSensorManager = (LnSensorManager)port.getSystemConnectionMemo().getSensorManager();
         LnSensorManager.setDefaultSensorState(port.getOptionState("SensorDefaultState"));
         
         // Install a debug programmer, replacing the existing LocoNet one
-        jmri.ProgrammerManager ep = port.getAdapterMemo().getProgrammerManager();
-        port.getAdapterMemo().setProgrammerManager(
-                new jmri.progdebugger.DebugProgrammerManager(port.getAdapterMemo()));
+        jmri.ProgrammerManager ep = port.getSystemConnectionMemo().getProgrammerManager();
+        port.getSystemConnectionMemo().setProgrammerManager(
+                new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         jmri.InstanceManager.setProgrammerManager(
-                port.getAdapterMemo().getProgrammerManager());
+                port.getSystemConnectionMemo().getProgrammerManager());
         jmri.InstanceManager.deregister(ep, jmri.ProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.AddressedProgrammerManager.class);
         jmri.InstanceManager.deregister(ep, jmri.GlobalProgrammerManager.class);
 
         // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getAdapterMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getAdapterMemo()));
+        port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
         jmri.InstanceManager.setThrottleManager(
-                port.getAdapterMemo().getThrottleManager());
+                port.getSystemConnectionMemo().getThrottleManager());
 
         // start operation of packetizer
         packets.startThreads();

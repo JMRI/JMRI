@@ -10,13 +10,15 @@ package jmri.jmrix.tams;
  */
 public abstract class TamsPortController extends jmri.jmrix.AbstractSerialPortController {
 
-	// base class. Implementations will provide InputStream and OutputStream
+    // base class. Implementations will provide InputStream and OutputStream
     // objects to TamsTrafficController classes, who in turn will deal in messages.
-    protected TamsSystemConnectionMemo adaptermemo = null;
+    protected TamsPortController(TamsSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
 
     @Override
     public TamsSystemConnectionMemo getSystemConnectionMemo() {
-        return adaptermemo;
+        return (TamsSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

@@ -2,19 +2,21 @@
 
 package jmri.jmrix.lenz.liusbserver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.BufferedReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
-import jmri.jmrix.lenz.XNetTrafficController;
-
 import jmri.jmrix.lenz.XNetReply;
-
-
-import java.io.*;
-import jmri.jmrix.SystemConnectionMemo;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
+import jmri.jmrix.lenz.XNetTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -119,13 +121,13 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
        	    // start operation
             // packets.startThreads();
-            adaptermemo.setXNetTrafficController(packets);
+            this.getSystemConnectionMemo().setXNetTrafficController(packets);
  
             // Start the threads that handle the network communication.
             startCommThread();
             startBCastThread();
 
-            new XNetInitializationManager(adaptermemo);
+            new XNetInitializationManager(this.getSystemConnectionMemo());
 
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	
@@ -273,7 +275,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      */
     @Override
     protected void resetupConnection() {
-       adaptermemo.getXNetTrafficController().connectPort(this);
+       this.getSystemConnectionMemo().getXNetTrafficController().connectPort(this);
     }
 
  
@@ -281,7 +283,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         private static class BroadCastPortAdapter extends jmri.jmrix.AbstractNetworkPortController {
                  private LIUSBServerAdapter parent;
 		 public BroadCastPortAdapter(LIUSBServerAdapter p){
-          		super();
+          		super(p.getSystemConnectionMemo());
                         parent=p;
                         allowConnectionRecovery=true;
           		setHostName(DEFAULT_IP_ADDRESS);
@@ -301,13 +303,19 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             public XNetSystemConnectionMemo getSystemConnectionMemo() {
                 return this.parent.getSystemConnectionMemo();
             }
+
+            @Override
+            public void dispose() {
+                // override to prevent super class from disposing of the
+                // SystemConnectionMemo since this object does not own it
+            }
         }
 
         // Internal class for communication port connection
         private static class CommunicationPortAdapter extends jmri.jmrix.AbstractNetworkPortController{
                  private LIUSBServerAdapter parent;
 		 public CommunicationPortAdapter(LIUSBServerAdapter p){
-          		super();
+          		super(p.getSystemConnectionMemo());
                         parent=p;
                         allowConnectionRecovery=true;
           		setHostName(DEFAULT_IP_ADDRESS);
@@ -327,6 +335,12 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             @Override
             public XNetSystemConnectionMemo getSystemConnectionMemo() {
                 return this.parent.getSystemConnectionMemo();
+            }
+
+            @Override
+            public void dispose() {
+                // override to prevent super class from disposing of the
+                // SystemConnectionMemo since this object does not own it
             }
 
         }

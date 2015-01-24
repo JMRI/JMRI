@@ -2,17 +2,15 @@
 
 package jmri.jmrix.can.adapters.lawicell;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
-import jmri.jmrix.can.TrafficController;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.can.TrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the LAWICELL protocol.
@@ -27,10 +25,9 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     SerialPort activeSerialPort = null;
     
     public SerialDriverAdapter() {
-        super();
+        super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
-        adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
     public String openPort(String portName, String appName)  {
@@ -117,7 +114,7 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
 
         // Register the CAN traffic controller being used for this connection
         TrafficController tc = new LawicellTrafficController();
-        adaptermemo.setTrafficController(tc);
+        this.getSystemConnectionMemo().setTrafficController(tc);
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
@@ -131,9 +128,9 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         tc.sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
-        adaptermemo.setProtocol(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
     }
     
     // base class methods for the PortController interface
@@ -181,12 +178,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     private boolean opened = false;
     InputStream serialStream = null;
     
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -19,8 +19,7 @@ import org.slf4j.LoggerFactory;
 public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortController implements XNetPortController {
 
     public XNetStreamPortController(DataInputStream in,DataOutputStream out,String pname){
-        super(in,out,pname);
-        adaptermemo = new XNetSystemConnectionMemo();
+        super(new XNetSystemConnectionMemo(), in,out,pname);
     }
 
     public void configure() {
@@ -28,13 +27,16 @@ public class XNetStreamPortController extends jmri.jmrix.AbstractStreamPortContr
         XNetTrafficController packets = new XNetPacketizer(new LenzCommandStation());
         packets.connectPort(this);
 
-        ((XNetSystemConnectionMemo)adaptermemo).setXNetTrafficController(packets);
+        this.getSystemConnectionMemo().setXNetTrafficController(packets);
 
-        new XNetInitializationManager((XNetSystemConnectionMemo)adaptermemo);
+        new XNetInitializationManager(this.getSystemConnectionMemo());
 
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }
 
+    public XNetSystemConnectionMemo getSystemConnectionMemo() {
+        return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
 
     /**
      * Check that this object is ready to operate. This is a question

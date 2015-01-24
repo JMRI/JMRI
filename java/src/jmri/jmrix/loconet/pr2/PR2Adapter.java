@@ -2,10 +2,10 @@
 
 package jmri.jmrix.loconet.pr2;
 
+import gnu.io.SerialPort;
+import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import gnu.io.SerialPort;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it 
@@ -64,11 +64,11 @@ public class PR2Adapter extends LocoBufferAdapter {
         packets.connectPort(this);
 
         // create memo
-        adaptermemo.setLnTrafficController(packets);
+        this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
-        adaptermemo.configureCommandStation(commandStationType, 
+        this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
         // start operation
         packets.startThreads();
@@ -107,11 +107,5 @@ public class PR2Adapter extends LocoBufferAdapter {
         return retval;
     }*/
     
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(PR2Adapter.class.getName());
 }

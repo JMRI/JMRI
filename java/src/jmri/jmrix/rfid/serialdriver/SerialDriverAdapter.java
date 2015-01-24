@@ -32,7 +32,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super();
+        super(null);
         option1Name = "Adapter";
         option2Name = "Concentrator-Range";
         option3Name = "Protocol";
@@ -203,19 +203,19 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         if (opt1.equals("Generic Stand-alone")) {
             // create a Generic Stand-alone port controller
             log.debug("Create Generic Standalone SpecificTrafficController");
-            adapterMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
-            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(adapterMemo);
+            this.connectionMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
+            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(this.getSystemConnectionMemo());
         } else if (opt1.equals("MERG Concentrator")) {
             // create a MERG Concentrator port controller
             log.debug("Create MERG Concentrator SpecificTrafficController");
-            adapterMemo = new jmri.jmrix.rfid.merg.concentrator.SpecificSystemConnectionMemo();
-            control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(adapterMemo, getOptionState(option2Name));
+            this.connectionMemo = new jmri.jmrix.rfid.merg.concentrator.SpecificSystemConnectionMemo();
+            control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
         } else {
             // no connection at all - warn
             log.warn("adapter option "+opt1+" defaults to Generic Stand-alone");
             // create a Generic Stand-alone port controller
-            adapterMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
-            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(adapterMemo);
+            this.connectionMemo = new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo();
+            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(this.getSystemConnectionMemo());
         }    
 
         // Now do the protocol
@@ -244,12 +244,12 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             log.info("set protocol to CORE-ID");
             protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
         }
-        adapterMemo.setProtocol(protocol);
+        this.getSystemConnectionMemo().setProtocol(protocol);
 
         // connect to the traffic controller
-        adapterMemo.setRfidTrafficController(control);
-        control.setAdapterMemo(adapterMemo);
-        adapterMemo.configureManagers();
+        this.getSystemConnectionMemo().setRfidTrafficController(control);
+        control.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().configureManagers();
         control.connectPort(this);
         control.sendInitString();
 

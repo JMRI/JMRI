@@ -14,13 +14,13 @@ package jmri.jmrix.ieee802154;
 public abstract class IEEE802154PortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to IEEE802154TrafficController classes, who in turn will deal in messages.
-    protected IEEE802154SystemConnectionMemo adaptermemo = null;
+    protected IEEE802154PortController(IEEE802154SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
     
     @Override
     public IEEE802154SystemConnectionMemo getSystemConnectionMemo() { 
-    	if (adaptermemo == null)
-    		adaptermemo= new IEEE802154SystemConnectionMemo();
-    	return adaptermemo; 
+    	return (IEEE802154SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     // returns the InputStream from the port

@@ -2,9 +2,10 @@
 
 package jmri.jmrix.loconet.hexfile;
 
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LnPacketizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.*;
 
 /**
  *  copied from HexFileFrame, then all ui-related elements removed.  ConnectionConfigXml.load()
@@ -41,23 +42,23 @@ public class HexFileServer {
         connected = true;
 
         // create memo
-        port.getAdapterMemo().setLnTrafficController(packets);
+        port.getSystemConnectionMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        port.getAdapterMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,   // full featured by default
+        port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,   // full featured by default
                 false, false);
-        port.getAdapterMemo().configureManagers();
+        port.getSystemConnectionMemo().configureManagers();
 
         // Install a debug programmer, replacing the existing LocoNet one
-        port.getAdapterMemo().setProgrammerManager(
-                new jmri.progdebugger.DebugProgrammerManager(port.getAdapterMemo()));
+        port.getSystemConnectionMemo().setProgrammerManager(
+                new jmri.progdebugger.DebugProgrammerManager(port.getSystemConnectionMemo()));
         jmri.InstanceManager.setProgrammerManager(
-                port.getAdapterMemo().getProgrammerManager());
+                port.getSystemConnectionMemo().getProgrammerManager());
 
         // Install a debug throttle manager, replacing the existing LocoNet one
-        port.getAdapterMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getAdapterMemo()));
+        port.getSystemConnectionMemo().setThrottleManager(new jmri.jmrix.debugthrottle.DebugThrottleManager(port.getSystemConnectionMemo()));
         jmri.InstanceManager.setThrottleManager(
-                port.getAdapterMemo().getThrottleManager());
+                port.getSystemConnectionMemo().getThrottleManager());
 
         // start operation of packetizer
         packets.startThreads();

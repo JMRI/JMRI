@@ -2,22 +2,21 @@
 
 package jmri.jmrix.nce.simulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.nce.NceBinaryCommand;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceCmdStationMemory;
-import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NceTurnoutMonitor;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.IOException;
+import jmri.jmrix.nce.NceBinaryCommand;
+import jmri.jmrix.nce.NceCmdStationMemory;
+import jmri.jmrix.nce.NceMessage;
+import jmri.jmrix.nce.NcePortController;
+import jmri.jmrix.nce.NceReply;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.nce.NceTurnoutMonitor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The following was copied from the NCE Power Pro System Reference Manual.  It
@@ -147,21 +146,9 @@ public class SimulatorAdapter extends NcePortController implements
 	char NCE_BYTE_OUT_OF_RANGE = '4';
     
     public SimulatorAdapter (){
-        super();
-        adaptermemo = new NceSystemConnectionMemo();
+        super(new NceSystemConnectionMemo());
     }
 
-    @Override
-    public NceSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
-	}
-
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-	
 	public String openPort(String portName, String appName) {
 		try {
 			PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -183,12 +170,12 @@ public class SimulatorAdapter extends NcePortController implements
 	 */
 	public void configure() {
         NceTrafficController tc = new NceTrafficController();
-        adaptermemo.setNceTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);
+        this.getSystemConnectionMemo().setNceTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         tc.connectPort(this);     
 		
 		// setting binary mode
-        adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+        this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
         tc.setCmdGroups(NceTrafficController.CMDS_MEM |
         		NceTrafficController.CMDS_AUI_READ |
         		NceTrafficController.CMDS_PROGTRACK |
@@ -199,7 +186,7 @@ public class SimulatorAdapter extends NcePortController implements
         		NceTrafficController.CMDS_ALL_SYS);
         tc.setUsbSystem(NceTrafficController.USB_SYSTEM_NONE);
                 
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         
 		jmri.jmrix.nce.ActiveFlag.setActive();
 
@@ -310,7 +297,7 @@ public class SimulatorAdapter extends NcePortController implements
 	// generateReply is the heart of the simulation.  It translates an 
 	// incoming NceMessage into an outgoing NceReply.
 	private NceReply generateReply(NceMessage m) {
-		NceReply reply = new NceReply(adaptermemo.getNceTrafficController());
+		NceReply reply = new NceReply(this.getSystemConnectionMemo().getNceTrafficController());
 		int command = m.getElement(0);
 		if (command < 0x80) 					// NOTE: NCE command station does not respond to
 			return null;						// command less than 0x80 (times out)

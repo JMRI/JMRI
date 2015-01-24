@@ -22,20 +22,18 @@ import org.slf4j.LoggerFactory;
 public class RfidStreamPortController extends AbstractStreamPortController implements RfidInterface {
 
     public RfidStreamPortController(DataInputStream in,DataOutputStream out,String pname){
-        super(in,out,pname);
-        adaptermemo = new SpecificSystemConnectionMemo();
-        
+        super(new SpecificSystemConnectionMemo(), in,out,pname);
     }
 
     @Override
     public void configure() {
        log.debug("configure() called.");
-       RfidTrafficController control = new SpecificTrafficController((RfidSystemConnectionMemo)adaptermemo);
+       RfidTrafficController control = new SpecificTrafficController(this.getSystemConnectionMemo());
        
        // connect to the traffic controller
-       ((RfidSystemConnectionMemo)adaptermemo).setRfidTrafficController(control);
-       control.setAdapterMemo((RfidSystemConnectionMemo)adaptermemo);
-       ((RfidSystemConnectionMemo)adaptermemo).configureManagers();
+       this.getSystemConnectionMemo().setRfidTrafficController(control);
+       control.setAdapterMemo(this.getSystemConnectionMemo());
+       this.getSystemConnectionMemo().configureManagers();
        control.connectPort(this);
 
        // declare up
@@ -65,19 +63,23 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
 
     @Override
     public void addRfidListener( RfidListener l){
-      ((RfidSystemConnectionMemo)adaptermemo).getTrafficController().addRfidListener(l);
+      this.getSystemConnectionMemo().getTrafficController().addRfidListener(l);
     }
 
     @Override
     public void removeRfidListener( RfidListener l) {
-      ((RfidSystemConnectionMemo)adaptermemo).getTrafficController().removeRfidListener(l);
+      this.getSystemConnectionMemo().getTrafficController().removeRfidListener(l);
     }
 
     @Override
     public void sendRfidMessage(RfidMessage m, RfidListener l){
-      ((RfidSystemConnectionMemo)adaptermemo).getTrafficController().sendRfidMessage(m,l);
+      this.getSystemConnectionMemo().getTrafficController().sendRfidMessage(m,l);
     }
-    
+
+    public RfidSystemConnectionMemo getSystemConnectionMemo() {
+        return (RfidSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
+
     static Logger log = LoggerFactory.getLogger(RfidStreamPortController.class.getName());
 
 

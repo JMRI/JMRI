@@ -2,20 +2,18 @@
 
 package jmri.jmrix.ieee802154.serialdriver;
 
-import jmri.jmrix.ieee802154.IEEE802154PortController;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.ieee802154.IEEE802154PortController;
+import jmri.jmrix.ieee802154.IEEE802154SystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to IEEE802.15.4 devices via a serial comm port.
@@ -32,9 +30,13 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     protected SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super();
+        this(new SerialSystemConnectionMemo());
     }
 
+    protected SerialDriverAdapter(IEEE802154SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
+    
     public String openPort(String portName, String appName)  {
         try {
             // get and open the primary port
@@ -167,13 +169,10 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
         log.debug("configure() called.");
         SerialTrafficController tc = new SerialTrafficController() ; 
 
-        if(adaptermemo==null)
-            adaptermemo=new SerialSystemConnectionMemo();
-
         // connect to the traffic controller
-        adaptermemo.setTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);     
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
 //        adaptermemo.setSerialAddress(new jmri.jmrix.ieee802154.SerialAddress(adaptermemo));
@@ -285,13 +284,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    @Override
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

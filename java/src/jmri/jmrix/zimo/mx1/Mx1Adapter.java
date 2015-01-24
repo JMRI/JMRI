@@ -13,30 +13,27 @@
 
 package jmri.jmrix.zimo.mx1;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
+import gnu.io.SerialPortEvent;
+import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
 import jmri.jmrix.zimo.Mx1CommandStation;
 import jmri.jmrix.zimo.Mx1Packetizer;
 import jmri.jmrix.zimo.Mx1PortController;
 import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
-
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPortEventListener;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPort;
-
-import java.io.DataOutputStream;
-import java.io.DataInputStream;
-import java.io.InputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPortAdapter {
 
     public Mx1Adapter(){
-        super();
+        super(new Mx1SystemConnectionMemo());
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
-        adaptermemo = new Mx1SystemConnectionMemo();
     }
 
 	SerialPort activeSerialPort = null;
@@ -181,13 +178,13 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
 	 */
 	public void configure() {
             Mx1CommandStation cs = new Mx1CommandStation();
-            adaptermemo.setCommandStation(cs);
+            this.getSystemConnectionMemo().setCommandStation(cs);
           // connect to a packetizing traffic controller
             Mx1Packetizer packets = new Mx1Packetizer(cs, Mx1Packetizer.ASCII);
             packets.connectPort(this);
             
-            adaptermemo.setMx1TrafficController(packets);
-            adaptermemo.configureManagers();
+            this.getSystemConnectionMemo().setMx1TrafficController(packets);
+            this.getSystemConnectionMemo().configureManagers();
 
              // start operation
              packets.startThreads();
@@ -272,12 +269,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
 
 }

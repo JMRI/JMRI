@@ -2,13 +2,12 @@
 
 package jmri.jmrix.easydcc.networkdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.net.Socket;
+import java.util.Vector;
 import jmri.jmrix.easydcc.EasyDccNetworkPortController;
 import jmri.jmrix.easydcc.EasyDccTrafficController;
-
-import java.net.*;
-import java.util.Vector;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the EasyDcc system network connection.
@@ -22,8 +21,7 @@ import java.util.Vector;
 public class NetworkDriverAdapter extends EasyDccNetworkPortController {
 
     public NetworkDriverAdapter() {
-        super();
-        adaptermemo = new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo("E", "EasyDCC via Network");
+        super(new jmri.jmrix.easydcc.EasyDccSystemConnectionMemo("E", "EasyDCC via Network"));
         setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
     }
     /**
@@ -34,8 +32,8 @@ public class NetworkDriverAdapter extends EasyDccNetworkPortController {
         // connect to the traffic controller
         EasyDccTrafficController control = EasyDccTrafficController.instance();
         control.connectPort(this);
-        adaptermemo.setEasyDccTrafficController(control);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }

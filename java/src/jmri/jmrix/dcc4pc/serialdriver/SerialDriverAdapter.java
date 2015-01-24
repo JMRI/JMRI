@@ -2,22 +2,20 @@
 
 package jmri.jmrix.dcc4pc.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.dcc4pc.Dcc4PcPortController;
-import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
-import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
-import jmri.jmrix.SystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.util.List;
-import java.util.ArrayList;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
+import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.dcc4pc.Dcc4PcPortController;
+import jmri.jmrix.dcc4pc.Dcc4PcSystemConnectionMemo;
+import jmri.jmrix.dcc4pc.Dcc4PcTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 /**
  * Implements SerialPortAdapter for the Dcc4Pc system.
  * <P>
@@ -30,11 +28,10 @@ import gnu.io.SerialPort;
 public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super();
+        super(new Dcc4PcSystemConnectionMemo());
         option1Name = "Programmer";
         options.put(option1Name, new Option("Programmer : ", validOption1()));
         setManufacturer(jmri.jmrix.DCCManufacturerList.DCC4PC);
-        adaptermemo = new Dcc4PcSystemConnectionMemo();
     }
     
     SerialPort activeSerialPort = null;
@@ -113,8 +110,8 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
             ArrayList<String> progConn = new ArrayList<String>();
             progConn.add("");
             String userName = "Dcc4Pc";
-            if(adaptermemo!=null){
-                userName = adaptermemo.getUserName();
+            if(this.getSystemConnectionMemo()!=null){
+                userName = this.getSystemConnectionMemo().getUserName();
             }
             for(int i = 0; i<connList.size(); i++){
                 SystemConnectionMemo scm = connList.get(i);
@@ -198,20 +195,13 @@ public class SerialDriverAdapter extends Dcc4PcPortController implements jmri.jm
     public void configure() {
         // connect to the traffic controller
         Dcc4PcTrafficController control = new Dcc4PcTrafficController();
-        adaptermemo.setDcc4PcTrafficController(control);
-        adaptermemo.setDefaultProgrammer(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setDcc4PcTrafficController(control);
+        this.getSystemConnectionMemo().setDefaultProgrammer(getOptionState(option1Name));
         control.connectPort(this);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         
         jmri.jmrix.dcc4pc.ActiveFlag.setActive();
 
-    }
-
-    
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
     }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());

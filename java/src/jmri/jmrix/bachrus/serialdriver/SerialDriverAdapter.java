@@ -2,21 +2,18 @@
 
 package jmri.jmrix.bachrus.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.bachrus.SpeedoPortController;
-import jmri.jmrix.bachrus.SpeedoTrafficController;
-import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
-
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.TooManyListenersException;
-
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import jmri.jmrix.SystemConnectionMemo;
+import jmri.jmrix.bachrus.SpeedoPortController;
+import jmri.jmrix.bachrus.SpeedoSystemConnectionMemo;
+import jmri.jmrix.bachrus.SpeedoTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Bachrus speedo.
@@ -39,8 +36,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     // There can only be one instance
     public SerialDriverAdapter() {
-        super();
-        adaptermemo = new SpeedoSystemConnectionMemo();
+        super(new SpeedoSystemConnectionMemo());
         setManufacturer(jmri.jmrix.DCCManufacturerList.BACHRUS);
         mInstance=this;
     }
@@ -145,7 +141,7 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
         SpeedoTrafficController control = SpeedoTrafficController.instance();
         control.connectPort(this);
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.bachrus.ActiveFlag.setActive();
 
@@ -192,17 +188,6 @@ public class SerialDriverAdapter extends SpeedoPortController implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
     
-    public void dispose(){
-        if(adaptermemo!=null){
-            adaptermemo.dispose();
-        }
-        adaptermemo = null;
-    }
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
-
-    @Override
-    public SpeedoSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
-    }
 
 }

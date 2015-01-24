@@ -2,12 +2,11 @@
 
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import gnu.io.CommPortIdentifier;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import gnu.io.CommPortIdentifier;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide an abstract base for *PortController classes.
@@ -24,6 +23,10 @@ import gnu.io.CommPortIdentifier;
  */
 abstract public class AbstractSerialPortController extends AbstractPortController implements SerialPortAdapter {
 
+    protected AbstractSerialPortController(SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
+    
     /**
      * Standard error handling for port-busy case
      */

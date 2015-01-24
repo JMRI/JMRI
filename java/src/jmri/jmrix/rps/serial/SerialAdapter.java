@@ -2,21 +2,18 @@
 
 package jmri.jmrix.rps.serial;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.rps.Distributor;
-import jmri.jmrix.rps.Engine;
-import jmri.jmrix.rps.Reading;
-
-import java.io.DataInputStream;
-import java.io.OutputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-import jmri.jmrix.SystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import jmri.jmrix.rps.Distributor;
+import jmri.jmrix.rps.Engine;
+import jmri.jmrix.rps.Reading;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the RPS system.
@@ -35,7 +32,7 @@ import jmri.jmrix.SystemConnectionMemo;
 public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialAdapter(){
-        super();
+        super(null);
         option1Name = "Protocol";
         options.put(option1Name, new Option("Protocol", validOptions1));
     }
@@ -235,11 +232,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         if (activeSerialPort != null) activeSerialPort.close();
         serialStream = null;    // flags state
         activeSerialPort = null; // flags state
-    }
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return null; // No SystemConnectionMemo
     }
 
     /**

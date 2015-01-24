@@ -2,22 +2,19 @@
 
 package jmri.jmrix.grapevine.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.grapevine.SerialPortController;
-import jmri.jmrix.grapevine.SerialSensorManager;
-import jmri.jmrix.grapevine.SerialTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import jmri.jmrix.SystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.grapevine.SerialPortController;
+import jmri.jmrix.grapevine.SerialSensorManager;
+import jmri.jmrix.grapevine.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to ProTrak Grapevine via a serial comm port.
@@ -29,6 +26,10 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     SerialPort activeSerialPort = null;
 
+    public SerialDriverAdapter() {
+        super(null);
+    }
+    
     public String openPort(String portName, String appName)  {
         try {
             // get and open the primary port

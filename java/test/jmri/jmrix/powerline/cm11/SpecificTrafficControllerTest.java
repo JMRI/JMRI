@@ -2,23 +2,21 @@
 
 package jmri.jmrix.powerline.cm11;
 
-import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
-import junit.framework.Test;
-import junit.framework.Assert;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
+import jmri.jmrix.powerline.SerialListener;
 import jmri.jmrix.powerline.SerialMessage;
+import jmri.jmrix.powerline.SerialPortController;
 import jmri.jmrix.powerline.SerialReply;
 import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
-import jmri.jmrix.powerline.SerialListener;
-import jmri.jmrix.powerline.SerialPortController;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * JUnit tests for the SpecificTrafficController class
@@ -176,6 +174,7 @@ public class SpecificTrafficControllerTest extends TestCase {
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }
         protected SerialPortControllerScaffold() throws Exception {
+            super(null);
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             tostream = new DataInputStream(tempPipe);

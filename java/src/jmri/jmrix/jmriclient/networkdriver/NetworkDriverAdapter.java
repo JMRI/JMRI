@@ -2,13 +2,12 @@
 
 package jmri.jmrix.jmriclient.networkdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ResourceBundle;
 import jmri.jmrix.jmriclient.JMRIClientPortController;
 import jmri.jmrix.jmriclient.JMRIClientTrafficController;
-
-import java.util.ResourceBundle;
 import jmri.util.zeroconf.ZeroConfClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements NetworkPortAdapter for the jmriclient system network connection.
@@ -23,8 +22,7 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.jmriclient.JMRIClientConfigurationBundle");
 
     public NetworkDriverAdapter() {
-        super();
-        adaptermemo = new jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo();
+        super(new jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo());
         setPort(2048); // set the default port on construction
     }
 
@@ -36,8 +34,8 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
         // connect to the traffic controller
         JMRIClientTrafficController control = new JMRIClientTrafficController();
         control.connectPort(this);
-        adaptermemo.setJMRIClientTrafficController(control);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setJMRIClientTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
 
         // mark OK for menus
         jmri.jmrix.jmriclient.ActiveFlag.setActive();
@@ -45,15 +43,8 @@ public class NetworkDriverAdapter extends JMRIClientPortController {
     
     public boolean status() {return opened;}
 
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-
     // private control members
     private boolean opened = false;
-
-    public void dispose(){
-        adaptermemo.dispose();
-        adaptermemo = null;
-    }
 
     @Deprecated
     static public NetworkDriverAdapter instance() {

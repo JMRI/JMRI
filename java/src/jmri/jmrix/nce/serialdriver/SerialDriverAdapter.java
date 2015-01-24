@@ -2,19 +2,17 @@
 
 package jmri.jmrix.nce.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.nce.NcePortController;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the NCE system.
@@ -34,17 +32,11 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     SerialPort activeSerialPort = null;
     
     public SerialDriverAdapter() {
-        super();
+        super(new NceSystemConnectionMemo());
         option1Name = "Eprom";
         // the default is 2006 or later
         options.put(option1Name, new Option("Command Station EPROM", new String[]{"2006 or later", "2004 or earlier"}));
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
-        adaptermemo = new NceSystemConnectionMemo();
-    }
-
-    @Override
-    public NceSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
     }
 
     public String openPort(String portName, String appName)  {
@@ -119,21 +111,21 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      */
     public void configure() {
         NceTrafficController tc = new NceTrafficController(); 
-        adaptermemo.setNceTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);     
+        this.getSystemConnectionMemo().setNceTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
              
         if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
             // setting binary mode
-            adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
-            adaptermemo.setNceCmdGroups(~NceTrafficController.CMDS_USB);
+            this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
+            this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         } else {
-            adaptermemo.configureCommandStation(NceTrafficController.OPTION_2004);
-            adaptermemo.setNceCmdGroups(~NceTrafficController.CMDS_USB);
+            this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2004);
+            this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         }
         
         tc.connectPort(this); 
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
        
         jmri.jmrix.nce.ActiveFlag.setActive();
 
@@ -175,12 +167,6 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
     
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

@@ -2,23 +2,20 @@
 
 package jmri.jmrix.serialsensor;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.JmriException;
-import jmri.Sensor;
-import jmri.jmrix.AbstractSerialPortController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import jmri.jmrix.SystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.InstanceManager;
+import jmri.JmriException;
+import jmri.Sensor;
+import jmri.jmrix.AbstractSerialPortController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for connecting to two sensors via the
@@ -31,6 +28,10 @@ public class SerialSensorAdapter extends AbstractSerialPortController
                 implements jmri.jmrix.SerialPortAdapter  {
 
     SerialPort activeSerialPort = null;
+
+    public SerialSensorAdapter() {
+        super(null);
+    }
 
     public void configure() {
         log.debug("Configure doesnt do anything here");
@@ -187,11 +188,6 @@ public class SerialSensorAdapter extends AbstractSerialPortController
      * Do a sensor change on the event queue
      */
     public void notify(String sensor, boolean value) {
-    }
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return null; // No SystemConnectionMemo
     }
 
     /**

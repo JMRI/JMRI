@@ -12,11 +12,13 @@ public abstract class EcosPortController extends jmri.jmrix.AbstractNetworkPortC
 
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to EcosTrafficController classes, who in turn will deal in messages.
-    protected EcosSystemConnectionMemo adaptermemo = null;
+    protected EcosPortController(EcosSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
     
     @Override
     public EcosSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (EcosSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

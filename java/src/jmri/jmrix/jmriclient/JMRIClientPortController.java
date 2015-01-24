@@ -12,7 +12,14 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
 
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to JMRIClientTrafficController classes, who in turn will deal in messages.
-    protected JMRIClientSystemConnectionMemo adaptermemo = null;
+    protected JMRIClientPortController (JMRIClientSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
+
+    @Override
+    public JMRIClientSystemConnectionMemo getSystemConnectionMemo() {
+        return (JMRIClientSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
 }
 
 

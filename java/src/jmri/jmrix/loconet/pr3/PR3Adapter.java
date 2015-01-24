@@ -2,12 +2,13 @@
 
 package jmri.jmrix.loconet.pr3;
 
+import gnu.io.SerialPort;
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import jmri.jmrix.loconet.*;
-
-import gnu.io.SerialPort;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it 
@@ -71,12 +72,11 @@ public class PR3Adapter extends LocoBufferAdapter {
             // create memo
             /*PR3SystemConnectionMemo memo 
                 = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
-            adaptermemo.setLnTrafficController(packets);
+            this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
-            adaptermemo.configureCommandStation(commandStationType, 
+            this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                                                 mTurnoutNoRetry, mTurnoutExtraSpace);
-            PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
-            memo.configureManagersPR2();
+            this.getSystemConnectionMemo().configureManagersPR2();
     
             // start operation
             packets.startThreads();
@@ -100,13 +100,12 @@ public class PR3Adapter extends LocoBufferAdapter {
             // create memo
             /*PR3SystemConnectionMemo memo 
                 = new PR3SystemConnectionMemo(packets, new SlotManager(packets));*/
-            adaptermemo.setLnTrafficController(packets);
+            this.getSystemConnectionMemo().setLnTrafficController(packets);
             // do the common manager config
-            adaptermemo.configureCommandStation(commandStationType, 
+            this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
             
-            PR3SystemConnectionMemo memo = (PR3SystemConnectionMemo)adaptermemo;
-            memo.configureManagersMS100();
+            this.getSystemConnectionMemo().configureManagersMS100();
     
             // start operation
             packets.startThreads();
@@ -154,11 +153,10 @@ public class PR3Adapter extends LocoBufferAdapter {
         retval[retval.length-1] = LnCommandStationType.COMMAND_STATION_STANDALONE.getName();
         return retval;
     }
-    
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
+
+    @Override
+    public PR3SystemConnectionMemo getSystemConnectionMemo() {
+        return (PR3SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     static Logger log = LoggerFactory.getLogger(PR3Adapter.class.getName());

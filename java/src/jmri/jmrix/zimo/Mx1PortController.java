@@ -2,9 +2,6 @@
 
 package jmri.jmrix.zimo;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-
 /**
  * Abstract base for classes representing a MX-1 communications port
  * @author			Bob Jacobsen    Copyright (C) 2001
@@ -16,17 +13,9 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to Mx1TrafficController classes, who in turn will deal in messages.
 
-	// returns the InputStream from the port
-	public abstract DataInputStream getInputStream();
-
-	// returns the outputStream to the port
-	public abstract DataOutputStream getOutputStream();
-
-	/**
-	 * Check that this object is ready to operate. This is a question
-	 * of configuration, not transient hardware status.
-	 */
-	public abstract boolean status();
+        protected Mx1PortController(Mx1SystemConnectionMemo connectionMemo) {
+            super(connectionMemo);
+        }
 
 	/**
 	 * Can the port accept additional characters?  This might
@@ -35,13 +24,9 @@ public abstract class Mx1PortController extends jmri.jmrix.AbstractSerialPortCon
 	 */
 	public abstract boolean okToSend();
     
-    protected Mx1SystemConnectionMemo adaptermemo = null;
-    
     @Override
     public Mx1SystemConnectionMemo getSystemConnectionMemo() { 
-    	if (adaptermemo == null)
-    		adaptermemo= new Mx1SystemConnectionMemo();
-    	return adaptermemo; 
+    	return (Mx1SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

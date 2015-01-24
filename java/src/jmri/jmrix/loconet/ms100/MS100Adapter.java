@@ -1,27 +1,25 @@
 // MS100Adapter.java
 
 package jmri.jmrix.loconet.ms100;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.loconet.*;
-import jmri.util.SystemType;
-
+import Serialio.SerInputStream;
+import Serialio.SerOutputStream;
+import Serialio.SerialConfig;
+import Serialio.SerialPortLocal;
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Enumeration;
 import java.util.Vector;
-
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-
-import Serialio.SerInputStream;
-import Serialio.SerOutputStream;
-import Serialio.SerialConfig;
-import Serialio.SerialPortLocal;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import jmri.util.SystemType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to LocoNet via a MS100 attached to a serial comm port.
@@ -36,11 +34,11 @@ import Serialio.SerialPortLocal;
 public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialPortAdapter {
 
     public MS100Adapter() {
+        super(new LocoNetSystemConnectionMemo());
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
         options.put(option2Name, new Option("Command station type:", commandStationNames, false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
-        adaptermemo = new LocoNetSystemConnectionMemo();
     }
 
     Vector<String> portNameVector = null;
@@ -256,11 +254,11 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
         packets.connectPort(this);
 
         // create memo
-        adaptermemo.setLnTrafficController(packets);
+        this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
-        adaptermemo.configureCommandStation(commandStationType, 
+        this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
         // start operation
         packets.startThreads();
@@ -311,12 +309,6 @@ public class MS100Adapter extends LnPortController implements jmri.jmrix.SerialP
     InputStream serialInStream = null;
     OutputStream serialOutStream = null;
     
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(MS100Adapter.class.getName());
 
 }

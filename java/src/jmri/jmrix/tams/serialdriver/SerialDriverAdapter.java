@@ -2,19 +2,17 @@
 
 package jmri.jmrix.tams.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.tams.TamsPortController;
-import jmri.jmrix.tams.TamsTrafficController;
-import jmri.jmrix.tams.TamsSystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.tams.TamsPortController;
+import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import jmri.jmrix.tams.TamsTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the TAMS system.
@@ -32,9 +30,8 @@ public class SerialDriverAdapter extends TamsPortController  implements jmri.jmr
     SerialPort activeSerialPort = null;
     
     public SerialDriverAdapter() {
-        super();
+        super(new TamsSystemConnectionMemo());
         setManufacturer(jmri.jmrix.DCCManufacturerList.TAMS);
-        adaptermemo = new TamsSystemConnectionMemo();
     }
 
     public String openPort(String portName, String appName)  {
@@ -122,12 +119,12 @@ public class SerialDriverAdapter extends TamsPortController  implements jmri.jmr
      */
     public void configure() {
         TamsTrafficController tc = new TamsTrafficController(); 
-        adaptermemo.setTamsTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);     
+        this.getSystemConnectionMemo().setTamsTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         
         tc.connectPort(this); 
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
        
         jmri.jmrix.tams.ActiveFlag.setActive();
 
@@ -169,12 +166,6 @@ public class SerialDriverAdapter extends TamsPortController  implements jmri.jmr
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
     
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

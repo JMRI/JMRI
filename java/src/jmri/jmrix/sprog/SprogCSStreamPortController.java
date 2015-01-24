@@ -24,9 +24,7 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     private Thread rcvNotice = null;
 
     public SprogCSStreamPortController(DataInputStream in,DataOutputStream out,String pname){
-        super(in,out,pname);
-        adaptermemo = new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS);
-        
+        super(new SprogSystemConnectionMemo(SprogConstants.SprogMode.OPS), in, out, pname);
     }
 
     @Override
@@ -35,10 +33,10 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
        SprogTrafficController control = SprogTrafficController.instance();
        
        // connect to the traffic controller
-       ((SprogSystemConnectionMemo)adaptermemo).setSprogTrafficController(control);
-       control.setAdapterMemo((SprogSystemConnectionMemo)adaptermemo);
-       ((SprogSystemConnectionMemo)adaptermemo).configureCommandStation();
-       ((SprogSystemConnectionMemo)adaptermemo).configureManagers();
+       this.getSystemConnectionMemo().setSprogTrafficController(control);
+       control.setAdapterMemo(this.getSystemConnectionMemo());
+       this.getSystemConnectionMemo().configureCommandStation();
+       this.getSystemConnectionMemo().configureManagers();
        control.connectPort(this);
 
        // start thread to notify controller when data is available
@@ -82,6 +80,11 @@ public class SprogCSStreamPortController extends AbstractStreamPortController im
     @Override
     public void sendSprogMessage(SprogMessage m, SprogListener l){
       SprogTrafficController.instance().sendSprogMessage(m,l);
+    }
+
+    @Override
+    public SprogSystemConnectionMemo getSystemConnectionMemo() {
+        return (SprogSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     // internal thread to check to see if the stream has data and

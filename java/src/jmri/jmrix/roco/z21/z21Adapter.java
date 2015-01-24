@@ -3,13 +3,10 @@
 package jmri.jmrix.roco.z21;
 
 import java.net.DatagramSocket;
-
+import java.util.ResourceBundle;
+import jmri.jmrix.ConnectionStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.ResourceBundle;
-
-import jmri.jmrix.ConnectionStatus;
 
 /**
  * Adapter representing a Z21 communication port
@@ -37,13 +34,12 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     private DatagramSocket socket = null;
 
     public z21Adapter(){
-       super();
+       super(new z21SystemConnectionMemo());
        rb = ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21AdapterConfigurationBundle");
        COMMUNICATION_UDP_PORT= java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
        DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
        setHostName(DEFAULT_IP_ADDRESS);
        setPort(COMMUNICATION_UDP_PORT);
-       adaptermemo = new z21SystemConnectionMemo();
        allowConnectionRecovery = true; // all classes derived from this class
                                        // can recover from a connection failure
        
@@ -60,10 +56,10 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
        packets.connectPort(this);
 
        // start operation
-       adaptermemo.setTrafficController(packets);
+       this.getSystemConnectionMemo().setTrafficController(packets);
 
        // add an XPressNet Tunnel.
-       new z21XPressNetTunnel(adaptermemo);
+       new z21XPressNetTunnel(this.getSystemConnectionMemo());
 
        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
@@ -115,18 +111,9 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      */
     public boolean status() { return opened; }
     
-    protected z21SystemConnectionMemo adaptermemo = null;
-
     @Override
     public z21SystemConnectionMemo getSystemConnectionMemo(){
-        log.debug("adapter memo {}null", (this.adaptermemo != null) ? "not " : "");
-        return this.adaptermemo;
-    }
-
-    public void dispose(){
-       adaptermemo.dispose();
-       adaptermemo=null;
-       log.info("Dispose called");
+        return (z21SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     /**
@@ -145,7 +132,7 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
             keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue,new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         // If the timer times out, send a request for status
-                        adaptermemo.getTrafficController()
+                        z21Adapter.this.getSystemConnectionMemo().getTrafficController()
                                    .sendz21Message(
                                    jmri.jmrix.roco.z21.z21Message.getSerialNumberRequestMessage(),
                                    null);

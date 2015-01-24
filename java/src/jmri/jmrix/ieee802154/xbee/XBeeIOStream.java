@@ -2,21 +2,20 @@
 
 package jmri.jmrix.ieee802154.xbee;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.PipedInputStream;
-import java.io.PipedOutputStream;
-import java.util.ArrayList;
-
 import com.rapplogic.xbee.api.XBeeAddress16;
 import com.rapplogic.xbee.api.XBeeAddress64;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.RxResponse16;
 import com.rapplogic.xbee.api.wpan.RxResponse64;
 import com.rapplogic.xbee.api.zigbee.ZNetRxResponse;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.PipedInputStream;
+import java.io.PipedOutputStream;
+import java.util.ArrayList;
 import jmri.jmrix.AbstractPortController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /*
  * This class provides an interface between the XBee messages that are sent 
@@ -43,6 +42,7 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
     private XBeeAddress64 nodeAddress64 = null;
 
     public XBeeIOStream(XBeeNode node,XBeeTrafficController tc){
+        super(null);
         nodeAddress16=node.getXBeeAddress16();
         nodeAddress64=node.getXBeeAddress64();
         try {
@@ -96,8 +96,6 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
     }
     
     public void setDisabled(boolean disabled) {}
-
-    public jmri.jmrix.SystemConnectionMemo getSystemConnectionMemo(){ return null; }
 
     public void dispose(){
     }

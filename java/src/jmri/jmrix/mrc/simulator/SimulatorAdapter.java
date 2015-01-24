@@ -2,19 +2,18 @@
 
 package jmri.jmrix.mrc.simulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.mrc.MrcMessage;
-import jmri.jmrix.mrc.MrcPortController;
-import jmri.jmrix.mrc.MrcPacketizer;
-import jmri.jmrix.mrc.MrcSystemConnectionMemo;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.IOException;
+import jmri.jmrix.mrc.MrcMessage;
+import jmri.jmrix.mrc.MrcPacketizer;
 import jmri.jmrix.mrc.MrcPackets;
+import jmri.jmrix.mrc.MrcPortController;
+import jmri.jmrix.mrc.MrcSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MRC simulator
@@ -39,21 +38,9 @@ public class SimulatorAdapter extends MrcPortController implements
 	private DataInputStream inpipe = null; // feed pout
 	    
     public SimulatorAdapter (){
-        super();
-        adaptermemo = new MrcSystemConnectionMemo();
+        super(new MrcSystemConnectionMemo());
     }
 
-    @Override
-    public MrcSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
-	}
-
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-	
 	public String openPort(String portName, String appName) {
 		try {
 			PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -76,11 +63,11 @@ public class SimulatorAdapter extends MrcPortController implements
 	public void configure() {
         MrcPacketizer tc = new MrcPacketizer();
         tc.connectPort(this);
-        adaptermemo.setMrcTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);
+        this.getSystemConnectionMemo().setMrcTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         //tc.connectPort(this);     
 		                
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         tc.setCabNumber(2);
 		jmri.jmrix.mrc.ActiveFlag.setActive();
 

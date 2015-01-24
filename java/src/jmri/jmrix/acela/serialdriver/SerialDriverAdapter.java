@@ -2,20 +2,17 @@
 
 package jmri.jmrix.acela.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.acela.AcelaPortController;
-import jmri.jmrix.acela.AcelaTrafficController;
-import jmri.jmrix.acela.AcelaSystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-import jmri.jmrix.SystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.acela.AcelaPortController;
+import jmri.jmrix.acela.AcelaSystemConnectionMemo;
+import jmri.jmrix.acela.AcelaTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Acela system.  This connects
@@ -35,8 +32,7 @@ import jmri.jmrix.SystemConnectionMemo;
 public class SerialDriverAdapter extends AcelaPortController  implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super();
-        adaptermemo = new AcelaSystemConnectionMemo();
+        super(new AcelaSystemConnectionMemo());
         setManufacturer(jmri.jmrix.DCCManufacturerList.CTI);
     }
     
@@ -119,8 +115,8 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
         AcelaTrafficController control = AcelaTrafficController.instance();
         control.connectPort(this);
 
-        adaptermemo.setAcelaTrafficController(control);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setAcelaTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
 
         // connect to a packetizing traffic controller
         // LnPacketizer packets = new LnPacketizer();
@@ -196,15 +192,6 @@ public class SerialDriverAdapter extends AcelaPortController  implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
     
-    //The following needs to be enabled once systemconnectionmemo has been correctly implemented
-    //public SystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-    
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 }
 

@@ -2,21 +2,15 @@
 
 package jmri.jmrix.can.adapters.gridconnect;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.can.adapters.gridconnect.GcPortController;
-import jmri.jmrix.can.adapters.gridconnect.GcTrafficController;
-import jmri.jmrix.can.TrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.can.CanSystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.can.TrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the GridConnect protocol.
@@ -31,10 +25,9 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     protected SerialPort activeSerialPort = null;
     
     public GcSerialDriverAdapter() {
-        super();
+        super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
-        adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
 
@@ -122,17 +115,17 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         // Register the CAN traffic controller being used for this connection
         //GcTrafficController.instance();
         TrafficController tc = makeGcTrafficController();
-        adaptermemo.setTrafficController(tc);
+        this.getSystemConnectionMemo().setTrafficController(tc);
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
         tc.connectPort(this);
         
-        adaptermemo.setProtocol(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
     }
     
@@ -186,10 +179,5 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class.getName());
-
-    @Override
-    public CanSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
-    }
 
 }

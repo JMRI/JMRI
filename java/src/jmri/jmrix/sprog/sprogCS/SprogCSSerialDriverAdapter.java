@@ -2,10 +2,10 @@
 
 package jmri.jmrix.sprog.sprogCS;
 
+import jmri.jmrix.sprog.SprogConstants.SprogMode;
+import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.sprog.SprogTrafficController;
-import jmri.jmrix.sprog.SprogConstants.SprogMode;
 
 
 
@@ -31,7 +31,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         super(SprogMode.OPS);
         options.put("TrackPowerState", new Option("Track Power At StartUp:", new String[]{"Powered Off", "Powered On"}, true));
         //Set the username to match name, once refactored to handle multiple connections or user setable names/prefixes then this can be removed
-        adaptermemo.setUserName("SPROG Command Station");
+        this.getSystemConnectionMemo().setUserName("SPROG Command Station");
     }
 
     /**
@@ -43,13 +43,13 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         SprogTrafficController control = SprogTrafficController.instance();
         control.connectPort(this);
 
-        adaptermemo.setSprogTrafficController(control);
-        adaptermemo.configureCommandStation();
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setSprogTrafficController(control);
+        this.getSystemConnectionMemo().configureCommandStation();
+        this.getSystemConnectionMemo().configureManagers();
         jmri.jmrix.sprog.ActiveFlagCS.setActive();
         if(getOptionState("TrackPowerState")!=null  && getOptionState("TrackPowerState").equals("Powered On")){
             try {
-                adaptermemo.getPowerManager().setPower(jmri.PowerManager.ON);
+                this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
             } catch (jmri.JmriException e){
                 log.error(e.toString());
             }
@@ -72,9 +72,7 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
             justification="temporary until mult-system; only set when disposed")
     public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
+        super.dispose();
         mInstance = null;
     }
     

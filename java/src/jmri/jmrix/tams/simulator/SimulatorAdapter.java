@@ -2,19 +2,18 @@
 
 package jmri.jmrix.tams.simulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.tams.TamsMessage;
-import jmri.jmrix.tams.TamsPortController;
-import jmri.jmrix.tams.TamsTrafficController;
-import jmri.jmrix.tams.TamsSystemConnectionMemo;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.IOException;
+import jmri.jmrix.tams.TamsMessage;
+import jmri.jmrix.tams.TamsPortController;
 import jmri.jmrix.tams.TamsReply;
+import jmri.jmrix.tams.TamsSystemConnectionMemo;
+import jmri.jmrix.tams.TamsTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MRC simulator
@@ -39,16 +38,9 @@ public class SimulatorAdapter extends TamsPortController implements
 	private DataInputStream inpipe = null; // feed pout
 	    
     public SimulatorAdapter (){
-        super();
-        adaptermemo = new TamsSystemConnectionMemo();
+        super(new TamsSystemConnectionMemo());
     }
 
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-	
 	public String openPort(String portName, String appName) {
 		try {
 			PipedOutputStream tempPipeI = new PipedOutputStream();
@@ -71,11 +63,11 @@ public class SimulatorAdapter extends TamsPortController implements
 	public void configure() {
         TamsTrafficController tc = new TamsTrafficController();
         tc.connectPort(this);
-        adaptermemo.setTamsTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);
+        this.getSystemConnectionMemo().setTamsTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         //tc.connectPort(this);     
 		                
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         //tc.setCabNumber(2);
 		jmri.jmrix.tams.ActiveFlag.setActive();
 

@@ -11,12 +11,10 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
-    public LnNetworkPortController(){
-        super();
+    protected LnNetworkPortController(LocoNetSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
         setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
     }
-
-    protected LocoNetSystemConnectionMemo adaptermemo = null;
 
     protected LnCommandStationType commandStationType = null;
 
@@ -72,7 +70,7 @@ public abstract class LnNetworkPortController extends jmri.jmrix.AbstractNetwork
 
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     public void setTurnoutHandling(String value) {

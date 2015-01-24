@@ -2,22 +2,19 @@
 
 package jmri.jmrix.secsi.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.secsi.SerialPortController;
-import jmri.jmrix.secsi.SerialSensorManager;
-import jmri.jmrix.secsi.SerialTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
-import jmri.jmrix.SystemConnectionMemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.secsi.SerialPortController;
+import jmri.jmrix.secsi.SerialSensorManager;
+import jmri.jmrix.secsi.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to Oak Tree via a serial comm port.
@@ -30,6 +27,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     SerialPort activeSerialPort = null;
 
+    public SerialDriverAdapter() {
+        super(null);
+    }
 
     public String openPort(String portName, String appName)  {
         try {
@@ -282,10 +282,5 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return null; // No SystemConnectionMemo
-    }
 
 }

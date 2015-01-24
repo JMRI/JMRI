@@ -2,22 +2,21 @@
 
 package jmri.jmrix.loconet.locobuffer;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.*;
-import jmri.jmrix.SystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-import java.util.Enumeration;
-import java.util.Vector;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import java.util.Enumeration;
+import java.util.Vector;
+import jmri.jmrix.loconet.LnPacketizer;
+import jmri.jmrix.loconet.LnPortController;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to LocoNet via a LocoBuffer attached to a serial comm port.
@@ -33,14 +32,13 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     }
 
     public LocoBufferAdapter(LocoNetSystemConnectionMemo adapterMemo) {
-        super();
+        super(adapterMemo);
         option1Name = "FlowControl";
         option2Name = "CommandStation";
         option3Name = "TurnoutHandle";
         options.put(option1Name, new Option("Connection uses:", validOption1));
         options.put(option2Name, new Option("Command station type:", commandStationNames, false));
         options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
-        this.adaptermemo = adapterMemo;
     }
 
     Vector<String> portNameVector = null;
@@ -213,12 +211,12 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
         packets.connectPort(this);
 
         // create memo
-         adaptermemo.setLnTrafficController(packets);
+        this.getSystemConnectionMemo().setLnTrafficController(packets);
         // do the common manager config
 
-        adaptermemo.configureCommandStation(commandStationType, 
+        this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
         // start operation
         packets.startThreads();
@@ -300,11 +298,6 @@ public class LocoBufferAdapter extends LnPortController implements jmri.jmrix.Se
     private boolean opened = false;
     InputStream serialStream = null;
         
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
     static Logger log = LoggerFactory.getLogger(LocoBufferAdapter.class.getName());
 
 }

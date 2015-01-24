@@ -2,11 +2,11 @@
 
 package jmri.jmrix.loconet.uhlenbrock;
 
+import gnu.io.SerialPort;
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import jmri.jmrix.loconet.*;
-import gnu.io.SerialPort;
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it
  * operates correctly with the IC-COM and Intellibox II on-board USB port.
@@ -49,11 +49,11 @@ public void configure() {
     packets.connectPort(this);
 
     // create memo
-    adaptermemo.setLnTrafficController(packets);
+    this.getSystemConnectionMemo().setLnTrafficController(packets);
     // do the common manager config
-        adaptermemo.configureCommandStation(commandStationType, 
-                                            mTurnoutNoRetry, mTurnoutExtraSpace);
-    adaptermemo.configureManagers();
+    this.getSystemConnectionMemo().configureCommandStation(commandStationType,
+            mTurnoutNoRetry, mTurnoutExtraSpace);
+    this.getSystemConnectionMemo().configureManagers();
 
     // start operation
     packets.startThreads();

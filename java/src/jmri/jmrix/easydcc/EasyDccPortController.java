@@ -1,33 +1,36 @@
 // EasyDccPortController.java
-
 package jmri.jmrix.easydcc;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Abstract base for classes representing a EasyDcc communications port
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision$
  */
 public abstract class EasyDccPortController extends jmri.jmrix.AbstractSerialPortController {
-	// base class. Implementations will provide InputStream and OutputStream
-	// objects to EasyDccTrafficController classes, who in turn will deal in messages.
+    // base class. Implementations will provide InputStream and OutputStream
+    // objects to EasyDccTrafficController classes, who in turn will deal in messages.
 
-	// returns the InputStream from the port
-	abstract public DataInputStream getInputStream();
+    protected EasyDccPortController(SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
 
-	// returns the outputStream to the port
-	abstract public DataOutputStream getOutputStream();
+    // returns the InputStream from the port
+    abstract public DataInputStream getInputStream();
 
-	// check that this object is ready to operate
-	abstract public boolean status();
+    // returns the outputStream to the port
+    abstract public DataOutputStream getOutputStream();
 
-    protected EasyDccSystemConnectionMemo adaptermemo = null;
-    
+    // check that this object is ready to operate
+    abstract public boolean status();
+
     @Override
     public EasyDccSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (EasyDccSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
 }

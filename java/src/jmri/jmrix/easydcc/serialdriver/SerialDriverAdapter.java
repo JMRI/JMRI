@@ -2,19 +2,17 @@
 
 package jmri.jmrix.easydcc.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.easydcc.EasyDccPortController;
-import jmri.jmrix.easydcc.EasyDccTrafficController;
-import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.easydcc.EasyDccPortController;
+import jmri.jmrix.easydcc.EasyDccSystemConnectionMemo;
+import jmri.jmrix.easydcc.EasyDccTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the EasyDcc system.  This connects
@@ -30,8 +28,7 @@ import gnu.io.SerialPort;
 public class SerialDriverAdapter extends EasyDccPortController  implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super();
-        adaptermemo = new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial");
+        super(new EasyDccSystemConnectionMemo("E", "EasyDCC via Serial"));
         setManufacturer(jmri.jmrix.DCCManufacturerList.EASYDCC);
     }
 
@@ -114,8 +111,8 @@ public class SerialDriverAdapter extends EasyDccPortController  implements jmri.
         // connect to the traffic controller
         EasyDccTrafficController control = EasyDccTrafficController.instance();
         control.connectPort(this);
-        adaptermemo.setEasyDccTrafficController(control);
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setEasyDccTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
         
         jmri.jmrix.easydcc.ActiveFlag.setActive();
     }

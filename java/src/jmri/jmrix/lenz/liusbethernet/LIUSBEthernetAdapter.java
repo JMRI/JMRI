@@ -2,15 +2,14 @@
 
 package jmri.jmrix.lenz.liusbethernet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.ResourceBundle;
 import jmri.jmrix.lenz.LenzCommandStation;
 import jmri.jmrix.lenz.XNetInitializationManager;
 import jmri.jmrix.lenz.XNetNetworkPortController;
 import jmri.jmrix.lenz.XNetTrafficController;
-
-import java.util.ResourceBundle;
 import jmri.util.zeroconf.ZeroConfClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to XPressNet via a the Lenz LIUSBEthernet.
@@ -76,9 +75,9 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
 
        	    // start operation
             // packets.startThreads();
-            adaptermemo.setXNetTrafficController(packets);
+            this.getSystemConnectionMemo().setXNetTrafficController(packets);
  
-            new XNetInitializationManager(adaptermemo);
+            new XNetInitializationManager(this.getSystemConnectionMemo());
 
             jmri.jmrix.lenz.ActiveFlag.setActive();
 	
@@ -103,10 +102,10 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue,new java.awt.event.ActionListener() {
                     public void actionPerformed(java.awt.event.ActionEvent e) {
                         // If the timer times out, send a request for status
-                        adaptermemo.getXNetTrafficController()
-                                   .sendXNetMessage(
-                                   jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
-                                   null);
+                        LIUSBEthernetAdapter.this.getSystemConnectionMemo().getXNetTrafficController()
+                                .sendXNetMessage(
+                                        jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
+                                        null);
                     }
                 });
         }

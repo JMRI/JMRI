@@ -3,13 +3,10 @@
 package jmri.jmrix.srcp.networkdriver;
 
 
+import jmri.jmrix.srcp.SRCPPortController;
+import jmri.jmrix.srcp.SRCPTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.srcp.SRCPPortController;
-/*import jmri.jmrix.srcp.SRCPProgrammer;
-import jmri.jmrix.srcp.SRCPMessage;
-import jmri.jmrix.srcp.SRCPProgrammerManager;*/
-import jmri.jmrix.srcp.SRCPTrafficController;
 
 /*import java.io.*;
 import java.net.*;
@@ -28,8 +25,7 @@ import java.util.Vector;*/
 public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmrix.NetworkPortAdapter{
 
     public NetworkDriverAdapter() {
-        super();
-        adaptermemo = new jmri.jmrix.srcp.SRCPSystemConnectionMemo();
+        super(new jmri.jmrix.srcp.SRCPSystemConnectionMemo());
     }
 
     /**
@@ -40,9 +36,9 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
         // connect to the traffic controller
         SRCPTrafficController control = new SRCPTrafficController();
         control.connectPort(this);
-        adaptermemo.setTrafficController(control);
-        adaptermemo.configureManagers();
-        adaptermemo.configureCommandStation();
+        this.getSystemConnectionMemo().setTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
+        this.getSystemConnectionMemo().configureCommandStation();
 
         /*jmri.InstanceManager.setProgrammerManager(
                 new SRCPProgrammerManager(
@@ -82,11 +78,6 @@ public class NetworkDriverAdapter extends SRCPPortController implements jmri.jmr
     }
     static NetworkDriverAdapter mInstance = null;
     
-    public void dispose(){
-        adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 
 }

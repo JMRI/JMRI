@@ -2,18 +2,17 @@
 
 package jmri.jmrix.loconet.hexfile;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.LnPortController;
-
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import jmri.jmrix.loconet.LnPortController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * LnHexFilePort implements a LnPortController via a
@@ -38,7 +37,7 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
     BufferedReader sFile = null;
 
     public LnHexFilePort() {
-        super();
+        super(new LocoNetSystemConnectionMemo());
         try {
             PipedInputStream tempPipe = new PipedInputStream();
             pin = new DataInputStream(tempPipe);
@@ -49,7 +48,6 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
             log.error("init (pipe): Exception: "+e.toString());
         }
         options.put("SensorDefaultState", new Option(Bundle.getMessage("DefaultSensorState") + ":", new String[]{Bundle.getMessage("BeanStateUnknown"), Bundle.getMessage("SensorStateInactive"), Bundle.getMessage("SensorStateActive")}, true));
-        adaptermemo = new LocoNetSystemConnectionMemo();
     }
     
     /* load(File) fills the contents from a file */
@@ -230,19 +228,6 @@ public class LnHexFilePort extends LnPortController implements Runnable, jmri.jm
         setTurnoutHandling(value);
     }
  
-    public void dispose() {
-        // leaves the LocoNet Packetizer (e.g. the simulated connection)
-        // running.
-        if(adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-        super.dispose();
-
-    }
-    
-    public jmri.jmrix.loconet.LocoNetSystemConnectionMemo getAdapterMemo() { return adaptermemo; }
-    public jmri.jmrix.loconet.LocoNetSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-
     static Logger log = LoggerFactory.getLogger(LnHexFilePort.class.getName());
 }
 

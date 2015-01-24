@@ -18,6 +18,10 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to TrafficController classes, who in turn will deal in messages.
 
+        protected PortController(SystemConnectionMemo connectionMemo) {
+            super(connectionMemo);
+        }
+
 	// returns the InputStream from the port
 	public abstract DataInputStream getInputStream();
 
@@ -27,11 +31,9 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
 	// check that this object is ready to operate
 	public abstract boolean status();
     
-    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
-    
     @Override
     public CanSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (CanSystemConnectionMemo)this.connectionMemo;
     }
 }
 /* @(#)PortController.java */

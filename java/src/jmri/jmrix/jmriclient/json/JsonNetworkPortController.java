@@ -10,11 +10,8 @@ import jmri.jmrix.jmriclient.ActiveFlag;
  */
 public class JsonNetworkPortController extends AbstractNetworkPortController {
 
-    private final JsonClientSystemConnectionMemo memo;
-
     public JsonNetworkPortController() {
-        super();
-        this.memo = new JsonClientSystemConnectionMemo();
+        super(new JsonClientSystemConnectionMemo());
         this.setPort(JsonServerPreferences.DEFAULT_PORT);
     }
 
@@ -23,7 +20,7 @@ public class JsonNetworkPortController extends AbstractNetworkPortController {
         // connect to the traffic controller
         JsonClientTrafficController control = new JsonClientTrafficController();
         control.connectPort(this);
-        this.memo.setTrafficController(control);
+        this.getSystemConnectionMemo().setTrafficController(control);
 
         // mark OK for menus
         ActiveFlag.setActive();
@@ -31,12 +28,7 @@ public class JsonNetworkPortController extends AbstractNetworkPortController {
 
     @Override
     public JsonClientSystemConnectionMemo getSystemConnectionMemo() {
-        return this.memo;
-    }
-
-    @Override
-    public void dispose() {
-        this.memo.dispose();
+        return (JsonClientSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
 }

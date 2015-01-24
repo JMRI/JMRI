@@ -16,8 +16,7 @@ import org.slf4j.LoggerFactory;
 public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetworkPortController implements XNetPortController {
 
     public XNetNetworkPortController(){
-       super();
-       adaptermemo = new XNetSystemConnectionMemo();
+       super(new XNetSystemConnectionMemo());
        allowConnectionRecovery = true; // all classes derived from this class
                                        // can recover from a connection failure
     }
@@ -40,18 +39,14 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
      */ 
     public void setOutputBufferEmpty(boolean s) {} // Maintained for compatibility with XNetPortController. Simply ignore calls !!!
 
-    protected XNetSystemConnectionMemo adaptermemo = null;
-
     @Override
     public XNetSystemConnectionMemo getSystemConnectionMemo() {
-        log.debug("adapter memo {}null", (this.adaptermemo != null) ? "not " : "");
-        return this.adaptermemo;
+        return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
-    public void dispose(){
-       adaptermemo.dispose();
-       adaptermemo=null;
-       log.error("Dispose called");
+    public void dispose() {
+        super.dispose();
+        log.error("Dispose called");
     }
     
     /**
@@ -60,7 +55,7 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
      */
     @Override
     protected void resetupConnection() {
-         adaptermemo.getXNetTrafficController().connectPort(this);
+         this.getSystemConnectionMemo().getXNetTrafficController().connectPort(this);
     }
 
 

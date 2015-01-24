@@ -2,19 +2,17 @@
 
 package jmri.jmrix.mrc.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.mrc.MrcPortController;
-import jmri.jmrix.mrc.MrcPacketizer;
-import jmri.jmrix.mrc.MrcSystemConnectionMemo;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.mrc.MrcPacketizer;
+import jmri.jmrix.mrc.MrcPortController;
+import jmri.jmrix.mrc.MrcSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the MRC system.  This connects
@@ -32,9 +30,9 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     SerialPort activeSerialPort = null;
     
     public SerialDriverAdapter() {
+        super(new MrcSystemConnectionMemo());
         setManufacturer(jmri.jmrix.DCCManufacturerList.MRC);
         options.put("CabAddress", new Option("Cab Address:", validOption1, false)); //IN18N
-        adaptermemo = new MrcSystemConnectionMemo();
     }
 
     @Override
@@ -115,12 +113,12 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     public void configure() {
         MrcPacketizer packets = new MrcPacketizer();
         packets.connectPort(this);
-        adaptermemo.setMrcTrafficController(packets);
+        this.getSystemConnectionMemo().setMrcTrafficController(packets);
         
-        packets.setAdapterMemo(adaptermemo);
+        packets.setAdapterMemo(this.getSystemConnectionMemo());
         packets.setCabNumber(Integer.parseInt(getOptionState("CabAddress")));//IN18N
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         
         packets.startThreads();
         jmri.jmrix.mrc.ActiveFlag.setActive();
@@ -172,18 +170,6 @@ public class SerialDriverAdapter extends MrcPortController  implements jmri.jmri
     InputStream serialStream = null;
     
     protected String [] validOption1 = new String[]{"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"};//IN18N
-    
-    
-    
-    @Override
-    public MrcSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
-    
-    @Override
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
     
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

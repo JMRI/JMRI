@@ -14,6 +14,9 @@ import jmri.jmrix.SystemConnectionMemo;
 public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPortController {
     // base class. Implementations will provide InputStream and OutputStream
     // objects to SerialTrafficController classes, who in turn will deal in messages.
+    protected SerialPortController(SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
 
     // returns the InputStream from the port
     public abstract DataInputStream getInputStream();
@@ -23,10 +26,5 @@ public abstract class SerialPortController extends jmri.jmrix.AbstractSerialPort
 
     // check that this object is ready to operate
     public abstract boolean status();
-
-    @Override
-    public SystemConnectionMemo getSystemConnectionMemo() {
-        return null; // No SystemConnectionMemo
-    }
 }
 /* @(#)SerialPortController.java */

@@ -2,20 +2,18 @@
 
 package jmri.jmrix.powerline.cm11;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.powerline.SerialPortController;
-import jmri.jmrix.powerline.SerialSystemConnectionMemo;
-import jmri.jmrix.powerline.SerialTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.powerline.SerialPortController;
+import jmri.jmrix.powerline.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to Powerline devices via a serial comm port.
@@ -31,13 +29,7 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     SerialPort activeSerialPort = null;
 
     public SpecificDriverAdapter() {
-        super();
-        adaptermemo = new SpecificSystemConnectionMemo();
-    }
-
-    @Override
-    public SerialSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo; 
+        super(new SpecificSystemConnectionMemo());
     }
 
     public String openPort(String portName, String appName)  {
@@ -182,15 +174,15 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
         SerialTrafficController tc = null; 
         // create a CM11 port controller
     	//adaptermemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
-    	tc = new SpecificTrafficController(adaptermemo);
+    	tc = new SpecificTrafficController(this.getSystemConnectionMemo());
 
         // connect to the traffic controller
-        adaptermemo.setTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);     
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
-        adaptermemo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(adaptermemo));
+        this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
 
         // declare up
         jmri.jmrix.powerline.ActiveFlag.setActive();
@@ -251,13 +243,6 @@ public class SpecificDriverAdapter extends SerialPortController implements jmri.
     protected String [] validSpeeds = new String[]{"(automatic)"};
     protected int [] validSpeedValues = new int[]{4800};
     protected String selectedSpeed=validSpeeds[0];
-
-    @Override
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
 
     static Logger log = LoggerFactory.getLogger(SpecificDriverAdapter.class.getName());
 

@@ -124,6 +124,36 @@ public interface PortAdapter {
      */
     public void setDisabled(boolean disabled);
 
+    /**
+     * Get the user name for this adapter.
+     *
+     * @return the username or null
+     */
+    public String getUserName();
+
+    /**
+     * Set the user name for this adapter.
+     *
+     * @param userName
+     * @throws IllegalArgumentException if another adapter has this user name
+     */
+    public void setUserName(String userName) throws IllegalArgumentException;
+
+    /**
+     * Get the system prefix for this adapter.
+     *
+     * @return the system prefix or null
+     */
+    public String getSystemPrefix();
+
+    /**
+     * Set the system prefix for this adapter.
+     *
+     * @param systemPrefix
+     * @throws IllegalArgumentException if another adapter has this system prefix
+     */
+    public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException;
+
     public SystemConnectionMemo getSystemConnectionMemo();
 
     public void dispose();

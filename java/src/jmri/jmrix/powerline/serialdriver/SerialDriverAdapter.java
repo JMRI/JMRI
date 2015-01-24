@@ -2,21 +2,18 @@
 
 package jmri.jmrix.powerline.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.powerline.SerialPortController;
-import jmri.jmrix.powerline.SerialSystemConnectionMemo;
-import jmri.jmrix.powerline.SerialTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.powerline.SerialPortController;
+import jmri.jmrix.powerline.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to Powerline devices via a serial comm port.
@@ -32,14 +29,9 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super();
+        super(null);
         option1Name = "Adapter";
         options.put(option1Name, new Option("Adapter", stdOption1Values));
-    }
-
-    @Override
-    public SerialSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo;
     }
 
     public String openPort(String portName, String appName)  {
@@ -193,31 +185,31 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         String opt1 = getOptionState(option1Name);
         if (opt1.equals("CM11")) {
             // create a CM11 port controller
-        	adaptermemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
-        	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(adaptermemo);
+        	this.connectionMemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(this.getSystemConnectionMemo());
         } else if (opt1.equals("CP290")) {
             // create a CP290 port controller
-        	adaptermemo = new jmri.jmrix.powerline.cp290.SpecificSystemConnectionMemo();
-        	tc = new jmri.jmrix.powerline.cp290.SpecificTrafficController(adaptermemo);
+        	this.connectionMemo = new jmri.jmrix.powerline.cp290.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.cp290.SpecificTrafficController(this.getSystemConnectionMemo());
         } else if (opt1.equals("Insteon 2412S")) {
             // create an Insteon 2412s port controller
-        	adaptermemo = new jmri.jmrix.powerline.insteon2412s.SpecificSystemConnectionMemo();
-        	tc = new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController(adaptermemo);
+        	this.connectionMemo = new jmri.jmrix.powerline.insteon2412s.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController(this.getSystemConnectionMemo());
         } else {
             // no connection at all - warn
             log.warn("protocol option "+opt1+" defaults to CM11");
             // create a CM11 port controller
-        	adaptermemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
-        	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(adaptermemo);
+        	this.connectionMemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+        	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(this.getSystemConnectionMemo());
         }    
 
         // connect to the traffic controller
-        adaptermemo.setTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);     
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
         // Configure the form of serial address validation for this connection
-        adaptermemo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(adaptermemo));
+        this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
 
         // declare up
         jmri.jmrix.powerline.ActiveFlag.setActive();
@@ -314,13 +306,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     public String getManufacturer() { return manufacturerName; }
     public void setManufacturer(String manu) { manufacturerName=manu; }
     
-    @Override
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

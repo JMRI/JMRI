@@ -2,13 +2,12 @@
 
 package jmri.jmrix.can.adapters.loopback;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.AbstractSerialPortController;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.can.CanSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Loopback connection to simulate a CAN link
@@ -19,10 +18,10 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
 public class Port extends AbstractSerialPortController {
 
     public Port() {
+        super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
         mPort="(None)";
-        adaptermemo = new jmri.jmrix.can.CanSystemConnectionMemo();
     }
 
     public void configure() {

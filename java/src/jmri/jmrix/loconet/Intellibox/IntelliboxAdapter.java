@@ -2,10 +2,10 @@
 
 package jmri.jmrix.loconet.Intellibox;
 
+import jmri.jmrix.loconet.LnCommandStationType;
+import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
-import jmri.jmrix.loconet.*;
 
 /**
  * Update the code in jmri.jmrix.loconet.locobuffer so that it
@@ -45,11 +45,11 @@ public void configure() {
     packets.connectPort(this);
 
     // create memo
-    adaptermemo.setLnTrafficController(packets);
+    this.getSystemConnectionMemo().setLnTrafficController(packets);
     // do the common manager config
-    adaptermemo.configureCommandStation(commandStationType, 
+    this.getSystemConnectionMemo().configureCommandStation(commandStationType,
                                             mTurnoutNoRetry, mTurnoutExtraSpace);
-    adaptermemo.configureManagers();
+    this.getSystemConnectionMemo().configureManagers();
 
     // start operation
     packets.startThreads();

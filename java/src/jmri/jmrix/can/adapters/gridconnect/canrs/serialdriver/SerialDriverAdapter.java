@@ -2,12 +2,11 @@
 
 package jmri.jmrix.can.adapters.gridconnect.canrs.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.jmrix.can.TrafficController;
 import jmri.jmrix.can.adapters.gridconnect.GcSerialDriverAdapter;
 import jmri.jmrix.can.adapters.gridconnect.canrs.MergTrafficController;
-import jmri.jmrix.can.TrafficController;
-import jmri.jmrix.SystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the MERG CAN-RS or CAN-USB.
@@ -44,26 +43,20 @@ public class SerialDriverAdapter extends GcSerialDriverAdapter  implements jmri.
             log.error("Now using default CAN ID");
         }
         
-        adaptermemo.setTrafficController(tc);
+        this.getSystemConnectionMemo().setTrafficController(tc);
         
         // Now connect to the traffic controller
         log.debug("Connecting port");
         tc.connectPort(this);
 
-        adaptermemo.setProtocol(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
 
         // do central protocol-specific configuration    
         //jmri.jmrix.can.ConfigurationManager.configure(getOptionState(option1Name));
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
     }
         
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

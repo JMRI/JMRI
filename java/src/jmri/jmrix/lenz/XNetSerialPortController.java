@@ -2,11 +2,11 @@
 
 package jmri.jmrix.lenz;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import gnu.io.SerialPort;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -24,10 +24,9 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     private boolean OutputBufferEmpty = true;
 
     public XNetSerialPortController(){
-        super();
+        super(new XNetSystemConnectionMemo());
         //option2Name = "Buffer";
         //options.put(option2Name, new Option("Check Buffer : ", validOption2));
-        adaptermemo = new XNetSystemConnectionMemo();
     }
 
     // base class. Implementations will provide InputStream and OutputStream
@@ -97,27 +96,10 @@ public abstract class XNetSerialPortController extends jmri.jmrix.AbstractSerial
     /* Allow derived classes to set the private checkBuffer value */
     protected void setCheckBuffer(boolean b) { checkBuffer = b; }
 
-    protected XNetSystemConnectionMemo adaptermemo = null;
-
     @Override
     public XNetSystemConnectionMemo getSystemConnectionMemo(){
-        if(adaptermemo!=null){
-          log.debug("adapter memo not null");
-          return adaptermemo;
-        }
-        else
-        {
-          log.debug("adapter memo null");
-          return null;
-	}
+        return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
-
-
-    public void dispose(){
-      adaptermemo.dispose();
-      adaptermemo=null;
-    }
-
 
     static Logger log = LoggerFactory.getLogger(XNetSerialPortController.class.getName());
 

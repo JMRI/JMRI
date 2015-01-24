@@ -2,9 +2,10 @@
 
 package jmri.jmrix.ecos.networkdriver;
 
+import jmri.jmrix.ecos.EcosPortController;
+import jmri.jmrix.ecos.EcosTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrix.ecos.*;
 
 /*import java.io.*;
 import java.net.*;
@@ -22,10 +23,9 @@ import java.util.Vector;*/
 public class NetworkDriverAdapter extends EcosPortController implements jmri.jmrix.NetworkPortAdapter{
 
     public NetworkDriverAdapter() {
-        super();
+        super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
         allowConnectionRecovery = true;
         mManufacturer = jmri.jmrix.DCCManufacturerList.ESU;
-        adaptermemo = new jmri.jmrix.ecos.EcosSystemConnectionMemo();
     }
     
     /**
@@ -36,9 +36,9 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
         // connect to the traffic controller
         EcosTrafficController control = new EcosTrafficController();
         control.connectPort(this);
-        control.setAdapterMemo(adaptermemo);
-        adaptermemo.setEcosTrafficController(control);
-        adaptermemo.configureManagers();
+        control.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().setEcosTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
         jmri.jmrix.ecos.ActiveFlag.setActive();
     }
 
@@ -46,13 +46,6 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     @Override
     public boolean status() {return opened;}
     
-    //To be completed
-    @Override
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="DE_MIGHT_IGNORE", 
         justification="We are closing the connection and not worried if it throws an exception as this stage")
     protected void closeConnection(){
@@ -65,10 +58,10 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     protected void resetupConnection() {
         log.info("reconnected to ECOS after lost connection");
         if(opened){
-            adaptermemo.getTrafficController().connectPort(this);
-            adaptermemo.getTurnoutManager().refreshItems();
-            adaptermemo.getSensorManager().refreshItems();
-            adaptermemo.getLocoAddressManager().refreshItems();
+            this.getSystemConnectionMemo().getTrafficController().connectPort(this);
+            this.getSystemConnectionMemo().getTurnoutManager().refreshItems();
+            this.getSystemConnectionMemo().getSensorManager().refreshItems();
+            this.getSystemConnectionMemo().getLocoAddressManager().refreshItems();
         }
     }
 

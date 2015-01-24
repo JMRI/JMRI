@@ -2,22 +2,18 @@
 
 package jmri.jmrix.wangrow.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.SystemConnectionMemo;
-import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-import jmri.jmrix.nce.NceTrafficController;
-
-import jmri.jmrix.wangrow.ActiveFlag;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.nce.NcePortController;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import jmri.jmrix.wangrow.ActiveFlag;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Wangrow system.
@@ -40,9 +36,8 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-		super();
+		super(new NceSystemConnectionMemo());
 		setManufacturer(jmri.jmrix.DCCManufacturerList.WANGROW);
-        adaptermemo = new NceSystemConnectionMemo();
 	}
     
 	public String openPort(String portName, String appName)  {
@@ -112,15 +107,15 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
      */
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
-        adaptermemo.setNceTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);
+        this.getSystemConnectionMemo().setNceTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         
     	// set the command option
         tc.setCommandOptions(NceTrafficController.OPTION_1999);
         
         tc.connectPort(this);
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
                      
         ActiveFlag.setActive();
 

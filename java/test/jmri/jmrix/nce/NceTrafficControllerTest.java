@@ -2,22 +2,15 @@
 
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
-import junit.framework.Test;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.nce.NceMessage;
-import jmri.jmrix.nce.NceReply;
-import jmri.jmrix.nce.NceListener;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NcePortController;
+import org.apache.log4j.Logger;
 
 /**
  * JUnit tests for the NceTrafficController class
@@ -207,6 +200,7 @@ public class NceTrafficControllerTest extends TestCase {
 	    public String[] validBaudRates() { return null; }
 
             protected NcePortControllerScaffold() throws Exception {
+                super(null);
 			PipedInputStream tempPipe;
 			tempPipe = new PipedInputStream();
 			tostream = new DataInputStream(tempPipe);

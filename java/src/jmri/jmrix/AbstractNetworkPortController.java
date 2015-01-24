@@ -28,10 +28,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     // keep the socket provides our connection.
     protected Socket socketConn = null;
 
-    public AbstractNetworkPortController(){
-       super();
-       setHostName(""); // give the host name a default value of 
-                        // the empty string.
+    protected AbstractNetworkPortController(SystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+        setHostName(""); // give the host name a default value of
+        // the empty string.
     }
 
     @Override

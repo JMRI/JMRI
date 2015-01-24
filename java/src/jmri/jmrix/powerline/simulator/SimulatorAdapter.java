@@ -2,15 +2,13 @@
 
 package jmri.jmrix.powerline.simulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.powerline.SerialSystemConnectionMemo;
-import jmri.jmrix.powerline.SerialPortController;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import jmri.jmrix.powerline.SerialPortController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement simulator for powerline serial systems
@@ -44,14 +42,7 @@ public class SimulatorAdapter extends SerialPortController implements
 	
 	
     public SimulatorAdapter (){
-        super();
-        adaptermemo = new SpecificSystemConnectionMemo();
-    }
-
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
+        super(new SpecificSystemConnectionMemo());
     }
 	
 	public String openPort(String portName, String appName) {
@@ -74,16 +65,16 @@ public class SimulatorAdapter extends SerialPortController implements
 	 * station.
 	 */
 	public void configure() {
-		SpecificTrafficController tc = new SpecificTrafficController(adaptermemo);
+		SpecificTrafficController tc = new SpecificTrafficController(this.getSystemConnectionMemo());
 		
         // connect to the traffic controller
-        adaptermemo.setTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);     
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().setTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().configureManagers();
         tc.connectPort(this);
         
         // Configure the form of serial address validation for this connection
-        adaptermemo.setSerialAddress(new jmri.jmrix.powerline.SerialAddress(adaptermemo));
+        this.getSystemConnectionMemo().setSerialAddress(new jmri.jmrix.powerline.SerialAddress(this.getSystemConnectionMemo()));
 
 		jmri.jmrix.powerline.ActiveFlag.setActive();
 

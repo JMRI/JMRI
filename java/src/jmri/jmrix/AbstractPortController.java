@@ -30,6 +30,22 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     public abstract DataOutputStream getOutputStream();
 
+    // Ideally, this would be private and final, but two classes expect to be
+    // able to set this after object construction instead during object
+    // construction.
+    // private final SystemConnectionMemo connectionMemo;
+    protected SystemConnectionMemo connectionMemo;
+
+    protected AbstractPortController(SystemConnectionMemo connectionMemo) {
+        this.connectionMemo = connectionMemo;
+    }
+
+    public void dispose() {
+        if (this.getSystemConnectionMemo() != null) {
+            this.getSystemConnectionMemo().dispose();
+        }
+    }
+
     // check that this object is ready to operate
     @Override
     public boolean status() {
@@ -277,6 +293,40 @@ abstract public class AbstractPortController implements PortAdapter {
     protected boolean mDisabled = false;
     private Boolean loadedDisabled = null;
 
+    @Override
+    public String getSystemPrefix() {
+        if (this.getSystemConnectionMemo() != null) {
+            return this.getSystemConnectionMemo().getSystemPrefix();
+        }
+        return null;
+    }
+
+    @Override
+    public void setSystemPrefix(String systemPrefix) {
+        if (this.getSystemConnectionMemo() != null) {
+            if (!this.getSystemConnectionMemo().setSystemPrefix(systemPrefix)) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
+    @Override
+    public String getUserName() {
+        if (this.getSystemConnectionMemo() != null) {
+            return this.getSystemConnectionMemo().getUserName();
+        }
+        return null;
+    }
+
+    @Override
+    public void setUserName(String userName) {
+        if (this.getSystemConnectionMemo() != null) {
+            if (!this.getSystemConnectionMemo().setUserName(userName)) {
+                throw new IllegalArgumentException();
+            }
+        }
+    }
+
     protected boolean allowConnectionRecovery = false;
 
     @Override
@@ -295,10 +345,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public boolean isDirty() {
-        boolean isDirty = false;
-        if (this.loadedDisabled != null) {
-            isDirty = (this.loadedDisabled.booleanValue() != this.getDisabled());
-        }
+        boolean isDirty = (this.loadedDisabled == null || this.loadedDisabled != this.getDisabled());
         if (!isDirty) {
             for (Option option : this.options.values()) {
                 isDirty = option.isDirty();
@@ -315,6 +362,10 @@ abstract public class AbstractPortController implements PortAdapter {
         // Override if any option should not be considered when determining if a
         // change requires JMRI to be restarted.
         return this.isDirty();
+    }
+
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        return this.connectionMemo;
     }
 
     static private Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());

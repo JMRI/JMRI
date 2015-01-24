@@ -2,18 +2,16 @@
 
 package jmri.jmrix.easydcc;
 
-import org.apache.log4j.Logger;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
-import junit.framework.Test;
+import java.util.Vector;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.Vector;
+import org.apache.log4j.Logger;
 
 /**
  * Description:	    JUnit tests for the EasyDccTrafficController class
@@ -127,6 +125,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 	    public String[] validBaudRates() { return null; }
 
 		protected EasyDccPortControllerScaffold() throws Exception {
+                        super(null);
 			PipedInputStream tempPipe;
 			tempPipe = new PipedInputStream();
 			tostream = new DataInputStream(tempPipe);

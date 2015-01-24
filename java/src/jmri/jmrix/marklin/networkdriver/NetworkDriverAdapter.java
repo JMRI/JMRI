@@ -2,17 +2,17 @@
 
 package jmri.jmrix.marklin.networkdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.marklin.*;
-import java.net.*;
-import jmri.jmrix.ConnectionStatus;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-
-import jmri.util.com.rbnb.UDPOutputStream;
+import java.net.DatagramSocket;
+import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.marklin.MarklinPortController;
+import jmri.jmrix.marklin.MarklinSystemConnectionMemo;
+import jmri.jmrix.marklin.MarklinTrafficController;
 import jmri.util.com.rbnb.UDPInputStream;
+import jmri.util.com.rbnb.UDPOutputStream;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the Marklin system network connection.
@@ -28,10 +28,9 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
     protected DatagramSocket datagramSocketConn = null;
     
     public NetworkDriverAdapter() {
-        super();
+        super(new MarklinSystemConnectionMemo());
         allowConnectionRecovery = true;
         mManufacturer = jmri.jmrix.DCCManufacturerList.MARKLIN;
-        adaptermemo = new jmri.jmrix.marklin.MarklinSystemConnectionMemo();
         m_port=15731;
     }
     
@@ -117,23 +116,15 @@ public class NetworkDriverAdapter extends MarklinPortController implements jmri.
         // connect to the traffic controller
         MarklinTrafficController control = new MarklinTrafficController();
         control.connectPort(this);
-        control.setAdapterMemo(adaptermemo);
-        adaptermemo.setMarklinTrafficController(control);
-        adaptermemo.configureManagers();
+        control.setAdapterMemo(this.getSystemConnectionMemo());
+        this.getSystemConnectionMemo().setMarklinTrafficController(control);
+        this.getSystemConnectionMemo().configureManagers();
         jmri.jmrix.marklin.ActiveFlag.setActive();
     }
 
 
     @Override
     public boolean status() {return opened;}
-    
-    //To be completed
-    @Override
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
     
     static Logger log = LoggerFactory.getLogger(NetworkDriverAdapter.class.getName());
 

@@ -2,23 +2,21 @@
 
 package jmri.jmrix.lenz.xnetsimulator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.lenz.LenzCommandStation;
-import jmri.jmrix.lenz.XNetPacketizer;
-import jmri.jmrix.lenz.XNetSimulatorPortController;
-import jmri.jmrix.lenz.XNetInitializationManager;
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetTrafficController;
-
-import jmri.jmrix.ConnectionStatus;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
+import jmri.jmrix.ConnectionStatus;
+import jmri.jmrix.lenz.LenzCommandStation;
+import jmri.jmrix.lenz.XNetConstants;
+import jmri.jmrix.lenz.XNetInitializationManager;
+import jmri.jmrix.lenz.XNetMessage;
+import jmri.jmrix.lenz.XNetPacketizer;
+import jmri.jmrix.lenz.XNetReply;
+import jmri.jmrix.lenz.XNetSimulatorPortController;
+import jmri.jmrix.lenz.XNetTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to a simulated XPressNet system.
@@ -102,12 +100,12 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         // start operation
         // packets.startThreads();
 
-        adaptermemo.setXNetTrafficController(packets);
+        this.getSystemConnectionMemo().setXNetTrafficController(packets);
  
         sourceThread = new Thread(this);
         sourceThread.start();
 
-        new XNetInitializationManager(adaptermemo);
+        new XNetInitializationManager(this.getSystemConnectionMemo());
         
         jmri.jmrix.lenz.ActiveFlag.setActive();
     }

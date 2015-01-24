@@ -2,20 +2,18 @@
 
 package jmri.jmrix.grapevine;
 
-import org.apache.log4j.Logger;
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-
-import junit.framework.Test;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRMessage;
+import org.apache.log4j.Logger;
 
 /**
  * JUnit tests for the SerialTrafficController class
@@ -422,6 +420,7 @@ public class SerialTrafficControllerTest extends TestCase {
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }
         protected SerialPortControllerScaffold() throws Exception {
+            super(null);
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             tostream = new DataInputStream(tempPipe);

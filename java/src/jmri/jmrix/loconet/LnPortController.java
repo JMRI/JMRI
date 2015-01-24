@@ -2,11 +2,10 @@
 
 package jmri.jmrix.loconet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import jmri.jmrix.sprog.SprogSystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base for classes representing a LocoNet communications port
@@ -17,8 +16,8 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
-    public LnPortController(){
-        super();
+    protected LnPortController(LocoNetSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
         setManufacturer(jmri.jmrix.DCCManufacturerList.DIGITRAX);
     }
 
@@ -46,8 +45,6 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     public boolean okToSend() {
         return true;
     }
-
-    protected LocoNetSystemConnectionMemo adaptermemo = null;
 
     protected LnCommandStationType commandStationType = null;
 
@@ -101,7 +98,7 @@ public abstract class LnPortController extends jmri.jmrix.AbstractSerialPortCont
     }
     @Override
     public LocoNetSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (LocoNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
     static Logger log = LoggerFactory.getLogger(LnPortController.class.getName());
 }

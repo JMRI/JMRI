@@ -13,11 +13,14 @@ public abstract class Dcc4PcPortController extends jmri.jmrix.AbstractSerialPort
 
 	// base class. Implementations will provide InputStream and OutputStream
 	// objects to Dcc4PcTrafficController classes, who in turn will deal in messages.
-    protected Dcc4PcSystemConnectionMemo adaptermemo = null;
-    
+
+    protected Dcc4PcPortController(Dcc4PcSystemConnectionMemo connectionMemo) {
+        super(connectionMemo);
+    }
+
     @Override
     public Dcc4PcSystemConnectionMemo getSystemConnectionMemo() {
-        return this.adaptermemo;
+        return (Dcc4PcSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 

@@ -2,20 +2,18 @@
 
 package jmri.jmrix.nce.usbdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.nce.NcePortController;
-import jmri.jmrix.nce.NceTrafficController;
-import jmri.jmrix.nce.NceSystemConnectionMemo;
-
+import gnu.io.CommPortIdentifier;
+import gnu.io.PortInUseException;
+import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import java.util.Vector;
-
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
+import jmri.jmrix.nce.NcePortController;
+import jmri.jmrix.nce.NceSystemConnectionMemo;
+import jmri.jmrix.nce.NceTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implements UsbPortAdapter for the NCE system.
@@ -36,17 +34,11 @@ public class UsbDriverAdapter extends NcePortController {
     SerialPort activeSerialPort = null;
     
     public UsbDriverAdapter() {
-        super();
+        super(new NceSystemConnectionMemo());
         option1Name = "System";
         options.put(option1Name, new Option("System:", option1Values, false));
         option2Name = "USB Version";
         options.put(option2Name, new Option("USB Version", option2Values, false));
-        adaptermemo = new NceSystemConnectionMemo();
-    }
-
-    @Override
-    public NceSystemConnectionMemo getSystemConnectionMemo() {
-    	return adaptermemo; 
     }
 
     public String openPort(String portName, String appName)  {
@@ -124,8 +116,8 @@ public class UsbDriverAdapter extends NcePortController {
      */
     public void configure() {  	
         NceTrafficController tc = new NceTrafficController();
-        adaptermemo.setNceTrafficController(tc);
-        tc.setAdapterMemo(adaptermemo);    
+        this.getSystemConnectionMemo().setNceTrafficController(tc);
+        tc.setAdapterMemo(this.getSystemConnectionMemo());
         
         //set the system the USB is connected to
         if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) {	//if V7 (Nov 2012)
@@ -137,7 +129,7 @@ public class UsbDriverAdapter extends NcePortController {
                 		NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_65);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
 
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {	//TWIN
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
@@ -147,20 +139,20 @@ public class UsbDriverAdapter extends NcePortController {
                 		NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_65);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {	//PowerPro
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_AUI_READ |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {	//SB3
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else {	//PowerCab
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
                 tc.setCmdGroups(NceTrafficController.CMDS_MEM |
@@ -169,7 +161,7 @@ public class UsbDriverAdapter extends NcePortController {
                 		NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_65);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
         	}
         } else {
         	// old firmware, original functions
@@ -178,39 +170,39 @@ public class UsbDriverAdapter extends NcePortController {
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
                 tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
                 tc.setCmdGroups(NceTrafficController.CMDS_NONE |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_2006);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
         	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
                 tc.setCmdGroups(NceTrafficController.CMDS_ACCYADDR250 |
                 		NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
         	} else {
         		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
                 tc.setCmdGroups(NceTrafficController.CMDS_PROGTRACK |
                 		NceTrafficController.CMDS_OPS_PGM |
                 		NceTrafficController.CMDS_USB |
                 		NceTrafficController.CMDS_ALL_SYS);
-                adaptermemo.configureCommandStation(NceTrafficController.OPTION_1_28);
+                this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
         	}
         }
         
         tc.connectPort(this);
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.nce.ActiveFlag.setActive();
 	}
@@ -252,12 +244,6 @@ public class UsbDriverAdapter extends NcePortController {
     private boolean opened = false;
     InputStream serialStream = null;
     
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
-    }
-
     static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
 
 }
