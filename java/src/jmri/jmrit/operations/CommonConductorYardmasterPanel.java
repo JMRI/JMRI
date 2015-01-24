@@ -292,7 +292,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         while (en.hasMoreElements()) {
             JCheckBox checkBox = en.nextElement();
             if (!checkBox.isSelected()) {
-                log.debug("Checkbox (" + checkBox.getText() + ") isn't selected ");
+//                log.debug("Checkbox (" + checkBox.getText() + ") isn't selected ");
                 moveButton.setEnabled(false);
                 setButton.setEnabled(true);
                 return;
@@ -366,10 +366,10 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
      */
     protected void blockCars(RouteLocation rl, boolean isManifest) {
         if (Setup.isPrintHeadersEnabled()) {
-            JLabel header = new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest));
+            JLabel header = new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest, false));
             setLabelFont(header);
             pPickups.add(header);
-            header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest));
+            header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest, false));
             setLabelFont(header);
             pSetouts.add(header);
             header = new JLabel(Tab + trainCommon.getLocalMoveHeader(isManifest));
@@ -404,7 +404,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                             }
                             // figure out the checkbox text, either single car or utility
                         } else {
-                            String text = trainCommon.pickupCar(car, isManifest);
+                            String text = trainCommon.pickupCar(car, isManifest, false);
                             if (car.isUtility()) {
                                 text = trainCommon.pickupUtilityCars(carList, car, rl, rld, isManifest);
                                 if (text == null) {
@@ -445,7 +445,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                             pSetouts.add(carCheckBoxes.get("s" + car.getId()));
                         }
                     } else {
-                        String text = trainCommon.dropCar(car, isManifest);
+                        String text = trainCommon.dropCar(car, isManifest, false);
                         if (car.isUtility()) {
                             text = trainCommon.setoutUtilityCars(carList, car, rl, false, isManifest);
                             if (text == null) {

@@ -1301,6 +1301,42 @@ public class Setup {
 		}
 		return format;
 	}
+	
+	public static String[] getTwoColumnByTrackPickupManifestMessageFormat() {
+		return createTwoColumnByTrackPickupMessageFormat(getPickupCarMessageFormat());
+	}
+	
+	public static String[] getTwoColumnByTrackPickupSwitchListMessageFormat() {
+		return createTwoColumnByTrackPickupMessageFormat(getSwitchListPickupCarMessageFormat());
+	}
+	
+	private static String[] createTwoColumnByTrackPickupMessageFormat(String[] format) {
+		for (int i = 0; i < format.length; i++) {
+			if (format[i].equals(LOCATION))
+				format[i] = BLANK;
+			else if (format[i].equals(TRACK))
+				format[i] = BLANK;
+		}
+		return format;
+	}
+	
+	public static String[] getTwoColumnByTrackDropManifestMessageFormat() {
+		return createTwoColumnByTrackDropMessageFormat(getDropCarMessageFormat());
+	}
+	
+	public static String[] getTwoColumnByTrackDropSwitchListMessageFormat() {
+		return createTwoColumnByTrackDropMessageFormat(getSwitchListDropCarMessageFormat());
+	}
+	
+	private static String[] createTwoColumnByTrackDropMessageFormat(String[] format) {
+		for (int i = 0; i < format.length; i++) {
+			if (format[i].equals(DESTINATION))
+				format[i] = BLANK;
+			else if (format[i].equals(TRACK))
+				format[i] = BLANK;
+		}
+		return format;
+	}
 
 	public static String getDropTextColor() {
 		return dropColor;
