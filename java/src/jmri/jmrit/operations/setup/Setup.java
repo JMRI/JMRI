@@ -207,17 +207,17 @@ public class Setup {
 	private static String localColor = BLACK;
 	private static String[] pickupEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT };
 	private static String[] dropEngineMessageFormat = { ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT };
-	private static String[] pickupCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+	private static String[] pickupManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
 			COMMENT, PICKUP_COMMENT };
-	private static String[] dropCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
+	private static String[] dropManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
 			COMMENT, DROP_COMMENT };
-	private static String[] localMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
+	private static String[] localManifestMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
 			DESTINATION, COMMENT };
-	private static String[] switchListPickupCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
+	private static String[] pickupSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
 			LOCATION, COMMENT, PICKUP_COMMENT };
-	private static String[] switchListDropCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
+	private static String[] dropSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
 			DESTINATION, COMMENT, DROP_COMMENT };
-	private static String[] switchListLocalMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
+	private static String[] localSwitchListMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
 			LOCATION, DESTINATION, COMMENT };
 	private static String[] missingCarMessageFormat = { ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT };
 	private static String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
@@ -1166,30 +1166,30 @@ public class Setup {
 	}
 
 	public static String[] getPickupCarMessageFormat() {
-		return pickupCarMessageFormat.clone();
+		return pickupManifestMessageFormat.clone();
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setPickupCarMessageFormat(String[] format) {
-		pickupCarMessageFormat = format;
+		pickupManifestMessageFormat = format;
 	}
 
 	public static String[] getDropCarMessageFormat() {
-		return dropCarMessageFormat.clone();
+		return dropManifestMessageFormat.clone();
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropCarMessageFormat(String[] format) {
-		dropCarMessageFormat = format;
+		dropManifestMessageFormat = format;
 	}
 
 	public static String[] getLocalMessageFormat() {
-		return localMessageFormat.clone();
+		return localManifestMessageFormat.clone();
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setLocalMessageFormat(String[] format) {
-		localMessageFormat = format;
+		localManifestMessageFormat = format;
 	}
 
 	public static String[] getMissingCarMessageFormat() {
@@ -1201,40 +1201,40 @@ public class Setup {
 		missingCarMessageFormat = format;
 	}
 
-	public static String[] getSwitchListPickupCarMessageFormat() {
+	public static String[] getPickupSwitchListMessageFormat() {
 		if (isSwitchListFormatSameAsManifest())
-			return pickupCarMessageFormat.clone();
+			return pickupManifestMessageFormat.clone();
 		else
-			return switchListPickupCarMessageFormat.clone();
+			return pickupSwitchListMessageFormat.clone();
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
-	public static void setSwitchListPickupCarMessageFormat(String[] format) {
-		switchListPickupCarMessageFormat = format;
+	public static void setPickupSwitchListMessageFormat(String[] format) {
+		pickupSwitchListMessageFormat = format;
 	}
 
-	public static String[] getSwitchListDropCarMessageFormat() {
+	public static String[] getDropSwitchListMessageFormat() {
 		if (isSwitchListFormatSameAsManifest())
-			return dropCarMessageFormat.clone();
+			return dropManifestMessageFormat.clone();
 		else
-			return switchListDropCarMessageFormat.clone();
+			return dropSwitchListMessageFormat.clone();
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
-	public static void setSwitchListDropCarMessageFormat(String[] format) {
-		switchListDropCarMessageFormat = format;
+	public static void setDropSwitchListMessageFormat(String[] format) {
+		dropSwitchListMessageFormat = format;
 	}
 
 	public static String[] getSwitchListLocalMessageFormat() {
 		if (isSwitchListFormatSameAsManifest())
-			return localMessageFormat.clone();
+			return localManifestMessageFormat.clone();
 		else
-			return switchListLocalMessageFormat.clone();
+			return localSwitchListMessageFormat.clone();
 	}
 
 	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setSwitchListLocalMessageFormat(String[] format) {
-		switchListLocalMessageFormat = format;
+		localSwitchListMessageFormat = format;
 	}
 
 	/**
@@ -1242,27 +1242,27 @@ public class Setup {
 	 * 
 	 * @return Utility car format
 	 */
-	public static String[] getPickupUtilityCarMessageFormat() {
+	public static String[] getPickupUtilityManifestMessageFormat() {
 		return createUitlityCarMessageFormat(getPickupCarMessageFormat());
 	}
 
-	public static String[] getSetoutUtilityCarMessageFormat() {
+	public static String[] getDropUtilityManifestMessageFormat() {
 		return createUitlityCarMessageFormat(getDropCarMessageFormat());
 	}
 
-	public static String[] getLocalUtilityCarMessageFormat() {
+	public static String[] getLocalUtilityManifestMessageFormat() {
 		return createUitlityCarMessageFormat(getLocalMessageFormat());
 	}
 
-	public static String[] getSwitchListPickupUtilityCarMessageFormat() {
-		return createUitlityCarMessageFormat(getSwitchListPickupCarMessageFormat());
+	public static String[] getPickupUtilitySwitchListMessageFormat() {
+		return createUitlityCarMessageFormat(getPickupSwitchListMessageFormat());
 	}
 
-	public static String[] getSwitchListSetoutUtilityCarMessageFormat() {
-		return createUitlityCarMessageFormat(getSwitchListDropCarMessageFormat());
+	public static String[] getDropUtilitySwitchListMessageFormat() {
+		return createUitlityCarMessageFormat(getDropSwitchListMessageFormat());
 	}
 
-	public static String[] getSwitchListLocalUtilityCarMessageFormat() {
+	public static String[] getLocalUtilitySwitchListMessageFormat() {
 		return createUitlityCarMessageFormat(getSwitchListLocalMessageFormat());
 	}
 
@@ -1279,11 +1279,11 @@ public class Setup {
 		return format;
 	}
 
-	public static String[] getTruncatedPickupManifestMessageFormat() {
+	public static String[] getPickupTruncatedManifestMessageFormat() {
 		return createTruncatedManifestMessageFormat(getPickupCarMessageFormat());
 	}
 
-	public static String[] getTruncatedSetoutManifestMessageFormat() {
+	public static String[] getDropTruncatedManifestMessageFormat() {
 		return createTruncatedManifestMessageFormat(getDropCarMessageFormat());
 	}
 
@@ -1302,12 +1302,20 @@ public class Setup {
 		return format;
 	}
 	
-	public static String[] getTwoColumnByTrackPickupManifestMessageFormat() {
+	public static String[] getPickupTwoColumnByTrackManifestMessageFormat() {
 		return createTwoColumnByTrackPickupMessageFormat(getPickupCarMessageFormat());
 	}
 	
-	public static String[] getTwoColumnByTrackPickupSwitchListMessageFormat() {
-		return createTwoColumnByTrackPickupMessageFormat(getSwitchListPickupCarMessageFormat());
+	public static String[] getPickupTwoColumnByTrackSwitchListMessageFormat() {
+		return createTwoColumnByTrackPickupMessageFormat(getPickupSwitchListMessageFormat());
+	}
+	
+	public static String[] getPickupTwoColumnByTrackUtilityManifestMessageFormat() {
+		return createTwoColumnByTrackPickupMessageFormat(getPickupUtilityManifestMessageFormat());
+	}
+	
+	public static String[] getPickupTwoColumnByTrackUtilitySwitchListMessageFormat() {
+		return createTwoColumnByTrackPickupMessageFormat(getPickupUtilitySwitchListMessageFormat());
 	}
 	
 	private static String[] createTwoColumnByTrackPickupMessageFormat(String[] format) {
@@ -1320,12 +1328,20 @@ public class Setup {
 		return format;
 	}
 	
-	public static String[] getTwoColumnByTrackDropManifestMessageFormat() {
+	public static String[] getDropTwoColumnByTrackManifestMessageFormat() {
 		return createTwoColumnByTrackDropMessageFormat(getDropCarMessageFormat());
 	}
 	
-	public static String[] getTwoColumnByTrackDropSwitchListMessageFormat() {
-		return createTwoColumnByTrackDropMessageFormat(getSwitchListDropCarMessageFormat());
+	public static String[] getDropTwoColumnByTrackSwitchListMessageFormat() {
+		return createTwoColumnByTrackDropMessageFormat(getDropSwitchListMessageFormat());
+	}
+	
+	public static String[] getDropTwoColumnByTrackUtilityManifestMessageFormat() {
+		return createTwoColumnByTrackDropMessageFormat(getDropUtilityManifestMessageFormat());
+	}
+	
+	public static String[] getDropTwoColumnByTrackUtilitySwitchListMessageFormat() {
+		return createTwoColumnByTrackDropMessageFormat(getDropUtilitySwitchListMessageFormat());
 	}
 	
 	private static String[] createTwoColumnByTrackDropMessageFormat(String[] format) {
@@ -1762,10 +1778,10 @@ public class Setup {
 		values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
-		storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getSwitchListPickupCarMessageFormat());
+		storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getPickupSwitchListMessageFormat());
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_DROP_CAR_FORMAT));
-		storeXmlMessageFormat(values, getSwitchListDropCarPrefix(), getSwitchListDropCarMessageFormat());
+		storeXmlMessageFormat(values, getSwitchListDropCarPrefix(), getDropSwitchListMessageFormat());
 
 		e.addContent(values = new Element(Xml.SWITCH_LIST_LOCAL_FORMAT));
 		storeXmlMessageFormat(values, getSwitchListLocalPrefix(), getSwitchListLocalMessageFormat());
@@ -2208,7 +2224,7 @@ public class Setup {
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
-				setSwitchListPickupCarMessageFormat(keys);
+				setPickupSwitchListMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST_DROP_CAR_FORMAT) != null) {
@@ -2221,7 +2237,7 @@ public class Setup {
 				String[] keys = setting.split(",");
 				replaceOldFormat(keys);
 				keyToStringConversion(keys);
-				setSwitchListDropCarMessageFormat(keys);
+				setDropSwitchListMessageFormat(keys);
 			}
 		}
 		if (operations.getChild(Xml.SWITCH_LIST_LOCAL_FORMAT) != null) {

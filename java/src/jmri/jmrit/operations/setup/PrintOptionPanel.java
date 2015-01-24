@@ -657,7 +657,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 .getMessage("BorderLayoutSwitchListPickupCar")));
         pSwPickup.add(switchListPickupCarPrefix);
         switchListPickupCarPrefix.setText(Setup.getSwitchListPickupCarPrefix());
-        pickFormat = Setup.getSwitchListPickupCarMessageFormat();
+        pickFormat = Setup.getPickupSwitchListMessageFormat();
         for (String pf : pickFormat) {
             JComboBox<String> cb = Setup.getCarMessageComboBox();
             cb.setSelectedItem(pf);
@@ -674,7 +674,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 .getMessage("BorderLayoutSwitchListDropCar")));
         pSwDrop.add(switchListDropCarPrefix);
         switchListDropCarPrefix.setText(Setup.getSwitchListDropCarPrefix());
-        dropFormat = Setup.getSwitchListDropCarMessageFormat();
+        dropFormat = Setup.getDropSwitchListMessageFormat();
         for (String df : dropFormat) {
             JComboBox<String> cb = Setup.getCarMessageComboBox();
             cb.setSelectedItem(df);
@@ -786,7 +786,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = switchListCarPickupMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        Setup.setSwitchListPickupCarMessageFormat(format);
+        Setup.setPickupSwitchListMessageFormat(format);
         // save switch list car drop message format
         Setup.setSwitchListDropCarPrefix(switchListDropCarPrefix.getText());
         format = new String[switchListCarDropMessageList.size()];
@@ -794,7 +794,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             JComboBox<?> cb = switchListCarDropMessageList.get(i);
             format[i] = (String) cb.getSelectedItem();
         }
-        Setup.setSwitchListDropCarMessageFormat(format);
+        Setup.setDropSwitchListMessageFormat(format);
         // save switch list local message format
         Setup.setSwitchListLocalPrefix(switchListLocalPrefix.getText());
         format = new String[switchListLocalMessageList.size()];
@@ -926,7 +926,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             format[i] = (String) cb.getSelectedItem();
         }
         if (!Setup.getSwitchListPickupCarPrefix().equals(this.switchListPickupCarPrefix.getText())
-                || !Arrays.equals(Setup.getSwitchListPickupCarMessageFormat(), format)) {
+                || !Arrays.equals(Setup.getPickupSwitchListMessageFormat(), format)) {
             return true;
         }
         // save switch list car drop message format
@@ -936,7 +936,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             format[i] = (String) cb.getSelectedItem();
         }
         if (!Setup.getSwitchListDropCarPrefix().equals(this.switchListDropCarPrefix.getText())
-                || !Arrays.equals(Setup.getSwitchListDropCarMessageFormat(), format)) {
+                || !Arrays.equals(Setup.getDropSwitchListMessageFormat(), format)) {
             return true;
         }
         // save switch list local message format

@@ -195,7 +195,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                             builder.append(pickupUtilityCars(cars, car, location, isManifest));
                         } // use truncated format if there's a switch list
                         else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
-                            builder.append(pickUpCar(car, Setup.getTruncatedPickupManifestMessageFormat()));
+                            builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                         } else {
                             builder.append(pickUpCar(car, Setup.getPickupCarMessageFormat()));
                         }
@@ -209,9 +209,9 @@ public class HtmlManifest extends HtmlTrainCommon {
                         builder.append(setoutUtilityCars(cars, car, location, isManifest));
                     } else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                         // use truncated format if there's a switch list
-                        builder.append(dropCar(car, Setup.getTruncatedSetoutManifestMessageFormat(), this.isLocalMove(car)));
+                        builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), this.isLocalMove(car)));
                     } else {
-                        String[] format = (!local) ? Setup.getSwitchListDropCarMessageFormat() : Setup.getSwitchListLocalMessageFormat();
+                        String[] format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup.getSwitchListLocalMessageFormat();
                         if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
                             format = (!local) ? Setup.getDropCarMessageFormat() : Setup.getLocalMessageFormat();
                         }
@@ -225,9 +225,9 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupUtilityCars(JsonNode cars, JsonNode car, RouteLocation location, boolean isManifest) {
         // list utility cars by type, track, length, and load
-        String[] messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
+        String[] messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
         if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
-            messageFormat = Setup.getPickupUtilityCarMessageFormat();
+            messageFormat = Setup.getPickupUtilityManifestMessageFormat();
         }
         // TODO: reimplement following commented out code
 //        if (this.countUtilityCars(messageFormat, carList, car, location, rld, PICKUP) == 0) {
@@ -241,13 +241,13 @@ public class HtmlManifest extends HtmlTrainCommon {
         if (Setup.isSwitchListFormatSameAsManifest()) {
             isManifest = true;
         }
-        String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
+        String[] messageFormat = Setup.getDropUtilityManifestMessageFormat();
         if (isLocal && isManifest) {
-            messageFormat = Setup.getLocalUtilityCarMessageFormat();
+            messageFormat = Setup.getLocalUtilityManifestMessageFormat();
         } else if (isLocal && !isManifest) {
-            messageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+            messageFormat = Setup.getLocalUtilitySwitchListMessageFormat();
         } else if (!isLocal && !isManifest) {
-            messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+            messageFormat = Setup.getDropUtilitySwitchListMessageFormat();
         }
         // TODO: reimplement following commented out code
 //        if (countUtilityCars(messageFormat, carList, car, location, null, !PICKUP) == 0) {

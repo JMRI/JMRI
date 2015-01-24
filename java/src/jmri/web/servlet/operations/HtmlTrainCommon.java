@@ -61,12 +61,11 @@ public class HtmlTrainCommon extends TrainCommon {
         this.emptyCars = 0;
     }
 
-    @Override
     public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
         // list utility cars by type, track, length, and load
-        String[] messageFormat = Setup.getSwitchListPickupUtilityCarMessageFormat();
+        String[] messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
         if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
-            messageFormat = Setup.getPickupUtilityCarMessageFormat();
+            messageFormat = Setup.getPickupUtilityManifestMessageFormat();
         }
         if (this.countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP) == 0) {
             return ""; // already printed out this car type
@@ -79,13 +78,13 @@ public class HtmlTrainCommon extends TrainCommon {
         if (Setup.isSwitchListFormatSameAsManifest()) {
             isManifest = true;
         }
-        String[] messageFormat = Setup.getSetoutUtilityCarMessageFormat();
+        String[] messageFormat = Setup.getDropUtilityManifestMessageFormat();
         if (isLocal && isManifest) {
-            messageFormat = Setup.getLocalUtilityCarMessageFormat();
+            messageFormat = Setup.getLocalUtilityManifestMessageFormat();
         } else if (isLocal && !isManifest) {
-            messageFormat = Setup.getSwitchListLocalUtilityCarMessageFormat();
+            messageFormat = Setup.getLocalUtilitySwitchListMessageFormat();
         } else if (!isLocal && !isManifest) {
-            messageFormat = Setup.getSwitchListSetoutUtilityCarMessageFormat();
+            messageFormat = Setup.getDropUtilitySwitchListMessageFormat();
         }
         if (countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP) == 0) {
             return ""; // already printed out this car type
