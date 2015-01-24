@@ -241,7 +241,7 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
         Warrant w = getWarrantAt(row);
         // some error checking
         if (w == null){
-        	log.debug("Warrant is null!");
+        	log.debug("getValueAt row= "+row+" Warrant is null!");
         	return "";
         }
         JRadioButton allocButton = new JRadioButton();
@@ -318,6 +318,10 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
     public void setValueAt(Object value, int row, int col) {
         if (log.isDebugEnabled()) log.debug("setValueAt: row= "+row+", column= "+col+", value= "+value.getClass().getName());
         Warrant w = getWarrantAt(row);
+        if (w == null){
+        	log.debug("setValueAt row= "+row+" Warrant is null!");
+        	return;
+        }
         String msg = null;
     	switch (col) {
             case WARRANT_COLUMN:
@@ -507,11 +511,10 @@ class WarrantTableModel extends AbstractTableModel implements PropertyChangeList
                     	(property.equals("runMode") && e.getNewValue()==Integer.valueOf(Warrant.MODE_NONE))
                     	|| (property.equals("controlChange") &&e.getNewValue()==Integer.valueOf(Warrant.ABORT))
                     	)) {
-                    	removeNXWarrant(bean);                       	
                         try {		// TableSorter needs time to get its row count updated
-                            Thread.sleep(50);
                             fireTableRowsDeleted(i, i);
                             Thread.sleep(50);                        	
+                        	removeNXWarrant(bean);                       	
                         } catch (InterruptedException ie) {                       	
                         }
                     } else {
