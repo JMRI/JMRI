@@ -486,7 +486,7 @@ public class FnMapPanelESU extends JPanel {
      */
     void updateSummaryLine(int row, int block) {
         String retString = "";
-        int retState = 2048;
+        int retState = AbstractValue.SAME;
 
         for (int item = outBlockStartCol[block]; item < (outBlockStartCol[block] + outBlockLength[block]); item++) {
             if (itemIsUsed[item]) {
