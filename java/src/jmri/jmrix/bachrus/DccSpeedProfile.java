@@ -42,9 +42,12 @@ public class DccSpeedProfile {
         if (idx < _length) {
             _dataPoints[idx] = val;
             _lastPoint++;
+            log.debug("Index: " + idx + " val: " + val);
             if (val > _max) {
+                log.debug("     Old max: " + _max);
                 // Adjust maximum value
                 _max = (float)(Math.floor(val/20)+1)*20;
+                log.debug("     New max: " + _max);
             }
             ret = true;
         }
@@ -55,6 +58,7 @@ public class DccSpeedProfile {
         for (int i=0; i<_length; i++) {
             _dataPoints[i] = 0.0F;
         }
+        _max = 40;
         _lastPoint = -1;
     }
     

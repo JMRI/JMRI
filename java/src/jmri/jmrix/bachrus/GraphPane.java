@@ -119,16 +119,16 @@ public class GraphPane extends JPanel implements Printable {
         // start with an increment of 1
         // Plot a grid line every two
         // Plot a label every ten
-        int valInc = 1;
-        float yInc = scale*valInc;
+        float yInc = scale;
         int yMod = 10;
         int gridMod = 2;
         if (units == Speed.MPH) {
             // need inverse transform here
             yInc = Speed.mphToKph(yInc);
         }
-        if (_sp[0].getMax() > 100) {
-            valInc = 2;
+        if ((units == Speed.KPH) && (_sp[0].getMax() > 100)
+                || (units == Speed.MPH) && (_sp[0].getMax() > 160)) {
+            log.debug("Adjusting Y axis spacing for max speed");
             yMod *=2;
             gridMod *=2;
         }
@@ -140,7 +140,7 @@ public class GraphPane extends JPanel implements Printable {
             float y1 = h - PAD - i*yInc;
             if ((i % yMod) == 0) {
                 g2.draw(new Line2D.Double(7*PAD/8, y1, PAD, y1));
-                ordString = Integer.toString(i*valInc);
+                ordString = Integer.toString(i);
                 sw = (float)font.getStringBounds(ordString, frc).getWidth();
                 sx = 7*PAD/8 - sw;
                 sy = y1 + lm.getAscent()/2;

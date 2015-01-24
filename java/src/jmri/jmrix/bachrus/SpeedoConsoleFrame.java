@@ -99,6 +99,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JButton stopProfileButton = new JButton(rb.getString("Stop"));
     protected JButton exportProfileButton = new JButton(rb.getString("Export"));
     protected JButton printProfileButton = new JButton(rb.getString("Print"));
+    protected JButton resetGraphButton = new JButton(rb.getString("ResetGraph"));
     protected JTextField printTitleText = new JTextField();
     protected JLabel statusLabel = new JLabel(" ");
 
@@ -203,6 +204,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected enum ProgState {IDLE, WAIT29, WAIT1, WAIT17, WAIT18}
     protected ProgState readState = ProgState.IDLE;
 
+    // For testing only, must be 1 for normal use
+    protected static final int speedTestScaleFactor = 1;
+    
     //Create the combo box, select item at index 4.
     //Indices start at 0, so 4 specifies British N.
     JComboBox<String> scaleList = new JComboBox<String>(scaleStrings);
@@ -501,6 +505,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         exportProfileButton.setToolTipText(rb.getString("TTSaveProfile"));
         profileButtonPane.add(printProfileButton);
         printProfileButton.setToolTipText(rb.getString("TTPrintProfile"));
+        profileButtonPane.add(resetGraphButton);
+        resetGraphButton.setToolTipText(rb.getString("TTResetGraph"));
         
         // pane to hold the title
         JPanel profileTitlePane = new JPanel();
@@ -564,6 +570,15 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         printProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 profileGraphPane.printProfile(printTitleText.getText());
+            }
+        });
+
+        // Listen to reset graph button
+        resetGraphButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                spFwd.clear();
+                spRev.clear();
+                profileGraphPane.repaint();
             }
         });
 
@@ -741,7 +756,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             // Scale the data and calculate kph
             try {
                 freq = 1500000/count;
-                sampleSpeed = (freq/24)*circ*selectedScale*3600/1000000;
+                sampleSpeed = (freq/24)*circ*selectedScale*3600/1000000*speedTestScaleFactor;
             } catch (ArithmeticException ae) {
                 log.error("Exception calculating sampleSpeed " + ae);
             }
@@ -874,6 +889,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                     } else {
                         profileDir = ProfileDirection.REVERSE;
                     }
+                    resetGraphButton.setEnabled(false);
                     profileGraphPane.repaint();
                     profileTimer.start();
                     log.info("Requesting throttle");
@@ -1089,6 +1105,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             //throttle.release();
             throttle = null;
         }
+        resetGraphButton.setEnabled(true);
         state = ProfileState.IDLE;
     }
     
