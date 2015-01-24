@@ -163,7 +163,7 @@ public class QsiTrafficControllerTest extends TestCase {
 	    public String[] validBaudRates() { return null; }
 
 		protected QsiPortControllerScaffold() throws Exception {
-                    super(null);
+                    super(new QsiSystemConnectionMemo());
 			PipedInputStream tempPipe;
 			tempPipe = new PipedInputStream();
 			tostream = new DataInputStream(tempPipe);

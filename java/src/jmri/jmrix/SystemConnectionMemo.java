@@ -5,8 +5,9 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.HashSet;
 import java.util.ResourceBundle;
-import java.util.Vector;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -201,14 +202,14 @@ abstract public class SystemConnectionMemo {
 
     public static void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
-            listeners.removeElement(l);
+            listeners.remove(l);
         }
     }
 
     public static void addPropertyChangeListener(PropertyChangeListener l) {
         // add only if not already registered
         if (!listeners.contains(l)) {
-            listeners.addElement(l);
+            listeners.add(l);
         }
     }
 
@@ -221,15 +222,13 @@ abstract public class SystemConnectionMemo {
      */
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         // make a copy of the listener vector to synchronized not needed for transmit
-        Vector<PropertyChangeListener> v;
+        Set<PropertyChangeListener> v;
         synchronized (this) {
-            v = new Vector<PropertyChangeListener>(listeners);
+            v = new HashSet<>(listeners);
         }
         // forward to all listeners
-        int cnt = v.size();
-        for (int i = 0; i < cnt; i++) {
-            PropertyChangeListener client = v.elementAt(i);
-            client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
+        for (PropertyChangeListener listener : v) {
+            listener.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
         }
     }
 
@@ -270,7 +269,7 @@ abstract public class SystemConnectionMemo {
     }
 
     // data members to hold contact with the property listeners
-    final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+    final private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
     static Logger log = LoggerFactory.getLogger(SystemConnectionMemo.class.getName());
 }

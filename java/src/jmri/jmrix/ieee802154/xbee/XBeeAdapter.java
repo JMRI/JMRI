@@ -186,7 +186,7 @@ public class XBeeAdapter extends jmri.jmrix.ieee802154.serialdriver.SerialDriver
     @Override
     public void configure() {
         log.debug("configure() called.");
-        XBeeTrafficController tc = new XBeeTrafficController() ;
+        XBeeTrafficController tc = new XBeeTrafficController();
 
         // connect to the traffic controller
         this.getSystemConnectionMemo().setTrafficController(tc);

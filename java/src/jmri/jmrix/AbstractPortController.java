@@ -30,16 +30,18 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     public abstract DataOutputStream getOutputStream();
 
-    // Ideally, this would be private and final, but two classes expect to be
-    // able to set this after object construction instead during object
-    // construction.
-    // private final SystemConnectionMemo connectionMemo;
-    protected SystemConnectionMemo connectionMemo;
+    // Ideally, this would be final, but two classes expect to be
+    // able to set this after object construction.
+    private SystemConnectionMemo connectionMemo;
 
     protected AbstractPortController(SystemConnectionMemo connectionMemo) {
+        if (connectionMemo == null) {
+            throw new NullPointerException();
+        }
         this.connectionMemo = connectionMemo;
     }
 
+    @Override
     public void dispose() {
         if (this.getSystemConnectionMemo() != null) {
             this.getSystemConnectionMemo().dispose();
@@ -364,10 +366,18 @@ abstract public class AbstractPortController implements PortAdapter {
         return this.isDirty();
     }
 
+    @Override
     public SystemConnectionMemo getSystemConnectionMemo() {
         return this.connectionMemo;
     }
 
+    protected void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) {
+        if (connectionMemo == null) {
+            throw new NullPointerException();
+        }
+        this.connectionMemo = connectionMemo;
+    }
+    
     static private Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
 
 }

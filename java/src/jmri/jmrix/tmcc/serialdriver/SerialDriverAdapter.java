@@ -12,6 +12,7 @@ import java.io.DataOutputStream;
 import java.io.InputStream;
 import jmri.jmrix.tmcc.SerialPortController;
 import jmri.jmrix.tmcc.SerialTrafficController;
+import jmri.jmrix.tmcc.TMCCSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,7 +27,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        super(new TMCCSystemConnectionMemo());
     }
     
     public String openPort(String portName, String appName)  {

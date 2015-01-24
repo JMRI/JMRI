@@ -10,10 +10,12 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
 import jmri.jmrix.AbstractSerialPortController;
+import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +32,13 @@ public class SerialSensorAdapter extends AbstractSerialPortController
     SerialPort activeSerialPort = null;
 
     public SerialSensorAdapter() {
-        super(null);
+        super(new SystemConnectionMemo(null, null) {
+
+            @Override
+            protected ResourceBundle getActionModelResourceBundle() {
+                return null;
+            }
+        });
     }
 
     public void configure() {

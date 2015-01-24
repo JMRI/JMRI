@@ -9,6 +9,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import jmri.jmrix.xpa.XpaPortController;
+import jmri.jmrix.xpa.XpaSystemConnectionMemo;
 import jmri.jmrix.xpa.XpaTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,7 +31,7 @@ import org.slf4j.LoggerFactory;
 public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter(){
-        super(null);
+        super(new XpaSystemConnectionMemo());
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
     }

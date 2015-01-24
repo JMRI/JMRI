@@ -11,6 +11,7 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import jmri.jmrix.powerline.SerialPortController;
+import jmri.jmrix.powerline.SerialSystemConnectionMemo;
 import jmri.jmrix.powerline.SerialTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +30,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        super(new SerialSystemConnectionMemo());
         option1Name = "Adapter";
         options.put(option1Name, new Option("Adapter", stdOption1Values));
     }
@@ -185,21 +186,21 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         String opt1 = getOptionState(option1Name);
         if (opt1.equals("CM11")) {
             // create a CM11 port controller
-        	this.connectionMemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+        	this.setSystemConnectionMemo(new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo());
         	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(this.getSystemConnectionMemo());
         } else if (opt1.equals("CP290")) {
             // create a CP290 port controller
-        	this.connectionMemo = new jmri.jmrix.powerline.cp290.SpecificSystemConnectionMemo();
+        	this.setSystemConnectionMemo(new jmri.jmrix.powerline.cp290.SpecificSystemConnectionMemo());
         	tc = new jmri.jmrix.powerline.cp290.SpecificTrafficController(this.getSystemConnectionMemo());
         } else if (opt1.equals("Insteon 2412S")) {
             // create an Insteon 2412s port controller
-        	this.connectionMemo = new jmri.jmrix.powerline.insteon2412s.SpecificSystemConnectionMemo();
+        	this.setSystemConnectionMemo(new jmri.jmrix.powerline.insteon2412s.SpecificSystemConnectionMemo());
         	tc = new jmri.jmrix.powerline.insteon2412s.SpecificTrafficController(this.getSystemConnectionMemo());
         } else {
             // no connection at all - warn
             log.warn("protocol option "+opt1+" defaults to CM11");
             // create a CM11 port controller
-        	this.connectionMemo = new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo();
+        	this.setSystemConnectionMemo(new jmri.jmrix.powerline.cm11.SpecificSystemConnectionMemo());
         	tc = new jmri.jmrix.powerline.cm11.SpecificTrafficController(this.getSystemConnectionMemo());
         }    
 

@@ -2,21 +2,20 @@
 
 package jmri.jmrix.maple.serialdriver;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrix.maple.SerialPortController;
-import jmri.jmrix.maple.SerialSensorManager;
-import jmri.jmrix.maple.SerialTrafficController;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.InputStream;
-
+import jmri.jmrix.maple.MapleSystemConnectionMemo;
 import gnu.io.CommPortIdentifier;
 import gnu.io.PortInUseException;
 import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.InputStream;
+import jmri.jmrix.maple.SerialPortController;
+import jmri.jmrix.maple.SerialSensorManager;
+import jmri.jmrix.maple.SerialTrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide access to C/MRI via a serial comm port.
@@ -29,7 +28,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        super(new MapleSystemConnectionMemo());
     }
 
     public String openPort(String portName, String appName)  {

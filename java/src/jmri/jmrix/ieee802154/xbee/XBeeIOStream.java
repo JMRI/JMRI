@@ -42,7 +42,7 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
     private XBeeAddress64 nodeAddress64 = null;
 
     public XBeeIOStream(XBeeNode node,XBeeTrafficController tc){
-        super(null);
+        super(tc.getAdapterMemo());
         nodeAddress16=node.getXBeeAddress16();
         nodeAddress64=node.getXBeeAddress64();
         try {

@@ -4,6 +4,7 @@ package jmri.jmrix;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.util.ResourceBundle;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
@@ -37,6 +38,7 @@ public class AbstractPortControllerTest extends TestCase {
         return suite;
     }
 
+    @Override
     public void setUp() {
         apc = new AbstractPortControllerScaffold();
     }
@@ -44,7 +46,13 @@ public class AbstractPortControllerTest extends TestCase {
     public static class AbstractPortControllerScaffold extends AbstractPortController {
 
         public AbstractPortControllerScaffold() {
-            super(null);
+            super(new SystemConnectionMemo("", "") {
+
+                @Override
+                protected ResourceBundle getActionModelResourceBundle() {
+                    return null;
+                }
+            });
         }
         
         @Override

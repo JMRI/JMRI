@@ -33,7 +33,7 @@ public abstract class PortController extends jmri.jmrix.AbstractSerialPortContro
     
     @Override
     public CanSystemConnectionMemo getSystemConnectionMemo() {
-        return (CanSystemConnectionMemo)this.connectionMemo;
+        return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 }
 /* @(#)PortController.java */

@@ -10,6 +10,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import jmri.jmrix.oaktree.OakTreeSystemConnectionMemo;
 import jmri.jmrix.oaktree.SerialPortController;
 import jmri.jmrix.oaktree.SerialSensorManager;
 import jmri.jmrix.oaktree.SerialTrafficController;
@@ -27,7 +28,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        super(new OakTreeSystemConnectionMemo());
     }
 
     public String openPort(String portName, String appName)  {

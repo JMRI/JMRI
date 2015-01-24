@@ -10,6 +10,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import jmri.jmrix.secsi.SecsiSystemConnectionMemo;
 import jmri.jmrix.secsi.SerialPortController;
 import jmri.jmrix.secsi.SerialSensorManager;
 import jmri.jmrix.secsi.SerialTrafficController;
@@ -28,7 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     SerialPort activeSerialPort = null;
 
     public SerialDriverAdapter() {
-        super(null);
+        super(new SecsiSystemConnectionMemo());
     }
 
     public String openPort(String portName, String appName)  {

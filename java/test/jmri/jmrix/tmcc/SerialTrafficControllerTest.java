@@ -168,7 +168,7 @@ public class SerialTrafficControllerTest extends TestCase {
 	    public void configure() {}
 	    public String[] validBaudRates() { return null; }
         protected SerialPortControllerScaffold() throws Exception {
-            super(null);
+            super(new TMCCSystemConnectionMemo());
             PipedInputStream tempPipe;
             tempPipe = new PipedInputStream();
             tostream = new DataInputStream(tempPipe);
