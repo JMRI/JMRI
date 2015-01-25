@@ -126,9 +126,9 @@ public class HtmlManifest extends HtmlTrainCommon {
                         builder.append(String.format(strings.getProperty("TrainDepartsLoads"),
                                 routeLocationName,
                                 strings.getProperty("Heading" + Setup.getDirectionString(location.path(JSON.DIRECTION).intValue())),
-                                location.path(JSON.LENGTH).path(JSON.LENGTH).asText(),
+                                location.path(JSON.LENGTH).path(JSON.LENGTH).intValue(),
                                 location.path(JSON.LENGTH).path(JSON.UNIT).asText().toLowerCase(),
-                                location.path(JSON.WEIGHT),
+                                location.path(JSON.WEIGHT).intValue(),
                                 location.path(JSON.CARS).path(JSON.LOADS).intValue(),
                                 location.path(JSON.CARS).path(JSON.EMPTIES).intValue()));
                     }
