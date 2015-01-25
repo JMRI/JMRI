@@ -363,10 +363,10 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 	 */
 	protected void blockCars(RouteLocation rl, boolean isManifest) {
 		if (Setup.isPrintHeadersEnabled()) {
-			JLabel header = new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest, false));
+			JLabel header = new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
 			setLabelFont(header);
 			pPickups.add(header);
-			header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest, false));
+			header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
 			setLabelFont(header);
 			pSetouts.add(header);
 			header = new JLabel(Tab + trainCommon.getLocalMoveHeader(isManifest));
@@ -447,8 +447,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 					} else {
 						String text;
 						if (car.isUtility()) {
-							text = trainCommon.setoutUtilityCars(carList, car, rl, !TrainCommon.LOCAL, isManifest,
-									!TrainCommon.IS_TWO_COLUMN_TRACK);
+							text = trainCommon.setoutUtilityCars(carList, car, rl, !TrainCommon.LOCAL, isManifest);
 							if (text == null) {
 								continue; // this car type has already been processed
 							}
@@ -477,13 +476,14 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 							pMoves.add(carCheckBoxes.get("m" + car.getId()));
 						}
 					} else {
-						String text = trainCommon.moveCar(car, isManifest);
+						String text;
 						if (car.isUtility()) {
-							text = trainCommon.setoutUtilityCars(carList, car, rl, TrainCommon.LOCAL, isManifest,
-									!TrainCommon.IS_TWO_COLUMN_TRACK);
+							text = trainCommon.setoutUtilityCars(carList, car, rl, TrainCommon.LOCAL, isManifest);
 							if (text == null) {
 								continue; // this car type has already been processed
 							}
+						} else {
+							text = trainCommon.localMoveCar(car, isManifest);
 						}
 						JCheckBox checkBox = new JCheckBox(text);
 						setCheckBoxFont(checkBox);

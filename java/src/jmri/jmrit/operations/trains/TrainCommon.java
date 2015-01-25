@@ -3,6 +3,7 @@
 package jmri.jmrit.operations.trains;
 
 import com.fasterxml.jackson.databind.util.ISO8601DateFormat;
+
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
@@ -536,7 +537,7 @@ public class TrainCommon {
 		newString = s + VERTICAL_LINE_CHAR;
 
 		if (car.isUtility()) {
-			String so = setoutUtilityCars(carList, car, rl, false, isManifest, isTwoColumnTrack);
+			String so = setoutUtilityCars(carList, car, rl, !LOCAL, isManifest, isTwoColumnTrack);
 			if (so == null)
 				return s; // no changes to the input string
 			newString = newString + so.trim();
@@ -695,14 +696,14 @@ public class TrainCommon {
 			format = Setup.getDropTwoColumnByTrackManifestMessageFormat();
 		else
 			format = Setup.getDropTwoColumnByTrackSwitchListMessageFormat();
+		// TODO the Setup.Location doesn't work correctly for the conductor
+		// window due to the fact that the car can be in the train and not
+		// at its starting location.
+		// Therefore we use the local true to disable it.
+		boolean local = false;
+		if (car.getTrack() == null)
+			local = true;
 		for (String attribute : format) {
-			// TODO the Setup.Location doesn't work correctly for the conductor
-			// window due to the fact that the car can be in the train and not
-			// at its starting location.
-			// Therefore we use the local true to disable it.
-			boolean local = true;
-			if (car.getTrack() != null)
-				local = false;
 			String s = getCarAttribute(car, attribute, !PICKUP, local);
 			buf.append(s);
 		}
@@ -717,7 +718,7 @@ public class TrainCommon {
 	 * @param car
 	 * @return move car string
 	 */
-	public String moveCar(Car car, boolean isManifest) {
+	public String localMoveCar(Car car, boolean isManifest) {
 		StringBuffer buf = new StringBuffer();
 		String[] format;
 		if (isManifest)
@@ -828,8 +829,15 @@ public class TrainCommon {
 			format = Setup.getPickupUtilitySwitchListMessageFormat();
 		return countUtilityCars(format, carList, car, rl, rld, PICKUP);
 	}
+	
+	/**
+	 * For the Conductor and Yardmaster windows.
+	 */
+	public String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
+		return setoutUtilityCars(carList, car, rl, isLocal, isManifest, !IS_TWO_COLUMN_TRACK);
+	}
 
-	public String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest,
+	protected String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest,
 			 boolean isTwoColumnTrack) {
 		int count = countSetoutUtilityCars(carList, car, rl, isLocal, isManifest);
 		if (count == 0)
@@ -850,10 +858,14 @@ public class TrainCommon {
 			format = Setup.getDropTwoColumnByTrackUtilitySwitchListMessageFormat();
 		}
 		StringBuffer buf = new StringBuffer(" " + padString(Integer.toString(count), UTILITY_CAR_COUNT_FIELD_SIZE));
+		// TODO the Setup.Location doesn't work correctly for the conductor
+		// window due to the fact that the car can be in the train and not
+		// at its starting location.
+		// Therefore we use the local true to disable it.
+		if (car.getTrack() == null)
+			isLocal = true;
 		for (String attribute : format) {
-			// TODO the Setup.Location doesn't work correctly for the conductor
-			// window, therefore we use the local true to disable it.
-			String s = getCarAttribute(car, attribute, !PICKUP, LOCAL);
+			String s = getCarAttribute(car, attribute, !PICKUP, isLocal);
 			buf.append(s);
 		}
 		return buf.toString();
