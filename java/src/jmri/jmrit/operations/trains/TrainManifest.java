@@ -30,7 +30,6 @@ import org.slf4j.LoggerFactory;
 public class TrainManifest extends TrainCommon {
 
 	private static final Logger log = LoggerFactory.getLogger(TrainManifest.class);
-	private static final boolean isManifest = true;
 
 	String messageFormatText = ""; // the text being formated in case there's an exception
 
@@ -81,7 +80,6 @@ public class TrainManifest extends TrainCommon {
 			log.debug("Train has {} cars assigned to it", carList.size());
 
 			boolean hasWork = false;
-			newWork = false; // when true there is work at the location, add train departure info to manifest
 			String previousRouteLocationName = null;
 			List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
 
@@ -92,15 +90,13 @@ public class TrainManifest extends TrainCommon {
 
 				// print info only if new location
 				String routeLocationName = splitString(rl.getName());
-				if (!routeLocationName.equals(previousRouteLocationName) || (hasWork && !hadWork && !newWork)) {
+				if (!routeLocationName.equals(previousRouteLocationName) || (hasWork && !hadWork)) {
 					if (hasWork) {
 						// add line break between locations without work and ones with work
 						// TODO An extra line break appears when the user has two or more locations with the
 						// "same" name with work and the last location doesn't have work
 						if (!hadWork)
 							newLine(fileOut);
-						newWork = true; // TODO this shouldn't be needed, other subroutines set this true if there's
-										// work
 						printHeader = true;
 						String expectedArrivalTime = train.getExpectedArrivalTime(rl);
 						String workAt = MessageFormat.format(messageFormatText = TrainManifestText
@@ -140,7 +136,7 @@ public class TrainManifest extends TrainCommon {
 				}
 				
 				// add track comments
-				printTrackComments(fileOut, rl, carList, isManifest);
+				printTrackComments(fileOut, rl, carList, IS_MANIFEST);
 
 				// engine change or helper service?
 				if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
@@ -161,15 +157,15 @@ public class TrainManifest extends TrainCommon {
 				}
 
 				if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-					pickupEngines(fileOut, engineList, rl, isManifest);
-					dropEngines(fileOut, engineList, rl, isManifest);
-					blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, isManifest);
+					pickupEngines(fileOut, engineList, rl, IS_MANIFEST);
+					dropEngines(fileOut, engineList, rl, IS_MANIFEST);
+					blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
 				} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
-					blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-					blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, isManifest);
+					blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
+					blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
 				} else {
-					blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-					blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader, isManifest);
+					blockLocosTwoColumn(fileOut, engineList, rl, IS_MANIFEST);
+					blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader, IS_MANIFEST);
 				}
 
 				if (rl != train.getRoute().getTerminatesRouteLocation()) {
@@ -179,7 +175,7 @@ public class TrainManifest extends TrainCommon {
 						if (hasWork) {
 							if (Setup.isPrintHeadersEnabled()
 									|| !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
-								printHorizontalLine(fileOut, isManifest);
+								printHorizontalLine(fileOut, IS_MANIFEST);
 							String trainDeparts = "";
 							if (Setup.isPrintLoadsAndEmptiesEnabled())
 								// Message format: Train departs Boston Westbound with 4 loads, 8 empties, 450 feet,
@@ -197,7 +193,6 @@ public class TrainManifest extends TrainCommon {
 										Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
 										train.getTrainTerminatesName() });
 							newLine(fileOut, trainDeparts);
-							newWork = false;
 							newLine(fileOut);
 						} else {
 							// no work at this location
@@ -238,7 +233,7 @@ public class TrainManifest extends TrainCommon {
 				} else {
 					// last location in the train's route, print train terminates message
 					if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
-						printHorizontalLine(fileOut, isManifest);
+						printHorizontalLine(fileOut, IS_MANIFEST);
 					newLine(fileOut, MessageFormat.format(messageFormatText = TrainManifestText
 							.getStringTrainTerminates(), new Object[] { routeLocationName, train.getName(),
 							train.getDescription() }));
@@ -246,7 +241,7 @@ public class TrainManifest extends TrainCommon {
 				previousRouteLocationName = routeLocationName;
 			}
 			// Are there any cars that need to be found?
-			addCarsLocationUnknown(fileOut, isManifest);
+			addCarsLocationUnknown(fileOut, IS_MANIFEST);
 
 		} catch (IllegalArgumentException e) {
 			newLine(fileOut, MessageFormat.format(Bundle.getMessage("ErrorIllegalArgument"), new Object[] {
@@ -281,7 +276,7 @@ public class TrainManifest extends TrainCommon {
 	}
 
 	private void newLine(PrintWriter file, String string) {
-		newLine(file, string, isManifest);
+		newLine(file, string, IS_MANIFEST);
 	}
 
 }

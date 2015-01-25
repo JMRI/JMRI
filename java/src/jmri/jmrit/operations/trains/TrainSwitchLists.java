@@ -33,8 +33,7 @@ public class TrainSwitchLists extends TrainCommon {
 
 	TrainManager trainManager = TrainManager.instance();
 	private static final char FORM_FEED = '\f';
-	private static final boolean isManifest = false;
-	private static final boolean printHeader = true;
+	private static final boolean IS_PRINT_HEADER = true;
 
 	String messageFormatText = ""; // the text being formated in case there's an exception
 
@@ -119,8 +118,8 @@ public class TrainSwitchLists extends TrainCommon {
 				}
 				checkFormFeed = false; // done with FF for this train
 				// some cars booleans and the number of times this location get's serviced
-				pickupCars = false;
-				dropCars = false;
+				pickupCars = false;	// when true there was a car pick up
+				dropCars = false;	// when true there was a car set out
 				int stops = 1;
 				boolean trainDone = false;
 				// get engine and car lists
@@ -217,19 +216,19 @@ public class TrainSwitchLists extends TrainCommon {
 						newLine(fileOut, rl.getComment());
 
 					if (Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT)) {
-						pickupEngines(fileOut, engineList, rl, isManifest);
-						dropEngines(fileOut, engineList, rl, isManifest);
-						blockCarsByTrack(fileOut, train, carList, routeList, rl, printHeader, isManifest);
+						pickupEngines(fileOut, engineList, rl, !IS_MANIFEST);
+						dropEngines(fileOut, engineList, rl, !IS_MANIFEST);
+						blockCarsByTrack(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
 					} else if (Setup.getManifestFormat().equals(Setup.TWO_COLUMN_FORMAT)) {
-						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, printHeader, isManifest);
+						blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
+						blockCarsByTrackTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER, !IS_MANIFEST);
 					} else {
-						blockLocosTwoColumn(fileOut, engineList, rl, isManifest);
-						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, printHeader,
-								isManifest);
+						blockLocosTwoColumn(fileOut, engineList, rl, !IS_MANIFEST);
+						blockCarsByTrackNameTwoColumn(fileOut, train, carList, routeList, rl, IS_PRINT_HEADER,
+								!IS_MANIFEST);
 					}
 					if (Setup.isPrintHeadersEnabled() || !Setup.getManifestFormat().equals(Setup.STANDARD_FORMAT))
-						printHorizontalLine(fileOut, isManifest);
+						printHorizontalLine(fileOut, !IS_MANIFEST);
 
 					stops++;
 
@@ -287,7 +286,7 @@ public class TrainSwitchLists extends TrainCommon {
 		}
 
 		// Are there any cars that need to be found?
-		addCarsLocationUnknown(fileOut, isManifest);
+		addCarsLocationUnknown(fileOut, !IS_MANIFEST);
 		fileOut.flush();
 		fileOut.close();
 	}
@@ -312,7 +311,7 @@ public class TrainSwitchLists extends TrainCommon {
 	}
 
 	protected void newLine(PrintWriter file, String string) {
-		newLine(file, string, isManifest);
+		newLine(file, string, !IS_MANIFEST);
 	}
 
 	static Logger log = LoggerFactory.getLogger(TrainSwitchLists.class.getName());

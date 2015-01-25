@@ -57,6 +57,7 @@ public class TrainCommon {
 	// protected static final String ARROW = ">";
 
 	protected static final boolean PICKUP = true;
+	protected static final boolean IS_MANIFEST = true;
 	public static final boolean LOCAL = true;
 	protected static final boolean ENGINE = true;
 	public static final boolean IS_TWO_COLUMN_TRACK = true;
