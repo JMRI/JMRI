@@ -52,8 +52,8 @@ public class CsvImporter {
             } else if ( lineStrings[0].equals("CV") ) {
                 log.debug("Header OK");
             } else {
-                name = lineStrings[0];
-                value = Integer.parseInt(lineStrings[1]);
+                name = lineStrings[0].trim();
+                value = Integer.parseInt(lineStrings[1].trim());
                 cvObject = cvModel.allCvMap().get(name);
                 if (cvObject == null) {
                     log.warn("CV "+name+" was in import file, but not defined by the decoder definition");
