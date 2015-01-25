@@ -27,21 +27,44 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
+/**
+ * Set up and run automated speed table calibration.
+ * <p>
+ * Uses three sensors in a row:
+ *<ul>
+ *<li>Start sensor: Track where locomotive starts
+ *<li>Block sensor: Middle track. This time through this is used to measure the speed.
+ *<li>Finish sensor: Track where locomotive stops before repeating.
+ *</ul>
+ * The expected sequence is:
+ *<ul>
+ * <li>Start moving with start sensor on, others off.  
+ * <li>Block (middle) sensor goes active:  startListener calls startTiming
+ * <li>Finish sensor goes active: finishListener calls stopCurrentSpeedStep
+ * <li>Block (middle) sensor goes inactive: startListener calls stopLoco, which stops loco after 2.5 seconds
+ *</ul>
+ * After a forward run, the start and finish sensors are swapped for a run in reverse.
+ */
+
 class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleListener{
     
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = -7592615396122420235L;
 	JButton profileButton = new JButton(Bundle.getMessage("ButtonProfile"));
     JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
     JButton testButton = new JButton(Bundle.getMessage("ButtonTest"));
     JTextField lengthField = new JTextField(10);
     JTextField speedStepFrom = new JTextField(10);
+    
+    // Start or finish sensor
     BeanSelectCreatePanel sensorAPanel = new  BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
+    
+    // Finish or start sensor
     BeanSelectCreatePanel sensorBPanel = new  BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
+    
+    // Block sensor
     BeanSelectCreatePanel blockCPanel = new  BeanSelectCreatePanel(InstanceManager.blockManagerInstance(), null);
     BeanSelectCreatePanel sensorCPanel = new  BeanSelectCreatePanel(InstanceManager.sensorManagerInstance(), null);
+    
     RosterEntryComboBox reBox = new RosterEntryComboBox();
     boolean profile = false;
     boolean test = false;
@@ -348,7 +371,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         startTime = System.nanoTime();
         sourceLabel.setText(Bundle.getMessage("StatusLabelCurrentRun", (isForward?"(forward) ":"(reverse) "), profileStep, finishSpeedStep));
     }
+    
     boolean stepCalculated = false;
+    
     void stopCurrentSpeedStep(){
         finishTime = System.nanoTime();
         stepCalculated = true;
@@ -384,13 +409,21 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
             t.setSpeedSetting(0.0f);
             return;
         }
-        //Don't bring the loco to an abrupt halt, but bring down to half speed then stop.
+        // Loco may have been brought to half-speed in stopCurrentSpeedStep, so wait for that to take effect then stop & restart
         javax.swing.Timer stopTimer = new javax.swing.Timer(2500, new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 
+                // finally command the stop
                 t.setSpeedSetting(0.0f);
                 
-                startProfile();
+                // and a second later, restart going the other way
+                javax.swing.Timer restartTimer = new javax.swing.Timer(1000, new java.awt.event.ActionListener() {
+                    public void actionPerformed(java.awt.event.ActionEvent e) {
+                        startProfile();
+                    }
+                });
+                restartTimer.setRepeats(false);
+                restartTimer.start();
             }
         });
         stopTimer.setRepeats(false);
@@ -456,10 +489,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
     
     void stopTrainTest(){
-        //int locolength = Integer.parseInt(locoLengthField.getText());
         int sectionlength = Integer.parseInt(lengthField.getText());
         re.getSpeedProfile().changeLocoSpeed(t, sectionlength, 0.0f);
-        //rosterSpeedProfile.stopLoco(t, Integer.parseInt(lengthField.getText())/1000);
         setButtonStates(true);
         startSensor.removePropertyChangeListener(startListener);
     }
