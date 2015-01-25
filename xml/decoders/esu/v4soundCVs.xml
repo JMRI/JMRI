@@ -61,7 +61,7 @@
     <label>Brake Off Threshold</label>
     <label xml:lang="it">="Soglia Fine intervento Freno"</label>
   </variable>
-  <variable CV="124" mask="XXXXXVXX" default="1" item="ESU V4 Extra Miscellaneous Option 7">
+  <variable CV="124" mask="XXXXXVXX" default="1" item="Sound Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Delay Prime Mover Startup if Drive Sound Enabled</label>
     <label xml:lang="it">="Ritardo accensione Motore se Suono Abilitato"</label>

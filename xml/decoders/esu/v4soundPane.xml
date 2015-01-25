@@ -11,9 +11,12 @@
           <text xml:lang="it">="Controlli principali"</text>
         </label>
       </griditem>
-      <griditem gridx="1" gridy="0" gridwidth="REMAINDER" anchor="LINE_START">
+      <griditem gridx="1" gridy="0" gridwidth="2" anchor="LINE_START">
         <!-- gridwidth for full-width row -->
-        <display item="ESU V4 Extra Miscellaneous Option 7"/>
+        <display item="Sound Option 1"/>
+      </griditem>
+      <griditem gridx="3" gridy="0" gridwidth="2" anchor="LINE_START">
+        <display item="Sound Option 2"/>
       </griditem>
       <griditem gridx="1" gridy="1" gridwidth="REMAINDER" anchor="LINE_START">
         <!-- gridwidth for full-width row -->

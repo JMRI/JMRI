@@ -135,9 +135,9 @@
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable CV="48" mask="XXXXVVVV" item="ESU V4 Extra Miscellaneous Option 5" default="0">
-        <decVal max="15"/>
-        <label>Language selection</label>
+      <variable CV="48" item="Sound Option 2" default="0">
+        <decVal/>
+        <label>Sound Configuration Number</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>

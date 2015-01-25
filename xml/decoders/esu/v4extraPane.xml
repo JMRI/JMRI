@@ -2,38 +2,36 @@
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <name>ESU Misc.</name>
   <column>
-    <group exclude="ESU LokPilot Standard V1.0">
-      <separator/>
-      <label>
-        <text>Enabled Protocols</text>
-        <text xml:lang="it">Protocolli Abilitati</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="ESU V4 Extra Protocols Option 1" format="checkbox"/>
-      <display item="ESU V4 Extra Protocols Option 2" format="checkbox"/>
-      <display item="ESU V4 Extra Protocols Option 3" format="checkbox"/>
-      <display item="ESU V4 Extra Protocols Option 4" format="checkbox"/>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-      <label>
-        <text>Command Station Compatibility</text>
-        <text xml:lang="it">Centrali Compatibili</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="ESU V4 Extra Compatibility Option 1" format="checkbox"/>
-      <display item="ESU V4 Extra Compatibility Option 2" format="checkbox"/>
-      <display item="ESU V4 Extra Compatibility Option 3" format="checkbox"/>
-      <display item="ESU V4 Extra Compatibility Option 4" format="checkbox"/>
-      <label>
-        <text> </text>
-      </label>
-    </group>
+    <separator/>
+    <label>
+      <text>Enabled Protocols</text>
+      <text xml:lang="it">Protocolli Abilitati</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Extra Protocols Option 1" format="checkbox"/>
+    <display item="ESU V4 Extra Protocols Option 2" format="checkbox"/>
+    <display item="ESU V4 Extra Protocols Option 3" format="checkbox"/>
+    <display item="ESU V4 Extra Protocols Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Command Station Compatibility</text>
+      <text xml:lang="it">Centrali Compatibili</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Extra Compatibility Option 1" format="checkbox"/>
+    <display item="ESU V4 Extra Compatibility Option 2" format="checkbox"/>
+    <display item="ESU V4 Extra Compatibility Option 3" format="checkbox"/>
+    <display item="ESU V4 Extra Compatibility Option 4" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <label>
       <text>RailCom Settings</text>
@@ -49,30 +47,28 @@
     <label>
       <text> </text>
     </label>
-    <group exclude="ESU LokPilot Standard V1.0">
-      <separator/>
-      <label>
-        <text>Power Interruption Handling</text>
-        <text xml:lang="it">Gestione Interruzione Alim.</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="ESU V4 Extra Power Handling Option 1"/>
-      <display item="ESU V4 Extra Power Handling Option 2"/>
-      <display item="ESU V4 Extra Power Handling Option 3"/>
-      <display item="ESU V4 Extra Power Handling Option 4"/>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Power Handling Slider 1" layout="above" label=""/>
-        <display item="ESU V4 Extra Power Handling Slider 1" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-    </group>
+    <separator/>
+    <label>
+      <text>Power Interruption Handling</text>
+      <text xml:lang="it">Gestione Interruzione Alim.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="ESU V4 Extra Power Handling Option 1"/>
+    <display item="ESU V4 Extra Power Handling Option 2"/>
+    <display item="ESU V4 Extra Power Handling Option 3"/>
+    <display item="ESU V4 Extra Power Handling Option 4"/>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Power Handling Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Extra Power Handling Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <label>
       <text>Miscellaneous</text>
@@ -129,95 +125,93 @@
     <label>
       <text> </text>
     </label>
-    <group exclude="ESU LokPilot Standard V1.0">
-      <separator/>
-      <label>
-        <text>Auto Uncoupling</text>
-        <text xml:lang="it">Sgancio Autom.</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" label=""/>
-        <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Auto Uncoupling Slider 2" layout="above" label=""/>
-        <display item="ESU V4 Extra Auto Uncoupling Slider 2" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Auto Uncoupling Slider 3" layout="above" label=""/>
-        <display item="ESU V4 Extra Auto Uncoupling Slider 3" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-      <label>
-        <text>ESU Smoke Unit</text>
-        <text xml:lang="it">Gener.Fumo ESU</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" label=""/>
-        <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Smoke Unit Slider 2" layout="above" label=""/>
-        <display item="ESU V4 Extra Smoke Unit Slider 2" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Smoke Unit Slider 3" layout="above" label=""/>
-        <display item="ESU V4 Extra Smoke Unit Slider 3" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-      <label>
-        <text>Smoke Chuffs</text>
-        <text xml:lang="it">Chuff Fumo</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" label=""/>
-        <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Smoke Chuffs Slider 2" layout="above" label=""/>
-        <display item="ESU V4 Extra Smoke Chuffs Slider 2" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="ESU V4 Extra Smoke Chuffs Slider 3" layout="above" label=""/>
-        <display item="ESU V4 Extra Smoke Chuffs Slider 3" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-    </group>
+    <separator/>
+    <label>
+      <text>Auto Uncoupling</text>
+      <text xml:lang="it">Sgancio Autom.</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Extra Auto Uncoupling Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Auto Uncoupling Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Extra Auto Uncoupling Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Auto Uncoupling Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Extra Auto Uncoupling Slider 3" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>ESU Smoke Unit</text>
+      <text xml:lang="it">Gener.Fumo ESU</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Unit Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Unit Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Unit Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Unit Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Unit Slider 3" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Smoke Chuffs</text>
+      <text xml:lang="it">Chuff Fumo</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Chuffs Slider 1" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Chuffs Slider 2" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Chuffs Slider 2" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Chuffs Slider 3" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Chuffs Slider 3" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <label>
       <text>Decoder Information</text>
