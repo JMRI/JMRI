@@ -223,7 +223,8 @@ public class HtmlTrainCommon extends TrainCommon {
             return rs.getLength();
         } else if (attribute.equals(Setup.COLOR)) {
             return rs.getColor();
-        } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)) {
+        } else if (attribute.equals(Setup.LOCATION) && (isPickup || isLocal)
+        		|| (attribute.equals(Setup.TRACK) && isPickup)) {
             if (rs.getTrack() != null) {
                 return String.format(locale, strings.getProperty("FromTrack"), StringEscapeUtils.escapeHtml4(rs.getTrackName()));
             }
@@ -232,7 +233,7 @@ public class HtmlTrainCommon extends TrainCommon {
             return String.format(locale, strings.getProperty("FromLocation"), StringEscapeUtils.escapeHtml4(rs.getLocationName()));
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
             return String.format(locale, strings.getProperty("ToLocation"), StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationName())));
-        } else if (attribute.equals(Setup.DESTINATION) && !isPickup) {
+        } else if ((attribute.equals(Setup.DESTINATION) || attribute.equals(Setup.TRACK)) && !isPickup) {
             return String.format(locale, strings.getProperty("ToTrack"), StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationTrackName())));
         } else if (attribute.equals(Setup.DEST_TRACK)) {
             return String.format(locale, strings.getProperty("ToLocationAndTrack"), StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationName())), StringEscapeUtils.escapeHtml4(splitString(rs.getDestinationTrackName())));
@@ -240,11 +241,11 @@ public class HtmlTrainCommon extends TrainCommon {
             return StringEscapeUtils.escapeHtml4(rs.getOwner());
         } else if (attribute.equals(Setup.COMMENT)) {
             return StringEscapeUtils.escapeHtml4(rs.getComment());
-        } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER) || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR) || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK) || attribute.equals(Setup.NO_LOCATION) || attribute.equals(Setup.TAB) || attribute.equals(Setup.TAB2) || attribute.equals(Setup.TAB3)) {
+        } else if (attribute.equals(Setup.BLANK) || attribute.equals(Setup.NO_NUMBER) || attribute.equals(Setup.NO_ROAD) || attribute.equals(Setup.NO_COLOR) || attribute.equals(Setup.NO_DESTINATION) || attribute.equals(Setup.NO_DEST_TRACK) || attribute.equals(Setup.NO_LOCATION) || attribute.equals(Setup.NO_TRACK) ||attribute.equals(Setup.TAB) || attribute.equals(Setup.TAB2) || attribute.equals(Setup.TAB3)) {
             // attributes that don't print
             return "";
         }
-        return Bundle.getMessage(locale, "ErrorPrintOptions"); // something is isn't right!
+        return String.format(Bundle.getMessage(locale, "ErrorPrintOptions"), attribute) ; // something is isn't right!
     }
 
     protected String getTrackComments(RouteLocation location, List<Car> cars) {
