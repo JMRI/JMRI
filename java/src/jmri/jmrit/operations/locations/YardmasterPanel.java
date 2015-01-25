@@ -76,6 +76,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 		textSwitchListComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 		textSwitchListComment.setBackground(null);
 		textSwitchListComment.setEditable(false);
+		textSwitchListComment.setMaximumSize(new Dimension(2000, 200));
 
 		// row 6
 		JPanel pRow6 = new JPanel();

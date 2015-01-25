@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
@@ -36,6 +38,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -150,7 +153,8 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 		textLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
 		textLocationComment.setBackground(null);
 		textLocationComment.setEditable(false);
-
+		textLocationComment.setMaximumSize(new Dimension(2000, 200));
+		
 		// train description
 		pTrainDescription.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
 		pTrainDescription.add(textTrainDescription);
@@ -159,17 +163,20 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 		textTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
 		textTrainComment.setBackground(null);
 		textTrainComment.setEditable(false);
+		textTrainComment.setMaximumSize(new Dimension(2000, 200));
 
 		// train route comment
 		textTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
 		textTrainRouteComment.setBackground(null);
 		textTrainRouteComment.setEditable(false);
+		textTrainRouteComment.setMaximumSize(new Dimension(2000, 200));
 
 		// train route location comment
 		textTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle
 				.getMessage("RouteLocationComment")));
 		textTrainRouteLocationComment.setBackground(null);
 		textTrainRouteLocationComment.setEditable(false);
+		textTrainRouteLocationComment.setMaximumSize(new Dimension(2000, 200));
 
 		// row 12
 		if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled())
@@ -545,6 +552,10 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 
 	// returns one of two possible departure strings for a train
 	protected String getStatus(RouteLocation rl) {
+		if (rl == _train.getRoute().getTerminatesRouteLocation()) {
+            return MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
+                    new Object[]{_train.getTrainTerminatesName()});
+		}
 		if (Setup.isPrintLoadsAndEmptiesEnabled()) {
 			int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
 			return MessageFormat.format(TrainManifestText.getStringTrainDepartsLoads(), new Object[] {
