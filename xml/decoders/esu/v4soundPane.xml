@@ -12,7 +12,7 @@
         </label>
       </griditem>
       <griditem gridx="1" gridy="0" gridwidth="2" anchor="LINE_START">
-        <!-- gridwidth for full-width row -->
+        <!-- gridwidth for two columns -->
         <display item="Sound Option 1"/>
       </griditem>
       <griditem gridx="3" gridy="0" gridwidth="2" anchor="LINE_START">
