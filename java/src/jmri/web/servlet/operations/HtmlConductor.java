@@ -260,7 +260,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                             else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                                 builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                             } else {
-                                builder.append(pickUpCar(car, Setup.getPickupCarMessageFormat()));
+                                builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
                             }
                             pickupCars = true;
                             cars++;
@@ -305,7 +305,7 @@ public class HtmlConductor extends HtmlTrainCommon {
 						// // use truncated format if there's a switch list
 						// builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
                     } else {
-                        String[] format = (!local) ? Setup.getDropCarMessageFormat() : Setup.getLocalMessageFormat();
+                        String[] format = (!local) ? Setup.getDropManifestMessageFormat() : Setup.getLocalManifestMessageFormat();
 //                        if (Setup.isSwitchListFormatSameAsManifest()) {
 //                            format = (!local) ? Setup.getDropCarMessageFormat() : Setup.getLocalMessageFormat();
 //                        }

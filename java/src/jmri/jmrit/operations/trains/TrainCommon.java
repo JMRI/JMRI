@@ -568,7 +568,7 @@ public class TrainCommon {
 	protected void pickUpCar(PrintWriter file, Car car, boolean isManifest) {
 		if (isManifest)
 			pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getPickupCarPrefix(), Setup
-					.getManifestPrefixLength())), Setup.getPickupCarMessageFormat(), isManifest);
+					.getManifestPrefixLength())), Setup.getPickupManifestMessageFormat(), isManifest);
 		else
 			pickUpCar(file, car, new StringBuffer(padAndTruncateString(Setup.getSwitchListPickupCarPrefix(), Setup
 					.getSwitchListPrefixLength())), Setup.getPickupSwitchListMessageFormat(), isManifest);
@@ -602,7 +602,7 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer();
 		String[] format;
 		if (isManifest && !isTwoColumnTrack)
-			format = Setup.getPickupCarMessageFormat();
+			format = Setup.getPickupManifestMessageFormat();
 		else if (!isManifest && !isTwoColumnTrack)
 			format = Setup.getPickupSwitchListMessageFormat();
 		else if (isManifest && isTwoColumnTrack)
@@ -642,11 +642,11 @@ public class TrainCommon {
 		if (isManifest) {
 			StringBuffer buf = new StringBuffer(padAndTruncateString(Setup.getDropCarPrefix(), Setup
 					.getManifestPrefixLength()));
-			String[] format = Setup.getDropCarMessageFormat();
+			String[] format = Setup.getDropManifestMessageFormat();
 			boolean isLocal = isLocalMove(car);
 			if (isLocal) {
 				buf = new StringBuffer(padAndTruncateString(Setup.getLocalPrefix(), Setup.getManifestPrefixLength()));
-				format = Setup.getLocalMessageFormat();
+				format = Setup.getLocalManifestMessageFormat();
 			}
 			dropCar(file, car, buf, format, isLocal, isManifest);
 		} else {
@@ -657,7 +657,7 @@ public class TrainCommon {
 			if (isLocal) {
 				buf = new StringBuffer(padAndTruncateString(Setup.getSwitchListLocalPrefix(), Setup
 						.getSwitchListPrefixLength()));
-				format = Setup.getSwitchListLocalMessageFormat();
+				format = Setup.getLocalSwitchListMessageFormat();
 			}
 			dropCar(file, car, buf, format, isLocal, isManifest);
 		}
@@ -690,7 +690,7 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer();
 		String[] format;
 		if (isManifest && !isTwoColumnTrack)
-			format = Setup.getDropCarMessageFormat();
+			format = Setup.getDropManifestMessageFormat();
 		else if (!isManifest && !isTwoColumnTrack)
 			format = Setup.getDropSwitchListMessageFormat();
 		else if (isManifest && isTwoColumnTrack)
@@ -723,9 +723,9 @@ public class TrainCommon {
 		StringBuffer buf = new StringBuffer();
 		String[] format;
 		if (isManifest)
-			format = Setup.getLocalMessageFormat();
+			format = Setup.getLocalManifestMessageFormat();
 		else
-			format = Setup.getSwitchListLocalMessageFormat();
+			format = Setup.getLocalSwitchListMessageFormat();
 		for (String attribute : format) {
 			String s = getCarAttribute(car, attribute, !PICKUP, LOCAL);
 			buf.append(s);
@@ -1465,7 +1465,7 @@ public class TrainCommon {
 
 	public String getPickupCarHeader(boolean isManifest, boolean isTwoColumnTrack) {
 		if (isManifest && !isTwoColumnTrack)
-			return getHeader(Setup.getPickupCarMessageFormat(), PICKUP, !LOCAL, !ENGINE);
+			return getHeader(Setup.getPickupManifestMessageFormat(), PICKUP, !LOCAL, !ENGINE);
 		else if (!isManifest && !isTwoColumnTrack)
 			return getHeader(Setup.getPickupSwitchListMessageFormat(), PICKUP, !LOCAL, !ENGINE);
 		else if (isManifest && isTwoColumnTrack)
@@ -1476,7 +1476,7 @@ public class TrainCommon {
 
 	public String getDropCarHeader(boolean isManifest, boolean isTwoColumnTrack) {
 		if (isManifest && !isTwoColumnTrack)
-			return getHeader(Setup.getDropCarMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
+			return getHeader(Setup.getDropManifestMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
 		else if (!isManifest && !isTwoColumnTrack)
 			return getHeader(Setup.getDropSwitchListMessageFormat(), !PICKUP, !LOCAL, !ENGINE);
 		else if (isManifest && isTwoColumnTrack)
@@ -1487,9 +1487,9 @@ public class TrainCommon {
 
 	public String getLocalMoveHeader(boolean isManifest) {
 		if (isManifest)
-			return getHeader(Setup.getLocalMessageFormat(), !PICKUP, LOCAL, !ENGINE);
+			return getHeader(Setup.getLocalManifestMessageFormat(), !PICKUP, LOCAL, !ENGINE);
 		else
-			return getHeader(Setup.getSwitchListLocalMessageFormat(), !PICKUP, LOCAL, !ENGINE);
+			return getHeader(Setup.getLocalSwitchListMessageFormat(), !PICKUP, LOCAL, !ENGINE);
 	}
 
 	private String getHeader(String[] format, boolean isPickup, boolean isLocal, boolean isEngine) {

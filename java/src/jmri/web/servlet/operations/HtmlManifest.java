@@ -197,7 +197,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                         else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                             builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                         } else {
-                            builder.append(pickUpCar(car, Setup.getPickupCarMessageFormat()));
+                            builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
                         }
                     }
                 }
@@ -211,9 +211,9 @@ public class HtmlManifest extends HtmlTrainCommon {
                         // use truncated format if there's a switch list
                         builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), this.isLocalMove(car)));
                     } else {
-                        String[] format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup.getSwitchListLocalMessageFormat();
+                        String[] format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup.getLocalSwitchListMessageFormat();
                         if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
-                            format = (!local) ? Setup.getDropCarMessageFormat() : Setup.getLocalMessageFormat();
+                            format = (!local) ? Setup.getDropManifestMessageFormat() : Setup.getLocalManifestMessageFormat();
                         }
                         builder.append(dropCar(car, format, this.isLocalMove(car)));
                     }
