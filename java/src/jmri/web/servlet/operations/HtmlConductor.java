@@ -167,7 +167,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             // Is the next location the same as the previous?
             RouteLocation rlNext = sequence.get(r + 1);
             if (!routeLocationName.equals(splitString(rlNext.getName()))) {
-                if (newWork) {
+                if (work) {
                     if (!Setup.isPrintLoadsAndEmptiesEnabled()) {
                         // Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
                         builder.append(String.format(strings.getProperty("TrainDepartsCars"),
