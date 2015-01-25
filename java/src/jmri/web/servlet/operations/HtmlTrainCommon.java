@@ -63,14 +63,17 @@ public class HtmlTrainCommon extends TrainCommon {
 
     public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
         // list utility cars by type, track, length, and load
-        String[] messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
-        if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
+        String[] messageFormat;
+        if (isManifest) {
             messageFormat = Setup.getPickupUtilityManifestMessageFormat();
+        } else {
+        	messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
         }
-        if (this.countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP) == 0) {
+        int count = countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
+        if (count == 0) {
             return ""; // already printed out this car type
         }
-        return pickUpCar(car, messageFormat);
+        return pickUpCar(car, count, messageFormat);
     }
 
     protected String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
@@ -86,26 +89,41 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (!isLocal && !isManifest) {
             messageFormat = Setup.getDropUtilitySwitchListMessageFormat();
         }
-        if (countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP) == 0) {
+        int count = countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
+        if (count == 0) {
             return ""; // already printed out this car type
         }
-        return dropCar(car, messageFormat, isLocal);
+        return dropCar(car, count, messageFormat, isLocal);
+    }
+    
+    protected String pickUpCar(Car car, String[] format) {
+    	return pickUpCar(car, 0, format);
     }
 
-    protected String pickUpCar(Car car, String[] format) {
+    protected String pickUpCar(Car car, int count, String[] format) {
         if (isLocalMove(car)) {
             return ""; // print nothing local move, see dropCar
         }
         StringBuilder builder = new StringBuilder();
+        // count the number of utility cars
+        if (count != 0)
+        	builder.append(count);
         for (String attribute : format) {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, PICKUP, !LOCAL), attribute.toLowerCase())).append(" "); // NOI18N
         }
         log.debug("Picking up car {}", builder);
         return String.format(locale, strings.getProperty(this.resourcePrefix + "PickUpCar"), builder.toString()); // NOI18N
     }
-
+    
     protected String dropCar(Car car, String[] format, boolean isLocal) {
+    	return dropCar(car, 0, format, isLocal);
+    }
+
+    protected String dropCar(Car car, int count, String[] format, boolean isLocal) {
         StringBuilder builder = new StringBuilder();
+        // count the number of utility cars
+        if (count != 0)
+        	builder.append(count);
         for (String attribute : format) {
             builder.append(String.format(locale, strings.getProperty("Attribute"), getCarAttribute(car, attribute, !PICKUP, isLocal), attribute.toLowerCase())).append(" "); // NOI18N
         }

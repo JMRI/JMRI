@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
@@ -13,7 +14,9 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.util.FileUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -255,7 +258,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                         if (car.getRouteLocation() == location && car.getTrack() != null && car.getRouteDestination() == rld) {
                             pickedUp.add(car.getId());
                             if (car.isUtility()) {
-                                builder.append(pickupUtilityCars(carList, car, location, rld, false));
+                                builder.append(pickupUtilityCars(carList, car, location, rld, TrainCommon.IS_MANIFEST));
                             } // use truncated format if there's a switch list
                             else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                                 builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
