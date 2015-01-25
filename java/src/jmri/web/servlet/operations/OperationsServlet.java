@@ -206,7 +206,7 @@ public class OperationsServlet extends HttpServlet {
                 if (location.equals(NULL)) {
                     train.terminate();
                 } else if (!train.move(location)) {
-                    response.sendError(412, Bundle.getMessage(request.getLocale(), "ErrorTrainMovement", id, location));
+                    response.sendError(412, String.format(Bundle.getMessage(request.getLocale(), "ErrorTrainMovement"), id, location));
                 }
             }
             log.debug("Getting conductor HTML code for train {}", id);
