@@ -209,10 +209,11 @@ Actual release steps:
     keys for SourceForge.net set up)
 
     (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
+    (the "./testrelease 3.11.2" local script on shell.sf.net does those steps)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.5/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.2/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
