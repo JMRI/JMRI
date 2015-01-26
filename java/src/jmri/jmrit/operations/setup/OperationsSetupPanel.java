@@ -6,7 +6,6 @@ import java.awt.GridBagLayout;
 import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -18,9 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.JTextPane;
-
 import jmri.jmrit.display.LocoIcon;
 import jmri.jmrit.operations.ExceptionDisplayFrame;
 import jmri.jmrit.operations.OperationsXml;
@@ -31,7 +29,6 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.web.server.WebServerManager;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -113,11 +110,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
     JComboBox<String> terminateComboBox = new JComboBox<>();
 
     // text area
-//    JTextArea commentTextArea = new JTextArea(2, 60);
-//    JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-//            JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    
-    JTextPane commentTextArea = new JTextPane();
+    JTextArea commentTextArea = new JTextArea(2, 80);
 
     public OperationsSetupPanel() {
         super();
@@ -355,15 +348,17 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         terminateComboBox.setSelectedItem(Setup.getTrainIconColorTerminate());
 
         // comment
-//        JPanel pC = new JPanel();
-//        pC.setLayout(new GridBagLayout());
-//        pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-//        addItem(pC, commentScroller, 0, 0);
+        JPanel pC = new JPanel();
+        pC.setLayout(new GridBagLayout());
+        pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
+    	JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+    			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        addItem(pC, commentScroller, 0, 0);
+        
+        pIcon.add(pC);
 
         // adjust text area width based on window size
 //        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
-        
-        commentTextArea.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
 
         // row 15
         JPanel pControl = new JPanel();
@@ -375,7 +370,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         add(panelPane);
         add(options);
         add(pIconPane);
-        add(commentTextArea);
+//        add(pC);
         add(pControl);
 
         // setup buttons

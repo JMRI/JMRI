@@ -3,9 +3,6 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import jmri.jmrit.operations.OperationsFrame;
@@ -19,7 +16,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 
-public class OperationsSetupFrame extends OperationsFrame implements PropertyChangeListener {
+public class OperationsSetupFrame extends OperationsFrame {
 
 	/**
 	 * 
@@ -27,12 +24,12 @@ public class OperationsSetupFrame extends OperationsFrame implements PropertyCha
 	private static final long serialVersionUID = 852682446088800323L;
 
 	public OperationsSetupFrame() {
-            super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSetupPanel());
+		super(Bundle.getMessage("TitleOperationsSetup"), new OperationsSetupPanel());
 	}
 
-        @Override
+	@Override
 	public void initComponents() {
-            super.initComponents();
+		super.initComponents();
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
@@ -51,22 +48,6 @@ public class OperationsSetupFrame extends OperationsFrame implements PropertyCha
 		addHelpMenu("package.jmri.jmrit.operations.Operations_Settings", true); // NOI18N
 
 		initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
-	}
-
-	// Save, Delete, Add buttons
-        @Override
-	public void buttonActionPerformed(ActionEvent ae) {
-            ((OperationsSetupPanel) this.getContentPane()).buttonActionPerformed(ae);
-	}
-
-        @Override
-	public void checkBoxActionPerformed(ActionEvent ae) {
-            ((OperationsSetupPanel) this.getContentPane()).checkBoxActionPerformed(ae);
-	}
-
-        @Override
-	public void propertyChange(PropertyChangeEvent e) {
-            ((OperationsSetupPanel) this.getContentPane()).propertyChange(e);
 	}
 
 	static Logger log = LoggerFactory.getLogger(OperationsSetupFrame.class.getName());
