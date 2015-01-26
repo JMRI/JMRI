@@ -134,7 +134,7 @@ public class TrainManifest extends TrainCommon {
 							newLine(fileOut, rl.getLocation().getComment());
 					}
 				}
-				
+
 				// add track comments
 				printTrackComments(fileOut, rl, carList, IS_MANIFEST);
 
@@ -169,7 +169,7 @@ public class TrainManifest extends TrainCommon {
 				}
 
 				if (rl != train.getRoute().getTerminatesRouteLocation()) {
-					// Is the next location the same as the previous?
+					// Is the next location the same as the current?
 					RouteLocation rlNext = train.getRoute().getNextRouteLocation(rl);
 					if (!routeLocationName.equals(splitString(rlNext.getName()))) {
 						if (hasWork) {
