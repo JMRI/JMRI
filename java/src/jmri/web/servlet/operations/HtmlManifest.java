@@ -191,10 +191,12 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (cars.path(JSON.ADD).size() > 0) {
                 for (JsonNode car : cars.path(JSON.ADD)) {
                     if (!this.isLocalMove(car)) {
-                        if (this.isUtilityCar(car)) {
-                            builder.append(pickupUtilityCars(cars, car, location, isManifest));
-                        } // use truncated format if there's a switch list
-                        else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+// TODO utility format not quite ready, so display each car in manifest for now.
+//                        if (this.isUtilityCar(car)) {
+//                            builder.append(pickupUtilityCars(cars, car, location, isManifest));
+//                        } // use truncated format if there's a switch list
+//                        else                         	
+                        if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                             builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
                         } else {
                             builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
@@ -205,17 +207,21 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (cars.path(JSON.REMOVE).size() > 0) {
                 for (JsonNode car : cars.path(JSON.REMOVE)) {
                     boolean local = isLocalMove(car);
-                    if (this.isUtilityCar(car)) {
-                        builder.append(setoutUtilityCars(cars, car, location, isManifest));
-                    } else if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+// TODO utility format not quite ready, so display each car in manifest for now.
+//                    if (this.isUtilityCar(car)) {
+//                        builder.append(setoutUtilityCars(cars, car, location, isManifest));
+//                    } else 
+                    if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                         // use truncated format if there's a switch list
-                        builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), this.isLocalMove(car)));
+                        builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
                     } else {
-                        String[] format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup.getLocalSwitchListMessageFormat();
-                        if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
+                        String[] format;
+                        if (isManifest) {
                             format = (!local) ? Setup.getDropManifestMessageFormat() : Setup.getLocalManifestMessageFormat();
+                        } else {
+                        	format = (!local) ? Setup.getDropSwitchListMessageFormat() : Setup.getLocalSwitchListMessageFormat();
                         }
-                        builder.append(dropCar(car, format, this.isLocalMove(car)));
+                        builder.append(dropCar(car, format, local));
                     }
                 }
             }

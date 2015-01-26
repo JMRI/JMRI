@@ -166,11 +166,12 @@ public class JsonManifest extends TrainCommon {
                         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                             emptyCars++;
                         }
-                        if (car.isUtility()) {
-                            pickups.add(this.jsonPickupUtilityCars(carList, car, routeLocation, destination, true));
-                        } else {
-                            pickups.add(JsonUtil.getCar(car));
-                        }
+// TODO utility format not quite ready, so display each car in manifest for now.
+//                        if (car.isUtility()) {
+//                            pickups.add(this.jsonPickupUtilityCars(carList, car, routeLocation, destination, true));
+//                        } else {
+                         pickups.add(JsonUtil.getCar(car));
+ //                       }
                     }
                 }
             }
@@ -184,11 +185,12 @@ public class JsonManifest extends TrainCommon {
                     if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(CarLoad.LOAD_TYPE_EMPTY)) {
                         emptyCars--;
                     }
-                    if (car.isUtility()) {
-                        setouts.add(this.setoutUtilityCars(carList, car, routeLocation, true));
-                    } else {
-                        setouts.add(JsonUtil.getCar(car));
-                    }
+// TODO utility format not quite ready, so display each car in manifest for now.                   
+//                    if (car.isUtility()) {
+//                        setouts.add(this.setoutUtilityCars(carList, car, routeLocation, true));
+//                    } else {
+                     setouts.add(JsonUtil.getCar(car));
+//                   }
                 }
             }
             jsonCars.put(JSON.REMOVE, setouts);
