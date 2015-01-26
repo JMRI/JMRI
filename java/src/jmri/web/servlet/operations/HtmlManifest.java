@@ -225,9 +225,11 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String pickupUtilityCars(JsonNode cars, JsonNode car, RouteLocation location, boolean isManifest) {
         // list utility cars by type, track, length, and load
-        String[] messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
-        if (isManifest || Setup.isSwitchListFormatSameAsManifest()) {
+        String[] messageFormat;
+        if (isManifest) {
             messageFormat = Setup.getPickupUtilityManifestMessageFormat();
+        } else {
+        	messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
         }
         // TODO: reimplement following commented out code
 //        if (this.countUtilityCars(messageFormat, carList, car, location, rld, PICKUP) == 0) {
@@ -238,16 +240,15 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected String setoutUtilityCars(JsonNode cars, JsonNode car, RouteLocation location, boolean isManifest) {
         boolean isLocal = isLocalMove(car);
-        if (Setup.isSwitchListFormatSameAsManifest()) {
-            isManifest = true;
-        }
-        String[] messageFormat = Setup.getDropUtilityManifestMessageFormat();
+        String[] messageFormat;
         if (isLocal && isManifest) {
             messageFormat = Setup.getLocalUtilityManifestMessageFormat();
         } else if (isLocal && !isManifest) {
             messageFormat = Setup.getLocalUtilitySwitchListMessageFormat();
         } else if (!isLocal && !isManifest) {
             messageFormat = Setup.getDropUtilitySwitchListMessageFormat();
+        } else {
+        	messageFormat = Setup.getDropUtilityManifestMessageFormat();
         }
         // TODO: reimplement following commented out code
 //        if (countUtilityCars(messageFormat, carList, car, location, null, !PICKUP) == 0) {
@@ -265,7 +266,8 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (!attribute.trim().equals("")) {
                 attribute = attribute.toLowerCase();
                 log.debug("Adding car with attribute {}", attribute);
-                if (attribute.equals(JSON.LOCATION)) {
+                if (attribute.equals(JSON.LOCATION) || attribute.equals(JSON.TRACK)) {
+                	attribute = JSON.LOCATION;	// treat "track" as "location"
                     builder.append(this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute), ShowLocation.track))).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
@@ -282,7 +284,8 @@ public class HtmlManifest extends HtmlTrainCommon {
             if (!attribute.trim().equals("")) {
                 attribute = attribute.toLowerCase();
                 log.debug("Removing car with attribute {}", attribute);
-                if (attribute.equals(JSON.DESTINATION)) {
+                if (attribute.equals(JSON.DESTINATION) || attribute.equals(JSON.TRACK)) {
+                	attribute = JSON.DESTINATION; // treat "track" as "destination"
                     builder.append(this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute), ShowLocation.track))).append(" "); // NOI18N
                 } else if (attribute.equals(JSON.LOCATION)) {
                     builder.append(this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute), ShowLocation.track))).append(" "); // NOI18N
@@ -314,7 +317,8 @@ public class HtmlManifest extends HtmlTrainCommon {
         for (String attribute : Setup.getDropEngineMessageFormat()) {
             if (!attribute.trim().equals("")) {
                 attribute = attribute.toLowerCase();
-                if (attribute.equals(JSON.DESTINATION)) {
+                if (attribute.equals(JSON.DESTINATION) || attribute.equals(JSON.TRACK)) {
+                	attribute = JSON.DESTINATION; // treat "track" as "destination"
                     builder.append(this.getFormattedAttribute(attribute, this.getDropLocation(engine.path(attribute), ShowLocation.track))).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
@@ -341,7 +345,8 @@ public class HtmlManifest extends HtmlTrainCommon {
         for (String attribute : Setup.getPickupEngineMessageFormat()) {
             if (!attribute.trim().equals("")) {
                 attribute = attribute.toLowerCase();
-                if (attribute.equals(JSON.LOCATION)) {
+                if (attribute.equals(JSON.LOCATION) || attribute.equals(JSON.TRACK)) {
+                	attribute = JSON.LOCATION;	// treat "track" as "location"
                     builder.append(this.getFormattedAttribute(attribute, this.getPickupLocation(engine.path(attribute), ShowLocation.track))).append(" "); // NOI18N
                 } else {
                     builder.append(this.getTextAttribute(attribute, engine)).append(" "); // NOI18N
