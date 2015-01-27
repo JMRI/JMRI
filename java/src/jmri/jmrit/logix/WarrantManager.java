@@ -3,9 +3,13 @@
 
 package jmri.jmrit.logix;
 
+import java.io.File;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import jmri.managers.AbstractManager;
+import jmri.util.FileUtil;
 
 /**
  * Basic Implementation of a WarrantManager.
@@ -32,10 +36,13 @@ import jmri.managers.AbstractManager;
 public class WarrantManager extends AbstractManager
     implements java.beans.PropertyChangeListener, jmri.InstanceManagerAutoDefault {
 
+    static private WarrantPreferences warrantPreferences = null;
+    
     public WarrantManager() {
         super();
     }
     
+    @Override
     public int getXMLOrder(){
         return jmri.Manager.WARRANTS;
     }
@@ -115,6 +122,18 @@ public class WarrantManager extends AbstractManager
         return (_instance);
     }
     
+    static public WarrantPreferences warrantPreferencesInstance(){
+    	if (warrantPreferences==null) {
+            if(jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantPreferences.class)==null){
+                jmri.InstanceManager.store(new jmri.jmrit.logix.WarrantPreferences(FileUtil.getUserFilesPath()+
+                		"signal" +File.separator+ "WarrantPreferences.xml"), jmri.jmrit.logix.WarrantPreferences.class);
+            }
+            warrantPreferences = jmri.InstanceManager.getDefault(jmri.jmrit.logix.WarrantPreferences.class);    		
+    	}
+        return warrantPreferences;
+    }
+
+    @Override
     public String getBeanTypeHandled(){
         return Bundle.getMessage("BeanNameWarrant");
     }

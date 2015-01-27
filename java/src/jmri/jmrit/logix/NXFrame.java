@@ -9,7 +9,6 @@ import java.awt.Point;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.Box;
@@ -17,12 +16,10 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JButton;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JRadioButtonMenuItem;
 import javax.swing.JTextField;
 
 import jmri.DccLocoAddress;
@@ -56,6 +53,10 @@ public class NXFrame extends WarrantRoute {
 	 */
 	private static final long serialVersionUID = -8971792418011219112L;
 	WarrantTableFrame 	_parent;
+    // Throttle setting = T.   Velocity(in/ms) = V.  V = T/S*F
+    private float _scale = 87.1f;
+    static final float FACTOR = 0.8117f;
+    
     JTextField  _dccNumBox = new JTextField();
     JTextField  _trainNameBox = new JTextField();
     JTextField  _nameBox = new JTextField();
@@ -68,19 +69,14 @@ public class NXFrame extends WarrantRoute {
 //    JCheckBox	_addTracker = new JCheckBox();
     JTextField _rampInterval = new JTextField(6);
     JTextField _numStepsBox = new JTextField(6);
-    JTextField _searchDepth = new JTextField();
     JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
     JPanel		_autoRunPanel;
     JPanel		_manualPanel;
-    HashMap<Float, JRadioButtonMenuItem> _scaleMap = new HashMap<Float, JRadioButtonMenuItem>();
-    JMenu 		_scaleMenu;
-    ButtonGroup _scaleButtons = new ButtonGroup();
 	// Session persistent defaults for NX warrants
 	static boolean _eStop = false;
 	static boolean _haltStart = false;
 //	static boolean _addTracker = false;
-	static int _searchdepth = 15;
 	static float _maxSpeed = 0.5f;
 	static float _minSpeed = 0.075f;
 	static float _intervalTime = 2000f;
@@ -115,12 +111,7 @@ public class NXFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(Box.createVerticalGlue());
         panel.add(makeBlockPanels());
-        JPanel pp = new JPanel();
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(WarrantFrame.makeTextBoxPanel(false, _searchDepth, "SearchDepth", true));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(pp);
-//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(searchDepthPanel(false));
         ButtonGroup bg = new ButtonGroup();
         bg.add(_runAuto);
         bg.add(_runManual);
@@ -135,7 +126,7 @@ public class NXFrame extends WarrantRoute {
             }
         });
         _runAuto.setSelected(true);
-        pp = new JPanel();
+        JPanel pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(_runAuto);
@@ -213,7 +204,6 @@ public class NXFrame extends WarrantRoute {
         _minSpeedBox.setText(Float.toString(_minSpeed));
         _rampInterval.setText(Float.toString(_intervalTime/1000));
         _numStepsBox.setText(Integer.toString(_numSteps));
-        _searchDepth.setText(Integer.toString(_searchdepth));
         JPanel p = new JPanel();
         JButton button = new JButton(Bundle.getMessage("ButtonRunNX"));
         button.addActionListener(new ActionListener() {
@@ -252,70 +242,8 @@ public class NXFrame extends WarrantRoute {
     private void makeMenus() {
 		setTitle(Bundle.getMessage("AutoWarrant"));
         JMenuBar menuBar = new JMenuBar();
-        _scaleMenu = new JMenu(Bundle.getMessage("MenuScale"));
-        menuBar.add(_scaleMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.logix.NXWarrant", true);
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "G", "20.3"), 20.3f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "L", "38"), 38f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "O", "43"), 43f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "S", "64"), 64f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "OO", "76.2"), 76.2f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "HO", "87.1"), 87.1f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "TT", "120"), 120f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "N", "160"), 160f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "Z", "220"), 220f));
-        _scaleMenu.add(makeItem(Bundle.getMessage("scaleMenu", "T", "480"), 480f));
-        _scaleMenu.add(makeCustomItem(_scale));
-    	setScaleMenu();
-    }
-    private JRadioButtonMenuItem makeItem(String name, float scale) {
-    	ActionListener act = new ActionListener() {
-        	float sc;
-        	@Override
-            public void actionPerformed(ActionEvent e) {
-            	setScale(sc);
-            	setScaleMenu();
-            }
-            ActionListener init (float s) {
-            	sc = s;
-                return this;
-            }
-               		
-    	}.init(scale);
-        JRadioButtonMenuItem rbmi = new JRadioButtonMenuItem(name);
-        rbmi.addActionListener(act);
-        _scaleButtons.add(rbmi);
-        _scaleMap.put(Float.valueOf(scale), rbmi); 
-    	return rbmi;
-    }
-    private JRadioButtonMenuItem makeCustomItem(float scale) {
-    	ActionListener act = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	scaleDialog();
-            }
-    	};
-    	JRadioButtonMenuItem rbmi = _scaleMap.get(scale);
-    	if (rbmi!=null) {
-                rbmi = new JRadioButtonMenuItem(Bundle.getMessage("custom"));
-    	} else {
-            rbmi = new JRadioButtonMenuItem(Bundle.getMessage("scaleMenu", Bundle.getMessage("custom"), Float.valueOf(scale)));    		
-    	}
-        rbmi.addActionListener(act);
-        _scaleMenu.add(rbmi);
-        _scaleButtons.add(rbmi);
-        _scaleMap.put(Float.valueOf(0), rbmi); 
-        return rbmi;
-    }
-    private void setScaleMenu() {
-    	JRadioButtonMenuItem rbmi = _scaleMap.get(_scale);
-    	if (rbmi==null) {
-    		rbmi = _scaleMap.get(0f);
-    		_scaleMenu.remove(rbmi);
-    		_scaleButtons.remove(rbmi);
-    		rbmi = makeCustomItem(_scale);
-    	}
-		rbmi.setSelected(true);
     }
     
     private void enableAuto(boolean enable) {
@@ -432,28 +360,6 @@ public class NXFrame extends WarrantRoute {
     	_parent.closeNXFrame();           	    	
     }
 
-    private void scaleDialog() {
-    	String s = JOptionPane.showInputDialog(this, Bundle.getMessage("customInput"), 
-    			Bundle.getMessage("customTitle"), JOptionPane.QUESTION_MESSAGE);
-    	try {
-    		Float f = new Float(s);
-    		float num = f.floatValue();
-    		if (num <= 1) {
-    			throw new NumberFormatException();
-    		}
-    		setScale(num);
-    	} catch (NumberFormatException nfe) {
-    		JOptionPane.showMessageDialog(this, Bundle.getMessage("customError", s), 
-    				Bundle.getMessage("customTitle"), JOptionPane.ERROR_MESSAGE);
-    	}
-    	setScaleMenu();
-    }
-    public void setSearchDepth(int s) {
-    	_searchdepth = s;
-    }
-    public float getSearchDepth() {
-    	return _searchdepth;
-    }
     public void setNumSteps(int s) {
     	_numSteps = s;
     }
@@ -490,9 +396,6 @@ public class NXFrame extends WarrantRoute {
     public float getScale() {
     	return _scale;
     }
-    // Throttle setting = T.   Velocity(in/ms) = V.  V = T/S*F
-    float _scale = 87.1f;
-    static final float FACTOR = 0.8117f;
     
     private String makeCommands(Warrant w) {
     	float maxSpeed = 0; 
@@ -829,12 +732,7 @@ public class NXFrame extends WarrantRoute {
         	msg = Bundle.getMessage("BadDccAddress", _addr);
         }
         if (msg==null) {
-        	try {
-        		 _searchdepth = Integer.parseInt(_searchDepth.getText());
-            } catch (NumberFormatException nfe) {
-            	_searchdepth = 15;
-            }
-            msg = findRoute(_searchdepth);
+            msg = findRoute();
         }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,

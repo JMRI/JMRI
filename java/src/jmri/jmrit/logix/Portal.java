@@ -11,6 +11,7 @@ import jmri.JmriException;
 import jmri.NamedBean;
 import jmri.SignalHead;
 import jmri.SignalMast;
+import jmri.implementation.SignalSpeedMap;
 
 /**
  * A Portal is a boundary between two Blocks.
@@ -149,7 +150,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         }
         return msg;
     }
-    private String checkName(String name, OBlock block) {
+    static private String checkName(String name, OBlock block) {
     	if (block==null) {
     		return null;
     	}
@@ -180,8 +181,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         } else if (!verify(_toPaths, block)) {
             return false;
         }
-        if (log.isDebugEnabled()) log.debug("setToBlock: oldBlock= \""+getToBlockName()
-                  +"\" newBlock \""+(block!=null ? block.getDisplayName() : null)+"\".");
+//        if (log.isDebugEnabled()) log.debug("setToBlock: oldBlock= \""+getToBlockName()
+//                  +"\" newBlock \""+(block!=null ? block.getDisplayName() : null)+"\".");
         if (_toBlock!=null) { _toBlock.removePortal(this); }
         _toBlock = block;
         if (_toBlock!=null) { _toBlock.addPortal(this); }
@@ -434,9 +435,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
 
-    private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
+    static private String getPermissibleSignalEntranceSpeed(SignalHead signal) {
         int appearance = signal.getAppearance();
-        String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
+        String speed = SignalSpeedMap.getMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
         if (speed==null) {
             log.error("SignalHead \""+ signal.getDisplayName()+"\" has no speed specified for appearance \""+
                             signal.getAppearanceName(appearance)+"\"! - Restricting Movement!");
@@ -447,9 +448,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
 
-    private String getPermissibleSignalEntranceSpeed(SignalMast signal) {
+    static private String getPermissibleSignalEntranceSpeed(SignalMast signal) {
         String aspect = signal.getAspect();
-        String speed = Warrant.getSpeedMap().getAspectSpeed(aspect, signal.getSignalSystem());
+        String speed = SignalSpeedMap.getMap().getAspectSpeed(aspect, signal.getSignalSystem());
         if (speed==null) {
             log.error("SignalMast \"Signal "+ signal.getDisplayName()+"\" has no speed specified for aspect \""+
                                                 aspect+"\"! - Restricting Movement!");
@@ -460,9 +461,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
     
-    private String getPermissibleSignalExitSpeed(SignalHead signal) {
+    static private String getPermissibleSignalExitSpeed(SignalHead signal) {
         int appearance = signal.getAppearance();
-        String speed = Warrant.getSpeedMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
+        String speed = SignalSpeedMap.getMap().getAppearanceSpeed(signal.getAppearanceName(appearance));
         if (speed==null) {
             log.error("SignalHead \""+ signal.getDisplayName()+"\" has no (exit) speed specified for appearance \""+
                             signal.getAppearanceName(appearance)+"\"! - Restricting Movement!");
@@ -473,9 +474,9 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
 
-    private String getPermissibleSignalExitSpeed(SignalMast signal) {
+    static private String getPermissibleSignalExitSpeed(SignalMast signal) {
         String aspect = signal.getAspect();
-        String speed = Warrant.getSpeedMap().getAspectExitSpeed(aspect, signal.getSignalSystem());
+        String speed = SignalSpeedMap.getMap().getAspectExitSpeed(aspect, signal.getSignalSystem());
         if (speed==null) {
             log.error("SignalMast \""+ signal.getDisplayName()+"\" has no exit speed specified for aspect \""+
                                                 aspect+"\"! - Restricting Movement!");
@@ -486,7 +487,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
     
-    private boolean verify(List <OPath> paths, OBlock block) {
+    static private boolean verify(List <OPath> paths, OBlock block) {
         if (block==null) {
             if (paths.size()==0) {
                 return true;
@@ -529,6 +530,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return (_fromBlock!=null && _toBlock!=null);
     }
 
+    @Override
     public void dispose() {
         if (_fromBlock!=null) _fromBlock.removePortal(this);
         if (_toBlock!=null) _toBlock.removePortal(this);
@@ -541,6 +543,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         		getUserName(), getFromBlockName(), getToBlockName());
     }
     
+    @Override
     public String toString() {
         return ("Portal \""+getUserName()+"\" from block \""+getFromBlockName()+"\" to block \""+getToBlockName()+"\""); 
     }

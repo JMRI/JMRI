@@ -159,7 +159,7 @@ you can restrict the number of routes found.
 Sometimes the dialog message "No Route found 
 from "Origin Block', path ..." etc. is displayed. Responding <b>Yes</b> to the
 question, "Show the search tree?" will open a window with a graphic description of 
-all paths begining at the Origin block, path and exit portal.  Trace what you 
+all paths beginning at the Origin block, path and exit portal.  Trace what you 
 believe to be a likely route by clicking on the nodes.  Each node is a block
 path and will display its path and block name and the entry and exit portals
 it uses.  At the end of each branch, the leaf node will be the point 
@@ -187,10 +187,10 @@ indicator track icon as the train travels along the warrant route.
 </p> 
 If you have defined an JMRI engine roster, the train names are displayed in
 the <b>Engine Roster</b> drop down ComboBox.  Selecting a name from this list
-will fill in the <b>Train Name</b>, and <b>Adddress</b> text fields and assigns them to 
+will fill in the <b>Train Name</b>, and <b>Address</b> text fields and assigns them to 
 the warrant.
 <p>
-A DCC address typed into the<b>Adddress</b>
+A DCC address typed into the<b>Address</b>
 text field will be used whether or not it is found in the
 JMRI engine roster. 
 </p>
@@ -205,11 +205,11 @@ then a throttle can be acquired by pressing the <b>Start</b> button.  This
 throttle will operate the acquired train and all the throttle commands will be
 recorded until the <b>Stop</b> button is pressed.
 <ul>
-	<b>NOTE:</b> It can be inconvienent to use the computer screen Learn Mode 
+	<b>NOTE:</b> It can be inconvenient to use the computer screen Learn Mode 
 	throttle.  Under LocoNet a handheld throttle may "steal" the screen throttle
 	address and its commands will be recorded.  For other systems a 
 	walkaround WiFi throttle
-	can be used to record commands.  Whatever thtottle is used, start 
+	can be used to record commands.  Whatever throttle is used, start 
 	and stop the recording with the screen buttons.
 </ul>
 The learn script should be done with a completely clear route - All turnouts 
@@ -247,7 +247,7 @@ this:
 
 <H2>Running Automated Trains</H2>
 The recorded throttle commands can be played back to run the train.  When running 
-automanted, additional control of the train can done through three choices: <b>Halt</b>,
+automated, additional control of the train can done through three choices: <b>Halt</b>,
 <b>Resume</b> and <b>Abort</b>.  As suggested by the names, these command stop a running
 automated train, restart it or stop the train and abort the remaining throttle commands.
 <p>

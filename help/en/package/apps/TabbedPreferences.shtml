@@ -45,6 +45,7 @@ Clicking on each preference will then populate the right hand side, with the var
 <a href="#Profiles">Config Profiles</a><br>
 <a href="#JSONServer">JSON Server</a><br>
 <a href="#WebServer">Web Server</a><br>
+<a href="#Warrants">Warrants</a><br>
 <p>Perhaps the most important control is at the bottom of this section:
 The "Save" button!  
 <p>
@@ -317,6 +318,30 @@ and work with your railroad.
 This tab lets you control what the web server provides.
 For more information, see the 
 <a href="../../html/web/index.shtml#Configure">web server preference pane</a> page.
+
+<a name="Warrants">
+<h2>Warrants and Speed Map</h2></a>
+
+This panel sets parameters used in computing routes for Warrants and for
+controlling the events that warranted trains may encounter.
+<p>
+When an automatically running train encounters a signal that calls for a speed change,
+or progress is blocked by occupancy ahead, the speed map table is used to make the 
+necessary speed change.  Other parameters control the way the speed change is ramped. 
+
+<h3>Speed Map</h3>
+
+The speed Map maps the speed names found in the aspects definition of a signal system to a value.
+It is important that all the speed names used in your signal system be listed in the Speed Map Table.
+The value associated with a speed name can be interpreted in two different ways: As a percentage of 
+the current running speed as recorded or set by an NXWarrant ("PercentNormal"), or as a percentage
+of a full throttle setting ("PercentFullThrottle").
+<p>
+The Head Appearance Map is used when Signal Heads are used as signals.  It maps the appearance to a speed
+name which in turn is mapped to a throttle value.
+<p> 
+For more information on Warrants, see  
+<a href="../jmri/jmrit/logix/Warrant.shtml">About Warrants</a> page.
 
 <!--#include virtual="/Footer" -->
 </body>

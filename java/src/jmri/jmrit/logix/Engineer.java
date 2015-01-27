@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import jmri.implementation.SignalSpeedMap;
 
 /**
  * Execute a throttle command script for a warrant
@@ -39,6 +40,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private int		_sensorWaitState;
     private ThrottleRamp _ramp;
     final ReentrantLock _lock = new ReentrantLock();
+	SignalSpeedMap 	_speedMap;
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -46,9 +48,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _throttle = throttle;
         _syncIdx = 0;
         _waitForSensor = false;
-        setSpeedStepMode(_throttle.getSpeedStepMode());
+        _speedMap = SignalSpeedMap.getMap();
+        _minSpeed = _throttle.getSpeedIncrement();
     }
 
+    @Override
     public void run() {
         if (log.isDebugEnabled()) log.debug("Engineer started warrant "+_warrant.getDisplayName());
 
@@ -127,7 +131,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     }
                 } else if (command.equals("SPEEDSTEP")) {
                     int step = Integer.parseInt(ts.getValue());
-                    setStep(step);
+                    setSpeedStepMode(step);
                 } else if (command.equals("FORWARD")) {
                     boolean isForward = Boolean.parseBoolean(ts.getValue());
                     _throttle.setIsForward(isForward);
@@ -162,26 +166,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _warrant.stopWarrant(false);
     }
 
-    private void setStep(int step) {
-        setSpeedStepMode(step);
-        _throttle.setSpeedStepMode(step);
-    }
-
-    private void setSpeedStepMode(int step) {
-        switch (step) {
-            case DccThrottle.SpeedStepMode14:
-                _minSpeed = 1.0f/15;
-                break;
-            case DccThrottle.SpeedStepMode27:
-                _minSpeed = 1.0f/28;
-                break;
-            case DccThrottle.SpeedStepMode28:
-                _minSpeed = 1.0f/29;
-                break;
-            default:
-                _minSpeed = 1.0f/127;
-                break;
-        }
+    private void setSpeedStepMode(int stepMode) {
+        _throttle.setSpeedStepMode(stepMode);
+        _minSpeed = _throttle.getSpeedIncrement();
     }
 
     /**
@@ -241,7 +228,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-    * Get the last normal speed setting.  Regress through commends, if necessary.  
+    * When restoring speed from a halt or signaled speed restriction,
+    * get the last normal speed setting.  Regress through commends, if necessary.  
     */
     private float getLastSpeedCommand(int currentIndex) {
         float speed = 0.0f;
@@ -275,10 +263,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     	if (sType.equals("EStop")) {
     		return -1;
     	}
-        jmri.implementation.SignalSpeedMap map = Warrant.getSpeedMap();
-        float speed = map.getSpeed(sType)/100;
+        float speed = _speedMap.getSpeed(sType)/100;
 
-        if (map.isRatioOfNormalSpeed()) {
+        if (_speedMap.isRatioOfNormalSpeed()) {
             speed *= s;
         } else { // max speed specified by signal aspect
         	// use the minimum of recorded speed and aspect specified speed
@@ -299,7 +286,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled()) log.debug("_speedType="+_speedType+", Speed set to "+
         		_speed+" _waitForClear= "+_waitForClear+" warrant "+_warrant.getDisplayName());
     }
-
+    
     synchronized public int getRunState() {
         if (_abort) {
             return Warrant.ABORT;
@@ -346,7 +333,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 _lock.unlock();
             }
         } else {
-            _throttle.setSpeedSetting(0.0f);
+        	setSpeed(0.0f);
         	if (_ramp!=null) {
         		_ramp.stop();
         		_ramp = null;
@@ -366,7 +353,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         if (_throttle != null) {
             _throttle.setSpeedSetting(-1.0f);
-            _throttle.setSpeedSetting(0.0f);
+            setSpeed(0.0f);
             setFunction(2, false);
             setFunction(0, false);
            try {
@@ -605,23 +592,21 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (log.isDebugEnabled())log.debug(msg);        	
     }
     
-    protected float getSpeedIncrement() {
-        float incr = Math.max(_throttle.getSpeedIncrement(), _minSpeed);
-        switch (_throttle.getSpeedStepMode()) {
-            case DccThrottle.SpeedStepMode14:
-                break;
-            case DccThrottle.SpeedStepMode27:
-            case DccThrottle.SpeedStepMode28:
-                incr *= 2;
-                break;
-            default:    // SpeedStepMode128
-                incr *= 4;
-                break;
-        }
-        return incr;
+    protected float getRampLengthForSpeed(String endSpeedType) {
+    	float maxRampLength = 0;
+    	float curSpeed = _speed;
+    	float delta = _throttle.getSpeedIncrement()*_speedMap.getNumStepsFromMode(_throttle.getSpeedStepMode());
+        int time = _speedMap.getStepDelay();
+        float scale = NXFrame.getInstance().getScale()*NXFrame.FACTOR;
+    	// assume linear speed change to ramp down to stop
+    	while (curSpeed>0.0) {
+    		maxRampLength += (curSpeed - delta/2)*time/(scale);
+    		curSpeed -= delta;
+    	}
+    	return maxRampLength;
     }
     
-    class ThrottleRamp implements Runnable {
+    private class ThrottleRamp implements Runnable {
         String endSpeedType;
         boolean stop = false;
 
@@ -671,11 +656,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 //                    _warrant.fireRunStatus("SpeedRestriction", old, 
 //                                       (endSpeed > speed ? "increasing" : "decreasing"));
 
-                    float incr = getSpeedIncrement();
-                    
-                    jmri.implementation.SignalSpeedMap map = Warrant.getSpeedMap();
-                    incr *= map.getNumSteps();
-                    int delay = map.getStepDelay();
+                	float incr = _throttle.getSpeedIncrement()*_speedMap.getNumStepsFromMode(_throttle.getSpeedStepMode());
+                    int delay = _speedMap.getStepDelay();
                     
                     if (log.isDebugEnabled()) log.debug("rampSpeed from \""+old+"\" to \""+endSpeedType+
         					"\" step increment= "+incr+" time interval= "+delay+

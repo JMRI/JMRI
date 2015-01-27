@@ -2,6 +2,7 @@ package jmri.jmrit.logix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.event.ActionListener;
@@ -10,8 +11,10 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+
 import javax.swing.*;
 import javax.swing.table.AbstractTableModel;
+
 /*
 import javax.swing.TransferHandler;
 import java.awt.datatransfer.Transferable; 
@@ -23,7 +26,6 @@ import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-
 import jmri.jmrit.picker.PickListModel;
 
 /**
@@ -88,9 +90,7 @@ public class WarrantFrame extends WarrantRoute {
     JRadioButton _invisible = new JRadioButton();
     JTextField  _statusBox = new JTextField(90);
 
-    JTextField  _searchDepth =  new JTextField();
     JTextField  _searchStatus =  new JTextField();
-    private int _maxBlocks = 20;
     
     /**
     *  Constructor for existing warrant
@@ -105,7 +105,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setBlockOrders(_saveWarrant.getBlockOrders());
         _warrant.setThrottleCommands(_saveWarrant.getThrottleCommands());
         init();
-        if (routeIsValid()!=null) { findRoute(_maxBlocks); }
+        if (routeIsValid()!=null) { findRoute(); }
     }
 
     /**
@@ -162,9 +162,6 @@ public class WarrantFrame extends WarrantRoute {
     }
 
     private void init() {
-        doSize(_searchDepth, 30, 10);
-        doSize(_searchStatus, 50, 30);
-
         _commandModel = new ThrottleTableModel();
 
         JPanel contentPane = new JPanel();
@@ -198,10 +195,10 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makeTopPanel() {
         JPanel topPanel = new JPanel();
-        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.PAGE_AXIS));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         panel.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         panel.add(new JLabel(Bundle.getMessage("SystemName")));
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -224,23 +221,24 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makeFindRouteTabPanel() {
         JPanel tab1 = new JPanel();
-        tab1.setLayout(new BoxLayout(tab1, BoxLayout.X_AXIS));
+        tab1.setLayout(new BoxLayout(tab1, BoxLayout.LINE_AXIS));
+        tab1.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         JPanel topLeft = new JPanel();
-        topLeft.setLayout(new BoxLayout(topLeft, BoxLayout.Y_AXIS));
+        topLeft.setLayout(new BoxLayout(topLeft, BoxLayout.PAGE_AXIS));
         
         topLeft.add(makeBlockPanels());
         
-        topLeft.add(Box.createVerticalStrut(STRUT_SIZE));
+        topLeft.add(Box.createVerticalStrut(2*STRUT_SIZE));
         tab1.add(topLeft);
 
         tab1.add(Box.createHorizontalStrut(STRUT_SIZE));
         JPanel topRight = new JPanel();
-        topRight.setLayout(new BoxLayout(topRight, BoxLayout.X_AXIS));
+        topRight.setLayout(new BoxLayout(topRight, BoxLayout.LINE_AXIS));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(Box.createVerticalStrut(2*STRUT_SIZE));
         JButton button = new JButton(Bundle.getMessage("Calculate"));
         button.setMaximumSize(button.getPreferredSize());
         button.addActionListener(new ActionListener() {
@@ -249,7 +247,7 @@ public class WarrantFrame extends WarrantRoute {
             }
        });
         JPanel p = new JPanel();
-        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(new JLabel(Bundle.getMessage("CalculateRoute")));
@@ -259,7 +257,7 @@ public class WarrantFrame extends WarrantRoute {
         pp.add(button);
         p.add(pp);
         panel.add(p);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(Box.createVerticalStrut(2*STRUT_SIZE));
 
         button = new JButton(Bundle.getMessage("Stop"));
         button.setMaximumSize(button.getPreferredSize());
@@ -270,36 +268,20 @@ public class WarrantFrame extends WarrantRoute {
         });
 
         int numBlocks = InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size();
-        if (numBlocks/6 > _maxBlocks) {
-            _maxBlocks = numBlocks/6;
+        if (numBlocks/6 > getDepth()) {
+            setDepth(numBlocks/6);
         }
-        _searchDepth.setText(Integer.toString(_maxBlocks));
-        _searchDepth.setMaximumSize(new Dimension(20, _searchDepth.getPreferredSize().height));
-        _searchDepth.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        _searchDepth.setAlignmentY(JComponent.CENTER_ALIGNMENT);
+        panel.add(searchDepthPanel(true));
+        
         p = new JPanel();
-        p.setLayout(new BorderLayout());
-        pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("SearchDepth")));
-        p.add(pp, BorderLayout.NORTH);
-        p.add(_searchDepth, BorderLayout.CENTER);
-        panel.add(p);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+        p.add(makeBoxPanel(true, _searchStatus, "SearchRoute"));
+    	p.add(Box.createVerticalGlue());
+    	panel.add(p);
 
         _searchStatus.setBackground(Color.white);        
         _searchStatus.setEditable(false);
-        _searchStatus.setMaximumSize(_searchStatus.getPreferredSize());
         p = new JPanel();
-        p.setLayout(new BorderLayout());
-        pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage("SearchRoute")));
-        p.add(pp, BorderLayout.NORTH);
-        p.add(_searchStatus, BorderLayout.CENTER);
-        _searchStatus.setMaximumSize(new Dimension(20, _searchDepth.getPreferredSize().height));
-        _searchStatus.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-        _searchStatus.setAlignmentY(JComponent.CENTER_ALIGNMENT);
         pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
         pp.add(button);
@@ -308,6 +290,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(Box.createRigidArea(new Dimension(10,
                       topLeft.getPreferredSize().height-panel.getPreferredSize().height)));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(Box.createVerticalGlue());
         topRight.add(panel);
         topRight.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -316,29 +299,13 @@ public class WarrantFrame extends WarrantRoute {
         Dimension dim = topRight.getPreferredSize();
         topRight.setMinimumSize(dim);
         tab1.add(topRight);
-
-        JPanel x = new JPanel();
-        x.setLayout(new java.awt.GridBagLayout());
-        java.awt.GridBagConstraints c = new java.awt.GridBagConstraints();
-        c.gridwidth  = 1;
-        c.gridheight = 1;
-        c.gridx = 0;
-        c.gridy = 0;
-        c.anchor = java.awt.GridBagConstraints.CENTER;
-        c.fill = java.awt.GridBagConstraints.HORIZONTAL;  // text field will expand
-        x.add(tab1, c);
-        return x;
+        tab1.add(Box.createHorizontalStrut(STRUT_SIZE));
+        return tab1;
     }
 
     private void calculate() {
         clearCommands();
-        int depth = _maxBlocks;
-        try {
-            depth = Integer.parseInt(_searchDepth.getText());
-        } catch (NumberFormatException nfe) {
-            depth = _maxBlocks;
-        }
-        String msg = findRoute(depth);
+        String msg = findRoute();
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -346,11 +313,11 @@ public class WarrantFrame extends WarrantRoute {
     }
     private JPanel makeSetPowerTabPanel() {
         JPanel tab2 = new JPanel();
-        tab2.setLayout(new BoxLayout(tab2, BoxLayout.Y_AXIS));
+        tab2.setLayout(new BoxLayout(tab2, BoxLayout.PAGE_AXIS));
         tab2.add(makeTabMidPanel());
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makeTrainPanel());
@@ -415,11 +382,11 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makeTrainPanel() {
         JPanel trainPanel = new JPanel();
-        trainPanel.setLayout(new BoxLayout(trainPanel, BoxLayout.X_AXIS));
+        trainPanel.setLayout(new BoxLayout(trainPanel, BoxLayout.LINE_AXIS));
         trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         panel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
@@ -435,7 +402,7 @@ public class WarrantFrame extends WarrantRoute {
             }
         });
         JPanel x = new JPanel();
-        x.setLayout(new BoxLayout(x, BoxLayout.Y_AXIS));
+        x.setLayout(new BoxLayout(x, BoxLayout.PAGE_AXIS));
         x.add(trainPanel);
 //        x.add(Box.createRigidArea(new Dimension(600, 2)));
 
@@ -450,7 +417,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makeRecordPanel() {
         JPanel learnPanel = new JPanel();
-        learnPanel.setLayout(new BoxLayout(learnPanel, BoxLayout.Y_AXIS));
+        learnPanel.setLayout(new BoxLayout(learnPanel, BoxLayout.PAGE_AXIS));
 
         JButton startButton = new JButton(Bundle.getMessage("Start"));
         startButton.addActionListener(new ActionListener() {
@@ -483,11 +450,11 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makePlaybackPanel() {
         JPanel runPanel = new JPanel();
-        runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.X_AXIS));
+        runPanel.setLayout(new BoxLayout(runPanel, BoxLayout.LINE_AXIS));
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel(); 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(STRUT_SIZE));
         ButtonGroup group = new ButtonGroup();
         group.add(_runProtect);
@@ -512,7 +479,7 @@ public class WarrantFrame extends WarrantRoute {
         _runBlind.setSelected(_warrant.getRunBlind());
 
         panel = new JPanel(); 
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         //panel.add(Box.createVerticalStrut(STRUT_SIZE));
         JPanel bPanel = new JPanel();
         bPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
@@ -533,7 +500,7 @@ public class WarrantFrame extends WarrantRoute {
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         group = new ButtonGroup();
         group.add(_halt);
         group.add(_resume);
@@ -572,10 +539,10 @@ public class WarrantFrame extends WarrantRoute {
 
     private JPanel makeTabMidPanel() {
         JPanel midPanel = new JPanel();
-        midPanel.setLayout(new BoxLayout(midPanel, BoxLayout.Y_AXIS));
+        midPanel.setLayout(new BoxLayout(midPanel, BoxLayout.PAGE_AXIS));
 
         JPanel tablePanel = new JPanel();
-        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.X_AXIS));
+        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.LINE_AXIS));
         _routePanel = makeRouteTablePanel(); 
         tablePanel.add(_routePanel);
         tablePanel.add(Box.createHorizontalStrut(5));
@@ -583,7 +550,7 @@ public class WarrantFrame extends WarrantRoute {
         boolean show = (_throttleCommands.size() > 0); 
         showCommands(show);
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         ButtonGroup group = new ButtonGroup();
         JRadioButton showRoute = new JRadioButton(Bundle.getMessage("showRoute"), !show);
         JRadioButton showScript = new JRadioButton(Bundle.getMessage("showScript"), show);
@@ -616,7 +583,6 @@ public class WarrantFrame extends WarrantRoute {
     private JPanel makeThrottleTablePanel() {
         _commandTable = new JTable(_commandModel);
         _commandTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
-//        _commandTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         for (int i=0; i<_commandModel.getColumnCount(); i++) {
             int width = _commandModel.getPreferredWidth(i);
             _commandTable.getColumnModel().getColumn(i).setPreferredWidth(width);
@@ -625,11 +591,10 @@ public class WarrantFrame extends WarrantRoute {
         ROW_HEIGHT = _commandTable.getRowHeight();
         Dimension dim = _commandTable.getPreferredSize();
         dim.height = ROW_HEIGHT*8;
-        _throttlePane.setPreferredSize(dim);
         _throttlePane.getViewport().setPreferredSize(dim);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
         buttonPanel.add(Box.createVerticalStrut(3*STRUT_SIZE));
 
         JButton insertButton =  new JButton(Bundle.getMessage("buttonInsertRow"));
@@ -651,10 +616,10 @@ public class WarrantFrame extends WarrantRoute {
         //buttonPanel.add(Box.createVerticalStrut(3*STRUT_SIZE));
 
         _commandPanel = new JPanel();
-        _commandPanel.setLayout(new BoxLayout(_commandPanel, BoxLayout.Y_AXIS));
+        _commandPanel.setLayout(new BoxLayout(_commandPanel, BoxLayout.PAGE_AXIS));
         JLabel title = new JLabel(Bundle.getMessage("CommandTableTitle"));
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
         JPanel p = new JPanel();
         p.add(_throttlePane);
         panel.add(p);
@@ -705,11 +670,11 @@ public class WarrantFrame extends WarrantRoute {
     */
     private JPanel makeEditableButtonPanel() {
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
         buttonPanel.add(Box.createHorizontalStrut(10*STRUT_SIZE));
 
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
         saveButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -723,7 +688,7 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(Box.createHorizontalStrut(3*STRUT_SIZE));
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton copyButton = new JButton(Bundle.getMessage("ButtonCopy"));
         copyButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -736,7 +701,7 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(Box.createHorizontalStrut(3*STRUT_SIZE));
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton cancelButton = new JButton(Bundle.getMessage("ButtonCancel"));
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -749,7 +714,7 @@ public class WarrantFrame extends WarrantRoute {
         buttonPanel.add(Box.createHorizontalStrut(3*STRUT_SIZE));
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         JButton deleteButton = new JButton(Bundle.getMessage("ButtonDelete"));
         deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -774,16 +739,25 @@ public class WarrantFrame extends WarrantRoute {
         return panel;
     }
 
+    /**
+     * 
+     * @param vertical	Label orientation true = above, false = left
+     * @param textField 
+     * @param label	String label message
+     * @return
+     */
     static protected JPanel makeBoxPanel(boolean vertical, JComponent textField, String label) {
         JPanel panel = new JPanel();
+//        panel.add(Box.createVerticalGlue());
+//        panel.add(Box.createHorizontalGlue());
         JLabel l = new JLabel(Bundle.getMessage(label));
         if (vertical) {
-            panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
             l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             textField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             panel.add(Box.createVerticalStrut(STRUT_SIZE));
         } else {
-            panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
             l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
             textField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -793,13 +767,15 @@ public class WarrantFrame extends WarrantRoute {
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         }
         textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
-        textField.setMinimumSize(new Dimension(200, textField.getPreferredSize().height));
+        textField.setMinimumSize(new Dimension(30, textField.getPreferredSize().height));
         panel.add(textField);
         if (vertical) {
             panel.add(Box.createVerticalStrut(STRUT_SIZE));        	
         } else {
             panel.add(Box.createHorizontalStrut(STRUT_SIZE));        	
         }
+//        panel.add(Box.createVerticalGlue());
+//        panel.add(Box.createHorizontalGlue());
         return panel;
     }
 
@@ -1371,8 +1347,9 @@ public class WarrantFrame extends WarrantRoute {
                         time = Long.parseLong((String)value);
                         if (time < 0) {
                             msg = Bundle.getMessage("InvalidTime", (String)value); 
+                        } else {
+                            ts.setTime(time);                        	
                         }
-                        ts.setTime(time);
                     } catch (NumberFormatException nfe) {
                         msg = Bundle.getMessage("InvalidTime", (String)value); 
                     }

@@ -2,8 +2,10 @@ package jmri.jmrit.logix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import jmri.DccThrottle;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -11,7 +13,6 @@ import jmri.NamedBean;
 import jmri.ThrottleListener;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
-
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 
@@ -102,8 +103,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected static final String[] RUN_STATE = {"HaltStart", "atHalt", "Resume", "Aborted", "Retry", 
     				"Running", "RestrictSpeed", "WaitingForClear", "WaitingForSensor","RunningLate"};
 
-    private static jmri.implementation.SignalSpeedMap _speedMap;
-
     /**
      * Create an object with no route defined.
      * The list of BlockOrders is the route from an Origin to a Destination
@@ -115,12 +114,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _orders = new ArrayList <BlockOrder>();
         _runBlind = false;
         _debug = log.isDebugEnabled();
-    }
-    public final static jmri.implementation.SignalSpeedMap getSpeedMap() {
-        if (_speedMap==null) {
-            _speedMap = jmri.implementation.SignalSpeedMap.getMap();
-        }
-        return _speedMap;
     }
 
     // _state not used (yet?)
@@ -611,6 +604,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
           	 if (_dccAddress==null) {	// if brand new warrant being tested. needed for a delayed start
         		 _dccAddress = address;
         	 }
+        } else {
+        	stopWarrant(true);
         }
         // set mode before setStoppingBlock and callback to notifyThrottleFound are called
         _runMode = mode;
@@ -705,10 +700,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         	OBlock b = bo.getBlock();
                         	if (b.allocate(this)==null && (b.getState()& OBlock.OCCUPIED) > 0) {
                             	_idxCurrentOrder++;
-                            	goingActive(b);
-                            	if (_stoppingBlock!=null) {
+                            	if (b.equals(_stoppingBlock)) {
                                     _stoppingBlock.removePropertyChangeListener(this);                            		
                             	}
+                            	goingActive(b);
                             	ret = true;
                         	}
                         }
@@ -745,7 +740,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             b.setValue(_trainName);
             b.setState(b.getState() | OBlock.RUNNING);
         } else {
-            getSpeedMap();      // initialize speedMap for getPermissibleEntranceSpeed() calls
             _engineer = new Engineer(this, throttle);
             if (_tempRunBlind) {
             	_engineer.setRunOnET(true);
@@ -1130,12 +1124,21 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         		_stoppingBlock.getDisplayName()+"\"");
     }
 
+    /**
+     * Called from goingActive() when train is confirmed as entering nextBlock
+     * Called from controlRunTrain() from "resume" command
+     * Looks ahead for a speed change.
+     * Notifies Engineer of speed to run
+     * Block is at the _idxCurrentOrder 
+     * @return true if able to move
+     */
     private boolean moveIntoNextBlock() {
         OBlock block = getBlockAt(_idxCurrentOrder);
         if ((block.getState() & (OBlock.OCCUPIED | OBlock.DARK))==0) {
             firePropertyChange("blockChange", block, null);                        	
         	return false;
         }
+        
     	// getNextSpeed() calls allocateNextBlock(getBlockOrderAt(_idxCurrentOrder+1))
         String nextSpeed = getNextSpeed();
         boolean ret = !"Stop".equals(nextSpeed);
@@ -1467,10 +1470,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      *  if next block is allocated, set the path. If there are no
      *  occupation problems get the permitted speed from the signals
-     *  Finds speed change in advance of move into the next block
+     *  Finds speed change in advance of move into the next block.
      *  Called by: 
      *  	startWarrant at start
+     *		moveIntoNextBlock as normal movement
      *  	checkStoppingBlock when stopping block has cleared
+     *  	checkShareTOBlock also when shareTOBlock has  cleared
      * @return an "occupied" (Stop or continue) speed change
      */
     private String getNextSpeed() {

@@ -65,11 +65,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     RouteLocation _focusedField;
 	
     static int STRUT_SIZE = 10;
+    static String PAD = "               ";
     private JDialog			_pickRouteDialog;
     private RouteTableModel	_routeModel;
     private ArrayList <BlockOrder> _orders = new ArrayList <BlockOrder>();
     private JFrame      _debugFrame;
     private RouteFinder _routeFinder;
+    private int 		_depth =20;
+    private JTextField  _searchDepth =  new JTextField(5);
 	
 	WarrantRoute() {		
         super(false, false);
@@ -78,14 +81,31 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 	
 	public abstract void selectedRoute(ArrayList <BlockOrder> orders);
     public abstract void propertyChange(java.beans.PropertyChangeEvent e);
-	
-	protected void doSize(JComponent comp, int max, int min) {
-        Dimension dim = comp.getPreferredSize();
-        dim.width = max;
-        comp.setMaximumSize(dim);
-        dim.width = min;
-        comp.setMinimumSize(dim);
+    
+    public int getDepth() {
+        try {
+            _depth = Integer.parseInt(_searchDepth.getText());
+        } catch (NumberFormatException nfe) {
+        	_searchDepth.setText(Integer.toString(_depth));
+        }
+    	return _depth;
     }
+    public void setDepth(int d) {
+    	_depth = d;
+    	_searchDepth.setText(Integer.toString(_depth));
+    }
+    
+    public JPanel searchDepthPanel(boolean vertical) {
+    	_searchDepth.setText(Integer.toString(_depth));
+    	JPanel p = new JPanel();
+    	p.add(Box.createHorizontalGlue());
+    	p.add(WarrantFrame.makeBoxPanel(vertical, _searchDepth, "SearchDepth"));
+    	_searchDepth.setColumns(5);
+    	_searchDepth.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
+    	p.add(Box.createHorizontalGlue());
+    	return p;
+    }
+	
 
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
@@ -128,19 +148,15 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     protected JPanel makeBlockPanels() {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel oPanel = _origin.makePanel("OriginBlock", "OriginToolTip", "PathName", "ExitPortalName", this);
         panel.add(oPanel);
-        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         oPanel = _destination.makePanel("DestBlock", "DestToolTip", "PathName", "EntryPortalName", this);
         panel.add(oPanel);
-        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         oPanel = _via.makePanel("ViaBlock", "ViaToolTip", "PathName", null, this);
         panel.add(oPanel);
-        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         oPanel = _avoid.makePanel("AvoidBlock", "AvoidToolTip", "PathName", null, this);
         panel.add(oPanel);
@@ -153,7 +169,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         p.setLayout(new BorderLayout());
         JPanel pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(Bundle.getMessage(title)));
+        pp.add(new JLabel(PAD+Bundle.getMessage(title)+PAD));
         p.setToolTipText(Bundle.getMessage(tooltip));
         box.setToolTipText(Bundle.getMessage(tooltip));
         p.add(pp, BorderLayout.NORTH);
@@ -191,11 +207,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
  
     	RouteLocation(Location loc) {
     		location = loc;
-            doSize(blockBox, 500, 200);
-            doSize(pathBox, 500, 200);
     		if (location==Location.ORIGIN ||location==Location.DEST) {
             	portalBox = new JComboBox<String>();
-                doSize(portalBox, 500, 200);
     		}
     	}
     	
@@ -212,20 +225,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             hPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             JPanel pPanel = new JPanel();
             pPanel.setLayout(new BoxLayout(pPanel, BoxLayout.X_AXIS));
-/*            if (location==Location.DEST) {
-                pPanel.add(makeLabelCombo(box1Name, portalBox, tooltip));           	
-            } else {
-                pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));            	
-            }*/
             pPanel.add(makeLabelCombo(box1Name, pathBox, tooltip));
             pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             
             if (box2Name != null) {
-/*            	if (location==Location.DEST) {
-                    pPanel.add(makeLabelCombo(box2Name, pathBox, tooltip));             		
-            	} else {
-                    pPanel.add(makeLabelCombo(box2Name, portalBox, tooltip)); 
-            	}*/
                 pPanel.add(makeLabelCombo(box2Name, portalBox, tooltip)); 
                 pPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
             }
@@ -234,7 +237,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             pPanel.setToolTipText(Bundle.getMessage(tooltip));
             hPanel.setToolTipText(Bundle.getMessage(tooltip));
             oPanel.setToolTipText(Bundle.getMessage(tooltip));
-            //oPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+
             blockBox.addActionListener(parent);
             blockBox.addPropertyChangeListener(parent);
             blockBox.addMouseListener(this);
@@ -244,7 +247,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         private JPanel makeBlockBox(String tooltip) {
             blockBox.setDragEnabled(true);
             blockBox.setTransferHandler(new jmri.util.DnDStringImportHandler());
-            blockBox.setColumns(15);
+            blockBox.setColumns(20);
             blockBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
             //blockBox.setMaximumSize(new Dimension(100, blockBox.getPreferredSize().height));
             //blockBox.setDropMode(DropMode.USE_SELECTION);
@@ -451,7 +454,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             		break;
         	}       		
          }
-       
+
+        @Override
     	public void mouseClicked(MouseEvent e) {
     		_focusedField = this;
     	}
@@ -488,7 +492,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     * Gather parameters to search for a route
     */
-    protected String findRoute(int depth) {
+    protected String findRoute() {
         // read and verify origin and destination blocks/paths/portals
         String msg = null;
         BlockOrder order = null;
@@ -543,7 +547,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
         if (msg==null) {
             _routeFinder = new RouteFinder(this, _origin.getOrder(), _destination.getOrder(),
-            		_via.getOrder(), _avoid.getOrder(), depth);
+            		_via.getOrder(), _avoid.getOrder(), getDepth());
             new Thread(_routeFinder).start();        	
         }       
         return msg;
@@ -580,9 +584,9 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
    /**
     *  Callback from RouteFinder - several routes found
     */
-    protected void pickRoute(List <DefaultMutableTreeNode> destNodes, DefaultTreeModel tree) {
+    protected void pickRoute(List <DefaultMutableTreeNode> destNodes, DefaultTreeModel routeTree) {
         if (destNodes.size()==1) {
-            showRoute(destNodes.get(0), tree);
+            showRoute(destNodes.get(0), routeTree);
             selectedRoute(_orders);
             return;
         }
@@ -610,14 +614,14 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         mainPanel.add(scrollPane, BorderLayout.CENTER);
         JButton ok = new JButton(Bundle.getMessage("ButtonSelect"));
         ok.addActionListener(new ActionListener() {
-                ButtonGroup buttons;
+                ButtonGroup buts;
                 JDialog dialog;
-                List <DefaultMutableTreeNode> destNodes;
+                List <DefaultMutableTreeNode> dNodes;
                 DefaultTreeModel tree;
                 public void actionPerformed(ActionEvent e) {
-                    if (buttons.getSelection()!=null) {
+                    if (buts.getSelection()!=null) {
                         int i = Integer.parseInt(buttons.getSelection().getActionCommand());
-                        showRoute(destNodes.get(i), tree);
+                        showRoute(dNodes.get(i), tree);
                         selectedRoute(_orders);
                         dialog.dispose();
                     } else {
@@ -626,35 +630,35 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 }
                 ActionListener init(ButtonGroup bg, JDialog d, List <DefaultMutableTreeNode> dn,
                                     DefaultTreeModel t) {
-                    buttons = bg;
+                    buts = bg;
                     dialog = d;
-                    destNodes = dn;
+                    dNodes = dn;
                     tree = t;
                     return this;
                 }
-            }.init(buttons, _pickRouteDialog, destNodes, tree));
+            }.init(buttons, _pickRouteDialog, destNodes, routeTree));
         ok.setMaximumSize(ok.getPreferredSize());
         JButton show = new JButton(Bundle.getMessage("ButtonReview"));
         show.addActionListener(new ActionListener() {
-                ButtonGroup buttons;
-                List <DefaultMutableTreeNode> destNodes;
+                ButtonGroup buts;
+                List <DefaultMutableTreeNode> destinationNodes;
                 DefaultTreeModel tree;
                 public void actionPerformed(ActionEvent e) {
-                    if (buttons.getSelection()!=null) {
+                    if (buts.getSelection()!=null) {
                         int i = Integer.parseInt(buttons.getSelection().getActionCommand());
-                        showRoute(destNodes.get(i), tree);
+                        showRoute(destinationNodes.get(i), tree);
                     } else {
                     	showWarning(Bundle.getMessage("SelectRoute"));
                     }
                 }
                 ActionListener init(ButtonGroup bg, List <DefaultMutableTreeNode> dn,
                                     DefaultTreeModel t) {
-                    buttons = bg;
-                    destNodes = dn;
+                    buts = bg;
+                    destinationNodes = dn;
                     tree = t;
                     return this;
                 }
-            }.init(buttons, destNodes, tree));
+            }.init(buttons, destNodes, routeTree));
         show.setMaximumSize(show.getPreferredSize());
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
@@ -720,11 +724,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     /**
     *  Callback from RouteFinder - no routes found
     */
-    protected void debugRoute(DefaultTreeModel tree, BlockOrder origin, BlockOrder dest, int depth) {
+    protected void debugRoute(DefaultTreeModel tree, BlockOrder origin, BlockOrder dest) {
         if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this, Bundle.getMessage("NoRoute",  
                             new Object[] {origin.getBlock().getDisplayName(), 
         								origin.getPathName(), origin.getExitName(), dest.getBlock().getDisplayName(),
-        								 dest.getEntryName(), dest.getPathName(), Integer.valueOf(depth) }),       								
+        								 dest.getEntryName(), dest.getPathName(), Integer.valueOf(getDepth()) }),       								
         						Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, 
                                                     JOptionPane.WARNING_MESSAGE)) {
             return; 
@@ -793,7 +797,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return msg;
     }
 
-    private String pathIsValid(OBlock block, String pathName) {
+    static private String pathIsValid(OBlock block, String pathName) {
         List <Path> list = block.getPaths();
         if (list.size()==0) {
             return Bundle.getMessage("WarningTitle");
@@ -813,6 +817,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return Bundle.getMessage("PathInvalid", pathName, block.getDisplayName());
     }
     
+    @Override
     public void dispose() {
         clearFrames();
         super.dispose();
@@ -842,6 +847,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             return _orders.size();
         }
 
+        @Override
         public String getColumnName(int col) {
             switch (col) {
                 case BLOCK_COLUMN: return Bundle.getMessage("BlockCol");
@@ -852,10 +858,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             return "";
         }
 
+        @Override
         public boolean isCellEditable(int row, int col) {
             return false;
         }
 
+        @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
@@ -890,6 +898,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             return "";
         }
 
+        @Override
         public void setValueAt(Object value, int row, int col) {
             BlockOrder bo = _orders.get(row);
             OBlock block = null;
