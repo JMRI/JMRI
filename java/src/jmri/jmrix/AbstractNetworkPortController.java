@@ -269,11 +269,9 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
         return null;
     }
 
-    /*Dispose should be handled by the port adapters and this should be abstract
-     However this is in place until all the other code has been refactored */
-
     @Override
     public void dispose() {
+        super.dispose();
     }
 
     //private boolean allowConnectionRecovery = false;

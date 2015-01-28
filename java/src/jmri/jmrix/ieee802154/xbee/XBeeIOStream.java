@@ -97,7 +97,9 @@ public class XBeeIOStream extends AbstractPortController implements XBeeListener
     
     public void setDisabled(boolean disabled) {}
 
-    public void dispose(){
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 
     public void recover() { }

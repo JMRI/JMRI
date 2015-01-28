@@ -72,6 +72,7 @@ public class AbstractPortControllerTest extends TestCase {
 
         @Override
         public void dispose() {
+            super.dispose();
         }
 
         @Override

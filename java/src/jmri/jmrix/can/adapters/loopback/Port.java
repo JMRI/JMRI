@@ -27,16 +27,14 @@ public class Port extends AbstractSerialPortController {
     public void configure() {
 
         // Register the CAN traffic controller being used for this connection
-        adaptermemo.setTrafficController(new LoopbackTrafficController());
+        this.getSystemConnectionMemo().setTrafficController(new LoopbackTrafficController());
 
         // do central protocol-specific configuration    
-        adaptermemo.setProtocol(getOptionState(option1Name));
+        this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
         
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
 
     }
-    
-    protected jmri.jmrix.can.CanSystemConnectionMemo adaptermemo;
     
     // check that this object is ready to operate
     public boolean status() { return true; }
@@ -61,13 +59,15 @@ public class Port extends AbstractSerialPortController {
 	    return v;
     }
     
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
+    @Override
+    public void dispose() {
+        super.dispose();
     }
-    
-    public CanSystemConnectionMemo getSystemConnectionMemo() { return adaptermemo; }
+
+    @Override
+    public CanSystemConnectionMemo getSystemConnectionMemo() {
+        return (CanSystemConnectionMemo) super.getSystemConnectionMemo();
+    }
     
     static Logger log = LoggerFactory.getLogger(Port.class.getName());
 }

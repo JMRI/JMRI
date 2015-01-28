@@ -22,13 +22,10 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
         super(new InternalSystemConnectionMemo());
         opened = true;
     }
-    
-    InternalSystemConnectionMemo adaptermemo;
 
-    public void dispose(){
-        if (adaptermemo!=null)
-            adaptermemo.dispose();
-        adaptermemo = null;
+    @Override
+    public void dispose() {
+        super.dispose();
     }
 	
 	public String openPort(String portName, String appName) {
@@ -36,7 +33,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
 	}
 
 	public void configure() {
-        adaptermemo.configureManagers();
+        this.getSystemConnectionMemo().configureManagers();
         
 	}
 
@@ -67,7 +64,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     
     @Override
     public InternalSystemConnectionMemo getSystemConnectionMemo() { 
-    	return this.adaptermemo; 
+    	return (InternalSystemConnectionMemo) super.getSystemConnectionMemo(); 
     }
 
     String manufacturerName = jmri.jmrix.DCCManufacturerList.NONE;

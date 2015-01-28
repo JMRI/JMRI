@@ -225,14 +225,20 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         t.stop();
     }
 
+    @Override
     public synchronized void dispose() {
         // stop operations here. This is a deprecated method, but OK for us.
-        if (readerThread!=null) stopThread(readerThread);
+        if (readerThread != null) {
+            stopThread(readerThread);
+        }
 
         // release port
-        if (activeSerialPort != null) activeSerialPort.close();
+        if (activeSerialPort != null) {
+            activeSerialPort.close();
+        }
         serialStream = null;    // flags state
         activeSerialPort = null; // flags state
+        super.dispose();
     }
 
     /**

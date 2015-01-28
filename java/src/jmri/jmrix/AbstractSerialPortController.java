@@ -151,9 +151,9 @@ abstract public class AbstractSerialPortController extends AbstractPortControlle
          return portNameVector;
     }
     
-    /*Dispose should be handled by the port adapters and this should be abstract
-    However this is in place until all the other code has been refactored */
+    @Override
     public void dispose(){
+        super.dispose();
     }
 
             /**

@@ -44,9 +44,10 @@ public abstract class XNetNetworkPortController extends jmri.jmrix.AbstractNetwo
         return (XNetSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
+    @Override
     public void dispose() {
         super.dispose();
-        log.error("Dispose called");
+        log.debug("Dispose called");
     }
     
     /**

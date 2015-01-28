@@ -150,11 +150,23 @@ public interface PortAdapter {
      * Set the system prefix for this adapter.
      *
      * @param systemPrefix
-     * @throws IllegalArgumentException if another adapter has this system prefix
+     * @throws IllegalArgumentException if another adapter has this system
+     * prefix
      */
     public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException;
 
     public SystemConnectionMemo getSystemConnectionMemo();
+
+    /**
+     * Replace the existing SystemConnectionMemo with another one. Overriding
+     * methods should throw an {@link java.lang.IllegalAccessException} if the
+     * overriding class requires a specific subclass of SystemConnectionMemo. A
+     * {@link java.lang.NullPointerException} should be thrown if the parameter
+     * is null.
+     *
+     * @param connectionMemo
+     */
+    public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) throws IllegalArgumentException;
 
     public void dispose();
 
