@@ -36,6 +36,7 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         super(new RpsSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Protocol", validOptions1));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
     }
     
     transient SerialPort activeSerialPort = null;
@@ -455,11 +456,6 @@ public class SerialAdapter extends jmri.jmrix.AbstractSerialPortController imple
         }
     }
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.NAC;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static Logger log = LoggerFactory.getLogger(SerialAdapter.class.getName());
 
 }

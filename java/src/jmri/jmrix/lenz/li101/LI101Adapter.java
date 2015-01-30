@@ -33,6 +33,7 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("LI101 connection uses : ", validOption1));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
     }
     
     public String openPort(String portName, String appName)  {
@@ -256,11 +257,6 @@ public class LI101Adapter extends XNetSerialPortController implements jmri.jmrix
         return mInstance;
     }
     static volatile LI101Adapter mInstance = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     static Logger log = LoggerFactory.getLogger(LI101Adapter.class.getName());
     

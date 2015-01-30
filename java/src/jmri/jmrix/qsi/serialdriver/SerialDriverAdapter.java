@@ -33,6 +33,7 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
 
     public SerialDriverAdapter() {
         super(new QsiSystemConnectionMemo());
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.QSI;
     }
 
     SerialPort activeSerialPort = null;
@@ -178,11 +179,6 @@ public class SerialDriverAdapter extends QsiPortController implements jmri.jmrix
     }
     static SerialDriverAdapter mInstance = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.QSI;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -40,6 +40,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H","I-P"}, false));
         options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.RFID;
     }
 
     @Override
@@ -332,13 +333,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.RFID;
-    
-    @Override
-    public String getManufacturer() { return manufacturerName; }
-    @Override
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     private static final Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

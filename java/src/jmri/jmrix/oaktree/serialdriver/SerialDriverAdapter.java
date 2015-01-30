@@ -29,6 +29,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 
     public SerialDriverAdapter() {
         super(new OakTreeSystemConnectionMemo());
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.OAK;
     }
 
     public String openPort(String portName, String appName)  {
@@ -264,10 +265,5 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
     }
     static SerialDriverAdapter mInstance = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.OAK;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 }

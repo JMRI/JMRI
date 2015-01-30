@@ -32,7 +32,7 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
     public SerialDriverAdapter(){
         super(new Mx1SystemConnectionMemo());
-        setManufacturer(jmri.jmrix.DCCManufacturerList.ZIMO);
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MXULF connection uses : ", validOption1));
         this.getSystemConnectionMemo().setConnectionType(Mx1SystemConnectionMemo.MXULF);
@@ -259,11 +259,6 @@ public class SerialDriverAdapter extends Mx1PortController implements jmri.jmrix
 
     private boolean opened = false;
     InputStream serialStream = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 

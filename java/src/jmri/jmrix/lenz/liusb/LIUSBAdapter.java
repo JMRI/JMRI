@@ -31,6 +31,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         super();
         option1Name = "FlowControl";
         options.put(option1Name, new Option("LIUSB connection uses : ", validOption1));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
     }
     
     public String openPort(String portName, String appName)  {
@@ -254,11 +255,6 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
         return mInstance;
     }
     static volatile LIUSBAdapter mInstance = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     static Logger log = LoggerFactory.getLogger(LIUSBAdapter.class.getName());
 

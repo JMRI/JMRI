@@ -287,11 +287,6 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     }
     static SerialDriverAdapter mInstance = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.OTHER;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

@@ -30,6 +30,8 @@ abstract public class AbstractPortController implements PortAdapter {
     @Override
     public abstract DataOutputStream getOutputStream();
 
+    protected String manufacturerName = null;
+
     // By making this private, and not protected, we are able to require that
     // all access is through the getter and setter, and that subclasses that
     // override the getter and setter must call the super implemenations of the
@@ -257,15 +259,14 @@ abstract public class AbstractPortController implements PortAdapter {
      */
     @Override
     public String getManufacturer() {
-        return mManufacturer;
+        return this.manufacturerName;
     }
 
     @Override
     public void setManufacturer(String manufacturer) {
-        log.debug("update manufacturer from " + mManufacturer + " to " + manufacturer);
-        mManufacturer = manufacturer;
+        log.debug("update manufacturer from {} to {}", this.manufacturerName, manufacturer);
+        this.manufacturerName = manufacturer;
     }
-    protected String mManufacturer = null;
 
     @Override
     public boolean getDisabled() {

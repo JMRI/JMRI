@@ -21,6 +21,7 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     public InternalAdapter (){
         super(new InternalSystemConnectionMemo());
         opened = true;
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.NONE;
     }
 
     @Override
@@ -67,10 +68,6 @@ public class InternalAdapter extends jmri.jmrix.AbstractSerialPortController
     	return (InternalSystemConnectionMemo) super.getSystemConnectionMemo(); 
     }
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.NONE;
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-    
     public void recover(){
     
     }

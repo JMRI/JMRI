@@ -25,7 +25,7 @@ public class NetworkDriverAdapter extends EcosPortController implements jmri.jmr
     public NetworkDriverAdapter() {
         super(new jmri.jmrix.ecos.EcosSystemConnectionMemo());
         allowConnectionRecovery = true;
-        mManufacturer = jmri.jmrix.DCCManufacturerList.ESU;
+        manufacturerName = jmri.jmrix.DCCManufacturerList.ESU;
     }
     
     /**

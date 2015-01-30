@@ -34,6 +34,7 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         super(new Mx1SystemConnectionMemo());
         option1Name = "FlowControl";
         options.put(option1Name, new Option("MX-1 connection uses : ", validOption1));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
     }
 
 	SerialPort activeSerialPort = null;
@@ -263,11 +264,6 @@ public class Mx1Adapter extends Mx1PortController implements jmri.jmrix.SerialPo
         return mInstance;
     }
     static Mx1Adapter mInstance = null;
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.ZIMO;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     static Logger log = LoggerFactory.getLogger(Mx1Adapter.class.getName());
 

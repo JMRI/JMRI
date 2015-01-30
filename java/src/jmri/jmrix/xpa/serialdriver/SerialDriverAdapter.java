@@ -34,6 +34,7 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
         super(new XpaSystemConnectionMemo());
         option1Name = "ModemInitString";
         options.put(option1Name, new Option("Modem Initilization String : ", new String[]{"ATX0E0"}));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
     }
 
     SerialPort activeSerialPort = null;
@@ -173,11 +174,6 @@ public class SerialDriverAdapter extends XpaPortController implements jmri.jmrix
     }
     static SerialDriverAdapter mInstance = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

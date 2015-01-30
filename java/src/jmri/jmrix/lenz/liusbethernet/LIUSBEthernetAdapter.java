@@ -41,6 +41,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
             if(log.isDebugEnabled()) log.debug("Constructor Called");
             setHostName(DEFAULT_IP_ADDRESS);
             setPort(COMMUNICATION_TCP_PORT);
+            this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
         }
 
         @Override
@@ -114,11 +115,6 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
         keepAliveTimer.setRepeats(true);
         keepAliveTimer.start();
     }
-
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     private boolean mDNSConfigure = false;
 

@@ -35,6 +35,7 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         option2Name = "Buffer";
         options.put(option2Name, new Option("Check Buffer : ", validOption2));
         setCheckBuffer(true); // default to true for elite
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.HORNBY;
     }
     
     Vector<String> portNameVector = null;
@@ -266,11 +267,6 @@ public class EliteAdapter extends XNetSerialPortController implements jmri.jmrix
         if (mInstance == null) mInstance = new EliteAdapter();
         return mInstance;
     }
-    
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.HORNBY;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
     
     static volatile EliteAdapter mInstance = null;
     

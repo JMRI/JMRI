@@ -61,6 +61,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             super();
             option1Name = "BroadcastPort";
             options.put(option1Name, new Option("Broadcast Port", new String[]{String.valueOf(LIUSBServerAdapter.BROADCAST_TCP_PORT),""}));
+            this.manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
         }
 
     synchronized public String openPort(String portName, String appName)  {
@@ -292,8 +293,10 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 		 
                   public void configure(){
                   }
-                  public String getManufacturer() { return null; }
-                  public void setManufacturer(String manu) { }
+            @Override
+            public String getManufacturer() {
+                return this.parent.getManufacturer();
+            }
                   @Override
                   protected void resetupConnection() {
                       parent.startBCastThread();
@@ -325,8 +328,10 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                   public void configure(){
                   }
                   
-                  public String getManufacturer() { return null; }
-                  public void setManufacturer(String manu) { }
+            @Override
+            public String getManufacturer() {
+                return this.parent.getManufacturer();
+            }
                   @Override
                   protected void resetupConnection() {
                       parent.startCommThread();
@@ -372,11 +377,6 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
         keepAliveTimer.setRepeats(true);
         keepAliveTimer.start();
     }
-
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.LENZ;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
 
     static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class.getName());
 

@@ -35,6 +35,7 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 
     protected SerialDriverAdapter(IEEE802154SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.IEEE802154;
     }
     
     public String openPort(String portName, String appName)  {
@@ -279,11 +280,6 @@ public class SerialDriverAdapter extends IEEE802154PortController implements jmr
 //    }
 //    static SerialDriverAdapter mInstance = null;
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.IEEE802154;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-    
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

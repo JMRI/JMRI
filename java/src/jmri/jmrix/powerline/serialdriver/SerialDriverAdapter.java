@@ -33,6 +33,7 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
         super(new SerialSystemConnectionMemo());
         option1Name = "Adapter";
         options.put(option1Name, new Option("Adapter", stdOption1Values));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
     }
 
     public String openPort(String portName, String appName)  {
@@ -302,11 +303,6 @@ public class SerialDriverAdapter extends SerialPortController implements jmri.jm
 //    }
 //    static SerialDriverAdapter mInstance = null;
 
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.POWERLINE;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-    
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

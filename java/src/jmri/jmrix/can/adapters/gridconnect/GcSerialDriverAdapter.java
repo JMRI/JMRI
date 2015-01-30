@@ -28,6 +28,7 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
+        this.manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
     }
 
 
@@ -173,11 +174,6 @@ public class GcSerialDriverAdapter extends GcPortController  implements jmri.jmr
     private boolean opened = false;
     InputStream serialStream = null;
     
-    String manufacturerName = jmri.jmrix.DCCManufacturerList.MERG;
-    
-    public String getManufacturer() { return manufacturerName; }
-    public void setManufacturer(String manu) { manufacturerName=manu; }
-
     static Logger log = LoggerFactory.getLogger(GcSerialDriverAdapter.class.getName());
 
 }
