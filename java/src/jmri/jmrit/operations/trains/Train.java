@@ -614,12 +614,7 @@ public class Train implements java.beans.PropertyChangeListener {
 		if (_route == null) {
 			return null;
 		}
-		List<RouteLocation> list = _route.getLocationsBySequenceList();
-		if (list.size() > 0) {
-			RouteLocation rl = list.get(list.size() - 1);
-			return rl;
-		}
-		return null;
+		return _route.getTerminatesRouteLocation();
 	}
 
 	/**
@@ -2692,6 +2687,7 @@ public class Train implements java.beans.PropertyChangeListener {
 			// save the current status
 			int savedStatus = getStatusCode();
 			setStatus(CODE_RUN_SCRIPTS);
+			jmri.util.PythonInterp.getPythonInterpreter(); // create the python interpreter thread
 			// find the number of active threads
 			ThreadGroup root = Thread.currentThread().getThreadGroup();
 			int numberOfThreads = root.activeCount();

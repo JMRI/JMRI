@@ -222,13 +222,13 @@ public class TrainBuilder extends TrainCommon {
 		int requested = 0;
 		for (RouteLocation rl : _routeList) {
 			// check to see if there's a location for each stop in the route
-			Location l = locationManager.getLocationByName(rl.getName());
-			if (l == null || rl.getLocation() == null) {
+			Location location = locationManager.getLocationByName(rl.getName());
+			if (location == null || rl.getLocation() == null) {
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorLocMissing"),
 						new Object[] { _train.getRoute().getName() }));
 			}
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
-			if (l.getLocationOps() == Location.STAGING && rl != _train.getTrainDepartsRouteLocation()
+			if (location.getLocationOps() == Location.STAGING && rl != _train.getTrainDepartsRouteLocation()
 					&& rl != _train.getTrainTerminatesRouteLocation()) {
 				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocStaging"), new Object[] { rl
 						.getName() }));
@@ -245,10 +245,20 @@ public class TrainBuilder extends TrainCommon {
 				rl.setCarMoves(rl.getMaxCarMoves()); // don't allow car moves for this location
 			} else {
 				// we're going to use this location, so initialize the location
-				rl.setCarMoves(0); // clear the number of moves
+				rl.setCarMoves(0); // clear the number of moves			
+				requested += rl.getMaxCarMoves(); // add up the total number of car moves requested
 				// show the type of moves allowed at this location
-				requested = requested + rl.getMaxCarMoves(); // add up the total number of car moves requested
-				if (rl.isDropAllowed() && rl.isPickUpAllowed())
+				if (location.getLocationOps() == Location.STAGING && rl.isPickUpAllowed()
+						&& rl == _train.getTrainDepartsRouteLocation())
+					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
+							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+									Setup.getLengthUnit().toLowerCase() }));
+				else if (location.getLocationOps() == Location.STAGING && rl.isDropAllowed()
+						&& rl == _train.getTrainTerminatesRouteLocation())
+					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
+							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
+									Setup.getLengthUnit().toLowerCase() }));
+				else if (rl.isDropAllowed() && rl.isPickUpAllowed())
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestMoves"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
 									Setup.getLengthUnit().toLowerCase() }));
