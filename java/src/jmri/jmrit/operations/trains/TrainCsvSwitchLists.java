@@ -156,7 +156,10 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
 				if (!rl.getComment().equals(RouteLocation.NONE)) {
 					addLine(fileOut, RLC + ESC + rl.getComment() + ESC);
 				}
-
+				
+				// engine change or helper service?
+				checkForEngineOrCabooseChange(fileOut, train, rl);
+				
 				// go through the list of engines and determine if the engine departs here
 				for (Engine engine : enginesList) {
 					if (engine.getRouteLocation() == rl && engine.getTrack() != null)

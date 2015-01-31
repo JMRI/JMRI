@@ -33,7 +33,7 @@ public class TrainCsvCommon extends TrainCommon {
 
 	protected final static String AH = "AH" + DEL + Bundle.getMessage("csvAddHelpers"); // NOI18N
 	protected final static String AT = "AT" + DEL + Bundle.getMessage("csvArrivalTime") + DEL; // NOI18N
-	protected final static String CC = "CC" + DEL + Bundle.getMessage("csvChangeLocosAndCaboose"); // NOI18N
+	protected final static String CC = "CC" + DEL + Bundle.getMessage("csvChangeCaboose"); // NOI18N
 	protected final static String CL = "CL" + DEL + Bundle.getMessage("csvChangeLocos"); // NOI18N
 	protected final static String DT = "DT" + DEL + Bundle.getMessage("csvDepartureTime") + DEL; // NOI18N
 	protected final static String DTR = "DTR" + DEL + Bundle.getMessage("csvDepartureTimeRoute") + DEL; // NOI18N
@@ -226,14 +226,31 @@ public class TrainCsvCommon extends TrainCommon {
 				+ engineConsistName + DEL + engineIsLead + DEL + ESC + engine.getComment() + ESC + DEL + ESC
 				+ engine.getRfid() + ESC);
 	}
+	
+	protected void checkForEngineOrCabooseChange(PrintWriter fileOut, Train train, RouteLocation rl) {
+		if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
+			if (rl == train.getSecondLegStartLocation()) {
+				engineCsvChange(fileOut, rl, train.getSecondLegOptions());
+			}
+			if (rl == train.getSecondLegEndLocation())
+				addLine(fileOut, RH);
+		}
+		if (train.getThirdLegOptions() != Train.NO_CABOOSE_OR_FRED) {
+			if (rl == train.getThirdLegStartLocation()) {
+				engineCsvChange(fileOut, rl, train.getThirdLegOptions());
+			}
+			if (rl == train.getThirdLegEndLocation())
+				addLine(fileOut, RH);
+		}
+	}
 
 	protected void engineCsvChange(PrintWriter fileOut, RouteLocation rl, int legOptions) {
 		if ((legOptions & Train.HELPER_ENGINES) == Train.HELPER_ENGINES)
 			addLine(fileOut, AH);
-		else if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
+		if ((legOptions & Train.REMOVE_CABOOSE) == Train.REMOVE_CABOOSE
 				|| (legOptions & Train.ADD_CABOOSE) == Train.ADD_CABOOSE)
 			addLine(fileOut, CC);
-		else if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
+		if ((legOptions & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES)
 			addLine(fileOut, CL);
 	}
 
