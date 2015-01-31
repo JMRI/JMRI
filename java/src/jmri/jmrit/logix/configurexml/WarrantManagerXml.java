@@ -166,10 +166,7 @@ public class WarrantManagerXml //extends XmlFile
         }
         Element elem = new Element("nxparams");
         NXFrame nxFrame = NXFrame.getInstance();
-        Element e = new Element("scale");
-        e.addContent(Float.toString(nxFrame.getScale()));
-        elem.addContent(e);
-        e = new Element("maxspeed");
+        Element e = new Element("maxspeed");
         e.addContent(Float.toString(nxFrame.getMaxSpeed()));
         elem.addContent(e);
         e = new Element("minspeed");
@@ -353,15 +350,7 @@ public class WarrantManagerXml //extends XmlFile
     		return;
     	}
         nxFrame.setVisible(false);
-    	Element e = elem.getChild("scale");
-    	if (e!=null) {
-        	try {
-        		nxFrame.setScale(Float.valueOf(e.getValue()));
-        	} catch (NumberFormatException nfe) {
-                log.error("Layout Scale; "+nfe);    		
-        	}    		
-    	}
-    	e = elem.getChild("maxspeed");
+        Element e = elem.getChild("maxspeed");
     	if (e!=null) {
         	try {
         		nxFrame.setMaxSpeed(Float.valueOf(e.getValue()));

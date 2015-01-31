@@ -487,7 +487,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.REPORT_CURRENTCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.PERMISSIONCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.SPEEDCOL), false);
-        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
+//        tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.ERR_SENSORCOL), false);
         tcm.setColumnVisible(tcm.getColumnByModelIndex(OBlockTableModel.CURVECOL), false);
 
         JPanel contentPane = new JPanel();

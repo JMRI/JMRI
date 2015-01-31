@@ -597,7 +597,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     	float curSpeed = _speed;
     	float delta = _throttle.getSpeedIncrement()*_speedMap.getNumStepsFromMode(_throttle.getSpeedStepMode());
         int time = _speedMap.getStepDelay();
-        float scale = NXFrame.getInstance().getScale()*NXFrame.FACTOR;
+        float scale = NXFrame.getInstance().getNetScale();
     	// assume linear speed change to ramp down to stop
     	while (curSpeed>0.0) {
     		maxRampLength += (curSpeed - delta/2)*time/(scale);

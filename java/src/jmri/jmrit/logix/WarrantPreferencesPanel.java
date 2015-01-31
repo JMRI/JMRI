@@ -35,7 +35,6 @@ import org.slf4j.LoggerFactory;
 
 import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
-import jmri.swing.JTitledSeparator;
 
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
     static int STRUT_SIZE = 10;
@@ -46,11 +45,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     private JComboBox<ScaleData> _layoutScales;
     private JTextField  _searchDepth;
     private JTextField  _timeIncre;
-    private JTextField  _stepIncre;
+    private JTextField  _throttleScale;
+    private boolean _percentNormal = true;
     private ArrayList<DataPair<String, Float>> _speedNameMap;
     private SpeedNameTableModel _speedNameModel;
     private JTable	_speedNameTable;
-    private boolean _percentNormal;
     private ArrayList<DataPair<String, String>> _appearanceMap;
     private AppearanceTableModel _appearanceModel;
     private JTable	_appearanceTable;
@@ -78,6 +77,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         leftPanel.add(layoutScalePanel());
         leftPanel.add(searchDepthPanel(true));
         leftPanel.add(timeIncrementPanel(true));
+        leftPanel.add(throttleScalePanel(true));
         leftPanel.add(stepIncrementsPanel());
         rightPanel.add(speedNamesPanel());
         rightPanel.add(Box.createGlue());
@@ -125,7 +125,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         panel.add(label);
     	JPanel p = new JPanel();
         p.add(_layoutScales);
-        p.add(Box.createVerticalGlue());
+//        p.add(Box.createVerticalGlue());
         panel.add(p);
         return panel;
     }
@@ -206,11 +206,19 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     	_searchDepth =  new JTextField(5);
     	_searchDepth.setText(Integer.toString(_preferences.getSearchDepth()));
     	JPanel p = new JPanel();
-    	p.add(Box.createHorizontalGlue());
     	p.add(WarrantFrame.makeBoxPanel(vertical, _searchDepth, "SearchDepth"));
     	_searchDepth.setColumns(5);
     	_searchDepth.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
-    	p.add(Box.createHorizontalGlue());
+//    	p.add(Box.createHorizontalGlue());
+    	return p;
+    }
+    private JPanel throttleScalePanel(boolean vertical) {
+    	_throttleScale =  new JTextField(5);
+    	_throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
+    	JPanel p = new JPanel();
+    	p.add(WarrantFrame.makeBoxPanel(vertical, _throttleScale, "ThrottleScale"));
+    	_throttleScale.setColumns(8);
+    	_throttleScale.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
     	return p;
     }
     
@@ -365,11 +373,9 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     	_timeIncre =  new JTextField(5);
     	_timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
     	JPanel p = new JPanel();
-    	p.add(Box.createHorizontalGlue());
     	p.add(WarrantFrame.makeBoxPanel(vertical, _timeIncre, "TimeIncrement"));
     	_timeIncre.setColumns(5);
     	_timeIncre.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
-    	p.add(Box.createHorizontalGlue());
     	return p;
     }
     private JPanel stepIncrementsPanel() {
@@ -411,6 +417,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             _preferences.setSearchDepth(depth);
             _isDirty = true;
         }
+        
     	int time = _preferences.getTimeIncre();
         try {
         	time =Integer.parseInt(_timeIncre.getText());
@@ -425,6 +432,17 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
         if (_preferences.getTimeIncre() != time) {
             _preferences.setTimeIncre(time);
+            _isDirty = true;
+        }
+        
+    	float scale = _preferences.getThrottleScale();
+        try {
+        	scale = Float.parseFloat(_throttleScale.getText());
+        } catch (NumberFormatException nfe) {
+        	_throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
+        }
+        if (_preferences.getThrottleScale() != scale) {
+            _preferences.setThrottleScale(scale);
             _isDirty = true;
         }
 

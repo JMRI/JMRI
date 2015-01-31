@@ -17,7 +17,7 @@ import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Document;
 import org.jdom2.Element;
-import org.jdom2.JDOMException;
+//import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,6 +35,7 @@ public class WarrantPreferences  {
     public static final String SpeedMapParams = "speedMapParams"; // NOI18N
     public static final String RampPrefs = "rampPrefs";			// NOI18N
     public static final String TimeIncrement = "timeIncrement"; // NOI18N
+    public static final String ThrottleScale = "throttleScale";	// NOI18N
     public static final String StepIncrements = "stepIncrements"; // NOI18N
     public static final String SpeedNamePrefs = "speedNames";	// NOI18N
     public static final String PercentNormal = "percentNormal"; // NOI18N
@@ -48,6 +49,7 @@ public class WarrantPreferences  {
     private String 	_fileName;
 	private float 	_scale = 87.1f;
 	private int 	_searchDepth = 20;
+	private float 	_throttleScale = 0.81f;
 	
     private OrderedHashtable<String, Float> _speedNames;
     private OrderedHashtable<String, String> _headAppearances;
@@ -152,6 +154,14 @@ public class WarrantPreferences  {
                 log.error("Unable to read ramp time increment. Setting to default value (750ms).", ex);
             }
         }
+        if ((a = rampParms.getAttribute(ThrottleScale)) != null) {
+            try {
+            	setThrottleScale(a.getFloatValue());
+            } catch (DataConversionException ex) {
+            	setThrottleScale(0.81f);
+                log.error("Unable to read throttle scale. Setting to default value (0.81f).", ex);
+            }
+        }
         
     	_stepIncrements = new OrderedHashtable<String, Integer>();
     	List<Element> list = rampParms.getChildren();
@@ -248,6 +258,7 @@ public class WarrantPreferences  {
     		prefs = new Element(SpeedMapParams);
     		Element rampPrefs = new Element(StepIncrements);
     		rampPrefs.setAttribute(TimeIncrement, Integer.toString(getTimeIncre()));
+    		rampPrefs.setAttribute(ThrottleScale, Float.toString(getThrottleScale()));
     		
      		Element step =  new Element(ThrottleStepMode14);
     		step.setText(Integer.toString(_stepIncrements.get(Bundle.getMessage(ThrottleStepMode14))));
@@ -314,9 +325,14 @@ public class WarrantPreferences  {
      * Apply to classes that use this data
      */
     public void apply() {
-    	NXFrame.getInstance().setScale(_scale);
-    	NXFrame.getInstance().setDepth(_searchDepth);
+    	setNXFrame();
     	setSpeedMap();
+    }
+    private void setNXFrame() {
+    	NXFrame frame = NXFrame.getInstance();
+    	frame.setScale(_scale);
+    	frame.setDepth(_searchDepth);
+    	frame.setThrottleScale(_throttleScale);    	
     }
     private void setSpeedMap() {
     	SignalSpeedMap map = new SignalSpeedMap();
@@ -331,6 +347,13 @@ public class WarrantPreferences  {
     }
     void setScale(float s) {
     	_scale = s;
+    }
+    
+    float getThrottleScale() {
+    	return _throttleScale;
+    }
+    void setThrottleScale(float f) {
+    	_throttleScale = f;
     }
     
     int getSearchDepth() {
