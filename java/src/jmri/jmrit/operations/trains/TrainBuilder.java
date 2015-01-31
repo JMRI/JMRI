@@ -250,14 +250,16 @@ public class TrainBuilder extends TrainCommon {
 				// show the type of moves allowed at this location
 				if (location.getLocationOps() == Location.STAGING && rl.isPickUpAllowed()
 						&& rl == _train.getTrainDepartsRouteLocation())
-					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
+					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDeparts"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
 									Setup.getLengthUnit().toLowerCase() }));
 				else if (location.getLocationOps() == Location.STAGING && rl.isDropAllowed()
 						&& rl == _train.getTrainTerminatesRouteLocation())
-					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
-							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
-									Setup.getLengthUnit().toLowerCase() }));
+					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTerminates"),
+							new Object[] { rl.getName(), rl.getMaxCarMoves() }));
+				else if (rl == _train.getTrainTerminatesRouteLocation() && rl.isDropAllowed() && rl.isPickUpAllowed())
+					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocTerminatesMoves"),
+							new Object[] { rl.getName(), rl.getMaxCarMoves() }));
 				else if (rl.isDropAllowed() && rl.isPickUpAllowed())
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestMoves"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
@@ -266,6 +268,9 @@ public class TrainBuilder extends TrainCommon {
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestPickups"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
 									Setup.getLengthUnit().toLowerCase() }));
+				else if (rl == _train.getTrainTerminatesRouteLocation())
+					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocTerminates"),
+							new Object[] { rl.getName(), rl.getMaxCarMoves() }));
 				else
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildLocRequestDrops"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
@@ -3556,14 +3561,15 @@ public class TrainBuilder extends TrainCommon {
 		boolean multiplePickup = false; // true when car can be picked up from two or more locations in the route
 
 		// more than one location in this route?
-		if (_routeList.size() > 1)
-			start++; // yes!, no car drops at departure
+		if (!_train.isLocalSwitcher())
+			start++; // being looking for tracks at the next location
 		// all pick ups to terminal?
 		if (_train.isSendCarsToTerminalEnabled()
 				&& !splitString(rl.getName()).equals(splitString(_departLocation.getName()))
 				&& routeEnd == _routeList.size()) {
 			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildSendToTerminal"),
 					new Object[] { _terminateLocation.getName() }));
+			// user could have specified several terminal locations with the "same" name
 			start = routeEnd - 1;
 			while (start > routeIndex) {
 				if (!splitString(_routeList.get(start - 1).getName()).equals(splitString(_terminateLocation.getName())))
@@ -3599,14 +3605,14 @@ public class TrainBuilder extends TrainCommon {
 			// get the destination
 			Location testDestination = rld.getLocation();
 			if (testDestination == null) {
-				// The following should never throw, all locations in the route have been already checked
+				// code check, should never throw, all locations in the route have been already checked
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorRouteLoc"),
 						new Object[] { _train.getRoute().getName(), rld.getName() }));
 			}
 			Track trackTemp = null;
 			Track finalDestinationTrackTemp = null;
 
-			// don't move car to same location unless the route only has one location (local moves) or is passenger,
+			// don't move car to same location unless the train is a switcher (local moves) or is passenger,
 			// caboose or car with FRED
 			if (splitString(rl.getName()).equals(splitString(rld.getName())) && !_train.isLocalSwitcher()
 					&& !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
