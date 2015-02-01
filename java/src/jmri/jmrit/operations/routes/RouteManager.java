@@ -227,6 +227,7 @@ public class RouteManager {
 				copyRouteLocation(newRoute, routeList.get(i), routeList.get(y), invert);
 			}
 		}
+		newRoute.setComment(route.getComment());
 		return newRoute;
 	}
 

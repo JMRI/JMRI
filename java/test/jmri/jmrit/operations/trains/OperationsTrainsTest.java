@@ -1468,9 +1468,9 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Location 1 c2 Used Length", 248, l1.getUsedLength());
 
 		// Define the route.
-		Route r1 = new Route("1", "Southbound Main Route");
-		Assert.assertEquals("Route Id", "1", r1.getId());
-		Assert.assertEquals("Route Name", "Southbound Main Route", r1.getName());
+		Route route1 = new Route("1", "Southbound Main Route");
+		Assert.assertEquals("Route Id", "1", route1.getId());
+		Assert.assertEquals("Route Name", "Southbound Main Route", route1.getName());
 
 		RouteLocation rl1 = new RouteLocation("1r1", l1);
 		rl1.setSequenceId(1);
@@ -1504,11 +1504,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Route Location 3 Id", "1r3", rl3.getId());
 		Assert.assertEquals("Route Location 3 Name", "South End", rl3.getName());
 
-		r1.register(rl1);
-		r1.register(rl2);
-		r1.register(rl3);
+		route1.register(rl1);
+		route1.register(rl2);
+		route1.register(rl3);
 
-		rmanager.register(r1);
+		rmanager.register(route1);
 
 		// Finally ready to define the trains.
 		Train train1 = new Train("1", "STF");
@@ -1518,7 +1518,7 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setCabooseRoad("CP");
 		train1.deleteTypeName("Flat");
 		train1.setRoadOption(Train.ALL_ROADS);
-		train1.setRoute(r1);
+		train1.setRoute(route1);
 		train1.setDepartureTime("6", "5");
 		tmanager.register(train1);
 
@@ -1528,7 +1528,7 @@ public class OperationsTrainsTest extends TestCase {
 		// there are boxcars waiting in staging so build should fail
 		train2.deleteTypeName("Boxcar");
 		train2.deleteTypeName("Flat");
-		train2.setRoute(r1);
+		train2.setRoute(route1);
 		train2.setDepartureTime("22", "45");
 		tmanager.register(train2);
 
@@ -1915,6 +1915,16 @@ public class OperationsTrainsTest extends TestCase {
 				.getTrainTerminatesName());
 		Assert.assertEquals("Train 1 After Build Next Location Name", "North Industries", train1
 				.getNextLocationName());
+		
+		// now trying limiting the number of cars that can depart staging
+		rl1.setMaxCarMoves(2);	// there are three cars in staging
+		train1.build();
+		Assert.assertEquals("Train 1 After Build limit train to 2 cars out of staging", false, train1.isBuilt());
+		
+		// try again but now the train can have three cars departing staging
+		rl1.setMaxCarMoves(3);	// there are three cars in staging
+		train1.build();
+		Assert.assertEquals("Train 1 After Build limit train to 3 cars out of staging", true, train1.isBuilt());
 
 		// Move the train #1
 		train1.move();
@@ -1978,7 +1988,7 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c3 destination After 2nd Move", "", c3.getDestinationTrackName());
 		Assert.assertEquals("Car c3 After 2nd Move location", "North Industries", c3.getLocationName());
 		Assert.assertEquals("Car c3 After 2nd Move", "NI Yard", c3.getTrackName());
-		Assert.assertEquals("Car c3 Moves after drop should be 13", 13, c3.getMoves());
+		Assert.assertEquals("Car c3 Moves after drop should be 14", 14, c3.getMoves());
 
 		// Are the location pickup and drop counts correct?
 		Assert.assertEquals("Move 2 Drop count for North End", 0, l1.getDropRS());
@@ -2030,11 +2040,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c8 After Terminate track", "South End 2", c8.getTrackName());
 
 		// Are the engine and car moves correct
-		Assert.assertEquals("Engine e1 Moves after Terminate should be 136", 136, e1.getMoves());
-		Assert.assertEquals("Engine e2 Moves after Terminate should be 334", 334, e2.getMoves());
-		Assert.assertEquals("Car c1 Moves after Terminate should be 38", 36, c1.getMoves());
-		Assert.assertEquals("Car c4 Moves after Terminate should be 4457", 4457, c4.getMoves());
-		Assert.assertEquals("Car c8 Moves after Terminate should be 10", 10, c8.getMoves());
+		Assert.assertEquals("Engine e1 Moves after Terminate should be 137", 137, e1.getMoves());
+		Assert.assertEquals("Engine e2 Moves after Terminate should be 335", 335, e2.getMoves());
+		Assert.assertEquals("Car c1 Moves after Terminate should be 37", 37, c1.getMoves());
+		Assert.assertEquals("Car c4 Moves after Terminate should be 4458", 4458, c4.getMoves());
+		Assert.assertEquals("Car c8 Moves after Terminate should be 11", 11, c8.getMoves());
 
 		// Are the location pickup and drop counts correct?
 		Assert.assertEquals("Move 3 Drop count for North End", 0, l1.getDropRS());
@@ -3011,6 +3021,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Car c7 load should be E", "E", c7.getLoadName());
 		Assert.assertEquals("Car c8 load should be E", "E", c8.getLoadName());
 		Assert.assertEquals("Car c9 load should be E", "E", c9.getLoadName());
+		
+		// disable build messages
+		tmanager.setBuildMessagesEnabled(false);
+		// disable build reports
+		tmanager.setBuildReportEnabled(false);
 
 		// Build train
 		train1.build();
@@ -3619,6 +3634,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
 		Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
 		Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk2));
+		
+		// disable build messages
+		tmanager.setBuildMessagesEnabled(false);
+		// disable build reports
+		tmanager.setBuildReportEnabled(false);
 
 		train1.build();
 
@@ -3731,7 +3751,7 @@ public class OperationsTrainsTest extends TestCase {
 		rte3 = rmanager.newRoute("Staging to Chelmsford");
 		RouteLocation r3rl1 = rte3.addLocation(loc3);
 		r3rl1.setTrainDirection(RouteLocation.EAST);
-		r3rl1.setMaxCarMoves(0); // all cars must move from staging
+		r3rl1.setMaxCarMoves(11); // there are 11 cars departing staging
 		r3rl1.setTrainIconX(25); // set the train icon coordinates
 		r3rl1.setTrainIconY(100);
 		RouteLocation r3rl2 = rte3.addLocation(loc2);
@@ -4048,6 +4068,11 @@ public class OperationsTrainsTest extends TestCase {
 		Assert.assertEquals("Place c11", Track.OKAY, c11.setLocation(loc1, loc1trk1));
 		Assert.assertEquals("Place c12", Track.OKAY, c12.setLocation(loc1, loc1trk1));
 		Assert.assertEquals("Place c13", Track.OKAY, c13.setLocation(loc1, loc1trk1));
+		
+		// disable build messages
+		tmanager.setBuildMessagesEnabled(false);
+		// disable build reports
+		tmanager.setBuildReportEnabled(false);
 
 		train1.build();
 		train2.build();
@@ -4555,7 +4580,7 @@ public class OperationsTrainsTest extends TestCase {
 		// Create route with 3 location
 		Setup.setCarMoves(7); // set default to 7 moves per location
 		Route rte1 = rmanager.newRoute("Route 2 Boston");
-		rte1.addLocation(loc1);
+		RouteLocation rl1 = rte1.addLocation(loc1);
 		RouteLocation rl2 = rte1.addLocation(loc2);
 		rl2.setTrainIconX(75); // set the train icon coordinates
 		rl2.setTrainIconY(150);
@@ -4815,6 +4840,7 @@ public class OperationsTrainsTest extends TestCase {
 		Track loc1trk2 = loc1.addTrack("Harvard Staging", Track.STAGING);
 		loc1trk2.setLength(1000);
 		// now depart staging, must take all cars in staging
+		rl1.setMaxCarMoves(9); // there are nine cars departing staging
 		// Place cars
 		Assert.assertEquals("Move c1", Track.OKAY, c1.setLocation(loc1, loc1trk2));
 		Assert.assertEquals("Move c2", Track.OKAY, c2.setLocation(loc1, loc1trk2));
@@ -5309,6 +5335,12 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setRequirements(Train.CABOOSE);
 		train1.setNumberEngines("2");
 		train1.setOwnerOption(Train.ALL_OWNERS);
+		
+		// disable build messages
+		tmanager.setBuildMessagesEnabled(false);
+		// disable build reports
+		tmanager.setBuildReportEnabled(false);
+		
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
 
@@ -5683,6 +5715,12 @@ public class OperationsTrainsTest extends TestCase {
 		train1.setRequirements(Train.CABOOSE);
 		train1.setNumberEngines("3");
 		train1.setOwnerOption(Train.ALL_OWNERS);
+		
+		// disable build messages
+		tmanager.setBuildMessagesEnabled(false);
+		// disable build reports
+		tmanager.setBuildReportEnabled(false);
+		
 		train1.build();
 		Assert.assertEquals("Train 1 After Build 1", true, train1.isBuilt());
 

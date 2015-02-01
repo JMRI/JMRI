@@ -307,7 +307,7 @@ public class TrainBuilder extends TrainCommon {
 		}
 
 		int numMoves = requested; // number of car moves
-		if (_routeList.size() > 1)
+		if (!_train.isLocalSwitcher())
 			requested = requested / 2; // only need half as many cars to meet requests
 		addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildRouteRequest"), new Object[] {
 				_train.getRoute().getName(), Integer.toString(requested), Integer.toString(numMoves) }));
@@ -454,16 +454,15 @@ public class TrainBuilder extends TrainCommon {
 				}
 			} else
 				for (Track track : stagingTracks) {
-					_departStageTrack = track;
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingHas"),
-							new Object[] { _departStageTrack.getName(),
-									Integer.toString(_departStageTrack.getNumberEngines()),
-									Integer.toString(_departStageTrack.getNumberCars()) }));
+							new Object[] { track.getName(),
+									Integer.toString(track.getNumberEngines()),
+									Integer.toString(track.getNumberCars()) }));
 					// is the departure track available?
-					if (!checkDepartureStagingTrack(_departStageTrack)) {
-						_departStageTrack = null;
+					if (!checkDepartureStagingTrack(track)) {
 						continue;
 					}
+					_departStageTrack = track;
 					// try each departure track for the required engines
 					if (getEngines(_reqNumEngines, _train.getEngineModel(), _train.getEngineRoad(), _train
 							.getTrainDepartsRouteLocation(), engineTerminatesFirstLeg)) {
@@ -2435,9 +2434,15 @@ public class TrainBuilder extends TrainCommon {
 	 * @return true is there are engines and cars available.
 	 */
 	private boolean checkDepartureStagingTrack(Track departStageTrack) {
-		if (departStageTrack.getNumberRS() == 0) {
+		if (departStageTrack.getNumberRS() == 0 && _train.getTrainDepartsRouteLocation().getMaxCarMoves() > 0) {
 			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingEmpty"),
 					new Object[] { departStageTrack.getName() }));
+			return false;
+		}
+		if (departStageTrack.getNumberCars() > _train.getTrainDepartsRouteLocation().getMaxCarMoves()) {
+			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTooManyCars"),
+					new Object[] { departStageTrack.getName(), departStageTrack.getNumberCars(),
+							_train.getTrainDepartsRouteLocation().getMaxCarMoves() }));
 			return false;
 		}
 		// does the staging track have the right number of locomotives?
