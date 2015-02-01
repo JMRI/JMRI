@@ -153,6 +153,7 @@
       <LI><A HREF="#AddRoute">Add Route</A></LI>
       <LI><A HREF="#EditRoute">Edit Route</A></LI>
       <LI><A HREF="#PassengerTrainRoute">Passenger Train Route</A></LI>
+      <LI><A HREF="#DepartingStagingRoute">Departing Staging Route</A></LI>
       <LI><A HREF="#RouteFeatures">Route Features</A></LI>
       <LI><A HREF="#RouteTools">Route Tools</A>
        <UL>
@@ -2859,6 +2860,15 @@
    train's route. The manifest statement "No work at xxx" isn't appropriate for a passenger train.
    To eliminate this statement, simply add a comment to each location in the train's route. Use the
    Edit Route window, and for each location, you can add a comment or edit an existing one. 
+   
+   <A NAME="DepartingStagingRoute"></A>
+   <H3>Departing Staging Route</H3>
+
+   When departing staging, the requested moves determines the maximum number of cars that the train
+   will depart with. For example, if the requested moves out of staging was 15, then staging tracks
+   with 15 cars or less, but not zero, can be used by the program. You can also request 0 cars out
+   of staging, then the program will select a track that doesn't have any cars. The staging track
+   can however have locos if required by the train's options. 
    
    <A NAME="RouteFeatures"></A>
    <H3>Route Features</H3>
