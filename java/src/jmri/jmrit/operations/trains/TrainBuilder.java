@@ -2439,6 +2439,13 @@ public class TrainBuilder extends TrainCommon {
 					new Object[] { departStageTrack.getName() }));
 			return false;
 		}
+		if (departStageTrack.getUsedLength() > _train.getTrainDepartsRouteLocation().getMaxTrainLength()) {
+			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTrainTooLong"),
+					new Object[] { departStageTrack.getName(), departStageTrack.getUsedLength(),
+							Setup.getLengthUnit().toLowerCase(),
+							_train.getTrainDepartsRouteLocation().getMaxTrainLength() }));
+			return false;
+		}
 		if (departStageTrack.getNumberCars() > _train.getTrainDepartsRouteLocation().getMaxCarMoves()) {
 			addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTooManyCars"),
 					new Object[] { departStageTrack.getName(), departStageTrack.getNumberCars(),
