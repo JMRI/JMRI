@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -22,9 +23,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JRadioButton;
+import jmri.jmris.json.JSON;
 import static jmri.jmris.json.JSON.NAME;
 import static jmri.jmris.json.JSON.URL;
+import jmri.jmris.json.JsonUtil;
+import jmri.jmrit.display.Editor;
 import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServerManager;
@@ -54,10 +59,10 @@ import org.slf4j.LoggerFactory;
 public class JmriJFrameServlet extends HttpServlet {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8777952493753632897L;
-	static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
+     *
+     */
+    private static final long serialVersionUID = 8777952493753632897L;
+    static String clickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getClickDelay());
     static String noclickRetryTime = Integer.toString(WebServerManager.getWebServerPreferences().getRefreshDelay());
     static List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
     boolean useAjax = WebServerManager.getWebServerPreferences().useAjax();
@@ -67,7 +72,7 @@ public class JmriJFrameServlet extends HttpServlet {
     protected String serverName = "JMRI-JFrameServer";
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.web.servlet.frameimage.JmriJFrameServlet");
     // store parameters here because the image clicks are not key=value mapped parameters
-    Map<String, String[]> parameters = new HashMap<String, String[]>();
+    Map<String, String[]> parameters = new HashMap<>();
 
     void sendClick(String name, Component c, int xg, int yg, Container FrameContentPane) {  // global positions
         int x = xg - c.getLocation().x;
@@ -320,6 +325,7 @@ public class JmriJFrameServlet extends HttpServlet {
         String format = request.getParameter("format");
         ObjectMapper mapper = new ObjectMapper();
         Date now = new Date();
+        boolean usePanels = Boolean.parseBoolean(request.getParameter(JSON.PANELS));
         response.setStatus(HttpServletResponse.SC_OK);
         if ("json".equals(format)) {
             response.setContentType("application/json"); // NOI18N
@@ -333,16 +339,29 @@ public class JmriJFrameServlet extends HttpServlet {
 
         if ("json".equals(format)) {
             ArrayNode root = mapper.createArrayNode();
-            for (JmriJFrame frame : JmriJFrame.getFrameList()) {
-                String title = frame.getTitle();
-                if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
-                    ObjectNode node = mapper.createObjectNode();
-                    node.put(NAME, title);
-                    node.put(URL, "/frame/" + StringUtil.escapeString(title) + ".html");
-                    node.put("png", "/frame/" + StringUtil.escapeString(title) + ".png");
-                    root.add(node);
+            HashSet<JFrame> frames = new HashSet<>();
+            JmriJFrame.getFrameList().stream().forEach((frame) -> {
+                if (usePanels && frame instanceof Editor) {
+                    ObjectNode node = JsonUtil.getPanel(request.getLocale(), (Editor) frame, "xml");
+                    if (node != null) {
+                        root.add(node);
+                        frames.add(((Editor) frame).getTargetFrame());
+                    }
+                } else {
+                    String title = frame.getTitle();
+                    if (!title.isEmpty()
+                            && frame.getAllowInFrameServlet()
+                            && !disallowedFrames.contains(title)
+                            && !frames.contains(frame)) {
+                        ObjectNode node = mapper.createObjectNode();
+                        node.put(NAME, title);
+                        node.put(URL, "/frame/" + StringUtil.escapeString(title) + ".html");
+                        node.put("png", "/frame/" + StringUtil.escapeString(title) + ".png");
+                        root.add(node);
+                        frames.add(frame);
+                    }
                 }
-            }
+            });
             response.getWriter().write(mapper.writeValueAsString(root));
         } else {
             response.getWriter().append(rb.getString("FrameDocType"));
@@ -352,7 +371,7 @@ public class JmriJFrameServlet extends HttpServlet {
             for (JmriJFrame frame : JmriJFrame.getFrameList()) {
                 String title = frame.getTitle();
                 //don't add to list if blank or disallowed
-                if (!title.equals("") && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
+                if (!title.isEmpty() && frame.getAllowInFrameServlet() && !disallowedFrames.contains(title)) {
                     String link = "/frame/" + StringUtil.escapeString(title) + ".html";
                     //format a table row for each valid window (frame)
                     response.getWriter().append("<tr><td><a href='" + link + "'>");
@@ -390,7 +409,7 @@ public class JmriJFrameServlet extends HttpServlet {
     // the parameter names to see if an image map was clicked
     void populateParameterMap(Map<String, String[]> map) {
         parameters.clear();
-        for (Map.Entry<String, String[]> entry : map.entrySet()) {
+        map.entrySet().stream().forEach((entry) -> {
             String[] value = entry.getValue();
             String key = entry.getKey();
             if (value[0].contains("?")) {
@@ -421,7 +440,7 @@ public class JmriJFrameServlet extends HttpServlet {
             } else {
                 parameters.put(key, value);
             }
-        }
+        });
     }
 
     private void doClick(JmriJFrame frame, String coords) {
