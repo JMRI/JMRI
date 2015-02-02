@@ -17,6 +17,7 @@ package jmri.util.javamail;
  * Check for //! comments
  *
  * @author Bob Jacobsen    Copyright 2008, 2009
+ * @author kcameron Copyright 2015
  * @version $Revision$
  * 
  */
@@ -65,9 +66,7 @@ import javax.mail.internet.*;
 /*
  * Demo app that shows how to construct and send an RFC822
  * (singlepart) message.
- *
- * XXX - allow more than one recipient on the command line
- *
+ * *
  * @author Max Spivak
  * @author Bill Shannon
  */
@@ -79,17 +78,20 @@ public class MailMessage {
     String mailhost;
     String subject;
     
-    String from = "jmri.problem.report@gmail.com";  //! null
+    String from = "";  //! null
     String cc = null;
     String bcc = null;
     String url = null;  // "store-url"
     String mailer = "JMRI";
-    String file = "default.lcf"; //! null;  // "attach-file"
+    String file = ""; //! null;  // "attach-file"
     String protocol = null;
     String host = null;
+    String pProtocol = "smtp";
+    String pTls = "true";
+    String pAuth = "true";
     
-    String user = "jmri.problem.report@gmail.com";
-    String password = "Hgytht756%gfA@f9";
+    String user = "";
+    String password = "";
     
     String record = null;   // name of folder in which to record mail
     
@@ -111,21 +113,82 @@ public class MailMessage {
         this.password = passWord;
     }
     
+    /**
+     * sets the protocol to be used connecting to the mailhost
+     * default smtp
+     * @param p
+     */
+    public void setProtocol(String p) {
+    	this.pProtocol = p;
+    }
+    
+    /**
+     * shows the protocol to be used connecting to the mailhost
+     * @return
+     */
+    public String getProtocol() {
+    	return(this.pProtocol);
+    }
+    
+    /**
+     * sets if encryption will used when connecting to the mailhost
+     * default is true
+     * @param t
+     */
+    public void setTls(boolean t) {
+    	if (t) {
+    		this.pTls = "true";
+    	} else {
+    		this.pTls = "false";
+    	}
+    }
+    
+    /** 
+     * shows if encryption will be used when connecting to the mailhost
+     * @return
+     */
+    public boolean isTls() {
+    	return((this.pTls.equals("true") ? true : false));
+    }
+
+    /**
+     * sets if authorization will be used to the mailhost
+     * default is true
+     * @param t
+     */
+    public void setAuth(boolean t) {
+    	if (t) {
+    		this.pAuth = "true";
+    	} else {
+    		this.pAuth = "false";
+    	}
+    }
+    
+    /**
+     * shows if authorization will be used to the mailhost
+     * @return
+     */
+    public boolean isAuth() {
+    	return((this.pAuth.equals("true") ? true : false));
+    }
+    
     Session session;
     Message msg;
     MimeMultipart mp;
     
+    /**
+     * sets up needed parts for sending email message
+     * presumes any needed sets have been done first
+     */
     public void prepare() {        
         try {
             Properties props = System.getProperties();
-            // XXX - could use Session.getTransport() and Transport.connect()
-            // XXX - assume we're using SMTP
-            props.put("mail.transport.protocol", "smtp");
-            props.put("mail.smtp.starttls.enable","true");
+            props.put("mail.transport.protocol", pProtocol);
+            props.put("mail.smtp.starttls.enable", pTls);
             if (mailhost != null) {
                 props.put("mail.smtp.host", mailhost);
             }
-            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.auth", pAuth);
             
             Authenticator auth = new SMTPAuthenticator();
             
@@ -156,7 +219,10 @@ public class MailMessage {
             log.warn("Exception in prepare", e);
         }
     }
-    
+    /**
+     * Adds the text to the message as a separate Mime part
+     * @param text
+     */
     public void setText(String text) {        
         try {
             MimeBodyPart mbp1 = new MimeBodyPart();
@@ -166,7 +232,10 @@ public class MailMessage {
             log.warn("Exception in setText", e);
         }
     }
-             
+    /**
+     * Adds the provided file to the message as a separate Mime part.
+     * @param file
+     */
     public void setFileAttachment(String file) {        
         try {
             // Attach the specified file.
