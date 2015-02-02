@@ -19,7 +19,7 @@ var server = {
             this._ws.send(message);
     },
     send: function(text) {
-        if (text != null && text.length > 0)
+        if (text !== null && text.length > 0)
             server._send(text);
     },
     _onmessage: function(m) {
