@@ -10,6 +10,7 @@ import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.InputStream;
+import jmri.jmrix.cmri.CMRISystemConnectionMemo;
 import jmri.jmrix.cmri.serial.SerialPortController;
 import jmri.jmrix.cmri.serial.SerialSensorManager;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
@@ -25,7 +26,7 @@ import org.slf4j.LoggerFactory;
 public class SerialDriverAdapter extends SerialPortController implements jmri.jmrix.SerialPortAdapter {
 
     public SerialDriverAdapter() {
-        super (null);
+        super (new CMRISystemConnectionMemo());
         this.manufacturerName = jmri.jmrix.DCCManufacturerList.CMRI;
     }
     
