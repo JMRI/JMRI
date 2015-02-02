@@ -17,7 +17,7 @@ import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
+import java.lang.SuppressWarnings;
 
 /**
  * Provide access to XPressNet via a the Lenz LIUSB Server.
@@ -272,7 +272,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
 
     /**
      * Customizable method to deal with resetting a system connection after
-     * a sucessful recovery of a connection.
+     * a successful recovery of a connection.
      */
     @Override
     protected void resetupConnection() {
@@ -308,6 +308,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             }
 
             @Override
+            @SuppressWarnings("OverridingMethodsMustInvokeSuper")
             public void dispose() {
                 // override to prevent super class from disposing of the
                 // SystemConnectionMemo since this object does not own it
@@ -343,6 +344,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
             }
 
             @Override
+            @SuppressWarnings("OverridingMethodsMustInvokeSuper")
             public void dispose() {
                 // override to prevent super class from disposing of the
                 // SystemConnectionMemo since this object does not own it

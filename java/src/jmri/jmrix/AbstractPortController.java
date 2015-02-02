@@ -4,6 +4,8 @@ package jmri.jmrix;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.util.HashMap;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,10 +49,12 @@ abstract public class AbstractPortController implements PortAdapter {
      * Clean up before removal.
      *
      * Overriding methods must call <code>super.dispose()</code> or document why
-     * they are not calling the overridden implementation. In most cases, failure
-     * to call the overridden implementation will cause user-visible error.
+     * they are not calling the overridden implementation. In most cases,
+     * failure to call the overridden implementation will cause user-visible
+     * error.
      */
     @Override
+    @OverridingMethodsMustInvokeSuper
     public void dispose() {
         this.getSystemConnectionMemo().dispose();
     }
@@ -252,11 +256,6 @@ abstract public class AbstractPortController implements PortAdapter {
         }
     }
 
-    /**
-     * Get and set of the Manufacturer for network (TCP/IP) based connections is
-     * handled by the ConnectionConfig code in each connector. this is here as
-     * we implement the serialdriveradpter.
-     */
     @Override
     public String getManufacturer() {
         return this.manufacturerName;
@@ -377,7 +376,7 @@ abstract public class AbstractPortController implements PortAdapter {
      * object.
      *
      * This method should only be overridden to ensure that a specific subclass
-     * of SystemConnectionMemo is returned. The recommended pattern is:      <code>
+     * of SystemConnectionMemo is returned. The recommended pattern is: <code>
      * public MySystemConnectionMemo getSystemConnectionMemo() {
      *  return (MySystemConnectionMemo) super.getSystemConnectionMemo();
      * }
@@ -401,7 +400,8 @@ abstract public class AbstractPortController implements PortAdapter {
      * @param connectionMemo
      */
     @Override
-    public void setSystemConnectionMemo(SystemConnectionMemo connectionMemo) {
+    @OverridingMethodsMustInvokeSuper
+    public void setSystemConnectionMemo(@Nonnull SystemConnectionMemo connectionMemo) {
         if (connectionMemo == null) {
             throw new NullPointerException();
         }
