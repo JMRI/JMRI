@@ -18,7 +18,7 @@ function getPanels() {
             if (data.length !== 0) {
                 $("#empty-panel-list").addClass("hidden").removeClass("show");
                 $.each(data, function (index, value) {
-                    $("#navbar-panels").append("<li class=\"navbar-panel-item\"><a href=\"/panel/" + value.name + "\">" + value.userName + "</a></li>");
+                    $("#navbar-panels").append("<li class=\"navbar-panel-item\"><a href=\"/panel/" + value.data.name + "\">" + value.data.userName + "</a></li>");
                 });
             } else {
                 $("#empty-panel-list").addClass("show").removeClass("hidden");

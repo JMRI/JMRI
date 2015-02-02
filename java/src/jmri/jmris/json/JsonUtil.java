@@ -588,56 +588,51 @@ public class JsonUtil {
         return root;
     }
 
+    static public ObjectNode getPanel(Locale locale, Editor editor, String format) {
+        if (editor.getAllowInFrameServlet()) {
+            String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
+            if (!title.isEmpty() && !WebServerManager.getWebServerPreferences().getDisallowedFrames().contains(title)) {
+                String type = PANEL;
+                String name = "Panel";
+                if (editor instanceof ControlPanelEditor) {
+                    type = CONTROL_PANEL;
+                    name = "ControlPanel";
+                } else if (editor instanceof LayoutEditor) {
+                    type = LAYOUT_PANEL;
+                    name = "Layout";
+                }
+                ObjectNode root = mapper.createObjectNode();
+                root.put(TYPE, PANEL);
+                ObjectNode data = root.putObject(DATA);
+                data.put(NAME, name + "/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
+                data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
+                data.put(USERNAME, title);
+                data.put(TYPE, type);
+                return root;
+            }
+        }
+        return null;
+    }
+
     static public JsonNode getPanels(Locale locale, String format) {
-        List<String> disallowedFrames = WebServerManager.getWebServerPreferences().getDisallowedFrames();
         ArrayNode root = mapper.createArrayNode();
         // list loaded Panels (ControlPanelEditor, PanelEditor, LayoutEditor)
-        List<ControlPanelEditor> controlPanels = Editor.getEditors(ControlPanelEditor.class);
-        for (Editor editor : controlPanels) {
-            if (editor.getAllowInFrameServlet()) {
-                String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-                if (!title.equals("") && !disallowedFrames.contains(title)) {
-                    ObjectNode panel = mapper.createObjectNode();
-                    panel.put(TYPE, PANEL);
-                    ObjectNode data = panel.putObject(DATA);
-                    data.put(NAME, "ControlPanel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                    data.put(USERNAME, title);
-                    data.put(TYPE, CONTROL_PANEL);
-                    root.add(data);
-                }
+        for (Editor editor : Editor.getEditors(ControlPanelEditor.class)) {
+            ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+            if (panel != null) {
+                root.add(panel);
             }
         }
-        List<PanelEditor> panels = Editor.getEditors(PanelEditor.class);
-        for (Editor editor : panels) {
-            if (editor.getAllowInFrameServlet() && !(LayoutEditor.class.isInstance(editor))) {  //skip LayoutEditor panels, as they will be added next
-                String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-                if (!title.equals("") && !disallowedFrames.contains(title)) {
-                    ObjectNode panel = mapper.createObjectNode();
-                    panel.put(TYPE, PANEL);
-                    ObjectNode data = panel.putObject(DATA);
-                    data.put(NAME, "Panel/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                    data.put(USERNAME, title);
-                    data.put(TYPE, PANEL_PANEL);
-                    root.add(data);
-                }
+        for (Editor editor : Editor.getEditors(PanelEditor.class)) {
+            ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+            if (panel != null) {
+                root.add(panel);
             }
         }
-        List<LayoutEditor> layouts = Editor.getEditors(LayoutEditor.class);
-        for (Editor editor : layouts) {
-            if (editor.getAllowInFrameServlet()) {
-                String title = ((JmriJFrame) editor.getTargetPanel().getTopLevelAncestor()).getTitle();
-                if (!title.equals("") && !disallowedFrames.contains(title)) {
-                    ObjectNode panel = mapper.createObjectNode();
-                    panel.put(TYPE, PANEL);
-                    ObjectNode data = panel.putObject(DATA);
-                    data.put(NAME, "Layout/" + title.replaceAll(" ", "%20").replaceAll("#", "%23")); // NOI18N
-                    data.put(URL, "/panel/" + data.path(NAME).asText() + "?format=" + format); // NOI18N
-                    data.put(USERNAME, title);
-                    data.put(TYPE, LAYOUT_PANEL);
-                    root.add(data);
-                }
+        for (Editor editor : Editor.getEditors(LayoutEditor.class)) {
+            ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+            if (panel != null) {
+                root.add(panel);
             }
         }
         return root;

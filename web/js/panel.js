@@ -1544,7 +1544,7 @@ function listPanels(name) {
                     $("#activity-alert").addClass("hidden").removeClass("show");
                     $("#panel-list").addClass("show").removeClass("hidden");
                     $.each(data, function(index, value) {
-                        $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.userName + "</div></a></div></div>");
+                        $("#panel-list").append("<div class=\"col-sm-6 col-md-4 col-lg-3\"><div class=\"thumbnail\"><a href=\"/panel/" + value.data.name + "\"><div class=\"thumbnail-image\"><img src=\"/panel/" + value.data.name + "?format=png\" style=\"width: 100%;\"></div><div class=\"caption\">" + value.data.userName + "</div></a></div></div>");
                         // (12 / col-lg-#) % index + 1
                         if (4 % (index + 1)) {
                             $("#panel-list").append("<div class=\"clearfix visible-lg\"></div>");

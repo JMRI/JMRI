@@ -20,11 +20,13 @@ public final class JSON {
      * Protocol version 1.0 was first introduced in JMRI 3.4<br>
      * Protocol version 1.1 was first introduced in JMRI 3.7.1 and finalized in
      * JMRI 3.8<br>
-     * Protocol version 2.0 was first introduced in JMRI 3.9.3
+     * Protocol version 2.0 was first introduced in JMRI 3.9.3 and finalized in
+     * JMRI 3.10<br>
+     * Protocol version 3.0 was first introduced in JMRI 3.11.2.
      * <p>
      * {@value #JSON_PROTOCOL_VERSION}
      */
-    public static final String JSON_PROTOCOL_VERSION = "2.0"; // NOI18N
+    public static final String JSON_PROTOCOL_VERSION = "3.0"; // NOI18N
 
     /* JSON structure */
     /**
