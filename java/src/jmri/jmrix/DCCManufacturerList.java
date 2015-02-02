@@ -180,23 +180,23 @@ public class DCCManufacturerList {
         else if (a.equals("C/MRI")) return 'C';
         else if (a.equals("SRCP")) return 'D';
         else if (a.equals("EasyDCC")) return 'E';
-        else if (a.equals("RFID")) return 'F';//
-        else if (a.equals("Grapevine")) return 'G';//
-        else if (a.equals("Maple")) return 'K';//
+        else if (a.equals("RFID")) return 'F';
+        else if (a.equals("Grapevine")) return 'G';
+        else if (a.equals("Maple")) return 'K';
         else if (a.equals("LocoNet")) return 'L';
         else if (a.equals("MERG")) return 'M';
         else if (a.equals("OpenLCB")) return 'M';
         else if (a.equals("NCE")) return 'N';
-        else if (a.equals("Oak Tree")) return 'O';//
-        else if (a.equals("PowerLine")) return 'P';//
+        else if (a.equals("Oak Tree")) return 'O';
+        else if (a.equals("PowerLine")) return 'P';
         else if (a.equals("QSI")) return 'Q';
-        else if (a.equals("RPS")) return 'R';//
+        else if (a.equals("RPS")) return 'R';
         else if (a.equals("Sprog")) return 'S';
-        else if (a.equals("Lionel TMCC")) return 'T';//
+        else if (a.equals("Lionel TMCC")) return 'T';
         else if (a.equals("ECoS")) return 'U';
-        else if (a.equals("SECSI")) return 'V';//
+        else if (a.equals("SECSI")) return 'V';
         else if (a.equals("Wangrow")) return 'W';
-        else if (a.equals("XpressNet")) return 'X';//
+        else if (a.equals("XpressNet")) return 'X';
         else if (a.equals("Zimo")) return 'Z';
         return '\0';
     }
