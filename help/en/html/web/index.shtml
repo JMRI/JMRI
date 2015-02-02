@@ -119,16 +119,9 @@
             <h3><a id="throttle">Throttles</a></h3>
             <!-- webThrottle intro -->
             <p>JMRI supports using a modern browser on a smart phone, tablet, or
-                other computer as a throttle device.</p>
-            <p>Two web throttles are currently supported:</p>
-            <ul>
-                <li><a href="http://localhost:12080/web/inControl.html">InControl
-                        throttles</a> provide basic throttles and work well with
-                    older browsers.
-                <li><a href="http://localhost:12080/web/webThrottle.html">Web
-                        Throttle</a> provide a feature-rich throttle for modern
-                    browsers.</li>
-            </ul>
+                other computer as a throttle device with the
+                <a href="http://localhost:12080/web/webThrottle.html">Web
+                    Throttle</a>.</p>
             <h3><a id="operations" href="Operations.shtml">Operations</a></h3>
             <!-- operationsServlet intro -->
             <p>Operations services at <a href="http://localhost:12080/operations">http://localhost:12080/operations</a>

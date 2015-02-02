@@ -142,13 +142,13 @@ Plusieurs exemples sont li&#233;s depuis l'index.html (Page d'accueil su Serveur
  Example, montrant sans lien, proteg&#233;, utilisant ajax pour rafra&#238;chir toutes les 12 secondes:
     <code><pre><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12</a></pre></code>
 
-Vous pouvez aussi appeler le <b>inControl</b> directement:
+Vous pouvez aussi appeler le <b>WebThrottle</b> directement:
 <code> <pre>
-<a href="http://localhost:12080/web/inControl.html" target="_blank"> http://localhost:12080/web/inControl.html </a>
+<a href="http://localhost:12080/web/webThrottle.html" target="_blank"> http://localhost:12080/web/webThrottle.html </a>
 </pre> </code></a>
-Voir page de d&#233;marrage <b>serveur web JMRI</b> pour plus d'informations ou passer &#224; la page d'aide: <b>inControl</b> 
+Voir page de d&#233;marrage <b>serveur web JMRI</b> pour plus d'informations ou passer &#224; la page d'aide: <b>WebThrottle</b> 
 <code> <pre>
-<a href="/help/en/package/jmri/jmrit/inControl/inControl.shtml">/help/en/package/jmri/jmrit/inControl/inControl.shtml</a>
+<a href="/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml">/help/en/package/jmri/jmrit/webThrottle/webThrottle.shtml</a>
 </pre> </code>
 
 <h2>Pour afficher un fichier local </h2>

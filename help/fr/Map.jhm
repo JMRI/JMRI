@@ -802,8 +802,6 @@
 
 <mapID target="manual.JMRI_2-12_Manual.Comp_LightFX" url="manual/JMRI_2-12_Manual/Comp_LightFX.shtml"/>
 
-<mapID target="package.jmri.jmrit.inControl.inControl" url="package/jmri/jmrit/inControl/inControl.shtml"/>
-
 <mapID target="manual.3-2_DecoderPro.Start_DCC_Hardware" url="manual/3-2_DecoderPro/Start_DCC_Hardware.shtml"/>
 
 <mapID target="manual.JMRI_2-14_manual.Comp_PrintData_b" url="manual/JMRI_2-14_manual/Comp_PrintData_b.shtml"/>
