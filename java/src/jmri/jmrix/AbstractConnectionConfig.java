@@ -62,7 +62,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public boolean isDirty() {
-        return this.getAdapter().isDirty();
+        return (this.getAdapter() != null) ? this.getAdapter().isDirty() : true;
     }
 
     /**
@@ -76,7 +76,7 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public boolean isRestartRequired() {
-        return this.getAdapter().isRestartRequired();
+        return (this.getAdapter() != null) ? this.getAdapter().isRestartRequired() : true;
     }
 
     protected static class Option {

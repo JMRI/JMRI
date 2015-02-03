@@ -444,11 +444,11 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return this.ccCurrent.isDirty();
+        return (this.ccCurrent != null) ? this.ccCurrent.isDirty() : true;
     }
 
     @Override
     public boolean isRestartRequired() {
-        return this.ccCurrent.isRestartRequired();
+        return (this.ccCurrent != null) ? this.ccCurrent.isRestartRequired() : true;
     }
 }
