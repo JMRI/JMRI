@@ -29,7 +29,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     private JButton btnCancel;
     private JsonServerPreferences preferences;
     private JFrame parentFrame = null;
-    private boolean restartRequired = false;
 
     public JsonServerPreferencesPanel() {
         preferences = JsonServerManager.getJsonServerPreferences();
@@ -86,7 +85,6 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
                     JOptionPane.WARNING_MESSAGE);
             didSet = false;
         } else {
-            this.restartRequired = (this.preferences.getPort() != portNum);
             preferences.setPort(portNum);
         }
         return didSet;
