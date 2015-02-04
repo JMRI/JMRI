@@ -269,10 +269,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public boolean getDisabled() {
-        if (this.getSystemConnectionMemo() != null) {
-            return this.getSystemConnectionMemo().getDisabled();
-        }
-        return this.mDisabled;
+        return this.getSystemConnectionMemo().getDisabled();
     }
 
     /**
@@ -291,46 +288,32 @@ abstract public class AbstractPortController implements PortAdapter {
         if (this.loadedDisabled == null) {
             this.loadedDisabled = disabled;
         }
-        if (this.getSystemConnectionMemo() != null) {
-            this.getSystemConnectionMemo().setDisabled(disabled);
-        }
-        this.mDisabled = disabled;
+        this.getSystemConnectionMemo().setDisabled(disabled);
     }
 
-    protected boolean mDisabled = false;
     private Boolean loadedDisabled = null;
 
     @Override
     public String getSystemPrefix() {
-        if (this.getSystemConnectionMemo() != null) {
-            return this.getSystemConnectionMemo().getSystemPrefix();
-        }
-        return null;
+        return this.getSystemConnectionMemo().getSystemPrefix();
     }
 
     @Override
     public void setSystemPrefix(String systemPrefix) {
-        if (this.getSystemConnectionMemo() != null) {
-            if (!this.getSystemConnectionMemo().setSystemPrefix(systemPrefix)) {
-                throw new IllegalArgumentException();
-            }
+        if (!this.getSystemConnectionMemo().setSystemPrefix(systemPrefix)) {
+            throw new IllegalArgumentException();
         }
     }
 
     @Override
     public String getUserName() {
-        if (this.getSystemConnectionMemo() != null) {
-            return this.getSystemConnectionMemo().getUserName();
-        }
-        return null;
+        return this.getSystemConnectionMemo().getUserName();
     }
 
     @Override
     public void setUserName(String userName) {
-        if (this.getSystemConnectionMemo() != null) {
-            if (!this.getSystemConnectionMemo().setUserName(userName)) {
-                throw new IllegalArgumentException();
-            }
+        if (!this.getSystemConnectionMemo().setUserName(userName)) {
+            throw new IllegalArgumentException();
         }
     }
 
