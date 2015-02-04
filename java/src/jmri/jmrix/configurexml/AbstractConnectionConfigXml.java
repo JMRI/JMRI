@@ -1,7 +1,6 @@
 package jmri.jmrix.configurexml;
 
 import java.util.List;
-import java.util.ResourceBundle;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrix.PortAdapter;
 import org.jdom2.Element;
@@ -19,8 +18,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
     public AbstractConnectionConfigXml() {
     }
-
-    static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
 
     abstract protected void getInstance();
 
@@ -109,7 +106,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
         if (e.getAttribute("disabled") != null) {
             String yesno = e.getAttribute("disabled").getValue();
-            if ((yesno != null) && (!yesno.equals(""))) {
+            if ((yesno != null) && (!yesno.isEmpty())) {
                 if (yesno.equals("no")) {
                     adapter.setDisabled(false);
                 } else if (yesno.equals("yes")) {
@@ -163,6 +160,6 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     // initialize logging
-    static Logger log = LoggerFactory.getLogger(AbstractConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(AbstractConnectionConfigXml.class);
 
 }
