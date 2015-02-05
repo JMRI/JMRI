@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150125-0016-heap on Sun Jan 25 11:16:55 EST 2015 $Id$-->
-  <decoderIndex version="548">
+  <!--Written by JMRI version 20150205-0448-heap on Thu Feb 05 15:48:58 EST 2015 $Id$-->
+  <decoderIndex version="566">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3152,6 +3152,69 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select.xml">
+        <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true" />
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="false" />
+            <functionlabel num="3" lockable="true" />
+            <functionlabel num="4" lockable="true" />
+            <functionlabel num="5" lockable="true" />
+            <functionlabel num="6" lockable="true" />
+            <functionlabel num="7" lockable="true" />
+            <functionlabel num="8" lockable="true" />
+            <functionlabel num="9" lockable="true" />
+            <functionlabel num="10" lockable="true" />
+            <functionlabel num="11" lockable="true" />
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true" />
+            <functionlabel num="14" lockable="true" />
+            <functionlabel num="15" lockable="true" />
+            <functionlabel num="16" lockable="true" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="true" />
+            <functionlabel num="22" lockable="true" />
+            <functionlabel num="23" lockable="true" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true" />
+            <functionlabel num="26" lockable="true" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1" />
+            <soundlabel num="2" />
+            <soundlabel num="3" />
+            <soundlabel num="4" />
+            <soundlabel num="5" />
+            <soundlabel num="6" />
+            <soundlabel num="7" />
+            <soundlabel num="8" />
+            <soundlabel num="9" />
+            <soundlabel num="10" />
+            <soundlabel num="11" />
+            <soundlabel num="12" />
+            <soundlabel num="13" />
+            <soundlabel num="14" />
+            <soundlabel num="15" />
+            <soundlabel num="16" />
+            <soundlabel num="17" />
+            <soundlabel num="18" />
+            <soundlabel num="19" />
+            <soundlabel num="20" />
+            <soundlabel num="21" />
+            <soundlabel num="22" />
+            <soundlabel num="23" />
+            <soundlabel num="24" />
+            <soundlabel num="25">Random sounds</soundlabel>
+            <soundlabel num="26">Automatic brake sound</soundlabel>
+            <soundlabel num="27">Gear shift sound</soundlabel>
+          </soundlabels>
+        </model>
         <model model="LokSound Select Alco 244" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73401">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
@@ -3234,25 +3297,25 @@
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="false">Horn</functionlabel>
-          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
           <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
-          <functionlabel num="5" lockable="false">Mars Light</functionlabel>
-          <functionlabel num="6" lockable="false">Ditch Light</functionlabel>
+          <functionlabel num="5" lockable="true">Mars Light</functionlabel>
+          <functionlabel num="6" lockable="true">Ditch Light</functionlabel>
           <functionlabel num="7" lockable="true">Switching</functionlabel>
           <functionlabel num="8" lockable="true">Sound On</functionlabel>
           <functionlabel num="9" lockable="true">Notch Up</functionlabel>
-          <functionlabel num="10" lockable="false">Notch Down</functionlabel>
+          <functionlabel num="10" lockable="true">Notch Down</functionlabel>
           <functionlabel num="11" lockable="true">Radiator Fan</functionlabel>
-          <functionlabel num="12" lockable="false">Dimmer</functionlabel>
-          <functionlabel num="13" lockable="false">AUX4</functionlabel>
-          <functionlabel num="14" lockable="false">Detector</functionlabel>
-          <functionlabel num="15" lockable="false">Crossing</functionlabel>
-          <functionlabel num="16" lockable="false">Rail Clack</functionlabel>
-          <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
-          <functionlabel num="18" lockable="false">Sanding</functionlabel>
-          <functionlabel num="19" lockable="false">Air</functionlabel>
-          <functionlabel num="20" lockable="false">Compressor</functionlabel>
-          <functionlabel num="21" lockable="false">Spitter Valve</functionlabel>
+          <functionlabel num="12" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="13" lockable="true">AUX4</functionlabel>
+          <functionlabel num="14" lockable="true">Detector</functionlabel>
+          <functionlabel num="15" lockable="true">Crossing</functionlabel>
+          <functionlabel num="16" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
+          <functionlabel num="18" lockable="true">Sanding</functionlabel>
+          <functionlabel num="19" lockable="true">Air</functionlabel>
+          <functionlabel num="20" lockable="true">Compressor</functionlabel>
+          <functionlabel num="21" lockable="true">Spitter Valve</functionlabel>
         </functionlabels>
         <soundlabels>
           <soundlabel num="1">Diesel</soundlabel>
@@ -3276,6 +3339,69 @@
         </soundlabels>
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
+        <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true" />
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="false" />
+            <functionlabel num="3" lockable="true" />
+            <functionlabel num="4" lockable="true" />
+            <functionlabel num="5" lockable="true" />
+            <functionlabel num="6" lockable="true" />
+            <functionlabel num="7" lockable="true" />
+            <functionlabel num="8" lockable="true" />
+            <functionlabel num="9" lockable="true" />
+            <functionlabel num="10" lockable="true" />
+            <functionlabel num="11" lockable="true" />
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true" />
+            <functionlabel num="14" lockable="true" />
+            <functionlabel num="15" lockable="true" />
+            <functionlabel num="16" lockable="true" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="true" />
+            <functionlabel num="22" lockable="true" />
+            <functionlabel num="23" lockable="true" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true" />
+            <functionlabel num="26" lockable="true" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1" />
+            <soundlabel num="2" />
+            <soundlabel num="3" />
+            <soundlabel num="4" />
+            <soundlabel num="5" />
+            <soundlabel num="6" />
+            <soundlabel num="7" />
+            <soundlabel num="8" />
+            <soundlabel num="9" />
+            <soundlabel num="10" />
+            <soundlabel num="11" />
+            <soundlabel num="12" />
+            <soundlabel num="13" />
+            <soundlabel num="14" />
+            <soundlabel num="15" />
+            <soundlabel num="16" />
+            <soundlabel num="17" />
+            <soundlabel num="18" />
+            <soundlabel num="19" />
+            <soundlabel num="20" />
+            <soundlabel num="21" />
+            <soundlabel num="22" />
+            <soundlabel num="23" />
+            <soundlabel num="24" />
+            <soundlabel num="25">Random sounds</soundlabel>
+            <soundlabel num="26">Automatic brake sound</soundlabel>
+            <soundlabel num="27" />
+          </soundlabels>
+        </model>
         <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
           <size length="1.41" width=".51" height=".25" units="inches" />
         </model>
@@ -3304,24 +3430,24 @@
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="false">Whistle</functionlabel>
-          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
           <functionlabel num="4" lockable="true">Blower</functionlabel>
-          <functionlabel num="5" lockable="false">AUX3</functionlabel>
-          <functionlabel num="6" lockable="false">AUX1+AUX2</functionlabel>
+          <functionlabel num="5" lockable="true">AUX3</functionlabel>
+          <functionlabel num="6" lockable="true">AUX1+AUX2</functionlabel>
           <functionlabel num="7" lockable="true">Switching</functionlabel>
           <functionlabel num="8" lockable="true">Sound On</functionlabel>
           <functionlabel num="9" lockable="true">Dimmer</functionlabel>
-          <functionlabel num="10" lockable="false">Air Pump</functionlabel>
+          <functionlabel num="10" lockable="true">Air Pump</functionlabel>
           <functionlabel num="11" lockable="true">Oil Burner</functionlabel>
-          <functionlabel num="12" lockable="false">Coal Shovelling</functionlabel>
-          <functionlabel num="13" lockable="false">AUX4</functionlabel>
-          <functionlabel num="14" lockable="false">Injector</functionlabel>
-          <functionlabel num="15" lockable="false">Crossing Comm</functionlabel>
-          <functionlabel num="16" lockable="false">Rail Clank</functionlabel>
-          <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
-          <functionlabel num="18" lockable="false">Sanding Valve</functionlabel>
-          <functionlabel num="19" lockable="false">Cylinder Cocks</functionlabel>
-          <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
+          <functionlabel num="12" lockable="true">Coal Shovelling</functionlabel>
+          <functionlabel num="13" lockable="true">AUX4</functionlabel>
+          <functionlabel num="14" lockable="true">Injector</functionlabel>
+          <functionlabel num="15" lockable="true">Crossing Comm</functionlabel>
+          <functionlabel num="16" lockable="true">Rail Clank</functionlabel>
+          <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
+          <functionlabel num="18" lockable="true">Sanding Valve</functionlabel>
+          <functionlabel num="19" lockable="true">Cylinder Cocks</functionlabel>
+          <functionlabel num="20" lockable="true">Short Whistle</functionlabel>
         </functionlabels>
         <soundlabels>
           <soundlabel num="1">Chuff #1</soundlabel>
@@ -9110,6 +9236,53 @@
           <functionlabel num="10" lockable="true">Air Compressor</functionlabel>
           <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
           <functionlabel num="12" lockable="true">Coupler</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Tsunami Diesel Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" comment="DCC Sound On-Board" file="SoundTraxx_Tsu_Diesel_Bachmann.xml">
+        <model model="On30 Whitcomb 50-Ton Center-Cab" numOuts="2" numFns="14" connector="other" productID="Whitcomb" comment="DCC Sound On-Board, Plug-and-Play Sound Module">
+          <versionCV lowVersionID="83" />
+          <output name="3" label="FX5|Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Air Horn| " />
+          <output name="6" label="  Bell  | " />
+          <output name="7" label=" Not | Used " />
+          <!-- dynamic brakes -->
+          <output name="8" label=" Short | Horn ">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- not used -->
+          <output name="10" label=" Fans |RPM +" />
+          <output name="11" label="Dimming| " />
+          <output name="12" label=" Mute | " />
+          <output name="13" label="Compressor|RPM -" />
+          <output name="14" label="Brakes| " />
+          <output name="15" label="Coupler| " />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="5" lockable="true">Compressor</functionlabel>
+          <functionlabel num="6" lockable="true">Fans</functionlabel>
+          <functionlabel num="7" lockable="true">Coupler</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <!-- regular Soundtraxx functions, not used for Bachmann
+        <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="5" lockable="true">FX5 Light</functionlabel>
+        <functionlabel num="6" lockable="true">FX6 Light</functionlabel>
+        <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+        <functionlabel num="8" lockable="true">Mute</functionlabel>
+        <functionlabel num="9" lockable="true">Fans</functionlabel>
+        <functionlabel num="10" lockable="true">Air Compressor</functionlabel>
+        <functionlabel num="11" lockable="true">Brake Squeal</functionlabel>
+        <functionlabel num="12" lockable="true">Coupler</functionlabel>
+      -->
         </functionlabels>
       </family>
       <family name="Tsunami Diesel Bowser OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Bowser Tsunami diesel decoders" file="SoundTraxx_Tsu_Diesel_Bowser.xml">

@@ -52,8 +52,73 @@
   <version author="Dave Heap" version="15" lastUpdated="20140114"/>
   <!-- ver16 fixed incorrect bell rates -->
   <version author="Dave Heap" version="16" lastUpdated="20140324"/>
+  <!-- ver17 added a Steam Generic model to use with as-yet undefined models -->
+  <version author="Dave Heap" version="17" lastUpdated="20140205"/>
   <decoder>
     <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
+      <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="0" lockable="true"></functionlabel>
+          <functionlabel num="1" lockable="true"></functionlabel>
+          <functionlabel num="2" lockable="false"></functionlabel>
+          <functionlabel num="3" lockable="true"></functionlabel>
+          <functionlabel num="4" lockable="true"></functionlabel>
+          <functionlabel num="5" lockable="true"></functionlabel>
+          <functionlabel num="6" lockable="true"></functionlabel>
+          <functionlabel num="7" lockable="true"></functionlabel>
+          <functionlabel num="8" lockable="true"></functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>
+          <functionlabel num="11" lockable="true"></functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+          <functionlabel num="13" lockable="true"></functionlabel>
+          <functionlabel num="14" lockable="true"></functionlabel>
+          <functionlabel num="15" lockable="true"></functionlabel>
+          <functionlabel num="16" lockable="true"></functionlabel>
+          <functionlabel num="17" lockable="true"></functionlabel>
+          <functionlabel num="18" lockable="true"></functionlabel>
+          <functionlabel num="19" lockable="true"></functionlabel>
+          <functionlabel num="20" lockable="true"></functionlabel>
+          <functionlabel num="21" lockable="true"></functionlabel>
+          <functionlabel num="22" lockable="true"></functionlabel>
+          <functionlabel num="23" lockable="true"></functionlabel>
+          <functionlabel num="24" lockable="true"></functionlabel>
+          <functionlabel num="25" lockable="true"></functionlabel>
+          <functionlabel num="26" lockable="true"></functionlabel>
+          <functionlabel num="27" lockable="true"></functionlabel>
+          <functionlabel num="28" lockable="true"></functionlabel>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="1"></soundlabel>
+          <soundlabel num="2"></soundlabel>
+          <soundlabel num="3"></soundlabel>
+          <soundlabel num="4"></soundlabel>
+          <soundlabel num="5"></soundlabel>
+          <soundlabel num="6"></soundlabel>
+          <soundlabel num="7"></soundlabel>
+          <soundlabel num="8"></soundlabel>
+          <soundlabel num="9"></soundlabel>
+          <soundlabel num="10"></soundlabel>
+          <soundlabel num="11"></soundlabel>
+          <soundlabel num="12"></soundlabel>
+          <soundlabel num="13"></soundlabel>
+          <soundlabel num="14"></soundlabel>
+          <soundlabel num="15"></soundlabel>
+          <soundlabel num="16"></soundlabel>
+          <soundlabel num="17"></soundlabel>
+          <soundlabel num="18"></soundlabel>
+          <soundlabel num="19"></soundlabel>
+          <soundlabel num="20"></soundlabel>
+          <soundlabel num="21"></soundlabel>
+          <soundlabel num="22"></soundlabel>
+          <soundlabel num="23"></soundlabel>
+          <soundlabel num="24"></soundlabel>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+          <soundlabel num="27"></soundlabel>
+        </soundlabels>
+      </model>
       <model model="LokSound Select Big Boy 4-8-8-4" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="73416">
         <size length="1.41" width=".51" height=".25" units="inches"/>
       </model>
@@ -82,24 +147,24 @@
         <functionlabel num="0" lockable="true">Light</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
         <functionlabel num="2" lockable="false">Whistle</functionlabel>
-        <functionlabel num="3" lockable="false">Coupler</functionlabel>
+        <functionlabel num="3" lockable="true">Coupler</functionlabel>
         <functionlabel num="4" lockable="true">Blower</functionlabel>
-        <functionlabel num="5" lockable="false">AUX3</functionlabel>
-        <functionlabel num="6" lockable="false">AUX1+AUX2</functionlabel>
+        <functionlabel num="5" lockable="true">AUX3</functionlabel>
+        <functionlabel num="6" lockable="true">AUX1+AUX2</functionlabel>
         <functionlabel num="7" lockable="true">Switching</functionlabel>
         <functionlabel num="8" lockable="true">Sound On</functionlabel>
         <functionlabel num="9" lockable="true">Dimmer</functionlabel>
-        <functionlabel num="10" lockable="false">Air Pump</functionlabel>
+        <functionlabel num="10" lockable="true">Air Pump</functionlabel>
         <functionlabel num="11" lockable="true">Oil Burner</functionlabel>
-        <functionlabel num="12" lockable="false">Coal Shovelling</functionlabel>
-        <functionlabel num="13" lockable="false">AUX4</functionlabel>
-        <functionlabel num="14" lockable="false">Injector</functionlabel>
-        <functionlabel num="15" lockable="false">Crossing Comm</functionlabel>
-        <functionlabel num="16" lockable="false">Rail Clank</functionlabel>
-        <functionlabel num="17" lockable="false">Brake Set/Rel</functionlabel>
-        <functionlabel num="18" lockable="false">Sanding Valve</functionlabel>
-        <functionlabel num="19" lockable="false">Cylinder Cocks</functionlabel>
-        <functionlabel num="20" lockable="false">Short Whistle</functionlabel>
+        <functionlabel num="12" lockable="true">Coal Shovelling</functionlabel>
+        <functionlabel num="13" lockable="true">AUX4</functionlabel>
+        <functionlabel num="14" lockable="true">Injector</functionlabel>
+        <functionlabel num="15" lockable="true">Crossing Comm</functionlabel>
+        <functionlabel num="16" lockable="true">Rail Clank</functionlabel>
+        <functionlabel num="17" lockable="true">Brake Set/Rel</functionlabel>
+        <functionlabel num="18" lockable="true">Sanding Valve</functionlabel>
+        <functionlabel num="19" lockable="true">Cylinder Cocks</functionlabel>
+        <functionlabel num="20" lockable="true">Short Whistle</functionlabel>
       </functionlabels>
       <soundlabels>
         <soundlabel num="1">Chuff #1</soundlabel>
@@ -143,7 +208,15 @@
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable CV="48" mask="XXXXVVVV" default="3" item="Sound Select 1">
+      <variable CV="48" item="Sound Option 2" default="0" include="Steam Generic">
+        <decVal/>
+        <label>Sound Configuration Value</label>
+      </variable>
+      <variable CV="48" mask="XXXXVVVV" default="0" include="Steam Generic" item="Sound Select 1">
+        <decVal max="15"/>
+        <label>Whistle</label>
+      </variable>
+      <variable CV="48" mask="XXXXVVVV" default="3" exclude="Steam Generic" item="Sound Select 1">
         <enumVal>
           <enumChoice choice="CB&amp;Q 5 chime short bell">
             <choice>CB&amp;Q 5 chime short bell</choice>
@@ -195,6 +268,10 @@
           </enumChoice>
         </enumVal>
         <label>Whistle</label>
+      </variable>
+      <variable CV="48" mask="XXVVXXXX" default="0" include="Steam Generic" item="Sound Select 2">
+        <decVal max="3"/>
+        <label>Loco Type</label>
       </variable>
       <variable CV="48" mask="XXVVXXXX" default="0" include="73409" item="Sound Select 2">
         <enumVal>
@@ -285,7 +362,11 @@
         </enumVal>
         <label>Loco Type</label>
       </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" item="Sound Select 3">
+      <variable CV="48" mask="XVXXXXXX" default="0" include="Steam Generic" item="Sound Select 3">
+        <decVal max="1"/>
+        <label>Bell</label>
+      </variable>
+      <variable CV="48" mask="XVXXXXXX" default="0" exclude="Steam Generic" item="Sound Select 3">
         <enumVal>
           <enumChoice choice="Slow">
             <choice>Slow</choice>
@@ -296,7 +377,11 @@
         </enumVal>
         <label>Bell</label>
       </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" item="Sound Select 4">
+      <variable CV="48" mask="VXXXXXXX" default="0" include="Steam Generic" item="Sound Select 4">
+        <decVal max="1"/>
+        <label>Brake Squeal</label>
+      </variable>
+      <variable CV="48" mask="VXXXXXXX" default="0" exclude="Steam Generic" item="Sound Select 4">
         <enumVal>
           <enumChoice choice="Squeal #1">
             <choice>Squeal #1</choice>
