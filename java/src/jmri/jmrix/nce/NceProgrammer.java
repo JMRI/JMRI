@@ -64,6 +64,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
 
     public boolean getCanWrite(String cv) {
        if ((Integer.parseInt(cv) > 256)
+       && (getMode() != DefaultProgrammerManager.OPSBYTEMODE) // allow all Ops mode writes
                && ((tc != null) && (
                        (tc.getCommandOptions() == NceTrafficController.OPTION_1999) |
                        (tc.getCommandOptions() == NceTrafficController.OPTION_2004) |
@@ -90,7 +91,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
     public synchronized void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
         useProgrammer(p);
-        // prevent writing Op mode CV > 255 on PowerHouse 2007C and earlier
+        // prevent writing Prog Track mode CV > 256 on PowerHouse 2007C and earlier
         if ((CV > 256) && 
         		((getMode() == DefaultProgrammerManager.PAGEMODE) ||
     				(getMode() == DefaultProgrammerManager.DIRECTBYTEMODE) ||
