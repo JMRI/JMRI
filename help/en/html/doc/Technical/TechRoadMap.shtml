@@ -96,6 +96,11 @@ New library features
 <li>Update to JDOM 2 for efficiency and coding convenience
 <li>Update Jython to at least 2.5.4 (bug fixes), 
     and depending on compatibility testing, perhaps 2.7.* (for modern Python)
+<li>Start using <a href="https://jcp.org/en/jsr/detail?id=305">JSR 305 annotations</a> 
+    <a href="https://code.google.com/p/findbugs/">via Findbugs</a>
+    to strengthen the code checking (see 
+        <a href="https://today.java.net/pub/a/today/2008/09/11/jsr-305-annotations.html">this</a> and
+        <a href="http://findbugs.sourceforge.net/api/edu/umd/cs/findbugs/annotations/package-summary.html">this</a>.
 <li>JUnit to the current <a href="http://junit.org">JUnit 4 release</a>, currently 4.12.
 Among other improvements, this will allow use of the 
 Java <a href="http://stackoverflow.com/questions/3806173/assert-keyword-in-java">assert keyword</a>. We'll
