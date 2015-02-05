@@ -39,11 +39,9 @@ import org.slf4j.LoggerFactory;
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -6184977238513337292L;
     private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+    private boolean isDirty = false;
 
     /**
      * Get access to a pane describing existing configuration information, or
@@ -88,6 +86,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         log.debug("findInstance returned " + c);
         retval = new JmrixConfigPane((ConnectionConfig) c);
         configPaneTable.put(index, retval);
+        retval.isDirty = true;
         return retval;
     }
 
@@ -444,11 +443,11 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isDirty() {
-        return (this.ccCurrent != null) ? this.ccCurrent.isDirty() : true;
+        return this.isDirty || ((this.ccCurrent != null) ? this.ccCurrent.isDirty() : true);
     }
 
     @Override
     public boolean isRestartRequired() {
-        return (this.ccCurrent != null) ? this.ccCurrent.isRestartRequired() : true;
+        return (this.ccCurrent != null) ? this.ccCurrent.isRestartRequired() : this.isDirty();
     }
 }
