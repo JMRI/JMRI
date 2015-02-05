@@ -285,13 +285,8 @@ abstract public class AbstractPortController implements PortAdapter {
      */
     @Override
     public void setDisabled(boolean disabled) {
-        if (this.loadedDisabled == null) {
-            this.loadedDisabled = disabled;
-        }
         this.getSystemConnectionMemo().setDisabled(disabled);
     }
-
-    private Boolean loadedDisabled = null;
 
     @Override
     public String getSystemPrefix() {
@@ -335,7 +330,7 @@ abstract public class AbstractPortController implements PortAdapter {
 
     @Override
     public boolean isDirty() {
-        boolean isDirty = (this.loadedDisabled == null || this.loadedDisabled != this.getDisabled());
+        boolean isDirty = this.getSystemConnectionMemo().isDirty();
         if (!isDirty) {
             for (Option option : this.options.values()) {
                 isDirty = option.isDirty();

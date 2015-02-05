@@ -23,6 +23,13 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class SystemConnectionMemo {
 
+    private boolean disabled = false;
+    private Boolean disabledAsLoaded = null; // Boolean can be true, false, or null
+    private String prefix;
+    private String prefixAsLoaded;
+    private String userName;
+    private String userNameAsLoaded;
+
     protected SystemConnectionMemo(String prefix, String userName) {
         initialise();
         if (!setSystemPrefix(prefix)) {
@@ -41,6 +48,10 @@ abstract public class SystemConnectionMemo {
             }
         }
         addToActionList();
+        // reset to null so these get set by the first setPrefix/setUserName
+        // call after construction
+        this.prefixAsLoaded = null;
+        this.userNameAsLoaded = null;
     }
 
     private static boolean initialised = false;
@@ -113,16 +124,21 @@ abstract public class SystemConnectionMemo {
     public String getSystemPrefix() {
         return prefix;
     }
-    private String prefix;
 
-    //This should probably throwing an exception
+    //This should probably throw an exception
     public boolean setSystemPrefix(String systemPrefix) {
         if (systemPrefix.equals(prefix)) {
+            if (this.prefixAsLoaded == null) {
+                this.prefixAsLoaded = systemPrefix;
+            }
             return true;
         }
         String oldPrefix = prefix;
         if (addSystemPrefix(systemPrefix)) {
             prefix = systemPrefix;
+            if (this.prefixAsLoaded == null) {
+                this.prefixAsLoaded = systemPrefix;
+            }
             removeSystemPrefix(oldPrefix);
             notifyPropertyChangeListener("ConnectionPrefixChanged", oldPrefix, systemPrefix);
             return true;
@@ -139,16 +155,21 @@ abstract public class SystemConnectionMemo {
     public String getUserName() {
         return userName;
     }
-    private String userName;
 
-    //This should probably throwing an exception
+    //This should probably throw an exception
     public boolean setUserName(String name) {
         if (name.equals(userName)) {
+            if (this.userNameAsLoaded == null) {
+                this.userNameAsLoaded = name;
+            }
             return true;
         }
         String oldUserName = this.userName;
         if (addUserName(name)) {
             this.userName = name;
+            if (this.userNameAsLoaded == null) {
+                this.userNameAsLoaded = name;
+            }
             removeUserName(oldUserName);
             notifyPropertyChangeListener("ConnectionNameChanged", oldUserName, name);
             return true;
@@ -185,18 +206,20 @@ abstract public class SystemConnectionMemo {
         notifyPropertyChangeListener("ConnectionRemoved", userName, null);
     }
 
-    private boolean mDisabled = false;
-
     public boolean getDisabled() {
-        return mDisabled;
+        return disabled;
     }
 
     public void setDisabled(boolean disabled) {
-        if (disabled == mDisabled) {
+        if (this.disabledAsLoaded == null) {
+            // only set first time
+            this.disabledAsLoaded = disabled;
+        }
+        if (disabled == this.disabled) {
             return;
         }
-        boolean oldDisabled = mDisabled;
-        mDisabled = disabled;
+        boolean oldDisabled = this.disabled;
+        this.disabled = disabled;
         notifyPropertyChangeListener("ConnectionDisabled", oldDisabled, disabled);
     }
 
@@ -268,6 +291,16 @@ abstract public class SystemConnectionMemo {
         }
     }
 
+    public boolean isDirty() {
+        return ((this.disabledAsLoaded == null || this.disabledAsLoaded != this.disabled) ||
+                (this.prefixAsLoaded == null || !this.prefixAsLoaded.equals(this.prefix)) ||
+                (this.userNameAsLoaded == null || !this.userNameAsLoaded.equals(this.userName)));
+    }
+    
+    public boolean isRestartRequired() {
+        return this.isDirty();
+    }
+    
     // data members to hold contact with the property listeners
     final private static Set<PropertyChangeListener> listeners = new HashSet<>();
 
