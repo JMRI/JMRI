@@ -129,7 +129,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
 		for (Location location : locationManager.getLocationsByNameList()) {
 			// don't show staging
-			if (location.getLocationOps() == Location.NORMAL) {
+			if (!location.isStaging()) {
 				addItemLeft(locationsPanel, new JLabel(location.getName()), 0, x++);
 				// now look for a spur with a schedule
 				for (Track spur : location.getTrackByNameList(Track.SPUR)) {

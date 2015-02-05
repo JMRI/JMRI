@@ -738,6 +738,8 @@ public class OperationsLocationsTest extends TestCase {
 
 		l.setLocationOps(Location.NORMAL);
 		Assert.assertEquals("Location Ops Normal", Location.NORMAL, l.getLocationOps());
+		
+		Assert.assertFalse("Location isn't staging", l.isStaging());
 	}
 
 	// test direction attributes

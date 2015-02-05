@@ -1543,7 +1543,7 @@ public class Train implements java.beans.PropertyChangeListener {
 												car.getDestinationTrackName() }));
 									continue;
 								}
-							} else if (rldest.getLocation().getLocationOps() == Location.STAGING
+							} else if (rldest.getLocation().isStaging()
 									&& getStatusCode() == CODE_BUILDING && getTerminationTrack() != null
 									&& getTerminationTrack().getLocation() == rldest.getLocation()) {
 								if (debugFlag)

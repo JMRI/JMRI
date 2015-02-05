@@ -197,7 +197,8 @@ public class TrainBuilder extends TrainCommon {
 		if (_train.isSendCarsToTerminalEnabled())
 			addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("SendToTerminal"),
 					new Object[] { _terminateLocation.getName() }));
-		if (_train.isAllowReturnToStagingEnabled() || Setup.isAllowReturnToStagingEnabled())
+		if ((_train.isAllowReturnToStagingEnabled() || Setup.isAllowReturnToStagingEnabled())
+				&& _departLocation.isStaging() && _departLocation == _terminateLocation)
 			addLine(_buildReport, FIVE, Bundle.getMessage("AllowCarsToReturn"));
 		if (_train.isAllowLocalMovesEnabled())
 			addLine(_buildReport, FIVE, Bundle.getMessage("AllowLocalMoves"));
@@ -228,7 +229,7 @@ public class TrainBuilder extends TrainCommon {
 						new Object[] { _train.getRoute().getName() }));
 			}
 			// train doesn't drop or pick up cars from staging locations found in middle of a route
-			if (location.getLocationOps() == Location.STAGING && rl != _train.getTrainDepartsRouteLocation()
+			if (location.isStaging() && rl != _train.getTrainDepartsRouteLocation()
 					&& rl != _train.getTrainTerminatesRouteLocation()) {
 				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildLocStaging"), new Object[] { rl
 						.getName() }));
@@ -248,12 +249,12 @@ public class TrainBuilder extends TrainCommon {
 				rl.setCarMoves(0); // clear the number of moves			
 				requested += rl.getMaxCarMoves(); // add up the total number of car moves requested
 				// show the type of moves allowed at this location
-				if (location.getLocationOps() == Location.STAGING && rl.isPickUpAllowed()
+				if (location.isStaging() && rl.isPickUpAllowed()
 						&& rl == _train.getTrainDepartsRouteLocation())
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingDeparts"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves(), rl.getMaxTrainLength(),
 									Setup.getLengthUnit().toLowerCase() }));
-				else if (location.getLocationOps() == Location.STAGING && rl.isDropAllowed()
+				else if (location.isStaging() && rl.isDropAllowed()
 						&& rl == _train.getTrainTerminatesRouteLocation())
 					addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingTerminates"),
 							new Object[] { rl.getName(), rl.getMaxCarMoves() }));
@@ -1831,7 +1832,7 @@ public class TrainBuilder extends TrainCommon {
 				continue;
 			}
 			// no pick ups from staging unless at the start of the train's route
-			if (routeIndex > 0 && rl.getLocation().getLocationOps() == Location.STAGING) {
+			if (routeIndex > 0 && rl.getLocation().isStaging()) {
 				addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildNoPickupsFromStaging"),
 						new Object[] { rl.getName() }));
 				continue;
@@ -2911,7 +2912,7 @@ public class TrainBuilder extends TrainCommon {
 		addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCouldNotFindSpur"), new Object[] {
 				car.toString(), car.getLoadName() }));
 		if (routeToSpurFound && !_train.isSendCarsWithCustomLoadsToStagingEnabled()
-				&& car.getLocation().getLocationOps() != Location.STAGING) {
+				&& !car.getLocation().isStaging()) {
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarVaildRoute"),
 					new Object[] { car.toString(), car.getLocationName(), car.getTrackName() }));
 		} else {
@@ -3630,7 +3631,7 @@ public class TrainBuilder extends TrainCommon {
 					&& !car.isPassenger() && !car.isCaboose() && !car.hasFred()) {
 				// allow cars to return to the same staging location if no other options (tracks) are available
 				if ((_train.isAllowReturnToStagingEnabled() || Setup.isAllowReturnToStagingEnabled())
-						&& testDestination.getLocationOps() == Location.STAGING && trackSave == null) {
+						&& testDestination.isStaging() && trackSave == null) {
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildReturnCarToStaging"),
 							new Object[] { car.toString(), rld.getName() }));
 				} else {
@@ -3936,7 +3937,7 @@ public class TrainBuilder extends TrainCommon {
 			if (car.isCaboose() || car.isPassenger() || car.hasFred())
 				return false;
 			// no later pick up if car is departing staging
-			if (car.getLocation().getLocationOps() == Location.STAGING)
+			if (car.getLocation().isStaging())
 				return false;
 			if (!checkPickUpTrainDirection(car, rld)) {
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterDirection"),

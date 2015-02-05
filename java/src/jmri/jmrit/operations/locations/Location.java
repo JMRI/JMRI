@@ -236,6 +236,14 @@ public class Location implements java.beans.PropertyChangeListener {
 	}
 	
 	/**
+	 * Used to determine if location is setup for staging
+	 * @return true if location is setup as staging
+	 */
+	public boolean isStaging() {
+		return getLocationOps() == STAGING;
+	}
+	
+	/**
 	 * 
 	 * @return True if location has spurs
 	 */

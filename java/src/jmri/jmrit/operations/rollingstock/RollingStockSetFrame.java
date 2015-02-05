@@ -536,7 +536,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 				}
 			} else if (rl != null && rd != null && rs.getDestinationTrack() != null
 					&& !train.isTrainInRoute()) {
-				if (rs.getDestinationTrack().getLocation().getLocationOps() == Location.STAGING
+				if (rs.getDestinationTrack().getLocation().isStaging()
 						&& !rs.getDestinationTrack().equals(train.getTerminationTrack())) {
 					log.debug("Rolling stock destination track is staging and not the same as train");
 					JOptionPane.showMessageDialog(this, MessageFormat.format(

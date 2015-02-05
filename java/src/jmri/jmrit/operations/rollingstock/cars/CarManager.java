@@ -334,7 +334,7 @@ public class CarManager extends RollingStockManager {
 			}
 			// pickup allowed at destination? Don't include cars in staging
 			if (destination != null && destination.isPickUpAllowed()
-					&& destination.getLocation().getLocationOps() != Location.STAGING)
+					&& !destination.getLocation().isStaging())
 				destination = null; // include cars at destination
 		}
 		// get rolling stock by priority and then by moves

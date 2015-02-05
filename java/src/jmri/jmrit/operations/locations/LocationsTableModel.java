@@ -230,7 +230,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	private String getTrackTypes(Location location) {
-		if (location.getLocationOps() == Location.STAGING) {
+		if (location.isStaging()) {
 			return (Bundle.getMessage("Staging"));
 		} else {
 			StringBuffer sb = new StringBuffer();

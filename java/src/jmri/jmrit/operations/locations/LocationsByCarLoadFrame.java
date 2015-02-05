@@ -223,7 +223,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
 					cb.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackNotThisType"),
 							new Object[] { type }));
 			}
-			if (location.getLocationOps() == Location.STAGING) {
+			if (location.isStaging()) {
 				JLabel ships = new JLabel(location.getName() + " (" + Bundle.getMessage("Ships") + ")");
 				addItemLeft(pLocations, ships, 0, x++);
 				for (Track track : tracks) {
