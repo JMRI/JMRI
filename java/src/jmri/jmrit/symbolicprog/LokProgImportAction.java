@@ -44,7 +44,7 @@ public class LokProgImportAction  extends AbstractAction {
         log.debug("start to import LokProgrammer file");
 
         if( fileChooser == null ){
-            fileChooser = jmri.jmrit.XmlFile.userFileChooser("LokProgrammer CSV list files");
+            fileChooser = jmri.jmrit.XmlFile.userFileChooser("LokProgrammer CV list files");
 
         }
 
@@ -52,7 +52,7 @@ public class LokProgImportAction  extends AbstractAction {
 
         if(retVal == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-            if (log.isDebugEnabled()) log.debug("Import from LokProgrammer file: " + file );
+            log.debug("Import from LokProgrammer file: " + file );
 
             try {
                 // ctor launches operation
