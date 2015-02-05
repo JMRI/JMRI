@@ -7,12 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
-import javax.swing.BoxLayout;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import jmri.Application;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -176,47 +173,25 @@ public class AppConfigBase extends JmriPanel {
         p = InstanceManager.getDefault(UserPreferencesManager.class);
         p.resetChangeMade();
         if (restartRequired) {
-            if (p.getMultipleChoiceOption(getClassName(), "quitAfterSave") == 0) {
-                JPanel message = new JPanel();
-                JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
-                final JCheckBox remember = new JCheckBox(rb.getString("MessageRememberSetting"));
-                remember.setFont(remember.getFont().deriveFont(10.0F));
-                message.setLayout(new BoxLayout(message, BoxLayout.Y_AXIS));
-                message.add(question);
-                message.add(remember);
-                Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
-                int retVal = JOptionPane.showOptionDialog(this,
-                        message,
-                        MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()),
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        null,
-                        options,
-                        null);
-                switch (retVal) {
-                    case JOptionPane.YES_OPTION:
-                        if (remember.isSelected()) {
-                            p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x02);
-                            saveContents();
-                        }
-                        dispose();
-                        Apps.handleRestart();
-                        break;
-                    case JOptionPane.NO_OPTION:
-                        if (remember.isSelected()) {
-                            p.setMultipleChoiceOption(getClassName(), "quitAfterSave", 0x01);
-                        }
-                        break;
-                    default:
-                        break;
-                }
-            } else if (p.getMultipleChoiceOption(getClassName(), "quitAfterSave") == 2) {
-                // restart the program
-                dispose();
-                // do orderly shutdown.  Note this
-                // invokes Apps.handleRestart, even if this
-                // panel hasn't been created by an Apps subclass.
-                Apps.handleRestart();
+            JLabel question = new JLabel(MessageFormat.format(rb.getString("MessageLongQuitWarning"), Application.getApplicationName()));
+            Object[] options = {rb.getString("RestartNow"), rb.getString("RestartLater")};
+            int retVal = JOptionPane.showOptionDialog(this,
+                    question,
+                    MessageFormat.format(rb.getString("MessageShortQuitWarning"), Application.getApplicationName()),
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null,
+                    options,
+                    null);
+            switch (retVal) {
+                case JOptionPane.YES_OPTION:
+                    dispose();
+                    Apps.handleRestart();
+                    break;
+                case JOptionPane.NO_OPTION:
+                    break;
+                default:
+                    break;
             }
         }
         // don't restart the program, just close the window
@@ -227,14 +202,6 @@ public class AppConfigBase extends JmriPanel {
 
     public String getClassDescription() {
         return rb.getString("Application");
-    }
-
-    public void setMessagePreferencesDetails() {
-        HashMap<Integer, String> options = new HashMap<>(3);
-        options.put(0x00, rb.getString("QuitAsk"));
-        options.put(0x01, rb.getString("QuitNever"));
-        options.put(0x02, rb.getString("QuitAlways"));
-        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).messageItemDetails(getClassName(), "quitAfterSave", rb.getString("quitAfterSave"), options, 0x00);
     }
 
     public String getClassName() {
