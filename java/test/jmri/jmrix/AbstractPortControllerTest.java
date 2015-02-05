@@ -1,5 +1,4 @@
 // AbstractPortControllerTest.java
-
 package jmri.jmrix;
 
 import java.io.DataInputStream;
@@ -10,18 +9,17 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * @author      Bob Jacobsen  Copyright (C) 2015
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class AbstractPortControllerTest extends TestCase {
 
-    public void testisDirtyNotNPE() {        
-        apc.isDirty();  
-    } 
+    public void testisDirtyNotNPE() {
+        apc.isDirty();
+    }
 
     // from here down is testing infrastructure
-
     AbstractPortController apc;
-    
+
     public AbstractPortControllerTest(String s) {
         super(s);
     }
@@ -31,7 +29,7 @@ public class AbstractPortControllerTest extends TestCase {
         String[] testCaseName = {AbstractPortControllerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(AbstractPortControllerTest.class);
@@ -54,7 +52,7 @@ public class AbstractPortControllerTest extends TestCase {
                 }
             });
         }
-        
+
         @Override
         public DataInputStream getInputStream() {
             return null;
@@ -77,11 +75,6 @@ public class AbstractPortControllerTest extends TestCase {
 
         @Override
         public void recover() {
-        }
-
-        @Override
-        public SystemConnectionMemo getSystemConnectionMemo() {
-            return null;
         }
 
         @Override
