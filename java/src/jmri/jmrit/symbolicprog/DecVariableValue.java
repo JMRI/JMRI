@@ -80,14 +80,16 @@ public class DecVariableValue extends VariableValue
             // There's no value Object yet, so just ignore & exit
             return;
         }
-        // what to do for the case where _value == null?
+        // what to do for the case where _value != null?
         if(!_value.getText().equals("")){
             // there may be a lost focus event left in the queue when disposed so protect
             if (!oldContents.equals(_value.getText())) {
-                int newVal = Integer.parseInt(_value.getText());
-                int oldVal = Integer.parseInt(oldContents);
-                updatedTextField();
-                prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(newVal));
+                try {
+                    int newVal = Integer.parseInt(_value.getText());
+                    int oldVal = Integer.parseInt(oldContents);
+                    updatedTextField();
+                    prop.firePropertyChange("Value", oldVal, newVal);
+                 } catch (java.lang.NumberFormatException ex) { _value.setText(oldContents); }
             }
         } else {
             //As the user has left the contents blank, we shall re-instate the old
@@ -100,7 +102,7 @@ public class DecVariableValue extends VariableValue
      * Invoked when a permanent change to the JTextField has been
      * made.  Note that this does _not_ notify property listeners;
      * that should be done by the invoker, who may or may not
-     * know what the old value was. Can be overwridden in subclasses
+     * know what the old value was. Can be overridden in subclasses
      * that want to display the value differently.
      */
     void updatedTextField() {
@@ -122,9 +124,11 @@ public class DecVariableValue extends VariableValue
     /** ActionListener implementations */
     public void actionPerformed(ActionEvent e) {
         if (log.isDebugEnabled()) log.debug("actionPerformed");
-        int newVal = Integer.parseInt(_value.getText());
-        updatedTextField();
-        prop.firePropertyChange("Value", null, Integer.valueOf(newVal));
+        try {
+            int newVal = Integer.parseInt(_value.getText());
+            updatedTextField();
+            prop.firePropertyChange("Value", null, newVal);
+         } catch (java.lang.NumberFormatException ex) { _value.setText(oldContents); }
     }
 
     /** FocusListener implementations */
