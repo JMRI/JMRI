@@ -3859,7 +3859,7 @@ public class TrainBuilder extends TrainCommon {
 					double nextCarMoves = rld.getCarMoves();
 					double nextRatio = nextCarMoves / rld.getMaxCarMoves();
 					// bias cars to the terminal
-					if (rld.getName().equals(_terminateLocation.getName())) {
+					if (rld == _train.getTrainTerminatesRouteLocation()) {
 						log.debug("Location ({}) is terminate location {}", rld.getName(), Double.toString(nextRatio));
 						nextRatio = nextRatio * nextRatio;
 					}

@@ -391,10 +391,12 @@ public class Router extends TrainCommon {
 		Car testCar = clone(car); // reload
 		log.debug("Two train routing, find {} track for car ({}) final destination ({}, {})", trackType,
 				car.toString(), testCar.getDestinationName(), testCar.getDestinationTrackName());
-		if (_addtoReport)
+		if (_addtoReport) {
+			addLine(_buildReport, SEVEN, BLANK_LINE);
 			addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFindTrack"), new Object[] {
 					Track.getTrackTypeName(trackType), car.toString(), testCar.getDestinationName(),
 					testCar.getDestinationTrackName() }));
+		}
 		boolean foundRoute = false;
 		// now search for a yard or interchange that a train can pick up and deliver the car to its destination
 		List<Track> tracks = LocationManager.instance().getTracksByMoves(trackType);
@@ -403,19 +405,23 @@ public class Router extends TrainCommon {
 				continue; // don't use car's current track
 			String status = track.accepts(testCar);
 			if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
-				if (_addtoReportVeryDetailed)
+				if (_addtoReportVeryDetailed) {
+					addLine(_buildReport, SEVEN, BLANK_LINE);
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCanNotDeliverCar"),
 							new Object[] { car.toString(), track.getLocation().getName(), track.getName(), status,
 									track.getTrackTypeName() }));
+				}
 				continue;
 			}
 			if (debugFlag)
 				log.debug("Found {} track ({}, {}) for car ({})", trackType, track.getLocation().getName(), track
 						.getName(), car.toString());
-			if (_addtoReport)
+			if (_addtoReport) {
+				addLine(_buildReport, SEVEN, BLANK_LINE);
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterFoundTrack"), new Object[] {
 						Track.getTrackTypeName(trackType), track.getLocation().getName(), track.getName(),
 						car.toString() }));
+			}
 			// test to see if there's a train that can deliver the car to its final location
 			testCar.setTrack(track);
 			testCar.setDestination(car.getFinalDestination());
@@ -427,7 +433,6 @@ public class Router extends TrainCommon {
 							trackType, track.getLocation().getName(), track.getName(), testCar.getDestinationName(),
 							testCar.getDestinationTrackName()); // NOI18N
 				if (_addtoReport) {
-					addLine(_buildReport, SEVEN, BLANK_LINE);
 					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNotFindTrain"),
 							new Object[] { Track.getTrackTypeName(trackType), track.getLocation().getName(),
 									track.getName(), testCar.getDestinationName(), testCar.getDestinationTrackName() }));
@@ -464,7 +469,6 @@ public class Router extends TrainCommon {
 				firstTrain = TrainManager.instance().getTrainForCar(testCar, _buildReport);
 			}
 			if (firstTrain == null && _addtoReport) {
-				addLine(_buildReport, SEVEN, BLANK_LINE);
 				addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNotFindTrain"),
 						new Object[] { testCar.getTrack().getTrackTypeName(),
 								testCar.getTrack().getLocation().getName(), testCar.getTrack().getName(),
