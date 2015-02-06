@@ -1296,16 +1296,18 @@ public class Track {
 				return OKAY;
 			// ignore used length option?
 			if (checkPlannedPickUps(length))
-					return OKAY;
+				return OKAY;
 			// Note that a lot of the code checks for track length being an issue, therefore it has to be the last
 			// check.
 			// Is rolling stock too long for this track?
 			if ((getLength() < length && getPool() == null)
 					|| (getPool() != null && getPool().getTotalLengthTracks() < length))
-				return CAPACITY + " " + getLength() + " " + Setup.getLengthUnit().toLowerCase();// NOI18N
+				return MessageFormat.format(Bundle.getMessage("capacityIssue"), new Object[] { CAPACITY, length,
+						Setup.getLengthUnit().toLowerCase(), getLength() });
 			log.debug("Rolling stock ({}) not accepted at location ({}, {}) no room!", rs.toString(), getLocation()
 					.getName(), getName()); // NOI18N
-			return LENGTH + " " + length + " " + Setup.getLengthUnit().toLowerCase();// NOI18N
+			return MessageFormat.format(Bundle.getMessage("lengthIssue"), new Object[] { LENGTH, length,
+					Setup.getLengthUnit().toLowerCase(), getLength() - (getUsedLength() + getReserved()) });
 		}
 		return OKAY;
 	}

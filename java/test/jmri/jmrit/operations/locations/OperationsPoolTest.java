@@ -8,7 +8,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 
 import java.io.File;
@@ -20,18 +19,14 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-
 /**
  * Tests for the Operations Pool class Last manually cross-checked on ?????
  * 
- * Still to do: ?????????????? Nees to be updated for Pool class ScheduleItem:
- * XML read/write Schedule: Register, List, XML read/write Track:
- * AcceptsDropTrain, AcceptsDropRoute Track: AcceptsPickupTrain,
- * AcceptsPickupRoute Track: CheckScheduleValid Track: XML read/write Location:
- * Track support <-- I am here Location: XML read/write
+ * Still to do: ?????????????? Nees to be updated for Pool class ScheduleItem: XML read/write Schedule: Register, List,
+ * XML read/write Track: AcceptsDropTrain, AcceptsDropRoute Track: AcceptsPickupTrain, AcceptsPickupRoute Track:
+ * CheckScheduleValid Track: XML read/write Location: Track support <-- I am here Location: XML read/write
  * 
- * @author Gregory Madsen Copyright (C) 2012, based on OperationsLocationTest
- *         class
+ * @author Gregory Madsen Copyright (C) 2012, based on OperationsLocationTest class
  * @version $Revision: 20262 $
  */
 public class OperationsPoolTest extends TestCase {
@@ -77,8 +72,7 @@ public class OperationsPoolTest extends TestCase {
 
 		p.setName("NewName");
 		Assert.assertTrue("Name changed event fired", opcl.isFired());
-		Assert.assertEquals("Name changed name", "Name", opcl.getEvent()
-				.getPropertyName());
+		Assert.assertEquals("Name changed name", "Name", opcl.getEvent().getPropertyName());
 
 		opcl.reset();
 
@@ -104,8 +98,7 @@ public class OperationsPoolTest extends TestCase {
 		p.add(t1);
 		Assert.assertEquals("Added one track", 1, p.getSize());
 		Assert.assertTrue("Was fired", opcl.isFired());
-		Assert.assertEquals("List changed", "poolListChange", opcl.getEvent()
-				.getPropertyName());
+		Assert.assertEquals("List changed", "poolListChange", opcl.getEvent().getPropertyName());
 
 		// Try to add it again
 		opcl.reset();
@@ -129,8 +122,7 @@ public class OperationsPoolTest extends TestCase {
 
 		Assert.assertEquals("Removed one track", 0, p.getSize());
 		Assert.assertTrue("Was fired", opcl.isFired());
-		Assert.assertEquals("List changed", "poolListChange", opcl.getEvent()
-				.getPropertyName());
+		Assert.assertEquals("List changed", "poolListChange", opcl.getEvent().getPropertyName());
 
 		// Try to remove it when it is not there.
 		opcl.reset();
@@ -179,8 +171,7 @@ public class OperationsPoolTest extends TestCase {
 		// Clear the returned list
 		lt.clear();
 
-		Assert.assertEquals("Original list size is unchanged", 2, p.getTracks()
-				.size());
+		Assert.assertEquals("Original list size is unchanged", 2, p.getTracks().size());
 	}
 
 	public void testLengthenTrack1() {
@@ -223,8 +214,8 @@ public class OperationsPoolTest extends TestCase {
 		Boolean ok = p.requestTrackLength(t1, 181);
 		Assert.assertFalse("Requested Track 1 181", ok);
 
-//		Assert.assertEquals("Length 1", 180, t1.getLength());
-//		Assert.assertEquals("Length 2", 40, t2.getLength());
+		// Assert.assertEquals("Length 1", 180, t1.getLength());
+		// Assert.assertEquals("Length 2", 40, t2.getLength());
 	}
 
 	public void testShortenTrack1() {
@@ -254,7 +245,7 @@ public class OperationsPoolTest extends TestCase {
 		Assert.assertEquals("Length 1", 20, t1.getLength());
 		Assert.assertEquals("Length 2", 200, t2.getLength());
 	}
-	
+
 	public void testTrackPools() {
 		LocationManager locMan = new LocationManager();
 		Location l = locMan.newLocation("TestTrackPoolsLocation");
@@ -265,126 +256,133 @@ public class OperationsPoolTest extends TestCase {
 		Track t5 = l.addTrack("Interchange 1", Track.INTERCHANGE);
 		Track t6 = l.addTrack("Interchange 2", Track.INTERCHANGE);
 		Track t7 = l.addTrack("Interchange 3", Track.INTERCHANGE);
-		
+
 		// create two pools
 		Pool pool1 = l.addPool("Pool One");
 		Pool pool2 = l.addPool("Pool Two");
-		
+
 		t1.setPool(pool1);
 		t3.setPool(pool1);
 		t7.setPool(pool1);
-		
+
 		t2.setPool(pool2);
 		t4.setPool(pool2);
 		t5.setPool(pool2);
 		t6.setPool(pool2);
-		
+
 		// only give one track in the pool some length
 		t3.setLength(100);
 		t5.setLength(200);
-		
+
 		// set minimums
 		t2.setMinimumLength(50);
 		t5.setMinimumLength(100);
-		
+
 		Car c1 = new Car("C", "1");
 		c1.setLength("40");
-		c1.setTypeName("Boxcar");	// location and track defaults should support type Boxcar
-		
+		c1.setTypeName("Boxcar"); // location and track defaults should support type Boxcar
+
 		Car c2 = new Car("C", "2");
 		c2.setLength("25");
-		c2.setTypeName("Boxcar");	// location and track defaults should support type Boxcar
-		
+		c2.setTypeName("Boxcar"); // location and track defaults should support type Boxcar
+
 		Car c3 = new Car("C", "3");
 		c3.setLength("32");
-		c3.setTypeName("Boxcar");	// location and track defaults should support type Boxcar
-		
+		c3.setTypeName("Boxcar"); // location and track defaults should support type Boxcar
+
 		// now place cars and see if track lengths adjust correctly
 		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t1));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
-		Assert.assertEquals("track length", 100-(40+Car.COUPLER), t3.getLength());
+		Assert.assertEquals("track length", 40 + Car.COUPLER, t1.getLength());
+		Assert.assertEquals("track length", 100 - (40 + Car.COUPLER), t3.getLength());
 		Assert.assertEquals("track length", 0, t7.getLength());
-		
+
 		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t7));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t1.getLength());
-		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
-		Assert.assertEquals("track length", 100-(40+Car.COUPLER)-(25+Car.COUPLER), t3.getLength());
-		
+		Assert.assertEquals("track length", 40 + Car.COUPLER, t1.getLength());
+		Assert.assertEquals("track length", 25 + Car.COUPLER, t7.getLength());
+		Assert.assertEquals("track length", 100 - (40 + Car.COUPLER) - (25 + Car.COUPLER), t3.getLength());
+
 		// not able to place c3, not enough available track length
-		Assert.assertEquals("Place c3", Track.LENGTH + " "+(32+Car.COUPLER)+" " + Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t1));
-		Assert.assertEquals("track length", 40+Car.COUPLER + 100-(40+Car.COUPLER)-(25+Car.COUPLER), t1.getLength());
-		Assert.assertEquals("track length", 25+Car.COUPLER, t7.getLength());
+		String status = c3.setLocation(l, t1);
+		// Assert.assertEquals("Place c3", Track.LENGTH + " "+(32+Car.COUPLER)+" " +
+		// Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t1));
+		Assert.assertTrue("Length issue", status.startsWith(Track.LENGTH));
+		Assert.assertEquals("track length", 40 + Car.COUPLER + 100 - (40 + Car.COUPLER) - (25 + Car.COUPLER), t1
+				.getLength());
+		Assert.assertEquals("track length", 25 + Car.COUPLER, t7.getLength());
 		Assert.assertEquals("track length", 0, t3.getLength());
-		
+
 		// now test the minimum track length pool feature
-		// tracks t2 t4 t5 and t6 in the same pool 
+		// tracks t2 t4 t5 and t6 in the same pool
 		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 40 + Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200 - (40 + Car.COUPLER), t5.getLength());
 		Assert.assertEquals("track length", 0, t4.getLength());
 		Assert.assertEquals("track length", 0, t6.getLength());
-		
+
 		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 200-(40+Car.COUPLER+25+Car.COUPLER), t5.getLength());
+		Assert.assertEquals("track length", 40 + Car.COUPLER + 25 + Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 200 - (40 + Car.COUPLER + 25 + Car.COUPLER), t5.getLength());
 		Assert.assertEquals("track length", 0, t4.getLength());
 		Assert.assertEquals("track length", 0, t6.getLength());
 
 		// not able to place c3, not enough available track length because of minimum for t5
-		Assert.assertEquals("Place c3", Track.LENGTH + " "+(32+Car.COUPLER)+" " + Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t2));
+		status = c3.setLocation(l, t2);
+		// Assert.assertEquals("Place c3", Track.LENGTH + " "+(32+Car.COUPLER)+" " +
+		// Setup.getLengthUnit().toLowerCase(), c3.setLocation(l, t2));
+		Assert.assertTrue("Length issue", status.startsWith(Track.LENGTH));
 		Assert.assertEquals("track length", 100, t2.getLength());
-		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
+		Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
 		Assert.assertEquals("track length", 0, t4.getLength());
 		Assert.assertEquals("track length", 0, t6.getLength());
-		
+
 		// now give t6 some length so the set location will work
 		t6.setLength(50);
-		
+
 		Assert.assertEquals("Place c3", Track.OKAY, c3.setLocation(l, t2));
-		Assert.assertEquals("track length", 40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
+		Assert.assertEquals("track length", 40 + Car.COUPLER + 25 + Car.COUPLER + 32 + Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
 		Assert.assertEquals("track length", 0, t4.getLength());
-		Assert.assertEquals("track length", 150-(40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER), t6.getLength());
-		
+		Assert.assertEquals("track length", 150 - (40 + Car.COUPLER + 25 + Car.COUPLER + 32 + Car.COUPLER), t6
+				.getLength());
+
 		// now move the cars on t2 to t4 to test the minimum for t2
-		c1.setLocation(null,null);	// release the used track. TODO requestTrackLength() should have checked
+		c1.setLocation(null, null); // release the used track. TODO requestTrackLength() should have checked
 									// to see if car's track was part of pool
-		
+
 		Assert.assertEquals("Place c1", Track.OKAY, c1.setLocation(l, t4));
-		Assert.assertEquals("track length", 25+Car.COUPLER+32+Car.COUPLER, t2.getLength());
-		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
-		Assert.assertEquals("track length", 40+Car.COUPLER, t4.getLength());
+		Assert.assertEquals("track length", 25 + Car.COUPLER + 32 + Car.COUPLER, t2.getLength());
+		Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
+		Assert.assertEquals("track length", 40 + Car.COUPLER, t4.getLength());
 		// 250 feet total track length in pool, 100 minimum
-		Assert.assertEquals("track length", (250-100)-(40+Car.COUPLER+25+Car.COUPLER+32+Car.COUPLER), t6.getLength());
-		
-		c2.setLocation(null,null);
-		
+		Assert.assertEquals("track length", (250 - 100) - (40 + Car.COUPLER + 25 + Car.COUPLER + 32 + Car.COUPLER), t6
+				.getLength());
+
+		c2.setLocation(null, null);
+
 		// latest code change 4/4/2013 provides enough track length for c2
 		Assert.assertEquals("Place c2", Track.OKAY, c2.setLocation(l, t4));
-		Assert.assertEquals("track length", 50, t2.getLength());	// minimum track length
-		Assert.assertEquals("track length", 100, t5.getLength());	// minimum track length
-		Assert.assertEquals("track length", 25+Car.COUPLER+40+Car.COUPLER, t4.getLength());
+		Assert.assertEquals("track length", 50, t2.getLength()); // minimum track length
+		Assert.assertEquals("track length", 100, t5.getLength()); // minimum track length
+		Assert.assertEquals("track length", 25 + Car.COUPLER + 40 + Car.COUPLER, t4.getLength());
 		// 250 feet total track length in pool, 150 minimum
-		Assert.assertEquals("track length", (250-150)-(40+Car.COUPLER+25+Car.COUPLER), t6.getLength());			
+		Assert.assertEquals("track length", (250 - 150) - (40 + Car.COUPLER + 25 + Car.COUPLER), t6.getLength());
 	}
 
 	/**
-	 * Test-by test initialization.
-	 * Does log4j for standalone use, and then
-	 * creates a set of turnouts, sensors and signals
-	 * as common background for testing
+	 * Test-by test initialization. Does log4j for standalone use, and then creates a set of turnouts, sensors and
+	 * signals as common background for testing
 	 */
 	@Override
 	protected void setUp() {
 		apps.tests.Log4JFixture.setUp();
-		
+
 		// set the locale to US English
 		Locale.setDefault(Locale.ENGLISH);
 
 		// Repoint OperationsSetupXml to JUnitTest subdirectory
-		OperationsSetupXml.setOperationsDirectoryName("operations"+File.separator+"JUnitTest");
+		OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
 		// Change file names to ...Test.xml
-		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml"); 
+		OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
 		RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
 		EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
 		CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
@@ -398,7 +396,7 @@ public class OperationsPoolTest extends TestCase {
 
 	// Main entry point
 	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", OperationsLocationsTest.class.getName()};
+		String[] testCaseName = { "-noloading", OperationsLocationsTest.class.getName() };
 		junit.swingui.TestRunner.main(testCaseName);
 	}
 
@@ -410,8 +408,7 @@ public class OperationsPoolTest extends TestCase {
 
 	// The minimal setup for log4J
 	@Override
-	protected void tearDown() { 
+	protected void tearDown() {
 		apps.tests.Log4JFixture.tearDown();
 	}
 }
-
