@@ -1139,7 +1139,7 @@ public class Setup {
 		return pickupEngineMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setPickupEngineMessageFormat(String[] format) {
 		pickupEngineMessageFormat = format;
 	}
@@ -1148,7 +1148,7 @@ public class Setup {
 		return dropEngineMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropEngineMessageFormat(String[] format) {
 		dropEngineMessageFormat = format;
 	}
@@ -1161,7 +1161,7 @@ public class Setup {
 		return pickupManifestMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setPickupManifestMessageFormat(String[] format) {
 		pickupManifestMessageFormat = format;
 	}
@@ -1170,7 +1170,7 @@ public class Setup {
 		return dropManifestMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropManifestMessageFormat(String[] format) {
 		dropManifestMessageFormat = format;
 	}
@@ -1179,7 +1179,7 @@ public class Setup {
 		return localManifestMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setLocalManifestMessageFormat(String[] format) {
 		localManifestMessageFormat = format;
 	}
@@ -1188,7 +1188,7 @@ public class Setup {
 		return missingCarMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setMissingCarMessageFormat(String[] format) {
 		missingCarMessageFormat = format;
 	}
@@ -1200,7 +1200,7 @@ public class Setup {
 			return pickupSwitchListMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setPickupSwitchListMessageFormat(String[] format) {
 		pickupSwitchListMessageFormat = format;
 	}
@@ -1212,7 +1212,7 @@ public class Setup {
 			return dropSwitchListMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setDropSwitchListMessageFormat(String[] format) {
 		dropSwitchListMessageFormat = format;
 	}
@@ -1224,7 +1224,7 @@ public class Setup {
 			return localSwitchListMessageFormat.clone();
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings("EI_EXPOSE_STATIC_REP2")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_STATIC_REP2")
 	public static void setLocalSwitchListMessageFormat(String[] format) {
 		localSwitchListMessageFormat = format;
 	}
