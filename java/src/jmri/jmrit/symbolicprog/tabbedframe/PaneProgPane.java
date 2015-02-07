@@ -1213,7 +1213,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // handle the xml definition
         // for all elements in the column or row
         List<Element> elemList = element.getChildren();
-        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        log.trace("newColumn starting with {} elements", elemList.size());
         for (int i=0; i<elemList.size(); i++) {
 
             Element e = (elemList.get(i));
@@ -1351,7 +1351,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // handle the xml definition
         // for all elements in the column or row
         List<Element> elemList = element.getChildren();
-        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        log.trace("newColumn starting with {} elements", elemList.size());
         for (int i=0; i<elemList.size(); i++) {
 
             Element e = (elemList.get(i));
@@ -1407,7 +1407,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // handle the xml definition
         // for all elements in the column or row
         List<Element> elemList = element.getChildren();
-        if (log.isDebugEnabled()) log.debug("newColumn starting with "+elemList.size()+" elements");
+        log.trace("newColumn starting with {} elements", elemList.size());
         for (int i=0; i<elemList.size(); i++) {
 
             // update the grid position
@@ -1551,7 +1551,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // handle the xml definition
         // for all elements in the column or row
         List<Element> elemList = element.getChildren();
-        if (log.isDebugEnabled()) log.debug("newRow starting with "+elemList.size()+" elements");
+        log.trace("newRow starting with {} elements", elemList.size());
         for (int i=0; i<elemList.size(); i++) {
 
             // update the grid position
@@ -1697,7 +1697,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // for all elements in the grid
         List<Element> elemList = element.getChildren();
         globs.gridAttList = element.getAttributes(); // get grid-level attributes
-        if (log.isDebugEnabled()) log.debug("newGrid starting with "+elemList.size()+" elements");
+        log.trace("newGrid starting with {} elements", elemList.size());
         for (int i=0; i<elemList.size(); i++) {
             globs.gridConstraints = new GridBagConstraints();
             Element e = elemList.get(i);
@@ -1881,7 +1881,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // handle the xml definition
         // for all elements in the grid item
         List<Element> elemList = element.getChildren();
-        if (log.isDebugEnabled()) log.debug("newGridItem starting with "+elemList.size()+" elements");
+        log.trace("newGridItem starting with {} elements", elemList.size());
         for (int i=0; i<elemList.size(); i++) {
 
             // update the grid position
@@ -2024,11 +2024,8 @@ public class PaneProgPane extends javax.swing.JPanel
         final JLabel l = new JLabel(text);
         l.setAlignmentX(1.0f);
         cs.fill = GridBagConstraints.BOTH;
-        if (log.isDebugEnabled()) {
-            log.debug("Add label: "+l.getText()+" cs: "
-                      +cs.gridwidth+" "+cs.fill+" "
-                      +cs.gridx+" "+cs.gridy);
-        }
+        log.trace("Add label: {} cs: {} fill: {} x: {} y: {}",
+                    l.getText(), cs.gridwidth, cs.fill, cs.gridx, cs.gridy);
         g.setConstraints(l, cs);
         c.add(l);
         cs.fill = GridBagConstraints.NONE;
@@ -2173,7 +2170,7 @@ public class PaneProgPane extends javax.swing.JPanel
         // if it doesn't exist, do nothing
         int i = _varModel.findVarIndex(name);
         if (i<0) {
-            if (log.isDebugEnabled()) log.debug("Variable \""+name+"\" not found, omitted");
+            log.trace("Variable \"{}\" not found, omitted", name);
             return;
         }
 //        log.info("Display item="+name);
@@ -2287,7 +2284,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Intended to handle e.g. adding CV numbers to variables.
      */
     String modifyToolTipText(String start, VariableValue variable) {
-        if (log.isDebugEnabled()) log.debug("modifyToolTipText: "+variable.label()+" "+_cvModel.getProgrammer());
+        log.trace("modifyToolTipText: {}", variable.label());
         // this is the place to invoke VariableValue methods to (conditionally)
         // add information about CVs, etc in the ToolTip text
         
@@ -2378,7 +2375,7 @@ public class PaneProgPane extends javax.swing.JPanel
             } else {
                 descString = descString+" no bits";
             }
-            log.debug(descString+" Mask:"+mask);
+            log.trace("{} Mask:{}", descString, mask);
         }
         
         // add to tool tip if Show CV Numbers enabled
