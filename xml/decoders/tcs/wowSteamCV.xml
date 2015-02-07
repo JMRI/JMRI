@@ -29,6 +29,19 @@
 		<comment xml:lang="it">Valori 0-255</comment>
 		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
 	</variable>
+	<!-- Manual 4 CV programming -->
+	<variable CV="201" item="CV201" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="202" item="CV202" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="203" item="CV203" default="0">
+		<decVal max="255"/>
+	</variable>
+	<variable CV="204" item="CV204" default="0">
+		<decVal max="255"/>
+	</variable>
 	<!-- Chuff Rate CV -->
 	<variable item="Step 1 Chuff Rate" CV="T2CV.3.1" default="46592" mask="VVVVVVVVVVVVVVVV">
 		<decVal max="65535"/>
