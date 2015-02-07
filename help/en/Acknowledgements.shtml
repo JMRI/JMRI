@@ -144,7 +144,8 @@
     <LI>Joan Carrancà, who provided the German DB signal set.
     <LI>Alain Carraso, who provided decoder definition for Arnold and Mistral Train decoders
     <li>Peter Cesaro provided MRC decoder definitions
-    <li>Xavier Chazelle, who provided a definition for the N scale Fleischmann "Leig einheit" F830681 double unit van equipped with a Fleiscmann specific dual decoder for opening or closing doors
+    <li>Xavier Chazelle, who provided a definition for the N scale 
+        Fleischmann "Leig einheit" F830681 double unit van equipped with a Fleiscmann specific dual decoder for opening or closing doors
 	<LI>Barry Chinn, who created the PDF file of our manual
 	<LI>Bill Chown, who did a lot of work on the MRC decoder definitions
 	<li>Bob Clearfield, who helped fix some broken links
