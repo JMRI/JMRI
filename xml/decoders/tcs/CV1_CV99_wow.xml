@@ -1043,12 +1043,6 @@
 	<label>Green/Brown Wire Timing</label>
 	<label xml:lang="it">Temporizzazioni filo Verde/Marrone</label>
   </variable>
-  <variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>BEMF Enable</label>
-	<label xml:lang="it">Abilitazione BEMF</label>
-	<tooltip xml:lang="it">Abilita (default=on) BEMF, abilitando la BEMF si disabilitano le Fluttuazioni</tooltip>
-  </variable>
   <variable CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 	<label>Enable BEMF Button Control</label>

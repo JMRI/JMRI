@@ -32,20 +32,13 @@
 		<enumChoice choice="Uncoupling" value="73"/>
 	</enumChoiceGroup>
 	<enumChoice choice="Crew Alert" value="74"/>
-	<enumChoiceGroup>
-		<name>Dynamic Brake</name>
-		<enumChoice choice="Dynamic brakes low" value="75"/>
-		<enumChoice choice="Dynamic brakes medium" value="76"/>
-		<enumChoice choice="Dynamic brakes high" value="77"/>
-	</enumChoiceGroup>
+	<enumChoice choice="Dynamic brakes" value="75"/>
 	<enumChoice choice="Exhaust Fan" value="78"/>
 	<enumChoiceGroup>
 		<name>Horn</name>
 		<enumChoice choice="Horn - Long" value="110"/>
 		<enumChoice choice="Horn - Proceed Forward" value="79"/>
-		<enumChoice choice="Horn - Quill 1" value="141"/>
-		<enumChoice choice="Horn - Quill 2" value="142"/>
-		<enumChoice choice="Horn - Quill 3" value="143"/>
+		<enumChoice choice="Horn - Quill" value="141"/>
 		<enumChoice choice="Horn - Reverse" value="574"/>
 		<enumChoice choice="Horn - Short" value="234"/>
 		<enumChoice choice="Horn - Stop" value="636"/>
@@ -57,5 +50,5 @@
 	<enumChoice choice="Prime mover ignition (on/off)" value="566"/>
 	<enumChoice choice="Rotate Horn/Bell" value="605"/>
 	<enumChoice choice="Windshield Wiper" value="667"/>
-	<enumChoice choice="None" value="669"/>
+	<enumChoice choice="None" value="65535"/>
 </enumVal>

@@ -85,7 +85,7 @@
 	</variable>
 	<variable item="Sound Option 4" CV="T2CV.4.9" default="1">
 		<enumVal>
-			<enumChoice choice="Slot car"/>
+			<enumChoice choice="Traditional throttle"/>
 			<enumChoice choice="Prototype throttle"/>
 			<enumChoice choice="Manual notch mode"/>
 		</enumVal>
@@ -96,39 +96,39 @@
 		<label>Global volume</label>
 	</variable>
 	<variable item="Sound Group 5 Checkbox 1" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXXXXXV">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		<label>Crew Alert</label>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Crew Alert enable</label>
 	</variable>
 	<variable item="Sound Group 5 Checkbox 5" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXXVXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Forward sound enable</label>
 	</variable>
 	<variable item="Sound Group 5 Checkbox 6" CV="T2CV.4.12" default="0" mask="XXXXXXXXXXVXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Reverse sound enable</label>
 	</variable>
 	<variable item="Sound Group 5 Checkbox 7" CV="T2CV.4.12" default="0" mask="XXXXXXXXXVXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Stop sound enable</label>
 	</variable>
 	<variable item="Sound Group 5 Checkbox 8" CV="T2CV.4.12" default="1" mask="XXXXXXXXVXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		<label>Direction change enable</label>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Direction change sound enable</label>
 	</variable>
 	<variable item="Sound Group 6 Checkbox 1" CV="T2CV.4.12" default="1" mask="XXXXXXXVXXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Random Sound 1 enable</label>
 	</variable> 
 	<variable item="Sound Group 6 Checkbox 2" CV="T2CV.4.12" default="1" mask="XXXXXXVXXXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Random Sound 2 enable</label>
 	</variable> 
 	<variable item="Sound Group 6 Checkbox 3" CV="T2CV.4.12" default="0" mask="XXXXXVXXXXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Random Sound 3 enable</label>
 	</variable> 
 	<variable item="Sound Group 6 Checkbox 4" CV="T2CV.4.12" default="0" mask="XXXXVXXXXXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Random Sound 4 enable</label>
 	</variable> 
 	<variable item="Sound Setting 35" CV="T2CV.4.13" default="15" >
@@ -160,19 +160,19 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable label="Dual function F7" CV="T2CV.4.14" default="0" mask="XXXXXXXVXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable label="Dual function F8" CV="T2CV.4.14" default="1" mask="XXXXXXVXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable label="Dual function F9" CV="T2CV.4.14" default="0" mask="XXXXXVXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable label="Dual function F10" CV="T2CV.4.14" default="0" mask="XXXXVXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable label="Dual function F11" CV="T2CV.4.14" default="0" mask="XXXVXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
 	<variable label="Dual function F12" CV="T2CV.4.14" default="0" mask="XXVXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -207,40 +207,46 @@
 		<label>BEMF calibration high</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 1" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXXV">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Manual notching feedback/relay sound</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 2" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXVX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Auto notch down prime mover when brakes are on</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXVXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Mute on Start up</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 4" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXVXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Switch/Mainline Mode Audio Feedback</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 5" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXVXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Rotate Horn/Bell Audio Feedback</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 6" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXVXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Light Mode/Sound Mode Audio Feedback</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 7" CV="T2CV.4.19" default="0" mask="XXXXXXXXXVXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Audio Auto Shut-off Timer</label>
 	</variable>
-	<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX" tooltip="Digitrax bit-set simulates button 2 as toggle while in A.A. mode">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
-		<label>Function 2 toggle in Audio Assist</label>
+	<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Function 2 Toggle in Audio Assist</label>
+		<tooltip>Digitrax bit: set simulates button 2 as toggle while in Audio Assist mode</tooltip>
 	</variable>
 	<variable item="Sound Group 8 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXVXXXXXXXX">
-		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Dual Prime Movers</label>
+	</variable>
+	<variable item="Sound Group 8 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXVXXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<label>Reverse Directional Horns</label>
+		<tooltip>If set the directional horns (if enabled) are played in opposite direction from normal, use along with Normal Direction Of Motion setting</tooltip>
 	</variable>
 	<variable item="Sound Setting 2" CV="T2CV.4.21" default="256" mask="VVVVVVVVVVVVVVVV" tooltip="a value of 256 is about 3 minutes">
 		<decVal max="65535"/>
@@ -293,27 +299,27 @@
 		<decVal max="126"/>
 		<label>Notch 2 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 15" CV="T2CV.4.33" default="11" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 3">
+	<variable item="Sound Setting 15" CV="T2CV.4.33" default="13" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 3">
 		<decVal max="126"/>
 		<label>Notch 3 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 16" CV="T2CV.4.34" default="17" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 4">
+	<variable item="Sound Setting 16" CV="T2CV.4.34" default="20" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 4">
 		<decVal max="126"/>
 		<label>Notch 4 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 17" CV="T2CV.4.35" default="26" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 5">
+	<variable item="Sound Setting 17" CV="T2CV.4.35" default="27" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 5">
 		<decVal max="126"/>
 		<label>Notch 5 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 18" CV="T2CV.4.36" default="36" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 6">
+	<variable item="Sound Setting 18" CV="T2CV.4.36" default="34" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 6">
 		<decVal max="126"/>
 		<label>Notch 6 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 19" CV="T2CV.4.37" default="47" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 7">
+	<variable item="Sound Setting 19" CV="T2CV.4.37" default="41" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 7">
 		<decVal max="126"/>
 		<label>Notch 7 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 20" CV="T2CV.4.38" default="70" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 8">
+	<variable item="Sound Setting 20" CV="T2CV.4.38" default="48" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 8">
 		<decVal max="126"/>
 		<label>Notch 8 transition speed step </label>
 	</variable>

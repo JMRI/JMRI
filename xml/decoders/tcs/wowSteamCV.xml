@@ -29,6 +29,12 @@
 		<comment xml:lang="it">Valori 0-255</comment>
 		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
 	</variable>
+	<variable CV="61" mask="XXXXXXXV" default="1" item="EMF Enable" tooltip="Turn off/on(default) BEMF, enabling BEMF disables Dither">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label>BEMF Enable</label>
+		<label xml:lang="it">Abilitazione BEMF</label>
+		<tooltip xml:lang="it">Abilita (default=on) BEMF, abilitando la BEMF si disabilitano le Fluttuazioni</tooltip>
+	</variable>
 	<!-- Manual 4 CV programming -->
 	<variable CV="201" item="CV201" default="0">
 		<decVal max="255"/>

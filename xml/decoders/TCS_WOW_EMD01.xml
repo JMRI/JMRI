@@ -79,7 +79,7 @@
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml" />
 			<xi:include href="http://jmri.org/xml/decoders/tcs/wowDieselCV.xml" />
 			<!-- Sound function mapping -->
-			<variable item="Function 0 Sound" CV="T2CV.1.0" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 0 Sound" CV="T2CV.1.0" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>  
 			</variable>
 			<variable item="Function 1 Sound" CV="T2CV.1.1" default="7" mask="VVVVVVVVVVVVVVVV">
@@ -136,34 +136,34 @@
 			<variable item="Function 18 Sound" CV="T2CV.1.18" default="2" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 19 Sound" CV="T2CV.1.19" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 19 Sound" CV="T2CV.1.19" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 20 Sound" CV="T2CV.1.20" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 20 Sound" CV="T2CV.1.20" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 21 Sound" CV="T2CV.1.21" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 21 Sound" CV="T2CV.1.21" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 22 Sound" CV="T2CV.1.22" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 22 Sound" CV="T2CV.1.22" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 23 Sound" CV="T2CV.1.23" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 23 Sound" CV="T2CV.1.23" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 24 Sound" CV="T2CV.1.24" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 24 Sound" CV="T2CV.1.24" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 25 Sound" CV="T2CV.1.25" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 25 Sound" CV="T2CV.1.25" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 26 Sound" CV="T2CV.1.26" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 26 Sound" CV="T2CV.1.26" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 27 Sound" CV="T2CV.1.27" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 27 Sound" CV="T2CV.1.27" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Function 28 Sound" CV="T2CV.1.28" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Function 28 Sound" CV="T2CV.1.28" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
 			<variable item="Random 1 Sound" CV="T2CV.1.29" default="0" mask="VVVVVVVVVVVVVVVV">
@@ -172,10 +172,10 @@
 			<variable item="Random 2 Sound" CV="T2CV.1.30" default="1" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Random 3 Sound" CV="T2CV.1.31" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Random 3 Sound" CV="T2CV.1.31" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
-			<variable item="Random 4 Sound" CV="T2CV.1.32" default="669" mask="VVVVVVVVVVVVVVVV">
+			<variable item="Random 4 Sound" CV="T2CV.1.32" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>
 			</variable>
 			
