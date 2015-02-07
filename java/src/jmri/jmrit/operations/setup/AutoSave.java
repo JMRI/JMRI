@@ -17,7 +17,7 @@ public class AutoSave {
 	
 	static Thread autoSave = null;
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="SC_START_IN_CTOR")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value="SC_START_IN_CTOR")
 	public AutoSave(){
 		synchronized (this) {
 			if (Setup.isAutoSaveEnabled() && autoSave == null){

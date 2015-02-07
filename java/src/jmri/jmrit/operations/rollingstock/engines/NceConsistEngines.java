@@ -262,7 +262,7 @@ public class NceConsistEngines extends Thread implements jmri.jmrix.nce.NceListe
 	public void message(NceMessage m) {
 	} // ignore replies
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NN_NAKED_NOTIFY")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "NN_NAKED_NOTIFY")
 	public void reply(NceReply r) {
 
 		if (waiting <= 0) {

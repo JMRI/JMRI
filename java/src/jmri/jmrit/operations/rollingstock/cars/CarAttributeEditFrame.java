@@ -130,7 +130,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 	}
 
 	// add, delete, or replace button
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("edit frame button activated");
 		if (ae.getSource() == addButton) {
@@ -214,7 +214,7 @@ public class CarAttributeEditFrame extends OperationsFrame implements java.beans
 
 	static boolean showDialogBox = true;
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	private void addItemToCombobox(String addItem) {
 		if (_comboboxName == CarEditFrame.ROAD) {
 			CarRoads.instance().addName(addItem);

@@ -315,7 +315,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 		}
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected void save() {
 		checkForErrors();
 		// save the last state of the "Use car type and load" checkbox

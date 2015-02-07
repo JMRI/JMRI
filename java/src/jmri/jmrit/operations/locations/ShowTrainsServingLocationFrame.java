@@ -172,7 +172,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
 		pTrains.revalidate();
 	}
 	
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
 		log.debug("check box action");
 		isShowAllTrains = showAllTrainsCheckBox.isSelected();

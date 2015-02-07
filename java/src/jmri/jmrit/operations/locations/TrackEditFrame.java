@@ -525,7 +525,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 		return true;
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected void saveTrack(Track track) {
 		// save train directions serviced by this location
 		int direction = 0;

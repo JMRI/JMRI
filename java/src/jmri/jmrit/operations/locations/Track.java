@@ -1245,7 +1245,7 @@ public class Track {
 		} catch (Exception e) {
 			return LENGTH + " (" + rs.getLength() + ")";
 		}
-		// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
+
 		if (Car.class.isInstance(rs)) {
 			Car car = (Car) rs;
 			// does this track service the car's final destination?
@@ -1274,7 +1274,6 @@ public class Track {
 			}
 		}
 		// check for loco in consist
-		// @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="BC_UNCONFIRMED_CAST")
 		if (Engine.class.isInstance(rs)) {
 			Engine eng = (Engine) rs;
 			if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {

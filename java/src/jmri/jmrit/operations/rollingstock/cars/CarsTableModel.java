@@ -182,11 +182,14 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			return "Error"; // NOI18N
 		}
 	}
+	
+	private static boolean isSelectVisible = false;
 
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	public void toggleSelectVisible() {
 		XTableColumnModel tcm = (XTableColumnModel) _table.getColumnModel();
-		boolean isVisible = tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
-		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), !isVisible);
+		isSelectVisible = !tcm.isColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN));
+		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
 	}
 
 	public void resetCheckboxes() {
@@ -387,7 +390,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		_table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 
 		// turn off columns
-		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), false);
+		tcm.setColumnVisible(tcm.getColumnByModelIndex(SELECT_COLUMN), isSelectVisible);
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(COLOR_COLUMN), false);
 
 		tcm.setColumnVisible(tcm.getColumnByModelIndex(FINAL_DESTINATION_COLUMN), false);

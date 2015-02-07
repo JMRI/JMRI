@@ -104,7 +104,7 @@ public class CarsSetFrame extends CarSetFrame implements java.beans.PropertyChan
 		toggle = !b;
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected boolean save() {
 		// save ignore states
 		ignoreStatusCheckBoxSelected = ignoreStatusCheckBox.isSelected();

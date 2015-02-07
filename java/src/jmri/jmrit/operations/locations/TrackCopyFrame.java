@@ -164,7 +164,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 		}
 	}
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
+	@edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
 	protected void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 		if (ae.getSource() == copyButton) {
 			log.debug("copy track button activated");
