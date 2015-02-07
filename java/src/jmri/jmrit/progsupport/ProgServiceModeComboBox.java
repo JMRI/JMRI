@@ -75,6 +75,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
 
     
     public ProgServiceModeComboBox(int direction) {
+        log.trace("ctor starts");
         modeBox = new JComboBox<ProgrammingMode>();
         modeBox.addActionListener(this);
         
@@ -129,7 +130,12 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
                 model.addElement(mode);
             }
         }
+        log.trace("programmerSelected sets model");
         modeBox.setModel(model);
+        ProgrammingMode mode = getProgrammer().getMode();
+        log.trace("programmerSelected sets mode {}",mode);
+        modeBox.setSelectedItem(mode);
+        
     }
     
     /**
