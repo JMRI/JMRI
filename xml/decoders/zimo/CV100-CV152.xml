@@ -2,6 +2,7 @@
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 27 Jan 12 JES  - fixed bug in diesel steam effect enum value -->
+<!-- version 1.2 18 jan 2015 Mark Waters   - fixed errors in CV114 and CV152 include href, added some missing minOuts -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
   <variable item="Smoke Characteristic" CV="112" mask="XXXXXXXV">
@@ -82,42 +83,42 @@
     <label xml:lang="it">Intensità Taglio EMF</label>
   </variable>
   <variable item="Dim Front Light" CV="114" mask="XXXXXXXV" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim Front Light</label>
     <label xml:lang="it">Smorzamento Luci frontali</label>
   </variable>
   <variable item="Dim Rear Light" CV="114" mask="XXXXXXVX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim Rear Light</label>
     <label xml:lang="it">Smorzamento Luci posteriori</label>
   </variable>
   <variable item="Dim function output 1" CV="114" mask="XXXXXVXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 1</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 1</label>
   </variable>
   <variable item="Dim function output 2" CV="114" mask="XXXXVXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 2</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 2</label>
   </variable>
   <variable item="Dim function output 3" CV="114" mask="XXXVXXXX" default="0" minOut="5">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 3</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 3</label>
   </variable>
-  <variable item="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="5">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 4" CV="114" mask="XXVXXXXX" default="0" minOut="6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 4</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 4</label>
   </variable>
   <variable item="Dim function output 5" CV="114" mask="XVXXXXXX" default="0" minOut="7">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 5</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 5</label>
   </variable>
-  <variable item="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="7">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 6" CV="114" mask="VXXXXXXX" default="0" minOut="8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 6</label>
     <label xml:lang="it">Smorzamento Uscita funzioni 6</label>
   </variable>
@@ -161,7 +162,7 @@
     <label>Flash function output 3</label>
     <label xml:lang="it">Lampeggio uscita funzione 3</label>
   </variable>
-  <variable item="Flash function output 4" CV="118" mask="XXVXXXXX" default="0" minOut="5">
+  <variable item="Flash function output 4" CV="118" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Flash function output 4</label>
     <label xml:lang="it">Lampeggio uscita funzione 4</label>
@@ -171,7 +172,7 @@
     <label>Inverse Flash Output 2</label>
     <label xml:lang="it">Lampeggio invertito uscita 2</label>
   </variable>
-  <variable item="Inverse Flash Output 4" CV="118" mask="VXXXXXXX" default="0" minOut="5">
+  <variable item="Inverse Flash Output 4" CV="118" mask="VXXXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Inverse Flash Output 4</label>
     <label xml:lang="it">Lampeggio invertito uscita 4</label>
@@ -201,7 +202,7 @@
     <label>F6 dims function output 3</label>
     <label xml:lang="it">F6 smorza Uscita funzione 3</label>
   </variable>
-  <variable item="F6 dims function output 4" CV="119" mask="XXVXXXXX" default="0" minOut="5">
+  <variable item="F6 dims function output 4" CV="119" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F6 dims function output 4</label>
     <label xml:lang="it">F6 smorza Uscita funzione 4</label>
@@ -236,7 +237,7 @@
     <label>F7 dims function output 3</label>
     <label xml:lang="it">F7 smorza Uscita funzione 3</label>
   </variable>
-  <variable item="F7 dims function output 4" CV="120" mask="XXVXXXXX" default="0" minOut="5">
+  <variable item="F7 dims function output 4" CV="120" mask="XXVXXXXX" default="0" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>F7 dims function output 4</label>
     <label xml:lang="it">F7 smorza Uscita funzione 4</label>
@@ -412,7 +413,7 @@
     <label>Function output 3 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 3</label>
   </variable>
-  <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated" minOut="5">
+  <variable CV="130" mask="VVVVVVXX" item="Output 6 effect generated" minOut="6">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
@@ -422,12 +423,12 @@
     <label>Function output 4 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 4</label>
   </variable>
-  <variable CV="130" mask="XXXXXXVV" item="Output 6 behavior" minOut="5">
+  <variable CV="130" mask="XXXXXXVV" item="Output 6 behavior" minOut="6">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 4 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 4</label>
   </variable>
-  <variable CV="131" mask="VVVVVVXX" minOut="8" item="Output 7 effect generated">
+  <variable CV="131" mask="VVVVVVXX" item="Output 7 effect generated" minOut="7">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
@@ -437,22 +438,22 @@
     <label>Function output 5 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 5</label>
   </variable>
-  <variable CV="131" mask="XXXXXXVV" minOut="8" item="Output 7 behavior">
+  <variable CV="131" mask="XXXXXXVV" item="Output 7 behavior" minOut="7">
    <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 5 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 5</label>
   </variable>
-  <variable CV="132" mask="VVVVVVXX" minOut="8" item="Output 8 effect generated">
+  <variable CV="132" mask="VVVVVVXX" item="Output 8 effect generated" minOut="8">
      <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth3.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth4.xml"/>
     </enumVal>
-    <label>Functin output 6 effect generated</label>
+    <label>Function output 6 effect generated</label>
     <label xml:lang="it">Effetti uscita Funzione 6</label>
   </variable>
-  <variable CV="132" mask="XXXXXXVV" minOut="8" item="Output 8 behavior">
+  <variable CV="132" mask="XXXXXXVV" item="Output 8 behavior" minOut="8">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>
     <label>Function output 6 behavior</label>
     <label xml:lang="it">Comportamento uscita Funzione 6</label>
@@ -694,33 +695,33 @@
     <label>Motor brake</label>
     <label xml:lang="it">Freno motore</label>
   </variable>
-  <variable item="Dim function output 7" CV="152" mask="XXXXXXXV" default="0" include="210">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 7" CV="152" mask="XXXXXXXV" default="0"  minOut="9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 7</label>
     <label xml:lang="it">Funzione smorzamento uscita 7</label>
   </variable>
-  <variable item="Dim function output 8" CV="152" mask="XXXXXXVX" default="0" include="210">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 8" CV="152" mask="XXXXXXVX" default="0"  minOut="10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 8</label>
     <label xml:lang="it">Funzione smorzamento uscita 8</label>
   </variable>
-  <variable item="Dim function output 9" CV="152" mask="XXXXXVXX" default="0" include="210">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 9" CV="152" mask="XXXXXVXX" default="0"  minOut="11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 9</label>
     <label xml:lang="it">Funzione smorzamento uscita 9</label>
   </variable>
-  <variable item="Dim function output 10" CV="152" mask="XXXXVXXX" default="0">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 10" CV="152" mask="XXXXVXXX" default="0" minOut="12">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 10</label>
     <label xml:lang="it">Funzione smorzamento uscita 10</label>
   </variable>
-  <variable item="Dim function output 11" CV="152" mask="XXXVXXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 11" CV="152" mask="XXXVXXXX" default="0" minOut="13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 11</label>
     <label xml:lang="it">Funzione smorzamento uscita 11</label>
   </variable>
-  <variable item="Dim function output 12" CV="152" mask="XXVXXXXX" default="0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
+  <variable item="Dim function output 12" CV="152" mask="XXVXXXXX" default="0" minOut="14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Dim function output 12</label>
     <label xml:lang="it">Funzione smorzamento uscita 12</label>
   </variable>
