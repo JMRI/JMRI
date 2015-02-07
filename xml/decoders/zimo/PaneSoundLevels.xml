@@ -599,6 +599,19 @@
   </row>
   <row>
     <column>
+	  <label>
+        <text>Sound Level Control by Function Keys</text>
+      </label>
+	  <label>
+        <text> </text>
+      </label>
+	  <display item="Maximum Volume" label="Maximum Volume"/>
+	  <display item="Function Key to Increase Volume" label="Function Key to Increase Volume"/>
+	  <display item="Function Key to Reduce Volume" label="Function Key to Reduce Volume"/>
+	  
+	  <label>
+        <text> </text>
+      </label>
       <label>
         <text> </text>
       </label>

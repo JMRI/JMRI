@@ -3,6 +3,7 @@
 <!-- version 1 - for Unified Software -->
 <!-- version 1.1 2 Aug 11 JES
                  - added turbocharger CVs 366-371
+	 Version 1.2  23Jan 2015, Nigel Cliffe   Numerous extensions from v34 firmware
 -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <column>
@@ -27,8 +28,54 @@
     <label>
       <text> </text>
     </label>
+	
+
+	<display item="Influence of Acceleration on Diesel Sound Steps">
+		<label>Influence of Acceleration on Diesel Sound Steps</label>
+		</display>
+	<display item="Influence of Deceleration on Diesel Sound Steps">
+		<label>Influence of Deceleration on Diesel Sound Steps</label>
+		</display>
+	<display item="Limitation of Acceleration on Diesel Sound Steps">
+		<label>Limitation of Acceleration on Diesel Sound Steps</label>
+		</display>
+	
+	<label>	
+	<text> </text>	
+	</label>
+	
+	<display item="Fn key driving solo">
+		<label>Fn key driving solo</label>
+		</display>
+	<display item="Solo unhindered rpm">
+		<label>Solo unhindered rpm</label>
+		</display>
+	<display item="Solo change momentum">
+		<label>Solo change momentum</label>
+		</display>
+	<display item="Solo change idle only">
+		<label>Solo change idle only</label>
+		</display>
+		
+		
+	<display item="Momentum reduction when driving solo">
+		<label>Momentum reduction when driving solo</label>
+		</display>
+	<display item="Driving idle sound speed step threshold">
+		<label>Driving idle sound speed step threshold</label>
+		</display>
+		
+	<label>
+	<text> </text>
+	</label>
+	
     <display item="Function Key for Coasting"/>
     <display item="Sound Slot during Coasting"/>
+	 <text> </text>
+	<display item="Automatic Coasting Speed Steps">
+		<label>Speed change for automatic coasting</label>
+		</display>
+	
   </column>
   <column>
     <label>
