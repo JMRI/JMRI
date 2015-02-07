@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 1.2, include statments for CV341 CV342 CV343 edited for new decoders and corrections by Mark Waters -->  
 <!-- version 1.1, correction to CV354 by Nigel Cliffe -->
 <!-- version 1, Mark Waters - for Unified Software version 30, added additional CV313 settings to CV260-CV355sound.xml -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -903,17 +904,17 @@
     <label>Playback length for random generator Z8</label>
     <label xml:lang="it">Tempo durata per generatore casuale Z8</label>
   </variable>
-  <variable item="Switch input 1 playback time" CV="341" default="0" tooltip="Seconds. 0 = Play sample back once (as recorded).">
+  <variable item="Switch input 1 playback time" CV="341" default="0" tooltip="Seconds. 0 = Play sample back once (as recorded)." include="208,210,214,215,221,222,224,227,230">
     <decVal min="0" max="255"/>
     <label>Switch input 1 playback time</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 1</label>
   </variable>
-  <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded).">
+  <variable item="Switch input 2 playback time" CV="342" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,210,224,227,230">
     <decVal min="0" max="255"/>
     <label>Switch input 2 playback time</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 2</label>
   </variable>
-  <variable item="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,224">
+  <variable item="Switch input 3 playback time" CV="343" default="0" tooltip="(If not used for the cam sensor) Seconds. 0 = Play sample back once (as recorded)." include="208,224,227,230">
     <decVal min="0" max="255"/>
     <label>Switch input 3 playback time</label>
     <label xml:lang="it">Tempo durata suono per Ingresso 3</label>
