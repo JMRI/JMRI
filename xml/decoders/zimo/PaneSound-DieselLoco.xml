@@ -71,7 +71,11 @@
 	
     <display item="Function Key for Coasting"/>
     <display item="Sound Slot during Coasting"/>
-	 <text> </text>
+
+	<label>
+	<text> </text>
+	</label>
+
 	<display item="Automatic Coasting Speed Steps">
 		<label>Speed change for automatic coasting</label>
 		</display>

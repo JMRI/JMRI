@@ -13,11 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Mark Waters mark16w-jmri@yahoo.co.uk" version="1" lastUpdated="20110530"/>
+  <version author="Mark Waters mark16jmri@mybtinternet.com" version="1" lastUpdated="20110530"/>
   <!-- This decoder configuration file is based on the Zimo_MX640_v9.xml                     -->
   <!-- V 1 file, dated 20090222. With the Sound tabs from Jeff Schmaltz' MX69/MX690 file.    -->
   <!--                                                                                       -->
-  <!-- Based on the "2010 03 01" English version of the ZIMO MX640            			 -->
+  <!-- Based on the "2010 03 01" English version of the ZIMO MX640            		     -->
   <!-- decoder manual (with thanks to Art Luescher of ZIMO Agency of North America           -->
   <!-- for the translations!)and the decoder software update page of the Zimo website.       -->
   <!--                                                                                       -->
@@ -28,6 +28,7 @@
   <!-- v1.1,  small change to refer CV's 260-355 to the "version 30" file,  Nigel Cliffe. 9th Dec 2011 -->
   <!-- v1.2,  "version 32 firmware" inclusion of sound control CV's and "coast" function for diesels  Nigel Cliffe. 17th Nov 2012 -->
   <!-- v1.3,  Extended Sound Volume controls to cover FnKeys F20-F28.   Nigel Cliffe, 7 March 2014 -->
+  <!-- v1.4,  Changed to use generic CV739-CV744.xml file.   Mark Waters, 4 Feb 2015 -->
   <decoder>
     <family name="Zimo Unified software (version 32+)" mfg="Zimo">
       <model model="MX646 version 32+" lowVersionID="32" highVersionID="35" maxInputVolts="30V" maxMotorCurrent="1.0A, peak=1.5A" maxTotalCurrent="1.2A" formFactor="N" numOuts="6" numFns="14" productID="217">
@@ -73,6 +74,7 @@
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV100-CV152version30.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV153-CV157version28.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV158version32.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV159-CV160.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV161-CV185Servo.xml"/>
       <variable item="Decoder ID 1" CV="250" default="217" readOnly="yes">
         <decVal/>
@@ -105,8 +107,7 @@
       <!-- more sound variables -->
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV500-CV603.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV604-CV699.xml"/>
-      <!-- does MX646 have any switch inputs ?   <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744twoSwitchIP.xml"/>
-  -->
+      <xi:include href="http://jmri.org/xml/decoders/zimo/CV739-CV744.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/zimo/CV745-CV768.xml"/>
       <!-- end of more sound variables -->
     </variables>
