@@ -8,6 +8,7 @@ import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
+import javax.annotation.Nonnull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,8 +126,17 @@ abstract public class SystemConnectionMemo {
         return prefix;
     }
 
-    //This should probably throw an exception
-    public boolean setSystemPrefix(String systemPrefix) {
+    /**
+     * Set the system prefix.
+     * 
+     * @param systemPrefix
+     * @throws java.lang.NullPointerException if systemPrefix is null
+     * @return true if the system prefix could be set
+     */
+    public boolean setSystemPrefix(@Nonnull String systemPrefix) {
+        if (systemPrefix == null) {
+            throw new NullPointerException();
+        }
         if (systemPrefix.equals(prefix)) {
             if (this.prefixAsLoaded == null) {
                 this.prefixAsLoaded = systemPrefix;
@@ -156,8 +166,17 @@ abstract public class SystemConnectionMemo {
         return userName;
     }
 
-    //This should probably throw an exception
-    public boolean setUserName(String name) {
+    /**
+     * Set the user name for the system connection.
+     * 
+     * @param name
+     * @throws java.lang.NullPointerException if name is null
+     * @return true if the user name could be set.
+     */
+    public boolean setUserName(@Nonnull String name) {
+        if (name == null) {
+            throw new NullPointerException();
+        }
         if (name.equals(userName)) {
             if (this.userNameAsLoaded == null) {
                 this.userNameAsLoaded = name;
