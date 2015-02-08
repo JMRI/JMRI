@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.implementation.QuietShutDownTask;
+import jmri.jmris.JmriConnection;
 import jmri.jmris.simpleserver.SimpleLightServer;
 import jmri.jmris.simpleserver.SimpleOperationsServer;
 import jmri.jmris.simpleserver.SimplePowerServer;
@@ -20,8 +21,13 @@ import jmri.util.FileUtil;
 import jmri.util.node.NodeIdentity;
 import jmri.web.server.WebServerManager;
 import jmri.web.servlet.ServletUtil;
-import org.eclipse.jetty.websocket.WebSocket;
-import org.eclipse.jetty.websocket.WebSocketServlet;
+import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -32,33 +38,15 @@ import org.slf4j.LoggerFactory;
 public class SimpleServlet extends WebSocketServlet {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3435613482175230757L;
-	private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<SimpleWebSocket>();
+     *
+     */
+    private static final long serialVersionUID = 3435613482175230757L;
+    private final Set<SimpleWebSocket> sockets = new CopyOnWriteArraySet<>();
     private static final Logger log = LoggerFactory.getLogger(SimpleServlet.class);
 
-    public SimpleServlet() {
-        super();
-        InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close simple web sockets") {
-            @Override
-            public boolean execute() {
-                for (SimpleWebSocket socket : sockets) {
-                    socket.connection.close();
-                }
-                return true;
-            }
-
-            @Override
-            public String name() {
-                return "CloseSimpleWebSockets";
-            }
-        });
-    }
-
     @Override
-    public WebSocket doWebSocketConnect(HttpServletRequest hsr, String string) {
-        return new SimpleWebSocket();
+    public void configure(WebSocketServletFactory factory) {
+        factory.register(SimpleWebSocket.class);
     }
 
     @Override
@@ -78,9 +66,11 @@ public class SimpleServlet extends WebSocketServlet {
         ));
     }
 
-    public class SimpleWebSocket implements WebSocket.OnTextMessage {
+    @WebSocket
+    public static class SimpleWebSocket {
 
-        private Connection connection;
+        private JmriConnection connection;
+        private QuietShutDownTask shutDownTask;
         private SimpleLightServer lightServer;
         private SimpleOperationsServer operationsServer;
         private SimplePowerServer powerServer;
@@ -93,10 +83,16 @@ public class SimpleServlet extends WebSocketServlet {
             this.connection.sendMessage(message);
         }
 
-        @Override
-        public void onOpen(Connection cnctn) {
-            this.connection = cnctn;
-            sockets.add(this);
+        @OnWebSocketConnect
+        public void onOpen(Session cnctn) {
+            this.connection = new JmriConnection(cnctn);
+            this.shutDownTask = new QuietShutDownTask("Close simple web sockets") { // NOI18N
+                @Override
+                public boolean execute() {
+                    SimpleWebSocket.this.connection.getSession().close();
+                    return true;
+                }
+            };
             this.lightServer = new SimpleLightServer(this.connection);
             this.operationsServer = new SimpleOperationsServer(this.connection);
             this.powerServer = new SimplePowerServer(this.connection);
@@ -110,17 +106,17 @@ public class SimpleServlet extends WebSocketServlet {
                 this.connection.sendMessage("NODE " + NodeIdentity.identity() + " \n");
             } catch (IOException e) {
                 log.warn(e.getMessage(), e);
-                this.connection.close();
-                sockets.remove(this);
+                this.connection.getSession().close();
             }
+            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
         }
 
-        @Override
-        public void onClose(int i, String string) {
-            sockets.remove(this);
+        @OnWebSocketError
+        public void onError(Throwable thrwbl) {
+            log.error(thrwbl.getMessage(), thrwbl);
         }
 
-        @Override
+        @OnWebSocketMessage
         public void onMessage(String string) {
             if (log.isDebugEnabled()) {
                 log.debug("Received from client: {}", string);
@@ -149,13 +145,13 @@ public class SimpleServlet extends WebSocketServlet {
                     this.connection.sendMessage("not supported\n");
                 } catch (IOException ie) {
                     log.warn(ie.getMessage(), ie);
-                    this.connection.close();
-                    sockets.remove(this);
+                    this.connection.getSession().close();
+                    InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
                 }
             } catch (IOException ie) {
                 log.warn(ie.getMessage(), ie);
-                this.connection.close();
-                sockets.remove(this);
+                this.connection.getSession().close();
+                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
             }
         }
     }

@@ -8,7 +8,7 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
 import jmri.jmris.AbstractReporterServer;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -23,9 +23,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleReporterServer extends AbstractReporterServer {
 
     private DataOutputStream output;
-    private Connection connection;
+    private JmriConnection connection;
 
-    public SimpleReporterServer(Connection connection) {
+    public SimpleReporterServer(JmriConnection connection) {
         super();
         this.connection = connection;
     }

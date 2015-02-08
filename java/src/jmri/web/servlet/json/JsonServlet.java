@@ -10,8 +10,6 @@ import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Locale;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
 import javax.servlet.AsyncContext;
 import javax.servlet.AsyncEvent;
 import javax.servlet.AsyncListener;
@@ -97,8 +95,14 @@ import jmri.util.FileUtil;
 import jmri.web.servlet.ServletUtil;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import org.eclipse.jetty.websocket.WebSocket;
-import org.eclipse.jetty.websocket.WebSocketServlet;
+import org.eclipse.jetty.websocket.api.Session;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketClose;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketConnect;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketError;
+import org.eclipse.jetty.websocket.api.annotations.OnWebSocketMessage;
+import org.eclipse.jetty.websocket.api.annotations.WebSocket;
+import org.eclipse.jetty.websocket.servlet.WebSocketServlet;
+import org.eclipse.jetty.websocket.servlet.WebSocketServletFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -127,15 +131,10 @@ public class JsonServlet extends WebSocketServlet {
     private static final long serialVersionUID = -671593634343578915L;
     private static final long longPollTimeout = 30000; // 5 minutes
     private ObjectMapper mapper;
-    private final Set<JsonWebSocket> sockets = new CopyOnWriteArraySet<>();
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
-    private final PropertyChangeListener instanceManagerListener = new PropertyChangeListener() {
-
-        @Override
-        public void propertyChange(PropertyChangeEvent evt) {
-            if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER) && evt.getNewValue() != null) {
-                InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
-            }
+    private final PropertyChangeListener instanceManagerListener = (PropertyChangeEvent evt) -> {
+        if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER) && evt.getNewValue() != null) {
+            InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
         }
     };
 
@@ -147,20 +146,6 @@ public class JsonServlet extends WebSocketServlet {
         }
         InstanceManager.addPropertyChangeListener(this.instanceManagerListener);
         this.mapper = new ObjectMapper();
-        InstanceManager.shutDownManagerInstance().register(new QuietShutDownTask("Close JSON web sockets") { // NOI18N
-            @Override
-            public boolean execute() {
-                for (JsonWebSocket socket : sockets) {
-                    try {
-                        socket.wsConnection.sendMessage(socket.mapper.writeValueAsString(socket.mapper.createObjectNode().put(TYPE, GOODBYE)));
-                    } catch (IOException e) {
-                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
-                    }
-                    socket.wsConnection.close();
-                }
-                return true;
-            }
-        });
     }
 
     @Override
@@ -169,9 +154,8 @@ public class JsonServlet extends WebSocketServlet {
     }
 
     @Override
-    public WebSocket doWebSocketConnect(HttpServletRequest hsr, String string) {
-        log.debug("Creating WebSocket for {} at {}", hsr.getRemoteHost(), hsr.getRequestURL());
-        return new JsonWebSocket(hsr.getLocale());
+    public void configure(WebSocketServletFactory factory) {
+        factory.register(JsonServlet.JsonWebSocket.class);
     }
 
     /**
@@ -233,181 +217,226 @@ public class JsonServlet extends WebSocketServlet {
             JsonNode reply;
             try {
                 if (name == null) {
-                    if (type.equals(CARS)) {
-                        reply = JsonUtil.getCars(request.getLocale());
-                    } else if (type.equals(CONSISTS)) {
-                        reply = JsonUtil.getConsists(request.getLocale());
-                    } else if (type.equals(ENGINES)) {
-                        reply = JsonUtil.getEngines(request.getLocale());
-                    } else if (type.equals(LIGHTS)) {
-                        reply = JsonUtil.getLights(request.getLocale());
-                    } else if (type.equals(LOCATIONS)) {
-                        reply = JsonUtil.getLocations(request.getLocale());
-                    } else if (type.equals(MEMORIES)) {
-                        reply = JsonUtil.getMemories(request.getLocale());
-                    } else if (type.equals(METADATA)) {
-                        reply = JsonUtil.getMetadata(request.getLocale());
-                    } else if (type.equals(PANELS)) {
-                        reply = JsonUtil.getPanels(request.getLocale(), (request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
-                    } else if (type.equals(POWER)) {
-                        if (longPoll) {
-                            try {
-                                if (InstanceManager.getDefault(PowerManager.class).getPower() == parameters.path(STATE).asInt()) {
-                                    final AsyncContext context = request.startAsync(request, response);
-                                    context.setTimeout(longPollTimeout);
-                                    context.start(new PowerPollingHandler(request.getLocale(), parameters.path(STATE).asInt(), context));
-                                    return;
+                    switch (type) {
+                        case CARS:
+                            reply = JsonUtil.getCars(request.getLocale());
+                            break;
+                        case CONSISTS:
+                            reply = JsonUtil.getConsists(request.getLocale());
+                            break;
+                        case ENGINES:
+                            reply = JsonUtil.getEngines(request.getLocale());
+                            break;
+                        case LIGHTS:
+                            reply = JsonUtil.getLights(request.getLocale());
+                            break;
+                        case LOCATIONS:
+                            reply = JsonUtil.getLocations(request.getLocale());
+                            break;
+                        case MEMORIES:
+                            reply = JsonUtil.getMemories(request.getLocale());
+                            break;
+                        case METADATA:
+                            reply = JsonUtil.getMetadata(request.getLocale());
+                            break;
+                        case PANELS:
+                            reply = JsonUtil.getPanels(request.getLocale(), (request.getParameter(FORMAT) != null) ? request.getParameter(FORMAT) : XML);
+                            break;
+                        case POWER:
+                            if (longPoll) {
+                                try {
+                                    if (InstanceManager.getDefault(PowerManager.class).getPower() == parameters.path(STATE).asInt()) {
+                                        final AsyncContext context = request.startAsync(request, response);
+                                        context.setTimeout(longPollTimeout);
+                                        context.start(new PowerPollingHandler(request.getLocale(), parameters.path(STATE).asInt(), context));
+                                        return;
+                                    }
+                                } catch (JmriException ex) {
+                                    // do nothing -- the following JsonUtil.getPower(request.getLocale()) statement should report the error to the client
                                 }
-                            } catch (JmriException ex) {
-                                // do nothing -- the following JsonUtil.getPower(request.getLocale()) statement should report the error to the client
                             }
-                        }
-                        reply = JsonUtil.getPower(request.getLocale());
-                    } else if (type.equals(RAILROAD)) {
-                        reply = JsonUtil.getRailroad(request.getLocale());
-                    } else if (type.equals(REPORTERS)) {
-                        reply = JsonUtil.getReporters(request.getLocale());
-                    } else if (type.equals(ROSTER)) {
-                        reply = JsonUtil.getRoster(request.getLocale(), parameters);
-                    } else if (type.equals(ROSTER_GROUPS)) {
-                        reply = JsonUtil.getRosterGroups(request.getLocale());
-                    } else if (type.equals(ROUTES)) {
-                        reply = JsonUtil.getRoutes(request.getLocale());
-                    } else if (type.equals(SENSORS)) {
-                        reply = JsonUtil.getSensors(request.getLocale());
-                    } else if (type.equals(SIGNAL_HEADS)) {
-                        reply = JsonUtil.getSignalHeads(request.getLocale());
-                    } else if (type.equals(SIGNAL_MASTS)) {
-                        reply = JsonUtil.getSignalMasts(request.getLocale());
-                    } else if (type.equals(TIME)) {
-                        if (longPoll) {
-                            final AsyncContext context = request.startAsync(request, response);
-                            context.setTimeout(longPollTimeout);
-                            context.start(new TimePollingHandler(request.getLocale(), context));
-                            return;
-                        }
-                        reply = JsonUtil.getTime(request.getLocale());
-                    } else if (type.equals(TRAINS)) {
-                        reply = JsonUtil.getTrains(request.getLocale());
-                    } else if (type.equals(TURNOUTS)) {
-                        reply = JsonUtil.getTurnouts(request.getLocale());
-                    } else if (type.equals(HELLO)) {
-                        reply = JsonUtil.getHello(request.getLocale(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
-                    } else if (type.equals(NETWORK_SERVICES)) {
-                        reply = JsonUtil.getNetworkServices(request.getLocale());
-                    } else if (type.equals(SYSTEM_CONNECTIONS)) {
-                        reply = JsonUtil.getSystemConnections(request.getLocale());
-                    } else if (type.equals(NODE)) {
-                        reply = JsonUtil.getNode(request.getLocale());
-                    } else {
-                        log.warn("Type {} unknown.", type);
-                        reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            reply = JsonUtil.getPower(request.getLocale());
+                            break;
+                        case RAILROAD:
+                            reply = JsonUtil.getRailroad(request.getLocale());
+                            break;
+                        case REPORTERS:
+                            reply = JsonUtil.getReporters(request.getLocale());
+                            break;
+                        case ROSTER:
+                            reply = JsonUtil.getRoster(request.getLocale(), parameters);
+                            break;
+                        case ROSTER_GROUPS:
+                            reply = JsonUtil.getRosterGroups(request.getLocale());
+                            break;
+                        case ROUTES:
+                            reply = JsonUtil.getRoutes(request.getLocale());
+                            break;
+                        case SENSORS:
+                            reply = JsonUtil.getSensors(request.getLocale());
+                            break;
+                        case SIGNAL_HEADS:
+                            reply = JsonUtil.getSignalHeads(request.getLocale());
+                            break;
+                        case SIGNAL_MASTS:
+                            reply = JsonUtil.getSignalMasts(request.getLocale());
+                            break;
+                        case TIME:
+                            if (longPoll) {
+                                final AsyncContext context = request.startAsync(request, response);
+                                context.setTimeout(longPollTimeout);
+                                context.start(new TimePollingHandler(request.getLocale(), context));
+                                return;
+                            }
+                            reply = JsonUtil.getTime(request.getLocale());
+                            break;
+                        case TRAINS:
+                            reply = JsonUtil.getTrains(request.getLocale());
+                            break;
+                        case TURNOUTS:
+                            reply = JsonUtil.getTurnouts(request.getLocale());
+                            break;
+                        case HELLO:
+                            reply = JsonUtil.getHello(request.getLocale(), JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+                            break;
+                        case NETWORK_SERVICES:
+                            reply = JsonUtil.getNetworkServices(request.getLocale());
+                            break;
+                        case SYSTEM_CONNECTIONS:
+                            reply = JsonUtil.getSystemConnections(request.getLocale());
+                            break;
+                        case NODE:
+                            reply = JsonUtil.getNode(request.getLocale());
+                            break;
+                        default:
+                            log.warn("Type {} unknown.", type);
+                            reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            break;
                     }
                 } else {
-                    if (type.equals(CAR)) {
-                        reply = JsonUtil.getCar(request.getLocale(), name);
-                    } else if (type.equals(CONSIST)) {
-                        reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                    } else if (type.equals(ENGINE)) {
-                        reply = JsonUtil.getEngine(request.getLocale(), name);
-                    } else if (type.equals(LIGHT)) {
-                        if (longPoll) {
-                            Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
-                            if (light.getState() == parameters.path(STATE).asInt()) {
+                    switch (type) {
+                        case CAR:
+                            reply = JsonUtil.getCar(request.getLocale(), name);
+                            break;
+                        case CONSIST:
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            break;
+                        case ENGINE:
+                            reply = JsonUtil.getEngine(request.getLocale(), name);
+                            break;
+                        case LIGHT:
+                            if (longPoll) {
+                                Light light = InstanceManager.lightManagerInstance().getBySystemName(name);
+                                if (light.getState() == parameters.path(STATE).asInt()) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new LightPollingHandler(request.getLocale(), light, parameters.path(STATE).asInt(), context));
+                                    return;
+                                }
+                            }
+                            reply = JsonUtil.getLight(request.getLocale(), name);
+                            break;
+                        case LOCATION:
+                            reply = JsonUtil.getLocation(request.getLocale(), name);
+                            break;
+                        case MEMORY:
+                            if (longPoll) {
+                                Memory memory = InstanceManager.memoryManagerInstance().getBySystemName(name);
+                                if (memory.getValue().toString().equals(parameters.path(VALUE).asText())) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new MemoryPollingHandler(request.getLocale(), memory, parameters.path(VALUE).asText(), context));
+                                    return;
+                                }
+                            }
+                            reply = JsonUtil.getMemory(request.getLocale(), name);
+                            break;
+                        case METADATA:
+                            reply = JsonUtil.getMetadata(request.getLocale(), name);
+                            break;
+                        case REPORTER:
+                            reply = JsonUtil.getReporter(request.getLocale(), name);
+                            break;
+                        case ROSTER_ENTRY:
+                        case ROSTER:
+                            reply = JsonUtil.getRosterEntry(request.getLocale(), name);
+                            break;
+                        case ROSTER_GROUP:
+                            reply = JsonUtil.getRosterGroup(request.getLocale(), name);
+                            break;
+                        case ROUTE:
+                            if (longPoll) {
+                                Route route = InstanceManager.routeManagerInstance().getBySystemName(name);
+                                if (InstanceManager.sensorManagerInstance().getBySystemName(route.getTurnoutsAlignedSensor()).getKnownState() == parameters.path(STATE).asInt()) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new RoutePollingHandler(request.getLocale(), route, parameters.path(STATE).asInt(), context));
+                                    return;
+                                }
+                            }
+                            reply = JsonUtil.getRoute(request.getLocale(), name);
+                            break;
+                        case SENSOR:
+                            if (longPoll) {
+                                Sensor sensor = InstanceManager.sensorManagerInstance().getBySystemName(name);
+                                if (sensor.getKnownState() == parameters.path(STATE).asInt()) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new SensorPollingHandler(request.getLocale(), sensor, parameters.path(STATE).asInt(), context));
+                                    return;
+                                }
+                            }
+                            reply = JsonUtil.getSensor(request.getLocale(), name);
+                            break;
+                        case SIGNAL_HEAD:
+                            if (longPoll) {
+                                SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
+                                if (signalHead.getAppearance() == parameters.path(STATE).asInt()) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new SignalHeadPollingHandler(request.getLocale(), signalHead, parameters.path(STATE).asInt(), context));
+                                    return;
+                                }
+                            }
+                            reply = JsonUtil.getSignalHead(request.getLocale(), name);
+                            break;
+                        case SIGNAL_MAST:
+                            if (longPoll) {
+                                SignalMast signalMast = InstanceManager.signalMastManagerInstance().getBySystemName(name);
+                                if (signalMast.getAspect().equals(parameters.path(ASPECT).asText())) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new SignalMastPollingHandler(request.getLocale(), signalMast, parameters.path(ASPECT).asText(), context));
+                                    return;
+                                }
+                            }
+                            reply = JsonUtil.getSignalMast(request.getLocale(), name);
+                            break;
+                        case TRAIN:
+                            if (longPoll) {
                                 final AsyncContext context = request.startAsync(request, response);
                                 context.setTimeout(longPollTimeout);
-                                context.start(new LightPollingHandler(request.getLocale(), light, parameters.path(STATE).asInt(), context));
+                                context.start(new TrainPollingHandler(request.getLocale(), TrainManager.instance().getTrainById(name), context));
                                 return;
                             }
-                        }
-                        reply = JsonUtil.getLight(request.getLocale(), name);
-                    } else if (type.equals(LOCATION)) {
-                        reply = JsonUtil.getLocation(request.getLocale(), name);
-                    } else if (type.equals(MEMORY)) {
-                        if (longPoll) {
-                            Memory memory = InstanceManager.memoryManagerInstance().getBySystemName(name);
-                            if (memory.getValue().toString().equals(parameters.path(VALUE).asText())) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new MemoryPollingHandler(request.getLocale(), memory, parameters.path(VALUE).asText(), context));
-                                return;
+                            reply = JsonUtil.getTrain(request.getLocale(), name);
+                            break;
+                        case TURNOUT:
+                            if (longPoll) {
+                                Turnout turnout = InstanceManager.turnoutManagerInstance().getBySystemName(name);
+                                if (turnout.getKnownState() == parameters.path(STATE).asInt()) {
+                                    final AsyncContext context = request.startAsync(request, response);
+                                    context.setTimeout(longPollTimeout);
+                                    context.start(new TurnoutPollingHandler(request.getLocale(), turnout, parameters.path(STATE).asInt(), context));
+                                    return;
+                                }
                             }
-                        }
-                        reply = JsonUtil.getMemory(request.getLocale(), name);
-                    } else if (type.equals(METADATA)) {
-                        reply = JsonUtil.getMetadata(request.getLocale(), name);
-                    } else if (type.equals(REPORTER)) {
-                        reply = JsonUtil.getReporter(request.getLocale(), name);
-                    } else if (type.equals(ROSTER_ENTRY) || type.equals(ROSTER)) {
-                        reply = JsonUtil.getRosterEntry(request.getLocale(), name);
-                    } else if (type.equals(ROSTER_GROUP)) {
-                        reply = JsonUtil.getRosterGroup(request.getLocale(), name);
-                    } else if (type.equals(ROUTE)) {
-                        if (longPoll) {
-                            Route route = InstanceManager.routeManagerInstance().getBySystemName(name);
-                            if (InstanceManager.sensorManagerInstance().getBySystemName(route.getTurnoutsAlignedSensor()).getKnownState() == parameters.path(STATE).asInt()) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new RoutePollingHandler(request.getLocale(), route, parameters.path(STATE).asInt(), context));
-                                return;
-                            }
-                        }
-                        reply = JsonUtil.getRoute(request.getLocale(), name);
-                    } else if (type.equals(SENSOR)) {
-                        if (longPoll) {
-                            Sensor sensor = InstanceManager.sensorManagerInstance().getBySystemName(name);
-                            if (sensor.getKnownState() == parameters.path(STATE).asInt()) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new SensorPollingHandler(request.getLocale(), sensor, parameters.path(STATE).asInt(), context));
-                                return;
-                            }
-                        }
-                        reply = JsonUtil.getSensor(request.getLocale(), name);
-                    } else if (type.equals(SIGNAL_HEAD)) {
-                        if (longPoll) {
-                            SignalHead signalHead = InstanceManager.signalHeadManagerInstance().getBySystemName(name);
-                            if (signalHead.getAppearance() == parameters.path(STATE).asInt()) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new SignalHeadPollingHandler(request.getLocale(), signalHead, parameters.path(STATE).asInt(), context));
-                                return;
-                            }
-                        }
-                        reply = JsonUtil.getSignalHead(request.getLocale(), name);
-                    } else if (type.equals(SIGNAL_MAST)) {
-                        if (longPoll) {
-                            SignalMast signalMast = InstanceManager.signalMastManagerInstance().getBySystemName(name);
-                            if (signalMast.getAspect().equals(parameters.path(ASPECT).asText())) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new SignalMastPollingHandler(request.getLocale(), signalMast, parameters.path(ASPECT).asText(), context));
-                                return;
-                            }
-                        }
-                        reply = JsonUtil.getSignalMast(request.getLocale(), name);
-                    } else if (type.equals(TRAIN)) {
-                        if (longPoll) {
-                            final AsyncContext context = request.startAsync(request, response);
-                            context.setTimeout(longPollTimeout);
-                            context.start(new TrainPollingHandler(request.getLocale(), TrainManager.instance().getTrainById(name), context));
-                            return;
-                        }
-                        reply = JsonUtil.getTrain(request.getLocale(), name);
-                    } else if (type.equals(TURNOUT)) {
-                        if (longPoll) {
-                            Turnout turnout = InstanceManager.turnoutManagerInstance().getBySystemName(name);
-                            if (turnout.getKnownState() == parameters.path(STATE).asInt()) {
-                                final AsyncContext context = request.startAsync(request, response);
-                                context.setTimeout(longPollTimeout);
-                                context.start(new TurnoutPollingHandler(request.getLocale(), turnout, parameters.path(STATE).asInt(), context));
-                                return;
-                            }
-                        }
-                        reply = JsonUtil.getTurnout(request.getLocale(), name);
-                    } else {
-                        log.warn("Type {} unknown.", type);
-                        reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            reply = JsonUtil.getTurnout(request.getLocale(), name);
+                            break;
+                        default:
+                            log.warn("Type {} unknown.", type);
+                            reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            break;
                     }
                 }
             } catch (JsonException ex) {
@@ -473,42 +502,55 @@ public class JsonServlet extends WebSocketServlet {
                 }
                 log.debug("POST operation for {}/{} with {}", type, name, data);
                 if (name != null) {
-                    if (type.equals(CONSIST)) {
-                        JsonUtil.setConsist(request.getLocale(), JsonUtil.addressForString(name), data);
-                        reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                    } else if (type.equals(LIGHT)) {
-                        JsonUtil.setLight(request.getLocale(), name, data);
-                        reply = JsonUtil.getLight(request.getLocale(), name);
-                    } else if (type.equals(MEMORY)) {
-                        JsonUtil.setMemory(request.getLocale(), name, data);
-                        reply = JsonUtil.getMemory(request.getLocale(), name);
-                    } else if (type.equals(POWER)) {
-                        JsonUtil.setPower(request.getLocale(), data);
-                        reply = JsonUtil.getPower(request.getLocale());
-                    } else if (type.equals(REPORTER)) {
-                        JsonUtil.setReporter(request.getLocale(), name, data);
-                        reply = JsonUtil.getReporter(request.getLocale(), name);
-                    } else if (type.equals(ROUTE)) {
-                        JsonUtil.setRoute(request.getLocale(), name, data);
-                        reply = JsonUtil.getRoute(request.getLocale(), name);
-                    } else if (type.equals(SENSOR)) {
-                        JsonUtil.setSensor(request.getLocale(), name, data);
-                        reply = JsonUtil.getSensor(request.getLocale(), name);
-                    } else if (type.equals(SIGNAL_HEAD)) {
-                        JsonUtil.setSignalHead(request.getLocale(), name, data);
-                        reply = JsonUtil.getSignalHead(request.getLocale(), name);
-                    } else if (type.equals(SIGNAL_MAST)) {
-                        JsonUtil.setSignalMast(request.getLocale(), name, data);
-                        reply = JsonUtil.getSignalMast(request.getLocale(), name);
-                    } else if (type.equals(TRAIN)) {
-                        JsonUtil.setTrain(request.getLocale(), name, data);
-                        reply = JsonUtil.getTrain(request.getLocale(), name);
-                    } else if (type.equals(TURNOUT)) {
-                        JsonUtil.setTurnout(request.getLocale(), name, data);
-                        reply = JsonUtil.getTurnout(request.getLocale(), name);
-                    } else {
-                        log.warn("Type {} unknown.", type);
-                        reply = JsonUtil.getUnknown(request.getLocale(), type);
+                    switch (type) {
+                        case CONSIST:
+                            JsonUtil.setConsist(request.getLocale(), JsonUtil.addressForString(name), data);
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            break;
+                        case LIGHT:
+                            JsonUtil.setLight(request.getLocale(), name, data);
+                            reply = JsonUtil.getLight(request.getLocale(), name);
+                            break;
+                        case MEMORY:
+                            JsonUtil.setMemory(request.getLocale(), name, data);
+                            reply = JsonUtil.getMemory(request.getLocale(), name);
+                            break;
+                        case POWER:
+                            JsonUtil.setPower(request.getLocale(), data);
+                            reply = JsonUtil.getPower(request.getLocale());
+                            break;
+                        case REPORTER:
+                            JsonUtil.setReporter(request.getLocale(), name, data);
+                            reply = JsonUtil.getReporter(request.getLocale(), name);
+                            break;
+                        case ROUTE:
+                            JsonUtil.setRoute(request.getLocale(), name, data);
+                            reply = JsonUtil.getRoute(request.getLocale(), name);
+                            break;
+                        case SENSOR:
+                            JsonUtil.setSensor(request.getLocale(), name, data);
+                            reply = JsonUtil.getSensor(request.getLocale(), name);
+                            break;
+                        case SIGNAL_HEAD:
+                            JsonUtil.setSignalHead(request.getLocale(), name, data);
+                            reply = JsonUtil.getSignalHead(request.getLocale(), name);
+                            break;
+                        case SIGNAL_MAST:
+                            JsonUtil.setSignalMast(request.getLocale(), name, data);
+                            reply = JsonUtil.getSignalMast(request.getLocale(), name);
+                            break;
+                        case TRAIN:
+                            JsonUtil.setTrain(request.getLocale(), name, data);
+                            reply = JsonUtil.getTrain(request.getLocale(), name);
+                            break;
+                        case TURNOUT:
+                            JsonUtil.setTurnout(request.getLocale(), name, data);
+                            reply = JsonUtil.getTurnout(request.getLocale(), name);
+                            break;
+                        default:
+                            log.warn("Type {} unknown.", type);
+                            reply = JsonUtil.getUnknown(request.getLocale(), type);
+                            break;
                     }
                 } else {
                     log.error("Name must be defined.");
@@ -557,30 +599,38 @@ public class JsonServlet extends WebSocketServlet {
                     name = data.path(NAME).asText();
                 }
                 if (name != null) {
-                    if (type.equals(CONSIST)) {
-                        JsonUtil.putConsist(request.getLocale(), JsonUtil.addressForString(name), data);
-                        reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
-                    } else if (type.equals(LIGHT)) {
-                        JsonUtil.putLight(request.getLocale(), name, data);
-                        reply = JsonUtil.getLight(request.getLocale(), name);
-                    } else if (type.equals(MEMORY)) {
-                        JsonUtil.putMemory(request.getLocale(), name, data);
-                        reply = JsonUtil.getMemory(request.getLocale(), name);
-                    } else if (type.equals(POWER)) {
-                        JsonUtil.setPower(request.getLocale(), data);
-                        reply = JsonUtil.getPower(request.getLocale());
-                    } else if (type.equals(REPORTER)) {
-                        JsonUtil.putReporter(request.getLocale(), name, data);
-                        reply = JsonUtil.getReporter(request.getLocale(), name);
-                    } else if (type.equals(SENSOR)) {
-                        JsonUtil.putSensor(request.getLocale(), name, data);
-                        reply = JsonUtil.getSensor(request.getLocale(), name);
-                    } else if (type.equals(TURNOUT)) {
-                        JsonUtil.putTurnout(request.getLocale(), name, data);
-                        reply = JsonUtil.getTurnout(request.getLocale(), name);
-                    } else {
-                        // not a creatable item
-                        throw new JsonException(400, type + " is not a creatable type"); // need to I18N
+                    switch (type) {
+                        case CONSIST:
+                            JsonUtil.putConsist(request.getLocale(), JsonUtil.addressForString(name), data);
+                            reply = JsonUtil.getConsist(request.getLocale(), JsonUtil.addressForString(name));
+                            break;
+                        case LIGHT:
+                            JsonUtil.putLight(request.getLocale(), name, data);
+                            reply = JsonUtil.getLight(request.getLocale(), name);
+                            break;
+                        case MEMORY:
+                            JsonUtil.putMemory(request.getLocale(), name, data);
+                            reply = JsonUtil.getMemory(request.getLocale(), name);
+                            break;
+                        case POWER:
+                            JsonUtil.setPower(request.getLocale(), data);
+                            reply = JsonUtil.getPower(request.getLocale());
+                            break;
+                        case REPORTER:
+                            JsonUtil.putReporter(request.getLocale(), name, data);
+                            reply = JsonUtil.getReporter(request.getLocale(), name);
+                            break;
+                        case SENSOR:
+                            JsonUtil.putSensor(request.getLocale(), name, data);
+                            reply = JsonUtil.getSensor(request.getLocale(), name);
+                            break;
+                        case TURNOUT:
+                            JsonUtil.putTurnout(request.getLocale(), name, data);
+                            reply = JsonUtil.getTurnout(request.getLocale(), name);
+                            break;
+                        default:
+                            // not a creatable item
+                            throw new JsonException(400, type + " is not a creatable type"); // need to I18N
                     }
                 } else {
                     log.warn("Type {} unknown.", type);
@@ -642,58 +692,69 @@ public class JsonServlet extends WebSocketServlet {
         response.getWriter().write(message);
     }
 
-    public class JsonWebSocket implements WebSocket.OnTextMessage {
+    @WebSocket
+    public static class JsonWebSocket {
 
-        protected Connection wsConnection;
         protected JmriConnection jmriConnection;
         protected ObjectMapper mapper;
         protected JsonClientHandler handler;
-        protected Locale locale;
-
-        public JsonWebSocket(Locale locale) {
-            super();
-            this.locale = locale;
-        }
+        protected QuietShutDownTask shutDownTask;
 
         public void sendMessage(String message) throws IOException {
-            this.wsConnection.sendMessage(message);
+            this.jmriConnection.sendMessage(message);
         }
 
-        @Override
-        public void onOpen(Connection cnctn) {
-            log.debug("Opening connnection");
-            this.wsConnection = cnctn;
-            this.jmriConnection = new JmriConnection(this.wsConnection);
-            this.jmriConnection.setLocale(this.locale);
-            this.wsConnection.setMaxIdleTime(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
+        @OnWebSocketConnect
+        public void onOpen(Session sn) {
+            log.debug("Opening connection");
+            this.jmriConnection = new JmriConnection(sn);
+            sn.setIdleTimeout((long) (JsonServerManager.getJsonServerPreferences().getHeartbeatInterval() * 1.1));
             this.mapper = new ObjectMapper();
             this.handler = new JsonClientHandler(this.jmriConnection, this.mapper);
-            sockets.add(this);
+            this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
+                @Override
+                public boolean execute() {
+                    try {
+                        JsonWebSocket.this.sendMessage(
+                                JsonWebSocket.this.mapper.writeValueAsString(
+                                        JsonWebSocket.this.mapper.createObjectNode().put(TYPE, GOODBYE)));
+                    } catch (IOException e) {
+                        log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
+                    }
+                    JsonWebSocket.this.jmriConnection.getSession().close();
+                    return true;
+                }
+            };
             try {
                 log.debug("Sending hello");
-                this.handler.sendHello(this.wsConnection.getMaxIdleTime());
+                this.handler.sendHello(JsonServerManager.getJsonServerPreferences().getHeartbeatInterval());
             } catch (IOException e) {
                 log.warn("Error opening WebSocket:\n{}", e.getMessage());
-                this.wsConnection.close();
-                sockets.remove(this);
+                sn.close();
             }
+            InstanceManager.shutDownManagerInstance().register(this.shutDownTask);
         }
 
-        @Override
+        @OnWebSocketClose
         public void onClose(int i, String string) {
             log.debug("Closing connection because {} ({})", string, i);
             this.handler.dispose();
-            sockets.remove(this);
+            InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
         }
 
-        @Override
+        @OnWebSocketError
+        public void onError(Throwable thrwbl) {
+            log.error(thrwbl.getMessage(), thrwbl);
+        }
+
+        @OnWebSocketMessage
         public void onMessage(String string) {
             try {
                 this.handler.onMessage(string);
             } catch (IOException e) {
                 log.error("Error on WebSocket message:\n{}", e.getMessage());
-                this.wsConnection.close();
-                sockets.remove(this);
+                this.jmriConnection.getSession().close();
+                InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
             }
         }
     }
@@ -772,15 +833,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (knownState != light.getState()) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (knownState != light.getState()) {
+                    respond();
                 }
-
             };
             light.addPropertyChangeListener(listener);
         }
@@ -810,15 +866,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (!knownValue.equals(memory.getValue().toString())) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (!knownValue.equals(memory.getValue().toString())) {
+                    respond();
                 }
-
             };
             memory.addPropertyChangeListener(listener);
         }
@@ -845,19 +896,14 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    try {
-                        if (knownState != InstanceManager.getDefault(PowerManager.class).getPower()) {
-                            respond();
-                        }
-                    } catch (JmriException ex) {
-                        respond(); // should trip execpetion again, but get a Json-formatable Exception instead.
+            listener = (PropertyChangeEvent evt) -> {
+                try {
+                    if (knownState != InstanceManager.getDefault(PowerManager.class).getPower()) {
+                        respond();
                     }
+                } catch (JmriException ex) {
+                    respond(); // should trip execpetion again, but get a Json-formatable Exception instead.
                 }
-
             };
             InstanceManager.getDefault(PowerManager.class).addPropertyChangeListener(listener);
         }
@@ -887,15 +933,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (knownState != InstanceManager.sensorManagerInstance().getBySystemName(route.getTurnoutsAlignedSensor()).getKnownState()) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (knownState != InstanceManager.sensorManagerInstance().getBySystemName(route.getTurnoutsAlignedSensor()).getKnownState()) {
+                    respond();
                 }
-
             };
             route.addPropertyChangeListener(listener);
         }
@@ -925,15 +966,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (knownState != sensor.getKnownState()) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (knownState != sensor.getKnownState()) {
+                    respond();
                 }
-
             };
             sensor.addPropertyChangeListener(listener);
         }
@@ -963,15 +999,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (knownState != signalHead.getAppearance()) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (knownState != signalHead.getAppearance()) {
+                    respond();
                 }
-
             };
             signalHead.addPropertyChangeListener(listener);
         }
@@ -1001,15 +1032,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (!knownValue.equals(signalMast.getAspect())) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (!knownValue.equals(signalMast.getAspect())) {
+                    respond();
                 }
-
             };
             signalMast.addPropertyChangeListener(listener);
         }
@@ -1036,15 +1062,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (evt.getPropertyName().equals("minutes")) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (evt.getPropertyName().equals("minutes")) {
+                    respond();
                 }
-
             };
             InstanceManager.timebaseInstance().addPropertyChangeListener(listener);
         }
@@ -1074,20 +1095,15 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (evt.getPropertyName().equals(STATUS_CHANGED_PROPERTY)
-                            || evt.getPropertyName().equals(DEPARTURETIME_CHANGED_PROPERTY)
-                            || evt.getPropertyName().equals(TRAIN_LOCATION_CHANGED_PROPERTY)
-                            || evt.getPropertyName().equals(TRAIN_ROUTE_CHANGED_PROPERTY)
-                            || evt.getPropertyName().equals(TRAIN_REQUIREMENTS_CHANGED_PROPERTY)
-                            || evt.getPropertyName().equals(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (evt.getPropertyName().equals(STATUS_CHANGED_PROPERTY)
+                        || evt.getPropertyName().equals(DEPARTURETIME_CHANGED_PROPERTY)
+                        || evt.getPropertyName().equals(TRAIN_LOCATION_CHANGED_PROPERTY)
+                        || evt.getPropertyName().equals(TRAIN_ROUTE_CHANGED_PROPERTY)
+                        || evt.getPropertyName().equals(TRAIN_REQUIREMENTS_CHANGED_PROPERTY)
+                        || evt.getPropertyName().equals(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
+                    respond();
                 }
-
             };
             train.addPropertyChangeListener(listener);
         }
@@ -1117,15 +1133,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @Override
         public void run() {
-            listener = new PropertyChangeListener() {
-
-                @Override
-                public void propertyChange(PropertyChangeEvent evt) {
-                    if (knownState != turnout.getKnownState()) {
-                        respond();
-                    }
+            listener = (PropertyChangeEvent evt) -> {
+                if (knownState != turnout.getKnownState()) {
+                    respond();
                 }
-
             };
             turnout.addPropertyChangeListener(listener);
         }

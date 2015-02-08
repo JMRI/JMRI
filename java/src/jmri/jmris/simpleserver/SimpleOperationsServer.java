@@ -9,9 +9,9 @@ import java.util.List;
 import javax.management.Attribute;
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
+import jmri.jmris.JmriConnection;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.trains.Train;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -118,9 +118,9 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
     public static final String FIELDSEPARATOR = "=";
 
     private DataOutputStream output;
-    private Connection connection;
+    private JmriConnection connection;
 
-    public SimpleOperationsServer(Connection connection) {
+    public SimpleOperationsServer(JmriConnection connection) {
         super();
         this.connection = connection;
     }

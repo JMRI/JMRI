@@ -1,11 +1,13 @@
 //SimpleLightServer.java
 package jmri.jmris.simpleserver;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import jmri.JmriException;
 import jmri.Light;
 import jmri.jmris.AbstractLightServer;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,9 +21,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleLightServer extends AbstractLightServer {
 
     private DataOutputStream output = null;
-    private Connection connection = null;
+    private JmriConnection connection = null;
 
-    public SimpleLightServer(Connection connection) {
+    public SimpleLightServer(JmriConnection connection) {
     	this.connection = connection;
     }
     

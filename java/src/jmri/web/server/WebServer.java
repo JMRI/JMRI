@@ -14,12 +14,12 @@ import jmri.web.servlet.directory.DirectoryHandler;
 import org.eclipse.jetty.server.Connector;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.ServerConnector;
 import org.eclipse.jetty.server.handler.ContextHandler;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.server.handler.ResourceHandler;
-import org.eclipse.jetty.server.nio.SelectChannelConnector;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.util.component.LifeCycle;
 import org.eclipse.jetty.util.thread.QueuedThreadPool;
@@ -61,15 +61,14 @@ public final class WebServer implements LifeCycle.Listener {
 
     public void start() {
         if (server == null) {
-            server = new Server();
-            SelectChannelConnector connector = new SelectChannelConnector();
-            connector.setMaxIdleTime(5 * 60 * 1000); // 5 minutes
-            connector.setSoLingerTime(-1);
-            connector.setPort(preferences.getPort());
             QueuedThreadPool threadPool = new QueuedThreadPool();
             threadPool.setName("WebServer");
             threadPool.setMaxThreads(1000);
-            server.setThreadPool(threadPool);
+            server = new Server(threadPool);
+            ServerConnector connector = new ServerConnector(server);
+            connector.setIdleTimeout(5 * 60 * 1000); // 5 minutes
+            connector.setSoLingerTime(-1);
+            connector.setPort(preferences.getPort());
             server.setConnectors(new Connector[]{connector});
 
             ContextHandlerCollection contexts = new ContextHandlerCollection();
@@ -180,7 +179,7 @@ public final class WebServer implements LifeCycle.Listener {
 
     @Override
     public void lifeCycleStarted(LifeCycle lc) {
-        HashMap<String, String> properties = new HashMap<String, String>();
+        HashMap<String, String> properties = new HashMap<>();
         properties.put("path", "/"); // NOI18N
         properties.put(JSON.JSON, JSON.JSON_PROTOCOL_VERSION);
         log.info("Starting ZeroConfService _http._tcp.local for Web Server with properties {}", properties);

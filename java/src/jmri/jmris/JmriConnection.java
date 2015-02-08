@@ -3,7 +3,7 @@ package jmri.jmris;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Locale;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import org.eclipse.jetty.websocket.api.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class JmriConnection {
 
-    private Connection webSocketConnection = null;
+    private Session session = null;
     private DataOutputStream dataOutputStream = null;
     protected Locale locale = Locale.getDefault();
     private final static Logger log = LoggerFactory.getLogger(JmriConnection.class);
@@ -27,8 +27,8 @@ public class JmriConnection {
      *
      * @param connection
      */
-    public JmriConnection(Connection connection) {
-        this.webSocketConnection = connection;
+    public JmriConnection(Session connection) {
+        this.session = connection;
     }
 
     /**
@@ -40,12 +40,42 @@ public class JmriConnection {
         this.dataOutputStream = output;
     }
 
-    public Connection getWebSocketConnection() {
-        return webSocketConnection;
+    /**
+     * Get the WebSocket session.
+     *
+     * @return the WebSocket session
+     */
+    public Session getSession() {
+        return this.session;
     }
 
-    public void setWebSocketConnection(Connection webSocketConnection) {
-        this.webSocketConnection = webSocketConnection;
+    /**
+     * @deprecated see {@link #getSession() }
+     * @return the WebSocket session
+     */
+    @Deprecated
+    public Session getWebSocketConnection() {
+        return this.getSession();
+    }
+
+    /**
+     * Set the WebSocket session.
+     *
+     * @param session the WebSocket session
+     */
+    public void setSession(Session session) {
+        this.session = session;
+    }
+
+    /**
+     * @deprecated see {@link #setSession(org.eclipse.jetty.websocket.api.Session)
+     * }
+     *
+     * @param webSocketConnection the WebSocket session
+     */
+    @Deprecated
+    public void setWebSocketConnection(Session webSocketConnection) {
+        this.setSession(session);
     }
 
     public DataOutputStream getDataOutputStream() {
@@ -69,21 +99,26 @@ public class JmriConnection {
         log.debug("Sending {}", message);
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
-        } else if (this.webSocketConnection != null) {
-            this.webSocketConnection.sendMessage(message);
+        } else if (this.session != null) {
+            this.session.getRemote().sendString(message);
         }
     }
 
     /**
      * Close the connection.
      *
+     * Note: Objects using JmriConnection with a
+     * {@link org.eclipse.jetty.websocket.api.Session} may prefer to use
+     * <code>getSession().close()</code> since Session.close() does not throw an
+     * IOException.
+     *
      * @throws IOException
      */
     public void close() throws IOException {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.close();
-        } else if (this.webSocketConnection != null) {
-            this.webSocketConnection.close();
+        } else if (this.session != null) {
+            this.session.close();
         }
     }
 

@@ -1,10 +1,12 @@
 //SimpleSensorServer.java
 package jmri.jmris.simpleserver;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import jmri.Sensor;
 import jmri.jmris.AbstractSensorServer;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,9 +20,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleSensorServer extends AbstractSensorServer {
 
     private DataOutputStream output;
-    private Connection connection;
+    private JmriConnection connection;
 
-    public SimpleSensorServer(Connection connection) {
+    public SimpleSensorServer(JmriConnection connection) {
         super();
         this.connection = connection;
     }

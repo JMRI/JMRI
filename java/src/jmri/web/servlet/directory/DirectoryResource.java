@@ -3,9 +3,9 @@ package jmri.web.servlet.directory;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.channels.ReadableByteChannel;
 import java.text.DateFormat;
 import java.util.Arrays;
 import java.util.Date;
@@ -164,8 +164,8 @@ public class DirectoryResource extends Resource {
     }
 
     @Override
-    public void release() {
-        this.resource.release();
+    public void close() {
+        this.resource.close();
     }
 
     @Override
@@ -209,11 +209,6 @@ public class DirectoryResource extends Resource {
     }
 
     @Override
-    public OutputStream getOutputStream() throws IOException, SecurityException {
-        return this.resource.getOutputStream();
-    }
-
-    @Override
     public boolean delete() throws SecurityException {
         return this.resource.delete();
     }
@@ -231,6 +226,11 @@ public class DirectoryResource extends Resource {
     @Override
     public Resource addPath(String string) throws IOException, MalformedURLException {
         return this.resource.addPath(string);
+    }
+
+    @Override
+    public ReadableByteChannel getReadableByteChannel() throws IOException {
+        return this.resource.getReadableByteChannel();
     }
 
 }

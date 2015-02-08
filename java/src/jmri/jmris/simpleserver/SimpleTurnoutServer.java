@@ -7,7 +7,7 @@ import java.io.IOException;
 import jmri.InstanceManager;
 import jmri.Turnout;
 import jmri.jmris.AbstractTurnoutServer;
-import org.eclipse.jetty.websocket.WebSocket.Connection;
+import jmri.jmris.JmriConnection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,9 +21,9 @@ import org.slf4j.LoggerFactory;
 public class SimpleTurnoutServer extends AbstractTurnoutServer {
 
     private DataOutputStream output;
-    private Connection connection;
+    private JmriConnection connection;
 
-    public SimpleTurnoutServer(Connection connection) {
+    public SimpleTurnoutServer(JmriConnection connection) {
     	this.connection = connection;
     }
     
