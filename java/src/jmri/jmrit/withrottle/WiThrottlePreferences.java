@@ -183,7 +183,7 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 || this.asLoadedEStopDelay != this.getEStopDelay()
                 || this.asLoadedUseMomF2 != this.isUseMomF2()
                 || this.asLoadedUseFixedPort != this.isUseFixedPort()
-                || !this.asLoadedPort.equals(this.getPort())
+                || (this.asLoadedPort != null) ? !this.asLoadedPort.equals(this.getPort()) : this.getPort() != null
                 || this.asLoadedAllowTrackPower != this.isAllowTrackPower()
                 || this.asLoadedAllowTurnout != this.isAllowTurnout()
                 || this.asLoadedAllowRoute != this.isAllowRoute()
