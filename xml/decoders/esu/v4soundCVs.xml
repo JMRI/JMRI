@@ -102,8 +102,8 @@
     <label>Sound Slot 1 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 1"</label>
   </variable>
-  <variable CV="16.1.260" mask="XXXXXXXV" item="Sound Drive 1">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.260" mask="XXXXXXXV" default="1" item="Sound Drive 1">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -122,8 +122,8 @@
     <label>Sound Slot 2 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 2"</label>
   </variable>
-  <variable CV="16.1.268" mask="XXXXXXXV" item="Sound Drive 2">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.268" mask="XXXXXXXV" default="1" item="Sound Drive 2">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -142,8 +142,8 @@
     <label>Sound Slot 3 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 3"</label>
   </variable>
-  <variable CV="16.1.276" mask="XXXXXXXV" item="Sound Drive 3">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.276" mask="XXXXXXXV" default="1" item="Sound Drive 3">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -162,8 +162,8 @@
     <label>Sound Slot 4 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 4"</label>
   </variable>
-  <variable CV="16.1.284" mask="XXXXXXXV" item="Sound Drive 4">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.284" mask="XXXXXXXV" default="1" item="Sound Drive 4">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -182,8 +182,8 @@
     <label>Sound Slot 5 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 5"</label>
   </variable>
-  <variable CV="16.1.292" mask="XXXXXXXV" item="Sound Drive 5">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.292" mask="XXXXXXXV" default="1" item="Sound Drive 5">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -202,8 +202,8 @@
     <label>Sound Slot 6 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 6"</label>
   </variable>
-  <variable CV="16.1.300" mask="XXXXXXXV" item="Sound Drive 6">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.300" mask="XXXXXXXV" default="1" item="Sound Drive 6">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -222,8 +222,8 @@
     <label>Sound Slot 7 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 7"</label>
   </variable>
-  <variable CV="16.1.308" mask="XXXXXXXV" item="Sound Drive 7">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.308" mask="XXXXXXXV" default="1" item="Sound Drive 7">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -242,8 +242,8 @@
     <label>Sound Slot 8 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 8"</label>
   </variable>
-  <variable CV="16.1.316" mask="XXXXXXXV" item="Sound Drive 8">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.316" mask="XXXXXXXV" default="1" item="Sound Drive 8">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -262,8 +262,8 @@
     <label>Sound Slot 9 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 9"</label>
   </variable>
-  <variable CV="16.1.324" mask="XXXXXXXV" item="Sound Drive 9">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.324" mask="XXXXXXXV" default="1" item="Sound Drive 9">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -282,8 +282,8 @@
     <label>Sound Slot 10 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 10"</label>
   </variable>
-  <variable CV="16.1.332" mask="XXXXXXXV" item="Sound Drive 10">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.332" mask="XXXXXXXV" default="1" item="Sound Drive 10">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -302,8 +302,8 @@
     <label>Sound Slot 11 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 11"</label>
   </variable>
-  <variable CV="16.1.340" mask="XXXXXXXV" item="Sound Drive 11">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.340" mask="XXXXXXXV" default="1" item="Sound Drive 11">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -322,8 +322,8 @@
     <label>Sound Slot 12 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 12"</label>
   </variable>
-  <variable CV="16.1.348" mask="XXXXXXXV" item="Sound Drive 12">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.348" mask="XXXXXXXV" default="1" item="Sound Drive 12">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -342,8 +342,8 @@
     <label>Sound Slot 13 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 13"</label>
   </variable>
-  <variable CV="16.1.356" mask="XXXXXXXV" item="Sound Drive 13">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.356" mask="XXXXXXXV" default="1" item="Sound Drive 13">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -362,8 +362,8 @@
     <label>Sound Slot 14 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 14"</label>
   </variable>
-  <variable CV="16.1.364" mask="XXXXXXXV" item="Sound Drive 14">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.364" mask="XXXXXXXV" default="1" item="Sound Drive 14">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -382,8 +382,8 @@
     <label>Sound Slot 15 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 15"</label>
   </variable>
-  <variable CV="16.1.372" mask="XXXXXXXV" item="Sound Drive 15">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.372" mask="XXXXXXXV" default="1" item="Sound Drive 15">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -402,8 +402,8 @@
     <label>Sound Slot 16 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 16"</label>
   </variable>
-  <variable CV="16.1.380" mask="XXXXXXXV" item="Sound Drive 16">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.380" mask="XXXXXXXV" default="1" item="Sound Drive 16">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -422,8 +422,8 @@
     <label>Sound Slot 17 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 17"</label>
   </variable>
-  <variable CV="16.1.388" mask="XXXXXXXV" item="Sound Drive 17">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.388" mask="XXXXXXXV" default="1" item="Sound Drive 17">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -442,8 +442,8 @@
     <label>Sound Slot 18 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 18"</label>
   </variable>
-  <variable CV="16.1.396" mask="XXXXXXXV" item="Sound Drive 18">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.396" mask="XXXXXXXV" default="1" item="Sound Drive 18">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -462,8 +462,8 @@
     <label>Sound Slot 19 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 19"</label>
   </variable>
-  <variable CV="16.1.404" mask="XXXXXXXV" item="Sound Drive 19">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.404" mask="XXXXXXXV" default="1" item="Sound Drive 19">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -482,8 +482,8 @@
     <label>Sound Slot 20 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 20"</label>
   </variable>
-  <variable CV="16.1.412" mask="XXXXXXXV" item="Sound Drive 20">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.412" mask="XXXXXXXV" default="1" item="Sound Drive 20">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -502,8 +502,8 @@
     <label>Sound Slot 21 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 21"</label>
   </variable>
-  <variable CV="16.1.420" mask="XXXXXXXV" item="Sound Drive 21">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.420" mask="XXXXXXXV" default="1" item="Sound Drive 21">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -522,8 +522,8 @@
     <label>Sound Slot 22 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 22"</label>
   </variable>
-  <variable CV="16.1.428" mask="XXXXXXXV" item="Sound Drive 22">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.428" mask="XXXXXXXV" default="1" item="Sound Drive 22">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -542,8 +542,8 @@
     <label>Sound Slot 23 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 23"</label>
   </variable>
-  <variable CV="16.1.436" mask="XXXXXXXV" item="Sound Drive 23">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.436" mask="XXXXXXXV" default="1" item="Sound Drive 23">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -562,8 +562,8 @@
     <label>Sound Slot 24 Volume</label>
     <label xml:lang="it">="Volume Suono Slot 24"</label>
   </variable>
-  <variable CV="16.1.444" mask="XXXXXXXV" item="Sound Drive 24">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.444" mask="XXXXXXXV" default="1" item="Sound Drive 24">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -582,8 +582,8 @@
     <label>Random Sounds volume</label>
     <label xml:lang="it">="Volume Suoni Casuali"</label>
   </variable>
-  <variable CV="16.1.452" mask="XXXXXXXV" item="Sound Drive Random">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.452" mask="XXXXXXXV" default="0" item="Sound Drive Random">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -602,8 +602,8 @@
     <label>Brake Sound volume</label>
     <label xml:lang="it">="Volume Freni"</label>
   </variable>
-  <variable CV="16.1.460" mask="XXXXXXXV" item="Sound Drive Brake">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.460" mask="XXXXXXXV" default="0" item="Sound Drive Brake">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
@@ -622,8 +622,8 @@
     <label>Gear Shift Sound volume</label>
     <label xml:lang="it">="Volume Cambio Marcia</label>
   </variable>
-  <variable CV="16.1.468" mask="XXXXXXXV" item="Sound Drive Gear Shift">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+  <variable CV="16.1.468" mask="XXXXXXXV" default="0" item="Sound Drive Gear Shift">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn-1_0.xml"/>
     <label>Requires Drive Sound</label>
     <label xml:lang="it">="Richiede unità.Suono"</label>
   </variable>
