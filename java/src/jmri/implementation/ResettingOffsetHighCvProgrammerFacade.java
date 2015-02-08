@@ -80,7 +80,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         _cv = Integer.parseInt(CV);
         _val = val;
         useProgrammer(p);
-        if (prog.getCanRead(CV) || _cv <= top) {
+        if (prog.getCanWrite(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
             prog.writeCV(_cv, val, this);
         } else {
@@ -108,7 +108,7 @@ public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFac
         log.debug("start readCV");
         _cv = Integer.parseInt(CV);
         useProgrammer(p);
-        if (prog.getCanWrite(CV) || _cv <= top) {
+        if (prog.getCanRead(CV) || _cv <= top) {
             state = ProgState.PROGRAMMING;
             prog.readCV(_cv, this);
         } else {

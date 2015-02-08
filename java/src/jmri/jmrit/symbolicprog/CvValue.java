@@ -431,7 +431,7 @@ public class CvValue extends AbstractValue implements ProgListener {
                                 java.text.MessageFormat.format(
                                     Bundle.getMessage("StateExceptionDuringWrite"),
                                     new Object[]{e.toString()}));
-                log.warn("Exception during CV write of '"+_num+"' to '"+_value+"'",e);
+                log.warn("Exception during write CV '"+_num+"' to '"+_value+"'",e);
                 setBusy(false);
             }
         } else {
