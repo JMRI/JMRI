@@ -86,7 +86,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         log.debug("findInstance returned " + c);
         retval = new JmrixConfigPane((ConnectionConfig) c);
         configPaneTable.put(index, retval);
-        retval.isDirty = true;
+        if (c == null) {
+            retval.isDirty = true;
+        }
         return retval;
     }
 
@@ -443,6 +445,12 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isDirty() {
+        // avoid potentially expensive exrta test for isDirty
+        if (log.isDebugEnabled()) {
+            log.debug("Connection \"{}\" is {}.",
+                    this.getConnectionName(),
+                    (this.isDirty || ((this.ccCurrent != null) ? this.ccCurrent.isDirty() : true) ? "dirty" : "clean"));
+        }
         return this.isDirty || ((this.ccCurrent != null) ? this.ccCurrent.isDirty() : true);
     }
 
