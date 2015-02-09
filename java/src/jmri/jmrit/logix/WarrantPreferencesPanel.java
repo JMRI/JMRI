@@ -418,6 +418,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             _isDirty = true;
         }
         
+        if (_preferences.isPercentNormal()!=_percentNormal) {
+            _preferences.setPercentNormal(_percentNormal);
+            _isDirty = true;        	
+        }
+        
     	int time = _preferences.getTimeIncre();
         try {
         	time =Integer.parseInt(_timeIncre.getText());
