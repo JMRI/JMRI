@@ -70,8 +70,9 @@ public class JsonServerPreferences extends Bean {
         Element prefs = new Element(XML_PREFS_ELEMENT);
         prefs.setAttribute(HEARTBEAT_INTERVAL, Integer.toString(this.getHeartbeatInterval()));
         prefs.setAttribute(PORT, Integer.toString(this.getPort()));
-        this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
-        this.asLoadedPort = this.getPort();
+        // asLoadedHeartbeatInterval should only be reset if the heartbeat
+        // interval can be updated without requiring a restart
+        // this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
         return prefs;
     }
     private String fileName;
