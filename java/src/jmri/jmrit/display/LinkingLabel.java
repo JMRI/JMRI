@@ -71,6 +71,11 @@ public class LinkingLabel extends PositionableLabel implements LinkingObject {
                 	java.awt.EventQueue.invokeLater(new Runnable() {
                 		@Override
                 		public void run() {
+                			//if frame was minimized, restore
+                			if (jframe.getExtendedState() == java.awt.Frame.ICONIFIED) {
+                				jframe.setExtendedState(java.awt.Frame.NORMAL);
+                			}
+                			//bring the frame to the foreground
                 			jframe.toFront();
                 			jframe.repaint();
                 		}
