@@ -17,7 +17,7 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
-        return ResourceBundle.getBundle("jmri.jmrix.cmri.CMRIActionListBundle");
+        return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
     
 }
