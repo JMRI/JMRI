@@ -204,7 +204,24 @@ public class TabbedPreferences extends AppConfigBase {
         return (this.getInitialisationState() == INITIALISED);
     }
 
-    private boolean invokeSaveOptions() {
+    // package only - for TabbedPreferencesFrame
+    boolean isDirty() {
+        for (PreferencesPanel panel : this.preferencesPanels.values()) {
+            if (log.isDebugEnabled()) {
+                log.debug("PreferencesPanel {} ({}) is {}.",
+                        panel.getClass().getName(),
+                        (panel.getTabbedPreferencesTitle() != null) ? panel.getTabbedPreferencesTitle() : panel.getPreferencesItemText(),
+                        (panel.isDirty()) ? "dirty" : "clean");
+            }
+            if (panel.isDirty()) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    // package only - for TabbedPreferencesFrame
+    boolean invokeSaveOptions() {
         boolean restartRequired = false;
         for (PreferencesPanel panel : this.preferencesPanels.values()) {
             if (log.isDebugEnabled()) {
