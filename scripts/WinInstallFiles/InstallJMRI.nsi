@@ -50,6 +50,13 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.4
+; - Updated "-CleanUp" so that any previous jetty-related .jar files and
+;   servlet .jar files are removed before installation.
+; - Delete files related to XmlIO which is removed as of JMRI 3.11.3
+; - Delete files which were removed as part of re-work of Zimo decoder 
+;   definition rework for JMRI 3.11.3
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.3
 ; - Updated "-CleanUp" so that any previous slf4j .jar files are removed 
 ; -   before installation.
@@ -231,7 +238,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.3"                    ; Installer version
+!define INST_VER  "0.1.21.4"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -405,6 +412,65 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
+
+    ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 3.11.3
+    Delete "$OUTDIR\lib\jetty-continuation-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-http-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-io-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-security-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-server-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-util-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\jetty-websocket-8.1.11.v20130520.jar"
+    Delete "$OUTDIR\lib\servlet-api-3.0.jar"
+
+    ; -- Delete XmlIO-related files, as of JMRI 3.11.3
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\2Throttles.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\AnalogClock.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Help.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\inControlIcon.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\LocoSettings.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Panel.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\QueryStringHelp.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Scan2BeInControl.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Settings.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Throttle1.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\Throttle2.png"
+    Delete "$OUTDIR\help\en\package\jmri\jmrit\inControl\images\.png"
+    RmDir  "$OUTDIR\help\en\package\jmri\jmrit\inControl\images"
+    RmDir  "$OUTDIR\help\en\package\jmri\jmrit\inControl"
+
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\2Throttles.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\AnalogClock.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Help.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\inControlIcon.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\LocoSettings.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Panel.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\QueryStringHelp.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Scan2BeInControl.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Settings.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Throttle1.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\Throttle2.png"
+    Delete "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images\.png"
+    RmDir  "$OUTDIR\help\fr\package\jmri\jmrit\inControl\images"
+    RmDir  "$OUTDIR\help\fr\package\jmri\jmrit\inControl"
+
+    Delete "$OUTDIR\web\css\inControl.css"
+    Delete "$OUTDIR\web\css\JMRI_XMLIO_TEST.css"
+    Delete "$OUTDIR\web\css\Scan2BeInControl.css"
+    Delete "$OUTDIR\web\js\inControl.js"
+    Delete "$OUTDIR\web\js\JMRI_XMLIO_TEST.js"
+    Delete "$OUTDIR\web\js\Scan2BeInControl.js"
+    Delete "$OUTDIR\web\inControl.html"
+    Delete "$OUTDIR\web\inControl.jar"
+    Delete "$OUTDIR\web\JMRI_XMLIO_test.html"
+    Delete "$OUTDIR\web\Scan2BeInControl.html"
+
+    ; Delete files which were removed as part of re-work of Zimo decoder
+    ;   definition rework for JMRI 3.11.3
+    Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744threeSwitchIP.xml"
+    Delete "$OUTDIR\xml\decoders\zimo\CV739-CV744twoSwitchIP.xml"
+    Delete "$OUTDIR\xml\decoders\zimo\CV739-CV768.xml"
 
     ; -- Delete old .jar & support files in lib/ directory
     Delete "$OUTDIR\lib\activation.jar"
