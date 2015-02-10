@@ -92,7 +92,7 @@ public class PanelServlet extends AbstractPanelServlet {
             XMLOutputter out = new XMLOutputter();
             out.setFormat(Format.getPrettyFormat()
                                 .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.PRESERVE));
+                                .setTextMode(Format.TextMode.TRIM));
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {
