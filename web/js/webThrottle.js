@@ -1704,7 +1704,7 @@ var trChangeStatus = function(e, type, name) {
 	if (!isLeftButton(e)) return;
 	e.preventDefault();
 	e.stopImmediatePropagation();
-	var lastState = Number($('#' + name).attr('state'));
+	var lastState = Number($('#' + encodeId(name)).attr('state'));
 	if (type == 'turnout') {	// 0(undefined) 1(unknown) 2(Closed) 4(Thrown)
 		switch (lastState) {
 			case $jmri.turnoutTHROWN:
