@@ -15,9 +15,10 @@
 
 <!ELEMENT operations-config (trains | options | schedules)*>
 
-<!ELEMENT options (trainOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
+<!ELEMENT options (trainOptions | rowColorOptions | trainEditOptions | trainScheduleOptions | scripts | manifestCreator 
 | switchlistCreator)*>
 <!ELEMENT trainOptions EMPTY>
+<!ELEMENT rowColorOptions EMPTY>
 <!ELEMENT trainEditOptions EMPTY>
 <!ELEMENT trainScheduleOptions EMPTY>
 
@@ -27,6 +28,12 @@
 <!ATTLIST trainOptions openFile		 	(true | false) "false">
 <!ATTLIST trainOptions runFile		 	(true | false) "false">
 <!ATTLIST trainOptions trainAction		CDATA #IMPLIED>
+
+<!ATTLIST rowColorOptions rowColorManual		(true | false) "false">
+<!ATTLIST rowColorOptions rowColorBuidFailed 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorBuilt 		CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorTrainEnRoute 	CDATA #IMPLIED>
+<!ATTLIST rowColorOptions rowColorTerminated 	CDATA #IMPLIED>
 
 <!ATTLIST trainScheduleOptions activeId		CDATA #IMPLIED>
 
@@ -38,8 +45,9 @@
 <!ELEMENT terminate EMPTY>
 
 <!ELEMENT trains (train)*>
-<!ELEMENT train (route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
+<!ELEMENT train (rowColor | route | types | carLoads | carRoads | carOwners |scripts | railRoad | manifestLogo)*>
 
+<!ELEMENT rowColor EMPTY>
 <!ELEMENT route (skips)*>
 <!ELEMENT skips (location)*>
 <!ELEMENT location EMPTY>
@@ -129,8 +137,13 @@
 <!ATTLIST train leg3End				CDATA #IMPLIED>
 <!ATTLIST train comment				CDATA #IMPLIED>
 <!ATTLIST train serviceAll			CDATA #IMPLIED>
+<!ATTLIST train sendCustomStaging	CDATA #IMPLIED>
 <!ATTLIST train buildConsist		CDATA #IMPLIED>
+<!ATTLIST train TerminationDate		CDATA #IMPLIED>
+<!ATTLIST train RequestedCars		CDATA #IMPLIED>
+<!ATTLIST train statusCode			CDATA #IMPLIED>
 
+<!ATTLIST rowColor name				CDATA #IMPLIED>
 <!ATTLIST carType name				CDATA #IMPLIED>
 <!ATTLIST locoType name				CDATA #IMPLIED>
 <!ATTLIST carLoad name				CDATA #IMPLIED>

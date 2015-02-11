@@ -13,16 +13,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 
-<!ELEMENT operations-config (operations | manifestTextStrings | switchListTextStrings | control)*>
+<!ELEMENT operations-config (operations | manifestHeaderTextStrings | manifestTextStrings | switchListTextStrings | control)*>
 
-<!ELEMENT operations (railRoad | settings | panel | fontName | fontSize | manifestColors
+<!ELEMENT operations (railRoad | setup | settings | panel | fontName | fontSize | manifestColors
  | manifestLogo | buildOptions | buildReport | owner | iconColor | options 
  | pickupEngFormat | dropEngFormat | pickupCarFormat | dropCarFormat | localFormat
- | missingCarFormat | tab | manifest | columnFormat | vsd | reporters | switchList
+ | missingCarFormat | tab | manifest | columnFormat | manifestFormat | vsd | reporters | switchList
  | switchListPickupCarFormat | switchListDropCarFormat | switchListLocalFormat 
  | pageOrientation | CATS | router | logger | comments)*>
  
 <!ELEMENT railRoad EMPTY>
+<!ELEMENT setup EMPTY>
 <!ELEMENT settings EMPTY>
 <!ELEMENT panel EMPTY>
 <!ELEMENT fontName EMPTY>
@@ -44,6 +45,7 @@
 <!ELEMENT tab EMPTY>
 <!ELEMENT manifest EMPTY>
 <!ELEMENT columnFormat EMPTY>
+<!ELEMENT manifestFormat EMPTY>
 <!ELEMENT vsd EMPTY>
 <!ELEMENT switchList EMPTY>
 <!ELEMENT switchListPickupCarFormat EMPTY>
@@ -56,6 +58,8 @@
 <!ELEMENT comments EMPTY>
 
 <!ATTLIST railRoad name				CDATA #IMPLIED>  
+
+<!ATTLIST setup comment				CDATA #IMPLIED>
 
 <!ATTLIST settings mainMenu			(true | false ) "false">
 <!ATTLIST settings closeOnSave		(true | false ) "false">     
@@ -75,6 +79,7 @@
 <!ATTLIST settings yearModeled		CDATA #IMPLIED> 
 <!ATTLIST settings lengthUnit		CDATA #IMPLIED>
 <!ATTLIST settings hpt				CDATA #IMPLIED>
+<!ATTLIST settings printHeaders		(true | false ) "false"> 
 
 <!-- next 3 for backward compatibility -->
 <!ATTLIST settings carLogger 			(true | false ) "false">  
@@ -118,6 +123,8 @@
 <!ATTLIST switchListPickupCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST switchListDropCarFormat setting	CDATA #IMPLIED>
 <!ATTLIST switchListLocalFormat setting		CDATA #IMPLIED>
+
+<!ATTLIST missingCarFormat prefix	CDATA #IMPLIED>
 <!ATTLIST missingCarFormat setting	CDATA #IMPLIED>
 
 <!ATTLIST manifestColors dropColor	CDATA #IMPLIED> 
@@ -127,6 +134,7 @@
 <!ATTLIST manifestLogo name			CDATA #IMPLIED>  
 
 <!ATTLIST buildOptions aggressive					(true | false ) "false">
+<!ATTLIST buildOptions numberPasses					CDATA #IMPLIED>
 <!ATTLIST buildOptions allowLocalInterchange		(true | false ) "false">
 <!ATTLIST buildOptions allowLocalSiding				(true | false ) "false">
 <!ATTLIST buildOptions allowLocalYard				(true | false ) "false">   
@@ -161,6 +169,8 @@
 
 <!ATTLIST tab enabled					(true | false ) "false"> 
 <!ATTLIST tab length					CDATA #IMPLIED>
+<!ATTLIST tab tab2Length				CDATA #IMPLIED>
+<!ATTLIST tab tab3Length				CDATA #IMPLIED>
 
 <!ATTLIST manifest printLocComments		(true | false ) "false"> 
 <!ATTLIST manifest printValid			(true | false ) "true"> 
@@ -175,6 +185,7 @@
 <!ATTLIST manifest hazardousMsg			CDATA #IMPLIED> 
 
 <!ATTLIST columnFormat twoColumns		(true | false ) "false">
+<!ATTLIST manifestFormat value 			CDATA #IMPLIED>
 
 <!ATTLIST vsd enablePhysicalLocations	(true | false ) "false">
 
@@ -182,6 +193,8 @@
 <!ATTLIST switchList realTime			(true | false ) "true">
 <!ATTLIST switchList allTrains			(true | false ) "true">
 <!ATTLIST switchList pageMode			(true | false ) "false">
+<!ATTLIST switchList pageFormat			CDATA #IMPLIED>
+<!ATTLIST switchList printRouteLocation	(true | false ) "false">
 
 <!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
 <!ATTLIST pageOrientation switchList	CDATA #IMPLIED>
@@ -201,8 +214,53 @@
 
 <!ATTLIST comments misplacedCars		CDATA #IMPLIED> 
 
+<!ELEMENT manifestHeaderTextStrings (road | number | engineNumber | type | model
+| length | load | color | track | destination | dest_Track | finalDest | fd_Track | location | consist
+| kernel | owner | rwe | comment | setOut_msg | pickUp_msg | hazardous)*>
+
+<!ELEMENT road EMPTY>
+<!ELEMENT number EMPTY>
+<!ELEMENT engineNumber EMPTY>
+<!ELEMENT type EMPTY>
+<!ELEMENT model EMPTY>
+<!ELEMENT length EMPTY>
+<!ELEMENT load EMPTY>
+<!ELEMENT color EMPTY>
+<!ELEMENT track EMPTY>
+<!ELEMENT dest_Track EMPTY>
+<!ELEMENT fd_Track EMPTY>
+<!ELEMENT location EMPTY>
+<!ELEMENT consist EMPTY>
+<!ELEMENT kernel EMPTY>
+<!ELEMENT rwe EMPTY>
+<!ELEMENT comment EMPTY>
+<!ELEMENT setOut_msg EMPTY>
+<!ELEMENT pickUp_msg EMPTY>
+<!ELEMENT hazardous EMPTY>
+
+<!ATTLIST road text				CDATA #IMPLIED>
+<!ATTLIST number text			CDATA #IMPLIED>
+<!ATTLIST engineNumber text		CDATA #IMPLIED>
+<!ATTLIST type text				CDATA #IMPLIED>
+<!ATTLIST model text			CDATA #IMPLIED>
+<!ATTLIST length text			CDATA #IMPLIED>
+<!ATTLIST load text				CDATA #IMPLIED>
+<!ATTLIST color text			CDATA #IMPLIED>
+<!ATTLIST track text			CDATA #IMPLIED>
+<!ATTLIST dest_Track text		CDATA #IMPLIED>
+<!ATTLIST fd_Track text			CDATA #IMPLIED>
+<!ATTLIST location text			CDATA #IMPLIED>
+<!ATTLIST consist text			CDATA #IMPLIED>
+<!ATTLIST kernel text			CDATA #IMPLIED>
+<!ATTLIST owner text			CDATA #IMPLIED>
+<!ATTLIST rwe text				CDATA #IMPLIED>
+<!ATTLIST comment text			CDATA #IMPLIED>
+<!ATTLIST setOut_msg text		CDATA #IMPLIED>
+<!ATTLIST pickUp_msg text		CDATA #IMPLIED>
+<!ATTLIST hazardous text		CDATA #IMPLIED>
+
 <!ELEMENT manifestTextStrings (manifestForTrain | valid | scheduledWork 
-| workDepartureTime | workArrivalTime | noScheduledWork | departTime 
+| workDepartureTime | workArrivalTime | noScheduledWork | noScheduledWorkRouteComment | departTime 
 | trainDepartsCars | trainDepartsLoads | trainTerminates | destination | from | to
 | dest | finalDest | addHelpers | removeHelpers | locoChange | cabooseChange | locoCabooseChange)*>
 
@@ -212,6 +270,7 @@
 <!ELEMENT workDepartureTime EMPTY>
 <!ELEMENT workArrivalTime EMPTY>
 <!ELEMENT noScheduledWork EMPTY>
+<!ELEMENT noScheduledWorkRouteComment EMPTY>
 <!ELEMENT departTime EMPTY>
 <!ELEMENT trainDepartsCars EMPTY>
 <!ELEMENT trainDepartsLoads EMPTY>
@@ -233,6 +292,7 @@
 <!ATTLIST workDepartureTime text	CDATA #IMPLIED>
 <!ATTLIST workArrivalTime text		CDATA #IMPLIED>
 <!ATTLIST noScheduledWork text		CDATA #IMPLIED>
+<!ATTLIST noScheduledWorkRouteComment text		CDATA #IMPLIED>
 <!ATTLIST departTime text			CDATA #IMPLIED>
 <!ATTLIST trainDepartsCars text		CDATA #IMPLIED>
 <!ATTLIST trainDepartsLoads text	CDATA #IMPLIED>
@@ -250,7 +310,7 @@
 
 <!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | departsAt | departsExpectedArrival
 | departedExpected | visitNumber | visitNumberDeparted | visitNumberTerminates | visitNumberTerminatesDeparted
-| visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone)*>
+| visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone | trainDepartsCars | trainDepartsLoads)*>
 
 <!ELEMENT switchListFor EMPTY>
 <!ELEMENT scheduledWorkTrain EMPTY>
