@@ -21,7 +21,7 @@
             }
         </style>
         <!-- include the jquery.jmri library and its dependencies -->
-        <script src="/js/jquery-1.11.0.min.js"></script>
+        <script src="/js/jquery-1.11.2.min.js"></script>
         <script src="/js/json2.js"></script>
         <script src="/js/jquery.websocket.js"></script>
         <script src="/js/jquery.jmri.js"></script>
@@ -85,7 +85,9 @@
         <p>The icon is grey if the turnout state is unknown, green if closed,
             and red if open.</p>
         <input type="text" id="turnoutAdr" value="IT1">
-        <img id="turnoutImg" alt="Unknown" src="/resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" style="background-color: gray;">
+        <a id="turnoutBtn" href="#">
+            <img id="turnoutImg" alt="Unknown" src="/resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" style="background-color: gray;">
+        </a>
         <p>Click the turnout to set its initial state and start monitoring it.</p>
     </body>
 </html>
