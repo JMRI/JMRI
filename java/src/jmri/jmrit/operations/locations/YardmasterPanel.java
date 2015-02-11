@@ -38,7 +38,7 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 	 */
 	private static final long serialVersionUID = -88218348551032298L;
 
-	protected static final boolean isManifest = false;
+	protected static final boolean IS_MANIFEST = false;
 
 	int _visitNumber = 1;
 
@@ -269,13 +269,13 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 				updateLocoPanes(rl);
 
 				// now update the car pick ups and set outs
-				blockCars(rl, isManifest);
+				blockCars(rl, IS_MANIFEST);
 
 				if (lastLocation) {
 					textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
 							new Object[] { TrainCommon.splitString(_train.getTrainTerminatesName()) }));
 				} else {
-					textStatus.setText(getStatus(rl));
+					textStatus.setText(getStatus(rl, IS_MANIFEST));
 				}
 			}
 			updateComplete();

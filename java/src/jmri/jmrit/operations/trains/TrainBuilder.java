@@ -1133,8 +1133,9 @@ public class TrainBuilder extends TrainCommon {
 	}
 
 	/**
-	 * Find a caboose if needed at the correct location and add it to the train. If departing staging, places caboose at
-	 * the rear of the train.
+	 * Find a caboose if needed at the correct location and add it to the train. If departing staging, any caboose found
+	 * is added to the train. If there isn't a road name required for the caboose, tries to find a caboose with the same
+	 * road name as the lead engine. 
 	 * 
 	 * @param roadCaboose
 	 *            Optional road name for this car.
@@ -2311,18 +2312,18 @@ public class TrainBuilder extends TrainCommon {
 	 * @return true if car can be added to train
 	 */
 	private boolean checkTrainLength(Car car, RouteLocation rl, RouteLocation rld) {
+		// car can be a kernel so get total length
+		int length = car.getTotalLength();
+		if (car.getKernel() != null)
+			length = car.getKernel().getTotalLength();
 		boolean carInTrain = false;
 		for (RouteLocation rlt : _routeList) {
 			if (rl == rlt) {
 				carInTrain = true;
 			}
 			if (rld == rlt) {
-				carInTrain = false;
+				break;
 			}
-			// car can be a kernel so get total length
-			int length = car.getTotalLength();
-			if (car.getKernel() != null)
-				length = car.getKernel().getTotalLength();
 			if (carInTrain && rlt.getTrainLength() + length > rlt.getMaxTrainLength()) {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCanNotPickupCarLength"),
 						new Object[] { car.toString(), length, Setup.getLengthUnit().toLowerCase() }));

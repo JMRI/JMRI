@@ -248,14 +248,16 @@ public class TrainSwitchLists extends TrainCommon {
 												rl.getTrainDirectionString(),
 												train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
 												train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
-												train.getTrainWeight(rl), train.getTrainTerminatesName() });
+												train.getTrainWeight(rl), train.getTrainTerminatesName(),
+												train.getName() });
 							} else {
 								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 								trainDeparts = MessageFormat.format(TrainSwitchListText.getStringTrainDepartsCars(),
 										new Object[] { TrainCommon.splitString(rl.getName()),
 												rl.getTrainDirectionString(), train.getNumberCarsInTrain(rl),
 												train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
-												train.getTrainWeight(rl), train.getTrainTerminatesName() });
+												train.getTrainWeight(rl), train.getTrainTerminatesName(),
+												train.getName() });
 							}
 							newLine(fileOut, trainDeparts);
 						}

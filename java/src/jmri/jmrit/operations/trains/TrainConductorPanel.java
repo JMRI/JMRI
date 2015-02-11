@@ -185,7 +185,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 // now update the car pick ups and set outs
                 blockCars(rl, IS_MANIFEST);
 
-                textStatus.setText(getStatus(rl));
+                textStatus.setText(getStatus(rl, IS_MANIFEST));
 
             } else {
                 moveButton.setEnabled(false);

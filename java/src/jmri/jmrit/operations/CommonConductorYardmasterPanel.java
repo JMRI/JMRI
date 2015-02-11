@@ -38,6 +38,7 @@ import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainManifestText;
+import jmri.jmrit.operations.trains.TrainSwitchListText;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -154,7 +155,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 		textLocationComment.setBackground(null);
 		textLocationComment.setEditable(false);
 		textLocationComment.setMaximumSize(new Dimension(2000, 200));
-		
+
 		// train description
 		pTrainDescription.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
 		pTrainDescription.add(textTrainDescription);
@@ -370,7 +371,8 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 	 */
 	protected void blockCars(RouteLocation rl, boolean isManifest) {
 		if (Setup.isPrintHeadersEnabled()) {
-			JLabel header = new JLabel(Tab + trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
+			JLabel header = new JLabel(Tab
+					+ trainCommon.getPickupCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
 			setLabelFont(header);
 			pPickups.add(header);
 			header = new JLabel(Tab + trainCommon.getDropCarHeader(isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK));
@@ -551,22 +553,32 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 	}
 
 	// returns one of two possible departure strings for a train
-	protected String getStatus(RouteLocation rl) {
+	protected String getStatus(RouteLocation rl, boolean isManifest) {
 		if (rl == _train.getRoute().getTerminatesRouteLocation()) {
-            return MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-                    new Object[]{_train.getTrainTerminatesName()});
+			return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[] { _train
+					.getTrainTerminatesName() });
 		}
 		if (Setup.isPrintLoadsAndEmptiesEnabled()) {
 			int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
-			return MessageFormat.format(TrainManifestText.getStringTrainDepartsLoads(), new Object[] {
-					TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
-					_train.getNumberCarsInTrain(rl) - emptyCars, emptyCars, _train.getTrainLength(rl),
-					Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl) });
+			String text;
+			if (isManifest)
+				text = TrainManifestText.getStringTrainDepartsLoads();
+			else
+				text = TrainSwitchListText.getStringTrainDepartsLoads();
+			return MessageFormat.format(text, new Object[] { TrainCommon.splitString(rl.getName()),
+					rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl) - emptyCars, emptyCars,
+					_train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl),
+					_train.getTrainTerminatesName(), _train.getName() });
 		} else {
-			return MessageFormat.format(TrainManifestText.getStringTrainDepartsCars(), new Object[] {
-					TrainCommon.splitString(rl.getName()), rl.getTrainDirectionString(),
-					_train.getNumberCarsInTrain(rl), _train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
-					_train.getTrainWeight(rl) });
+			String text;
+			if (isManifest)
+				text = TrainManifestText.getStringTrainDepartsCars();
+			else
+				text = TrainSwitchListText.getStringTrainDepartsCars();
+			return MessageFormat.format(text, new Object[] { TrainCommon.splitString(rl.getName()),
+					rl.getTrainDirectionString(), _train.getNumberCarsInTrain(rl), _train.getTrainLength(rl),
+					Setup.getLengthUnit().toLowerCase(), _train.getTrainWeight(rl), _train.getTrainTerminatesName(),
+					_train.getName() });
 		}
 	}
 

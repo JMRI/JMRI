@@ -184,14 +184,14 @@ public class TrainManifest extends TrainCommon {
 										.getStringTrainDepartsLoads(), new Object[] { routeLocationName,
 										rl.getTrainDirectionString(), cars - emptyCars, emptyCars,
 										train.getTrainLength(rl), Setup.getLengthUnit().toLowerCase(),
-										train.getTrainWeight(rl), train.getTrainTerminatesName() });
+										train.getTrainWeight(rl), train.getTrainTerminatesName(), train.getName() });
 							else
 								// Message format: Train departs Boston Westbound with 12 cars, 450 feet, 3000 tons
 								trainDeparts = MessageFormat.format(messageFormatText = TrainManifestText
 										.getStringTrainDepartsCars(), new Object[] { routeLocationName,
 										rl.getTrainDirectionString(), cars, train.getTrainLength(rl),
 										Setup.getLengthUnit().toLowerCase(), train.getTrainWeight(rl),
-										train.getTrainTerminatesName() });
+										train.getTrainTerminatesName(), train.getName() });
 							newLine(fileOut, trainDeparts);
 							newLine(fileOut);
 						} else {
