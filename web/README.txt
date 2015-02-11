@@ -29,8 +29,8 @@ instead of rewriting them.
 ### Updating Bootstrap
 1. Download current stable release from
 [Bootstrap](http://getbootstrap.com/getting-started/)
-2. Unzip the contents of that file directly into _/web_. The contents of that
-file should overwrite the older version of Bootstrap.
+2. Unzip the contents of the _dist_ directory in that file directly into _/web_.
+The contents of that file should overwrite the older version of Bootstrap.
 3. As always, test before committing.
 
 ### Updating jQuery
