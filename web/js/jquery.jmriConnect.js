@@ -154,7 +154,7 @@
 			var loadRoster = function() {	//Retrieve roster
 				var roster = null;
 				$.ajax({
-					url: '/prefs/roster.xml',
+					url: '/roster?format=xml',
 					async: false,
 					cache: false,
 					type: 'GET',
@@ -163,7 +163,12 @@
 						if(jqXHR.status == 404) jmri.error(jqXHR.status, 'Roster empty.\nNo locos defined in JMRI.');
 						else jmri.error(jqXHR.status, 'Response:\n' + jqXHR.responseText + '\n\nError:\n' + errorThrown);
 					},
-					success: function(xmlReturned, status, jqXHR) {roster = $(xmlReturned);}
+					success: function(xmlReturned, status, jqXHR) {
+                                            roster = $(xmlReturned);
+                                            if (xmlReturned === null) {
+                                                jmri.error('Roster empty.\nNo locos defined in JMRI.');
+                                            }
+                                        }
 				});
 				return roster;
 			};
