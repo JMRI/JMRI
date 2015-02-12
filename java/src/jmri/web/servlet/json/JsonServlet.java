@@ -746,7 +746,7 @@ public class JsonServlet extends WebSocketServlet {
         @OnWebSocketError
         public void onError(Throwable thrwbl) {
             if (thrwbl instanceof SocketTimeoutException) {
-                log.errors(thrwbl.getMessage());
+                log.error(thrwbl.getMessage());
                 return;
             }
             log.error(thrwbl.getMessage(), thrwbl);
