@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
 import java.util.Locale;
 import java.util.Map;
@@ -744,6 +745,10 @@ public class JsonServlet extends WebSocketServlet {
 
         @OnWebSocketError
         public void onError(Throwable thrwbl) {
+            if (thrwbl instanceof SocketTimeoutException) {
+                log.errors(thrwbl.getMessage());
+                return;
+            }
             log.error(thrwbl.getMessage(), thrwbl);
         }
 
