@@ -1,14 +1,22 @@
 // ProgServiceModeComboBox.java
 package jmri.jmrit.progsupport;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.*;
-import java.beans.*;
-import javax.swing.*;
-import jmri.*;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.Programmer;
+import jmri.ProgrammingMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provide a JPanel with a JComboBox to configure the service mode programmer.
@@ -132,7 +140,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         }
         log.trace("programmerSelected sets model");
         modeBox.setModel(model);
-        ProgrammingMode mode = getProgrammer().getMode();
+        ProgrammingMode mode = (getProgrammer() != null) ? getProgrammer().getMode() : null;
         log.trace("programmerSelected sets mode {}",mode);
         modeBox.setSelectedItem(mode);
         
@@ -144,7 +152,9 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     public void actionPerformed(java.awt.event.ActionEvent e) {
         // convey change to programmer
         log.debug("Selected mode: {}", modeBox.getSelectedItem());
-        getProgrammer().setMode((ProgrammingMode)modeBox.getSelectedItem());
+        if (modeBox.getSelectedItem() != null) {
+            getProgrammer().setMode((ProgrammingMode) modeBox.getSelectedItem());
+        }
     }
     
     /**
