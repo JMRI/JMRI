@@ -16,6 +16,8 @@ import jmri.jmrit.catalog.*;
  * <p> Based on analogue clock frame by Dennis Miller
  *
  * @author                     Andrew Crosland Copyright (C) 2010
+ * @author			Dennis Miller   Copyright (C) 2015
+
  * @version                    $Revision$
  */
 public class SpeedoDial extends JPanel {
@@ -56,9 +58,11 @@ public class SpeedoDial extends JPanel {
 
     int units = Speed.MPH;
     
-    int mphLimit = 80;
+    int baseMphLimit = 80;
+    int baseKphLimit = 140;
+    int mphLimit = baseMphLimit;
     int mphInc = 40;
-    int kphLimit = 140;
+    int kphLimit = baseKphLimit;
     int kphInc = 70;
     float priMajorTick;
     float priMinorTick;
@@ -311,6 +315,12 @@ public class SpeedoDial extends JPanel {
         units = Speed.KPH;
         priString = "KPH";
         secString = "MPH";
+    }
+ 
+    public void reset() {
+        mphLimit = baseMphLimit;
+        kphLimit = baseKphLimit;
+        update(0.0f);
     }
 
     static Logger log = LoggerFactory.getLogger(SpeedoDial.class.getName());

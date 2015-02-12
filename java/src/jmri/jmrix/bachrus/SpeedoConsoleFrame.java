@@ -39,6 +39,7 @@ import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
  * Frame for Speedo Console for Bachrus running stand reader interface
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
+ * @author			Dennis Miller   Copyright (C) 2015
  * @version			$Revision$
  */
 public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
@@ -450,7 +451,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         Using an ActionListener didn't select a loco from the ComboBox properly
         so changed it to a PropertyChangeListener approach modeled on the code
         in CombinedLocoSelPane class, layoutRosterSelection method, which is known to work.
-        Not sure why the ActionListener didn't work properly, but this fixses the bug
+        Not sure why the ActionListener didn't work properly, but this fixes the bug
         */
         rosterBox.addPropertyChangeListener(
                 RosterEntrySelector.SELECTED_ROSTER_ENTRIES, new PropertyChangeListener(){
@@ -587,6 +588,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 spFwd.clear();
                 spRev.clear();
+		speedoDialDisplay.reset();
                 profileGraphPane.repaint();
             }
         });
