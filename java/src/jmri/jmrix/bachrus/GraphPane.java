@@ -15,6 +15,7 @@ import javax.swing.*;
  * Frame for graph of loco speed curves
  *
  * @author			Andrew Crosland   Copyright (C) 2010
+ * @author			Dennis Miller   Copyright (C) 2015
  * @version			$Revision$
  */
 public class GraphPane extends JPanel implements Printable {
@@ -112,9 +113,15 @@ public class GraphPane extends JPanel implements Printable {
         float sw = (float)font.getStringBounds(xLabel, frc).getWidth();
         float sx = (w - sw)/2;
         g2.drawString(xLabel, sx, sy);
+	
+	// find the maximum of all profiles
+        float maxSpeed = 0;
+        for (int i = 0; i < _sp.length; i++) {
+            maxSpeed = Math.max(_sp[i].getMax(), maxSpeed);
+        }
         
         // Used to scale values into drawing area
-        float scale = (h - 2*PAD)/_sp[0].getMax();
+        float scale = (h - 2*PAD)/maxSpeed;
         // space between values along the ordinate (y-axis)
         // start with an increment of 1
         // Plot a grid line every two
@@ -126,8 +133,8 @@ public class GraphPane extends JPanel implements Printable {
             // need inverse transform here
             yInc = Speed.mphToKph(yInc);
         }
-        if ((units == Speed.KPH) && (_sp[0].getMax() > 100)
-                || (units == Speed.MPH) && (_sp[0].getMax() > 160)) {
+        if ((units == Speed.KPH) && (maxSpeed > 100)
+                || (units == Speed.MPH) && (maxSpeed > 160)) {
             log.debug("Adjusting Y axis spacing for max speed");
             yMod *=2;
             gridMod *=2;
