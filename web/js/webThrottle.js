@@ -1724,8 +1724,8 @@ var trChangeStatus = function(e, type, name) {
 				$jmri.setJMRI('turnout', name, {"state":$jmri.turnoutCLOSED});
 				break;
 		}
-	} else {	// 0(disable - cannot change) 1(undefined) 2(Active) 4(Inactive) - Can only activate
-		if (lastState == $jmri.routeUNDEFINED || lastState == $jmri.routeINACTIVE) $jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE});
+	} else {	// 0(unknown) 2(Active) 4(Inactive) 8(inconsistent) - Can only activate
+		$jmri.setJMRI('route', name, {"state":$jmri.routeACTIVE});
 	}
 };
 
