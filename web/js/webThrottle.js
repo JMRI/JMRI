@@ -332,7 +332,14 @@ var startJMRI = function() {
 		//*** Callback Functions available in '$jmri' object
 		toSend: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONtoSend: ' + data);},	//Nothing to do
 		fullData: function(data) {$debug && window.console && console.log(new Date() + ' - ' + document.title + '\n' + 'JSONreceived: ' + data);},	//Nothing to do
-		error: function(code, message) {if (code == 0) jmriLostComm(message); else smoothAlert('Error: ' + code + ' - ' + message);},
+                error: function (code, message) {
+                    if (code === 0)
+                        jmriLostComm(message);
+                    else if (code === 200)
+                        smoothAlert(message, 10);
+                    else
+                        smoothAlert('Error: ' + code + ' - ' + message);
+                },
 		end: function() {jmriLostComm('The JMRI WebSocket service was turned off.\nSolve the problem and refresh web page.');},
 		ready: function(jsonVersion, jmriVersion, railroadName) {jmriReady(jsonVersion, jmriVersion, railroadName);},	//When WebSocket connection established - continue next steps
 		throttle: function(name, address, speed, forward, fs) {throttleState(name, address, speed, forward, fs);},

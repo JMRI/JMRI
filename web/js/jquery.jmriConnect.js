@@ -166,7 +166,7 @@
 					success: function(xmlReturned, status, jqXHR) {
                                             roster = $(xmlReturned);
                                             if (xmlReturned === null) {
-                                                jmri.error('Roster empty.\nNo locos defined in JMRI.');
+                                                jmri.error(200, 'Roster empty.\nNo locos defined in JMRI.');
                                             }
                                         }
 				});
