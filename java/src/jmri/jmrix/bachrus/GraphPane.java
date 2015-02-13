@@ -31,7 +31,7 @@ public class GraphPane extends JPanel implements Printable {
     // array to hold the speed curves
     protected DccSpeedProfile [] _sp;
     protected String annotate;
-    protected Color [] colors = { Color.RED, Color.BLUE };
+    protected Color [] colors = { Color.RED, Color.BLUE, Color.BLACK };
     
     protected boolean _grid = false;
 
@@ -55,6 +55,14 @@ public class GraphPane extends JPanel implements Printable {
         _sp = new DccSpeedProfile[2];
         _sp[0] = sp0;
         _sp[1] = sp1;
+    }
+
+    public GraphPane(DccSpeedProfile sp0, DccSpeedProfile sp1, DccSpeedProfile ref) {
+        super();
+        _sp = new DccSpeedProfile[3];
+        _sp[0] = sp0;
+        _sp[1] = sp1;
+        _sp[2] = ref;
     }
 
     public void setXLabel (String s) { xLabel = s; }
@@ -113,8 +121,8 @@ public class GraphPane extends JPanel implements Printable {
         float sw = (float)font.getStringBounds(xLabel, frc).getWidth();
         float sx = (w - sw)/2;
         g2.drawString(xLabel, sx, sy);
-	
-	// find the maximum of all profiles
+        
+        // find the maximum of all profiles
         float maxSpeed = 0;
         for (int i = 0; i < _sp.length; i++) {
             maxSpeed = Math.max(_sp[i].getMax(), maxSpeed);

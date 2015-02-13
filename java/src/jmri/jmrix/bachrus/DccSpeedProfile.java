@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import javax.swing.JFileChooser;
 import jmri.util.FileUtil;
@@ -14,6 +17,7 @@ import jmri.util.FileUtil;
  * Class to represent a dimensionless speed profile of a DCC decoder.
  * 
  * @author			Andrew Crosland   Copyright (C) 2010
+ * @author			Dennis Miller  Copyright (C) 2015
  * @version			$Revision$
  */
 public class DccSpeedProfile {
@@ -23,6 +27,7 @@ public class DccSpeedProfile {
     protected float _max;
     // index of last valid data point, -1 means no data
     protected int _lastPoint;
+    protected List<String> dccProfileData = new ArrayList();
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
@@ -193,6 +198,61 @@ public class DccSpeedProfile {
             log.error("Exception writing CSV " + ex);
         }
     }
+    
+    public int importDccProfile(int units) {
+        openImportFile();
+        if (dccProfileData.size() < 31){
+            log.error("Not enough lines in reference speed profile file");
+            clear();
+            return -1;
+        }
+        
+        String secondLine = dccProfileData.get(1);
+        if (!(secondLine.contains("MPH") || secondLine.contains("KPH"))) {
+            log.error("Bad 'units' format on line 2 of reference speed profile file");
+            clear();
+            return -1;
+        }
+        for (int i = 2; i < dccProfileData.size(); i++){
+            try {
+                String value = dccProfileData.get(i).split("\\s*,\\s*")[1];
+                float speed =  new Float(value);
+                // speed values from the speedometer are calc'd and stored in 
+                // the DccSpeedProfile object as KPH so need to convert
+                // if the file was in MPH
+                if (secondLine.contains("MPH")) {
+                    speed = Speed.mphToKph(speed);
+                }
+                
+                setPoint(i-2, speed);
+            } catch (NullPointerException|NumberFormatException|ArrayIndexOutOfBoundsException ex) {
+                log.error("Bad data or format in reference speed profile file: " + ex);
+                clear();
+                return -1;
+            }
+        }
+        return 0;
+    }
+        
+    private void openImportFile() {
+        JFileChooser fileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+        
+        // get filename
+        // start at current file, show dialog
+        int retVal = fileChooser.showOpenDialog(null);
+
+        // handle selection or cancel
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+          String selectedPath = fileChooser.getSelectedFile().getPath();
+          Path filePath = Paths.get(selectedPath);
+          try{
+            dccProfileData = Files.readAllLines(filePath);
+          }catch (IOException ex) {
+            log.error("Failed to read reference profile file " + ex);
+          }
+        }
+    }
+
     
     static Logger log = LoggerFactory.getLogger(DccSpeedProfile.class.getName());
 }

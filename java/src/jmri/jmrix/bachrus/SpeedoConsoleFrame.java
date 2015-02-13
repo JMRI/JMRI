@@ -101,6 +101,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     protected JButton exportProfileButton = new JButton(rb.getString("Export"));
     protected JButton printProfileButton = new JButton(rb.getString("Print"));
     protected JButton resetGraphButton = new JButton(rb.getString("ResetGraph"));
+    protected JButton loadProfileButton = new JButton(rb.getString("LoadRef"));
     protected JTextField printTitleText = new JTextField();
     protected JLabel statusLabel = new JLabel(" ");
 
@@ -190,6 +191,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
 
     protected DccSpeedProfile spFwd;
     protected DccSpeedProfile spRev;
+    protected DccSpeedProfile spRef;
     protected enum ProfileState {IDLE, WAIT_FOR_THROTTLE, RUNNING}
     protected ProfileState state = ProfileState.IDLE;
     protected enum ProfileDirection {FORWARD, REVERSE}
@@ -208,8 +210,7 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
     // For testing only, must be 1 for normal use
     protected static final int speedTestScaleFactor = 1;
     
-    //Create the combo box, select item at index 4.
-    //Indices start at 0, so 4 specifies British N.
+    //Create the combo box, and assign the scales to it
     JComboBox<String> scaleList = new JComboBox<String>(scaleStrings);
 
     // members for handling the Speedo interface
@@ -495,7 +496,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         // pane to hold the graph
         spFwd = new DccSpeedProfile(29);       // 28 step plus step 0
         spRev = new DccSpeedProfile(29);       // 28 step plus step 0
-        profileGraphPane = new GraphPane(spFwd, spRev);
+        spRef = new DccSpeedProfile(29);       // 28 step plus step 0
+        profileGraphPane = new GraphPane(spFwd, spRev, spRef);
         profileGraphPane.setPreferredSize(new Dimension(600, 300));
         profileGraphPane.setXLabel(rb.getString("SpeedStep"));
         profileGraphPane.setUnitsMph();
@@ -517,6 +519,8 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
         printProfileButton.setToolTipText(rb.getString("TTPrintProfile"));
         profileButtonPane.add(resetGraphButton);
         resetGraphButton.setToolTipText(rb.getString("TTResetGraph"));
+        profileButtonPane.add(loadProfileButton);
+        loadProfileButton.setToolTipText(rb.getString("TTLoadProfile"));
         
         // pane to hold the title
         JPanel profileTitlePane = new JPanel();
@@ -588,7 +592,23 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 spFwd.clear();
                 spRev.clear();
-		speedoDialDisplay.reset();
+                spRef.clear();
+                speedoDialDisplay.reset();
+                profileGraphPane.repaint();
+            }
+        });
+
+        // Listen to Load Reference button
+        loadProfileButton.addActionListener(new java.awt.event.ActionListener() {
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                spRef.clear();
+                int response = spRef.importDccProfile(profileGraphPane.getUnits());
+                if (response == -1){
+                    statusLabel.setText("Improper data or format in reference profile file - see Help for the proper format");
+                } else {
+                    statusLabel.setText("Reference profile loaded");
+                }
                 profileGraphPane.repaint();
             }
         });
