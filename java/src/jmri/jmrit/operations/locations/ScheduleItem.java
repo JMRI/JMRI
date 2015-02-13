@@ -80,7 +80,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 	public void setRandom(String value) {
 		String old = _random;
 		_random = value;
-		firePropertyChange("random value changed", old, value);
+		firePropertyChange("scheduleItemRandomValueChanged", old, value); // NOI18N
 	}
 
 	public String getSetoutTrainScheduleId() {

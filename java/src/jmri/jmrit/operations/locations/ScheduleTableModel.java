@@ -391,7 +391,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		return cb;
 	}
 	
-	String[] randomValues = { ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1" };
+	String[] randomValues = { ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1" };  // NOI18N
 
 	private JComboBox<String> getRandomComboBox(ScheduleItem si) {
 		JComboBox<String> cb = new JComboBox<String>();

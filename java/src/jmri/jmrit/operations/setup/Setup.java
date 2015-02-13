@@ -321,9 +321,9 @@ public class Setup {
 	private static boolean printHeaders = false; // when true add headers to manifest and switch lists
 	
 	// property changes
-	public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange";
-	public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange";
-	public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime";
+	public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
+	public static final String MANIFEST_CSV_PROPERTY_CHANGE = "setupManifestCSVChange"; //  NOI18N
+	public static final String REAL_TIME_PROPERTY_CHANGE = "setupSwitchListRealTime"; //  NOI18N
 
 	public static boolean isMainMenuEnabled() {
 		OperationsSetupXml.instance(); // load file

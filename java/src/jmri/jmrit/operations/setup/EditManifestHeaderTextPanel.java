@@ -31,7 +31,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     // major buttons
     JButton saveButton = new JButton(Bundle.getMessage("Save"));
-    JButton resetButton = new JButton(rb.getString("Reset"));
+    JButton resetButton = new JButton(Bundle.getMessage("Reset"));
 
     // car and engine attributes
     JTextField road_TextField = new JTextField(25);

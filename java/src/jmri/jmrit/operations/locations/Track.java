@@ -307,7 +307,7 @@ public class Track {
 			return Bundle.getMessage("Class/Interchange"); // this is an abbreviation
 		if (trackType.equals(Track.STAGING))
 			return Bundle.getMessage("Staging").toLowerCase();
-		return ("unknown");
+		return ("unknown");  // NOI18N
 	}
 
 	@Deprecated
@@ -1618,9 +1618,8 @@ public class Track {
 				return OKAY; // no
 			return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
 		}
-		log.debug(
-				"Track ({}) has schedule ({}) mode {}" + (getScheduleMode() == SEQUENTIAL ? " Sequential" : " Match"),
-				getName(), getScheduleName(), getScheduleMode()); // NOI18N
+		log.debug("Track ({}) has schedule ({}) mode {} {}", getName(), getScheduleName(), getScheduleMode(),
+				getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
 
 		ScheduleItem si = getCurrentScheduleItem();
 		if (si == null) {
