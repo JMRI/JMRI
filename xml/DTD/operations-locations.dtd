@@ -107,6 +107,7 @@
 <!ATTLIST item trainScheduleId	CDATA #IMPLIED>
 <!ATTLIST item pickupTrainScheduleId	CDATA #IMPLIED>
 <!ATTLIST item hits				CDATA #IMPLIED>
+<!ATTLIST item random			CDATA #IMPLIED>
 
 <!ATTLIST locationEditOptions x		CDATA #IMPLIED> 
 <!ATTLIST locationEditOptions y		CDATA #IMPLIED> 

@@ -38,23 +38,24 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	 */
 	private static final long serialVersionUID = -2920410151470878120L;
 	// Defines the columns
-	private static final int IDCOLUMN = 0;
-	private static final int CURRENTCOLUMN = IDCOLUMN + 1;
-	private static final int TYPECOLUMN = CURRENTCOLUMN + 1;
-	private static final int SETOUT_DAY_COLUMN = TYPECOLUMN + 1;
-	private static final int ROADCOLUMN = SETOUT_DAY_COLUMN + 1;
-	private static final int LOADCOLUMN = ROADCOLUMN + 1;
-	private static final int SHIPCOLUMN = LOADCOLUMN + 1;
-	private static final int DESTCOLUMN = SHIPCOLUMN + 1;
-	private static final int TRACKCOLUMN = DESTCOLUMN + 1;
-	private static final int PICKUP_DAY_COLUMN = TRACKCOLUMN + 1;
-	private static final int COUNTCOLUMN = PICKUP_DAY_COLUMN + 1;
-	private static final int WAITCOLUMN = COUNTCOLUMN + 1;
-	private static final int UPCOLUMN = WAITCOLUMN + 1;
-	private static final int DOWNCOLUMN = UPCOLUMN + 1;
-	private static final int DELETECOLUMN = DOWNCOLUMN + 1;
+	private static final int ID_COLUMN = 0;
+	private static final int CURRENT_COLUMN = ID_COLUMN + 1;
+	private static final int TYPE_COLUMN = CURRENT_COLUMN + 1;
+	private static final int RANDOM_COLUMN = TYPE_COLUMN + 1;
+	private static final int SETOUT_DAY_COLUMN = RANDOM_COLUMN + 1;
+	private static final int ROAD_COLUMN = SETOUT_DAY_COLUMN + 1;
+	private static final int LOAD_COLUMN = ROAD_COLUMN + 1;
+	private static final int SHIP_COLUMN = LOAD_COLUMN + 1;
+	private static final int DEST_COLUMN = SHIP_COLUMN + 1;
+	private static final int TRACK_COLUMN = DEST_COLUMN + 1;
+	private static final int PICKUP_DAY_COLUMN = TRACK_COLUMN + 1;
+	private static final int COUNT_COLUMN = PICKUP_DAY_COLUMN + 1;
+	private static final int WAIT_COLUMN = COUNT_COLUMN + 1;
+	private static final int UP_COLUMN = WAIT_COLUMN + 1;
+	private static final int DOWN_COLUMN = UP_COLUMN + 1;
+	private static final int DELETE_COLUMN = DOWN_COLUMN + 1;
 
-	private static final int HIGHESTCOLUMN = DELETECOLUMN + 1;
+	private static final int HIGHEST_COLUMN = DELETE_COLUMN + 1;
 
 	public ScheduleTableModel() {
 		super();
@@ -107,12 +108,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		TableColumnModel tcm = table.getColumnModel();
 		ButtonRenderer buttonRenderer = new ButtonRenderer();
 		TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-		tcm.getColumn(UPCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(UPCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(DOWNCOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(DOWNCOLUMN).setCellEditor(buttonEditor);
-		tcm.getColumn(DELETECOLUMN).setCellRenderer(buttonRenderer);
-		tcm.getColumn(DELETECOLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(UP_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(UP_COLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(DOWN_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(DOWN_COLUMN).setCellEditor(buttonEditor);
+		tcm.getColumn(DELETE_COLUMN).setCellRenderer(buttonRenderer);
+		tcm.getColumn(DELETE_COLUMN).setCellEditor(buttonEditor);
 		table.setDefaultRenderer(JComboBox.class, new jmri.jmrit.symbolicprog.ValueRenderer());
 		table.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
 
@@ -130,21 +131,22 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return; // done
 		log.debug("Setting preferred widths");
 		// set column preferred widths
-		table.getColumnModel().getColumn(IDCOLUMN).setPreferredWidth(35);
-		table.getColumnModel().getColumn(CURRENTCOLUMN).setPreferredWidth(50);
-		table.getColumnModel().getColumn(TYPECOLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(ID_COLUMN).setPreferredWidth(35);
+		table.getColumnModel().getColumn(CURRENT_COLUMN).setPreferredWidth(50);
+		table.getColumnModel().getColumn(TYPE_COLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(RANDOM_COLUMN).setPreferredWidth(60);
 		table.getColumnModel().getColumn(SETOUT_DAY_COLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(ROADCOLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(LOADCOLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(SHIPCOLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(DESTCOLUMN).setPreferredWidth(130);
-		table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(130);
+		table.getColumnModel().getColumn(ROAD_COLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(LOAD_COLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(SHIP_COLUMN).setPreferredWidth(90);
+		table.getColumnModel().getColumn(DEST_COLUMN).setPreferredWidth(130);
+		table.getColumnModel().getColumn(TRACK_COLUMN).setPreferredWidth(130);
 		table.getColumnModel().getColumn(PICKUP_DAY_COLUMN).setPreferredWidth(90);
-		table.getColumnModel().getColumn(COUNTCOLUMN).setPreferredWidth(45);
-		table.getColumnModel().getColumn(WAITCOLUMN).setPreferredWidth(40);
-		table.getColumnModel().getColumn(UPCOLUMN).setPreferredWidth(60);
-		table.getColumnModel().getColumn(DOWNCOLUMN).setPreferredWidth(70);
-		table.getColumnModel().getColumn(DELETECOLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(COUNT_COLUMN).setPreferredWidth(45);
+		table.getColumnModel().getColumn(WAIT_COLUMN).setPreferredWidth(40);
+		table.getColumnModel().getColumn(UP_COLUMN).setPreferredWidth(60);
+		table.getColumnModel().getColumn(DOWN_COLUMN).setPreferredWidth(70);
+		table.getColumnModel().getColumn(DELETE_COLUMN).setPreferredWidth(70);
 	}
 
 	public int getRowCount() {
@@ -152,42 +154,44 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 	}
 
 	public int getColumnCount() {
-		return HIGHESTCOLUMN;
+		return HIGHEST_COLUMN;
 	}
 
 	public String getColumnName(int col) {
 		switch (col) {
-		case IDCOLUMN:
+		case ID_COLUMN:
 			return Bundle.getMessage("Id");
-		case CURRENTCOLUMN:
+		case CURRENT_COLUMN:
 			return Bundle.getMessage("Current");
-		case TYPECOLUMN:
+		case TYPE_COLUMN:
 			return Bundle.getMessage("Type");
+		case RANDOM_COLUMN:
+			return Bundle.getMessage("Random");
 		case SETOUT_DAY_COLUMN:
 			return Bundle.getMessage("Delivery");
-		case ROADCOLUMN:
+		case ROAD_COLUMN:
 			return Bundle.getMessage("Road");
-		case LOADCOLUMN:
+		case LOAD_COLUMN:
 			return Bundle.getMessage("Receive");
-		case SHIPCOLUMN:
+		case SHIP_COLUMN:
 			return Bundle.getMessage("Ship");
-		case DESTCOLUMN:
+		case DEST_COLUMN:
 			return Bundle.getMessage("Destination");
-		case TRACKCOLUMN:
+		case TRACK_COLUMN:
 			return Bundle.getMessage("Track");
 		case PICKUP_DAY_COLUMN:
 			return Bundle.getMessage("Pickup");
-		case COUNTCOLUMN:
+		case COUNT_COLUMN:
 			if (_matchMode)
 				return Bundle.getMessage("Hits");
 			return Bundle.getMessage("Count");
-		case WAITCOLUMN:
+		case WAIT_COLUMN:
 			return Bundle.getMessage("Wait");
-		case UPCOLUMN:
+		case UP_COLUMN:
 			return Bundle.getMessage("Up");
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			return Bundle.getMessage("Down");
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			return Bundle.getMessage("Delete");
 		default:
 			return "unknown"; // NOI18N
@@ -196,35 +200,37 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	public Class<?> getColumnClass(int col) {
 		switch (col) {
-		case IDCOLUMN:
+		case ID_COLUMN:
 			return String.class;
-		case CURRENTCOLUMN:
+		case CURRENT_COLUMN:
 			return String.class;
-		case TYPECOLUMN:
+		case TYPE_COLUMN:
 			return String.class;
+		case RANDOM_COLUMN:
+			return JComboBox.class;
 		case SETOUT_DAY_COLUMN:
 			return JComboBox.class;
-		case ROADCOLUMN:
+		case ROAD_COLUMN:
 			return JComboBox.class;
-		case LOADCOLUMN:
+		case LOAD_COLUMN:
 			return JComboBox.class;
-		case SHIPCOLUMN:
+		case SHIP_COLUMN:
 			return JComboBox.class;
-		case DESTCOLUMN:
+		case DEST_COLUMN:
 			return JComboBox.class;
-		case TRACKCOLUMN:
+		case TRACK_COLUMN:
 			return JComboBox.class;
 		case PICKUP_DAY_COLUMN:
 			return JComboBox.class;
-		case COUNTCOLUMN:
+		case COUNT_COLUMN:
 			return String.class;
-		case WAITCOLUMN:
+		case WAIT_COLUMN:
 			return String.class;
-		case UPCOLUMN:
+		case UP_COLUMN:
 			return JButton.class;
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			return JButton.class;
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			return JButton.class;
 		default:
 			return null;
@@ -233,18 +239,19 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
 	public boolean isCellEditable(int row, int col) {
 		switch (col) {
+		case RANDOM_COLUMN:
 		case SETOUT_DAY_COLUMN:
-		case ROADCOLUMN:
-		case LOADCOLUMN:
-		case SHIPCOLUMN:
-		case DESTCOLUMN:
-		case TRACKCOLUMN:
+		case ROAD_COLUMN:
+		case LOAD_COLUMN:
+		case SHIP_COLUMN:
+		case DEST_COLUMN:
+		case TRACK_COLUMN:
 		case PICKUP_DAY_COLUMN:
-		case COUNTCOLUMN:
-		case WAITCOLUMN:
-		case UPCOLUMN:
-		case DOWNCOLUMN:
-		case DELETECOLUMN:
+		case COUNT_COLUMN:
+		case WAIT_COLUMN:
+		case UP_COLUMN:
+		case DOWN_COLUMN:
+		case DELETE_COLUMN:
 			return true;
 		default:
 			return false;
@@ -258,37 +265,39 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		if (si == null)
 			return "ERROR schedule item unknown " + row; // NOI18N
 		switch (col) {
-		case IDCOLUMN:
+		case ID_COLUMN:
 			return si.getId();
-		case CURRENTCOLUMN:
+		case CURRENT_COLUMN:
 			return getCurrentPointer(si);
-		case TYPECOLUMN:
+		case TYPE_COLUMN:
 			return getType(si);
+		case RANDOM_COLUMN:
+			return getRandomComboBox(si);
 		case SETOUT_DAY_COLUMN:
 			return getSetoutDayComboBox(si);
-		case ROADCOLUMN:
+		case ROAD_COLUMN:
 			return getRoadComboBox(si);
-		case LOADCOLUMN:
+		case LOAD_COLUMN:
 			return getLoadComboBox(si);
-		case SHIPCOLUMN:
+		case SHIP_COLUMN:
 			return getShipComboBox(si);
-		case DESTCOLUMN:
+		case DEST_COLUMN:
 			return getDestComboBox(si);
-		case TRACKCOLUMN:
+		case TRACK_COLUMN:
 			return getTrackComboBox(si);
 		case PICKUP_DAY_COLUMN:
 			return getPickupDayComboBox(si);
-		case COUNTCOLUMN:
+		case COUNT_COLUMN:
 			if (_matchMode)
 				return si.getHits();
 			return si.getCount();
-		case WAITCOLUMN:
+		case WAIT_COLUMN:
 			return si.getWait();
-		case UPCOLUMN:
+		case UP_COLUMN:
 			return Bundle.getMessage("Up");
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			return Bundle.getMessage("Down");
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			return Bundle.getMessage("Delete");
 		default:
 			return "unknown " + col; // NOI18N
@@ -301,40 +310,43 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			return;
 		}
 		switch (col) {
+		case RANDOM_COLUMN:
+			setRandom(value, row);
+			break;
 		case SETOUT_DAY_COLUMN:
 			setSetoutDay(value, row);
 			break;
-		case ROADCOLUMN:
+		case ROAD_COLUMN:
 			setRoad(value, row);
 			break;
-		case LOADCOLUMN:
+		case LOAD_COLUMN:
 			setLoad(value, row);
 			break;
-		case SHIPCOLUMN:
+		case SHIP_COLUMN:
 			setShip(value, row);
 			break;
-		case DESTCOLUMN:
+		case DEST_COLUMN:
 			setDestination(value, row);
 			break;
-		case TRACKCOLUMN:
+		case TRACK_COLUMN:
 			setTrack(value, row);
 			break;
 		case PICKUP_DAY_COLUMN:
 			setPickupDay(value, row);
 			break;
-		case COUNTCOLUMN:
+		case COUNT_COLUMN:
 			setCount(value, row);
 			break;
-		case WAITCOLUMN:
+		case WAIT_COLUMN:
 			setWait(value, row);
 			break;
-		case UPCOLUMN:
+		case UP_COLUMN:
 			moveUpScheduleItem(row);
 			break;
-		case DOWNCOLUMN:
+		case DOWN_COLUMN:
 			moveDownScheduleItem(row);
 			break;
-		case DELETECOLUMN:
+		case DELETE_COLUMN:
 			deleteScheduleItem(row);
 			break;
 		default:
@@ -376,6 +388,16 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 			cb.addItem(notValid);
 			cb.setSelectedItem(notValid);
 		}
+		return cb;
+	}
+	
+	String[] randomValues = { ScheduleItem.NONE, "50", "30", "25", "20", "15", "10", "5", "2", "1" };
+
+	private JComboBox<String> getRandomComboBox(ScheduleItem si) {
+		JComboBox<String> cb = new JComboBox<String>();
+		for (String item : randomValues)
+			cb.addItem(item);
+		cb.setSelectedItem(si.getRandom());
 		return cb;
 	}
 
@@ -522,6 +544,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		}
 		si.setWait(wait);
 	}
+	
+	private void setRandom(Object value, int row) {
+		ScheduleItem si = _list.get(row);
+		String random = (String) ((JComboBox<?>) value).getSelectedItem();
+		si.setRandom(random);
+
+	}
 
 	private void setSetoutDay(Object value, int row) {
 		ScheduleItem si = _list.get(row);
@@ -584,7 +613,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 		si.setDestinationTrack(null);
 		Location dest = (Location) ((JComboBox<?>) value).getSelectedItem();
 		si.setDestination(dest);
-		fireTableCellUpdated(row, TRACKCOLUMN);
+		fireTableCellUpdated(row, TRACK_COLUMN);
 	}
 
 	private void setTrack(Object value, int row) {

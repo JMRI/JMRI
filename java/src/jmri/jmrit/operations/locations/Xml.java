@@ -53,6 +53,7 @@ public class Xml {
 	// ScheduleItem.java
 	static final String ITEM = "item"; // NOI18N
 	static final String SEQUENCE_ID = "sequenceId"; // NOI18N
+	static final String RANDOM = "random"; // NOI18N
 	static final String TRAIN_SCHEDULE_ID = "trainScheduleId"; // NOI18N
 	static final String PICKUP_TRAIN_SCHEDULE_ID = "pickupTrainScheduleId"; // NOI18N
 	static final String COUNT = "count"; // NOI18N

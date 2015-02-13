@@ -16,6 +16,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 
 	protected String _id = NONE;
 	protected int _sequenceId = 0; // used to determine order in schedule
+	protected String _random = NONE; // used to determine if random set out is needed
 	protected String _setoutTrainScheduleId = NONE; // which day of the week to deliver car
 	protected String _type = NONE; // the type of car
 	protected String _road = NONE; // the car road
@@ -70,6 +71,16 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		String old = _type;
 		_type = type;
 		firePropertyChange(TYPE_CHANGED_PROPERTY, old, type);
+	}
+	
+	public String getRandom() {
+		return _random;
+	}
+
+	public void setRandom(String value) {
+		String old = _random;
+		_random = value;
+		firePropertyChange("random value changed", old, value);
 	}
 
 	public String getSetoutTrainScheduleId() {
@@ -263,6 +274,8 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 			log.warn("no id attribute in Schedule Item element when reading operations");
 		if ((a = e.getAttribute(Xml.SEQUENCE_ID)) != null)
 			_sequenceId = Integer.parseInt(a.getValue());
+		if ((a = e.getAttribute(Xml.RANDOM)) != null)
+			_random = a.getValue();
 		if ((a = e.getAttribute(Xml.TRAIN_SCHEDULE_ID)) != null)
 			_setoutTrainScheduleId = a.getValue();
 		if ((a = e.getAttribute(Xml.PICKUP_TRAIN_SCHEDULE_ID)) != null)
@@ -299,6 +312,7 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
 		org.jdom2.Element e = new org.jdom2.Element(Xml.ITEM);
 		e.setAttribute(Xml.ID, getId());
 		e.setAttribute(Xml.SEQUENCE_ID, Integer.toString(getSequenceId()));
+		e.setAttribute(Xml.RANDOM, getRandom());
 		e.setAttribute(Xml.TRAIN_SCHEDULE_ID, getSetoutTrainScheduleId());
 		e.setAttribute(Xml.PICKUP_TRAIN_SCHEDULE_ID, getPickupTrainScheduleId());
 		e.setAttribute(Xml.COUNT, Integer.toString(getCount()));

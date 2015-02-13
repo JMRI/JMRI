@@ -3233,6 +3233,20 @@ public class TrainBuilder extends TrainCommon {
 
 			return null;
 		}
+		if (!si.getRandom().equals(ScheduleItem.NONE)) {
+			try {
+				int value = Integer.parseInt(si.getRandom());
+				double random = 100 * Math.random();
+				log.debug("Selected random {}, created random {}", si.getRandom(), random);
+				if (random > value) {
+					addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildScheduleRandom"),
+							new Object[] { track.getName(), track.getScheduleName(), si.getId(), value, random }));
+					return null;
+				}
+			} catch (Exception NumberFormatException) {
+				log.error("Random value {} isn't a number", si.getRandom());
+			}
+		}
 		log.debug("Found a schedule item id ({}) for car ({})", si.getId(), car.toString());
 		return si;
 	}
