@@ -75,6 +75,7 @@ log4j.appender.T.MaxBackupIndex=2
 
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
+log4j.category.org.eclipse.jetty.server.handler=WARN
 
 # Examples of changing priority of specific categories (classes, packages):
 #
