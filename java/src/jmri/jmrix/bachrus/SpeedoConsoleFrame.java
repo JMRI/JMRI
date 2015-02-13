@@ -605,9 +605,9 @@ public class SpeedoConsoleFrame extends JmriJFrame implements SpeedoListener,
                 spRef.clear();
                 int response = spRef.importDccProfile(profileGraphPane.getUnits());
                 if (response == -1){
-                    statusLabel.setText("Improper data or format in reference profile file - see Help for the proper format");
+                    statusLabel.setText(rb.getString("StatFileError"));
                 } else {
-                    statusLabel.setText("Reference profile loaded");
+                    statusLabel.setText(rb.getString("StatFileSuccess"));
                 }
                 profileGraphPane.repaint();
             }
