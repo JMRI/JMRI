@@ -37,7 +37,7 @@ class SearchPathTableModel extends AbstractTableModel implements PropertyChangeL
         File p = ProfileManager.defaultManager().getSearchPaths(rowIndex);
         switch (columnIndex) {
             case -1: // tooltip
-                return Bundle.getMessage("SearchPathTableModel.tooltip", p.getPath());
+                return Bundle.getMessage("SearchPathTableModel.tooltip", ProfileManager.defaultManager().getDefaultSearchPath().getPath());
             case 0:
                 return p;
             case 1:
