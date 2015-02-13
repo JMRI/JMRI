@@ -1,6 +1,7 @@
 package jmri.jmrit.operations;
 
 import java.io.File;
+
 import jmri.InstanceManager;
 import jmri.ShutDownTask;
 import jmri.implementation.QuietShutDownTask;
@@ -9,9 +10,12 @@ import jmri.jmrit.operations.locations.ScheduleManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.routes.RouteManager;
+import jmri.jmrit.operations.setup.AutoBackup;
+import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 import jmri.util.FileUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,6 +49,15 @@ public final class OperationsManager {
 		ScheduleManager.instance();
 		TrainScheduleManager.instance();
 		this.setShutDownTask(this.getDefaultShutDownTask());
+		// auto backup?
+		if (Setup.isAutoBackupEnabled()) {
+			try {
+				AutoBackup backup = new AutoBackup();
+				backup.autoBackup();
+			} catch (Exception ex) {
+				log.debug("Auto backup after enabling Auto Backup flag.", ex);
+			}
+		}
 	}
 
 	/**
