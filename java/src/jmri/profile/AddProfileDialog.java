@@ -91,8 +91,6 @@ public class AddProfileDialog extends javax.swing.JDialog {
         ResourceBundle bundle = ResourceBundle.getBundle("jmri/profile/Bundle"); // NOI18N
         setTitle(bundle.getString("AddProfileDialog.title")); // NOI18N
         setMinimumSize(new Dimension(413, 239));
-        setPreferredSize(new Dimension(517, 239));
-        setSize(new Dimension(413, 239));
 
         lblProfileNameAndLocation.setFont(lblProfileNameAndLocation.getFont().deriveFont(lblProfileNameAndLocation.getFont().getStyle() | Font.BOLD));
         lblProfileNameAndLocation.setText(bundle.getString("AddProfileDialog.lblProfileNameAndLocation.text")); // NOI18N
@@ -129,16 +127,16 @@ public class AddProfileDialog extends javax.swing.JDialog {
 
         lblProfileLocation.setText(bundle.getString("AddProfileDialog.lblProfileLocation.text")); // NOI18N
 
-        profileLocation.setText(FileUtil.getPreferencesPath());
+        profileLocation.setText(ProfileManager.defaultManager().getDefaultSearchPath().getPath());
         profileLocation.setMinimumSize(new Dimension(14, 128));
-        profileLocation.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent evt) {
-                profileLocationActionPerformed(evt);
-            }
-        });
         profileLocation.addFocusListener(new FocusAdapter() {
             public void focusLost(FocusEvent evt) {
                 profileLocationFocusLost(evt);
+            }
+        });
+        profileLocation.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent evt) {
+                profileLocationActionPerformed(evt);
             }
         });
         profileLocation.addKeyListener(new KeyAdapter() {
@@ -294,10 +292,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
             }
             ProfileManager.defaultManager().saveActiveProfile(p, ProfileManager.defaultManager().isAutoStartActiveProfile());
             this.dispose();
-        } catch (IOException ex) {
-            JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
-            log.error("Error saving profile", ex);
-        } catch (IllegalArgumentException ex) {
+        } catch (IOException | IllegalArgumentException ex) {
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);
             log.error("Error saving profile", ex);
         }

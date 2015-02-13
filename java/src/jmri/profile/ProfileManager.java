@@ -14,6 +14,7 @@ import java.util.Date;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
+import javax.annotation.Nonnull;
 import jmri.beans.Bean;
 import jmri.jmrit.roster.Roster;
 import jmri.util.FileUtil;
@@ -37,14 +38,15 @@ import org.slf4j.LoggerFactory;
  */
 public class ProfileManager extends Bean {
 
-    private final ArrayList<Profile> profiles = new ArrayList<Profile>();
-    private final ArrayList<File> searchPaths = new ArrayList<File>();
+    private final ArrayList<Profile> profiles = new ArrayList<>();
+    private final ArrayList<File> searchPaths = new ArrayList<>();
     private Profile activeProfile = null;
     private Profile nextActiveProfile = null;
     private final File catalog;
     private File configFile = null;
     private boolean readingProfiles = false;
     private boolean autoStartActiveProfile = false;
+    private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
     private static ProfileManager instance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
@@ -54,6 +56,8 @@ public class ProfileManager extends Bean {
     public static final String PROFILES = "profiles"; // NOI18N
     private static final String PROFILECONFIG = "profileConfig"; // NOI18N
     public static final String SEARCH_PATHS = "searchPaths"; // NOI18N
+    public static final String DEFAULT = "default"; // NOI18N
+    public static final String DEFAULT_SEARCH_PATH = "defaultSearchPath"; // NOI18N
     public static final String SYSTEM_PROPERTY = "org.jmri.profile"; // NOI18N
     private static final Logger log = LoggerFactory.getLogger(ProfileManager.class);
 
@@ -66,9 +70,7 @@ public class ProfileManager extends Bean {
         try {
             this.readProfiles();
             this.findProfiles();
-        } catch (JDOMException ex) {
-            log.error(ex.getLocalizedMessage(), ex);
-        } catch (IOException ex) {
+        } catch (JDOMException | IOException ex) {
             log.error(ex.getLocalizedMessage(), ex);
         }
     }
@@ -239,7 +241,7 @@ public class ProfileManager extends Bean {
      * @return A list of all Profile objects
      */
     public ArrayList<Profile> getAllProfiles() {
-        return new ArrayList<Profile>(profiles);
+        return new ArrayList<>(profiles);
     }
 
     /**
@@ -313,6 +315,10 @@ public class ProfileManager extends Bean {
         return searchPaths.toArray(new File[searchPaths.size()]);
     }
 
+    public ArrayList<File> getAllSearchPaths() {
+        return this.searchPaths;
+    }
+
     /**
      * Get the search path at index.
      *
@@ -343,6 +349,26 @@ public class ProfileManager extends Bean {
             int index = searchPaths.indexOf(path);
             searchPaths.remove(path);
             this.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
+            this.writeProfiles();
+            if (this.getDefaultSearchPath().equals(path)) {
+                this.setDefaultSearchPath(new File(FileUtil.getPreferencesPath()));
+            }
+        }
+    }
+
+    @Nonnull
+    protected File getDefaultSearchPath() {
+        return this.defaultSearchPath;
+    }
+
+    protected void setDefaultSearchPath(@Nonnull File defaultSearchPath) throws IOException {
+        if (defaultSearchPath == null) {
+            throw new NullPointerException();
+        }
+        if (!defaultSearchPath.equals(this.defaultSearchPath)) {
+            File oldDefault = this.defaultSearchPath;
+            this.defaultSearchPath = defaultSearchPath;
+            this.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
             this.writeProfiles();
         }
     }
@@ -377,6 +403,9 @@ public class ProfileManager extends Bean {
                 if (!searchPaths.contains(path)) {
                     this.addSearchPath(path);
                 }
+                if (Boolean.parseBoolean(e.getAttributeValue(DEFAULT))) {
+                    this.defaultSearchPath = path;
+                }
             }
             if (searchPaths.isEmpty()) {
                 this.addSearchPath(FileUtil.getFile(FileUtil.getPreferencesPath()));
@@ -385,10 +414,7 @@ public class ProfileManager extends Bean {
             if (reWrite) {
                 this.writeProfiles();
             }
-        } catch (JDOMException ex) {
-            this.readingProfiles = false;
-            throw ex;
-        } catch (IOException ex) {
+        } catch (JDOMException | IOException ex) {
             this.readingProfiles = false;
             throw ex;
         }
@@ -409,6 +435,7 @@ public class ProfileManager extends Bean {
         for (File f : this.searchPaths) {
             Element e = new Element(Profile.PATH);
             e.setAttribute(Profile.PATH, FileUtil.getPortableFilename(f.getPath(), true, true));
+            e.setAttribute(DEFAULT, Boolean.toString(f.equals(this.defaultSearchPath)));
             pathsElement.addContent(e);
         }
         doc.getRootElement().addContent(profilesElement);
@@ -417,8 +444,8 @@ public class ProfileManager extends Bean {
             fw = new FileWriter(catalog);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
-                                .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.PRESERVE));
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.PRESERVE));
             fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {
@@ -657,8 +684,8 @@ public class ProfileManager extends Bean {
             FileWriter fw = new FileWriter(config);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
-                                .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.PRESERVE));
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.PRESERVE));
             fmt.output(doc, fw);
             fw.close();
         }

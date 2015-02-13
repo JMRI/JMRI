@@ -58,11 +58,8 @@ import org.slf4j.LoggerFactory;
  */
 public class ProfileManagerDialog extends JDialog {
 
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8335767552519729376L;
-	private Timer timer;
+    private static final long serialVersionUID = 8335767552519729376L;
+    private Timer timer;
     private int countDown;
 
     /**
@@ -240,7 +237,7 @@ public class ProfileManagerDialog extends JDialog {
     private void btnUseExistingActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnUseExistingActionPerformed
         timer.stop();
         countDownLbl.setVisible(false);
-        JFileChooser chooser = new JFileChooser(FileUtil.getPreferencesPath());
+        JFileChooser chooser = new JFileChooser(FileUtil.getHomePath());
         chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
         chooser.setFileFilter(new ProfileFileFilter());
         chooser.setFileView(new ProfileFileView());
