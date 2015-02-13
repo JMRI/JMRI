@@ -282,7 +282,7 @@ public class EditManifestTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitleManifestText"); // NOI18N
+        return Bundle.getMessage("TitleManifestText");
     }
 
     @Override

@@ -180,7 +180,7 @@ public class BuildReportOptionPanel extends OperationsPreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitleBuildReportOptions"); // NOI18N
+        return Bundle.getMessage("TitleBuildReportOptions");
     }
 
     @Override

@@ -265,7 +265,7 @@ public class EditManifestHeaderTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitleManifestHeaderText"); // NOI18N
+        return Bundle.getMessage("TitleManifestHeaderText");
     }
 
     @Override

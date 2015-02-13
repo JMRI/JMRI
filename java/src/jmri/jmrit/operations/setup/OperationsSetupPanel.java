@@ -753,7 +753,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitleOperationsSetup"); // NOI18N
+        return Bundle.getMessage("TitleOperationsSetup");
     }
 
     @Override

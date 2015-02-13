@@ -275,7 +275,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitleOptions"); // NOI18N
+        return Bundle.getMessage("TitleOptions");
     }
 
     @Override

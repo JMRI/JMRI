@@ -233,7 +233,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitleSwitchListText"); // NOI18N
+        return Bundle.getMessage("TitleSwitchListText");
     }
 
     @Override

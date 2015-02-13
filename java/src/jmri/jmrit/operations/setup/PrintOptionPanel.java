@@ -716,7 +716,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
 
     @Override
     public String getTabbedPreferencesTitle() {
-        return Bundle.getMessage("TitlePrintOptions"); // NOI18N
+        return Bundle.getMessage("TitlePrintOptions");
     }
 
     @Override
