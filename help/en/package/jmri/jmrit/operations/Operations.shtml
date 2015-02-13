@@ -86,7 +86,7 @@
        </UL></LI>
        <LI><A HREF="#Sidings">Spurs</A>
        <UL>
-        <LI><A HREF="#Schedule">Schedules</A></LI>
+        <LI><A HREF="#Schedules">Schedules</A></LI>
         <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
         <LI><A HREF="#ShowSchedulesByCarTypeAndLoad">Show Schedules by Car Type and Load</A></LI>
         <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
@@ -1492,7 +1492,7 @@
    </P>
 
    <A NAME="Schedules"></A>
-   <H3>Schedule</H3>
+   <H3>Schedules</H3>
 
    If you would like to see cars delivered in a particular sequence, or with a specific load for
    delivery or shipping, the program allows you to apply a schedule to a spur. This is an optional
@@ -1513,8 +1513,9 @@
     Enter a name for your schedule and press the "Add Schedule" button at the bottom of the window.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
-    in your schedule containing the type of car, pull down menus for delivery, roads, loads,
-    destinations, and pickup. The schedule item also includes count of 1 and a wait of 0. 
+    in your schedule containing the type of car, pull down menus for random, delivery, roads, loads,
+    destinations, and pickup. The schedule item also includes count of 1 and a wait of 0. Leave the
+    pull down menu item blank for any field you don't care about.
     </p>
     <P>You can if
     you wish specify a particular road for the type of car you entered, or leave it blank if you
@@ -1527,6 +1528,12 @@
     car will only be serviced when that train timetable is active. See Trains-&gt;Tools-&gt;<A
      HREF="#Timetable">Timetable</A> to select the train timetable for your session.
    </P>
+   <P>You can also select a random value for any schedule item. If you select a value of 15, it
+    means that the item has a 15 percent chance of being selected if all of the other criteria for
+    the schedule item was met, and there was track space available for the car. This feature is
+    useful for a RIP track where you would want cars to be randomly sent to the repair facility. For
+    example, a random value of 2 would mean that roughly 1 in 50 cars could be sent the to RIP
+    track.</P>
 
    <P>If you wanted more than one car type to be delivered consecutively, increase the count to
     the number that you wish. The maximum count is 100 and the minimum is 1. In the schedule shown
