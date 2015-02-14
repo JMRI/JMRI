@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20141024"/>
-	<version author="Michael Mosher" version="2" lastUpdated="20150105"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20150214"/>
 	<!-- CV248 to read only -->
 	<decoder>
 		<family name="WOW Sound Set 2" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
@@ -1264,6 +1264,7 @@
 		</resets>
 	</decoder>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_snd.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_chuff.xml"/>

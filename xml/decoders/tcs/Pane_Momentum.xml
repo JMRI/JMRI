@@ -128,45 +128,6 @@
     <row>
       <column>
 		<row>
-			<display item="Brake Rate 1" layout="above" label=""/>
-			<display item="Brake Rate 1" layout="above" format="hslider"/>
-		</row>
-        <label>
-          <text> </text>
-        </label>
-		<row>
-			<display item="Brake Rate 2" layout="above" label=""/>
-			<display item="Brake Rate 2" layout="above" format="hslider"/>
-		</row>
-        <label>
-          <text> </text>
-        </label>
-		<row>
-			<display item="Brake Rate 3" layout="above" label=""/>
-			<display item="Brake Rate 3" layout="above" format="hslider"/>
-		</row>
-        <label>
-          <text> </text>
-        </label>
-		<row>
-			<display item="Brake Rate 4" layout="above" label=""/>
-			<display item="Brake Rate 4" layout="above" format="hslider"/>
-		</row>
-        <label>
-          <text> </text>
-        </label>
-		<row>
-		<row>
-			<display item="Brake Rate 5" layout="above" label=""/>
-			<display item="Brake Rate 5" layout="above" format="hslider"/>
-		</row>
-		</row>
-      </column>
-      <label>
-		<text>  </text>
-      </label>
-      <column>
-		<row>
 			<display item="Switch mode acceleration" layout="above" label=""/>
 			<display item="Switch mode acceleration" layout="above" format="hslider"/>
 		</row>
@@ -190,29 +151,6 @@
 		<row>
 			<display item="Main line mode deceleration" layout="above" label=""/>
 			<display item="Main line mode deceleration" layout="above" format="hslider"/>
-		</row>
-      </column>
-      <label>
-		<text>  </text>
-      </label>
-      <column>
-		<row>
-			<display item="Dynamic Lowest Speed Step" layout="above" label=""/>
-			<display item="Dynamic Lowest Speed Step" layout="above" format="hslider"/>
-		</row>
-        <label>
-          <text> </text>
-        </label>
-		<row>
-			<display item="Dynamic Decel Rate" layout="above" label=""/>
-			<display item="Dynamic Decel Rate" layout="above" format="hslider"/>
-		</row>
-        <label>
-          <text> </text>
-        </label>
-		<row>
-			<display item="Dynamic Speed Step Decrease" layout="above" label=""/>
-			<display item="Dynamic Speed Step Decrease" layout="above" format="hslider"/>
 		</row>
       </column>
     </row>
