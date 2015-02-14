@@ -2,19 +2,20 @@
 
 package jmri.jmrix.ieee802154.xbee;
 
-import jmri.jmrix.ieee802154.IEEE802154Message;
-import jmri.jmrix.ieee802154.IEEE802154Reply;
-import jmri.jmrix.ieee802154.IEEE802154Listener;
-import jmri.jmrix.AbstractMRReply;
-import jmri.jmrix.AbstractMRMessage;
-import jmri.jmrix.AbstractMRListener;
-import jmri.jmrix.AbstractPortController;
-import jmri.jmrix.ieee802154.IEEE802154TrafficController;
-
+import com.rapplogic.xbee.api.AtCommandResponse;
 import com.rapplogic.xbee.api.XBee;
 import com.rapplogic.xbee.api.XBeeException;
 import com.rapplogic.xbee.api.XBeeResponse;
-import com.rapplogic.xbee.api.AtCommandResponse;
+import jmri.jmrix.AbstractMRListener;
+import jmri.jmrix.AbstractMRMessage;
+import jmri.jmrix.AbstractMRReply;
+import jmri.jmrix.AbstractPortController;
+import jmri.jmrix.ieee802154.IEEE802154Listener;
+import jmri.jmrix.ieee802154.IEEE802154Message;
+import jmri.jmrix.ieee802154.IEEE802154Reply;
+import jmri.jmrix.ieee802154.IEEE802154TrafficController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Traffic Controller interface for communicating with XBee devices
@@ -412,7 +413,7 @@ public class XBeeTrafficController extends IEEE802154TrafficController implement
 
 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XBeeTrafficController.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(XBeeTrafficController.class);
 
 
 }
