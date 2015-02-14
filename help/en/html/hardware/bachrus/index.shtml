@@ -43,7 +43,7 @@
 		</p>
 		<a href="images/dial.jpg">
     <img src="images/dial.jpg"
-         width="306" height="238"
+         width="336" height="373"
          alt="Speedometer dial display" ></a>
 		<p>
 		When the Bachrus MTS-DCC is set as a layout connection alongside a DCC
@@ -52,7 +52,7 @@
 		</p>
 		<a href="images/profile.jpg">
     <img src="images/profile.jpg"
-         width="306" height="238"
+         width="543" height="373"
          alt="Speedometer speed profile graph" ></a>
    
 <!--#include virtual="/Footer" -->
