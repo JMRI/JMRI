@@ -20,7 +20,7 @@
 	<version author="Michael Mosher and Dave Heap" version="5" lastUpdated="20131005"/>
 	<!-- ver 6  add sound set cv 248, override acc, dec default values -->
 	<version author="Michael Mosher" version="6" lastUpdated="20141017"/>
-	<version author="Michael Mosher" version="7" lastUpdated="20150105"/>
+	<version author="Michael Mosher" version="7" lastUpdated="20150214"/>
 	<!-- CV248 to read only -->
 	<decoder>
 		<family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
@@ -1236,6 +1236,7 @@
 		</resets>
 	</decoder>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
+	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_snd.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_chuff.xml"/>

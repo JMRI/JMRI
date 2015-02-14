@@ -3114,7 +3114,11 @@
 
    Normally the program allows cars to travel from the train's departure location (origin) to its
    last location (terminal). Deselect this option if you don't want the train to carry cars from the
-   train's origin to the terminal.
+   train's origin to the terminal. For example, say the train departs Boston (origin), and services
+   Worcester, Springfield, and terminates in New York (terminal). If the option is selected, then
+   the cars could travel from Boston to Worcester, Springfield, or New York. If not selected, then
+   cars from Boston can only travel to Worcester or Springfield, and cars from Worcester or Springfield
+   could go to New York. But through cars from Boston to New York are not allowed.
 
    <H4>Service all cars with a final destination</H4>
 
@@ -3849,10 +3853,14 @@
    the train doesn't have any work. If you deselect this option, then the program only prints out
    trains that have work at that location.
 
-   <P>The next option "Page per Train" when selected causes the program to print a train's
+   <P>The next option controls how much paper is used when printing out switch lists. The
+    "Normal" mode uses the least amount of paper, and will list the trains servicing the location
+    one after another. The "Page per Train" option when selected causes the program to print a train's
     switch list on a new page for each train. This way your operators when completing the work for a
     train, can simply discard the paperwork for that train. This mode is also useful if you have
-    more than one operator working a location, this way they can easily hand out the work by train.</P>
+    more than one operator working a location, this way they can easily hand out the work by train. The final
+    option is "Page per Visit", this option prints a new page each time a train visits the location. Useful
+    if you don't want multiple visits by a train to be on the same set of pages.</P>
 
    <P>The last option "Real Time" is whether you want your switch lists in real time or
     consolidation mode. Normally you would generate your switch lists in real time. In this mode the

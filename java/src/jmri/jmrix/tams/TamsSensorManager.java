@@ -5,6 +5,8 @@ package jmri.jmrix.tams;
 import java.util.Hashtable;
 import jmri.JmriException;
 import jmri.Sensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement sensor manager for Tams systems.
@@ -269,7 +271,7 @@ public class TamsSensorManager extends jmri.managers.AbstractSensorManager
         }
     }
     
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsSensorManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsSensorManager.class);
 }
 
 /* @(#)TamsSensorManager.java */

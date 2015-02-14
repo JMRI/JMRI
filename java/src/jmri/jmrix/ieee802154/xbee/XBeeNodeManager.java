@@ -6,6 +6,8 @@ import com.rapplogic.xbee.api.AtCommandResponse;
 import com.rapplogic.xbee.api.XBeeResponse;
 import com.rapplogic.xbee.api.wpan.WpanNodeDiscover;
 import com.rapplogic.xbee.api.zigbee.ZBNodeDiscover;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /*
@@ -157,7 +159,7 @@ public class XBeeNodeManager implements XBeeListener {
     }
   } 
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(XBeeNodeManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(XBeeNodeManager.class);
 
 
 }

@@ -131,9 +131,8 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Random Sound 4 enable</label>
 	</variable> 
-	<variable item="Sound Setting 35" CV="T2CV.4.13" default="15" >
+	<variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
 		<decVal max="126"/>
-		<label>Brake grinding noise start speed</label>
 	</variable>
 	<variable label="Dual function F0F" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXXV" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -183,7 +182,7 @@
 	<variable label="Dual function F14" CV="T2CV.4.14" default="0" mask="VXXXXXXXXXXXXXXX" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 	</variable>
-	<variable item="Sound Option 6" CV="T2CV.4.15" default="3"  tooltip="controls what notch the prime mover goes into when the Dynamic brakes are turned on">
+	<variable item="Dynamic brake notch setting" CV="T2CV.4.15" default="3"  tooltip="controls what notch the prime mover goes into when the Dynamic brakes are turned on">
 		<enumVal>
 			<enumChoice choice="Idle"/>
 			<enumChoice choice="Notch 1"/>
@@ -196,7 +195,6 @@
 			<enumChoice choice="Notch 8"/>
 			<enumChoice choice="Notch determined by throttle setting"/>
 		</enumVal>
-		<label>Dynamic brake notch setting</label>
 	</variable>
 	<variable item="Sound Setting 3" CV="T2CV.4.17" default="10" tooltip="at approx this bemf value the decoder should be in notch 1, the decoder assigns this CV during the calibration process but it can be manually overwritten. A value of 0 means the motor is moving with no friction, a value of 255 means the motor is stalled, This is used only in prototype mode">
 		<decVal max="255"/>
@@ -210,9 +208,8 @@
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Manual notching feedback/relay sound</label>
 	</variable>
-	<variable item="Sound Group 7 Checkbox 2" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXVX">
+	<variable item="Auto notch down prime mover when brakes are on" CV="T2CV.4.19" default="1" mask="XXXXXXXXXXXXXXVX">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-		<label>Auto notch down prime mover when brakes are on</label>
 	</variable>
 	<variable item="Sound Group 7 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXVXX">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -242,6 +239,10 @@
 	<variable item="Sound Group 8 Checkbox 1" CV="T2CV.4.19" default="0" mask="XXXXXXXVXXXXXXXX">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
 		<label>Dual Prime Movers</label>
+	</variable>
+	<variable item="Increase in Dynamic Brake power increases throttle notch" CV="T2CV.4.19" default="1" mask="XXXXXXVXXXXXXXXX">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+		<tooltip>When the dynamic brakes are on the prime mover goes to notch x, if you increase the db braking power the prime mover notches to x+1, press the DB again and it goes to x+2 </tooltip>
 	</variable>
 	<variable item="Sound Group 8 Checkbox 3" CV="T2CV.4.19" default="0" mask="XXXXXVXXXXXXXXXX">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

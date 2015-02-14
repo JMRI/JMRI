@@ -310,6 +310,8 @@
 
 <mapID target="manual.DecoderPro.Main_RPS" url="manual/DecoderPro/Main_RPS.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_DepartingStagingRoute" url="package/jmri/jmrit/operations/Operations.shtml#DepartingStagingRoute"/>
+
 <mapID target="manual.DecoderPro.Main_Throttle_List" url="manual/DecoderPro/Main_Throttle_List.shtml"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_toolbar" url="manual/DecoderPro3/dp3_Main_Throttle_toolbar.shtml"/>
@@ -718,6 +720,8 @@
 
 <mapID target="package.jmri.jmrit.logix.OBlockEdit" url="package/jmri/jmrit/logix/OBlockEdit.shtml"/>
 
+<mapID target="package.jmri.jmrit.beantable.SignalGroupTable_example" url="package/jmri/jmrit/beantable/SignalGroupTable.shtml#example"/>
+
 <mapID target="package.jmri.jmrit.beantable.SignalGroupAddEdit" url="package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml"/>
 
 <mapID target="manual.DecoderPro3.Comp_ManfSpecific_Top" url="manual/DecoderPro3/Comp_ManfSpecific.shtml#Top"/>
@@ -907,6 +911,8 @@
 <mapID target="html.doc.Technical.I8N" url="html/doc/Technical/I8N.shtml"/>
 
 <mapID target="html.hardware.XBee.XBeeNodeConfigurationTool" url="html/hardware/XBee/XBeeNodeConfigurationTool.shtml"/>
+
+<mapID target="html.tools.signaling.SignalGroups_speed" url="html/tools/signaling/SignalGroups.shtml#speed"/>
 
 <mapID target="manual.DecoderPro.Start_DCC_Hardware_Top" url="manual/DecoderPro/Start_DCC_Hardware.shtml#Top"/>
 
@@ -1394,6 +1400,8 @@
 
 <mapID target="package.jmri.jmrit.blockboss.SimpleSignalExample" url="package/jmri/jmrit/blockboss/SimpleSignalExample.shtml"/>
 
+<mapID target="html.tools.signaling.SignalGroups_junction" url="html/tools/signaling/SignalGroups.shtml#junction"/>
+
 <mapID target="manual.DecoderPro3.Start_Preferences_Top" url="manual/DecoderPro3/Start_Preferences.shtml#Top"/>
 
 <mapID target="manual.DecoderPro3.Comp_LightFX" url="manual/DecoderPro3/Comp_LightFX.shtml"/>
@@ -1493,6 +1501,8 @@
 <mapID target="manual.DecoderPro3.Start_DCC_Top" url="manual/DecoderPro3/Start_DCC.shtml#Top"/>
 
 <mapID target="html.tools.throttle.ThrottleWindowMenus_FileMenu" url="html/tools/throttle/ThrottleWindowMenus.shtml#FileMenu"/>
+
+<mapID target="package.jmri.jmrit.inControl.inControl" url="package/jmri/jmrit/inControl/inControl.shtml"/>
 
 <mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_zimobis" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#zimobis"/>
 
@@ -1595,6 +1605,8 @@
 <mapID target="package.jmri.jmrit.sendpacket.SendPacketFrame" url="package/jmri/jmrit/sendpacket/SendPacketFrame.shtml"/>
 
 <mapID target="html.hardware.loconet.LocoNetClasses_startup" url="html/hardware/loconet/LocoNetClasses.shtml#startup"/>
+
+<mapID target="html.tools.signaling.SignalGroups_route" url="html/tools/signaling/SignalGroups.shtml#route"/>
 
 <mapID target="manual.DecoderPro.Main_QSI" url="manual/DecoderPro/Main_QSI.shtml"/>
 

@@ -6,7 +6,7 @@
 <title>JMRI: Signaling introduction</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-<meta name="Date.Modified" content="20140615"/>
+<meta name="Date.Modified" content="20150125"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -84,6 +84,26 @@ can't safely enter the block it protects; it goes Yellow when the block followin
 the protected block can't be entered". Although that's a simplification, it can serve
 		as a good starting point for understanding signaling logic. More modern signaling systems are <a href="http://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Absolute Permissive Block</a> (APB) signaling used by many western US railroads and <a href="http://en.wikipedia.org/wiki/Centralized_traffic_control">Centralized Traffic Control</a> (CTC) remotely operated from large switchboards. 
 
+	<h3>Standard CTC nomenclature</h3>
+	
+<h4>Union Switch &amp; Signal Company (US&amp;S)</h4>
+<ul>
+<li>Signals are identified by EVEN numbers with movement direction as depicted on the panel (R - right, L - left)</li>
+<li>Switches are identified as ODD numbers</li>
+</ul>
+
+<p>Example #1: Signals at a controlled switch with single track approaching from the left to two tracks moving to right - 2R (facing point), 2L (main route), 2LA (diverging route). 2LA would be shown as 2L on the panel to correspond with Signal Lever 2. Cardinal directions might also be used (N, S, E, W) at a diamond for the opposing route. Switches are N (normal) or R (reverse).<br/>
+Example #2: Dennis Drury's CTC signals get even numbers with a directional modifier such as E 50 W or E 52 W. The intermediate block signals may be numbered based on milepost locations such as 322.2 and 322.3.</p>
+
+<h4>General Railroad Signal (GRS)</h4>
+<ul>
+<li>Signals get ODD numbers</li>
+<li>Switches get EVEN numbers (as opposed to US&amp;S!)</li>
+<li>Same R - right, L - left scheme, though</li>
+</ul>
+<p>Thanks to Jim Duncan, who adds: There are always exceptions! Any labeling must be consistent, easy to understand, and have absolutely no possibility of being confused with any other signal, switch or lever.</p>
+	
+	<h3>Further reading</h3>	
 	<p>There are a lot of excellent sources of information on prototype signaling, including:
 <ul>
 	<li>The <a href="http://en.wikipedia.org/wiki/Railway_signal">Wikipedia Signaling page</a></li>

@@ -1,17 +1,17 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
 import jmri.jmrix.ieee802154.xbee.XBeeAdapter;
+import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
 import jmri.jmrix.ieee802154.xbee.XBeeNode;
 import jmri.jmrix.ieee802154.xbee.XBeeTrafficController;
-import jmri.jmrix.ieee802154.xbee.XBeeConnectionMemo;
-
-import java.util.List;
-
-import org.jdom2.*;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persisting
@@ -165,6 +165,6 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
      
     // initialize logging
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(ConnectionConfigXml.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class);
 
 }

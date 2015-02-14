@@ -501,9 +501,8 @@
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 			<label>Random Sound 4 enable</label>
 		</variable> 
-		<variable item="Sound Setting 35" CV="T2CV.4.13" default="15" >
+		<variable item="Brake grinding noise start speed" CV="T2CV.4.13" default="15" >
 			<decVal max="126"/>
-			<label>Brake grinding noise start speed</label>
 		</variable>
 		<variable label="Dual function F0F" CV="T2CV.4.14" default="1" mask="XXXXXXXXXXXXXXXV" tooltip="for fxns F0F-F14, set bit to have sound and light active in both modes">
 			<xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>

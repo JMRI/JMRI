@@ -7,7 +7,7 @@
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20140515"/>
+<meta name="Date.Modified" content="20150125"/>
     <META name="keywords" content="JMRI help Signal Mast Add">
 
 <!-- Style -->
@@ -31,7 +31,7 @@
 Signal Masts are built based one of the available Signaling Systems, and the Signal Mast Types supported within that system.
 <p>
 	In the <b>Add Signal Mast</b> window, after entering a User Name for the new Signal Mast, select the JMRI Signal System that the Signal Mast is to be based upon from a pop-up menu.<br/>
-	Next select one of the Signal Mast type available in the selected Signal System e.g. "3 Aspect Signal with Call On".
+	Next select one of the Signal Mast types available in the selected Signal System e.g. "3 Aspect Signal with Call On".
 	<h2>Signal Mast Driver</h2>
 		<p>
 The fourth pop-up menu on the Add Signal Mast panel lets you select one of five different Signal Mast Driver types depending upon the hardware being used:

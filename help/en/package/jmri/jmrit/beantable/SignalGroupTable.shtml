@@ -3,11 +3,11 @@
 <head>
 <!-- Copyright ($Author$) 2009 -->
 <!-- $Id$ -->
-<title>JMRI: Signal Groups Table</title>
+<title>JMRI: Signal Groups Table Help</title>
 
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20140615"/>
+<meta name="Date.Modified" content="20150125"/>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <meta name="keywords" content="model railroad JMRI decoderpro panelpro signal">
 <!-- Style -->
@@ -24,42 +24,94 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: Signal Groups Table
+The Signal Groups Table
 </h1>
-		<p>The Signal Groups Table displays a list of your Signal Mast Groups.</p>
-		<p>There are six columns in the Signal Groups Table:</p>
-			<ul>
-				<li>Each line starts with the System Name and User Name of each Signal Group</li>
-			<li>You may add a Comment by double clicking on that field</li>
-			<li>The following column contains a "Delete" button for that Signal Group</li>
-				<li>By unchecking the "Enabled" check box you can disable a particular Signal Mast Group temporarily</li>
-				<li>Finally there is an "Edit" button</li>
-		</ul>
-	
-	<a href="SignalGroupsTable.png">
+		<p>The Signal Groups Table displays a list of your Signal Groups.</p>
+<a href="SignalGroupsTable.png">
    <img src="SignalGroupsTable.png" align="right" width="386" height="165">
 </a>
+		<p>There are six columns in the Signal Groups Table:</p>
+			<ol>
+				<li>Each line starts with the System Name and User Name of each Signal Group</li>
+				<li>You may add a <b>Comment</b> by double clicking on that field</li>
+			<li>The following column contains a <b>Delete</b> button for that Signal Group</li>
+				<li>By unchecking the <b>Enabled</b> check box you can temporarily disable a particular Signal Group</li>
+				<li>Finally there is an <b>Edit</b> button</li>
+		</ol>
 	
 		<a name="add"><h3>Creating a Signal Group</h3></a>
 <p>To define a new Signal Group, click on the <a href="SignalGroupAddEdit.shtml">Add...</a> button at the bottom of the Signal Groups Table. This will prompt you for a Signal Group name and whatever further information is needed.
-<p>You can delete a Signal Group from the Signal Groups Table by clicking the "Delete"" button. Save
+<p>You can delete a Signal Group from the Signal Groups Table by clicking one of the <b>Delete</b> buttons. Save
 a copy of your JMRI Configuration file as a backup first!
 
-<a name="edit"><h3>Editing an Existing Signal Group</h3>
-	<p> Click on the <b>Edit</b> button at the right of the Signal Groups Table to open the <a href="SignalGroupAddEdit.shtml">Edit Signal Group</a> window. 
+<a name="edit"><h3>Editing an existing Signal Group</h3>
+	<p> Click on one of the <b>Edit</b> buttons at the right of the Signal Groups Table to open the <a href="SignalGroupAddEdit.shtml">Edit Signal Group</a> window for the corresponding Signal Group. 
 
 		<a href="SignalGroup.png">
    <img src="SignalGroup.png" align="right" height="274" width="306">
 </a>
+	
+	<h2><a name="example">Signal Group Example - Junction Indicator</a></h2>
+<p>Consider the following track diagram, with 6 possible junctions off the main running line.<br>
 
-<h2>Junction Indicators</h2>
-<p>A Junction indicator can be configured to display anything from 1 to 6 diverging routes.  A single indicator will frequently be found where a branch line diverges off from a main line.  Multiple indicators will be found in more complex areas such as the approach to stations and good yards, where multiple routes can be taken.  The junction indicator informs the driver that he is about to take a different route and should therefore adjust his speed according to the signage.<br>
-The Junction indicators themselves will be set according to a given set of Turnouts for that junction.
+<a href="SignalGroupTrackDiagram.png">
+   <img src="SignalGroupTrackDiagram.png" 
+        height="90" width="233">
+</a>
 
-<h2>Route Indicators</h2>
-<p>A route indicator as used in the UK, will display a number or letter, they are predominately found attached to signals on the approach to a Station.  They display which platform the train has been routed into, given the complexity of some station throats, there may be a number of different physical routes that could be take from the signal to the destination. Thus a junction indicator could not be used when tided in with turnout positions. In addition the junction indicator can only deal with 6 different routes, and some stations have more than 6 platforms.<br>
-Therefore, the route indicator can only display one destination at time. The displaying of a route doesn't necessarily indicate that the driver will take the same route to get to the destination platform.
-		
+<p>The Signal facing this junction will have a Junction Indicator attached, with each possible route through the junction having it own Indication. When the Route is set for straight through, then no indicator is shown (pictured above).</p>
+<p>If the route is set for position 1, then the position 1 indicator will be shown (pictured below).<br>
+<a href="SignalGroupTrackDiagram1.png">
+   <img src="SignalGroupTrackDiagram1.png" 
+        height="90" width="262">
+</a>
+
+<p>With this configuration, you would create a single Turnout Signal Head for each position, configured with both a Dark and Lunar Appearance. You can use any two combinations of colors you like, however Dark and Lunar are more suitable for this situation.
+
+	<p> Within the Signal Group, you would then select each of the Signal Heads that are used to create the junction indicator. The logic for each Signal Head is then configured as follows:
+<table>
+  <td width=200 valign=top>
+  <p>Position 1 - Set Turnouts</p>
+  <p>IT1 set Thrown</p>
+  <p>IT2 set Thrown</p>
+  </td>
+  <td width=200>
+  <p>Position 2 - Set Turnouts</p>
+  <p>IT1 set Thrown</p>
+  <p>IT2 set Closed</p>
+  <p>IT3 set Thrown</p>
+  </td>
+ </tr>
+  <td width=200>
+  <p>Position 3 - Set Turnouts</p>
+  <p>IT1 set Thrown</p>
+  <p>IT2 set Closed</p>
+  <p>IT3 set Closed</p>
+  </td>
+  <td width=200>
+  <p>Position 4 - Set Turnouts</p>
+  <p>IT1 set Closed</p>
+  <p>IT4 set Thrown</p>
+  <p>IT5 set Thrown</p>
+  </td>
+ </tr>
+  <td width=200>
+  <p>Position 5 - Set Turnouts</p>
+  <p>IT1 set Closed</p>
+  <p>IT4 set Thrown</p>
+  <p>IT5 set Closed</p>
+  <p>IT6 set Thrown</p>
+  </td>
+  <td width=200>
+  <p>Position 6 - Set Turnouts</p>
+  <p>IT1 set Closed</p>
+  <p>IT4 set Thrown</p>
+  <p>IT5 set Closed</p>
+  <p>IT6 set Closed</p>
+  </td>
+ </tr>
+</table>
+
 	<p>Back to the <a href="../../../../html/tools/signaling/SignalGroups.shtml">Signal Groups help page</a>.
 
 <!--#include virtual="/Footer" -->

@@ -3,6 +3,8 @@
 package jmri.jmrix.tams;
 
 import jmri.implementation.AbstractSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Sensor via Tams communications.
@@ -40,7 +42,7 @@ public class TamsSensor extends AbstractSensor {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(TamsSensor.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(TamsSensor.class);
 }
 
 /* @(#)TamsSensor.java */
