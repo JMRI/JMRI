@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="6" lastUpdated="20091027"/>
+  <version author="Michael Mosher" version="5" lastUpdated="20030706"/>
+  <!-- V3 add versionID range -->
+  <!-- V4 - add consist direction - jake -->
+  <!-- V5 - renamed and few tweeks to co-exist with four function decoder, fixed vstart bug -->
+  <!-- V6 - Added factory reset, added CV2 max value -->
+  <decoder>
+    <family name="Dual Mode" mfg="Atlas" lowVersionID="45" highVersionID="45">
+      <model model="Dual Mode" numOuts="2" numFns="0"/>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="2" comment="0-31" item="Vstart" default="8">
+        <decVal max="31"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Anfahrspannung</label>
+        <comment>0-31</comment>
+      </variable>
+      <!-- CV 3-4 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <!-- CV=19 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable item="Consist Acceleration Adjustment" CV="23" mask="XVVVVVVV">
+        <decVal max="127"/>
+        <label>Consist Acceleration Adjustment</label>
+      </variable>
+      <variable item="Consist Acceleration Adjustment Sign" CV="23" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="Adjustment Added">
+            <choice>Adjustment Added</choice>
+          </enumChoice>
+          <enumChoice choice="Adjustment Subtracted">
+            <choice>Adjustment Subtracted</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Acceleration Adjustment Sign</label>
+      </variable>
+      <variable item="Consist Deceleration Adjustment" CV="24" mask="XVVVVVVV">
+        <decVal max="127"/>
+        <label>Consist Deceleration Adjustment</label>
+      </variable>
+      <variable item="Consist Deceleration Adjustment Sign" CV="24" mask="VXXXXXXX">
+        <enumVal>
+          <enumChoice choice="Adjustment Added">
+            <choice>Adjustment Added</choice>
+          </enumChoice>
+          <enumChoice choice="Adjustment Subtracted">
+            <choice>Adjustment Subtracted</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Deceleration Adjustment Sign</label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table3-28.xml"/>
+      <variable item="Speed Table" CV="67">
+        <speedTableVal/>
+        <label>Speed Table</label>
+      </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <!-- Atlas-specific variables -->
+      <variable CV="50" mask="XXXXXXVX" item="Consist Adjustments Active">
+        <enumVal>
+          <enumChoice choice="Not Active">
+            <choice>Not Active</choice>
+          </enumChoice>
+          <enumChoice choice="Active">
+            <choice>Active</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Consist Accel and Decel Trims</label>
+      </variable>
+      <variable CV="50" mask="XXXXXVXX" item="DC Brake Momentum">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Brake Momentum on DC operation</label>
+        <label xml:lang="it">Inerzia frenata in Analogico</label>
+      </variable>
+      <!-- CV=51 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv51_DirectionalHeadlights.xml"/>
+      <variable CV="51" mask="XXXXXXVX" item="Global lighting option 1">
+        <enumVal>
+          <enumChoice choice="Dimming Disabled">
+            <choice>Dimming Disabled</choice>
+          </enumChoice>
+          <enumChoice choice="Dimming Enabled. If headlights independent, F1 dims headlight">
+            <choice>Dimming Enabled. If headlights independent, F1 dims headlight</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Functional Headlight Dimming</label>
+      </variable>
+      <variable CV="51" mask="XXXXXVXX" item="Global lighting option 2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>If Lights Independent, F4 dims F0</label>
+      </variable>
+      <variable CV="51" mask="XXXXVXXX" item="Global lighting option 3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>If Lights Independent, F4 dims F1</label>
+      </variable>
+      <variable CV="52" item="Global lighting option 4" default="64">
+        <decVal/>
+        <label>Dimming Value</label>
+      </variable>
+      <variable item="Decoder Software Version" CV="128" readOnly="yes">
+        <decVal/>
+        <label>Decoder Software Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <!-- Define the fixed Function-Output mapping -->
+      <constant item="FL(f) controls output 1" minOut="1" default="1"/>
+      <constant item="FL(r) controls output 2" minOut="2" default="1"/>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="33">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <name>Atlas</name>
+    <column>
+      <display item="Decoder Software Version"/>
+    </column>
+  </pane>
+</decoder-config>

@@ -1,0 +1,113 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; 2013-09-08-->
+<html lang="fr">
+<head>
+    <TITLE>
+ 	JMRI: Patterns and Structure
+ </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code patterns structure">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+	<div id="mainContent">
+	    <!-- -------- -->
+	    <!--  Teaser  --> <!-- Optional -->
+	    <!-- -------- -->
+
+<H1>JMRI: Mod&#232;les et Organisation</H1>
+
+JMRI a grandi et &#233;volu&#233; avec le temps, et
+vous ne pouvez pas toujours voir les structures et les caract&#233;ristiques actuellement pr&#233;f&#233;r&#233;es
+en regardant l'ancien code.
+<p>
+Cette page tente de d&#233;crire la structure recommand&#233;e et les mod&#232;les,
+et fournir des exemples des meilleures pratiques actuelles.
+
+<h2>Organisation du Code</h2>
+<p>
+Au plus haut niveau, nous s&#233;parons le code de test du code
+distribu&#233;s en les mettant dans des r&#233;pertoires distincts
+dans le r&#233;pertoire de d&#233;veloppement: "test" et "src".
+Il est donc facile de compiler une version sans code de test,
+d'appliquer des outils diff&#233;rents pour les deux types de code, etc
+
+<p>
+Dans le code source lui-m&#234;me, nous s&#233;parons plusieurs types. 
+
+<dl>
+<dt>Le paquet jmri
+<dd>contient les interfaces de base pour le syst&#232;me.
+     Il doit contenir le code de mise en oeuvre minimale,
+     et pas de r&#233;f&#233;rences non-JMRI, en particulier le code Swing.
+
+<dt>jmri.jmrix package (jmri.jmrix)
+<dd>Contient tout le code pour se connecter &#224;
+     du mat&#233;riel sp&#233;cifique du r&#233;seau ferr&#233;.
+
+<dt>jmri.managers and jmri.implementations packages (paquets jmri.managers et jmri.implementations) 
+<dd>Ceux-ci fournissent des r&#233;alisations par d&#233;faut pour les gestionnaires et les autres classes. Cela d&#233;place le code du paquet
+ primaire JMRI. Ils ne doivent pas r&#233;pondre &#224; des applications, jmri.jmrix ou jmri.jmrit.
+
+<dt>jmri.util package (paquet jmri.util)
+<dd>Autres r&#233;alisations courantes d'usage g&#233;n&#233;ral.
+     Ne devrait pas d&#233;pendre des paquets  jmri.jmri tou de jmri.jmrix.
+     Le sous-paquet jmri.util.swing fournit les utilitaires Swing 
+
+ <dt>Apps package (paquet applications) 
+<dd> Pour rassembler une application, cela peut
+d&#233;pendre de rien.    
+
+<dt>Sous-r&#233;pertoires configurexml 
+<dd>Ceux-ci contiennent le code pour le
+<a href="XmlPersistance.shtml"> syst&#232;me de configuration XML</a>
+ les paquets de haut niveau, en particulier util & d&#233;pendances, les application.
+
+
+
+<dt>Sous-r&#233;pertoires swing
+<dd>Contient les outils Swing sp&#233;cifiques.
+    En particulier &#224; l'ext&#233;rieur du paquet jmri.jmrit,nous essayons de s&#233;parer le code Swing du
+    code normal op&#233;rationnel.
+    Voir la <a href=""> page Swing</a>pour plus d'informations.
+
+<dt>help files (fichiers d'aide)
+<dd> La structure du fichier d'aide, les fichiers &#233;chos de la structure du code.
+     Pour plus d'informations, voir la page d'aide <a href="Help.shtml"> dans les pages JavaHelp</a>.
+ 
+<dt>ResourceBundles
+<dd> Nous utilisons le regroupements de ressources pour <a href="I8N.shtml">l'internationalisation</a>.
+     Elles sont colocalis&#233;e avec le code qui les r&#233;f&#233;rences, mais nous nous dirigeons vers une nouvelle convention de d&#233;nomination.
+     Pour r&#233;duire le fardeau de chargement, nous nous dirigeons vers un mod&#232;le o&#251; le fichier jmri.foo.FooBundle.properties est adress&#233; par un 
+&#233;l&#233;ment statique dans la classe jmri.foo.FooBundle, s&#233;par&#233; des propri&#233;t&#233;s du fichier lui m&#234;me. Cela r&#233;duit beaucoup le temps de chargement!    
+<p>
+Notez qu'il existe &#233;galement quelques regroupements de ressources qui sont utilis&#233;s &#224; d'autres fins, indiqu&#233;s dans leurs commentaires en t&#234;te.
+</dl>
+Le script outil de d&#233;veloppement "checkdepends.csh" est destin&#233; &#224; v&#233;rifier certaines des d&#233;pendances par inadvertance,
+mais nous sommes loin de l'effacer.
+
+<!--#include virtual="/Footer" -->
+
+	</div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

@@ -1,0 +1,65 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Bob Jacobsen 2008 -->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-02-->
+<title>JMRI: Applications</title>
+
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
+
+      <!-- Page Body -->
+        <H2>
+		JMRI: Applications
+        </H2>
+
+	<P>JMRI offre plusieurs applications qui sont optimis&#233;es pour des objectifs sp&#233;cifiques. Vous pouvez bien s&#251;r &#233;galement &#233;crire les votres
+	    <dl>
+		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
+		<dd>
+Un meilleur outil pour programmer les d&#233;codeurs		    
+DecoderPro simplifie la t&#226;che de configuration compliqu&#233;e des d&#233;codeurs DCC
+ 		    en fournissant des &#233;crans sur lesquels vous pouvez s&#233;lectionner les diff&#233;rentes
+		     options et valeurs que vous voulez.</dd>
+
+		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
+		<dd>
+		    L'exploitation CRT d&#233;riv&#233;e des panneaux contr&#244;le CTC qui refl&#232;te en temps r&#233;el
+		    l'&#233;tat de votre r&#233;seau <em>et</em> vous permettent de le contr&#244;ler - presque comme un
+		     r&#233;partiteur prototype!
+		</dd>
+		<dt><h3><a href="LocoTools/index.shtml">Outils LocoNet</a></h3></dt>
+		<dd> Un ensemble d'outils LocoNet sp&#233;cifiques Digitrax :
+		    <UL>
+		  	<LI><dfn>moniteur LocoNet</dfn>
+		   	<LI><dfn> moniteur de Slot </dfn>
+                   	<LI> <dfn> source de paquets </dfn>
+		    	<LI> <dfn> programmateur PM4 </dfn>
+			<LI> <dfn> programmateur BDL16 </dfn>
+			<LI> <dfn> programmateur SE8C </ dfn>
+			<LI> <dfn> programmateur DS64 </ dfn>
+			<LI> <dfn> LocoIO programmateur</dfn>
+		    </UL>
+		Ils sont &#233;galement disponibles dans DecoderPro et PanelPro lorsque ces derniers sont
+		configur&#233;s pour une connexion LocoNet, mais LocoTools leur fournit une fa&#231;on  plus facile de les
+		utilis&#233;s. 
+		</dd>
+
+	    </dl>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

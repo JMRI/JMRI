@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- 																		-->
+<!-- version 1 - Created as a separate file from Uhlenbrock_73400.xml v2    -->
+<!-- 					Alain Le Marchand (2014-05-09)						-->
+<!-- 	Valid for 731x0, 734x0, 764x0 families (non exhaustive list)        -->
+<!-- 																		-->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <column>
+    <separator/>
+    <label>
+      <text>Uhlenbrock configuration</text>
+      <text xml:lang="de">Uhlenbrock Konfiguration</text>		
+    </label>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Sound module" format="checkbox"/>
+      <display item="LISSY module" format="checkbox"/>
+      <display item="SUSI Configuration"/>
+    <label>
+      <text> </text>
+    </label>
+      <display item="RailCom" format="checkbox"/>	  
+      <display item="RailCom broadcast"/>
+      <display item="RailCom data transmission"/>	  
+    <label>
+      <text> </text>
+    </label>
+      <display item="LISSY Train Category"/>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Digital format"/>
+      <display item="Motorola address 2"/>	  
+    <label>
+      <text> </text>
+    </label>
+    <separator/>
+    <label>
+      <text>Braking parameters</text>
+      <text xml:lang="de">Bremsparameter</text>
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <display item="Braking condition"/>
+    <display item="Braking End"/>
+    <display item="End braking speed"/>
+    </column>
+    <column>
+      <display item="Coupling option 1"/>
+      <display item="Coupling option 2"/>
+      <display item="Coupling option 3"/>
+      <display item="Coupling option 4"/>
+      <display item="Coupling option 5"/>
+      <display item="Coupling option 6"/>
+    <label>
+      <text> </text>
+    </label>  
+      <display item="Smoke generator option 1" format="checkbox"/>
+      <display item="Smoke generator option 2" format="checkbox"/>
+      <display item="Smoke generator option 3"/>
+      <display item="Smoke generator option 4"/>
+      <display item="Smoke generator option 5"/>
+      <display item="Smoke generator option 6"/>  
+    </column>
+    <column>
+      <separator/>
+      <display item="Outputs monitoring off 1" format="checkbox"/>
+      <display item="Outputs monitoring off 2" format="checkbox"/>
+      <display item="Outputs monitoring off 3" format="checkbox"/>
+    <label>
+      <text> </text>
+    </label>
+      <separator/>		  
+      <label>
+        <text>Errors or Information (Read-Only)</text>
+        <text xml:lang="de">Fehler oder Information (Read-Only)</text>
+        <text xml:lang="it">Informazioni o Errori (Solo-Lettura)</text>
+      </label>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Shutdown Temperature"/>	  
+      <display item="Short circuit supervision"/>
+      <display item="Lights Short circuit supervision"/>
+      <display item="Short circuit supervision 1" format="checkbox"/>
+      <display item="Short circuit supervision 2" format="checkbox"/>
+      <display item="Short circuit supervision 3" format="checkbox"/>	  
+      <display item="Error register"/>
+    <label>
+      <text> </text>
+    </label>
+      <display item="Offset Register"/>
+      <display item="Page Register"/>
+  </column>
+  <name>Uhlenbrock</name>
+</pane>

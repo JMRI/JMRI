@@ -1,0 +1,67 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<title>JMRI: OpenLCB Details</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: OpenLCB Support Technical Details
+</h1>
+
+<em>The support on this page is rapidly evolving; the
+actual code might be ahead or behind the documentation
+on any given day.</em><p>
+
+This page describes technical details of JMRI's
+<a href="index.shtml">OpenLCB</a>
+support.  See also the pages on JMRI's 
+<A href="../index.shtml">general CAN support</a>.
+<p>
+
+<h2>CAN Adapters</h2>
+
+JMRI's general approach is to support as many 
+hardware combinations as possible. By supporting as many 
+people and their hardware desires as possible, we 
+can create a growing community of developers, hence more
+code.
+
+<P>
+As part of this, the JMRI CAN support is designed to
+use as many CAN adapter types as possible.
+
+<h2>Node ID</h2>
+
+JMRI on an OpenLCB network acts, in part, like an OpenLCB node.
+As such, it needs a unique 6-byte OpenLCB node ID.  
+It builds this automatically every time it starts up.
+It's built from the JMRI OpenLCB unique prefix,
+along with one byte from the computer's IP address,
+and two bytes of the process ID of the program.
+This allows you to e.g. run JMRI on multiple computers
+or multiple copies on ome computer without problems.
+<p>
+A future enhancement will make these persistent from run
+to run, so that they can be used to create unique and persistent
+eventIDs easily.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

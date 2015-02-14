@@ -1,0 +1,55 @@
+<!-- DTD for JHelpDev Configuration Settings -->
+<!-- author Markus Kraetzig   03/19/03 -->
+<!-- xml version="1.0" encoding="ISO-8859-1" -->
+
+<!-- jhelpdev. It is versioned. -->
+<!ELEMENT jhelpdev (config, view, subhelpset*, encoding?)>
+  <!ATTLIST jhelpdev version CDATA #IMPLIED>
+  <!ATTLIST jhelpdev xml:lang CDATA #IMPLIED>
+
+
+<!-- the config settings for the directory structure -->
+<!ELEMENT config (project, projectdir, startpage, popupicon)>
+
+<!ELEMENT project (#PCDATA)>
+
+<!ELEMENT projectdir (#PCDATA)>
+
+<!ELEMENT startpage (#PCDATA)>
+
+<!ELEMENT popupicon (#PCDATA)>
+
+
+<!-- the view settings that are saved in the .hs file -->
+<!ELEMENT view (helptitle, toc, index, search)>
+
+<!ELEMENT helptitle (#PCDATA)>
+
+<!ELEMENT toc EMPTY>
+  <!ATTLIST toc xml:lang CDATA #IMPLIED>
+  <!ATTLIST toc showing  (yes | no) #REQUIRED>
+  <!ATTLIST toc label CDATA #REQUIRED>
+
+
+<!ELEMENT index EMPTY>
+  <!ATTLIST index xml:lang CDATA #IMPLIED>
+  <!ATTLIST index showing  (yes | no) #REQUIRED>
+  <!ATTLIST index label CDATA #REQUIRED>
+
+<!ELEMENT search EMPTY>
+  <!ATTLIST search xml:lang CDATA #IMPLIED>
+  <!ATTLIST search showing  (yes | no) #REQUIRED>
+  <!ATTLIST search label CDATA #REQUIRED>
+
+
+<!-- the subhelpsets that are saved in the .hs file -->
+<!ELEMENT subhelpset EMPTY>
+  <!ATTLIST subhelpset xml:lang CDATA #IMPLIED>
+  <!ATTLIST subhelpset location CDATA #REQUIRED>
+
+<!-- the subhelpsets that are saved in the .hs file -->
+<!ELEMENT encoding EMPTY>
+  <!ATTLIST encoding xml:lang CDATA #IMPLIED>
+  <!ATTLIST encoding value CDATA #REQUIRED>
+
+

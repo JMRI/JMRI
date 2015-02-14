@@ -1,0 +1,633 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2004, 2007, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1" lastUpdated="2014/07/19"/>
+  <!-- Version 1.10, Alain Le Marchand, 2014/07/19 -->
+  <!-- Created from CT_Elektronik_DCX_V66_plus.xml version 1.10 (refactored) -->
+  <!-- Low Version ID set randomly at 66. Tested with a DCX33D with version 71 -->
+  <!-- Removed all unused CVs (mostly motor related)-->
+  <decoder>
+    <family name="Function Decoder" mfg="CT Elektronik" lowVersionID="27" highVersionID="255" comment="DCX32, DCX33">
+      <model model="DCX32D" numOuts="4" numFns="10" highVersionID="59" maxMotorCurrent="0.8A" maxTotalCurrent="1.6A" productID="DCX32">
+        <output name="1" label="White" maxcurrent="0.8A"/>
+        <output name="2" label="Yellow" maxcurrent="0.8A"/>
+        <output name="3" label="Green" maxcurrent="0.8A"/>
+        <output name="4" label="Violet" maxcurrent="0.8A"/>
+        <size length="13" width="9" height="2" units="mm"/>		
+      </model>	
+      <model model="DCX33D" numOuts="4" numFns="10" lowVersionID="40" maxMotorCurrent="0.8A" maxTotalCurrent="1.6A" productID="DCX33">
+        <output name="1" label="White" maxcurrent="0.8A"/>
+        <output name="2" label="Yellow" maxcurrent="0.8A"/>
+        <output name="3" label="Green" maxcurrent="0.8A"/>
+        <output name="4" label="Violet" maxcurrent="0.8A"/>
+        <size length="10.4" width="6.7" height="1.4" units="mm"/>		
+      </model>
+    </family>
+    <programming direct="yes" paged="no" register="no" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <variable CV="7" readOnly="yes" item="Decoder Version">
+        <decVal/>
+        <label>Decoder Version: </label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="117">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>	  
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <variable CV="30" mask="XXXXXXVX" item="Function Output short circuit" readOnly="yes" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>on Function Output</label>
+        <label xml:lang="de">Funktionsausgang</label>
+        <label xml:lang="it">Funzioni di Uscita</label>
+      </variable>
+	  <!-- Function map -->
+	   <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/functionMapNMRA.xml"/>
+	  <!-- End Function Map -->
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/lockDecoder-CV53.xml"/>
+      <variable CV="54" item="PWM Function Outputs" default="50">
+        <decVal min="0" max="100"/>
+        <label>Dimming for Function Outputs (%)</label>
+        <label xml:lang="de">Dimmen der Funktionsausgängen (%)</label>
+        <label xml:lang="it">Smorzamento uscita  (%)</label>
+		    <tooltip>PWM for Dimming Function Outputs : 0 - 100%</tooltip>
+		    <tooltip xml:lang="de">Funktionen dimmen, Reduktion der Helligkeit der Lampen: 0 - 100%</tooltip>
+		    <tooltip xml:lang="it">Riduzione luminosità: 0 - 100%</tooltip>
+      </variable>
+      <variable CV="55" item="Uncoupler Holding Current" default="32" comment="Range 0-100">
+        <decVal min="0" max="100"/>
+        <label>Uncoupler Holding Current</label>
+        <label xml:lang="de">Dimmen der Kupplungsausgänge</label>
+        <label xml:lang="it">Corrente mantenimento sganciatore</label>
+        <tooltip>Reduced current value during holding time after uncoupling pulse (0-100)</tooltip>
+        <tooltip xml:lang="de">Kupplungen dimmen, Reduktion der Ziehkraft der Kupplungen (0-100)</tooltip>
+        <tooltip xml:lang="it">Valore corrente ridotto dopo impulso di sgancio(0-100)</tooltip>
+      </variable>
+      <variable CV="56" item="Uncoupler Pulse Time" default="60">
+        <decVal/>
+        <label>Uncoupler Pulse Time</label>
+        <label xml:lang="de">Schaltzeit der Kupplungsausgänge</label>
+        <label xml:lang="it">Tempo impulso sgancio</label>
+		    <tooltip>Time during which the uncoupling impulse is applied with full power (in 1/10s sec)</tooltip>
+        <tooltip xml:lang="de">Einschaltzeit für digitale Kupplung E = 0.1sec</tooltip>
+        <tooltip xml:lang="it">tempo di applicazione impulso di sgancio a corrente massima (in 1/10 sec)</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/outputMapDimming-CV57-58.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <variable CV="109" mask="XXXXXXXV" item="Advanced Group 2 Option 1" default="0">
+		    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Select Alternative CV Set</label>
+        <label xml:lang="it">selezione set CV alternativo</label>
+		    <label xml:lang="de">Auswahl der CVs Spezialgruppe</label>
+		    <tooltip>&lt;html&gt;Offers a second CV set to allow an alternative configuration stored in the decoder.&lt;br&gt; Reset does not modify this CV&lt;/html&gt;</tooltip>
+        <tooltip xml:lang="it">Altro set di CV alternativo in memoria sul decoder. Un Reset non lo modifica</tooltip>
+		    <tooltip xml:lang="de">&lt;html&gt;0=Standardgruppe, 1=Spezialgruppe für div. Anwendungen.&lt;br&gt; Hardreset wirkt nur auf die aktuelle CV-Gruppe, CV109 bleibt unverändert beim Hardreset&lt;/html&gt;</tooltip>
+      </variable>
+      <variable CV="111" item="Advanced Group 1 Option 11" default="150">
+        <decVal/>
+        <label>ACK Pulse Intensity</label>
+		    <label xml:lang="de">Intensität der ACK impulse</label>
+		    <label xml:lang="it">Intensità impulso di ACK</label>
+		    <tooltip>might be modified if the loco draws too less or too much current on the programming track.</tooltip>
+		    <tooltip xml:lang="it">Potrebbe essere necessario modificarlo se la loco assorbe troppa corrente sul Binario di programmazione</tooltip>
+		    <tooltip xml:lang="de">verbessert die Programmierbarkeit, 128 = ca. 50% des max. Quittierungsstromes (Motor abhängig), 150 = allg. gut verträglich</tooltip>		
+      </variable>
+      <variable CV="114" item="PWM Light Effects Outputs" default="0" exclude="DCX32">
+        <decVal min="0" max="100"/>
+        <label>Dimming value for Light Effects</label>
+		    <label xml:lang="de">Dimmwert der Effekte</label>
+		    <label xml:lang="it">Intensità smorzamento Luci</label>
+		    <tooltip>Dimming Light Effects Outputs (0 - 100%)</tooltip>
+		    <tooltip xml:lang="de">unterer Helligkeitswert für Licht-Effekte (0-100%)</tooltip>
+		    <tooltip xml:lang="it">Effetto smorzamento Uscita Luci (0-100%)</tooltip>
+		    </variable>
+      <variable CV="115" item="Time Between Effects" default="0" exclude="DCX32">
+        <decVal/>
+        <label>Time Between Effects</label>
+		    <label xml:lang="de">Pauseauer der Effekte</label>
+		    <label xml:lang="it">Pausa tra Effetti</label>
+		    <tooltip>Time Between Effects</tooltip>
+		    <tooltip xml:lang="de">definiert die Zeit (Dauer) zwischen 2 Effekten</tooltip>
+		    <tooltip xml:lang="it">Definisce il tempo di pausa tra due effetti</tooltip>
+      </variable>
+      <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/dimmingFunction-CV117-118.xml"/>
+      <variable CV="119" item="PWM Dimming" default="0" exclude="DCX32">
+        <decVal min="0" max="100"/>
+        <label>PWM Dimming</label>
+        <label xml:lang="it">Smorzamento PWM</label>
+		    <label xml:lang="de">Dimmwert für Abblendfunktion</label>
+        <tooltip>PWM Dimming 0 - 100%</tooltip>
+        <tooltip xml:lang="it">Valori tra 0 - 100%</tooltip>
+        <tooltip xml:lang="de">Dimmwert für Abblenden, 50=50% der vollen Helligkeit, 100=kein Abblenden</tooltip>			
+      </variable>
+      <variable CV="120" item="Time Effect ON" default="0" exclude="DCX32">
+        <decVal/>
+        <label>Time Effect ON</label>
+		    <label xml:lang="de">Zyklusdauer der Effekte</label>
+		    <label xml:lang="it">Tempo di ON effetto</label>
+        <tooltip>defines how long the effect must last</tooltip>
+        <tooltip xml:lang="de">definiert wie lange ein Effekt dauern soll</tooltip>
+        <tooltip xml:lang="it">Durata dell'effetto</tooltip>
+      </variable>	  
+      <variable CV="139" item="Direct Cut Off Function Outputs" default="35">
+        <decVal/>
+        <label>Direct Cut Off Function Outputs</label>
+        <label xml:lang="it">Spegnimento uscita per sovraccarico</label>
+		    <label xml:lang="de">sofortige Abschaltung Funktionen</label>			
+		    <tooltip>Immediate shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
+        <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita</tooltip>
+      </variable>
+      <variable CV="140" item="Fast Cut Off Function Outputs" default="30">
+        <decVal/>
+        <label>Fast Cut Off Function Outputs</label>
+        <label xml:lang="it">Spegnimento uscita per sovraccarico</label>
+		    <label xml:lang="de">rasche Abschaltung Funktionen</label>		
+		    <tooltip>Rapid shutdown in case of overload of the function outputs</tooltip>
+		    <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita</tooltip>
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>			
+        <comment>Fast Cut off Functions</comment>
+        <comment xml:lang="it">Spegnimento Veloce Uscite</comment>
+      </variable>
+      <variable CV="141" item="Slow Cut Off Function Outputs" default="25">
+        <decVal/>
+        <label>Slow Cut Off Function Outputs</label>
+        <label xml:lang="it">Spegnimento Lento Uscite</label>
+		    <label xml:lang="de">langsame Abschaltung Funktionen</label>		
+		    <tooltip>Slow shutdown in case of overload of the function outputs</tooltip>
+        <tooltip xml:lang="de">langsame Abschaltung bei Überlastung der Zusatzfunktionen</tooltip>
+        <tooltip xml:lang="it">Spegnimento lento in caso di sovraccarico sull'uscita</tooltip>
+        <comment>Slow Cut off Functions</comment>
+        <comment xml:lang="it">Spegnimento Lento Uscite</comment>
+      </variable>
+	  <!-- short circuit thresholds for motor: irrelevant for a function decoder,
+		   but listed in documentation and default values not null in decoder -->
+      <variable CV="142" item="Direct Cut Off Motor" default="70" exclude="DCX32">
+        <decVal/>
+        <label>Direct Cut Off Motor</label>
+        <label xml:lang="it">Spegnimento Motore</label>
+		    <label xml:lang="de">sofortige Abschaltung Motor</label>		
+		    <tooltip>Immediate shutdown in case of overload of the motor</tooltip>
+		    <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita motore</tooltip>
+        <tooltip xml:lang="de">sofortige Abschaltung bei Überlastung (Motor)</tooltip>
+        <comment>Direct Cut off Motor</comment>
+        <comment xml:lang="it">Spegnimento immediato motore</comment>
+      </variable>
+      <variable CV="143" item="Fast Cut Off Motor" default="60" exclude="DCX32">
+        <decVal/>
+        <label>Fast Cut Off Motor</label>
+        <label xml:lang="it">Spegnimento Veloce Motore</label>
+		    <label xml:lang="de">rasche Abschaltung Motor</label>
+		    <tooltip>Rapid shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">rasche Abschaltung bei Überlastung (Motor)</tooltip>
+        <tooltip xml:lang="it">Spegnimento immediato in caso di sovraccarico sull'uscita motore</tooltip>
+        <comment>Fast Cut Off Motor</comment>
+        <comment xml:lang="it">Spegnimento immediato motore</comment>
+      </variable>
+      <variable CV="144" item="Slow Cut Off Motor" default="50" exclude="DCX32">
+        <decVal/>
+        <label>Slow Cut Off Motor</label>
+        <label xml:lang="it">Spegnimento Lento Motore</label>
+		    <label xml:lang="de">langsame Abschaltung Motor</label>		
+		    <tooltip>Slow shutdown in case of overload of the motor</tooltip>
+        <tooltip xml:lang="de">langsame Abschaltung bei Überlastung (Motor)</tooltip>
+        <tooltip xml:lang="it">Spegnimento Lento in caso di sovraccarico sull'uscita motore</tooltip>
+        <comment>Slow Cut off Motor</comment>
+        <comment xml:lang="it">Spegnimento Lento motore</comment>
+      </variable>
+	  <!-- End of short circuit thresholds for motor -->
+      <!--  ALM comment: in DCX33D version 71, default value=8 - DCX76 indicates F2=4, F3=8, F4=16, etc. No indication for F0 and F1 -->
+      <variable CV="152" item="Loco travel FWD, rear coupler" default="8" exclude="DCX32">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+            <choice xml:lang="it">Nessuna</choice>
+            <choice xml:lang="de">Kein</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="4">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="8">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="16">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="32">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="64">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="128">
+            <choice>F7</choice>
+          </enumChoice>	  
+        </enumVal>
+        <label>Loco travel FWD, rear coupler</label>
+        <label xml:lang="it">Loco in avanti, gancio posteriore</label>
+		    <label xml:lang="de">Funktion für Abkuppeln vorwärts</label>
+		    <tooltip>select function for uncoupler action</tooltip>
+        <tooltip xml:lang="de">Abkuppeln vorwärts: Auswahl der zu verwendenden Funktion</tooltip>
+        <tooltip xml:lang="it">Selezione funzione per sgancio</tooltip>
+      </variable> 
+      <variable CV="153" item="Loco travel BWD, front coupler" default="8" exclude="DCX32">
+        <enumVal>
+          <enumChoice choice="None">
+            <choice>None</choice>
+            <choice xml:lang="it">Nessuna</choice>
+            <choice xml:lang="de">Kein</choice>
+          </enumChoice>
+          <enumChoice choice="F2" value="4">
+            <choice>F2</choice>
+          </enumChoice>
+          <enumChoice choice="F3" value="8">
+            <choice>F3</choice>
+          </enumChoice>
+          <enumChoice choice="F4" value="16">
+            <choice>F4</choice>
+          </enumChoice>
+          <enumChoice choice="F5" value="32">
+            <choice>F5</choice>
+          </enumChoice>
+          <enumChoice choice="F6" value="64">
+            <choice>F6</choice>
+          </enumChoice>
+          <enumChoice choice="F7" value="128">
+            <choice>F7</choice>
+          </enumChoice>		  
+        </enumVal>
+        <label>Loco travel BWD, front coupler</label>
+        <label xml:lang="it">Loco in retro, gancio anteriore</label>
+		    <label xml:lang="de">Funktion für Abkuppeln rückwärts</label>
+		    <tooltip>select function for uncoupler action</tooltip>
+        <tooltip xml:lang="de">Abkuppeln rückwärts: Auswahl der zu verwendenden Funktion</tooltip>
+        <tooltip xml:lang="it">Selezione funzione per sgancio</tooltip>
+      </variable>
+      <!-- Tran Light Effects  -->
+      <variable CV="154" mask="XXXVVVVV" item="Light Effects F0F" default="0" tooltip="Effects on F0F" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F0F</label>
+        <label xml:lang="it">Luci (F0) in avanti</label>
+		    <label xml:lang="de">Effekt für Licht FL(f)</label>
+      </variable>
+      <variable CV="154" mask="VVXXXXXX" item="Light Effects Direction F0F" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F0F</label>
+        <label xml:lang="it">Luci(F0) direzionali in avanti</label>
+		    <label xml:lang="de">Effekt für Licht FL(f) - Richtung</label>
+      </variable>
+      <variable CV="155" mask="XXXVVVVV" item="Light Effects F0R" default="0" tooltip="Effects on F0R" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects FL(r)</label>
+        <label xml:lang="it">Luci (FL) in retro</label>
+		    <label xml:lang="de">Effekt für Licht FL(r)</label>
+      </variable>
+      <variable CV="155" mask="VVXXXXXX" item="Light Effects Direction F0R" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction FL(r)</label>
+        <label xml:lang="it">Luci(FL) direzionali in retro</label>
+		    <label xml:lang="de">Effekt für Licht FL(r) - Richtung</label>
+      </variable>
+      <variable CV="156" mask="XXXVVVVV" item="Light Effects F1" default="0" minOut="3" tooltip="Effects on F1" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F1</label>
+        <label xml:lang="it">Luci con F1</label>
+		    <label xml:lang="de">Effekt für Licht F1</label>
+      </variable>
+      <variable CV="156" mask="VVXXXXXX" item="Light Effects Direction F1" minOut="3" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F1</label>
+        <label xml:lang="it">Luci direzionali con F1</label>
+		<label xml:lang="de">Effekt für Licht F1 - Richtung</label>
+      </variable>
+      <variable CV="157" mask="XXXVVVVV" item="Light Effects F2" default="0" minOut="4" tooltip="Effects on F2" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F2</label>
+        <label xml:lang="it">Luci con F2</label>
+		    <label xml:lang="de">Effekt für Licht F2</label>
+      </variable>
+      <variable CV="157" mask="VVXXXXXX" item="Light Effects Direction F2" minOut="4" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F2</label>
+        <label xml:lang="it">Luci direzionali con F2</label>
+		    <label xml:lang="de">Effekt für Licht F2 - Richtung</label>
+      </variable>
+      <variable CV="158" mask="XXXVVVVV" item="Light Effects F3" default="0" minOut="5" tooltip="Effects on F3" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F3</label>
+        <label xml:lang="it">Luci con F3</label>
+		    <label xml:lang="de">Effekt für Licht F3</label>
+      </variable>
+      <variable CV="158" mask="VVXXXXXX" item="Light Effects Direction F3" minOut="5" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F3</label>
+        <label xml:lang="it">Luci direzionali con F3</label>
+		    <label xml:lang="de">Effekt für Licht F3 - Richtung</label>
+      </variable>
+      <variable CV="159" mask="XXXVVVVV" item="Light Effects F4" default="0" minOut="6" tooltip="Effects on F4" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F4</label>
+        <label xml:lang="it">Luci con F4</label>
+		    <label xml:lang="de">Effekt für Licht F4</label>
+      </variable>
+      <variable CV="159" mask="VVXXXXXX" item="Light Effects Direction F4" minOut="6" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F4</label>
+        <label xml:lang="it">Luci direzionali con F4</label>
+		    <label xml:lang="de">Effekt für Licht F4 - Richtung</label>
+      </variable>
+      <variable CV="160" mask="XXXVVVVV" item="Light Effects F5" default="0" minOut="7" tooltip="Effects on F5" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F5</label>
+        <label xml:lang="it">Luci con F5</label>
+		    <label xml:lang="de">Effekt für Licht F5</label>
+      </variable>
+      <variable CV="160" mask="VVXXXXXX" item="Light Effects Direction F5" minOut="7" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F5</label>
+        <label xml:lang="it">Luci direzionali con F5</label>
+		    <label xml:lang="de">Effekt für Licht F5 - Richtung</label>
+      </variable>
+	  <variable CV="161" mask="XXXVVVVV" item="Light Effects F6" default="0" minOut="8" tooltip="Effects on F6" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightType.xml"/>
+        <label>Light Effects F6</label>
+        <label xml:lang="it">Luci con F6</label>
+		    <label xml:lang="de">Effekt für Licht F6</label>
+      </variable>
+      <variable CV="161" mask="VVXXXXXX" item="Light Effects Direction F6" minOut="8" exclude="DCX32">
+        <xi:include href="http://jmri.org/xml/decoders/ct_elektronik/enumLightDirection.xml"/>
+        <label>Light Effects Direction F6</label>
+        <label xml:lang="it">Luci direzionali con F6</label>
+		    <label xml:lang="de">Effekt für Licht F6 - Richtung</label>
+      </variable>
+    </variables>
+    <resets>
+      <!-- CT use CV1 (short address) set to zero as the reset -->
+      <factReset label="HARD RESET all CVs reset to default values" CV="1" default="0">
+         <label xml:lang="it">Resetta tutte le CV al valore di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+  <pane>
+    <column>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text>Uncoupler Assignment</text>
+        <text xml:lang="it">Assegnamento Sganciatore</text>
+		    <text xml:lang="de">Kupplungsausgängen</text>
+      </label>
+      <separator/>
+      <label>
+        <text>Defines how long coupling is active.</text>
+        <text xml:lang="it">Definisce per quanto è attivo lo Sgancio</text>
+      </label>
+      <label>
+        <text>Use Function Map or 'Automatic</text>
+        <text xml:lang="it">Usare Mappa Funzioni o Automatico</text>
+      </label>
+      <label>
+        <text>Uncoupling Loco Movement' to set</text>
+        <text xml:lang="it">Movimento loco per Sgancio</text>
+      </label>
+      <label>
+        <text>Function Key</text>
+        <text xml:lang="it">Tasto Funzione</text>
+      </label>
+      <separator/>
+      <display item="Uncoupler Holding Current"/>
+      <display item="Uncoupler Pulse Time"/>
+      <separator/>
+      <display item="Output Uncoupler FL(f)" format="checkbox"/>
+      <display item="Output Uncoupler FL(r)" format="checkbox"/>
+      <display item="Output Uncoupler F 1" format="checkbox"/>
+      <display item="Output Uncoupler F 2" format="checkbox"/>
+      <display item="Output Uncoupler F 3" format="checkbox"/>
+      <display item="Output Uncoupler F 4" format="checkbox"/>
+      <display item="Output Uncoupler F 5" format="checkbox"/>
+      <display item="Output Uncoupler F 6" format="checkbox"/>
+    </column>
+    <column>
+      <label>
+        <text>Automatic Uncoupling Loco Movement</text>
+        <text xml:lang="it">Movimento automatico Loco per sgancio</text>
+		    <text xml:lang="de">Abkuppel-Automatik</text>
+      </label>
+      <separator/>
+      <label>
+        <text>Note works on function key-off,</text>
+        <text xml:lang="it">Notare che le funzioni lavorano sul tasto in Off</text>
+      </label>
+      <label>
+        <text>non-locking key on throttle suggested</text>
+        <text xml:lang="it">Si consiglia l'uso di tasti senza memoria</text>
+      </label>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Speed Step Coupling Release"/>
+      <display item="Speed Step Uncoupled"/>
+      <display item="Time Driving Backwards"/>
+      <display item="Time Driving Forwards"/>
+      <display item="F-Button Used For Auto-Uncoupling"/>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text>Uncoupler outputs with movement</text>
+        <text xml:lang="it">Uscita Sganciatore con movimento</text>
+      </label>
+      <separator/>
+      <display item="Loco travel FWD, rear coupler"/>
+      <display item="Loco travel BWD, front coupler"/>
+    </column>
+    <name>Uncoupling</name>
+    <name xml:lang="it">Sganciatore</name>
+    <name xml:lang="de">Kupplung</name>
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>Output Dimming</text>
+        <text xml:lang="it">Smorzamento Uscite</text>
+        <text xml:lang="de">Dimmen der Funktionsausgängen</text>
+      </label>
+      <label>
+        <text>CV 54/57</text>
+      </label>
+      <separator/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="PWM Function Outputs"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Dimming Output FL(f)" format="checkbox"/>
+      <display item="Dimming Output FL(r)" format="checkbox"/>
+      <display item="Dimming Output F 1" format="checkbox"/>
+      <display item="Dimming Output F 2" format="checkbox"/>
+      <display item="Dimming Output F 3" format="checkbox"/>
+      <display item="Dimming Output F 4" format="checkbox"/>
+      <display item="Dimming Output F 5" format="checkbox"/>
+      <display item="Dimming Output F 6" format="checkbox"/>
+    </column>
+    <column>
+      <label>
+        <text>Function Key Controlled Dimming</text>
+        <text xml:lang="it">Smorzamento Uscite da tasto Funzione</text>
+        <text xml:lang="de">F-Funktion für Abblenden</text>
+      </label>
+      <label>
+        <text>CV 116-118</text>
+      </label>
+      <separator/>
+      <label>
+        <text>Note, Function Key 'on' will remove</text>
+        <text xml:lang="it">Nota: Tasto funzione in On rimuove</text>
+      </label>
+      <label>
+        <text>the dimming from a lamp.</text>
+        <text xml:lang="it">Smorzamento dalla luce</text>
+      </label>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="F-Button Used For Dimming"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="PWM Dimming"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Dim FL(f)" format="checkbox"/>
+      <display item="Dim FL(r)" format="checkbox"/>
+      <display item="Dim F 1" format="checkbox"/>
+      <display item="Dim F 2" format="checkbox"/>
+      <display item="Dim F 3" format="checkbox"/>
+      <display item="Dim F 4" format="checkbox"/>
+	  <display item="Dim F 5" format="checkbox"/>
+      <display item="Dim F 6" format="checkbox"/>
+    </column>
+    <column>
+      <label>
+        <text>Light Effects</text>
+        <text xml:lang="it">Effetti Luci</text>
+        <text xml:lang="de">Effekte für Lichte</text>
+      </label>
+      <label>
+        <text>CV 114/115 and CV 154-157</text>
+        <text xml:lang="it">CV 114/115 e CV 154-157</text>
+      </label>
+      <separator/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="PWM Light Effects Outputs"/>
+      <display item="Time Between Effects"/>
+      <display item="Time Effect ON"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F0F"/>
+      <display item="Light Effects Direction F0F"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F0R"/>
+      <display item="Light Effects Direction F0R"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F1"/>
+      <display item="Light Effects Direction F1"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F2"/>
+      <display item="Light Effects Direction F2"/>
+     <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F3"/>
+      <display item="Light Effects Direction F3"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F4"/>
+      <display item="Light Effects Direction F4"/>
+	       <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F5"/>
+      <display item="Light Effects Direction F5"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Light Effects F6"/>
+      <display item="Light Effects Direction F6"/>
+    </column>
+    <name>Output Dimming and Light Effects</name>
+    <name xml:lang="it">Smorzamento ed Effetti Luci</name>
+    <name xml:lang="de">Dimmung und Effekte für Lichte</name>	
+  </pane>
+  <pane>
+    <column>
+      <label>
+        <text>Short Circuit Protection Thresholds</text>
+        <text xml:lang="it">Soglia protezione da Corto circuito</text>
+        <text xml:lang="de">Kurzschluss-Schwellen</text>		
+      </label>
+      <separator/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Direct Cut Off Function Outputs"/>
+      <display item="Fast Cut Off Function Outputs"/>
+      <display item="Slow Cut Off Function Outputs"/>
+      <label>
+        <text>  </text>
+      </label>
+      <display item="Direct Cut Off Motor"/>
+      <display item="Fast Cut Off Motor"/>
+      <display item="Slow Cut Off Motor"/>
+      <label>
+        <text>  </text>
+      </label>
+      <label>
+        <text>Short Circuit Detection :</text>
+        <text xml:lang="it">Protezione da Corto circuito</text>
+        <text xml:lang="de">Kurzschlussanalyse :</text>
+      </label>
+      <separator/>	  
+      <display item="Motor short circuit" format="checkbox"/>
+      <display item="Function Output short circuit" format="checkbox"/>
+    </column>	
+    <name>Short-Circuit</name>
+    <name xml:lang="it">Corto circuito</name>
+    <name xml:lang="de">Kurzschluss</name>
+  </pane>
+</decoder-config>

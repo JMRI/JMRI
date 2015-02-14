@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>JSON Set Turnout Demonstration</title>
+        <style>
+            html {background-color:#eeeeee}
+            body {
+                background-color:#ccffcc;
+                font-family:Tahoma,Arial,Helvetica,sans-serif;
+                font-size:12px;
+                margin-left:15%;
+                margin-right:15%;
+                border:3px groove #006600;
+                padding:15px
+            }
+            h1   {
+                text-align:left;
+                font-size:1.5em;
+                font-weight:bold
+            }
+        </style>
+        <!-- include the jquery.jmri library and its dependencies -->
+        <script src="/js/jquery-1.11.2.min.js"></script>
+        <script src="/js/json2.js"></script>
+        <script src="/js/jquery.websocket.js"></script>
+        <script src="/js/jquery.jmri.js"></script>
+        <script type="text/javascript">
+            // set the jmri global variable to null
+            var jmri = null;
+            var turnoutState = 0;
+            $(document).ready(function () {
+                // once the document is loaded, assign a $.JMRI object to
+                // the jmri variable and overload the function turnout(name, state, data)
+                jmri = $.JMRI({
+                    // when the JMRI object receives a turnout update, call this
+                    // function, regardless of source of update
+                    turnout: function (name, state, data) {
+                        console.log("Got turnout \"" + name + "\" with state " + state + ".");
+                        turnoutState = state;
+                        if (name === $('#turnoutAdr').val()) {
+                            switch (turnoutState) {
+                                case jmri.UNKNOWN:
+                                    $('#turnoutImg').prop('src', "/resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif");
+                                    $('#turnoutImg').prop('alt', "Unknown");
+                                    $('#turnoutImg').prop('title', "Unknown");
+                                    $('#turnoutImg').css('background-color', "gray");
+                                    break;
+                                case jmri.CLOSED:
+                                    $('#turnoutImg').prop('src', "/resources/icons/track/line/RightTO/os-righthand-east-closed-black.gif");
+                                    $('#turnoutImg').prop('alt', "Closed");
+                                    $('#turnoutImg').prop('title', "Closed");
+                                    $('#turnoutImg').css('background-color', "green");
+                                    break;
+                                case jmri.THROWN:
+                                    $('#turnoutImg').prop('src', "/resources/icons/track/line/RightTO/os-righthand-east-thrown-black.gif");
+                                    $('#turnoutImg').prop('alt', "Thrown");
+                                    $('#turnoutImg').prop('title', "Thrown");
+                                    $('#turnoutImg').css('background-color', "red");
+                                    break;
+                            }
+                        }
+                    },
+                    reconnect: function () {
+
+                    }
+                });
+                // trigger the initial connection to the JMRI server
+                jmri.connect();
+                // make it possible to click on the power button to turn track
+                // power on or off without using a javascript URI
+                $('#turnoutImg').click(function (event) {
+                    jmri.setTurnout($('#turnoutAdr').val(), (turnoutState === jmri.THROWN) ? jmri.CLOSED : jmri.THROWN);
+                });
+            });
+        </script>
+
+    </head>
+    <body>
+        <h1>JSON Set Turnout Demonstration</h1>
+        <hr />
+        <p>This sample page sends a request to throw the specified turnout when
+            the turnout image is clicked. This page will update the turnout
+            automatically as the turnout is thrown elsewhere in JMRI.</p>
+        <p>The icon is grey if the turnout state is unknown, green if closed,
+            and red if open.</p>
+        <input type="text" id="turnoutAdr" value="IT1">
+        <a id="turnoutBtn" href="#">
+            <img id="turnoutImg" alt="Unknown" src="/resources/icons/track/line/RightTO/os-righthand-east-unknown-black.gif" style="background-color: gray;">
+        </a>
+        <p>Click the turnout to set its initial state and start monitoring it.</p>
+    </body>
+</html>

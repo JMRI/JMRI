@@ -1,0 +1,56 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- <!-- $Id$ --> -->
+<!--Updated by Herv&#233; Blorec  2013-09-10-->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Bachrus
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Andrew Crosland" name=Author>
+    <META name="keywords" content="Bachrus java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H2> 
+      Guide Mat&#233;riel JMRI: Bachrus
+      </H2>
+
+	<H3>Mat&#233;riel Support&#233;</H3>
+
+    JMRI soutient le Bachrus MTS-DCC Speedometer pour train miniature, qui est un p&#233;riph&#233;rique d'entr&#233;e unique, pour capturer les informations de vitesse &#224; partir d'un module de lecteur sur un stand de course Bachrus "Saddle" . Pour plus d'informations sur les produits Bachrus voir le
+    <a href="http://www.bachrus.com">site web Bachrus</a>.<br>
+		<p>		
+		Lorsque le Bachrus MTS-DCC est d&#233;fini comme une pr&#233;f&#233;rence de connexion de r&#233;seau, l'utilitaire Speedo peut &#234;tre utilis&#233; pour afficher l'&#233;chelle de vitesse de course aux &#233;chelles de Z &#224; O et au-del&#224;.
+		</p>
+		<a href="images/dial.jpg">
+    <img src="images/dial.jpg"
+         width="306" height="238"
+         alt="Speedometer dial display" ></a>
+		<p>
+		Lorsque le Bachrus MTS-DCC est d&#233;fini comme une connexion mise parall&#232;lement &#224; un syst&#232;me mat&#233;riel DCC l'utilitaire Speedo permet la mesure automatique d'une d&#233;codeur DCC &#233;quip&#233; en profil de vitesse de Loco.
+		</p>
+		<a href="images/profile.jpg">
+    <img src="images/profile.jpg"
+         width="306" height="238"
+         alt="Speedometer speed profile graph" ></a>
+   
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

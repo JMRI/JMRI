@@ -1,0 +1,391 @@
+// AbstractPortController.java
+package jmri.jmrix;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.util.HashMap;
+import javax.annotation.Nonnull;
+import javax.annotation.OverridingMethodsMustInvokeSuper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+/**
+ * Provide an abstract base for *PortController classes.
+ * <P>
+ * This is complicated by the lack of multiple inheritance. SerialPortAdapter is
+ * an Interface, and its implementing classes also inherit from various
+ * PortController types. But we want some common behaviors for those, so we put
+ * them here.
+ *
+ * @see jmri.jmrix.SerialPortAdapter
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
+ * @version	$Revision$
+ */
+abstract public class AbstractPortController implements PortAdapter {
+
+    // returns the InputStream from the port
+    @Override
+    public abstract DataInputStream getInputStream();
+
+    // returns the outputStream to the port
+    @Override
+    public abstract DataOutputStream getOutputStream();
+
+    protected String manufacturerName = null;
+
+    // By making this private, and not protected, we are able to require that
+    // all access is through the getter and setter, and that subclasses that
+    // override the getter and setter must call the super implemenations of the
+    // getter and setter. By channelling setting through a single method, we can
+    // ensure this is never null.
+    private SystemConnectionMemo connectionMemo;
+
+    protected AbstractPortController(SystemConnectionMemo connectionMemo) {
+        AbstractPortController.this.setSystemConnectionMemo(connectionMemo);
+    }
+
+    /**
+     * Clean up before removal.
+     *
+     * Overriding methods must call <code>super.dispose()</code> or document why
+     * they are not calling the overridden implementation. In most cases,
+     * failure to call the overridden implementation will cause user-visible
+     * error.
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void dispose() {
+        this.getSystemConnectionMemo().dispose();
+    }
+
+    // check that this object is ready to operate
+    @Override
+    public boolean status() {
+        return opened;
+    }
+
+    protected boolean opened = false;
+
+    protected void setOpened() {
+        opened = true;
+    }
+
+    protected void setClosed() {
+        opened = false;
+    }
+
+    //These are to support the old legacy files.
+    protected String option1Name = "1";
+    protected String option2Name = "2";
+    protected String option3Name = "3";
+    protected String option4Name = "4";
+
+    @Override
+    abstract public String getCurrentPortName();
+    /*
+     The next set of configureOptions are to support the old configuration files.
+     */
+
+    @Override
+    public void configureOption1(String value) {
+        if (options.containsKey(option1Name)) {
+            options.get(option1Name).configure(value);
+        }
+    }
+
+    @Override
+    public void configureOption2(String value) {
+        if (options.containsKey(option2Name)) {
+            options.get(option2Name).configure(value);
+        }
+    }
+
+    @Override
+    public void configureOption3(String value) {
+        if (options.containsKey(option3Name)) {
+            options.get(option3Name).configure(value);
+        }
+    }
+
+    @Override
+    public void configureOption4(String value) {
+        if (options.containsKey(option4Name)) {
+            options.get(option4Name).configure(value);
+        }
+    }
+
+    /*
+     The next set of getOption Names are to support legacy configuration files
+     */
+    @Override
+    public String getOption1Name() {
+        return option1Name;
+    }
+
+    @Override
+    public String getOption2Name() {
+        return option2Name;
+    }
+
+    @Override
+    public String getOption3Name() {
+        return option3Name;
+    }
+
+    @Override
+    public String getOption4Name() {
+        return option4Name;
+    }
+
+    /**
+     * Get a list of all the options configured against this adapter.
+     *
+     * @return Array of option identifiers
+     */
+    @Override
+    public String[] getOptions() {
+        String[] arr = options.keySet().toArray(new String[0]);
+        java.util.Arrays.sort(arr);
+        return arr;
+
+    }
+
+    /**
+     * Set the value of an option
+     *
+     * @param option
+     * @param value
+     */
+    @Override
+    public void setOptionState(String option, String value) {
+        if (options.containsKey(option)) {
+            options.get(option).configure(value);
+        }
+    }
+
+    /**
+     * Get the value of a specific option.
+     *
+     * @param option
+     * @return the option value
+     */
+    @Override
+    public String getOptionState(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).getCurrent();
+        }
+        return null;
+    }
+
+    /**
+     * Return a list of the various choices allowed with an option.
+     *
+     * @param option
+     * @return list of valid values for the option
+     */
+    @Override
+    public String[] getOptionChoices(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).getOptions();
+        }
+        return null;
+    }
+
+    @Override
+    public String getOptionDisplayName(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).getDisplayText();
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isOptionAdvanced(String option) {
+        if (options.containsKey(option)) {
+            return options.get(option).isAdvanced();
+        }
+        return false;
+    }
+
+    protected HashMap<String, Option> options = new HashMap<>();
+
+    static protected class Option {
+
+        String currentValue = null;
+        String displayText;
+        String[] options;
+        Boolean advancedOption = true;
+
+        public Option(String displayText, String[] options, boolean advanced) {
+            this(displayText, options);
+            this.advancedOption = advanced;
+        }
+
+        public Option(String displayText, String[] options) {
+            this.displayText = displayText;
+            this.options = new String[options.length];
+            System.arraycopy(options, 0, this.options, 0, options.length);
+        }
+
+        void configure(String value) {
+            currentValue = value;
+        }
+
+        String getCurrent() {
+            if (currentValue == null) {
+                return options[0];
+            }
+            return currentValue;
+        }
+
+        String[] getOptions() {
+            return options;
+        }
+
+        String getDisplayText() {
+            return displayText;
+        }
+
+        boolean isAdvanced() {
+            return advancedOption;
+        }
+
+        boolean isDirty() {
+            return (currentValue != null && !currentValue.equals(options[0]));
+        }
+    }
+
+    @Override
+    public String getManufacturer() {
+        return this.manufacturerName;
+    }
+
+    @Override
+    public void setManufacturer(String manufacturer) {
+        log.debug("update manufacturer from {} to {}", this.manufacturerName, manufacturer);
+        this.manufacturerName = manufacturer;
+    }
+
+    @Override
+    public boolean getDisabled() {
+        return this.getSystemConnectionMemo().getDisabled();
+    }
+
+    /**
+     * Set the connection disabled or enabled. By default connections are
+     * enabled.
+     *
+     * If the implementing class does not use a
+     * {@link jmri.jmrix.SystemConnectionMemo}, this method must be overridden.
+     * Overriding methods must call <code>super.setDisabled(boolean)</code> to
+     * ensure the configuration change state is correctly set.
+     *
+     * @param disabled true if connection should be disabled
+     */
+    @Override
+    public void setDisabled(boolean disabled) {
+        this.getSystemConnectionMemo().setDisabled(disabled);
+    }
+
+    @Override
+    public String getSystemPrefix() {
+        return this.getSystemConnectionMemo().getSystemPrefix();
+    }
+
+    @Override
+    public void setSystemPrefix(String systemPrefix) {
+        if (!this.getSystemConnectionMemo().setSystemPrefix(systemPrefix)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    @Override
+    public String getUserName() {
+        return this.getSystemConnectionMemo().getUserName();
+    }
+
+    @Override
+    public void setUserName(String userName) {
+        if (!this.getSystemConnectionMemo().setUserName(userName)) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    protected boolean allowConnectionRecovery = false;
+
+    @Override
+    abstract public void recover();
+
+    protected int reconnectinterval = 1000;
+    protected int retryAttempts = 10;
+
+    protected static void safeSleep(long milliseconds, String s) {
+        try {
+            Thread.sleep(milliseconds);
+        } catch (InterruptedException e) {
+            log.error("Sleep Exception raised during reconnection attempt" + s);
+        }
+    }
+
+    @Override
+    public boolean isDirty() {
+        boolean isDirty = this.getSystemConnectionMemo().isDirty();
+        if (!isDirty) {
+            for (Option option : this.options.values()) {
+                isDirty = option.isDirty();
+                if (isDirty) {
+                    break;
+                }
+            }
+        }
+        return isDirty;
+    }
+
+    @Override
+    public boolean isRestartRequired() {
+        // Override if any option should not be considered when determining if a
+        // change requires JMRI to be restarted.
+        return this.isDirty();
+    }
+
+    /**
+     * Get the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * object.
+     *
+     * This method should only be overridden to ensure that a specific subclass
+     * of SystemConnectionMemo is returned. The recommended pattern is: <code>
+     * public MySystemConnectionMemo getSystemConnectionMemo() {
+     *  return (MySystemConnectionMemo) super.getSystemConnectionMemo();
+     * }
+     * </code>
+     *
+     * @return a SystemConnectionMemo
+     */
+    @Override
+    public SystemConnectionMemo getSystemConnectionMemo() {
+        return this.connectionMemo;
+    }
+
+    /**
+     * Set the {@link jmri.jmrix.SystemConnectionMemo} associated with this
+     * object.
+     *
+     * Overriding implementations must call
+     * <code>super.setSystemConnectionMemo(memo)</code> at some point to ensure
+     * the SystemConnectionMemo gets set.
+     *
+     * @param connectionMemo
+     */
+    @Override
+    @OverridingMethodsMustInvokeSuper
+    public void setSystemConnectionMemo(@Nonnull SystemConnectionMemo connectionMemo) {
+        if (connectionMemo == null) {
+            throw new NullPointerException();
+        }
+        this.connectionMemo = connectionMemo;
+    }
+
+    static private Logger log = LoggerFactory.getLogger(AbstractPortController.class.getName());
+
+}

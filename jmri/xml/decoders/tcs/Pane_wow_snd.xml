@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Sound Function</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+      </column>
+    </row>
+    <row>
+		<display item="Function 0 Sound" layout="above" format="tree"/>
+		<display item="Function 1 Sound" layout="above" format="tree"/>
+		<display item="Function 2 Sound" layout="above" format="tree"/>
+		<display item="Function 3 Sound" layout="above" format="tree"/>
+		<display item="Function 4 Sound" layout="above" format="tree"/>
+		<display item="Function 5 Sound" layout="above" format="tree"/>
+		<display item="Function 6 Sound" layout="above" format="tree"/>
+		<display item="Function 7 Sound" layout="above" format="tree"/>
+		<display item="Function 8 Sound" layout="above" format="tree"/>
+		<display item="Function 9 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
+		<display item="Function 10 Sound" layout="above" format="tree"/>
+		<display item="Function 11 Sound" layout="above" format="tree"/>
+		<display item="Function 12 Sound" layout="above" format="tree"/>
+		<display item="Function 13 Sound" layout="above" format="tree"/>
+		<display item="Function 14 Sound" layout="above" format="tree"/>
+		<display item="Function 15 Sound" layout="above" format="tree"/>
+		<display item="Function 16 Sound" layout="above" format="tree"/>
+		<display item="Function 17 Sound" layout="above" format="tree"/>
+		<display item="Function 18 Sound" layout="above" format="tree"/>
+		<display item="Function 19 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
+		<display item="Function 20 Sound" layout="above" format="tree"/>
+		<display item="Function 21 Sound" layout="above" format="tree"/>
+		<display item="Function 22 Sound" layout="above" format="tree"/>
+		<display item="Function 23 Sound" layout="above" format="tree"/>
+		<display item="Function 24 Sound" layout="above" format="tree"/>
+		<display item="Function 25 Sound" layout="above" format="tree"/>
+		<display item="Function 26 Sound" layout="above" format="tree"/>
+		<display item="Function 27 Sound" layout="above" format="tree"/>
+		<display item="Function 28 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
+		<display item="Random 1 Sound" layout="above" format="tree"/>
+		<display item="Random 2 Sound" layout="above" format="tree"/>
+		<display item="Random 3 Sound" layout="above" format="tree"/>
+		<display item="Random 4 Sound" layout="above" format="tree"/>
+    </row>
+	<label>
+		<text>   </text>
+	</label>
+    <row>
+		<column>
+			<display item="Dual function F0F" format="checkbox"/>
+			<display item="Dual function F0R" format="checkbox"/>
+			<display item="Dual function F1" format="checkbox"/>
+			<display item="Dual function F2" format="checkbox"/>
+			<display item="Dual function F3" format="checkbox"/>
+			<display item="Dual function F4" format="checkbox"/>
+			<display item="Dual function F5" format="checkbox"/>
+			<display item="Dual function F6" format="checkbox"/>
+		</column>
+		<column>
+			<display item="Dual function F7" format="checkbox"/>
+			<display item="Dual function F8" format="checkbox"/>
+			<display item="Dual function F9" format="checkbox"/>
+			<display item="Dual function F10" format="checkbox"/>
+			<display item="Dual function F11" format="checkbox"/>
+			<display item="Dual function F12" format="checkbox"/>
+			<display item="Dual function F13" format="checkbox"/>
+			<display item="Dual function F14" format="checkbox"/>
+		</column>
+    </row>
+  </column>
+  <name xml:lang="it">Funzioni Suono</name>
+</pane>

@@ -1,0 +1,106 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Use of JavaDoc and UML
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code ">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+
+<H1>JMRI: Use of JavaDoc and UML</H1>
+
+The JMRI library provides the majority of its
+API documentation via 
+<a href="http://java.sun.com/j2se/javadoc/writingdoccomments/">JavaDoc</a>
+and 
+<a href="http://en.wikipedia.org/wiki/Unified_Modeling_Language">UML</a>.
+
+<p>
+We also use Java
+<a href="http://java.sun.com/docs/books/tutorial/java/javaOO/annotations.html">annotations</a>
+to document our code structure.
+
+<p>
+We use the 
+<a href="http://www.umlgraph.org">UmlGraph</a>
+doclet to automatically create the UML diagrams in 
+our JavaDoc pages.
+
+<h2>JavaDoc for Developers</h2>
+
+The 
+<a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">JavaDoc tutorial</a>
+is a good, but somewhat long, 
+<a href="http://www.oracle.com/technetwork/java/javase/documentation/index-137868.html">introduction to JavaDoc</a>.
+A brief summary of the formatting and tags can be found in 
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#documentationcomments">the reference</a>.
+
+<p>
+Traditionally, the Java packages in JMRI have used
+<code>package.html</code> files to contain any needed package-level 
+documentation.
+It's now <a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment">recommended</a>
+that any significant Java package contain a 
+<a href="http://docs.oracle.com/javase/7/docs/technotes/tools/windows/javadoc.html#packagecomment"><code>package-info.java</code></a>
+file for this. 
+Only a few of these have been included in JMRI so far, and 
+it's not a high priority to replace existing <code>package.html</code> files,
+but new packages should include a <code>package-info.java</code>
+copied from <code>java/package-info.java</code>.
+
+<p>
+A nice discussion of how to use the "deprecated" label
+in documentation is available on the
+<a href="http://docs.oracle.com/javase/7/docs/technotes/guides/javadoc/deprecation/deprecation.html">"How and When To Deprecate APIs" page</a>.
+
+<h2>UML and UmlGraph for Developers</h2>
+
+UML is a broad and deep language for describing the 
+structure, design and behavior of computing systems. 
+JMRI primarly uses 
+UML class diagrams
+for documenting its structure.
+
+Many UML tutorials are available on the web.  In particular, 
+a good starting point is the 
+<a href="http://www.objectmentor.com/resources/articles/umlClassDiagrams.pdf">Object Mentor introduction to class diagrams</a>.
+For more detail, please see 
+<a href="http://web.archive.org/web/20110704185440/http://atlas.kennesaw.edu/~dbraun/csis4650/A&D/UML_tutorial/class.htm">Atlas UML course</a>
+or
+<a href="http://edn.embarcadero.com/article/31863">Embarcadero Software introduction</a>.
+
+<h2>Processing</h2>
+
+The standard JMRI Ant build provides three documentation targets:
+<dl>
+<dt>javadoc<dd>Create the text JavaDocs in the local doc/ directory.  Open doc/index.html for access.
+<dt>javadoc-uml<dd>Create the UML diagrams and JavaDocs in the local doc/ directory.  Open doc/index.html for access.
+<dt>uploadjavadoc<dd>Upload the current documentation in the local doc/ directory to the jmri.org web site.
+This is done automatically by the <a href="ContinuousIntegration.shtml">CI system</a>, so you generally don't have to deal with it.
+</dl>
+
+<h3>Manual Diagrams</h3>
+
+
+<!--#include virtual="/Footer" -->
+
+	  </div><!-- closes #mainContent-->
+	</div> <!-- closes #mBody-->
+</body>
+</html>
+

@@ -1,0 +1,496 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<!-- $Id$ -->
+<!-- Cornwall RR configuration: turnout, sensor, signal definitions -->
+<layout-config>
+
+  <turnouts class="jmri.jmrix.loconet.configurexml.LnTurnoutManagerXml">
+    <turnout systemName="LT1"  userName="Cornwall Jct 1" />
+    <turnout systemName="LT2"  userName="Ridge" />
+    <turnout systemName="LT3"  userName="Cornwall Jct 3" />
+    <turnout systemName="LT4"  userName="Reading Relay Track West Switch" />
+    <turnout systemName="LT5"  userName="Lickdale East" />
+    <turnout systemName="LT6"  userName="Colebrook West" />
+    <turnout systemName="LT7"  userName="Colebrook East" />
+    <turnout systemName="LT8"  userName="Colebrook Branch" />
+    <turnout systemName="LT9"  userName="Conewago West" />
+    <turnout systemName="LT10" userName="Blackies" />
+    <turnout systemName="LT11" userName="Lickdale Xover" />
+    <turnout systemName="LT12" userName="East Cornwall Junction Switch" />
+    <turnout systemName="LT13" userName="Cornwall Mine Lead" />
+    <turnout systemName="LT14" userName="Lebanon Jct East" />
+    <turnout systemName="LT15" userName="Lebanon Jct West" />
+    <turnout systemName="LT16" userName="Lebanon Low Line West" />
+    <turnout systemName="LT17" userName="Conewago Xover West" />
+    <turnout systemName="LT18" userName="Conewago Xover East" />
+    <turnout systemName="LT19" userName="Conewago Reading West" />
+  </turnouts>
+
+  <sensors class="jmri.jmrix.cmri.serial.configurexml.SerialSensorManagerXml">
+    <sensor systemName="CS1" userName="Q Curve bo(01)" />
+    <sensor systemName="CS2" userName="Cornwall Jct 1 tu(01)" />
+    <sensor systemName="CS3" userName="PRR Highline 2 bo(02)" />
+    <sensor systemName="CS4" userName="PRR Highline 1 bo(03)" />
+    <sensor systemName="CS5" userName="Ridge tu(02)" />
+    <sensor systemName="CS6" userName="Cornwall Jct 3 tu(03)" />
+    <sensor systemName="CS7" userName="Reading Relay Track 2 bo(04)" />
+    <sensor systemName="CS8" userName="Ridge bo(05)" />
+    <sensor systemName="CS9" userName="Reading Relay Track West Switch tu(04)" />
+    <sensor systemName="CS10" userName="Lickdale Approach bo(06)" />
+    <sensor systemName="CS11" userName="Lickdale East tu(05)" />
+    <sensor systemName="CS12" userName="Lickdale Passenger Siding bo(07)" />
+    <sensor systemName="CS13" userName="Lickdale Mainline bo(08)" />
+    <sensor systemName="CS14" userName="Gate North bo(09)" />
+    <sensor systemName="CS15" userName="Gate South bo(10)" />
+    <sensor systemName="CS16" userName="Colebrook West tu(06)" />
+    <sensor systemName="CS17" userName="Colebrook Main bo(11)" />
+    <sensor systemName="CS18" userName="Colebrook Passing Siding bo(12)" />
+    <sensor systemName="CS19" userName="Colebrook East tu(07)" />
+    <sensor systemName="CS20" userName="Edisonville North bo(13)" />
+    <sensor systemName="CS21" userName="Edisonville South bo(14)" />
+    <sensor systemName="CS22" userName="Conewago Approach bo(15)" />
+    <sensor systemName="CS23" userName="Colebrook Branch tu(08)" />
+    <sensor systemName="CS24" userName="Conewago West tu(09)" />
+    <sensor systemName="CS25" userName="Blackies tu(10)" />
+    <sensor systemName="CS26" userName="Lickdale Xover tu(11)" />
+    <sensor systemName="CS27" userName="PRR/Lebanon Entrance bo(16)" />
+    <sensor systemName="CS28" userName="Cornwall Relay 1 bo(17)" />
+    <sensor systemName="CS29" userName="East Cornwall Junction Switch tu(12)" />
+    <sensor systemName="CS30" userName="Cornwall Mine Lead tu(13)" />
+    <sensor systemName="CS31" userName="Reading Low Line Track 2 bo(18)" />
+    <sensor systemName="CS32" userName="Reading Low Line Track 1 bo(19)" />
+    <sensor systemName="CS33" userName="Lebanon Main Lead bo(20)" />
+    <sensor systemName="CS34" userName="Lebanon Yard Lead bo(21)" />
+    <sensor systemName="CS35" userName="Lebanon Jct East tu(14)" />
+    <sensor systemName="CS36" userName="Lebanon Jct West tu(15)" />
+    <sensor systemName="CS37" userName="Lebanon Low Line West tu(16)" />
+    <sensor systemName="CS38" userName="Conewago Main West bo(22)" />
+    <sensor systemName="CS39" userName="Conewago Yard West bo(23)" />
+    <sensor systemName="CS40" userName="Conewago Main East bo(24)" />
+    <sensor systemName="CS41" userName="Conewago Departure bo(25)" />
+    <sensor systemName="CS42" userName="Conewago Reading Interchange bo(26)" />
+    <sensor systemName="CS43" userName="Conewago Xover West tu(17)" />
+    <sensor systemName="CS44" userName="Conewago Xover East tu(18)" />
+    <sensor systemName="CS45" userName="Conewago Reading West tu(19)" />
+    <sensor systemName="CS46" userName="Conewago Reading East tu(20)" />
+    <sensor systemName="CS47" userName="Conewago Departure East tu(21)" />
+    <sensor systemName="CS48" userName="Conewago Reading Interchange East tu(22)" />
+    <sensor systemName="CS49" userName="Relay Track 2 bo(27)" />
+    <sensor systemName="CS50" userName="Lickdale Interchange Track 4 bo(28)" />
+    <sensor systemName="CS51" userName="Lickdale Interchange Track 3 bo(29)" />
+    <sensor systemName="CS52" userName="Lickdale Interchange NorthWest Switch tu(23)" />
+    <sensor systemName="CS53" userName="Lickdale Interchange NorthEast Switch tu(24)" />
+    <sensor systemName="CS54" userName="Relay Track 1 bo(30)" />
+    <sensor systemName="CS55" userName="Lickdale Interchange Track 2 bo(31)" />
+    <sensor systemName="CS56" userName="Lickdale Interchange Track 1 bo(32)" />
+    <sensor systemName="CS57" userName="Lickdale Interchange SouthWest Switch tu(25)" />
+    <sensor systemName="CS58" userName="Lickdale Interchange SouthEast Switch tu(26)" />
+    <sensor systemName="CS59" userName="Gate Power Interlock Gate" />
+    <sensor systemName="CS60" userName="Conewago Interlocking bo(33)" />
+    <sensor systemName="CS61" userName="Conewago Pocket bo(34)" />
+  </sensors>
+  
+  <!-- C/MRI turnouts actually drive signal LEDs on the layout -->
+  <turnouts class="jmri.jmrix.cmri.serial.configurexml.SerialTurnoutManagerXml">
+    <turnout systemName="CT1" userName="1a green" />
+    <turnout systemName="CT2" userName="1a yellow" />
+    <turnout systemName="CT3" userName="1a red" />
+
+    <turnout systemName="CT4" userName="1b green" />
+    <turnout systemName="CT5" userName="1b yellow" />
+    <turnout systemName="CT6" userName="1b red" />
+
+    <turnout systemName="CT7" userName="2a green" />
+    <turnout systemName="CT8" userName="2a yellow" />
+    <turnout systemName="CT9" userName="2a red" />
+
+    <turnout systemName="CT10" userName="2b green" />
+    <turnout systemName="CT11" userName="2b yellow" />
+    <turnout systemName="CT12" userName="2b red" />
+
+    <turnout systemName="CT13" userName="3a green" />
+    <turnout systemName="CT14" userName="3a yellow" />
+    <turnout systemName="CT15" userName="3a red" />
+
+    <turnout systemName="CT16" userName="3b green" />
+    <turnout systemName="CT17" userName="3b yellow" />
+    <turnout systemName="CT18" userName="3b red" />
+
+    <turnout systemName="CT19" userName="4a green" />
+    <turnout systemName="CT20" userName="4a yellow" />
+    <turnout systemName="CT21" userName="4a red" />
+
+    <turnout systemName="CT22" userName="4b green" />
+    <turnout systemName="CT23" userName="4b yellow" />
+    <turnout systemName="CT24" userName="4b red" />
+
+    <turnout systemName="CT25" userName="5a green" />
+    <turnout systemName="CT26" userName="5a yellow" />
+    <turnout systemName="CT27" userName="5a red" />
+
+    <turnout systemName="CT28" userName="5b green" />
+    <turnout systemName="CT29" userName="5b yellow" />
+    <turnout systemName="CT30" userName="5b red" />
+
+    <turnout systemName="CT31" userName="6a green" />
+    <turnout systemName="CT32" userName="6a yellow" />
+    <turnout systemName="CT33" userName="6a red" />
+
+    <turnout systemName="CT34" userName="6b green" />
+    <turnout systemName="CT35" userName="6b yellow" />
+    <turnout systemName="CT36" userName="6b red" />
+
+    <turnout systemName="CT37" userName="7a green" />
+    <turnout systemName="CT38" userName="7a yellow" />
+    <turnout systemName="CT39" userName="7a red" />
+
+    <turnout systemName="CT40" userName="7b green" />
+    <turnout systemName="CT41" userName="7b yellow" />
+    <turnout systemName="CT42" userName="7b red" />
+
+    <turnout systemName="CT43" userName="8a green" />
+    <turnout systemName="CT44" userName="8a yellow" />
+    <turnout systemName="CT45" userName="8a red" />
+
+    <turnout systemName="CT46" userName="8b green" />
+    <turnout systemName="CT47" userName="8b yellow" />
+    <turnout systemName="CT48" userName="8b red" />
+
+    <turnout systemName="CT49" userName="9a green" />
+    <turnout systemName="CT50" userName="9a yellow" />
+    <turnout systemName="CT51" userName="9a red" />
+
+    <turnout systemName="CT52" userName="9b green" />
+    <turnout systemName="CT53" userName="9b yellow" />
+    <turnout systemName="CT54" userName="9b red" />
+
+    <turnout systemName="CT55" userName="10a green" />
+    <turnout systemName="CT56" userName="10a yellow" />
+    <turnout systemName="CT57" userName="10a red" />
+
+    <turnout systemName="CT58" userName="10b green" />
+    <turnout systemName="CT59" userName="10b yellow" />
+    <turnout systemName="CT60" userName="10b red" />
+
+    <turnout systemName="CT61" userName="11a green" />
+    <turnout systemName="CT62" userName="11a yellow" />
+    <turnout systemName="CT63" userName="11a red" />
+
+    <turnout systemName="CT64" userName="11b green" />
+    <turnout systemName="CT65" userName="11b yellow" />
+    <turnout systemName="CT66" userName="11b red" />
+
+    <turnout systemName="CT67" userName="12a green" />
+    <turnout systemName="CT68" userName="12a yellow" />
+    <turnout systemName="CT69" userName="12a red" />
+
+    <turnout systemName="CT70" userName="12b green" />
+    <turnout systemName="CT71" userName="12b yellow" />
+    <turnout systemName="CT72" userName="12b red" />
+
+    <turnout systemName="CT73" userName="13a green" />
+    <turnout systemName="CT74" userName="13a yellow" />
+    <turnout systemName="CT75" userName="13a red" />
+
+    <turnout systemName="CT76" userName="13b green" />
+    <turnout systemName="CT77" userName="13b yellow" />
+    <turnout systemName="CT78" userName="13b red" />
+
+    <turnout systemName="CT79" userName="14a green" />
+    <turnout systemName="CT80" userName="14a yellow" />
+    <turnout systemName="CT81" userName="14a red" />
+ 
+    <turnout systemName="CT82" userName="14b green" />
+    <turnout systemName="CT83" userName="14b yellow" />
+    <turnout systemName="CT84" userName="14b red" />
+
+    <turnout systemName="CT85" userName="15a green" />
+    <turnout systemName="CT86" userName="15a yellow" />
+    <turnout systemName="CT87" userName="15a red" />
+
+    <turnout systemName="CT88" userName="15b green" />
+    <turnout systemName="CT89" userName="15b yellow" />
+    <turnout systemName="CT90" userName="15b red" />
+
+    <turnout systemName="CT91" userName="16a green" />
+    <turnout systemName="CT92" userName="16a yellow" />
+    <turnout systemName="CT93" userName="16a red" />
+
+    <turnout systemName="CT94" userName="16b green" />
+    <turnout systemName="CT95" userName="16b yellow" />
+    <turnout systemName="CT96" userName="16b red" />
+
+    <turnout systemName="CT97" userName="17a green" />
+    <turnout systemName="CT98" userName="17a yellow" />
+    <turnout systemName="CT99" userName="17a red" />
+ 
+    <turnout systemName="CT100" userName="17b green" />
+    <turnout systemName="CT101" userName="17b yellow" />
+    <turnout systemName="CT102" userName="17b red" />
+
+    <turnout systemName="CT103" userName="17c green" />
+    <turnout systemName="CT104" userName="17c yellow" />
+    <turnout systemName="CT105" userName="17c red" />
+
+    <turnout systemName="CT106" userName="18a green" />
+    <turnout systemName="CT107" userName="18a yellow" />
+    <turnout systemName="CT108" userName="18a red" />
+
+    <turnout systemName="CT109" userName="18b green" />
+    <turnout systemName="CT110" userName="18b yellow" />
+    <turnout systemName="CT111" userName="18b red" />
+
+    <turnout systemName="CT112" userName="19a green" />
+    <turnout systemName="CT113" userName="19a yellow" />
+    <turnout systemName="CT114" userName="19a red" />
+
+    <turnout systemName="CT115" userName="19b green" />
+    <turnout systemName="CT116" userName="19b yellow" />
+    <turnout systemName="CT117" userName="19b red" />
+
+    <turnout systemName="CT118" userName="20a green" />
+    <turnout systemName="CT119" userName="20a yellow" />
+    <turnout systemName="CT120" userName="20a red" />
+
+    <turnout systemName="CT121" userName="20b green" />
+    <turnout systemName="CT122" userName="20b yellow" />
+    <turnout systemName="CT123" userName="20b red" />
+
+    <turnout systemName="CT124" userName="21a green" />
+    <turnout systemName="CT125" userName="21a yellow" />
+    <turnout systemName="CT126" userName="21a red" />
+
+    <turnout systemName="CT127" userName="21b green" />
+    <turnout systemName="CT128" userName="21b yellow" />
+    <turnout systemName="CT129" userName="21b red" />
+
+    <turnout systemName="CT130" userName="22a green" />
+    <turnout systemName="CT131" userName="22a yellow" />
+    <turnout systemName="CT132" userName="22a red" />
+  </turnouts>
+
+  <signalheads class="jmri.configurexml.AbstractSignalHeadManagerXml">
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH1a" userName="Signal 1A">
+      <turnout systemName="CT1" userName="1a green" />
+      <turnout systemName="CT2" userName="1a yellow" />
+      <turnout systemName="CT3" userName="1a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH1b" userName="Signal 1B">
+      <turnout systemName="CT4" userName="1b green" />
+      <turnout systemName="CT5" userName="1b yellow" />
+      <turnout systemName="CT6" userName="1b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH2a" userName="Signal 2A">
+      <turnout systemName="CT7" userName="2a green" />
+      <turnout systemName="CT8" userName="2a yellow" />
+      <turnout systemName="CT9" userName="2a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH2b" userName="Signal 2B">
+      <turnout systemName="CT10" userName="2b green" />
+      <turnout systemName="CT11" userName="2b yellow" />
+      <turnout systemName="CT12" userName="2b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH3a" userName="Signal 3A">
+      <turnout systemName="CT13" userName="3a green" />
+      <turnout systemName="CT14" userName="3a yellow" />
+      <turnout systemName="CT15" userName="3a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH3b" userName="Signal 3B">
+      <turnout systemName="CT16" userName="3b green" />
+      <turnout systemName="CT17" userName="3b yellow" />
+      <turnout systemName="CT18" userName="3b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH4a" userName="Signal 4A">
+      <turnout systemName="CT19" userName="4a green" />
+      <turnout systemName="CT20" userName="4a yellow" />
+      <turnout systemName="CT21" userName="4a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH4b" userName="Signal 4B">
+      <turnout systemName="CT22" userName="4b green" />
+      <turnout systemName="CT23" userName="4b yellow" />
+      <turnout systemName="CT24" userName="4b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH5a" userName="Signal 5A">
+      <turnout systemName="CT25" userName="5a green" />
+      <turnout systemName="CT26" userName="5a yellow" />
+      <turnout systemName="CT27" userName="5a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH5b" userName="Signal 5B">
+      <turnout systemName="CT28" userName="5b green" />
+      <turnout systemName="CT29" userName="5b yellow" />
+      <turnout systemName="CT30" userName="5b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH6a" userName="Signal 6A">
+      <turnout systemName="CT31" userName="6a green" />
+      <turnout systemName="CT32" userName="6a yellow" />
+      <turnout systemName="CT33" userName="6a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH6b" userName="Signal 6B">
+      <turnout systemName="CT34" userName="6b green" />
+      <turnout systemName="CT35" userName="6b yellow" />
+      <turnout systemName="CT36" userName="6b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH7a" userName="Signal 7A">
+      <turnout systemName="CT37" userName="7a green" />
+      <turnout systemName="CT38" userName="7a yellow" />
+      <turnout systemName="CT39" userName="7a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH7b" userName="Signal 7B">
+      <turnout systemName="CT40" userName="7b green" />
+      <turnout systemName="CT41" userName="7b yellow" />
+      <turnout systemName="CT42" userName="7b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH8a" userName="Signal 8A">
+      <turnout systemName="CT43" userName="8a green" />
+      <turnout systemName="CT44" userName="8a yellow" />
+      <turnout systemName="CT45" userName="8a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH8b" userName="Signal 8B">
+      <turnout systemName="CT46" userName="8b green" />
+      <turnout systemName="CT47" userName="8b yellow" />
+      <turnout systemName="CT48" userName="8b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH9a" userName="Signal 9A">
+      <turnout systemName="CT49" userName="9a green" />
+      <turnout systemName="CT50" userName="9a yellow" />
+      <turnout systemName="CT51" userName="9a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH9b" userName="Signal 9B">
+      <turnout systemName="CT52" userName="9b green" />
+      <turnout systemName="CT53" userName="9b yellow" />
+      <turnout systemName="CT54" userName="9b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH10a" userName="Signal 10A">
+      <turnout systemName="CT55" userName="10a green" />
+      <turnout systemName="CT56" userName="10a yellow" />
+      <turnout systemName="CT57" userName="10a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH10b" userName="Signal 10B">
+      <turnout systemName="CT58" userName="10b green" />
+      <turnout systemName="CT59" userName="10b yellow" />
+      <turnout systemName="CT60" userName="10b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH11a" userName="Signal 11A">
+      <turnout systemName="CT61" userName="11a green" />
+      <turnout systemName="CT62" userName="11a yellow" />
+      <turnout systemName="CT63" userName="11a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH11b" userName="Signal 11B">
+      <turnout systemName="CT64" userName="11b green" />
+      <turnout systemName="CT65" userName="11b yellow" />
+      <turnout systemName="CT66" userName="11b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH12a" userName="Signal 12A">
+      <turnout systemName="CT67" userName="12a green" />
+      <turnout systemName="CT68" userName="12a yellow" />
+      <turnout systemName="CT69" userName="12a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH12b" userName="Signal 12B">
+      <turnout systemName="CT70" userName="12b green" />
+      <turnout systemName="CT71" userName="12b yellow" />
+      <turnout systemName="CT72" userName="12b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH13a" userName="Signal 13A">
+      <turnout systemName="CT73" userName="13a green" />
+      <turnout systemName="CT74" userName="13a yellow" />
+      <turnout systemName="CT75" userName="13a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH13b" userName="Signal 13B">
+      <turnout systemName="CT76" userName="13b green" />
+      <turnout systemName="CT77" userName="13b yellow" />
+      <turnout systemName="CT78" userName="13b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH14a" userName="Signal 14A">
+      <turnout systemName="CT79" userName="14a green" />
+      <turnout systemName="CT80" userName="14a yellow" />
+      <turnout systemName="CT81" userName="14a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH14b" userName="Signal 14B">
+      <turnout systemName="CT82" userName="14b green" />
+      <turnout systemName="CT83" userName="14b yellow" />
+      <turnout systemName="CT84" userName="14b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH15a" userName="Signal 15A">
+      <turnout systemName="CT85" userName="15a green" />
+      <turnout systemName="CT86" userName="15a yellow" />
+      <turnout systemName="CT87" userName="15a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH15b" userName="Signal 15B">
+      <turnout systemName="CT88" userName="15b green" />
+      <turnout systemName="CT89" userName="15b yellow" />
+      <turnout systemName="CT90" userName="15b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH16a" userName="Signal 16A">
+      <turnout systemName="CT91" userName="16a green" />
+      <turnout systemName="CT92" userName="16a yellow" />
+      <turnout systemName="CT93" userName="16a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH16b" userName="Signal 16B">
+      <turnout systemName="CT94" userName="16b green" />
+      <turnout systemName="CT95" userName="16b yellow" />
+      <turnout systemName="CT96" userName="16b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH17a" userName="Signal 17A">
+      <turnout systemName="CT97" userName="17a green" />
+      <turnout systemName="CT98" userName="17a yellow" />
+      <turnout systemName="CT99" userName="17a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH17b" userName="Signal 17B">
+      <turnout systemName="CT100" userName="17b green" />
+      <turnout systemName="CT101" userName="17b yellow" />
+      <turnout systemName="CT102" userName="17b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH17c" userName="Signal 17C">
+      <turnout systemName="CT103" userName="17c green" />
+      <turnout systemName="CT104" userName="17c yellow" />
+      <turnout systemName="CT105" userName="17c red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH18a" userName="Signal 18A">
+      <turnout systemName="CT106" userName="18a green" />
+      <turnout systemName="CT107" userName="18a yellow" />
+      <turnout systemName="CT108" userName="18a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH18b" userName="Signal 18B">
+      <turnout systemName="CT109" userName="18b green" />
+      <turnout systemName="CT110" userName="18b yellow" />
+      <turnout systemName="CT111" userName="18b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH19a" userName="Signal 19A">
+      <turnout systemName="CT112" userName="19a green" />
+      <turnout systemName="CT113" userName="19a yellow" />
+      <turnout systemName="CT114" userName="19a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH19b" userName="Signal 19B">
+      <turnout systemName="CT115" userName="19b green" />
+      <turnout systemName="CT116" userName="19b yellow" />
+      <turnout systemName="CT117" userName="19b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH20a" userName="Signal 20A">
+      <turnout systemName="CT118" userName="20a green" />
+      <turnout systemName="CT119" userName="20a yellow" />
+      <turnout systemName="CT120" userName="20a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH20b" userName="Signal 20B">
+      <turnout systemName="CT121" userName="20b green" />
+      <turnout systemName="CT122" userName="20b yellow" />
+      <turnout systemName="CT123" userName="20b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH21a" userName="Signal 21A">
+      <turnout systemName="CT124" userName="21a green" />
+      <turnout systemName="CT125" userName="21a yellow" />
+      <turnout systemName="CT126" userName="21a red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH21b" userName="Signal 21B">
+      <turnout systemName="CT127" userName="21b green" />
+      <turnout systemName="CT128" userName="21b yellow" />
+      <turnout systemName="CT129" userName="21b red" />
+    </signalhead>
+    <signalhead class="jmri.configurexml.TripleTurnoutSignalHeadXml" systemName="IH22a" userName="Signal 22A">
+      <turnout systemName="CT130" userName="22a green" />
+      <turnout systemName="CT131" userName="22a yellow" />
+      <turnout systemName="CT132" userName="22a red" />
+    </signalhead>
+  </signalheads>
+
+</layout-config>
+

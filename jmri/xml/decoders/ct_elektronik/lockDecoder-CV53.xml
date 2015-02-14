@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010, 2014 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-07-19</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial release as separate file</revremark>
+    </revision>
+  </revhistory>
+  <variable CV="53" item="Advanced Group 1 Option 12" default="0">
+	<!-- Values of 1 and 2 are to be used with Roco Lokmaus only, not relevant with JMRI -->
+	<enumVal>
+	  <enumChoice choice="Unlocked/Not Set" value="0">
+		<choice>Unlocked/Not Set</choice>
+		<choice xml:lang="de">entsperrt/nicht gesetzt</choice>			
+	  </enumChoice>
+	  <enumChoice choice="Lock Decoder" value="66">
+		<choice>Lock Decoder</choice>
+		<choice xml:lang="de">Decoder sperren</choice>					
+	  </enumChoice>
+	  <enumChoice choice="Unlock Decoder" value="77">
+		<choice>Unlock Decoder</choice>
+		<choice xml:lang="de">Decoder freigeben</choice>					
+	  </enumChoice>
+	</enumVal>
+	<label>Lock Decoder</label>
+	<label xml:lang="de">Decoder sperren</label>
+	<tooltip>&lt;html&gt;When locked, decoder will not respond to read orders.&lt;br&gt; Write value &quot;Unlock Decoder&quot; (77) to force unlock the decoder.&lt;/html&gt;</tooltip>
+	<tooltip xml:lang="de">&lt;html&gt;Wenn gesperrt ist, wird Decoder nicht reagieren, Aufträge zu lesen.&lt;br&gt; Schreibwert &quot;Decoder freigeben&quot; (77) zu zwingen, Entsperren der Decoder.&lt;/html&gt;</tooltip>	
+  </variable>
+</variables>

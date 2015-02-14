@@ -1,0 +1,76 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright Me 2008 -->
+<!-- $Id$ -->
+<!-- Translated  by Blorec Herv&#233; bzh56420@yahoo.fr 2013-11-12 -->
+<title>JMRI: Tools Menu</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+
+
+<h2>JMRI: Menu Outils</h2>
+
+Le menu Outils permet d'acc&#233;der aux outils de base JMRI :
+<ul>
+<li> programmateurs
+  <ul>
+  <li> <a href="simpleprog/SimpleProgFrame.shtml">Programmateur Simple CV </a>
+  <li> <a href="../../../manual/Basic_Programming.shtml">Programmateur DecoderPro sur voie de programmation</a>
+  <li> <a href="../../../manual/index.shtml"> Programmateur DecoderPro en exploitation</a>
+ </ul>
+<li> tableaux
+  <ul>
+  <li> <a href="beantable/TurnoutTable.shtml"> Aiguillages</a>
+  <li> <a href="beantable/SensorTable.shtml"> Capteurs</a>
+  <li> <a href="beantable/LightTable.shtml"> lumi&#232;res</a >
+  <li> <a href="beantable/SignalHeadTable.shtml"> T&#234;te Signal</a>
+  <li> <a href="beantable/SignalMastTable.shtml"> M&#226;ts Signal</a>
+  <li> <a href="beantable/ReporterTable.shtml"> Rapports</a>
+  <li> <a href="beantable/MemoryTable.shtml"> Variables M&#233;moire</a>
+  <li> <a href="beantable/RouteTable.shtml"> Itin&#233;raires</a>
+  <li> <a href="beantable/LRouteTable.shtml"> LItin&#233;raires</a>
+  <li> <a href="beantable/LogixTable.shtml"> Logix</a>
+  <li> <a href="beantable/BlockTable.shtml"> Cantons</a >
+  <li> <a href="beantable/AudioTable.shtml"> Audio</a>
+ </ul>
+<li> <a href="../../../html/tools/throttle/ThrottleMain.shtml"> R&#233;gulateurs</a>
+<li> <a href="../../../html/tools/consisttool/ConsistTool.shtml"> Outil de Couplage</a>
+<li> <a href="../../../html/tools/fastclock/index.shtml"> Horloges</a>
+<li> <a href="powerpanel/PowerPanelFrame.shtml"> Commande Alimentation</a>
+<li> <a href="simpleturnoutctrl/SimpleTurnoutCtrl.shtml"> Commande Aiguillage</a>
+<li> <a href="../../../package/jmri/jmrit/blockboss/BlockBossFrame.shtml"> Logique simple Signal</a>
+<li> <a href="sensorgroup/SensorGroupFrame.shtml">Groupes de Capteurs</a >
+<li> <a href="../../../html/tools/speedometer/index.shtml"> Calculateur de Vitesse</a>
+<li> <a href="simplelightctrl/SimpleLightCtrl.shtml"> Commande Lumi&#232;res</a>
+<li> <a href="../../../package/jmri/jmrit/dispatcher/Dispatcher.shtml"> Dispatcheur</a>
+<li> Envoyer message DCC 
+<li> Outils USS CTC 
+<li> <a href="../../../package/jmri/jmrit/operations/Operations.shtml">Exploitation</a>
+</ul>
+
+Pour plus d'informations , voir &#233;galement le
+<a href="../../../html/tools/index.shtml"> Index g&#233;n&#233;ral des outils</a> .
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+
+ 	  	 

@@ -1,0 +1,12 @@
+This is the README file for the jmrix.locobuffer package.
+
+The jmrix Java package defines implementations for the JMRI interfaces. jmrix.locobuffer
+defines classes for interfacing to a LocoNet via a LocoBuffer interface.  LocoBuffer is
+RS232 to LocoNet interface designed by John Jabour. For more information on
+LocoBuffer, see  http://groups.yahoo.com/group/loconet_hackers
+
+
+
+
+	
+	

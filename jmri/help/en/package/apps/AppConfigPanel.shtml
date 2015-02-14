@@ -1,0 +1,197 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Preferences Window
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help preferences">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>JMRI: Preferences Window</H1>
+
+The preferences window is where you 
+configure the basic operation of your JMRI application.
+There's a top part that contains the basics, and 
+a separate section for advanced preferences.
+
+<p>
+This page describes an older preferences pane that was replaced by 
+<a href="TabbedPreferences.shtml">another one</a> in 
+<a href="http://jmri.org/releasenotes/jmri2.9.4.shtml">JMRI 2.9.4</a>.  Information on the new one is on
+<a href="TabbedPreferences.shtml">another page</a>.
+
+<p>
+<a name="basic">
+<h2>Basic Preferences</h2></a>
+<p>
+When the window first opens, it displays the basic preferences.
+<p>
+<a href="../../manual/images/Preferences.png">
+<img src="../../manual/images/Preferences.png" height="156" width="256" align="right"></a>
+<dl>
+<dt>Layout Connection
+<dd>You can select any of the various JMRI layout connections here.
+For more information on how to configure this for your particular hardware,
+see the <a href="../../html/hardware/index.shtml">hardware pages</a>.
+<dt>GUI Style
+<dd>These radio boxes allow you to select how the program looks.
+The available choices depend on what kind of computer you have, and not 
+all of the following may be available:
+    <ul>
+    <li>Metal - the default Java style, usable on all computers
+    <li>CDE/Motif - A Linux/Unix form that works well with X Windows
+        screen managers.  It's also available on (almost) all computer types.
+    <li>Windows - only available on Microsoft Windows systems, this makes the
+        program look as much as possible like a regular Windows application.
+    <li>Mac OS X - only available on MacOS, this makes the program look
+        like a Macintosh application
+    </ul>
+<dt>Programmer Defaults
+<dd>The DecoderPro programmer allows you to select how much or how little
+to display of the decoder content using configurable "Programmers". You 
+can select one at the same time you 
+<a href="../../manual/Basic_Programming.shtml">select your locomotive decoder</a>,
+but this provides a convenient place to set a default so you don't
+have to select it each time you open a decoder.
+</dl>
+
+Perhaps the most important control is at the bottom of this section:
+The "Save" button!  
+<p>
+Be sure to click "Save" when leaving this window.  Your changes to the preferences
+don't take effect until the program is stopped and restarted, so the
+program will prompt you to do that after saving the preferences.
+
+<a name="advanced">
+<h2>Advanced Preferences</h2></a> Advanced Preferences allows you to
+customize your connection to the layout. You do not need to use them to
+get your initial connection to the layout up and running, and it is
+recommended that you leave them alone until the connection to your
+command station is operational. To set the advanced preferences, check
+the "Show Advanced Preferences" box.<br><p>
+<a href="../../manual/images/Preferences2.png">
+<img src="../../manual/images/Preferences2.png" height="150" width="256" align="right"></a>
+
+<dl>
+	<dt>Auxiliary layout connections
+	
+	<dd>The auxiliary connections allow you to have more than one layout
+	connection active at a time. Most users only need one connection,
+	therefore select an auxiliary connection only if you need more than one
+	connection to the layout. Use the "Layout Connection:" at the top of
+	the Preferences Menu for your primary connection.
+	
+	<dt>Programmer Defaults
+	<dd>This section has a checkbox that lets you decide whether the DecoderPro
+programmer will display empty panes (tabs). Some people like to see them, even though they're empty,
+some people would prefer not to see them, so they don't keep trying to look at them.  We
+provide this preference so you can choose.
+
+<a name="locale">
+<dt>Locale
+<dd><a href="../../Acknowledgements.shtml">Many people</a> have contributed "internationalizations"
+of JMRI.  This converts (much) of the text on the screen to a language
+other thank English.  If you select your country or region and language here,
+then save and restart the preferences, JMRI will use an internationalization
+for that country and language if it's available.  Items that have not been translated 
+will continue to appear in English, so you won't miss anything.  For
+more information on how to set this up, and particularly how to contribute
+new and improved translations, please see our
+<a href="../../html/doc/Technical/I8N.shtml">internationalization page</a>.
+
+<a name="actions">
+<dt>Do actions at startup</a>
+<dd>
+This section lets you have the program automatically
+execute various menu selections at startup.  For example,
+you can have the Turnout Table automatically open, or 
+automatically open a window for programming on the main.
+<P>
+For example, to automatically open the Turnout Table, 
+click the "Add Action" button in this section of the advanced preferences. 
+From the list that's presented, select "Open Turnout Table". 
+Don't forget
+to save your updated preferences with the button at the bottom of the screen!
+
+<dt>Create buttons on the main screen
+<dd>
+This allows you to add extra buttons to the main JMRI window
+that are connected to specific menu choices.
+<P>
+For example, to add a button that will open the Power Control when clicked, 
+click the "Add Action" button in this section of the advanced preferences.  
+From the list that's presented, select "Open Turnout Table". Don't forget
+to save your updated preferences with the button at the bottom of the screen!
+From the list that's presented, select "Open Power Control". 
+Don't forget
+to save your updated preferences with the button at the bottom of the screen!
+The button will appear when you next start the program.
+
+<dt>Load panel files at startup
+<dd>
+This section lets you automatically load panel files when the program
+starts up.  The previous sections will have already executed, so any actions
+they're configured for will have taken place.  You can load
+as many panel files as you'd like; each will be completely loaded before the next
+is started.
+<p>
+Click "Add File", which will open a file section window in which you can select the 
+desired file.  If you later want to stop loading the file at startup, 
+click the "Remove" button next to the filename.
+
+<dt>Run scripts at startup
+<dd>
+This section lets you automatically run a script file when the program
+starts up.  The previous sections will have already executed, so any actions
+they're configured for will have taken place
+and all panel files will have been loaded.  
+You can run as many script files
+as you'd like; each will be run to the end of the file before the next
+is started.
+<p>
+Click "Add File", which will open a file section window in which you can select the 
+desired file.  If you later want to stop executing a particular script at startup, 
+click the "Remove" button next to the filename.
+
+<a id="roster">
+<dt>Set the location of the roster
+<dd>
+Normally, the roster is stored in a standard location
+as part of the
+<a href="../../html/apps/DecoderPro/Files.shtml">preferences directory</a>.
+This option lets you move that somewhere else.
+<p>
+To configure it, click the "Set..." button and follow the directions.
+<p>
+The "Reset" button restores it to the default location. Note that
+this just changes where the program looks.  If you've stored roster
+information elsewhere and want it back in the default location, you have
+to move the files there yourself.
+<p>
+You can also enter a default value for the "Owner" field in DecoderPro
+roster entries here.  This fills in the value for new entries, which 
+can save you a little bit of typing. It has no effect on 
+existing entries, even if changed.
+
+</dl>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

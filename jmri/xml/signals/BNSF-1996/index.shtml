@@ -1,0 +1,221 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: ken_c $) 2010 -->
+<!-- $Id: index.shtml 23697 2013-07-01 14:39:59Z ken_c $ -->
+<title>JMRI: BN-1989 Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: BNSF-1996 Signalling Definition
+</h1>
+
+This system contains signalling definitions corresponding to 
+the BNSF Railway (Burlington Northern and Santa Fe Railway) rules as described in the BNSF all subdivisions System Special Instructions. In effect at 0001 Central, Mountain and Pacific Continental Time, Thursday August 1st 1996.
+
+<p>
+Signal aspects can be referenced on page 2 of the 1996 special instructions here:-
+<p>
+<a href="http://www.fobnr.org/timetables/bnsf/phase1/SI/SI-01-080196.pdf">Special Instructions 1996</a>.
+
+<p>
+Not all of the possible masts have been defined but there is a varied selection here that should cover most requirements. Due to the nature of this being a simplified prototype system it is not always easy to display all the possible variations of the same aspect on a mast and this should not be necessary in most cases. Where a mast can display different variations of an aspect (e.g. Diverging Clear or Diverging Approach) the lower aspect will apply to any diverging route with a slow speed restriction.
+
+<p>
+It is assumed that semaphore signal arms cannot display flashing indications and cannot display Lunar aspects.
+
+<p>
+It is also assumed that searchlight heads can only display a maximum of three different colours on an individual head.
+
+<p>
+Some of the possible distant aspects (any approach aspect requiring multiple or flashing heads) were not explicitly defined in the initial 1996 rules 9.1.1 and 9.1.2, but have been included on some distant masts because they are made available under later revisions of the rules. The single arm semaphore distant does comply fully with distant rules 9.1.1 and 9.1.2 so you can use that if required to generate the correct signalling sequence for early installations for both semaphore and searchlight signals.
+
+<p>
+No one mast can display all of the available aspects so check carefully which aspects you require before choosing a mast.
+
+<p>
+Some aspect sequences can be controlled by setting appropriate speeds on blocks. A 'Sixty' speed block will cause a signal to be proceeded by an Approach Limited indication in most cases, a 'Fifty' speed block Advance Approach and a 'Medium' or 'Slow' speed block Approach Medium. A Slow speed block on a divergance will force the lower head to display Diverging Approach and Diverging Clear indications on a triple head/arm mast instead of the centre head where available, and a Restricting speed block will force a restricting or Restricting (Diverging) indication where possible.
+
+<p>
+An additional non-flashing icon set has been provided for where the flashing icons cause display problems. Choosing the non flashing representations does not affect the aspect displayed on the physical signal. Right click on the signal icon when editing the panel to select the alternate icon set for that signal.
+
+<p>
+Not all aspects described under a particular rule are fully interchangeable with one another since they contain slightly different meanings not fully described in the rules. Rule 9.1.6 (Approach medium) for example has both a family of flashing yellows and a family of double yellows. The double yellows signify that the next signal will indicate diverging while the flashing yellow generally indicates that the next signal is an approach signal. From a driver's point of view of course they mean the same, but if modelling the prototype the continuing historical differences in use are of note.
+
+<p>
+Some indications appear in the aspects list several times. In this case there is a seperate entry for each of the possible prescribed speeds that the aspect may apply to in order to get the preceeding signal to display the correct aspect. On a diverging route the signal aspect may be determined by the state of a signal some distance ahead and not just the next signal.
+
+<p>
+Track speeds used in this system are Sixty = 60 MPH, Fifty = 50MPH, Medium = 30 MPH, Slow = slower than Medium and Restricted = Restricted speed. Use the Sixty speed where Limited speed is required - do not use Limited because that refers to a slower speed used by other signal systems. Use Slow speed where a divering route is the secondary diverging route to force the correct aspects to be displayed where alternative aspects are available on a triple head/arm mast.
+
+<p>
+Typical sequences of aspects shown by this signal system :-
+
+<p>
+Semaphore signals leading through a consecutive divergance. The triple arm signal is located at the first divergance:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SE-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SE-2-high/rule-9.1.5-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SE-2-high/rule-9.1.6-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SE-3-high/rule-9.1.10-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SE-2-high/rule-9.1.9-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SE-1-high/rule-9.1.3-a.gif" /img>
+
+<p>
+Searchlight signals leading through a consecutive divergance. Again the triple head signal is located at the first divergance:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-b.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-3-high/rule-9.1.10-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.9-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<p>
+
+Searchlight signals leading through a single secondary divergance:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-b.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-3-high/rule-9.1.9-b.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+
+<p>
+Searchlight signals leading through a single primary divergance:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.6-b.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.9-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+
+<p>
+Searchlight signals with Lunar aspects leading to a restricted siding:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.7-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.13-c.gif" /img>
+
+<p>
+Searchlight signals without Lunar aspects leading to a restricted siding:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-a.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.7-b.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-2-high/rule-9.1.13-b.gif" /img>
+
+<p>
+Automatic block searchlight signals leading to an occupied block:
+
+<p>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.3-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.6-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.8-s.gif" /img>
+<img src="../../../resources/icons/smallschematics/aspects/BNSF-1996/SL-1-high/rule-9.1.14-s.gif" /img>
+<p>
+
+Triple head/arm masts will typically only be required at the entrance to a complex interlocking with multiple divergences. Simple single divergences will only require a double head/arm mast with appropriate approach masts.
+
+<p>
+See the 
+<a href="aspects.xml">Aspects page</a> for full details of the available masts and aspects.
+
+<p>
+Semaphore Signal Mast definitions:
+<ul>
+<li><a href="appearance-SE-1A.xml">Single arm Absolute signal</a>
+
+<li><a href="appearance-SE-1R.xml">Single arm Restricting signal</a> (with 'G' plate)
+
+<li><a href="appearance-SE-1S.xml">Single arm Stop and Proceed signal</a> (with number plate)
+
+<li><a href="appearance-SE-1D.xml">Single arm Distant signal</a> (with 'D' plate)
+</ul>
+
+<ul>
+
+<li><a href="appearance-SE-2A.xml">Double arm Absolute signal</a>
+
+<li><a href="appearance-SE-2R.xml">Double arm Restricting signal</a> (with 'G' plate)
+
+<li><a href="appearance-SE-2S.xml">Double arm Stop and Proceed signal</a> (with number plate)
+
+<li><a href="appearance-SE-2D.xml">Double arm Distant signal</a> (with 'D' plate)
+</ul>
+
+<ul>
+
+<li><a href="appearance-SE-3A.xml">Triple arm Absolute signal</a>
+</ul>
+
+<p>
+Searchlight Signal Mast definitions:
+<ul>
+
+<li><a href="appearance-SL-1A.xml">Single head Absolute searchlight signal</a>
+
+<li><a href="appearance-SL-1P.xml">Single head Permissive searchlight signal</a> (with Lunar proceed aspect in place of Green)
+
+<li><a href="appearance-SL-1R.xml">Single head Restricting searchlight signal</a> (with 'G' plate)
+
+<li><a href="appearance-SL-1S.xml">Single head Stop and Proceed searchlight signal</a> (with number plate)
+
+<li><a href="appearance-SL-1D.xml">Single head Distant searchlight signal</a> (with 'D' plate)
+</ul>
+
+<ul>
+<li><a href="appearance-SL-2A.xml">Double head Absolute searchlight signal</a>
+
+<li><a href="appearance-SL-2L.xml">Double head Absolute searchlight signal</a> (with Lunar on lower head in place of Red)
+
+<li><a href="appearance-SL-2R.xml">Double head Restricting searchlight signal</a> (with 'G' plate)
+
+<li><a href="appearance-SL-2S.xml">Double head Stop and Proceed searchlight signal</a> (with number plate)
+
+<li><a href="appearance-SL-2SL.xml">Double head Stop and Proceed searchlight signal</a> (with number plate and Lunar in place of Red on lower head)
+
+<li><a href="appearance-SL-2D.xml">Double head Distant searchlight signal</a> (with 'D' plate)
+
+<li><a href="appearance-SL-2DL.xml">Double head Distant searchlight signal</a> (with Lunar in place of Red on lower head)
+
+</ul>
+
+<ul>
+
+<li><a href="appearance-SL-3A.xml">Triple head Absolute searchlight signal</a>
+
+<li><a href="appearance-SL-3L2.xml">Triple head searchlight signal</a> (with Lunar in place of Green on centre head)
+
+<li><a href="appearance-SL-3L3.xml">Triple head searchlight signal</a> (with Lunar in place of Green on lower head)
+
+</ul>
+
+	</div>
+</div>
+
+<!--#include virtual="/Footer" -->
+
+</body>
+</html>

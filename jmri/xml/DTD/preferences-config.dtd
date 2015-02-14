@@ -1,0 +1,47 @@
+<!-- Defines XML for configuring the JMRIdemo and DecoderPro programs -->
+<!-- $Id$ -->
+
+<!-- This file is obsolete! Preferences are now stored -->
+<!-- via the general layout-config DTD -->
+
+<!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!ELEMENT preferences-config (connection*, gui, programmer, perform*)>
+<!ATTLIST preferences-config>
+
+<!--  Section identifies serial port info -->
+<!ELEMENT connection EMPTY>
+<!ATTLIST connection class CDATA #REQUIRED>
+<!ATTLIST connection port CDATA #REQUIRED>
+<!ATTLIST connection speed CDATA #IMPLIED>  <!-- May not be provided if fixed by protocol -->
+<!ATTLIST connection option1 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
+<!ATTLIST connection option2 CDATA #IMPLIED> <!-- Meaning is protocol specific -->
+
+<!--  Section identifies GUI info, e.g. look&feel info-->
+<!ELEMENT gui EMPTY>
+<!ATTLIST gui LAFclass CDATA #IMPLIED>  <!-- default means use system default -->
+
+<!--  Section identifies programmer options -->
+<!ELEMENT programmer EMPTY>
+<!ATTLIST programmer defaultFile CDATA "Basic.xml">
+<!ATTLIST programmer verifyBeforeWrite (yes | no) "no" >
+
+<!--  Section identifies swing.Actions to invoke -->
+<!ELEMENT perform EMPTY>
+<!ATTLIST perform classname CDATA #REQUIRED>
+
+
+
+
+
+

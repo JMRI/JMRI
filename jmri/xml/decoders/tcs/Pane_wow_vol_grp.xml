@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - for Unified Software -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Volume Groups</name>
+  <column>
+    <row>
+      <column>
+        <label>
+          <text>   </text>
+        </label>
+        <label>
+          <text>Must have JMRI 3.9.5 or later.</text>
+          <text xml:lang="it">Dovete avere JMRI 3.9.5 o successivo.</text>
+        </label>
+        <label>
+          <text>   </text>
+        </label>
+		</column>
+    </row>
+    <row>
+		<column>
+			<row>
+				<display item="Volume Group 1" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 1" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 2" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 2" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 3" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 3" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 4" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 4" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 5" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 5" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 6" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 6" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 7" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 7" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 8" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 8" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 9" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 9" layout="above" format="hslider"/>
+			</row>
+		</column>
+		<label>
+			<text>    </text>
+		</label>
+		<column>
+			<row>
+				<display item="Volume Group 10" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 10" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 11" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 11" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 12" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 12" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 13" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 13" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 14" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 14" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 15" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 15" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 16" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 16" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 17" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 17" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 18" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 18" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 19" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 19" layout="above" format="hslider"/>
+			</row>
+		</column>
+		<label>
+			<text>    </text>
+		</label>
+		<column>
+			<row>
+				<display item="Volume Group 20" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 20" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 21" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 21" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 22" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 22" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 23" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 23" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 24" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 24" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 25" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 25" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 26" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 26" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 27" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 27" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 28" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 28" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 29" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 29" layout="above" format="hslider"/>
+			</row>
+		</column>
+		<label>
+			<text>    </text>
+		</label>
+		<column>
+			<row>
+				<display item="Volume Group 30" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 30" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 31" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 31" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 32" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 32" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 33" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 33" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 34" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 34" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 35" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 35" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 36" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 36" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 37" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 37" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 38" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 38" layout="above" format="hslider"/>
+			</row>
+			<row>
+				<display item="Volume Group 39" layout="above" label=""/>
+				<label>
+					<text> </text>
+				</label>
+				<display item="Volume Group 39" layout="above" format="hslider"/>
+			</row>
+		</column>
+    </row>
+  </column>
+  <name xml:lang="it">Volume Livello 0</name>
+</pane>

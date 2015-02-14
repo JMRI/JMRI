@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<title>JMRI: OpenLCB Naming</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: OpenLCB Naming
+</h1>
+
+This page discusses how JMRI uses system names
+to access OpenLCB-attached resources.
+
+<p>
+For more on JMRI's OpenLCB support, see the
+<a href="index.shtml">main OpenLCB page</a>.
+
+<h2>JMRI's Use of Names</h2>
+JMRI provides an interface to the real layout via 
+internal objects such as Turnouts, Sensors, etc that
+are closely mapped to corresponding physical devices.
+This mapping is done via "System Names", which both 
+identify the how to access a particular device, and
+are the key to looking up the corresponding object in JMRI.
+
+<h2>OpenLCB Events</h2>
+
+<a href="http://openlcb.org">OpenLCB</a>
+communicates events via messages with a fixed format: eight bytes of
+content.  We convert this to a 16 hexadecimal digit code with a 
+leading "x" character, e.g. "x1234567890ABCDEF".
+We recommend you use upper case for the A-F letters.
+
+You can also enter it with periods separating the bytes: "12.34.56.78.90.AB.CD.EF". 
+In this case only, one leading zero per byte can be omitted when typing the event; 
+JMRI will
+insert them automatically in names. For example, "00.01.02.03.04.05.06.07" can be 
+typed as "0.1.2.3.4.5.6.7".
+
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

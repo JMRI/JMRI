@@ -1,0 +1,50 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!--Translated by Herv&#233; Blorec bzh56420@yahoo.fr 2013/11/11 -->
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI: Power Control
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Kevin Dickerson" name=Author>
+    <META name="keywords" content="JMRI help Roster Speed Profiling">
+
+<!--Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!--/Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Liste profils de vitesse</H1>
+    
+<p> L'outil est con&#231;u pour cr&#233;er le profil d'une loco &#224; divers crans de vitesse pour aider &#224; l'ex&#233;cution automatique d'une loco au sein de JMRI. Principalement pour aider avec le principe d'obtenir qu'une loco s'arr&#234;te &#224; une distance sp&#233;cifique &#224; partir d'un r&#233;glage de r&#233;gulateur connu .</P>
+<p>L'outil fonctionne sur le principe de chronom&#233;trer une loco sur une distance connue &#224; une cran de vitesse donn&#233;e, &#224; la fois dans les direction avant et arri&#232;re. Actuellement, il n&#233;cessite trois capteurs qui surveillent l'occupation d'une section de voie. Id&#233;alement, la section de la voie o&#249; les essais chronom&#233;tr&#233;s sont effectu&#233;s doit &#234;tre droite, et un minimum de 1m de long, plus la longueur est grande, meilleur est le r&#233;sultat. Pour que ce profilage fonctionne correctement les rampes d'acc&#233;l&#233;ration/d&#233;cc&#233;l&#233;ration doivent &#234;tre d&#233;sactiv&#233;es sur le d&#233;codeur loco.</P>
+<b>Exigences</b ><ul>
+<li><b>Longueur du canton</b>-C'est la longueur en millim&#232;tres de la section du milieu o&#249; la course sera mesur&#233;e</li>
+<li><b>Capteur de d&#233;but</b>-C'est la premi&#232;re section de la voie o&#249; la locomotive d&#233;marre sa course initiale</li>
+<li><b>Capteur canton</b>-Il s'agit du capteur li&#233; &#224; la section de la voie o&#249; le chronom&#233;trage sera r&#233;alis&#233;</li>
+<li><b>Capteur Terminer</b>-Ce capteur li&#233; au tron&#231;on de voie imm&#233;diatement apr&#232;s la section chronom&#233;tr&#233;e</li>
+<li><b>Entr&#233;e Roster</b>-S&#233;lectionnez la loco sur laquelle le profilage doit &#234;tre effectu&#233;e</li>
+<li><b>Annuler</b>-Annule le profilage ou le test</li>
+<li><b>profil</b>-D&#233;marre le profilage</li>
+</ul>
+</ul>
+Pour le profil de la loco, remplissez les d&#233;tails ci-dessus dans la fen&#234;tre, placez la locomotive dans la section de d&#233;part vers l'avant vers (mais pas sur ) la section de la voie o&#249; le chronom&#233;trage sera fait, puis appuyez sur le bouton "profil". </P>
+<p> Ce qui arrive est que l'outil va r&#233;gler la loco pour rouler vers l'avant au cran 1, lorsqu'il active le capteur du secteur chronom&#233;tr&#233;, il d&#233;marre une minuterie. Une fois que le capteur de la section d'arriv&#233;e est activ&#233;, le chronom&#232;trage est arr&#234;t&#233;, et la vitesse est calcul&#233;e en millim&#232;tres par seconde, et est ensuite enregistr&#233;e dans la liste. L'outil va alors faire en sorte que la locomotive est lib&#233;r&#233;e du capteur du secteur chronom&#233;tr&#233;, puis r&#233;p&#233;tez la proc&#233;dure &#224; nouveau, mais dans le sens inverse. Une fois que la locomotive est de retour &#224; la section de d&#233;marrage initial, toute la proc&#233;dure se r&#233;p&#232;te pour cran suivant de la vitesse, cela se produit jusqu'&#224; ce qu'un profil avec toutes les mesures de vitesse soit  achev&#233;. </P>
+<H3> Test </h3>
+<p>Apr&#232;s avoir termin&#233; le profil, il est possible de tester le profil. Placez la locomotive dans la section pour repartir vers l'avant en direction de la section chronom&#233;tr&#233;e, id&#233;alement &#224; une certaine distance d'elle pour que la machine ait le temps de se lancer. Entrez un certain nombre de pas de vitesse &#224; partir de la bo&#238;te &#224; c&#244;t&#233; du bouton de test, puis appuyez test. Que se passera-t-il, l'outil va r&#233;gler la loco pour rouler au cran de vitesse donn&#233;, puis il va tenter d'arr&#234;ter progressivement la locomotive avant qu'elle n'atteigne l'extr&#233;mit&#233;. Les r&#233;sultats peuvent varier en particulier aux  vitesses plus &#233;lev&#233;es, o&#249; vous aurez plus de chances de constater un d&#233;passement. </P>
+
+Ceci est la page d'aide help/fr/package/jmri/jmrit/roster/swing/speedprofile/speedProfileFrame.shtml
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

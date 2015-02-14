@@ -1,0 +1,81 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: LocoNet Slot Monitor
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help loconet slot monitor">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>LocoNet Slot Monitor
+</H1>
+    
+<a href="../../../../../html/apps/LocoTools/images/SlotMon.gif">
+    <img src="../../../../../html/apps/LocoTools/images/SlotMon.gif"
+         width="300" height="150"
+         alt="Command Station Slot Monitor" align="right"></a>
+<br>
+The Slot Monitor tool displays a table of the "command
+station slots'" contents. Slots are used to control
+individual locomotives and consists. The display
+includes the decoder's speed step format, current speed
+and function settings, consist information and status.
+You can choose to show either all slots or just the
+ones being actively used.
+
+<p>
+The checkboxes at the top allow you to show just the active (in use) slots,
+or all locomotive slots.  You can also choose whether to show the "system" slots,
+which don't carry locomotive information.  The "estop all" button sets the
+speed of all the locomotives to "Emergency Stop" very quickly.
+
+<p>
+The columns are:
+<dl>
+<dt>Slot<dd>The number of the slot
+<dt>E Stop<dd>Click this button to set the speed of the decoder to emergency stop
+<dt>Address<dd>The address of the locomotive the slot controls
+<dt>Speed<dd>For unconsisted locomotives and addresses that are the top 
+of a consist, this is the current speed setting.  It's an internal value
+for consisted slots.
+<dt>Status<dd>The format of the commands being sent to the decoder, 
+typically either 128 step , 28 step, or 14 step, though other values are possible.
+<dt>Use<dd>One of the four possible states:
+    <dl>
+    <dt>Free<dd>Not reserved for any particular use, no contents
+    <dt>Idle<dd>Not reserved for any particular use, no contents
+    <dt>Common<dd>Not in use at the moment, but still contains valid data for the last decoder to use it
+    <dt>In Use<dd>Currently controlling a decoder
+    </dl>
+<dt>Free<dd>Click this button to free the slot, so it can be reused for another locomotive
+<dt>Consisted<dd>Displays the consist status of the slot, whether it's not consisted,
+the top of a consist, included in a consist, etc.
+<dt>Throttle ID<dd>The ID of the throttle using this slot.  It's displayed as two hexadecimal bytes.
+The second pair can be configured into the throttle, see the Digitrax instructions.
+<dt>Direction<dd>Whether the decoder is currently being commanded to go Forward or Reverse
+<dt>F0-F8<dd>The current function settings. Check mark indicates function is On.
+<p>
+
+<dt>         package/jmri/jmrix/loconet/slotmon/
+</dd>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

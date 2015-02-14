@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2004 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="dave@bayworld.com" version="1" lastUpdated="20021128"/>
+  <decoder>
+    <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way">
+      <model model="DCCACC"/>
+    </family>
+    <programming direct="no" paged="yes" register="no" ops="no"/>
+    <variables>
+      <variable item="Decoder Address" CV="513" mask="VVVVVVVV" comment="Decoder address">
+        <decVal min="1" max="63"/>
+        <label>Decoder Address</label>
+        <comment>Decoder address</comment>
+      </variable>
+      <variable item="A Output Milliseconds" CV="515" mask="VVVVVVVV">
+        <decVal min="0" max="255"/>
+        <label>A Output Milliseconds</label>
+      </variable>
+      <variable item="B Output Milliseconds" CV="516" mask="VVVVVVVV">
+        <decVal min="0" max="255"/>
+        <label>B Output Milliseconds</label>
+      </variable>
+      <variable item="C Output Milliseconds" CV="517" mask="VVVVVVVV">
+        <decVal min="0" max="255"/>
+        <label>C Output Milliseconds</label>
+      </variable>
+      <variable item="D Output Milliseconds" CV="518" mask="VVVVVVVV">
+        <decVal min="0" max="255"/>
+        <label>D Output Milliseconds</label>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="Decoder Address"/>
+      <display item="A Output Milliseconds"/>
+      <display item="B Output Milliseconds"/>
+      <display item="C Output Milliseconds"/>
+      <display item="D Output Milliseconds"/>
+    </column>
+    <name>DCCACC</name>
+  </pane>
+</decoder-config>

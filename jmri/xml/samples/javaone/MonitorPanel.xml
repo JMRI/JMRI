@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE layout-config SYSTEM "layout-config.dtd">
+<layout-config>
+  <memories class="jmri.configurexml.DefaultMemoryManagerXml">
+    <memory systemName="IMIB150" userName="Track IB150" />
+    <memory systemName="IMIB151" userName="Track IB151" />
+    <memory systemName="IMIB152" userName="Track IB152" />
+    <memory systemName="IMIB153" userName="Track IB153" />
+    <memory systemName="IMIB154" userName="Track IB154" />
+    <memory systemName="IMIB155" userName="Track IB155" />
+    <memory systemName="IMIB156" userName="Track IB156" />
+    <memory systemName="IMIB157" userName="Track IB157" />
+    <memory systemName="IMIB158" userName="Track IB158" />
+    <memory systemName="IMIB159" userName="Track IB159" />
+    <memory systemName="IMIB160" userName="Track IB160" />
+    <memory systemName="IMIB161" userName="Track IB161" />
+    <memory systemName="IMIB162" userName="Track IB162" />
+    <memory systemName="IMIB163" userName="Track IB163" />
+    <memory systemName="IMIB164" userName="Track IB164" />
+    <memory systemName="IMIB165" userName="Track IB165" />
+  </memories>
+  <paneleditor class="jmri.jmrit.display.configurexml.PanelEditorXml" name="Monitor Train Locations" x="1382" y="788" height="200" width="538" editable="yes" positionable="yes" controlling="yes" hide="yes" panelmenu="yes">
+    <memoryicon memory="IMIB150" x="393" y="100" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB151" x="393" y="60" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB152" x="275" y="40" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB153" x="275" y="63" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB154" x="200" y="40" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB155" x="200" y="63" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB156" x="78" y="60" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB157" x="78" y="100" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB158" x="200" y="126" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB159" x="200" y="105" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB160" x="275" y="126" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB161" x="275" y="105" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB162" x="130" y="126" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB163" x="341" y="126" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB164" x="130" y="40" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+    <memoryicon memory="IMIB165" x="341" y="40" selectable="no" class="jmri.jmrit.display.configurexml.MemoryIconXml" defaulticon="resources/icons/smallschematics/LEDs/gray.gif" />
+  </paneleditor>
+  <!--Written by JMRI version 1.7.3 on Mon May 15 16:43:55 PDT 2006 $Id$-->
+</layout-config>
+

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$	-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2014</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Alain</firstname>
+        <surname>Le Marchand</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2014-08-30</date>
+      <authorinitials>ALM</authorinitials>
+      <revremark>Initial creation</revremark>
+    </revision>
+  </revhistory>
+  <!-- Specific for Qdecoder accessory decoder -->
+	<!-- Accessory Addresses A1 to A15					 -->
+	<variable CV="552" item="Accessory Address A1" default="0" minOut="2">
+		<splitVal highCV="551" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A1</label>
+		<label xml:lang="de">Zubehöradresse A1</label>
+		<tooltip>Accessory address for output A1 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A1 (1-2047)</tooltip>
+	</variable>
+	<variable CV="555" item="Accessory Address A2" default="2" minOut="3">
+		<splitVal highCV="554" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A2</label>
+		<label xml:lang="de">Zubehöradresse A2</label>
+		<tooltip>Accessory address for output A2 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A2 (1-2047)</tooltip>
+	</variable>
+	<variable CV="558" item="Accessory Address A3" default="0" minOut="4">
+		<splitVal highCV="557" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A3</label>
+		<label xml:lang="de">Zubehöradresse A3</label>
+		<tooltip>Accessory address for output A3 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A3 (1-2047)</tooltip>
+	</variable>
+	<variable CV="561" item="Accessory Address A4" default="3" minOut="5">
+		<splitVal highCV="560" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A4</label>
+		<label xml:lang="de">Zubehöradresse A4</label>
+		<tooltip>Accessory address for output A4 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A4 (1-2047)</tooltip>
+	</variable>
+	<variable CV="564" item="Accessory Address A5" default="0" minOut="6">
+		<splitVal highCV="563" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A5</label>
+		<label xml:lang="de">Zubehöradresse A5</label>
+		<tooltip>Accessory address for output A5 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A5 (1-2047)</tooltip>
+	</variable>
+	<variable CV="567" item="Accessory Address A6" default="4" minOut="7">
+		<splitVal highCV="566" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A6</label>
+		<label xml:lang="de">Zubehöradresse A6</label>
+		<tooltip>Accessory address for output A6 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A6 (1-2047)</tooltip>
+	</variable>
+	<variable CV="570" item="Accessory Address A7" default="0" minOut="8">
+		<splitVal highCV="569" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A7</label>
+		<label xml:lang="de">Zubehöradresse A7</label>
+		<tooltip>Accessory address for output A7 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A7 (1-2047)</tooltip>
+	</variable>
+	<variable CV="573" item="Accessory Address A8" default="5" minOut="9">
+		<splitVal highCV="572" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A8</label>
+		<label xml:lang="de">Zubehöradresse A8</label>
+		<tooltip>Accessory address for output A8 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A8 (1-2047)</tooltip>
+	</variable>
+	<variable CV="576" item="Accessory Address A9" default="0" minOut="10">
+		<splitVal highCV="575" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A9</label>
+		<label xml:lang="de">Zubehöradresse A9</label>
+		<tooltip>Accessory address for output A9 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A9 (1-2047)</tooltip>
+	</variable>
+	<variable CV="579" item="Accessory Address A10" default="6" minOut="11">
+		<splitVal highCV="578" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A10</label>
+		<label xml:lang="de">Zubehöradresse A10</label>
+		<tooltip>Accessory address for output A10 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A10 (1-2047)</tooltip>
+	</variable>
+	<variable CV="582" item="Accessory Address A11" default="0" minOut="12">
+		<splitVal highCV="581" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A11</label>
+		<label xml:lang="de">Zubehöradresse A11</label>
+		<tooltip>Accessory address for output A11 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A11 (1-2047)</tooltip>
+	</variable>
+	<variable CV="585" item="Accessory Address A12" default="7" minOut="13">
+		<splitVal highCV="584" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A12</label>
+		<label xml:lang="de">Zubehöradresse A12</label>
+		<tooltip>Accessory address for output A12 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A12 (1-2047)</tooltip>
+	</variable>
+	<variable CV="588" item="Accessory Address A13" default="0" minOut="14">
+		<splitVal highCV="587" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A13</label>
+		<label xml:lang="de">Zubehöradresse A13</label>
+		<tooltip>Accessory address for output A13 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A13 (1-2047)</tooltip>
+	</variable>
+	<variable CV="591" item="Accessory Address A14" default="8" minOut="15">
+		<splitVal highCV="590" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A14</label>
+		<label xml:lang="de">Zubehöradresse A14</label>
+		<tooltip>Accessory address for output A14 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A14 (1-2047)</tooltip>
+	</variable>
+	<variable CV="594" item="Accessory Address A15" default="0" minOut="16">
+		<splitVal highCV="593" upperMask="XXXXXVVV"/>
+		<label>Accessory Address A15</label>
+		<label xml:lang="de">Zubehöradresse A15</label>
+		<tooltip>Accessory address for output A15 (1-2047)</tooltip>
+		<tooltip xml:lang="de">Zubehöradresse für Ausgang A15 (1-2047)</tooltip>
+	</variable>
+</variables>

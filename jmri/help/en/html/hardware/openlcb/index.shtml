@@ -1,0 +1,116 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!-- $Id$ -->
+<title>JMRI: OpenLCB Support</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: OpenLCB Support
+</h1>
+
+<em>The support on this page is rapidly evolving; the
+actual code might be ahead or behind the documentation
+on any given day.</em><p>
+
+JMRI provides support for general JMRI
+<a href="../../tools/Sensors.shtml">Sensors</a>
+and
+<a href="../../tools/Turnouts.shtml">Turnouts</a>
+in terms of OpenLCB "events". 
+
+<p>
+You can directly operate the OpenLCB network
+via the 
+<a href="../../../package/jmri/jmrix/openlcb/swing/send/OpenLcbCanSendFrame.shtml">send frame tool</a>.
+For browsing and setting configuration, see the 
+<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">node configuration browser tool</a>.
+<a href="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png">
+    <img src="../../../package/jmri/jmrix/openlcb/swing/networktree/NodeWithID.png"
+         width="128" height="149" align="right"
+         alt="Configuration Tool window"></a>
+
+<p>
+See also the 
+<a href="../index.shtml">main help page</a> for JMRI CAN support,
+including links to various general tools, and the
+page on the 
+<a href="Details.shtml">technical details</a>
+of JMRI's OpenLCB support. There's
+also a page on 
+how to 
+<a href="Connections.shtml">connect JMRI to an OpenLCB installation</a>.
+
+<h2>Naming</h2>
+
+The <a href="../../../html/doc/Technical/Names.shtml">system letter</a> 
+for OpenLCB connections is "M". OpenLCB 
+event and object names are 
+introduced below, with additional details and formats on a
+<a href="Names.shtml">separate page</a>.
+
+<p>
+JMRI associates OpenLCB events with individual
+JMRI objects (Sensors, Turnouts, etc) via the 
+JMRI system names.  A system name like
+"<code>MS1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>"
+defines a Sensor that follows the "1.2.3.4.5.6.7.8"
+and "1.2.3.4.5.6.7.9" OpenLCB events
+to change state. 
+<p>
+Another format for event IDs is a
+continuous hexadecimal string, such as
+"x0102030405060709".
+<p>
+These system names can get very long, in which
+case the "user names" become much more useful. 
+
+<h2>Sensors</h2>
+
+OpenLCB messages coming into JMRI applications can be accessed 
+via JMRI Sensor objects.  The Sensor's 
+<a href="Names.shtml">system name</a>
+determines which OpenLCB events it corresponds to.
+
+<p>
+A sensor is defined by two events: The one that sets it ACTIVE, and
+the one that sets it INACTIVE. The event numbers are essentially 
+arbitrary, and are defined by the OpenLCB nodes that send them.
+Because events are not intrinsically associated with specific hardware
+objects, and because people can use event IDs in many ways, 
+the specific event IDs for a sensor must be supplied.  
+You create Sensors using the 
+<a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
+button on the
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
+If you supply two event IDs, the first will set the sensor ACTIVE and 
+the second will set it INACTIVE.  If you provide just one, it
+will set the sensor ACTIVE, and it will automatically reset itself to INACTIVE
+shortly after.  This can be used for events that indicate momentary things on
+the layout like "it's noon".
+
+<h2>Turnouts</h2>
+
+The scheme for Turnouts is similar to Sensors above, 
+except JMRI is emitting the OpenLCB frames instead of receiving them, and
+the type letter is "T" instead of "S", e.g. "<code>MT1.2.3.4.5.6.7.8;1.2.3.4.5.6.7.9</code>".
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

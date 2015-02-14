@@ -1,0 +1,47 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: Renumber Grapevine Node
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help configure grapevine node">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Change Grapevine Board Address
+</H1>
+    
+This tool lets you change the address of a Grapevine board.
+<p>
+The board remembers the change, even through power off/on cycles, 
+until you change it again.
+
+<p>
+Enter the original node number, the new node number, and 
+press "Change The Node Number".
+
+<p>
+You might want to open the 
+<a href="NodeTableFrame.shtml">Node Table</a>
+and click "Check" to see if the 
+renumbering has worked.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

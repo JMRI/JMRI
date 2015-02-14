@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2006, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Peter Ulvestad" version="1" lastUpdated="20140104"/>
+  <!-- made from mrc1922 file -->
+  <decoder>
+    <family name="N Scale - No Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
+      <model model="N Gauge Atlas GP and Others - 1641" numOuts="2" numFns="4" maxTotalCurrent="1.0A"/>
+      <model model="N Gauge Kato SD70 MAC and AC4400 - 1642" numOuts="2" numFns="4" maxTotalCurrent="1.0A"/>
+      <model model="N Gauge Kato F Unit - 1659" numOuts="2" numFns="4" maxTotalCurrent="1.0A"/>
+      <model model="N Gauge Kato P42 / E8 / E9 - 1664" numOuts="2" numFns="4" maxTotalCurrent="1.0A"/>
+    </family>
+    <programming direct="yes" paged="no" register="yes" ops="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable CV="2" item="Vstart" default="0" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Start Volts</label>
+        <label xml:lang="it">Volt Partenza</label>
+        <label xml:lang="fr">V démarr.</label>
+        <label xml:lang="de">Startspannung</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="3" item="Accel" default="0" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Acceleration</label>
+        <label xml:lang="it">Accellerazione (0-32)</label>
+        <label xml:lang="fr">Accelération (0-32)</label>
+        <label xml:lang="de">Anfahrverzögerung (0-32)</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="4" item="Decel" default="0" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
+        <comment>Range 0-32</comment>
+      </variable>
+      <variable CV="5" item="Vhigh" default="32" comment="Range 0-32">
+        <decVal max="32"/>
+        <label>Max Voltage</label>
+        <label xml:lang="it">Volt Massimi (0-32):</label>
+        <label xml:lang="de">Höchstgeschwindigkeit</label>
+        <comment>Range 0-63</comment>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="125" default="1">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

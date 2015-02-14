@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- $Id$ -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="http://www.ppp-digital.es" version="1" lastUpdated="20121212"/>
+  <decoder>
+    <family name="PpP Decoders" mfg="PpP" lowVersionID="32" highVersionID="32" comment="PpP-Sem3 decoder.">
+      <model model="PpP-Sem3"/>
+    </family>
+    <programming direct="yes" paged="yes" register="no" ops="no"/>
+    <variables>
+      <variable CV="3" mask="XXXXVVVV" default="15" comment="Red light bright" item="pCV3">
+        <decVal min="1" max="15"/>
+        <label>Red light bright</label>
+      </variable>
+      <variable CV="4" mask="XXXXVVVV" default="15" comment="Green light bright" item="pCV4">
+        <decVal min="1" max="15"/>
+        <label>Green light bright</label>
+      </variable>
+      <variable CV="5" mask="XXXXVVVV" default="15" comment="Yellow light  bright" item="pCV5">
+        <decVal min="1" max="15"/>
+        <label>Yellow light bright</label>
+      </variable>
+      <variable item="Decoder Version" CV="7" readOnly="yes" default="32">
+        <decVal min="0" max="255"/>
+        <label>Decoder Version</label>
+        <label xml:lang="it">Versione Decoder: </label>
+        <label xml:lang="fr">Version décodeur: </label>
+        <label xml:lang="de">Decoder Version: </label>
+      </variable>
+      <variable item="Manufacturer" CV="8" readOnly="yes" default="74">
+        <decVal min="0" max="255"/>
+        <label>Manufacturer</label>
+        <label xml:lang="it">ID Costruttore: </label>
+        <label xml:lang="fr">ID constructeur: </label>
+        <label xml:lang="de">Hersteller ID: </label>
+      </variable>
+      <variable CV="33" default="20" comment="On/Off time" item="pCV33">
+        <decVal min="1" max="255"/>
+        <label>On/Off time</label>
+      </variable>
+      <variable CV="34" mask="XXXXVVVV" default="0" comment="Signal type" item="pCV34">
+        <enumVal>
+          <enumChoice choice="4 signals of 3 lights" value="0"/>
+          <enumChoice choice="3 signals of 3 lights and relays" value="1"/>
+        </enumVal>
+        <label>Signal type</label>
+      </variable>
+    </variables>
+  </decoder>
+  <pane>
+    <column>
+      <display item="pCV3"/>
+      <display item="pCV4"/>
+      <display item="pCV5"/>
+      <display item="pCV33"/>
+      <display item="pCV34"/>
+    </column>
+    <name>PpP Panel</name>
+  </pane>
+</decoder-config>

@@ -1,0 +1,512 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2011 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file includes for LNCP files -->
+<!-- Panes to show Masts -->
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+<name>Logic Cells 17-24</name>
+	<column>
+		<row>
+		<column>
+		<label label=" "/>
+		<label label="------ Logic combination reference table for conditions B and C ------"/>
+		<label label=" "/>
+		</column>
+		</row>
+		<row>
+		<separator/>
+		<column>
+			<separator/> <label label="Logic Combination"/> <separator/>
+			<label label="A OR B OR C "/> <separator/>
+			<label label="(A OR B) AND C "/> <separator/>
+			<label label="(A AND B) OR C "/> <separator/>
+			<label label="A AND B AND C "/> <separator/>
+				</column>
+				<separator/>
+		<column>
+			<separator/> <label label=" B Logic "/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" AND "/> <separator/>
+			<label label=" AND "/> <separator/>
+				</column>
+				<separator/>
+		<column>
+			<separator/> <label label=" C Logic"/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" AND "/> <separator/>
+			<label label=" OR "/> <separator/>
+			<label label=" AND "/> <separator/>
+				</column>
+				<separator/>
+		</row>
+		
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 17 Address" label="------ Logic Cell 17 ------ Control for Servo 1"/>
+		<row>
+			<column> <display item="Address 17A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 17A" format="checkbox"/> </column>	
+			<column> <display item="Message 17A" /> </column>
+			<column>
+				<display item="State 17A"/>
+				<display item="Aspect 17A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 17B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 17B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 17B" format="checkbox"/> </column>		
+			<column> <display item="Message 17B" /> </column>
+			<column>
+				<display item="State 17B"/>
+				<display item="Aspect 17B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 17C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 17C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 17C" format="checkbox"/> </column>
+			<column> <display item="Message 17C" /> </column>
+			<column>
+				<display item="State 17C"/>
+				<display item="Aspect 17C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 17D" format="checkbox"/>
+			<display item="Address 17D" />
+			<display item="Aspect 17D" />
+			<display item="Message 17D" />
+			<display item="State 17D" />
+	</column>
+	</row>
+
+	<separator/>
+	<separator/>
+	<row>
+	<column>	
+		<display item="Cell 18 Address" label="------ Logic Cell 18 ------ Control for Servo 2"/>
+		<row>
+			<column> <display item="Address 18A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 18A" format="checkbox"/> </column>	
+			<column> <display item="Message 18A" /> </column>
+			<column>
+				<display item="State 18A"/>
+				<display item="Aspect 18A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 18B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 18B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 18B" format="checkbox"/> </column>		
+			<column> <display item="Message 18B" /> </column>
+			<column>
+				<display item="State 18B"/>
+				<display item="Aspect 18B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 18C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 18C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 18C" format="checkbox"/> </column>
+			<column> <display item="Message 18C" /> </column>
+			<column>
+				<display item="State 18C"/>
+				<display item="Aspect 18C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 18D" format="checkbox"/>
+			<display item="Address 18D" />
+			<display item="Aspect 18D" />
+			<display item="Message 18D" />
+			<display item="State 18D" />
+	</column>
+	</row>
+		
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 19 Address" label="------ Logic Cell 19 ------"/>
+		<row>
+			<column> <display item="Address 19A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 19A" format="checkbox"/> </column>	
+			<column> <display item="Message 19A" /> </column>
+			<column>
+				<display item="State 19A"/>
+				<display item="Aspect 19A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 19B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 19B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 19B" format="checkbox"/> </column>		
+			<column> <display item="Message 19B" /> </column>
+			<column>
+				<display item="State 19B"/>
+				<display item="Aspect 19B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 19C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 19C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 19C" format="checkbox"/> </column>
+			<column> <display item="Message 19C" /> </column>
+			<column>
+				<display item="State 19C"/>
+				<display item="Aspect 19C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 19D" format="checkbox"/>
+			<display item="Address 19D" />
+			<display item="Aspect 19D" />
+			<display item="Message 19D" />
+			<display item="State 19D" />
+	</column>
+	</row>
+		
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 20 Address" label="------ Logic Cell 20 ------"/>
+		<row>
+			<column> <display item="Address 20A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 20A" format="checkbox"/> </column>	
+			<column> <display item="Message 20A" /> </column>
+			<column>
+				<display item="State 20A"/>
+				<display item="Aspect 20A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 20B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 20B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 20B" format="checkbox"/> </column>		
+			<column> <display item="Message 20B" /> </column>
+			<column>
+				<display item="State 20B"/>
+				<display item="Aspect 20B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 20C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 20C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 20C" format="checkbox"/> </column>
+			<column> <display item="Message 20C" /> </column>
+			<column>
+				<display item="State 20C"/>
+				<display item="Aspect 20C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 20D" format="checkbox"/>
+			<display item="Address 20D" />
+			<display item="Aspect 20D" />
+			<display item="Message 20D" />
+			<display item="State 20D" />
+	</column>
+	</row>
+	
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 21 Address" label="------ Logic Cell 21 ------"/>
+		<row>
+			<column> <display item="Address 21A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 21A" format="checkbox"/> </column>	
+			<column> <display item="Message 21A" /> </column>
+			<column>
+				<display item="State 21A"/>
+				<display item="Aspect 21A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 21B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 21B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 21B" format="checkbox"/> </column>		
+			<column> <display item="Message 21B" /> </column>
+			<column>
+				<display item="State 21B"/>
+				<display item="Aspect 21B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 21C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 21C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 21C" format="checkbox"/> </column>
+			<column> <display item="Message 21C" /> </column>
+			<column>
+				<display item="State 21C"/>
+				<display item="Aspect 21C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 21D" format="checkbox"/>
+			<display item="Address 21D" />
+			<display item="Aspect 21D" />
+			<display item="Message 21D" />
+			<display item="State 21D" />
+	</column>
+	</row>
+
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 22 Address" label="------ Logic Cell 22 ------"/>
+		<row>
+			<column> <display item="Address 22A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 22A" format="checkbox"/> </column>	
+			<column> <display item="Message 22A" /> </column>
+			<column>
+				<display item="State 22A"/>
+				<display item="Aspect 22A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 22B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 22B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 22B" format="checkbox"/> </column>		
+			<column> <display item="Message 22B" /> </column>
+			<column>
+				<display item="State 22B"/>
+				<display item="Aspect 22B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 22C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 22C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 22C" format="checkbox"/> </column>
+			<column> <display item="Message 22C" /> </column>
+			<column>
+				<display item="State 22C"/>
+				<display item="Aspect 22C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 22D" format="checkbox"/>
+			<display item="Address 22D" />
+			<display item="Aspect 22D" />
+			<display item="Message 22D" />
+			<display item="State 22D" />
+	</column>
+	</row>
+	
+	<separator/>
+	<separator/>	
+	<row>
+	<column>	
+		<display item="Cell 23 Address" label="------ Logic Cell 23 ------"/>
+		<row>
+			<column> <display item="Address 23A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 23A" format="checkbox"/> </column>	
+			<column> <display item="Message 23A" /> </column>
+			<column>
+				<display item="State 23A"/>
+				<display item="Aspect 23A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 23B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 23B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 23B" format="checkbox"/> </column>		
+			<column> <display item="Message 23B" /> </column>
+			<column>
+				<display item="State 23B"/>
+				<display item="Aspect 23B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 23C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 23C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 23C" format="checkbox"/> </column>
+			<column> <display item="Message 23C" /> </column>
+			<column>
+				<display item="State 23C"/>
+				<display item="Aspect 23C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 23D" format="checkbox"/>
+			<display item="Address 23D" />
+			<display item="Aspect 23D" />
+			<display item="Message 23D" />
+			<display item="State 23D" />
+	</column>
+	</row>
+	
+	<separator/>
+	<separator/>
+	<row>
+	<column>	
+		<display item="Cell 24 Address" label="------ Logic Cell 24 ------"/>
+		<row>
+			<column> <display item="Address 24A" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 24A" format="checkbox"/> </column>	
+			<column> <display item="Message 24A" /> </column>
+			<column>
+				<display item="State 24A"/>
+				<display item="Aspect 24A"/>
+			</column>
+		</row>
+		<row>			
+			<column> <display item="Logic 24B" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 24B" /> </column>
+			<label label=" Type " />
+			<column> <display item="DCC Message 24B" format="checkbox"/> </column>		
+			<column> <display item="Message 24B" /> </column>
+			<column>
+				<display item="State 24B"/>
+				<display item="Aspect 24B"/>
+			</column>
+		</row>	
+		<row>			
+			<column> <display item="Logic 24C" /> </column>
+		</row>
+		<row>
+			<column> <label label=""/> </column>
+			<column> <display item="Address 24C" /> </column>
+			<label label=" Type " />		
+			<column> <display item="DCC Message 24C" format="checkbox"/> </column>
+			<column> <display item="Message 24C" /> </column>
+			<column>
+				<display item="State 24C"/>
+				<display item="Aspect 24C"/>
+			</column>
+		</row>	
+	</column>
+
+	<separator/>
+	<column>
+		<label label="Action when logic cell goes True"/>
+		<label label=" "/>
+		<display item="DCC Message 24D" format="checkbox"/>
+			<display item="Address 24D" />
+			<display item="Aspect 24D" />
+			<display item="Message 24D" />
+			<display item="State 24D" />
+	</column>
+	</row>
+	<separator/>
+	<separator/>
+	</column>
+</pane>

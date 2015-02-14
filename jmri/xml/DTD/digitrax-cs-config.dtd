@@ -1,0 +1,58 @@
+<!-- Defines XML documenting a Digitrax command station configuration, -->
+<!-- including both the available options and current settings -->
+<!-- $Id$ -->
+
+<!-- This DTD is part of JMRI. Copyright 2001-2007.                         -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+
+<!-- A command station is configured by picking one specific value  -->
+<!-- from a series of choices for each of a number of options.      -->
+<!-- Some options represent closed/thrown of a single opswitch, in  -->
+<!-- which case the obvious two choices are defined.  Other options -->
+<!-- represent things that require setting a number of opswitches   -->
+<!-- in a consistent pattern.  -->
+
+<!-- Define a Command Station -->
+<!ELEMENT digitrax-cs-config (command-station* )>
+
+<!-- Define a Command Station -->
+<!ELEMENT command-station (identifier, options )>
+  <!ATTLIST command-station name CDATA #REQUIRED>
+
+<!-- Define a Command Station Identifier -->
+<!ELEMENT identifier (opsw*)>
+
+<!-- Define the list of Options -->
+<!ELEMENT options (group*)>
+
+<!-- Define Option Groupings -->
+<!ELEMENT group (option*)>
+  <!ATTLIST group name CDATA #REQUIRED>
+  
+<!-- Define an available option -->
+<!ELEMENT option (choice*)>
+  <!ATTLIST option name CDATA #REQUIRED>
+  
+<!-- Define how a choice for an option is configured -->
+<!ELEMENT choice (opsw*)>
+  <!ATTLIST choice name CDATA #REQUIRED>
+
+<!-- Define a particular setting within a choice -->
+<!ELEMENT opsw EMPTY>
+  <!ATTLIST opsw number CDATA #REQUIRED>
+  <!ATTLIST opsw setting ( closed | thrown ) "thrown" >
+
+<!-- Define value for a specific option -->
+<!--
+<!ELEMENT value EMPTY>
+  <!ATTLIST value name CDATA #REQUIRED>
+ -->

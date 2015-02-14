@@ -1,0 +1,151 @@
+/**
+ * ToolsMenu.java
+ */
+
+package jmri.jmrit;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import javax.swing.*;
+
+/**
+ * Create a "Tools" menu containing the Jmri system-independent tools
+ *<P>
+ * As a best practice, we are migrating the action names (constructor arguments)
+ * out of this class and into the contructors themselves.
+ *
+ * @author	Bob Jacobsen   Copyright 2003, 2008
+ * @author      Matthew Harris copyright (c) 2009
+ * @version     $Revision$
+ */
+public class ToolsMenu extends JMenu {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2981121278089960823L;
+
+	public ToolsMenu(String name) {
+        this();
+        setText(name);
+    }
+
+    Action prefsAction;
+    
+    protected void doPreferences() {
+            prefsAction.actionPerformed(null);
+    }
+    
+    public ToolsMenu() {
+
+        super();
+
+        setText(Bundle.getMessage("MenuTools"));
+
+        JMenu programmerMenu = new JMenu(Bundle.getMessage("MenuProgrammers"));
+        programmerMenu.add(new jmri.jmrit.simpleprog.SimpleProgAction());
+        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("MenuItemDecoderProServiceProgrammer")));
+        programmerMenu.add(new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("MenuItemDecoderProOpsModeProgrammer")));
+        programmerMenu.add(new jmri.jmrit.dualdecoder.DualDecoderToolAction());
+        add(programmerMenu);
+
+        // disable programmer menu if there's no programmer manager
+        if (jmri.InstanceManager.programmerManagerInstance()==null){
+        	programmerMenu.setEnabled(false);
+        }
+        
+        JMenu tableMenu = new JMenu(Bundle.getMessage("MenuTables"));
+        
+        tableMenu.add(tableMenu);
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTurnoutTable"), "jmri.jmrit.beantable.TurnoutTableTabAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSensorTable"), "jmri.jmrit.beantable.SensorTableTabAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLightTable"), "jmri.jmrit.beantable.LightTableTabAction"));
+        
+        JMenu signalMenu = new JMenu(Bundle.getMessage("MenuSignals"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalTable"), "jmri.jmrit.beantable.SignalHeadTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalMastTable"), "jmri.jmrit.beantable.SignalMastTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalGroupTable"), "jmri.jmrit.beantable.SignalGroupTableAction"));
+        signalMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSignalMastLogicTable"), "jmri.jmrit.beantable.SignalMastLogicTableAction"));
+        
+        tableMenu.add(signalMenu);
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemReporterTable"), "jmri.jmrit.beantable.ReporterTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemMemoryTable"), "jmri.jmrit.beantable.MemoryTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemRouteTable"), "jmri.jmrit.beantable.RouteTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLRouteTable"), "jmri.jmrit.beantable.LRouteTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemLogixTable"), "jmri.jmrit.beantable.LogixTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemBlockTable"), "jmri.jmrit.beantable.BlockTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemSectionTable"), "jmri.jmrit.beantable.SectionTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemTransitTable"), "jmri.jmrit.beantable.TransitTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemAudioTable"), "jmri.jmrit.beantable.AudioTableAction"));
+        tableMenu.add(new jmri.jmrit.beantable.ListedTableAction(Bundle.getMessage("MenuItemIdTagTable"), "jmri.jmrit.beantable.IdTagTableAction"));
+        add(tableMenu);
+
+        JMenu throttleMenu = new JMenu(Bundle.getMessage("MenuThrottles"));
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottleCreationAction(Bundle.getMessage("MenuItemNewThrottle" )));
+        throttleMenu.add(new jmri.jmrit.throttle.ThrottlesListAction(Bundle.getMessage("MenuItemThrottlesList" )));
+        throttleMenu.addSeparator();
+        throttleMenu.add(new jmri.jmrit.throttle.StoreXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveThrottleLayout" )));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemLoadThrottleLayout")));
+        throttleMenu.addSeparator();
+        throttleMenu.add(new jmri.jmrit.throttle.StoreDefaultXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemSaveAsDefaultThrottleLayout" )));
+        throttleMenu.add(new jmri.jmrit.throttle.LoadDefaultXmlThrottlesLayoutAction(Bundle.getMessage("MenuItemLoadDefaultThrottleLayout" )));
+        //throttleMenu.addSeparator();
+        //throttleMenu.add(new jmri.jmrit.throttle.ThrottlesPreferencesAction(Bundle.getMessage("MenuItemThrottlesPreferences"))); // now in tabbed preferences
+        throttleMenu.add(new JSeparator());
+        throttleMenu.add(new jmri.jmrit.withrottle.WiThrottleCreationAction(Bundle.getMessage("MenuItemStartWiThrottle")));
+        add(throttleMenu);
+
+	// disable the throttle menu if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+            throttleMenu.setEnabled(false);
+        }
+
+        AbstractAction consistAction= new jmri.jmrit.consisttool.ConsistToolAction(Bundle.getMessage("MenuItemConsistTool"));
+
+        add(consistAction);
+
+	// disable the consist tool if there is no consist Manager
+        if (jmri.InstanceManager.getDefault(jmri.ConsistManager.class)==null) {
+            consistAction.setEnabled(false);
+        }
+
+
+        JMenu clockMenu = new JMenu(Bundle.getMessage("MenuClocks"));
+        clockMenu.add(new jmri.jmrit.simpleclock.SimpleClockAction(Bundle.getMessage("MenuItemSetupClock")));
+        clockMenu.add(new jmri.jmrit.nixieclock.NixieClockAction(Bundle.getMessage("MenuItemNixieClock")));
+        clockMenu.add(new jmri.jmrit.lcdclock.LcdClockAction(Bundle.getMessage("MenuItemLcdClock")));
+        clockMenu.add(new jmri.jmrit.analogclock.AnalogClockAction(Bundle.getMessage("MenuItemAnalogClock")));
+	add(clockMenu);
+
+        add(new JSeparator());
+
+        add(new jmri.jmrit.powerpanel.PowerPanelAction(Bundle.getMessage("MenuItemPowerControl")));
+        add(new jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrlAction(Bundle.getMessage("MenuItemTurnoutControl")));
+        add(new jmri.jmrit.blockboss.BlockBossAction(Bundle.getMessage("MenuItemSimpleSignal")));
+        add(new jmri.jmrit.sensorgroup.SensorGroupAction(Bundle.getMessage("MenuItemSensorGroup")));
+    	add(new jmri.jmrit.speedometer.SpeedometerAction(Bundle.getMessage("MenuItemSpeedometer")));
+        add(new jmri.jmrit.simplelightctrl.SimpleLightCtrlAction(Bundle.getMessage("MenuItemLightControl")));
+        add(new jmri.jmrit.dispatcher.DispatcherAction(Bundle.getMessage("MenuItemDispatcher")));
+
+        add(new JSeparator());
+
+        add(new jmri.jmrit.sendpacket.SendPacketAction( Bundle.getMessage("MenuItemSendDCCPacket") ));
+
+        add(new JSeparator());
+        // US&S CTC subsystem tools
+        add(new jmri.jmrit.ussctc.ToolsMenu());
+
+        add(new JSeparator());
+        // operations menu
+        add(new jmri.jmrit.operations.OperationsMenu());
+
+        add(new JSeparator());
+        // add start web server
+        add(new jmri.web.server.WebServerAction());
+
+    }
+
+    static Logger log = LoggerFactory.getLogger(ToolsMenu.class.getName());
+}
+
+

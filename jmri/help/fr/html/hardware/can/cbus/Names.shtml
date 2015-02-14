@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- Copyright ($Author$) 2008 -->
+<!--  $Id$ -->
+
+<!-- UpDated  by Blorec Herv&#233;  2013-09-10-->
+<title>JMRI: CBUS Naming</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=  iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: d&#233;signation CBUS
+</h1>
+
+Cette page explique comment JMRI utilise des noms syst&#232;me
+pour acc&#233;der aux ressources jointes &#224; CBUS.
+<p>
+
+Pour en savoir plus sur le support CBUS JMRI, voir la
+<a href="index.shtml"> page principale CBUS</a>.
+
+<h2>Utilisation des noms JMRI</h2>
+JMRI fournit une interface au r&#233;seau r&#233;el via des
+objets internes, tels que les Aiguillages, les Capteurs, etc qui
+sont &#233;troitement cartographi&#233;s correspondants &#224; des p&#233;riph&#233;riques physiques.
+Cette cartographie est r&#233;alis&#233;e via la d&#233;signation "Noms Syst&#232;mes", qui &#224; la fois
+identifie comment acc&#233;der &#224; un dispositif particulier, et sont les cl&#233;s
+ de la recherche d'un objet correspondant dans JMRI.
+
+
+
+<h2> &#233;v&#233;nements CBUS</h2>
+
+<a href="http://www.merg.org.uk/"> MERG</a>  
+<a href="http://www.merg.org.uk/resources/lcb.html"> CBUS</a>
+communique par messages avec un format fixe:
+Un octet de commande et d'information sur la longueur, suivi &#233;ventuellement
+par des octets de donn&#233;es suppl&#233;mentaires.
+Et ceci est la forme la plus simple, il est utilis&#233; pour envoyer des "&#233;v&#233;nements" identifiables
+ &#224; leur tour, les &#233;v&#233;nements sont de deux types: "ON" et "OFF".
+
+
+   
+<!--#include virtual="/Footer" -->
+</body>
+</html>

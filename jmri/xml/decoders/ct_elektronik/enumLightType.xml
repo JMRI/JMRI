@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2014 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for CT Elektronik (Alain Le Marchand) -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice choice="No effect">
+    <choice>No effect</choice>
+    <choice xml:lang="de">Kein Effekt</choice>    
+  </enumChoice>
+  <enumChoice choice="Flashing">
+    <choice>Flashing</choice>
+    <choice xml:lang="de">Blinken</choice>     
+  </enumChoice>
+  <enumChoice choice="Blinking">
+    <choice>Blinking</choice>
+    <choice xml:lang="de">Blinken im Gegentakt</choice>     
+  </enumChoice>
+  <enumChoice choice="Single Pulse Strobe">
+    <choice>Single Pulse Strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Double Strobe">
+    <choice>Double Strobe</choice>
+  </enumChoice>
+  <enumChoice choice="Flashing Headlight">
+    <choice>Flashing Headlamp</choice>
+  </enumChoice>
+  <enumChoice choice="Ditch Light Left">
+    <choice>Ditch Light Left</choice>
+    <choice xml:lang="de">Ditch-Light links</choice>     
+  </enumChoice>
+  <enumChoice choice="Ditch Light Right">
+    <choice>Ditch Light Right</choice>
+    <choice xml:lang="de">Ditch-Light rechts</choice>     
+  </enumChoice>
+  <enumChoice choice="Rotary Beacon">
+    <choice>Rotary Beacon</choice>
+  </enumChoice>
+  <enumChoice choice="Gyralite">
+    <choice>Gyralite</choice>
+  </enumChoice>
+  <enumChoice choice="Mars Light">
+    <choice>Mars Light</choice>
+  </enumChoice>
+  <enumChoice choice="Soft Start">
+    <choice>Soft Start</choice>
+  </enumChoice>
+</enumVal>

@@ -1,0 +1,104 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated by Herv&#233; Blorec 2013-10-11-->
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: Sensor Table Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META NAME="keywords" CONTENT="JMRI help Sensor Table">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1> Le Tableau Capteur</H1>
+
+<P> Cette table contient une liste des capteurs qui existent pour ce
+panneau.
+
+<H2>Colonnes Tableau Capteur</H2>
+
+<DL>
+<DT>Nom Utilisateur </DT>
+<DD> Vous pouvez directement saisir ou modifier le champ "Nom Utilisateur" pour un
+capteur existant.</dd>
+
+<DT> &#233;tat</DT>
+<DD> Appuyer sur le bouton "&#233;tat" va changer l'&#233;tat d'un
+capteur existant.</dd>
+
+<DT> Supprimer</DT>
+<DD>
+Appuyer le bouton "Supprimer" supprimera le capteur du
+tableau.
+<p>
+Notez que cela ne supprime pas le capteur de tous les fichiers que vous avez
+sauvegard&#233;s qui le contiennent Si vous chargez un de ces fichiers, peut-&#234;tre
+lorsque vous red&#233;marrez le programme, le capteur va r&#233;appara&#238;tre.
+Vous devez utiliser l'option  "Stocker dans un fichier" dans le menu"Fichier"
+pour enregistrer de nouvelles versions de tous les fichiers qui contiennent ce capteur.
+</Dd>
+
+<DT> Invers&#233;</DT>
+<DD> Quand elle est coch&#233;e, la commande du capteur et le statut sont invers&#233;. 
+Par exemple, un capteur invers&#233; signifie que lorsque le r&#233;seau envoie une
+commande "actif" du capteur, il devient "inactif" pour JMRI.</dd>
+
+ <DT>Utilisez Retard Global</DT>
+<DD> Quand elle est coch&#233;e, le capteur va utiliser les valeurs sp&#233;cifi&#233;es dans le syst&#232;me de
+ "AntiRebond&#166; d&#233;faut .." option de menu pour toute la dur&#233;e o&#249; le syst&#232;me attend
+ avant d'enregistre le changement d'&#233;tat.
+<a HREF="#Debounce"><p> Voir le Capteur AntiRebond ci-dessous</A>
+</Dd>
+ <DT> Retard actif/Retard inactif</DT>
+<DD> Sp&#233;cifiez la dur&#233;e du temps en millisecondes pendant lequel le syst&#232;me attend avant
+l'enregistrement du changement d'&#233;tat d'un capteur.
+<a HREF="#Debounce"><p> Voir Capteur AntiRebond ci-dessous</A></dd>
+
+</DL>
+
+</DL>
+
+<H2>Commandes Tableau Capteur</H2>
+
+Il y a aussi un bouton au bas de la Table Capteur
+
+<DL>
+<DT>Ajouter</DT>
+<DD> Appuyez sur ce bouton pour ajouter un nouveau capteur. Pour plus d'informations, voir
+ <A HREF="SensorAddEdit.shtml"> Ajouter/&#233;diter Capteurs</A>.</Dd>
+</ DL>
+<H2> <A NAME="Debounce"></A> Capteur AntiRebond</H2>
+<p> L'installation d'un  Capteur Antirebond est l&#224; pour aider &#224; pr&#233;venir les faux d&#233;clenchements d'un capteur
+et le d&#233;clenchement d'autres &#233;v&#233;nements dans le syst&#232;me. <br>
+Ces faux d&#233;clenchements pourrait &#234;tre d&#249; &#224; un zone de la voie sale ou des interf&#233;rences &#233;lectriques.
+
+<p> L'installation vous permet d'assigner une dur&#233;e en millisecondes avant que le changement
+soit enregistr&#233; avec le reste du syst&#232;me. Si apr&#232;s cette p&#233;riode l'&#233;tat n'a
+pas chang&#233; alors l'&#233;tat du capteur sera transmis au reste du syst&#232;me. <br>
+
+Toutefois, si l'&#233;tat des capteurs est diff&#233;rent apr&#232;s que la temporisation soit termin&#233;e, alors le
+syst&#232;me va red&#233;marrer le processus, cette fois apr&#232;s que le minuteur ait termin&#233;, il 
+v&#233;rifiera si l'&#233;tat du capteur est dans le m&#234;me &#233;tat qu'il &#233;tait avant qu'il ait red&#233;marr&#233;
+le processus. Si ce n'est pas le cas , le processus est relanc&#233; &#224; nouveau jusqu'&#224; ce que l'&#233;tat soit le m&#234;me
+avant et apr&#232;s que le chronom&#232;tre ait &#233;t&#233; lanc&#233;.
+
+    
+    
+    </DD>
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

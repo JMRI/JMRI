@@ -1,0 +1,52 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+ <TITLE>
+      JMRI: OS Indicator Help
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="JMRI help OS Indicator">
+
+<!-- Style -->
+  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+  <link rel="icon" href="/images/jmri.ico" type="image/png">
+  <link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>OS Indicator</H1>
+
+<img src="images/OsIndicatorFrame.jpg" alt="Screen shot" align="right"><br>
+
+This tool makes it easy to drive an occupancy indicator lamp on a 
+CTC panel from an occupancy sensor, while allowing
+for the indicator to be forced on when the track section is
+unlocked into manual mode.
+
+<p>
+Fields and buttons:
+<dl>
+<dt>Output Name<dd>Enter the system name or user name of the Turnout the follower will control
+<dt>Sensor Name<dd>Enter the system name or user name of the Sensor the followe will watch
+<dt>Lock Name<dd>If a sensor is added here, the output turnout will be set THROWN (on) when the sensor is INACTIVE.
+This can be used e.g. to indicate that a particular track section has been unlocked.
+<dt>View<dd>Enter an output turnout name and click this button to see any existing follower configuration.
+<dt>Add/Update<dd>File out fields as desired and press Add/Update to create a new follower or modify an existing one.
+</dl>
+
+<p>  
+This is the help/jmri/jmrit/ussctc/OsIndicatorFrame help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

@@ -1,0 +1,326 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: Panel Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Warrant Help">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>Warrants</H1>
+
+A Warrant is a collection of information sufficient to run an automated train.
+It will set the turnouts for a specified route and drive the train over the route.  
+When running, using block occupancy detection and signal configuration, it will 
+make a best effort to control speed according to signal aspects and  
+occupancy conditions ahead.
+A JMRI Warrant is suggestive of what a warrant does on a prototype railroad, but
+there is no intention to replicate any particular railroad's mode of
+operation.  It is simply the idea of giving an automated train trackage rights to 
+move from point A to point B.
+<p>
+<b>Warrants</b> depend on having an accurate description of the layout in terms of
+<b>OBlocks</b>, <b>Portals</b> and <b>OPaths</b>.  These elements are
+created by entering data into the <b>Occupancy Block Tables</b> or by using the
+graphical interface of the <b>Circuit Builder</b>.  Initially neither of these
+subsystems are visible in Control Panel editor.
+<p>It is also important that the scale of your layout is known so that warrant
+can compute the distances required when encountering signals.  Go the <b>Warrants</b>
+section of <b>Preferences</b> to set the layout scale.  There are other parameters
+related to warrants there, that you may wish to change later, but the defaults are
+generally sufficient without change.
+<p>
+<H2>How To Get Started</H2>
+<ul>
+	<li>Definitions of OBlocks, Portals and OPaths are found at
+	<a href="OBlockTable.shtml">The Occupancy Block Tables</a>.</li>
+	
+	<li>Opening the Occupancy Block Tables
+	is done by either the <b>Tables -> Occupancy Blocks</b> menu item under 
+	the <b>Tools</b> menu in the main PanelPro window, or by the <b>Occupancy Blocks</b>
+	menu item under the <b>Add Items</b> menu of a Control 
+	Panel Editor.  How to create OBlock, Portals and OPaths is described in
+	<a href="OBlockEdit.shtml">Creating and Editing OBlocks, Portals and OPaths</a>.</li>
+	
+	<li>OBlocks, Portals and Paths can be created using
+	the <b>Circuit Builder</b> tool found in the Control Panel Editor.  Intially, the
+	Circuit Builder can be opened using the <b>Open Circuit Builder</b> menu item 
+	under the <b>Warrants</b> menu. Instructions for use are found in 
+	<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>.</li>
+</ul>
+<p>
+<H3>More About Circuit Builder</h3>
+Circuit Builder is an interactive tool that creates OBlocks, Portals and Paths graphically.
+It is necessary to have a track diagram of your layout expressed with track icons 
+(track segments and turnout icons).  OBlocks are created by clicking on track icons.
+The Circuit Builder can convert the track segments and turnout icons of your layout to 
+Indicator Track and Indicator Turnout icons.  These icons display the
+status of the OBlock they represent by color - whether the track circuit of the OBlock is
+occupied or unoccupied, whether a warrant has allocated it or whether a train 
+under warrant currently is proceeding over the circuit.  Details are found at
+<a href="..\display\CircuitBuilder.shtml">The Circuit Builder</a>, 
+<p> 
+<H3>Compatibility With Layout Editor</h3>
+OBlocks, Portals and Paths can be used with Layout Editor.  Compatibility is 
+achieved by using the same occupancy detection sensor(s) for LayoutBlocks as
+for OBlocks.  If there is no corresponding Control Panel layout diagram, Circuit Builder
+cannot be used.  The Occupancy Block Tables will then have to be used to 
+define the OBlocks, Portals and Paths.
+<p>
+<H3>More About Getting Started</H3>
+In order to create a <b>Warrant</b> you must first have created two or more OBlocks.
+These blocks don't have to be fully defined, but their existence indicates that you 
+are interested in using Warrants, that is, you have a block to start a train and 
+a block to stop it.
+When two or more OBlocks exist    
+Control Panel Editor will display a <b>Warrants</b> menu with the following
+menu items.  The Warrant menu items are:
+<ul>
+        <li><b>Warrant List</b>: - Opens a table of warrants from which you
+        	can control warrant routes and dispatch trains.</li>
+        <li><b>Edit Warrant...</b>: - Shows the list of existing  warrants.
+        	Selecting one will open a Warrant Editing Window.  The
+        	operations of this frame are discussed in <A HREF="WarrantTable.shtml">
+        	Creating and Editing Warrants</A>.</li>  
+        <li><b>Create New Warrant</b>: - After providing system and user names this
+		opens a blank Warrant Editing Window to create a new warrant. The
+        	operations of this frame are discussed in <A HREF="WarrantTable.shtml">
+        	Creating and Editing Warrants</A>.</li>
+	  <li><b>Train Trackers</b>: - Opens window where the identity of trains can be
+		displayed as they move from one occupancy block to another.</li>
+	  <li><b>Create NXWarrant</b> - Opens a window to create an eNtry/eXit warrant.</li>
+	  <li><b>Open Session Log</b> - Opens a window to name a file that records the
+	  warrant and train tracking status messages.</li>
+</ul>
+
+The editor also will display a <b>Circuit Builder</b> menu.   Otherwise, this menu is not displayed.
+The circuit Builder menu contains menu items to create and edit OBlocks, Portals and OPaths
+and to position icons that represent them.
+<p>
+
+<H2>Creating a Warrant</H2>
+There are two types of warrants;
+<ul>		
+		<li>A recorded script Warrant, where 
+		throttle commands are recorded from a throttle you use to drive a train over
+		preselected route.  The warrant then replicates all the commands when played back.
+		To create a recorded script warrant, select the menu item <b>Create New Warrant</b>
+		from the <b>Warrants</b> menu.</li>
+	and
+		<li>An NXwarrant, that is, an eNtry/eXit warrant. These warrants are created by
+		selecting a start position and an end position and having Control Panel Editor
+		generate the commands to drive the train from start to end.  To create an
+		NXwarrant select the menu item <b>Create NXWarrant</b> from the <b>Warrants</b>
+		menu.</li>
+</ul>
+<p>
+In either case, first a route must be chosen on which to run the train. The <b>Creating Routes</b>
+section below describes how this is done.
+
+<H2>Elements of a Warrant</H2>
+A warrant consists of two parts; The route over which a train will run and the commands
+it will receive when running over the route.
+
+<H3>Creating Routes</H3>
+A warrant route is a series of block paths linked together so a train
+may travel over it.  A warrant route is created by first choosing an <b>origin
+block</b>, a starting path and a portal to exit the orginating block.  Then, a
+<b>destination block</b> is chosen and a path on which to end the route.  Optionally,
+you may also chose a <b>Via</b> block, that is, a block that route <i>must</i> include
+and a <b>Avoid</b> block, that is, a block the the route <i>must not</i> include.  Blocks
+are chosen either by typing in the block name or dragging it from a displayed 
+OBlock table.  The origin and destination blocks can also be chosen by clicking on track
+icons that represent these OBlocks.  To use this feature your panel must have your layout
+depicted by Indicator Track Icons placed there by Circuit builder. 
+<p>
+A computer algorithm determines all the intermediate blocks, portals and paths to make the route.  If more
+than one route meets the criterion, you are presented with a list to review and select the 
+route you want.
+<p>
+<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A> has more
+information about creating routes.
+</p>
+<H3>Scripting the Train Action</H3>
+The second part of a Warrant are the throttle commands to control the train as it traverses the
+route.  
+The script commands contain the elapsed time between commands and playback will duplicate this timing.
+However, when a warrant is run with a different engine or a different consist, or even the same train 
+depending whether the motor is hot or cold, this timing may not be replicated exactly.  Because of this
+the command script is synchronized upon entering each detection OBlock.  So, if the train is slow in 
+reaching the next block, the commands for the next block will be delayed until the train enters
+the block.  Conversely, if the train reaches the next block ahead of time, any remaing commands in the
+block just left will issued with no elasped time so that the train can <i>catch up</i> to the script.
+<p>
+<H4>Recorded Scripts</H4>
+This is done by putting a screen throttle into <i>Learn Mode</i> that records all the 
+throttle comands you make when driving the train over the route.  This script can then
+be replayed to drive the train automatically. All possible throttle functions can be recorded
+and played back.
+<p>
+With Loconet you may steal the address and use a manual walk around throttle.  For other command systems,
+a WiFi throttle may take the same address and be used to record a walk around script.
+<p>
+<H4>Generated Scripts</H4>
+For NXWarrants the script is generated by Control Panel Editor.  It ramps the train up to speed
+and ramps it down at the destination.  It obeys all the traffic occupancy and signals as do the
+recorded warrants. See <A HREF="NXWarrant.shtml"> NXWarrants</A> for how to run them.
+<p>
+<H3>Customizing the Script</H3>
+A warrant script can be edited to modify the recorded commands.  Additional non-throttle events
+can be added to the script such as triggering or responding to external sensors.
+<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>. has more
+information about creating and customizing scripts.</p>
+<p>
+<H2>Using the Warrant List</H2>
+The <b>Warrant List</b> menu item opens the <b>Warrant Table</b>.  Each row is a
+warrant that has been created and saved.  Warrant routes can be allocated, i.e. reserved
+for that warrant, the turnouts for route can be set and when the warrant is run, its status
+is shown and controlled using the columns in the table.
+
+<H3>Columns in the Warrant Table</H3>
+<ul>
+        <li><b>Warrant</b>: - The name of the warrant.</li> 
+        <li><b>Route</b>: - The route of the warrant is listed in a drop down combo box by 
+		clicking the table cell</li>
+        <li><b>Train Name</b>: - The Train Id, as stated in the Roster.  This cell can be
+		edited and its content is displayed by the Indicator Track Icons when the train
+		occupies their OBlock. (The edit popup of Indicator Track Icons have a checkbox 
+		to enable this function)</li>
+        <li><b>DCC Address</b>: - The DCC Address of the locomotive or consist.  This cell can
+		be edited to correspond to the current motive power of the train.</li>
+        <li><b>Allocate</b>: - A button that reserves the route for the warrant.  The Indicator
+		Track Icons display green to indicate the route.</li>
+        <li><b>Deallocate</b>: - A button that removes the reservation for the warrant.</li>
+        <li><b>Set</b>: - A button that allocates and sets the turnouts for the warrant route.</li>
+        <li><b>AutoRun</b>: - A button that runs the train over the route according to the 
+		throttle commands of the warrant. The recorded speed of the train will be modified 
+		according to the occupancy and signal aspects encountered on the route.  The 
+		Indicator Track Icons display the current position of the
+		of the train with a blue color.</li>
+        <li><b>ManRun</b>: - A button that allocates the warrant and sets the route for
+        a manual operator to run the train.  The script is not run.  The 
+		Indicator Track Icons display the current position of the
+		of the train with a blue color.</li>
+        <li><b>Control/Status</b>: - The status of the warrant is shown.  It also has a 
+		drop down combo box that can send the following commands to a running train. 
+		<b><i>Note</b>: This column has two functions - 
+		Status messages and control buttons.</i>
+        <ul>
+        	<li><b>Halt</b> - Temporarily halts the train and suspends execution of the 
+			throttle command script</li>
+		<li><b>Resume</b> - Ramps up the speed of the train to its former setting and 
+			restarts the throttle command script
+		<li><b>Retry</b> - Repeats the test for whether a signal aspect has changed or
+			an occupied block ahead has cleared.  (Ocaisionally a sensor change can be
+			missed due to a short or other hardware malfunction.  This retest may allow 
+			a stopped train to continue.)
+		<li><b>Abort</b> - Abort the script and deallocate the warrant.</li>
+	  </ul>
+        <li><b>Edit</b>: - A button that opens an editing window for the warrant,</li>
+        <li><b>Delete</b>: - A button that deletes the warrant.</li>
+</ul></p>
+
+<H3>Creating NX Warrants</H3>
+Warrants from an eNtry block to an eXit block can be created "on the fly" using the 
+<b>Generate NX Warrant</b> button at the lower
+left of the Warrant List table.  This feature is particularly useful for taking trains on or
+off the visible layout to and from staging.
+<p>
+The button opens a window where occupancy blocks can be specified for the <b>Origin</b>, 
+<b>Destination</b>, <b>Via</b> and <b>Avoid</b> blocks of the warrant.   Clicking on the 
+Indicator Track Icon of a block will insert the block name into block text fields.  The 
+<i>first click</i> sets the Origin block, the <i>second click</i> the Destination block, 
+the <i>third</i> the Via block and the <i>fourth</i> the Avoid block.  This sequence is 
+repeated mod 4.<A HREF="WarrantTable.shtml"> Creating and Editing Warrants</A>. has more
+information about creating routes.</p>
+<p>
+The <b>Address</b>, <b>Train ID,</b>  and <b>Direction,</b> of the engine are set in this window
+as well as  the parameters used for the speed changing ramps.  
+Pressing the 
+<b>Run NX Warrant</b> button computes the route and runs the addressed train at the specified 
+speeds and direction.</p>
+<p>
+<H2>Tracking Trains</H2>
+The fourth Warrants menu item opens the <b>Tracker Table</b>.  Pressing the <b>New Tracker</b>
+button in this window opens a dialog to enter a train name and the OBlock it occupies.  Pressing
+the done button creates a row in the Tracking Table.  The row shows the train name ane the block 
+it currently occupies and the length of time it has occupied the block.  As the train moves from
+block to block, this status is updated.  The Indicator Track Icons can display the train name.
+<ul>
+	<b>Note:</b> The <b>Edit Icon</b> popup menu item opens a dialog for Indicator Track Icons 
+	have a <b>Display Train Name when occupied</b> checkbox to select to display text for 
+	train tracking or warrant running.
+</ul>
+The window also has a <b>Refresh Tracker Info</b> button to poll the trackers listed in the 
+Tracker table and a <b>OBlock Pick List</b> button to display a picklist.</p>
+<p>
+The location of the train can be set by typing, by dragging block name from the picklist, or by 
+clicking on a Indicator Track Icon in the panel.</p>
+<p>
+Tracking can also be done for a train by dragging and dropping a Loco Icon onto the OBlock 
+the train occupies.  This is the most simple way of tracking in that both the names and 
+location are done with a single drag and drop.
+<p>
+<H2>Using Warrants in Logix</H2>
+Several of the operations that can be done from the Warrant List and Warrant Editing frame
+can be done with Logix Conditionals.  You may design and implement a dispatcher's panel
+using the Warrant state variables and actions found in Logix.
+
+<H3>Warrant State Variables</H3>
+When a warrant has been allocated or is in effect, the following state variables can be tested
+in a Logix conditional.
+<ul>
+        <li><b>Route Free</b>: - True when all blocks in the warrant route are not allocated
+        to anyone and are not occipied.  False otherwise.</li>
+        <li><b>Route Set</b>: - True when all blocks in the warrant route are allocated and the
+        turnouts set for this warrant.  False otherwise.</li>
+        <li><b>Route Allocated</b>: - True when all blocks in the warrant route are allocated
+        to this warrant.  False otherwise.</li>
+        <li><b>Route Occupied</b>: - True when none of the blocks in the warrant route, other
+        than the origin block, are occipied.  (Assumes the train of this warrant is occupying
+        the origin block).  False otherwise. </li>
+        <li><b>Train Running</b>: - True when the train specified in the warrant is running 
+        either in Learn Mode or Auto Run Mode.  False otherwise.</li>
+</ul>
+
+<H3>Warrant Actions</H3>
+<ul>
+        <li><b>Allocate Warrant Route</b>: - Allocates the route to this warrant.</li>
+        <li><b>Deallocate Warrant</b>: - Deallocates the route of this warrant (only).  This will not
+         deallocate the route of a different warrant.</li>
+        <li><b>Set Route Turnouts</b>: - Sets the signals and turnouts for the route as far along the
+         route that it can until it reaches an occupied block or a block allocated to another 
+         warrant.</li>
+        <li><b>Auto Run Train</b>: - Issue the throttle commands to the train in the warrant.  This
+         should only be done when the train occupies the Origin block.</li>
+        <li><b>Set Train Id</b>: - Set the engine consist to be used in the warrant from a trainId 
+        in the Engine Roster.  Alternatively, the DCC address can be used to identify the engine.</li>
+        <li><b>Set Train Name</b>: - Set the name of the train to display in the loco marker
+         indicating the current position of the train when running.</li> 
+        <li><b>Control Train</b>: - Send a control command (<b>Halt</b>, <b>Resume</b> or 
+        <b>Abort)</b> to a running train under warrant.</li>
+        <li><b>Set Throttle Factor</b>: - Set a multiplier for the recorded throttle setting.
+         When the engine or consist of the train is changed, more or less power may be required.</li>
+</ul>        
+<br>
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>
+

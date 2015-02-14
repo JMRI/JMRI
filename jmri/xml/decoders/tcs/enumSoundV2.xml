@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new file for TCS version 2 sound set -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+	<enumChoiceGroup>
+		<name>Air Pump</name>
+		<enumChoice choice="Air Pump 1" value="118"/>
+		<enumChoice choice="Air Pump 2" value="119"/>
+		<enumChoice choice="Air Pump 3" value="120"/>
+		<enumChoice choice="Air Pump 4" value="121"/>
+		<enumChoice choice="Air Pump 5" value="122"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Ash Dump 1" value="383"/>
+	<enumChoiceGroup>
+		<name>Bell</name>
+		<enumChoice choice="Bell Conrail #2233 GP30 Air Powered" value="7"/>
+		<enumChoice choice="Bell Heisler Class 53833 #4 Hand Powered" value="12"/>
+		<enumChoice choice="Bell John Bull Replica Hand Powered" value="9"/>
+		<enumChoice choice="Bell Leetonia Railroad Shay #1" value="13"/>
+		<enumChoice choice="Bell PRR #1223 American 4-4-0 D16SB Hand Powered" value="6"/>
+		<enumChoice choice="Bell PRR 2-8-0 H3 1187 Hand Powered" value="10"/>
+		<enumChoice choice="Bell PRR 2-8-0 H3 2846 Air Powered" value="11"/>
+		<enumChoice choice="Bell PRR 4-4-2 #7002 Hand Powered" value="5"/>
+		<enumChoice choice="Bell PRR GG1" value="8"/>
+		<enumChoice choice="Bell Reading 0-6-0 #1251 Tank Engine Air Powered" value="3"/>
+		<enumChoice choice="Bell Strasburg #475 Air Powered" value="1"/>
+		<enumChoice choice="Bell Strasburg #475 Hand Powered" value="0"/>
+		<enumChoice choice="Bell Strasburg #89 Air Powered" value="2"/>
+		<enumChoice choice="Bell Strasburg #90 Hand Powered" value="16"/>
+		<enumChoice choice="Bell Strasburg #90 Hand Powered (Variation)" value="17"/>
+		<enumChoice choice="Bell Unknown from Strasburg museum floor" value="14"/>
+		<enumChoice choice="Bell Virginia Truckee Railroad 2-6-0 Hand Powered" value="4"/>
+		<enumChoice choice="Bell Williams Grove PRR #643 0-6-0" value="15"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Blow Down</name>
+		<enumChoice choice="Blow Down 1" value="92"/>
+		<enumChoice choice="Blow Down 2" value="93"/>
+		<enumChoice choice="Blow Down 3" value="94"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Blower</name>
+		<enumChoice choice="Blower 1" value="95"/>
+		<enumChoice choice="Blower 2" value="96"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Release</name>
+		<enumChoice choice="Brake Release 1" value="199"/>
+		<enumChoice choice="Brake Release 2" value="200"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Brake Squeal</name>
+		<enumChoice choice="brake grinding to a stop" value="198"/>
+		<enumChoice choice="brake squeal 1" value="192"/>
+		<enumChoice choice="brake squeal 2" value="193"/>
+		<enumChoice choice="brake squeal 3" value="194"/>
+		<enumChoice choice="brake squeal 4" value="195"/>
+		<enumChoice choice="brake squeal 5" value="196"/>
+		<enumChoice choice="brake squeal 6" value="197"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Coupler Clank</name>
+		<enumChoice choice="Coupler Clank 1" value="97"/>
+		<enumChoice choice="Coupler Clank 2" value="98"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Cylinder Cocks</name>
+		<enumChoice choice="Cylinder Cocks 1" value="99"/>
+		<enumChoice choice="Cylinder Cocks 10" value="108"/>
+		<enumChoice choice="Cylinder Cocks 11" value="109"/>
+		<enumChoice choice="Cylinder Cocks 12" value="110"/>
+		<enumChoice choice="Cylinder Cocks 13" value="111"/>
+		<enumChoice choice="Cylinder Cocks 14" value="112"/>
+		<enumChoice choice="Cylinder Cocks 2" value="100"/>
+		<enumChoice choice="Cylinder Cocks 3" value="101"/>
+		<enumChoice choice="Cylinder Cocks 4" value="102"/>
+		<enumChoice choice="Cylinder Cocks 5" value="103"/>
+		<enumChoice choice="Cylinder Cocks 6" value="104"/>
+		<enumChoice choice="Cylinder Cocks 7" value="105"/>
+		<enumChoice choice="Cylinder Cocks 8" value="106"/>
+		<enumChoice choice="Cylinder Cocks 9" value="107"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Direction Change 1" value="91"/>
+	<enumChoiceGroup>
+		<name>Generator</name>
+		<enumChoice choice="Generator 1" value="113"/>
+		<enumChoice choice="Generator 2" value="114"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Horn</name>
+		<enumChoice choice="Horn Nathan K5LA long" value="85"/>
+		<enumChoice choice="Horn Nathan K5LA quill" value="86"/>
+		<enumChoice choice="Horn Nathan K5LA short" value="84"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Idling Sounds 1" value="382"/>
+	<enumChoiceGroup>
+		<name>Injector</name>
+		<enumChoice choice="Injector 1" value="115"/>
+		<enumChoice choice="Injector 2" value="116"/>
+		<enumChoice choice="Injector 3" value="117"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Mute</name>
+		<enumChoice choice="Mute" value="359"/>
+		<enumChoice choice="Silence" value="358"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Rod Clank</name>
+		<enumChoice choice="Rod Clank 1" value="87"/>
+		<enumChoice choice="Rod Clank 2" value="88"/>
+		<enumChoice choice="Rod Clank 3" value="89"/>
+		<enumChoice choice="Rod Clank 4" value="90"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Safety</name>
+		<enumChoice choice="Safety 1" value="123"/>
+		<enumChoice choice="Safety 2" value="124"/>
+	</enumChoiceGroup>
+	<enumChoiceGroup>
+		<name>Shovelling</name>
+		<enumChoice choice="Shovelling 1" value="125"/>
+		<enumChoice choice="Shovelling 2" value="126"/>
+	</enumChoiceGroup>
+	<enumChoice choice="Waterfill 1" value="384"/>
+	<enumChoice choice="Whistle Forward" value="127"/>
+	<enumChoice choice="Whistle Long" value="19"/>
+	<enumChoice choice="Whistle Quill" value="20"/>
+	<enumChoice choice="Whistle Reverse" value="148"/>
+	<enumChoice choice="Whistle Short" value="18"/>
+	<enumChoice choice="Whistle Stopped" value="170"/>
+	<enumChoice choice="Rotate Whistle" value="360"/>
+	<enumChoice choice="None" value="473" />
+</enumVal>

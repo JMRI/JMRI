@@ -1,0 +1,10 @@
+CVSROOT/java
+
+This directory contains the scripts needed
+to build JMRI in various contexts, plus basic
+runtime support.
+
+For wider run-time support, see the CVSROOT/scripts
+directory, which contains the run-time files for
+various distributions.
+

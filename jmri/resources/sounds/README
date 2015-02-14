@@ -1,0 +1,33 @@
+This directory contains sound fragments contributed
+for use with JMRI.  
+
+Bell.wav
+Code-receive.wav
+Code-send.wav
+Crossing.wav
+Relay.wav
+RlyClick.wav
+bell_stroke.wav
+
+
+Dick Bronson contributed the following files:
+  They are taken from the machine in the NC Transportation 
+  museum where there was a lot of background hum from lights, etc. 
+  I have taken that out, but the resulting quality is not what 
+  I would have preferred. Probably for the clicks on a panel they 
+  will be fine, because they will be in response to mouse clicks.
+
+ toggle-on.wav
+ toggle-off.wav
+ Button.wav
+ Button-press.wav
+ Button-release.wav
+ pull-on.wav
+ push-off.wav
+ Signal-lever.wav
+ Signal-normal.wav
+ Switch-lever.wav
+
+Older versions of some sounds can be found in the "old"
+subdirectory, in case somebody was using them and prefers
+the original ones.

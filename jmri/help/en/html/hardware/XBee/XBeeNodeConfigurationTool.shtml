@@ -1,0 +1,44 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- $Id$ -->
+<title>The XBee Node Configuration Tool</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<H2>XBee Node Configuration Tool</H2>
+<img src="images/XBeeNodeConfigurationTool.png" alt="XBee node Configuration 
+Tool Image">
+<P>
+The XBee Node Configuration tool can be used to add XBee nodes to the JMRI configuration.
+<P>
+Starting at the top, we have drop down boxes for the 16 bit node address, the 64 bit GUID, and the Node Identification (NI) field of the node.  Selecting one of the addresses will bring up the information for the selected node.
+<P>
+Next we have a table listing the current configuration of the node's I/O pins.  The first column lists the DIO pin numbers.  The second Column lists the system name associated with the pin or free if the pin is not currently assigned to a device.  The last column lists the user names associated with the system name.
+<P>The button labeled "Add Node" will add the node associated with the 16 bit adddress to the list of nodes.
+<P>The button labeled "Discover Nodes" will cause the XBee to perform a node discovery routine and search for new nodes on the network.
+<P>The button labeled "Edit Node" will allow you to edit node information for the selected node.
+<P>The button labeled "Delete Node" will remove the currently selected node.
+<P>The button labeled "Done" will close the node configuration tool.
+<P>
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

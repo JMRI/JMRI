@@ -1,0 +1,114 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+    <head>
+        <!-- Copyright 2012 -->
+        <!-- $Id$ -->
+        <title>JMRI JSON Protocol</title>
+
+        <!-- Style -->
+        <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+        <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
+        <link rel="home" title="Home" href="/">
+        <STYLE type="text/css">
+            table#jsonResponses {
+                border-collapse:collapse;
+            }
+            table#jsonResponses td {
+                border: 1px solid grey;
+                width: 33%;
+            }
+            code {
+                white-space: normal;
+            }
+        </STYLE>
+        <!-- /Style -->
+    </head>
+
+    <body>
+        <!--#include virtual="/Header" -->
+
+        <!--#include virtual="Sidebar" -->
+        <div id="mainContent">
+
+            <h1>JMRI JSON Protocol</h1>
+            <p>The JMRI JSON Protocol provides access for a number of JMRI-defined entities, and is accessible through multiple methods:</p>
+            <ul>
+                <li><strong>The JMRI JSON servlet</strong>, providing both HTTP and WebSocket access</li>
+                <li><strong>The JMRI JSON server</strong>, providing a standard network socket for streamed access</li>
+                <li><strong>jquery-json</strong>, A jQuery-based JavaScript library that chooses the best method to communicate with a JMRI server using the JMRI JSON protocol</li>
+            </ul>
+            <h2>JMRI JSON Servlet</h2>
+            <p>The <b>JMRI JSON Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
+                <a href='http://en.wikipedia.org/wiki/JSON'>JSON format</a>.  It also provides a
+                <a href='http://en.wikipedia.org/wiki/WebSocket'>WebSocket</a> interface for
+                making changes to the state of those entities, and listening for external changes.</p>
+
+            <p>The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
+            <ul>
+                <li>/json/cars</li>
+                <li>/json/car/&lt;ID&gt;</li>
+                <li>/json/sensors</li>
+                <li>/json/sensor/&lt;name&gt;</li>
+            </ul>Currently, the servlet supports cars, consists, engines, lights, locations, memories, metadata, 
+            networkServices, panels, power, railroad, reporters, roster, routes, 
+            sensors, signalHeads, signalMasts, systemConnections, trains, and turnouts.</p>
+
+            <p>The <b>WebSocket</b> feature of this servlet currently handles JSON strings in four different forms:
+            <ul>
+                <li>list requests in the form: <code>{"list":"trains"}</code> or <code>{"type":"list","list":"trains"}</code>
+                    that return an array of items, or an empty array (<code>[]</code>).</li>
+                <li>individual item state requests in the form: <code>{"type":"turnout","data":{"name":"LT14"}}</code>
+                    that are passed to type-specific handlers. These requests will initiate "listeners", which will send
+                    updated responses every time the item's state changes.
+                    <ul>
+                        <li>an item's state can be set by adding a <strong>state</strong> node to the
+                            <em>data</em> node in an HTTP POST request:
+                            <code>{"type":"turnout","data":{"name":"LT14","state":4}}</code>
+                        <li>individual types can be created if the request is an HTTP PUT request.
+                            Note that not all types support this.</li>
+                    </ul>
+                </li>
+                <li>a heartbeat in the form <code>*</code> or <code>{"type":"ping"}</code>. The <code>*</code> heartbeat
+                    gets no response, while the JSON heartbeat causes a <code>{"type":"pong"}</code> response.</li>
+                <li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
+                    is sent before the connection gets closed.</li>
+            </ul></p>
+            The <b>WebSocket</b> feature of the servlet can be seen
+            by browsing to the <b>/json/</b> url, where a <b>JSON console</b> is providing for testing.<br>
+            Example commands and responses:
+            <table id="jsonResponses"><tr><th>command</th><th>response</th><th>notes</th></tr>
+                <tr><td><code>{"type":"sensor","data":{"name":"IS2"}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>request current state of sensor IS2</td></tr>
+                <tr><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td><code>{"type":"sensor","data":{"name":"IS2","state":4}}</code></td><td>set sensor IS2 to InActive (4)</td></tr>
+                <tr><td><code>{"type":"turnout","data":{"name":"IT99","state":0}}</code></td><td><code>{"type":"turnout","data":{"name":"IT99","state":4}}</code></td><td>sending state=0 is also treated as request for current state</td></tr>
+                <tr><td><code>{"type":"power","data":{}}</code></td><td><code>{"type":"power","data":{"state":2}}</code></td><td>power does not need a name</td></tr>
+                <tr><td><code>{"type":"ping"}</code></td><td><code>{"type":"pong"}</code></td><td>ping request and response</td></tr>
+                <tr><td><code>{"list":"panels"}</code></td><td><code>[{"name":"Layout/MainSouth","URL":"/panel/Layout/MainSouth?format=xml","userName":"MainSouth","type":"Layout"},{"name":"Layout/Parking%20MainSouth","URL":"/panel/Layout/Parking%20MainSouth?format=xml","userName":"Parking MainSouth","type":"Layout"}]</code></td>
+                    <td>request a list of panels, respond with array, example shows two panels</td></tr>
+                <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","address":754}}</code></td>
+                    <td><code>{"type":"throttle","data":{"address":754,"speed":0.0,"forward":true, "F0":false,"F1":false,"F2":false,"F3":false,"F4":false,"F5":false,"F6":false,"F7":false, "F8":false,"F9":false,"F10":false,"F11":false,"F12":false,"F13":false,"F14":false, "F15":false,"F16":false,"F17":false,"F18":false,"F19":false,"F20":false,"F21":false, "F22":false,"F23":false,"F24":false,"F25":false,"F26":false,"F27":false,"F28":false, "throttle":"CSX754"}}</code></td>
+                    <td>request throttle for address 754, refer to it as "CSX754"</td></tr>
+                <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","speed":0.25}}</code></td><td><code>{"type":"throttle","data":{"speed":0.25,"throttle":"CSX754"}}</code></td><td>request speed of throttle "CSX754" to 25%</td></tr>
+                <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td><td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td><td>release the throttle "CSX754"</td></tr>
+                <tr><td><code>{"list":"trains"}</code></td><td><em>If list is empty:</em><code>[]</code></td><td>Example showing list response if there are no objects of that type.</td></tr>
+            </table>
+        </div>
+        <h2>JMRI JSON Server<h2>
+        <p>The JMRI JSON server is functionally identical to the JSON WebSocket, but running over a standard network socket.</p>
+        <h2>jquery-json</h2>
+        <p><em>jquery-json</em> is a JavaScript library that ships with JMRI and
+            makes the JSON protocol support just work on most current browsers.</p>
+        <p>Examples of use of the jquery-json JavaScript library that ship with JMRI include (all links assume you are reading this on your JMRI web server):</p>
+        <ul>
+            <li><a href="/operations">Operations Conductor</a> (implemented in <a href="/js/operations.js">/js/operations.js</a></li>
+            <li><a href="/panel">Panel</a> (implemented in <a href="/js/panel.js">/js/panel.js</a></li>
+            <!-- the webThrottle does not use jquery-json, but instead uses its own implementation, so do not include it in this list
+            <li><a href="/web/webThrottle.html">webThrottle</a> (implemented in <a href="/js/webThrottle.js">/js/webThrottle.js</a></li>
+            -->
+            <li><a href="/json">JSON Console</a> (implemented in <a href="/js/json-console.js">/js/json-console.js</a></li>
+            <li><a href="/web/power.html">Power Demonstration</a> (view the page source for the implementation)</li>
+        </ul>
+        <!--#include virtual="/Footer" -->
+    </body>
+</html>

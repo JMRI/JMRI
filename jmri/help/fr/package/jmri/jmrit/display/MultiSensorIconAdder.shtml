@@ -1,0 +1,60 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!--  UpDated by Herv&#233; Blorec <bzh56420@yahoo.fr>  2013-11-01--> 
+<HTML LANG="fr">
+<HEAD>
+<TITLE>JMRI: MultiSensor Icon Editor Help</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Pete Cressman" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI help Panel Editor">
+charset=iso-8859-1">
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>
+L'&#201;diteurd'Ic&#244;ne Multicapteurs </H1>
+
+<p> La fa&#231;on dont les ic&#244;nes sont modifi&#233;es dans l'&#201;dteur d'Ic&#244;ne Multicapteurs est la m&#234;me que celles qui les modifie
+ dans les autres &#201;diteurs d'Ic&#244;ne. Le bouton <b>Changer l'Ic&#244;ne...</b> et le
+Catalogue de fonction sont identiques avec les autre &#201;diteurs d'Ic&#244;ne. Le Menu <b>Trouver des Ic&#244;nes</b>
+ et ses &#233;l&#233;ments sont
+&#233;galement identiques. <p> Voir la <a href="IconAdder.shtml"> pages &#201;diteurs d'Ic&#244;ne</a>
+et l'image <a href="../catalog/ImageIndex.shtml"> Page &#201;diteur d'index</a>
+pour plus de d&#233;tails sur leur utilisation.
+
+
+<H2>Contenu de l'&#201;diteur d'Ic&#244;ne Multicapteurs</H2>
+
+<img src="MultiSensorIcon.png" align="right">
+<p> Les ic&#244;nes de l'&#201;diteur d'Ic&#244;ne Multicapteurs ne diff&#232;rent que par l'existence de plusieurs ic&#244;nes
+"actives". Chacune correspond &#224; un commutateur ou &#224; la position d'un levier. Dans le Panneau,
+les positions s'encha&#238;nent dans l'ordre. Une position peut &#234;tre supprim&#233;e en 
+appuyant sur la touche <b>Supprimer</b> sous l'ic&#244;ne. D'autres positions peuvent
+&#234;tre ajout&#233;es en appuyant sur le bouton <b>Ajouter</b> une autre ic&#244;ne.
+
+<p>Chaque ic&#244;ne active doit avoir un capteur qui lui est associ&#233;. Pour attribuer un
+capteur &#224; une position de l'ic&#244;ne, faites glisser une ligne du Tableau Capteur &#224; l'endroit
+dans l'onglet ic&#244;ne &#224; un emplacement intitul&#233; "ind&#233;fini". Lorsque la ligne du capteur est
+tomb&#233; sur l'&#233;tiquette, il affiche le nom du capteur.</p>
+
+<p> Lorsque toutes les ic&#244;nes actives sont affect&#233;es" aux capteurs, le bouton <b> Ajouter au Panneau</b>
+ devient actif et il peut &#234;tre appuy&#233; pour installer le multicapteurs
+dans le panneau.
+
+
+<!--#include virtual="/Footer" -->
+</BODY>
+</HTML>

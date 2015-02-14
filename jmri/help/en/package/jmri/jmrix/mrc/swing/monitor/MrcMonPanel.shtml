@@ -1,0 +1,49 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: MRC Command Monitor</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: MRC Command Monitor
+</h1>
+
+This is the 
+package/jmri/jmrix/mrc/swing/monitor/MrcMonPanel.shtml
+package help file.
+
+<p>
+<b>Include Poll Messages</b>
+-
+When enabled you will see the messages as each cab on the network
+is polled by the command station.
+This is a lot of traffic and generally shows that nothing meaningful
+is happening.
+It is useful to confirm that a cab is being polled and if the cab is responding.
+
+<p>
+For more information on the common
+controls and options, please see the
+<a href="../../../AbstractMonFrame.shtml">Communications Monitor Window page</a>.
+</p>
+    
+<!--#include virtual="/Footer" -->
+</body>
+</html>

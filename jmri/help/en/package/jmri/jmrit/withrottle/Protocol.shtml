@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author$) 2009 -->
+<!-- $Id$ -->
+<title>JMRI: WiFi Throttle Communications Protocol</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: WiFi Throttle Communications Protocol
+</h1>
+
+This page describes the protocol provided by the
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/withrottle/package-summary.html">jmri.jmrit.withrottle</a>
+package for controlling trains through JMRI via 
+a TCP/IP link.
+
+
+
+<p>
+Open a TCP/IP link to the port advertised via ZeroConf/Bonjour
+as the servicve "_withrottle._tcp.local.".
+
+<p>
+The first letter is interpreted by the DeviceServer class to determine
+where to send the rest of the package.
+<ol>
+    <li>
+        'T' sends to the throttle controller class.
+    </li>
+    <li>
+        'N' is the device name.
+    </li>
+    <li>
+        'Q' indicates the device has quit, close its window.
+    </li>
+    <li>
+        'C' is not used anymore and forwards to the throttle controller.
+    </li>
+</ol>
+
+<p>
+<h3>
+    Throttle Controller:
+</h3>
+<p>
+These would follow the 'T'
+<p>
+Send Laddr, or Saddr to allocate
+a throttle.  "L" means Long DCC address, "S" means Short DCC
+address. e.g. TL345 will tell the throttle controller to
+request long address 345. When the address is set, the Device Server
+will send out the acquired address to the mobile device.
+
+<p>
+R0 is reverse, R1 is forward. e.g. TR1 tells throttle controller
+to set direction forward.
+
+<p>
+Viii sets speed, where iii is an integer value between 0 and 126.
+e.g. TV63 will have the throttle controller set the speed value
+to 50%
+
+<p>
+'r' and 'd' "release" and "dispatch" the throttle.  For most
+DCC systems, these are the same thing; if in doubt, use release.
+Device server will then send "Not Set" to the mobile device.
+
+<p>
+Function buttons are not latched by the connected mobile device.
+Instead the packages sent from the device to JMRI indicate when
+a button is pressed, and when it is released. The format is 'F'
+followed by 0 or 1 for released and pressed, followed by the
+function number. e.g. TF13 says the button for function 3 is pressed,
+and TF03 is sent when the button for function 3 is released. The
+throttle controller then checks to see if that function is momentary,
+and handles it accordingly.
+
+<p>
+This is the package/jmri/jmrit/withrottle/Protocol help page
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

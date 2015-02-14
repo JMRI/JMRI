@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="fr">
+<head>
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; 2013-09-25-->
+<title>JMRI: Connecting the Grapevine System</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: Connexion au Syst&#232;me Grapevine
+</h1>
+
+
+D&#233;signation et connecteurs d'entr&#233;e/sortie sont d&#233;crits sur une
+<a href="Names.shtml"> page s&#233;par&#233;e</a>.
+
+<H2>Outils</h2>
+
+Vous pouvez v&#233;rifier si votre  Grapevine travaille et configure
+les noeuds connect&#233;s &#224; l'aide de l'outil
+<a href="../../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml"> la table des noeud</a> .
+Il vous permet &#233;galement de changer le num&#233;ro d'un noeud.
+
+<H2>Limitations</h2>
+
+<UL>
+<LI>Les horloges rapides ne sont pas encore support&#233;es. Si vous en avez une et que vous souhaitez la tester
+ avec JMRI, nous le faire savoir.
+</UL>
+
+<h2>Plus d'informations</h2>
+
+Plus d'informations sur le mat&#233;riel Grapevine peut &#233;tre consult&#233;e sur le
+<a href="http://www.protrak.cc"> site web ProTrak</a>.
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>

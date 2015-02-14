@@ -1,0 +1,122 @@
+<!--
+Navigation bar fragment for JMRI Servlets
+Comments containing Java Formatter syntax (http://docs.oracle.com/javase/6/docs/api/java/util/Formatter.html)
+should not be changed. See JavaDoc for jmri.web.servlet.ServletHelper#getNavBar(String) for details
+-->
+<div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/"><!-- Railroad name %1$s --></a>
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <!-- <li class="context-home"><a href="/">Home</a></li> -->
+                <li class="dropdown context-panel">
+                    <a href="/panel" class="dropdown-toggle" data-toggle="dropdown">Panels <b class="caret"></b></a>
+                    <ul id="navbar-panels" class="dropdown-menu">
+                        <li id="navbar-panel-thumbnails"><a href="/panel">Show Panels</a></li>
+                        <li class="divider"></li>
+                        <!-- <li class="dropdown-header context-panel-only">Nav header</li> -->
+                        <li id="navbar-panel-reload" class="context-panel-only"><a href="#">Reload</a></li>
+                        <li id="navbar-panel-xml" class="context-panel-only"><a href="#">Panel XML</a></li>
+                        <li class="divider context-panel-only"></li>
+                        <!-- will populate with ajax query -->
+                        <li id="empty-panel-list" class="disabled"><a href="#">No Panels Loaded</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown context-roster">
+                    <a href="/roster" class="dropdown-toggle" data-toggle="dropdown">Roster <b class="caret"></b></a>
+                    <ul id="navbar-roster-groups" class="dropdown-menu"></ul>
+                </li>
+                <li class="dropdown context-operations">
+                    <a href="/operations" class="dropdown-toggle" data-toggle="dropdown">Operations <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/operations/trains">Trains</a></li>
+                        <li id="navbar-operations-train-divider" class="divider context-operations-only"></li>
+                        <li id="navbar-operations-train" class="dropdown-header context-operations-only"></li>
+                        <li id="navbar-operations-manifest" class="context-operations-only"><a href="#">Manifest</a></li>
+                        <li id="navbar-operations-conductor" class="context-operations-only"><a href="#">Conductor</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li id="navbar-power" data-power="readonly" class="disabled"><a href="#" class="visible-xs">Layout power unknown</a><button type="button" class="btn navbar-btn disabled btn-warning hidden-xs"><span class="glyphicon glyphicon-off"></span></button></li>
+                <li class="dropdown context-config">
+                    <a href="/config" class="dropdown-toggle" data-toggle="dropdown">Preferences <b class="caret"></b></a>
+                    <ul id="navbar-config" class="dropdown-menu">
+                        <li class="dropdown-header"><span id="font-size-value" class="pull-right"></span>Font size</li>
+                        <li><a href="#" id="font-size-smaller" style="font-size: smaller">Smaller</a></li>
+                        <li><a href="#" id="font-size-larger" style="font-size: larger">Larger</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Navigation Bar</li>
+                        <li><div class="navbar-form checkbox"><label><input id="navbar-fixed-position" type="checkbox" checked="checked"> Fixed Position</label></div></li>
+                        <li class="divider"></li>
+                        <li><a href="#" id="reset-local-preferences">Reset</a></li>
+                        <!-- divider and header for system preferences, should personal preferences be supported
+                        <li class="divider"></li>
+                        <li class="dropdown-header">System Preferences</li>
+                        <li class="config-disabled-only disabled"><a href="#">System Preferences Disabled</a></li>
+                        -->
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="" class="dropdown-toggle navbar-right" data-toggle="dropdown">Help <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/help/en/index.html">Introduction</a></li>
+                        <li><a href="/help/en/webtoc.shtml">Help Contents</a></li>
+                        <li><a href="/help/en/webindex.shtml">Index</a></li>
+                    </ul>
+                </li>
+
+            </ul>
+        </div><!--/.navbar-collapse -->
+    </div>
+</div>
+<div class="modal fade" id="navbar-power-modal" tabindex="-1" role="dialog" aria-labelledby="navbar-power-modal-label" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="navbar-power-modal-label">Layout Power</h4>
+            </div>
+            <div class="modal-body">
+                Turn power<br class="visible-xs">
+                <button type="button" class="btn btn-success btn-lg" id="navbar-power-modal-on">On</button>
+                <button type="button" class="btn btn-danger btn-lg" id="navbar-power-modal-off">Off</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+Provide a generic WebSocket reconnecting dialog for use by subclasses of the
+jquery.jmri JavaScript library. See json-console.js for an example use.
+
+Note that the jquery.jmri subclass that supports the power button in the
+navigation bar silently attempts a reconnection and does not use this dialog.
+-->
+<div class="modal fade" id="modal-websocket-reconnecting" tabindex="-1" role="dialog" aria-labelledby="modal-websocket-reconnecting-label" aria-hidden="true">
+    <div class="modal-dialog text-danger">
+        <div class="modal-content">
+            <div class="modal-header">
+                <!--
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                -->
+                <h4 class="modal-title" id="modal-websocket-reconnecting-label">Reconnecting to <!-- Railroad name %1$s --></h4>
+            </div>
+            <div class="modal-body">
+                <p>The WebSocket connection to <!-- Railroad name %1$s --> on JMRI was lost.</p>
+                <p id="modal-websocket-reconnecting-attempt">Reconnecting <span id="modal-websocket-reconnecting-next">soon</span> (attempt <span id="modal-websocket-reconnecting-attempts">1</span> out of 20).</p>
+                <p id="modal-websocket-reconnecting-failed" class="hidden">Unable to reconnect.</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" id="modal-websocket-reconnecting-reload">Reload Page</button>
+                <button type="button" class="btn btn-primary" id="modal-websocket-reconnecting-now">Reconnect Now</button>
+            </div>
+        </div>
+    </div>
+</div>

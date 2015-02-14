@@ -1,0 +1,28 @@
+#! /bin/csh
+
+#
+# Add iternationalization (I18N) to JMRI decoder and programmer files.
+#
+# Output is sent to a (created, if need be) tmp subdirectory in the wd, using the
+# same file names.
+#
+# Requires the file be in normal format first,
+# see the normalizeDecoder transform script
+#
+# Known to work on Mac OS X, expected to work on Linux, Windows situation not clear.
+#
+#  Bob Jacobsen 4/2014
+# 
+mkdir tmp >& /dev/null
+foreach x ( $* )
+ cat $x |\
+    xsltproc decoderAddI18nLabel.xsl - |\
+    xsltproc decoderAddI18nComment.xsl - |\
+    xsltproc decoderAddI18nChoice.xsl - |\
+    xsltproc decoderAddI18nTooltip.xsl - |\
+    xsltproc decoderPaneAddI18nName.xsl - |\
+    xsltproc decoderAddI18nPaneLabel.xsl - |\
+    xsltproc decoderAddI18nPaneTooltip.xsl - |\
+    xmllint -format - > tmp/$x:t
+end
+

@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Michael Mosher" version="1" lastUpdated="20111214"/>
+  <!-- New file -->
+  <decoder>
+    <family name="Ditch Light Decoder" mfg="Kato" lowVersionID="49" highVersionID="51">
+      <model model="Ditch Light Decoder" numOuts="2" numFns="5" formFactor="HO" connector="unspecified">
+        <output name="1" label="Ditch Lights" connection="unspecified"/>
+        <output name="2" label="Flashing" connection="unspecified"/>
+      </model>
+    </family>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="yes"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21.22.xml"/>
+      <variable item="Consist Address Active For F9" CV="22" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F9</label>
+      </variable>
+      <variable item="Consist Address Active For F10" CV="22" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F10</label>
+      </variable>
+      <variable item="Consist Address Active For F11" CV="22" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F11</label>
+      </variable>
+      <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F12</label>
+      </variable>
+      <!-- CV=29 -->
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <!-- Found on my decoders that this bit must be on, if this bit off then get no lights even if others bits are on
+				 also if another bit in on along with this one, then F0f does not turn onthe lights, only the other setting -->
+      <variable item="FL(f) controls output 1" CV="33" mask="XXXXXXXV" minOut="1" default="1" tooltip="Must remain checked">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 1</label>
+      </variable>
+      <variable item="FL(f) controls output 2" CV="33" mask="XXXXXVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(f) controls output 2</label>
+      </variable>
+      <variable item="FL(r) controls output 1" CV="34" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 1</label>
+      </variable>
+      <variable item="FL(r) controls output 2" CV="34" mask="XXXXXVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>FL(r) controls output 2</label>
+      </variable>
+      <variable item="F1 controls output 1" CV="35" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 1</label>
+      </variable>
+      <variable item="F1 controls output 2" CV="35" mask="XXXXXVXX" minOut="2" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1 controls output 2</label>
+      </variable>
+      <variable item="F2 controls output 1" CV="36" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 1</label>
+      </variable>
+      <variable item="F2 controls output 2" CV="36" mask="XXXXXVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2 controls output 2</label>
+      </variable>
+      <variable item="F3 controls output 1" CV="37" mask="XXXXXXXV" minOut="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 1</label>
+      </variable>
+      <variable item="F3 controls output 2" CV="37" mask="XXXXXVXX" minOut="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3 controls output 2</label>
+      </variable>
+      <variable CV="63" item="Global lighting option 3">
+        <enumVal>
+          <enumChoice choice="0.5 Sec">
+            <choice>0.5 Sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.6 Sec">
+            <choice>0.6 Sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.7 Sec">
+            <choice>0.7 Sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.8 Sec">
+            <choice>0.8 Sec</choice>
+          </enumChoice>
+          <enumChoice choice="0.9 Sec">
+            <choice>0.9 Sec</choice>
+          </enumChoice>
+          <enumChoice choice="1.0 Sec">
+            <choice>1.0 Sec</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Ditch Light Cycle Time</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="Reset All CVs" CV="8" default="8">
+        <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+      </factReset>
+    </resets>
+  </decoder>
+</decoder-config>

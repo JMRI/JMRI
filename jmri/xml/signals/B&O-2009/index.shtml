@@ -1,0 +1,61 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<head>
+<!-- Copyright ($Author: jacobsen $) 2009 -->
+<!-- $Id: index.shtml 25755 2014-05-03 21:25:55Z jacobsen $ -->
+<title>JMRI: B&O-2009 (CSX) Signaling Definition</title>
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<h1> 
+JMRI: B&O-2005 (CSX) Signaling Definition
+</h1>
+
+This directory contains signaling definitions corresponding to 
+the 2009 CSX rules as applied to ex-B&O lines as described on the Signals of the US website
+
+<p>
+See the 
+<a href="aspects.xml">aspect page</a>.
+
+<p>
+Not all possible lamp combinations have been defined as separate masts so if the mast you 
+require is not defined just use a mast that includes the marker lamps that you require. 
+Generally speaking only the full mast is required since on the prototype B&O system nearly all 
+signal masts are the same but with unused lamps left off.
+
+<p>
+Signal Mast definitions:
+<ul>
+<li><a href="appearance-full.xml">Signal mast with full set of marker lamps</a>
+<li><a href="appearance-fast1.xml">Basic full speed home signal mast with top centre marker lamp</a>
+<li><a href="appearance-med1.xml">Basic medium speed home signal mast with bottom centre marker lamp</a>
+<li><a href="appearance-slow.xml">Basic slow speed home signal mast with no marker lamps</a>
+<li><a href="appearance-block.xml">Basic full speed block signal mast with top centre marker lamp and number plate</a>
+<li><a href="appearance-fast.xml">Full speed distant signal mast with full top row of marker lamps</a>
+<li><a href="appearance-med.xml">Medium speed distant signal mast with full bottom row of marker lamps</a>
+<li><a href="appearance-junc.xml">Dual speed junction signal mast with top and bottom centre marker lamps to control a medium or limited speed simple divergance</a>
+<li><a href="appearance-fastm.xml">Full speed distant signal mast for medium speed divergance with top left and centre marker lamps</a>
+<li><a href="appearance-fasts.xml">Full speed distant signal mast for slow speed divergance with top right and centre marker lamps</a>
+<li><a href="appearance-medm.xml">Medium speed distant signal mast for medium speed divergance with bottom left and centre marker lamps</a>
+<li><a href="appearance-meds.xml">Medium speed distant signal mast for slow speed divergance with bottom right and centre marker lamps</a>
+</ul>
+    </div>
+</div>
+<!--#include virtual="/Footer" -->
+</body>
+</html>

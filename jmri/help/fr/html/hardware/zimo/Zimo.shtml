@@ -1,0 +1,83 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<!-- UpDated  by Blorec Herv&#233; le 2013-09-20--> 
+
+<html lang="fr">
+<head>
+ <TITLE>
+      JMRI Hardware Guide: Zimo MX-1
+ </TITLE>
+    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <META content="Bob Jacobsen" name=Author>
+    <META name="keywords" content="Zimo MX-1 java model railroad JMRI install windows">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+      <H2> 
+      JMRI Guide Mat&#233;riel: Zimo mx-1
+      </h2>
+
+	<h3>Mat&#233;riel support&#233;</h3>
+
+	<ul>
+	<li>Zimo mx-1
+	</ul>
+
+	<h3>Limitations</h3>
+
+	<p>TBD</p>
+
+	<h3>Installations</h3>
+
+	  <ol>
+	  <li> Pour connecter votre ordinateur &#224; un syst&#232;me Zimo MX-1 , vous pouvez
+normalement connecter la centrale au port s&#233;rie de l'ordinateur
+ &#224; l'aide d'un c&#226;ble s&#233;rie. </li>
+
+<li> Puis allez dans le panneau des pr&#233;f&#233;rences d'un programme bas&#233; sur JMRI.
+Celui ci s'ouvre automatiquement la premi&#232;re fois qu'un programme est ex&#233;cut&#233;, ou vous
+pouvez le s&#233;lectionner dans le menu "&#233;dition". </li>
+
+<li> s&#233;lectionnez "Zimo MX-1" de la bo&#238;te de s&#233;lection en haut. Vous pouvez alors
+s&#233;lectionnez le port s&#233;rie appropri&#233; dans la seconde bo&#238;te de s&#233;lection . </li>
+
+	   <li> La bo&#238;te de s&#233;lection  de vitesse de transmission( Baud/Rate)vous donnera des choix de 1200
+&#224; 38.400 bauds. S&#233;lectionner la vitesse qui est configur&#233;e dans votre
+MX-1. </li>
+
+<li> La s&#233;rie de boutons radio &#233;tiquet&#233;s "style GUI" vous permet
+de s&#233;lectionner la fa&#231;on dont le programme va s'afficher. "m&#233;tal" est le mode natif Java. Voir pour d'autres choix possibles
+ en fonction de votre type d'ordinateur. "motif", "fen&#234;tres", "MacOS" et "MacOS adaptative"
+apparence native sous Linux, Windows, MacOS "classique" et Mac OS X
+respectivement. </li>
+
+<li> dans la case de s&#233;lection en bas, vous pouvez choisir l'option par d&#233;faut du 
+format de programmeur. Vous pouvez le remplacer &#224; chaque fois que vous ouvrez le
+programmateur, ce n'est donc ici juste que par convenance.</li>
+
+<li> Cliquez sur "Enregistrer". Il vous sera demand&#233; si c'est Ok  pour quitter le programme , cliquez sur "oui". </li>
+
+<li> Red&#233;marrer le programme. Vous devriez &#234;tre pr&#234;t &#224; fonctionner. </li> 
+	<h3>D&#233;bogage</h3>
+
+	<p><a href="http://w3.zimo.at/">Site Web Principal Zimo</a></p>
+	<p><a href="http://www.mrsonline.net/html/zimo.html">Agence Zimo Nord Am&#233;ricaine</a></p>
+
+<!--#include virtual="/footer" -->
+</body>
+</html>

@@ -1,0 +1,1675 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved   -->
+<!-- $Id$                  -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+  <version author="Ron30" version="1" lastUpdated="20140923"/>
+  <!-- version 1 - made from Arnold.xml example                             -->
+  <decoder>
+		<family name="Locomotive lighting" mfg="Digirails">
+			<model model="DR80010" lowVersionID="10" highVersionID="10" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" formFactor="HO" numOuts="8" numFns="18">
+				<output name="1" label="FO 0 Headlight" connection="solder" maxcurrent="500 mA" />
+				<output name="2" label="FO 0 Taillight" connection="solder" maxcurrent="500 mA" />
+				<output name="3" label="FO 1 AUX 1" connection="solder" maxcurrent="500 mA" />
+				<output name="4" label="FO 2 AUX 2" connection="solder" maxcurrent="500 mA" />
+				<output name="5" label="FO 5 LED group 1" connection="other"/>
+				<output name="6" label="FO 6 LED group 2" connection="other"/>
+				<output name="7" label="FO 7 LED group 3" connection="other"/>
+				<output name="8" label="FO 8 LED group 4" connection="other"/>
+				<size length="280" width="6" height="1.5" units="mm" />
+			</model>
+		</family>
+    <programming direct="yes" paged="no" register="no" ops="no"/>
+    <variables>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
+			<variable CV="7" readOnly="yes" item="Decoder Version" default="10">
+        <decVal/>
+        <label>Version ID</label>
+      </variable>
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="42">
+        <decVal/>
+        <label>Manufacturer ID</label>
+      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
+      <variable item="Consist Address Active For F1" CV="21" mask="XXXXXXXV" default="0" minFn="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F1</label>
+      </variable>
+      <variable item="Consist Address Active For F2" CV="21" mask="XXXXXXVX" default="0" minFn="2">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F2</label>
+      </variable>
+      <variable item="Consist Address Active For F3" CV="21" mask="XXXXXVXX" default="0" minFn="3">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F3</label>
+      </variable>
+      <variable item="Consist Address Active For F4" CV="21" mask="XXXXVXXX" default="1" minFn="4">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F4</label>
+      </variable>
+      <variable item="Consist Address Active For F5" CV="21" mask="XXXVXXXX" default="1" minFn="5">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F5</label>
+      </variable>
+      <variable item="Consist Address Active For F6" CV="21" mask="XXVXXXXX" default="1" minFn="6">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F6</label>
+      </variable>
+      <variable item="Consist Address Active For F7" CV="21" mask="XVXXXXXX" default="1" minFn="7">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F7</label>
+      </variable>
+      <variable item="Consist Address Active For F8" CV="21" mask="VXXXXXXX" default="1" minFn="8">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F8</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Forward" CV="22" mask="XXXXXXXV" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For FL Forward</label>
+      </variable>
+      <variable item="Consist Address Active For FL in Reverse" CV="22" mask="XXXXXXVX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For FL Reverse</label>
+      </variable>
+
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+
+	  <variable item="Presets" CV="47" mask="XXXXXXVV" writeOnly="yes" default="0">
+        <enumVal>
+          <enumChoice choice="Bulb">
+            <choice>Bulb</choice>
+          </enumChoice>
+          <enumChoice choice="Fluorescent light">
+            <choice>Fluorescent light</choice>
+          </enumChoice>
+          <enumChoice choice="Gas lamp">
+            <choice>Gas lamp</choice>
+          </enumChoice>
+          <enumChoice choice="On - Off">
+            <choice>On - Off</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Presets</label>
+      </variable>
+
+      <variable item="Light intensity LEDgroup 1-4" CV="48" mask="XXXXVVVV" default="31" writeOnly="yes" comment="Output configuration LEDgroup 1-4">
+        <decVal min="0" max="15"/>
+        <label>Light intensity LEDgroup 1-4</label>
+        <comment>Controls how much LEDgroup 1-4 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect LEDgroup 1-4" CV="48" mask="XXXVXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect LEDgroup 1-4</label>
+      </variable>
+      <variable item="Flicker effect LEDgroup 1-4" CV="48" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect LEDgroup 1-4</label>
+      </variable>
+      <variable item="Random light effect LEDgroup 1-4" CV="48" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect LEDgroup 1-4</label>
+      </variable>
+      <variable item="Broken light effect LEDgroup 1-4" CV="48" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect LEDgroup 1-4</label>
+      </variable>
+
+      <variable item="PWM period" CV="109" default="23" comment="PWM period">
+        <decVal min="1" max="255"/>
+        <label>PWM period</label>
+        <comment>The resolution used by the internal PWM to manage effect and dimming values</comment>
+      </variable>
+
+      <variable item="Fade speed" CV="111" default="10" comment="Fade speed">
+        <decVal min="1" max="255"/>
+        <label>Fade speed</label>
+        <comment>The speed with which the outputs configured to have a fade function fade in and fade out</comment>
+      </variable>
+
+      <variable item="Flicker speed" CV="112" default="128" comment="Flicker speed">
+        <decVal min="1" max="255"/>
+        <label>Flicker speed</label>
+        <comment>The speed with which the outputs configured to flicker do so</comment>
+      </variable>
+
+      <variable item="Light intensity(f)" CV="113" mask="XXXXVVVV" default="15" comment="Output configuration headlight(f)">
+        <decVal min="0" max="15"/>
+        <label>Light intensity(f)</label>
+        <comment>Controls how much headlights dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect(f)" CV="113" mask="XXXVXXXX" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect(f)</label>
+      </variable>
+      <variable item="Flicker effect(f)" CV="113" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect(f)</label>
+      </variable>
+      <variable item="Random light effect(f)" CV="113" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect(f)</label>
+      </variable>
+      <variable item="Broken light effect(f)" CV="113" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect(f)</label>
+      </variable>
+
+      <variable item="Light intensity(r)" CV="114" mask="XXXXVVVV" default="15" comment="Output configuration headlight(r)">
+        <decVal min="0" max="15"/>
+        <label>Light intensity(r)</label>
+        <comment>Controls how much headlights dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect(r)" CV="114" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect(r)</label>
+      </variable>
+      <variable item="Flicker effect(r)" CV="114" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect(r)</label>
+      </variable>
+      <variable item="Random light effect(r)" CV="114" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect(r)</label>
+      </variable>
+      <variable item="Broken light effect(r)" CV="114" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect(r)</label>
+      </variable>
+
+      <variable item="Light intensity AUX1" CV="115" mask="XXXXVVVV" default="15" comment="Output configuration AUX1">
+        <decVal min="0" max="15"/>
+        <label>Light intensity AUX1</label>
+        <comment>Controls how much AUX1 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect AUX1" CV="115" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect AUX1</label>
+      </variable>
+      <variable item="Flicker effect AUX1" CV="115" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect AUX1</label>
+      </variable>
+      <variable item="Random light effect AUX1" CV="115" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect AUX1</label>
+      </variable>
+      <variable item="Broken light effect AUX1" CV="115" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect AUX1</label>
+      </variable>
+
+      <variable item="Light intensity AUX2" CV="116" mask="XXXXVVVV" default="15" comment="Output configuration AUX2">
+        <decVal min="0" max="15"/>
+        <label>Light intensity AUX2</label>
+        <comment>Controls how much AUX2 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect AUX2" CV="116" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect AUX2</label>
+      </variable>
+      <variable item="Flicker effect AUX2" CV="116" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect AUX2</label>
+      </variable>
+      <variable item="Random light effect AUX2" CV="116" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect AUX2</label>
+      </variable>
+      <variable item="Broken light effect AUX2" CV="116" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect AUX2</label>
+      </variable>
+
+      <variable item="Light intensity LEDgroup 1" CV="117" mask="XXXXVVVV" default="15" comment="Output configuration LEDgroup 1">
+        <decVal min="0" max="15"/>
+        <label>Light intensity LEDgroup 1</label>
+        <comment>Controls how much LEDgroup 1 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect LEDgroup 1" CV="117" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect LEDgroup 1</label>
+      </variable>
+      <variable item="Flicker effect LEDgroup 1" CV="117" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect LEDgroup 1</label>
+      </variable>
+      <variable item="Random light effect LEDgroup 1" CV="117" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect LEDgroup 1</label>
+      </variable>
+      <variable item="Broken light effect LEDgroup 1" CV="117" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect LEDgroup 1</label>
+      </variable>
+
+      <variable item="Light intensity LEDgroup 2" CV="118" mask="XXXXVVVV" default="15" comment="Output configuration LEDgroup 2">
+        <decVal min="0" max="15"/>
+        <label>Light intensity LEDgroup 2</label>
+        <comment>Controls how much LEDgroup 2 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect LEDgroup 2" CV="118" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect LEDgroup 2</label>
+      </variable>
+      <variable item="Flicker effect LEDgroup 2" CV="118" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect LEDgroup 2</label>
+      </variable>
+      <variable item="Random light effect LEDgroup 2" CV="118" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect LEDgroup 2</label>
+      </variable>
+      <variable item="Broken light effect LEDgroup 2" CV="118" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect LEDgroup 2</label>
+      </variable>
+
+      <variable item="Light intensity LEDgroup 3" CV="119" mask="XXXXVVVV" default="15" comment="Output configuration LEDgroup 3">
+        <decVal min="0" max="15"/>
+        <label>Light intensity LEDgroup 3</label>
+        <comment>Controls how much LEDgroup 3 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect LEDgroup 3" CV="119" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect LEDgroup 3</label>
+      </variable>
+      <variable item="Flicker effect LEDgroup 3" CV="119" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect LEDgroup 3</label>
+      </variable>
+      <variable item="Random light effect LEDgroup 3" CV="119" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect LEDgroup 3</label>
+      </variable>
+      <variable item="Broken light effect LEDgroup 3" CV="119" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect LEDgroup 3</label>
+      </variable>
+
+      <variable item="Light intensity LEDgroup 4" CV="120" mask="XXXXVVVV" default="15" comment="Output configuration LEDgroup 4">
+        <decVal min="0" max="15"/>
+        <label>Light intensity LEDgroup 4</label>
+        <comment>Controls how much LEDgroup 4 dim (0-dark to 15-max bright)</comment>
+      </variable>
+      <variable item="Fade in fade out effect LEDgroup 4" CV="120" mask="XXXVXXXX"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Fade in fade out effect LEDgroup 4</label>
+      </variable>
+      <variable item="Flicker effect LEDgroup 4" CV="120" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Flicker effect LEDgroup 4</label>
+      </variable>
+      <variable item="Random light effect LEDgroup 4" CV="120" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Random light effect LEDgroup 4</label>
+      </variable>
+      <variable item="Broken light effect LEDgroup 4" CV="120" mask="VXXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+        <label>Broken light effect LEDgroup 4</label>
+      </variable>
+
+<!-- F0 Forward -->
+      <variable item="F0(f) controls output 1" CV="141" mask="XXXXXXXV" minOut="1" minFn="0" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 2" CV="141" mask="XXXXXXVX" minOut="2" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 3" CV="141" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 4" CV="141" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 5" CV="141" mask="XXXVXXXX" minOut="5" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 6" CV="141" mask="XXVXXXXX" minOut="6" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 7" CV="141" mask="XVXXXXXX" minOut="7" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+      <variable item="F0(f) controls output 8" CV="141" mask="VXXXXXXX" minOut="8" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(f) controls output 1</label>
+      </variable>
+<!-- F0 Reverse -->
+      <variable item="F0(r) controls output 1" CV="144" mask="XXXXXXXV" minOut="1" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 1</label>
+      </variable>
+	  <variable item="F0(r) controls output 2" CV="144" mask="XXXXXXVX" minOut="2" minFn="0" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 2</label>
+      </variable>
+      <variable item="F0(r) controls output 3" CV="144" mask="XXXXXVXX" minOut="3" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 3</label>
+      </variable>
+      <variable item="F0(r) controls output 4" CV="144" mask="XXXXVXXX" minOut="4" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 4</label>
+      </variable>
+      <variable item="F0(r) controls output 5" CV="144" mask="XXXVXXXX" minOut="5" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 5</label>
+      </variable>
+      <variable item="F0(r) controls output 6" CV="144" mask="XXVXXXXX" minOut="6" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 6</label>
+      </variable>
+      <variable item="F0(r) controls output 7" CV="144" mask="XVXXXXXX" minOut="7" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 7</label>
+      </variable>
+      <variable item="F0(r) controls output 8" CV="144" mask="VXXXXXXX" minOut="8" minFn="0" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F0(r) controls output 8</label>
+      </variable>
+
+<!-- F1 Forward -->
+      <variable item="F1(f) controls output 1" CV="147" mask="XXXXXXXV" minOut="1" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 1</label>
+      </variable>
+      <variable item="F1(f) controls output 2" CV="147" mask="XXXXXXVX" minOut="2" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 2</label>
+      </variable>
+      <variable item="F1(f) controls output 3" CV="147" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 3</label>
+      </variable>
+      <variable item="F1(f) controls output 4" CV="147" mask="XXXXVXXX" minOut="4" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 4</label>
+      </variable>
+      <variable item="F1(f) controls output 5" CV="147" mask="XXXVXXXX" minOut="5" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 5</label>
+      </variable>
+      <variable item="F1(f) controls output 6" CV="147" mask="XXVXXXXX" minOut="6" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 6</label>
+      </variable>
+      <variable item="F1(f) controls output 7" CV="147" mask="XVXXXXXX" minOut="7" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 7</label>
+      </variable>
+      <variable item="F1(f) controls output 8" CV="147" mask="VXXXXXXX" minOut="8" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(f) controls output 8</label>
+      </variable>
+<!-- F1 Reverse -->
+      <variable item="F1(r) controls output 1" CV="150" mask="XXXXXXXV" minOut="1" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 1</label>
+      </variable>
+      <variable item="F1(r) controls output 2" CV="150" mask="XXXXXXVX" minOut="2" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 2</label>
+      </variable>
+      <variable item="F1(r) controls output 3" CV="150" mask="XXXXXVXX" minOut="3" minFn="1" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 3</label>
+      </variable>
+      <variable item="F1(r) controls output 4" CV="150" mask="XXXXVXXX" minOut="4" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 4</label>
+      </variable>
+      <variable item="F1(r) controls output 5" CV="150" mask="XXXVXXXX" minOut="5" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 5</label>
+      </variable>
+      <variable item="F1(r) controls output 6" CV="150" mask="XXVXXXXX" minOut="6" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 6</label>
+      </variable>
+      <variable item="F1(r) controls output 7" CV="150" mask="XVXXXXXX" minOut="7" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 7</label>
+      </variable>
+      <variable item="F1(r) controls output 8" CV="150" mask="VXXXXXXX" minOut="8" minFn="1" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F1(r) controls output 8</label>
+      </variable>
+
+<!-- F2 Forward -->
+	  <variable item="F2(f) controls output 1" CV="153" mask="XXXXXXXV" minOut="1" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 1</label>
+      </variable>
+      <variable item="F2(f) controls output 2" CV="153" mask="XXXXXXVX" minOut="2" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 2</label>
+      </variable>
+      <variable item="F2(f) controls output 3" CV="153" mask="XXXXXVXX" minOut="3" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 3</label>
+      </variable>
+      <variable item="F2(f) controls output 4" CV="153" mask="XXXXVXXX" minOut="4" minFn="2"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 4</label>
+      </variable>
+      <variable item="F2(f) controls output 5" CV="153" mask="XXXVXXXX" minOut="5" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 5</label>
+      </variable>
+      <variable item="F2(f) controls output 6" CV="153" mask="XXVXXXXX" minOut="6" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 6</label>
+      </variable>
+      <variable item="F2(f) controls output 7" CV="153" mask="XVXXXXXX" minOut="7" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 7</label>
+      </variable>
+      <variable item="F2(f) controls output 8" CV="153" mask="VXXXXXXX" minOut="8" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(f) controls output 8</label>
+      </variable>
+<!-- F2 Reverse -->
+	  <variable item="F2(r) controls output 1" CV="156" mask="XXXXXXXV" minOut="1" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 1</label>
+      </variable>
+      <variable item="F2(r) controls output 2" CV="156" mask="XXXXXXVX" minOut="2" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 2</label>
+      </variable>
+      <variable item="F2(r) controls output 3" CV="156" mask="XXXXXVXX" minOut="3" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 3</label>
+      </variable>
+      <variable item="F2(r) controls output 4" CV="156" mask="XXXXVXXX" minOut="4" minFn="2"  default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 4</label>
+      </variable>
+      <variable item="F2(r) controls output 5" CV="156" mask="XXXVXXXX" minOut="5" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 5</label>
+      </variable>
+      <variable item="F2(r) controls output 6" CV="156" mask="XXVXXXXX" minOut="6" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 6</label>
+      </variable>
+      <variable item="F2(r) controls output 7" CV="156" mask="XVXXXXXX" minOut="7" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 7</label>
+      </variable>
+      <variable item="F2(r) controls output 8" CV="156" mask="VXXXXXXX" minOut="8" minFn="2"  default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F2(r) controls output 8</label>
+      </variable>
+
+<!-- F3 Forward -->
+      <variable item="F3(f) controls output 1" CV="159" mask="XXXXXXXV" minOut="1" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 1</label>
+      </variable>
+      <variable item="F3(f) controls output 2" CV="159" mask="XXXXXXVX" minOut="2" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 2</label>
+      </variable>
+      <variable item="F3(f) controls output 3" CV="159" mask="XXXXXVXX" minOut="3" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 3</label>
+      </variable>
+      <variable item="F3(f) controls output 4" CV="159" mask="XXXXVXXX" minOut="4" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 4</label>
+      </variable>
+      <variable item="F3(f) controls output 5" CV="159" mask="XXXVXXXX" minOut="5" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 5</label>
+      </variable>
+      <variable item="F3(f) controls output 6" CV="159" mask="XXVXXXXX" minOut="6" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 6</label>
+      </variable>
+      <variable item="F3(f) controls output 7" CV="159" mask="XVXXXXXX" minOut="7" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 7</label>
+      </variable>
+      <variable item="F3(f) controls output 8" CV="159" mask="VXXXXXXX" minOut="8" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(f) controls output 8</label>
+      </variable>
+<!-- F3 Reverse -->
+      <variable item="F3(r) controls output 1" CV="162" mask="XXXXXXXV" minOut="1" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 1</label>
+      </variable>
+      <variable item="F3(r) controls output 2" CV="162" mask="XXXXXXVX" minOut="2" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 2</label>
+      </variable>
+      <variable item="F3(r) controls output 3" CV="162" mask="XXXXXVXX" minOut="3" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 3</label>
+      </variable>
+      <variable item="F3(r) controls output 4" CV="162" mask="XXXXVXXX" minOut="4" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 4</label>
+      </variable>
+      <variable item="F3(r) controls output 5" CV="162" mask="XXXVXXXX" minOut="5" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 5</label>
+      </variable>
+      <variable item="F3(r) controls output 6" CV="162" mask="XXVXXXXX" minOut="6" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 6</label>
+      </variable>
+      <variable item="F3(r) controls output 7" CV="162" mask="XVXXXXXX" minOut="7" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 7</label>
+      </variable>
+      <variable item="F3(r) controls output 8" CV="162" mask="VXXXXXXX" minOut="8" minFn="3" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F3(r) controls output 8</label>
+      </variable>
+
+<!-- F4 Forward -->
+      <variable item="F4(f) controls output 1" CV="165" mask="XXXXXXXV" minOut="1" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 1</label>
+      </variable>
+      <variable item="F4(f) controls output 2" CV="165" mask="XXXXXXVX" minOut="2" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 2</label>
+      </variable>
+      <variable item="F4(f) controls output 3" CV="165" mask="XXXXXVXX" minOut="3" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 3</label>
+      </variable>
+      <variable item="F4(f) controls output 4" CV="165" mask="XXXXVXXX" minOut="4" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 4</label>
+      </variable>
+      <variable item="F4(f) controls output 5" CV="165" mask="XXXVXXXX" minOut="5" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 5</label>
+      </variable>
+      <variable item="F4(f) controls output 6" CV="165" mask="XXVXXXXX" minOut="6" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 6</label>
+      </variable>
+      <variable item="F4(f) controls output 7" CV="165" mask="XVXXXXXX" minOut="7" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 7</label>
+      </variable>
+      <variable item="F4(f) controls output 8" CV="165" mask="VXXXXXXX" minOut="8" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(f) controls output 8</label>
+      </variable>
+<!-- F4 Reverse -->
+      <variable item="F4(r) controls output 1" CV="168" mask="XXXXXXXV" minOut="1" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 1</label>
+      </variable>
+      <variable item="F4(r) controls output 2" CV="168" mask="XXXXXXVX" minOut="2" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 2</label>
+      </variable>
+      <variable item="F4(r) controls output 3" CV="168" mask="XXXXXVXX" minOut="3" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 3</label>
+      </variable>
+      <variable item="F4(r) controls output 4" CV="168" mask="XXXXVXXX" minOut="4" minFn="4" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 4</label>
+      </variable>
+      <variable item="F4(r) controls output 5" CV="168" mask="XXXVXXXX" minOut="5" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 5</label>
+      </variable>
+      <variable item="F4(r) controls output 6" CV="168" mask="XXVXXXXX" minOut="6" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 6</label>
+      </variable>
+      <variable item="F4(r) controls output 7" CV="168" mask="XVXXXXXX" minOut="7" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 7</label>
+      </variable>
+      <variable item="F4(r) controls output 8" CV="168" mask="VXXXXXXX" minOut="8" minFn="4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F4(r) controls output 8</label>
+      </variable>
+
+<!-- F5 Forward -->
+	  <variable item="F5(f) controls output 1" CV="171" mask="XXXXXXXV" minOut="1" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 1</label>
+      </variable>
+      <variable item="F5(f) controls output 2" CV="171" mask="XXXXXXVX" minOut="2" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 2</label>
+      </variable>
+      <variable item="F5(f) controls output 3" CV="171" mask="XXXXXVXX" minOut="3" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 3</label>
+      </variable>
+      <variable item="F5(f) controls output 4" CV="171" mask="XXXXVXXX" minOut="4" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 4</label>
+      </variable>
+      <variable item="F5(f) controls output 5" CV="171" mask="XXXVXXXX" minOut="5" minFn="5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 5</label>
+      </variable>
+      <variable item="F5(f) controls output 6" CV="171" mask="XXVXXXXX" minOut="6" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 6</label>
+      </variable>
+      <variable item="F5(f) controls output 7" CV="171" mask="XVXXXXXX" minOut="7" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 7</label>
+      </variable>
+      <variable item="F5(f) controls output 8" CV="171" mask="VXXXXXXX" minOut="8" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(f) controls output 8</label>
+      </variable>
+<!-- F5 Reverse -->
+	  <variable item="F5(r) controls output 1" CV="174" mask="XXXXXXXV" minOut="1" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 1</label>
+      </variable>
+      <variable item="F5(r) controls output 2" CV="174" mask="XXXXXXVX" minOut="2" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 2</label>
+      </variable>
+      <variable item="F5(r) controls output 3" CV="174" mask="XXXXXVXX" minOut="3" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 3</label>
+      </variable>
+      <variable item="F5(r) controls output 4" CV="174" mask="XXXXVXXX" minOut="4" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 4</label>
+      </variable>
+      <variable item="F5(r) controls output 5" CV="174" mask="XXXVXXXX" minOut="5" minFn="5" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 5</label>
+      </variable>
+      <variable item="F5(r) controls output 6" CV="174" mask="XXVXXXXX" minOut="6" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 6</label>
+      </variable>
+      <variable item="F5(r) controls output 7" CV="174" mask="XVXXXXXX" minOut="7" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 7</label>
+      </variable>
+      <variable item="F5(r) controls output 8" CV="174" mask="VXXXXXXX" minOut="8" minFn="5" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F5(r) controls output 8</label>
+      </variable>
+
+<!-- F6 Forward -->
+      <variable item="F6(f) controls output 1" CV="177" mask="XXXXXXXV" minOut="1" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 1</label>
+      </variable>
+      <variable item="F6(f) controls output 2" CV="177" mask="XXXXXXVX" minOut="2" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 2</label>
+      </variable>
+      <variable item="F6(f) controls output 3" CV="177" mask="XXXXXVXX" minOut="3" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 3</label>
+      </variable>
+      <variable item="F6(f) controls output 4" CV="177" mask="XXXXVXXX" minOut="4" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 4</label>
+      </variable>
+      <variable item="F6(f) controls output 5" CV="177" mask="XXXVXXXX" minOut="5" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 5</label>
+      </variable>
+      <variable item="F6(f) controls output 6" CV="177" mask="XXVXXXXX" minOut="6" minFn="6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 6</label>
+      </variable>
+      <variable item="F6(f) controls output 7" CV="177" mask="XVXXXXXX" minOut="7" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 7</label>
+      </variable>
+      <variable item="F6(f) controls output 8" CV="177" mask="VXXXXXXX" minOut="8" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(f) controls output 8</label>
+      </variable>
+<!-- F6 Reverse -->
+      <variable item="F6(r) controls output 1" CV="180" mask="XXXXXXXV" minOut="1" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 1</label>
+      </variable>
+      <variable item="F6(r) controls output 2" CV="180" mask="XXXXXXVX" minOut="2" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 2</label>
+      </variable>
+      <variable item="F6(r) controls output 3" CV="180" mask="XXXXXVXX" minOut="3" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 3</label>
+      </variable>
+      <variable item="F6(r) controls output 4" CV="180" mask="XXXXVXXX" minOut="4" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 4</label>
+      </variable>
+      <variable item="F6(r) controls output 5" CV="180" mask="XXXVXXXX" minOut="5" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 5</label>
+      </variable>
+      <variable item="F6(r) controls output 6" CV="180" mask="XXVXXXXX" minOut="6" minFn="6" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 6</label>
+      </variable>
+      <variable item="F6(r) controls output 7" CV="180" mask="XVXXXXXX" minOut="7" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 7</label>
+      </variable>
+      <variable item="F6(r) controls output 8" CV="180" mask="VXXXXXXX" minOut="8" minFn="6" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F6(r) controls output 8</label>
+      </variable>
+
+<!-- F7 Forward -->
+      <variable item="F7(f) controls output 1" CV="183" mask="XXXXXXXV" minOut="1" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 1</label>
+      </variable>
+      <variable item="F7(f) controls output 2" CV="183" mask="XXXXXXVX" minOut="2" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 2</label>
+      </variable>
+      <variable item="F7(f) controls output 3" CV="183" mask="XXXXXVXX" minOut="3" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 3</label>
+      </variable>
+      <variable item="F7(f) controls output 4" CV="183" mask="XXXXVXXX" minOut="4" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 4</label>
+      </variable>
+      <variable item="F7(f) controls output 5" CV="183" mask="XXXVXXXX" minOut="5" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 5</label>
+      </variable>
+      <variable item="F7(f) controls output 6" CV="183" mask="XXVXXXXX" minOut="6" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 6</label>
+      </variable>
+      <variable item="F7(f) controls output 7" CV="183" mask="XVXXXXXX" minOut="7" minFn="7" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 7</label>
+      </variable>
+      <variable item="F7(f) controls output 8" CV="183" mask="VXXXXXXX" minOut="8" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(f) controls output 8</label>
+      </variable>
+<!-- F7 Reverse -->
+      <variable item="F7(r) controls output 1" CV="186" mask="XXXXXXXV" minOut="1" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 1</label>
+      </variable>
+      <variable item="F7(r) controls output 2" CV="186" mask="XXXXXXVX" minOut="2" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 2</label>
+      </variable>
+      <variable item="F7(r) controls output 3" CV="186" mask="XXXXXVXX" minOut="3" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 3</label>
+      </variable>
+      <variable item="F7(r) controls output 4" CV="186" mask="XXXXVXXX" minOut="4" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 4</label>
+      </variable>
+      <variable item="F7(r) controls output 5" CV="186" mask="XXXVXXXX" minOut="5" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 5</label>
+      </variable>
+      <variable item="F7(r) controls output 6" CV="186" mask="XXVXXXXX" minOut="6" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 6</label>
+      </variable>
+      <variable item="F7(r) controls output 7" CV="186" mask="XVXXXXXX" minOut="7" minFn="7" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 7</label>
+      </variable>
+      <variable item="F7(r) controls output 8" CV="186" mask="VXXXXXXX" minOut="8" minFn="7" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F7(r) controls output 8</label>
+      </variable>
+
+<!-- F8 Forward -->
+      <variable item="F8(f) controls output 1" CV="189" mask="XXXXXXXV" minOut="1" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 1</label>
+      </variable>
+      <variable item="F8(f) controls output 2" CV="189" mask="XXXXXXVX" minOut="2" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 2</label>
+      </variable>
+      <variable item="F8(f) controls output 3" CV="189" mask="XXXXXVXX" minOut="3" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 3</label>
+      </variable>
+      <variable item="F8(f) controls output 4" CV="189" mask="XXXXVXXX" minOut="4" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 4</label>
+      </variable>
+      <variable item="F8(f) controls output 5" CV="189" mask="XXXVXXXX" minOut="5" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 5</label>
+      </variable>
+      <variable item="F8(f) controls output 6" CV="189" mask="XXVXXXXX" minOut="6" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 6</label>
+      </variable>
+      <variable item="F8(f) controls output 7" CV="189" mask="XVXXXXXX" minOut="7" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 7</label>
+      </variable>
+      <variable item="F8(f) controls output 8" CV="189" mask="VXXXXXXX" minOut="8" minFn="8" default ="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(f) controls output 8</label>
+      </variable>
+<!-- F8 Reverse -->
+      <variable item="F8(r) controls output 1" CV="192" mask="XXXXXXXV" minOut="1" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 1</label>
+      </variable>
+      <variable item="F8(r) controls output 2" CV="192" mask="XXXXXXVX" minOut="2" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 2</label>
+      </variable>
+      <variable item="F8(r) controls output 3" CV="192" mask="XXXXXVXX" minOut="3" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 3</label>
+      </variable>
+      <variable item="F8(r) controls output 4" CV="192" mask="XXXXVXXX" minOut="4" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 4</label>
+      </variable>
+      <variable item="F8(r) controls output 5" CV="192" mask="XXXVXXXX" minOut="5" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 5</label>
+      </variable>
+      <variable item="F8(r) controls output 6" CV="192" mask="XXVXXXXX" minOut="6" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 6</label>
+      </variable>
+      <variable item="F8(r) controls output 7" CV="192" mask="XVXXXXXX" minOut="7" minFn="8" default ="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 7</label>
+      </variable>
+      <variable item="F8(r) controls output 8" CV="192" mask="VXXXXXXX" minOut="8" minFn="8" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
+        <label>F8(r) controls output 8</label>
+      </variable>
+    </variables>
+    <resets>
+      <factReset label="HARD RESET all CVs reset to default values" CV="8" default="8"/>
+    </resets>
+  </decoder>
+
+<pane>
+ 	<name>Alt Function Map</name>
+	<column>
+		<display item="Special Function Mapping" format="radiobuttons"/>
+		<label><text> </text></label>
+		<label><text> </text></label>
+		<label>
+			<text> Function                          Output</text>
+		</label>
+		<label><text> </text></label>
+	 <row>
+		 <column>
+			 <label>
+				 <text>                                               1</text>
+			 </label>
+			 <label>
+				 <text>                                           Head  </text>
+			 </label>
+			 <label>
+				 <text>                                           Light  </text>
+			 </label>
+			 <label>
+				 <text> </text>
+			 </label>
+			 <display item="F0(f) controls output 1" format="checkbox" tooltip="FO 0 Headlight forward">
+				 <label>Function 0 forward       </label>
+			 </display>
+			 <display item="F0(r) controls output 1" format="checkbox" tooltip="FO 0 Headlight reverse">
+				 <label>Function 0 reverse       </label>
+			 </display>
+			 <display item="F1(f) controls output 1" format="checkbox" tooltip="FO 1 Taillight forward">
+				 <label>Function 1 forward       </label>
+			 </display>
+			 <display item="F1(r) controls output 1" format="checkbox" tooltip="FO 1 Taillight reverse">
+				 <label>Function 1 reverse       </label>
+			 </display>
+			 <display item="F2(f) controls output 1" format="checkbox" tooltip="FO 2 AUX 1 forward">
+				 <label>Function 2 forward       </label>
+			 </display>
+			 <display item="F2(r) controls output 1" format="checkbox" tooltip="FO 2 AUX 1 reverse">
+				 <label>Function 2 reverse       </label>
+			 </display>
+			 <display item="F3(f) controls output 1" format="checkbox" tooltip="FO 3 AUX 2 forward">
+				 <label>Function 3 forward       </label>
+			 </display>
+			 <display item="F3(r) controls output 1" format="checkbox" tooltip="FO 3 AUX 2 reverse">
+				 <label>Function 3 reverse       </label>
+			 </display>
+			 <display item="F4(f) controls output 1" format="checkbox" tooltip="FO 4 LED group all forward">
+				 <label>Function 4 forward       </label>
+			 </display>
+			 <display item="F4(r) controls output 1" format="checkbox" tooltip="FO 4 LED group all reverse">
+				 <label>Function 4 reverse       </label>
+			 </display>
+			 <display item="F5(f) controls output 1" format="checkbox" tooltip="FO 5 LED group 1 forward">
+				 <label>Function 5 forward       </label>
+			 </display>
+			 <display item="F5(r) controls output 1" format="checkbox" tooltip="FO 5 LED group 1 reverse">
+				 <label>Function 5 reverse       </label>
+			 </display>
+			 <display item="F6(f) controls output 1" format="checkbox" tooltip="FO 6 LED group 2 forward">
+				 <label>Function 6 forward       </label>
+			 </display>
+			 <display item="F6(r) controls output 1" format="checkbox" tooltip="FO 6 LED group 2 reverse">
+				 <label>Function 6 reverse       </label>
+			 </display>
+			 <display item="F7(f) controls output 1" format="checkbox" tooltip="FO 7 LED group 3 forward">
+				 <label>Function 7 forward       </label>
+			 </display>
+			 <display item="F7(r) controls output 1" format="checkbox" tooltip="FO 7 LED group 3 reverse">
+				 <label>Function 7 reverse       </label>
+			 </display>
+			 <display item="F8(f) controls output 1" format="checkbox" tooltip="FO 8 LED group 4 forward">
+				 <label>Function 8 forward       </label>
+			 </display>
+			 <display item="F8(r) controls output 1" format="checkbox" tooltip="FO 8 LED group 4 reverse">
+				 <label>Function 8 reverse       </label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>    2 </text>
+			 </label>
+			 <label>
+				 <text> Tail </text>
+			 </label>
+			 <label>
+				 <text> Light </text>
+			 </label>
+			 <label>
+				 <text> </text>
+			 </label>
+			 <display item="F0(f) controls output 2" format="checkbox" label="FO 0 Headlight forward">
+				 <label></label>
+			 </display>
+			 <display item="F0(r) controls output 2" format="checkbox" label="FO 0 Headlight reverse">
+				 <label></label>
+			 </display>
+			 <display item="F1(f) controls output 2" format="checkbox" label="FO 1 Taillight forward">
+				 <label></label>
+			 </display>
+			 <display item="F1(r) controls output 2" format="checkbox" label="FO 1 Taillight reverse">
+				 <label></label>
+			 </display>
+			 <display item="F2(f) controls output 2" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F2(r) controls output 2" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F3(f) controls output 2" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F3(r) controls output 2" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F4(f) controls output 2" format="checkbox" label="FO 4 LED group all forward">
+				 <label></label>
+			 </display>
+			 <display item="F4(r) controls output 2" format="checkbox" label="FO 4 LED group all reverse">
+				 <label></label>
+			 </display>
+			 <display item="F5(f) controls output 2" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 2" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 2" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 2" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 2" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 2" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 2" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 2" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>     3 </text>
+			 </label>
+			 <label>
+				 <text>  AUX </text>
+			 </label>
+			 <label>
+				 <text>     1 </text>
+			 </label>
+			 <label>
+				 <text> </text>
+			 </label>
+			 <display item="F0(f) controls output 3" format="checkbox" label="FO 0 Headlight forward">
+				 <label></label>
+			 </display>
+			 <display item="F0(r) controls output 3" format="checkbox" label="FO 0 Headlight reverse">
+				 <label></label>
+			 </display>
+			 <display item="F1(f) controls output 3" format="checkbox" label="FO 1 Taillight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F1(r) controls output 3" format="checkbox" label="FO 1 Taillight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F2(f) controls output 3" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F2(r) controls output 3" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F3(f) controls output 3" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F3(r) controls output 3" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F4(f) controls output 3" format="checkbox" label="FO 4 LED group all forward">
+				 <label> </label>
+			 </display>
+			 <display item="F4(r) controls output 3" format="checkbox" label="FO 4 LED group all reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F5(f) controls output 3" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 3" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 3" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 3" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 3" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 3" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 3" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 3" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>     4 </text>
+			 </label>
+			 <label>
+				 <text>  AUX </text>
+			 </label>
+			 <label>
+				 <text>    2 </text>
+			 </label>
+			 <label>
+				 <text> </text>
+			 </label>
+			 <display item="F0(f) controls output 4" format="checkbox" label="FO 0 Headlight forward">
+				 <label></label>
+			 </display>
+			 <display item="F0(r) controls output 4" format="checkbox" label="FO 0 Headlight reverse">
+				 <label></label>
+			 </display>
+			 <display item="F1(f) controls output 4" format="checkbox" label="FO 1 Taillight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F1(r) controls output 4" format="checkbox" label="FO 1 Taillight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F2(f) controls output 4" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F2(r) controls output 4" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F3(f) controls output 4" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F3(r) controls output 4" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F4(f) controls output 4" format="checkbox" label="FO 4 LED group all forward">
+				 <label> </label>
+			 </display>
+			 <display item="F4(r) controls output 4" format="checkbox" label="FO 4 LED group all reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F5(f) controls output 4" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 4" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 4" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 4" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 4" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 4" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 4" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 4" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>     5 </text>
+			 </label>
+			 <label>
+				 <text>   LED </text>
+			 </label>
+			 <label>
+				 <text> Group</text>
+			 </label>
+			 <label>
+				 <text>     1</text>
+			 </label>
+			 <display item="F0(f) controls output 5" format="checkbox" label="FO 0 Headlight forward">
+				 <label></label>
+			 </display>
+			 <display item="F0(r) controls output 5" format="checkbox" label="FO 0 Headlight reverse">
+				 <label></label>
+			 </display>
+			 <display item="F1(f) controls output 5" format="checkbox" label="FO 1 Taillight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F1(r) controls output 5" format="checkbox" label="FO 1 Taillight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F2(f) controls output 5" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F2(r) controls output 5" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F3(f) controls output 5" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F3(r) controls output 5" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F4(f) controls output 5" format="checkbox" label="FO 4 LED group all forward">
+				 <label> </label>
+			 </display>
+			 <display item="F4(r) controls output 5" format="checkbox" label="FO 4 LED group all reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F5(f) controls output 5" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 5" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 5" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 5" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 5" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 5" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 5" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 5" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>     6</text>
+			 </label>
+			 <label>
+				 <text>   LED </text>
+			 </label>
+			 <label>
+				 <text> Group</text>
+			 </label>
+			 <label>
+				 <text>     2</text>
+			 </label>
+			 <display item="F0(f) controls output 6" format="checkbox" label="FO 0 Headlight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F0(r) controls output 6" format="checkbox" label="FO 0 Headlight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F1(f) controls output 6" format="checkbox" label="FO 1 Taillight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F1(r) controls output 6" format="checkbox" label="FO 1 Taillight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F2(f) controls output 6" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F2(r) controls output 6" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F3(f) controls output 6" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F3(r) controls output 6" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F4(f) controls output 6" format="checkbox" label="FO 4 LED group all forward">
+				 <label> </label>
+			 </display>
+			 <display item="F4(r) controls output 6" format="checkbox" label="FO 4 LED group all reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F5(f) controls output 6" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 6" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 6" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 6" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 6" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 6" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 6" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 6" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>     7</text>
+			 </label>
+			 <label>
+				 <text>   LED </text>
+			 </label>
+			 <label>
+				 <text> Group</text>
+			 </label>
+			 <label>
+				 <text>     3</text>
+			 </label>
+			 <display item="F0(f) controls output 7" format="checkbox" label="FO 0 Headlight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F0(r) controls output 7" format="checkbox" label="FO 0 Headlight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F1(f) controls output 7" format="checkbox" label="FO 1 Taillight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F1(r) controls output 7" format="checkbox" label="FO 1 Taillight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F2(f) controls output 7" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F2(r) controls output 7" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F3(f) controls output 7" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F3(r) controls output 7" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F4(f) controls output 7" format="checkbox" label="FO 4 LED group all forward">
+				 <label> </label>
+			 </display>
+			 <display item="F4(r) controls output 7" format="checkbox" label="FO 4 LED group all reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F5(f) controls output 7" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 7" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 7" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 7" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 7" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 7" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 7" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 7" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+		 <column>
+			 <label>
+				 <text>     8</text>
+			 </label>
+			 <label>
+				 <text>   LED </text>
+			 </label>
+			 <label>
+				 <text> Group</text>
+			 </label>
+			 <label>
+				 <text>     4</text>
+			 </label>
+			 <display item="F0(f) controls output 8" format="checkbox" label="FO 0 Headlight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F0(r) controls output 8" format="checkbox" label="FO 0 Headlight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F1(f) controls output 8" format="checkbox" label="FO 1 Taillight forward">
+				 <label> </label>
+			 </display>
+			 <display item="F1(r) controls output 8" format="checkbox" label="FO 1 Taillight reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F2(f) controls output 8" format="checkbox" label="FO 2 AUX 1 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F2(r) controls output 8" format="checkbox" label="FO 2 AUX 1 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F3(f) controls output 8" format="checkbox" label="FO 3 AUX 2 forward">
+				 <label> </label>
+			 </display>
+			 <display item="F3(r) controls output 8" format="checkbox" label="FO 3 AUX 2 reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F4(f) controls output 8" format="checkbox" label="FO 4 LED group all forward">
+				 <label> </label>
+			 </display>
+			 <display item="F4(r) controls output 8" format="checkbox" label="FO 4 LED group all reverse">
+				 <label> </label>
+			 </display>
+			 <display item="F5(f) controls output 8" format="checkbox" label="FO 5 LED group 1 forward">
+				 <label></label>
+			 </display>
+			 <display item="F5(r) controls output 8" format="checkbox" label="FO 5 LED group 1 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F6(f) controls output 8" format="checkbox" label="FO 6 LED group 2 forward">
+				 <label></label>
+			 </display>
+			 <display item="F6(r) controls output 8" format="checkbox" label="FO 6 LED group 2 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F7(f) controls output 8" format="checkbox" label="FO 7 LED group 3 forward">
+				 <label></label>
+			 </display>
+			 <display item="F7(r) controls output 8" format="checkbox" label="FO 7 LED group 3 reverse">
+				 <label></label>
+			 </display>
+			 <display item="F8(f) controls output 8" format="checkbox" label="FO 8 LED group 4 forward">
+				 <label></label>
+			 </display>
+			 <display item="F8(r) controls output 8" format="checkbox" label="FO 8 LED group 4 reverse">
+				 <label></label>
+			 </display>
+		 </column>
+	 </row>
+ </column>
+</pane>
+
+<pane>
+	<name>Output Configuration</name>
+	<row>
+		<column>
+			<display item="PWM period" tooltip=""/>
+			<display item="Fade speed" tooltip=""/>
+			<display item="Flicker speed" tooltip=""/>
+		</column>
+		<column>
+			<display item="PWM period" format="hslider" label="" tooltip="">
+				<label/>
+			</display>
+			<display item="Fade speed" format="hslider" label="" tooltip="">
+				<label/>
+			</display>
+			<display item="Flicker speed" format="hslider" label="" tooltip="">
+				<label/>
+			</display>
+		</column>
+	</row>
+	<row>
+		<column>
+			<row>
+				<display item="Presets" layout="above"/>
+			</row>
+			<label><text> </text></label>
+			<label><text> </text></label>
+			<label><text> </text></label>
+			<label><text>Output Configuration LEDgroup 1-4</text></label>
+			<separator/>
+			<row>
+				<display item="Light intensity LEDgroup 1-4" tooltip=""/>
+				<display item="Light intensity LEDgroup 1-4" label="" format="hslider" tooltip=""/>
+			</row>
+			<display item="Fade in fade out effect LEDgroup 1-4" format="checkbox" tooltip=""/>
+			<display item="Flicker effect LEDgroup 1-4" format="checkbox" tooltip=""/>
+			<display item="Random light effect LEDgroup 1-4" format="checkbox" tooltip=""/>
+			<display item="Broken light effect LEDgroup 1-4" format="checkbox" tooltip=""/>
+		</column>
+	</row>
+</pane>
+
+<pane>
+	<name>Headlight Configuration</name>
+	<column>
+		<row>
+			<column>
+				<label><text>Output Configuration Headlight(f)</text></label>
+				<separator/>
+				<row>
+					<display item="Light intensity(f)" tooltip=""/>
+					<display item="Light intensity(f)" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect(f)" format="checkbox" tooltip=""/>
+				<display item="Flicker effect(f)" format="checkbox" tooltip=""/>
+				<display item="Random light effect(f)" format="checkbox" tooltip=""/>
+				<display item="Broken light effect(f)" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+		<label>
+			<text> </text>
+		</label>
+		<row>
+			<column>
+				<label><text>Output Configuration Headlight(r)</text></label>
+				<separator/>
+				<row>
+				 <display item="Light intensity(r)" tooltip=""/>
+					<display item="Light intensity(r)" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect(r)" format="checkbox" tooltip=""/>
+				<display item="Flicker effect(r)" format="checkbox" tooltip=""/>
+				<display item="Random light effect(r)" format="checkbox" tooltip=""/>
+				<display item="Broken light effect(r)" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+	</column>
+</pane>
+<pane>
+	<name>Auxilary Ports Configuration</name>
+	<column>
+		<row>
+			<column>
+				<label><text>Output Configuration AUX1</text></label>
+				<separator/>
+				<row>
+				 <display item="Light intensity AUX1" tooltip=""/>
+					<display item="Light intensity AUX1" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect AUX1" format="checkbox" tooltip=""/>
+				<display item="Flicker effect AUX1" format="checkbox" tooltip=""/>
+				<display item="Random light effect AUX1" format="checkbox" tooltip=""/>
+				<display item="Broken light effect AUX1" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+		<label>
+			<text> </text>
+		</label>
+		<row>
+			<column>
+				<label><text>Output Configuration AUX2</text></label>
+				<separator/>
+				<row>
+					<display item="Light intensity AUX2" tooltip=""/>
+					<display item="Light intensity AUX2" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect AUX2" format="checkbox" tooltip=""/>
+				<display item="Flicker effect AUX2" format="checkbox" tooltip=""/>
+				<display item="Random light effect AUX2" format="checkbox" tooltip=""/>
+				<display item="Broken light effect AUX2" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+	</column>
+</pane>
+<pane>
+	<name>LED Groups Configuration</name>
+	<column>
+		<row>
+			<column>
+				<label><text>Output Configuration LEDgroup 1</text></label>
+				<separator/>
+				<row>
+					<display item="Light intensity LEDgroup 1" tooltip=""/>
+					<display item="Light intensity LEDgroup 1" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect LEDgroup 1" format="checkbox" tooltip=""/>
+				<display item="Flicker effect LEDgroup 1" format="checkbox" tooltip=""/>
+				<display item="Random light effect LEDgroup 1" format="checkbox" tooltip=""/>
+				<display item="Broken light effect LEDgroup 1" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+		<label>
+			<text> </text>
+		</label>
+		<row>
+			<column>
+				<label><text>Output Configuration LEDgroup 2</text></label>
+				<separator/>
+				<row>
+					<display item="Light intensity LEDgroup 2" tooltip=""/>
+					<display item="Light intensity LEDgroup 2" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect LEDgroup 2" format="checkbox" tooltip=""/>
+				<display item="Flicker effect LEDgroup 2" format="checkbox" tooltip=""/>
+				<display item="Random light effect LEDgroup 2" format="checkbox" tooltip=""/>
+				<display item="Broken light effect LEDgroup 2" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+		<label>
+			<text> </text>
+		</label>
+		<row>
+			<column>
+				<label><text>Output Configuration LEDgroup 3</text></label>
+				<separator/>
+				<row>
+					<display item="Light intensity LEDgroup 3" tooltip=""/>
+					<display item="Light intensity LEDgroup 3" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect LEDgroup 3" format="checkbox" tooltip=""/>
+				<display item="Flicker effect LEDgroup 3" format="checkbox" tooltip=""/>
+				<display item="Random light effect LEDgroup 3" format="checkbox" tooltip=""/>
+				<display item="Broken light effect LEDgroup 3" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+		<label>
+			<text> </text>
+		</label>
+		<row>
+			<column>
+				<label><text>Output Configuration LEDgroup 4</text></label>
+				<separator/>
+				<row>
+					<display item="Light intensity LEDgroup 4" tooltip=""/>
+					<display item="Light intensity LEDgroup 4" label="" format="hslider" tooltip=""/>
+				</row>
+				<display item="Fade in fade out effect LEDgroup 4" format="checkbox" tooltip=""/>
+				<display item="Flicker effect LEDgroup 4" format="checkbox" tooltip=""/>
+				<display item="Random light effect LEDgroup 4" format="checkbox" tooltip=""/>
+				<display item="Broken light effect LEDgroup 4" format="checkbox" tooltip=""/>
+			</column>
+		</row>
+	</column>
+</pane>
+</decoder-config>
