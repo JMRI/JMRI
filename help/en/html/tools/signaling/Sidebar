@@ -12,7 +12,7 @@
 		    <LI><dfn><a href="AspectSignaling.shtml">Aspect Signaling</a></dfn>
 		    <LI><dfn><a href="SignalHeads.shtml">Signal Heads</a></dfn>
 		    <LI><dfn><a href="SignalMasts.shtml">Signal Masts</a></dfn>
-		    <LI><dfn><a href="../../../package/jmri/jmrit/beantable/SignalGroupAddEdit.shtml">Signal Groups</a></dfn>
+		    <LI><dfn><a href="SignalGroups.shtml">Signal Groups</a></dfn>
 		    <LI><dfn><a href="SignalMastLogic.shtml">Signal Mast Logic</a></dfn>
 		    <LI><dfn><a href="interlock/index.shtml">Entry Exit &amp; Interlocking</a></dfn>
 		    </UL>
