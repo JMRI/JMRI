@@ -3,10 +3,18 @@
 package apps;
 
 
-import javax.swing.*;
-import java.io.*;
-
-import jmri.util.swing.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import javax.swing.BoxLayout;
+import javax.swing.Icon;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTextPane;
+import jmri.util.FileUtil;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
 
 /**
  * Swing action to display the JMRI license
@@ -30,6 +38,7 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
         super(s, w);
     }
 
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         jmri.util.swing.JmriPanel p = new JmriPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
@@ -39,13 +48,13 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
         // get the file
         
-        File file = new File("resources"+File.separator+"COPYING"); // NOI18N
+        InputStream is = FileUtil.findInputStream("resources/COPYING", FileUtil.Location.INSTALLED); // NOI18N
         
         String t;
         
         try {
-            BufferedReader r = new BufferedReader(new InputStreamReader( new FileInputStream(file), "US-ASCII"));  // file stored as ASCII // NOI18N
-            StringBuffer buf = new StringBuffer();
+            BufferedReader r = new BufferedReader(new InputStreamReader(is, "US-ASCII"));  // file stored as ASCII // NOI18N
+            StringBuilder buf = new StringBuilder();
             while (r.ready()) {
                 buf.append(r.readLine());
                 buf.append("\n");
@@ -54,7 +63,7 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
             
             r.close();
         } catch (IOException ex) {
-            t = "JMRI is distributed under a license. For license information, see the JMRI website http://jmri.sourceforge.net";
+            t = "JMRI is distributed under a license. For license information, see the JMRI website http://jmri.org";
         }
         textPane.setText(t);
         
