@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map.Entry;
 import java.util.List;
-import java.io.File;
+import java.net.URL;
 
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
@@ -38,6 +38,7 @@ import jmri.jmrit.catalog.ImageIndexEditor;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.display.Editor;
 import jmri.jmrit.picker.PickListModel;
+import jmri.util.FileUtil;
 
 
 /**
@@ -221,13 +222,13 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     }
     
     static List<Element> getDefaultIconItemTypes() throws org.jdom2.JDOMException, java.io.IOException{
-        File file = new File("xml"+File.separator+"defaultPanelIcons.xml");
-        if (!file.exists()) {
-            log.error("defaultPanelIcons file doesn't exist: "+file.getPath());
-            throw new IllegalArgumentException("defaultPanelIcons file doesn't exist: "+file.getPath());
+        URL file = FileUtil.findURL("xml/defaultPanelIcons.xml");
+        if (file == null) {
+            log.error("defaultPanelIcons file (xml/defaultPanelIcons.xml) doesn't exist.");
+            throw new IllegalArgumentException("defaultPanelIcons file (xml/defaultPanelIcons.xml) doesn't exist.");
         }
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile(){};
-        Element root = xf.rootFromFile(file);
+        Element root = xf.rootFromURL(file);
         List<Element> typeList = root.getChild("ItemTypes").getChildren();
         return typeList;
     }
