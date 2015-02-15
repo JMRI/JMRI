@@ -2,22 +2,21 @@
 
 package jmri.jmrit.decoderdefn;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.jmrit.XmlFile;
 import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Enumeration;
-
+import java.util.Hashtable;
+import java.util.List;
 import javax.swing.JComboBox;
-
+import jmri.jmrit.XmlFile;
+import jmri.util.FileUtil;
 import org.jdom2.Attribute;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;
-import java.util.ArrayList;
-import java.util.Hashtable;
-import java.util.List;
-import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 // try to limit the JDOM to this class, so that others can manipulate...
 
@@ -183,9 +182,9 @@ public class DecoderIndexFile extends XmlFile {
         // get version from master index; if not found, give up
         String masterVersion = null;
         DecoderIndexFile masterXmlFile = new DecoderIndexFile();
-        File masterFile = new File("xml"+File.separator+defaultDecoderIndexFilename());
-        if (! masterFile.exists()) return false;
-        Element masterRoot = masterXmlFile.rootFromFile(masterFile);
+        URL masterFile = FileUtil.findURL("xml/" + defaultDecoderIndexFilename(), FileUtil.Location.INSTALLED);
+        if (masterFile == null) return false;
+        Element masterRoot = masterXmlFile.rootFromURL(masterFile);
         if (masterRoot.getChild("decoderIndex") != null ) {
             if (masterRoot.getChild("decoderIndex").getAttribute("version")!=null)
                 masterVersion = masterRoot.getChild("decoderIndex").getAttribute("version").getValue();
