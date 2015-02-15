@@ -1427,7 +1427,7 @@ public class Track {
 	}
 
 	public void setScheduleItemId(String id) {
-		log.debug("set schedule item id: {} for track ({})", id, getName());
+		log.debug("Set schedule item id ({}) for track ({})", id, getName());
 		String old = _scheduleItemId;
 		_scheduleItemId = id;
 		setDirtyAndFirePropertyChange(SCHEDULE_CHANGED_PROPERTY, old, id);
@@ -1618,7 +1618,7 @@ public class Track {
 				return OKAY; // no
 			return MessageFormat.format(Bundle.getMessage("carHasA"), new Object[] { CUSTOM, LOAD, car.getLoadName() });
 		}
-		log.debug("Track ({}) has schedule ({}) mode {} {}", getName(), getScheduleName(), getScheduleMode(),
+		log.debug("Track ({}) has schedule ({}) mode {} ({})", getName(), getScheduleName(), getScheduleMode(),
 				getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
 
 		ScheduleItem si = getCurrentScheduleItem();
@@ -1638,8 +1638,8 @@ public class Track {
 		if (debugFlag)
 			log.debug("Search match for car ({}) type ({}) load ({})", car.toString(), car.getTypeName(), car
 					.getLoadName());
-		if (!car.getScheduleId().equals(NONE)) {
-			ScheduleItem si = getSchedule().getItemById(car.getScheduleId());
+		if (!car.getScheduleItemId().equals(NONE)) {
+			ScheduleItem si = getSchedule().getItemById(car.getScheduleItemId());
 			if (si != null && checkScheduleItem(si, car).equals(OKAY))
 				return OKAY;
 		}
@@ -1653,7 +1653,7 @@ public class Track {
 				log.debug("Found item match ({}) car ({}) load ({}) ship ({}) destination ({}, {})", si.getId(), car
 						.toString(), si.getReceiveLoadName(), si.getShipLoadName(), si.getDestinationName(), si
 						.getDestinationTrackName()); // NOI18N
-				car.setScheduleId(si.getId()); // remember which item was a match
+				car.setScheduleItemId(si.getId()); // remember which item was a match
 				return OKAY;
 			} else {
 				if (debugFlag)
@@ -1662,7 +1662,7 @@ public class Track {
 		}
 		if (debugFlag)
 			log.debug("No Match");
-		car.setScheduleId(Car.NONE); // clear the car's schedule id
+		car.setScheduleItemId(Car.NONE); // clear the car's schedule id
 		return SCHEDULE + " " + Bundle.getMessage("noMatch");
 	}
 
@@ -1687,7 +1687,7 @@ public class Track {
 			return SCHEDULE + " (" + getScheduleName() + ") " + Bundle.getMessage("requestCar") + " " + TYPE + " ("
 					+ si.getTypeName() + ") " + LOAD + " (" + si.getReceiveLoadName() + ")";
 		}
-		if (car.getScheduleId().equals(Car.NONE) && !si.getRandom().equals(ScheduleItem.NONE)) {
+		if (car.getScheduleItemId().equals(Car.NONE) && !si.getRandom().equals(ScheduleItem.NONE)) {
 			try {
 				int value = Integer.parseInt(si.getRandom());
 				double random = 100 * Math.random();
@@ -1725,22 +1725,21 @@ public class Track {
 			return OKAY;
 		// is car part of a kernel?
 		if (car.getKernel() != null && !car.getKernel().isLead(car)) {
-			log.debug("Car ({}) is part of kernel ({})", car.toString(), car.getKernelName());
+			log.debug("Car ({}) is part of kernel ({}) not lead", car.toString(), car.getKernelName());
 			return OKAY;
 		}
-		// a car can have a scheduleId if the schedule is in match mode, or the car was routed to this spur
-		if (!car.getScheduleId().equals(Car.NONE)) {
-			String id = car.getScheduleId();
-			log.debug("Car ({}) has schedule id ({})", car.toString(), car.getScheduleId());
+		if (!car.getScheduleItemId().equals(Car.NONE)) {
+			String id = car.getScheduleItemId();
+			log.debug("Car ({}) has schedule item id ({})", car.toString(), car.getScheduleItemId());
 			Schedule sch = getSchedule();
 			if (sch != null) {
 				ScheduleItem si = sch.getItemById(id);
-				car.setScheduleId(Car.NONE);
+				car.setScheduleItemId(Car.NONE);
 				if (si != null) {
 					loadNext(si, car);
 					return OKAY;
 				}
-				log.debug("Schedule id " + id + " not valid for track (" + getName() + ")");
+				log.debug("Schedule id ({}) not valid for track ({})", id, getName());
 				// user could have deleted the schedule item after build train, so not really an error
 				// return SCHEDULE + " ERROR id " + id + " not valid for track ("+ getName() + ")"; // NOI18N
 			}
@@ -1750,8 +1749,8 @@ public class Track {
 					+ MessageFormat.format(Bundle.getMessage("matchMessage"), new Object[] { getScheduleName() });
 		}
 		ScheduleItem currentSi = getCurrentScheduleItem();
-		log.debug("Destination track ({}) has schedule ({}) item id: {} mode: {}", getName(), getScheduleName(),
-				getScheduleItemId(), getScheduleMode()); // NOI18N
+		log.debug("Destination track ({}) has schedule ({}) item id ({}) mode: {} ({})", getName(), getScheduleName(),
+				getScheduleItemId(), getScheduleMode(), getScheduleMode() == SEQUENTIAL ? "Sequential" : "Match"); // NOI18N
 		if (currentSi != null
 				&& (currentSi.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || TrainManager.instance()
 						.getTrainScheduleActiveId().equals(currentSi.getSetoutTrainScheduleId()))
@@ -1761,7 +1760,7 @@ public class Track {
 				&& (currentSi.getReceiveLoadName().equals(ScheduleItem.NONE) || car.getLoadName().equals(
 						currentSi.getReceiveLoadName()))) {
 			loadNext(currentSi, car);
-			car.setScheduleId(Car.NONE);
+			car.setScheduleItemId(Car.NONE);
 			// bump schedule
 			bumpSchedule();
 		} else if (currentSi != null) {

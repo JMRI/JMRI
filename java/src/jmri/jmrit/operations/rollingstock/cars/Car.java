@@ -184,15 +184,15 @@ public class Car extends RollingStock {
 	 * 
 	 * @param id
 	 */
-	public void setScheduleId(String id) {
-		log.debug("set schedule id ({}) for car ({})", id, toString());
+	public void setScheduleItemId(String id) {
+		log.debug("Set schedule item id ({}) for car ({})", id, toString());
 		String old = _scheduleId;
 		_scheduleId = id;
 		if (!old.equals(id))
 			setDirtyAndFirePropertyChange(SCHEDULE_ID_CHANGED_PROPERTY, old, id);
 	}
 
-	public String getScheduleId() {
+	public String getScheduleItemId() {
 		return _scheduleId;
 	}
 
@@ -329,7 +329,7 @@ public class Car extends RollingStock {
 		Track old = _finalDestTrack;
 		_finalDestTrack = track;
 		if (track == null)
-			setScheduleId(NONE);
+			setScheduleItemId(NONE);
 		if ((old != null && !old.equals(track)) || (track != null && !track.equals(old))) {
 			if (old != null) {
 				old.removePropertyChangeListener(this);
@@ -646,7 +646,7 @@ public class Car extends RollingStock {
 	}
 
 	public void reset() {
-		setScheduleId(getPreviousScheduleId()); // revert to previous
+		setScheduleItemId(getPreviousScheduleId()); // revert to previous
 		setNextLoadName(NONE);
 		setNextWait(0);
 		setFinalDestination(getPreviousFinalDestination()); // revert to previous
@@ -794,8 +794,8 @@ public class Car extends RollingStock {
 			e.setAttribute(Xml.PICKUP_SCHEDULE_ID, getPickupScheduleId());
 		}
 
-		if (!getScheduleId().equals(NONE)) {
-			e.setAttribute(Xml.SCHEDULE_ID, getScheduleId());
+		if (!getScheduleItemId().equals(NONE)) {
+			e.setAttribute(Xml.SCHEDULE_ID, getScheduleItemId());
 		}
 
 		if (!getNextLoadName().equals(NONE)) {

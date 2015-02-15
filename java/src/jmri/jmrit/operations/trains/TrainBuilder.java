@@ -1298,7 +1298,7 @@ public class TrainBuilder extends TrainCommon {
 			// save final destination and track values in case of train reset
 			car.setPreviousFinalDestination(car.getFinalDestination());
 			car.setPreviousFinalDestinationTrack(car.getFinalDestinationTrack());
-			car.setPreviousScheduleId(car.getScheduleId());
+			car.setPreviousScheduleId(car.getScheduleItemId());
 		}
 	}
 
@@ -2900,7 +2900,7 @@ public class TrainBuilder extends TrainCommon {
 				// is car part of kernel?
 				car.updateKernel();
 				if (car.getDestination() != track.getLocation()) {
-					car.setScheduleId(track.getCurrentScheduleItem().getId());
+					car.setScheduleItemId(track.getCurrentScheduleItem().getId());
 					track.bumpSchedule();
 				}
 				return true; // done, car has a new destination
@@ -3047,7 +3047,7 @@ public class TrainBuilder extends TrainCommon {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCreateNewLoadForCar"),
 						new Object[] { car.toString(), si.getReceiveLoadName(), track.getLocation().getName(),
 								track.getName() }));
-				car.setScheduleId(si.getId());
+				car.setScheduleItemId(si.getId());
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
 				car.updateKernel();
@@ -3159,6 +3159,7 @@ public class TrainBuilder extends TrainCommon {
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoScheduleItem"),
 						new Object[] { track.getScheduleItemId(), track.getScheduleName(), track.getName(),
 								track.getLocation().getName() }));
+			car.setScheduleItemId(si.getId());
 			return checkScheduleItem(si, car, track);
 		}
 		log.debug("Track ({}) in match mode", track.getName());
@@ -3170,7 +3171,7 @@ public class TrainBuilder extends TrainCommon {
 								track.getLocation().getName() }));
 			si = checkScheduleItem(si, car, track);
 			if (si != null) {
-				car.setScheduleId(si.getId());
+				car.setScheduleItemId(si.getId());
 				return si;
 			}
 		}
@@ -3247,7 +3248,7 @@ public class TrainBuilder extends TrainCommon {
 				log.error("Random value {} isn't a number", si.getRandom());
 			}
 		}
-		log.debug("Found a schedule item id ({}) for car ({})", si.getId(), car.toString());
+		log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
 		return si;
 	}
 
@@ -3796,6 +3797,7 @@ public class TrainBuilder extends TrainCommon {
 										.getMessage("buildAddingScheduleLoad"), new Object[] { si.getReceiveLoadName(),
 										car.toString() }));
 								car.setLoadGeneratedFromStaging(true);
+								testTrack.bumpSchedule();
 								addCarToTrain(car, rl, rld, testTrack);
 								return true;
 							}
