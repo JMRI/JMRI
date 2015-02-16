@@ -2,35 +2,41 @@
 
 package jmri.jmrit.signalling;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import javax.swing.*;
-import javax.swing.table.TableCellEditor;
-import javax.swing.table.TableColumn;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import java.util.ResourceBundle;
-import jmri.util.table.ButtonEditor;
-import jmri.util.table.ButtonRenderer;
-import jmri.util.JmriJFrame;
-import java.awt.Container;
-import java.awt.Color;
-
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import javax.swing.BoxLayout;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.table.TableCellEditor;
+import javax.swing.table.TableColumn;
+import jmri.InstanceManager;
 import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutEditor;
 import jmri.jmrit.display.layoutEditor.LayoutSlip;
+import jmri.jmrit.display.layoutEditor.LayoutTurnout;
 import jmri.jmrit.display.layoutEditor.LevelXing;
 import jmri.jmrit.display.layoutEditor.PositionablePoint;
-import jmri.jmrit.display.layoutEditor.LayoutTurnout;
+import jmri.util.JmriJFrame;
 import jmri.util.com.sun.TableSorter;
-import jmri.InstanceManager;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JPanel to create a new JMRI devices
@@ -160,7 +166,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel{
         JPanel panel1 = new JPanel();
         sourceLabel = new JLabel("Discovering Entry Exit Pairs");
         /*ImageIcon i;
-        i = new ImageIcon("resources"+File.separator+"icons"+File.separator+"misc" + File.separator+ "gui3" + File.separator+"process-working.gif");
+        i = new ImageIcon(FileUtil.findURL("resources/icons/misc/gui3/process-working.gif"));
         JLabel label = new JLabel(); 
         label.setIcon(i); 
         panel1.add(label);*/

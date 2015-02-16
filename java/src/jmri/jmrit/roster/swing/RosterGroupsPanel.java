@@ -1,29 +1,60 @@
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.Insets;
+import java.awt.Rectangle;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
-import java.awt.event.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-import javax.swing.*;
+import javax.swing.DropMode;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPopupMenu;
+import javax.swing.JScrollPane;
+import javax.swing.JSeparator;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.JTree;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 import javax.swing.event.PopupMenuEvent;
 import javax.swing.event.PopupMenuListener;
 import javax.swing.event.TreeExpansionEvent;
 import javax.swing.event.TreeSelectionEvent;
 import javax.swing.plaf.basic.BasicTreeUI;
-import javax.swing.tree.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellRenderer;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.DefaultTreeSelectionModel;
+import javax.swing.tree.ExpandVetoException;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 import jmri.jmrit.roster.FullBackupExportAction;
 import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
+import jmri.util.FileUtil;
 import jmri.util.IterableEnumeration;
 import jmri.util.datatransfer.RosterEntrySelection;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A JPanel that lists Roster Groups
@@ -221,8 +252,8 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
         JToolBar controls = new JToolBar();
         controls.setLayout(new GridLayout(1, 0, 0, 0));
         controls.setFloatable(false);
-        final JToggleButton addGroupBtn = new JToggleButton(new ImageIcon("resources/icons/misc/gui3/Add.png"), false);
-        final JToggleButton actGroupBtn = new JToggleButton(new ImageIcon("resources/icons/misc/gui3/Action.png"), false);
+        final JToggleButton addGroupBtn = new JToggleButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/gui3/Add.png")), false);
+        final JToggleButton actGroupBtn = new JToggleButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/gui3/Action.png")), false);
         addGroupBtn.addActionListener(new ActionListener() {
 
             @Override

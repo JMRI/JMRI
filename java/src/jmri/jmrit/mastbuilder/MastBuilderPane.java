@@ -2,9 +2,16 @@
 
 package jmri.jmrit.mastbuilder;
 
-import java.awt.*;
-
-import javax.swing.*;
+import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import jmri.util.FileUtil;
 
 /**
  * Pane for building mast definitions
@@ -88,9 +95,9 @@ public class MastBuilderPane extends javax.swing.JPanel {
 
     Object[] icons() {
         Object [] list = new Object[3];
-        list[0] = new ImageIcon("resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-287.gif");
-        list[1] = new ImageIcon("resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-290.gif");
-        list[2] = new ImageIcon("resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-292.gif");        
+        list[0] = new ImageIcon(FileUtil.findURL("resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-287.gif"));
+        list[1] = new ImageIcon(FileUtil.findURL("resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-290.gif"));
+        list[2] = new ImageIcon(FileUtil.findURL("resources/icons/smallschematics/aspects/AAR-1946/SL-1-low/rule-292.gif"));        
         return list;
     }
     

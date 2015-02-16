@@ -5,7 +5,6 @@ package jmri.jmrit.symbolicprog;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import javax.swing.*;
-import javax.swing.UIManager;
 import java.awt.*;
 
 import java.util.List;
@@ -13,9 +12,8 @@ import org.jdom2.Element;
 import org.jdom2.Attribute;
 import jmri.util.jdom.LocaleSelector;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
-import jmri.util.SystemType;
-import jmri.Application;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.FileUtil;
 import org.jdom2.*;
 
 /**
@@ -589,7 +587,7 @@ public class FnMapPanelESU extends JPanel {
      */
     void AddRowMoveButtons() {
         {
-            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowUp-16.png"));
+            JButton button = new JButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/ArrowUp-16.png")));
             button.setActionCommand(String.valueOf(-1));
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
 //             button.setBorderPainted(false);
@@ -602,7 +600,7 @@ public class FnMapPanelESU extends JPanel {
             saveAt(MOVE_ARROWS_TOP_ROW, 0, button);
         }
         {
-            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowDown-16.png"));
+            JButton button = new JButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/ArrowDown-16.png")));
             button.setActionCommand(String.valueOf(1));
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
 //             button.setBorderPainted(false);
@@ -615,7 +613,7 @@ public class FnMapPanelESU extends JPanel {
             saveAt(MOVE_ARROWS_TOP_ROW, 1, button);
         }
         {
-            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowUp-16.png"));
+            JButton button = new JButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/ArrowUp-16.png")));
             button.setActionCommand(String.valueOf(-1));
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveUp"));
 //             button.setBorderPainted(false);
@@ -628,7 +626,7 @@ public class FnMapPanelESU extends JPanel {
             saveAt(FIRST_ROW + numRows, 0, button);
         }
         {
-            JButton button = new JButton(new ImageIcon("resources/icons/misc/ArrowDown-16.png"));
+            JButton button = new JButton(new ImageIcon(FileUtil.findURL("resources/icons/misc/ArrowDown-16.png")));
             button.setActionCommand(String.valueOf(1));
             button.setToolTipText(Bundle.getMessage("FnMapESUMoveDown"));
 //             button.setBorderPainted(false);

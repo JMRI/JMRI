@@ -1,14 +1,21 @@
 package jmri.jmrit.throttle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.event.*;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
+import java.awt.event.InputEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -26,15 +33,16 @@ import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.MouseInputAdapter;
-
 import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.util.FileUtil;
 import jmri.util.MouseInputAdapterInstaller;
-
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *  A JInternalFrame that contains a JSlider to control loco speed, and buttons
@@ -497,8 +505,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	forwardButton.setBorderPainted(false);
         	forwardButton.setContentAreaFilled(false);
         	forwardButton.setText(null);
-        	forwardButton.setIcon(new ImageIcon("resources/icons/throttles/up-red.png"));
-        	forwardButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/up-green.png"));
+        	forwardButton.setIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/up-red.png")));
+        	forwardButton.setSelectedIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/up-green.png")));
         	forwardButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	forwardButton.setToolTipText(Bundle.getMessage("ButtonForward"));
         } else {
@@ -511,8 +519,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	reverseButton.setBorderPainted(false);
         	reverseButton.setContentAreaFilled(false);
         	reverseButton.setText(null);
-        	reverseButton.setIcon(new ImageIcon("resources/icons/throttles/down-red.png"));
-        	reverseButton.setSelectedIcon(new ImageIcon("resources/icons/throttles/down-green.png"));
+        	reverseButton.setIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/down-red.png")));
+        	reverseButton.setSelectedIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/down-green.png")));
         	reverseButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	reverseButton.setToolTipText(Bundle.getMessage("ButtonReverse"));
         } else {
@@ -790,8 +798,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	stopButton.setBorderPainted(false);
         	stopButton.setContentAreaFilled(false);
         	stopButton.setText(null);
-        	stopButton.setIcon(new ImageIcon("resources/icons/throttles/estop.png"));
-        	stopButton.setPressedIcon(new ImageIcon("resources/icons/throttles/estop24.png"));
+        	stopButton.setIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop.png")));
+        	stopButton.setPressedIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/estop24.png")));
         	stopButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	stopButton.setToolTipText(Bundle.getMessage("ButtonEStop"));
         } else
@@ -826,8 +834,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
         	idleButton.setBorderPainted(false);
         	idleButton.setContentAreaFilled(false);
         	idleButton.setText(null);
-        	idleButton.setIcon(new ImageIcon("resources/icons/throttles/stop.png"));
-        	idleButton.setPressedIcon(new ImageIcon("resources/icons/throttles/stop24.png"));
+        	idleButton.setIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop.png")));
+        	idleButton.setPressedIcon(new ImageIcon(FileUtil.findURL("resources/icons/throttles/stop24.png")));
         	idleButton.setPreferredSize(new Dimension(BUTTON_SIZE, BUTTON_SIZE));
         	idleButton.setToolTipText(Bundle.getMessage("ButtonIdle"));
         } else
