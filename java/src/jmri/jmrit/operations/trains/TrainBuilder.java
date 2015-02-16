@@ -3047,7 +3047,6 @@ public class TrainBuilder extends TrainCommon {
 				addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildCreateNewLoadForCar"),
 						new Object[] { car.toString(), si.getReceiveLoadName(), track.getLocation().getName(),
 								track.getName() }));
-				car.setScheduleItemId(si.getId());
 				car.setLoadGeneratedFromStaging(true);
 				// is car part of kernel?
 				car.updateKernel();
@@ -3159,7 +3158,6 @@ public class TrainBuilder extends TrainCommon {
 				throw new BuildFailedException(MessageFormat.format(Bundle.getMessage("buildErrorNoScheduleItem"),
 						new Object[] { track.getScheduleItemId(), track.getScheduleName(), track.getName(),
 								track.getLocation().getName() }));
-			car.setScheduleItemId(si.getId());
 			return checkScheduleItem(si, car, track);
 		}
 		log.debug("Track ({}) in match mode", track.getName());
@@ -3171,8 +3169,7 @@ public class TrainBuilder extends TrainCommon {
 								track.getLocation().getName() }));
 			si = checkScheduleItem(si, car, track);
 			if (si != null) {
-				car.setScheduleItemId(si.getId());
-				return si;
+				break;
 			}
 		}
 		return si;
@@ -3249,6 +3246,7 @@ public class TrainBuilder extends TrainCommon {
 			}
 		}
 		log.debug("Found track ({}) schedule item id ({}) for car ({})", track.getName(), si.getId(), car.toString());
+		car.setScheduleItemId(si.getId());
 		return si;
 	}
 
