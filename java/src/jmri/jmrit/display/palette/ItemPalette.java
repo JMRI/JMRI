@@ -130,6 +130,7 @@ public class ItemPalette extends JmriJFrame implements ChangeListener  {
     static public void loadIcons(Editor ed) {
         if (_iconMaps==null) {
 //        	long t = System.currentTimeMillis();
+            new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
             _iconMaps = new HashMap <String, HashMap<String, HashMap<String, NamedIcon>>>();
             _indicatorTOMaps = 
                 new HashMap<String, HashMap<String, HashMap<String, HashMap<String, NamedIcon>>>>();
