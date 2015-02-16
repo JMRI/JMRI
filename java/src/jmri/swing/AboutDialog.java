@@ -1,18 +1,27 @@
 // AboutDialog.java
 package jmri.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.Locale;
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JComponent;
+import javax.swing.JDialog;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import jmri.Application;
 import jmri.Version;
 import jmri.jmrix.ConnectionConfig;
+import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * About dialog.
@@ -53,9 +62,9 @@ public class AboutDialog extends JDialog {
         JPanel pane = new JPanel();
         pane.setLayout(new BoxLayout(pane, BoxLayout.Y_AXIS));
         if (log.isDebugEnabled()) {
-            log.debug("Fetch main logo: " + logo + " " + getToolkit().getImage(logo));
+            log.debug("Fetch main logo: {} ", logo, getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)));
         }
-        addCenteredComponent(new JLabel(new ImageIcon(getToolkit().getImage(logo), "JMRI logo"), JLabel.CENTER), pane);
+        addCenteredComponent(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo, FileUtil.Location.INSTALLED)), "JMRI logo"), JLabel.CENTER), pane);
         pane.add(Box.createRigidArea(new Dimension(0, 15)));
         JLabel appName = new JLabel(Application.getApplicationName(), JLabel.CENTER);
         appName.setFont(pane.getFont().deriveFont(Font.BOLD, pane.getFont().getSize() * 1.2f));

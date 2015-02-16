@@ -2,38 +2,35 @@
 
 package jmri.jmrit.roster;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.util.davidflanagan.*;
-import java.io.IOException;
 import java.awt.Font;
-
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.ArrayList;
 import java.util.List;
-import org.jdom2.Element;
-
-import jmri.util.JmriJFrame;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
-import jmri.jmrit.symbolicprog.VariableTableModel;
 import jmri.jmrit.symbolicprog.ResetTableModel;
-
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneContainer;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
 import jmri.util.BusyGlassPane;
-
-import javax.swing.ImageIcon;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JFrame;
-import javax.swing.BoxLayout;
-
-import jmri.jmrit.symbolicprog.tabbedframe.*;
+import jmri.util.FileUtil;
+import jmri.util.JmriJFrame;
+import jmri.util.davidflanagan.HardcopyWriter;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PrintRosterEntry implements PaneContainer {
 
@@ -251,7 +248,7 @@ public class PrintRosterEntry implements PaneContainer {
     }
     
     public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         w.write(icon.getImage(), new JLabel(icon));
         w.setFontStyle(Font.BOLD);

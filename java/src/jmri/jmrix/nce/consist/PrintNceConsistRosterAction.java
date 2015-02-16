@@ -2,18 +2,16 @@
 
 package jmri.jmrix.nce.consist;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.util.List;
-
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-
+import jmri.util.FileUtil;
 import jmri.util.davidflanagan.HardcopyWriter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
@@ -63,7 +61,7 @@ public class PrintNceConsistRosterAction  extends AbstractAction {
         }
 
         // add the image
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         writer.write(icon.getImage(), new JLabel(icon));
 

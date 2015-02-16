@@ -1,37 +1,34 @@
 package apps.gui3;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JTextField;
-import javax.swing.JTextArea;
-import javax.swing.BoxLayout;
-import javax.swing.JOptionPane;
-import javax.swing.border.BevelBorder;
-import javax.swing.JComboBox;
-import javax.swing.ImageIcon;
-import javax.swing.JComponent;
-
 import java.awt.BorderLayout;
+import java.awt.Component;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Dimension;
-import java.awt.Component;
-import java.awt.Cursor;
-
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.io.File;
-import java.util.Locale;
 import java.util.HashMap;
+import java.util.Locale;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.border.BevelBorder;
 import jmri.Application;
-
-import jmri.jmrix.JmrixConfigPane;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrix.JmrixConfigPane;
+import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class FirstTimeStartUpWizard {
   
@@ -63,9 +60,7 @@ public class FirstTimeStartUpWizard {
     }
     
     JPanel createHelpPanel(){
-       splashIm = Toolkit.getDefaultToolkit(
-           ).getImage("resources"+File.separator+"logo.gif");
-        
+        splashIm = Toolkit.getDefaultToolkit().getImage(FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED));
         ImageIcon img = new ImageIcon(splashIm, "JMRI splash screen");
         int imageWidth = img.getIconWidth();
         minHelpFieldDim = new Dimension(imageWidth,20);

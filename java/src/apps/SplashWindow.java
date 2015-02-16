@@ -7,13 +7,13 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-import java.io.File;
 
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.BoxLayout;
+import jmri.util.FileUtil;
 
 /**
  * A splash screen for showing during JMRI startup
@@ -45,7 +45,7 @@ public class SplashWindow extends JFrame {
         // get the splash image
        MediaTracker mt = new MediaTracker(this);
        splashIm = Toolkit.getDefaultToolkit(
-           ).getImage("resources"+File.separator+"logo.gif");
+           ).getImage(FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED));
        mt.addImage(splashIm,0);
        try {
           mt.waitForID(0);

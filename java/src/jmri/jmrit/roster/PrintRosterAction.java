@@ -2,17 +2,17 @@
 
 package jmri.jmrit.roster;
 
+import java.awt.Frame;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import java.util.List;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import jmri.beans.Beans;
+import jmri.util.FileUtil;
+import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.davidflanagan.*;
-import java.awt.*;
-import java.awt.event.*;
-
-import javax.swing.*;
-import java.io.IOException;
-
-import java.util.List;
-import jmri.beans.Beans;
 
 
 /**
@@ -88,7 +88,7 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         }
 
         // add the image
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         writer.write(icon.getImage(), new JLabel(icon));
         //Add a number of blank lines, so that the roster entry starts below the decoderpro logo

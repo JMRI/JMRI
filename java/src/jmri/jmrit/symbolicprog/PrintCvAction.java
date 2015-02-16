@@ -2,16 +2,18 @@
 
 package jmri.jmrit.symbolicprog;
 
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.io.IOException;
+import javax.swing.AbstractAction;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
+import jmri.util.FileUtil;
+import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.davidflanagan.*;
-import jmri.jmrit.symbolicprog.tabbedframe.*;
-import java.awt.event.*;
-import jmri.jmrit.roster.RosterEntry;
-import java.awt.Font;
-import java.io.IOException;
-
-import javax.swing.*;
 
 /**
  * Action to print the information in the CV table.
@@ -50,7 +52,7 @@ public class PrintCvAction  extends AbstractAction {
     boolean isPreview;
             
     public void printInfoSection(HardcopyWriter w) {
-        ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("resources/decoderpro.gif"));
+        ImageIcon icon = new ImageIcon(FileUtil.findURL("resources/decoderpro.gif", FileUtil.Location.INSTALLED));
         // we use an ImageIcon because it's guaranteed to have been loaded when ctor is complete
         w.write(icon.getImage(), new JLabel(icon));
         w.setFontStyle(Font.BOLD);

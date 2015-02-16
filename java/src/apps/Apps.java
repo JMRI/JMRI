@@ -827,7 +827,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         JPanel pane1 = new JPanel();
         pane1.setLayout(new BoxLayout(pane1, BoxLayout.X_AXIS));
         log.debug("Fetch main logo: {}", logo());
-        pane1.add(new JLabel(new ImageIcon(getToolkit().getImage(logo()), "JMRI logo"), JLabel.LEFT));
+        pane1.add(new JLabel(new ImageIcon(getToolkit().getImage(FileUtil.findURL(logo(), FileUtil.Location.INSTALLED)), "JMRI logo"), JLabel.LEFT));
         pane1.add(Box.createRigidArea(new Dimension(15, 0))); // Some spacing between logo and status panel
 
         log.debug("start labels");
