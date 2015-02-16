@@ -2899,7 +2899,7 @@ public class TrainBuilder extends TrainCommon {
 			if (car.getDestination() != null) {
 				// is car part of kernel?
 				car.updateKernel();
-				if (car.getDestination() != track.getLocation()) {
+				if (car.getDestinationTrack() != track) {
 					car.setScheduleItemId(track.getCurrentScheduleItem().getId());
 					track.bumpSchedule();
 				}
