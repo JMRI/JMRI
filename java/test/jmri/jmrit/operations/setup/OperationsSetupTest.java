@@ -542,6 +542,9 @@ public class OperationsSetupTest extends TestCase {
 		file = new File(TrainManagerXml.instance().getDefaultOperationsFilename());
 		if (file.exists())
 			file.delete();
+		file = new File(OperationsSetupXml.instance().getDefaultOperationsFilename());
+		if (file.exists())
+			file.delete();
 	}
 
 	public OperationsSetupTest(String s) {

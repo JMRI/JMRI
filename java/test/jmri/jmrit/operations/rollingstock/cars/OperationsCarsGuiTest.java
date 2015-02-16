@@ -48,14 +48,14 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		cr.addName("SP");
 		// add locations
 		LocationManager lManager = LocationManager.instance();
-		Location westford = lManager.newLocation("Westford");
+		Location westford = lManager.newLocation("Newer Westford");
 		Track westfordYard = westford.addTrack("Yard", Track.YARD);
 		westfordYard.setLength(300);
 		Track westfordSiding = westford.addTrack("Siding", Track.SPUR);
 		westfordSiding.setLength(300);
 		Track westfordAble = westford.addTrack("Able", Track.SPUR);
 		westfordAble.setLength(300);
-		Location boxford = lManager.newLocation("New Boxford");
+		Location boxford = lManager.newLocation("Newer Boxford");
 		Track boxfordYard = boxford.addTrack("Yard", Track.YARD);
 		boxfordYard.setLength(300);
 		Track boxfordJacobson = boxford.addTrack("Jacobson", Track.SPUR);
@@ -83,13 +83,16 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("c1 destination", Track.OKAY, c1.setDestination(boxford, boxfordJacobson));
 
 		Car c2 = cManager.getByRoadAndNumber("UP", "2");
+		Assert.assertNotNull(c2);
 		
 		Car c3 = cManager.getByRoadAndNumber("AA", "3");
+		Assert.assertNotNull(c3);
 		
 		Assert.assertEquals("c3 location", Track.OKAY, c3.setLocation(boxford, boxfordHood));
 		Assert.assertEquals("c3 destination", Track.OKAY, c3.setDestination(boxford, boxfordYard));
 		
 		Car c4 = cManager.getByRoadAndNumber("SP", "2");
+		Assert.assertNotNull(c4);
 
 		Assert.assertEquals("c4 location", Track.OKAY, c4.setLocation(westford, westfordSiding));
 		Assert.assertEquals("c4 destination", Track.OKAY, c4.setDestination(boxford, boxfordHood));
@@ -240,8 +243,8 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		f.initComponents();
 		
 		// add a new car
-		f.roadComboBox.setSelectedItem("SP");
 		f.roadNumberTextField.setText("6");
+		f.roadComboBox.setSelectedItem("SP");
 		f.typeComboBox.setSelectedItem("Caboose");
 		f.lengthComboBox.setSelectedItem("38");
 		f.colorComboBox.setSelectedItem("Black");
@@ -489,7 +492,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c3.setMoves(40);
 		c3.setOwner("AB");
 		c3.setRfid("RFID 5");
-		c3.setTypeName("Gon");
+		c3.setTypeName("Gondola");
 		
 		Car c4 = cManager.newCar("SP", "2");
 		c4.setBuilt("1990");
@@ -509,7 +512,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		c5.setMoves(25);
 		c5.setOwner("DAB");
 		c5.setRfid("RFID 1");
-		c5.setTypeName("Coil Car");
+		c5.setTypeName("Coilcar");
 
 	}
 	
@@ -547,6 +550,7 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 		TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 		
 		CarColors.instance().dispose();	// reset colors
+		CarTypes.instance().dispose();
 
 	}
 
