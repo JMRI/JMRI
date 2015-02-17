@@ -17,6 +17,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -669,7 +670,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         d.add(new jmri.jmrix.libusb.UsbViewAction());
 
         d.add(new JSeparator());
-        d.add(new RunJythonScript("RailDriver Throttle", new File("jython/RailDriver.py")));
+        try {
+            d.add(new RunJythonScript("RailDriver Throttle", new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+        } catch (URISyntaxException | NullPointerException ex) {
+            log.error("Unable to load RailDriver Throttle", ex);
+            JMenuItem i = new JMenuItem("RailDriver Throttle");
+            i.setEnabled(false);
+            d.add(i);
+        }
 
         // also add some tentative items from webserver
         d.add(new JSeparator());

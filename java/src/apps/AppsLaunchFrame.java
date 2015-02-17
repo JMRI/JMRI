@@ -3,6 +3,7 @@ package apps;
 
 import java.awt.Dimension;
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.EventObject;
 import javax.help.SwingHelpUtilities;
 import javax.swing.AbstractAction;
@@ -10,6 +11,7 @@ import javax.swing.Action;
 import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JSeparator;
 import javax.swing.UIManager;
 import javax.swing.WindowConstants;
@@ -25,6 +27,7 @@ import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.plaf.macosx.Application;
 import jmri.plaf.macosx.PreferencesHandler;
+import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.SystemType;
@@ -208,7 +211,14 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         d.add(new jmri.jmrix.libusb.UsbViewAction());
 
         d.add(new JSeparator());
-        d.add(new RunJythonScript("RailDriver Throttle", new File("jython/RailDriver.py")));
+        try {
+            d.add(new RunJythonScript("RailDriver Throttle", new File(FileUtil.findURL("jython/RailDriver.py").toURI())));
+        } catch (URISyntaxException | NullPointerException ex) {
+            log.error("Unable to load RailDriver Throttle", ex);
+            JMenuItem i = new JMenuItem("RailDriver Throttle");
+            i.setEnabled(false);
+            d.add(i);
+        }
 
         // also add some tentative items from webserver
         d.add(new JSeparator());
