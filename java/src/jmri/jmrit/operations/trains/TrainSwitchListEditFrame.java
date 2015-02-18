@@ -195,7 +195,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
 		// build menu
 		JMenuBar menuBar = new JMenuBar();
 		JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
-		toolMenu.add(new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgram")));
+		toolMenu.add(new SetupExcelProgramSwitchListFrameAction(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList")));
 		menuBar.add(toolMenu);
 		setJMenuBar(menuBar);
 

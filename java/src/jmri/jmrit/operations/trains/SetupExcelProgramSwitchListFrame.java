@@ -36,6 +36,7 @@ public class SetupExcelProgramSwitchListFrame extends SetupExcelProgramFrame {
 		generateCheckBox.setSelected(Setup.isGenerateCsvSwitchListEnabled());
 		fileNameTextField.setText(TrainCustomSwitchList.getFileName());
 		pDirectoryName.add(new JLabel(OperationsManager.getInstance().getFile(TrainCustomSwitchList.getDirectoryName()).getPath()));
+		setTitle(Bundle.getMessage("MenuItemSetupExcelProgramSwitchList"));
 
 	}
 
