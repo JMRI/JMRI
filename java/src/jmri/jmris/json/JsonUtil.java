@@ -106,7 +106,7 @@ import static jmri.jmris.json.JSON.OFF;
 import static jmri.jmris.json.JSON.ON;
 import static jmri.jmris.json.JSON.OWNER;
 import static jmri.jmris.json.JSON.PANEL;
-import static jmri.jmris.json.JSON.PANEL_PANEL;
+//import static jmri.jmris.json.JSON.PANEL_PANEL;
 import static jmri.jmris.json.JSON.PORT;
 import static jmri.jmris.json.JSON.POSITION;
 import static jmri.jmris.json.JSON.POWER;
@@ -1389,9 +1389,9 @@ public class JsonUtil {
             ObjectNode rln = mapper.createObjectNode();
             RouteLocation rl = route;
             rln.put(ID, rl.getId());
-            rln.put(NAME, rl.getName());
+            rln.put(NAME, StringEscapeUtils.escapeHtml4(rl.getName()));
             rln.put(DIRECTION, rl.getTrainDirectionString());
-            rln.put(COMMENT, rl.getComment());
+            rln.put(COMMENT, StringEscapeUtils.escapeHtml4(rl.getComment()));
             rln.put(SEQUENCE, rl.getSequenceId());
             rln.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             rln.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
@@ -1477,9 +1477,9 @@ public class JsonUtil {
         ObjectNode node = JsonUtil.getRollingStock(car);
         node.put(LOAD, StringEscapeUtils.escapeHtml4(car.getLoadName())); // NOI18N
         node.put(HAZARDOUS, car.isHazardous());
-        node.put(REMOVE_COMMENT, car.getDropComment());
-        node.put(ADD_COMMENT, car.getPickupComment());
-        node.put(KERNEL, car.getKernelName());
+        node.put(REMOVE_COMMENT, StringEscapeUtils.escapeHtml4(car.getDropComment()));
+        node.put(ADD_COMMENT, StringEscapeUtils.escapeHtml4(car.getPickupComment()));
+        node.put(KERNEL, StringEscapeUtils.escapeHtml4(car.getKernelName()));
         node.put(UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
             node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack(), null));
@@ -1496,8 +1496,8 @@ public class JsonUtil {
 
     static public ObjectNode getEngine(Engine engine) {
         ObjectNode node = JsonUtil.getRollingStock(engine);
-        node.put(MODEL, engine.getModel());
-        node.put(CONSIST, engine.getConsistName());
+        node.put(MODEL, StringEscapeUtils.escapeHtml4(engine.getModel()));
+        node.put(CONSIST, StringEscapeUtils.escapeHtml4(engine.getConsistName()));
         return node;
     }
 
@@ -1508,9 +1508,9 @@ public class JsonUtil {
         node.put(ROAD, StringEscapeUtils.escapeHtml4(rs.getRoadName()));
         String[] type = rs.getTypeName().split("-"); // second half of string
         // can be anything
-        node.put(TYPE, type[0]);
+        node.put(TYPE, StringEscapeUtils.escapeHtml4(type[0]));
         node.put(LENGTH, rs.getLength());
-        node.put(COLOR, rs.getColor());
+        node.put(COLOR, StringEscapeUtils.escapeHtml4(rs.getColor()));
         node.put(OWNER, StringEscapeUtils.escapeHtml4(rs.getOwner()));
         node.put(COMMENT, StringEscapeUtils.escapeHtml4(rs.getComment()));
         if (rs.getTrack() != null) {
@@ -1528,7 +1528,7 @@ public class JsonUtil {
 
     static private ObjectNode getLocation(Location location, RouteLocation routeLocation) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, location.getName());
+        node.put(NAME, StringEscapeUtils.escapeHtml4(location.getName()));
         node.put(ID, location.getId());
         if (routeLocation != null) {
             node.put(ROUTE, routeLocation.getId());
@@ -1544,7 +1544,7 @@ public class JsonUtil {
 
     static private ObjectNode getTrack(Track track) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, track.getName());
+        node.put(NAME, StringEscapeUtils.escapeHtml4(track.getName()));
         node.put(ID, track.getId());
         return node;
     }
