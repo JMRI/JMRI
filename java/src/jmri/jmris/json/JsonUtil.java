@@ -1209,7 +1209,7 @@ public class JsonUtil {
             data.put(ICON_NAME, train.getIconName());
             data.put(ID, train.getId());
             data.put(DEPARTURE_TIME, train.getFormatedDepartureTime());
-            data.put(DESCRIPTION, train.getDescription());
+            data.put(DESCRIPTION, StringEscapeUtils.escapeHtml4(train.getDescription()));
             data.put(COMMENT, StringEscapeUtils.escapeHtml4(train.getComment()));
             data.put(ROUTE, StringEscapeUtils.escapeHtml4(train.getRoute().getName()));
             data.put(ROUTE_ID, train.getRoute().getId());
