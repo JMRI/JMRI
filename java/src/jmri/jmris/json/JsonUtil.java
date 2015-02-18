@@ -484,10 +484,10 @@ public class JsonUtil {
         ObjectNode data = root.putObject(DATA);
         try {
             Location location = LocationManager.instance().getLocationById(id);
-            data.put(NAME, location.getName());
+            data.put(NAME, StringEscapeUtils.escapeHtml4(location.getName()));
             data.put(ID, location.getId());
             data.put(LENGTH, location.getLength());
-            data.put(COMMENT, location.getComment());
+            data.put(COMMENT, StringEscapeUtils.escapeHtml4(location.getComment()));
         } catch (NullPointerException e) {
             log.error("Unable to get location id [{}].", id);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, id));
@@ -847,7 +847,7 @@ public class JsonUtil {
             SensorManager s = InstanceManager.sensorManagerInstance();
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
-            data.put(COMMENT, route.getComment());
+            data.put(COMMENT, StringEscapeUtils.escapeHtml4(route.getComment()));
             Sensor sensor = s.getSensor(route.getTurnoutsAlignedSensor());
             if (sensor != null) {
                 switch (sensor.getKnownState()) {
@@ -1012,7 +1012,7 @@ public class JsonUtil {
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalHead.getUserName());
-            data.put(COMMENT, signalHead.getComment());
+            data.put(COMMENT, StringEscapeUtils.escapeHtml4(signalHead.getComment()));
             data.put(LIT, signalHead.getLit());
             data.put(APPEARANCE, signalHead.getAppearance());
             data.put(TOKEN_HELD, signalHead.getHeld());
@@ -1076,7 +1076,7 @@ public class JsonUtil {
             data.put(NAME, name);
             data.put(USERNAME, signalMast.getUserName());
             if (signalMast.getComment() != null) {
-                data.put(COMMENT, signalMast.getComment());
+                data.put(COMMENT, StringEscapeUtils.escapeHtml4(signalMast.getComment()));
             }
             String aspect = signalMast.getAspect();
             if (aspect == null) {
@@ -1205,24 +1205,24 @@ public class JsonUtil {
         ObjectNode data = root.putObject(DATA);
         try {
             Train train = TrainManager.instance().getTrainById(id);
-            data.put(NAME, train.getName());
+            data.put(NAME, StringEscapeUtils.escapeHtml4(train.getName()));
             data.put(ICON_NAME, train.getIconName());
             data.put(ID, train.getId());
             data.put(DEPARTURE_TIME, train.getFormatedDepartureTime());
             data.put(DESCRIPTION, train.getDescription());
-            data.put(COMMENT, train.getComment());
-            data.put(ROUTE, train.getRoute().getName());
+            data.put(COMMENT, StringEscapeUtils.escapeHtml4(train.getComment()));
+            data.put(ROUTE, StringEscapeUtils.escapeHtml4(train.getRoute().getName()));
             data.put(ROUTE_ID, train.getRoute().getId());
             data.put(LOCATIONS, getRouteLocationsForTrain(locale, train));
             data.put(ENGINES, getEnginesForTrain(locale, train));
             data.put(CARS, getCarsForTrain(locale, train));
             if (train.getTrainDepartsName() != null) {
-                data.put(DEPARTURE_LOCATION, train.getTrainDepartsName());
+                data.put(DEPARTURE_LOCATION, StringEscapeUtils.escapeHtml4(train.getTrainDepartsName()));
             }
             if (train.getTrainTerminatesName() != null) {
-                data.put(TERMINATES_LOCATION, train.getTrainTerminatesName());
+                data.put(TERMINATES_LOCATION, StringEscapeUtils.escapeHtml4(train.getTrainTerminatesName()));
             }
-            data.put(LOCATION, train.getCurrentLocationName());
+            data.put(LOCATION, StringEscapeUtils.escapeHtml4(train.getCurrentLocationName()));
             if (train.getCurrentLocation() != null) {
                 data.put(LOCATION_ID, train.getCurrentLocation().getId());
             }
@@ -1408,7 +1408,7 @@ public class JsonUtil {
         data.put(JMRI, jmri.Version.name());
         data.put(JSON, JSON_PROTOCOL_VERSION);
         data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
+        data.put(RAILROAD, StringEscapeUtils.escapeHtml4(WebServerManager.getWebServerPreferences().getRailRoadName()));
         data.put(NODE, NodeIdentity.identity());
         return root;
     }

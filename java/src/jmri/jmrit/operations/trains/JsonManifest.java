@@ -4,10 +4,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+
 import jmri.jmris.json.JSON;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.locations.Track;
@@ -15,6 +17,8 @@ import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Setup;
+
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -51,12 +55,12 @@ public class JsonManifest extends TrainCommon {
 	public void build() throws IOException {
 		ObjectNode root = this.mapper.createObjectNode();
 		if (!this.train.getRailroadName().equals(Train.NONE)) {
-			root.put(JSON.RAILROAD, this.train.getRailroadName());
+			root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(this.train.getRailroadName()));
 		} else {
-			root.put(JSON.RAILROAD, Setup.getRailroadName());
+			root.put(JSON.RAILROAD, StringEscapeUtils.escapeHtml4(Setup.getRailroadName()));
 		}
-		root.put(JSON.NAME, this.train.getName());
-		root.put(JSON.DESCRIPTION, this.train.getDescription());
+		root.put(JSON.NAME, StringEscapeUtils.escapeHtml4(this.train.getName()));
+		root.put(JSON.DESCRIPTION, StringEscapeUtils.escapeHtml4(this.train.getDescription()));
 		root.put(JSON.LOCATIONS, this.getLocations());
 		if (!this.train.getManifestLogoURL().equals(Train.NONE)) {
 			// The operationsServlet will need to change this to a usable URL
@@ -78,7 +82,7 @@ public class JsonManifest extends TrainCommon {
 			String locationName = splitString(routeLocation.getName());
 			jsonLocation = this.mapper.createObjectNode();
 			jsonCars = this.mapper.createObjectNode();
-			jsonLocation.put(JSON.NAME, locationName);
+			jsonLocation.put(JSON.NAME, StringEscapeUtils.escapeHtml4(locationName));
 			jsonLocation.put(JSON.ID, routeLocation.getId());
 			if (routeLocation != train.getRoute().getDepartsRouteLocation()) {
 				jsonLocation.put(JSON.ARRIVAL_TIME, train.getExpectedArrivalTime(routeLocation));
@@ -92,10 +96,10 @@ public class JsonManifest extends TrainCommon {
 			}
 			// add location comment and id
 			ObjectNode locationNode = this.mapper.createObjectNode();
-			locationNode.put(JSON.COMMENT, routeLocation.getLocation().getComment());
+			locationNode.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getLocation().getComment()));
 			locationNode.put(JSON.ID, routeLocation.getLocation().getId());
 			jsonLocation.put(JSON.LOCATION, locationNode);
-			jsonLocation.put(JSON.COMMENT, routeLocation.getComment());
+			jsonLocation.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(routeLocation.getComment()));
 			// engine change or helper service?
 			if (train.getSecondLegOptions() != Train.NO_CABOOSE_OR_FRED) {
 				ArrayNode options = this.mapper.createArrayNode();
@@ -171,7 +175,7 @@ public class JsonManifest extends TrainCommon {
 				jsonCars.put(JSON.EMPTIES, emptyCars);
 			} else {
 				log.debug("Train terminates in {}", locationName);
-				jsonLocation.put("TrainTerminatesIn", locationName);
+				jsonLocation.put("TrainTerminatesIn", StringEscapeUtils.escapeHtml4(locationName));
 			}
 			jsonLocation.put(JSON.CARS, jsonCars);
 			locations.add(jsonLocation);
@@ -219,16 +223,16 @@ public class JsonManifest extends TrainCommon {
 					}
 				}
 				if (pickup) {
-					jsonTrack.put(JSON.ADD, track.getCommentPickup());
+					jsonTrack.put(JSON.ADD, StringEscapeUtils.escapeHtml4(track.getCommentPickup()));
 				}
 				if (setout) {
-					jsonTrack.put(JSON.REMOVE, track.getCommentSetout());
+					jsonTrack.put(JSON.REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentSetout()));
 				}
 				if (pickup && setout) {
-					jsonTrack.put(JSON.ADD_AND_REMOVE, track.getCommentBoth());
+					jsonTrack.put(JSON.ADD_AND_REMOVE, StringEscapeUtils.escapeHtml4(track.getCommentBoth()));
 				}
 				if (pickup || setout) {
-					jsonTrack.put(JSON.COMMENT, track.getComment());
+					jsonTrack.put(JSON.COMMENT, StringEscapeUtils.escapeHtml4(track.getComment()));
 					comments.put(track.getId(), jsonTrack);
 				}
 			}
