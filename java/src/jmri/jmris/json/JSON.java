@@ -458,7 +458,7 @@ public final class JSON {
     /**
      * {@value #DESTINATION_TRACK}
      */
-    public static final String DESTINATION_TRACK = "destinationTrack"; // NOI18N
+    public static final String DESTINATION_TRACK = "dest&track"; // NOI18N
     /**
      * {@value #LOCATION_TRACK}
      */

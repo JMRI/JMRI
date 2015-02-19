@@ -15,7 +15,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -73,17 +72,16 @@ public class HtmlManifest extends HtmlTrainCommon {
 				}
 				// add route comment
 				if (!location.path(JSON.COMMENT).textValue().trim().isEmpty()) {
-					builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), StringEscapeUtils.escapeHtml4(routeLocation
-							.getComment().trim())));
+					builder.append(String.format(locale, strings.getProperty("RouteLocationComment"), location.path(JSON.COMMENT).textValue()));
 				}
 
 				builder.append(getTrackComments(location.path(JSON.TRACK), location.path(JSON.CARS)));
 
 				// add location comment
 				if (Setup.isPrintLocationCommentsEnabled()
-						&& !routeLocation.getLocation().getComment().trim().isEmpty()) {
-					builder.append(String.format(locale, strings.getProperty("LocationComment"), routeLocation
-							.getLocation().getComment()));
+						&& !location.path(JSON.LOCATION).path(JSON.COMMENT).textValue().trim().isEmpty()) {
+					builder.append(String.format(locale, strings.getProperty("LocationComment"), location.path(
+							JSON.LOCATION).path(JSON.COMMENT).textValue()));
 				}
 			}
 
@@ -295,6 +293,14 @@ public class HtmlManifest extends HtmlTrainCommon {
 					builder.append(
 							this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
 									ShowLocation.track))).append(" "); // NOI18N
+				} else if (attribute.equals(JSON.DESTINATION)) {
+					builder.append(
+							this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute),
+									ShowLocation.location))).append(" "); // NOI18N
+				} else if (attribute.equals(JSON.DESTINATION_TRACK)) {
+					builder.append(
+							this.getFormattedAttribute(attribute, this.getDropLocation(car.path(JSON.LOCATION),
+									ShowLocation.both))).append(" "); // NOI18N
 				} else {
 					builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
 				}
@@ -318,7 +324,7 @@ public class HtmlManifest extends HtmlTrainCommon {
 				} else if (attribute.equals(JSON.LOCATION)) {
 					builder.append(
 							this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
-									ShowLocation.track))).append(" "); // NOI18N
+									ShowLocation.location))).append(" "); // NOI18N
 				} else {
 					builder.append(this.getTextAttribute(attribute, car)).append(" "); // NOI18N
 				}
@@ -428,15 +434,12 @@ public class HtmlManifest extends HtmlTrainCommon {
 		// TODO handle tracks without names
 		switch (show) {
 		case location:
-			return String.format(locale, strings.getProperty(prefix + "Location"), StringEscapeUtils
-					.escapeHtml4(location.path(JSON.NAME).asText()));
+			return String.format(locale, strings.getProperty(prefix + "Location"), location.path(JSON.NAME).asText());
 		case track:
-			return String.format(locale, strings.getProperty(prefix + "Track"), StringEscapeUtils.escapeHtml4(location
-					.path(JSON.TRACK).path(JSON.NAME).asText()));
+			return String.format(locale, strings.getProperty(prefix + "Track"), location.path(JSON.TRACK).path(JSON.NAME).asText());
 		case both:
 		default: // default here ensures the method always returns
-			return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"), StringEscapeUtils
-					.escapeHtml4(location.path(JSON.TRACK).path(JSON.NAME).asText()));
+			return String.format(locale, strings.getProperty(prefix + "LocationAndTrack"), location.path(JSON.NAME).asText(), location.path(JSON.TRACK).path(JSON.NAME).asText());
 		}
 	}
 
