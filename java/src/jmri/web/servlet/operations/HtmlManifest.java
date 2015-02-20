@@ -321,6 +321,10 @@ public class HtmlManifest extends HtmlTrainCommon {
 					builder.append(
 							this.getFormattedAttribute(attribute, this.getDropLocation(car.path(attribute),
 									ShowLocation.track))).append(" "); // NOI18N
+				} else if (attribute.equals(JSON.LOCATION) && isLocal) {
+					builder.append(
+							this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
+									ShowLocation.track))).append(" "); // NOI18N
 				} else if (attribute.equals(JSON.LOCATION)) {
 					builder.append(
 							this.getFormattedAttribute(attribute, this.getPickupLocation(car.path(attribute),
