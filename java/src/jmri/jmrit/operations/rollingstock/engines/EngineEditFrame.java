@@ -361,6 +361,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 		valueTextField.setText(engine.getValue());
 		rfidTextField.setText(engine.getRfid());
 		commentTextField.setText(engine.getComment());
+		
+		setTitle(Bundle.getMessage("TitleEngineEdit"));
 	}
 
 	// combo boxes

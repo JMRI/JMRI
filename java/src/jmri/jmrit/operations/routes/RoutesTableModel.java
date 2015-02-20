@@ -4,11 +4,14 @@ package jmri.jmrit.operations.routes;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -147,14 +150,6 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	public synchronized Object getValueAt(int row, int col) {
-		// Funky code to put the ref frame in focus after the edit table buttons is used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the edit frame
-		// in focus.
-		if (focusRef) {
-			focusRef = false;
-			ref.requestFocus();
-		}
 		if (row >= sysList.size())
 			return "ERROR unknown " + row; // NOI18N
 		Route r = sysList.get(row);
@@ -186,17 +181,20 @@ public class RoutesTableModel extends javax.swing.table.AbstractTableModel imple
 		}
 	}
 
-	boolean focusRef = false;
 	RouteEditFrame ref = null;
 
 	private synchronized void editRoute(int row) {
 		log.debug("Edit route");
 		if (ref != null)
 			ref.dispose();
-		ref = new RouteEditFrame();
-		Route route = sysList.get(row);
-		ref.initComponents(route);
-		focusRef = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				ref = new RouteEditFrame();
+				Route route = sysList.get(row);
+				ref.initComponents(route);
+			}
+		});
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {

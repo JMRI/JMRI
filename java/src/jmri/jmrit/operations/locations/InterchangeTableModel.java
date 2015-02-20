@@ -45,11 +45,15 @@ public class InterchangeTableModel extends TrackTableModel {
 		if (tef != null) {
 			tef.dispose();
 		}
-		tef = new InterchangeEditFrame();
-		Track interchange = tracksList.get(row);
-		tef.initComponents(_location, interchange);
-		tef.setTitle(Bundle.getMessage("EditInterchange"));
-		focusEditFrame = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tef = new InterchangeEditFrame();
+				Track interchange = tracksList.get(row);
+				tef.initComponents(_location, interchange);
+				tef.setTitle(Bundle.getMessage("EditInterchange"));
+			}
+		});
 	}
 
 	// this table listens for changes to a location and it's interchanges

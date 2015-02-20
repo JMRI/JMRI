@@ -5,14 +5,18 @@ package jmri.jmrit.operations.locations;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
 import jmri.jmrit.operations.setup.Control;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -185,19 +189,6 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	public synchronized Object getValueAt(int row, int col) {
-		// Funky code to put the lef frame in focus after the edit table buttons is used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the edit frame
-		// in focus.
-
-		if (lef != null) {
-			lef.requestFocus();
-			lef = null;
-		}
-		if (ymf != null) {
-			ymf.requestFocus();
-			ymf = null;
-		}
 		if (row >= getRowCount())
 			return "ERROR row " + row; // NOI18N
 		Location l = locationsList.get(row);
@@ -257,34 +248,40 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 		}
 	}
 
-	LocationEditFrame lef = null;
+	// limit user to only two edit location windows
 	LocationEditFrame lef1 = null;
 	LocationEditFrame lef2 = null;
 
 	private synchronized void editLocation(int row) {
-		log.debug("Edit location");
-		Location loc = locationsList.get(row);
-		if (lef1 != null && (lef2 == null || !lef2.isVisible())) {
-			if (lef2 != null)
-				lef2.dispose();
-			lef2 = new LocationEditFrame();
-			lef2.initComponents(loc);
-			lef = lef2;
-		} else {
-			if (lef1 != null)
-				lef1.dispose();
-			lef1 = new LocationEditFrame();
-			lef1.initComponents(loc);
-			lef = lef1;
-		}
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				log.debug("Edit location");
+				Location loc = locationsList.get(row);
+				if (lef1 != null && (lef2 == null || !lef2.isVisible())) {
+					if (lef2 != null)
+						lef2.dispose();
+					lef2 = new LocationEditFrame();
+					lef2.initComponents(loc);
+				} else {
+					if (lef1 != null)
+						lef1.dispose();
+					lef1 = new LocationEditFrame();
+					lef1.initComponents(loc);
+				}
+			}
+		});
 	}
 
-	YardmasterFrame ymf = null;
-
 	private synchronized void launchYardmaster(int row) {
-		log.debug("Yardmaster");
-		Location loc = locationsList.get(row);
-		ymf = new YardmasterFrame(loc);
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				log.debug("Yardmaster");
+				Location loc = locationsList.get(row);
+				new YardmasterFrame(loc);
+			}
+		});
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {

@@ -441,6 +441,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
 		autoTrackCheckBox.setEnabled(true);
 
 		blockingTextField.setText(Integer.toString(car.getBlocking()));
+		
+		setTitle(Bundle.getMessage("TitleCarEdit"));
 	}
 
 	// combo boxes

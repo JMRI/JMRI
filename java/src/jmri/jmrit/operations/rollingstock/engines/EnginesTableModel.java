@@ -11,6 +11,7 @@ import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
 
@@ -332,18 +333,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 	}
 
 	public Object getValueAt(int row, int col) {
-		// Funky code to put the esf and eef frames in focus after set and edit table buttons are used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the set and edit frames
-		// in focus.
-		if (focusEsf) {
-			focusEsf = false;
-			esf.requestFocus();
-		}
-		if (focusEef) {
-			focusEef = false;
-			eef.requestFocus();
-		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
 		Engine eng = (Engine) sysList.get(row);
@@ -406,8 +395,6 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 		}
 	}
 
-	boolean focusEef = false;
-	boolean focusEsf = false;
 	EngineEditFrame eef = null;
 	EngineSetFrame esf = null;
 
@@ -418,24 +405,27 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 			log.debug("Set engine location");
 			if (esf != null)
 				esf.dispose();
-			esf = new EngineSetFrame();
-			esf.initComponents();
-			esf.loadEngine(engine);
-			esf.setVisible(true);
-			esf.setExtendedState(java.awt.Frame.NORMAL);
-			focusEsf = true;
+			// use invokeLater so new window appears on top
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					esf = new EngineSetFrame();
+					esf.initComponents();
+					esf.loadEngine(engine);
+				}
+			});
 			break;
 		case EDITCOLUMN:
 			log.debug("Edit engine");
 			if (eef != null)
 				eef.dispose();
-			eef = new EngineEditFrame();
-			eef.initComponents();
-			eef.loadEngine(engine);
-			eef.setTitle(Bundle.getMessage("TitleEngineEdit"));
-			eef.setVisible(true);
-			eef.setExtendedState(java.awt.Frame.NORMAL);
-			focusEef = true;
+			// use invokeLater so new window appears on top
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					eef = new EngineEditFrame();
+					eef.initComponents();
+					eef.loadEngine(engine);
+				}
+			});
 			break;
 		case MOVESCOLUMN:
 			if (showMoveCol == SHOWBUILT)

@@ -196,14 +196,6 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 	}
 
 	public Object getValueAt(int row, int col) {
-		// Funky code to put the sef frame in focus after the edit table buttons is used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the edit frame
-		// in focus.
-		if (focusSef) {
-			focusSef = false;
-			sef.requestFocus();
-		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
 		Schedule schedule = sysList.get(row);
@@ -250,7 +242,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 		}
 	}
 
-	boolean focusSef = false;
+
 	ScheduleEditFrame sef = null;
 
 	private void editSchedule(int row) {
@@ -266,11 +258,15 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 					new Object[] { Bundle.getMessage("Edit") }), JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		sef = new ScheduleEditFrame();
-		sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[] { ltp.getTrack()
-				.getName() }));
-		sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
-		focusSef = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				sef = new ScheduleEditFrame();
+				sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[] { ltp.getTrack()
+						.getName() }));
+				sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
+			}
+		});
 	}
 
 	private void deleteSchedule(int row) {

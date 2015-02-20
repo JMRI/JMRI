@@ -8,15 +8,15 @@ import org.slf4j.LoggerFactory;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.List;
-import java.awt.Frame;
-
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
 
 import javax.swing.JButton;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.TableCellEditor;
+
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -495,18 +495,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 	}
 
 	public Object getValueAt(int row, int col) {
-		// Funky code to put the csf and cef frames in focus after set and edit table buttons are used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the set and edit frames
-		// in focus.
-		if (focusCsf) {
-			focusCsf = false;
-			csf.requestFocus();
-		}
-		if (focusCef) {
-			focusCef = false;
-			cef.requestFocus();
-		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
 		Car car = (Car) sysList.get(row);
@@ -598,8 +586,6 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 		}
 	}
 
-	boolean focusCef = false;
-	boolean focusCsf = false;
 	CarEditFrame cef = null;
 	CarSetFrame csf = null;
 
@@ -610,26 +596,30 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
 			car.setSelected(((Boolean) value).booleanValue());
 			break;
 		case SET_COLUMN:
-			log.debug("Set car location");
+			log.debug("Set car");
 			if (csf != null)
 				csf.dispose();
-			csf = new CarSetFrame();
-			csf.initComponents();
-			csf.loadCar(car);
-			csf.setVisible(true);
-			csf.setExtendedState(Frame.NORMAL);
-			focusCsf = true;
+			// use invokeLater so new window appears on top
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					csf = new CarSetFrame();
+					csf.initComponents();
+					csf.loadCar(car);
+				}
+			});
 			break;
 		case EDIT_COLUMN:
 			log.debug("Edit car");
 			if (cef != null)
 				cef.dispose();
-			cef = new CarEditFrame();
-			cef.initComponents();
-			cef.loadCar(car);
-			cef.setTitle(Bundle.getMessage("TitleCarEdit"));
-			cef.setExtendedState(Frame.NORMAL);
-			focusCef = true;
+			// use invokeLater so new window appears on top
+			SwingUtilities.invokeLater(new Runnable() {
+				public void run() {
+					cef = new CarEditFrame();
+					cef.initComponents();
+					cef.loadCar(car);
+				}
+			});
 			break;
 		case MOVES_COLUMN:
 			try {

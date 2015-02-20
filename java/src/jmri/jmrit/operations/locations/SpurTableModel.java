@@ -45,11 +45,15 @@ public class SpurTableModel extends TrackTableModel {
 		if (tef != null) {
 			tef.dispose();
 		}
-		tef = new SpurEditFrame();
-		Track spur = tracksList.get(row);
-		tef.initComponents(_location, spur);
-		tef.setTitle(Bundle.getMessage("EditSpur"));
-		focusEditFrame = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tef = new SpurEditFrame();
+				Track spur = tracksList.get(row);
+				tef.initComponents(_location, spur);
+				tef.setTitle(Bundle.getMessage("EditSpur"));
+			}
+		});
 	}
 
 	// this table listens for changes to a location and it's spurs

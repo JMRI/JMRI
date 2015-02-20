@@ -249,14 +249,6 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 	}
 
 	public Object getValueAt(int row, int col) {
-		// Funky code to put the edit frame in focus after the edit table buttons is used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the edit frame
-		// in focus.
-		if (focusEditFrame) {
-			focusEditFrame = false;
-			tef.requestFocus();
-		}
 		if (row >= tracksList.size())
 			return "ERROR row " + row; // NOI18N
 		Track track = tracksList.get(row);
@@ -335,7 +327,6 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		}
 	}
 
-	boolean focusEditFrame = false;
 	TrackEditFrame tef = null;
 
 	protected void editTrack(int row) {
@@ -343,11 +334,15 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 		if (tef != null) {
 			tef.dispose();
 		}
-		tef = new TrackEditFrame();
-		Track tracks = tracksList.get(row);
-		tef.initComponents(_location, tracks);
-		tef.setTitle(Bundle.getMessage("EditTrack"));
-		focusEditFrame = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tef = new TrackEditFrame();
+				Track tracks = tracksList.get(row);
+				tef.initComponents(_location, tracks);
+				tef.setTitle(Bundle.getMessage("EditTrack"));
+			}
+		});
 	}
 
 	// this table listens for changes to a location and it's tracks

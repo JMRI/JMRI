@@ -4,8 +4,11 @@ package jmri.jmrit.operations.locations;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.beans.*;
+
 import javax.swing.*;
+
 import jmri.jmrit.operations.setup.Control;
 
 /**
@@ -42,11 +45,15 @@ public class StagingTableModel extends TrackTableModel {
 		if (tef != null) {
 			tef.dispose();
 		}
-		tef = new StagingEditFrame();
-		Track staging = tracksList.get(row);
-		tef.initComponents(_location, staging);
-		tef.setTitle(Bundle.getMessage("EditStaging"));
-		focusEditFrame = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tef = new StagingEditFrame();
+				Track staging = tracksList.get(row);
+				tef.initComponents(_location, staging);
+				tef.setTitle(Bundle.getMessage("EditStaging"));
+			}
+		});
 	}
 
 	// this table listens for changes to a location and it's staging tracks

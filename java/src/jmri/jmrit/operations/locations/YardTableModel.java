@@ -45,11 +45,15 @@ public class YardTableModel extends TrackTableModel {
 		if (tef != null) {
 			tef.dispose();
 		}
-		tef = new YardEditFrame();
-		Track yard = tracksList.get(row);
-		tef.initComponents(_location, yard);
-		tef.setTitle(Bundle.getMessage("EditYard"));
-		focusEditFrame = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tef = new YardEditFrame();
+				Track yard = tracksList.get(row);
+				tef.initComponents(_location, yard);
+				tef.setTitle(Bundle.getMessage("EditYard"));
+			}
+		});
 	}
 
 	// this table listens for changes to a location and it's yards
