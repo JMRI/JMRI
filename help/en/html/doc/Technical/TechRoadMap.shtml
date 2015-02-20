@@ -112,6 +112,16 @@ need to establish some conventions for how to use that.
 The series of test releases in Fall 2015 is expected to continue with Java 1.8
 and the same set of included libraries.  Any changes to that plan will be noted here.
 
+<p>At some point, we have to migrate away from 
+<a href="Help.shtml">JavaHelp and JHelpDev</a>.
+At a minimum, we'll need to
+<a href="http://weblogs.java.net/blog/brinkley/archive/2004/11/javahelp_v20_02.html">replace the renderer</a>.
+There are 
+<a href="http://stackoverflow.com/questions/9900110/javahelp-viewers-or-alternatives">several alternative help systems</a> available.
+<a href="http://www.oracle.com/technetwork/topics/index-083946.html">Oracle Help</a>
+might be a good choice.
+
+
 <h3>Java Release and Operating System Support</h3>
 
 More information on Java releases and the operating systems
