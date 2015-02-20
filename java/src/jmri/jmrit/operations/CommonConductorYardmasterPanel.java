@@ -258,11 +258,11 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
 		pSetouts.repaint();
 		pMoves.repaint();
 
-		pPickupLocos.validate();
-		pSetoutLocos.validate();
-		pPickups.validate();
-		pSetouts.validate();
-		pMoves.validate();
+		pPickupLocos.revalidate();
+		pSetoutLocos.revalidate();
+		pPickups.revalidate();
+		pSetouts.revalidate();
+		pMoves.revalidate();
 
 		selectButton.setEnabled(carCheckBoxes.size() > 0);
 		clearButton.setEnabled(carCheckBoxes.size() > 0);

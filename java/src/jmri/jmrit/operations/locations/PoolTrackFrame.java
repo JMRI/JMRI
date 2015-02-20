@@ -209,7 +209,7 @@ class PoolTrackFrame extends OperationsFrame implements java.beans.PropertyChang
 		poolStatus.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(Bundle.getMessage("PoolTracks"),
 				new Object[] { poolName })));
 		poolStatus.repaint();
-		poolStatus.validate();
+		poolStatus.revalidate();
 		setPreferredSize(null); // kill JMRI window size
 		pack();
 	}

@@ -175,7 +175,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 			}
 		}
 		locationsPanel.revalidate();
-		validate();
+		revalidate();
 		repaint();
 	}
 

@@ -411,13 +411,13 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 						x = 0;
 					}
 				}
-				validate();
+				revalidate();
 			}
 		} else {
 			loadNameAll.setSelected(true);
 		}
 		panelLoads.repaint();
-		panelLoads.validate();
+		panelLoads.revalidate();
 	}
 
 	private void updateShipLoadNames() {
@@ -446,13 +446,13 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 						x = 0;
 					}
 				}
-				validate();
+				revalidate();
 			}
 		} else {
 			shipLoadNameAll.setSelected(true);
 		}
 		panelShipLoads.repaint();
-		panelShipLoads.validate();
+		panelShipLoads.revalidate();
 	}
 
 	private void deleteAllLoads() {

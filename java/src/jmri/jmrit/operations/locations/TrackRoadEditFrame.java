@@ -249,13 +249,13 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
 						x = 0;
 					}
 				}
-				validate();
+				revalidate();
 			}
 		} else {
 			roadNameAll.setSelected(true);
 		}
 		panelRoads.repaint();
-		panelRoads.validate();
+		panelRoads.revalidate();
 	}
 
 	private void deleteAllRoads() {

@@ -286,13 +286,13 @@ public class TrainLoadOptionsFrame extends OperationsFrame implements java.beans
 						x = 0;
 					}
 				}
-				validate();
+				revalidate();
 			}
 		} else {
 			loadNameAll.setSelected(true);
 		}
 		panelLoads.repaint();
-		panelLoads.validate();
+		panelLoads.revalidate();
 	}
 
 	private void deleteAllLoads() {

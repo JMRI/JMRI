@@ -546,7 +546,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     private void addComboBox(JPanel panel, List<JComboBox<String>> list, JComboBox<String> box) {
         list.add(box);
         panel.add(box, list.size());
-        panel.validate();
+        panel.revalidate();
         pManifest.revalidate();
     }
 
@@ -556,7 +556,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
             if (cb.getSelectedItem() == Setup.BLANK) {
                 list.remove(i);
                 panel.remove(cb);
-                panel.validate();
+                panel.revalidate();
                 pManifest.revalidate();
                 return;
             }

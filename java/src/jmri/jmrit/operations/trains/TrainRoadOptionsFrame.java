@@ -263,13 +263,13 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 						x = 0;
 					}
 				}
-				validate();
+				revalidate();
 			}
 		} else {
 			roadNameAll.setSelected(true);
 		}
 		panelRoads.repaint();
-		panelRoads.validate();
+		panelRoads.revalidate();
 	}
 
 	private void deleteAllRoads() {

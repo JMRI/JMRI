@@ -595,7 +595,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 		}
 		panelOwnerNames.revalidate();
 		panelOwnerNames.repaint();
-		validate();
+		revalidate();
 	}
 
 	private void setBuiltRadioButton() {
@@ -631,7 +631,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			builtAfterTextField.setVisible(true);
 			builtBeforeTextField.setVisible(true);
 		}
-		validate();
+		revalidate();
 	}
 
 	private void updateTrainRequires1Option() {
@@ -679,7 +679,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			createCaboose1Panel(modify1Caboose.isSelected());
 		if (helper1Service.isSelected())
 			engine1Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddHelpers")));
-		validate();
+		revalidate();
 	}
 
 	private void updateTrainRequires2Option() {
@@ -728,7 +728,7 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
 			createCaboose2Panel(modify2Caboose.isSelected());
 		if (helper2Service.isSelected())
 			engine2Option.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AddHelpers")));
-		validate();
+		revalidate();
 	}
 
 	private void saveTrain() {
