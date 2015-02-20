@@ -1054,6 +1054,7 @@
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
+            <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>
 
@@ -1124,6 +1125,7 @@
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
             <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
+            <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
