@@ -207,13 +207,20 @@ public class OperationsServlet extends HttpServlet {
         }
         if (data.path("format").asText().equals("html")) {
             if (!data.path(LOCATION).isMissingNode()) {
-                String location = data.path(LOCATION).asText();
-                if (location.equals(NULL)) {
-                    train.terminate();
-                } else if (!train.move(location)) {
-                    response.sendError(412, String.format(Bundle.getMessage(request.getLocale(), "ErrorTrainMovement"), id, location));
-                }
-            }
+// need to consider that the train could be moved by other methods, the commented out code incorrectly assumes that the train hasn't been moved
+//              String location = data.path(LOCATION).asText();
+//              if (location.equals(NULL)) {
+//                  train.terminate();
+//              } else if (!train.move(location)) {
+//                  response.sendError(412, String.format(Bundle.getMessage(request.getLocale(), "ErrorTrainMovement"), id, location));
+//              }
+				String location = data.path(LOCATION).asText();
+				if (location.equals(NULL)) {
+					train.terminate();
+				} else if (train.getNextLocationName().equals(location)) {
+					train.move();
+				}
+			}
             log.debug("Getting conductor HTML code for train {}", id);
             HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
             ServletUtil.getInstance().setNonCachingHeaders(response);
