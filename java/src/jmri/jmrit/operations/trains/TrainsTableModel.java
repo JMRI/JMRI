@@ -10,12 +10,15 @@ import java.beans.PropertyChangeListener;
 import java.text.MessageFormat;
 import java.util.Hashtable;
 import java.util.List;
+
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableCellEditor;
 import javax.swing.table.TableColumnModel;
+
 import jmri.jmrit.beantable.EnablingCheckboxRenderer;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.routes.RouteEditFrame;
@@ -24,6 +27,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.table.ButtonEditor;
 import jmri.util.table.ButtonRenderer;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -264,23 +268,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 	}
 
 	public synchronized Object getValueAt(int row, int col) {
-		// Funky code to put the tef or ref frame in focus after the edit table buttons is used.
-		// The button editor for the table does a repaint of the button cells after the setValueAt code
-		// is called which then returns the focus back onto the table. We need the edit frame
-		// in focus.
-		if (focusTef) {
-			focusTef = false;
-			tef.requestFocus();
-		}
-		if (focusRef) {
-			focusRef = false;
-			ref.requestFocus();
-		}
-		// more funkyness for the conductor window.
-		if (tcf != null) {
-			tcf.requestFocus();
-			tcf = null;
-		}
 		if (row >= sysList.size())
 			return "ERROR row " + row; // NOI18N
 		Train train = sysList.get(row);
@@ -375,30 +362,37 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 		return train.getTableRowColor();
 	}
 
-	boolean focusTef = false;
 	TrainEditFrame tef = null;
 
 	private synchronized void editTrain(int row) {
 		if (tef != null)
 			tef.dispose();
-		tef = new TrainEditFrame();
-		Train train = sysList.get(row);
-		log.debug("Edit train ({})", train.getName());
-		tef.initComponents(train);
-		focusTef = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				tef = new TrainEditFrame();
+				Train train = sysList.get(row);
+				log.debug("Edit train ({})", train.getName());
+				tef.initComponents(train);
+			}
+		});
 	}
 
-	boolean focusRef = false;
+
 	RouteEditFrame ref = null;
 
 	private synchronized void editRoute(int row) {
 		if (ref != null)
 			ref.dispose();
-		ref = new RouteEditFrame();
-		Train train = sysList.get(row);
-		log.debug("Edit route for train (" + train.getName() + ")");
-		ref.initComponents(train.getRoute(), train);
-		focusRef = true;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				ref = new RouteEditFrame();
+				Train train = sysList.get(row);
+				log.debug("Edit route for train (" + train.getName() + ")");
+				ref.initComponents(train.getRoute(), train);
+			}
+		});
 	}
 
 	Thread build;
@@ -485,20 +479,23 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 				&& train.getDepartureTrack() != train.getTerminationTrack() && train.getDepartureTrack().getDropRS() > 0);
 	}
 
-	TrainConductorFrame tcf = null;
 	private static Hashtable<String, TrainConductorFrame> _trainConductorHashTable = new Hashtable<String, TrainConductorFrame>();
 
 	private void launchConductor(Train train) {
-		TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
-		// create a copy train frame
-		if (f == null || !f.isVisible()) {
-			f = new TrainConductorFrame(train);
-			_trainConductorHashTable.put(train.getId(), f);
-		} else {
-			f.setExtendedState(Frame.NORMAL);
-		}
-                f.setVisible(true); // this also brings the frame into focus
-		tcf = f;
+		// use invokeLater so new window appears on top
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				TrainConductorFrame f = _trainConductorHashTable.get(train.getId());
+				// create a copy train frame
+				if (f == null || !f.isVisible()) {
+					f = new TrainConductorFrame(train);
+					_trainConductorHashTable.put(train.getId(), f);
+				} else {
+					f.setExtendedState(Frame.NORMAL);
+				}
+				f.setVisible(true); // this also brings the frame into focus
+			}
+		});
 	}
 
 	public void propertyChange(PropertyChangeEvent e) {
