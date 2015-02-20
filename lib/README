@@ -24,6 +24,11 @@ vecmath.jar
 Serialio.jar
  from <http://serialio.com>
  
+commons-lang3-3.2.1.jar
+    version 3.2.1
+    provides org.apache.commons.lang3
+    from https://commons.apache.org/proper/commons-lang/
+     
 javacsv.jar
  version 2.0 of 2006-12-12
  from <http://javacsv.sourceforge.net/>
