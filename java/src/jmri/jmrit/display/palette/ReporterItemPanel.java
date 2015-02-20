@@ -79,7 +79,7 @@ public class ReporterItemPanel extends TableItemPanel {
          }
          comp.add(_reporter);
          panel.add(comp);
-         panel.validate();
+         panel.revalidate();
          int width = Math.max(100, panel.getPreferredSize().width);
          panel.setPreferredSize(new java.awt.Dimension(width, panel.getPreferredSize().height));
          panel.setToolTipText(Bundle.getMessage("ToolTipDragIcon"));

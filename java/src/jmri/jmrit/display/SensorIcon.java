@@ -953,7 +953,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                                 int h = getHeight();
                                 java.awt.Container parent = getParent();
                                 // force redisplay
-                                parent.validate();
+                                parent.revalidate();
                                 parent.repaint(p.x,p.y,w,h);
                             }
                             else

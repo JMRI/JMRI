@@ -129,7 +129,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
             }
             editorComp.setBounds(getCellBounds(index, index));
             add(editorComp);
-            editorComp.validate();
+            editorComp.revalidate();
 
             editingIndex = index;
             cellEditor.addCellEditorListener(this);

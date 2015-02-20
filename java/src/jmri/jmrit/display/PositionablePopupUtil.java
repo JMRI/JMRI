@@ -443,7 +443,7 @@ public class PositionablePopupUtil {
                             Container parent = _parent.getParent();
                             // force redisplay
                             setMargin(margin);  //This rebuilds margin and clears it colour.
-                            parent.validate();
+                            parent.revalidate();
                             parent.repaint(p.x,p.y,w,h);
                         }
                         else

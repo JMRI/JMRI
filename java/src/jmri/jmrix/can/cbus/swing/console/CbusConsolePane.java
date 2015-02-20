@@ -358,13 +358,13 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             public void actionPerformed(ActionEvent e) {
                 if (showStatsCheckBox.isSelected()) {
                     statsPane.setVisible(true);
-                    //statsPane.validate();
+                    //statsPane.revalidate();
                     packInside();
                     //statsPane.repaint();
                 }
                 else {
                     statsPane.setVisible(false);
-                    //statsPane.validate();
+                    //statsPane.revalidate();
                     packInside();
                     //statsPane.repaint();
                 }
@@ -452,18 +452,18 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             public void actionPerformed(ActionEvent e) {
                 if (showPacketCheckBox.isSelected()) {
                     rxPane.setVisible(true);
-                    //rxPane.validate();
+                    //rxPane.revalidate();
                     sendPane.setVisible(true);
-                    //sendPane.validate();
+                    //sendPane.revalidate();
                     packInside();
                     //rxPane.repaint();
                     //sendPane.repaint();
                 }
                 else {
                     rxPane.setVisible(false);
-                    //rxPane.validate();
+                    //rxPane.revalidate();
                     sendPane.setVisible(false);
-                    //sendPane.validate();
+                    //sendPane.revalidate();
                     packInside();
                     //rxPane.repaint();
                     //sendPane.repaint();
@@ -515,13 +515,13 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
             public void actionPerformed(ActionEvent e) {
                 if (showEventCheckBox.isSelected()) {
                     evPane.setVisible(true);
-                    //evPane.validate();
+                    //evPane.revalidate();
                     packInside();
                     //evPane.repaint();
                 }
                 else {
                     evPane.setVisible(false);
-                    //evPane.validate();
+                    //evPane.revalidate();
                     packInside();
                     //evPane.repaint();
                 }

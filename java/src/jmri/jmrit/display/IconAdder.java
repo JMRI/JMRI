@@ -123,7 +123,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
         if (_defaultIcons != null) {
             makeIconPanel(true);
         }
-        this.validate();
+        this.revalidate();
     }
 
     public IconAdder(String type) {
@@ -460,7 +460,7 @@ public class IconAdder extends JPanel implements ListSelectionListener {
             _table.clearSelection();
             _addButton.setEnabled(false);
             _addButton.setToolTipText(null);
-            this.validate();
+            this.revalidate();
             if (log.isDebugEnabled()) log.debug("getTableSelection: row= "+row+", bean= "+b.getDisplayName());
             return b;
         } else if (log.isDebugEnabled()) log.debug("getTableSelection: row=0");

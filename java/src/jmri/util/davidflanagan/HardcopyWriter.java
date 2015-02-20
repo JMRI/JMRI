@@ -255,7 +255,7 @@ public class HardcopyWriter extends Writer {
 		totalPages.setText("" + pageImages.size() + "     ");
 		// repaint the frame but don't use pack() as we don't want resizing
 		previewFrame.invalidate();
-		previewFrame.validate();
+		previewFrame.revalidate();
 		previewFrame.setVisible(true);
 	}
 

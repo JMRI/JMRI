@@ -5,10 +5,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 import java.util.ArrayList;
+
 import javax.jmdns.ServiceInfo;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JViewport;
+
 import jmri.jmris.json.JSON;
 import jmri.jmrix.AbstractNetworkConnectionConfig;
 import jmri.jmrix.NetworkPortAdapter;
@@ -122,7 +124,7 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
         }
         if (this._details.getParent() != null && this._details.getParent() instanceof JViewport) {
             JViewport vp = (JViewport) _details.getParent();
-            vp.validate();
+            vp.revalidate();
             vp.repaint();
         }
     }
@@ -138,7 +140,7 @@ public class JsonNetworkConnectionConfig extends AbstractNetworkConnectionConfig
 
     @SuppressWarnings("unchecked")
     public Object[] getServices() {
-        ArrayList<String> services = new ArrayList();
+        ArrayList<String> services = new ArrayList<String>();
         for (ServiceInfo service : this.zeroConfClient.getServices(JSON.ZEROCONF_SERVICE_TYPE)) {
             services.add(String.format(Bundle.getMessage("ZeroConfServiceDescription"), service.getQualifiedName(), service.getPropertyString(JSON.NODE)));
         }

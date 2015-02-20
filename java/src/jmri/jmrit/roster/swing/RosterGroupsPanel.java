@@ -221,8 +221,8 @@ public class RosterGroupsPanel extends JPanel implements RosterGroupSelector {
             allEntriesMenu.remove(0);
             newWindowMenuItemAction = null;
         }
-        groupsMenu.validate();
-        allEntriesMenu.validate();
+        groupsMenu.revalidate();
+        allEntriesMenu.revalidate();
     }
 
     /**

@@ -574,7 +574,7 @@ public class SecurityElementIcon extends PositionableJPanel
         Container parent = this.getParent();
         parent.remove(this);
         // force redisplay
-        parent.validate();
+        parent.revalidate();
 
         // remove from persistance
         active = false;

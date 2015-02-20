@@ -266,7 +266,7 @@ public class VSDManagerFrame extends JmriJFrame {
 	    if (decoderPane.getComponentCount() == 0)
 		decoderPane.add(decoderBlank);
 	    //debugPrintDecoderList();
-	    decoderPane.validate();
+	    decoderPane.revalidate();
 	    this.pack();
 	    this.setVisible(true);
 	}

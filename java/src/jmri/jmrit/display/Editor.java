@@ -890,7 +890,8 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * @deprecated 3.9.5
      * @see #setPanelMenuVisible(boolean)
      */
-    public void setPanelMenu(boolean state) {
+    @Deprecated
+	public void setPanelMenu(boolean state) {
         _targetFrame.getJMenuBar().setVisible(state);
         validate();
     }
@@ -905,7 +906,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         this.panelMenuIsVisible = state;
         if (!GraphicsEnvironment.isHeadless() && this._targetFrame != null) {
             _targetFrame.getJMenuBar().setVisible(state);
-            this.validate();
+            this.revalidate();
         }
     }
 
@@ -1696,7 +1697,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         _targetPanel.add(c, Integer.valueOf(l.getDisplayLevel()));
         _targetPanel.moveToFront(c);
         c.repaint();
-        _targetPanel.validate();
+        _targetPanel.revalidate();
     }
 
     /*
@@ -2577,7 +2578,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         Point p = l.getLocation();
         int w = l.getWidth();
         int h = l.getHeight();
-        _targetPanel.validate();
+        _targetPanel.revalidate();
         _targetPanel.repaint(p.x, p.y, w, h);
     }
 

@@ -220,7 +220,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         if (edit) {
             int idx = _menuBar.getComponentIndex(_warrantMenu);
             _menuBar.add(_circuitMenu, ++idx);
-            _menuBar.validate();
+            _menuBar.revalidate();
         }
     }
 
@@ -935,7 +935,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         }
         super.setAllEditable(edit);
         setTitle();
-        _menuBar.validate();
+        _menuBar.revalidate();
     }
 
     @Override
@@ -1805,7 +1805,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _highlightcomponent = null;
         TargetPane targetPane = (TargetPane) getTargetPanel();
         targetPane.setDefaultColors();
-        targetPane.validate();
+        targetPane.revalidate();
         setSelectionGroup(null);
         _disablePortalSelection = true;
     }

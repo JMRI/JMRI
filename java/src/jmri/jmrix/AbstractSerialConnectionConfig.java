@@ -434,7 +434,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
         if (_details.getParent()!=null && _details.getParent() instanceof javax.swing.JViewport){
             javax.swing.JViewport vp = (javax.swing.JViewport)_details.getParent();
-            vp.validate();
+            vp.revalidate();
             vp.repaint();
         }
     }

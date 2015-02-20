@@ -307,7 +307,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
     }
     private JButton checkLabelWidth(JButton now, String name) {
         JButton b = new JButton(res.getString(name));
-        b.validate();
+        b.revalidate();
         if (b.getPreferredSize().width > now.getPreferredSize().width)
             return b;
         else 
@@ -377,7 +377,7 @@ public class EditorTableDataModel extends javax.swing.table.AbstractTableModel {
                 if (this.getValueAt(i, j) == null) {
                     columnStrings[j] = spaces;
                 } else if (this.getValueAt(i, j)instanceof JComboBox){
-                        columnStrings[j] = (String)((JComboBox) this.getValueAt(i, j)).getSelectedItem();
+                        columnStrings[j] = (String)((JComboBox<?>) this.getValueAt(i, j)).getSelectedItem();
                     } else if (this.getValueAt(i, j)instanceof Boolean){
                             columnStrings[j] = ( this.getValueAt(i, j)).toString();
                         }else columnStrings[j] = (String) this.getValueAt(i, j);

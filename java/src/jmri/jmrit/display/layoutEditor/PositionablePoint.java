@@ -927,7 +927,7 @@ public class PositionablePoint
         );
         container.add(getLinkPanel(), BorderLayout.NORTH);
         container.add(done, BorderLayout.SOUTH);
-        container.validate();
+        container.revalidate();
 
         editLink.add(container);
 

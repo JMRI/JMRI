@@ -292,7 +292,7 @@ public abstract class DrawFrame  extends jmri.util.JmriJFrame {
 			_chooser.getSelectionModel().setSelectedColor(_fillColor);
 			_alphaSlider.setValue(_fillColor.getAlpha());  
 		}
-		_alphaSlider.validate();
+		_alphaSlider.revalidate();
 		_alphaSlider.repaint();
 	}
 	private void colorChange() {

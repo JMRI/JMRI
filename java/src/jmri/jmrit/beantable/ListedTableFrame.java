@@ -263,7 +263,7 @@ public class ListedTableFrame extends BeanTableFrame {
         } catch (Exception ex){
             log.error("Error when trying to set menu bar for " + item.getClassAsString()+"\n"+ex);
         }
-        this.validate();
+        this.revalidate();
     }
     
     TabbedTableItem lastSelectedItem = null;

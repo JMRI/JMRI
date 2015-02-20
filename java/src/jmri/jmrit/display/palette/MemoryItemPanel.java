@@ -158,7 +158,7 @@ public class MemoryItemPanel extends TableItemPanel implements ChangeListener, L
         }
         comp.add(mem);
         panel.add(comp);
-        panel.validate();
+        panel.revalidate();
         return panel;
     }
 

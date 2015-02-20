@@ -174,7 +174,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
                 Container parent = this.getParent();  // have to do this before remove
                 Component topParent = this.getTopLevelAncestor();
                 parent.remove(this);
-                parent.validate();
+                parent.revalidate();
                 if (topParent != null) {
                     ((JFrame) topParent).pack();
                 }

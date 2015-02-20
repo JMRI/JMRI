@@ -84,7 +84,7 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractNetworkConnectionConfi
        }
         if (_details.getParent()!=null && _details.getParent() instanceof javax.swing.JViewport){
             javax.swing.JViewport vp = (javax.swing.JViewport)_details.getParent();
-            vp.validate();
+            vp.revalidate();
             vp.repaint();
         }
 

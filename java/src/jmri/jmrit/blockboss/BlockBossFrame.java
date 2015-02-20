@@ -880,10 +880,10 @@ public class BlockBossFrame extends jmri.util.JmriJFrame {
         else {
             log.debug(rbt.getString("no_button_selected?"));
         }
-        modeSingle.validate();
-        modeTrailMain.validate();
-        modeTrailDiv.validate();
-        modeFacing.validate();
+        modeSingle.revalidate();
+        modeTrailMain.revalidate();
+        modeTrailDiv.revalidate();
+        modeFacing.revalidate();
         pack();
         modeSingle.repaint();
         modeTrailMain.repaint();
