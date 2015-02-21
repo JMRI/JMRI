@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SwingUtilities;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -145,47 +146,53 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 
     }
 
-    private void update() {
-        log.debug("update");
-        if (_train == null || _train.getRoute() == null) {
-            return;
-        }
-        textTrainName.setText(_train.getIconName());
-        pCars.removeAll();
-        RouteLocation rl = _train.getCurrentLocation();
-        if (rl != null) {
-            textLocationName.setText(rl.getLocation().getName());
-            textNextLocationName.setText(_train.getNextLocationName());
-            // add header
-            int i = 0;
-            addItemLeft(pCars, textPickUp, 0, 0);
-            addItemLeft(pCars, textInTrain, 1, 0);
-            addItemLeft(pCars, textSetOut, 2, i++);
-            // block cars by destination
-            for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
-                for (Car car : carManager.getByTrainDestinationList(_train)) {
-                    log.debug("car " + car.toString() + " track " + car.getTrackName() + " routelocation "
-                            + car.getRouteLocation().getName()); // NOI18N
-                    if ((car.getTrack() == null || car.getRouteLocation() == rl) && car.getRouteDestination() == rld) {
-                        JCheckBox checkBox = new JCheckBox(car.toString());
-                        if (car.getRouteDestination() == rl) {
-                            addItemLeft(pCars, checkBox, 2, i++); // set out
-                        } else if (car.getRouteLocation() == rl && car.getTrack() != null) {
-                            addItemLeft(pCars, checkBox, 0, i++); // pick up
-                        } else {
-                            addItemLeft(pCars, checkBox, 1, i++); // in train
-                        }
-                    }
-                }
-            }
+	private void update() {
+		// use invokeLater to prevent deadlock
+		SwingUtilities.invokeLater(new Runnable() {
+			public void run() {
+				log.debug("update");
+				if (_train == null || _train.getRoute() == null) {
+					return;
+				}
+				textTrainName.setText(_train.getIconName());
+				pCars.removeAll();
+				RouteLocation rl = _train.getCurrentLocation();
+				if (rl != null) {
+					textLocationName.setText(rl.getLocation().getName());
+					textNextLocationName.setText(_train.getNextLocationName());
+					// add header
+					int i = 0;
+					addItemLeft(pCars, textPickUp, 0, 0);
+					addItemLeft(pCars, textInTrain, 1, 0);
+					addItemLeft(pCars, textSetOut, 2, i++);
+					// block cars by destination
+					for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
+						for (Car car : carManager.getByTrainDestinationList(_train)) {
+							log.debug("car ({}) track ({}) routelocation ({})", car.toString(), car.getTrackName(), car
+									.getRouteLocation().getName());
+							if ((car.getTrack() == null || car.getRouteLocation() == rl)
+									&& car.getRouteDestination() == rld) {
+								JCheckBox checkBox = new JCheckBox(car.toString());
+								if (car.getRouteDestination() == rl) {
+									addItemLeft(pCars, checkBox, 2, i++); // set out
+								} else if (car.getRouteLocation() == rl && car.getTrack() != null) {
+									addItemLeft(pCars, checkBox, 0, i++); // pick up
+								} else {
+									addItemLeft(pCars, checkBox, 1, i++); // in train
+								}
+							}
+						}
+					}
 
-            textStatus.setText(getStatus(rl));
-        } else {
-            textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
-                .getTrainTerminatesName()}));
-        }
-        pCars.repaint();
-    }
+					textStatus.setText(getStatus(rl));
+				} else {
+					textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
+							new Object[] { _train.getTrainTerminatesName() }));
+				}
+				pCars.repaint();
+			}
+		});
+	}
 
     private String getStatus(RouteLocation rl) {
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
