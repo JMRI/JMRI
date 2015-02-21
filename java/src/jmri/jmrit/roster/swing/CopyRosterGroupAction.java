@@ -1,17 +1,16 @@
 // DeleteRosterGroupAction.java
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import jmri.util.swing.JmriAbstractAction;
-import jmri.util.swing.WindowInterface;
 import javax.swing.Icon;
-
 import javax.swing.JOptionPane;
 import jmri.beans.Beans;
 import jmri.jmrit.roster.Roster;
+import jmri.util.swing.JmriAbstractAction;
+import jmri.util.swing.WindowInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Duplicate roster group.
@@ -26,27 +25,25 @@ import jmri.jmrit.roster.Roster;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Kevin Dickerson  Copyright (C) 2009
+ * @author	Kevin Dickerson Copyright (C) 2009
  * @version	$Revision$
  */
 public class CopyRosterGroupAction extends JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3490415977207449861L;
+     *
+     */
+    private static final long serialVersionUID = -3490415977207449861L;
 
-	public CopyRosterGroupAction(String s, WindowInterface wi) {
+    public CopyRosterGroupAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 
@@ -56,8 +53,8 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
 
     /**
      * @param s Name of this action, e.g. in menus
-     * @param who Component that action is associated with, used
-     *              to ensure proper position in of dialog boxes
+     * @param who Component that action is associated with, used to ensure
+     * proper position in of dialog boxes
      */
     public CopyRosterGroupAction(String s, Component who) {
         super(s);
@@ -66,10 +63,10 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
     Component _who;
 
     /**
-     * Call setParameter("group", oldName) prior to calling actionPerformed(event)
-     * to bypass the roster group selection dialog if the name of the group to
-     * be copied is already known and is not the selectedRosterGroup property of
-     * the WindowInterface.
+     * Call setParameter("group", oldName) prior to calling
+     * actionPerformed(event) to bypass the roster group selection dialog if the
+     * name of the group to be copied is already known and is not the
+     * selectedRosterGroup property of the WindowInterface.
      *
      * @param event
      */
@@ -79,7 +76,7 @@ public class CopyRosterGroupAction extends JmriAbstractAction {
         // only query wi for group if group was not set using setParameter
         // prior to call
         if (Beans.hasProperty(wi, "selectedRosterGroup")) {
-            group = (String)Beans.getProperty(wi, "selectedRosterGroup");
+            group = (String) Beans.getProperty(wi, "selectedRosterGroup");
         }
         // null might be valid output from getting the selectedRosterGroup,
         // so we have to check for null again.

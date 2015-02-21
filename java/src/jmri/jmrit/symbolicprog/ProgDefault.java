@@ -13,7 +13,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Functions for use with programmer files, including the default file name. <P>
+ * Functions for use with programmer files, including the default file name.
+ * <P>
  * This was refactored from LocoSelPane in JMRI 1.5.3, which was the the right
  * thing to do anyway. But the real reason was that on MacOS Classic the static
  * member holding the default programmer name was being overwritten when the

@@ -1,22 +1,20 @@
 // PackageTest.java
-
-
 package jmri.jmrix.jmriclient;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.jmriclient package
- * @author			Bob Jacobsen
- * @version			$Revision: 18472 $
+ *
+ * @author	Bob Jacobsen
+ * @version	$Revision: 18472 $
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -41,11 +39,10 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(JMRIClientTrafficControllerTest.class));
         suite.addTest(new TestSuite(JMRIClientSystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(JMRIClientPowerManagerTest.class));
-        
-       // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-       // there are currently no swing tests.
-       // }
-        
+
+        // if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        // there are currently no swing tests.
+        // }
         return suite;
     }
 

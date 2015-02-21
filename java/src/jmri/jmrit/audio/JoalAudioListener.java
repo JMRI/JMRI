@@ -1,11 +1,10 @@
 // JoalAudioListener.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import net.java.games.joal.AL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JOAL implementation of the Audio Listener sub-class.
@@ -13,18 +12,18 @@ import net.java.games.joal.AL;
  * For now, no system-specific implementations are forseen - this will remain
  * internal-only
  * <br><br><hr><br><b>
- *    This software is based on or using the JOAL Library available from
- *    <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
+ * This software is based on or using the JOAL Library available from
+ * <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
  * </b><br><br>
- *    JOAL License:
+ * JOAL License:
  * <br><i>
- * Copyright (c) 2003 Sun Microsystems, Inc. All  Rights Reserved.
+ * Copyright (c) 2003 Sun Microsystems, Inc. All Rights Reserved.
  * <br>
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions are met:
  * <br>
- * -Redistribution of source code must retain the above copyright notice,
- * this list of conditions and the following disclaimer.
+ * -Redistribution of source code must retain the above copyright notice, this
+ * list of conditions and the following disclaimer.
  * <br>
  * -Redistribution in binary form must reproduce the above copyright notice,
  * this list of conditions and the following disclaimer in the documentation
@@ -34,9 +33,9 @@ import net.java.games.joal.AL;
  * be used to endorse or promote products derived from this software without
  * specific prior written permission.
  * <br>
- * This software is provided "AS IS," without a warranty of any kind.
- * ALL EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING
- * ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
+ * This software is provided "AS IS," without a warranty of any kind. ALL
+ * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING ANY
+ * IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
  * NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN MIDROSYSTEMS, INC. ("SUN") AND ITS
  * LICENSORS SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A
  * RESULT OF USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
@@ -52,28 +51,26 @@ import net.java.games.joal.AL;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class JoalAudioListener extends AbstractAudioListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3857969947487071207L;
+     *
+     */
+    private static final long serialVersionUID = -3857969947487071207L;
 
-	private static AL al = JoalAudioFactory.getAL();
+    private static AL al = JoalAudioFactory.getAL();
 
     private boolean _initialised = false;
 
@@ -84,7 +81,9 @@ public class JoalAudioListener extends AbstractAudioListener {
      */
     public JoalAudioListener(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) log.debug("New JoalAudioListener: "+systemName);
+        if (log.isDebugEnabled()) {
+            log.debug("New JoalAudioListener: " + systemName);
+        }
         _initialised = init();
     }
 
@@ -96,7 +95,9 @@ public class JoalAudioListener extends AbstractAudioListener {
      */
     public JoalAudioListener(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) log.debug("New JoalAudioListener: "+userName+" ("+systemName+")");
+        if (log.isDebugEnabled()) {
+            log.debug("New JoalAudioListener: " + userName + " (" + systemName + ")");
+        }
         _initialised = init();
     }
 
@@ -131,8 +132,8 @@ public class JoalAudioListener extends AbstractAudioListener {
         super.setOrientation(at, up);
         if (_initialised) {
             al.alListenerfv(AL.AL_ORIENTATION,
-                    new float[] { at.x, at.y, at.z,
-                                  up.x, up.y, up.z},
+                    new float[]{at.x, at.y, at.z,
+                        up.x, up.y, up.z},
                     0);
             if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating orientation of JoalAudioListener (" + this.getSystemName() + ")");
@@ -165,19 +166,18 @@ public class JoalAudioListener extends AbstractAudioListener {
     @Override
     public void stateChanged(int oldState) {
         super.stateChanged(oldState);
-        if (_initialised){
+        if (_initialised) {
             al.alListenerf(AL.AL_GAIN, this.getGain());
             al.alListener3f(AL.AL_POSITION, this.getCurrentPosition().x, this.getCurrentPosition().y, this.getCurrentPosition().z);
             al.alListener3f(AL.AL_VELOCITY, this.getVelocity().x, this.getVelocity().y, this.getVelocity().z);
             al.alListenerfv(AL.AL_ORIENTATION,
-                    new float[] { this.getOrientation(AT).x, this.getOrientation(AT).y, this.getOrientation(AT).z,
-                                  this.getOrientation(UP).x, this.getOrientation(UP).y, this.getOrientation(UP).z},
+                    new float[]{this.getOrientation(AT).x, this.getOrientation(AT).y, this.getOrientation(AT).z,
+                        this.getOrientation(UP).x, this.getOrientation(UP).y, this.getOrientation(UP).z},
                     0);
             if (JoalAudioFactory.checkALError()) {
                 log.warn("Error updating JoalAudioListener (" + this.getSystemName() + ")");
             }
-        }
-        else {
+        } else {
             _initialised = init();
         }
     }
@@ -185,7 +185,9 @@ public class JoalAudioListener extends AbstractAudioListener {
     @Override
     protected void cleanUp() {
         // no clean-up needed for Listener
-        if (log.isDebugEnabled()) log.debug("Cleanup JoalAudioListener (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Cleanup JoalAudioListener (" + this.getSystemName() + ")");
+        }
         this.dispose();
     }
 

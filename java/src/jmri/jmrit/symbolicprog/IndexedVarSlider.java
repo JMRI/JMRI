@@ -1,14 +1,14 @@
 // IndexedVarSlider.java
 package jmri.jmrit.symbolicprog;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.swing.BoundedRangeModel;
 import javax.swing.DefaultBoundedRangeModel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /* Extends a JSlider so that its color & value are consistent with
  * an underlying variable; we return one of these in IndexedVariableValue.getNewRep.
@@ -21,10 +21,10 @@ import javax.swing.event.ChangeListener;
 public class IndexedVarSlider extends JSlider implements ChangeListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8095790142790464814L;
-	IndexedVariableValue _iVar;
+     *
+     */
+    private static final long serialVersionUID = 8095790142790464814L;
+    IndexedVariableValue _iVar;
 
     IndexedVarSlider(IndexedVariableValue iVar, int min, int max) {
         super(new DefaultBoundedRangeModel(min, 0, min, max));
@@ -59,7 +59,9 @@ public class IndexedVarSlider extends JSlider implements ChangeListener {
     }
 
     void originalPropertyChanged(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("IndexedVarSlider saw property change: "+e);
+        if (log.isDebugEnabled()) {
+            log.debug("IndexedVarSlider saw property change: " + e);
+        }
         // update this color from original state
         if (e.getPropertyName().equals("State")) {
             setBackground(_iVar.getColor());
@@ -70,7 +72,7 @@ public class IndexedVarSlider extends JSlider implements ChangeListener {
             }
         }
         if (e.getPropertyName().equals("Value")) {
-            int newValue = Integer.valueOf(((JTextField)_iVar.getCommonRep()).getText()).intValue();
+            int newValue = Integer.valueOf(((JTextField) _iVar.getCommonRep()).getText()).intValue();
             setValue(newValue);
         }
     }

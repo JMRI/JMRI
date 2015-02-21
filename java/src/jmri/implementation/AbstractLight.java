@@ -45,11 +45,11 @@ public abstract class AbstractLight extends AbstractNamedBean
         implements Light, java.io.Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3863736856456563301L;
+     *
+     */
+    private static final long serialVersionUID = -3863736856456563301L;
 
-	public AbstractLight(String systemName, String userName) {
+    public AbstractLight(String systemName, String userName) {
         super(systemName.toUpperCase(), userName);
     }
 

@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.jmrix.sprog;
 
 import junit.framework.Test;
@@ -8,13 +7,13 @@ import junit.framework.TestSuite;
 
 /**
  * tests for the jmri.jmrix.sprog package
- * @author			Bob Jacobsen
- * @version   $Revision$
+ *
+ * @author	Bob Jacobsen
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -37,7 +36,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrix.sprog.SprogMessageTest.suite());
         suite.addTest(jmri.jmrix.sprog.SprogCSStreamPortControllerTest.suite());
-        
+
         return suite;
     }
 

@@ -1,13 +1,10 @@
 // NceUSB.java
-
 package jmri.jmrix.nce;
-
-
 
 /**
  * USB -> Cab bus adapter: When used with PowerCab V1.28 - 6.3.0 When used with
- * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10 -
- * 6.3.2 (limited set of features available through cab bus)
+ * SB3 V1.28 - 6.3.1 (No program track on an SB3) When used with PH-Pro or PH-10
+ * - 6.3.2 (limited set of features available through cab bus)
  * <P>
  * From NCE 2007 (with some minor corrections, formatting & additional info):
  * <P>
@@ -17,10 +14,10 @@ package jmri.jmrix.nce;
  * <P>
  * The USB interface when configured for Power Cab Ver 1.28 returns software
  * version 6.3.0. When configured for the SB3 V1.28 it returns version 6.3.1.
- * (SB3 doesn't have a program track) And when configured for the Power Pro
- * 2007 it returns version 6.3.2. Not all binary commands are useful or
- * available with the PowerCab, SB3, or Power Pro. PowerCab/SB3/Power Pro
- * commands supported below:
+ * (SB3 doesn't have a program track) And when configured for the Power Pro 2007
+ * it returns version 6.3.2. Not all binary commands are useful or available
+ * with the PowerCab, SB3, or Power Pro. PowerCab/SB3/Power Pro commands
+ * supported below:
  * <P>
  * *************************************************************************
  * <P>
@@ -72,7 +69,7 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 0xA2 (4 data bytes) Locomotive control command (1) !,1. 
+ * 0xA2 (4 data bytes) Locomotive control command (1) !,1.
  * <P>
  * Sends a speed or function packet to a locomotive. Command Format: 0xA2
  * (addr_h) (addr_l) (op_1) (data_1)
@@ -81,7 +78,7 @@ package jmri.jmrix.nce;
  * use, bits 6 and 7 of the high byte are set. Ex: Long address 3 = 0xc0 0x03
  * Short address 3 = 0x00 0x03
  * <P>
- * 
+ *
  * op_1 data_1 Operation description
  * <P>
  * 00 0-7f nop
@@ -111,7 +108,7 @@ package jmri.jmrix.nce;
  * 16 0-ff Functions 21-28 control (bit 0=F21, bit 7=F28)
  * <P>
  * 17-7f reserved reserved
- * 
+ *
  * <P>
  * --------------------------------------------------------------------------
  * <P>
@@ -167,7 +164,7 @@ package jmri.jmrix.nce;
  * 05 0-1f Signal Aspect 0-31
  * <P>
  * 05-7f reserved reserved
- * 
+ *
  * <P>
  * --------------------------------------------------------------------------
  * <P>
@@ -190,10 +187,10 @@ package jmri.jmrix.nce;
  * <P>
  * --------------------------------------------------------------------------
  * <P>
- * 
+ *
  * NOTE: a single byte of 0 will be returned if not in programming mode for
  * commands 0x9F,0xA0,0xA1 and 0xA6-0xA9
- * 
+ *
  * <P>
  * Errors returned:
  * <P>
@@ -225,20 +222,14 @@ package jmri.jmrix.nce;
  * <P>
  * 0xB2 through 0xBF
  * <P>
- * 
+ *
  * @author Daniel Boudreau Copyright (C) 2007
  * @version $Revision$
  */
 @Deprecated
-public class NceUSB  {
+public class NceUSB {
 
 }
 
 
 /* @(#)NceUSB.java */
-
-
-
-
-
-

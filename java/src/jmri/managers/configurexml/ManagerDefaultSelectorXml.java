@@ -1,17 +1,16 @@
 package jmri.managers.configurexml;
 
-import org.jdom2.Element;
-import java.util.*;
-
-import jmri.configurexml.*;
+import java.util.List;
+import jmri.configurexml.AbstractXmlAdapter;
 import jmri.managers.ManagerDefaultSelector;
+import org.jdom2.Element;
 
 /**
  * Handle XML persistence of ManagerDefaultSelector
  * <P>
  * This class is named as being the persistent form of the
- * ManagerDefaultSelector class, but there's no object of that
- * form created or used.
+ * ManagerDefaultSelector class, but there's no object of that form created or
+ * used.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2010
  * @version $Revision$
@@ -25,6 +24,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
     /**
      * Default implementation for storing the static contents of a
      * ManagerDefaultSelector
+     *
      * @param o Object to store, of type ManagerDefaultSelector
      * @return Element containing the complete info
      */
@@ -47,7 +47,7 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
 
     public boolean load(Element e) {
         List<Element> list = e.getChildren("setting");
-        
+
         for (Element s : list) {
             String name = s.getChild("value").getText();
             String className = s.getChild("key").getText();
@@ -59,19 +59,20 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
             } catch (java.lang.NoClassDefFoundError ex) {
                 continue;
             }
-            jmri.managers.ManagerDefaultSelector.instance.setDefault(c,name);
-            
+            jmri.managers.ManagerDefaultSelector.instance.setDefault(c, name);
+
         }
         // put into effect
         jmri.managers.ManagerDefaultSelector.instance.configure();
         jmri.InstanceManager.configureManagerInstance().registerPref(jmri.managers.ManagerDefaultSelector.instance);
-    	return true;
+        return true;
     }
 
     /**
      * Doesn't need to do anything, shouldn't get invoked
+     *
      * @param element Top level Element to unpack.
-     * @param o  PanelEditor as an Object
+     * @param o PanelEditor as an Object
      */
     public void load(Element element, Object o) {
     }

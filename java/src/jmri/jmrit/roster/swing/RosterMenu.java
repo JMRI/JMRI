@@ -1,9 +1,6 @@
 // RosterMenu.java
-
 package jmri.jmrit.roster.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Frame;
 import javax.swing.AbstractAction;
@@ -16,13 +13,15 @@ import jmri.jmrit.roster.FullBackupImportAction;
 import jmri.jmrit.roster.ImportRosterItemAction;
 import jmri.jmrit.roster.PrintRosterAction;
 import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Provides a context-specific menu for handling the Roster.
  * <P>
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2008
- * @author  Dennis Miller  Copyright (C) 2005
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author Dennis Miller Copyright (C) 2005
  * @version	$Revision$
  * @see jmri.jmrit.roster.RosterEntry
  * @see jmri.jmrit.roster.Roster
@@ -30,44 +29,42 @@ import jmri.jmrit.roster.swing.speedprofile.SpeedProfileAction;
 public class RosterMenu extends JMenu {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1386179387265677639L;
+     *
+     */
+    private static final long serialVersionUID = -1386179387265677639L;
 
-	/**
-     * Ctor argument defining that the menu object will be
-     * used as part of the main menu of the program, away from
-     * any GUI that can select or use a RosterEntry.
+    /**
+     * Ctor argument defining that the menu object will be used as part of the
+     * main menu of the program, away from any GUI that can select or use a
+     * RosterEntry.
      */
     static public final int MAINMENU = 1;
 
     /**
-     * Ctor argument defining that the menu object will be
-     * used as a menu on a GUI object that can select
-     * a RosterEntry.
+     * Ctor argument defining that the menu object will be used as a menu on a
+     * GUI object that can select a RosterEntry.
      */
-    static public final int SELECTMENU =2;
+    static public final int SELECTMENU = 2;
 
     /**
-     * Ctor argument defining that the menu object will
-     * be used as a menu on a GUI object that is dealing with
-     * a single RosterEntry.
+     * Ctor argument defining that the menu object will be used as a menu on a
+     * GUI object that is dealing with a single RosterEntry.
      */
     static public final int ENTRYMENU = 3;
 
     /**
      * Create a menu of Roster tools.
+     *
      * @param pMenuName Name for the menu
-     * @param pMenuType Select where the menu will be used, hence the
-     *                  right set of items to be enabled.
-     * @param pWho      The Component using this menu, used to ensure that
-     *                  dialog boxes will pop in the right place.
+     * @param pMenuType Select where the menu will be used, hence the right set
+     * of items to be enabled.
+     * @param pWho The Component using this menu, used to ensure that dialog
+     * boxes will pop in the right place.
      */
     public RosterMenu(String pMenuName, int pMenuType, Component pWho) {
         super(pMenuName);
 
         // create the menu
-
         AbstractAction dp3Action = new jmri.jmrit.roster.swing.RosterFrameAction(Bundle.getMessage("MenuItemRoster"), false);
         dp3Action.setEnabled(true);
 
@@ -88,28 +85,28 @@ public class RosterMenu extends JMenu {
 
         AbstractAction deleteAction = new DeleteRosterItemAction(Bundle.getMessage("MenuItemDelete"), pWho);
         deleteAction.setEnabled(false);
-        
+
         AbstractAction deleteGroupAction = new DeleteRosterGroupAction(Bundle.getMessage("MenuGroupDelete"), pWho);
         deleteGroupAction.setEnabled(false);
-        
+
         AbstractAction createGroupAction = new CreateRosterGroupAction(Bundle.getMessage("MenuGroupCreate"), pWho);
         createGroupAction.setEnabled(false);
-        
+
         AbstractAction rosterEntryToGroupAction = new RosterEntryToGroupAction(Bundle.getMessage("MenuGroupAssociate"), pWho);
         rosterEntryToGroupAction.setEnabled(false);
-        
+
         AbstractAction removeRosterEntryToGroupAction = new RemoveRosterEntryToGroupAction(Bundle.getMessage("MenuGroupDisassociate"), pWho);
         removeRosterEntryToGroupAction.setEnabled(false);
 
         AbstractAction rosterGroupTableAction = new jmri.jmrit.roster.swing.rostergroup.RosterGroupTableAction(Bundle.getMessage("MenuGroupTable"));
-        rosterGroupTableAction.setEnabled(false); 
-       
+        rosterGroupTableAction.setEnabled(false);
+
         AbstractAction rosterExportAction = new FullBackupExportAction(Bundle.getMessage("MenuFullExport"), pWho);
         rosterExportAction.setEnabled(false);
-        
+
         AbstractAction rosterImportAction = new FullBackupImportAction(Bundle.getMessage("MenuFullImport"), pWho);
         rosterImportAction.setEnabled(false);
-        
+
         AbstractAction speedProfileAction = new SpeedProfileAction(Bundle.getMessage("MenuSpeedProfile"));
         speedProfileAction.setEnabled(false);
 
@@ -119,7 +116,7 @@ public class RosterMenu extends JMenu {
         printAction.setEnabled(false);
         AbstractAction previewAction = new PrintRosterAction(Bundle.getMessage("MenuItemPreview"), newFrame, true);
         printAction.setEnabled(false);
-        
+
         JMenu groupMenu = new JMenu(Bundle.getMessage("MenuRosterGroups"));
         groupMenu.add(createGroupAction);
         groupMenu.add(deleteGroupAction);
@@ -127,7 +124,6 @@ public class RosterMenu extends JMenu {
         groupMenu.add(rosterEntryToGroupAction);
         groupMenu.add(removeRosterEntryToGroupAction);
 
-        
         add(dp3Action);
         addSeparator();
         add(createAction);
@@ -175,11 +171,11 @@ public class RosterMenu extends JMenu {
                 break;
             default:
                 log.error("RosterMenu constructed without a valid menuType parameter: "
-                            +pMenuType);
-            }
+                        + pMenuType);
+        }
     }
 
-	// initialize logging
+    // initialize logging
     static Logger log = LoggerFactory.getLogger(RosterMenu.class.getName());
 
 }

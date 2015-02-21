@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.jmrix.powerline;
 
 //import junit.framework.Assert;
@@ -9,13 +8,13 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.powerline package.
- * @author      Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -24,7 +23,6 @@ public class PackageTest extends TestCase {
 //        Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERNODE,
 //                                    SerialNode.MAXSENSORS+1);
 //    }
-
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {PackageTest.class.getName()};

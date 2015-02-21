@@ -1,19 +1,19 @@
 package jmri.jmrix.modbus;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.modbus package.
+ *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2014
- * @version     $Revision$
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -31,7 +31,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.modbus.common.PackageTest.suite());
         suite.addTest(jmri.jmrix.modbus.slave.PackageTest.suite());
         suite.addTest(jmri.jmrix.modbus.master.PackageTest.suite());
-        
+
         return suite;
     }
 

@@ -1,24 +1,23 @@
 // z21Menu.java
-
 package jmri.jmrix.roco.z21.swing;
 
 import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 
 /**
  * Create a menu containing the Z21 specific tools
  *
- * @author	Paul Bender   Copyright 2014 
- * @version     $Revision$
+ * @author	Paul Bender Copyright 2014
+ * @version $Revision$
  */
 public class z21Menu extends JMenu {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3323808897274636375L;
 
-	public z21Menu(String name,jmri.jmrix.roco.z21.z21SystemConnectionMemo memo) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3323808897274636375L;
+
+    public z21Menu(String name, jmri.jmrix.roco.z21.z21SystemConnectionMemo memo) {
         this(memo);
         setText(name);
     }
@@ -29,15 +28,14 @@ public class z21Menu extends JMenu {
 
         ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
 
-        if(memo != null)
-          setText(memo.getUserName());
-        else
-          setText(rb.getString("Menuz21"));
+        if (memo != null) {
+            setText(memo.getUserName());
+        } else {
+            setText(rb.getString("Menuz21"));
+        }
 
-        add(new jmri.jmrix.roco.z21.swing.mon.z21MonAction(rb.getString("jmri.jmrix.roco.z21.swing.mon.z21MonAction"),memo));
-        add(new jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction"),memo));
+        add(new jmri.jmrix.roco.z21.swing.mon.z21MonAction(rb.getString("jmri.jmrix.roco.z21.swing.mon.z21MonAction"), memo));
+        add(new jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction(rb.getString("jmri.jmrix.roco.z21.swing.packetgen.PacketGenAction"), memo));
     }
 
 }
-
-

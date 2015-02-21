@@ -1,5 +1,4 @@
 // SplashWindow.java
-
 package apps;
 
 import java.awt.Dimension;
@@ -7,32 +6,33 @@ import java.awt.Image;
 import java.awt.MediaTracker;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
-
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.BoxLayout;
 import jmri.util.FileUtil;
 
 /**
  * A splash screen for showing during JMRI startup
- * @author	Bob Jacobsen   Copyright 2003
- * @author  Dennis Miller Copyright 2007
- * @version     $Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2003
+ * @author Dennis Miller Copyright 2007
+ * @version $Revision$
  */
 public class SplashWindow extends JFrame {
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 300950834122464494L;
-	Image splashIm;
-    
+     *
+     */
+    private static final long serialVersionUID = 300950834122464494L;
+    Image splashIm;
+
     public SplashWindow() {
         super("JMRI");
         splashWindowDisplay(null);
     }
-    
+
     public SplashWindow(JPanel splashMsg) {
         super("JMRI");
         splashWindowDisplay(splashMsg);
@@ -40,26 +40,25 @@ public class SplashWindow extends JFrame {
 
     public void splashWindowDisplay(JPanel splashMsg) {
         //super("JMRI");
-       this.setUndecorated(true);
+        this.setUndecorated(true);
 
         // get the splash image
-       MediaTracker mt = new MediaTracker(this);
-       splashIm = Toolkit.getDefaultToolkit(
-           ).getImage(FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED));
-       mt.addImage(splashIm,0);
-       try {
-          mt.waitForID(0);
-       } catch(InterruptedException ie){
-         Thread.currentThread().interrupt(); // retain if needed later
-       }
+        MediaTracker mt = new MediaTracker(this);
+        splashIm = Toolkit.getDefaultToolkit().getImage(FileUtil.findURL("resources/logo.gif", FileUtil.Location.INSTALLED));
+        mt.addImage(splashIm, 0);
+        try {
+            mt.waitForID(0);
+        } catch (InterruptedException ie) {
+            Thread.currentThread().interrupt(); // retain if needed later
+        }
 
         JLabel l = new JLabel(new ImageIcon(splashIm, "JMRI splash screen"));
         l.setOpaque(true);
-        
-        if (splashMsg!=null) {
+
+        if (splashMsg != null) {
             JPanel full = new JPanel();
             full.setLayout(
-             new BoxLayout( full, BoxLayout.Y_AXIS ) );
+                    new BoxLayout(full, BoxLayout.Y_AXIS));
             l.setAlignmentX(CENTER_ALIGNMENT);
             splashMsg.setAlignmentX(CENTER_ALIGNMENT);
             full.add(l);
@@ -68,13 +67,13 @@ public class SplashWindow extends JFrame {
         } else {
             getContentPane().add(l);
         }
-        
+
         pack();
 
         /* Center the window and pad the frame size slightly to put some space 
          * between logo and frame border*/
-        Dimension screenDim =
-             Toolkit.getDefaultToolkit().getScreenSize();
+        Dimension screenDim
+                = Toolkit.getDefaultToolkit().getScreenSize();
         Rectangle winDim = getBounds();
         winDim.height = winDim.height + 10;
         winDim.width = winDim.width + 10;
@@ -86,8 +85,6 @@ public class SplashWindow extends JFrame {
         setVisible(true);
     }
 
-/*  paint method required for Java 1.1.8 removed as it caused a
- *  transparent frame under Java 1.6 */
+    /*  paint method required for Java 1.1.8 removed as it caused a
+     *  transparent frame under Java 1.6 */
 }
-
-

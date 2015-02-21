@@ -1,5 +1,4 @@
 // SpeedoInterface.java
-
 package jmri.jmrix.bachrus;
 
 /**
@@ -9,14 +8,15 @@ package jmri.jmrix.bachrus;
  * @author	Andrew Crosland Copyright (C) 2010
  * @version	$Revision$
  */
-
 public interface SpeedoInterface {
 
-    public void addSpeedoListener( SpeedoListener l);
-    public void removeSpeedoListener( SpeedoListener l);
+    public void addSpeedoListener(SpeedoListener l);
+
+    public void removeSpeedoListener(SpeedoListener l);
 
     /**
      * Test operational status of interface.
+     *
      * @return true is interface implementation is operational.
      */
     boolean status();

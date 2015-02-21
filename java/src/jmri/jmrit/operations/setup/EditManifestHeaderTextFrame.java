@@ -12,11 +12,11 @@ import jmri.jmrit.operations.OperationsFrame;
 public class EditManifestHeaderTextFrame extends OperationsFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8750952066802266213L;
+     *
+     */
+    private static final long serialVersionUID = -8750952066802266213L;
 
-	public EditManifestHeaderTextFrame() {
+    public EditManifestHeaderTextFrame() {
         super(Bundle.getMessage("TitleManifestHeaderText"), new EditManifestHeaderTextPanel());
     }
 
@@ -26,7 +26,7 @@ public class EditManifestHeaderTextFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
-        
+
         initMinimumSize();
     }
 }

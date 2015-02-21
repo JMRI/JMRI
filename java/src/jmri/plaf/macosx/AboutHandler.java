@@ -9,7 +9,7 @@ import java.util.EventObject;
  * @author rhwood
  */
 public interface AboutHandler {
-    
+
     abstract public void handleAbout(EventObject eo);
 
 }

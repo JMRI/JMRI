@@ -1,5 +1,4 @@
 // PrintNceConsistRosterAction.java
-
 package jmri.jmrix.nce.consist;
 
 import java.awt.Frame;
@@ -13,27 +12,25 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Action to print a summary of the Roster contents
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
  * @author Daniel Boudreau Copyright (C) 2008
- * @version     $Revision$
+ * @version $Revision$
  */
-public class PrintNceConsistRosterAction  extends AbstractAction {
+public class PrintNceConsistRosterAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2634928231435374292L;
+     *
+     */
+    private static final long serialVersionUID = 2634928231435374292L;
 
-
-	public PrintNceConsistRosterAction(String actionName, Frame frame, boolean preview) {
+    public PrintNceConsistRosterAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
@@ -47,7 +44,6 @@ public class PrintNceConsistRosterAction  extends AbstractAction {
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    
 
     public void actionPerformed(ActionEvent e) {
 
@@ -68,9 +64,9 @@ public class PrintNceConsistRosterAction  extends AbstractAction {
         // Loop through the Roster, printing as needed
         NceConsistRoster r = NceConsistRoster.instance();
         List<NceConsistRosterEntry> l = r.matchingList(null, null, null, null, null, null, null, null, null, null); // take all
-        int i=-1;
-        log.debug("Roster list size: "+l.size());
-        for (i = 0; i<l.size(); i++) {
+        int i = -1;
+        log.debug("Roster list size: " + l.size());
+        for (i = 0; i < l.size(); i++) {
             l.get(i).printEntry(writer);
         }
 

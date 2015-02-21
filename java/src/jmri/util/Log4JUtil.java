@@ -123,7 +123,7 @@ public class Log4JUtil {
         FileInputStream f = new FileInputStream(config);
         p.load(new FileInputStream(config));
         f.close();
-        
+
         if (System.getProperty("jmri.log.path") == null || p.getProperty("jmri.log.path") == null) {
             System.setProperty("jmri.log.path", FileUtil.getPreferencesPath() + "log" + File.separator);
             p.put("jmri.log.path", System.getProperty("jmri.log.path"));

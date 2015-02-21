@@ -1,18 +1,16 @@
 // SerialLightManagerXml.java
-
 package jmri.jmrix.grapevine.configurexml;
 
+import jmri.jmrix.grapevine.SerialLightManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
-import jmri.jmrix.grapevine.*;
 
 /**
- * Provides load and store functionality for
- * configuring SerialLightManagers.
+ * Provides load and store functionality for configuring SerialLightManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  * <P>
  * Based on SerialTurnoutManagerXml.java
  *
@@ -26,7 +24,7 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
     }
 
     public void setStoreElementClass(Element lights) {
-        lights.setAttribute("class","jmri.jmrix.grapevine.configurexml.SerialLightManagerXml");
+        lights.setAttribute("class", "jmri.jmrix.grapevine.configurexml.SerialLightManagerXml");
     }
 
     public void load(Element element, Object o) {

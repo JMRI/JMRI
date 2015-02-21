@@ -1,51 +1,57 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.secsi.serialdriver;
 
-import javax.swing.*;
-import jmri.jmrix.secsi.nodeconfig.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import jmri.jmrix.secsi.nodeconfig.NodeConfigAction;
 
 /**
  * Definition of objects to handle configuring a SECSI layout connection
  *
- * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
+
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
-	
+
     public void loadDetails(JPanel details) {
-    	// have to embed the usual one in a new JPanel
-    	
-    	JPanel p = new JPanel();
+        // have to embed the usual one in a new JPanel
+
+        JPanel p = new JPanel();
         super.loadDetails(p);
 
-		details.setLayout(new BoxLayout(details,BoxLayout.Y_AXIS));
-		details.add(p);
+        details.setLayout(new BoxLayout(details, BoxLayout.Y_AXIS));
+        details.add(p);
 
-		// add another button
-		JButton b = new JButton("Configure nodes");
+        // add another button
+        JButton b = new JButton("Configure nodes");
 
-		details.add(b);
-						
-		b.addActionListener(new NodeConfigAction());		
-        
+        details.add(b);
+
+        b.addActionListener(new NodeConfigAction());
+
     }
-    public String name() { return "SECSI Layout Bus"; }
 
-    protected void setInstance() { adapter = SerialDriverAdapter.instance(); }
+    public String name() {
+        return "SECSI Layout Bus";
+    }
+
+    protected void setInstance() {
+        adapter = SerialDriverAdapter.instance();
+    }
 }
-

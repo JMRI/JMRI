@@ -53,10 +53,10 @@ import org.slf4j.LoggerFactory;
 public class UserInterface extends JmriJFrame implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8012190396840569066L;
-	static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
+     *
+     */
+    private static final long serialVersionUID = 8012190396840569066L;
+    static Logger log = LoggerFactory.getLogger(UserInterface.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
 
     JMenuBar menuBar;
@@ -214,11 +214,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
         serverOnOff = new JMenuItem(rb.getString("MenuMenuStop"));
         serverOnOff.addActionListener(new AbstractAction() {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 8264877902074382783L;
+             *
+             */
+            private static final long serialVersionUID = 8264877902074382783L;
 
-			@Override
+            @Override
             public void actionPerformed(ActionEvent event) {
                 if (isListen) {	//	Stop server
                     disableServer();
@@ -419,11 +419,11 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
                 if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
                     this.portLabel.setText(addr.getHostName());
                     this.manualPortLabel.setText(addr.getHostAddress() + ":" + port); // NOI18N
-    				log.debug("Published IPv4 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                    log.debug("Published IPv4 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 } else {
                     this.portLabel.setText(Inet4Address.getLocalHost().getHostName());
                     this.manualPortLabel.setText(Inet4Address.getLocalHost().getHostAddress() + ":" + port); // NOI18N
-    				log.debug("Published IPv6 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+                    log.debug("Published IPv6 ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
                 }
             } catch (NullPointerException ex) {
                 log.error("Address is invalid: {}", ex.getLocalizedMessage());

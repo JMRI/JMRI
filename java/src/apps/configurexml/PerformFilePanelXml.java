@@ -1,13 +1,11 @@
 package apps.configurexml;
 
+import apps.PerformFilePanel;
+import java.awt.Component;
+import jmri.InstanceManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.PerformFilePanel;
-
-import jmri.InstanceManager;
-import java.awt.Component;
-
-import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformFileModel objects
@@ -23,14 +21,15 @@ public class PerformFilePanelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Arrange for all the model objects to be stored
+     *
      * @param o Object to store, of type PerformFilePanel
      * @return null, after updating state so others are stored
      */
     public Element store(Object o) {
         PerformFilePanel p = (PerformFilePanel) o;
         Component[] l = p.getComponents();
-        for (int i = 0; i<l.length; i++) {
-            if ( (l[i]!= null) && (l[i].getClass().equals(PerformFilePanel.Item.class))) {
+        for (int i = 0; i < l.length; i++) {
+            if ((l[i] != null) && (l[i].getClass().equals(PerformFilePanel.Item.class))) {
                 PerformFilePanel.Item m = (PerformFilePanel.Item) l[i];
                 InstanceManager.configureManagerInstance().registerPref(m.getModel());
             }
@@ -40,9 +39,10 @@ public class PerformFilePanelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Create object from XML file
+     *
      * @param e Top level Element to unpack.
      * @return true if successful
-      */
+     */
     public boolean load(Element e) {
         log.error("load(Element) should not have been invoked");
         return false;
@@ -50,8 +50,9 @@ public class PerformFilePanelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");

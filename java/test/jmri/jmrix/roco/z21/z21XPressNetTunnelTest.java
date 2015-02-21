@@ -1,27 +1,28 @@
 package jmri.jmrix.roco.z21;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * z21XPressNetTunnelTest.java
  *
- * Description:	    tests for the jmri.jmrix.roco.z21.z21XPressNetTunnel class
- * @author			Paul Bender
- * @version         $Revision$
+ * Description:	tests for the jmri.jmrix.roco.z21.z21XPressNetTunnel class
+ *
+ * @author	Paul Bender
+ * @version $Revision$
  */
 public class z21XPressNetTunnelTest extends TestCase {
 
     public void testCtor() {
         z21SystemConnectionMemo memo = new z21SystemConnectionMemo();
-        z21TrafficController tc = new z21TrafficController(){
+        z21TrafficController tc = new z21TrafficController() {
             @Override
             public void sendMessage(jmri.jmrix.AbstractMRMessage m,
-                                    jmri.jmrix.AbstractMRListener l){
-               // don't actually send messages in this test.
+                    jmri.jmrix.AbstractMRListener l) {
+                // don't actually send messages in this test.
             }
         };
         memo.setTrafficController(tc);
@@ -30,9 +31,8 @@ public class z21XPressNetTunnelTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public z21XPressNetTunnelTest(String s) {
-       super(s);
+        super(s);
     }
 
     // Main entry point
@@ -48,8 +48,13 @@ public class z21XPressNetTunnelTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(z21XPressNetTunnelTest.class.getName());
 

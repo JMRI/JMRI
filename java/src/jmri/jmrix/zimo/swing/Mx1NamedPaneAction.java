@@ -1,59 +1,57 @@
 // MrcNamedPaneAction.java
-
 package jmri.jmrix.zimo.swing;
 
+import javax.swing.Icon;
+import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
+import jmri.util.swing.JmriPanel;
+import jmri.util.swing.WindowInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
-
-import jmri.jmrix.zimo.Mx1SystemConnectionMemo;
-import jmri.util.swing.*;
 
 /**
  * Action to create and load a JmriPanel from just its name.
  *
- * @author		Bob Jacobsen Copyright (C) 2010
- * Copied from nce.swing
+ * @author	Bob Jacobsen Copyright (C) 2010 Copied from nce.swing
  * @author Ken Cameron 2014
  * @author Kevin Dickerson 2014
- * @version		$Revision: 22942 $
+ * @version	$Revision: 22942 $
  */
- 
 public class Mx1NamedPaneAction extends jmri.util.swing.JmriNamedPaneAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7955184289782860199L;
-
-	/**
-     * Enhanced constructor for placing the pane in various 
-     * GUIs
+     *
      */
- 	public Mx1NamedPaneAction(String s, WindowInterface wi, String paneClass, Mx1SystemConnectionMemo memo) {
-    	super(s, wi, paneClass);
-    	this.memo = memo;
+    private static final long serialVersionUID = -7955184289782860199L;
+
+    /**
+     * Enhanced constructor for placing the pane in various GUIs
+     */
+    public Mx1NamedPaneAction(String s, WindowInterface wi, String paneClass, Mx1SystemConnectionMemo memo) {
+        super(s, wi, paneClass);
+        this.memo = memo;
     }
-    
- 	public Mx1NamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, Mx1SystemConnectionMemo memo) {
-    	super(s, i, wi, paneClass);
-    	this.memo = memo;
+
+    public Mx1NamedPaneAction(String s, Icon i, WindowInterface wi, String paneClass, Mx1SystemConnectionMemo memo) {
+        super(s, i, wi, paneClass);
+        this.memo = memo;
     }
-    
+
     Mx1SystemConnectionMemo memo;
-    
+
     public JmriPanel makePanel() {
         JmriPanel p = super.makePanel();
-        if (p == null) return null;
-        
+        if (p == null) {
+            return null;
+        }
+
         try {
-            ((Mx1PanelInterface)p).initComponents(memo);
+            ((Mx1PanelInterface) p).initComponents(memo);
             return p;
         } catch (Exception ex) {
-            log.warn("could not init pane class: "+paneClass+" due to:"+ex); //IN18N
+            log.warn("could not init pane class: " + paneClass + " due to:" + ex); //IN18N
             ex.printStackTrace();
-        }      
-        
+        }
+
         return p;
     }
 

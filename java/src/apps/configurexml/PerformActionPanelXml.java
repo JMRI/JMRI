@@ -1,13 +1,11 @@
 package apps.configurexml;
 
+import apps.PerformActionPanel;
+import java.awt.Component;
+import jmri.InstanceManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import apps.PerformActionPanel;
-
-import jmri.InstanceManager;
-import java.awt.Component;
-
-import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformActionPanel objects.
@@ -23,14 +21,15 @@ public class PerformActionPanelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Arrange for all the model objects to be stored
+     *
      * @param o Object to store, of type PerformActionPanel
      * @return null, after updating state so others are stored
      */
     public Element store(Object o) {
         PerformActionPanel p = (PerformActionPanel) o;
         Component[] l = p.getComponents();
-        for (int i = 0; i<l.length; i++) {
-            if ( (l[i]!= null) && (l[i].getClass().equals(PerformActionPanel.Item.class))) {
+        for (int i = 0; i < l.length; i++) {
+            if ((l[i] != null) && (l[i].getClass().equals(PerformActionPanel.Item.class))) {
                 PerformActionPanel.Item m = (PerformActionPanel.Item) l[i];
                 InstanceManager.configureManagerInstance().registerPref(m.updatedModel());
             }
@@ -40,9 +39,10 @@ public class PerformActionPanelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Create object from XML file
+     *
      * @param e Top level Element to unpack.
      * @return true if successful
-      */
+     */
     public boolean load(Element e) {
         log.error("load(Element) should not have been invoked");
         return false;
@@ -50,8 +50,9 @@ public class PerformActionPanelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");

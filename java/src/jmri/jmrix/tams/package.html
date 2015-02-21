@@ -1,44 +1,44 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id: package.html 17977 2011-07-18 17:23:46Z zoo $
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id: package.html 17977 2011-07-18 17:23:46Z zoo $
+        Support for the ESU ECoS.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            The current implementation just does turnout 
+            (accessory decoder) operations only.
 
-  Copyright 2003
+        <h2>Related Documentation</h2>
 
--->
-</head>
-<body bgcolor="white">
+        Additional information on the ECoS can be found
+        on the 
+        <a href="http://www.loksound.de/us/index.php?showId=205">ESU web site</a>.
 
-Support for the ESU ECoS.
+        <p>
+            The ECoS contains a "database" of information, which must be
+            asynchronously maintained with respect to the JMRI internal
+            state.
+            The
+            <a href="model/package.html">model</a>
+            subpackage maintains a local copy of the
+            ECoS local state, which is then manipulated
+            by JMRI objects.
+            <!-- Put @see and @since tags down here. -->
+            <!-- @see jmri.InstanceManager -->
 
-<p>
-The current implementation just does turnout 
-(accessory decoder) operations only.
+            @since 2.3.3
 
-<h2>Related Documentation</h2>
-
-Additional information on the ECoS can be found
-on the 
-<a href="http://www.loksound.de/us/index.php?showId=205">ESU web site</a>.
-
-<p>
-The ECoS contains a "database" of information, which must be
-asynchronously maintained with respect to the JMRI internal
-state.
-The
-<a href="model/package.html">model</a>
-subpackage maintains a local copy of the
-ECoS local state, which is then manipulated
-by JMRI objects.
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-
-@since 2.3.3
-
-</body>
+    </body>
 </html>

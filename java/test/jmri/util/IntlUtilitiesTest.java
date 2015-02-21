@@ -1,18 +1,20 @@
 // IntlUtilitiesTest.java
-
 package jmri.util;
 
+import java.util.Locale;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-import junit.framework.*;
-import java.util.*;
 
 /**
  * Tests for the jmri.util.IntlUtilities class.
- * @author	Bob Jacobsen  Copyright 20014
+ *
+ * @author	Bob Jacobsen Copyright 20014
  * @version	$Revision$
  */
 public class IntlUtilitiesTest extends TestCase {
-
 
     public void testFloatInUSEnglish() throws java.text.ParseException {
         Locale startingLocale = Locale.getDefault();
@@ -29,14 +31,13 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1,0", 1.0f, IntlUtilities.floatValue("1,0"));            
-            Assert.assertEquals("2,3", 2.3f, IntlUtilities.floatValue("2,3"));            
+            Assert.assertEquals("1,0", 1.0f, IntlUtilities.floatValue("1,0"));
+            Assert.assertEquals("2,3", 2.3f, IntlUtilities.floatValue("2,3"));
         } finally {
             Locale.setDefault(startingLocale);
         }
     }
 
-    
     public void testDoubleInUSEnglish() throws java.text.ParseException {
         Locale startingLocale = Locale.getDefault();
         try {
@@ -52,8 +53,8 @@ public class IntlUtilitiesTest extends TestCase {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1,0", 1.0, IntlUtilities.doubleValue("1,0"));            
-            Assert.assertEquals("2,3", 2.3, IntlUtilities.doubleValue("2,3"));            
+            Assert.assertEquals("1,0", 1.0, IntlUtilities.doubleValue("1,0"));
+            Assert.assertEquals("2,3", 2.3, IntlUtilities.doubleValue("2,3"));
         } finally {
             Locale.setDefault(startingLocale);
         }
@@ -72,14 +73,14 @@ public class IntlUtilitiesTest extends TestCase {
             Locale.setDefault(startingLocale);
         }
     }
-    
+
     public void testStringInUSEnglish() {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.US);
-            Assert.assertEquals("1.1",  "1.1", IntlUtilities.valueOf(1.1));
+            Assert.assertEquals("1.1", "1.1", IntlUtilities.valueOf(1.1));
             Assert.assertEquals("1.1f", "1.1", IntlUtilities.valueOf(1.1f));
-            Assert.assertEquals("2.3",  "2.3", IntlUtilities.valueOf(2.3));
+            Assert.assertEquals("2.3", "2.3", IntlUtilities.valueOf(2.3));
             Assert.assertEquals("2.3f", "2.3", IntlUtilities.valueOf(2.3f));
             Assert.assertEquals("5", "5", IntlUtilities.valueOf(5));
             Assert.assertEquals("1", "1", IntlUtilities.valueOf(1));
@@ -87,14 +88,14 @@ public class IntlUtilitiesTest extends TestCase {
             Locale.setDefault(startingLocale);
         }
     }
-    
+
     public void testStringInItalyItalian() {
         Locale startingLocale = Locale.getDefault();
         try {
             Locale.setDefault(Locale.ITALY);
-            Assert.assertEquals("1.1",  "1,1", IntlUtilities.valueOf(1.1));
+            Assert.assertEquals("1.1", "1,1", IntlUtilities.valueOf(1.1));
             Assert.assertEquals("1.1f", "1,1", IntlUtilities.valueOf(1.1f));
-            Assert.assertEquals("2.3",  "2,3", IntlUtilities.valueOf(2.3));
+            Assert.assertEquals("2.3", "2,3", IntlUtilities.valueOf(2.3));
             Assert.assertEquals("2.3f", "2,3", IntlUtilities.valueOf(2.3f));
             Assert.assertEquals("5", "5", IntlUtilities.valueOf(5));
             Assert.assertEquals("1", "1", IntlUtilities.valueOf(1));
@@ -102,26 +103,24 @@ public class IntlUtilitiesTest extends TestCase {
             Locale.setDefault(startingLocale);
         }
     }
-    
-    
-	// from here down is testing infrastructure
 
-	public IntlUtilitiesTest(String s) {
-		super(s);
-	}
+    // from here down is testing infrastructure
+    public IntlUtilitiesTest(String s) {
+        super(s);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {IntlUtilitiesTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {IntlUtilitiesTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(IntlUtilitiesTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(IntlUtilitiesTest.class);
+        return suite;
+    }
 
-	static Logger log = Logger.getLogger(IntlUtilitiesTest.class.getName());
+    static Logger log = Logger.getLogger(IntlUtilitiesTest.class.getName());
 
 }

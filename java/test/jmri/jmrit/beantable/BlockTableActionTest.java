@@ -1,18 +1,18 @@
 // BlockTableActionTest.java
-
 package jmri.jmrit.beantable;
-
-import org.apache.log4j.Logger;
-import junit.framework.*;
-import junit.extensions.jfcunit.*;
 
 import jmri.Block;
 import jmri.InstanceManager;
-import jmri.util.*;
+import jmri.util.JUnitUtil;
+import junit.extensions.jfcunit.TestHelper;
+import junit.framework.Test;
+import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
- * @author	Bob Jacobsen  Copyright 2004, 2007, 2008
+ *
+ * @author	Bob Jacobsen Copyright 2004, 2007, 2008
  * @version	$Revision$
  */
 public class BlockTableActionTest extends jmri.util.SwingTestCase {
@@ -28,18 +28,16 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         BlockTableAction ba = new BlockTableAction();
         ba.actionPerformed(null);
-        
+
         // create a couple blocks, and see if they show
         InstanceManager.blockManagerInstance().createNewBlock("IB1", "block 1");
-        
+
         Block b2 = InstanceManager.blockManagerInstance().createNewBlock("IB2", "block 2");
         b2.setDirection(jmri.Path.EAST);
         TestHelper.disposeWindow(ba.f, this);
     }
 
-
     // from here down is testing infrastructure
-
     public BlockTableActionTest(String s) {
         super(s);
     }
@@ -58,8 +56,8 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
 
     // The minimal setup for log4J
     // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
 
         super.setUp();
         JUnitUtil.resetInstanceManager();
@@ -68,7 +66,8 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initInternalSignalHeadManager();
     }
-    protected void tearDown() throws Exception { 
+
+    protected void tearDown() throws Exception {
         JUnitUtil.resetInstanceManager();
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();

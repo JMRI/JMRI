@@ -122,9 +122,9 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
         String programmer = this.getSelectedItem();
         return (this.getShowEmptyTabs() != PaneProgFrame.getShowEmptyPanes()
                 || this.getShowCvNums() != PaneProgFrame.getShowCvNumbers()
-                || ((programmer != null) 
-                ? !programmer.equals(ProgDefault.getDefaultProgFile())
-                : ProgDefault.getDefaultProgFile() != null));
+                || ((programmer != null)
+                        ? !programmer.equals(ProgDefault.getDefaultProgFile())
+                        : ProgDefault.getDefaultProgFile() != null));
     }
 
     @Override

@@ -1,7 +1,5 @@
 package jmri.jmrit.throttle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -13,14 +11,16 @@ import jmri.JmriException;
 import jmri.PowerManager;
 import jmri.jmrit.catalog.NamedIcon;
 import jmri.jmrit.powerpanel.PowerPane;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class PowerManagerButton extends JButton implements PropertyChangeListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6973591266016989688L;
-	static final ResourceBundle pprb = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
+     *
+     */
+    private static final long serialVersionUID = -6973591266016989688L;
+    static final ResourceBundle pprb = ResourceBundle.getBundle("jmri.jmrit.powerpanel.PowerPanelBundle");
     private PowerPane powerControl = new PowerPane();
     private PowerManager powerMgr = null;
     private Boolean fullText = false;
@@ -108,9 +108,9 @@ public abstract class PowerManagerButton extends JButton implements PropertyChan
         } catch (JmriException ex) {
             setIcon(powerXIcon);
             setToolTipText(Bundle.getMessage("LayoutPowerUnknown"));
-                if (fullText) {
-                    setText(pprb.getString("StatusUnknown"));
-                }
+            if (fullText) {
+                setText(pprb.getString("StatusUnknown"));
+            }
         }
     }
     static Logger log = LoggerFactory.getLogger(PowerManagerButton.class.getName());

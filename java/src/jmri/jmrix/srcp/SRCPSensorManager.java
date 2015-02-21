@@ -1,10 +1,9 @@
 // SRCPSensorManager.java
-
 package jmri.jmrix.srcp;
 
+import jmri.Sensor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Sensor;
 
 /**
  * Implement Sensor manager for SRCP systems
@@ -14,23 +13,24 @@ import jmri.Sensor;
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @version	$Revision$
  */
-
 public class SRCPSensorManager extends jmri.managers.AbstractSensorManager {
 
     SRCPBusConnectionMemo _memo = null;
     int _bus;
 
     public SRCPSensorManager(SRCPBusConnectionMemo memo, int bus) {
-    	_memo=memo;
-        _bus=bus;
+        _memo = memo;
+        _bus = bus;
     }
 
-    public String getSystemPrefix() { return _memo.getSystemPrefix(); }
+    public String getSystemPrefix() {
+        return _memo.getSystemPrefix();
+    }
 
     public Sensor createNewSensor(String systemName, String userName) {
         Sensor t;
-        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length()+1)).intValue();
-        t = new SRCPSensor(addr,_memo);
+        int addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();
+        t = new SRCPSensor(addr, _memo);
         t.setUserName(userName);
 
         return t;

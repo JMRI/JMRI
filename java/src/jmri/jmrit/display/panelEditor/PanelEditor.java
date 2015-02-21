@@ -91,10 +91,10 @@ import org.slf4j.LoggerFactory;
 public class PanelEditor extends Editor implements ItemListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3568655156437993712L;
-	JTextField nextX = new JTextField(Bundle.getMessage("DefaultX"), 4);
+     *
+     */
+    private static final long serialVersionUID = -3568655156437993712L;
+    JTextField nextX = new JTextField(Bundle.getMessage("DefaultX"), 4);
     JTextField nextY = new JTextField(Bundle.getMessage("DefaultY"), 4);
 
     JCheckBox editableBox = new JCheckBox(Bundle.getMessage("CheckBoxEditable"));
@@ -539,11 +539,11 @@ public class PanelEditor extends Editor implements ItemListener {
         menuBar.add(editMenu);
         editMenu.add(new AbstractAction(Bundle.getMessage("OpenEditor")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -7003482354206142094L;
+             *
+             */
+            private static final long serialVersionUID = -7003482354206142094L;
 
-			@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 setVisible(true);
             }
@@ -551,11 +551,11 @@ public class PanelEditor extends Editor implements ItemListener {
         editMenu.addSeparator();
         editMenu.add(new AbstractAction(Bundle.getMessage("DeletePanel")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -3302292525750164017L;
+             *
+             */
+            private static final long serialVersionUID = -3302292525750164017L;
 
-			@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 if (deletePanel()) {
                     dispose(true);
@@ -568,33 +568,33 @@ public class PanelEditor extends Editor implements ItemListener {
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(Bundle.getMessage("AddLoco")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 3904117730465002247L;
+             *
+             */
+            private static final long serialVersionUID = 3904117730465002247L;
 
-			@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(Bundle.getMessage("AddLocoRoster")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 9124717518244688272L;
+             *
+             */
+            private static final long serialVersionUID = 9124717518244688272L;
 
-			@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         markerMenu.add(new AbstractAction(Bundle.getMessage("RemoveMarkers")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 3102044914128656099L;
+             *
+             */
+            private static final long serialVersionUID = 3102044914128656099L;
 
-			@Override
+            @Override
             public void actionPerformed(ActionEvent e) {
                 removeMarkers();
             }
@@ -1201,7 +1201,7 @@ public class PanelEditor extends Editor implements ItemListener {
                     log.debug(ex.getLocalizedMessage(), ex);
                 }
                 /*We remove the original item from the list, so we end up with
-                just the new items selected and allow the items to be moved around */
+                 just the new items selected and allow the items to be moved around */
                 amendSelectionGroup(comp);
                 copied.setLocation(xOrig, yOrig);
             }
@@ -1218,10 +1218,10 @@ public class PanelEditor extends Editor implements ItemListener {
     public void setRemoveMenu(Positionable p, JPopupMenu popup) {
         popup.add(new AbstractAction(Bundle.getMessage("Remove")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -7169869783719845309L;
-			Positionable comp;
+             *
+             */
+            private static final long serialVersionUID = -7169869783719845309L;
+            Positionable comp;
 
             @Override
             public void actionPerformed(ActionEvent e) {

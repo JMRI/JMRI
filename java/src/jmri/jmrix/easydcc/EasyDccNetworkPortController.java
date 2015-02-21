@@ -13,7 +13,6 @@ public abstract class EasyDccNetworkPortController extends jmri.jmrix.AbstractNe
 
     // base class. Implementations will provide InputStream and OutputStream
     // objects to EasyDccTrafficController classes, who in turn will deal in messages.
-
     protected EasyDccNetworkPortController(SystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }

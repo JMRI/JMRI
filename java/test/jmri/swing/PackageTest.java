@@ -1,14 +1,15 @@
 // PackageTest.java
-
 package jmri.swing;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invokes complete set of tests in the jmri.swing tree
  *
- * @author	    Bob Jacobsen  Copyright 2014
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2014
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -33,7 +34,12 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

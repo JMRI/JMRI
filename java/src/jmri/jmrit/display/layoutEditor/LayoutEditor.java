@@ -104,10 +104,10 @@ import org.slf4j.LoggerFactory;
 public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor implements java.beans.VetoableChangeListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3228600678758422754L;
-	// Defined text resource
+     *
+     */
+    private static final long serialVersionUID = 3228600678758422754L;
+    // Defined text resource
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.layoutEditor.LayoutEditorBundle");
     static final ResourceBundle rbx = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
     static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
@@ -143,7 +143,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     final public static int SLIP_D = 24; // offset for slip connection points
     final public static int TURNTABLE_RAY_OFFSET = 50; // offset for turntable connection points
 
-	// dashed line parameters
+    // dashed line parameters
     //private static int minNumDashes = 3;
     //private static double maxDashLength = 10;
     // Operational instance variables - not saved to disk
@@ -226,7 +226,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private boolean delayedPopupTrigger = false;
     private transient Point2D currentPoint = new Point2D.Double(100.0, 100.0);
     private transient Point2D dLoc = new Point2D.Double(0.0, 0.0);
-	//private int savedMSX = 0;
+    //private int savedMSX = 0;
     //private int savedMSY = 0;
     private int height = 100;
     private int width = 100;
@@ -331,7 +331,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     private double xOverHWidDefault = 10.0;
     private double xOverShortDefault = 10.0;
 
-	// Lists of items that describe the Layout, and allow it to be drawn
+    // Lists of items that describe the Layout, and allow it to be drawn
     //		Each of the items must be saved to disk over sessions
     public ArrayList<LayoutTurnout> turnoutList = new ArrayList<LayoutTurnout>();  // LayoutTurnouts
     public ArrayList<TrackSegment> trackList = new ArrayList<TrackSegment>();  // TrackSegment list
@@ -1487,7 +1487,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     private Point2D windowCenter() {
-		// Returns window's center coordinates converted to layout space
+        // Returns window's center coordinates converted to layout space
         // Used for initial setup of turntables and reporters
         // First of all compute center of window in screen coordinates
         Point pt = getLocationOnScreen();
@@ -1506,31 +1506,31 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
         menuBar.add(markerMenu);
         markerMenu.add(new AbstractAction(rbx.getString("AddLoco") + "...") {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -7759328538138927410L;
+             *
+             */
+            private static final long serialVersionUID = -7759328538138927410L;
 
-			public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 locoMarkerFromInput();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("AddLocoRoster") + "...") {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -8879389496257856672L;
+             *
+             */
+            private static final long serialVersionUID = -8879389496257856672L;
 
-			public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 locoMarkerFromRoster();
             }
         });
         markerMenu.add(new AbstractAction(rbx.getString("RemoveMarkers")) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -3673017468200997943L;
+             *
+             */
+            private static final long serialVersionUID = -3673017468200997943L;
 
-			public void actionPerformed(ActionEvent e) {
+            public void actionPerformed(ActionEvent e) {
                 removeMarkers();
             }
         });
@@ -2885,7 +2885,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                                 }
                             }
 
-							//selectedNeedsConnect = false;
+                            //selectedNeedsConnect = false;
                         } else {
                             selectedObject = checkBackgrounds(dLoc);
                             if (selectedObject != null) {
@@ -3888,11 +3888,11 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
                 setShowAlignmentMenu(popup);
                 popup.add(new AbstractAction(rb.getString("Remove")) {
                     /**
-					 * 
-					 */
-					private static final long serialVersionUID = 8665204205409832217L;
+                     *
+                     */
+                    private static final long serialVersionUID = 8665204205409832217L;
 
-					public void actionPerformed(ActionEvent e) {
+                    public void actionPerformed(ActionEvent e) {
                         deleteSelectedItems();
                     }
                 }
@@ -5100,21 +5100,21 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
             JMenu edit = new JMenu(rb.getString("EditAlignment"));
             edit.add(new AbstractAction(rb.getString("AlignX")) {
                 /**
-				 * 
-				 */
-				private static final long serialVersionUID = 3802627760002559496L;
+                 *
+                 */
+                private static final long serialVersionUID = 3802627760002559496L;
 
-				public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e) {
                     alignSelection(true);
                 }
             });
             edit.add(new AbstractAction(rb.getString("AlignY")) {
                 /**
-				 * 
-				 */
-				private static final long serialVersionUID = 2591755542663220942L;
+                 *
+                 */
+                private static final long serialVersionUID = 2591755542663220942L;
 
-				public void actionPerformed(ActionEvent e) {
+                public void actionPerformed(ActionEvent e) {
                     alignSelection(false);
                 }
             });
@@ -7327,7 +7327,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // Invoked when window has new multi-sensor ready
-
     public void addMultiSensor(MultiSensorIcon l) {
         l.setLocation(multiLocX, multiLocY);
         setDirty(true);
@@ -7709,7 +7708,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // accessor routines for turnout size parameters
-
     public void setTurnoutBX(double bx) {
         turnoutBX = bx;
         setDirty(true);
@@ -7765,7 +7763,6 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     // reset turnout sizes to program defaults
-
     private void resetTurnoutSize() {
         turnoutBX = turnoutBXDefault;
         turnoutCX = turnoutCXDefault;
@@ -8189,7 +8186,7 @@ public class LayoutEditor extends jmri.jmrit.display.panelEditor.PanelEditor imp
     }
 
     protected void drawTurnouts(Graphics2D g2) {
-		//float trackWidth = sideTrackWidth;
+        //float trackWidth = sideTrackWidth;
         // loop over all defined turnouts
         for (int i = 0; i < turnoutList.size(); i++) {
             LayoutTurnout t = turnoutList.get(i);

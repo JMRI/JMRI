@@ -1,21 +1,18 @@
 // ComboCheckBoxTest.java
-
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
-import java.util.*;
-
-import javax.swing.*;
+import java.util.HashMap;
+import javax.swing.JComboBox;
+import jmri.progdebugger.ProgDebugger;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-
-import jmri.progdebugger.*;
+import org.apache.log4j.Logger;
 
 /**
- * @author			Bob Jacobsen Copyright 2005
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright 2005
+ * @version	$Revision$
  */
 public class ComboCheckBoxTest extends TestCase {
 
@@ -26,18 +23,24 @@ public class ComboCheckBoxTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
-        if (log.isDebugEnabled()) log.debug("Enum variable created, loaded");
+        v.put("81", cv);
+        if (log.isDebugEnabled()) {
+            log.debug("Enum variable created, loaded");
+        }
 
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        if (log.isDebugEnabled()) log.debug("Enum variable created");
+        if (log.isDebugEnabled()) {
+            log.debug("Enum variable created");
+        }
 
-        JComboBox combo = (JComboBox)(var.getCommonRep());
+        JComboBox combo = (JComboBox) (var.getCommonRep());
 
         // create object under test
-        ComboCheckBox b = new ComboCheckBox(combo,var);
-        if (log.isDebugEnabled()) log.debug("ComboCheckBox created");
+        ComboCheckBox b = new ComboCheckBox(combo, var);
+        if (log.isDebugEnabled()) {
+            log.debug("ComboCheckBox created");
+        }
 
         // set it to "checked" & test state
         b.doClick();
@@ -61,13 +64,13 @@ public class ComboCheckBoxTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox)(var.getCommonRep());
+        JComboBox combo = (JComboBox) (var.getCommonRep());
 
         // create object under test
-        ComboCheckBox b = new ComboCheckBox(combo,var);
+        ComboCheckBox b = new ComboCheckBox(combo, var);
 
         // set combo box to 1 and check state
         combo.setSelectedIndex(1);
@@ -86,7 +89,6 @@ public class ComboCheckBoxTest extends TestCase {
 
     }
 
-
     protected void addTestItems(EnumVariableValue var) {
         var.nItems(2);
         var.addItem("Value0");
@@ -100,7 +102,6 @@ public class ComboCheckBoxTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public ComboCheckBoxTest(String s) {
         super(s);
     }
@@ -118,8 +119,13 @@ public class ComboCheckBoxTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(ComboCheckBoxTest.class.getName());
 

@@ -8,7 +8,6 @@
  *
  * Created on 17 juil. 2009, 15:05:26
  */
-
 package jmri.jmrit.throttle;
 
 import java.awt.GridBagConstraints;

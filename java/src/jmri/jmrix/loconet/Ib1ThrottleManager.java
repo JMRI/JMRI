@@ -1,26 +1,23 @@
 package jmri.jmrix.loconet;
 
+import jmri.DccThrottle;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import jmri.DccThrottle;
-import jmri.jmrix.loconet.LocoNetSlot;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 
 /**
  * Specialization of a ThrottleManager for the Intellibox.
  *
- * @author		Bob Jacobsen  Copyright (C) 2014
- * @version 		$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2014
+ * @version $Revision$
  */
 public class Ib1ThrottleManager extends jmri.jmrix.loconet.LnThrottleManager {
 
     /**
-     * Constructor. 
+     * Constructor.
      */
     public Ib1ThrottleManager(LocoNetSystemConnectionMemo memo) {
-    	super(memo);
-    	log.debug("Ib2ThrottleManager created");
+        super(memo);
+        log.debug("Ib2ThrottleManager created");
     }
 
     DccThrottle createThrottle(LocoNetSystemConnectionMemo memo, LocoNetSlot s) {

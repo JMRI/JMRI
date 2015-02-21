@@ -3,7 +3,7 @@
 <programmer-config
     xmlns:xi="http://www.w3.org/2001/XInclude" >
     
-<xi:include href="java/test/jmri/util/xml/ProgramPart.xml"/>
+    <xi:include href="java/test/jmri/util/xml/ProgramPart.xml"/>
 
 </programmer-config>
 

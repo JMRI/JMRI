@@ -43,7 +43,6 @@ public class VersionTest extends TestCase {
      */
     public void testCompareCanonicalVersions() {
 
-
         assertTrue(Version.compareCanonicalVersions("1.2.3", "1.2.3") == 0);
         assertTrue(Version.compareCanonicalVersions("1.2.1", "1.2.3") < 0);
         assertTrue(Version.compareCanonicalVersions("1.2.4", "1.2.3") > 0);

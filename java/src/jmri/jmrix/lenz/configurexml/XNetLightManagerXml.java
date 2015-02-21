@@ -1,17 +1,15 @@
 // XNetLightManagerXml.java
-
 package jmri.jmrix.lenz.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
- * Provides load and store functionality for
- * configuring XNetLightManagers.
+ * Provides load and store functionality for configuring XNetLightManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2006
  * @version $Revision$
@@ -23,7 +21,7 @@ public class XNetLightManagerXml extends jmri.managers.configurexml.AbstractLigh
     }
 
     public void setStoreElementClass(Element lights) {
-        lights.setAttribute("class","jmri.jmrix.lenz.configurexml.XNetLightManagerXml");
+        lights.setAttribute("class", "jmri.jmrix.lenz.configurexml.XNetLightManagerXml");
     }
 
     public void load(Element element, Object o) {

@@ -13,7 +13,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map.Entry;
-
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -29,37 +28,36 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-
+import jmri.InstanceManager;
+import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import jmri.InstanceManager;
-import jmri.swing.PreferencesPanel;
-
 public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel, ItemListener {
+
     static int STRUT_SIZE = 10;
-	
-	private WarrantPreferences _preferences;
+
+    private WarrantPreferences _preferences;
     private boolean _isDirty = false;
 
     private JComboBox<ScaleData> _layoutScales;
-    private JTextField  _searchDepth;
-    private JTextField  _timeIncre;
-    private JTextField  _throttleScale;
+    private JTextField _searchDepth;
+    private JTextField _timeIncre;
+    private JTextField _throttleScale;
     private boolean _percentNormal = true;
     private ArrayList<DataPair<String, Float>> _speedNameMap;
     private SpeedNameTableModel _speedNameModel;
-    private JTable	_speedNameTable;
+    private JTable _speedNameTable;
     private ArrayList<DataPair<String, String>> _appearanceMap;
     private AppearanceTableModel _appearanceModel;
-    private JTable	_appearanceTable;
+    private JTable _appearanceTable;
     private ArrayList<DataPair<String, Integer>> _stepIncrementMap;
-    private JTable	_stepIncrementTable;
+    private JTable _stepIncrementTable;
 
     public WarrantPreferencesPanel() {
         if (jmri.InstanceManager.getDefault(WarrantPreferences.class) == null) {
-            InstanceManager.store(new WarrantPreferences(jmri.util.FileUtil.getProfilePath() +
-            		"signal" + File.separator + "WarrantPreferences.xml"), WarrantPreferences.class);
+            InstanceManager.store(new WarrantPreferences(jmri.util.FileUtil.getProfilePath()
+                    + "signal" + File.separator + "WarrantPreferences.xml"), WarrantPreferences.class);
         }
         _preferences = InstanceManager.getDefault(WarrantPreferences.class);
         //  set local prefs to match instance prefs
@@ -67,6 +65,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         initGUI();
         setGUI();
     }
+
     private void initGUI() {
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 //        add(new JTitledSeparator(Bundle.getMessage("TitleWarrantPreferences")));
@@ -93,7 +92,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
 
     private void setGUI() {
-    	_preferences.apply();
+        _preferences.apply();
     }
 
     private JPanel layoutScalePanel() {
@@ -112,133 +111,143 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _layoutScales.addItem(new ScaleData("T", 480f));
         ScaleData sc = makeCustomItem(_preferences.getScale());
         _layoutScales.addItem(sc);
-        if (_layoutScales.getSelectedIndex()<0) {
-            _layoutScales.setSelectedItem(sc);        	
+        if (_layoutScales.getSelectedIndex() < 0) {
+            _layoutScales.setSelectedItem(sc);
         }
         Dimension dim = _layoutScales.getPreferredSize();
-        dim.width = 3*dim.width/2;
+        dim.width = 3 * dim.width / 2;
         _layoutScales.setPreferredSize(dim);
         _layoutScales.addItemListener(this);
         _layoutScales.setToolTipText(Bundle.getMessage("ToolTipLayoutScale"));
-        JLabel label= new JLabel(Bundle.getMessage("LabelLayoutScale"));
+        JLabel label = new JLabel(Bundle.getMessage("LabelLayoutScale"));
         label.setToolTipText(Bundle.getMessage("ToolTipLayoutScale"));
         panel.add(label);
-    	JPanel p = new JPanel();
+        JPanel p = new JPanel();
         p.add(_layoutScales);
 //        p.add(Box.createVerticalGlue());
         panel.add(p);
         return panel;
     }
+
     private ScaleData makeCustomItem(float scale) {
-    	int cnt = 0;
-    	while (cnt <_layoutScales.getItemCount()) {
-    		if (_layoutScales.getItemAt(cnt).scale == scale) {
-            	_layoutScales.setSelectedItem(_layoutScales.getItemAt(cnt));
-    	    	return new CustomDialog("custom", 0.0f);
-    		}
-    		cnt++;
-    	}
-    	_layoutScales.setSelectedIndex(-1);
-		return new CustomDialog(Bundle.getMessage("custom"), scale);
+        int cnt = 0;
+        while (cnt < _layoutScales.getItemCount()) {
+            if (_layoutScales.getItemAt(cnt).scale == scale) {
+                _layoutScales.setSelectedItem(_layoutScales.getItemAt(cnt));
+                return new CustomDialog("custom", 0.0f);
+            }
+            cnt++;
+        }
+        _layoutScales.setSelectedIndex(-1);
+        return new CustomDialog(Bundle.getMessage("custom"), scale);
     }
 
     public void itemStateChanged(ItemEvent e) {
-    	if (e.getStateChange()==ItemEvent.SELECTED) {
-    		ScaleData sd = (ScaleData)e.getItem();
-    		if (sd instanceof CustomDialog) {
-    			boolean ok = false;
-    			while (!ok) {
-                	float scale = 0.0f;
-                	String str = JOptionPane.showInputDialog(this, Bundle.getMessage("customInput"),
-                			Bundle.getMessage("customTitle"), JOptionPane.QUESTION_MESSAGE);
-                	try {
-                		if (str==null) {
-                			sd.scale = 0.0f;
-                			makeCustomItem(_preferences.getScale());
-                			ok = true;
-                		} else {
-                    		scale = Float.parseFloat(str);
-                    		if (scale <= 1.0f) {
-                    			throw new NumberFormatException();
-                    		}
-                    		sd.scale = scale;
-                    		_preferences.setScale(scale);
-                    		_isDirty = true;
-                    		ok = true;                			
-                		}
-                	} catch (NumberFormatException nfe) {
-                		JOptionPane.showMessageDialog(this, Bundle.getMessage("customError", str),
-                				Bundle.getMessage("customTitle"), JOptionPane.ERROR_MESSAGE);
-                	}    				
-    			}
-    		} else {
-        		_preferences.setScale(sd.scale);
-        		_isDirty = true;
-    		}
-    	}
+        if (e.getStateChange() == ItemEvent.SELECTED) {
+            ScaleData sd = (ScaleData) e.getItem();
+            if (sd instanceof CustomDialog) {
+                boolean ok = false;
+                while (!ok) {
+                    float scale = 0.0f;
+                    String str = JOptionPane.showInputDialog(this, Bundle.getMessage("customInput"),
+                            Bundle.getMessage("customTitle"), JOptionPane.QUESTION_MESSAGE);
+                    try {
+                        if (str == null) {
+                            sd.scale = 0.0f;
+                            makeCustomItem(_preferences.getScale());
+                            ok = true;
+                        } else {
+                            scale = Float.parseFloat(str);
+                            if (scale <= 1.0f) {
+                                throw new NumberFormatException();
+                            }
+                            sd.scale = scale;
+                            _preferences.setScale(scale);
+                            _isDirty = true;
+                            ok = true;
+                        }
+                    } catch (NumberFormatException nfe) {
+                        JOptionPane.showMessageDialog(this, Bundle.getMessage("customError", str),
+                                Bundle.getMessage("customTitle"), JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            } else {
+                _preferences.setScale(sd.scale);
+                _isDirty = true;
+            }
+        }
     }
+
     class ScaleData {
-    	float scale;
-    	String scaleName;
-    	ScaleData(String scaleName, float scale) {
-    		this.scale = scale;
-    		this.scaleName = scaleName;
-    	}
+
+        float scale;
+        String scaleName;
+
+        ScaleData(String scaleName, float scale) {
+            this.scale = scale;
+            this.scaleName = scaleName;
+        }
+
         @Override
-    	public String toString() {
-        	return Bundle.getMessage("scaleItem", scaleName, Float.toString(scale));
-    	}
+        public String toString() {
+            return Bundle.getMessage("scaleItem", scaleName, Float.toString(scale));
+        }
     }
+
     class CustomDialog extends ScaleData {
-    	CustomDialog(String scaleName, float scale) {
-    		super(scaleName, scale);
-    	}
+
+        CustomDialog(String scaleName, float scale) {
+            super(scaleName, scale);
+        }
+
         @Override
-    	public String toString() {
-        	if (scale < 1.0f) {
-        		return Bundle.getMessage("custom");
-        	} else {
-        		return super.toString();
-        	}
-    	}
+        public String toString() {
+            if (scale < 1.0f) {
+                return Bundle.getMessage("custom");
+            } else {
+                return super.toString();
+            }
+        }
     }
+
     private JPanel searchDepthPanel(boolean vertical) {
-    	_searchDepth =  new JTextField(5);
-    	_searchDepth.setText(Integer.toString(_preferences.getSearchDepth()));
-    	JPanel p = new JPanel();
-    	p.add(WarrantFrame.makeBoxPanel(vertical, _searchDepth, "SearchDepth"));
-    	_searchDepth.setColumns(5);
-    	_searchDepth.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
+        _searchDepth = new JTextField(5);
+        _searchDepth.setText(Integer.toString(_preferences.getSearchDepth()));
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeBoxPanel(vertical, _searchDepth, "SearchDepth"));
+        _searchDepth.setColumns(5);
+        _searchDepth.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
 //    	p.add(Box.createHorizontalGlue());
-    	return p;
+        return p;
     }
+
     private JPanel throttleScalePanel(boolean vertical) {
-    	_throttleScale =  new JTextField(5);
-    	_throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
-    	JPanel p = new JPanel();
-    	p.add(WarrantFrame.makeBoxPanel(vertical, _throttleScale, "ThrottleScale"));
-    	_throttleScale.setColumns(8);
-    	_throttleScale.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
-    	return p;
+        _throttleScale = new JTextField(5);
+        _throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeBoxPanel(vertical, _throttleScale, "ThrottleScale"));
+        _throttleScale.setColumns(8);
+        _throttleScale.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
+        return p;
     }
-    
+
     private JPanel speedNamesPanel() {
-    	JPanel panel = new JPanel();
-    	panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                 Bundle.getMessage("LabelSpeedNameTable"),
                 javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.TOP));
-    	panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-    	
-    	_speedNameMap = new ArrayList<DataPair<String, Float>>();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+
+        _speedNameMap = new ArrayList<DataPair<String, Float>>();
         Iterator<Entry<String, Float>> it = _preferences.getSpeedNameEntryIterator();
-    	while (it.hasNext()) {
-    		Entry<String, Float> ent = it.next();
-    		_speedNameMap.add(new DataPair<String, Float>(ent.getKey(), ent.getValue())); 
-    	}
-    	_speedNameModel = new SpeedNameTableModel();
-    	_speedNameTable = new JTable(_speedNameModel);
-        for (int i=0; i<_speedNameModel.getColumnCount(); i++) {
+        while (it.hasNext()) {
+            Entry<String, Float> ent = it.next();
+            _speedNameMap.add(new DataPair<String, Float>(ent.getKey(), ent.getValue()));
+        }
+        _speedNameModel = new SpeedNameTableModel();
+        _speedNameTable = new JTable(_speedNameModel);
+        for (int i = 0; i < _speedNameModel.getColumnCount(); i++) {
             int width = _speedNameModel.getPreferredWidth(i);
             _speedNameTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
@@ -249,87 +258,91 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         };
         ActionListener deleteAction = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-               deleteSpeedNameRow();
+                deleteSpeedNameRow();
             }
         };
         panel.add(tablePanel(_speedNameTable, "ToolTipSpeedNameTable", insertAction, deleteAction));
         return panel;
     }
+
     private JPanel appearancePanel() {
-    	JPanel panel = new JPanel();
-    	panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                 Bundle.getMessage("LabelAppearanceTable"),
                 javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.TOP));
-    	panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         _appearanceMap = new ArrayList<DataPair<String, String>>();
         Iterator<Entry<String, String>> it = _preferences.getAppearanceEntryIterator();
-    	while (it.hasNext()) {
-    		Entry<String, String> ent = it.next();
-    		_appearanceMap.add(new DataPair<String, String>(ent.getKey(), ent.getValue())); 
-    	}
-    	_appearanceModel = new AppearanceTableModel();
-    	_appearanceTable = new JTable(_appearanceModel);
-        for (int i=0; i<_appearanceModel.getColumnCount(); i++) {
+        while (it.hasNext()) {
+            Entry<String, String> ent = it.next();
+            _appearanceMap.add(new DataPair<String, String>(ent.getKey(), ent.getValue()));
+        }
+        _appearanceModel = new AppearanceTableModel();
+        _appearanceTable = new JTable(_appearanceModel);
+        for (int i = 0; i < _appearanceModel.getColumnCount(); i++) {
             int width = _appearanceModel.getPreferredWidth(i);
             _appearanceTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         panel.add(tablePanel(_appearanceTable, "ToolTipAppearanceTable", null, null));
-    	return panel;
+        return panel;
     }
+
     static private JPanel tablePanel(JTable table, String toolTip, ActionListener insertAction, ActionListener removeAction) {
-    	JPanel tablePanel = new JPanel();
-    	tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.LINE_AXIS));
-    	JScrollPane scrollPane = new JScrollPane(table);
+        JPanel tablePanel = new JPanel();
+        tablePanel.setLayout(new BoxLayout(tablePanel, BoxLayout.LINE_AXIS));
+        JScrollPane scrollPane = new JScrollPane(table);
         int height = table.getRowHeight();
         Dimension dim = table.getPreferredSize();
-        dim.height = height*5;
+        dim.height = height * 5;
         scrollPane.getViewport().setPreferredSize(dim);
         table.setToolTipText(Bundle.getMessage(toolTip));
         scrollPane.setToolTipText(Bundle.getMessage(toolTip));
         tablePanel.add(scrollPane);
         tablePanel.add(Box.createVerticalStrut(STRUT_SIZE));
-    	
+
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.PAGE_AXIS));
 
-        if (insertAction!=null) {
-            JButton insertButton =  new JButton(Bundle.getMessage("buttonInsertRow"));
+        if (insertAction != null) {
+            JButton insertButton = new JButton(Bundle.getMessage("buttonInsertRow"));
             insertButton.addActionListener(insertAction);
             buttonPanel.add(insertButton);
-            buttonPanel.add(Box.createVerticalStrut(2*STRUT_SIZE));        	
+            buttonPanel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
         }
 
-        if (removeAction!=null) {
-            JButton deleteButton =  new JButton(Bundle.getMessage("buttonDeleteRow"));
+        if (removeAction != null) {
+            JButton deleteButton = new JButton(Bundle.getMessage("buttonDeleteRow"));
             deleteButton.addActionListener(removeAction);
-            buttonPanel.add(deleteButton);        	
+            buttonPanel.add(deleteButton);
         }
         tablePanel.add(buttonPanel);
-    	return tablePanel;
+        return tablePanel;
     }
+
     private void insertSpeedNameRow() {
         int row = _speedNameTable.getSelectedRow();
-        if (row<0) {
-        	JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                	
+        if (row < 0) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         _speedNameMap.add(row, new DataPair<String, Float>("", 0f));
-    	_speedNameModel.fireTableDataChanged();    	
+        _speedNameModel.fireTableDataChanged();
     }
+
     private void deleteSpeedNameRow() {
         int row = _speedNameTable.getSelectedRow();
-        if (row<0) {
-        	JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                	
+        if (row < 0) {
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("selectRow"),
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         _speedNameMap.remove(row);
-    	_speedNameModel.fireTableDataChanged();    	
+        _speedNameModel.fireTableDataChanged();
     }
-    
+
     private JPanel interpretationPanel() {
         JPanel buttonPanel = new JPanel();
         buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.LINE_AXIS));
@@ -345,106 +358,107 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         buttonPanel.add(Box.createGlue());
         percentNormal.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-            		_percentNormal = true;
-                }
-            });
+                _percentNormal = true;
+            }
+        });
         percentThrottle.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-        			_percentNormal = false;
-                }
-            });
+                _percentNormal = false;
+            }
+        });
         if (_preferences.isPercentNormal()) {
-        	percentNormal.setSelected(true);
+            percentNormal.setSelected(true);
         } else {
-        	percentThrottle.setSelected(true);
-        }     	
-    	JPanel panel = new JPanel();
-    	panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        JLabel label= new JLabel(Bundle.getMessage("LabelInterpretation"));
+            percentThrottle.setSelected(true);
+        }
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        JLabel label = new JLabel(Bundle.getMessage("LabelInterpretation"));
         label.setToolTipText(Bundle.getMessage("ToolTipInterpretation"));
         percentNormal.setToolTipText(Bundle.getMessage("ToolTipPercentNormal"));
         percentThrottle.setToolTipText(Bundle.getMessage("ToolTipPercentThrottle"));
         panel.add(label, Box.CENTER_ALIGNMENT);
         panel.add(buttonPanel, Box.CENTER_ALIGNMENT);
-    	return panel;
+        return panel;
     }
-    
+
     private JPanel timeIncrementPanel(boolean vertical) {
-    	_timeIncre =  new JTextField(5);
-    	_timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
-    	JPanel p = new JPanel();
-    	p.add(WarrantFrame.makeBoxPanel(vertical, _timeIncre, "TimeIncrement"));
-    	_timeIncre.setColumns(5);
-    	_timeIncre.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
-    	return p;
+        _timeIncre = new JTextField(5);
+        _timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
+        JPanel p = new JPanel();
+        p.add(WarrantFrame.makeBoxPanel(vertical, _timeIncre, "TimeIncrement"));
+        _timeIncre.setColumns(5);
+        _timeIncre.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
+        return p;
     }
+
     private JPanel stepIncrementsPanel() {
-    	JPanel panel = new JPanel();
-    	panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                 Bundle.getMessage("LabelStepIncrementTable"),
                 javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.TOP));
-    	panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
 
         _stepIncrementMap = new ArrayList<DataPair<String, Integer>>();
         Iterator<Entry<String, Integer>> it = _preferences.getStepIncrementEntryIterator();
-    	while (it.hasNext()) {
-    		Entry<String, Integer> ent = it.next();
-    		_stepIncrementMap.add(new DataPair<String, Integer>(ent.getKey(), ent.getValue())); 
-    	}
+        while (it.hasNext()) {
+            Entry<String, Integer> ent = it.next();
+            _stepIncrementMap.add(new DataPair<String, Integer>(ent.getKey(), ent.getValue()));
+        }
         StepIncrementTableModel stepIncrementModel = new StepIncrementTableModel();
-    	_stepIncrementTable = new JTable(stepIncrementModel);
-        for (int i=0; i<stepIncrementModel.getColumnCount(); i++) {
+        _stepIncrementTable = new JTable(stepIncrementModel);
+        for (int i = 0; i < stepIncrementModel.getColumnCount(); i++) {
             int width = stepIncrementModel.getPreferredWidth(i);
             _stepIncrementTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         panel.add(tablePanel(_stepIncrementTable, "ToolTipStepIncrementTable", null, null));
-    	return panel;
+        return panel;
     }
 
     /**
-     * Compare GUI vaules with Preferences.  When different, update Preferences
+     * Compare GUI vaules with Preferences. When different, update Preferences
      * and set _isDirty flag.
      */
     private void setValues() {
-    	int depth = _preferences.getSearchDepth();
+        int depth = _preferences.getSearchDepth();
         try {
-        	 depth =Integer.parseInt(_searchDepth.getText());
+            depth = Integer.parseInt(_searchDepth.getText());
         } catch (NumberFormatException nfe) {
-        	_searchDepth.setText(Integer.toString(_preferences.getSearchDepth()));
+            _searchDepth.setText(Integer.toString(_preferences.getSearchDepth()));
         }
         if (_preferences.getSearchDepth() != depth) {
             _preferences.setSearchDepth(depth);
             _isDirty = true;
         }
-        
-        if (_preferences.isPercentNormal()!=_percentNormal) {
+
+        if (_preferences.isPercentNormal() != _percentNormal) {
             _preferences.setPercentNormal(_percentNormal);
-            _isDirty = true;        	
+            _isDirty = true;
         }
-        
-    	int time = _preferences.getTimeIncre();
+
+        int time = _preferences.getTimeIncre();
         try {
-        	time =Integer.parseInt(_timeIncre.getText());
+            time = Integer.parseInt(_timeIncre.getText());
             if (time < 200) {
-            	time = 200;
-            	JOptionPane.showMessageDialog(null, Bundle.getMessage("timeWarning"),
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                	
-            	_timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
+                time = 200;
+                JOptionPane.showMessageDialog(null, Bundle.getMessage("timeWarning"),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                _timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
             }
         } catch (NumberFormatException nfe) {
-        	_timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
+            _timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
         }
         if (_preferences.getTimeIncre() != time) {
             _preferences.setTimeIncre(time);
             _isDirty = true;
         }
-        
-    	float scale = _preferences.getThrottleScale();
+
+        float scale = _preferences.getThrottleScale();
         try {
-        	scale = Float.parseFloat(_throttleScale.getText());
+            scale = Float.parseFloat(_throttleScale.getText());
         } catch (NumberFormatException nfe) {
-        	_throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
+            _throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
         }
         if (_preferences.getThrottleScale() != scale) {
             _preferences.setThrottleScale(scale);
@@ -452,78 +466,81 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
 
         boolean different = false;
-    	javax.swing.table.TableCellEditor tce = _speedNameTable.getCellEditor();
-    	if (tce!=null) {
-    		tce.stopCellEditing();
-    	}
+        javax.swing.table.TableCellEditor tce = _speedNameTable.getCellEditor();
+        if (tce != null) {
+            tce.stopCellEditing();
+        }
         if (_preferences.getSpeedNamesSize() != _speedNameMap.size()) {
-        	different = true;
+            different = true;
         } else {
-        	for (int i=0; i<_speedNameMap.size(); i++) {
-        		DataPair<String, Float> dp = _speedNameMap.get(i);
-        		String name = dp.getKey();
-        		if (_preferences.getSpeedNameValue(name)==null || _preferences.getSpeedNameValue(name)!= dp.getValue()) {
-                	different = true;
-                	break;
-        		}
-        	}
-        } if (different) {
-        	_preferences.setSpeedNames(_speedNameMap);
+            for (int i = 0; i < _speedNameMap.size(); i++) {
+                DataPair<String, Float> dp = _speedNameMap.get(i);
+                String name = dp.getKey();
+                if (_preferences.getSpeedNameValue(name) == null || _preferences.getSpeedNameValue(name) != dp.getValue()) {
+                    different = true;
+                    break;
+                }
+            }
+        }
+        if (different) {
+            _preferences.setSpeedNames(_speedNameMap);
             _isDirty = true;
         }
-    
+
         different = false;
-    	tce = _appearanceTable.getCellEditor();
-    	if (tce!=null) {
-    		tce.stopCellEditing();
-    	}
+        tce = _appearanceTable.getCellEditor();
+        if (tce != null) {
+            tce.stopCellEditing();
+        }
         if (_preferences.getAppeaancesSize() != _appearanceMap.size()) {
-        	different = true;
+            different = true;
         } else {
-        	for (int i=0; i<_appearanceMap.size(); i++) {
-        		DataPair<String, String> dp = _appearanceMap.get(i);
-        		String name = dp.getKey();
-        		if (_preferences.getAppearanceValue(name)==null || _preferences.getAppearanceValue(name)!= dp.getValue()) {
-                	different = true;
-                	break;
-        		}
-        	}
-        } if (different) {
-        	_preferences.setAppearances(_appearanceMap);
+            for (int i = 0; i < _appearanceMap.size(); i++) {
+                DataPair<String, String> dp = _appearanceMap.get(i);
+                String name = dp.getKey();
+                if (_preferences.getAppearanceValue(name) == null || _preferences.getAppearanceValue(name) != dp.getValue()) {
+                    different = true;
+                    break;
+                }
+            }
+        }
+        if (different) {
+            _preferences.setAppearances(_appearanceMap);
             _isDirty = true;
         }
-        
+
         different = false;
-    	tce = _stepIncrementTable.getCellEditor();
-    	if (tce!=null) {
-    		tce.stopCellEditing();
-    	}
+        tce = _stepIncrementTable.getCellEditor();
+        if (tce != null) {
+            tce.stopCellEditing();
+        }
         if (_preferences.getStepIncrementSize() != _stepIncrementMap.size()) {
-        	different = true;
+            different = true;
         } else {
-        	for (int i=0; i<_stepIncrementMap.size(); i++) {
-        		DataPair<String, Integer> dp = _stepIncrementMap.get(i);
-        		String name = dp.getKey();
-        		if (_preferences.getStepIncrementValue(name)==null || _preferences.getStepIncrementValue(name)!= dp.getValue()) {
-                	different = true;
-                	break;
-        		}
-        	}
-        } if (different) {
-        	_preferences.setStepIncrements(_stepIncrementMap);
+            for (int i = 0; i < _stepIncrementMap.size(); i++) {
+                DataPair<String, Integer> dp = _stepIncrementMap.get(i);
+                String name = dp.getKey();
+                if (_preferences.getStepIncrementValue(name) == null || _preferences.getStepIncrementValue(name) != dp.getValue()) {
+                    different = true;
+                    break;
+                }
+            }
+        }
+        if (different) {
+            _preferences.setStepIncrements(_stepIncrementMap);
             _isDirty = true;
         }
     }
-    
+
     private JPanel applyPanel() {
         JPanel panel = new JPanel();
         JButton applyB = new JButton(Bundle.getMessage("ButtonApply"));
         applyB.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent event) {
-            	setValues();
-            	if (_isDirty) {
-                	_preferences.apply();
+                setValues();
+                if (_isDirty) {
+                    _preferences.apply();
                 }
             }
         });
@@ -556,7 +573,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * @return the text for the preferences item.
      */
     public String getPreferencesItemText() {
-    	return Bundle.getMessage("TitleWarrantPreferences");
+        return Bundle.getMessage("TitleWarrantPreferences");
     }
 
     /**
@@ -565,7 +582,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * @return a tab title
      */
     public String getTabbedPreferencesTitle() {
-    	return null;
+        return null;
     }
 
     /**
@@ -577,7 +594,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * @return label text
      */
     public String getLabelKey() {
-    	return null;
+        return null;
     }
 
     /**
@@ -586,7 +603,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * @return the preferences panel
      */
     public JComponent getPreferencesComponent() {
-    	return this;
+        return this;
     }
 
     /**
@@ -609,7 +626,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * @return tooltip text
      */
     public String getPreferencesTooltip() {
-    	return Bundle.getMessage("ToolTipLayoutScale");
+        return Bundle.getMessage("ToolTipLayoutScale");
     }
 
     /**
@@ -620,7 +637,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * is false.
      */
     public void savePreferences() {
-    	setValues();
+        setValues();
         if (_isDirty) {
             _preferences.apply();
             _preferences.save();
@@ -643,267 +660,317 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
      * @return true if the application needs to restart
      */
     public boolean isRestartRequired() {
-    	return false;
+        return false;
     }
 
     class DataPair<K, V> {
-    	K key;
-    	V value;
-    	
-    	DataPair(K k, V v) {
-        	key = k;
-        	value = v;   		
-    	}
-    	K getKey() { return key; }
-    	void setKey(K k) { key = k; }
-    	V getValue() { return value; }
-    	void setValue(V v) { value = v; }
+
+        K key;
+        V value;
+
+        DataPair(K k, V v) {
+            key = k;
+            value = v;
+        }
+
+        K getKey() {
+            return key;
+        }
+
+        void setKey(K k) {
+            key = k;
+        }
+
+        V getValue() {
+            return value;
+        }
+
+        void setValue(V v) {
+            value = v;
+        }
     }
-    /************************* SpeedName Table ******************************/
+
+    /**
+     * *********************** SpeedName Table *****************************
+     */
     class SpeedNameTableModel extends AbstractTableModel {
 
-    	public SpeedNameTableModel() {
+        public SpeedNameTableModel() {
             super();
         }
-        public int getColumnCount () {
+
+        public int getColumnCount() {
             return 2;
         }
+
         public int getRowCount() {
             return _speedNameMap.size();
         }
+
         @Override
         public String getColumnName(int col) {
-            if (col==0) {
-            	return Bundle.getMessage("speedName");
+            if (col == 0) {
+                return Bundle.getMessage("speedName");
             } else {
-            	return Bundle.getMessage("speedValue");
+                return Bundle.getMessage("speedValue");
             }
         }
+
         @Override
         public boolean isCellEditable(int row, int col) {
             return true;
         }
+
         @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
 
         public int getPreferredWidth(int col) {
-        	if (col==0) {
-                return new JTextField(15).getPreferredSize().width;        		
-        	} else {
-                return new JTextField(8).getPreferredSize().width;
-        		
-        	}
-        }
-        public Object getValueAt(int row, int col) {
-        	// some error checking
-        	if (row >= _speedNameMap.size()){
-        		log.error("row is greater than aspect speedNames size");
-        		return "";
-        	}
-        	DataPair<String, Float> data = _speedNameMap.get(row);
-            if (data == null){
-            	log.error("Aspect speedName data is null!");
-            	return "";
-            }
-            if (col==0) {
-            	return data.getKey();            
+            if (col == 0) {
+                return new JTextField(15).getPreferredSize().width;
             } else {
-            	return data.getValue();
+                return new JTextField(8).getPreferredSize().width;
+
             }
         }
+
+        public Object getValueAt(int row, int col) {
+            // some error checking
+            if (row >= _speedNameMap.size()) {
+                log.error("row is greater than aspect speedNames size");
+                return "";
+            }
+            DataPair<String, Float> data = _speedNameMap.get(row);
+            if (data == null) {
+                log.error("Aspect speedName data is null!");
+                return "";
+            }
+            if (col == 0) {
+                return data.getKey();
+            } else {
+                return data.getValue();
+            }
+        }
+
         @Override
         public void setValueAt(Object value, int row, int col) {
-        	DataPair<String, Float> data = _speedNameMap.get(row);
-        	String str = (String)value;
-        	String msg = null;
-        	if (str==null || data==null) {
-        		msg = Bundle.getMessage("NoData");
-        	}
-            if (col==0) {
-            	data.setKey((String)value);            
+            DataPair<String, Float> data = _speedNameMap.get(row);
+            String str = (String) value;
+            String msg = null;
+            if (str == null || data == null) {
+                msg = Bundle.getMessage("NoData");
+            }
+            if (col == 0) {
+                data.setKey((String) value);
             } else {
-                try { 
-                    float f = Float.parseFloat((String)value);
+                try {
+                    float f = Float.parseFloat((String) value);
                     if (f < 0) {
-                        msg = Bundle.getMessage("InvalidNumber", (String)value); 
+                        msg = Bundle.getMessage("InvalidNumber", (String) value);
                     } else {
-                       	data.setValue(f);                                	
+                        data.setValue(f);
                     }
                 } catch (NumberFormatException nfe) {
-                    msg = Bundle.getMessage("InvalidNumber", (String)value); 
+                    msg = Bundle.getMessage("InvalidNumber", (String) value);
                 }
-             }
-            if (msg!=null) {
-            	JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                	
+            }
+            if (msg != null) {
+                JOptionPane.showMessageDialog(null, msg,
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                fireTableRowsUpdated(row, row);            	
+                fireTableRowsUpdated(row, row);
             }
         }
     }
-    /************************* appearance Table ******************************/
+
+    /**
+     * *********************** appearance Table *****************************
+     */
     class AppearanceTableModel extends AbstractTableModel {
 
-    	public AppearanceTableModel() {
+        public AppearanceTableModel() {
             super();
         }
-        public int getColumnCount () {
+
+        public int getColumnCount() {
             return 2;
         }
+
         public int getRowCount() {
             return _appearanceMap.size();
         }
+
         @Override
         public String getColumnName(int col) {
-            if (col==0) {
-            	return Bundle.getMessage("appearance");
+            if (col == 0) {
+                return Bundle.getMessage("appearance");
             } else {
-            	return Bundle.getMessage("speedName");
+                return Bundle.getMessage("speedName");
             }
         }
+
         @Override
         public boolean isCellEditable(int row, int col) {
-        	if (col==0) { return false; }              
-        	else { return true; }
+            if (col == 0) {
+                return false;
+            } else {
+                return true;
+            }
         }
+
         @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
+
         public int getPreferredWidth(int col) {
-        	if (col==0) {
-                return new JTextField(15).getPreferredSize().width;        		
-        	} else {
+            if (col == 0) {
                 return new JTextField(15).getPreferredSize().width;
-        		
-        	}
+            } else {
+                return new JTextField(15).getPreferredSize().width;
+
+            }
         }
 
         public Object getValueAt(int row, int col) {
-        	// some error checking
-        	if (row >= _appearanceMap.size()){
-        		log.error("row is greater than appearance names size");
-        		return "";
-        	}
-        	DataPair<String, String> data = _appearanceMap.get(row);
-            if (data == null){
-            	log.error("Appearance name data is null!");
-            	return "";
+            // some error checking
+            if (row >= _appearanceMap.size()) {
+                log.error("row is greater than appearance names size");
+                return "";
             }
-            if (col==0) {
-            	return data.getKey();            
+            DataPair<String, String> data = _appearanceMap.get(row);
+            if (data == null) {
+                log.error("Appearance name data is null!");
+                return "";
+            }
+            if (col == 0) {
+                return data.getKey();
             } else {
-            	return data.getValue();
+                return data.getValue();
             }
         }
+
         @Override
         public void setValueAt(Object value, int row, int col) {
-        	DataPair<String, String> data = _appearanceMap.get(row);
-        	String str = (String)value;
-        	String msg = null;
-        	if (str==null || data==null) {
-        		msg = Bundle.getMessage("NoData");
-        	}
-            if (col==0) {
-            	data.setKey((String)value);            
-            } else {
-                data.setValue((String)value);                                	
+            DataPair<String, String> data = _appearanceMap.get(row);
+            String str = (String) value;
+            String msg = null;
+            if (str == null || data == null) {
+                msg = Bundle.getMessage("NoData");
             }
-            if (msg!=null) {
-            	JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                	
+            if (col == 0) {
+                data.setKey((String) value);
             } else {
-                fireTableRowsUpdated(row, row);            	
+                data.setValue((String) value);
+            }
+            if (msg != null) {
+                JOptionPane.showMessageDialog(null, msg,
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+            } else {
+                fireTableRowsUpdated(row, row);
             }
         }
     }
-    /************************* Throttle Step Increment Table ******************************/
+
+    /**
+     * *********************** Throttle Step Increment Table
+     * *****************************
+     */
     class StepIncrementTableModel extends AbstractTableModel {
 
-    	public StepIncrementTableModel() {
+        public StepIncrementTableModel() {
             super();
         }
-        public int getColumnCount () {
+
+        public int getColumnCount() {
             return 2;
         }
+
         public int getRowCount() {
             return _stepIncrementMap.size();
         }
+
         @Override
         public String getColumnName(int col) {
-            if (col==0) {
-            	return Bundle.getMessage("throttleStepMode");
+            if (col == 0) {
+                return Bundle.getMessage("throttleStepMode");
             } else {
-            	return Bundle.getMessage("rampIncrement");
+                return Bundle.getMessage("rampIncrement");
             }
         }
+
         @Override
         public boolean isCellEditable(int row, int col) {
-        	if (col==0) { return false; }              
-        	else { return true; }
+            if (col == 0) {
+                return false;
+            } else {
+                return true;
+            }
         }
+
         @Override
         public Class<?> getColumnClass(int col) {
             return String.class;
         }
 
         public int getPreferredWidth(int col) {
-        	if (col==0) {
-                return new JTextField(15).getPreferredSize().width;        		
-        	} else {
-                return new JTextField(5).getPreferredSize().width;
-        		
-        	}
-        }
-        public Object getValueAt(int row, int col) {
-        	// some error checking
-        	if (row >= _stepIncrementMap.size()){
-        		log.error("row is greater than throttle step modes size");
-        		return "";
-        	}
-        	DataPair<String, Integer> data = _stepIncrementMap.get(row);
-            if (data == null){
-            	log.error("Throttle step data is null!");
-            	return "";
-            }
-            if (col==0) {
-            	return data.getKey();            
+            if (col == 0) {
+                return new JTextField(15).getPreferredSize().width;
             } else {
-            	return data.getValue();
+                return new JTextField(5).getPreferredSize().width;
+
             }
         }
+
+        public Object getValueAt(int row, int col) {
+            // some error checking
+            if (row >= _stepIncrementMap.size()) {
+                log.error("row is greater than throttle step modes size");
+                return "";
+            }
+            DataPair<String, Integer> data = _stepIncrementMap.get(row);
+            if (data == null) {
+                log.error("Throttle step data is null!");
+                return "";
+            }
+            if (col == 0) {
+                return data.getKey();
+            } else {
+                return data.getValue();
+            }
+        }
+
         @Override
         public void setValueAt(Object value, int row, int col) {
-        	DataPair<String, Integer> data = _stepIncrementMap.get(row);
-        	String str = (String)value;
-        	String msg = null;
-        	if (str==null || data==null) {
-        		msg = Bundle.getMessage("NoData");
-        	}
-            if (col==0) {
-            	data.setKey((String)value);            
+            DataPair<String, Integer> data = _stepIncrementMap.get(row);
+            String str = (String) value;
+            String msg = null;
+            if (str == null || data == null) {
+                msg = Bundle.getMessage("NoData");
+            }
+            if (col == 0) {
+                data.setKey((String) value);
             } else {
-                try { 
-                    Integer f = Integer.parseInt((String)value);
+                try {
+                    Integer f = Integer.parseInt((String) value);
                     if (f < 1) {
-                        msg = Bundle.getMessage("InvalidNumber", (String)value); 
+                        msg = Bundle.getMessage("InvalidNumber", (String) value);
                     } else {
-                       	data.setValue(f);                                	
+                        data.setValue(f);
                     }
                 } catch (NumberFormatException nfe) {
-                    msg = Bundle.getMessage("InvalidNumber", (String)value); 
+                    msg = Bundle.getMessage("InvalidNumber", (String) value);
                 }
-             }
-            if (msg!=null) {
-            	JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                	
+            }
+            if (msg != null) {
+                JOptionPane.showMessageDialog(null, msg,
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             } else {
-                fireTableRowsUpdated(row, row);            	
+                fireTableRowsUpdated(row, row);
             }
         }
     }
-    
+
     private static Logger log = LoggerFactory.getLogger(WarrantPreferencesPanel.class.getName());
 }

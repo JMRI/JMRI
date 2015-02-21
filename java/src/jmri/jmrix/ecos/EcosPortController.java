@@ -1,5 +1,4 @@
 // EcosPortController.java
-
 package jmri.jmrix.ecos;
 
 /*
@@ -7,15 +6,14 @@ package jmri.jmrix.ecos;
  * @author			Bob Jacobsen    Copyright (C) 2001, 2008
  * @version $Revision$
  */
-
 public abstract class EcosPortController extends jmri.jmrix.AbstractNetworkPortController {
 
-	// base class. Implementations will provide InputStream and OutputStream
-	// objects to EcosTrafficController classes, who in turn will deal in messages.
+    // base class. Implementations will provide InputStream and OutputStream
+    // objects to EcosTrafficController classes, who in turn will deal in messages.
     protected EcosPortController(EcosSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
-    
+
     @Override
     public EcosSystemConnectionMemo getSystemConnectionMemo() {
         return (EcosSystemConnectionMemo) super.getSystemConnectionMemo();

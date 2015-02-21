@@ -16,11 +16,11 @@ import javax.swing.AbstractListModel;
 public class SearchPathsListModel extends AbstractListModel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6765348859634258763L;
+     *
+     */
+    private static final long serialVersionUID = 6765348859634258763L;
 
-	public SearchPathsListModel() {
+    public SearchPathsListModel() {
         ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.SEARCH_PATHS, new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent evt) {

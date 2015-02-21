@@ -3,12 +3,12 @@ package jmri.implementation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import jmri.AddressedProgrammer;
 import jmri.Consist;
 import jmri.ConsistListener;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.ProgListener;
-import jmri.AddressedProgrammer;
 import jmri.ProgrammerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -234,7 +234,7 @@ public class DccConsist implements Consist, ProgListener {
     protected void addToAdvancedConsist(DccLocoAddress LocoAddress, boolean directionNormal) {
         AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
-                LocoAddress.getNumber());
+                        LocoAddress.getNumber());
         if (directionNormal) {
             try {
                 opsProg.writeCV(19, ConsistAddress.getNumber(), this);
@@ -260,7 +260,7 @@ public class DccConsist implements Consist, ProgListener {
     protected void removeFromAdvancedConsist(DccLocoAddress LocoAddress) {
         AddressedProgrammer opsProg = InstanceManager.programmerManagerInstance()
                 .getAddressedProgrammer(LocoAddress.isLongAddress(),
-                LocoAddress.getNumber());
+                        LocoAddress.getNumber());
         try {
             opsProg.writeCV(19, 0, this);
         } catch (ProgrammerException e) {

@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.configurexml;
 
 import junit.framework.Test;
@@ -8,13 +7,13 @@ import junit.framework.TestSuite;
 
 /**
  * Test the jmri.configxml package.
+ *
  * @author	Bob Jacobsen
- * @version         $Revision$
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -34,18 +33,23 @@ public class PackageTest extends TestCase {
         suite.addTest(LoadAndStoreTest.suite());
 
         suite.addTest(ConfigXmlManagerTest.suite());
-        
+
         suite.addTest(BlockManagerXmlTest.suite());
         //suite.addTest(OBlockManagerXmlTest.suite());
         suite.addTest(SectionManagerXmlTest.suite());
-        
+
         suite.addTest(DefaultJavaBeanConfigXMLTest.suite());
-        
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

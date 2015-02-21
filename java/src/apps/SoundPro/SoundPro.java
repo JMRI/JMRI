@@ -1,5 +1,4 @@
 // SoundPro.java
-
 package apps.SoundPro;
 
 import apps.Apps;
@@ -19,36 +18,34 @@ import org.slf4j.LoggerFactory;
 /**
  * The JMRI application for controlling audio.
  * <P>
- * If an argument is provided at startup, it will be used as the name of
- * the configuration file.  Note that this is just the name, not the path;
- * the file is searched for in the usual way, first in the preferences tree and then in
+ * If an argument is provided at startup, it will be used as the name of the
+ * configuration file. Note that this is just the name, not the path; the file
+ * is searched for in the usual way, first in the preferences tree and then in
  * xml/
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  *
- * @author	Bob Jacobsen   Copyright 2003, 2004, 2007
- * @author      Matthew Harris  copyright (c) 2009
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003, 2004, 2007
+ * @author Matthew Harris copyright (c) 2009
+ * @version $Revision$
  */
 public class SoundPro extends Apps {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3990086935026870871L;
+     *
+     */
+    private static final long serialVersionUID = 3990086935026870871L;
 
-	SoundPro(JFrame p) {
+    SoundPro(JFrame p) {
         super(p);
     }
 
@@ -59,13 +56,13 @@ public class SoundPro extends Apps {
 
     @Override
     protected String mainWindowHelpID() {
-            return "package.apps.SoundPro.SoundPro";
+        return "package.apps.SoundPro.SoundPro";
     }
 
     @Override
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("SoundProVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+                new Object[]{jmri.Version.name()});
     }
 
     @Override
@@ -79,19 +76,18 @@ public class SoundPro extends Apps {
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
         j.add(super.statusPanel());
 
-       // Buttons
-
+        // Buttons
         Action audioTable = new jmri.jmrit.beantable.AudioTableAction(Bundle.getMessage("SpButtonAudioTable"));
-        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = -4436153177473078189L;
+        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = -4436153177473078189L;
 
-				public void actionPerformed(ActionEvent e) {
-					Apps.handleQuit();
-                }
-            };
+            public void actionPerformed(ActionEvent e) {
+                Apps.handleQuit();
+            }
+        };
 
         JButton b1 = new JButton(Bundle.getMessage("SpButtonAudioTable"));
         b1.addActionListener(audioTable);
@@ -131,5 +127,3 @@ public class SoundPro extends Apps {
 
     static Logger log = LoggerFactory.getLogger(SoundPro.class.getName());
 }
-
-

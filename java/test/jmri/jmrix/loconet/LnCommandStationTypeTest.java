@@ -1,15 +1,17 @@
 // LnCommandStationTypeTest.java
 package jmri.jmrix.loconet;
-import org.apache.log4j.Logger;
+
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnSensor class.
- * @author			Bob Jacobsen  Copyright 2001, 2002
- * @version         $Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2001, 2002
+ * @version $Revision$
  */
 public class LnCommandStationTypeTest extends TestCase {
 
@@ -23,15 +25,14 @@ public class LnCommandStationTypeTest extends TestCase {
 
     public void testThrottleManager() {
         LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(null, new SlotManager(new LocoNetInterfaceScaffold()));
-        
+
         jmri.ThrottleManager tm = LnCommandStationType.COMMAND_STATION_DCS200.getThrottleManager(memo);
         Assert.assertEquals(LnThrottleManager.class, tm.getClass());
     }
 
     // from here down is testing infrastructure
-
     public LnCommandStationTypeTest(String s) {
-    	super(s);
+        super(s);
     }
 
     // Main entry point
@@ -49,6 +50,11 @@ public class LnCommandStationTypeTest extends TestCase {
     static Logger log = Logger.getLogger(LnCommandStationTypeTest.class.getName());
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

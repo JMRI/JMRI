@@ -1,27 +1,29 @@
 // NceInterface.java
-
 package jmri.jmrix.nce;
 
 /**
- * Define interface for sending and receiving messages to the NCE
- * command station.
+ * Define interface for sending and receiving messages to the NCE command
+ * station.
  *
  * @author	Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
  */
 public interface NceInterface {
 
-    public void addNceListener( NceListener l);
-    public void removeNceListener( NceListener l);
+    public void addNceListener(NceListener l);
+
+    public void removeNceListener(NceListener l);
 
     /**
      * Test operational status of interface.
+     *
      * @return true is interface implementation is operational.
      */
     boolean status();
 
     /**
      * Send a message through the interface.
+     *
      * @param m Message to be sent.
      * @param l Listener to be notified of reply.
      */

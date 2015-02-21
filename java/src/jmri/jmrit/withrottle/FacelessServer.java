@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 //	listen() has to run in a separate thread.
-public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener  {
+public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfServiceListener {
 
     static Logger log = LoggerFactory.getLogger(FacelessServer.class.getName());
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.withrottle.WiThrottleBundle");
@@ -139,56 +139,56 @@ public class FacelessServer implements DeviceListener, DeviceManager, ZeroConfSe
 
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void addPropertyChangeListener(String propertyName,
             PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void removePropertyChangeListener(String propertyName,
             PropertyChangeListener listener) {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
     @Override
     public void notifyDeviceAddressChanged(DeviceServer device) {
-		// TODO Auto-generated method stub
+        // TODO Auto-generated method stub
 
     }
 
-	@Override
-	public void serviceQueued(ZeroConfServiceEvent se) {
-	}
+    @Override
+    public void serviceQueued(ZeroConfServiceEvent se) {
+    }
 
-	@Override
-	public void servicePublished(ZeroConfServiceEvent se) {
-		try {
-			InetAddress addr = se.getAddress();
-			// most addresses are Inet6Address objects, 
-			if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
-				log.info("Published ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
-			}
-		} catch (NullPointerException ex) {
-			log.error("NPE in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
-		}
-	}
+    @Override
+    public void servicePublished(ZeroConfServiceEvent se) {
+        try {
+            InetAddress addr = se.getAddress();
+            // most addresses are Inet6Address objects, 
+            if (addr instanceof Inet4Address && !addr.isLoopbackAddress()) {
+                log.info("Published ZeroConf service for {} on {}:{}", se.getService().key(), addr.getHostAddress(), port); // NOI18N
+            }
+        } catch (NullPointerException ex) {
+            log.error("NPE in FacelessServer.servicePublished(): {}", ex.getLocalizedMessage());
+        }
+    }
 
-	@Override
-	public void serviceUnpublished(ZeroConfServiceEvent se) {
-	}
+    @Override
+    public void serviceUnpublished(ZeroConfServiceEvent se) {
+    }
 
     //  listen() has to run in a separate thread.
     static class FacelessThread extends Thread {

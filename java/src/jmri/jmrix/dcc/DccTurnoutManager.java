@@ -1,10 +1,9 @@
 // EasyDccTurnoutManager.java
-
 package jmri.jmrix.dcc;
 
+import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Turnout;
 
 /**
  * Implement turnout manager for DCC-only systems
@@ -14,12 +13,14 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2014
  * @version	$Revision$
  */
-
 public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
-    public DccTurnoutManager() {}
+    public DccTurnoutManager() {
+    }
 
-    public String getSystemPrefix() { return "B"; }
+    public String getSystemPrefix() {
+        return "B";
+    }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
@@ -31,7 +32,9 @@ public class DccTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     static public DccTurnoutManager instance() {
-        if (_instance == null) _instance = new DccTurnoutManager();
+        if (_instance == null) {
+            _instance = new DccTurnoutManager();
+        }
         return _instance;
     }
     static DccTurnoutManager _instance = null;

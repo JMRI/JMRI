@@ -1,5 +1,4 @@
 // UsbDriverAdapter.java
-
 package jmri.jmrix.nce.usbdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -21,8 +20,8 @@ import org.slf4j.LoggerFactory;
  * This connects an NCE PowerCab or PowerHouse via a USB port. Normally
  * controlled by the UsbDriverFrame class.
  * <P>
- * 
- * 
+ *
+ *
  * @author Bob Jacobsen Copyright (C) 2001, 2002
  * @author Daniel Boudreau Copyright (C) 2007
  * @author ken cameron Copyright (C) 2013
@@ -32,7 +31,7 @@ public class UsbDriverAdapter extends NcePortController {
 
     Vector<String> portNameVector = null;
     SerialPort activeSerialPort = null;
-    
+
     public UsbDriverAdapter() {
         super(new NceSystemConnectionMemo());
         option1Name = "System";
@@ -41,7 +40,7 @@ public class UsbDriverAdapter extends NcePortController {
         options.put(option2Name, new Option("USB Version", option2Values, false));
     }
 
-    public String openPort(String portName, String appName)  {
+    public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -56,13 +55,15 @@ public class UsbDriverAdapter extends NcePortController {
             try {
                 // find the baud rate value, configure comm options
                 int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i<validSpeeds.length; i++ )
-                    if (validSpeeds[i].equals(mBaudRate))
+                for (int i = 0; i < validSpeeds.length; i++) {
+                    if (validSpeeds[i].equals(mBaudRate)) {
                         baud = validSpeedValues[i];
+                    }
+                }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
-                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
+                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set RTS high, DTR high
@@ -75,32 +76,33 @@ public class UsbDriverAdapter extends NcePortController {
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows "+count+" bytes available");
-            while ( count > 0) {
+            log.debug("input stream shows " + count + " bytes available");
+            while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
             }
 
             // report status
-            if (log.isInfoEnabled()) 
-                log.info("NCE USB "+portName+" port opened at "
-                		+activeSerialPort.getBaudRate()+" baud");
+            if (log.isInfoEnabled()) {
+                log.info("NCE USB " + portName + " port opened at "
+                        + activeSerialPort.getBaudRate() + " baud");
+            }
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+            return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return
@@ -109,103 +111,103 @@ public class UsbDriverAdapter extends NcePortController {
 
     String[] option1Values = new String[]{"PowerCab", "SB3/SB3a", "Power Pro", "Twin", "SB5"};
     String[] option2Values = new String[]{"V6.x.x", "V7.x.x"};
-    
+
     /**
-     * set up all of the other objects to operate with an NCE command
-     * station connected to this port
+     * set up all of the other objects to operate with an NCE command station
+     * connected to this port
      */
-    public void configure() {  	
+    public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-        
+
         //set the system the USB is connected to
         if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[1])) {	//if V7 (Nov 2012)
-        	// is new firmware, determine functions available
-        	if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {	//SB5
+            // is new firmware, determine functions available
+            if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {	//SB5
                 tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
-                tc.setCmdGroups(NceTrafficController.CMDS_MEM |
-                		NceTrafficController.CMDS_AUI_READ |
-                		NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+                tc.setCmdGroups(NceTrafficController.CMDS_MEM
+                        | NceTrafficController.CMDS_AUI_READ
+                        | NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
 
-        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {	//TWIN
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
-                tc.setCmdGroups(NceTrafficController.CMDS_MEM |
-                		NceTrafficController.CMDS_AUI_READ |
-                		NceTrafficController.CMDS_PROGTRACK |
-                		NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {	//TWIN
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
+                tc.setCmdGroups(NceTrafficController.CMDS_MEM
+                        | NceTrafficController.CMDS_AUI_READ
+                        | NceTrafficController.CMDS_PROGTRACK
+                        | NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
-        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {	//PowerPro
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
-                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_AUI_READ |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {	//PowerPro
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_AUI_READ
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
-        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {	//SB3
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
-                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {	//SB3
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-        	} else {	//PowerCab
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
-                tc.setCmdGroups(NceTrafficController.CMDS_MEM |
-                		NceTrafficController.CMDS_AUI_READ |
-                		NceTrafficController.CMDS_PROGTRACK |
-                		NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else {	//PowerCab
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
+                tc.setCmdGroups(NceTrafficController.CMDS_MEM
+                        | NceTrafficController.CMDS_AUI_READ
+                        | NceTrafficController.CMDS_PROGTRACK
+                        | NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_65);
-        	}
+            }
         } else {
-        	// old firmware, original functions
-        	if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
-                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            // old firmware, original functions
+            if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[4])) {
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB5);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
-                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[3])) {
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_TWIN);
+                tc.setCmdGroups(NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
-                tc.setCmdGroups(NceTrafficController.CMDS_NONE |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[2])) {
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERHOUSE);
+                tc.setCmdGroups(NceTrafficController.CMDS_NONE
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
-        	} else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
-                tc.setCmdGroups(NceTrafficController.CMDS_ACCYADDR250 |
-                		NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[1])) {
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_SB3);
+                tc.setCmdGroups(NceTrafficController.CMDS_ACCYADDR250
+                        | NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-        	} else {
-        		tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
-                tc.setCmdGroups(NceTrafficController.CMDS_PROGTRACK |
-                		NceTrafficController.CMDS_OPS_PGM |
-                		NceTrafficController.CMDS_USB |
-                		NceTrafficController.CMDS_ALL_SYS);
+            } else {
+                tc.setUsbSystem(NceTrafficController.USB_SYSTEM_POWERCAB);
+                tc.setCmdGroups(NceTrafficController.CMDS_PROGTRACK
+                        | NceTrafficController.CMDS_OPS_PGM
+                        | NceTrafficController.CMDS_USB
+                        | NceTrafficController.CMDS_ALL_SYS);
                 this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_1_28);
-        	}
+            }
         }
-        
+
         tc.connectPort(this);
-        
+
         this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.nce.ActiveFlag.setActive();
-	}
+    }
 
     // base class methods for the NcePortController interface
     public DataInputStream getInputStream() {
@@ -217,33 +219,36 @@ public class UsbDriverAdapter extends NcePortController {
     }
 
     public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
+        if (!opened) {
+            log.error("getOutputStream called before load(), stream not available");
+        }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
+        } catch (java.io.IOException e) {
+            log.error("getOutputStream exception: " + e);
         }
-        catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
+        return null;
     }
 
-    public boolean status() {return opened;}
+    public boolean status() {
+        return opened;
+    }
 
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-	public String[] validBaudRates() {
-		return validSpeeds;
-	}
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    public String[] validBaudRates() {
+        return validSpeeds;
+    }
 
-	private String [] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
-	private int [] validSpeedValues = new int[]{9600, 19200};
+    private String[] validSpeeds = new String[]{"9,600 baud", "19,200 baud"};
+    private int[] validSpeedValues = new int[]{9600, 19200};
 
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
+
     static Logger log = LoggerFactory.getLogger(UsbDriverAdapter.class.getName());
 
 }

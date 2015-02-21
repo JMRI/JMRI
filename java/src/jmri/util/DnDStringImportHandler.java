@@ -5,31 +5,31 @@ package jmri.util;
  * Use JTextField default handler if you want insertion
  * <P>
  *
- * @author Pete Cressman  Copyright 2010
+ * @author Pete Cressman Copyright 2010
  * @version $Revision$
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
+import java.io.IOException;
 import javax.swing.JComponent;
 import javax.swing.JTextField;
 import javax.swing.TransferHandler;
-import java.awt.datatransfer.Transferable; 
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DnDStringImportHandler extends TransferHandler {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2107475489891148707L;
-	/////////////////////import
+     *
+     */
+    private static final long serialVersionUID = 2107475489891148707L;
+
+    /////////////////////import
     public boolean canImport(JComponent comp, DataFlavor[] transferFlavors) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.canImport ");
 
-        for (int k=0; k<transferFlavors.length; k++){
+        for (int k = 0; k < transferFlavors.length; k++) {
             if (transferFlavors[k].equals(DataFlavor.stringFlavor)) {
                 return true;
             }
@@ -39,25 +39,25 @@ public class DnDStringImportHandler extends TransferHandler {
 
     public boolean importData(JComponent comp, Transferable tr) {
         //if (log.isDebugEnabled()) log.debug("DnDStringImportHandler.importData ");
-        DataFlavor[] flavors = new DataFlavor[] {DataFlavor.stringFlavor};
+        DataFlavor[] flavors = new DataFlavor[]{DataFlavor.stringFlavor};
 
         if (!canImport(comp, flavors)) {
             return false;
         }
 
         try {
-            if (tr.isDataFlavorSupported(DataFlavor.stringFlavor) ) {
-                String data = (String)tr.getTransferData(DataFlavor.stringFlavor);
-                JTextField field = (JTextField)comp;
+            if (tr.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                String data = (String) tr.getTransferData(DataFlavor.stringFlavor);
+                JTextField field = (JTextField) comp;
                 field.setText(data);
                 //Notify listeners drop happened
                 field.firePropertyChange("DnDrop", 0, 1);
                 return true;
             }
         } catch (UnsupportedFlavorException ufe) {
-            log.warn("DnDStringImportHandler.importData: "+ufe.getMessage());
+            log.warn("DnDStringImportHandler.importData: " + ufe.getMessage());
         } catch (IOException ioe) {
-            log.warn("DnDStringImportHandler.importData: "+ioe.getMessage());
+            log.warn("DnDStringImportHandler.importData: " + ioe.getMessage());
         }
         return false;
     }

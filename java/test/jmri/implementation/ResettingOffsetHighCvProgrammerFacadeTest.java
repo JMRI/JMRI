@@ -1,25 +1,22 @@
 // ResettingOffsetHighCvProgrammerFacadeTest.java
-
 package jmri.implementation;
 
-import org.apache.log4j.Logger;
-import jmri.Programmer;
 import jmri.ProgListener;
+import jmri.Programmer;
 import jmri.progdebugger.ProgDebugger;
-
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Test the ResettingOffsetHighCvProgrammerFacade class.
  *
  * @author	Bob Jacobsen Copyright 2013, 2014
- * @version     $Revision: 24246 $
+ * @version $Revision: 24246 $
  */
 public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
-
 
     int readValue = -2;
     boolean replied = false;
@@ -31,13 +28,13 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         dp.setTestWriteLimit(256);
 
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
-        ProgListener l = new ProgListener(){
-                public void programmingOpReply(int value, int status) {
-                    log.debug("callback value="+value+" status="+status);
-                    replied = true;
-                    readValue = value;
-                }
-            };
+        ProgListener l = new ProgListener() {
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value=" + value + " status=" + status);
+                replied = true;
+                readValue = value;
+            }
+        };
         p.writeCV("4", 12, l);
         waitReply();
         Assert.assertEquals("target written", 12, dp.getCvVal(4));
@@ -47,7 +44,7 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         waitReply();
         Assert.assertEquals("read back", 12, readValue);
     }
-    
+
     public void testWriteReadDirectHighCV() throws jmri.ProgrammerException, InterruptedException {
 
         ProgDebugger dp = new ProgDebugger();
@@ -55,13 +52,13 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         dp.setTestWriteLimit(1024);
 
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
-        ProgListener l = new ProgListener(){
-                public void programmingOpReply(int value, int status) {
-                    log.debug("callback value="+value+" status="+status);
-                    replied = true;
-                    readValue = value;
-                }
-            };
+        ProgListener l = new ProgListener() {
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value=" + value + " status=" + status);
+                replied = true;
+                readValue = value;
+            }
+        };
         p.writeCV("258", 12, l);
         waitReply();
         Assert.assertEquals("target written", 12, dp.getCvVal(258));
@@ -71,21 +68,21 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         waitReply();
         Assert.assertEquals("read back", 12, readValue);
     }
-    
+
     public void testWriteReadIndexed() throws jmri.ProgrammerException, InterruptedException {
-        
+
         ProgDebugger dp = new ProgDebugger();
         dp.setTestReadLimit(256);
         dp.setTestWriteLimit(256);
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
-        ProgListener l = new ProgListener(){
-                public void programmingOpReply(int value, int status) {
-                    log.debug("callback value="+value+" status="+status);
-                    replied = true;
-                    readValue = value;
-                }
-            };
-        
+        ProgListener l = new ProgListener() {
+            public void programmingOpReply(int value, int status) {
+                log.debug("callback value=" + value + " status=" + status);
+                replied = true;
+                readValue = value;
+            }
+        };
+
         p.writeCV("258", 12, l);
         waitReply();
         Assert.assertTrue("target not written", !dp.hasBeenWritten(258));
@@ -93,45 +90,44 @@ public class ResettingOffsetHighCvProgrammerFacadeTest extends TestCase {
         Assert.assertEquals("value written", 12, dp.getCvVal(58));
         Assert.assertEquals("did 3 operations", 3, dp.nOperations);
     }
-    
+
     public void testCvLimit() {
         ProgDebugger dp = new ProgDebugger();
         dp.setTestReadLimit(256);
         dp.setTestWriteLimit(256);
         Programmer p = new ResettingOffsetHighCvProgrammerFacade(dp, "256", "7", "10", "100", "200");
-        Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));  
-        Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));  
-        Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));  
-        Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));  
+        Assert.assertTrue("CV limit read OK", p.getCanRead("1024"));
+        Assert.assertTrue("CV limit write OK", p.getCanWrite("1024"));
+        Assert.assertTrue("CV limit read fail", !p.getCanRead("1025"));
+        Assert.assertTrue("CV limit write fail", !p.getCanWrite("1025"));
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     synchronized void waitReply() throws InterruptedException {
-        while(!replied)
+        while (!replied) {
             wait(200);
+        }
         replied = false;
     }
 
-    
     // from here down is testing infrastructure
     public ResettingOffsetHighCvProgrammerFacadeTest(String s) {
         super(s);
     }
-    
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {ResettingOffsetHighCvProgrammerFacadeTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
         TestSuite suite = new TestSuite(ResettingOffsetHighCvProgrammerFacadeTest.class);
         return suite;
     }
-    
+
     static Logger log = Logger.getLogger(ResettingOffsetHighCvProgrammerFacadeTest.class.getName());
 
 }

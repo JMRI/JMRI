@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.web;
 
 import junit.framework.Test;
@@ -9,8 +8,8 @@ import junit.framework.TestSuite;
 /**
  * Invokes complete set of tests in the jmri.web tree
  *
- * @author	    Bob Jacobsen  Copyright 2008
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright 2008
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -33,6 +32,11 @@ public class PackageTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

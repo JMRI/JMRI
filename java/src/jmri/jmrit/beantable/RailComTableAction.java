@@ -1,42 +1,42 @@
 // RailCommTableAction.java
 package jmri.jmrit.beantable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
 import java.awt.event.ActionEvent;
 import java.text.DateFormat;
 import java.util.Date;
-
-import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.Reporter;
+import jmri.InstanceManager;
+import jmri.Manager;
+import jmri.NamedBean;
 import jmri.RailCom;
 import jmri.RailComManager;
+import jmri.Reporter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a
- * RailCommTable GUI.
+ * Swing action to create and register a RailCommTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision: 18072 $
- * @since       2.11.4
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision: 18072 $
+ * @since 2.11.4
  */
 public class RailComTableAction extends AbstractTableAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4041803967319785256L;
-	/**
+     *
+     */
+    private static final long serialVersionUID = 4041803967319785256L;
+
+    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
-     * resulting frame.  Perhaps this should be changed?
+     * resulting frame. Perhaps this should be changed?
+     *
      * @param actionName
      */
     public RailComTableAction(String actionName) {
@@ -54,30 +54,30 @@ public class RailComTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create the JTable DataModel, along with the changes
-     * for the specific case of RailComm objects
+     * Create the JTable DataModel, along with the changes for the specific case
+     * of RailComm objects
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
 
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 2279329942656851421L;
-			static public final int VALUECOL = 0;
+             *
+             */
+            private static final long serialVersionUID = 2279329942656851421L;
+            static public final int VALUECOL = 0;
             public static final int WHERECOL = VALUECOL + 1;
             public static final int WHENCOL = WHERECOL + 1;
             public static final int CLEARCOL = WHENCOL + 1;
-            public static final int SPEEDCOL = CLEARCOL + 1; 
-            public static final int LOADCOL = SPEEDCOL + 1; 
-            public static final int TEMPCOL = LOADCOL + 1; 
-            public static final int FUELCOL = TEMPCOL + 1; 
-            public static final int WATERCOL = FUELCOL + 1; 
-            public static final int LOCATIONCOL = WATERCOL + 1; 
-            public static final int ROUTINGCOL = LOCATIONCOL + 1; 
-            static public final int DELETECOL =  ROUTINGCOL+1;
-            
-            static public final int NUMCOLUMN = DELETECOL+1;
+            public static final int SPEEDCOL = CLEARCOL + 1;
+            public static final int LOADCOL = SPEEDCOL + 1;
+            public static final int TEMPCOL = LOADCOL + 1;
+            public static final int FUELCOL = TEMPCOL + 1;
+            public static final int WATERCOL = FUELCOL + 1;
+            public static final int LOCATIONCOL = WATERCOL + 1;
+            public static final int ROUTINGCOL = LOCATIONCOL + 1;
+            static public final int DELETECOL = ROUTINGCOL + 1;
+
+            static public final int NUMCOLUMN = DELETECOL + 1;
 
             public String getValue(String name) {
                 RailCom tag = (RailCom) InstanceManager.getDefault(RailComManager.class).getBySystemName(name);
@@ -94,7 +94,9 @@ public class RailComTableAction extends AbstractTableAction {
 
             public Manager getManager() {
                 RailComManager m = InstanceManager.getDefault(RailComManager.class);
-                if (!m.isInitialised()) m.init();
+                if (!m.isInitialised()) {
+                    m.init();
+                }
                 return m;
             }
 
@@ -120,8 +122,7 @@ public class RailComTableAction extends AbstractTableAction {
                     }
                     t.setWhereLastSeen(null);
                     fireTableRowsUpdated(row, row);
-                } 
-                else if (col==DELETECOL) {
+                } else if (col == DELETECOL) {
                     // button fired, delete Bean
                     deleteBean(row, col);
                 }
@@ -141,22 +142,24 @@ public class RailComTableAction extends AbstractTableAction {
                         return rb.getString("ColumnIdWhere");
                     case WHENCOL:
                         return rb.getString("ColumnIdWhen");
-                    case  SPEEDCOL:
+                    case SPEEDCOL:
                         return rb.getString("ColumnSpeed");
-                    case  LOADCOL:
+                    case LOADCOL:
                         return rb.getString("ColumnLoad");
-                    case  TEMPCOL:
+                    case TEMPCOL:
                         return rb.getString("ColumnTemp");
-                    case  FUELCOL:
+                    case FUELCOL:
                         return rb.getString("ColumnFuelLevel");
-                    case  WATERCOL:
+                    case WATERCOL:
                         return rb.getString("ColumnWaterLevel");
-                    case  LOCATIONCOL:
+                    case LOCATIONCOL:
                         return rb.getString("ColumnLocation");
-                    case  ROUTINGCOL:
+                    case ROUTINGCOL:
                         return rb.getString("ColumnRouting");
-                    case DELETECOL: return "";
-                    case CLEARCOL: return "";
+                    case DELETECOL:
+                        return "";
+                    case CLEARCOL:
+                        return "";
                     default:
                         return super.getColumnName(col);
                 }
@@ -187,8 +190,9 @@ public class RailComTableAction extends AbstractTableAction {
             @Override
             public Object getValueAt(int row, int col) {
                 RailCom t = (RailCom) getBySystemName(sysNameList.get(row));
-                if(t==null)
+                if (t == null) {
                     return null;
+                }
                 switch (col) {
                     case VALUECOL:
                         return t.getTagID() + " " + t.getAddressTypeAsString();
@@ -197,37 +201,44 @@ public class RailComTableAction extends AbstractTableAction {
                         return (((r = t.getWhereLastSeen()) != null) ? r.getSystemName() : null);
                     case WHENCOL:
                         Date d;
-                        return (((d = t.getWhenLastSeen()) != null) ?
-                            DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null);
+                        return (((d = t.getWhenLastSeen()) != null)
+                                ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null);
                     case CLEARCOL:
                         return rb.getString("ButtonClear");
-                    case  SPEEDCOL:
-                        if(t.getActualSpeed()==-1)
+                    case SPEEDCOL:
+                        if (t.getActualSpeed() == -1) {
                             return null;
+                        }
                         return t.getActualSpeed();
-                    case  LOADCOL:
-                        if(t.getActualLoad()==-1)
+                    case LOADCOL:
+                        if (t.getActualLoad() == -1) {
                             return null;
+                        }
                         return t.getActualLoad();
-                    case  TEMPCOL:
-                        if(t.getActualTemperature()==-1)
+                    case TEMPCOL:
+                        if (t.getActualTemperature() == -1) {
                             return null;
+                        }
                         return t.getActualTemperature();
-                    case  FUELCOL:
-                        if(t.getFuelLevel()==-1)
+                    case FUELCOL:
+                        if (t.getFuelLevel() == -1) {
                             return null;
+                        }
                         return t.getFuelLevel();
-                    case  WATERCOL:
-                        if(t.getWaterLevel()==-1)
+                    case WATERCOL:
+                        if (t.getWaterLevel() == -1) {
                             return null;
+                        }
                         return t.getWaterLevel();
-                    case  LOCATIONCOL:
-                        if(t.getLocation()==-1)
+                    case LOCATIONCOL:
+                        if (t.getLocation() == -1) {
                             return null;
+                        }
                         return t.getLocation();
-                    case  ROUTINGCOL:
-                        if(t.getRoutingNo()==-1)
+                    case ROUTINGCOL:
+                        if (t.getRoutingNo() == -1) {
                             return null;
+                        }
                         return t.getRoutingNo();
                     case DELETECOL:  //
                         return AbstractTableAction.rb.getString("ButtonDelete");
@@ -272,8 +283,8 @@ public class RailComTableAction extends AbstractTableAction {
             protected String getMasterClassName() {
                 return getClassName();
             }
-            
-            protected String getBeanType(){
+
+            protected String getBeanType() {
                 return "ID Tag";
             }
         };

@@ -1,32 +1,29 @@
 package jmri.jmrit.display.layoutEditor.configurexml;
 
+import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrit.display.configurexml.SensorIconXml;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.configurexml.*;
-import jmri.jmrit.display.configurexml.*;
-
-import org.jdom2.Element;
 
 /**
- * Dummy class, just present so files that refer to this 
- * class (e.g. pre JMRI 2.7.8 files) can still be read by
- * deferring to the present class.
+ * Dummy class, just present so files that refer to this class (e.g. pre JMRI
+ * 2.7.8 files) can still be read by deferring to the present class.
  *
  * @author David Duchamp Copyright (c) 2007
  * @author Kevin Dickerson, Deprecated
  * @version $Revision$
  * @deprecated 2.7.8
  */
- 
- @Deprecated
+@Deprecated
 public class LayoutSensorIconXml extends AbstractXmlAdapter {
 
     public LayoutSensorIconXml() {
     }
 
     /**
-     * Default implementation for storing the contents of a
-     * LayoutSensorIcon
+     * Default implementation for storing the contents of a LayoutSensorIcon
+     *
      * @param o Object to store, of type LayoutSensorIcon
      * @return Element containing the complete info
      */
@@ -34,8 +31,6 @@ public class LayoutSensorIconXml extends AbstractXmlAdapter {
         SensorIconXml tmp = new SensorIconXml();
         return tmp.store(o);
     }
-    
-
 
     public boolean load(Element element) {
         log.error("Invalid method called");
@@ -44,8 +39,9 @@ public class LayoutSensorIconXml extends AbstractXmlAdapter {
 
     /**
      * Create a PositionableLabel, then add to a target JLayeredPane
+     *
      * @param element Top level Element to unpack.
-     * @param o  LayoutEditor as an Object
+     * @param o LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects
@@ -53,8 +49,6 @@ public class LayoutSensorIconXml extends AbstractXmlAdapter {
         tmp.load(element, o);
 
     }
-    
-    
 
     static Logger log = LoggerFactory.getLogger(LayoutSensorIconXml.class.getName());
 

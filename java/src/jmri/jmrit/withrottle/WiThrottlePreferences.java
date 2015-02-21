@@ -184,11 +184,11 @@ public class WiThrottlePreferences extends AbstractWiThrottlePreferences {
                 || this.asLoadedUseMomF2 != this.isUseMomF2()
                 || this.asLoadedUseFixedPort != this.isUseFixedPort()
                 || (this.asLoadedPort != null) ? !this.asLoadedPort.equals(this.getPort()) : this.getPort() != null
-                || this.asLoadedAllowTrackPower != this.isAllowTrackPower()
-                || this.asLoadedAllowTurnout != this.isAllowTurnout()
-                || this.asLoadedAllowRoute != this.isAllowRoute()
-                || this.asLoadedAllowConsist != this.isAllowConsist()
-                || this.asLoadedUseWiFiConsist != this.isUseWiFiConsist();
+                        || this.asLoadedAllowTrackPower != this.isAllowTrackPower()
+                        || this.asLoadedAllowTurnout != this.isAllowTurnout()
+                        || this.asLoadedAllowRoute != this.isAllowRoute()
+                        || this.asLoadedAllowConsist != this.isAllowConsist()
+                        || this.asLoadedUseWiFiConsist != this.isUseWiFiConsist();
     }
 
     public boolean isRestartRequired() {

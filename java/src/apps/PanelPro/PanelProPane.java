@@ -1,5 +1,4 @@
 // PanelProPane.java
-
 package apps.PanelPro;
 
 import apps.Apps;
@@ -20,27 +19,25 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003, 2014
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003, 2014
+ * @version $Revision$
  */
 public class PanelProPane extends apps.AppsLaunchPane {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5742354704602024439L;
+     *
+     */
+    private static final long serialVersionUID = -5742354704602024439L;
 
-	PanelProPane() {
+    PanelProPane() {
         super();
     }
 
@@ -57,7 +54,7 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("PanelProVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+                new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {
@@ -70,18 +67,16 @@ public class PanelProPane extends apps.AppsLaunchPane {
         j.add(super.statusPanel());
 
         // Buttons
+        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = -9134833676932931297L;
 
-        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = -9134833676932931297L;
-
-				public void actionPerformed(ActionEvent e) {
-					Apps.handleQuit();
-                }
-            };
-
+            public void actionPerformed(ActionEvent e) {
+                Apps.handleQuit();
+            }
+        };
 
         JPanel p3 = new JPanel();
         p3.setLayout(new java.awt.FlowLayout());
@@ -100,5 +95,3 @@ public class PanelProPane extends apps.AppsLaunchPane {
 
     static Logger log = LoggerFactory.getLogger(PanelProPane.class.getName());
 }
-
-

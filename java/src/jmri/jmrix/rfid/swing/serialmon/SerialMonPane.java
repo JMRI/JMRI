@@ -1,5 +1,4 @@
 // SerialMonPane.java
-
 package jmri.jmrix.rfid.swing.serialmon;
 
 import jmri.InstanceManager;
@@ -14,28 +13,29 @@ import jmri.util.swing.sdi.JmriJFrameInterface;
 /**
  * Swing action to create and register a MonFrame object
  *
- * @author      Bob Jacobsen    Copyright (C) 2001, 2008
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Bob Jacobsen Copyright (C) 2001, 2008
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
-
-public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface{
+public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidListener, RfidPanelInterface {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5991369812503715412L;
+     *
+     */
+    private static final long serialVersionUID = 5991369812503715412L;
 
-	public SerialMonPane() {
+    public SerialMonPane() {
         super();
     }
 
     @Override
-    public String getHelpTarget() { return null; }
+    public String getHelpTarget() {
+        return null;
+    }
 
     @Override
-    public String getTitle() { 
+    public String getTitle() {
         return "RFID Device Command Monitor";
     }
 
@@ -48,13 +48,14 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     }
 
     @Override
-    public void init() {}
+    public void init() {
+    }
 
     RfidSystemConnectionMemo memo;
 
     @Override
     public void initContext(Object context) {
-        if (context instanceof RfidSystemConnectionMemo ) {
+        if (context instanceof RfidSystemConnectionMemo) {
             initComponents((RfidSystemConnectionMemo) context);
         }
     }
@@ -69,26 +70,26 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
     @Override
     public synchronized void message(RfidMessage l) {  // receive a message and log it
         if (l.isBinary()) {
-            nextLine("binary cmd: "+l.toMonitorString()+"\n", null);
+            nextLine("binary cmd: " + l.toMonitorString() + "\n", null);
         } else {
-            nextLine("cmd: \""+l.toMonitorString()+"\"\n", null);
+            nextLine("cmd: \"" + l.toMonitorString() + "\"\n", null);
         }
     }
 
     @Override
     public synchronized void reply(RfidReply l) {  // receive a reply message and log it
         String raw = "";
-        for (int i=0;i<l.getNumDataElements(); i++) {
-            if (i>0) {
-                raw+=" ";
+        for (int i = 0; i < l.getNumDataElements(); i++) {
+            if (i > 0) {
+                raw += " ";
             }
-            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i)&0xFF, raw);
+            raw = jmri.util.StringUtil.appendTwoHexFromInt(l.getElement(i) & 0xFF, raw);
         }
 
         if (l.isUnsolicited()) {
-            nextLine("msg: \""+l.toMonitorString()+"\"\n", raw);
+            nextLine("msg: \"" + l.toMonitorString() + "\"\n", raw);
         } else {
-            nextLine("rep: \""+l.toMonitorString()+"\"\n", raw);
+            nextLine("rep: \"" + l.toMonitorString() + "\"\n", raw);
         }
     }
 
@@ -96,16 +97,17 @@ public class SerialMonPane extends jmri.jmrix.AbstractMonPane implements RfidLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends RfidNamedPaneAction {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = -7671831932813281699L;
 
-		public Default() {
+        /**
+         *
+         */
+        private static final long serialVersionUID = -7671831932813281699L;
+
+        public Default() {
             super("RFID Device Command Monitor",
-                new JmriJFrameInterface(), 
-                SerialMonPane.class.getName(), 
-                InstanceManager.getDefault(RfidSystemConnectionMemo.class));
+                    new JmriJFrameInterface(),
+                    SerialMonPane.class.getName(),
+                    InstanceManager.getDefault(RfidSystemConnectionMemo.class));
         }
     }
 

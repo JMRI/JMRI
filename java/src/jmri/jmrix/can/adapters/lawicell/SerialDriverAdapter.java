@@ -1,5 +1,4 @@
 // SerialDriverAdapter.java
-
 package jmri.jmrix.can.adapters.lawicell;
 
 import gnu.io.CommPortIdentifier;
@@ -16,23 +15,23 @@ import org.slf4j.LoggerFactory;
  * Implements SerialPortAdapter for the LAWICELL protocol.
  * <P>
  *
- * @author			Bob Jacobsen    Copyright (C) 2001, 2002, 2008
- * @author			Andrew Crosland Copyright (C) 2008
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author	Andrew Crosland Copyright (C) 2008
+ * @version	$Revision$
  */
-public class SerialDriverAdapter extends PortController  implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends PortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
-    
+
     public SerialDriverAdapter() {
         super(new jmri.jmrix.can.CanSystemConnectionMemo());
         option1Name = "Protocol";
         options.put(option1Name, new Option("Connection Protocol", jmri.jmrix.can.ConfigurationManager.getSystemOptions()));
     }
 
-    public String openPort(String portName, String appName)  {
-        String [] baudRates = validBaudRates();
-        int [] baudValues = validBaudValues();
+    public String openPort(String portName, String appName) {
+        String[] baudRates = validBaudRates();
+        int[] baudValues = validBaudValues();
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -47,13 +46,15 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
             try {
                 // find the baud rate value, configure comm options
                 int baud = baudValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i<baudRates.length; i++ )
-                    if (baudRates[i].equals(mBaudRate))
+                for (int i = 0; i < baudRates.length; i++) {
+                    if (baudRates[i].equals(mBaudRate)) {
                         baud = baudValues[i];
+                    }
+                }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
-                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
+                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set RTS high, DTR high
@@ -66,30 +67,30 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows "+count+" bytes available");
-            while ( count > 0) {
+            log.debug("input stream shows " + count + " bytes available");
+            while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
             }
 
             // report status?
             if (log.isInfoEnabled()) {
-                log.info(portName+" port opened at "
-                         +activeSerialPort.getBaudRate()+" baud, sees "
-                         +" DTR: "+activeSerialPort.isDTR()
-                         +" RTS: "+activeSerialPort.isRTS()
-						+" DSR: "+activeSerialPort.isDSR()
-                         +" CTS: "+activeSerialPort.isCTS()
-                         +"  CD: "+activeSerialPort.isCD()
-                         );
+                log.info(portName + " port opened at "
+                        + activeSerialPort.getBaudRate() + " baud, sees "
+                        + " DTR: " + activeSerialPort.isDTR()
+                        + " RTS: " + activeSerialPort.isRTS()
+                        + " DSR: " + activeSerialPort.isDSR()
+                        + " CTS: " + activeSerialPort.isCTS()
+                        + "  CD: " + activeSerialPort.isCD()
+                );
             }
 
             opened = true;
@@ -97,9 +98,9 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+            return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return
@@ -115,24 +116,24 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
         // Register the CAN traffic controller being used for this connection
         TrafficController tc = new LawicellTrafficController();
         this.getSystemConnectionMemo().setTrafficController(tc);
-        
+
         // Now connect to the traffic controller
         log.debug("Connecting port");
         tc.connectPort(this);
-    
+
         // send a request for version information, set 125kbps, open channel
         log.debug("send version request");
-        jmri.jmrix.can.CanMessage m = 
-            new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '4', 13, 'O', 13}, tc.getCanid());
+        jmri.jmrix.can.CanMessage m
+                = new jmri.jmrix.can.CanMessage(new int[]{'V', 13, 'S', '4', 13, 'O', 13}, tc.getCanid());
         m.setTranslated(true);
         tc.sendCanMessage(m, null);
 
         // do central protocol-specific configuration    
         this.getSystemConnectionMemo().setProtocol(getOptionState(option1Name));
-        
+
         this.getSystemConnectionMemo().configureManagers();
     }
-    
+
     // base class methods for the PortController interface
     public DataInputStream getInputStream() {
         if (!opened) {
@@ -143,41 +144,44 @@ public class SerialDriverAdapter extends PortController  implements jmri.jmrix.S
     }
 
     public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
+        if (!opened) {
+            log.error("getOutputStream called before load(), stream not available");
+        }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
+        } catch (java.io.IOException e) {
+            log.error("getOutputStream exception: " + e);
         }
-        catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
+        return null;
     }
 
-    public boolean status() {return opened;}
+    public boolean status() {
+        return opened;
+    }
 
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public String[] validBaudRates() {
         return validSpeeds;
     }
-    
+
     /**
      * And the corresponding values.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
     public int[] validBaudValues() {
         return validSpeedValues;
     }
-    
-    protected String [] validSpeeds = new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};
-    protected int [] validSpeedValues = new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
-    
+
+    protected String[] validSpeeds = new String[]{"57,600", "115,200", "230,400", "250,000", "333,333", "460,800", "500,000"};
+    protected int[] validSpeedValues = new int[]{57600, 115200, 230400, 250000, 333333, 460800, 500000};
+
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
+
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

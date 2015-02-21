@@ -1,5 +1,4 @@
 // SwingTest.java
-
 package jmri.jmrix.rps.swing;
 
 import junit.framework.Test;
@@ -8,18 +7,17 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.rps.swing package.
- * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2008
+ * @version $Revision$
  */
 public class SwingTest extends TestCase {
 
-
-   // from here down is testing infrastructure
-
+    // from here down is testing infrastructure
     public SwingTest(String s) {
         super(s);
     }
-    
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {SwingTest.class.getName()};

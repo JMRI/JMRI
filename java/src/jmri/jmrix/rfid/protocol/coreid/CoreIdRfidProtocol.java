@@ -1,5 +1,4 @@
 // CoreIdRfidProtocol.java
-
 package jmri.jmrix.rfid.protocol.coreid;
 
 import jmri.jmrix.AbstractMRReply;
@@ -13,38 +12,34 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2014
- * @version     $Revision$
+ * @author Matthew Harris Copyright (C) 2014
+ * @version $Revision$
  */
 public class CoreIdRfidProtocol extends RfidProtocol {
 
     private static final int SPECIFICMAXSIZE = 16;
 
     /**
-     * Constructor for CORE-ID RFID Protocol.
-     * Used when a single reader is connected directly to a port, not via a
-     * concentrator.
+     * Constructor for CORE-ID RFID Protocol. Used when a single reader is
+     * connected directly to a port, not via a concentrator.
      */
     public CoreIdRfidProtocol() {
         super();
     }
 
     /**
-     * Constructor for CORE-ID RFID Protocol.
-     * Supports the use of concentrators where a character range is used to
-     * determine the specific reader port.
-     * 
+     * Constructor for CORE-ID RFID Protocol. Supports the use of concentrators
+     * where a character range is used to determine the specific reader port.
+     *
      * @param concentratorFirst - character representing first concentrator port
      * @param concentratorLast - character representing last concentrator port
      * @param portPosition - position of port character in reply string
@@ -67,7 +62,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
     public String getTag(AbstractMRReply msg) {
         StringBuilder sb = new StringBuilder(10);
 
-        for (int i=1; i<11; i++) {
+        for (int i = 1; i < 11; i++) {
             sb.append((char) msg.getElement(i));
         }
 
@@ -83,7 +78,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
     public String getCheckSum(AbstractMRReply msg) {
         StringBuilder sb = new StringBuilder(2);
 
-        for (int i=11; i<13; i++) {
+        for (int i = 11; i < 13; i++) {
             sb.append((char) msg.getElement(i));
         }
 
@@ -92,22 +87,22 @@ public class CoreIdRfidProtocol extends RfidProtocol {
 
     @Override
     public boolean isValid(AbstractMRReply msg) {
-        return ((!isConcentrator && msg.getElement(0)==0x02 && 
-                    (msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x03) ||
-                 (isConcentrator && 
-                    msg.getElement(portPosition)>=concentratorFirst && 
-                    msg.getElement(portPosition)<=concentratorLast &&
-                    (msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x3E ) &&
-                (msg.getElement(SPECIFICMAXSIZE-2)&0xFF)==0x0A &&
-                (msg.getElement(SPECIFICMAXSIZE-3)&0xFF)==0x0D);
+        return ((!isConcentrator && msg.getElement(0) == 0x02
+                && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x03)
+                || (isConcentrator
+                && msg.getElement(portPosition) >= concentratorFirst
+                && msg.getElement(portPosition) <= concentratorLast
+                && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x3E)
+                && (msg.getElement(SPECIFICMAXSIZE - 2) & 0xFF) == 0x0A
+                && (msg.getElement(SPECIFICMAXSIZE - 3) & 0xFF) == 0x0D);
     }
 
     public boolean isCheckSumValid(AbstractMRReply msg) {
         byte[] tag = convertHexString(getTag(msg));
         int checksum = 0;
-        for (int i=0; i<5; i++) {
+        for (int i = 0; i < 5; i++) {
             checksum = checksum ^ tag[i];
-            log.debug("read "+tag[i]);
+            log.debug("read " + tag[i]);
         }
         log.debug("Checksum: " + getCheckSum(msg) + " converted: " + convertHexString(getCheckSum(msg))[0]);
         return checksum == convertHexString(getCheckSum(msg))[0];
@@ -115,14 +110,16 @@ public class CoreIdRfidProtocol extends RfidProtocol {
 
     @Override
     public boolean endOfMessage(AbstractMRReply msg) {
-        if (msg.getNumDataElements()==SPECIFICMAXSIZE) {
-            if (((msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x03 ||
-                 (msg.getElement(SPECIFICMAXSIZE-1)&0xFF)==0x3E ) &&
-                (msg.getElement(SPECIFICMAXSIZE-2)&0xFF)==0x0A &&
-                (msg.getElement(SPECIFICMAXSIZE-3)&0xFF)==0x0D) {
+        if (msg.getNumDataElements() == SPECIFICMAXSIZE) {
+            if (((msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x03
+                    || (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x3E)
+                    && (msg.getElement(SPECIFICMAXSIZE - 2) & 0xFF) == 0x0A
+                    && (msg.getElement(SPECIFICMAXSIZE - 3) & 0xFF) == 0x0D) {
                 return true;
             }
-            if (log.isDebugEnabled()) log.debug("Not a correctly formed message");
+            if (log.isDebugEnabled()) {
+                log.debug("Not a correctly formed message");
+            }
             return true;
         }
         return false;
@@ -143,7 +140,7 @@ public class CoreIdRfidProtocol extends RfidProtocol {
             sb.append(" checksum ");
             sb.append(getCheckSum(msg));
             sb.append(" valid? ");
-            sb.append(isCheckSumValid(msg)?"yes":"no");
+            sb.append(isCheckSumValid(msg) ? "yes" : "no");
             return sb.toString();
         } else {
             return super.toMonitorString(msg);

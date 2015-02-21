@@ -1,23 +1,25 @@
 // LoadAndStoreTestBase.java
 package jmri.configurexml;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import jmri.InstanceManager;
 import jmri.util.FileUtil;
-
-import junit.framework.Assert;
-import junit.framework.TestCase;
-
 import jmri.util.JUnitUtil;
+import junit.framework.Assert;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
 
 /**
- * Base for testing load-and-store of configuration files. <p> Will test each
- * file in a "load" directory by loading it, then storing it, then comparing
- * (with certain lines skipped) against either a file by the same name in the
- * "loadref" directory, or against the original file itself.
+ * Base for testing load-and-store of configuration files.
+ * <p>
+ * Will test each file in a "load" directory by loading it, then storing it,
+ * then comparing (with certain lines skipped) against either a file by the same
+ * name in the "loadref" directory, or against the original file itself.
  *
  * @author Bob Jacobsen Copyright 2009, 2014
  * @since 2.5.5 (renamed & reworked in 3.9 series)
@@ -55,14 +57,14 @@ public class LoadAndStoreTestBase extends TestCase {
         JUnitUtil.initInternalLightManager();
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
-        
-        log.debug("Start check file "+inFile.getCanonicalPath());
-        
+
+        log.debug("Start check file " + inFile.getCanonicalPath());
+
         // load file
         InstanceManager.configureManagerInstance().load(inFile);
 
-		InstanceManager.logixManagerInstance().activateAllLogixs();
-		InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
         new jmri.jmrit.catalog.configurexml.DefaultCatalogTreeManagerXml().readCatalogTrees();
 
         String name = inFile.getName();
@@ -77,15 +79,15 @@ public class LoadAndStoreTestBase extends TestCase {
         if (!compFile.exists()) {
             compFile = inFile;
         }
-        log.debug("   Chose comparison file "+compFile.getCanonicalPath());
+        log.debug("   Chose comparison file " + compFile.getCanonicalPath());
 
         // compare files, except for certain special lines
         BufferedReader inFileStream = new BufferedReader(
                 new InputStreamReader(
-                new FileInputStream(compFile)));
+                        new FileInputStream(compFile)));
         BufferedReader outFileStream = new BufferedReader(
                 new InputStreamReader(
-                new FileInputStream(outFile)));
+                        new FileInputStream(outFile)));
         String inLine;
         String outLine;
         int count = 0;

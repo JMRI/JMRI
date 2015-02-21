@@ -1,10 +1,9 @@
 package jmri.configurexml;
 
+import jmri.LocoAddress;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.LocoAddress;
-
-import org.jdom2.Element;
 
 /**
  * Handle XML configuration for LocoAddress objects.
@@ -14,26 +13,27 @@ import org.jdom2.Element;
  */
 public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
 
-    public LocoAddressXml() {}
+    public LocoAddressXml() {
+    }
 
     /**
-     * Default implementation for storing the contents of a
-     * LocoAddress
+     * Default implementation for storing the contents of a LocoAddress
+     *
      * @param o Object to store, of type LocoAddress
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        LocoAddress p = (LocoAddress)o;
+        LocoAddress p = (LocoAddress) o;
 
         Element element = new Element("locoaddress");
-        
+
         // include contents, we shall also store the old format for backward compatability
         DccLocoAddressXml adapter = new DccLocoAddressXml();
-        
+
         element.addContent(adapter.store(p));
-        
-        if (p!=null) {
-            element.addContent(new Element("number").addContent(""+p.getNumber()));
+
+        if (p != null) {
+            element.addContent(new Element("number").addContent("" + p.getNumber()));
             element.addContent(new Element("protocol").addContent(p.getProtocol().getShortName()));
         } else {
             element.addContent(new Element("number").addContent(""));
@@ -47,16 +47,16 @@ public class LocoAddressXml extends jmri.configurexml.AbstractXmlAdapter {
         log.error("Invalid method called");
         return false;
     }
-    
+
     public LocoAddress getAddress(Element element) {
-        if(element.getChild("number")==null){
+        if (element.getChild("number") == null) {
             DccLocoAddressXml adapter = new DccLocoAddressXml();
             return adapter.getAddress(element.getChild("dcclocoaddress"));
         }
         int addr = 0;
         try {
             addr = Integer.parseInt(element.getChild("number").getText());
-        } catch (java.lang.NumberFormatException e){
+        } catch (java.lang.NumberFormatException e) {
             return null;
         }
         String protocol = element.getChild("protocol").getText();

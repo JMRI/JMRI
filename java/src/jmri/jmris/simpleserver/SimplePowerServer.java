@@ -29,8 +29,8 @@ public class SimplePowerServer extends AbstractPowerServer {
     }
 
     public SimplePowerServer(JmriConnection cnctn) {
-    	this.connection = cnctn;
-    	mgrOK();
+        this.connection = cnctn;
+        mgrOK();
     }
 
     /*
@@ -66,12 +66,12 @@ public class SimplePowerServer extends AbstractPowerServer {
             setOffStatus();
         }
     }
-    
+
     public void sendStatus(String status) throws IOException {
-    	if (this.output != null) {
-    		this.output.writeBytes(status);
-    	} else {
-    		this.connection.sendMessage(status);
-    	}
+        if (this.output != null) {
+            this.output.writeBytes(status);
+        } else {
+            this.connection.sendMessage(status);
+        }
     }
 }

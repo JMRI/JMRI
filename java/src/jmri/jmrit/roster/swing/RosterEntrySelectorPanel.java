@@ -1,5 +1,4 @@
 // RosterEntrySelectorPanel.java
-
 package jmri.jmrit.roster.swing;
 
 import java.awt.FlowLayout;
@@ -19,10 +18,10 @@ import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelector, RosterGroupSelector {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 3641274360656995669L;
-	private RosterEntryComboBox entryCombo;
+     *
+     */
+    private static final long serialVersionUID = 3641274360656995669L;
+    private RosterEntryComboBox entryCombo;
     private RosterGroupComboBox groupCombo;
 
     public RosterEntrySelectorPanel() {
@@ -110,7 +109,7 @@ public class RosterEntrySelectorPanel extends JPanel implements RosterEntrySelec
     public String getNonSelectedItem() {
         return this.entryCombo.getNonSelectedItem();
     }
-    
+
     public void setNonSelectedItem(String itemText) {
         this.entryCombo.setNonSelectedItem(itemText);
     }

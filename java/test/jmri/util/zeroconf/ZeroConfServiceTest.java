@@ -1,5 +1,4 @@
 // ZeroConfServiceTest.java
-
 package jmri.util.zeroconf;
 
 import junit.framework.Assert;
@@ -9,18 +8,18 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the ZeroConfService class
- * @author      Paul Bender  Copyright (C) 2014
- * @version     $Revision: 17977 $
+ *
+ * @author Paul Bender Copyright (C) 2014
+ * @version $Revision: 17977 $
  */
 public class ZeroConfServiceTest extends TestCase {
 
     public void testCreate() {
-        ZeroConfService zcs=ZeroConfService.create("_http._tcp.local.",12345);
+        ZeroConfService zcs = ZeroConfService.create("_http._tcp.local.", 12345);
         Assert.assertNotNull(zcs);
-    } 
+    }
 
     // from here down is testing infrastructure
-
     public ZeroConfServiceTest(String s) {
         super(s);
     }
@@ -30,7 +29,7 @@ public class ZeroConfServiceTest extends TestCase {
         String[] testCaseName = {ZeroConfServiceTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(ZeroConfServiceTest.class);

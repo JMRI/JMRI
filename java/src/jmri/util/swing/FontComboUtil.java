@@ -1,9 +1,6 @@
 // FontComboUtil.java
-
 package jmri.util.swing;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -18,6 +15,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This utility class provides methods that initialise and return a JComboBox
@@ -28,20 +27,18 @@ import javax.swing.UIManager;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.13.1
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.13.1
  */
 public class FontComboUtil {
 
@@ -56,9 +53,9 @@ public class FontComboUtil {
     private static List<String> proportional = null;
     private static List<String> character = null;
     private static List<String> symbol = null;
-    
+
     private static boolean prepared = false;
-    
+
     public static List<String> getFonts(int which) {
         if (!prepared) {
             prepareFontLists();
@@ -81,6 +78,7 @@ public class FontComboUtil {
 
     /**
      * Determine if the specified font family is a symbol font
+     *
      * @param font the font family to check
      * @return true if a symbol font; false if not
      */
@@ -90,12 +88,12 @@ public class FontComboUtil {
         }
         return symbol.contains(font);
     }
-    
+
     /**
      * Method to initialise the font lists on first access
      */
     public static synchronized void prepareFontLists() {
-        
+
         if (prepared) {
             // Normally we shouldn't get here except when the initialisation
             // thread has taken a bit longer than normal.
@@ -116,7 +114,7 @@ public class FontComboUtil {
         FontRenderContext frc = new FontRenderContext(null, false, false);
 
         // Loop through all available font families
-        for (String s: GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
+        for (String s : GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames()) {
 
             // Add to the 'all' fonts list
             all.add(s);
@@ -134,9 +132,9 @@ public class FontComboUtil {
                 // Check if the widths of a 'narrow' letter (I)
                 // a 'wide' letter (W) and a 'space' ( ) are the same.
                 double w;
-                if (f.getStringBounds("I", frc).getWidth() ==
-                        (w = f.getStringBounds("W", frc).getWidth()) &&
-                        w == f.getStringBounds(" ", frc).getWidth()) {
+                if (f.getStringBounds("I", frc).getWidth()
+                        == (w = f.getStringBounds("W", frc).getWidth())
+                        && w == f.getStringBounds(" ", frc).getWidth()) {
                     // Yes, they're all the same width - add to the monospaced list
                     monospaced.add(s);
                 } else {
@@ -154,8 +152,9 @@ public class FontComboUtil {
     }
 
     /**
-     * Return a JComboBox containing all available font families.
-     * The list is displayed using a preview of the font at the standard size.
+     * Return a JComboBox containing all available font families. The list is
+     * displayed using a preview of the font at the standard size.
+     *
      * @see #getFontCombo(int, int, boolean)
      * @return List of all available font families as a {@link JComboBox}
      */
@@ -164,11 +163,13 @@ public class FontComboUtil {
     }
 
     /**
-     * Return a JComboBox containing all available font families.
-     * The list is displayed using a preview of the font at the standard size
-     * and with the option of the name alongside in the regular dialog font.
+     * Return a JComboBox containing all available font families. The list is
+     * displayed using a preview of the font at the standard size and with the
+     * option of the name alongside in the regular dialog font.
+     *
      * @see #getFontCombo(int, int, boolean)
-     * @param previewOnly set to True to show only a preview in the list; False to show both name and preview
+     * @param previewOnly set to True to show only a preview in the list; False
+     * to show both name and preview
      * @return List of specified font families as a {@link JComboBox}
      */
     public static JComboBox<String> getFontCombo(boolean previewOnly) {
@@ -176,11 +177,13 @@ public class FontComboUtil {
     }
 
     /**
-     * Return a JComboBox containing the specified set of font families.
-     * The list is displayed using a preview of the font at the standard size.
+     * Return a JComboBox containing the specified set of font families. The
+     * list is displayed using a preview of the font at the standard size.
+     *
      * @see #getFontCombo(int, int, boolean)
      * @param which the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or {@link #ALL}
+     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
+     * {@link #ALL}
      * @return List of specified font families as a {@link JComboBox}
      */
     public static JComboBox<String> getFontCombo(int which) {
@@ -188,13 +191,16 @@ public class FontComboUtil {
     }
 
     /**
-     * Return a JComboBox containing the specified set of font families.
-     * The list is displayed using a preview of the font at the standard size
-     * and with the option of the name alongside in the regular dialog font.
+     * Return a JComboBox containing the specified set of font families. The
+     * list is displayed using a preview of the font at the standard size and
+     * with the option of the name alongside in the regular dialog font.
+     *
      * @see #getFontCombo(int, int, boolean)
      * @param which the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or {@link #ALL}
-     * @param previewOnly set to True to show only a preview in the list; False to show both name and preview
+     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
+     * {@link #ALL}
+     * @param previewOnly set to True to show only a preview in the list; False
+     * to show both name and preview
      * @return List of specified font families as a {@link JComboBox}
      */
     public static JComboBox<String> getFontCombo(int which, boolean previewOnly) {
@@ -202,12 +208,14 @@ public class FontComboUtil {
     }
 
     /**
-     * Return a JComboBox containing the specified set of font families.
-     * The list is displayed using a preview of the font at the specified
-     * point size.
+     * Return a JComboBox containing the specified set of font families. The
+     * list is displayed using a preview of the font at the specified point
+     * size.
+     *
      * @see #getFontCombo(int, int, boolean)
      * @param which the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or {@link #ALL}
+     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
+     * {@link #ALL}
      * @param size point size for the preview
      * @return List of specified font families as a {@link JComboBox}
      */
@@ -216,10 +224,9 @@ public class FontComboUtil {
     }
 
     /**
-     * Return a JComboBox containing the specified set of font families.
-     * The list is displayed using a preview of the font at the specified
-     * point size and with the option of the name alongside in the regular
-     * dialog font.
+     * Return a JComboBox containing the specified set of font families. The
+     * list is displayed using a preview of the font at the specified point size
+     * and with the option of the name alongside in the regular dialog font.
      * <p>
      * Available font sets:
      * <ul>
@@ -240,10 +247,13 @@ public class FontComboUtil {
      *  });
      *  fontFamily.setSelectedItem(myObject.getFontFamily());
      * </pre>
+     *
      * @param which the set of fonts to return; {@link #MONOSPACED},
-     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or {@link #ALL}
+     * {@link #PROPORTIONAL}, {@link #CHARACTER}, {@link #SYMBOL} or
+     * {@link #ALL}
      * @param size point size for the preview
-     * @param previewOnly true to show only a preview in the list; false to show both name and preview
+     * @param previewOnly true to show only a preview in the list; false to show
+     * both name and preview
      * @return List of specified font families as a {@link JComboBox}
      */
     public static JComboBox<String> getFontCombo(int which, final int size, final boolean previewOnly) {
@@ -253,7 +263,7 @@ public class FontComboUtil {
         // Assign a custom renderer
         fontList.setRenderer(new ListCellRenderer<String>() {
             public Component getListCellRendererComponent(JList<? extends String> list,
-                    String family,  // name of the current font family
+                    String family, // name of the current font family
                     int index,
                     boolean isSelected,
                     boolean hasFocus) {
@@ -287,11 +297,11 @@ public class FontComboUtil {
                     preview.setFont(list.getFont());
                     preview.setText(family + " " + Bundle.getMessage("FontSymbol"));
                 } else {
-                    preview.setFont(new Font(family, Font.PLAIN, size==0?list.getFont().getSize():size));
+                    preview.setFont(new Font(family, Font.PLAIN, size == 0 ? list.getFont().getSize() : size));
                 }
 
                 // Set the size of the labels
-                name.setPreferredSize(new Dimension((index==-1 && !previewOnly?name.getMaximumSize().width*2:name.getMaximumSize().width), name.getMaximumSize().height + 4));
+                name.setPreferredSize(new Dimension((index == -1 && !previewOnly ? name.getMaximumSize().width * 2 : name.getMaximumSize().width), name.getMaximumSize().height + 4));
                 preview.setPreferredSize(new Dimension(name.getMaximumSize().width, preview.getMaximumSize().height));
 
                 // Centre align both labels vertically
@@ -308,7 +318,7 @@ public class FontComboUtil {
                     p.add(name);
                     p.add(preview);
                 } else if (index == -1) {
-                    name.setPreferredSize(new Dimension(name.getPreferredSize().width+20, name.getPreferredSize().height - 2));
+                    name.setPreferredSize(new Dimension(name.getPreferredSize().width + 20, name.getPreferredSize().height - 2));
                     p.add(name);
                 } else {
                     p.add(preview);
@@ -316,7 +326,7 @@ public class FontComboUtil {
 
                 // 'Oribble hack as CDE/Motif JComboBox doesn't seem to like
                 // displaying JPanels in the JComboBox header
-                if(UIManager.getLookAndFeel().getName().equals("CDE/Motif") && index==-1) {
+                if (UIManager.getLookAndFeel().getName().equals("CDE/Motif") && index == -1) {
                     return name;
                 }
                 return p;

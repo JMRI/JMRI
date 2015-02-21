@@ -1,37 +1,56 @@
 // DefaultInstanceInitializer.java
-
 package jmri.managers;
 
-import jmri.*;
-
+import jmri.AudioManager;
+import jmri.BlockManager;
+import jmri.CatalogTreeManager;
+import jmri.ClockControl;
+import jmri.ConditionalManager;
+import jmri.IdTagManager;
+import jmri.InstanceManager;
+import jmri.LightManager;
+import jmri.LogixManager;
+import jmri.MemoryManager;
+import jmri.ProgrammerManager;
+import jmri.ReporterManager;
+import jmri.RouteManager;
+import jmri.SectionManager;
+import jmri.SensorManager;
+import jmri.SignalGroupManager;
+import jmri.SignalHeadManager;
+import jmri.SignalMastLogicManager;
+import jmri.SignalMastManager;
+import jmri.SignalSystemManager;
+import jmri.Timebase;
+import jmri.TransitManager;
+import jmri.TurnoutManager;
 import jmri.implementation.DefaultClockControl;
+import jmri.jmrit.audio.DefaultAudioManager;
 import jmri.jmrit.catalog.DefaultCatalogTreeManager;
 import jmri.jmrit.roster.RosterIconFactory;
 import jmri.jmrit.vsdecoder.VSDecoderManager;
-import jmri.jmrit.audio.DefaultAudioManager;
 
 /**
- * Provide the usual default implementations for
- * the {@link jmri.InstanceManager}.
+ * Provide the usual default implementations for the
+ * {@link jmri.InstanceManager}.
  * <P>
  * Not all {@link jmri.InstanceManager} related classes are provided by this
- * class. See the discussion in {@link jmri.InstanceManager} of initilization methods.
+ * class. See the discussion in {@link jmri.InstanceManager} of initilization
+ * methods.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2001, 2008, 2014
- * @version			$Revision$
- * @since           2.9.4
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
+ * @version	$Revision$
+ * @since 2.9.4
  */
 public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
@@ -93,7 +112,7 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
         if (type == SensorManager.class) {
             return new jmri.managers.ProxySensorManager();
         }
-        
+
         // @TODO Should do "implements InstanceManagerAutoDefault" instead
         if (type == SectionManager.class) {
             return new SectionManager();
@@ -125,8 +144,9 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
 
         if (type == Timebase.class) {
             Timebase timebase = new jmri.jmrit.simpleclock.SimpleTimebase();
-            if (InstanceManager.getDefault(jmri.ConfigureManager.class) != null)
-                InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);        
+            if (InstanceManager.getDefault(jmri.ConfigureManager.class) != null) {
+                InstanceManager.getDefault(jmri.ConfigureManager.class).registerConfig(timebase, jmri.Manager.TIMEBASE);
+            }
             return timebase;
         }
 
@@ -138,7 +158,6 @@ public class DefaultInstanceInitializer implements jmri.InstanceInitializer {
         if (type == TurnoutManager.class) {
             return new jmri.managers.ProxyTurnoutManager();
         }
-
 
         if (type == VSDecoderManager.class) {
             return VSDecoderManager.instance();

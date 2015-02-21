@@ -219,7 +219,7 @@ public class TabbedPreferences extends AppConfigBase {
         }
         return false;
     }
-    
+
     // package only - for TabbedPreferencesFrame
     boolean invokeSaveOptions() {
         boolean restartRequired = false;

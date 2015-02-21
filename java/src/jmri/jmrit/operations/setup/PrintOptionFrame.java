@@ -14,11 +14,11 @@ import jmri.jmrit.operations.OperationsFrame;
 public class PrintOptionFrame extends OperationsFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3366352601871116274L;
+     *
+     */
+    private static final long serialVersionUID = -3366352601871116274L;
 
-	public PrintOptionFrame() {
+    public PrintOptionFrame() {
         super(Bundle.getMessage("TitlePrintOptions"), new PrintOptionPanel());
     }
 
@@ -36,7 +36,7 @@ public class PrintOptionFrame extends OperationsFrame {
         menuBar.add(toolMenu);
         setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_PrintOptions", true); // NOI18N
-        
+
         initMinimumSize();
     }
 

@@ -1,12 +1,10 @@
 /* LnOpsModeProgrammer.java */
-
 package jmri.jmrix.loconet;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.beans.*;
 import java.util.*;
-import java.beans.*;
 
 import jmri.*;
 import jmri.managers.DefaultProgrammerManager;
@@ -14,17 +12,19 @@ import jmri.managers.DefaultProgrammerManager;
 /**
  * Provide an Ops Mode Programmer via a wrapper what works with the LocoNet
  * SlotManager object.
- * @see             jmri.Programmer
- * @author			Bob Jacobsen Copyright (C) 2002
- * @version			$Revision$
+ *
+ * @see jmri.Programmer
+ * @author	Bob Jacobsen Copyright (C) 2002
+ * @version	$Revision$
  */
-public class LnOpsModeProgrammer implements AddressedProgrammer  {
+public class LnOpsModeProgrammer implements AddressedProgrammer {
 
     SlotManager mSlotMgr;
     int mAddress;
     boolean mLongAddr;
+
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
-                               int pAddress, boolean pLongAddr) {
+            int pAddress, boolean pLongAddr) {
         mSlotMgr = pSlotMgr;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
@@ -48,9 +48,11 @@ public class LnOpsModeProgrammer implements AddressedProgrammer  {
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         writeCV(Integer.parseInt(CV), val, p);
     }
+
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         readCV(Integer.parseInt(CV), p);
     }
+
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
         confirmCV(Integer.parseInt(CV), val, p);
     }
@@ -64,12 +66,15 @@ public class LnOpsModeProgrammer implements AddressedProgrammer  {
             mode = m;
             notifyPropertyChange("Mode", mode, m);
         } else {
-            throw new IllegalArgumentException("Invalid requested mode: "+m);
+            throw new IllegalArgumentException("Invalid requested mode: " + m);
         }
     }
-    public final ProgrammingMode getMode() { return mode; }
 
-     /**
+    public final ProgrammingMode getMode() {
+        return mode;
+    }
+
+    /**
      * Types implemented here.
      */
     @Override
@@ -102,35 +107,46 @@ public class LnOpsModeProgrammer implements AddressedProgrammer  {
     }
 
     /**
-     * Can this ops-mode programmer read back values?  Yes,
-     * if transponding hardware is present, but we don't check that here.
+     * Can this ops-mode programmer read back values? Yes, if transponding
+     * hardware is present, but we don't check that here.
+     *
      * @return always true
      */
     @Override
     public boolean getCanRead() {
         return true;
     }
+
     @Override
-    public boolean getCanRead(String addr) { 
+    public boolean getCanRead(String addr) {
         return getCanRead();
     }
-    
+
     @Override
-    public boolean getCanWrite()  { return true; }
+    public boolean getCanWrite() {
+        return true;
+    }
+
     @Override
-    public boolean getCanWrite(String addr) { 
-        return getCanWrite() && Integer.parseInt(addr)<=1024;
+    public boolean getCanWrite(String addr) {
+        return getCanWrite() && Integer.parseInt(addr) <= 1024;
     }
 
     public String decodeErrorCode(int i) {
         return mSlotMgr.decodeErrorCode(i);
     }
-    
-    public boolean getLongAddress() {return mLongAddr;}
-    
-    public int getAddressNumber() { return mAddress; }
-    
-    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
+
+    public boolean getLongAddress() {
+        return mLongAddr;
+    }
+
+    public int getAddressNumber() {
+        return mAddress;
+    }
+
+    public String getAddress() {
+        return "" + getAddressNumber() + " " + getLongAddress();
+    }
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(LnOpsModeProgrammer.class.getName());

@@ -8,6 +8,7 @@ package jmri.jmrix.qsi;
  * @version	$Revision$
  */
 public abstract class QsiPortController extends jmri.jmrix.AbstractSerialPortController {
+
     // base class. Implementations will provide InputStream and OutputStream
     // objects to QsiTrafficController classes, who in turn will deal in messages.
     protected QsiPortController(QsiSystemConnectionMemo connectionMemo) {

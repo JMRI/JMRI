@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract interface between the a JMRI Programmer and a network connection
- *<p>
+ * <p>
  * Connects to default global programmer at construction time.
  *
  * @author Paul Bender Copyright (C) 2012
@@ -18,8 +18,11 @@ import org.slf4j.LoggerFactory;
 abstract public class AbstractProgrammerServer implements jmri.ProgListener {
 
     private Programmer p = null;
-    protected Programmer getProgrammer() { return p; }
-    
+
+    protected Programmer getProgrammer() {
+        return p;
+    }
+
     protected int lastCV = -1;
 
     public AbstractProgrammerServer() {

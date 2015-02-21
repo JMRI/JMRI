@@ -1,14 +1,14 @@
 // Message.java
-
 package jmri.jmrix;
 
 /**
  * Basic interface for messages to and from the layout hardware
  *
  * @author jake Copyright 2008
- * @version   $Revision$
+ * @version $Revision$
  */
 public interface Message {
+
     int getElement(int n);
 
     int getNumDataElements();
@@ -16,5 +16,5 @@ public interface Message {
     void setElement(int n, int v);
 
     String toString();
-    
+
 }

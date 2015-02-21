@@ -1,17 +1,16 @@
 // DefaultConditionalTest.java
-
 package jmri.implementation;
 
 import jmri.*;
 
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
  * Test the DefaultConditional implementation class
- * @author      Bob Jacobsen  Copyright (C) 2015
+ *
+ * @author Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultConditionalTest extends NamedBeanTest {
 
@@ -19,7 +18,7 @@ public class DefaultConditionalTest extends NamedBeanTest {
      * Operate parent NamedBeanTest tests.
      */
     protected NamedBean createInstance() {
-	    return new DefaultConditional("IXIC 0");
+        return new DefaultConditional("IXIC 0");
     }
 
     public void testCtor() {
@@ -28,18 +27,17 @@ public class DefaultConditionalTest extends NamedBeanTest {
 
     public void testBasicBeanOperations() {
         Conditional ix1 = new DefaultConditional("IXIC 2");
-        
+
         Conditional ix2 = new DefaultConditional("IXIC 3");
-        
+
         Assert.assertTrue("object not equals", !ix1.equals(ix2));
         Assert.assertTrue("object not equals reverse", !ix2.equals(ix1));
-        
+
         Assert.assertTrue("hash not equals", ix1.hashCode() != ix2.hashCode());
-        
+
     }
 
     // from here down is testing infrastructure
-
     public DefaultConditionalTest(String s) {
         super(s);
     }

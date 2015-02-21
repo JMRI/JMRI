@@ -1,13 +1,10 @@
 package apps.configurexml;
 
+import apps.PerformScriptModel;
 import jmri.util.FileUtil;
-
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import apps.PerformScriptModel;
-
-import org.jdom2.Element;
 
 /**
  * Handle XML persistance of PerformScriptModel objects
@@ -24,6 +21,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Default implementation for storing the model contents
+     *
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
@@ -39,6 +37,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Object should be loaded after basic GUI constructed
+     *
      * @return true to defer loading
      * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
@@ -50,14 +49,15 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Create object from XML file
+     *
      * @param e Top level Element to unpack.
      * @return true if successful
-      */
+     */
     public boolean load(Element e) {
-    	boolean result = true;
+        boolean result = true;
         String fileName = e.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);
-        log.info("Run file "+fileName);
+        log.info("Run file " + fileName);
 
         // run the script
         jmri.util.PythonInterp.runScript(fileName);
@@ -72,8 +72,9 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");

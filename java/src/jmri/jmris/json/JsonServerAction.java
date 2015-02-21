@@ -6,11 +6,11 @@ import javax.swing.AbstractAction;
 public class JsonServerAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6621731521962689693L;
+     *
+     */
+    private static final long serialVersionUID = -6621731521962689693L;
 
-	public JsonServerAction(String s) {
+    public JsonServerAction(String s) {
         super(s);
     }
 

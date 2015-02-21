@@ -1,5 +1,4 @@
 // MonitorFrameTest.java
-
 package jmri.jmrix.pricom.pockettester;
 
 import junit.framework.Test;
@@ -8,8 +7,9 @@ import junit.framework.TestSuite;
 
 /**
  * JUnit tests for the MonitorFrame class
- * @author		Bob Jacobsen  Copyright 2005
- * @version		$Revision$
+ *
+ * @author	Bob Jacobsen Copyright 2005
+ * @version	$Revision$
  */
 public class MonitorFrameTest extends TestCase {
 
@@ -26,7 +26,7 @@ public class MonitorFrameTest extends TestCase {
         f.asciiFormattedMessage(PocketTesterTest.version);
         f.asciiFormattedMessage(PocketTesterTest.speed0003A);
         f.asciiFormattedMessage(PocketTesterTest.idlePacket);
-        
+
         f.dispose();
     }
 
@@ -48,4 +48,3 @@ public class MonitorFrameTest extends TestCase {
     }
 
 }
-

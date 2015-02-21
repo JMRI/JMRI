@@ -18,12 +18,11 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
-import jmri.util.swing.*;
-import java.util.ArrayList;
 
 @SuppressWarnings("serial")
 public class VSDSoundsPanel extends JmriPanel {
@@ -32,38 +31,40 @@ public class VSDSoundsPanel extends JmriPanel {
     VSDecoderPane main_pane;
 
     public VSDSoundsPanel() {
-	super();
+        super();
     }
 
     public VSDSoundsPanel(String dec, VSDecoderPane dad) {
-	super();
-	decoder_id = dec;
-	main_pane = dad;
-	initComponents();
+        super();
+        decoder_id = dec;
+        main_pane = dad;
+        initComponents();
 
     }
 
-    public void init() {}
+    public void init() {
+    }
 
     public void initContext(Object context) {
-	initComponents();
+        initComponents();
     }
 
     public void initComponents() {
 
-	this.setLayout(new GridLayout(0, 3));
+        this.setLayout(new GridLayout(0, 3));
 
-	if (main_pane.getDecoder() == null) {
-	    log.debug("No decoder!");
-	    return;
-	}
-	
-	ArrayList<SoundEvent> elist = new ArrayList<SoundEvent>(main_pane.getDecoder().getEventList());
-	for (SoundEvent e : elist) {
-	    if (e.getButton() != null)
-		log.debug("adding button " + e.getButton().toString());
-		this.add(e.getButton());
-	}
+        if (main_pane.getDecoder() == null) {
+            log.debug("No decoder!");
+            return;
+        }
+
+        ArrayList<SoundEvent> elist = new ArrayList<SoundEvent>(main_pane.getDecoder().getEventList());
+        for (SoundEvent e : elist) {
+            if (e.getButton() != null) {
+                log.debug("adding button " + e.getButton().toString());
+            }
+            this.add(e.getButton());
+        }
     }
 
     private static final Logger log = LoggerFactory.getLogger(VSDSoundsPanel.class.getName());

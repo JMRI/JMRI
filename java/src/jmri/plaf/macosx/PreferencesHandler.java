@@ -9,7 +9,7 @@ import java.util.EventObject;
  * @author rhwood
  */
 public interface PreferencesHandler {
-    
+
     abstract public void handlePreferences(EventObject eo);
 
 }

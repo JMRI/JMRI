@@ -1,5 +1,4 @@
 // AudioSourceFrame.java
-
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -32,31 +31,29 @@ import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class AudioSourceFrame extends AbstractAudioFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -933611748183387484L;
+     *
+     */
+    private static final long serialVersionUID = -933611748183387484L;
 
-	private static int counter = 1;
+    private static int counter = 1;
 
     private boolean _newSource;
-    
+
     private final Object lock = new Object();
 
     // UI components for Add/Edit Source
@@ -73,10 +70,10 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //    JLabel loopDelayUnitsLabel = new JLabel(rba.getString("UnitMS"));
     JCheckBox loopInfinite = new JCheckBox(rba.getString("LabelLoopInfinite"));
     JPanelVector3f position = new JPanelVector3f("",
-                                                 rba.getString("UnitUnits"));
+            rba.getString("UnitUnits"));
     JCheckBox positionRelative = new JCheckBox(rba.getString("LabelPositionRelative"));
     JPanelVector3f velocity = new JPanelVector3f(rba.getString("LabelVelocity"),
-                                                 rba.getString("UnitU/S"));
+            rba.getString("UnitU/S"));
     JPanelSliderf gain = new JPanelSliderf(rba.getString("LabelGain"), 0.0f, 1.0f, 5, 4);
     JPanelSliderf pitch = new JPanelSliderf(rba.getString("LabelPitch"), 0.5f, 2.0f, 6, 5);
     JLabel refDistanceLabel = new JLabel(rba.getString("LabelReferenceDistance"));
@@ -92,7 +89,6 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     JSpinner fadeOutTime = new JSpinner();
     JLabel fadeTimeUnitsLabel = new JLabel(rba.getString("UnitMS"));
 
-
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
         super(title, model);
@@ -104,40 +100,42 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         super.layoutFrame();
         JPanel p;
 
-        p = new JPanel(); p.setLayout(new FlowLayout());
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         p.add(assignedBufferLabel);
         p.add(assignedBuffer);
         main.add(p);
 
-        p = new JPanel(); p.setLayout(new FlowLayout());
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(rba.getString("LabelLoop")),
-                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                BorderFactory.createTitledBorder(rba.getString("LabelLoop")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p.add(loopMinLabel);
         loopMin.setPreferredSize(new JTextField(8).getPreferredSize());
-        loopMin.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
+        loopMin.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         loopMin.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 loopMax.setValue(
-                        ((Integer)loopMin.getValue()
-                        <(Integer)loopMax.getValue())
-                        ?loopMax.getValue()
-                        :loopMin.getValue());
+                        ((Integer) loopMin.getValue()
+                        < (Integer) loopMax.getValue())
+                                ? loopMax.getValue()
+                                : loopMin.getValue());
             }
         });
         p.add(loopMin);
         p.add(loopMaxLabel);
         loopMax.setPreferredSize(new JTextField(8).getPreferredSize());
-        loopMax.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
+        loopMax.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         loopMax.addChangeListener(new ChangeListener() {
             @Override
             public void stateChanged(ChangeEvent e) {
                 loopMin.setValue(
-                        ((Integer)loopMax.getValue()
-                        <(Integer)loopMin.getValue())
-                        ?loopMax.getValue()
-                        :loopMin.getValue());
+                        ((Integer) loopMax.getValue()
+                        < (Integer) loopMin.getValue())
+                                ? loopMax.getValue()
+                                : loopMin.getValue());
             }
         });
         p.add(loopMax);
@@ -184,25 +182,28 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 //        p.add(loopDelayUnitsLabel);
 //        main.add(p);
 //
-        p = new JPanel(); p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(rba.getString("LabelPosition")),
-                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                BorderFactory.createTitledBorder(rba.getString("LabelPosition")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p.add(position);
         p.add(positionRelative);
         main.add(p);
-        
+
         main.add(velocity);
         main.add(gain);
         main.add(pitch);
 
-        p = new JPanel(); p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
+        p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(rba.getString("LabelDistances")),
-                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                BorderFactory.createTitledBorder(rba.getString("LabelDistances")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         JPanel p2;
-        p2 = new JPanel(); p2.setLayout(new FlowLayout());
+        p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
         p2.add(refDistanceLabel);
         refDistance.setPreferredSize(new JTextField(8).getPreferredSize());
         refDistance.setModel(
@@ -212,10 +213,10 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 maxDistance.setValue(
-                        ((Float)refDistance.getValue()
-                        <(Float)maxDistance.getValue())
-                        ?maxDistance.getValue()
-                        :refDistance.getValue());
+                        ((Float) refDistance.getValue()
+                        < (Float) maxDistance.getValue())
+                                ? maxDistance.getValue()
+                                : refDistance.getValue());
             }
         });
         p2.add(refDistance);
@@ -229,17 +230,18 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 refDistance.setValue(
-                        ((Float)maxDistance.getValue()
-                        <(Float)refDistance.getValue())
-                        ?maxDistance.getValue()
-                        :refDistance.getValue());
+                        ((Float) maxDistance.getValue()
+                        < (Float) refDistance.getValue())
+                                ? maxDistance.getValue()
+                                : refDistance.getValue());
             }
         });
         p2.add(maxDistance);
         p2.add(distancesLabel);
         p.add(p2);
 
-        p2 = new JPanel(); p2.setLayout(new FlowLayout());
+        p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
         p2.add(rollOffFactorLabel);
         rollOffFactor.setPreferredSize(new JTextField(8).getPreferredSize());
         rollOffFactor.setModel(
@@ -249,24 +251,24 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p.add(p2);
         main.add(p);
 
-        p = new JPanel(); p.setLayout(new FlowLayout());
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(rba.getString("LabelFadeTimes")),
-                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                BorderFactory.createTitledBorder(rba.getString("LabelFadeTimes")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         p.add(fadeInTimeLabel);
         fadeInTime.setPreferredSize(new JTextField(8).getPreferredSize());
-        fadeInTime.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
+        fadeInTime.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         p.add(fadeInTime);
 
         p.add(fadeOutTimeLabel);
         fadeOutTime.setPreferredSize(new JTextField(8).getPreferredSize());
-        fadeOutTime.setModel(new SpinnerNumberModel(0,0,Integer.MAX_VALUE,1));
+        fadeOutTime.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
         p.add(fadeOutTime);
 
         p.add(fadeTimeUnitsLabel);
         main.add(p);
-
 
         JButton ok;
         frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
@@ -283,8 +285,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
      */
     @Override
     public void resetFrame() {
-        synchronized(lock) {
-            sysName.setText("IAS"+counter++);
+        synchronized (lock) {
+            sysName.setText("IAS" + counter++);
         }
         userName.setText(null);
         assignedBuffer.setSelectedIndex(0);
@@ -293,9 +295,9 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         loopMax.setValue(AudioSource.LOOP_NONE);
 //        loopMinDelay.setValue(0);
 //        loopMaxDelay.setValue(0);
-        position.setValue(new Vector3f(0,0,0));
+        position.setValue(new Vector3f(0, 0, 0));
         positionRelative.setSelected(false);
-        velocity.setValue(new Vector3f(0,0,0));
+        velocity.setValue(new Vector3f(0, 0, 0));
         gain.setValue(1.0f);
         pitch.setValue(1.0f);
         refDistance.setValue(1.0f);
@@ -317,12 +319,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         AudioManager am = InstanceManager.audioManagerInstance();
         String ab = s.getAssignedBufferName();
         Audio b = am.getAudio(ab);
-        if (b!=null) {
-            assignedBuffer.setSelectedItem(b.getUserName()==null?ab:b.getUserName());
+        if (b != null) {
+            assignedBuffer.setSelectedItem(b.getUserName() == null ? ab : b.getUserName());
         }
-        loopInfinite.setSelected((s.getMinLoops()==AudioSource.LOOP_CONTINUOUS));
-        loopMin.setValue(loopInfinite.isSelected()?0:s.getMinLoops());
-        loopMax.setValue(loopInfinite.isSelected()?0:s.getMaxLoops());
+        loopInfinite.setSelected((s.getMinLoops() == AudioSource.LOOP_CONTINUOUS));
+        loopMin.setValue(loopInfinite.isSelected() ? 0 : s.getMinLoops());
+        loopMax.setValue(loopInfinite.isSelected() ? 0 : s.getMaxLoops());
 //        loopMinDelay.setValue(s.getMinLoopDelay());
 //        loopMaxDelay.setValue(s.getMaxLoopDelay());
         position.setValue(s.getPosition());
@@ -340,12 +342,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     public void updateBufferList() {
-        AudioManager am=InstanceManager.audioManagerInstance();
+        AudioManager am = InstanceManager.audioManagerInstance();
         assignedBuffer.removeAllItems();
         assignedBuffer.addItem("Select buffer from list");
-        for (String s: am.getSystemNameList(Audio.BUFFER)) {
-            String u=am.getAudio(s).getUserName();
-            if (u!=null) {
+        for (String s : am.getSystemNameList(Audio.BUFFER)) {
+            String u = am.getAudio(s).getUserName();
+            if (u != null) {
                 assignedBuffer.addItem(u);
             } else {
                 assignedBuffer.addItem(s);
@@ -355,14 +357,18 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
-        if (user.equals("")) user=null;
+        if (user.equals("")) {
+            user = null;
+        }
         String sName = sysName.getText().toUpperCase();
         AudioSource s;
         try {
             AudioManager am = InstanceManager.audioManagerInstance();
             s = (AudioSource) am.provideAudio(sName);
-            if (s==null) throw new AudioException("Problem creating source");
-            if (_newSource && am.getByUserName(user)!=null) {
+            if (s == null) {
+                throw new AudioException("Problem creating source");
+            }
+            if (_newSource && am.getByUserName(user) != null) {
                 am.deregister(s);
                 counter--;
                 throw new AudioException("Duplicate user name - please modify");
@@ -372,8 +378,8 @@ public class AudioSourceFrame extends AbstractAudioFrame {
                 Audio a = am.getAudio((String) assignedBuffer.getSelectedItem());
                 s.setAssignedBuffer(a.getSystemName());
             }
-            s.setMinLoops(loopInfinite.isSelected()?AudioSource.LOOP_CONTINUOUS:(Integer)loopMin.getValue());
-            s.setMaxLoops(loopInfinite.isSelected()?AudioSource.LOOP_CONTINUOUS:(Integer)loopMax.getValue());
+            s.setMinLoops(loopInfinite.isSelected() ? AudioSource.LOOP_CONTINUOUS : (Integer) loopMin.getValue());
+            s.setMaxLoops(loopInfinite.isSelected() ? AudioSource.LOOP_CONTINUOUS : (Integer) loopMax.getValue());
 //            s.setMinLoopDelay((Integer) loopMinDelay.getValue());
 //            s.setMaxLoopDelay((Integer) loopMaxDelay.getValue());
             s.setPosition(position.getValue());
@@ -395,7 +401,6 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AudioSourceFrame.class.getName());
-
 }
 
 /* @(#)AudioSourceFrame.java */

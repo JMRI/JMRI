@@ -1,18 +1,17 @@
 package jmri.jmrix.zimo;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.DccLocoAddress;
-
 import jmri.jmrix.AbstractThrottleManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * MRC implementation of a ThrottleManager.
  * <P>
- * @author	    Bob Jacobsen  Copyright (C) 2001
- * @version         $Revision: 24649 $
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version $Revision: 24649 $
  */
 public class Mx1ThrottleManager extends AbstractThrottleManager {
 
@@ -24,42 +23,46 @@ public class Mx1ThrottleManager extends AbstractThrottleManager {
         this.tc = memo.getMx1TrafficController();
         this.prefix = memo.getSystemPrefix();
     }
-    
+
     Mx1TrafficController tc = null;
     String prefix = "";
 
     public void requestThrottleSetup(LocoAddress a, boolean control) {
         //We do interact
         DccLocoAddress address = (DccLocoAddress) a;
-        log.debug("new Mx1Throttle for "+address); //IN18N
-        notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo)adapterMemo, address), address);
+        log.debug("new Mx1Throttle for " + address); //IN18N
+        notifyThrottleKnown(new Mx1Throttle((Mx1SystemConnectionMemo) adapterMemo, address), address);
     }
 
     /**
      * Addresses 0-10239 can be long
-     **/
+     *
+     */
     public boolean canBeLongAddress(int address) {
-        return ( (address>=0) && (address<=10239) );
+        return ((address >= 0) && (address <= 10239));
     }
-    
+
     /**
      * The short addresses 1-127 are available
-     **/
+     *
+     */
     public boolean canBeShortAddress(int address) {
-        return ( (address>=1) && (address<=127) );
+        return ((address >= 1) && (address <= 127));
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
-    public boolean addressTypeUnique() { return false; }
-    
-    public int supportedSpeedModes() {
-    	return(DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    public boolean addressTypeUnique() {
+        return false;
     }
-    
-    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l){
-        if (super.disposeThrottle(t, l)){
+
+    public int supportedSpeedModes() {
+        return (DccThrottle.SpeedStepMode128 | DccThrottle.SpeedStepMode28);
+    }
+
+    public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
+        if (super.disposeThrottle(t, l)) {
             Mx1Throttle nct = (Mx1Throttle) t;
             nct.throttleDispose();
             return true;

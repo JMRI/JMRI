@@ -1,10 +1,10 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * SRCPThrottleTest.java
@@ -17,12 +17,12 @@ import junit.framework.TestSuite;
 public class SRCPThrottleTest extends TestCase {
 
     public void testCtor() {
-        SRCPBusConnectionMemo sm=new SRCPBusConnectionMemo(new SRCPTrafficController(){
-          @Override
-          public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
-           }
-        },"TEST",1);
-        SRCPThrottle s = new SRCPThrottle(sm,new jmri.DccLocoAddress(1,true));
+        SRCPBusConnectionMemo sm = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+            @Override
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+            }
+        }, "TEST", 1);
+        SRCPThrottle s = new SRCPThrottle(sm, new jmri.DccLocoAddress(1, true));
         Assert.assertNotNull(s);
     }
 

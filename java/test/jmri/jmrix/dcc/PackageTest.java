@@ -1,18 +1,18 @@
 package jmri.jmrix.dcc;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.dcc package
- * @author			Bob Jacobsen
+ *
+ * @author	Bob Jacobsen
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }

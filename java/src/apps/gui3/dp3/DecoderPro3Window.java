@@ -10,11 +10,11 @@ import jmri.jmrit.roster.swing.RosterFrame;
 public class DecoderPro3Window extends RosterFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7080210226059840968L;
+     *
+     */
+    private static final long serialVersionUID = -7080210226059840968L;
 
-	/**
+    /**
      * Loads Decoder Pro 3 with the default set of menus and toolbars
      */
     public DecoderPro3Window() {

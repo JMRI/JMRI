@@ -1,5 +1,4 @@
 // FontUtil.java
-
 package jmri.util;
 
 import java.awt.Font;
@@ -7,18 +6,16 @@ import java.awt.Font;
 /**
  * Common utility methods for working with Fonts.
  * <P>
- * We needed a place to refactor common Font-processing idioms in JMRI
- * code, so this class was created. It's more of a library of procedures
- * than a real class, as (so far) all of the operations have needed no state
- * information.
+ * We needed a place to refactor common Font-processing idioms in JMRI code, so
+ * this class was created. It's more of a library of procedures than a real
+ * class, as (so far) all of the operations have needed no state information.
  * <P>
- * In particular, this is intended to provide Java 2 functionality on a
- * Java 1.1.8 system, or at least try to fake it.
+ * In particular, this is intended to provide Java 2 functionality on a Java
+ * 1.1.8 system, or at least try to fake it.
  *
- * @author Bob Jacobsen  Copyright 2003
+ * @author Bob Jacobsen Copyright 2003
  * @version $Revision$
  */
-
 public class FontUtil {
 
     static public boolean canRestyle() {
@@ -27,7 +24,7 @@ public class FontUtil {
 
     static boolean doInit = true;
     static boolean skip = false;
-    
+
     static void init() {
         doInit = false;
         // see if on a Mac Classic system where shouldnt even try
@@ -35,13 +32,17 @@ public class FontUtil {
             skip = true;
         }
     }
-    
+
     static public Font deriveFont(Font f, int style) {
-        if (doInit) init();
-        
+        if (doInit) {
+            init();
+        }
+
         // dont even attempt this on certain systems
-        if (skip) return f;        
-        
+        if (skip) {
+            return f;
+        }
+
         // on other platforms, try it
         try {
             return f.deriveFont(style);
@@ -56,12 +57,15 @@ public class FontUtil {
     }
 
     static public Font deriveFont(Font f, float size) {
-        if (doInit) init();
+        if (doInit) {
+            init();
+        }
 
         // dont even attempt this on certain systems
-        if (skip) return f;        
-        
-        
+        if (skip) {
+            return f;
+        }
+
         // on other platforms, try it
         try {
             return f.deriveFont(size);

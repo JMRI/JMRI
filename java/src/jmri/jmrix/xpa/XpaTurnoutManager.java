@@ -1,13 +1,12 @@
 // XpaTurnoutManager.java
-
 package jmri.jmrix.xpa;
 
+import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Turnout;
 
 /**
- * Implement turnout manager for Xpa+Modem connections to XPressNet Based 
+ * Implement turnout manager for Xpa+Modem connections to XPressNet Based
  * systems.
  * <P>
  * System names are "PTnnn", where nnn is the turnout number without padding.
@@ -18,13 +17,14 @@ import jmri.Turnout;
 public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     public XpaTurnoutManager() {
-    	
+
     }
 
-    public String getSystemPrefix() { return "P"; }
+    public String getSystemPrefix() {
+        return "P";
+    }
 
     // Xpa-specific methods
-
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr = Integer.valueOf(systemName.substring(2)).intValue();
         Turnout t = new XpaTurnout(addr);
@@ -33,7 +33,9 @@ public class XpaTurnoutManager extends jmri.managers.AbstractTurnoutManager {
     }
 
     static public XpaTurnoutManager instance() {
-        if (_instance == null) _instance = new XpaTurnoutManager();
+        if (_instance == null) {
+            _instance = new XpaTurnoutManager();
+        }
         return _instance;
     }
     static XpaTurnoutManager _instance = null;

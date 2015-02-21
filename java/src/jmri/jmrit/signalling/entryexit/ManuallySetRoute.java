@@ -1,28 +1,27 @@
 package jmri.jmrit.signalling.entryexit;
 
-import jmri.NamedBean;
 import jmri.Block;
-import jmri.jmrit.signalling.EntryExitPairs;
+import jmri.NamedBean;
 import jmri.jmrit.display.layoutEditor.LayoutBlock;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-
+import jmri.jmrit.signalling.EntryExitPairs;
 
 public class ManuallySetRoute {
-    
+
     LayoutBlockManager lbm = jmri.InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class);
     PointDetails sourcePoint = null;
-    
-    public ManuallySetRoute(PointDetails pd){
+
+    public ManuallySetRoute(PointDetails pd) {
         sourcePoint = pd;
         LayoutBlock facing = lbm.getFacingBlockByNamedBean(pd.getSensor(), pd.getPanel());
         EntryExitPairs manager = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class);
-        for(LayoutBlock pro:lbm.getProtectingBlocksByNamedBean(pd.getSensor(), pd.getPanel())){
-            if(findDestPoint(pro, facing)){
+        for (LayoutBlock pro : lbm.getProtectingBlocksByNamedBean(pd.getSensor(), pd.getPanel())) {
+            if (findDestPoint(pro, facing)) {
                 PointDetails dest = manager.providePoint(destLoc, pd.getPanel());
                 Source src = manager.getSourceForPoint(pd);
-                if(dest!=null && src!=null){
+                if (dest != null && src != null) {
                     DestinationPoints dp = src.getDestForPoint(dest);
-                    if(dp!=null){
+                    if (dp != null) {
                         dp.setInterlockRoute(false);
                         break;
                     }
@@ -30,25 +29,27 @@ public class ManuallySetRoute {
             }
         }
     }
-    
+
     NamedBean destLoc = null;
-    
+
     int depth = 0;
-    
-    boolean findDestPoint(LayoutBlock pro, LayoutBlock facing){
-        depth ++;
-        if(depth>50) //This is to prevent a loop, only look as far as 50 blocks
+
+    boolean findDestPoint(LayoutBlock pro, LayoutBlock facing) {
+        depth++;
+        if (depth > 50) //This is to prevent a loop, only look as far as 50 blocks
+        {
             return false;
+        }
         boolean looking = true;
-        if(pro.getNumberOfThroughPaths()==0){
+        if (pro.getNumberOfThroughPaths() == 0) {
             destLoc = lbm.getSensorAtEndBumper(pro.getBlock(), sourcePoint.getPanel());
         } else {
-            while(looking){
+            while (looking) {
                 Block found = cycle(pro, facing);
-                if(found!=null){
+                if (found != null) {
                     destLoc = lbm.getFacingBean(pro.getBlock(), found, sourcePoint.getPanel(), jmri.Sensor.class);
-                    if(destLoc!=null){
-                        looking=false;
+                    if (destLoc != null) {
+                        looking = false;
                     } else {
                         findDestPoint(lbm.getLayoutBlock(found), pro);
                         looking = false;
@@ -58,18 +59,19 @@ public class ManuallySetRoute {
                 }
             }
         }
-        if(destLoc!=null)
+        if (destLoc != null) {
             return true;
+        }
         return false;
-        
+
     }
-    
-    Block cycle(LayoutBlock protect, LayoutBlock face){
-        for(int i = 0; i<protect.getNumberOfThroughPaths(); i++){
-            if(protect.isThroughPathActive(i)){
-                if(protect.getThroughPathSource(i)==face.getBlock()){
+
+    Block cycle(LayoutBlock protect, LayoutBlock face) {
+        for (int i = 0; i < protect.getNumberOfThroughPaths(); i++) {
+            if (protect.isThroughPathActive(i)) {
+                if (protect.getThroughPathSource(i) == face.getBlock()) {
                     jmri.Block found = protect.getThroughPathDestination(i);
-                    if(found.getState()==jmri.Block.UNOCCUPIED && !lbm.getLayoutBlock(found).getUseExtraColor()){
+                    if (found.getState() == jmri.Block.UNOCCUPIED && !lbm.getLayoutBlock(found).getUseExtraColor()) {
                         return found;
                     }
                 }

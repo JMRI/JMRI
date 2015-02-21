@@ -1,19 +1,19 @@
 package jmri.jmrix.loconet;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.loconet package.
+ *
  * @author	Bob Jacobsen Copyright 2001, 2003
- * @version     $Revision$
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -30,7 +30,7 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
             suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
             suite.addTest(jmri.jmrix.loconet.locostats.PackageTest.suite());
@@ -39,7 +39,7 @@ public class PackageTest extends TestCase {
             suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
             suite.addTest(new TestSuite(SecurityElementTest.class));
         }
-        
+
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));
@@ -57,12 +57,11 @@ public class PackageTest extends TestCase {
         suite.addTest(LnSensorManagerTest.suite());
         suite.addTest(LnCommandStationTypeTest.suite());
 
-
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.loconet.locoio.PackageTest.suite());
             suite.addTest(jmri.jmrix.loconet.locogen.PackageTest.suite());
         }
-        
+
         return suite;
     }
 

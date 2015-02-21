@@ -1,5 +1,4 @@
 // DefaultAudioManagerXml.java
-
 package jmri.jmrit.audio.configurexml;
 
 import jmri.InstanceManager;
@@ -14,18 +13,16 @@ import org.jdom2.Element;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
@@ -37,19 +34,21 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
     }
 
     /**
-     * Subclass provides implementation to create the correct top
-     * element, including the type information.
-     * Default implementation is to use the local class here.
+     * Subclass provides implementation to create the correct top element,
+     * including the type information. Default implementation is to use the
+     * local class here.
+     *
      * @param audio The top-level element being created
      */
     @Override
     public void setStoreElementClass(Element audio) {
-        audio.setAttribute("class","jmri.jmrit.audio.configurexml.DefaultAudioManagerXml");
+        audio.setAttribute("class", "jmri.jmrit.audio.configurexml.DefaultAudioManagerXml");
     }
 
     /**
-     * Create a AudioManager object of the correct class, then
-     * register and fill it.
+     * Create a AudioManager object of the correct class, then register and fill
+     * it.
+     *
      * @param audio Top level Element to unpack.
      * @return true if successful
      */

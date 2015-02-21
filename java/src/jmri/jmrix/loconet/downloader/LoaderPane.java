@@ -1,65 +1,75 @@
 // LoaderPane.java
-
 package jmri.jmrix.loconet.downloader;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.FlowLayout;
 import java.awt.Color;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import javax.swing.*;
-
-import jmri.jmrix.loconet.*;
-import java.io.*;
-
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
+import javax.swing.JTextField;
 import jmri.jmrit.MemoryContents;
+import jmri.jmrix.loconet.LnConstants;
+import jmri.jmrix.loconet.LocoNetMessage;
+import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
 import jmri.util.FileUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Pane for downloading .hex files and .dmf files to those LocoNet devices
- * which support firmware updates via LocoNet IPL messages.
- * 
- * This version relies on the file contents interpretation mechanisms built into 
- * the readHex() methods found in class jmri.jmrit.MemoryContents to 
+ * Pane for downloading .hex files and .dmf files to those LocoNet devices which
+ * support firmware updates via LocoNet IPL messages.
+ *
+ * This version relies on the file contents interpretation mechanisms built into
+ * the readHex() methods found in class jmri.jmrit.MemoryContents to
  * automatically interpret the file's addressing type - either 16-bit or 24-bit
- * addressing.  The interpreted addressing type is reported in the pane after a 
- * file is read.  The user cannot select the addressing type.
- *  
- * This version relies on the file contents checking mechanisms built into the 
- * readHex() methods found in class jmri.jmrit.MemoryContents to check for a 
+ * addressing. The interpreted addressing type is reported in the pane after a
+ * file is read. The user cannot select the addressing type.
+ *
+ * This version relies on the file contents checking mechanisms built into the
+ * readHex() methods found in class jmri.jmrit.MemoryContents to check for a
  * wide variety of possible issues in the contents of the firmware update file.
- * Any exception thrown by at method is used to select an error message to 
+ * Any exception thrown by at method is used to select an error message to
  * display in the status line of the pane.
- *  
- * @author	    Bob Jacobsen   Copyright (C) 2005
- * @author          B. Milhaupt    Copyright (C) 2013, 2014
- * @version	    $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2005
+ * @author B. Milhaupt Copyright (C) 2013, 2014
+ * @version	$Revision$
  */
-public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel 
-    implements ActionListener {
+public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
+        implements ActionListener {
 
     // GUI member declarations
-
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6862502901108992179L;
+     *
+     */
+    private static final long serialVersionUID = 6862502901108992179L;
 
-	JLabel inputFileName = new JLabel("");
+    JLabel inputFileName = new JLabel("");
 
     JTextField bootload = new JTextField();
-    JTextField mfg      = new JTextField();
+    JTextField mfg = new JTextField();
 
-    JTextField developer= new JTextField();
-    JTextField product  = new JTextField();
+    JTextField developer = new JTextField();
+    JTextField product = new JTextField();
     JTextField hardware = new JTextField();
     JTextField software = new JTextField();
-    JTextField delay    = new JTextField();
-    JTextField eestart  = new JTextField();
+    JTextField delay = new JTextField();
+    JTextField eestart = new JTextField();
 
     JRadioButton checkhardwareno = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareNo"));
     JRadioButton checkhardwareexact = new JRadioButton(Bundle.getMessage("ButtonCheckHardwareExact"));
@@ -77,35 +87,35 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     JRadioButton address24bit = new JRadioButton(Bundle.getMessage("Button24bit"));
     JRadioButton address16bit = new JRadioButton(Bundle.getMessage("Button16bit"));
     ButtonGroup addressSizeButtonGroup = new ButtonGroup();
-    
-    JProgressBar    bar;
-    JLabel          status = new JLabel("");
-    JPanel          inputFileNamePanel;
+
+    JProgressBar bar;
+    JLabel status = new JLabel("");
+    JPanel inputFileNamePanel;
 
     MemoryContents inputContent = new MemoryContents();
     private int inputFileLabelWidth;
 
-    private static final int PXCT1DOWNLOAD     = 0x40;
-    static int PXCT2SETUP        = 0x00;
-    static int PXCT2SENDADDRESS  = 0x10;
-    static int PXCT2SENDDATA     = 0x20;
-    static int PXCT2VERIFYDATA   = 0x30;
+    private static final int PXCT1DOWNLOAD = 0x40;
+    static int PXCT2SETUP = 0x00;
+    static int PXCT2SENDADDRESS = 0x10;
+    static int PXCT2SENDDATA = 0x20;
+    static int PXCT2VERIFYDATA = 0x30;
     static int PXCT2ENDOPERATION = 0x40;
-    
+
     /*
      * Flags for "Options"
      * see http://embeddedloconet.cvs.sourceforge.net/viewvc/embeddedloconet/apps/BootLoader/BootloaderUser.c
      */
-    private static final int DO_NOT_CHECK_SOFTWARE_VERSION        = 0x00;
-    private static final int CHECK_SOFTWARE_VERSION_LESS          = 0x04;
+    private static final int DO_NOT_CHECK_SOFTWARE_VERSION = 0x00;
+    private static final int CHECK_SOFTWARE_VERSION_LESS = 0x04;
 
-    private static final int DO_NOT_CHECK_HARDWARE_VERSION        = 0x00;
+    private static final int DO_NOT_CHECK_HARDWARE_VERSION = 0x00;
     private static final int REQUIRE_HARDWARE_VERSION_EXACT_MATCH = 0x01;
-    private static final int ACCEPT_LATER_HARDWARE_VERSIONS       = 0x03;
-    
-    private static final int SW_FLAGS_MSK                         = 0x04;
-    private static final int HW_FLAGS_MSK                         = 0x03;
-    
+    private static final int ACCEPT_LATER_HARDWARE_VERSIONS = 0x03;
+
+    private static final int SW_FLAGS_MSK = 0x04;
+    private static final int HW_FLAGS_MSK = 0x03;
+
     // some constant string declarations
     private static final String MIN_VALUE_ZERO = "0";
     private static final String MIN_EESTART_VALUE = "8";
@@ -115,38 +125,48 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     private static final String MIN_DELAY_VALUE = "5";
     private static final String MAX_DELAY_VALUE = "500";
 
-    public LoaderPane() { }
-    
-    @Override public String getHelpTarget() { return "package.jmri.jmrix.loconet.downloader.LoaderFrame"; }
-    @Override public String getTitle() { return getTitle(Bundle.getMessage("TitleLoader")); }
+    public LoaderPane() {
+    }
 
-    @Override public void initComponents(LocoNetSystemConnectionMemo memo) {
+    @Override
+    public String getHelpTarget() {
+        return "package.jmri.jmrix.loconet.downloader.LoaderFrame";
+    }
+
+    @Override
+    public String getTitle() {
+        return getTitle(Bundle.getMessage("TitleLoader"));
+    }
+
+    @Override
+    public void initComponents(LocoNetSystemConnectionMemo memo) {
         super.initComponents(memo);
-    
+
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        { 
+        {
             /* Create panels for displaying a filename and for providing a file 
              * seleciton pushbutton
              */
-        inputFileNamePanel = new JPanel();
-        inputFileNamePanel.setLayout(new FlowLayout());
-        JLabel l = new JLabel(Bundle.getMessage("LabelInpFile"));  
-        inputFileLabelWidth = l.getMinimumSize().width;
-        l.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-        inputFileNamePanel.add(l);
-        inputFileNamePanel.add(new Box.Filler(new java.awt.Dimension(5, 20), 
-                new java.awt.Dimension(5, 20), 
-                new java.awt.Dimension(5, 20)));
-        inputFileNamePanel.add(inputFileName);
+            inputFileNamePanel = new JPanel();
+            inputFileNamePanel.setLayout(new FlowLayout());
+            JLabel l = new JLabel(Bundle.getMessage("LabelInpFile"));
+            inputFileLabelWidth = l.getMinimumSize().width;
+            l.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
+            inputFileNamePanel.add(l);
+            inputFileNamePanel.add(new Box.Filler(new java.awt.Dimension(5, 20),
+                    new java.awt.Dimension(5, 20),
+                    new java.awt.Dimension(5, 20)));
+            inputFileNamePanel.add(inputFileName);
 
-        add(inputFileNamePanel);
-            
+            add(inputFileNamePanel);
+
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
             JButton selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
             selectButton.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(ActionEvent e) {
+                @Override
+                public void actionPerformed(ActionEvent e) {
                     inputContent = new MemoryContents();
                     setDefaultFieldValues();
                     updateDownloadVerifyButtons();
@@ -155,7 +175,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
                 }
             });
             p.add(selectButton);
-            
+
             add(p);
         }
 
@@ -163,7 +183,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // Create a panel for displaying the addressing type, via radio buttons
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            JLabel l = new JLabel(Bundle.getMessage("LabelBitMode")+" ");
+            JLabel l = new JLabel(Bundle.getMessage("LabelBitMode") + " ");
             l.setEnabled(false);
             p.add(l);
             p.add(address16bit);
@@ -179,19 +199,22 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         setDefaultFieldValues();
 
         add(new JSeparator());
-        
+
         {
             // create a panel for displaying/modifying the bootloader version
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelBootload")+" "));  
+            p.add(new JLabel(Bundle.getMessage("LabelBootload") + " "));
             p.add(bootload);
             bootload.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); 
+                    MIN_VALUE_ZERO, MAX_VALUE_255));
             bootload.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     intParameterIsValid(bootload, 0, 255);
                     updateDownloadVerifyButtons();
                 }
@@ -203,16 +226,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // create a panel for displaying/modifying the manufacturer number
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelMfg")+" "));  
+            p.add(new JLabel(Bundle.getMessage("LabelMfg") + " "));
             mfg.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); 
+                    MIN_VALUE_ZERO, MAX_VALUE_255));
             p.add(mfg);
             mfg.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     intParameterIsValid(mfg, 0, 255);
-                    updateDownloadVerifyButtons();                }
+                    updateDownloadVerifyButtons();
+                }
             });
             add(p);
         }
@@ -221,15 +248,18 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // create a panel for displaying/modifying the developer number
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelDev")+
-                    " ")); //NOI18N
+            p.add(new JLabel(Bundle.getMessage("LabelDev")
+                    + " ")); //NOI18N
             developer.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255)); 
+                    MIN_VALUE_ZERO, MAX_VALUE_255));
             p.add(developer);
             developer.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     intParameterIsValid(developer, 0, 255);
                     updateDownloadVerifyButtons();
                 }
@@ -241,14 +271,17 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // create a panel for displaying/modifying the product number
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelProduct")+" ")); 
+            p.add(new JLabel(Bundle.getMessage("LabelProduct") + " "));
             product.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_65535));
+                    MIN_VALUE_ZERO, MAX_VALUE_65535));
             p.add(product);
             product.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     intParameterIsValid(product, 0, 65535);
                     updateDownloadVerifyButtons();
                 }
@@ -262,13 +295,16 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
             hardware.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255));
-            p.add(new JLabel(Bundle.getMessage("LabelHardware")+" ")); 
+                    MIN_VALUE_ZERO, MAX_VALUE_255));
+            p.add(new JLabel(Bundle.getMessage("LabelHardware") + " "));
             p.add(hardware);
             hardware.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     intParameterIsValid(hardware, 0, 255);
                     updateDownloadVerifyButtons();
                 }
@@ -288,7 +324,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             hardgroup.add(checkhardwareno);
             hardgroup.add(checkhardwareexact);
             hardgroup.add(checkhardwaregreater);
-            
+
 //            checkhardwareno.addFocusListener(new FocusListener() {
 //                @Override public void focusGained(FocusEvent e) {
 //                }
@@ -320,14 +356,17 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // create a panel for displaying/modifying the software version
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelSoftware")+" ")); 
+            p.add(new JLabel(Bundle.getMessage("LabelSoftware") + " "));
             software.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_VALUE_ZERO,MAX_VALUE_255));
+                    MIN_VALUE_ZERO, MAX_VALUE_255));
             p.add(software);
             software.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     intParameterIsValid(software, 0, 255);
                     updateDownloadVerifyButtons();
                 }
@@ -356,17 +395,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // create a panel for displaying/modifying the delay value
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelDelay")+" ")); 
+            p.add(new JLabel(Bundle.getMessage("LabelDelay") + " "));
             delay.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_DELAY_VALUE,MAX_DELAY_VALUE));
+                    MIN_DELAY_VALUE, MAX_DELAY_VALUE));
 
             p.add(delay);
             delay.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
-                    intParameterIsValid(hardware, 
-                            Integer.parseInt(MIN_DELAY_VALUE), 
+
+                @Override
+                public void focusLost(FocusEvent e) {
+                    intParameterIsValid(hardware,
+                            Integer.parseInt(MIN_DELAY_VALUE),
                             Integer.parseInt(MAX_DELAY_VALUE));
                     updateDownloadVerifyButtons();
                 }
@@ -379,14 +421,17 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             // create a panel for displaying/modifying the EEPROM start address
             JPanel p = new JPanel();
             p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            p.add(new JLabel(Bundle.getMessage("LabelEEStart")+" ")); 
+            p.add(new JLabel(Bundle.getMessage("LabelEEStart") + " "));
             eestart.setToolTipText(Bundle.getMessage("TipValueRange",
-                    MIN_EESTART_VALUE,MAX_EESTART_VALUE));
+                    MIN_EESTART_VALUE, MAX_EESTART_VALUE));
             p.add(eestart);
             eestart.addFocusListener(new FocusListener() {
-                @Override public void focusGained(FocusEvent e) {
+                @Override
+                public void focusGained(FocusEvent e) {
                 }
-                @Override public void focusLost(FocusEvent e) {
+
+                @Override
+                public void focusLost(FocusEvent e) {
                     updateDownloadVerifyButtons();
                 }
             });
@@ -401,12 +446,13 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             JPanel p = new JPanel();
             p.setLayout(new FlowLayout());
 
-            loadButton = new JButton(Bundle.getMessage("ButtonLoad")); 
+            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
             loadButton.setEnabled(false);
-            loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled")); 
+            loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
             p.add(loadButton);
             loadButton.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(java.awt.event.ActionEvent e) {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
                     doLoad();
                 }
             });
@@ -416,7 +462,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
             p.add(verifyButton);
             verifyButton.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(java.awt.event.ActionEvent e) {
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
                     doVerify();
                 }
             });
@@ -428,8 +475,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
             p.add(abortButton);
             abortButton.addActionListener(new ActionListener() {
-                @Override public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setOperationAborted(true) ;
+                @Override
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    setOperationAborted(true);
                 }
             });
 
@@ -438,14 +486,14 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             add(new JSeparator());
 
             // create progress bar
-            bar = new JProgressBar(0,100);
+            bar = new JProgressBar(0, 100);
             bar.setStringPainted(true);
             add(bar);
 
             add(new JSeparator());
 
             {
-            // create a panel for displaying a status message
+                // create a panel for displaying a status message
                 p = new JPanel();
                 p.setLayout(new FlowLayout());
                 status.setText(Bundle.getMessage("StatusSelectFile"));
@@ -466,47 +514,48 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         }
         if (chooser == null) {
             chooser = new JFileChooser(name);
-            javax.swing.filechooser.FileNameExtensionFilter filter =
-                    new javax.swing.filechooser.FileNameExtensionFilter(
-                    Bundle.getMessage("FileFilterLabel",
-                        "*.dfm, *.hex"),  // NOI18N
-                        "dmf","hex");   // NOI18N
-                    
+            javax.swing.filechooser.FileNameExtensionFilter filter
+                    = new javax.swing.filechooser.FileNameExtensionFilter(
+                            Bundle.getMessage("FileFilterLabel",
+                                    "*.dfm, *.hex"), // NOI18N
+                            "dmf", "hex");   // NOI18N
+
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Digitrax Mangled Firmware (*.dmf)","dmf")); //NOI18N
+                            "Digitrax Mangled Firmware (*.dmf)", "dmf")); //NOI18N
             chooser.addChoosableFileFilter(
                     new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Intel Hex Format Firmware (*.hex)","hex")); //NOI18N
+                            "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
             chooser.addChoosableFileFilter(filter);
 
             // make the downloadable file filter the default active filter
-            chooser.setFileFilter(filter); 
-            
+            chooser.setFileFilter(filter);
+
         }
         inputFileName.setText("");  // clear out in case of failure
         int retVal = chooser.showOpenDialog(this);
-        if (retVal != JFileChooser.APPROVE_OPTION) return;  // give up if no file selected
-        
+        if (retVal != JFileChooser.APPROVE_OPTION) {
+            return;  // give up if no file selected
+        }
         String newFileName = chooser.getSelectedFile().getName();
         inputFileName.setText(newFileName);
         // check to see if it fits on the screen
         double currentStringWidth = inputFileName.getMinimumSize().width;
         double allowedWidth;
         inputFileName.setToolTipText(newFileName);
-        allowedWidth = inputFileNamePanel.getSize().width*4/5 - inputFileLabelWidth;
-        if (currentStringWidth > allowedWidth ) {
+        allowedWidth = inputFileNamePanel.getSize().width * 4 / 5 - inputFileLabelWidth;
+        if (currentStringWidth > allowedWidth) {
             // Filename won't fit on the display.
             // need to shorten the string.
-            double startPoint = 
-                    (inputFileName.getText().length() 
-                    * (1.0 - (allowedWidth/currentStringWidth)));
+            double startPoint
+                    = (inputFileName.getText().length()
+                    * (1.0 - (allowedWidth / currentStringWidth)));
             String displayableName = "..." // NOI18N
-                    +inputFileName.getText().substring((int)startPoint);
-            log.info("Shortening display of filename "  // NOI18N
+                    + inputFileName.getText().substring((int) startPoint);
+            log.info("Shortening display of filename " // NOI18N
                     + inputFileName.getText()
-                    + " to " +displayableName);   // NOI18N
-            log.debug("Width required to display the full file name = "  // NOI18N
+                    + " to " + displayableName);   // NOI18N
+            log.debug("Width required to display the full file name = " // NOI18N
                     + currentStringWidth);
             log.debug("Allowed width = " + allowedWidth);  // NOI18N
             log.debug("Amount of text not displayed = " + startPoint);  // NOI18N
@@ -515,7 +564,6 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         inputFileName.updateUI();
         inputFileNamePanel.updateUI();
         updateUI();
-
 
         loadButton.setEnabled(false);
         loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
@@ -527,8 +575,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     private void doRead() {
         if (inputFileName.getText().equals("")) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
-                                      Bundle.getMessage("ErrorTitle"),
-                                      JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
             return;
         }
 
@@ -542,56 +590,56 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
         // clear the existing memory contents
         inputContent = new MemoryContents();
-        
+
         bar.setValue(0);
-        
+
         // load
         try {
             inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
         } catch (FileNotFoundException f) {
             log.error(f.getLocalizedMessage());
             JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
-                                      Bundle.getMessage("ErrorTitle"),
-                                      JOptionPane.ERROR_MESSAGE);
+                    Bundle.getMessage("ErrorTitle"),
+                    JOptionPane.ERROR_MESSAGE);
             status.setText(Bundle.getMessage("StatusFileNotFound"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileRecordLengthException f) {
+        } catch (MemoryContents.MemoryFileRecordLengthException f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileChecksumException f) {
+        } catch (MemoryContents.MemoryFileChecksumException f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileUnknownRecordType f) {
+        } catch (MemoryContents.MemoryFileUnknownRecordType f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileRecordContentException f) {
+        } catch (MemoryContents.MemoryFileRecordContentException f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileAddressingRangeException f) {
+        } catch (MemoryContents.MemoryFileAddressingRangeException f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileNoDataRecordsException f) {
+        } catch (MemoryContents.MemoryFileNoDataRecordsException f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileNoEOFRecordException f) {
+        } catch (MemoryContents.MemoryFileNoEOFRecordException f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
             return;
-        } catch ( MemoryContents.MemoryFileRecordFoundAfterEOFRecord f) {
+        } catch (MemoryContents.MemoryFileRecordFoundAfterEOFRecord f) {
             log.error(f.getLocalizedMessage());
             status.setText(Bundle.getMessage("ErrorFileContentsError"));
             this.disableDownloadVerifyButtons();
@@ -609,34 +657,33 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         status.setText(Bundle.getMessage("StatusDoDownload"));
 
         // get some key/value pairs from the input file (if available)
-
         String text = inputContent.extractValueOfKey("Bootloader Version");
-        if (text!=null) {
+        if (text != null) {
             bootload.setText(text);
         }
 
         text = inputContent.extractValueOfKey("Manufacturer Code");
-        if (text!=null) {
+        if (text != null) {
             mfg.setText(text);
         }
 
         text = inputContent.extractValueOfKey("Developer Code");
-        if (text!=null) {
+        if (text != null) {
             developer.setText(text);
         }
 
         text = inputContent.extractValueOfKey("Product Code");
-        if (text!=null) {
+        if (text != null) {
             product.setText(text);
         }
 
         text = inputContent.extractValueOfKey("Hardware Version");
-        if (text!=null) {
+        if (text != null) {
             hardware.setText(text);
         }
 
         text = inputContent.extractValueOfKey("Software Version");
-        if (text!=null) {
+        if (text != null) {
             software.setText(text);
         }
 
@@ -655,21 +702,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         }
 
         text = inputContent.extractValueOfKey("Delay");
-        if (text!=null) {
+        if (text != null) {
             delay.setText(text);
         }
 
         text = inputContent.extractValueOfKey("EEPROM Start Address");
-        if (text!=null) {
+        if (text != null) {
             eestart.setText(text);
         }
-        
+
         MemoryContents.LoadOffsetFieldType addresstype = inputContent.getCurrentAddressFormat();
         if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE16BITS) {
             address16bit.setSelected(true);
             address24bit.setSelected(false);
-        }
-        else if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS) {
+        } else if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS) {
             address16bit.setSelected(false);
             address24bit.setSelected(true);
         }
@@ -685,37 +731,37 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         try {
             int control = Integer.parseInt(text);
             switch (control & SW_FLAGS_MSK) {
-            case CHECK_SOFTWARE_VERSION_LESS:
-                checksoftwareless.setSelected(true);
-                checksoftwareno.setSelected(false);
-                break;
-            case DO_NOT_CHECK_SOFTWARE_VERSION:
-                checksoftwareless.setSelected(false);
-                checksoftwareno.setSelected(true);
-                break;
-            default:
-                throw new NumberFormatException("Invalid Software Options: "
-                                                     +(control & SW_FLAGS_MSK));
+                case CHECK_SOFTWARE_VERSION_LESS:
+                    checksoftwareless.setSelected(true);
+                    checksoftwareno.setSelected(false);
+                    break;
+                case DO_NOT_CHECK_SOFTWARE_VERSION:
+                    checksoftwareless.setSelected(false);
+                    checksoftwareno.setSelected(true);
+                    break;
+                default:
+                    throw new NumberFormatException("Invalid Software Options: "
+                            + (control & SW_FLAGS_MSK));
             }
             switch (control & HW_FLAGS_MSK) {
-            case DO_NOT_CHECK_HARDWARE_VERSION:
-                checkhardwareno.setSelected(true);
-                checkhardwareexact.setSelected(false);
-                checkhardwaregreater.setSelected(false);
-                break;
-            case REQUIRE_HARDWARE_VERSION_EXACT_MATCH:
-                checkhardwareno.setSelected(false);
-                checkhardwareexact.setSelected(true);
-                checkhardwaregreater.setSelected(false);
-                break;
-            case ACCEPT_LATER_HARDWARE_VERSIONS:
-                checkhardwareno.setSelected(false);
-                checkhardwareexact.setSelected(false);
-                checkhardwaregreater.setSelected(true);
-                break;
-            default:
-                throw new NumberFormatException("Invalid Hardware Options: "
-                                                     +(control & HW_FLAGS_MSK));
+                case DO_NOT_CHECK_HARDWARE_VERSION:
+                    checkhardwareno.setSelected(true);
+                    checkhardwareexact.setSelected(false);
+                    checkhardwaregreater.setSelected(false);
+                    break;
+                case REQUIRE_HARDWARE_VERSION_EXACT_MATCH:
+                    checkhardwareno.setSelected(false);
+                    checkhardwareexact.setSelected(true);
+                    checkhardwaregreater.setSelected(false);
+                    break;
+                case ACCEPT_LATER_HARDWARE_VERSIONS:
+                    checkhardwareno.setSelected(false);
+                    checkhardwareexact.setSelected(false);
+                    checkhardwaregreater.setSelected(true);
+                    break;
+                default:
+                    throw new NumberFormatException("Invalid Hardware Options: "
+                            + (control & HW_FLAGS_MSK));
             }
         } catch (NumberFormatException ex) {
             log.error("Invalid Option value: " + text);
@@ -752,22 +798,26 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Cleans up the GUI interface.  Updates status line to a localized "done" 
-     * message or a localized "aborted" message depending on the value returned 
-     * by isOperationAborted() .  Assumes that the file was properly read to memory 
-     * and is usable for firmware update and/or verify operations, and configures
-     * the Load, and Verify GUI buttons as enabled, and the Abort GUI button as 
-     * disabled.
-     **/
+     * Cleans up the GUI interface. Updates status line to a localized "done"
+     * message or a localized "aborted" message depending on the value returned
+     * by isOperationAborted() . Assumes that the file was properly read to
+     * memory and is usable for firmware update and/or verify operations, and
+     * configures the Load, and Verify GUI buttons as enabled, and the Abort GUI
+     * button as disabled.
+     *
+     */
     void enableDownloadVerifyButtons() {
-        if (log.isDebugEnabled()) log.debug("enableGUI");
+        if (log.isDebugEnabled()) {
+            log.debug("enableGUI");
+        }
 
-        if (isOperationAborted())
-          status.setText(Bundle.getMessage("StatusAbort"));
-        else
-          status.setText(Bundle.getMessage("StatusDone"));
+        if (isOperationAborted()) {
+            status.setText(Bundle.getMessage("StatusAbort"));
+        } else {
+            status.setText(Bundle.getMessage("StatusDone"));
+        }
 
-          // remove the
+        // remove the
         setOperationAborted(false);
 
         loadButton.setEnabled(true);
@@ -779,13 +829,16 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Cleans up the GUI interface after a firmware file read fails.  Assumes 
-     * that the invoking code will update the GUI status line as appropriate
-     * for the particular cause of failure.  Configures the Load, Verify and Abort
+     * Cleans up the GUI interface after a firmware file read fails. Assumes
+     * that the invoking code will update the GUI status line as appropriate for
+     * the particular cause of failure. Configures the Load, Verify and Abort
      * GUI buttons as disabled.
-     **/
+     *
+     */
     private void disableDownloadVerifyButtons() {
-        if (log.isDebugEnabled()) log.debug("disableGUI");
+        if (log.isDebugEnabled()) {
+            log.debug("disableGUI");
+        }
 
         setOperationAborted(false);
 
@@ -797,22 +850,22 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
     }
 
-      // boolean used to abort the threaded operation
-      // access has to be synchronized to make sure
-      // the Sender threads sees the value change from the
-      // GUI thread
-    private boolean abortOperation ;
+    // boolean used to abort the threaded operation
+    // access has to be synchronized to make sure
+    // the Sender threads sees the value change from the
+    // GUI thread
+    private boolean abortOperation;
 
-    private void setOperationAborted( boolean state ) {
-      synchronized(this){
-        abortOperation = state;
-      }
+    private void setOperationAborted(boolean state) {
+        synchronized (this) {
+            abortOperation = state;
+        }
     }
 
     private boolean isOperationAborted() {
-      synchronized(this){
-        return abortOperation ;
-      }
+        synchronized (this) {
+            return abortOperation;
+        }
     }
 
     private int operation;
@@ -824,10 +877,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         int hardval;
         int softval;
         int control;
-        
+
         // before starting the send sequence, check for bad values in the
         // GUI text fields containing the parameters.
-        
         if (!parametersAreValid()) {
             disableDownloadVerifyButtons();
             status.setText(Bundle.getMessage("ErrorInvalidParameter"));
@@ -838,85 +890,85 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             status.setText(Bundle.getMessage("ErrorEmptyFirmwareFile"));
             return;
         }
-        
+
         // now know that the GUI text fields are valid and have some data to move.
         try {
             mfgval = Integer.parseInt(mfg.getText());
-            if(mfgval<0 || mfgval>0xff) {
+            if (mfgval < 0 || mfgval > 0xff) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
+        } catch (NumberFormatException ex) {
             log.error("sendSequence() failed due to bad Manufacturer Number value " + mfg.getText());
             mfg.setForeground(Color.red);
             mfg.requestFocusInWindow();
             enableDownloadVerifyButtons();
             status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
-                    Bundle.getMessage("LabelMfg"), 
+                    Bundle.getMessage("LabelMfg"),
                     mfg.getText()));
             return;
         }
 
         try {
             developerval = Integer.parseInt(developer.getText());
-            if(developerval<0 || developerval>0xff) {
+            if (developerval < 0 || developerval > 0xff) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
+        } catch (NumberFormatException ex) {
             log.error("sendSequence() failed due to bad Developer Number value " + developer.getText());
             developer.setForeground(Color.red);
             developer.requestFocusInWindow();
             enableDownloadVerifyButtons();
             status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
-                    Bundle.getMessage("LabelDev"), 
+                    Bundle.getMessage("LabelDev"),
                     developer.getText()));
             return;
         }
-        
+
         try {
             prodval = Integer.parseInt(product.getText());
-            if(prodval<0 || prodval>0xffff) {
+            if (prodval < 0 || prodval > 0xffff) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
+        } catch (NumberFormatException ex) {
             log.error("sendSequence() failed due to bad Product Code value " + product.getText());
             product.setForeground(Color.red);
             product.requestFocusInWindow();
             this.enableDownloadVerifyButtons();
             enableDownloadVerifyButtons();
             status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
-                    Bundle.getMessage("LabelProduct"), 
+                    Bundle.getMessage("LabelProduct"),
                     product.getText()));
             return;
         }
 
         try {
             hardval = Integer.parseInt(hardware.getText());
-            if(hardval<0 || hardval>0xff) {
+            if (hardval < 0 || hardval > 0xff) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
+        } catch (NumberFormatException ex) {
             log.error("sendSequence() failed due to bad Hardware Version value " + hardware.getText());
             hardware.setForeground(Color.red);
             hardware.requestFocusInWindow();
             enableDownloadVerifyButtons();
-            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
-                    Bundle.getMessage("LabelHardware"), 
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelHardware"),
                     hardware.getText()));
             return;
         }
 
         try {
             softval = Integer.parseInt(software.getText());
-            if(softval<0 || softval>0xff) {
+            if (softval < 0 || softval > 0xff) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
+        } catch (NumberFormatException ex) {
             log.error("sendSequence() failed due to bad Software Version value " + software.getText());
             software.setForeground(Color.red);
             software.requestFocusInWindow();
             enableDownloadVerifyButtons();
-            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
-                    Bundle.getMessage("LabelSoftware"), 
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelSoftware"),
                     software.getText()));
             return;
         }
@@ -925,78 +977,78 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
         try {
             delayval = Integer.parseInt(delay.getText());
-            if ((delayval < Integer.parseInt(MIN_DELAY_VALUE)) || 
-                    (delayval > Integer.parseInt(MAX_DELAY_VALUE))) {
+            if ((delayval < Integer.parseInt(MIN_DELAY_VALUE))
+                    || (delayval > Integer.parseInt(MAX_DELAY_VALUE))) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
+        } catch (NumberFormatException ex) {
             log.error("sendSequence() failed due to bad Delay value " + delay.getText());
             delay.setForeground(Color.red);
             delay.requestFocusInWindow();
             enableDownloadVerifyButtons();
-            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
-                    Bundle.getMessage("LabelDelay"), 
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelDelay"),
                     delay.getText()));
             return;
         }
 
         try {
-            eestartval = Integer.parseInt(eestart.getText(),16);
-            if ((eestartval < Integer.parseInt(MIN_EESTART_VALUE,16)) ||
-                    (eestartval > Integer.parseInt(MAX_EESTART_VALUE,16))) {
+            eestartval = Integer.parseInt(eestart.getText(), 16);
+            if ((eestartval < Integer.parseInt(MIN_EESTART_VALUE, 16))
+                    || (eestartval > Integer.parseInt(MAX_EESTART_VALUE, 16))) {
                 throw new NumberFormatException("out of range");
             }
-        } catch( NumberFormatException ex ) {
-            log.error("sendSequence() failed due to bad EESTART value "+eestart.getText());
+        } catch (NumberFormatException ex) {
+            log.error("sendSequence() failed due to bad EESTART value " + eestart.getText());
             eestart.setForeground(Color.red);
             eestart.requestFocusInWindow();
             enableDownloadVerifyButtons();
-            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI", 
-                    Bundle.getMessage("LabelEEStart"), 
+            status.setText(Bundle.getMessage("ErrorInvalidValueInGUI",
+                    Bundle.getMessage("LabelEEStart"),
                     eestart.getText()));
             return;
         }
 
         // send start
-        sendOne(PXCT2SETUP, mfgval, prodval&0xff ,hardval,softval,
-                control,0,developerval,prodval/256);
+        sendOne(PXCT2SETUP, mfgval, prodval & 0xff, hardval, softval,
+                control, 0, developerval, prodval / 256);
 
         // start transmission loop
         new Thread(new Sender()).start();
     }
 
     void sendOne(int pxct2, int d1, int d2, int d3, int d4,
-                int d5, int d6, int d7, int d8) {
+            int d5, int d6, int d7, int d8) {
         LocoNetMessage m = new LocoNetMessage(16);
         m.setOpCode(LnConstants.OPC_PEER_XFER);
-        m.setElement( 1, 0x10);
-        m.setElement( 2, 0x7F);
-        m.setElement( 3, 0x7F);
-        m.setElement( 4, 0x7F);
+        m.setElement(1, 0x10);
+        m.setElement(2, 0x7F);
+        m.setElement(3, 0x7F);
+        m.setElement(4, 0x7F);
 
-        int d1u = (d1&0x80)/0x80;
-        int d2u = (d2&0x80)/0x40;
-        int d3u = (d3&0x80)/0x20;
-        int d4u = (d4&0x80)/0x10;
+        int d1u = (d1 & 0x80) / 0x80;
+        int d2u = (d2 & 0x80) / 0x40;
+        int d3u = (d3 & 0x80) / 0x20;
+        int d4u = (d4 & 0x80) / 0x10;
         int lowbits = d1u | d2u | d3u | d4u;
 
-        m.setElement( 5, (lowbits | PXCT1DOWNLOAD)&0x7F);  // PXCT1
-        m.setElement( 6, d1&0x7F);  // D1
-        m.setElement( 7, d2&0x7F);  // D2
-        m.setElement( 8, d3&0x7F);  // D3
-        m.setElement( 9, d4&0x7F);  // D4
+        m.setElement(5, (lowbits | PXCT1DOWNLOAD) & 0x7F);  // PXCT1
+        m.setElement(6, d1 & 0x7F);  // D1
+        m.setElement(7, d2 & 0x7F);  // D2
+        m.setElement(8, d3 & 0x7F);  // D3
+        m.setElement(9, d4 & 0x7F);  // D4
 
-        int d5u = (d5&0x80)/0x80;
-        int d6u = (d6&0x80)/0x40;
-        int d7u = (d7&0x80)/0x20;
-        int d8u = (d8&0x80)/0x10;
+        int d5u = (d5 & 0x80) / 0x80;
+        int d6u = (d6 & 0x80) / 0x40;
+        int d7u = (d7 & 0x80) / 0x20;
+        int d8u = (d8 & 0x80) / 0x10;
         lowbits = d5u | d6u | d7u | d8u;
 
-        m.setElement(10, (lowbits | pxct2)&0x7F);  // PXCT2
-        m.setElement(11, d5&0x7F);  // D5
-        m.setElement(12, d6&0x7F);  // D6
-        m.setElement(13, d7&0x7F);  // D7
-        m.setElement(14, d8&0x7F);  // D8
+        m.setElement(10, (lowbits | pxct2) & 0x7F);  // PXCT2
+        m.setElement(11, d5 & 0x7F);  // D5
+        m.setElement(12, d6 & 0x7F);  // D6
+        m.setElement(13, d7 & 0x7F);  // D7
+        m.setElement(14, d8 & 0x7F);  // D8
 
         memo.getLnTrafficController().sendLocoNetMessage(m);
 
@@ -1006,18 +1058,22 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     int endaddr;
     int delayval;
     int eestartval;
-        
+
     private class Sender implements Runnable {
+
         int totalmsgs;
         int sentmsgs;
 
         // send the next data, and a termination record when done
-        @Override public void run() {
+        @Override
+        public void run() {
             // define range to be checked for download
             startaddr = 0x000000;
-            endaddr   = 0xFFFFFF;
+            endaddr = 0xFFFFFF;
 
-            if ((startaddr&0x7) != 0) log.error("Can only start on an 8-byte boundary: "+startaddr);
+            if ((startaddr & 0x7) != 0) {
+                log.error("Can only start on an 8-byte boundary: " + startaddr);
+            }
 
             // fast scan to count bytes to send
             int location = inputContent.nextContent(startaddr);
@@ -1029,14 +1085,16 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
                 totalmsgs++;
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
-                if (next<0) break;   // no data left
+                if (next < 0) {
+                    break;   // no data left
+                }
                 location = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
 
             } while (location <= endaddr);
 
             // find the initial location with data
             location = inputContent.nextContent(startaddr);
-            if (location<0) {
+            if (location < 0) {
                 log.info("No data, which seems odd");
                 return;  // ends load process
             }
@@ -1050,26 +1108,27 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
                 // send this data
                 sentmsgs++;
-                sendOne(operation,    // either send or verify
+                sendOne(operation, // either send or verify
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
-
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++),
                         inputContent.getLocation(location++));
 
                 // update GUI intermittently
-                if ( (sentmsgs % 5) == 0) {
+                if ((sentmsgs % 5) == 0) {
                     // update progress bar via the queue to ensure synchronization
-                    updateGUI(100*sentmsgs/totalmsgs);
+                    updateGUI(100 * sentmsgs / totalmsgs);
                 }
 
                 // update to the next location for data
                 int next = inputContent.nextContent(location);
-                if (next<0) break;   // no data left
+                if (next < 0) {
+                    break;   // no data left
+                }
                 next = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
                 if (next != location) {
                     // wait for completion
@@ -1083,13 +1142,14 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
             // send end (after wait)
             doWait(location);
-            sendOne(PXCT2ENDOPERATION, 0,0,0,0, 0,0,0,0);
+            sendOne(PXCT2ENDOPERATION, 0, 0, 0, 0, 0, 0, 0, 0);
 
             this.updateGUI(100); //draw bar to 100%
 
             // signal end to GUI via the queue to ensure synchronization
             Runnable r = new Runnable() {
-                @Override public void run() {
+                @Override
+                public void run() {
                     enableGUI();
                 }
             };
@@ -1102,25 +1162,27 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
          */
         void setAddr(int location) {
             sendOne(PXCT2SENDADDRESS,
-                            (location/256/256)&0xFF,
-                            (location/256)&0xFF,
-                            location&0xFF,
-                            0, 0,0,0,0);
+                    (location / 256 / 256) & 0xFF,
+                    (location / 256) & 0xFF,
+                    location & 0xFF,
+                    0, 0, 0, 0, 0);
         }
 
         /**
          * Wait the specified time.
          *
-         *  16*10/16.44 = 14 msec is the time it takes to send the message.
+         * 16*10/16.44 = 14 msec is the time it takes to send the message.
          */
-
         void doWait(int address) {
             try {
-                synchronized(this) {
+                synchronized (this) {
                     // make sure enough time in EEPROM address space
                     int tdelay;
-                    if (address >= eestartval) tdelay = delayval+50+14;
-                    else tdelay = delayval+4+14;
+                    if (address >= eestartval) {
+                        tdelay = delayval + 50 + 14;
+                    } else {
+                        tdelay = delayval + 4 + 14;
+                    }
 
                     // do the actual wait
                     wait(tdelay);
@@ -1143,17 +1205,20 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
          * Update the GUI for progress
          */
         void updateGUI(final int value) {
-            javax.swing.SwingUtilities.invokeLater( new Runnable() {
-                @Override public void run() {
-                    if (log.isDebugEnabled()) log.debug("updateGUI with "+value);
+            javax.swing.SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    if (log.isDebugEnabled()) {
+                        log.debug("updateGUI with " + value);
+                    }
                     // update progress bar
-                    bar.setValue(100*sentmsgs/totalmsgs);
+                    bar.setValue(100 * sentmsgs / totalmsgs);
                 }
             });
         }
 
     }
-    
+
     private void setDefaultFieldValues() {
         addressSizeButtonGroup.clearSelection();
         bootload.setText("1");
@@ -1168,68 +1233,68 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         try {
             setOptionsRadiobuttons(Integer.toString(DO_NOT_CHECK_SOFTWARE_VERSION + REQUIRE_HARDWARE_VERSION_EXACT_MATCH));
         } catch (NumberFormatException ex) {
-            throw(new java.lang.Error("SetCheckboxes Failed to update the GUI for known-good parameters"));
+            throw (new java.lang.Error("SetCheckboxes Failed to update the GUI for known-good parameters"));
         }
         parametersAreValid();
     }
 
     /**
      * Checks the values in the GUI text boxes to determine if any are invalid.
-     * Intended for use immediately after reading a firmware file for the purpose
-     * of validating any key/value pairs found in the file.  Also intended for 
-     * use immediately before a "verify" or "download" operation to check that 
-     * the user has not changed any of the GUI text values to ones that are 
-     * unsupported.  
-     * 
+     * Intended for use immediately after reading a firmware file for the
+     * purpose of validating any key/value pairs found in the file. Also
+     * intended for use immediately before a "verify" or "download" operation to
+     * check that the user has not changed any of the GUI text values to ones
+     * that are unsupported.
+     *
      * Note that this method cannot guarantee that the values are suitable for
      * the hardware being updated and/or for the particular firmware information
      * which was read from the firmware file.
-     * 
-     * @return  false if one or more GUI text box contains an invalid value
+     *
+     * @return false if one or more GUI text box contains an invalid value
      */
     public boolean parametersAreValid() {
         boolean allIsOk;
         allIsOk = true; // assume that all GUI values are ok.
         String text;    // temporary variable to hold text from GUI element
         int junk;       // temporary variable to hold interpreted GUI value
-    
+
         boolean temp;
         temp = intParameterIsValid(bootload, 0, 255);
         allIsOk &= temp;
         if (!temp) {
-            log.info("Bootloader Version Number is not valid: "+bootload.getText());
+            log.info("Bootloader Version Number is not valid: " + bootload.getText());
         }
         temp = intParameterIsValid(mfg, 0, 255);
         allIsOk &= temp;
         if (!temp) {
-            log.info("Manufacturer Number is not valid: "+mfg.getText());
+            log.info("Manufacturer Number is not valid: " + mfg.getText());
         }
         temp = intParameterIsValid(developer, 0, 255);
         allIsOk &= temp;
         if (!temp) {
-            log.info("Developer Number is not valid: "+bootload.getText());
+            log.info("Developer Number is not valid: " + bootload.getText());
         }
         temp = intParameterIsValid(product, 0, 65535);
         allIsOk &= temp;
         if (!temp) {
-            log.info("Product Code is not valid: "+product.getText());
+            log.info("Product Code is not valid: " + product.getText());
         }
         temp = intParameterIsValid(hardware, 0, 255);
         allIsOk &= temp;
         if (!temp) {
-            log.info("Hardware Version Number is not valid: "+hardware.getText());
+            log.info("Hardware Version Number is not valid: " + hardware.getText());
         }
         temp = intParameterIsValid(software, 0, 255);
         allIsOk &= temp;
         if (!temp) {
-            log.info("Software Version Number is not valid: "+software.getText());
+            log.info("Software Version Number is not valid: " + software.getText());
         }
-        temp = intParameterIsValid(delay, 
-                Integer.parseInt(MIN_DELAY_VALUE), 
+        temp = intParameterIsValid(delay,
+                Integer.parseInt(MIN_DELAY_VALUE),
                 Integer.parseInt(MAX_DELAY_VALUE));
         allIsOk &= temp;
         if (!temp) {
-            log.info("Delay is not valid: "+delay.getText());
+            log.info("Delay is not valid: " + delay.getText());
         }
         temp = (hardgroup.getSelection() != null);
         allIsOk &= temp;
@@ -1241,7 +1306,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         if (!temp) {
             log.info("No software version check radio button is selected.");
         }
-        temp = true;         
+        temp = true;
         eestart.setForeground(Color.black);
         text = eestart.getText();
         if (text.equals("")) {
@@ -1254,9 +1319,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             } catch (NumberFormatException ex) {
                 junk = -1;
             }
-            if ((junk < Integer.parseInt(MIN_EESTART_VALUE,16)) || 
-                    ((junk % 8) != 0) ||
-                    (junk > Integer.parseInt(MAX_EESTART_VALUE,16))) {
+            if ((junk < Integer.parseInt(MIN_EESTART_VALUE, 16))
+                    || ((junk % 8) != 0)
+                    || (junk > Integer.parseInt(MAX_EESTART_VALUE, 16))) {
                 eestart.setForeground(Color.red);
                 temp = false;
             } else {
@@ -1265,15 +1330,15 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
             }
         }
         eestart.updateUI();
-        
+
         allIsOk &= temp;
         if (allIsOk == true) {
             log.debug("No problems found when checking parameter values.");
         }
-        
+
         return allIsOk;
     }
-    
+
     private boolean intParameterIsValid(JTextField jtf, int minOk, int maxOk) {
         String text;
         int junk;
@@ -1303,7 +1368,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
     private int computeOptionsValFromRadiobuttons() {
         int control = 0;
-            if (checksoftwareless.isSelected()) {
+        if (checksoftwareless.isSelected()) {
             control |= CHECK_SOFTWARE_VERSION_LESS;
         }
 
@@ -1316,9 +1381,9 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     /**
-     * Conditionally enables or disables the Download and Verify GUI
-     * buttons based on the validity of the parameter values in the GUI
-     * and the state of the memory contents object.
+     * Conditionally enables or disables the Download and Verify GUI buttons
+     * based on the validity of the parameter values in the GUI and the state of
+     * the memory contents object.
      */
     private void updateDownloadVerifyButtons() {
         if (parametersAreValid() && !inputContent.isEmpty()) {
@@ -1332,6 +1397,6 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         updateDownloadVerifyButtons();
         log.info("ActionListener");
     }
-static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoaderPane.class.getName());
 
 }

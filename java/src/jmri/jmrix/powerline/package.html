@@ -1,69 +1,69 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        This package handles communications for powerline adapters, such as X10.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <p>
+            The package structure has to take two kinds of variation into account:
+        <ol>
+            <li>Multiple adapters, e.g. as shown on the
+                <a href="http://jmri.org/help/en/html/hardware/powerline/Compatibility.shtml">compatibility page</a>.
+                Each of these has its own serial protocol, including its own message format.
+            <li>Multiple device families and types, starting with X10, but later including
+                Insteon and perhaps others.  Individual adapters might support one or several of these.
+        </ol>
 
-  Copyright 2003
+        <p>
+            Our strategy is to use explicit interfaces for each device protocol, implemented
+            by a polymorphic TrafficController for each adapter type.
+        <p>
+            For example, the primary 
+            {@link jmri.jmrix.powerline.SerialTrafficController}
+            abstract class has an interface for sending 
+            {@link jmri.jmrix.powerline.X10Sequence} objects.  
+            An {@link jmri.jmrix.powerline.X10Sequence} encapulates just the X10 commands, not
+            the particular message needed to send them.  
+            When the {@link jmri.jmrix.powerline.X10Sequence} is passed
+            to the specific SerialTrafficController implementation, 
+            e.g. {@link jmri.jmrix.powerline.cm11.SpecificTrafficController},
+            it's encapsulated in one or more {@link jmri.jmrix.powerline.cm11.SpecificMessage}
+            objects, queued and sent.
 
--->
-</head>
-<body bgcolor="white">
+        <p>
+            The setup is done in 
+            {@link jmri.jmrix.powerline.serialdriver.SerialDriverAdapter}, which keys off the 
+            adapter name in option1.
 
-This package handles communications for powerline adapters, such as X10.
+        <h2>Related Documentation</h2>
 
-<p>
-The package structure has to take two kinds of variation into account:
-<ol>
-<li>Multiple adapters, e.g. as shown on the
-<a href="http://jmri.org/help/en/html/hardware/powerline/Compatibility.shtml">compatibility page</a>.
-Each of these has its own serial protocol, including its own message format.
-<li>Multiple device families and types, starting with X10, but later including
-Insteon and perhaps others.  Individual adapters might support one or several of these.
-</ol>
+        Other sources of documentation
+        <ul>
+            <li><a href="http://x10.com/homepage.htm">X10.com web site</a> (consumer oriented)
+            <li><a href="http://www.x10.com/support/technical_support.htm">X10.com support site</a>
+        </ul>
 
-<p>
-Our strategy is to use explicit interfaces for each device protocol, implemented
-by a polymorphic TrafficController for each adapter type.
-<p>
-For example, the primary 
-{@link jmri.jmrix.powerline.SerialTrafficController}
-abstract class has an interface for sending 
-{@link jmri.jmrix.powerline.X10Sequence} objects.  
-An {@link jmri.jmrix.powerline.X10Sequence} encapulates just the X10 commands, not
-the particular message needed to send them.  
-When the {@link jmri.jmrix.powerline.X10Sequence} is passed
-to the specific SerialTrafficController implementation, 
-e.g. {@link jmri.jmrix.powerline.cm11.SpecificTrafficController},
-it's encapsulated in one or more {@link jmri.jmrix.powerline.cm11.SpecificMessage}
-objects, queued and sent.
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
 
-<p>
-The setup is done in 
-{@link jmri.jmrix.powerline.serialdriver.SerialDriverAdapter}, which keys off the 
-adapter name in option1.
+        @since 2.1.1
 
-<h2>Related Documentation</h2>
+        <h2>To Do</h2>
+        <ul>
+            <li>
 
-Other sources of documentation
-<ul>
-  <li><a href="http://x10.com/homepage.htm">X10.com web site</a> (consumer oriented)
-  <li><a href="http://www.x10.com/support/technical_support.htm">X10.com support site</a>
-</ul>
-
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-
-@since 2.1.1
-
-<h2>To Do</h2>
-<ul>
-<li>
-
-</ul>
-</body>
+        </ul>
+    </body>
 </html>

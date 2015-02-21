@@ -1,92 +1,97 @@
 // ManagerDefaultSelector.java
-
 package jmri.managers;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.util.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.List;
 import java.util.Vector;
-
-import jmri.*;
+import jmri.AddressedProgrammerManager;
+import jmri.CommandStation;
+import jmri.ConsistManager;
+import jmri.GlobalProgrammerManager;
+import jmri.InstanceManager;
+import jmri.PowerManager;
+import jmri.ProgrammerManager;
+import jmri.ThrottleManager;
 import jmri.jmrix.SystemConnectionMemo;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Records and executes a desired set of defaults
- * for the JMRI InstanceManager and ProxyManagers
+ * Records and executes a desired set of defaults for the JMRI InstanceManager
+ * and ProxyManagers
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author			Bob Jacobsen Copyright (C) 2010
- * @version			$Revision$
- * @since           2.9.4
+ * @author	Bob Jacobsen Copyright (C) 2010
+ * @version	$Revision$
+ * @since 2.9.4
  */
 public class ManagerDefaultSelector {
 
     public static final ManagerDefaultSelector instance = new ManagerDefaultSelector();
-    
-    /*public static synchronized ManagerDefaultSelector instance() {
-        if (instance == null) {
-            if (log.isDebugEnabled()) log.debug("Manager Default Selector creating instance");
-            // create and load
-            instance = new ManagerDefaultSelector();
-        }
-        if (log.isDebugEnabled()) log.debug("ManagerDefaultSelector returns instance "+instance);
-        return instance;
-    }*/
 
+    /*public static synchronized ManagerDefaultSelector instance() {
+     if (instance == null) {
+     if (log.isDebugEnabled()) log.debug("Manager Default Selector creating instance");
+     // create and load
+     instance = new ManagerDefaultSelector();
+     }
+     if (log.isDebugEnabled()) log.debug("ManagerDefaultSelector returns instance "+instance);
+     return instance;
+     }*/
     private ManagerDefaultSelector() {
-        jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener(new PropertyChangeListener(){
+        jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener(new PropertyChangeListener() {
             public void propertyChange(PropertyChangeEvent e) {
-                if(e.getPropertyName().equals("ConnectionNameChanged")){
+                if (e.getPropertyName().equals("ConnectionNameChanged")) {
                     String oldName = (String) e.getOldValue();
                     String newName = (String) e.getNewValue();
                     for (Class<?> c : defaults.keySet()) {
                         String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
-                        if(connectionName.equals(oldName))
+                        if (connectionName.equals(oldName)) {
                             ManagerDefaultSelector.instance.defaults.put(c, newName);
+                        }
                     }
-                } else if (e.getPropertyName().equals("ConnectionDisabled")){
+                } else if (e.getPropertyName().equals("ConnectionDisabled")) {
                     Boolean newState = (Boolean) e.getNewValue();
-                    if(newState){
-                        jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo)e.getSource();
+                    if (newState) {
+                        jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo) e.getSource();
                         String disabledName = memo.getUserName();
                         ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
                         for (Class<?> c : defaults.keySet()) {
                             String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
-                            if(connectionName.equals(disabledName)){
+                            if (connectionName.equals(disabledName)) {
                                 log.warn("Connection " + disabledName + " has been disabled, we shall remove it as the default for " + c);
                                 tmpArray.add(c);
 //                                ManagerDefaultSelector.instance.defaults.remove(c);
                             }
                         }
-                        for(int i = 0; i<tmpArray.size(); i++){
+                        for (int i = 0; i < tmpArray.size(); i++) {
                             ManagerDefaultSelector.instance.defaults.remove(tmpArray.get(i));
                         }
                     }
-                } else if (e.getPropertyName().equals("ConnectionRemoved")){
+                } else if (e.getPropertyName().equals("ConnectionRemoved")) {
                     String removedName = (String) e.getOldValue();
                     ArrayList<Class<?>> tmpArray = new ArrayList<Class<?>>();
                     for (Class<?> c : defaults.keySet()) {
                         String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
-                        if(connectionName.equals(removedName)){
+                        if (connectionName.equals(removedName)) {
                             log.warn("Connection " + removedName + " has been removed, we shall remove it as the default for " + c);
                             //ManagerDefaultSelector.instance.defaults.remove(c);
                             tmpArray.add(c);
                         }
                     }
-                    for(int i = 0; i<tmpArray.size(); i++){
+                    for (int i = 0; i < tmpArray.size(); i++) {
                         ManagerDefaultSelector.instance.defaults.remove(tmpArray.get(i));
                     }
                 }
@@ -94,13 +99,13 @@ public class ManagerDefaultSelector {
             }
         });
     }
-    
+
     /**
-     * Return the userName of the system
-     * that provides the default instance
-     * for a specific class.
-     * @param managerClass the specific type, e.g. TurnoutManager,
-     *          for which a default system is desired
+     * Return the userName of the system that provides the default instance for
+     * a specific class.
+     *
+     * @param managerClass the specific type, e.g. TurnoutManager, for which a
+     * default system is desired
      * @return userName of the system, or null if none set
      */
     public String getDefault(Class<?> managerClass) {
@@ -108,17 +113,15 @@ public class ManagerDefaultSelector {
     }
 
     /**
-     * Record the userName of the system
-     * that provides the default instance
-     * for a specific class.
+     * Record the userName of the system that provides the default instance for
+     * a specific class.
      *
-     * To ensure compatibility of different preference versions,
-     * only classes that are current registered are preserved.
-     * This way, reading in an old file will just have irrelevant
-     * items ignored.
+     * To ensure compatibility of different preference versions, only classes
+     * that are current registered are preserved. This way, reading in an old
+     * file will just have irrelevant items ignored.
      *
-     * @param managerClass the specific type, e.g. TurnoutManager,
-     *          for which a default system is desired
+     * @param managerClass the specific type, e.g. TurnoutManager, for which a
+     * default system is desired
      * @param userName of the system, or null if none set
      */
     public void setDefault(Class<?> managerClass, String userName) {
@@ -128,23 +131,24 @@ public class ManagerDefaultSelector {
                 return;
             }
         }
-        log.warn("Ignoring preference for class {} with name {}",managerClass, userName);
+        log.warn("Ignoring preference for class {} with name {}", managerClass, userName);
     }
 
-    /** 
+    /**
      * load into InstanceManager
      */
     @SuppressWarnings("unchecked")
     public void configure() {
         List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
-        if (connList == null) return; // nothing to do 
-        
+        if (connList == null) {
+            return; // nothing to do 
+        }
         for (Class c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = ManagerDefaultSelector.instance.defaults.get(c);
             // have to find object of that type from proper connection
             boolean found = false;
-            for (int x = 0; x<connList.size(); x++) {
+            for (int x = 0; x < connList.size(); x++) {
                 SystemConnectionMemo memo = connList.get(x);
                 String testName = memo.getUserName();
                 if (testName.equals(connectionName)) {
@@ -158,44 +162,46 @@ public class ManagerDefaultSelector {
              * If the set connection can not be found then we shall set the manager default to use what
              * has currently been set.
              */
-            if(!found){
+            if (!found) {
                 String currentName = null;
-                if(c == ThrottleManager.class && InstanceManager.throttleManagerInstance()!=null){
+                if (c == ThrottleManager.class && InstanceManager.throttleManagerInstance() != null) {
                     currentName = InstanceManager.throttleManagerInstance().getUserName();
-                } else if(c==PowerManager.class && InstanceManager.powerManagerInstance()!=null){
+                } else if (c == PowerManager.class && InstanceManager.powerManagerInstance() != null) {
                     currentName = InstanceManager.powerManagerInstance().getUserName();
-                } else if (c==ProgrammerManager.class && InstanceManager.programmerManagerInstance()!=null){
+                } else if (c == ProgrammerManager.class && InstanceManager.programmerManagerInstance() != null) {
                     currentName = InstanceManager.programmerManagerInstance().getUserName();
                 }
-                if(currentName!=null){
+                if (currentName != null) {
                     log.warn("The configured " + connectionName + " for " + c + " can not be found so will use the default " + currentName);
                     ManagerDefaultSelector.instance.defaults.put(c, currentName);
                 }
             }
         }
     }
-    
+
     public Hashtable<Class<?>, String> defaults = new Hashtable<Class<?>, String>();
-    
-    final public Item[] knownManagers = new Item[] {
-                new Item("Throttles", ThrottleManager.class),
-                new Item("<html>Power<br>Control</html>", PowerManager.class),
-                new Item("<html>Command<br>Station</html>", CommandStation.class),
-                new Item("<html>Service<br>Programmer</html>", GlobalProgrammerManager.class),
-                new Item("<html>Ops Mode<br>Programmer</html>", AddressedProgrammerManager.class),
-                new Item( "Consists ", ConsistManager.class)
+
+    final public Item[] knownManagers = new Item[]{
+        new Item("Throttles", ThrottleManager.class),
+        new Item("<html>Power<br>Control</html>", PowerManager.class),
+        new Item("<html>Command<br>Station</html>", CommandStation.class),
+        new Item("<html>Service<br>Programmer</html>", GlobalProgrammerManager.class),
+        new Item("<html>Ops Mode<br>Programmer</html>", AddressedProgrammerManager.class),
+        new Item("Consists ", ConsistManager.class)
     };
-    
+
     public static class Item {
+
         public String typeName;
         public Class<?> managerClass;
         public boolean proxy;
+
         Item(String typeName, Class<?> managerClass) {
             this.typeName = typeName;
             this.managerClass = managerClass;
         }
     }
-    
+
     public synchronized void removePropertyChangeListener(PropertyChangeListener l) {
         if (listeners.contains(l)) {
             listeners.removeElement(l);
@@ -208,29 +214,28 @@ public class ManagerDefaultSelector {
             listeners.addElement(l);
         }
     }
-    
+
     /**
      * Trigger the notification of all PropertyChangeListeners
      */
     @SuppressWarnings("unchecked")
-	protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
+    protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
         // make a copy of the listener vector to synchronized not needed for transmit
         Vector<PropertyChangeListener> v;
-        synchronized(this)
-            {
-                v = (Vector<PropertyChangeListener>) listeners.clone();
-            }
+        synchronized (this) {
+            v = (Vector<PropertyChangeListener>) listeners.clone();
+        }
         // forward to all listeners
         int cnt = v.size();
-        for (int i=0; i < cnt; i++) {
+        for (int i = 0; i < cnt; i++) {
             PropertyChangeListener client = v.elementAt(i);
             client.propertyChange(new PropertyChangeEvent(this, property, oldValue, newValue));
         }
     }
-    
+
     // data members to hold contact with the property listeners
     final private static Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
-    
+
     static Logger log = LoggerFactory.getLogger(ManagerDefaultSelector.class.getName());
 }
 

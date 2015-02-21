@@ -16,10 +16,10 @@ import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
 
 /**
- * Offer an easy mechanism to save the entire roster contents from one
- * instance of DecoderPro.  The result is a zip format file, containing 
- * all of the roster entries plus the overall roster.xml index file.
- * 
+ * Offer an easy mechanism to save the entire roster contents from one instance
+ * of DecoderPro. The result is a zip format file, containing all of the roster
+ * entries plus the overall roster.xml index file.
+ *
  * @author david d zuhn
  *
  */
@@ -30,20 +30,18 @@ public class FullBackupExportAction
     // parent component for GUI
 
     public FullBackupExportAction(String s, WindowInterface wi) {
-    	super(s, wi);
+        super(s, wi);
     }
-     
- 	public  FullBackupExportAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public FullBackupExportAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
     private Component _parent;
 
     /**
-     * @param s
-     *            Name of this action, e.g. in menus
-     * @param parent
-     *            Component that action is associated with, used to ensure
-     *            proper position in of dialog boxes
+     * @param s Name of this action, e.g. in menus
+     * @param parent Component that action is associated with, used to ensure
+     * proper position in of dialog boxes
      */
     public FullBackupExportAction(String s, Component parent) {
         super(s);
@@ -60,7 +58,7 @@ public class FullBackupExportAction
 
             JFileChooser chooser = new JFileChooser();
             FileNameExtensionFilter filter = new FileNameExtensionFilter(
-            "JMRI full roster files", roster_filename_extension);
+                    "JMRI full roster files", roster_filename_extension);
             chooser.setFileFilter(filter);
 
             int returnVal = chooser.showSaveDialog(_parent);
@@ -110,7 +108,7 @@ public class FullBackupExportAction
      * Copy a file to an entry in a zip file.
      *
      * The basename of the source file will be used in the zip file, placed in
-     * the directory of the zip file specified by dirname.  If dirname is null,
+     * the directory of the zip file specified by dirname. If dirname is null,
      * the file will be placed in the root level of the zip file.
      *
      * @param filename the file to copy
@@ -151,8 +149,8 @@ public class FullBackupExportAction
 
         zipper.closeEntry();
     }
-    
-        // never invoked, because we overrode actionPerformed above
+
+    // never invoked, because we overrode actionPerformed above
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

@@ -1,27 +1,24 @@
 // NcePanelInterface.java
-
 package jmri.jmrix.nce.swing;
 
 import jmri.jmrix.nce.NceSystemConnectionMemo;
 
 /**
- * JPanel interface to handle providing 
- * system connection information to a panel.
+ * JPanel interface to handle providing system connection information to a
+ * panel.
  *
- * @author Bob Jacobsen  Copyright 2010
+ * @author Bob Jacobsen Copyright 2010
  * @since 2.11.1
  * @author kcameron 2010
  * @version $Revision$
  */
-
-public interface NcePanelInterface  {
+public interface NcePanelInterface {
 
     /**
-     * 2nd stage of initialization, invoked after
-     * the constuctor is complete.
+     * 2nd stage of initialization, invoked after the constuctor is complete.
      * <p>
-     * This needs to be connected to the 
-     * initContext() method in implementing classes.
+     * This needs to be connected to the initContext() method in implementing
+     * classes.
      */
     public void initComponents(NceSystemConnectionMemo memo) throws Exception;
 

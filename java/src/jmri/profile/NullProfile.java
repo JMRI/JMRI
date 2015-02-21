@@ -42,7 +42,8 @@ public class NullProfile extends Profile {
      * load a single profile with a given id.
      *
      * @param name
-     * @param id If null, {@link jmri.profile.ProfileManager#createDefaultProfile() } will be used to generate the id.
+     * @param id If null, {@link jmri.profile.ProfileManager#createDefaultProfile()
+     * } will be used to generate the id.
      * @param path
      * @throws IOException
      * @throws IllegalArgumentException

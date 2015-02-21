@@ -1,5 +1,4 @@
 // NcePowerManager.java
-
 package jmri.jmrix.nce;
 
 import jmri.JmriException;
@@ -17,17 +16,19 @@ public class NcePowerManager implements PowerManager, NceListener {
         this(memo.getNceTrafficController(), memo.getSystemPrefix());// connect to the TrafficManager
         userName = memo.getUserName();
     }
-    
+
     public NcePowerManager(NceTrafficController tc, String p) {
         // connect to the TrafficManager
         this.tc = tc;
         this.prefix = p;
         tc.addNceListener(this);
     }
-    
+
     String userName = "NCE";
-    
-    public String getUserName() { return userName; }
+
+    public String getUserName() {
+        return userName;
+    }
 
     int power = UNKNOWN;
 
@@ -37,14 +38,14 @@ public class NcePowerManager implements PowerManager, NceListener {
     public void setPower(int v) throws JmriException {
         power = UNKNOWN; // while waiting for reply
         checkTC();
-        if (v==ON) {
+        if (v == ON) {
             // configure to wait for reply
             waiting = true;
             onReply = PowerManager.ON;
             // send "Enable main track"
             NceMessage l = NceMessage.getEnableMain(tc);
             tc.sendNceMessage(l, this);
-        } else if (v==OFF) {
+        } else if (v == OFF) {
             // configure to wait for reply
             waiting = true;
             onReply = PowerManager.OFF;
@@ -56,7 +57,9 @@ public class NcePowerManager implements PowerManager, NceListener {
         firePropertyChange("Power", null, null);
     }
 
-    public int getPower() { return power;}
+    public int getPower() {
+        return power;
+    }
 
     // to free resources when no longer used
     public void dispose() throws JmriException {
@@ -65,15 +68,22 @@ public class NcePowerManager implements PowerManager, NceListener {
     }
 
     private void checkTC() throws JmriException {
-        if (tc == null) throw new JmriException("attempt to use NcePowerManager after dispose");
+        if (tc == null) {
+            throw new JmriException("attempt to use NcePowerManager after dispose");
+        }
     }
 
     // to hear of changes
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
-    protected void firePropertyChange(String p, Object old, Object n) { pcs.firePropertyChange(p,old,n);}
+
+    protected void firePropertyChange(String p, Object old, Object n) {
+        pcs.firePropertyChange(p, old, n);
+    }
+
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
@@ -91,7 +101,7 @@ public class NcePowerManager implements PowerManager, NceListener {
     }
 
     public void message(NceMessage m) {
-        if (m.isKillMain() ) {
+        if (m.isKillMain()) {
             // configure to wait for reply
             waiting = true;
             onReply = PowerManager.OFF;

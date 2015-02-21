@@ -1,16 +1,13 @@
 package apps.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import apps.PerformFileModel;
+import java.io.File;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.util.FileUtil;
-
-import java.io.File;
-
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of PerformFileModel objects
@@ -27,6 +24,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Default implementation for storing the model contents
+     *
      * @param o Object to store, of type PerformActonModel
      * @return Element containing the complete info
      */
@@ -42,6 +40,7 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Object should be loaded after basic GUI constructed
+     *
      * @return true to defer loading
      * @see jmri.configurexml.AbstractXmlAdapter#loadDeferred()
      * @see jmri.configurexml.XmlAdapter#loadDeferred()
@@ -53,13 +52,14 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Create object from XML file
+     *
      * @param e Top level Element to unpack.
      * @return true if successful
-      */
+     */
     public boolean load(Element e) throws JmriException {
-    	boolean result = true;
+        boolean result = true;
         String fileName = FileUtil.getAbsoluteFilename(e.getAttribute("name").getValue());
-        log.info("Load file "+fileName);
+        log.info("Load file " + fileName);
 
         // load the file
         File file = new File(fileName);
@@ -75,8 +75,9 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
 
     /**
      * Update static data from XML file
+     *
      * @param element Top level Element to unpack.
-     * @param o  ignored
+     * @param o ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");

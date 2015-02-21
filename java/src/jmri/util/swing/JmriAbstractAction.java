@@ -8,10 +8,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for actions that will work with multiple JMRI GUIs.
- * 
+ *
  * An opaque Object can be passed as a context, but null is also possible.
  *
- * <b>NOTE</b> Either {@link jmri.util.swing.JmriAbstractAction#actionPerformed(java.awt.event.ActionEvent) }
+ * <b>NOTE</b> Either {@link jmri.util.swing.JmriAbstractAction#actionPerformed(java.awt.event.ActionEvent)
+ * }
  * or {@link jmri.util.swing.JmriAbstractAction#makePanel() } must be overridden
  * by extending classes.
  *
@@ -21,10 +22,10 @@ import org.slf4j.LoggerFactory;
 abstract public class JmriAbstractAction extends javax.swing.AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 373576744806206486L;
-	protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
+     *
+     */
+    private static final long serialVersionUID = 373576744806206486L;
+    protected WindowInterface.Hint hint = WindowInterface.Hint.DEFAULT;
     protected WindowInterface wi;
     protected Object context = null;
     static Logger log = LoggerFactory.getLogger(JmriAbstractAction.class.getName());

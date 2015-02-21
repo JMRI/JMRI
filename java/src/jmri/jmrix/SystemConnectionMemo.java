@@ -128,7 +128,7 @@ abstract public class SystemConnectionMemo {
 
     /**
      * Set the system prefix.
-     * 
+     *
      * @param systemPrefix
      * @throws java.lang.NullPointerException if systemPrefix is null
      * @return true if the system prefix could be set
@@ -168,7 +168,7 @@ abstract public class SystemConnectionMemo {
 
     /**
      * Set the user name for the system connection.
-     * 
+     *
      * @param name
      * @throws java.lang.NullPointerException if name is null
      * @return true if the user name could be set.
@@ -311,15 +311,15 @@ abstract public class SystemConnectionMemo {
     }
 
     public boolean isDirty() {
-        return ((this.disabledAsLoaded == null || this.disabledAsLoaded != this.disabled) ||
-                (this.prefixAsLoaded == null || !this.prefixAsLoaded.equals(this.prefix)) ||
-                (this.userNameAsLoaded == null || !this.userNameAsLoaded.equals(this.userName)));
+        return ((this.disabledAsLoaded == null || this.disabledAsLoaded != this.disabled)
+                || (this.prefixAsLoaded == null || !this.prefixAsLoaded.equals(this.prefix))
+                || (this.userNameAsLoaded == null || !this.userNameAsLoaded.equals(this.userName)));
     }
-    
+
     public boolean isRestartRequired() {
         return this.isDirty();
     }
-    
+
     // data members to hold contact with the property listeners
     final private static Set<PropertyChangeListener> listeners = new HashSet<>();
 

@@ -1,36 +1,34 @@
 // ShortAddrVariableValue.java
-
 package jmri.jmrit.symbolicprog;
 
+import java.util.HashMap;
+import javax.swing.JLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
-
-import java.util.*;
 
 /**
  * Representation of a short address (CV1).
  * <P>
- * This is a decimal value, extended to modify the other CVs when
- * written.  The CVs to be modified and their new values are
- * stored in two arrays for simplicity.
+ * This is a decimal value, extended to modify the other CVs when written. The
+ * CVs to be modified and their new values are stored in two arrays for
+ * simplicity.
  * <P>
- * 
- * The NMRA has decided that writing CV1 causes other CVs to update
- * within the decoder (CV19 for consisting, CV29 for short/long
- * address). We want DP to overwrite those _after_ writing CV1,
- * so that the DP values are forced to be the correct ones.
- * 
- * @author	    Bob Jacobsen   Copyright (C) 2001, 2006, 2007
- * @version     $Revision$
+ *
+ * The NMRA has decided that writing CV1 causes other CVs to update within the
+ * decoder (CV19 for consisting, CV29 for short/long address). We want DP to
+ * overwrite those _after_ writing CV1, so that the DP values are forced to be
+ * the correct ones.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2006, 2007
+ * @version $Revision$
  *
  */
 public class ShortAddrVariableValue extends DecVariableValue {
 
     public ShortAddrVariableValue(String name, String comment, String cvName,
-                                  boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                  String cvNum, String mask,
-                                  HashMap<String, CvValue> v, JLabel status, String stdname) {
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask,
+            HashMap<String, CvValue> v, JLabel status, String stdname) {
         // specify min, max value explicitly
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 1, 127, v, status, stdname);
 
@@ -41,11 +39,10 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     /**
-     * Register a CV to be modified regardless of
-     * current value
+     * Register a CV to be modified regardless of current value
      */
     public void setModifiedCV(String cvNum) {
-        if (firstFreeSpace>=maxCVs) {
+        if (firstFreeSpace >= maxCVs) {
             log.error("too many CVs registered for changes!");
             return;
         }
@@ -58,15 +55,20 @@ public class ShortAddrVariableValue extends DecVariableValue {
      * Change CV values due to change in short address
      */
     private void updateCvForAddrChange() {
-        for (int i=0; i<firstFreeSpace; i++) {
+        for (int i = 0; i < firstFreeSpace; i++) {
             CvValue cv = _cvMap.get(cvNumbers[i]);
-            if (cv == null) continue;  // if CV not present this decoder...
-            if (! cvNumbers[i].equals(cv.number()))
+            if (cv == null) {
+                continue;  // if CV not present this decoder...
+            }
+            if (!cvNumbers[i].equals(cv.number())) {
                 log.error("CV numbers don't match: "
-                          +cvNumbers[i]+" "+cv.number());
+                        + cvNumbers[i] + " " + cv.number());
+            }
             cv.setToWrite(true);
             cv.setState(EDITED);
-            if(log.isDebugEnabled()) log.debug("Mark to write " +cv.number());
+            if (log.isDebugEnabled()) {
+                log.debug("Mark to write " + cv.number());
+            }
         }
     }
 
@@ -76,7 +78,9 @@ public class ShortAddrVariableValue extends DecVariableValue {
     int[] newValues = new int[maxCVs];
 
     public void writeChanges() {
-        if (getReadOnly()) log.error("unexpected writeChanges operation when readOnly is set");
+        if (getReadOnly()) {
+            log.error("unexpected writeChanges operation when readOnly is set");
+        }
         setBusy(true);  // will be reset when value changes
         // mark other CVs as possibly needing write
         updateCvForAddrChange();
@@ -85,7 +89,9 @@ public class ShortAddrVariableValue extends DecVariableValue {
     }
 
     public void writeAll() {
-        if (getReadOnly()) log.error("unexpected writeAll operation when readOnly is set");
+        if (getReadOnly()) {
+            log.error("unexpected writeAll operation when readOnly is set");
+        }
         setBusy(true);  // will be reset when value changes
         // mark other CVs as possibly needing write
         updateCvForAddrChange();

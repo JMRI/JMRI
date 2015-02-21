@@ -30,8 +30,7 @@ public abstract class UnboundBean implements BeanInterface {
      * <p>
      * This implementation calls a read method for the indexed property using
      * JavaBeans introspection, and assumes, based on JavaBeans coding patterns,
-     * that the read method has the following parameter:
-     * <code>index</code>.
+     * that the read method has the following parameter: <code>index</code>.
      *
      * @param key
      * @param index
@@ -108,8 +107,7 @@ public abstract class UnboundBean implements BeanInterface {
      * This implementation calls a write method for the indexed property using
      * JavaBeans introspection, and assumes, based on JavaBeans coding patterns,
      * that the write method has the following two parameters in order:
-     * <code>index</code>,
-     * <code>value</code>.
+     * <code>index</code>, <code>value</code>.
      *
      * @param key
      * @param index

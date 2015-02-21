@@ -1,10 +1,9 @@
 // NullAudioListener.java
-
 package jmri.jmrit.audio;
 
+import javax.vecmath.Vector3f;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.vecmath.Vector3f;
 
 /**
  * Null implementation of the Audio Listener sub-class.
@@ -15,35 +14,35 @@ import javax.vecmath.Vector3f;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class NullAudioListener extends AbstractAudioListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8149788369213980559L;
+     *
+     */
+    private static final long serialVersionUID = 8149788369213980559L;
 
-	/**
+    /**
      * Constructor for new NullAudioListener with system name
      *
      * @param systemName AudioListener object system name (e.g. IAL)
      */
     public NullAudioListener(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) log.debug("New NullAudioListener: "+systemName);
+        if (log.isDebugEnabled()) {
+            log.debug("New NullAudioListener: " + systemName);
+        }
     }
 
     /**
@@ -54,7 +53,9 @@ public class NullAudioListener extends AbstractAudioListener {
      */
     public NullAudioListener(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) log.debug("New NullAudioListener: "+userName+" ("+systemName+")");
+        if (log.isDebugEnabled()) {
+            log.debug("New NullAudioListener: " + userName + " (" + systemName + ")");
+        }
     }
 
     @Override
@@ -64,7 +65,9 @@ public class NullAudioListener extends AbstractAudioListener {
 
     @Override
     protected void cleanUp() {
-        if (log.isDebugEnabled()) log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
+        }
         this.dispose();
     }
 

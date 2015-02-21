@@ -67,7 +67,7 @@ abstract public class AbstractRouteServer {
     }
 
     public void dispose() {
-            for (Map.Entry<String, RouteListener> route : this.routes.entrySet()) {
+        for (Map.Entry<String, RouteListener> route : this.routes.entrySet()) {
             Sensor tas = InstanceManager.routeManagerInstance().getRoute(route.getKey()).getTurnoutsAlgdSensor();
             if (tas != null) {  //only remove listener if there is a turnout-aligned sensor defined
                 tas.removePropertyChangeListener(route.getValue());

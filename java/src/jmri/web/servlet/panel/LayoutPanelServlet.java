@@ -237,8 +237,8 @@ public class LayoutPanelServlet extends AbstractPanelServlet {
             Document doc = new Document(panel);
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
-                                .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.TRIM));
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.TRIM));
 
             return fmt.outputString(doc);
         } catch (NullPointerException ex) {

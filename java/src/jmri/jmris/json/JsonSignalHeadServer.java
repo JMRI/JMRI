@@ -67,7 +67,7 @@ public class JsonSignalHeadServer extends AbstractSignalHeadServer {
 
     @Override
     public void parseStatus(String statusString) throws JmriException, IOException {
-        this.parseRequest(Locale.getDefault(),this.mapper.readTree(statusString).path(DATA));
+        this.parseRequest(Locale.getDefault(), this.mapper.readTree(statusString).path(DATA));
     }
 
     public void parseRequest(Locale locale, JsonNode data) throws JmriException, IOException {

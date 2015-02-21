@@ -1,56 +1,53 @@
 // VariableValueTest.java
-
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
-import javax.swing.*;
+import java.util.List;
+import javax.swing.JLabel;
+import jmri.progdebugger.ProgDebugger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import java.util.List;
+import org.apache.log4j.Logger;
 import org.jdom2.Element;
-
-import jmri.progdebugger.*;
 
 /**
  * Base for tests of classes inheriting from FnMapPanel abstract class
+ *
  * @author	Bob Jacobsen, Copyright 2009
- * @version     $Revision$
+ * @version $Revision$
  */
 public class FnMapPanelTest extends TestCase {
 
     public void testCtor() {
         ProgDebugger p = new ProgDebugger();
         VariableTableModel tableModel = new VariableTableModel(
-                               new JLabel(""),
-                               new String[] {"Name", "Value"},
-                               new CvTableModel(new JLabel(""), p),
-                               new IndexedCvTableModel(new JLabel(""), p)
-                               );
+                new JLabel(""),
+                new String[]{"Name", "Value"},
+                new CvTableModel(new JLabel(""), p),
+                new IndexedCvTableModel(new JLabel(""), p)
+        );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
-        
+
         new FnMapPanel(tableModel, varsUsed, model);
     }
 
     public void testLargeNumbers() {
         ProgDebugger p = new ProgDebugger();
         VariableTableModel tableModel = new VariableTableModel(
-                               new JLabel(""),
-                               new String[] {"Name", "Value"},
-                               new CvTableModel(new JLabel(""), p),
-                               new IndexedCvTableModel(new JLabel(""), p)
-                               );
+                new JLabel(""),
+                new String[]{"Name", "Value"},
+                new CvTableModel(new JLabel(""), p),
+                new IndexedCvTableModel(new JLabel(""), p)
+        );
         List<Integer> varsUsed = null;
         Element model = new Element("model");
-            model.setAttribute("numFns", "28");
-        
+        model.setAttribute("numFns", "28");
+
         new FnMapPanel(tableModel, varsUsed, model);
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public FnMapPanelTest(String s) {
         super(s);
     }
@@ -70,8 +67,12 @@ public class FnMapPanelTest extends TestCase {
     static Logger log = Logger.getLogger(FnMapPanelTest.class.getName());
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }
-

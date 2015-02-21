@@ -13,10 +13,10 @@ import org.slf4j.LoggerFactory;
 class JsonClientMonitorAction extends PopupMenu {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5738608851589851778L;
-	private final JsonClientSystemConnectionMemo memo;
+     *
+     */
+    private static final long serialVersionUID = -5738608851589851778L;
+    private final JsonClientSystemConnectionMemo memo;
     private final static Logger log = LoggerFactory.getLogger(JsonClientMonitorAction.class);
 
     public JsonClientMonitorAction(String message, JsonClientSystemConnectionMemo memo) {

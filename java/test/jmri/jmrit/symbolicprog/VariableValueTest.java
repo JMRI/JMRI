@@ -1,49 +1,52 @@
 // VariableValueTest.java
-
 package jmri.jmrit.symbolicprog;
 
-import org.apache.log4j.Logger;
-import java.util.*;
-import javax.swing.*;
 import java.awt.Component;
+import java.util.HashMap;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JTextField;
+import jmri.progdebugger.ProgDebugger;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-
-import jmri.progdebugger.*;
+import org.apache.log4j.Logger;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
+ *
  * @author	Bob Jacobsen, Copyright 2002
- * @version     $Revision$
+ * @version $Revision$
  */
 public abstract class VariableValueTest extends TestCase {
 
     ProgDebugger p = new ProgDebugger();
 
     abstract VariableValue makeVar(String label, String comment, String cvName,
-                                   boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                   String cvNum, String mask, int minVal, int maxVal,
-                                   HashMap<String, CvValue> v, JLabel status, String item);
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask, int minVal, int maxVal,
+            HashMap<String, CvValue> v, JLabel status, String item);
 
     abstract void setValue(VariableValue var, String value);
+
     abstract void checkValue(VariableValue var, String comment, String value);
 
     // we have separate fns for ReadOnly, as they may have different "value" object types
     abstract void setReadOnlyValue(VariableValue var, String value);
+
     abstract void checkReadOnlyValue(VariableValue var, String comment, String value);
 
     // start of base tests
-
     // check label, item from ctor
     public void testVariableNaming() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, check name
         VariableValue variable = makeVar("label check", "comment", "", false, false, false, false, "81", "XXVVVVVV", 0, 255, v, null, "item check");
-        Assert.assertEquals("label", "label check", variable.label() );
-        Assert.assertEquals("item", "item check", variable.item() );
+        Assert.assertEquals("label", "label check", variable.label());
+        Assert.assertEquals("item", "item check", variable.item());
     }
 
     // can we create one, then manipulate the variable to change the CV?
@@ -51,10 +54,10 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, check name
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertEquals("label", "label", variable.label() );
+        Assert.assertEquals("label", "label", variable.label());
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify
@@ -64,7 +67,7 @@ public abstract class VariableValueTest extends TestCase {
         checkValue(variable, "value object contains ", "5");
 
         // see if the CV was updated
-        Assert.assertEquals("cv value", 5*4+3, cv.getValue());
+        Assert.assertEquals("cv value", 5 * 4 + 3, cv.getValue());
     }
 
     //  check create&manipulate for large values
@@ -72,10 +75,10 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, check name
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "VVVVVVVVVVVVVVVV", 0, 60000, v, null, null);
-        Assert.assertEquals("label", "label", variable.label() );
+        Assert.assertEquals("label", "label", variable.label());
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify
@@ -92,11 +95,11 @@ public abstract class VariableValueTest extends TestCase {
     public void testVariableValueCreateLargeMaskValue() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
-        cv.setValue(32768+3);
-        v.put("81",cv);
+        cv.setValue(32768 + 3);
+        v.put("81", cv);
         // create a variable pointed at CV 81, check name
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXXVVXXXXXXXXXXX", 0, 60000, v, null, null);
-        Assert.assertEquals("label", "label", variable.label() );
+        Assert.assertEquals("label", "label", variable.label());
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify
@@ -106,16 +109,17 @@ public abstract class VariableValueTest extends TestCase {
         checkValue(variable, "value object contains ", "2");
 
         // see if the CV was updated
-        Assert.assertEquals("cv value", 2*8*256+32768+3, cv.getValue());
+        Assert.assertEquals("cv value", 2 * 8 * 256 + 32768 + 3, cv.getValue());
     }
+
     public void testVariableValueCreateLargeMaskValue256() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
-        cv.setValue(32768+3);
-        v.put("81",cv);
+        cv.setValue(32768 + 3);
+        v.put("81", cv);
         // create a variable pointed at CV 81, check name
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXXXXXXVXXXXXXXX", 0, 60000, v, null, null);
-        Assert.assertEquals("label", "label", variable.label() );
+        Assert.assertEquals("label", "label", variable.label());
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify
@@ -125,16 +129,17 @@ public abstract class VariableValueTest extends TestCase {
         checkValue(variable, "value object contains ", "1");
 
         // see if the CV was updated
-        Assert.assertEquals("cv value", 256+32768+3, cv.getValue());
+        Assert.assertEquals("cv value", 256 + 32768 + 3, cv.getValue());
     }
+
     public void testVariableValueCreateLargeMaskValue2up16() {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, check name
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "VXXXXXXXXXXXXXXX", 0, 60000, v, null, null);
-        Assert.assertEquals("label", "label", variable.label() );
+        Assert.assertEquals("label", "label", variable.label());
         checkValue(variable, "value object initially contains ", "0");
 
         // pretend you've edited the value & manually notify
@@ -144,7 +149,7 @@ public abstract class VariableValueTest extends TestCase {
         checkValue(variable, "value object contains ", "1");
 
         // see if the CV was updated
-        Assert.assertEquals("cv value", 256*128+3, cv.getValue());
+        Assert.assertEquals("cv value", 256 * 128 + 3, cv.getValue());
     }
 
     // can we change the CV and see the result in the Variable?
@@ -152,7 +157,7 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertTrue("getValue not null ", variable.getCommonRep() != null);
@@ -160,9 +165,9 @@ public abstract class VariableValueTest extends TestCase {
         checkValue(variable, "variable value", "5");
 
         // change the CV, expect to see a change in the variable value
-        cv.setValue(7*4+1);
+        cv.setValue(7 * 4 + 1);
         checkValue(variable, "value after CV set", "7");
-        Assert.assertEquals("cv after CV set ", 7*4+1, cv.getValue());
+        Assert.assertEquals("cv after CV set ", 7 * 4 + 1, cv.getValue());
     }
 
     // Do we get the right return from a readOnly == true DecVariable?
@@ -170,10 +175,10 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5
         VariableValue variable = makeVar("label", "comment", "", true, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertTrue( variable.getCommonRep() != null);
+        Assert.assertTrue(variable.getCommonRep() != null);
         setReadOnlyValue(variable, "5");
         checkReadOnlyValue(variable, "value", "5");
     }
@@ -184,7 +189,7 @@ public abstract class VariableValueTest extends TestCase {
 
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
@@ -192,15 +197,17 @@ public abstract class VariableValueTest extends TestCase {
         variable.readAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( variable.isBusy() && i++ < 100 )  {
+        while (variable.isBusy() && i++ < 100) {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getCommonRep()+" state="+variable.getState());
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i + " value=" + variable.getCommonRep() + " state=" + variable.getState());
+        }
 
-        Assert.assertTrue("wait time for message",i<100);
+        Assert.assertTrue("wait time for message", i < 100);
         checkValue(variable, "text var value ", "14");
         Assert.assertEquals("var state ", AbstractValue.READ, variable.getState());
         Assert.assertEquals("cv value", 123, cv.getValue());
@@ -213,9 +220,9 @@ public abstract class VariableValueTest extends TestCase {
 
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
-        v.put("81",cv);
-        cv.setValue(128+1);
-        
+        v.put("81", cv);
+        cv.setValue(128 + 1);
+
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
@@ -223,29 +230,33 @@ public abstract class VariableValueTest extends TestCase {
         variable.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( variable.isBusy() && i++ < 100  )  {
+        while (variable.isBusy() && i++ < 100) {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+variable.getCommonRep()+" state="+variable.getState());
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i + " value=" + variable.getCommonRep() + " state=" + variable.getState());
+        }
 
-        Assert.assertTrue("iterations ",i<100);
-        checkValue(variable, "value ","5");
+        Assert.assertTrue("iterations ", i < 100);
+        checkValue(variable, "value ", "5");
         Assert.assertEquals("var state ", AbstractValue.STORED, variable.getState());
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
-        Assert.assertEquals("last program write ", 5*4+128+1, p.lastWrite()); // include checking original bits
+        Assert.assertEquals("last program write ", 5 * 4 + 128 + 1, p.lastWrite()); // include checking original bits
     }
 
     // check synch during a write operation to the CV
     public void testVariableCvWrite() {
-        if (log.isDebugEnabled()) log.debug("start testVariableCvWrite test");
+        if (log.isDebugEnabled()) {
+            log.debug("start testVariableCvWrite test");
+        }
 
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
@@ -254,21 +265,25 @@ public abstract class VariableValueTest extends TestCase {
         cv.write(statusLabel);  // JLabel is for reporting status, ignored here
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( cv.isBusy() && i++ < 100  )  {
+        while (cv.isBusy() && i++ < 100) {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+cv.getValue()+" state="+cv.getState());
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i + " value=" + cv.getValue() + " state=" + cv.getState());
+        }
 
-        Assert.assertTrue("iterations needed ", i<100);
-        checkValue(variable, "value ","5");
-        Assert.assertEquals("variable state ", AbstractValue.STORED, variable.getState() );
+        Assert.assertTrue("iterations needed ", i < 100);
+        checkValue(variable, "value ", "5");
+        Assert.assertEquals("variable state ", AbstractValue.STORED, variable.getState());
         Assert.assertEquals("cv state ", AbstractValue.STORED, cv.getState());
-        Assert.assertEquals("value written ", 5*4+3, p.lastWrite()); // includes initial value bits
+        Assert.assertEquals("value written ", 5 * 4 + 3, p.lastWrite()); // includes initial value bits
         Assert.assertEquals("status label ", "OK", statusLabel.getText());
-        if (log.isDebugEnabled()) log.debug("end testVariableCvWrite test");
+        if (log.isDebugEnabled()) {
+            log.debug("end testVariableCvWrite test");
+        }
     }
 
     // check the state diagram
@@ -277,7 +292,7 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         Assert.assertEquals("initial state", VariableValue.FROMFILE, variable.getState());
@@ -293,13 +308,13 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertEquals("FROM_FILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground() );
+        Assert.assertEquals("FROM_FILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground());
 
         cv.setState(CvValue.UNKNOWN);
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground() );
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground());
     }
 
     // check the state <-> color connection for rep when var changes
@@ -308,24 +323,24 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
-        JComponent rep = (JComponent)variable.getNewRep("");
+        JComponent rep = (JComponent) variable.getNewRep("");
 
-        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground() );
-        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground());
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground());
 
         cv.setState(CvValue.UNKNOWN);
 
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground() );
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground());
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground());
 
         setValue(variable, "5");
 
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground() );
-        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground());
+        Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground());
     }
 
     // check the state <-> color connection for var when rep changes
@@ -334,26 +349,26 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         // get a representation
-        JComponent rep = (JComponent)variable.getNewRep("");
+        JComponent rep = (JComponent) variable.getNewRep("");
 
-        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground() );
-        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground() );
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, variable.getCommonRep().getBackground());
+        Assert.assertEquals("FROMFILE color", VariableValue.COLOR_FROMFILE, rep.getBackground());
 
         cv.setState(CvValue.UNKNOWN);
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground() );
-        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground() );
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, variable.getCommonRep().getBackground());
+        Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground());
 
         try {   // might be either of two reps?
-            ((JComboBox)rep).setSelectedItem("9");
-        } catch ( java.lang.ClassCastException e) {
-            ((JTextField)rep).setText("9");
-            ((JTextField)rep).postActionEvent();
-            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground() );
-            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground() );
+            ((JComboBox) rep).setSelectedItem("9");
+        } catch (java.lang.ClassCastException e) {
+            ((JTextField) rep).setText("9");
+            ((JTextField) rep).postActionEvent();
+            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, variable.getCommonRep().getBackground());
+            Assert.assertEquals("EDITED color", VariableValue.COLOR_EDITED, rep.getBackground());
         }
     }
 
@@ -363,7 +378,7 @@ public abstract class VariableValueTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue variable = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         setValue(variable, "5");
@@ -390,7 +405,7 @@ public abstract class VariableValueTest extends TestCase {
         rep1.postActionEvent();
 
         // check again with existing references
-        Assert.assertEquals("2 saved value ", "9", ((JTextField)val1).getText());
+        Assert.assertEquals("2 saved value ", "9", ((JTextField) val1).getText());
         Assert.assertEquals("2 saved rep ", "9", rep1.getText());
         // pick up new references and check
         checkValue(variable, "2 new value ", "9");
@@ -399,12 +414,14 @@ public abstract class VariableValueTest extends TestCase {
 
     // check synchronization of two vars during a write
     public void testWriteSynch2() {
-        if (log.isDebugEnabled()) log.debug("start testWriteSynch2 test");
+        if (log.isDebugEnabled()) {
+            log.debug("start testWriteSynch2 test");
+        }
 
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5, manually notified
         VariableValue var1 = makeVar("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         VariableValue var2 = makeVar("alternate", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
@@ -413,61 +430,64 @@ public abstract class VariableValueTest extends TestCase {
         var1.writeAll();
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
-        while ( var1.isBusy() && i++ < 100  )  {
+        while (var1.isBusy() && i++ < 100) {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i+" value="+var1.getCommonRep()+" state="+var1.getState());
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i + " value=" + var1.getCommonRep() + " state=" + var1.getState());
+        }
 
-        Assert.assertTrue("Number of iterations ",i<100);
-        checkValue(var1, "var 1 value","5");
-        checkValue(var2, "var 2 value","5");
+        Assert.assertTrue("Number of iterations ", i < 100);
+        checkValue(var1, "var 1 value", "5");
+        checkValue(var2, "var 2 value", "5");
         Assert.assertEquals("1st variable state ", AbstractValue.STORED, var1.getState());
         Assert.assertEquals("2nd variable state ", AbstractValue.STORED, var2.getState());
-        Assert.assertEquals("value written to programmer ",5*4+3, p.lastWrite()); // includes initial value bits
-        if (log.isDebugEnabled()) log.debug("end testWriteSynch2 test");
+        Assert.assertEquals("value written to programmer ", 5 * 4 + 3, p.lastWrite()); // includes initial value bits
+        if (log.isDebugEnabled()) {
+            log.debug("end testWriteSynch2 test");
+        }
     }
 
     // end of common tests
-
     // this next is just preserved here; note not being invoked.
     // test that you're not using too much space when you call for a value
     public void XtestSpaceUsage() {  // leading X prevents test from being called
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         // create a variable pointed at CV 81, loaded as 5
         DecVariableValue var = new DecVariableValue("label", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
-        Assert.assertNotNull("exists", var );
-        System.out.println("free, total memory at start = "+Runtime.getRuntime().freeMemory()
-                           +" "+Runtime.getRuntime().totalMemory());
+        Assert.assertNotNull("exists", var);
+        System.out.println("free, total memory at start = " + Runtime.getRuntime().freeMemory()
+                + " " + Runtime.getRuntime().totalMemory());
         Runtime.getRuntime().gc();
-        long usedStart = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("free, total memory after gc = "+Runtime.getRuntime().freeMemory()
-                           +" "+Runtime.getRuntime().totalMemory());
+        long usedStart = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        System.out.println("free, total memory after gc = " + Runtime.getRuntime().freeMemory()
+                + " " + Runtime.getRuntime().totalMemory());
         JTextField master = new JTextField(3);
         javax.swing.text.Document doc = master.getDocument();
         // loop to repeat getting value
-        for (int i = 0; i<10; i++) {
-            JTextField j = new JTextField(doc,"",3);
+        for (int i = 0; i < 10; i++) {
+            JTextField j = new JTextField(doc, "", 3);
             //JTextField temp = ((JTextField)var.getValue());
             //Assert.assertTrue(temp != null);
-            Assert.assertNotNull("exists", j );
+            Assert.assertNotNull("exists", j);
         }
         long freeAfter = Runtime.getRuntime().freeMemory();
-        Assert.assertNotNull("exists", freeAfter );
-        System.out.println("free, total memory after loop = "+Runtime.getRuntime().freeMemory()
-                           +" "+Runtime.getRuntime().totalMemory());
-        long usedAfter = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
+        Assert.assertNotNull("exists", freeAfter);
+        System.out.println("free, total memory after loop = " + Runtime.getRuntime().freeMemory()
+                + " " + Runtime.getRuntime().totalMemory());
+        long usedAfter = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
 
         Runtime.getRuntime().gc();
-        long usedAfterGC = Runtime.getRuntime().totalMemory()-Runtime.getRuntime().freeMemory();
-        System.out.println("free, total memory after gc = "+Runtime.getRuntime().freeMemory()
-                           +" "+Runtime.getRuntime().totalMemory());
-        System.out.println("used & kept = "+(usedAfterGC-usedStart)+" used before reclaim = "+(usedAfter-usedStart));
+        long usedAfterGC = Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory();
+        System.out.println("free, total memory after gc = " + Runtime.getRuntime().freeMemory()
+                + " " + Runtime.getRuntime().totalMemory());
+        System.out.println("used & kept = " + (usedAfterGC - usedStart) + " used before reclaim = " + (usedAfter - usedStart));
     }
 
     protected HashMap<String, CvValue> createCvMap() {
@@ -476,18 +496,20 @@ public abstract class VariableValueTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public VariableValueTest(String s) {
         super(s);
     }
 
     // abstract class has no main entry point, test suite
-
     static Logger log = Logger.getLogger(VariableValueTest.class.getName());
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }
-

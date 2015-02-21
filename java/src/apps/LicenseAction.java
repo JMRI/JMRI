@@ -1,7 +1,5 @@
 // LicenseAction.java
-
 package apps;
-
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,21 +17,24 @@ import jmri.util.swing.WindowInterface;
 /**
  * Swing action to display the JMRI license
  *
- * @author	    Bob Jacobsen    Copyright (C) 2004, 2010
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2004, 2010
+ * @version $Revision$
  */
 public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 9049030313953910292L;
+     *
+     */
+    private static final long serialVersionUID = 9049030313953910292L;
 
-	public LicenseAction() { super("License");}
+    public LicenseAction() {
+        super("License");
+    }
 
     public LicenseAction(String s, Icon i, WindowInterface w) {
         super(s, i, w);
     }
+
     public LicenseAction(String s, WindowInterface w) {
         super(s, w);
     }
@@ -42,16 +43,15 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         jmri.util.swing.JmriPanel p = new JmriPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-        
+
         JScrollPane jScrollPane = new JScrollPane();
         JTextPane textPane = new JTextPane();
 
         // get the file
-        
         InputStream is = FileUtil.findInputStream("resources/COPYING", FileUtil.Location.INSTALLED); // NOI18N
-        
+
         String t;
-        
+
         try {
             BufferedReader r = new BufferedReader(new InputStreamReader(is, "US-ASCII"));  // file stored as ASCII // NOI18N
             StringBuilder buf = new StringBuilder();
@@ -60,17 +60,17 @@ public class LicenseAction extends jmri.util.swing.JmriAbstractAction {
                 buf.append("\n");
             }
             t = buf.toString();
-            
+
             r.close();
         } catch (IOException ex) {
             t = "JMRI is distributed under a license. For license information, see the JMRI website http://jmri.org";
         }
         textPane.setText(t);
-        
+
         // set up display
         textPane.setEditable(false);
         jScrollPane.getViewport().add(textPane);
-        p.add(jScrollPane);        
+        p.add(jScrollPane);
 
         // start scrolled to top
         JScrollBar b = jScrollPane.getVerticalScrollBar();

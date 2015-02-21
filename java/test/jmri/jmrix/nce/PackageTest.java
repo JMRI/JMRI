@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.jmrix.nce;
 
 import junit.framework.Test;
@@ -8,13 +7,13 @@ import junit.framework.TestSuite;
 
 /**
  * tests for the jmri.jmrix.nce package
- * @author			Bob Jacobsen
- * @version   $Revision$
+ *
+ * @author	Bob Jacobsen
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -44,11 +43,11 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.nce.NceReplyTest.suite());
         suite.addTest(jmri.jmrix.nce.NcePowerManagerTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.nce.ncemon.NceMonPanelTest.suite());
             suite.addTest(jmri.jmrix.nce.packetgen.NcePacketGenPanelTest.suite());
         }
-        
+
         return suite;
     }
 

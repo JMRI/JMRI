@@ -39,10 +39,10 @@ import jmri.util.swing.XTableColumnModel;
 public class RosterTable extends JmriPanel implements RosterEntrySelector, RosterGroupSelector {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4642772877556156627L;
-	RosterTableModel dataModel;
+     *
+     */
+    private static final long serialVersionUID = -4642772877556156627L;
+    RosterTableModel dataModel;
     TableSorter sorter;
     JTable dataTable;
     JScrollPane dataScroll;
@@ -72,7 +72,6 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
         // set initial sort
         TableSorter tmodel = ((TableSorter) dataTable.getModel());
         tmodel.setSortingStatus(RosterTableModel.ADDRESSCOL, TableSorter.ASCENDING);
-
 
         // Use a "Numeric, if not, Alphanumeric" comparator
         tmodel.setColumnComparator(String.class, new jmri.util.PreferNumericComparator());
@@ -252,7 +251,7 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     // between selection changes will not require the creation of a new array
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
-    justification = "Want to give access to mutable, original roster objects")
+            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         if (selectedRosterEntries == null) {
             int[] rows = dataTable.getSelectedRows();
@@ -351,18 +350,18 @@ public class RosterTable extends JmriPanel implements RosterEntrySelector, Roste
     public class RosterCellEditor extends DefaultCellEditor implements TableCellEditor {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -6459789129802283684L;
+         *
+         */
+        private static final long serialVersionUID = -6459789129802283684L;
 
-		public RosterCellEditor() {
+        public RosterCellEditor() {
             super(new JTextField() {
                 /**
-				 * 
-				 */
-				private static final long serialVersionUID = -3459969794810110857L;
+                 *
+                 */
+                private static final long serialVersionUID = -3459969794810110857L;
 
-				@Override
+                @Override
                 public void setBorder(Border border) {
                     //No border required
                 }

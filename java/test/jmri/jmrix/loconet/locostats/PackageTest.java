@@ -1,19 +1,19 @@
 package jmri.jmrix.loconet.locostats;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.loconet.locostats package.
+ *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2006, 2008
- * @version     $Revision$
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }

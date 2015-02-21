@@ -25,11 +25,11 @@ import org.slf4j.LoggerFactory;
 public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7149077790256321679L;
+     *
+     */
+    private static final long serialVersionUID = 7149077790256321679L;
 
-	protected static final boolean IS_MANIFEST = true;
+    protected static final boolean IS_MANIFEST = true;
 
     // labels
     JLabel textTrainName = new JLabel();
@@ -40,7 +40,6 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     JPanel pTrainDepartureTime = new JPanel();
 
     // major buttons
-
     /**
      * Default constructor required to use as JavaBean.
      */
@@ -104,7 +103,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         add(textTrainComment);
         add(textTrainRouteComment); // train route comment
         add(textTrainRouteLocationComment); // train route location comment
-        add(textLocationComment);  
+        add(textLocationComment);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -113,7 +112,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
         // setup buttons
         addButtonAction(moveButton);
-        
+
         if (_train != null) {
             textTrainDescription.setText(_train.getDescription());
             // show train comment box only if there's a comment
@@ -123,11 +122,11 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 textTrainComment.setText(_train.getComment());
             }
             // show route comment box only if there's a route comment
-			if (_train.getRoute() != null) {
-				textTrainRouteComment.setVisible(!_train.getRoute().getComment().equals("")
-						&& Setup.isPrintRouteCommentsEnabled());
-				textTrainRouteComment.setText(_train.getRoute().getComment());
-			}
+            if (_train.getRoute() != null) {
+                textTrainRouteComment.setVisible(!_train.getRoute().getComment().equals("")
+                        && Setup.isPrintRouteCommentsEnabled());
+                textTrainRouteComment.setText(_train.getRoute().getComment());
+            }
 
             // Does this train have a unique railroad name?
             if (!_train.getRailroadName().equals("")) {

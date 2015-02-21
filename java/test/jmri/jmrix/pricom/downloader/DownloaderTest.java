@@ -1,5 +1,4 @@
 // DownloaderTest.java
-
 package jmri.jmrix.pricom.downloader;
 
 import junit.framework.Test;
@@ -8,17 +7,17 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.pricom.downloader package.
- * @author      Bob Jacobsen  Copyright 2005
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2005
+ * @version $Revision$
  */
 public class DownloaderTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public DownloaderTest(String s) {
         super(s);
     }
-    
+
     // Main entry point
     static public void main(String[] args) {
         String[] testCaseName = {DownloaderTest.class.getName()};

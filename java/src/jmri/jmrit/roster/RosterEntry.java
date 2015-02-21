@@ -639,7 +639,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
 // Temporarily ignore soundlabels in Roster Entry until  they are user-editable and resettable to defaults.
 // Needed to correct bad sound labels from ESU definitions - only ones used to date.
 //         loadSounds(e.getChild("soundlabels"), "RosterEntry");
-
         loadAttributes(e.getChild("attributepairs"));
 
         if (e.getChild(RosterEntry.SPEED_PROFILE) != null) {

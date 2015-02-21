@@ -1,26 +1,26 @@
 // SaveMenu.java
-
 package jmri.configurexml;
 
+import java.util.ResourceBundle;
+import javax.swing.JMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.JMenu;
-import java.util.*;
 
 /**
- * Create a "Save" menu item containing actions for storing 
- * various data (subsets).
+ * Create a "Save" menu item containing actions for storing various data
+ * (subsets).
  *
- * @author	Bob Jacobsen   Copyright 2005
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2005
+ * @version $Revision$
  */
 public class SaveMenu extends JMenu {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6477363534170911645L;
 
-	public SaveMenu(String name) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6477363534170911645L;
+
+    public SaveMenu(String name) {
         this();
         setText(name);
     }
@@ -40,5 +40,3 @@ public class SaveMenu extends JMenu {
 
     static Logger log = LoggerFactory.getLogger(SaveMenu.class.getName());
 }
-
-

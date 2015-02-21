@@ -1,5 +1,4 @@
 // JMRIClientComponentFactory.java
-
 package jmri.jmrix.jmriclient.swing;
 
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
@@ -7,9 +6,9 @@ import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 /**
  * Provide access to Swing components for the JMRI Network Client.
  *
- * @author		Bob Jacobsen  Copyright (C) 2010
- * @author		Paul Bender   Copyright (C) 2010
- * @version             $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2010
+ * @author	Paul Bender Copyright (C) 2010
+ * @version $Revision$
  * @since 2.11.1
  */
 public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactory {
@@ -17,14 +16,16 @@ public class JMRIClientComponentFactory extends jmri.jmrix.swing.ComponentFactor
     public JMRIClientComponentFactory(JMRIClientSystemConnectionMemo memo) {
         this.memo = memo;
     }
-    
+
     JMRIClientSystemConnectionMemo memo;
-    
+
     /**
      * Provide a menu with all items attached to this system connection
      */
     public javax.swing.JMenu getMenu() {
-        if (memo.getDisabled()) return null;
+        if (memo.getDisabled()) {
+            return null;
+        }
         return new JMRIClientMenu(memo);
     }
 }

@@ -1,5 +1,4 @@
 // TreeAction.java
-
 package jmri.jmrix.jinput.treecontrol;
 
 import jmri.util.JmriJFrameAction;
@@ -7,17 +6,17 @@ import jmri.util.JmriJFrameAction;
 /**
  * Create a JInput control window.
  *
- * @author   Bob Jacobsen Copyright 2008
+ * @author Bob Jacobsen Copyright 2008
  * @version	$Revision$
  */
 public class TreeAction extends JmriJFrameAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6718366926805444393L;
+     *
+     */
+    private static final long serialVersionUID = 6718366926805444393L;
 
-	public TreeAction(String s) { 
+    public TreeAction(String s) {
         super(s);
     }
 

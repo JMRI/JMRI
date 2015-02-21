@@ -1,34 +1,31 @@
 // SampleAutomaton3.java
-
 package jmri.jmrit.automat;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * This sample Automaton runs a locomotive back and forth
- * on a piece of track by watching two sensors.
+ * This sample Automaton runs a locomotive back and forth on a piece of track by
+ * watching two sensors.
  * <P>
- * The sensors and locomotive are hardcoded, as this is
- * an example of just the Automaton function.  Adding a GUI
- * to configure these would be straight-forward. The values
- * could be passed via the constructor, or the constructor
- * (which can run in any required thread) could invoke
- * a dialog.
+ * The sensors and locomotive are hardcoded, as this is an example of just the
+ * Automaton function. Adding a GUI to configure these would be
+ * straight-forward. The values could be passed via the constructor, or the
+ * constructor (which can run in any required thread) could invoke a dialog.
  * <P>
- * For test purposes, one of these objects can be
- * created and invoked by a SampleAutomaton3Action.
+ * For test purposes, one of these objects can be created and invoked by a
+ * SampleAutomaton3Action.
  * <p>
- * For more information on JMRI support for automation
- * classes, please see the 
- * <a href="http://jmri.org/help/en/html/tools/automation/viaJava.shtml">JMRI Layout Automation in Java page</a>.
+ * For more information on JMRI support for automation classes, please see the
+ * <a href="http://jmri.org/help/en/html/tools/automation/viaJava.shtml">JMRI
+ * Layout Automation in Java page</a>.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @version     $Revision$
- * @see         jmri.jmrit.automat.SampleAutomaton3Action
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @version $Revision$
+ * @see jmri.jmrit.automat.SampleAutomaton3Action
  */
 public class SampleAutomaton3 extends AbstractAutomaton {
 
@@ -38,14 +35,14 @@ public class SampleAutomaton3 extends AbstractAutomaton {
     DccThrottle throttle = null;
 
     /**
-     * References the sensor the locomotive will enter when
-     * it moves forward to the limit.
+     * References the sensor the locomotive will enter when it moves forward to
+     * the limit.
      */
     Sensor fwdSensor;
 
     /**
-     * References the sensor the locomotive will enter when
-     * it moves backward to the limit.
+     * References the sensor the locomotive will enter when it moves backward to
+     * the limit.
      */
     Sensor revSensor;
 
@@ -69,16 +66,16 @@ public class SampleAutomaton3 extends AbstractAutomaton {
         // get references to sample layout objects
 
         fwdSensor = InstanceManager.sensorManagerInstance().
-                    provideSensor(fwdSensorName);
-		if (fwdSensor==null) {
-			log.error("Failure to provide forward sensor "+fwdSensorName+" on initialization");
-		}
+                provideSensor(fwdSensorName);
+        if (fwdSensor == null) {
+            log.error("Failure to provide forward sensor " + fwdSensorName + " on initialization");
+        }
 
         revSensor = InstanceManager.sensorManagerInstance().
-                    provideSensor(revSensorName);
-		if (revSensor==null) {
-			log.error("Failure to provide reverse sensor "+revSensorName+" on initialization");
-		}
+                provideSensor(revSensorName);
+        if (revSensor == null) {
+            log.error("Failure to provide reverse sensor " + revSensorName + " on initialization");
+        }
 
         throttle = getThrottle(locoNumber, locoLong);
     }
@@ -89,6 +86,7 @@ public class SampleAutomaton3 extends AbstractAutomaton {
 
     /**
      * Watch the sensors, and change direction to match.
+     *
      * @return Always returns true to continue operation
      */
     protected boolean handle() {

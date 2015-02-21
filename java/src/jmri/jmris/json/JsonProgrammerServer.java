@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Locale;
 import jmri.JmriException;
 import jmri.ProgListener;
-import jmri.Programmer;
 import jmri.jmris.AbstractProgrammerServer;
 import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CODE;
@@ -82,8 +81,12 @@ public class JsonProgrammerServer extends AbstractProgrammerServer {
         jmri.ProgrammingMode mode = DefaultProgrammerManager.REGISTERMODE;
         String requestMode = data.path(MODE).asText();
         for (jmri.ProgrammingMode check : getProgrammer().getSupportedModes()) {
-            if (requestMode.equals(check.toString())) mode = check;
-            if (requestMode.equals(check.getStandardName())) mode = check;            
+            if (requestMode.equals(check.toString())) {
+                mode = check;
+            }
+            if (requestMode.equals(check.getStandardName())) {
+                mode = check;
+            }
         }
         int CV = data.path(NODE_CV).asInt();
         int value = data.path(VALUE).asInt();

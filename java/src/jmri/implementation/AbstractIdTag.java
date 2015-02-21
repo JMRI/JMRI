@@ -1,40 +1,37 @@
 // AbstractIdTag.java
-
 package jmri.implementation;
 
 import java.util.Date;
-import jmri.Reporter;
 import jmri.IdTag;
+import jmri.Reporter;
 
 /**
- * Abstract implementation of {@link jmri.IdTag} containing code common
- * to all concrete implementations.
+ * Abstract implementation of {@link jmri.IdTag} containing code common to all
+ * concrete implementations.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
 public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8149992170721277901L;
+     *
+     */
+    private static final long serialVersionUID = -8149992170721277901L;
 
-	protected Reporter _whereLastSeen = null;
+    protected Reporter _whereLastSeen = null;
 
     protected Date _whenLastSeen = null;
 
@@ -60,22 +57,23 @@ public abstract class AbstractIdTag extends AbstractNamedBean implements IdTag {
 
     @Override
     public Date getWhenLastSeen() {
-        if (this._whenLastSeen == null) return null;
-        else return (Date)this._whenLastSeen.clone();  // Date is mutable, so return copy
+        if (this._whenLastSeen == null) {
+            return null;
+        } else {
+            return (Date) this._whenLastSeen.clone();  // Date is mutable, so return copy
+        }
     }
 
     @Override
     public String toString() {
-        return (mUserName==null || mUserName.length()==0)?getTagID():mUserName;
+        return (mUserName == null || mUserName.length() == 0) ? getTagID() : mUserName;
     }
-    
-    public String getBeanType(){
+
+    public String getBeanType() {
         return Bundle.getMessage("BeanNameReporter");
     }
 
-
 //    private static final Logger log = LoggerFactory.getLogger(AbstractIdTag.class.getName());
-
 }
 
 /* @(#)AbstractIdTag.java */

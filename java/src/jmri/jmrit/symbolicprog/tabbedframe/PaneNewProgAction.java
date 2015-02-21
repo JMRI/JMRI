@@ -1,9 +1,6 @@
 // PaneNewProgAction.java
-
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import javax.swing.AbstractAction;
@@ -18,27 +15,28 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.LocoSelTreePane;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a
- * frame for selecting the information needed to
- * open a PaneProgFrame for creating a new Roster entry.
+ * Swing action to create and register a frame for selecting the information
+ * needed to open a PaneProgFrame for creating a new Roster entry.
  * <P>
- * The resulting JFrame
- * is constructed on the fly here, and has no specific type.
+ * The resulting JFrame is constructed on the fly here, and has no specific
+ * type.
  *
- * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
+ * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
- * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @version	$Revision$
  */
 public class PaneNewProgAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4761829946106004226L;
-	Object o1, o2, o3, o4;
+     *
+     */
+    private static final long serialVersionUID = 4761829946106004226L;
+    Object o1, o2, o3, o4;
 
     public PaneNewProgAction() {
         this("DecoderPro service programmer");
@@ -50,12 +48,14 @@ public class PaneNewProgAction extends AbstractAction {
 
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isDebugEnabled()) log.debug("New roster entry programmer requested");
+        if (log.isDebugEnabled()) {
+            log.debug("New roster entry programmer requested");
+        }
 
         // create the initial frame that steers
         final JmriJFrame f = new JmriJFrame(SymbolicProgBundle.getMessage("FrameNewEntrySetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-        
+
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
         // menuBar.setBorder(new BevelBorder(BevelBorder.RAISED));
@@ -67,38 +67,41 @@ public class PaneNewProgAction extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
-        JPanel pane1 = new LocoSelTreePane(null){
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = -3304246544040107635L;
+        JPanel pane1 = new LocoSelTreePane(null) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = -3304246544040107635L;
 
-				protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                                                String filename) {
-                    String title = SymbolicProgBundle.getMessage("FrameNewEntryTitle");
-                    JFrame p = new PaneProgFrame(decoderFile, re,
-                                                 title, "programmers"+File.separator+filename+".xml",
-                                                 null, false){
-                        /**
-													 * 
-													 */
-													private static final long serialVersionUID = -4093978952107929146L;
+            protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+                    String filename) {
+                String title = SymbolicProgBundle.getMessage("FrameNewEntryTitle");
+                JFrame p = new PaneProgFrame(decoderFile, re,
+                        title, "programmers" + File.separator + filename + ".xml",
+                        null, false) {
+                            /**
+                             *
+                             */
+                            private static final long serialVersionUID = -4093978952107929146L;
 
-						protected JPanel getModePane() { return null; }
-                    };
-                    p.pack();
-                    p.setVisible(true);
+                            protected JPanel getModePane() {
+                                return null;
+                            }
+                        };
+                p.pack();
+                p.setVisible(true);
 
-                }
-            };
+            }
+        };
 
         // load primary frame
-
         pane1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         f.getContentPane().add(pane1);
 
         f.pack();
-        if (log.isDebugEnabled()) log.debug("Tab-Programmer setup created");
+        if (log.isDebugEnabled()) {
+            log.debug("Tab-Programmer setup created");
+        }
         f.setVisible(true);
     }
 

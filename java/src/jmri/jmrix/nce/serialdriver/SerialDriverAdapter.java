@@ -1,5 +1,4 @@
 // SerialDriverAdapter.java
-
 package jmri.jmrix.nce.serialdriver;
 
 import gnu.io.CommPortIdentifier;
@@ -17,20 +16,19 @@ import org.slf4j.LoggerFactory;
 /**
  * Implements SerialPortAdapter for the NCE system.
  * <P>
- * This connects
- * an NCE command station via a serial com port.
- * Normally controlled by the SerialDriverFrame class.
+ * This connects an NCE command station via a serial com port. Normally
+ * controlled by the SerialDriverFrame class.
  * <P>
  *
  *
- * @author			Bob Jacobsen   Copyright (C) 2001, 2002
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @author ken ccameron Copyright (C) 2013
- * @version			$Revision$
+ * @version	$Revision$
  */
-public class SerialDriverAdapter extends NcePortController  implements jmri.jmrix.SerialPortAdapter {
+public class SerialDriverAdapter extends NcePortController implements jmri.jmrix.SerialPortAdapter {
 
     SerialPort activeSerialPort = null;
-    
+
     public SerialDriverAdapter() {
         super(new NceSystemConnectionMemo());
         option1Name = "Eprom";
@@ -39,7 +37,7 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
         setManufacturer(jmri.jmrix.DCCManufacturerList.NCE);
     }
 
-    public String openPort(String portName, String appName)  {
+    public String openPort(String portName, String appName) {
         // open the port, check ability to set moderators
         try {
             // get and open the primary port
@@ -54,13 +52,15 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
             try {
                 // find the baud rate value, configure comm options
                 int baud = validSpeedValues[0];  // default, but also defaulted in the initial value of selectedSpeed
-                for (int i = 0; i<validSpeeds.length; i++ )
-                    if (validSpeeds[i].equals(mBaudRate))
+                for (int i = 0; i < validSpeeds.length; i++) {
+                    if (validSpeeds[i].equals(mBaudRate)) {
                         baud = validSpeedValues[i];
+                    }
+                }
                 activeSerialPort.setSerialPortParams(baud, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
             } catch (gnu.io.UnsupportedCommOperationException e) {
-                log.error("Cannot set serial parameters on port "+portName+": "+e.getMessage());
-                return "Cannot set serial parameters on port "+portName+": "+e.getMessage();
+                log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
+                return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
 
             // set RTS high, DTR high
@@ -73,32 +73,33 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
 
             // set timeout
             // activeSerialPort.enableReceiveTimeout(1000);
-            log.debug("Serial timeout was observed as: "+activeSerialPort.getReceiveTimeout()
-                      +" "+activeSerialPort.isReceiveTimeoutEnabled());
+            log.debug("Serial timeout was observed as: " + activeSerialPort.getReceiveTimeout()
+                    + " " + activeSerialPort.isReceiveTimeoutEnabled());
 
             // get and save stream
             serialStream = activeSerialPort.getInputStream();
 
             // purge contents, if any
             int count = serialStream.available();
-            log.debug("input stream shows "+count+" bytes available");
-            while ( count > 0) {
+            log.debug("input stream shows " + count + " bytes available");
+            while (count > 0) {
                 serialStream.skip(count);
                 count = serialStream.available();
             }
 
             // report status
-            if (log.isInfoEnabled()) 
-                log.info("NCE "+portName+" port opened at "
-                		+activeSerialPort.getBaudRate()+" baud");
+            if (log.isInfoEnabled()) {
+                log.info("NCE " + portName + " port opened at "
+                        + activeSerialPort.getBaudRate() + " baud");
+            }
             opened = true;
 
         } catch (gnu.io.NoSuchPortException p) {
             return handlePortNotFound(p, portName, log);
         } catch (Exception ex) {
-            log.error("Unexpected exception while opening port "+portName+" trace follows: "+ex);
+            log.error("Unexpected exception while opening port " + portName + " trace follows: " + ex);
             ex.printStackTrace();
-            return "Unexpected error while opening port "+portName+": "+ex;
+            return "Unexpected error while opening port " + portName + ": " + ex;
         }
 
         return null; // indicates OK return
@@ -106,14 +107,14 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     }
 
     /**
-     * set up all of the other objects to operate with an NCE command
-     * station connected to this port
+     * set up all of the other objects to operate with an NCE command station
+     * connected to this port
      */
     public void configure() {
-        NceTrafficController tc = new NceTrafficController(); 
+        NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-             
+
         if (getOptionState(option1Name).equals(getOptionChoices(option1Name)[0])) {
             // setting binary mode
             this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
@@ -122,11 +123,11 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
             this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2004);
             this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         }
-        
-        tc.connectPort(this); 
-        
+
+        tc.connectPort(this);
+
         this.getSystemConnectionMemo().configureManagers();
-       
+
         jmri.jmrix.nce.ActiveFlag.setActive();
 
     }
@@ -141,33 +142,36 @@ public class SerialDriverAdapter extends NcePortController  implements jmri.jmri
     }
 
     public DataOutputStream getOutputStream() {
-        if (!opened) log.error("getOutputStream called before load(), stream not available");
+        if (!opened) {
+            log.error("getOutputStream called before load(), stream not available");
+        }
         try {
             return new DataOutputStream(activeSerialPort.getOutputStream());
+        } catch (java.io.IOException e) {
+            log.error("getOutputStream exception: " + e);
         }
-        catch (java.io.IOException e) {
-            log.error("getOutputStream exception: "+e);
-     	}
-     	return null;
+        return null;
     }
 
-    public boolean status() {return opened;}
+    public boolean status() {
+        return opened;
+    }
 
     /**
      * Get an array of valid baud rates.
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
-	public String[] validBaudRates() {
-		return validSpeeds;
-	}
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP") // OK to expose array instead of copy until Java 1.6
+    public String[] validBaudRates() {
+        return validSpeeds;
+    }
 
-	private String [] validSpeeds = new String[]{"9,600 baud"};
-	private int [] validSpeedValues = new int[]{9600};
+    private String[] validSpeeds = new String[]{"9,600 baud"};
+    private int[] validSpeedValues = new int[]{9600};
 
     // private control members
     private boolean opened = false;
     InputStream serialStream = null;
-    
+
     static Logger log = LoggerFactory.getLogger(SerialDriverAdapter.class.getName());
 
 }

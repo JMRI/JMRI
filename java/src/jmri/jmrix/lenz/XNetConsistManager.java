@@ -270,7 +270,7 @@ public final class XNetConsistManager extends AbstractConsistManager {
                             CurrentState = DHADDRESS2INFO;
                             XNetMessage msg = XNetMessage
                                     .getLocomotiveInfoRequestMsg(
-                                    _lastMemberAddress);
+                                            _lastMemberAddress);
                             tc.sendXNetMessage(msg, this);
                         } else {
                             // This consist already exists

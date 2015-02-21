@@ -1,5 +1,4 @@
 // SystemsMenu.java
-
 package jmri.jmrix;
 
 import java.util.ResourceBundle;
@@ -10,23 +9,24 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Provide a "Systems" menu containing the Jmri system-specific tools in submenus.
+ * Provide a "Systems" menu containing the Jmri system-specific tools in
+ * submenus.
  * <P>
- * This contains all compiled systems, whether active or not.  For the
- * set of currently-active system-specific tools, see
- * {@link ActiveSystemsMenu}.
+ * This contains all compiled systems, whether active or not. For the set of
+ * currently-active system-specific tools, see {@link ActiveSystemsMenu}.
  *
  * @see ActiveSystemsMenu
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003
+ * @version $Revision$
  */
 public class SystemsMenu extends JMenu {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4380492272339103766L;
 
-	public SystemsMenu(String name) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4380492272339103766L;
+
+    public SystemsMenu(String name) {
         this();
         setText(name);
     }
@@ -41,12 +41,14 @@ public class SystemsMenu extends JMenu {
 
         // Put configured menus at top
         // get ComponentFactory object(s) and create menus
-        java.util.List<ComponentFactory> list 
+        java.util.List<ComponentFactory> list
                 = jmri.InstanceManager.getList(ComponentFactory.class);
         if (list != null) {
             for (ComponentFactory memo : list) {
                 JMenu menu = memo.getMenu();
-                if (menu != null) add(menu);
+                if (menu != null) {
+                    add(menu);
+                }
             }
             add(new javax.swing.JSeparator());
         }
@@ -54,20 +56,20 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.acela.AcelaMenu");
         addMenu("jmri.jmrix.bachrus.SpeedoMenu");
         // CAN is migrated
-        add( new jmri.jmrix.can.swing.CanMenu(null));
-        
+        add(new jmri.jmrix.can.swing.CanMenu(null));
+
         // Merg CBUS is migrated
-        add( new jmri.jmrix.can.cbus.swing.CbusMenu(null));
+        add(new jmri.jmrix.can.cbus.swing.CbusMenu(null));
 
         addMenu("jmri.jmrix.cmri.CMRIMenu");
         addMenu("jmri.jmrix.easydcc.EasyDCCMenu");
         addMenu("jmri.jmrix.grapevine.GrapevineMenu");
-        
+
         // LocoNet is migrated
         add(new jmri.jmrix.loconet.swing.LocoNetMenu(null));
         //addMenu("jmri.jmrix.loconet.swing.LocoNetMenu");
         // NCE is migrated
-        add( new jmri.jmrix.nce.swing.NceMenu(null));
+        add(new jmri.jmrix.nce.swing.NceMenu(null));
 
         // OpenLCB is migrated
         add(new jmri.jmrix.openlcb.OpenLcbMenu(null));
@@ -84,7 +86,7 @@ public class SystemsMenu extends JMenu {
         addMenu("jmri.jmrix.tmcc.TMCCMenu");
         addMenu("jmri.jmrix.wangrow.WangrowMenu");
         // XPressNet Allows Multiple Connections now
-        add( new jmri.jmrix.lenz.swing.XNetMenu(null));
+        add(new jmri.jmrix.lenz.swing.XNetMenu(null));
         addMenu("jmri.jmrix.xpa.XpaMenu");
         addMenu("jmri.jmrix.zimo.Mx1Menu");
         add(new javax.swing.JSeparator());
@@ -92,19 +94,19 @@ public class SystemsMenu extends JMenu {
 
         // nmranet is migrated
         add(new jmri.jmrix.can.nmranet.swing.NmraNetMenu(null));
-        
+
         // Ecos is migrated
-        add( new jmri.jmrix.ecos.swing.EcosMenu(null));
-        
+        add(new jmri.jmrix.ecos.swing.EcosMenu(null));
+
         addMenu("jmri.jmrix.maple.MapleMenu");
         // The JMRI Network ClientAllows Multiple Connections
-        add( new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));
+        add(new jmri.jmrix.jmriclient.swing.JMRIClientMenu(null));
         add(new JsonClientMenu(null));
-        
+
         add(new jmri.jmrix.rfid.swing.RfidMenu(null));
 
-        add( new jmri.jmrix.ieee802154.swing.IEEE802154Menu(null));
-        add( new jmri.jmrix.ieee802154.xbee.swing.XBeeMenu(null));
+        add(new jmri.jmrix.ieee802154.swing.IEEE802154Menu(null));
+        add(new jmri.jmrix.ieee802154.xbee.swing.XBeeMenu(null));
     }
 
     void addMenu(String className) {
@@ -112,12 +114,12 @@ public class SystemsMenu extends JMenu {
         try {
             j = (JMenu) Class.forName(className).newInstance();
         } catch (Exception e) {
-            log.warn("Could not make menu from class "+className+"; "+e);
+            log.warn("Could not make menu from class " + className + "; " + e);
         }
-        if (j!=null) add(j);
+        if (j != null) {
+            add(j);
+        }
     }
-    
+
     static Logger log = LoggerFactory.getLogger(SystemsMenu.class.getName());
 }
-
-

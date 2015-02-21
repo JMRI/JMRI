@@ -1,13 +1,12 @@
 // AbstractAudioListener.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.InstanceManager;
 import jmri.implementation.AbstractAudio;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation of the AudioListener class.
@@ -18,35 +17,33 @@ import jmri.implementation.AbstractAudio;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public abstract class AbstractAudioListener extends AbstractAudio implements AudioListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7653942390344476939L;
-	private Vector3f _position      = new Vector3f( 0.0f,  0.0f,  0.0f);
-    private Vector3f _currentPosition = new Vector3f( 0.0f,  0.0f,  0.0f);
-    private Vector3f _velocity      = new Vector3f( 0.0f,  0.0f,  0.0f);
-    private Vector3f _orientationAt = new Vector3f( 0.0f,  1.0f,  0.0f);
-    private Vector3f _orientationUp = new Vector3f( 0.0f,  0.0f,  1.0f);
-    private Vector3f _currentOriAt  = new Vector3f( 0.0f,  1.0f,  0.0f);
-    private Vector3f _currentOriUp  = new Vector3f( 0.0f,  0.0f,  1.0f);
-    private float _gain             = 1.0f;
-    private float _metersPerUnit    = 1.0f;
+     *
+     */
+    private static final long serialVersionUID = 7653942390344476939L;
+    private Vector3f _position = new Vector3f(0.0f, 0.0f, 0.0f);
+    private Vector3f _currentPosition = new Vector3f(0.0f, 0.0f, 0.0f);
+    private Vector3f _velocity = new Vector3f(0.0f, 0.0f, 0.0f);
+    private Vector3f _orientationAt = new Vector3f(0.0f, 1.0f, 0.0f);
+    private Vector3f _orientationUp = new Vector3f(0.0f, 0.0f, 1.0f);
+    private Vector3f _currentOriAt = new Vector3f(0.0f, 1.0f, 0.0f);
+    private Vector3f _currentOriUp = new Vector3f(0.0f, 0.0f, 1.0f);
+    private float _gain = 1.0f;
+    private float _metersPerUnit = 1.0f;
     private long _timeOfLastPositionCheck = 0;
 
     private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
@@ -81,8 +78,9 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     public void setPosition(Vector3f pos) {
         this._position = pos;
         changePosition(pos);
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("Set position of Listener " + this.getSystemName() + " to " + pos);
+        }
     }
 
     @Override
@@ -108,9 +106,10 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     @Override
     public void setVelocity(Vector3f vel) {
         this._velocity = vel;
-        this.setState(vel.length()!=0?STATE_MOVING:STATE_POSITIONED);
-        if (log.isDebugEnabled())
+        this.setState(vel.length() != 0 ? STATE_MOVING : STATE_POSITIONED);
+        if (log.isDebugEnabled()) {
             log.debug("Set velocity of Listener " + this.getSystemName() + " to " + vel);
+        }
     }
 
     @Override
@@ -128,7 +127,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
         long timePassed = (currentTime - this._timeOfLastPositionCheck) / 1000;
         this._timeOfLastPositionCheck = currentTime;
 
-        if (this._velocity.length()!=0) {
+        if (this._velocity.length() != 0) {
             this._currentPosition.scaleAdd(
                     timePassed * this._metersPerUnit,
                     this._velocity,
@@ -159,6 +158,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     /**
      * Method to change the current position of this source
+     *
      * @param pos new position
      */
     abstract protected void changePosition(Vector3f pos);
@@ -167,8 +167,9 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     public void setOrientation(Vector3f at, Vector3f up) {
         this._orientationAt = at;
         this._orientationUp = up;
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("Set orientation of Listener " + this.getSystemName() + " to (at) " + at + " (up) " + up);
+        }
     }
 
     @Override
@@ -210,8 +211,9 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     @Override
     public void setGain(float gain) {
         this._gain = gain;
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("Set gain of Listener " + this.getSystemName() + " to " + gain);
+        }
     }
 
     @Override
@@ -222,8 +224,9 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
     @Override
     public void setMetersPerUnit(float metersPerUnit) {
         this._metersPerUnit = metersPerUnit;
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("Set Meters per unit of Listener " + this.getSystemName() + " to " + metersPerUnit);
+        }
     }
 
     @Override
@@ -265,8 +268,11 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
             super();
             this.setName("movelis-" + super.getName());
             this.audioListener = audioListener;
-            if (log.isDebugEnabled()) log.debug("Created AudioListenerMoveThread for AudioListener " + audioListener.getSystemName());
+            if (log.isDebugEnabled()) {
+                log.debug("Created AudioListenerMoveThread for AudioListener " + audioListener.getSystemName());
+            }
         }
+
         /**
          * Main processing loop
          */
@@ -279,7 +285,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
                 audioListener.calculateCurrentPosition();
 
                 // Check state and die if not playing
-                if (audioListener.getState()!=STATE_MOVING) {
+                if (audioListener.getState() != STATE_MOVING) {
                     die();
                 }
 
@@ -289,9 +295,10 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
 //            // Reset the current position
 //            audioListener.resetCurrentPosition();
-
             // Finish up
-            if (log.isDebugEnabled()) log.debug("Clean up thread " + this.getName());
+            if (log.isDebugEnabled()) {
+                log.debug("Clean up thread " + this.getName());
+            }
             cleanup();
         }
 

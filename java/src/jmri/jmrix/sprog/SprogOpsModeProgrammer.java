@@ -1,28 +1,31 @@
 /* SprogOpsModeProgrammer.java */
-
 package jmri.jmrix.sprog;
 
+import java.util.ArrayList;
+import java.util.List;
+import jmri.AddressedProgrammer;
+import jmri.ProgListener;
+import jmri.ProgrammerException;
+import jmri.ProgrammingMode;
+import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.*;
-import jmri.jmrix.sprog.SprogCommandStation;
-import java.util.*;
-import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Provide an Ops Mode Programmer via a wrapper what works with the SPROG command
- * station object.
+ * Provide an Ops Mode Programmer via a wrapper what works with the SPROG
+ * command station object.
  * <P>
  * Functionally, this just creates packets to send via the command station.
  *
- * @see             jmri.Programmer
- * @author			Andrew Crosland Copyright (C) 2006
- * @version			$Revision$
+ * @see jmri.Programmer
+ * @author	Andrew Crosland Copyright (C) 2006
+ * @version	$Revision$
  */
 public class SprogOpsModeProgrammer extends SprogProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
+
     public SprogOpsModeProgrammer(int pAddress, boolean pLongAddr) {
 
         mAddress = pAddress;
@@ -33,7 +36,7 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
      * Forward a write request to an ops-mode write operation
      */
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        log.debug("write CV="+CV+" val="+val);
+        log.debug("write CV=" + CV + " val=" + val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -48,13 +51,17 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("read CV="+CV);
+        if (log.isDebugEnabled()) {
+            log.debug("read CV=" + CV);
+        }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
     synchronized public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("confirm CV="+CV);
+        if (log.isDebugEnabled()) {
+            log.debug("confirm CV=" + CV);
+        }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }
@@ -74,8 +81,9 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
     }
 
     /**
-     * Can this ops-mode programmer read back values?  For now, no,
-     * but maybe later.
+     * Can this ops-mode programmer read back values? For now, no, but maybe
+     * later.
+     *
      * @return always false for now
      */
     @Override
@@ -83,17 +91,23 @@ public class SprogOpsModeProgrammer extends SprogProgrammer implements Addressed
         return false;
     }
 
-    public boolean getLongAddress() {return mLongAddr;}
-    
-    public int getAddressNumber() { return mAddress; }
-    
-    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
+    public boolean getLongAddress() {
+        return mLongAddr;
+    }
+
+    public int getAddressNumber() {
+        return mAddress;
+    }
+
+    public String getAddress() {
+        return "" + getAddressNumber() + " " + getLongAddress();
+    }
 
     /**
-     * Ops-mode programming doesn't put the command station in programming
-     * mode, so we don't have to send an exit-programming command at end.
-     * Therefore, this routine does nothing except to replace the parent
-     * routine that does something.
+     * Ops-mode programming doesn't put the command station in programming mode,
+     * so we don't have to send an exit-programming command at end. Therefore,
+     * this routine does nothing except to replace the parent routine that does
+     * something.
      */
     void cleanup() {
     }

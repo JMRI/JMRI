@@ -1,17 +1,16 @@
 // BlockManagerTest.java
-
 package jmri;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the BlockManager class
  * <P>
- * Based upon a stub by Bob Jacobsen Copyright (C) 2006 
+ * Based upon a stub by Bob Jacobsen Copyright (C) 2006
  * <P>
  * @author Bob Coleman Copyright 2012
  * @author Bob Jacobsen Copyright 2014
@@ -21,14 +20,14 @@ public class BlockManagerTest extends TestCase {
 
     public void testCreate1() {
         // original create with systemname and username
-        Block b1 = InstanceManager.blockManagerInstance().createNewBlock("SystemName1","UserName1");
+        Block b1 = InstanceManager.blockManagerInstance().createNewBlock("SystemName1", "UserName1");
         Assert.assertEquals("system name", "SYSTEMNAME1", b1.getSystemName());
         Assert.assertEquals("user name", "UserName1", b1.getUserName());
     }
 
     public void testCreate2() {
         // original create with systemname and empty username
-        Block b1 = InstanceManager.blockManagerInstance().createNewBlock("SystemName2","");
+        Block b1 = InstanceManager.blockManagerInstance().createNewBlock("SystemName2", "");
         Assert.assertEquals("system name", "SYSTEMNAME2", b1.getSystemName());
         Assert.assertEquals("user name", "", b1.getUserName());
     }
@@ -61,7 +60,7 @@ public class BlockManagerTest extends TestCase {
         Assert.assertEquals("system name 1", "IB:AUTO:0001", b1.getSystemName());
         Assert.assertEquals("user name 1", "", b1.getUserName());
     }
-    
+
     public void testGet1() {
         // original create with no systemname and a username
         Block b1 = InstanceManager.blockManagerInstance().createNewBlock("UserName4");
@@ -103,7 +102,7 @@ public class BlockManagerTest extends TestCase {
     }
 
     public void testAutoSkip1() {
-        Block bautoskip1 = InstanceManager.blockManagerInstance().createNewBlock("IB:AUTO:0007","UserName7");
+        Block bautoskip1 = InstanceManager.blockManagerInstance().createNewBlock("IB:AUTO:0007", "UserName7");
         Assert.assertEquals("autoskip system name", "IB:AUTO:0007", bautoskip1.getSystemName());
         Assert.assertEquals("autoskip user name", "UserName7", bautoskip1.getUserName());
 
@@ -130,47 +129,47 @@ public class BlockManagerTest extends TestCase {
             if (ex.getMessage().startsWith("Value of requested default block speed is not valid")) {
                 threw = true;
             } else {
-                Assert.fail("failed to set speed due to wrong reason: "+ex);
+                Assert.fail("failed to set speed due to wrong reason: " + ex);
             }
         }
         //Assert.assertEquals("faster block speed", "Faster", InstanceManager.blockManagerInstance().getDefaultSpeed());
         Assert.assertTrue("Expected exception", threw);
-        
-        
+
         try {
             InstanceManager.blockManagerInstance().setDefaultSpeed("Normal");
         } catch (JmriException ex) {
-            Assert.fail("failed to reset speed due to: "+ex);
+            Assert.fail("failed to reset speed due to: " + ex);
         }
         Assert.assertEquals("block speed back to normal", "Normal", InstanceManager.blockManagerInstance().getDefaultSpeed());
     }
-    
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
+    public BlockManagerTest(String s) {
+        super(s);
+    }
 
-	public BlockManagerTest(String s) {
-		super(s);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {BlockManagerTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {BlockManagerTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
-
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(BlockManagerTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(BlockManagerTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception { 
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
     }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
 
-	static Logger log = Logger.getLogger(BlockManagerTest.class.getName());
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    static Logger log = Logger.getLogger(BlockManagerTest.class.getName());
 }

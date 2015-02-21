@@ -1,5 +1,4 @@
 // NetworkDriverAdapter.java
-
 package jmri.jmrix.nce.networkdriver;
 
 import jmri.jmrix.nce.NceNetworkPortController;
@@ -10,11 +9,11 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Implements SerialPortAdapter for the NCE system network connection.
- * <P>This connects
- * an NCE command station via a telnet connection.
- * Normally controlled by the NetworkDriverFrame class.
+ * <P>
+ * This connects an NCE command station via a telnet connection. Normally
+ * controlled by the NetworkDriverFrame class.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001, 2002, 2003
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2003
  * @version	$Revision$
  */
 public class NetworkDriverAdapter extends NceNetworkPortController {
@@ -28,16 +27,16 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
     }
 
     /**
-     * set up all of the other objects to operate with an NCE command
-     * station connected to this port
+     * set up all of the other objects to operate with an NCE command station
+     * connected to this port
      */
     public void configure() {
         NceTrafficController tc = new NceTrafficController();
         this.getSystemConnectionMemo().setNceTrafficController(tc);
         tc.setAdapterMemo(this.getSystemConnectionMemo());
-               
-    	// set the command options, Note that the NetworkDriver uses
-    	// the second option for EPROM revision
+
+        // set the command options, Note that the NetworkDriver uses
+        // the second option for EPROM revision
         if (getOptionState(option2Name).equals(getOptionChoices(option2Name)[0])) {
             // setting binary mode
             this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2006);
@@ -46,11 +45,11 @@ public class NetworkDriverAdapter extends NceNetworkPortController {
             this.getSystemConnectionMemo().configureCommandStation(NceTrafficController.OPTION_2004);
             this.getSystemConnectionMemo().setNceCmdGroups(~NceTrafficController.CMDS_USB);
         }
-        
-        tc.connectPort(this); 
-        
+
+        tc.connectPort(this);
+
         this.getSystemConnectionMemo().configureManagers();
-        
+
         jmri.jmrix.nce.ActiveFlag.setActive();
     }
 

@@ -30,8 +30,8 @@ public class Version {
     static final public int major = Integer.parseInt(versionBundle.getString("release.major")); // NOI18N
 
     /**
-     * Minor number changes with each production versionBundle. Odd is development,
-     * even is production.
+     * Minor number changes with each production versionBundle. Odd is
+     * development, even is production.
      */
     static final public int minor = Integer.parseInt(versionBundle.getString("release.minor")); // NOI18N;
 
@@ -72,9 +72,9 @@ public class Version {
     /**
      * Provide the current version string.
      * <P>
- This string is built using various known build parameters, including the
- versionBundle.{major,minor,build} values, the SVN revision ID (if known) and
- the branched & versionBundle.official statuses.
+     * This string is built using various known build parameters, including the
+     * versionBundle.{major,minor,build} values, the SVN revision ID (if known)
+     * and the branched & versionBundle.official statuses.
      *
      * @return The current version string
      */
@@ -190,9 +190,9 @@ public class Version {
     /**
      * Standalone print of version string and exit.
      *
-     * This is used in the build.xml to generate parts of the installer versionBundle
- file name, so take care in altering this code to make sure the ant
- recipes are also suitably modified.
+     * This is used in the build.xml to generate parts of the installer
+     * versionBundle file name, so take care in altering this code to make sure
+     * the ant recipes are also suitably modified.
      *
      * @param args
      */

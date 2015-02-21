@@ -1,5 +1,4 @@
 // RfidReporterManager.java
-
 package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.IdTag;
@@ -17,13 +16,12 @@ import org.slf4j.LoggerFactory;
 /**
  * Rfid implementation of a ReporterManager.
  * <P>
- * System names are "FRpppp", where ppp is a
- * representation of the RFID reader.
+ * System names are "FRpppp", where ppp is a representation of the RFID reader.
  * <P>
- * @author      Bob Jacobsen    Copyright (C) 2008
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Bob Jacobsen Copyright (C) 2008
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
 public class SpecificReporterManager extends RfidReporterManager {
 
@@ -43,8 +41,8 @@ public class SpecificReporterManager extends RfidReporterManager {
 
     @Override
     protected Reporter createNewReporter(String systemName, String userName) {
-        log.debug("Create new Reporter: "+systemName);
-        if (!systemName.matches(prefix+typeLetter()+"["+tc.getRange()+"]")) {
+        log.debug("Create new Reporter: " + systemName);
+        if (!systemName.matches(prefix + typeLetter() + "[" + tc.getRange() + "]")) {
             log.warn("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
             throw new IllegalArgumentException("Invalid Reporter name: " + systemName + " - out of supported range " + tc.getRange());
         }
@@ -56,8 +54,8 @@ public class SpecificReporterManager extends RfidReporterManager {
 
     @Override
     public void message(RfidMessage m) {
-        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(),0).toString())) {
-            log.info("Sent init string: "+m);
+        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
+            log.info("Sent init string: " + m);
         } else {
             super.message(m);
         }
@@ -65,8 +63,9 @@ public class SpecificReporterManager extends RfidReporterManager {
 
     @Override
     public synchronized void reply(RfidReply r) {
-        if (r instanceof SpecificReply)
+        if (r instanceof SpecificReply) {
             processReply((SpecificReply) r);
+        }
     }
 
     private void processReply(SpecificReply r) {
@@ -79,7 +78,7 @@ public class SpecificReporterManager extends RfidReporterManager {
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
-        TimeoutRfidReporter report = (TimeoutRfidReporter) provideReporter(prefix+typeLetter()+r.getReaderPort());
+        TimeoutRfidReporter report = (TimeoutRfidReporter) provideReporter(prefix + typeLetter() + r.getReaderPort());
         report.notify(idTag);
     }
 

@@ -1,15 +1,16 @@
 // PackageTest.java
-
 package jmri.util.zeroconf;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Invokes complete set of tests in the jmri.util.zeroconf tree
  *
- * @author	    Bob Jacobsen  Copyright 2003
- * @author          Paul Bender   Copyright 2014
- * @version         $Revision: 22233 $
+ * @author	Bob Jacobsen Copyright 2003
+ * @author Paul Bender Copyright 2014
+ * @version $Revision: 22233 $
  */
 public class PackageTest extends TestCase {
 
@@ -29,12 +30,17 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.util.zeroconf.ZeroConfTest");   // no tests in this class itself
 
         suite.addTest(ZeroConfServiceTest.suite());
-        
+
         return suite;
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

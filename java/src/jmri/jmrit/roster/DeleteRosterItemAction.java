@@ -18,18 +18,22 @@ import org.slf4j.LoggerFactory;
 /**
  * Remove a locomotive from the roster.
  *
- * <P>In case of error, this moves the definition file to a backup. This action
+ * <P>
+ * In case of error, this moves the definition file to a backup. This action
  * posts a dialog box to select the loco to be deleted, and then posts an "are
  * you sure" dialog box before acting.
  *
  *
- * <hr> This file is part of JMRI. <P> JMRI is free software; you can
- * redistribute it and/or modify it under the terms of version 2 of the GNU
- * General Public License as published by the Free Software Foundation. See the
- * "COPYING" file for a copy of this license. <P> JMRI is distributed in the
- * hope that it will be useful, but WITHOUT ANY WARRANTY; without even the
- * implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See
- * the GNU General Public License for more details. <P>
+ * <hr> This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2002
  * @version	$Revision$
@@ -38,11 +42,11 @@ import org.slf4j.LoggerFactory;
 public class DeleteRosterItemAction extends JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1566611248270959245L;
+     *
+     */
+    private static final long serialVersionUID = -1566611248270959245L;
 
-	public DeleteRosterItemAction(String s, WindowInterface wi) {
+    public DeleteRosterItemAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 
@@ -76,12 +80,18 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
         }
         if (Beans.hasProperty(wi, "selectedRosterEntries")) {
             entries = (RosterEntry[]) Beans.getProperty(wi, "selectedRosterEntries");
-            if (entries != null) log.debug("selectedRosterEntries found {} entries", entries.length);
-            else log.debug("selectedRosterEntries left entries null");
+            if (entries != null) {
+                log.debug("selectedRosterEntries found {} entries", entries.length);
+            } else {
+                log.debug("selectedRosterEntries left entries null");
+            }
         } else {
             entries = selectRosterEntry(rosterGroup);
-            if (entries != null) log.debug("selectRosterEntry(rosterGroup) found {} entries", entries.length);
-            else log.debug("selectRosterEntry(rosterGroup) left entries null");
+            if (entries != null) {
+                log.debug("selectRosterEntry(rosterGroup) found {} entries", entries.length);
+            } else {
+                log.debug("selectRosterEntry(rosterGroup) left entries null");
+            }
         }
         if (entries == null) {
             return;
@@ -156,11 +166,11 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     boolean userOK(String entry, String filename, String fullFileName) {
         return (JOptionPane.YES_OPTION
                 == JOptionPane.showConfirmDialog(_who,
-                java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("DeletePrompt"),
-                entry, fullFileName),
-                java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("DeleteTitle"),
-                entry),
-                JOptionPane.YES_NO_OPTION));
+                        java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("DeletePrompt"),
+                                entry, fullFileName),
+                        java.text.MessageFormat.format(ResourceBundle.getBundle("jmri.jmrit.roster.JmritRosterBundle").getString("DeleteTitle"),
+                                entry),
+                        JOptionPane.YES_NO_OPTION));
     }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(DeleteRosterItemAction.class.getName());

@@ -1,49 +1,55 @@
 package jmri.jmrix.ieee802154.xbee;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * XBeeSensorManagerTest.java
  *
- * Description:	    tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
- * @author			Paul Bender
- * @version         $Revision$
+ * Description:	tests for the jmri.jmrix.ieee802154.xbee.XBeeSensorManager class
+ *
+ * @author	Paul Bender
+ * @version $Revision$
  */
 public class XBeeSensorManagerTest extends TestCase {
 
     public void testCtor() {
         XBeeTrafficController tc = new XBeeTrafficController() {
-            public void setInstance(){}
+            public void setInstance() {
+            }
         };
-        XBeeSensorManager m = new XBeeSensorManager(tc,"ABC"); 
-        Assert.assertNotNull("exists",m);
+        XBeeSensorManager m = new XBeeSensorManager(tc, "ABC");
+        Assert.assertNotNull("exists", m);
     }
 
-	// from here down is testing infrastructure
+    // from here down is testing infrastructure
+    public XBeeSensorManagerTest(String s) {
+        super(s);
+    }
 
-	public XBeeSensorManagerTest(String s) {
-		super(s);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", XBeeSensorManagerTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", XBeeSensorManagerTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
-
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(XBeeSensorManagerTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(XBeeSensorManagerTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(XBeeSensorManagerTest.class.getName());
 

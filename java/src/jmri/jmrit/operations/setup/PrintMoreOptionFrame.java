@@ -2,7 +2,6 @@
 package jmri.jmrit.operations.setup;
 
 import java.awt.Dimension;
-
 import jmri.jmrit.operations.OperationsFrame;
 
 /**
@@ -14,11 +13,11 @@ import jmri.jmrit.operations.OperationsFrame;
 public class PrintMoreOptionFrame extends OperationsFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6234971819984062486L;
+     *
+     */
+    private static final long serialVersionUID = -6234971819984062486L;
 
-	public PrintMoreOptionFrame() {
+    public PrintMoreOptionFrame() {
         super(Bundle.getMessage("TitlePrintMoreOptions"), new PrintMoreOptionPanel());
     }
 
@@ -28,7 +27,7 @@ public class PrintMoreOptionFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
-        
+
         initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight400));
     }
 

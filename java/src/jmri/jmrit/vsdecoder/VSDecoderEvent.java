@@ -18,42 +18,42 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision: 18512 $
  */
-
 import java.util.EventObject;
 
 @SuppressWarnings("serial")
 public class VSDecoderEvent extends EventObject {
 
-    public static enum EventType { NONE, LOCATION_CHANGE }  // propertyChangeEvents fired by the Manager.
+    public static enum EventType {
 
+        NONE, LOCATION_CHANGE
+    }  // propertyChangeEvents fired by the Manager.
 
     VSDecoderEvent.EventType type;
     Object data;
 
     public VSDecoderEvent(VSDecoder source) {
-	this(source, VSDecoderEvent.EventType.NONE, null);
+        this(source, VSDecoderEvent.EventType.NONE, null);
     }
 
     public VSDecoderEvent(VSDecoder source, VSDecoderEvent.EventType t) {
-	this(source, t, null);
+        this(source, t, null);
     }
 
     public VSDecoderEvent(VSDecoder source, VSDecoderEvent.EventType t, Object d) {
-	super(source);
-	type = t;
-	data = d;
+        super(source);
+        type = t;
+        data = d;
     }
 
     public void setType(VSDecoderEvent.EventType t) {
-	type = t;
+        type = t;
     }
 
     public VSDecoderEvent.EventType getType() {
-	return(type);
+        return (type);
     }
 
     public Object getData() {
-	return(data);
+        return (data);
     }
 }
-

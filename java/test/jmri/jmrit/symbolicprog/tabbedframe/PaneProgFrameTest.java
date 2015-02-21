@@ -1,77 +1,81 @@
 // PaneProgFrameTest.java
-
 package jmri.jmrit.symbolicprog.tabbedframe;
-
-import org.apache.log4j.Logger;
-import jmri.jmrit.decoderdefn.DecoderFile;
-import jmri.jmrit.roster.RosterEntry;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-
-import org.jdom2.DocType;
-import org.jdom2.Document;
-import org.jdom2.Element;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.roster.RosterEntry;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 /**
  * Test PaneProgFrame
  *
- * @author			Bob Jacobsen
- * @version			$Revision$
+ * @author	Bob Jacobsen
+ * @version	$Revision$
  */
 public class PaneProgFrameTest extends TestCase {
 
     // test creating a pane in config file
     public void testPane() {
-        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            return;
+        }
         setupDoc();
 
         // create test object
         result = null;
 
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
-                                            "test frame", "programmers/Basic.xml",
-                                            new jmri.progdebugger.ProgDebugger(), false) {
-                /**
-												 * 
-												 */
-												private static final long serialVersionUID = 4374088194550590113L;
+                "test frame", "programmers/Basic.xml",
+                new jmri.progdebugger.ProgDebugger(), false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 4374088194550590113L;
 
-				// dummy implementations
-                protected JPanel getModePane() { return new JPanel(); }
-            };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return new JPanel();
+                    }
+                };
 
         // invoke
         result = null;
         p.readConfig(root, new RosterEntry());
         Assert.assertEquals("paneList length ", 4, p.paneList.size());
         // three panes in root, plus roster entry pane
-        
-    	JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
-    	Assert.assertTrue("found frame", f !=null );
-    	f.dispose();
-    }
 
+        JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
+    }
 
     // show me the specially-created frame
     public void testFrame() {
-        if (System.getProperty("jmri.headlesstest","false").equals("true")) return;
+        if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            return;
+        }
         setupDoc();
         PaneProgFrame p = new PaneProgFrame(null, new RosterEntry(),
-                                            "test frame", "programmers/Basic.xml",
-                                            new jmri.progdebugger.ProgDebugger(), false) {
-                /**
-												 * 
-												 */
-												private static final long serialVersionUID = 8480123043386522138L;
+                "test frame", "programmers/Basic.xml",
+                new jmri.progdebugger.ProgDebugger(), false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 8480123043386522138L;
 
-				// dummy implementations
-                protected JPanel getModePane() { return null; }
-            };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
 
         // ugly, temporary way to load the decoder info
         jmri.jmrit.decoderdefn.DecoderFileTest t = new jmri.jmrit.decoderdefn.DecoderFileTest("");
@@ -82,10 +86,10 @@ public class PaneProgFrameTest extends TestCase {
         p.readConfig(root, new RosterEntry());
         p.pack();
         p.setVisible(true);
-        
-    	JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
-    	Assert.assertTrue("found frame", f !=null );
-    	f.dispose();
+
+        JFrame f = jmri.util.JmriJFrame.getFrame("test frame");
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
     }
 
     // static variables for internal classes to report their interpretations
@@ -102,67 +106,65 @@ public class PaneProgFrameTest extends TestCase {
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
         doc = new Document(root);
-        doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
+        doc.setDocType(new DocType("programmer-config", "programmer-config.dtd"));
 
         // add some elements
         root.addContent(new Element("programmer")
-                .setAttribute("showFnLanelPane","yes")
-                .setAttribute("showRosterMediaPane","yes")
-            .addContent(new Element("pane")
-                .setAttribute("name","Basic")
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
+                .setAttribute("showFnLanelPane", "yes")
+                .setAttribute("showRosterMediaPane", "yes")
+                .addContent(new Element("pane")
+                        .setAttribute("name", "Basic")
+                        .addContent(new Element("column")
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Address")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Start voltage")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                )
                         )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Start voltage")
+                        .addContent(new Element("column")
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Address")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                        .setAttribute("format", "checkbox")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                        .setAttribute("format", "radiobuttons")
+                                )
                         )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    )
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        .setAttribute("format","checkbox")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        .setAttribute("format","radiobuttons")
-                        )
-                    )
                 )
-            .addContent(new Element("pane")
-                .setAttribute("name", "CV")
-                .addContent(new Element("column")
-                    .addContent(new Element("cvtable"))
-                    )
-                )
-            .addContent(new Element("pane")
-                .setAttribute("name", "Other")
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
+                .addContent(new Element("pane")
+                        .setAttribute("name", "CV")
+                        .addContent(new Element("column")
+                                .addContent(new Element("cvtable"))
                         )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    )
                 )
-            )
-            ; // end of adding contents
+                .addContent(new Element("pane")
+                        .setAttribute("name", "Other")
+                        .addContent(new Element("column")
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Address")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                )
+                        )
+                )
+        ); // end of adding contents
 
         return;
     }
 
     // from here down is testing infrastructure
-
     public PaneProgFrameTest(String s) {
         super(s);
     }
@@ -180,8 +182,14 @@ public class PaneProgFrameTest extends TestCase {
     }
 
     static Logger log = Logger.getLogger(PaneProgFrameTest.class.getName());
+
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

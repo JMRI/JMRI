@@ -13,15 +13,14 @@ import jmri.jmrit.roster.RosterEntry;
  *
  * @see jmri.jmrit.roster.swing.RosterEntryComboBox
  */
- 
 public class RosterEntryListCellRenderer extends JLabel implements ListCellRenderer<Object> {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1256109351736867211L;
+     *
+     */
+    private static final long serialVersionUID = 1256109351736867211L;
 
-	public RosterEntryListCellRenderer() {
+    public RosterEntryListCellRenderer() {
         super();
         setOpaque(true);
     }

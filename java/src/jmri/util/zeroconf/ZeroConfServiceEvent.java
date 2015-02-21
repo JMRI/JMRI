@@ -14,10 +14,10 @@ import org.slf4j.LoggerFactory;
 public class ZeroConfServiceEvent extends EventObject {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8611294427862982023L;
-	private final ZeroConfService service;
+     *
+     */
+    private static final long serialVersionUID = -8611294427862982023L;
+    private final ZeroConfService service;
     private final JmDNS dns;
     private static final Logger log = LoggerFactory.getLogger(ZeroConfServiceEvent.class);
 
@@ -26,6 +26,7 @@ public class ZeroConfServiceEvent extends EventObject {
         this.dns = dns;
         this.service = service;
     }
+
     /**
      * @return the service
      */

@@ -1,5 +1,4 @@
 // SerialDriverAdapter.java
-
 package jmri.jmrix.sprog.sprogCS;
 
 import jmri.jmrix.sprog.SprogConstants.SprogMode;
@@ -7,25 +6,20 @@ import jmri.jmrix.sprog.SprogTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-
-
 /**
  * Implements SerialPortAdapter for the Sprog system.
  * <P>
- * This connects
- * an Sprog command station via a serial com port.
- * Also used for the USB SPROG, which appears to the computer as a
- * serial port.
+ * This connects an Sprog command station via a serial com port. Also used for
+ * the USB SPROG, which appears to the computer as a serial port.
  * <P>
- * The current implementation only handles the 9,600 baud rate, and does
- * not use any other options at configuration time.
+ * The current implementation only handles the 9,600 baud rate, and does not use
+ * any other options at configuration time.
  *
- * @author	Andrew Crosland   Copyright (C) 2006
+ * @author	Andrew Crosland Copyright (C) 2006
  * @version	$Revision$
  */
-public class SprogCSSerialDriverAdapter 
-extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
+public class SprogCSSerialDriverAdapter
+        extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
 
     public SprogCSSerialDriverAdapter() {
         super(SprogMode.OPS);
@@ -35,8 +29,8 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
     }
 
     /**
-     * set up all of the other objects to operate with an Sprog command
-     * station connected to this port
+     * set up all of the other objects to operate with an Sprog command station
+     * connected to this port
      */
     public void configure() {
         // connect to the traffic controller
@@ -47,10 +41,10 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
         this.getSystemConnectionMemo().configureCommandStation();
         this.getSystemConnectionMemo().configureManagers();
         jmri.jmrix.sprog.ActiveFlagCS.setActive();
-        if(getOptionState("TrackPowerState")!=null  && getOptionState("TrackPowerState").equals("Powered On")){
+        if (getOptionState("TrackPowerState") != null && getOptionState("TrackPowerState").equals("Powered On")) {
             try {
                 this.getSystemConnectionMemo().getPowerManager().setPower(jmri.PowerManager.ON);
-            } catch (jmri.JmriException e){
+            } catch (jmri.JmriException e) {
                 log.error(e.toString());
             }
         }
@@ -58,7 +52,6 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
     }
 
     //private Thread slotThread;
-
     static public SprogCSSerialDriverAdapter instance() {
         if (mInstance == null) {
             SprogCSSerialDriverAdapter m = new SprogCSSerialDriverAdapter();
@@ -69,14 +62,14 @@ extends jmri.jmrix.sprog.serialdriver.SerialDriverAdapter {
     }
     static volatile SprogCSSerialDriverAdapter mInstance = null;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
-            justification="temporary until mult-system; only set when disposed")
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD",
+            justification = "temporary until mult-system; only set when disposed")
     @Override
     public void dispose() {
         super.dispose();
         mInstance = null;
     }
-    
+
     static Logger log = LoggerFactory.getLogger(SprogCSSerialDriverAdapter.class.getName());
 
 }

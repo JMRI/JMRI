@@ -1,9 +1,6 @@
 //AbstractMonFrame.java
-
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,7 +10,6 @@ import java.io.PrintStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -26,37 +22,39 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.text.*;
+import javax.swing.text.BadLocationException;
 import jmri.util.FileUtil;
-
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base class for Frames displaying communications monitor information
- * @author	Bob Jacobsen   Copyright (C) 2001, 2003, 2014
+ *
+ * @author	Bob Jacobsen Copyright (C) 2001, 2003, 2014
  * @version	$Revision$
  */
-public abstract class AbstractMonFrame extends JmriJFrame  {
+public abstract class AbstractMonFrame extends JmriJFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7090997005389773332L;
+     *
+     */
+    private static final long serialVersionUID = 7090997005389773332L;
 
-	// template functions to fill in
+    // template functions to fill in
     protected abstract String title();    // provide the title for the frame
 
     /**
      * Initialize the data source.
      * <P>
-     * This is invoked at the end of the GUI initialization phase.
-     * Subclass implementations should connect to their data source here.
+     * This is invoked at the end of the GUI initialization phase. Subclass
+     * implementations should connect to their data source here.
      */
     protected abstract void init();
 
     // the subclass also needs a dispose() method to close any specific communications; call super.dispose()
     @Override
-    public void dispose() { 
+    public void dispose() {
         p.setSimplePreferenceState(timeStampCheck, timeCheckBox.isSelected());
         p.setSimplePreferenceState(rawDataCheck, rawCheckBox.isSelected());
         p.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTopCheckBox.isSelected());
@@ -80,10 +78,10 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     protected JButton openFileChooserButton = new JButton();
     protected JTextField entryField = new JTextField();
     protected JButton enterButton = new JButton();
-    String rawDataCheck = this.getClass().getName()+".RawData"; // NOI18N
-    String timeStampCheck = this.getClass().getName()+".TimeStamp"; // NOI18N
-    String alwaysOnTopCheck = this.getClass().getName()+".alwaysOnTop"; // NOI18N
-    String autoScrollCheck = this.getClass().getName()+".AutoScroll"; // NOI18N
+    String rawDataCheck = this.getClass().getName() + ".RawData"; // NOI18N
+    String timeStampCheck = this.getClass().getName() + ".TimeStamp"; // NOI18N
+    String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop"; // NOI18N
+    String autoScrollCheck = this.getClass().getName() + ".AutoScroll"; // NOI18N
     jmri.UserPreferencesManager p;
 
     // for locking
@@ -146,8 +144,8 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
         // fix a width for current character set
         JTextField t = new JTextField(80);
-        int x = jScrollPane1.getPreferredSize().width+t.getPreferredSize().width;
-        int y = jScrollPane1.getPreferredSize().height+10*t.getPreferredSize().height;
+        int x = jScrollPane1.getPreferredSize().width + t.getPreferredSize().width;
+        int y = jScrollPane1.getPreferredSize().height + 10 * t.getPreferredSize().height;
 
         jScrollPane1.getViewport().add(monTextPane);
         jScrollPane1.setPreferredSize(new Dimension(x, y));
@@ -170,7 +168,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         timeCheckBox.setVisible(true);
         timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps")); // NOI18N
         timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
-        
+
         alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
@@ -284,10 +282,9 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     /**
      * Define help menu for this window.
      * <p>
-     * By default, provides a generic help page
-     * that covers general features.  Specific
-     * implementations can override this to 
-     * show their own help page if desired.
+     * By default, provides a generic help page that covers general features.
+     * Specific implementations can override this to show their own help page if
+     * desired.
      */
     protected void addHelpMenu() {
         addHelpMenu("package.jmri.jmrix.AbstractMonFrame", true); // NOI18N
@@ -300,41 +297,37 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         StringBuffer sb = new StringBuffer(120);
 
         // display the timestamp if requested
-        if ( timeCheckBox.isSelected() ) {
-            sb.append(df.format(new Date())).append( ": " ) ; // NOI18N
+        if (timeCheckBox.isSelected()) {
+            sb.append(df.format(new Date())).append(": "); // NOI18N
         }
 
         // display the raw data if requested
-        if ( rawCheckBox.isSelected() ) {
-            sb.append( '[' ).append(raw).append( "]  " ); // NOI18N
+        if (rawCheckBox.isSelected()) {
+            sb.append('[').append(raw).append("]  "); // NOI18N
         }
 
         // display decoded data
         sb.append(line);
-        synchronized( self )
-        {
-            linesBuffer.append( sb.toString() );
+        synchronized (self) {
+            linesBuffer.append(sb.toString());
         }
 
         // if not frozen, display it in the Swing thread
         if (!freezeButton.isSelected()) {
             Runnable r = new Runnable() {
                 public void run() {
-                    synchronized( self )
-                    {
-                        monTextPane.append( linesBuffer.toString() );
-                        int LineCount = monTextPane.getLineCount() ;
-                        if( LineCount > MAX_LINES )
-                        {
-                            LineCount -= MAX_LINES ;
+                    synchronized (self) {
+                        monTextPane.append(linesBuffer.toString());
+                        int LineCount = monTextPane.getLineCount();
+                        if (LineCount > MAX_LINES) {
+                            LineCount -= MAX_LINES;
                             try {
                                 int offset = monTextPane.getLineStartOffset(LineCount);
-                                monTextPane.getDocument().remove(0, offset ) ;
-                            }
-                            catch (BadLocationException ex) {
+                                monTextPane.getDocument().remove(0, offset);
+                            } catch (BadLocationException ex) {
                             }
                         }
-                        linesBuffer.setLength(0) ;
+                        linesBuffer.setLength(0);
                     }
                 }
             };
@@ -342,7 +335,6 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
         }
 
         // if requested, log to a file.
-
         if (logStream != null) {
             synchronized (logStream) {
                 String logLine = sb.toString();
@@ -350,12 +342,13 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
                     // have to massage the line-ends
                     int i = 0;
                     int lim = sb.length();
-                    StringBuffer out = new StringBuffer(sb.length()+10);  // arbitrary guess at space
-                    for ( i = 0; i<lim; i++) {
-                        if (sb.charAt(i) == '\n')
+                    StringBuffer out = new StringBuffer(sb.length() + 10);  // arbitrary guess at space
+                    for (i = 0; i < lim; i++) {
+                        if (sb.charAt(i) == '\n') {
                             out.append(newline);
-                        else
+                        } else {
                             out.append(sb.charAt(i));
+                        }
                     }
                     logLine = out.toString();
                 }
@@ -368,8 +361,7 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
         // clear the monitoring history
-        synchronized( linesBuffer )
-        {
+        synchronized (linesBuffer) {
             linesBuffer.setLength(0);
             monTextPane.setText("");
         }
@@ -377,19 +369,19 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
 
     public synchronized void startLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // start logging by creating the stream
-        if ( logStream==null) {  // successive clicks don't restart the file
+        if (logStream == null) {  // successive clicks don't restart the file
             // start logging
             try {
-                logStream = new PrintStream (new FileOutputStream(logFileChooser.getSelectedFile()));
+                logStream = new PrintStream(new FileOutputStream(logFileChooser.getSelectedFile()));
             } catch (Exception ex) {
-                log.error("exception "+ex);
+                log.error("exception " + ex);
             }
         }
     }
 
     public synchronized void stopLogButtonActionPerformed(java.awt.event.ActionEvent e) {
         // stop logging by removing the stream
-        if (logStream!=null) {
+        if (logStream != null) {
             synchronized (logStream) {
                 logStream.flush();
                 logStream.close();
@@ -408,21 +400,23 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
             stopLogButtonActionPerformed(e);  // stop before changing file
             //File file = logFileChooser.getSelectedFile();
             // if we were currently logging, start the new file
-            if (loggingNow) startLogButtonActionPerformed(e);
+            if (loggingNow) {
+                startLogButtonActionPerformed(e);
+            }
         }
     }
 
     public void enterButtonActionPerformed(java.awt.event.ActionEvent e) {
-        nextLine(entryField.getText()+"\n", ""); // NOI18N
+        nextLine(entryField.getText() + "\n", ""); // NOI18N
     }
-    
+
     public synchronized String getFrameText() {
         return linesBuffer.toString();
     }
 
     /**
-     * Method to position caret at end of JTextArea ta when
-     * scroll true.
+     * Method to position caret at end of JTextArea ta when scroll true.
+     *
      * @param ta Reference to JTextArea
      * @param scroll True to move to end
      */
@@ -433,9 +427,9 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
                 int len = ta.getText().length();
                 if (scroll) {
                     ta.setCaretPosition(len);
-                } else if (ta.getCaretPosition()==len && len>0) {
-                    ta.setCaretPosition(len-1);
-                }        
+                } else if (ta.getCaretPosition() == len && len > 0) {
+                    ta.setCaretPosition(len - 1);
+                }
             }
         });
     }
@@ -446,6 +440,6 @@ public abstract class AbstractMonFrame extends JmriJFrame  {
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
     StringBuffer linesBuffer = new StringBuffer();
-    static private int MAX_LINES = 500 ;
+    static private int MAX_LINES = 500;
     private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());
 }

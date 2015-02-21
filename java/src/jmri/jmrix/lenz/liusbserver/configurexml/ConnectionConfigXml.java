@@ -1,28 +1,26 @@
 package jmri.jmrix.lenz.liusbserver.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbserver.ConnectionConfig;
 import jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter;
-
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of layout connections by persistening
- * the LIUSB Server (and connections). Note this is
- * named as the XML version of a ConnectionConfig object,
- * but it's actually persisting the LIUSB Server.
+ * Handle XML persistance of layout connections by persistening the LIUSB Server
+ * (and connections). Note this is named as the XML version of a
+ * ConnectionConfig object, but it's actually persisting the LIUSB Server.
  * <P>
- * NOTE: The LIUSB Server currently has no options, so this class does 
- * not store any.
+ * NOTE: The LIUSB Server currently has no options, so this class does not store
+ * any.
  * <p>
- * This class is invoked from jmrix.JmrixConfigPaneXml on write,
- * as that class is the one actually registered. Reads are brought
- * here directly via the class attribute in the XML.
+ * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
+ * is the one actually registered. Reads are brought here directly via the class
+ * attribute in the XML.
  *
- * @author   Paul Bender Copyright (C) 2009	
+ * @author Paul Bender Copyright (C) 2009
  * @version $Revision$
  */
 public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
@@ -32,9 +30,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     /**
-     * An LIUSBServer connection needs no extra information, so
-     * we reimplement the superclass method to just write the
-     * necessary parts.
+     * An LIUSBServer connection needs no extra information, so we reimplement
+     * the superclass method to just write the necessary parts.
+     *
      * @param o
      * @return Formatted element containing no attributes except the class name
      */
@@ -48,20 +46,20 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         return e;
     }
 
-
-   /**
+    /**
      * Update static data from XML file
+     *
      * @param e Top level Element to unpack.
-      */
+     */
     public boolean load(Element e) throws Exception {
         boolean result = true;
         // start the "connection"
         /*jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter adapter = 
-                        new jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter();
-                        String errCode = adapter.openPort("localhost","LIUSBServer");
-                        if (errCode == null)    {
-                                adapter.configure();
-                }*/
+         new jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter();
+         String errCode = adapter.openPort("localhost","LIUSBServer");
+         if (errCode == null)    {
+         adapter.configure();
+         }*/
         // register, so can be picked up
         getInstance();
         register();
@@ -70,19 +68,19 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void getInstance() {
-        if(adapter == null){ //adapter=new LIUSBServerAdapter();
-            adapter =  new LIUSBServerAdapter();
-            String errCode = ((LIUSBServerAdapter)adapter).openPort("localhost","LIUSBServer");
-            if (errCode == null)    {
+        if (adapter == null) { //adapter=new LIUSBServerAdapter();
+            adapter = new LIUSBServerAdapter();
+            String errCode = ((LIUSBServerAdapter) adapter).openPort("localhost", "LIUSBServer");
+            if (errCode == null) {
                 adapter.configure();
             }
-        
+
         }
     }
 
     @Override
     protected void getInstance(Object object) {
-        adapter=((ConnectionConfig) object).getAdapter();
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
     protected void register() {
@@ -90,6 +88,6 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
     }
 
     // initialize logging
-static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 
 }

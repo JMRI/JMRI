@@ -1,5 +1,4 @@
 // AbstractAudioFrame.java
-
 package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
@@ -29,41 +28,39 @@ import jmri.util.JmriJFrame;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 abstract public class AbstractAudioFrame extends JmriJFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8799988277074614855L;
-	static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
+     *
+     */
+    private static final long serialVersionUID = 8799988277074614855L;
+    static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
     static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     AbstractAudioFrame frame = this;
 
     JPanel main = new JPanel();
-    JScrollPane scroll =
-            new JScrollPane(main,
-                ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
-                ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    JScrollPane scroll
+            = new JScrollPane(main,
+                    ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS,
+                    ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
     AudioTableDataModel model;
 
     static final int INT_PRECISION = (int) Math.pow(10, Audio.DECIMAL_PLACES);
-    static final float FLT_PRECISION = 1/(float)INT_PRECISION;
+    static final float FLT_PRECISION = 1 / (float) INT_PRECISION;
 
     // Common UI components for Add/Edit Audio
     JLabel sysNameLabel = new JLabel(rb.getString("LabelSystemName"));
@@ -73,7 +70,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
     /**
      * Standard constructor
-     * 
+     *
      * @param title Title of this AudioFrame
      * @param model AudioTableDataModel holding Audio data
      */
@@ -93,15 +90,17 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
         frame.addHelpMenu("package.jmri.jmrit.beantable.AudioAddEdit", true);
         frame.getContentPane().setLayout(new BoxLayout(frame.getContentPane(), BoxLayout.Y_AXIS));
         main.setLayout(new BoxLayout(main, BoxLayout.Y_AXIS));
-        
+
         JPanel p;
 
-        p = new JPanel(); p.setLayout(new FlowLayout());
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         p.add(sysNameLabel);
         p.add(sysName);
         frame.getContentPane().add(p);
 
-        p = new JPanel(); p.setLayout(new FlowLayout());
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         p.add(userNameLabel);
         p.add(userName);
         frame.getContentPane().add(p);
@@ -124,18 +123,17 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     }
 
     //private static final Logger log = LoggerFactory.getLogger(AbstractAudioFrame.class.getName());
-
     /**
-     * A convenience class to create a JPanel to edit a Vector3f object using
-     * 3 seperate JSpinner Swing objects
+     * A convenience class to create a JPanel to edit a Vector3f object using 3
+     * seperate JSpinner Swing objects
      */
     protected static class JPanelVector3f extends JPanel {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -2102431744610108951L;
-		JLabel xLabel = new JLabel(rba.getString("LabelX"));
+         *
+         */
+        private static final long serialVersionUID = -2102431744610108951L;
+        JLabel xLabel = new JLabel(rba.getString("LabelX"));
         JSpinner xValue = new JSpinner();
         JLabel yLabel = new JLabel(rba.getString("LabelY"));
         JSpinner yValue = new JSpinner();
@@ -152,18 +150,18 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             super();
             layoutPanel(title, "");
         }
-        
+
         JPanelVector3f(String title, String units) {
             super();
             layoutPanel(title, units);
         }
-        
+
         private void layoutPanel(String title, String units) {
             this.setLayout(new FlowLayout());
-            if (title.length()!=0) {
+            if (title.length() != 0) {
                 this.setBorder(BorderFactory.createCompoundBorder(
-                                BorderFactory.createTitledBorder(title),
-                                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                        BorderFactory.createTitledBorder(title),
+                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
             }
             this.add(xLabel);
             xValue.setPreferredSize(new JTextField(8).getPreferredSize());
@@ -186,7 +184,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             zValue.setEditor(new JSpinner.NumberEditor(zValue, "0.00"));
             this.add(zValue);
 
-            if (units.length()!=0) {
+            if (units.length() != 0) {
                 unitsLabel.setText(units);
                 this.add(unitsLabel);
             }
@@ -195,6 +193,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         /**
          * Set the value of this object
+         *
          * @param value value to set
          */
         public void setValue(Vector3f value) {
@@ -205,6 +204,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         /**
          * Retrieve the current value of this object
+         *
          * @return current value
          */
         public Vector3f getValue() {
@@ -216,40 +216,40 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     }
 
     /**
-     * A convenience class to create a JPanel for editing a float value
-     * using combined JSlider and JSPinner Swing objects
+     * A convenience class to create a JPanel for editing a float value using
+     * combined JSlider and JSPinner Swing objects
      */
     protected static class JPanelSliderf extends JPanel {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -7201712611650896844L;
+         *
+         */
+        private static final long serialVersionUID = -7201712611650896844L;
 
-		JSlider slider = new JSlider();
+        JSlider slider = new JSlider();
 
         JSpinner spinner = new JSpinner();
 
         JPanelSliderf(String title, Float min, Float max, int majorTicks, int minorTicks) {
             super();
-            int iMin = Math.round(min*INT_PRECISION);
-            int iMax = Math.round(max*INT_PRECISION);
-            int iInterval = (iMax-iMin)/majorTicks;
+            int iMin = Math.round(min * INT_PRECISION);
+            int iMax = Math.round(max * INT_PRECISION);
+            int iInterval = (iMax - iMin) / majorTicks;
 
             this.setLayout(new FlowLayout());
             this.setBorder(BorderFactory.createCompoundBorder(
-                            BorderFactory.createTitledBorder(title),
-                            BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-            slider.setMinimum(Math.round(min*INT_PRECISION));
-            slider.setMaximum(Math.round(max*INT_PRECISION));
+                    BorderFactory.createTitledBorder(title),
+                    BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+            slider.setMinimum(Math.round(min * INT_PRECISION));
+            slider.setMaximum(Math.round(max * INT_PRECISION));
             slider.setMajorTickSpacing(iInterval);
-            slider.setMinorTickSpacing(iInterval/minorTicks);
+            slider.setMinorTickSpacing(iInterval / minorTicks);
             @SuppressWarnings("UseOfObsoleteCollectionType")
-                    // Need to use Hashtable for JSlider labels
-            Hashtable<Integer,JLabel> labelTable = new Hashtable<Integer,JLabel>();
-            for (int i=iMin; i<=iMax; i+=iInterval) {
+            // Need to use Hashtable for JSlider labels
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+            for (int i = iMin; i <= iMax; i += iInterval) {
                 float f = i;
-                f/=INT_PRECISION;
+                f /= INT_PRECISION;
                 labelTable.put(i, new JLabel(Float.toString(f)));
             }
             slider.setLabelTable(labelTable);
@@ -259,7 +259,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                     float f = slider.getValue();
-                    f/=INT_PRECISION;
+                    f /= INT_PRECISION;
                     spinner.setValue(f);
                 }
             });
@@ -271,7 +271,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
                 @Override
                 public void stateChanged(ChangeEvent e) {
                     slider.setValue(
-                            Math.round((Float)spinner.getValue()*INT_PRECISION));
+                            Math.round((Float) spinner.getValue() * INT_PRECISION));
                 }
             });
             this.add(slider);
@@ -280,6 +280,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         /**
          * Set the value of this object
+         *
          * @param value value to set
          */
         public void setValue(float value) {
@@ -288,10 +289,11 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         /**
          * Retrieve the current value of this object
+         *
          * @return current value
          */
         public float getValue() {
-            return AbstractAudio.roundDecimal((Float)spinner.getValue());
+            return AbstractAudio.roundDecimal((Float) spinner.getValue());
         }
     }
 }

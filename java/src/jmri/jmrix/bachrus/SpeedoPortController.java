@@ -15,7 +15,6 @@ public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPort
 
     // base class. Implementations will provide InputStream and OutputStream
     // objects to SprogTrafficController classes, who in turn will deal in messages.
-
     protected SpeedoPortController(SpeedoSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
     }
@@ -31,7 +30,7 @@ public abstract class SpeedoPortController extends jmri.jmrix.AbstractSerialPort
 
     @Override
     public SpeedoSystemConnectionMemo getSystemConnectionMemo() {
-        return (SpeedoSystemConnectionMemo)super.getSystemConnectionMemo();
+        return (SpeedoSystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
 }

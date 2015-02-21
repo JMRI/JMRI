@@ -1,16 +1,14 @@
 package jmri.implementation.configurexml;
 
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.SignalHead;
+import jmri.Turnout;
+import jmri.implementation.TripleTurnoutSignalHead;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.implementation.TripleTurnoutSignalHead;
-import jmri.Turnout;
-import jmri.NamedBeanHandle;
-
-import java.util.List;
-
-import org.jdom2.Element;
 
 /**
  * Handle XML configuration for TripleTurnoutSignalHead objects.
@@ -20,16 +18,18 @@ import org.jdom2.Element;
  */
 public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
-    public TripleTurnoutSignalHeadXml() {}
+    public TripleTurnoutSignalHeadXml() {
+    }
 
     /**
      * Default implementation for storing the contents of a
      * TripleTurnoutSignalHead
+     *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        TripleTurnoutSignalHead p = (TripleTurnoutSignalHead)o;
+        TripleTurnoutSignalHead p = (TripleTurnoutSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -39,7 +39,7 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
-        
+
         element.addContent(addTurnoutElement(p.getGreen(), "green"));
         element.addContent(addTurnoutElement(p.getYellow(), "yellow"));
         element.addContent(addTurnoutElement(p.getRed(), "red"));
@@ -49,12 +49,15 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
 
     /**
      * Create a TripleTurnoutSignalHead
+     *
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-	public boolean load(Element element) {
+    public boolean load(Element element) {
         List<Element> l = element.getChildren("turnoutname");
-        if (l.size() == 0) l = element.getChildren("turnout");
+        if (l.size() == 0) {
+            l = element.getChildren("turnout");
+        }
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
@@ -63,13 +66,14 @@ public class TripleTurnoutSignalHeadXml extends DoubleTurnoutSignalHeadXml {
         String sys = getSystemName(element);
         String uname = getUserName(element);
         SignalHead h;
-        if (uname == null)
+        if (uname == null) {
             h = new TripleTurnoutSignalHead(sys, green, yellow, red);
-        else
+        } else {
             h = new TripleTurnoutSignalHead(sys, uname, green, yellow, red);
+        }
 
         loadCommon(h, element);
-        
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }

@@ -1,49 +1,53 @@
-
 package jmri.jmrit.display.palette;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-
+import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-
-import javax.swing.*;
-
 import java.util.ArrayList;
 import java.util.List;
-
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import jmri.InstanceManager;
 import jmri.Path;
 import jmri.Sensor;
-import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.picker.PickPanel;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
+import jmri.jmrit.picker.PickListModel;
+import jmri.jmrit.picker.PickPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
-*  Panel for Occupancy and Error detection,  
-*/
+ * Panel for Occupancy and Error detection,
+ */
 public class DetectionPanel extends JPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5943021268643905786L;
-	private JTextField  _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
-    private JFrame      _pickFrame;
-    private JButton     _openPicklistButton;
-    private JPanel      _trainIdPanel;
-    private JCheckBox   _showTrainName;
-    private OBlock      _block;
-    private JPanel      _blockPathPanel;
-    private ItemPanel   _parent;
+     *
+     */
+    private static final long serialVersionUID = -5943021268643905786L;
+    private JTextField _occDetectorName = new JTextField();   // can be either a Sensor or OBlock name
+    private JFrame _pickFrame;
+    private JButton _openPicklistButton;
+    private JPanel _trainIdPanel;
+    private JCheckBox _showTrainName;
+    private OBlock _block;
+    private JPanel _blockPathPanel;
+    private ItemPanel _parent;
     private ArrayList<JCheckBox> _pathBoxes;
-    private JPanel      _checkBoxPanel;
+    private JPanel _checkBoxPanel;
 
     /**
-    */
+     */
     public DetectionPanel(ItemPanel parent) {
         super();
         _parent = parent;
@@ -63,13 +67,13 @@ public class DetectionPanel extends JPanel {
         panel.add(makeSensorPanel(_occDetectorName, "OccupancySensor", "ToolTipOccupancySensor"));
         _openPicklistButton = new JButton(Bundle.getMessage("OpenPicklist"));
         _openPicklistButton.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent a) {
-                    if (_pickFrame==null) {
-                        openPickList();
-                    } else {
-                        closePickList();
-                    }
+            public void actionPerformed(ActionEvent a) {
+                if (_pickFrame == null) {
+                    openPickList();
+                } else {
+                    closePickList();
                 }
+            }
         });
         _openPicklistButton.setToolTipText(Bundle.getMessage("ToolTipPickLists"));
         JPanel p = new JPanel();
@@ -127,17 +131,17 @@ public class DetectionPanel extends JPanel {
         JPanel panel = new JPanel();
         panel.add(blurb);
         content.add(panel);
-        PickListModel[] models = { PickListModel.oBlockPickModelInstance(),
-                                    PickListModel.sensorPickModelInstance()
-                                 };
+        PickListModel[] models = {PickListModel.oBlockPickModelInstance(),
+            PickListModel.sensorPickModelInstance()
+        };
         content.add(new PickPanel(models));
 
         _pickFrame.setContentPane(content);
         _pickFrame.addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    closePickList();                   
-                }
-            });
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                closePickList();
+            }
+        });
         _pickFrame.setLocationRelativeTo(this);
         _pickFrame.toFront();
         _pickFrame.setVisible(true);
@@ -163,14 +167,15 @@ public class DetectionPanel extends JPanel {
     }
 
     public void dispose() {
-        if (_pickFrame!=null) {
+        if (_pickFrame != null) {
             _pickFrame.dispose();
             _pickFrame = null;
         }
     }
 
-    /****************** Getters & Setters ***************************/
-
+    /**
+     * **************** Getters & Setters **************************
+     */
     public boolean getShowTrainName() {
         return _showTrainName.isSelected();
     }
@@ -181,8 +186,8 @@ public class DetectionPanel extends JPanel {
 
     public String getOccSensor() {
         String name = _occDetectorName.getText();
-        if (name!=null && name.trim().length()>0) {
-            if (InstanceManager.sensorManagerInstance().getSensor(name)!=null) {
+        if (name != null && name.trim().length() > 0) {
+            if (InstanceManager.sensorManagerInstance().getSensor(name) != null) {
                 return name;
             }
         }
@@ -191,8 +196,8 @@ public class DetectionPanel extends JPanel {
 
     public String getOccBlock() {
         String name = _occDetectorName.getText();
-        if (name!=null && name.trim().length()>0) {
-            if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name)!=null) {
+        if (name != null && name.trim().length() > 0) {
+            if (InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name) != null) {
                 return name;
             }
         }
@@ -200,18 +205,18 @@ public class DetectionPanel extends JPanel {
     }
 
     /**
-    * Name of either Sensor or OBlock for detection
-    */
+     * Name of either Sensor or OBlock for detection
+     */
     public void setOccDetector(String name) {
         _occDetectorName.setText(name);
-        checkDetection(); 
+        checkDetection();
     }
 
     public ArrayList<String> getPaths() {
         ArrayList<String> paths = new ArrayList<String>();
-        if (_pathBoxes!=null) {
-            for (int i=0; i<_pathBoxes.size(); i++) {
-                if ( _pathBoxes.get(i).isSelected()) {
+        if (_pathBoxes != null) {
+            for (int i = 0; i < _pathBoxes.size(); i++) {
+                if (_pathBoxes.get(i).isSelected()) {
                     paths.add(_pathBoxes.get(i).getName().trim());
                 }
             }
@@ -220,36 +225,37 @@ public class DetectionPanel extends JPanel {
     }
 
     public void setPaths(ArrayList<String> iconPath) {
-        if (iconPath==null || _block==null) {
+        if (iconPath == null || _block == null) {
             _pathBoxes = null;
             return;
         }
-        for (int k=0; k<iconPath.size(); k++) {
-            for (int i=0; i<_pathBoxes.size(); i++) {
+        for (int k = 0; k < iconPath.size(); k++) {
+            for (int i = 0; i < _pathBoxes.size(); i++) {
                 String name = _pathBoxes.get(i).getName().trim();
-                if (iconPath.get(k).equals(name) ) {
+                if (iconPath.get(k).equals(name)) {
                     _pathBoxes.get(i).setSelected(true);
                 }
             }
         }
     }
 
-    /*********************************************/
-
-    private void checkDetection() { 
+    /**
+     * ******************************************
+     */
+    private void checkDetection() {
         String name = _occDetectorName.getText();
-        if (name!=null && name.trim().length()>0) {
+        if (name != null && name.trim().length() > 0) {
             OBlock block = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getOBlock(name);
-            if (block!=null) {
+            if (block != null) {
                 if (block.equals(_block)) {
                     return;
                 }
                 makePathList(block);
             } else {
                 Sensor sensor = InstanceManager.sensorManagerInstance().getSensor(name);
-                if (sensor==null) {
-                    JOptionPane.showMessageDialog(_parent._paletteFrame, 
-                    		Bundle.getMessage("InvalidOccDetector", name), 
+                if (sensor == null) {
+                    JOptionPane.showMessageDialog(_parent._paletteFrame,
+                            Bundle.getMessage("InvalidOccDetector", name),
                             Bundle.getMessage("warnTitle"), JOptionPane.WARNING_MESSAGE);
                     _occDetectorName.setText(null);
                 }
@@ -266,21 +272,21 @@ public class DetectionPanel extends JPanel {
         _blockPathPanel.remove(_checkBoxPanel);
         _checkBoxPanel = new JPanel();
         _checkBoxPanel.setLayout(new BoxLayout(_checkBoxPanel, BoxLayout.Y_AXIS));
-        _checkBoxPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.black), 
-                                                         Bundle.getMessage("circuitPaths")));
+        _checkBoxPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.black),
+                Bundle.getMessage("circuitPaths")));
         _checkBoxPanel.add(Box.createHorizontalStrut(100));
         _block = block;
         _pathBoxes = new ArrayList<JCheckBox>();
         List<Path> paths = _block.getPaths();
-        for (int i=0; i<paths.size(); i++) {
-            String name = ((OPath)paths.get(i)).getName();
-            if (name.length()<25){
+        for (int i = 0; i < paths.size(); i++) {
+            String name = ((OPath) paths.get(i)).getName();
+            if (name.length() < 25) {
                 char[] ca = new char[25];
-                for (int j=0; j<name.length(); j++ ) {
-                	ca[j] = name.charAt(j);            	
+                for (int j = 0; j < name.length(); j++) {
+                    ca[j] = name.charAt(j);
                 }
-                for (int j=name.length(); j<25; j++ ) {
-                	ca[j] = ' ';            	
+                for (int j = name.length(); j < 25; j++) {
+                    ca[j] = ' ';
                 }
                 name = new String(ca);
             }
@@ -295,4 +301,3 @@ public class DetectionPanel extends JPanel {
 
     static Logger log = LoggerFactory.getLogger(DetectionPanel.class.getName());
 }
-

@@ -1,12 +1,14 @@
 // PackageTest.java
-
 package jmri.jmrit.beantable.signalmast;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Tests for classes in the jmri.jmrit.beantable.signalmast package
- * @author	Bob Jacobsen  Copyright 2014
+ *
+ * @author	Bob Jacobsen Copyright 2014
  * @version	$Revision$
  */
 public class PackageTest extends TestCase {
@@ -15,7 +17,6 @@ public class PackageTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -30,13 +31,18 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite(PackageTest.class);
 
-		suite.addTest(AddSignalMastPanelTest.suite());
+        suite.addTest(AddSignalMastPanelTest.suite());
 
         return suite;
     }
-    
+
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-    
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 }

@@ -1,5 +1,4 @@
 // RpsMenu.java
-
 package jmri.jmrix.rps;
 
 import javax.swing.JMenu;
@@ -8,16 +7,17 @@ import javax.swing.JSeparator;
 /**
  * Create a "RPS" menu containing the Jmri RPS-specific tools.
  *
- * @author	Bob Jacobsen   Copyright 2006, 2007, 2008
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2006, 2007, 2008
+ * @version $Revision$
  */
 public class RpsMenu extends JMenu {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -4274427241421520434L;
 
-	public RpsMenu(String name) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -4274427241421520434L;
+
+    public RpsMenu(String name) {
         this();
         setText(name);
     }
@@ -37,12 +37,10 @@ public class RpsMenu extends JMenu {
         add(new jmri.jmrix.rps.swing.soundset.SoundSetAction());
 
         add(new JSeparator());
-                
+
         // old, obsolete or not updated tools
         add(new jmri.jmrix.rps.reversealign.AlignmentPanelAction());
 
     }
 
 }
-
-

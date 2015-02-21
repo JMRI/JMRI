@@ -1,20 +1,17 @@
 // LnMessageManager.java
-
 package jmri.jmrix.loconet;
-
-import jmri.jmrix.loconet.LnConstants;
 
 /**
  * Provide access to throttle-messaging on a LocoNet.
  * <P>
  * Some of the message formats used in this class are Copyright Digitrax, Inc.
- * and used with permission as part of the JMRI project.  That permission
- * does not extend to uses in other software products.  If you wish to
- * use this code, algorithm or these message formats outside of JMRI, please
- * contact Digitrax Inc for separate permission.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
  * <P>
  * @author	Bob Jacobsen Copyright (C) 2001
- * @version     $Revision$
+ * @version $Revision$
  */
 public class LnMessageManager implements LocoNetListener {
 
@@ -30,12 +27,12 @@ public class LnMessageManager implements LocoNetListener {
 
     public void sendMessage(int id, String text) {
         LocoNetMessage l = new LocoNetMessage(16);
-        String localText = text+"        "; // insure at least 8 characters
+        String localText = text + "        "; // insure at least 8 characters
         l.setOpCode(LnConstants.OPC_PEER_XFER);
         l.setElement(1, 0x10);
         l.setElement(2, 0x7F);   // throttle message
-        l.setElement(3, id&0x7F);
-        l.setElement(4, id/128);
+        l.setElement(3, id & 0x7F);
+        l.setElement(4, id / 128);
         l.setElement(5, 0);
         l.setElement(6, localText.charAt(0));
         l.setElement(7, localText.charAt(1));
@@ -52,7 +49,7 @@ public class LnMessageManager implements LocoNetListener {
     /**
      * Free resources when no longer used
      */
-    public void dispose(){
+    public void dispose() {
         tc.removeLocoNetListener(~0, this);
         tc = null;
     }
@@ -62,8 +59,8 @@ public class LnMessageManager implements LocoNetListener {
     /**
      * Listen for status changes from LocoNet
      * <P>
-     * This doesn't do anything now. Eventually, it will handle the
-     * user response.
+     * This doesn't do anything now. Eventually, it will handle the user
+     * response.
      */
     public void message(LocoNetMessage m) {
     }

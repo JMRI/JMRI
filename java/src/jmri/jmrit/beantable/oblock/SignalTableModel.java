@@ -1,54 +1,46 @@
 package jmri.jmrit.beantable.oblock;
 
 /**
- * GUI to define OBlocks 
- *<P> 
+ * GUI to define OBlocks
+ * <P>
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
  * @author	Pete Cressman (C) 2010
- * @version     $Revision$
+ * @version $Revision$
  */
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import java.beans.PropertyChangeEvent;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-
 import jmri.InstanceManager;
 import jmri.NamedBean;
-
-//import jmri.jmrit.logix.Bundle;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SignalTableModel extends AbstractTableModel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1150140866074591437L;
-	public static final int NAME_COLUMN = 0;
+     *
+     */
+    private static final long serialVersionUID = 1150140866074591437L;
+    public static final int NAME_COLUMN = 0;
     public static final int FROM_BLOCK_COLUMN = 1;
     public static final int PORTAL_COLUMN = 2;
     public static final int TO_BLOCK_COLUMN = 3;
@@ -56,15 +48,17 @@ public class SignalTableModel extends AbstractTableModel {
     static public final int DELETE_COL = 5;
     public static final int NUMCOLS = 6;
 
-    private ArrayList <SignalRow> _signalList = new ArrayList <SignalRow>();
+    private ArrayList<SignalRow> _signalList = new ArrayList<SignalRow>();
     PortalManager _portalMgr;
 
     static class SignalRow {
+
         NamedBean _signal;
         OBlock _fromBlock;
         Portal _portal;
         OBlock _toBlock;
-        long   _delayTime;
+        long _delayTime;
+
         SignalRow(NamedBean signal, OBlock fromBlock, Portal portal, OBlock toBlock, long delayTime) {
             _signal = signal;
             _fromBlock = fromBlock;
@@ -72,39 +66,49 @@ public class SignalTableModel extends AbstractTableModel {
             _toBlock = toBlock;
             _delayTime = delayTime;
         }
-        void setSignal(NamedBean signal) { 
-            _signal = signal; 
+
+        void setSignal(NamedBean signal) {
+            _signal = signal;
         }
-        NamedBean getSignal() { 
+
+        NamedBean getSignal() {
             return _signal;
         }
-        void setFromBlock(OBlock fromBlock) { 
-            _fromBlock = fromBlock; 
+
+        void setFromBlock(OBlock fromBlock) {
+            _fromBlock = fromBlock;
         }
+
         OBlock getFromBlock() {
             return _fromBlock;
         }
+
         void setPortal(Portal portal) {
             _portal = portal;
         }
+
         Portal getPortal() {
             return _portal;
         }
-        void setToBlock(OBlock toBlock) { 
-            _toBlock = toBlock; 
+
+        void setToBlock(OBlock toBlock) {
+            _toBlock = toBlock;
         }
+
         OBlock getToBlock() {
             return _toBlock;
         }
-        void setDelayTime (long time) {
+
+        void setDelayTime(long time) {
             _delayTime = time;
         }
+
         long getDelayTime() {
             return _delayTime;
         }
     }
 
-    private String[] tempRow= new String[NUMCOLS];
+    private String[] tempRow = new String[NUMCOLS];
 
     TableFrames _parent;
 
@@ -120,41 +124,44 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     void initTempRow() {
-        for (int i=0; i<NUMCOLS; i++) {
+        for (int i = 0; i < NUMCOLS; i++) {
             tempRow[i] = null;
         }
         tempRow[TIME_OFFSET] = "0";
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
+
     private void makeList() {
-        ArrayList <SignalRow> tempList = new ArrayList <SignalRow>();
+        ArrayList<SignalRow> tempList = new ArrayList<SignalRow>();
         // collect signals entered into Portals
         String[] sysNames = _portalMgr.getSystemNameArray();
-        for(int i=0; i<sysNames.length; i++) {
-            Portal  portal = _portalMgr.getBySystemName(sysNames[i]);
+        for (int i = 0; i < sysNames.length; i++) {
+            Portal portal = _portalMgr.getBySystemName(sysNames[i]);
             NamedBean signal = portal.getFromSignal();
             SignalRow sr = null;
-            if (signal!=null) {
+            if (signal != null) {
                 sr = new SignalRow(signal, portal.getFromBlock(), portal,
-                                         portal.getToBlock(), portal.getFromSignalDelay());
+                        portal.getToBlock(), portal.getFromSignalDelay());
                 addToList(tempList, sr);
             }
             signal = portal.getToSignal();
-            if (signal!=null) {
+            if (signal != null) {
                 sr = new SignalRow(signal, portal.getToBlock(), portal,
-                                           portal.getFromBlock(), portal.getToSignalDelay());
+                        portal.getFromBlock(), portal.getToSignalDelay());
                 addToList(tempList, sr);
             }
         }
         _signalList = tempList;
-        if (log.isDebugEnabled()) log.debug("makeList exit: _signalList has "
-                                            +_signalList.size()+" rows.");
+        if (log.isDebugEnabled()) {
+            log.debug("makeList exit: _signalList has "
+                    + _signalList.size() + " rows.");
+        }
     }
 
-    private void addToList (List <SignalRow> tempList, SignalRow sr) {
+    private void addToList(List<SignalRow> tempList, SignalRow sr) {
         // not in list, for the sort, insert at correct position
         boolean add = true;
-        for (int j=0; j<tempList.size(); j++) {
+        for (int j = 0; j < tempList.size(); j++) {
             if (sr.getSignal().getDisplayName().compareTo(tempList.get(j).getSignal().getDisplayName()) < 0) {
                 tempList.add(j, sr);
                 add = false;
@@ -165,131 +172,132 @@ public class SignalTableModel extends AbstractTableModel {
             tempList.add(sr);
         }
     }
-    
+
     private String checkSignalRow(SignalRow sr) {
-    	Portal portal = sr.getPortal();
-    	OBlock fromBlock = sr.getFromBlock();
-    	OBlock toBlock = sr.getToBlock();
-    	String msg = null;
-        if (portal!=null) {
-            if (toBlock==null && sr.getFromBlock()==null) {
+        Portal portal = sr.getPortal();
+        OBlock fromBlock = sr.getFromBlock();
+        OBlock toBlock = sr.getToBlock();
+        String msg = null;
+        if (portal != null) {
+            if (toBlock == null && sr.getFromBlock() == null) {
                 msg = Bundle.getMessage("SignalDirection",
-                                                     portal.getName(), 
-                                                     portal.getFromBlock().getDisplayName(),
-                                                     portal.getToBlock().getDisplayName());
+                        portal.getName(),
+                        portal.getFromBlock().getDisplayName(),
+                        portal.getToBlock().getDisplayName());
                 return msg;
             }
-    		OBlock pToBlk = portal.getToBlock();
-    		OBlock pFromBlk = portal.getFromBlock();
-    		if (pToBlk.equals(toBlock)) {
-    			if (fromBlock==null) {
-    				sr.setFromBlock(pFromBlk);
-/*    			} else if (!fromBlock.equals(pFromBlk)) {
-                	msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
-                            fromBlock.getDisplayName());    */				
-    			}
-    		} else if (pFromBlk.equals(toBlock)) {
-    			if (fromBlock==null) {
-    				sr.setFromBlock(pToBlk);
-/*    			} else if (!toBlock.equals(pToBlk)) {
-                	msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
-                            toBlock.getDisplayName()); */
-    			}       			       			
-    		} else if (pToBlk.equals(fromBlock)) {
-    			if (toBlock==null) {
-    				sr.setToBlock(pFromBlk);
-    			}       			       			
-    		} else if (pFromBlk.equals(fromBlock)) {
-    			if (toBlock==null) {
-    				sr.setToBlock(pToBlk);
-    			}       			       			
-    		} else {
-            	msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
-                        (toBlock != null ? toBlock.getDisplayName() : "(null to-block reference)"));    			
-    		}
-        } else if (fromBlock!=null && toBlock!=null) {
-        	Portal p = getPortal(fromBlock, toBlock);
-            if (p==null) {
-                msg = Bundle.getMessage("NoSuchPortal", 
-                                fromBlock.getDisplayName(), toBlock.getDisplayName());
+            OBlock pToBlk = portal.getToBlock();
+            OBlock pFromBlk = portal.getFromBlock();
+            if (pToBlk.equals(toBlock)) {
+                if (fromBlock == null) {
+                    sr.setFromBlock(pFromBlk);
+                    /*    			} else if (!fromBlock.equals(pFromBlk)) {
+                     msg = Bundle.getMessage("PortalBlockConflict", portal.getName(), 
+                     fromBlock.getDisplayName());    */
+                }
+            } else if (pFromBlk.equals(toBlock)) {
+                if (fromBlock == null) {
+                    sr.setFromBlock(pToBlk);
+                    /*    			} else if (!toBlock.equals(pToBlk)) {
+                     msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
+                     toBlock.getDisplayName()); */
+                }
+            } else if (pToBlk.equals(fromBlock)) {
+                if (toBlock == null) {
+                    sr.setToBlock(pFromBlk);
+                }
+            } else if (pFromBlk.equals(fromBlock)) {
+                if (toBlock == null) {
+                    sr.setToBlock(pToBlk);
+                }
             } else {
-            	sr.setPortal(p);
+                msg = Bundle.getMessage("PortalBlockConflict", portal.getName(),
+                        (toBlock != null ? toBlock.getDisplayName() : "(null to-block reference)"));
+            }
+        } else if (fromBlock != null && toBlock != null) {
+            Portal p = getPortal(fromBlock, toBlock);
+            if (p == null) {
+                msg = Bundle.getMessage("NoSuchPortal",
+                        fromBlock.getDisplayName(), toBlock.getDisplayName());
+            } else {
+                sr.setPortal(p);
             }
         }
-        if ( msg==null && fromBlock != null && fromBlock.equals(toBlock)) {
+        if (msg == null && fromBlock != null && fromBlock.equals(toBlock)) {
             msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
         }
-    	return msg;
+        return msg;
     }
 
     private Portal getPortal(OBlock fromBlock, OBlock toBlock) {
         String[] sysNames = _portalMgr.getSystemNameArray();
-        for(int i=0; i<sysNames.length; i++) {
-            Portal portal =  _portalMgr.getBySystemName(sysNames[i]);
-            if ((portal.getFromBlock().equals(fromBlock) || portal.getToBlock().equals(fromBlock)) 
-                && (portal.getFromBlock().equals(toBlock) || portal.getToBlock().equals(toBlock))) {
-                return portal; 
+        for (int i = 0; i < sysNames.length; i++) {
+            Portal portal = _portalMgr.getBySystemName(sysNames[i]);
+            if ((portal.getFromBlock().equals(fromBlock) || portal.getToBlock().equals(fromBlock))
+                    && (portal.getFromBlock().equals(toBlock) || portal.getToBlock().equals(toBlock))) {
+                return portal;
             }
         }
         return null;
     }
 
     private String checkDuplicateSignal(NamedBean signal) {
-        if (signal==null) {
+        if (signal == null) {
             return null;
         }
-        for (int i=0; i<_signalList.size(); i++)  {
+        for (int i = 0; i < _signalList.size(); i++) {
             SignalRow srow = _signalList.get(i);
             if (signal.equals(srow.getSignal())) {
-                return Bundle.getMessage("DuplSignalName", 
-                		signal.getDisplayName(), srow.getToBlock().getDisplayName(), 
-                		srow.getPortal().getName(), srow.getFromBlock().getDisplayName());
-                
+                return Bundle.getMessage("DuplSignalName",
+                        signal.getDisplayName(), srow.getToBlock().getDisplayName(),
+                        srow.getPortal().getName(), srow.getFromBlock().getDisplayName());
+
             }
         }
         return null;
-    }
-    private String checkDuplicateSignal(SignalRow row) {
-    	NamedBean signal = row.getSignal();
-        if (signal==null) {
-            return null;
-        }
-        for (int i=0; i<_signalList.size(); i++)  {
-            SignalRow srow = _signalList.get(i);
-            if (srow.equals(row)) {
-            	continue;
-            }
-            if (signal.equals(srow.getSignal())) {
-                return Bundle.getMessage("DuplSignalName", 
-                		signal.getDisplayName(), srow.getToBlock().getDisplayName(), 
-                		srow.getPortal().getName(), srow.getFromBlock().getDisplayName());
-                
-            }
-        }
-        return null;
-    }
-    
-    private String checkDuplicateProtection(SignalRow row) {
-    	Portal portal = row.getPortal();
-    	OBlock block = row.getToBlock();
-        if (block==null || portal==null) {
-        	return null;
-        }
-        for (int i=0; i<_signalList.size(); i++)  {
-            SignalRow srow = _signalList.get(i);
-            if (srow.equals(row)) {
-            	continue;
-            }
-            if (block.equals(srow.getToBlock()) && portal.equals(srow.getPortal())) {
-                return Bundle.getMessage("DuplProtection", block.getDisplayName(), portal.getName(), 
-                		srow.getFromBlock().getDisplayName(), srow.getSignal().getDisplayName());              
-            }
-        }
-        return null;
-    	
     }
 
-    public int getColumnCount () {
+    private String checkDuplicateSignal(SignalRow row) {
+        NamedBean signal = row.getSignal();
+        if (signal == null) {
+            return null;
+        }
+        for (int i = 0; i < _signalList.size(); i++) {
+            SignalRow srow = _signalList.get(i);
+            if (srow.equals(row)) {
+                continue;
+            }
+            if (signal.equals(srow.getSignal())) {
+                return Bundle.getMessage("DuplSignalName",
+                        signal.getDisplayName(), srow.getToBlock().getDisplayName(),
+                        srow.getPortal().getName(), srow.getFromBlock().getDisplayName());
+
+            }
+        }
+        return null;
+    }
+
+    private String checkDuplicateProtection(SignalRow row) {
+        Portal portal = row.getPortal();
+        OBlock block = row.getToBlock();
+        if (block == null || portal == null) {
+            return null;
+        }
+        for (int i = 0; i < _signalList.size(); i++) {
+            SignalRow srow = _signalList.get(i);
+            if (srow.equals(row)) {
+                continue;
+            }
+            if (block.equals(srow.getToBlock()) && portal.equals(srow.getPortal())) {
+                return Bundle.getMessage("DuplProtection", block.getDisplayName(), portal.getName(),
+                        srow.getFromBlock().getDisplayName(), srow.getSignal().getDisplayName());
+            }
+        }
+        return null;
+
+    }
+
+    public int getColumnCount() {
         return NUMCOLS;
     }
 
@@ -299,11 +307,16 @@ public class SignalTableModel extends AbstractTableModel {
 
     public String getColumnName(int col) {
         switch (col) {
-            case NAME_COLUMN:       return Bundle.getMessage("SignalName");
-            case FROM_BLOCK_COLUMN: return Bundle.getMessage("FromBlockName");
-            case PORTAL_COLUMN:     return Bundle.getMessage("ThroughPortal");
-            case TO_BLOCK_COLUMN:   return Bundle.getMessage("ToBlockName");
-            case TIME_OFFSET:       return Bundle.getMessage("TimeOffset");
+            case NAME_COLUMN:
+                return Bundle.getMessage("SignalName");
+            case FROM_BLOCK_COLUMN:
+                return Bundle.getMessage("FromBlockName");
+            case PORTAL_COLUMN:
+                return Bundle.getMessage("ThroughPortal");
+            case TO_BLOCK_COLUMN:
+                return Bundle.getMessage("ToBlockName");
+            case TIME_OFFSET:
+                return Bundle.getMessage("TimeOffset");
         }
         return "";
     }
@@ -313,24 +326,24 @@ public class SignalTableModel extends AbstractTableModel {
         if (_signalList.size() == rowIndex) {
             return tempRow[columnIndex];
         }
-        switch(columnIndex) {
+        switch (columnIndex) {
             case NAME_COLUMN:
-                if (_signalList.get(rowIndex).getSignal()!=null) {
+                if (_signalList.get(rowIndex).getSignal() != null) {
                     return _signalList.get(rowIndex).getSignal().getDisplayName();
                 }
                 break;
             case FROM_BLOCK_COLUMN:
-                if (_signalList.get(rowIndex).getFromBlock()!=null) {
+                if (_signalList.get(rowIndex).getFromBlock() != null) {
                     return _signalList.get(rowIndex).getFromBlock().getDisplayName();
                 }
                 break;
             case PORTAL_COLUMN:
-                if (_signalList.get(rowIndex).getPortal()!=null) {
-                    return  _signalList.get(rowIndex).getPortal().getName();
+                if (_signalList.get(rowIndex).getPortal() != null) {
+                    return _signalList.get(rowIndex).getPortal().getName();
                 }
                 break;
             case TO_BLOCK_COLUMN:
-                if (_signalList.get(rowIndex).getToBlock()!=null) {
+                if (_signalList.get(rowIndex).getToBlock() != null) {
                     return _signalList.get(rowIndex).getToBlock().getDisplayName();
                 }
                 break;
@@ -345,113 +358,113 @@ public class SignalTableModel extends AbstractTableModel {
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
         if (_signalList.size() == row) {
-        	if (col==DELETE_COL) {
-        		initTempRow();
-        		fireTableRowsUpdated(row,row);
-        		return;
+            if (col == DELETE_COL) {
+                initTempRow();
+                fireTableRowsUpdated(row, row);
+                return;
             } else {
-            	String str = (String)value;
-            	if (str!=null && str.trim().length()>0) {               	
-                 	tempRow[col] = str.trim();             		
-            	} else {
-                 	tempRow[col] = null;             		            		
-            	}
-            }
-        	String name = tempRow[NAME_COLUMN];
-        	if (name == null) {
-        		return;
-        	}
-        	OBlock fromBlock = null;
-        	OBlock toBlock = null;
-        	Portal portal = null;
-        	OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-        	if (tempRow[FROM_BLOCK_COLUMN]!=null) {
-                fromBlock = OBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
-                if (fromBlock==null) {
-                    msg = Bundle.getMessage("NoSuchBlock", tempRow[FROM_BLOCK_COLUMN]);                	
-                }        		
-        	}
-        	if (tempRow[TO_BLOCK_COLUMN]!=null) {
-                toBlock = OBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
-                if (toBlock==null && msg==null) {
-                    msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);                	
-                }       		
-        	}
-        	if (tempRow[PORTAL_COLUMN]!=null) {
-            	portal = _portalMgr.getPortal(tempRow[PORTAL_COLUMN]);
-            	if (portal==null && msg==null) {
-                    msg = Bundle.getMessage("NoSuchPortalName", tempRow[PORTAL_COLUMN]);            		
-            	}        		
-        	}
-            NamedBean signal = Portal.getSignal(name);
-        	if (msg==null) {
-                if (signal==null) {
-                    msg = Bundle.getMessage("NoSuchSignal", name);            	
+                String str = (String) value;
+                if (str != null && str.trim().length() > 0) {
+                    tempRow[col] = str.trim();
                 } else {
-                	msg = checkDuplicateSignal(signal);            	
-                }        		
-        	}
+                    tempRow[col] = null;
+                }
+            }
+            String name = tempRow[NAME_COLUMN];
+            if (name == null) {
+                return;
+            }
+            OBlock fromBlock = null;
+            OBlock toBlock = null;
+            Portal portal = null;
+            OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+            if (tempRow[FROM_BLOCK_COLUMN] != null) {
+                fromBlock = OBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
+                if (fromBlock == null) {
+                    msg = Bundle.getMessage("NoSuchBlock", tempRow[FROM_BLOCK_COLUMN]);
+                }
+            }
+            if (tempRow[TO_BLOCK_COLUMN] != null) {
+                toBlock = OBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
+                if (toBlock == null && msg == null) {
+                    msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);
+                }
+            }
+            if (tempRow[PORTAL_COLUMN] != null) {
+                portal = _portalMgr.getPortal(tempRow[PORTAL_COLUMN]);
+                if (portal == null && msg == null) {
+                    msg = Bundle.getMessage("NoSuchPortalName", tempRow[PORTAL_COLUMN]);
+                }
+            }
+            NamedBean signal = Portal.getSignal(name);
+            if (msg == null) {
+                if (signal == null) {
+                    msg = Bundle.getMessage("NoSuchSignal", name);
+                } else {
+                    msg = checkDuplicateSignal(signal);
+                }
+            }
             long time = 0;
             try {
                 time = Long.parseLong(tempRow[TIME_OFFSET]);
             } catch (NumberFormatException nfe) {
-                if (msg==null) {            	
+                if (msg == null) {
                     msg = Bundle.getMessage("DelayTriggerTime");
                 }
             }
-            if (msg==null) {
+            if (msg == null) {
                 SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, time);
-                msg =  checkSignalRow(signalRow);       		
-                if (msg==null) {
-                	portal = signalRow.getPortal();
-                	toBlock = signalRow.getToBlock();
-                	msg = checkDuplicateProtection(signalRow);
-                    if (msg==null && portal!=null) {
+                msg = checkSignalRow(signalRow);
+                if (msg == null) {
+                    portal = signalRow.getPortal();
+                    toBlock = signalRow.getToBlock();
+                    msg = checkDuplicateProtection(signalRow);
+                    if (msg == null && portal != null) {
                         if (portal.setProtectSignal(signal, time, toBlock)) {
-                            if (signalRow.getFromBlock()==null) {
+                            if (signalRow.getFromBlock() == null) {
                                 signalRow.setFromBlock(portal.getOpposingBlock(toBlock));
                             }
                             _signalList.add(signalRow);
                             initTempRow();
                             fireTableDataChanged();
                         } else {
-                        	msg = Bundle.getMessage("PortalBlockConflict",
-                        					portal.getName(), toBlock.getDisplayName());
+                            msg = Bundle.getMessage("PortalBlockConflict",
+                                    portal.getName(), toBlock.getDisplayName());
                         }
                     }
                 }
-        	}
-        	
+            }
+
         } else {	// Editing existing signal configurations
-            SignalRow signalRow =_signalList.get(row);
-        	OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
-            switch(col) {
+            SignalRow signalRow = _signalList.get(row);
+            OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
+            switch (col) {
                 case NAME_COLUMN:
-                    NamedBean signal = Portal.getSignal((String)value); 
-                    if (signal==null) {
-                        msg = Bundle.getMessage("NoSuchSignal", (String)value);
+                    NamedBean signal = Portal.getSignal((String) value);
+                    if (signal == null) {
+                        msg = Bundle.getMessage("NoSuchSignal", (String) value);
 //                        signalRow.setSignal(null);                            		
                         break;
                     }
                     Portal portal = signalRow.getPortal();
-                    if (portal!=null && signalRow.getToBlock()!=null) {
-                    	NamedBean oldSignal = signalRow.getSignal();
-                        signalRow.setSignal(signal);                            		
-                    	msg = checkDuplicateSignal(signalRow);
-                    	if (msg==null) {
+                    if (portal != null && signalRow.getToBlock() != null) {
+                        NamedBean oldSignal = signalRow.getSignal();
+                        signalRow.setSignal(signal);
+                        msg = checkDuplicateSignal(signalRow);
+                        if (msg == null) {
                             deleteSignal(signalRow);    // delete old
                             msg = setSignal(signalRow, false);
-                            fireTableRowsUpdated(row,row);                            	
-                    	} else {
-                            signalRow.setSignal(oldSignal);                            		
-                    		
-                    	}
+                            fireTableRowsUpdated(row, row);
+                        } else {
+                            signalRow.setSignal(oldSignal);
+
+                        }
                     }
                     break;
                 case FROM_BLOCK_COLUMN:
-                    OBlock block = OBlockMgr.getOBlock((String)value);
-                    if (block==null) {
-                        msg = Bundle.getMessage("NoSuchBlock", (String)value);
+                    OBlock block = OBlockMgr.getOBlock((String) value);
+                    if (block == null) {
+                        msg = Bundle.getMessage("NoSuchBlock", (String) value);
 //                        signalRow.setFromBlock(null);                    	
                         break;
                     }
@@ -460,33 +473,33 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     deleteSignal(signalRow);    // delete old
 //                    OBlock oldBlock = signalRow.getFromBlock();
-                    signalRow.setFromBlock(block);                    	
+                    signalRow.setFromBlock(block);
                     portal = signalRow.getPortal();
                     if (checkPortalBlock(portal, block)) {
-                        signalRow.setToBlock(null);                    	
+                        signalRow.setToBlock(null);
                     } else {
                         // get new portal
                         portal = getPortal(block, signalRow.getToBlock());
-                        signalRow.setPortal(portal);                        	
+                        signalRow.setPortal(portal);
                     }
                     msg = checkSignalRow(signalRow);
-                    if (msg==null) {
-                    	msg = checkDuplicateProtection(signalRow);                    	
+                    if (msg == null) {
+                        msg = checkDuplicateProtection(signalRow);
                     } else {
                         signalRow.setPortal(null);
                         break;
                     }
-                    if (msg==null && signalRow.getPortal()!=null) {
+                    if (msg == null && signalRow.getPortal() != null) {
                         msg = setSignal(signalRow, true);
                     } else {
-                        signalRow.setPortal(null);                    	
+                        signalRow.setPortal(null);
                     }
-                    fireTableRowsUpdated(row,row);
+                    fireTableRowsUpdated(row, row);
                     break;
                 case PORTAL_COLUMN:
-                    portal = _portalMgr.getPortal((String)value);
-                    if (portal==null) {
-                        msg = Bundle.getMessage("NoSuchPortalName", (String)value);
+                    portal = _portalMgr.getPortal((String) value);
+                    if (portal == null) {
+                        msg = Bundle.getMessage("NoSuchPortalName", (String) value);
 //                        signalRow.setPortal(null);
                         break;
                     }
@@ -494,30 +507,30 @@ public class SignalTableModel extends AbstractTableModel {
                     signalRow.setPortal(portal);
                     block = signalRow.getToBlock();
                     if (checkPortalBlock(portal, block)) {
-                    	signalRow.setFromBlock(null);
+                        signalRow.setFromBlock(null);
                     } else {
                         block = signalRow.getFromBlock();
                         if (checkPortalBlock(portal, block)) {
-                        	signalRow.setToBlock(null);                        	
-                        }                    	
+                            signalRow.setToBlock(null);
+                        }
                     }
-                    msg =  checkSignalRow(signalRow);       		
-                    if (msg==null) {
-                    	msg = checkDuplicateProtection(signalRow);
+                    msg = checkSignalRow(signalRow);
+                    if (msg == null) {
+                        msg = checkDuplicateProtection(signalRow);
                     } else {
                         signalRow.setToBlock(null);
                         break;
                     }
-                    if (msg==null) {
+                    if (msg == null) {
                         signalRow.setPortal(portal);
                         msg = setSignal(signalRow, false);
-                        fireTableRowsUpdated(row,row);                         	
+                        fireTableRowsUpdated(row, row);
                     }
                     break;
                 case TO_BLOCK_COLUMN:
-                    block = OBlockMgr.getOBlock((String)value);
-                    if (block==null) {
-                        msg = Bundle.getMessage("NoSuchBlock", (String)value);
+                    block = OBlockMgr.getOBlock((String) value);
+                    if (block == null) {
+                        msg = Bundle.getMessage("NoSuchBlock", (String) value);
 //                        signalRow.setToBlock(null);
                         break;
                     }
@@ -528,30 +541,30 @@ public class SignalTableModel extends AbstractTableModel {
                     signalRow.setToBlock(block);
                     portal = signalRow.getPortal();
                     if (checkPortalBlock(portal, block)) {
-                        signalRow.setFromBlock(null);                    	
+                        signalRow.setFromBlock(null);
                     } else {
                         // get new portal
                         portal = getPortal(signalRow.getFromBlock(), block);
                         signalRow.setPortal(portal);
                     }
-                    msg = checkSignalRow(signalRow);                    
-                    if (msg==null) {
-                    	msg = checkDuplicateProtection(signalRow);                    	
+                    msg = checkSignalRow(signalRow);
+                    if (msg == null) {
+                        msg = checkDuplicateProtection(signalRow);
                     } else {
                         signalRow.setPortal(null);
                         break;
                     }
-                    if (msg==null && signalRow.getPortal()!=null) {
+                    if (msg == null && signalRow.getPortal() != null) {
                         msg = setSignal(signalRow, true);
                     } else {
-                        signalRow.setPortal(null);                    	
+                        signalRow.setPortal(null);
                     }
-                    fireTableRowsUpdated(row,row);
+                    fireTableRowsUpdated(row, row);
                     break;
                 case TIME_OFFSET:
                     long time = 0;
                     try {
-                        time = Long.parseLong((String)value);
+                        time = Long.parseLong((String) value);
                     } catch (NumberFormatException nfe) {
                         msg = Bundle.getMessage("DelayTriggerTime");
                         signalRow.setDelayTime(0);
@@ -559,7 +572,7 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     signalRow.setDelayTime(time);
                     msg = setSignal(signalRow, false);
-                    fireTableRowsUpdated(row,row);
+                    fireTableRowsUpdated(row, row);
                     break;
                 case DELETE_COL:
                     deleteSignal(signalRow);
@@ -576,7 +589,7 @@ public class SignalTableModel extends AbstractTableModel {
     }
 
     private Portal getPortal(Portal p, OBlock fromBlock, OBlock toBlock) {
-        if (p!= null) {
+        if (p != null) {
             return p;
         } else {
             return getPortal(fromBlock, toBlock);
@@ -585,31 +598,31 @@ public class SignalTableModel extends AbstractTableModel {
 
     private void deleteSignal(SignalRow signalRow) {
         Portal portal = signalRow.getPortal();
-        if (portal==null) {
+        if (portal == null) {
             portal = getPortal(null, signalRow.getFromBlock(), signalRow.getToBlock());
         }
-        if (portal!=null) {
+        if (portal != null) {
             // remove signal from previous portal
             portal.deleteSignal(signalRow.getSignal());
         }
     }
-    
+
     private String setSignal(SignalRow signalRow, boolean deletePortal) {
-    	Portal portal = signalRow.getPortal();
+        Portal portal = signalRow.getPortal();
         if (portal.setProtectSignal(signalRow.getSignal(), signalRow.getDelayTime(), signalRow.getToBlock())) {
-            if (signalRow.getFromBlock()==null) {
+            if (signalRow.getFromBlock() == null) {
                 signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
             }
         } else {
-        	if (deletePortal) {
-                signalRow.setPortal(null);                    	       		
-        	} else {
-                signalRow.setToBlock(null);                    	        		
-        	}
-        	return Bundle.getMessage("PortalBlockConflict", portal.getName(),
-        				signalRow.getToBlock().getDisplayName()); 
+            if (deletePortal) {
+                signalRow.setPortal(null);
+            } else {
+                signalRow.setToBlock(null);
+            }
+            return Bundle.getMessage("PortalBlockConflict", portal.getName(),
+                    signalRow.getToBlock().getDisplayName());
         }
-    	return null;
+        return null;
     }
 
     private boolean checkPortalBlock(Portal portal, OBlock block) {
@@ -629,12 +642,18 @@ public class SignalTableModel extends AbstractTableModel {
 
     public int getPreferredWidth(int col) {
         switch (col) {
-            case NAME_COLUMN:       return new JTextField(18).getPreferredSize().width;
-            case FROM_BLOCK_COLUMN: return new JTextField(18).getPreferredSize().width;
-            case PORTAL_COLUMN:     return new JTextField(18).getPreferredSize().width;
-            case TO_BLOCK_COLUMN:   return new JTextField(18).getPreferredSize().width;
-            case TIME_OFFSET:       return new JTextField(6).getPreferredSize().width;
-            case DELETE_COL:        return new JButton("DELETE").getPreferredSize().width;
+            case NAME_COLUMN:
+                return new JTextField(18).getPreferredSize().width;
+            case FROM_BLOCK_COLUMN:
+                return new JTextField(18).getPreferredSize().width;
+            case PORTAL_COLUMN:
+                return new JTextField(18).getPreferredSize().width;
+            case TO_BLOCK_COLUMN:
+                return new JTextField(18).getPreferredSize().width;
+            case TIME_OFFSET:
+                return new JTextField(6).getPreferredSize().width;
+            case DELETE_COL:
+                return new JButton("DELETE").getPreferredSize().width;
         }
         return 5;
     }
@@ -642,7 +661,7 @@ public class SignalTableModel extends AbstractTableModel {
     public void propertyChange(PropertyChangeEvent e) {
         String property = e.getPropertyName();
         if (property.equals("length") || property.equals("portalCount")
-                            || property.equals("UserName")) {
+                || property.equals("UserName")) {
             makeList();
             fireTableDataChanged();
         }

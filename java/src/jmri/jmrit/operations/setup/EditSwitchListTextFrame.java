@@ -12,11 +12,11 @@ import jmri.jmrit.operations.OperationsFrame;
 public class EditSwitchListTextFrame extends OperationsFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8868355208674070617L;
+     *
+     */
+    private static final long serialVersionUID = -8868355208674070617L;
 
-	public EditSwitchListTextFrame() {
+    public EditSwitchListTextFrame() {
         super(Bundle.getMessage("TitleSwitchListText"), new EditSwitchListTextPanel());
     }
 
@@ -26,7 +26,7 @@ public class EditSwitchListTextFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_ManifestPrintOptionsTools", true); // NOI18N
-        
+
         initMinimumSize();
     }
 

@@ -1,15 +1,16 @@
 // PackageTest.java
-
 package jmri.jmrix.loconet.soundloader;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-import junit.framework.*;
 
 /**
  * Tests for the jmri.jmrix.loconet.soundloader package
  *
  * @author	Bob Jacobsen Copyright (C) 2006
- * @version     $Revision$
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
@@ -17,12 +18,11 @@ public class PackageTest extends TestCase {
         return;
     }
 
-    public void testRead(){
+    public void testRead() {
         return;
     }
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }

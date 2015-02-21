@@ -1,41 +1,41 @@
 // ResetTableModel.java
 package jmri.jmrit.symbolicprog;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.Vector;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.table.AbstractTableModel;
+import jmri.Programmer;
+import jmri.util.jdom.LocaleSelector;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.table.AbstractTableModel;
-import java.util.Vector;
-import java.beans.PropertyChangeEvent;
-
-import javax.swing.JLabel;
-import org.jdom2.Element;
-import jmri.Programmer;
-import javax.swing.JButton;
-import java.beans.PropertyChangeListener;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import jmri.util.jdom.LocaleSelector;
 
 /**
- * Creates a table of the available factory resets available for a
- * particular decoder.
+ * Creates a table of the available factory resets available for a particular
+ * decoder.
  *
- * @author    Howard G. Penny    Copyright (C) 2005
- * @version   $Revision$
+ * @author Howard G. Penny Copyright (C) 2005
+ * @version $Revision$
  */
 public class ResetTableModel extends AbstractTableModel implements ActionListener, PropertyChangeListener {
+
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5802447765323835861L;
+     *
+     */
+    private static final long serialVersionUID = 5802447765323835861L;
 
-	private String headers[] = {"Label", "Name",
-                                "PI", "PIvalue",
-                                "SI", "SIvalue",
-                                "CV", "Value",
-                                "Write", "State"};
+    private String headers[] = {"Label", "Name",
+        "PI", "PIvalue",
+        "SI", "SIvalue",
+        "CV", "Value",
+        "Write", "State"};
 
-    private Vector<CvValue> rowVector   = new Vector<CvValue>(); // vector of Reset items
+    private Vector<CvValue> rowVector = new Vector<CvValue>(); // vector of Reset items
     private Vector<String> labelVector = new Vector<String>(); // vector of related labels
 
     private Vector<JButton> _writeButtons = new Vector<JButton>();
@@ -52,15 +52,15 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         _status = status;
     }
 
-    public void setProgrammer(Programmer p) { 
+    public void setProgrammer(Programmer p) {
         mProgrammer = p;
-        
+
         // pass on to all contained CVs
         for (CvValue cv : rowVector) {
             cv.setProgrammer(p);
         }
     }
-    
+
     public int getRowCount() {
         return rowVector.size();
     }
@@ -71,35 +71,35 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     public Object getValueAt(int row, int col) {
         // if (log.isDebugEnabled()) log.debug("getValueAt "+row+" "+col);
-       	// some error checking
-    	if (row >= rowVector.size()){
-    		log.debug("row greater than row vector");
-    		return "Error";
-    	}
-        CvValue cv = rowVector.elementAt(row);
-        if (cv == null){
-        	log.debug("cv is null!");
-        	return "Error CV";
+        // some error checking
+        if (row >= rowVector.size()) {
+            log.debug("row greater than row vector");
+            return "Error";
         }
-        if (headers[col].equals("Label"))
+        CvValue cv = rowVector.elementAt(row);
+        if (cv == null) {
+            log.debug("cv is null!");
+            return "Error CV";
+        }
+        if (headers[col].equals("Label")) {
             return "" + labelVector.elementAt(row);
-        else if (headers[col].equals("Name"))
+        } else if (headers[col].equals("Name")) {
             return "" + cv.cvName();
-        else if (headers[col].equals("PI"))
+        } else if (headers[col].equals("PI")) {
             return "" + cv.piCv();
-        else if (headers[col].equals("PIvalue"))
+        } else if (headers[col].equals("PIvalue")) {
             return "" + cv.piVal();
-        else if (headers[col].equals("SI"))
+        } else if (headers[col].equals("SI")) {
             return "" + cv.siCv();
-        else if (headers[col].equals("SIvalue"))
+        } else if (headers[col].equals("SIvalue")) {
             return "" + cv.siVal();
-        else if (headers[col].equals("CV"))
+        } else if (headers[col].equals("CV")) {
             return "" + cv.iCv();
-        else if (headers[col].equals("Value"))
+        } else if (headers[col].equals("Value")) {
             return "" + cv.getValue();
-        else if (headers[col].equals("Write"))
+        } else if (headers[col].equals("Write")) {
             return _writeButtons.elementAt(row);
-        else if (headers[col].equals("State")) {
+        } else if (headers[col].equals("State")) {
             int state = cv.getState();
             switch (state) {
                 case CvValue.UNKNOWN:
@@ -115,9 +115,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 default:
                     return "inconsistent";
             }
-        }
-        else
+        } else {
             return "hmmm ... missed it";
+        }
     }
 
     private String _piCv;
@@ -133,12 +133,16 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     public void setRow(int row, Element e) {
         String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
-        if (log.isDebugEnabled()) log.debug("Starting to setRow \"" +
-                                            label + "\"");
+        if (log.isDebugEnabled()) {
+            log.debug("Starting to setRow \""
+                    + label + "\"");
+        }
         String cv = e.getAttribute("CV").getValue();
         int cvVal = Integer.valueOf(e.getAttribute("default").getValue()).intValue();
 
-        if (log.isDebugEnabled()) log.debug("            CV \"" +cv+ "\" value "+cvVal);
+        if (log.isDebugEnabled()) {
+            log.debug("            CV \"" + cv + "\" value " + cvVal);
+        }
 
         CvValue resetCV = new CvValue(cv, mProgrammer);
         resetCV.setValue(cvVal);
@@ -153,18 +157,20 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         if (_piCv != "" && _siCv != "") {
             // get the values for the VariableValue ctor
             String label = LocaleSelector.getAttribute(e, "label"); // Note the name variable is actually the label attribute
-            if (log.isDebugEnabled()) log.debug("Starting to setIndxRow \"" +
-                                                label + "\"");
+            if (log.isDebugEnabled()) {
+                log.debug("Starting to setIndxRow \""
+                        + label + "\"");
+            }
             String cvName = e.getAttributeValue("CVname");
             int piVal = Integer.valueOf(e.getAttribute("PI").getValue()).intValue();
-            int siVal = (e.getAttribute("SI") != null ?
-                         Integer.valueOf(e.getAttribute("SI").getValue()).
-                         intValue() :
-                         -1);
-            String iCv   = e.getAttribute("CV").getValue();
+            int siVal = (e.getAttribute("SI") != null
+                    ? Integer.valueOf(e.getAttribute("SI").getValue()).
+                    intValue()
+                    : -1);
+            String iCv = e.getAttribute("CV").getValue();
             int icvVal = Integer.valueOf(e.getAttribute("default").getValue()).intValue();
 
-            CvValue resetCV = new CvValue(""+row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
+            CvValue resetCV = new CvValue("" + row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
             resetCV.addPropertyChangeListener(this);
 
             JButton bw = new JButton("Write");
@@ -180,7 +186,9 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
 
     protected void performReset(int row) {
         CvValue cv = rowVector.get(row);
-        if (log.isDebugEnabled()) log.debug("performReset: "+cv+" with piCv \""+cv.piCv()+"\"");
+        if (log.isDebugEnabled()) {
+            log.debug("performReset: " + cv + " with piCv \"" + cv.piCv() + "\"");
+        }
         if (cv.piCv() != null && cv.piCv() != "" && cv.iCv() != null && cv.iCv() != "") {
             _iCv = cv;
             indexedWrite();
@@ -190,15 +198,19 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     }
 
     public void actionPerformed(ActionEvent e) {
-         if (log.isDebugEnabled()) log.debug("action command: "+e.getActionCommand());
-         char b = e.getActionCommand().charAt(0);
-         int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
-         if (log.isDebugEnabled()) log.debug("event on "+b+" row "+row);
-         if (b=='W') {
-             // write command
-             performReset(row);
-         }
-     }
+        if (log.isDebugEnabled()) {
+            log.debug("action command: " + e.getActionCommand());
+        }
+        char b = e.getActionCommand().charAt(0);
+        int row = Integer.valueOf(e.getActionCommand().substring(1)).intValue();
+        if (log.isDebugEnabled()) {
+            log.debug("event on " + b + " row " + row);
+        }
+        if (b == 'W') {
+            // write command
+            performReset(row);
+        }
+    }
 
     private int _progState = 0;
     private static final int IDLE = 0;
@@ -207,55 +219,71 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
     private static final int WRITING_CV = 3;
 
     public void indexedWrite() {
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
-         // lets skip the SI step if SI is not used
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+        }
+        // lets skip the SI step if SI is not used
         if (_iCv.siVal() > 0) {
             _progState = WRITING_PI;
         } else {
             _progState = WRITING_SI;
         }
-        if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
+        if (log.isDebugEnabled()) {
+            log.debug("invoke PI write for CV write");
+        }
         // to write any indexed CV we must write the PI
         _iCv.writePI(_status);
     }
 
     public void propertyChange(PropertyChangeEvent e) {
 
-        if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
+        if (log.isDebugEnabled()) {
+            log.debug("Property changed: " + e.getPropertyName());
+        }
         // notification from Indexed CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
+        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
             switch (_progState) {
-            case IDLE:  // no, just an Indexed CV update
-                if (log.isDebugEnabled()) log.error("Busy goes false with state IDLE");
-                return;
-            case WRITING_PI:   // have written the PI, now write SI if needed
-                if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
-                _progState = WRITING_SI;
-                _iCv.writeSI(_status);
-                return;
-            case WRITING_SI:  // have written the SI if needed, now write CV
-                if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
-                _progState = WRITING_CV;
-                _iCv.writeIcV(_status);
-                return;
-            case WRITING_CV:  // now done with the write request
-                if (log.isDebugEnabled()) log.debug("Finished writing the Indexed CV");
-                _progState = IDLE;
-                return;
-            default:  // unexpected!
-                log.error("Unexpected state found: "+_progState);
-                _progState = IDLE;
-                return;
+                case IDLE:  // no, just an Indexed CV update
+                    if (log.isDebugEnabled()) {
+                        log.error("Busy goes false with state IDLE");
+                    }
+                    return;
+                case WRITING_PI:   // have written the PI, now write SI if needed
+                    if (log.isDebugEnabled()) {
+                        log.debug("Busy goes false with state WRITING_PI");
+                    }
+                    _progState = WRITING_SI;
+                    _iCv.writeSI(_status);
+                    return;
+                case WRITING_SI:  // have written the SI if needed, now write CV
+                    if (log.isDebugEnabled()) {
+                        log.debug("Busy goes false with state WRITING_SI");
+                    }
+                    _progState = WRITING_CV;
+                    _iCv.writeIcV(_status);
+                    return;
+                case WRITING_CV:  // now done with the write request
+                    if (log.isDebugEnabled()) {
+                        log.debug("Finished writing the Indexed CV");
+                    }
+                    _progState = IDLE;
+                    return;
+                default:  // unexpected!
+                    log.error("Unexpected state found: " + _progState);
+                    _progState = IDLE;
+                    return;
             }
         }
     }
 
     public void dispose() {
-        if (log.isDebugEnabled()) log.debug("dispose");
+        if (log.isDebugEnabled()) {
+            log.debug("dispose");
+        }
 
         // remove buttons
-        for (int i = 0; i<_writeButtons.size(); i++) {
+        for (int i = 0; i < _writeButtons.size(); i++) {
             _writeButtons.elementAt(i).removeActionListener(this);
         }
 
@@ -263,7 +291,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         _writeButtons = null;
 
         // remove variables listeners
-        for (int i = 0; i<rowVector.size(); i++) {
+        for (int i = 0; i < rowVector.size(); i++) {
             CvValue cv = rowVector.elementAt(i);
             cv.dispose();
         }

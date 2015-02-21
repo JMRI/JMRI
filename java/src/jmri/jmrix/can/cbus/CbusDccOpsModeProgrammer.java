@@ -1,31 +1,30 @@
 /* CbusDccOpsModeProgrammer.java */
-
 package jmri.jmrix.can.cbus;
 
-import java.util.*;
-
-import jmri.*;
+import java.util.ArrayList;
+import java.util.List;
+import jmri.AddressedProgrammer;
 import jmri.ProgListener;
 import jmri.ProgrammerException;
-
+import jmri.ProgrammingMode;
 import jmri.jmrix.can.CanReply;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Provide an Ops Mode Programmer via a wrapper what works with the CBUS
- * command station object.
+ * Provide an Ops Mode Programmer via a wrapper what works with the CBUS command
+ * station object.
  * <P>
  * Functionally, this just creates packets to send via the command station.
  *
- * @see             jmri.Programmer
- * @author			Andrew Crosland Copyright (C) 2009
- * @version			$Revision$
+ * @see jmri.Programmer
+ * @author	Andrew Crosland Copyright (C) 2009
+ * @version	$Revision$
  */
 public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements AddressedProgrammer {
 
     int mAddress;
     boolean mLongAddr;
-    
+
     public CbusDccOpsModeProgrammer(int pAddress, boolean pLongAddr, jmri.jmrix.can.TrafficController tc) {
         super(tc);
         mAddress = pAddress;
@@ -36,7 +35,7 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
      * Forward a write request to an ops-mode write operation
      */
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        log.debug("ops mode write CV="+CV+" val="+val);
+        log.debug("ops mode write CV=" + CV + " val=" + val);
 
         // record state.  COMMANDSENT is just waiting for a reply...
         useProgrammer(p);
@@ -51,13 +50,17 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
     }
 
     synchronized public void readCV(int CV, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("read CV="+CV);
+        if (log.isDebugEnabled()) {
+            log.debug("read CV=" + CV);
+        }
         log.error("readCV not available in this protocol");
         throw new ProgrammerException();
     }
 
     synchronized public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("confirm CV="+CV);
+        if (log.isDebugEnabled()) {
+            log.debug("confirm CV=" + CV);
+        }
         log.error("confirmCV not available in this protocol");
         throw new ProgrammerException();
     }
@@ -86,18 +89,23 @@ public class CbusDccOpsModeProgrammer extends CbusDccProgrammer implements Addre
         return false;
     }
 
-    public boolean getLongAddress() {return mLongAddr;}
-    
-    public int getAddressNumber() { return mAddress; }
-    
-    public String getAddress() { return ""+getAddressNumber()+" "+getLongAddress(); }
+    public boolean getLongAddress() {
+        return mLongAddr;
+    }
 
+    public int getAddressNumber() {
+        return mAddress;
+    }
+
+    public String getAddress() {
+        return "" + getAddressNumber() + " " + getLongAddress();
+    }
 
     /**
-     * Ops-mode programming doesn't put the command station in programming
-     * mode, so we don't have to send an exit-programming command at end.
-     * Therefore, this routine does nothing except to replace the parent
-     * routine that does something.
+     * Ops-mode programming doesn't put the command station in programming mode,
+     * so we don't have to send an exit-programming command at end. Therefore,
+     * this routine does nothing except to replace the parent routine that does
+     * something.
      */
     void cleanup() {
     }

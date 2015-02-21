@@ -31,9 +31,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Base class for pane filling main frame (window) of traditional-style JMRI applications
+ * Base class for pane filling main frame (window) of traditional-style JMRI
+ * applications
  * <P>
- * This is for launching after the system is initialized, so it does none of that.
+ * This is for launching after the system is initialized, so it does none of
+ * that.
  *
  * @author	Bob Jacobsen Copyright 2003, 2007, 2008, 2010, 2014
  * @author Dennis Miller Copyright 2005
@@ -44,10 +46,10 @@ import org.slf4j.LoggerFactory;
 public abstract class AppsLaunchPane extends JPanel implements PropertyChangeListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4491168291678104991L;
-	static String profileFilename;
+     *
+     */
+    private static final long serialVersionUID = 4491168291678104991L;
+    static String profileFilename;
 
     public AppsLaunchPane() {
 
@@ -58,8 +60,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
         jmri.Application.setLogo(logo());
         jmri.Application.setURL(line2());
-
-
 
         // Add actions to abstractActionModel
         // Done here as initial non-GUI initialisation is completed
@@ -345,7 +345,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         return MessageFormat.format(Bundle.getMessage("ConnectionCredit"),
                 new Object[]{AppConfigBase.getConnection(3), AppConfigBase.getPort(3), AppConfigBase.getManufacturerName(3)});
     }
-    
 
     /**
      * Set up the configuration file name at startup.

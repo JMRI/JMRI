@@ -1,50 +1,50 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
-
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
-
-  Copyright 2003
-
--->
-</head>
-<body bgcolor="white">
-
-Contains packages implementing connections through
-individual CAN adapter units.
-<p>
-These are in turn organized in families:
-<dl>
-<dt>gridconnect
-<dd><a href="http://www.gridconnect.com/canboandto.html">GridConnect</a> adapters,
-which is also the protocol used by the MERG CAN_RS board with some small 
-modifications.  The MERG varient is handled by a sub-package.
-<p>
-The basic message format is:
-<code><pre>
+        Contains packages implementing connections through
+        individual CAN adapter units.
+        <p>
+            These are in turn organized in families:
+        <dl>
+            <dt>gridconnect
+            <dd><a href="http://www.gridconnect.com/canboandto.html">GridConnect</a> adapters,
+                which is also the protocol used by the MERG CAN_RS board with some small 
+                modifications.  The MERG varient is handled by a sub-package.
+                <p>
+                    The basic message format is:
+                    <code><pre>
 :S123N12345678;
 :XF00DN;
 :X00000123R12345678;
-</pre></code>
-<dt>lawicell
-<dd><a href="http://canusb.com/">LAWICEL AB</a> CANUSB and CAN232 adapters.
-<p>
-The basic message format is:
-t123412345678
-T1EBFD28514C
-T1DBFD285720820301380000
-<code><pre>
-</pre></code>
-</dl>
+                        </pre></code>
+            <dt>lawicell
+            <dd><a href="http://canusb.com/">LAWICEL AB</a> CANUSB and CAN232 adapters.
+                <p>
+                    The basic message format is:
+                    t123412345678
+                    T1EBFD28514C
+                    T1DBFD285720820301380000
+                    <code><pre>
+                        </pre></code>
+        </dl>
 
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
 
-@since 2.1.7
+        @since 2.1.7
 
-</body>
+    </body>
 </html>

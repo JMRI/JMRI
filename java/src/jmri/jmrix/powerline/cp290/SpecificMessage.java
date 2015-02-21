@@ -1,39 +1,34 @@
 // SpecificMessage.java
-
 package jmri.jmrix.powerline.cp290;
 
 import jmri.jmrix.powerline.SerialMessage;
 import jmri.jmrix.powerline.X10Sequence;
-import jmri.jmrix.powerline.cp290.Constants;
 
 /**
- * Contains the data payload of a serial
- * packet.
+ * Contains the data payload of a serial packet.
  * <P>
  * The transmission protocol can come in one of several forms:
  * <ul>
- * <li>If the interlocked parameter is false (default),
- * the packet is just sent.  If the response length is not zero,
- * a reply of that length is expected.
- * <li>If the interlocked parameter is true, the transmission
- * will require a CRC interlock, which will be automatically added.
- * (Design note: this is done to make sure that the messages
- * remain atomic)
+ * <li>If the interlocked parameter is false (default), the packet is just sent.
+ * If the response length is not zero, a reply of that length is expected.
+ * <li>If the interlocked parameter is true, the transmission will require a CRC
+ * interlock, which will be automatically added. (Design note: this is done to
+ * make sure that the messages remain atomic)
  * </ul>
  *
- * @author    Bob Jacobsen  Copyright (C) 2001,2003, 2006, 2007, 2008
- * @version   $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001,2003, 2006, 2007, 2008
+ * @version $Revision$
  */
-
 public class SpecificMessage extends SerialMessage {
     // is this logically an abstract class?
 
-    /** Suppress the default ctor, as the
-     * length must always be specified
+    /**
+     * Suppress the default ctor, as the length must always be specified
      */
     @SuppressWarnings("unused")
-	private SpecificMessage() {}
-    
+    private SpecificMessage() {
+    }
+
     public SpecificMessage(int l) {
         super(l);
         setResponseLength(0);  // only polls require a response
@@ -42,21 +37,22 @@ public class SpecificMessage extends SerialMessage {
     }
 
     /**
-     * This ctor interprets the String as the exact
-     * sequence to send, byte-for-byte.
+     * This ctor interprets the String as the exact sequence to send,
+     * byte-for-byte.
+     *
      * @param m message
      * @param l response length in bytes
      */
-    public  SpecificMessage(String m,int l) {
-        super(m,l);
+    public SpecificMessage(String m, int l) {
+        super(m, l);
     }
 
     /**
-     * This ctor interprets the byte array as
-     * a sequence of characters to send.
+     * This ctor interprets the byte array as a sequence of characters to send.
+     *
      * @param a Array of bytes to send
      */
-    public  SpecificMessage(byte[] a, int l) {
+    public SpecificMessage(byte[] a, int l) {
         super(a, l);
     }
 
@@ -65,15 +61,17 @@ public class SpecificMessage extends SerialMessage {
      */
     int startIndex() {
         int len = getNumDataElements();
-        for (int i = 0; i<len; i++) {
-            if ( (getElement(i)&0xFF) != 0xFF ) return i;
+        for (int i = 0; i < len; i++) {
+            if ((getElement(i) & 0xFF) != 0xFF) {
+                return i;
+            }
         }
         return -1;
     }
 
-	/**
-	 * Translate packet to text
-	 */
+    /**
+     * Translate packet to text
+     */
     public String toMonitorString() {
         String test = Constants.toMonitorString(this);
 //        // check for valid length
@@ -149,16 +147,30 @@ public class SpecificMessage extends SerialMessage {
 //        	break;
 //        }
         return "Send[" + getNumDataElements() + "]: " + test + "\n";
-	}
-	
+    }
+
     int responseLength = -1;  // -1 is an invalid value, indicating it hasn't been set
-    public void setResponseLength(int l) { responseLength = l; }
-    public int getResponseLength() { return responseLength; }
-        
+
+    public void setResponseLength(int l) {
+        responseLength = l;
+    }
+
+    public int getResponseLength() {
+        return responseLength;
+    }
+
     // static methods to recognize a message
-    public boolean isPoll() { return getElement(1)==48;}
-    public boolean isXmt()  { return getElement(1)==17;}
-    public int getAddr() { return getElement(0); }
+    public boolean isPoll() {
+        return getElement(1) == 48;
+    }
+
+    public boolean isXmt() {
+        return getElement(1) == 17;
+    }
+
+    public int getAddr() {
+        return getElement(0);
+    }
 
     // static methods to return a formatted message
     static public SerialMessage getPoll(int addr) {
@@ -169,40 +181,44 @@ public class SpecificMessage extends SerialMessage {
         // m.setResponseLength(2);
         // m.setElement(0, addr);
         //  m.setTimeout(SHORT_TIMEOUT);    // minumum reasonable timeout
-        
+
         // Powerline implementation does not currently poll
         return null;
     }
+
     static public SpecificMessage getAddress(int housecode, int devicecode) {
         SpecificMessage m = new SpecificMessage(2);
-        m.setElement(0,0x04);
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
+        m.setElement(0, 0x04);
+        m.setElement(1, (X10Sequence.encode(housecode) << 4) + X10Sequence.encode(devicecode));
         return m;
     }
+
     static public SpecificMessage getAddressDim(int housecode, int devicecode, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         if (dimcode > 0) {
-        	m.setElement(0, 0x04 | ((dimcode & 0x1f) << 3));
+            m.setElement(0, 0x04 | ((dimcode & 0x1f) << 3));
         } else {
-        	m.setElement(0, 0x04);
+            m.setElement(0, 0x04);
         }
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+X10Sequence.encode(devicecode));
+        m.setElement(1, (X10Sequence.encode(housecode) << 4) + X10Sequence.encode(devicecode));
         return m;
     }
+
     static public SpecificMessage getFunctionDim(int housecode, int function, int dimcode) {
         SpecificMessage m = new SpecificMessage(2);
         if (dimcode > 0) {
-        	m.setElement(0, 0x06 | ((dimcode & 0x1f) << 3));
+            m.setElement(0, 0x06 | ((dimcode & 0x1f) << 3));
         } else {
-        	m.setElement(0, 0x06);
+            m.setElement(0, 0x06);
         }
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+function);
+        m.setElement(1, (X10Sequence.encode(housecode) << 4) + function);
         return m;
     }
+
     static public SpecificMessage getFunction(int housecode, int function) {
         SpecificMessage m = new SpecificMessage(2);
-        m.setElement(0,0x06);
-        m.setElement(1,(X10Sequence.encode(housecode)<<4)+function);
+        m.setElement(0, 0x06);
+        m.setElement(1, (X10Sequence.encode(housecode) << 4) + function);
         return m;
     }
 }

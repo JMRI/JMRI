@@ -1,5 +1,4 @@
 // BusyGlassPane.java
-
 package jmri.util;
 
 import java.awt.Component;
@@ -15,23 +14,23 @@ import javax.swing.SwingUtilities;
 import javax.swing.event.MouseInputAdapter;
 
 /**
- * Used to intercept inputs and to display a busy
- * cursor during reads and writes.
+ * Used to intercept inputs and to display a busy cursor during reads and
+ * writes.
  *
  * Based in part on code from the Java Tutorial for glass panes (java.sun.com).
  *
  * Used in PaneProgFrame to control cursor operations during programming.
  *
- * @author  Howard G. Penny   Copyright (C) 2005
+ * @author Howard G. Penny Copyright (C) 2005
  * @version $Revision$
  */
 public class BusyGlassPane extends JComponent {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6832898807706288698L;
-	CBListener listener;
+     *
+     */
+    private static final long serialVersionUID = 6832898807706288698L;
+    CBListener listener;
 
     public BusyGlassPane(List<JComponent> components, List<Rectangle> rectangles, Container contentPane, JFrame parent) {
         listener = new CBListener(components, rectangles, this, contentPane, parent);
@@ -45,10 +44,11 @@ public class BusyGlassPane extends JComponent {
     }
 
     /**
-     * Listen for all events that our components are likely to be
-     * interested in.  Redispatch them to the appropriate component.
+     * Listen for all events that our components are likely to be interested in.
+     * Redispatch them to the appropriate component.
      */
     class CBListener extends MouseInputAdapter {
+
         JFrame parentFrame;
         List<JComponent> liveComponents;
         List<Rectangle> liveRectangles;
@@ -57,7 +57,7 @@ public class BusyGlassPane extends JComponent {
         boolean inDrag = false;
 
         public CBListener(List<JComponent> objects, List<Rectangle> rectangles,
-                          BusyGlassPane glassPane, Container contentPane, JFrame parent) {
+                BusyGlassPane glassPane, Container contentPane, JFrame parent) {
             this.parentFrame = parent;
             this.liveComponents = objects;
             this.liveRectangles = rectangles;
@@ -108,8 +108,8 @@ public class BusyGlassPane extends JComponent {
             Component component = null;
             Container container = contentPane;
             Point containerPoint = SwingUtilities.convertPoint(glassPane,
-                                                               glassPanePoint,
-                                                               contentPane);
+                    glassPanePoint,
+                    contentPane);
             int eventID = e.getID();
 
             //XXX: If the event is from a component in a popped-up menu,
@@ -117,8 +117,8 @@ public class BusyGlassPane extends JComponent {
             //XXX: JPopupMenu, and containerPoint should be adjusted
             //XXX: accordingly.
             component = SwingUtilities.getDeepestComponentAt(container,
-                                                             containerPoint.x,
-                                                             containerPoint.y);
+                    containerPoint.x,
+                    containerPoint.y);
 
             if (component == null) {
                 return;
@@ -140,17 +140,17 @@ public class BusyGlassPane extends JComponent {
 
             if (inButton || (inButton && inDrag)) {
                 Point componentPoint = SwingUtilities.convertPoint(glassPane,
-                                                                   glassPanePoint,
-                                                                   component);
+                        glassPanePoint,
+                        component);
                 parentFrame.setCursor(Cursor.getDefaultCursor());
                 component.dispatchEvent(new MouseEvent(component,
-                                                       eventID,
-                                                       e.getWhen(),
-                                                       e.getModifiers(),
-                                                       componentPoint.x,
-                                                       componentPoint.y,
-                                                       e.getClickCount(),
-                                                       e.isPopupTrigger()));
+                        eventID,
+                        e.getWhen(),
+                        e.getModifiers(),
+                        componentPoint.x,
+                        componentPoint.y,
+                        e.getClickCount(),
+                        e.isPopupTrigger()));
             } else {
                 parentFrame.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             }

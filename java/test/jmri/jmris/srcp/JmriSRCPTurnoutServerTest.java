@@ -1,35 +1,35 @@
 //JmriSRCPTurnoutServerTest.java
-
 package jmri.jmris.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPTurnoutServer class
- * @author                      Paul Bender
- * @version                     $Revision$
+ *
+ * @author Paul Bender
+ * @version $Revision$
  */
 public class JmriSRCPTurnoutServerTest extends TestCase {
 
     public void testCtor() {
-	    java.io.DataOutputStream output=new java.io.DataOutputStream(
-	        new java.io.OutputStream() {
-	        // null output string drops characters
-	        // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {}
-	    });
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        JmriSRCPTurnoutServer a = new JmriSRCPTurnoutServer(input,output);
+        JmriSRCPTurnoutServer a = new JmriSRCPTurnoutServer(input, output);
         Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-
     public JmriSRCPTurnoutServerTest(String s) {
         super(s);
     }
@@ -50,4 +50,3 @@ public class JmriSRCPTurnoutServerTest extends TestCase {
     static Logger log = Logger.getLogger(JmriSRCPTurnoutServerTest.class.getName());
 
 }
-

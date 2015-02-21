@@ -16,11 +16,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table data model for display of Roster variable values. <P> Any desired
- * ordering, etc, is handled outside this class. <P> The initial implementation
- * doesn't automatically update when roster entries change, doesn't allow
- * updating of the entries, and only shows some of the fields. But it's a
- * start....
+ * Table data model for display of Roster variable values.
+ * <P>
+ * Any desired ordering, etc, is handled outside this class.
+ * <P>
+ * The initial implementation doesn't automatically update when roster entries
+ * change, doesn't allow updating of the entries, and only shows some of the
+ * fields. But it's a start....
  *
  * @author Bob Jacobsen Copyright (C) 2009, 2010
  * @version $Revision$
@@ -29,10 +31,10 @@ import org.slf4j.LoggerFactory;
 public class RosterTableModel extends DefaultTableModel implements PropertyChangeListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 994579600898713052L;
-	public static final int IDCOL = 0;
+     *
+     */
+    private static final long serialVersionUID = 994579600898713052L;
+    public static final int IDCOL = 0;
     static final int ADDRESSCOL = 1;
     static final int ICONCOL = 2;
     static final int DECODERCOL = 3;

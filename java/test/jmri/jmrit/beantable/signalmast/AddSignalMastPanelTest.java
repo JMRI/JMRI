@@ -1,22 +1,23 @@
 // AddSignalMastPanelTest.java
-
 package jmri.jmrit.beantable.signalmast;
 
 import jmri.implementation.SignalSystemTestUtil;
-
-import junit.framework.*;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
- * @author	Bob Jacobsen  Copyright 2014
+ * @author	Bob Jacobsen Copyright 2014
  * @version	$Revision$
  */
 public class AddSignalMastPanelTest extends TestCase {
 
     public void testDefaultSystems() {
-        AddSignalMastPanel  a = new AddSignalMastPanel();
-        
+        AddSignalMastPanel a = new AddSignalMastPanel();
+
         jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
-        
+
         // check that "Basic Model Signals" (basic directory) system is present
         boolean found = false;
         for (int i = 0; i < a.sigSysBox.getItemCount(); i++) {
@@ -27,15 +28,14 @@ public class AddSignalMastPanelTest extends TestCase {
         Assert.assertTrue("found Basic Model Signals", found);
     }
 
-
     public void testSearch() throws Exception {
         try {  // need try-finally to ensure junk deleted from user area
             SignalSystemTestUtil.createMockSystem();
-        
-            AddSignalMastPanel  a = new AddSignalMastPanel();
-        
+
+            AddSignalMastPanel a = new AddSignalMastPanel();
+
             jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
-        
+
             // check that mock (test) system is present
             boolean found = false;
             for (int i = 0; i < a.sigSysBox.getItemCount(); i++) {
@@ -48,9 +48,8 @@ public class AddSignalMastPanelTest extends TestCase {
             SignalSystemTestUtil.deleteMockSystem();
         }
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public AddSignalMastPanelTest(String s) {
         super(s);
     }
@@ -67,24 +66,25 @@ public class AddSignalMastPanelTest extends TestCase {
 
         return suite;
     }
-    
-    // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
-        super.setUp(); 
 
-        jmri.util.JUnitUtil.resetInstanceManager(); 
-        jmri.util.JUnitUtil.initInternalTurnoutManager(); 
-        jmri.util.JUnitUtil.initInternalLightManager(); 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+        super.setUp();
+
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
         jmri.managers.DefaultUserMessagePreferences.resetInstance();
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
     }
-    protected void tearDown() throws Exception { 
-        jmri.util.JUnitUtil.resetInstanceManager(); 
+
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
 
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        apps.tests.Log4JFixture.tearDown();
     }
-    
+
 }

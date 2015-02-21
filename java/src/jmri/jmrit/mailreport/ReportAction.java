@@ -1,29 +1,29 @@
 // ReportAction.java
-
 package jmri.jmrit.mailreport;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.event.*;
-import javax.swing.AbstractAction;
 
 /**
  * Swing action to create and register a ReportFrame object
  *
- * @author      Bob Jacobsen    Copyright (C) 2009
- * @version     $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
+ * @version $Revision$
  */
 public class ReportAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2713560182288676071L;
-	public ReportAction(String s) { 
+     *
+     */
+    private static final long serialVersionUID = -2713560182288676071L;
+
+    public ReportAction(String s) {
         super(s);
     }
 
-    public ReportAction() { 
+    public ReportAction() {
         this(java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle").getString("Name"));
     }
 
@@ -32,8 +32,7 @@ public class ReportAction extends AbstractAction {
         ReportFrame f = new ReportFrame();
         try {
             f.initComponents();
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             log.error("Exception in startup", ex);
         }
         f.setVisible(true);

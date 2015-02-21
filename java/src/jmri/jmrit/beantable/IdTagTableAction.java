@@ -1,48 +1,46 @@
 // IdTagTableAction.java
 package jmri.jmrit.beantable;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.Manager;
-import jmri.NamedBean;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.util.Date;
-
 import javax.swing.BoxLayout;
-import javax.swing.JTable;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.Reporter;
 import jmri.IdTag;
 import jmri.IdTagManager;
-
+import jmri.InstanceManager;
+import jmri.Manager;
+import jmri.NamedBean;
+import jmri.Reporter;
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a
- * IdTagTable GUI.
+ * Swing action to create and register a IdTagTable GUI.
  *
- * @author	Bob Jacobsen    Copyright (C) 2003
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
 public class IdTagTableAction extends AbstractTableAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1575248820674993316L;
+     *
+     */
+    private static final long serialVersionUID = -1575248820674993316L;
 
-	/**
+    /**
      * Create an action with a specific title.
      * <P>
      * Note that the argument is the Action title, not the title of the
-     * resulting frame.  Perhaps this should be changed?
+     * resulting frame. Perhaps this should be changed?
+     *
      * @param actionName
      */
     public IdTagTableAction(String actionName) {
@@ -60,17 +58,17 @@ public class IdTagTableAction extends AbstractTableAction {
     }
 
     /**
-     * Create the JTable DataModel, along with the changes
-     * for the specific case of IdTag objects
+     * Create the JTable DataModel, along with the changes for the specific case
+     * of IdTag objects
      */
     protected void createModel() {
         m = new BeanTableDataModel() {
 
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = 3809491722828887091L;
-			public static final int WHERECOL = NUMCOLUMN;
+             *
+             */
+            private static final long serialVersionUID = 3809491722828887091L;
+            public static final int WHERECOL = NUMCOLUMN;
             public static final int WHENCOL = WHERECOL + 1;
             public static final int CLEARCOL = WHENCOL + 1;
 
@@ -89,7 +87,9 @@ public class IdTagTableAction extends AbstractTableAction {
 
             public Manager getManager() {
                 IdTagManager m = InstanceManager.getDefault(IdTagManager.class);
-                if (!m.isInitialised()) m.init();
+                if (!m.isInitialised()) {
+                    m.init();
+                }
                 return m;
             }
 
@@ -101,7 +101,7 @@ public class IdTagTableAction extends AbstractTableAction {
                 return InstanceManager.getDefault(IdTagManager.class).getByUserName(name);
             }
             /*public int getDisplayDeleteMsg() { return InstanceManager.getDefault(jmri.UserPreferencesManager.class).getWarnMemoryInUse(); }
-            public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }*/
+             public void setDisplayDeleteMsg(int boo) { InstanceManager.getDefault(jmri.UserPreferencesManager.class).setWarnMemoryInUse(boo); }*/
 
             public void clickOn(NamedBean t) {
                 // don't do anything on click; not used in this class, because
@@ -182,8 +182,8 @@ public class IdTagTableAction extends AbstractTableAction {
                     case WHENCOL:
                         Date d;
                         t = (IdTag) getBySystemName(sysNameList.get(row));
-                        return (t != null) ? (((d = t.getWhenLastSeen()) != null) ?
-                            DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null) : null;
+                        return (t != null) ? (((d = t.getWhenLastSeen()) != null)
+                                ? DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.MEDIUM).format(d) : null) : null;
                     case CLEARCOL:
                         return rb.getString("ButtonClear");
                     default:
@@ -228,8 +228,8 @@ public class IdTagTableAction extends AbstractTableAction {
             protected String getMasterClassName() {
                 return getClassName();
             }
-            
-            protected String getBeanType(){
+
+            protected String getBeanType() {
                 return "ID Tag";
             }
         };
@@ -289,8 +289,8 @@ public class IdTagTableAction extends AbstractTableAction {
     void handleCreateException(String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
-                rb.getString("ErrorIdTagAddFailed"),
-                new Object[]{sysName}),
+                        rb.getString("ErrorIdTagAddFailed"),
+                        new Object[]{sysName}),
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }

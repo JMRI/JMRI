@@ -6,7 +6,7 @@ import jmri.jmrix.SystemConnectionMemo;
 
 /**
  * Minimal SystemConnectionMemo for C/MRI systems.
- * 
+ *
  * @author Randall Wood
  */
 public class CMRISystemConnectionMemo extends SystemConnectionMemo {
@@ -14,10 +14,10 @@ public class CMRISystemConnectionMemo extends SystemConnectionMemo {
     public CMRISystemConnectionMemo() {
         super("C", DCCManufacturerList.CMRI);
     }
-    
+
     @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.cmri.CmriActionListBundle");
     }
-    
+
 }

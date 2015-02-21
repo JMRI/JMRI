@@ -18,10 +18,9 @@ package jmri.jmrit.vsdecoder;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision$
  */
-
-import javax.swing.JPanel;
-import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import javax.swing.JPanel;
 
 @SuppressWarnings("serial")
 public class EnginePane extends JPanel {
@@ -31,66 +30,66 @@ public class EnginePane extends JPanel {
     String name;
 
     EngineSoundEvent engine;
-    
- 
 
     public EnginePane(String n, EngineSoundEvent e) {
-	super();
-	name = n;
-	engine = e;
+        super();
+        name = n;
+        engine = e;
         listenerList = new javax.swing.event.EventListenerList();
     }
 
     public EnginePane(String n) {
-	this(n, null);
+        this(n, null);
     }
 
     public EnginePane() {
-	this(null, null);
+        this(null, null);
     }
 
     public void init() {
-        
+
     }
 
     public void initContext(Object context) {
-	initComponents();
+        initComponents();
     }
 
-    public void initComponents() { }
+    public void initComponents() {
+    }
 
     public String getName() {
-	return(name);
+        return (name);
     }
 
     public void setName(String n) {
-	name = n;
+        name = n;
     }
 
     public EngineSoundEvent getEngine() {
-	return(engine);
+        return (engine);
     }
 
     public void setEngine(EngineSoundEvent e) {
-	engine = e;
+        engine = e;
     }
 
-    public void setThrottle(int t) {}
+    public void setThrottle(int t) {
+    }
 
     public void addPropertyChangeListener(PropertyChangeListener listener) {
-	listenerList.add(PropertyChangeListener.class, listener);
+        listenerList.add(PropertyChangeListener.class, listener);
     }
 
     public void removePropertyChangeListener(PropertyChangeListener listener) {
-	listenerList.remove(PropertyChangeListener.class, listener);
+        listenerList.remove(PropertyChangeListener.class, listener);
     }
 
     protected void firePropertyChangeEvent(PropertyChangeEvent evt) {
-	//Object[] listeners = listenerList.getListenerList();
+        //Object[] listeners = listenerList.getListenerList();
 
-	for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
-	    l.propertyChange(evt);
-	}
+        for (PropertyChangeListener l : listenerList.getListeners(PropertyChangeListener.class)) {
+            l.propertyChange(evt);
+        }
     }
 
 }

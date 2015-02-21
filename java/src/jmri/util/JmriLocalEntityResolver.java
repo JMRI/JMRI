@@ -1,5 +1,4 @@
 // JmriLocalEntityResolver.java
-
 package jmri.util;
 
 import java.io.File;
@@ -14,24 +13,25 @@ import org.xml.sax.InputSource;
 
 /**
  * Entity Resolver to locate JMRI DTDs in the local space.
- *<P>
- * For historical reasons, JMRI xml files might have DTD definitions
- * of three forms:
- *<OL>
- *<LI>SYSTEM "../DTD/decoder-config.dtd"
- *<LI>SYSTEM "layout-config.dtd"
- *<LI>SYSTEM "http://jmri.sourceforce.net/xml/DTD/layout-config.dtd"
- *</OL>
- * Only the last of these is preferred now. The first two refer to
- * local files within the JMRI distributions in the xml/DTD directory.
+ * <P>
+ * For historical reasons, JMRI xml files might have DTD definitions of three
+ * forms:
+ * <OL>
+ * <LI>SYSTEM "../DTD/decoder-config.dtd"
+ * <LI>SYSTEM "layout-config.dtd"
+ * <LI>SYSTEM "http://jmri.sourceforce.net/xml/DTD/layout-config.dtd"
+ * </OL>
+ * Only the last of these is preferred now. The first two refer to local files
+ * within the JMRI distributions in the xml/DTD directory.
  *
- * @author Bob Jacobsen  Copyright 2007, 2009
+ * @author Bob Jacobsen Copyright 2007, 2009
  * @version $Revision$
  */
 public class JmriLocalEntityResolver implements EntityResolver {
-    public InputSource resolveEntity (String publicId, String systemId) {
+
+    public InputSource resolveEntity(String publicId, String systemId) {
         log.trace("-- got entity request {}", systemId);
-        
+
         // find local file first
         try {
             URI uri = new URI(systemId);
@@ -63,7 +63,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 }
             } else if (path != null && path.startsWith("../DTD")) {
                 // type 1
-                String filename = "xml"+File.separator+"DTD"+File.separator+path;
+                String filename = "xml" + File.separator + "DTD" + File.separator + path;
                 log.trace("starts with ../DTD finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
@@ -72,9 +72,9 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     log.error("did not find type 1 DTD file: {}", filename);
                     return null;
                 }
-            } else if (path != null && path.indexOf("/")==-1) {  // path doesn't contain "/", so is just name
+            } else if (path != null && path.indexOf("/") == -1) {  // path doesn't contain "/", so is just name
                 // type 2
-                String filename = "xml"+File.separator+"DTD"+File.separator+path;
+                String filename = "xml" + File.separator + "DTD" + File.separator + path;
                 log.trace("doesn't contain / finds filename: {}", filename);
                 stream = FileUtil.findInputStream(filename);
                 if (stream != null) {
@@ -84,7 +84,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     return null;
                 }
             } else if (scheme.equals("file")) {
-                if (path != null ) {
+                if (path != null) {
                     // still looking for a local file, this must be absolute or full relative path
                     log.trace("scheme file finds path: {}", path);
                     // now we see if we've got a valid path
@@ -144,14 +144,16 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 }
             } else {
                 // not recognized type, return null to use default
-                log.error("could not parse systemId: "+systemId);
+                log.error("could not parse systemId: " + systemId);
                 return null;
             }
         } catch (Exception e1) { // was java.net.URISyntaxException, but that's not in Java 1.3.1
             log.warn(e1.getLocalizedMessage(), e1);
             return null;
         } catch (NoClassDefFoundError e2) { // working on an old version of java, go with default quietly
-            if (!toldYouOnce) log.info("Falling back to defailt resolver due to JVM version");
+            if (!toldYouOnce) {
+                log.info("Falling back to defailt resolver due to JVM version");
+            }
             toldYouOnce = true;
             return null;
         }
@@ -161,4 +163,3 @@ public class JmriLocalEntityResolver implements EntityResolver {
     static private Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class.getName());
 
 }
- 

@@ -121,10 +121,10 @@ import org.slf4j.LoggerFactory;
 public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector, RosterGroupSelector {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6820971027038275933L;
-	static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
+     *
+     */
+    private static final long serialVersionUID = 6820971027038275933L;
+    static Logger log = LoggerFactory.getLogger(RosterFrame.class.getName());
     static ArrayList<RosterFrame> frameInstances = new ArrayList<RosterFrame>();
     protected boolean allowQuit = true;
     protected String baseTitle = "Roster";
@@ -213,12 +213,12 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * closed.
      */
     protected void allowQuit(boolean quitAllowed) {
-        if(allowQuit!=quitAllowed){
+        if (allowQuit != quitAllowed) {
             newWindowAction = null;
             allowQuit = quitAllowed;
             groups.setNewWindowMenuAction(this.getNewWindowAction());
         }
-        
+
         firePropertyChange("quit", "setEnabled", allowQuit);
         //if we are not allowing quit, ie opened from JMRI classic
         //then we must at least allow the window to be closed
@@ -330,7 +330,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 if (log.isDebugEnabled()) {
                     log.debug("Launch Throttle pressed");
                 }
-                if (!checkIfEntrySelected()) return;
+                if (!checkIfEntrySelected()) {
+                    return;
+                }
                 ThrottleFrame tf = ThrottleFrameManager.instance().createThrottleFrame();
                 tf.toFront();
                 tf.getAddressPanel().setRosterEntry(re);
@@ -544,11 +546,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         rtable.getTable().setDragEnabled(true);
         rtable.getTable().setTransferHandler(new TransferHandler() {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -5029989951536106561L;
+             *
+             */
+            private static final long serialVersionUID = -5029989951536106561L;
 
-			@Override
+            @Override
             public int getSourceActions(JComponent c) {
                 return TransferHandler.COPY;
             }
@@ -730,8 +732,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
      * @return the newWindowAction
      */
     protected JmriAbstractAction getNewWindowAction() {
-        if(newWindowAction==null)
+        if (newWindowAction == null) {
             newWindowAction = new RosterFrameAction("newWindow", this, allowQuit);
+        }
         return newWindowAction;
     }
 
@@ -777,7 +780,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     // between selection changes will not require the creation of a new array
     @Override
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP",
-    justification = "Want to give access to mutable, original roster objects")
+            justification = "Want to give access to mutable, original roster objects")
     public RosterEntry[] getSelectedRosterEntries() {
         return rtable.getSelectedRosterEntries();
     }
@@ -811,7 +814,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             } else {
                 AppsBase.handleQuit();
             }
-        } else if (frameInstances.size() >1){
+        } else if (frameInstances.size() > 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeMultipleDP3prompt";
             if (!p.getSimplePreferenceState(rememberWindowClose)) {
                 JPanel message = new JPanel();
@@ -1251,7 +1254,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     protected void showPopup(MouseEvent e) {
-        int row = rtable.getTable().rowAtPoint( e.getPoint() );
+        int row = rtable.getTable().rowAtPoint(e.getPoint());
         if (!rtable.getTable().isRowSelected(row)) {
             rtable.getTable().changeSelection(row, 0, false, false);
         }
@@ -1263,7 +1266,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 startProgrammer(null, re, programmer1);
             }
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
@@ -1312,7 +1315,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 editMediaButton();
             }
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
@@ -1326,7 +1329,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 tf.getAddressPanel().setRosterEntry(re);
             }
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
@@ -1338,7 +1341,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 copyLoco();
             }
         });
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
@@ -1350,7 +1353,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         popupMenu.add(menuItem);
-        if(re==null){
+        if (re == null) {
             menuItem.setEnabled(false);
         }
 
@@ -1398,7 +1401,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             log.debug("Call to start programmer has been called twice when the first call hasn't opened");
             return;
         }
-        if (!checkIfEntrySelected()) return;
+        if (!checkIfEntrySelected()) {
+            return;
+        }
         try {
             setCursor(new Cursor(Cursor.WAIT_CURSOR));
             inStartProgrammer = true;
@@ -1407,11 +1412,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             if (edit.isSelected()) {
                 progFrame = new PaneProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", null, false) {
                     /**
-					 * 
-					 */
-					private static final long serialVersionUID = -5406468334024223092L;
+                     *
+                     */
+                    private static final long serialVersionUID = -5406468334024223092L;
 
-					@Override
+                    @Override
                     protected JPanel getModePane() {
                         return null;
                     }
@@ -1419,10 +1424,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             } else if (service.isSelected()) {
                 progFrame = new PaneServiceProgFrame(decoderFile, re, title, "programmers" + File.separator + filename + ".xml", modePanel.getProgrammer()) {
 
-					/**
-					 * 
-					 */
-					private static final long serialVersionUID = 1953980697520737653L;
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 1953980697520737653L;
                 };
             } else if (ops.isSelected()) {
                 int address = Integer.parseInt(re.getDccAddress());
@@ -1520,7 +1525,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         ConnectionConfig oldOpsMode = opsModeProCon;
 
         GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
-        if (gpm!=null) {
+        if (gpm != null) {
             String serviceModeProgrammer = gpm.getUserName();
             ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
             if (connList != null) {
@@ -1533,7 +1538,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         }
         AddressedProgrammerManager apm = InstanceManager.getDefault(AddressedProgrammerManager.class);
-        if (apm!=null) {
+        if (apm != null) {
             //Ideally we should probably have the programmer manager reference the username configured in the system connection memo.
             //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
             String opsModeProgrammer = apm.getUserName();
@@ -1547,9 +1552,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 }
             }
         }
-        
+
         if (serModeProCon != null) {
-            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo()) 
+            if (ConnectionStatus.instance().isConnectionOk(serModeProCon.getInfo())
                     && gpm != null) {
                 serviceModeProgrammerLabel.setText(
                         Bundle.getMessage("ServiceModeProgOnline", serModeProCon.getConnectionName()));
@@ -1577,9 +1582,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 firePropertyChange("setprogservice", "setEnabled", false);
             }
         }
-        
+
         if (opsModeProCon != null) {
-            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm!=null ) {
+            if (ConnectionStatus.instance().isConnectionOk(opsModeProCon.getInfo()) && apm != null) {
                 operationsModeProgrammerLabel.setText(
                         Bundle.getMessage("OpsModeProgOnline", opsModeProCon.getConnectionName()));
                 operationsModeProgrammerLabel.setForeground(new Color(0, 128, 0));
@@ -1677,11 +1682,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     static class ExportRosterItem extends ExportRosterItemAction {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = 5920288372458701120L;
+         *
+         */
+        private static final long serialVersionUID = 5920288372458701120L;
 
-		ExportRosterItem(String pName, Component pWho, RosterEntry re) {
+        ExportRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
         }
@@ -1695,11 +1700,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     static class CopyRosterItem extends CopyRosterItemAction {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -4822095767152284104L;
+         *
+         */
+        private static final long serialVersionUID = -4822095767152284104L;
 
-		CopyRosterItem(String pName, Component pWho, RosterEntry re) {
+        CopyRosterItem(String pName, Component pWho, RosterEntry re) {
             super(pName, pWho);
             setExistingEntry(re);
         }

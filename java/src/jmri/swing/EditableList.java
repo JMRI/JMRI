@@ -2,7 +2,11 @@
 package jmri.swing;
 
 import java.applet.Applet;
-import java.awt.*;
+import java.awt.Component;
+import java.awt.KeyboardFocusManager;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -10,7 +14,13 @@ import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EventObject;
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JComponent;
+import javax.swing.JList;
+import javax.swing.KeyStroke;
+import javax.swing.ListModel;
+import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.CellEditorListener;
 import javax.swing.event.ChangeEvent;
 
@@ -21,10 +31,10 @@ import javax.swing.event.ChangeEvent;
 public class EditableList<E> extends JList<E> implements CellEditorListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2724300657041009593L;
-	protected Component editorComp = null;
+     *
+     */
+    private static final long serialVersionUID = 2724300657041009593L;
+    protected Component editorComp = null;
     protected int editingIndex = -1;
     protected transient ListCellEditor<E> cellEditor = null;
     private PropertyChangeListener editorRemover = null;
@@ -33,7 +43,7 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
         super(new DefaultEditableListModel<E>());
         init();
     }
-    
+
     public EditableList(ListModel<E> dataModel) {
         super(dataModel);
         init();
@@ -220,12 +230,12 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     private class StartEditingAction extends AbstractAction {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = 2759348317251714909L;
+         *
+         */
+        private static final long serialVersionUID = 2759348317251714909L;
 
-		@Override
-		@SuppressWarnings("unchecked") // have to cast CellEditor to ListCellEditor to access methods
+        @Override
+        @SuppressWarnings("unchecked") // have to cast CellEditor to ListCellEditor to access methods
         public void actionPerformed(ActionEvent e) {
             EditableList list = (EditableList) e.getSource();
             if (!list.hasFocus()) {
@@ -249,11 +259,11 @@ public class EditableList<E> extends JList<E> implements CellEditorListener {
     private class CancelEditingAction extends AbstractAction {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -8222730187928540505L;
+         *
+         */
+        private static final long serialVersionUID = -8222730187928540505L;
 
-		@Override
+        @Override
         public void actionPerformed(ActionEvent e) {
             EditableList list = (EditableList) e.getSource();
             list.removeEditor();

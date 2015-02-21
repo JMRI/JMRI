@@ -89,7 +89,6 @@ public class LocoNetConsistManager extends AbstractConsistManager {
 
         // in the first pass, check for consists top addresses in the
         // command station slots.
-
         for (int i = 0; i < 128; i++) {
             LocoNetSlot s = sm.slot(i);
             DccLocoAddress address = new DccLocoAddress(s.locoAddr(), LnThrottleManager.isLongAddress(s.locoAddr()));

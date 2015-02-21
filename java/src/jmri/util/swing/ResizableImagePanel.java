@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
 public class ResizableImagePanel extends JPanel implements ComponentListener {
 
     public static final String IMAGE_PATH = "imagePath";
-    
+
     /**
      *
      */

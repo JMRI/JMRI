@@ -1,5 +1,4 @@
 // MemoryContentsTest.java
-
 package jmri.jmrit;
 
 import java.io.File;
@@ -15,17 +14,16 @@ import org.apache.log4j.Logger;
 /**
  * Test simple functioning of MemoryContents
  *
- * @author			Bob Jacobsen Copyright (C) 2008
- * @suthor                      B. Milhaupt  Copyright (C) 2014
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2008
+ * @suthor B. Milhaupt Copyright (C) 2014
+ * @version	$Revision$
  */
-
 public class MemoryContentsTest extends TestCase {
 
     public void testReadNormalFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadNormalFile");
-        
+
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile.hex"));
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordLengthException e) {
@@ -47,14 +45,14 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         Assert.assertEquals("content restarts", 864, m.nextContent(500));
     }
 
     public void testReadSegmentsTestFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadSegmentsTestFile");
-        
+
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_extSegRecords.hex"));
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordLengthException e) {
@@ -76,38 +74,37 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         verifyMemoryData(0x00000, 0x01, m);
         verifyMemoryData(0x00001, 0x02, m);
         verifyMemoryData(0x00002, -1, m);
         verifyMemoryData(0x00003, -1, m);
-        
+
         verifyMemoryData(0x0FFFF, -1, m);
         verifyMemoryData(0x10000, 0x03, m);
         verifyMemoryData(0x10001, 0x04, m);
         verifyMemoryData(0x10002, -1, m);
         verifyMemoryData(0x10003, -1, m);
-         
+
         verifyMemoryData(0x1FFFF, -1, m);
         verifyMemoryData(0x20000, 0x05, m);
         verifyMemoryData(0x20001, 0x06, m);
         verifyMemoryData(0x20002, -1, m);
         verifyMemoryData(0x20003, -1, m);
-         
+
         verifyMemoryData(0x2FFFF, -1, m);
         verifyMemoryData(0x30000, 0x07, m);
         verifyMemoryData(0x30001, 0x08, m);
         verifyMemoryData(0x30002, -1, m);
         verifyMemoryData(0x30003, -1, m);
-         
+
         verifyMemoryData(0x3FFFF, -1, m);
         verifyMemoryData(0x9FFFF, -1, m);
         verifyMemoryData(0xA0000, 0xa0, m);
         verifyMemoryData(0xA0001, 0xa1, m);
         verifyMemoryData(0xA0002, -1, m);
         verifyMemoryData(0xA0003, -1, m);
-   }
-
+    }
 
     public void testReadNormal24BitAddressFile() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
@@ -134,7 +131,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception reading" + filename);
         }
-        
+
         verifyMemoryData(0x10000, 0x54, m);
 
         verifyMemoryData(0x10001, 0x32, m);
@@ -151,38 +148,38 @@ public class MemoryContentsTest extends TestCase {
             // create the temp directory if it does not exist
             FileUtil.createDirectory(tempDirectoryName);
         }
-        filename = tempDirectoryName+File.separator+"MemoryContentsTestOutputFile.hex";
+        filename = tempDirectoryName + File.separator + "MemoryContentsTestOutputFile.hex";
         File MemoryContentsTestWrite_24AddrFile;
-        
+
         MemoryContentsTestWrite_24AddrFile = new File(filename);
         if (MemoryContentsTestWrite_24AddrFile.exists()) {
             try {
                 MemoryContentsTestWrite_24AddrFile.delete();
             } catch (java.lang.Exception e) {
-                Assert.fail("Exception while trying to delete the existing file " + 
-                        filename + " before creating a new copy of the file.\n Exception reported: " + e.toString());
+                Assert.fail("Exception while trying to delete the existing file "
+                        + filename + " before creating a new copy of the file.\n Exception reported: " + e.toString());
             }
             return;
         }
-        
+
         m.setAddressFormat(MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS);
         m.addKeyValueComment("Harrumph", "TRUE");
-        
+
         try {
             java.io.FileWriter writer = new java.io.FileWriter(MemoryContentsTestWrite_24AddrFile);
             m.writeHex(writer,
-                    true,16);
+                    true, 16);
             writer.close(); // make sure to close the stream associated with the file
         } catch (java.io.IOException e) {
             Assert.fail("I/O exception attempting to write a .hex file " + e);
         } catch (jmri.jmrit.MemoryContents.MemoryFileAddressingFormatException e) {
             Assert.fail("Memory Addressing format exception attempting to write .hex file");
         }
-        
+
         // make sure the new file is in 24-bit address format
         m.setAddressFormat(jmri.jmrit.MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS);
         MemoryContents n = new MemoryContents();
-        
+
         try {
             n.readHex(new java.io.File(filename));
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordLengthException e) {
@@ -202,22 +199,21 @@ public class MemoryContentsTest extends TestCase {
         } catch (MemoryContents.MemoryFileAddressingRangeException e) {
             Assert.fail("unexpected 'addressing range' exception reading " + filename);
         } catch (IOException e) {
-            Assert.fail("unexpected 'IOException' exception reading " + filename + ": "+e.toString());
+            Assert.fail("unexpected 'IOException' exception reading " + filename + ": " + e.toString());
         }
-        
+
         // attempt to delete the file if debug logging is not enabled.
         if (log.isDebugEnabled()) {
-            log.debug("Path to written hex file is: "+filename);
-        }
-        else {
+            log.debug("Path to written hex file is: " + filename);
+        } else {
             MemoryContentsTestWrite_24AddrFile.delete();
         }
 
         if (n.nextContent(500) != 864) {
             Assert.fail("NextContent didn't reply as expected for nextContent(500) - "
                     + "expected 864, got "
-                    +m.nextContent(500)
-                    +".");
+                    + m.nextContent(500)
+                    + ".");
         }
 
         // Code here uses manual validity checks (the "if" statements) below 
@@ -258,7 +254,7 @@ public class MemoryContentsTest extends TestCase {
         verifyMemoryData(0x400E, 0x5c, n);
 
         verifyMemoryData(0x400F, 0x09, n);
-        
+
         verifyMemoryData(0x4010, 0xFF, n);
 
         verifyMemoryData(0x4011, 0x3F, n);
@@ -292,14 +288,14 @@ public class MemoryContentsTest extends TestCase {
         }
         JUnitAppender.assertErrorMessage(
                 "Record checksum error in line 29 - computed checksum = 0x1f, expected checksum = 0x1e.");
-        
+
         Assert.assertTrue("Checksum Exception was expected", expectedExceptionHappened);
     }
-    
+
     public void testReadFileRecordTypeError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordTypeError");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_recordTypeError.hex"));
@@ -328,11 +324,11 @@ public class MemoryContentsTest extends TestCase {
 
         Assert.assertTrue("Record Type Exception was expected", expectedExceptionHappened);
     }
-        
+
     public void testReadFileRecordLengthError() throws java.io.FileNotFoundException {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordLengthError");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_recordLenError.hex"));
@@ -355,27 +351,27 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "Data record line length is incorrect for inferred addressing type and for data count field in line 10");
 
         Assert.assertTrue("Record Length Exception was expected", expectedExceptionHappened);
 
-        if (! (m.extractValueOfKey("KeyName2").matches("ValueInfo99"))) {
+        if (!(m.extractValueOfKey("KeyName2").matches("ValueInfo99"))) {
             Assert.fail("Expect to retrieve 'ValueInfo99' as value of key KeyName2, but got '"
                     + m.extractValueOfKey("KeyName2")
-                    +"' instead.");
+                    + "' instead.");
         }
         Assert.assertNull(m.extractValueOfKey("non-existent_Key"));
         if (m.extractValueOfKey("fictitiousKeyName") != null) {
             Assert.fail("Failed to return <null> for non-existant key name 'fictitiousKeyName'.");
-        } 
+        }
     }
 
     public void testReadFileFileNotFound() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileFileNotFound");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_file_doesnt_exist.hex"));
@@ -402,16 +398,16 @@ public class MemoryContentsTest extends TestCase {
         }
 
         Assert.assertTrue("File-not-found Exception was expected", expectedExceptionHappened);
-        
+
         // make sure that key/value from previous test is gone now.
         Assert.assertNull("old key/value disappears", m.extractValueOfKey(m.extractValueOfKey("KeyName2")));
         Assert.assertEquals("old data disappears", -1, m.nextContent(500));
     }
-    
+
     public void testReadFileMalformedLine() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileMalformedLine");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_malformed_line.hex"));
@@ -436,17 +432,17 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "Data record line length is incorrect for inferred addressing type and for data count field in line 7");
-        
+
         Assert.assertTrue("Record Content Length exception expected", expectedExceptionHappened);
     }
-    
+
     public void testReadFileNoEOFRecordFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileNoEOFRecordFile");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_noEOFRecord.hex"));
@@ -471,17 +467,17 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "No EOF Record found in file - aborting.");
-        
+
         Assert.assertTrue("No EOF Record exception expected", expectedExceptionHappened);
     }
-    
+
     public void testReadFileNoContentFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileNoContentFile");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_no_data_records.dmf"));
@@ -506,17 +502,17 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "No Data Records found in file - aborting.");
-        
+
         Assert.assertTrue("'No records found' exception expected", expectedExceptionHappened);
     }
-    
+
     public void testReadFile16bitContentFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFile16bitContentFile");
-        
+
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_16bit.hex"));
         } catch (java.io.FileNotFoundException e) {
@@ -541,11 +537,11 @@ public class MemoryContentsTest extends TestCase {
             Assert.fail("unexpected 'IOException' exception");
         }
     }
-    
+
     public void testReadFileRecordType02BadFile() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordType02BadFile");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_RecType02bad.hex"));
@@ -570,17 +566,17 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "Unsupported Extended Segment Address Record data value 0x1000 in line 3");
-        
+
         Assert.assertTrue("'Addressing range' exception expected", expectedExceptionHappened);
     }
-    
+
     public void testReadFileRecordType02BadFile2() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileRecordType02BadFile2");
-        
+
         boolean expectedExceptionHappened = false;
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_RecType02bad_2.hex"));
@@ -593,7 +589,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (jmri.jmrit.MemoryContents.MemoryFileUnknownRecordType e) {
             Assert.fail("Unexpected unknown record type exception"); // got an unexpected exception so fail.
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordContentException e) {
-            Assert.fail("Unexpected record contents exception:"+e); // got an unexpected exception so fail.
+            Assert.fail("Unexpected record contents exception:" + e); // got an unexpected exception so fail.
         } catch (MemoryContents.MemoryFileNoDataRecordsException e) {
             Assert.fail("Unexpected 'no records found' exception");
         } catch (MemoryContents.MemoryFileNoEOFRecordException e) {
@@ -605,17 +601,17 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "Unsupported Extended Segment Address Record data value 0x1000 in line 2");
-        
+
         Assert.assertTrue("'Addressing range' exception expected", expectedExceptionHappened);
     }
-    
+
     public void testReadFileHighSegments() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFileHighSegments");
-        
+
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_24bitHighSegs.hex"));
         } catch (java.io.FileNotFoundException e) {
@@ -627,7 +623,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (jmri.jmrit.MemoryContents.MemoryFileUnknownRecordType e) {
             Assert.fail("Unexpected unknown record type exception"); // got an unexpected exception so fail.
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordContentException e) {
-            Assert.fail("Unexpected record contents exception:"+e); // got an unexpected exception so fail.
+            Assert.fail("Unexpected record contents exception:" + e); // got an unexpected exception so fail.
         } catch (MemoryContents.MemoryFileNoDataRecordsException e) {
             Assert.fail("Unexpected 'no records found' exception");
         } catch (MemoryContents.MemoryFileNoEOFRecordException e) {
@@ -639,9 +635,9 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         verifyMemoryData(0xFFFFFF, 0x7B, m);
-        
+
         if (m.locationInUse(0xFFFFFE)) {
             verifyMemoryData(0xFFFFFE, -1, m);
         }
@@ -649,22 +645,22 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x0)) {
             verifyMemoryData(0x0, -1, m);
         }
-        
+
         verifyMemoryData(0xF000FF, 0xD0, m);
 
         verifyMemoryData(0xFF0000, 0x9A, m);
-        
+
         verifyMemoryData(0xD000FF, 0x12, m);
-        
+
         verifyMemoryData(0xD00100, 0x34, m);
     }
-    
+
     public void testReadFilePageCross() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFilePageCross");
-        
+
         boolean expectedExceptionHappened = false;
-        
+
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_16bit_pagecross.hex"));
         } catch (java.io.FileNotFoundException e) {
@@ -676,7 +672,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (jmri.jmrit.MemoryContents.MemoryFileUnknownRecordType e) {
             Assert.fail("Unexpected unknown record type exception"); // got an unexpected exception so fail.
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordContentException e) {
-            Assert.fail("Unexpected record contents exception:"+e); // got an unexpected exception so fail.
+            Assert.fail("Unexpected record contents exception:" + e); // got an unexpected exception so fail.
         } catch (MemoryContents.MemoryFileNoDataRecordsException e) {
             Assert.fail("Unexpected 'no records found' exception");
         } catch (MemoryContents.MemoryFileNoEOFRecordException e) {
@@ -688,16 +684,16 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "Data crosses boundary which could lead to  mis-interpretation.  Aborting read at line :02FFFF000102FD");
-        
+
         Assert.assertTrue("Address Range exception was expected", expectedExceptionHappened);
-        
+
         if (m.locationInUse(0x00FFFF)) {
             verifyMemoryData(0x00FFFF, -1, m);
         }
-        
+
         if (m.locationInUse(0x00FFFE)) {
             verifyMemoryData(0x00FFFE, -1, m);
         }
@@ -705,7 +701,7 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x00FF00)) {
             verifyMemoryData(0x00FF00, -1, m);
         }
-        
+
         if (m.locationInUse(0x00FF01)) {
             verifyMemoryData(0x00FF01, -1, m);
         }
@@ -713,7 +709,7 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x00FF02)) {
             verifyMemoryData(0x00FF02, -1, m);
         }
-        
+
         if (m.locationInUse(0x00FF03)) {
             verifyMemoryData(0x00FF03, -1, m);
         }
@@ -721,7 +717,7 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x010000)) {
             verifyMemoryData(0x010000, -1, m);
         }
-        
+
         if (m.locationInUse(0x010001)) {
             verifyMemoryData(0x010001, -1, m);
         }
@@ -729,7 +725,7 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x010002)) {
             verifyMemoryData(0x010002, -1, m);
         }
-        
+
         if (m.locationInUse(0x010003)) {
             verifyMemoryData(0x010003, -1, m);
         }
@@ -738,9 +734,9 @@ public class MemoryContentsTest extends TestCase {
     public void testReadFile24bitPageCross() {
         MemoryContents m = new MemoryContents();
         log.debug("Begin of testReadFile24bitPageCross");
-        
+
         boolean expectedExceptionHappened = false;
-        
+
         try {
             m.readHex(new java.io.File("java/test/jmri/jmrit/MemoryContentsTestFiles/TestFiles/MemoryContentsTestFile_24bit_pagecross.hex"));
         } catch (java.io.FileNotFoundException e) {
@@ -752,7 +748,7 @@ public class MemoryContentsTest extends TestCase {
         } catch (jmri.jmrit.MemoryContents.MemoryFileUnknownRecordType e) {
             Assert.fail("Unexpected unknown record type exception"); // got an unexpected exception so fail.
         } catch (jmri.jmrit.MemoryContents.MemoryFileRecordContentException e) {
-            Assert.fail("Unexpected record contents exception:"+e); // got an unexpected exception so fail.
+            Assert.fail("Unexpected record contents exception:" + e); // got an unexpected exception so fail.
         } catch (MemoryContents.MemoryFileNoDataRecordsException e) {
             Assert.fail("Unexpected 'no records found' exception");
         } catch (MemoryContents.MemoryFileNoEOFRecordException e) {
@@ -764,16 +760,16 @@ public class MemoryContentsTest extends TestCase {
         } catch (IOException e) {
             Assert.fail("unexpected 'IOException' exception");
         }
-        
+
         JUnitAppender.assertErrorMessage(
                 "Data crosses boundary which could lead to  mis-interpretation.  Aborting read at line :0201FFFF000709EF");
-        
+
         Assert.assertTrue("Address Range exception was expected", expectedExceptionHappened);
 
         if (m.locationInUse(0x01FFFF)) {
             verifyMemoryData(0x01FFFF, -1, m);
         }
-        
+
         if (m.locationInUse(0x01FFFE)) {
             verifyMemoryData(0x01FFFE, -1, m);
         }
@@ -781,7 +777,7 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x020000)) {
             verifyMemoryData(0x020000, -1, m);
         }
-        
+
         if (m.locationInUse(0x020001)) {
             verifyMemoryData(0x020001, -1, m);
         }
@@ -789,15 +785,15 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x020002)) {
             verifyMemoryData(0x020002, -1, m);
         }
-        
+
         if (m.locationInUse(0x020003)) {
             verifyMemoryData(0x020003, -1, m);
         }
-        
+
         if (m.locationInUse(0x010000)) {
             verifyMemoryData(0x010000, -1, m);
         }
-        
+
         if (m.locationInUse(0x010001)) {
             verifyMemoryData(0x010001, -1, m);
         }
@@ -805,49 +801,50 @@ public class MemoryContentsTest extends TestCase {
         if (m.locationInUse(0x010002)) {
             verifyMemoryData(0x010002, -1, m);
         }
-        
+
         if (m.locationInUse(0x010003)) {
             verifyMemoryData(0x010003, -1, m);
         }
-        
+
     }
 
-
-    
-    
     private void verifyMemoryData(int address, int expect, MemoryContents mc) {
         int reported = mc.getLocation(address);
         if (reported != expect) {
             Assert.fail("Verify that address 0x" + Integer.toHexString(address)
                     + " has correct value: expected 0x" + Integer.toHexString(expect)
                     + ", got 0x" + Integer.toHexString(reported));
+        }
     }
-}
+
     public MemoryContentsTest(String s) {
-            super(s);
+        super(s);
     }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {"-noloading", MemoryContentsTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", MemoryContentsTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(MemoryContentsTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(MemoryContentsTest.class);
+        return suite;
+    }
 
-        // The minimal setup for log4J
-        @Override protected void setUp() throws Exception { 
-            apps.tests.Log4JFixture.setUp(); 
-            super.setUp();
-        }
-        @Override protected void tearDown() throws Exception { 
-            super.tearDown();
-            apps.tests.Log4JFixture.tearDown(); 
-        }
-	static Logger log = Logger.getLogger(MemoryContentsTest.class.getName());
+    // The minimal setup for log4J
+    @Override
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+        super.setUp();
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
+    static Logger log = Logger.getLogger(MemoryContentsTest.class.getName());
 
 }

@@ -1,23 +1,21 @@
 // AbstractNamedBean.java
-
 package jmri.implementation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
 import java.util.ArrayList;
 import java.util.Enumeration;
-
 import java.util.HashMap;
 import java.util.Hashtable;
+import jmri.NamedBean;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract base for the NamedBean interface.
  * <P>
  * Implements the parameter binding support.
  *
- * @author      Bob Jacobsen Copyright (C) 2001
- * @version     $Revision$
+ * @author Bob Jacobsen Copyright (C) 2001
+ * @version $Revision$
  */
 public abstract class AbstractNamedBean implements NamedBean, java.io.Serializable {
 
@@ -28,30 +26,33 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     //    Exception e = new Exception();
     //    e.printStackTrace();
     //}
-
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7953684310136579104L;
+     *
+     */
+    private static final long serialVersionUID = -7953684310136579104L;
 
-	protected AbstractNamedBean(String sys) {
+    protected AbstractNamedBean(String sys) {
         mSystemName = sys;
         mUserName = null;
     }
+
     protected AbstractNamedBean(String sys, String user) {
         this(sys);
         mUserName = user;
     }
 
     /**
-     * Get associated comment text.  
+     * Get associated comment text.
      */
-    public String getComment() { return this.comment; }
-    
+    public String getComment() {
+        return this.comment;
+    }
+
     /**
      * Set associated comment text.
      * <p>
      * Comments can be any valid text.
+     *
      * @param comment Null means no comment associated.
      */
     public void setComment(String comment) {
@@ -69,8 +70,8 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
             return getSystemName();
         }
     }
-    
-    public String getFullyFormattedDisplayName(){
+
+    public String getFullyFormattedDisplayName() {
         String name = getUserName();
         if (name != null && name.length() > 0) {
             name = name + "(" + getSystemName() + ")";
@@ -86,43 +87,46 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     //					       	Object oldValue,
     //						Object newValue)
     // _once_ if anything has changed state
-
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
     Hashtable<java.beans.PropertyChangeListener, String> register = new Hashtable<java.beans.PropertyChangeListener, String>();
     Hashtable<java.beans.PropertyChangeListener, String> listenerRefs = new Hashtable<java.beans.PropertyChangeListener, String>();
-    
+
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l, String beanRef, String listenerRef) {
         pcs.addPropertyChangeListener(l);
-        if(beanRef!=null)
+        if (beanRef != null) {
             register.put(l, beanRef);
-        if(listenerRef!=null)
+        }
+        if (listenerRef != null) {
             listenerRefs.put(l, listenerRef);
+        }
     }
-    
+
     public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
-    
+
     public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
-    	if (pcs!=null) pcs.removePropertyChangeListener(l);
+        if (pcs != null) {
+            pcs.removePropertyChangeListener(l);
+        }
         register.remove(l);
         listenerRefs.remove(l);
     }
-    
+
     public synchronized ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name) {
         ArrayList<java.beans.PropertyChangeListener> list = new ArrayList<java.beans.PropertyChangeListener>();
         Enumeration<java.beans.PropertyChangeListener> en = register.keys();
         while (en.hasMoreElements()) {
             java.beans.PropertyChangeListener l = en.nextElement();
-            if(register.get(l).equals(name)){
+            if (register.get(l).equals(name)) {
                 list.add(l);
             }
         }
         return list;
     }
-    
+
     /* This allows a meaning full list of places where the bean is in use!*/
     public synchronized ArrayList<String> getListenerRefs() {
         ArrayList<String> list = new ArrayList<String>();
@@ -133,20 +137,20 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         }
         return list;
     }
-    
-    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName){
-        if(listenerRefs.containsKey(l)){
+
+    public synchronized void updateListenerRef(java.beans.PropertyChangeListener l, String newName) {
+        if (listenerRefs.containsKey(l)) {
             listenerRefs.put(l, newName);
         }
     }
-    
+
     public synchronized String getListenerRef(java.beans.PropertyChangeListener l) {
         return listenerRefs.get(l);
     }
-    
+
     /**
-     * Number of current listeners. May return -1 if the 
-     * information is not available for some reason.
+     * Number of current listeners. May return -1 if the information is not
+     * available for some reason.
      */
     public synchronized int getNumPropertyChangeListeners() {
         return pcs.getPropertyChangeListeners().length;
@@ -156,22 +160,30 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
         return pcs.getPropertyChangeListeners();
     }
 
-    public String getSystemName() {return mSystemName;}
-    public String getUserName() {return mUserName;}
-    public void   setUserName(String s) {
+    public String getSystemName() {
+        return mSystemName;
+    }
+
+    public String getUserName() {
+        return mUserName;
+    }
+
+    public void setUserName(String s) {
         String old = mUserName;
         mUserName = s;
         firePropertyChange("UserName", old, s);
     }
 
-	@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="IS2_INCONSISTENT_SYNC",
-								justification="Sync of mUserName protected by ctor invocation") 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "IS2_INCONSISTENT_SYNC",
+            justification = "Sync of mUserName protected by ctor invocation")
     protected String mUserName;
-    
+
     protected String mSystemName;
 
-    protected void firePropertyChange(String p, Object old, Object n) { 
-        if (pcs!=null) pcs.firePropertyChange(p,old,n);
+    protected void firePropertyChange(String p, Object old, Object n) {
+        if (pcs != null) {
+            pcs.firePropertyChange(p, old, n);
+        }
     }
 
     public void dispose() {
@@ -179,31 +191,38 @@ public abstract class AbstractNamedBean implements NamedBean, java.io.Serializab
     }
 
     public void setProperty(Object key, Object value) {
-        if (parameters == null) 
+        if (parameters == null) {
             parameters = new HashMap<Object, Object>();
+        }
         parameters.put(key, value);
     }
-    
+
     public Object getProperty(Object key) {
-        if (parameters == null) return null;
+        if (parameters == null) {
+            return null;
+        }
         return parameters.get(key);
     }
 
     public java.util.Set<Object> getPropertyKeys() {
-        if (parameters == null) return null;
+        if (parameters == null) {
+            return null;
+        }
         return parameters.keySet();
     }
-    
-    public void removeProperty(Object key){
-        if(parameters == null || key == null)
+
+    public void removeProperty(Object key) {
+        if (parameters == null || key == null) {
             return;
+        }
         parameters.remove(key);
     }
 
     HashMap<Object, Object> parameters = null;
-    
-    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException { }
-    
+
+    public void vetoableChange(java.beans.PropertyChangeEvent evt) throws java.beans.PropertyVetoException {
+    }
+
     static Logger log = LoggerFactory.getLogger(AbstractNamedBean.class.getName());
 }
 

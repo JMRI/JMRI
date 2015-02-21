@@ -1,5 +1,4 @@
 // ReportPanel.java
-
 package jmri.jmrit.mailreport;
 
 import java.awt.FlowLayout;
@@ -32,27 +31,27 @@ import org.slf4j.LoggerFactory;
 /**
  * User interface for sending a problem report via email.
  * <p>
- * The report is sent to a dedicated SourceForge mailing list, from which 
- * people can retrieve it.  
+ * The report is sent to a dedicated SourceForge mailing list, from which people
+ * can retrieve it.
  * <P>
- * @author          Bob Jacobsen   Copyright (C) 2009
- * @author          Matthew Harris  Copyright (c) 2014
- * @version         $Revision$
+ * @author Bob Jacobsen Copyright (C) 2009
+ * @author Matthew Harris Copyright (c) 2014
+ * @version $Revision$
  */
 public class ReportPanel extends JPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8455989563494151294L;
+     *
+     */
+    private static final long serialVersionUID = 8455989563494151294L;
 
-	static java.util.ResourceBundle rb = null;
+    static java.util.ResourceBundle rb = null;
 
     // member declarations
     JButton sendButton;
     JTextField emailField = new JTextField(40);
     JTextField summaryField = new JTextField(40);
-    JTextArea descField = new JTextArea(8,40);
+    JTextArea descField = new JTextArea(8, 40);
     JCheckBox checkContext;
     JCheckBox checkNetwork;
     JCheckBox checkLog;
@@ -65,7 +64,9 @@ public class ReportPanel extends JPanel {
     String[] profDirs = {"networkservices", "programmers", "throttle"};
 
     public ReportPanel() {
-        if (rb == null) rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
+        if (rb == null) {
+            rb = java.util.ResourceBundle.getBundle("jmri.jmrit.mailreport.ReportBundle");
+        }
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -78,7 +79,7 @@ public class ReportPanel extends JPanel {
 
         // grid of options
         p1 = new JPanel();
-        p1.setLayout(new GridLayout2(3,2));
+        p1.setLayout(new GridLayout2(3, 2));
         add(p1);
 
         JLabel l = new JLabel(rb.getString("LabelEmail"));
@@ -119,7 +120,7 @@ public class ReportPanel extends JPanel {
 
         checkNetwork = new JCheckBox(rb.getString("CheckNetwork"));
         checkNetwork.setSelected(true);
-        p1.add(checkNetwork);        
+        p1.add(checkNetwork);
 
         checkLog = new JCheckBox(rb.getString("CheckLog"));
         checkLog.setSelected(true);
@@ -144,11 +145,11 @@ public class ReportPanel extends JPanel {
         sendButton = new javax.swing.JButton(rb.getString("ButtonSend"));
         sendButton.setToolTipText(rb.getString("TooltipSend"));
         sendButton.addActionListener(new java.awt.event.ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    sendButtonActionPerformed(e);
-                }
-            });
+            @Override
+            public void actionPerformed(java.awt.event.ActionEvent e) {
+                sendButtonActionPerformed(e);
+            }
+        });
         add(sendButton);
 
     }
@@ -166,13 +167,13 @@ public class ReportPanel extends JPanel {
             String requestURL = "http://jmri.org/problem-report.php";  //NOI18N
 
             MultipartMessage msg = new MultipartMessage(requestURL, charSet);
-            
+
             // add reporter email address
             log.debug("start creating message");
             msg.addFormField("reporter", emailField.getText());
 
             // add if to Cc sender
-            msg.addFormField("sendcopy", checkCopy.isSelected()?"yes":"no");
+            msg.addFormField("sendcopy", checkCopy.isSelected() ? "yes" : "no");
 
             // add problem summary
             msg.addFormField("summary", summaryField.getText());
@@ -181,7 +182,7 @@ public class ReportPanel extends JPanel {
             String report = descField.getText() + "\r\n";
             if (checkContext.isSelected()) {
                 report += "=========================================================\r\n"; //NOI18N
-                report += ( new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
+                report += (new ReportContext()).getReport(checkNetwork.isSelected() && checkNetwork.isEnabled());
             }
             msg.addFormField("problem", report);
 
@@ -190,8 +191,8 @@ public class ReportPanel extends JPanel {
             if (checkPanel.isSelected()) {
                 log.debug("prepare panel attachment");
                 // Check that a panel file has been loaded
-                File file=jmri.configurexml.LoadXmlUserAction.getCurrentFile();
-                if (file!=null) {
+                File file = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
+                if (file != null) {
                     log.debug("add panel file: " + file.getPath());
                     msg.addFilePart("logfileupload[]", jmri.configurexml.LoadXmlUserAction.getCurrentFile());
                 } else {
@@ -206,7 +207,7 @@ public class ReportPanel extends JPanel {
                 // Check that a profile has been loaded
                 Profile profile = ProfileManager.defaultManager().getActiveProfile();
                 File file = profile.getPath();
-                if (file!=null) {
+                if (file != null) {
                     log.debug("add profile: " + file.getPath());
                     // Now zip-up contents of profile
                     // Create temp file that will be deleted when Java quits
@@ -232,16 +233,19 @@ public class ReportPanel extends JPanel {
             if (checkLog.isSelected()) {
                 log.debug("prepare log attachments");
                 // search for an appender that stores a file
-                for (java.util.Enumeration<org.apache.log4j.Appender> en = org.apache.log4j.Logger.getRootLogger().getAllAppenders(); en.hasMoreElements() ;) {
+                for (java.util.Enumeration<org.apache.log4j.Appender> en = org.apache.log4j.Logger.getRootLogger().getAllAppenders(); en.hasMoreElements();) {
                     // does this have a file?
                     org.apache.log4j.Appender a = en.nextElement();
                     // see if it's one of the ones we know
-                    if (log.isDebugEnabled()) log.debug("check appender "+a);
+                    if (log.isDebugEnabled()) {
+                        log.debug("check appender " + a);
+                    }
                     try {
                         org.apache.log4j.FileAppender f = (org.apache.log4j.FileAppender) a;
-                        log.debug("find file: "+f.getFile());
+                        log.debug("find file: " + f.getFile());
                         msg.addFilePart("logfileupload[]", new File(f.getFile()), "application/octet-stream");
-                    } catch (ClassCastException ex) {}
+                    } catch (ClassCastException ex) {
+                    }
                 }
             }
             log.debug("done adding attachments");
@@ -252,7 +256,7 @@ public class ReportPanel extends JPanel {
             log.debug("send complete");
             log.debug("server response:");
             boolean checkResponse = false;
-            for (String line: response) {
+            for (String line : response) {
                 log.debug(line);
                 if (line.contains("<p>Message successfully sent!</p>")) {
                     checkResponse = true;
@@ -289,39 +293,39 @@ public class ReportPanel extends JPanel {
 
         log.debug("Add directory: " + directory);
 
-        for(File file : files) {
+        for (File file : files) {
             // if current file is a directory, call recursively
-            if(file.isDirectory()) {
+            if (file.isDirectory()) {
                 // Only include certain sub-directories
-                if(!directory.equals("") || Arrays.asList(profDirs).contains(file.getName().toLowerCase())) {
+                if (!directory.equals("") || Arrays.asList(profDirs).contains(file.getName().toLowerCase())) {
                     try {
-                        out.putNextEntry(new ZipEntry(directory+file.getName()+"/"));
+                        out.putNextEntry(new ZipEntry(directory + file.getName() + "/"));
                     } catch (IOException ex) {
                         log.error("Exception when adding directory: " + ex);
                     }
-                    addDirectory(out, file, directory+file.getName()+"/");
+                    addDirectory(out, file, directory + file.getName() + "/");
                 } else {
-                    log.debug("Skipping: "+directory+file.getName());
+                    log.debug("Skipping: " + directory + file.getName());
                 }
                 continue;
             }
             // Got here - add file
             try {
                 // Only include certain files
-                if(!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
-                    log.debug("Add file: " + directory+file.getName());
+                if (!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
+                    log.debug("Add file: " + directory + file.getName());
                     byte[] buffer = new byte[1024];
                     FileInputStream in = new FileInputStream(file);
-                    out.putNextEntry(new ZipEntry(directory+file.getName()));
+                    out.putNextEntry(new ZipEntry(directory + file.getName()));
 
                     int length;
-                    while((length = in.read(buffer))>0) {
+                    while ((length = in.read(buffer)) > 0) {
                         out.write(buffer, 0, length);
                     }
                     out.closeEntry();
                     in.close();
                 } else {
-                    log.debug("Skip file: " + directory+file.getName());
+                    log.debug("Skip file: " + directory + file.getName());
                 }
             } catch (FileNotFoundException ex) {
                 log.error("Exception when adding file: " + ex);

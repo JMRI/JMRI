@@ -4,28 +4,30 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 public class ThrottlesListAction extends AbstractAction {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6318756102854541505L;
 
-	/**
+    /**
+     *
+     */
+    private static final long serialVersionUID = 6318756102854541505L;
+
+    /**
      * Constructor
+     *
      * @param s Name for the action.
      */
     public ThrottlesListAction(String s) {
         super(s);
-    // disable the ourselves if there is no throttle Manager
-        if (jmri.InstanceManager.throttleManagerInstance()==null) {
+        // disable the ourselves if there is no throttle Manager
+        if (jmri.InstanceManager.throttleManagerInstance() == null) {
             setEnabled(false);
-        }         
+        }
     }
-    
+
     public ThrottlesListAction() {
-	  this("Throttles list");         
+        this("Throttles list");
     }
-    
-	public void actionPerformed(ActionEvent e) {
-		jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
-	}
+
+    public void actionPerformed(ActionEvent e) {
+        jmri.jmrit.throttle.ThrottleFrameManager.instance().showThrottlesList();
+    }
 }

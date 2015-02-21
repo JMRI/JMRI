@@ -140,9 +140,9 @@ public abstract class AppsBase {
             thr2.start();
         }
 
-		// all loaded, initialize objects as necessary
-		InstanceManager.logixManagerInstance().activateAllLogixs();
-		InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
+        // all loaded, initialize objects as necessary
+        InstanceManager.logixManagerInstance().activateAllLogixs();
+        InstanceManager.getDefault(jmri.jmrit.display.layoutEditor.LayoutBlockManager.class).initializeLayoutBlockPaths();
 
     }
 

@@ -3,14 +3,11 @@ package jmri.web.servlet.operations;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-
 import java.io.IOException;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import jmri.jmris.json.JSON;
 import static jmri.jmris.json.JSON.CODE;
 import static jmri.jmris.json.JSON.DATA;
@@ -30,7 +27,6 @@ import jmri.web.servlet.ServletUtil;
 import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
 import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,11 +39,11 @@ import org.slf4j.LoggerFactory;
 public class OperationsServlet extends HttpServlet {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5856610982342205832L;
+     *
+     */
+    private static final long serialVersionUID = 5856610982342205832L;
 
-	private ObjectMapper mapper;
+    private ObjectMapper mapper;
 
     private final static Logger log = LoggerFactory.getLogger(OperationsServlet.class);
 
@@ -214,13 +210,13 @@ public class OperationsServlet extends HttpServlet {
 //              } else if (!train.move(location)) {
 //                  response.sendError(412, String.format(Bundle.getMessage(request.getLocale(), "ErrorTrainMovement"), id, location));
 //              }
-				String location = data.path(LOCATION).asText();
-				if (location.equals(NULL)) {
-					train.terminate();
-				} else if (train.getNextLocationName().equals(location)) {
-					train.move();
-				}
-			}
+                String location = data.path(LOCATION).asText();
+                if (location.equals(NULL)) {
+                    train.terminate();
+                } else if (train.getNextLocationName().equals(location)) {
+                    train.move();
+                }
+            }
             log.debug("Getting conductor HTML code for train {}", id);
             HtmlConductor conductor = new HtmlConductor(request.getLocale(), train);
             ServletUtil.getInstance().setNonCachingHeaders(response);

@@ -211,14 +211,16 @@ public abstract class XmlFile {
      */
     public void writeXML(File file, Document doc) throws IOException, FileNotFoundException {
         // ensure parent directory exists
-        if (file.getParent()!=null) FileUtil.createDirectory(file.getParent());
+        if (file.getParent() != null) {
+            FileUtil.createDirectory(file.getParent());
+        }
         // write the result to selected file
         FileOutputStream o = new FileOutputStream(file);
         try {
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
-                                .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.TRIM_FULL_WHITE));
             fmt.output(doc, o);
         } finally {
             o.close();
@@ -243,7 +245,7 @@ public abstract class XmlFile {
         } else {
             File fx = new File(xmlDir() + name);
             return fx.exists();
-    }
+        }
     }
 
     /**
@@ -458,7 +460,7 @@ public abstract class XmlFile {
         String date = "" + now.get(Calendar.YEAR) + m + d + h + min + sec;
         return date;
     }
-    
+
     /**
      * Execute the Processing Instructions in the file.
      *
@@ -471,42 +473,48 @@ public abstract class XmlFile {
         for (Object c : doc.getContent()) { // type Content
             if (c instanceof ProcessingInstruction) {
                 try {
-                    doc = processOneInstruction((ProcessingInstruction)c, doc);
+                    doc = processOneInstruction((ProcessingInstruction) c, doc);
                 } catch (org.jdom2.transform.XSLTransformException ex) {
-                    log.error("XSLT error while transforming with "+c+", ignoring transform", ex);
+                    log.error("XSLT error while transforming with " + c + ", ignoring transform", ex);
                 } catch (org.jdom2.JDOMException ex) {
-                    log.error("JDOM error while transforming with "+c+", ignoring transform", ex);
+                    log.error("JDOM error while transforming with " + c + ", ignoring transform", ex);
                 } catch (java.io.IOException ex) {
-                    log.error("IO error while transforming with "+c+", ignoring transform", ex);
+                    log.error("IO error while transforming with " + c + ", ignoring transform", ex);
                 }
             }
         }
-        
-        return doc ;
+
+        return doc;
     }
-    
+
     Document processOneInstruction(ProcessingInstruction p, Document doc) throws org.jdom2.transform.XSLTransformException, org.jdom2.JDOMException, java.io.IOException {
-        log.debug("handling ",p);
-        
+        log.debug("handling ", p);
+
         // check target
         String target = p.getTarget();
-        if (!target.equals("transform-xslt")) return doc;
-        
+        if (!target.equals("transform-xslt")) {
+            return doc;
+        }
+
         String href = p.getPseudoAttributeValue("href");
         // we expect this to start with http://jmri.org/ and refer to the JMRI file tree
-        if (! href.startsWith("http://jmri.org/")) return doc;
+        if (!href.startsWith("http://jmri.org/")) {
+            return doc;
+        }
         href = href.substring(16);
-        
+
         // if starts with 'xml/' we remove that; findFile will put it back
-        if (href.startsWith("xml/")) href = href.substring(4);
-        
+        if (href.startsWith("xml/")) {
+            href = href.substring(4);
+        }
+
         // read the XSLT transform into a Document to get XInclude done
         SAXBuilder builder = getBuilder(false);  // argument controls validation
         Document xdoc = builder.build(new BufferedInputStream(new FileInputStream(findFile(href))));
         org.jdom2.transform.XSLTransformer transformer = new org.jdom2.transform.XSLTransformer(xdoc);
         return transformer.transform(doc);
     }
-    
+
     /**
      * Create the Document object to store a particular root Element.
      *
@@ -535,12 +543,15 @@ public abstract class XmlFile {
     }
 
     /**
-     * Add default information to the XML before writing it out. <P> Currently,
-     * this is identification information as an XML comment. This includes: <UL>
+     * Add default information to the XML before writing it out.
+     * <P>
+     * Currently, this is identification information as an XML comment. This
+     * includes: <UL>
      * <LI>The JMRI version used <LI>Date of writing <LI>A CVS id string, in
-     * case the file gets checked in or out </UL> <P> It may be necessary to
-     * extend this to check whether the info is already present, e.g. if
-     * re-writing a file.
+     * case the file gets checked in or out </UL>
+     * <P>
+     * It may be necessary to extend this to check whether the info is already
+     * present, e.g. if re-writing a file.
      *
      * @param root The root element of the document that will be written.
      */

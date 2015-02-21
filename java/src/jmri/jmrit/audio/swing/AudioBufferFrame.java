@@ -1,10 +1,7 @@
 // AudioBufferFrame.java
-
 package jmri.jmrit.audio.swing;
 
 //import java.awt.Dimension;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,11 +24,11 @@ import jmri.AudioException;
 import jmri.AudioManager;
 import jmri.InstanceManager;
 import jmri.jmrit.audio.AudioBuffer;
-//import jmri.jmrit.audio.WaveFileReader;
 import jmri.jmrit.beantable.AudioTableAction.AudioTableDataModel;
 import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
-//import jmri.util.swing.VerticalLabelUI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Defines a GUI to edit AudioBuffer objects
@@ -39,28 +36,26 @@ import jmri.util.FileUtil;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class AudioBufferFrame extends AbstractAudioFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 5309874433054867893L;
+     *
+     */
+    private static final long serialVersionUID = 5309874433054867893L;
 
-	private static int counter = 1;
+    private static int counter = 1;
 
     private boolean _newBuffer;
 
@@ -79,7 +74,6 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     JSpinner loopEnd = new JSpinner();
     JFileChooser fileChooser;
 //    AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
-
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioBufferFrame(String title, AudioTableDataModel model) {
@@ -100,11 +94,13 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         JPanel p;
 
         JPanel p2;
-        p = new JPanel(); p.setLayout(new BoxLayout(p,BoxLayout.Y_AXIS));
+        p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(rba.getString("LabelSample")),
-                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
-        p2 = new JPanel(); p2.setLayout(new FlowLayout());
+                BorderFactory.createTitledBorder(rba.getString("LabelSample")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+        p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
         p2.add(urlLabel);
         p2.add(url);
         buttonBrowse.addActionListener(new ActionListener() {
@@ -115,7 +111,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         });
         p2.add(buttonBrowse);
         p.add(p2);
-        p2 = new JPanel(); p2.setLayout(new FlowLayout());
+        p2 = new JPanel();
+        p2.setLayout(new FlowLayout());
         p2.add(stream);
         p.add(p2);
 //        p2 = new JPanel(); p2.setLayout(new FlowLayout());
@@ -146,10 +143,11 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 //
 //        main.add(p);
 //
-        p = new JPanel(); p.setLayout(new FlowLayout());
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
-                        BorderFactory.createTitledBorder(rba.getString("LabelLoopPoints")),
-                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
+                BorderFactory.createTitledBorder(rba.getString("LabelLoopPoints")),
+                BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p.add(loopStartLabel);
         loopStart.setPreferredSize(new JTextField(8).getPreferredSize());
         loopStart.setModel(
@@ -158,10 +156,10 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 loopEnd.setValue(
-                        ((Long)loopStart.getValue()
-                        <(Long)loopEnd.getValue())
-                        ?loopEnd.getValue()
-                        :loopStart.getValue());
+                        ((Long) loopStart.getValue()
+                        < (Long) loopEnd.getValue())
+                                ? loopEnd.getValue()
+                                : loopStart.getValue());
             }
         });
         p.add(loopStart);
@@ -173,10 +171,10 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             @Override
             public void stateChanged(ChangeEvent e) {
                 loopStart.setValue(
-                        ((Long)loopEnd.getValue()
-                        <(Long)loopStart.getValue())
-                        ?loopEnd.getValue()
-                        :loopStart.getValue());
+                        ((Long) loopEnd.getValue()
+                        < (Long) loopStart.getValue())
+                                ? loopEnd.getValue()
+                                : loopStart.getValue());
             }
         });
         p.add(loopEnd);
@@ -197,8 +195,8 @@ public class AudioBufferFrame extends AbstractAudioFrame {
      */
     @Override
     public void resetFrame() {
-        synchronized(lock) {
-            sysName.setText("IAB"+counter++);
+        synchronized (lock) {
+            sysName.setText("IAB" + counter++);
         }
         userName.setText(null);
         url.setText(null);
@@ -234,7 +232,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void browsePressed(ActionEvent e) {
         if (fileChooser == null) {
-            fileChooser = new JFileChooser("resources"+File.separator+"sounds"+File.separator);
+            fileChooser = new JFileChooser("resources" + File.separator + "sounds" + File.separator);
             FileChooserFilter audioFileFilter = new FileChooserFilter("Audio Files (*.wav)");
             audioFileFilter.addExtension("wav");
             fileChooser.setFileFilter(audioFileFilter);
@@ -262,14 +260,18 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     void okPressed(ActionEvent e) {
         String user = userName.getText();
-        if (user.equals("")) user=null;
+        if (user.equals("")) {
+            user = null;
+        }
         String sName = sysName.getText().toUpperCase();
         AudioBuffer b;
         try {
             AudioManager am = InstanceManager.audioManagerInstance();
             b = (AudioBuffer) am.provideAudio(sName);
-            if (b==null) throw new AudioException("Problem creating buffer");
-            if (_newBuffer && am.getByUserName(user)!=null) {
+            if (b == null) {
+                throw new AudioException("Problem creating buffer");
+            }
+            if (_newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
                 counter--;
                 throw new AudioException("Duplicate user name - please modify");

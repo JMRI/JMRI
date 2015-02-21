@@ -3,14 +3,12 @@ package jmri.jmrit.operations.setup;
 
 import java.awt.GridBagLayout;
 import java.util.ResourceBundle;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
 import jmri.jmrit.operations.trains.TrainSwitchListText;
 
 /**
@@ -163,7 +161,7 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         trainDoneTextField.setText(TrainSwitchListText.getStringTrainDone());
         trainDoneTextField.setToolTipText(rb.getString("ToolTipTrainDone"));
         pSwitchList.add(pTrainDone);
-        
+
         JPanel pTrainDepartsCars = new JPanel();
         pTrainDepartsCars.setBorder(BorderFactory.createTitledBorder(rb.getString("TrainDepartsCars")));
         pTrainDepartsCars.add(trainDepartsCarsTextField);
@@ -177,7 +175,6 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         trainDepartsLoadsTextField.setText(TrainSwitchListText.getStringTrainDepartsLoads());
         trainDepartsLoadsTextField.setToolTipText(rb.getString("ToolTipTrainDepartsLoads"));
         pSwitchList.add(pTrainDepartsLoadsTextField);
-
 
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));

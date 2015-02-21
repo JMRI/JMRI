@@ -1,16 +1,15 @@
 // UpdateDecoderDefinitionAction.java
 package jmri.jmrit.roster;
 
+import java.awt.event.ActionEvent;
+import java.util.List;
+import javax.swing.Icon;
+import jmri.jmrit.decoderdefn.DecoderFile;
+import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import jmri.jmrit.decoderdefn.*;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.awt.event.ActionEvent;
-import javax.swing.Icon;
-import java.util.List;
 
 /**
  * Update the decoder definitions in the roster
@@ -22,10 +21,11 @@ import java.util.List;
 public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2751913119792322837L;
-	public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
+     *
+     */
+    private static final long serialVersionUID = -2751913119792322837L;
+
+    public UpdateDecoderDefinitionAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 
@@ -40,35 +40,36 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent e) {
         Roster roster = Roster.instance();
         List<RosterEntry> list = roster.matchingList(null, null, null, null, null, null, null);
-        
+
         for (RosterEntry entry : list) {
             String family = entry.getDecoderFamily();
             String model = entry.getDecoderModel();
-            
+
             // check if replaced
             List<DecoderFile> decoders = DecoderIndexFile.instance().matchingDecoderList(null, family, null, null, null, model);
-            log.info("Found "+decoders.size()+" decoders matching family \""+family+"\" model \""+model+"\" from roster entry \""+entry.getId()+"\"");
-            
+            log.info("Found " + decoders.size() + " decoders matching family \"" + family + "\" model \"" + model + "\" from roster entry \"" + entry.getId() + "\"");
+
             String replacementFamily = null;
             String replacementModel = null;
-            
+
             for (DecoderFile decoder : decoders) {
-                
-                if (decoder.getReplacementFamily()!=null || decoder.getReplacementModel() != null)
-                    log.info("   Recommended replacement is family \""+decoder.getReplacementFamily()+"\" model \""+decoder.getReplacementModel()+"\"");
+
+                if (decoder.getReplacementFamily() != null || decoder.getReplacementModel() != null) {
+                    log.info("   Recommended replacement is family \"" + decoder.getReplacementFamily() + "\" model \"" + decoder.getReplacementModel() + "\"");
+                }
                 replacementFamily = (decoder.getReplacementFamily() != null) ? decoder.getReplacementFamily() : replacementFamily;
                 replacementModel = (decoder.getReplacementModel() != null) ? decoder.getReplacementModel() : replacementModel;
             }
-            
+
             if (replacementModel != null && replacementFamily != null) {
                 log.info("   *** Will update");
-        
+
                 // change the roster entry
                 entry.setDecoderFamily(replacementFamily);
                 entry.setDecoderModel(replacementModel);
-                
+
                 // write it out (not bothering to do backup?)
-                entry.updateFile();    
+                entry.updateFile();
             }
         }
 
@@ -77,12 +78,12 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         try {
             roster.writeFile(Roster.defaultRosterFilename());
         } catch (Exception ex) {
-            log.error("Exception while writing the new roster file, may not be complete: "+ex);
+            log.error("Exception while writing the new roster file, may not be complete: " + ex);
         }
         // use the new one
         Roster.resetInstance();
         Roster.instance();
-        
+
     }
 
     // never invoked, because we overrode actionPerformed above

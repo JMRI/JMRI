@@ -1,13 +1,12 @@
 // JavaSoundAudioListener.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JavaSound implementation of the Audio Listener sub-class.
@@ -21,35 +20,35 @@ import jmri.InstanceManager;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class JavaSoundAudioListener extends AbstractAudioListener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 9173649719613819402L;
+     *
+     */
+    private static final long serialVersionUID = 9173649719613819402L;
 
-	/**
+    /**
      * Constructor for new JavaSoundAudioListener with system name
      *
      * @param systemName AudioListener object system name (e.g. IAL)
      */
     public JavaSoundAudioListener(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) log.debug("New JavaSoundAudioListener: "+systemName);
+        if (log.isDebugEnabled()) {
+            log.debug("New JavaSoundAudioListener: " + systemName);
+        }
     }
 
     /**
@@ -60,7 +59,9 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
      */
     public JavaSoundAudioListener(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) log.debug("New JavaSoundAudioListener: "+userName+" ("+systemName+")");
+        if (log.isDebugEnabled()) {
+            log.debug("New JavaSoundAudioListener: " + userName + " (" + systemName + ")");
+        }
     }
 
     @Override
@@ -80,14 +81,15 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     private void recalculateSources() {
         // Loop through each AudioSource and recalculate their gain & pan
         AudioManager am = InstanceManager.audioManagerInstance();
-        for (String sysName: am.getSystemNameList()) {
+        for (String sysName : am.getSystemNameList()) {
             Audio audio = am.getBySystemName(sysName);
-            if (audio.getSubType()==Audio.SOURCE
+            if (audio.getSubType() == Audio.SOURCE
                     && audio instanceof JavaSoundAudioSource) {
                 ((JavaSoundAudioSource) audio).calculateGain();
                 ((JavaSoundAudioSource) audio).calculatePan();
-                if (log.isDebugEnabled())
+                if (log.isDebugEnabled()) {
                     log.debug("Recalculating gain & pan for JavaSoundAudioSource " + audio.getSystemName());
+                }
             }
         }
     }
@@ -95,7 +97,9 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
     @Override
     protected void cleanUp() {
         // no clean-up needed for Listener
-        if (log.isDebugEnabled()) log.debug("Cleanup JavaSoundAudioListener (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Cleanup JavaSoundAudioListener (" + this.getSystemName() + ")");
+        }
         this.dispose();
     }
 

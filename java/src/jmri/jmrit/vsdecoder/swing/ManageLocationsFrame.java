@@ -18,7 +18,6 @@ package jmri.jmrit.vsdecoder.swing;
  * @author			Mark Underwood Copyright (C) 2011
  * @version			$Revision: 21510 $
  */
-
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -29,7 +28,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -44,7 +42,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
-
 import jmri.Block;
 import jmri.BlockManager;
 import jmri.Reporter;
@@ -61,42 +58,45 @@ import jmri.jmrit.vsdecoder.listener.ListeningSpot;
 import jmri.util.JmriJFrame;
 import jmri.util.PhysicalLocation;
 import jmri.util.WindowMenu;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 public class ManageLocationsFrame extends JmriJFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 9159687443567118015L;
+     *
+     */
+    private static final long serialVersionUID = 9159687443567118015L;
 
-	// Uncomment this when we add labels...
-    public static enum PropertyChangeID { MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER }
+    // Uncomment this when we add labels...
+    public static enum PropertyChangeID {
+
+        MUTE, VOLUME_CHANGE, ADD_DECODER, REMOVE_DECODER
+    }
 
     public static final Map<PropertyChangeID, String> PCIDMap;
+
     static {
-	Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
-	aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute"); // NOI18N
-	aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange"); // NOI18N
-	aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder"); // NOI18N
-	aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder"); // NOI18N
-	PCIDMap = Collections.unmodifiableMap(aMap);
+        Map<PropertyChangeID, String> aMap = new HashMap<PropertyChangeID, String>();
+        aMap.put(PropertyChangeID.MUTE, "VSDMF:Mute"); // NOI18N
+        aMap.put(PropertyChangeID.VOLUME_CHANGE, "VSDMF:VolumeChange"); // NOI18N
+        aMap.put(PropertyChangeID.ADD_DECODER, "VSDMF:AddDecoder"); // NOI18N
+        aMap.put(PropertyChangeID.REMOVE_DECODER, "VSDMF:RemoveDecoder"); // NOI18N
+        PCIDMap = Collections.unmodifiableMap(aMap);
     }
 
     // Map of Mnemonic KeyEvent values to GUI Components
     private static final Map<String, Integer> Mnemonics = new HashMap<String, Integer>();
+
     static {
-	Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
-	Mnemonics.put("HeadphoneMode", KeyEvent.VK_H); // NOI18N
-	Mnemonics.put("ReporterTab", KeyEvent.VK_E); // NOI18N
-	Mnemonics.put("OpsTab", KeyEvent.VK_P); // NOI18N
-	Mnemonics.put("ListenerTab", KeyEvent.VK_L); // NOI18N
-	Mnemonics.put("BlockTab", KeyEvent.VK_B); // NOI18N
-	Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
-	Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
+        Mnemonics.put("RoomMode", KeyEvent.VK_R); // NOI18N
+        Mnemonics.put("HeadphoneMode", KeyEvent.VK_H); // NOI18N
+        Mnemonics.put("ReporterTab", KeyEvent.VK_E); // NOI18N
+        Mnemonics.put("OpsTab", KeyEvent.VK_P); // NOI18N
+        Mnemonics.put("ListenerTab", KeyEvent.VK_L); // NOI18N
+        Mnemonics.put("BlockTab", KeyEvent.VK_B); // NOI18N
+        Mnemonics.put("CloseButton", KeyEvent.VK_O); // NOI18N
+        Mnemonics.put("SaveButton", KeyEvent.VK_S); // NOI18N
     }
 
     protected EventListenerList listenerList = new javax.swing.event.EventListenerList();
@@ -119,226 +119,230 @@ public class ManageLocationsFrame extends JmriJFrame {
 
     private List<JMenu> menuList;
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="EI_EXPOSE_REP2",
-                    justification="2D array of different types passed as complex parameter. "+
-                                   "Better to switch to passing use-specific objects rather than "+
-                                   "papering this over with a deep copy of the arguments. "+
-                                   "In any case, there's no risk of exposure here.")
-    public ManageLocationsFrame(ListeningSpot listener, 
-				Object[][] reporters,
-				Object[][] ops,
-				Object[][] blocks) {
-	super(false, false);
-	reporterData = reporters;
-	opsData = ops;
-	listenerLoc = listener;
-	blockData = blocks;
-	initGui();
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "EI_EXPOSE_REP2",
+            justification = "2D array of different types passed as complex parameter. "
+            + "Better to switch to passing use-specific objects rather than "
+            + "papering this over with a deep copy of the arguments. "
+            + "In any case, there's no risk of exposure here.")
+    public ManageLocationsFrame(ListeningSpot listener,
+            Object[][] reporters,
+            Object[][] ops,
+            Object[][] blocks) {
+        super(false, false);
+        reporterData = reporters;
+        opsData = ops;
+        listenerLoc = listener;
+        blockData = blocks;
+        initGui();
     }
-    
+
     private void initGui() {
 
-	this.setTitle(Bundle.getMessage("FieldManageLocationsFrameTitle"));
-	this.buildMenu();
-	// Panel for managing listeners
-	listenerPanel = new JPanel();
-	listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
+        this.setTitle(Bundle.getMessage("FieldManageLocationsFrameTitle"));
+        this.buildMenu();
+        // Panel for managing listeners
+        listenerPanel = new JPanel();
+        listenerPanel.setLayout(new BoxLayout(listenerPanel, BoxLayout.Y_AXIS));
 
-	// Audio Mode Buttons
-	JRadioButton b1 = new JRadioButton(Bundle.getMessage("ButtonAudioModeRoom"));
-	b1.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeRoom"));
-	b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
-	b1.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    modeRadioButtonPressed(e);
-		}
-	    });
-	JRadioButton b2 = new JRadioButton(Bundle.getMessage("ButtonAudioModeHeadphone"));
-	b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
-	b2.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeHeadphone"));
-	b2.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    modeRadioButtonPressed(e);
-		}
-	    });
-	b2.setEnabled(false);
-	ButtonGroup bg = new ButtonGroup();
-	bg.add(b1);
-	bg.add(b2);
-	b1.setSelected(true);
-	JPanel modePanel = new JPanel();
-	modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
-	modePanel.add(new JLabel(Bundle.getMessage("FieldAudioMode")));
-	modePanel.add(b1);
-	modePanel.add(b2);
+        // Audio Mode Buttons
+        JRadioButton b1 = new JRadioButton(Bundle.getMessage("ButtonAudioModeRoom"));
+        b1.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeRoom"));
+        b1.setMnemonic(Mnemonics.get("RoomMode")); // NOI18N
+        b1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                modeRadioButtonPressed(e);
+            }
+        });
+        JRadioButton b2 = new JRadioButton(Bundle.getMessage("ButtonAudioModeHeadphone"));
+        b2.setMnemonic(Mnemonics.get("HeadphoneMode")); // NOI18N
+        b2.setToolTipText(Bundle.getMessage("ToolTipButtonAudioModeHeadphone"));
+        b2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                modeRadioButtonPressed(e);
+            }
+        });
+        b2.setEnabled(false);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(b1);
+        bg.add(b2);
+        b1.setSelected(true);
+        JPanel modePanel = new JPanel();
+        modePanel.setLayout(new BoxLayout(modePanel, BoxLayout.LINE_AXIS));
+        modePanel.add(new JLabel(Bundle.getMessage("FieldAudioMode")));
+        modePanel.add(b1);
+        modePanel.add(b2);
 
-	// Build Listener Locations Table
-	locData = new Object[1][7];
-	locData[0][0] = listenerLoc.getName();
-	locData[0][1] = true;
-	locData[0][2] = listenerLoc.getLocation().x;
-	locData[0][3] = listenerLoc.getLocation().y;
-	locData[0][4] = listenerLoc.getLocation().z;
-	locData[0][5] = listenerLoc.getBearing();
-	locData[0][6] = listenerLoc.getAzimuth();
-	
-	log.debug("Listener:" + listenerLoc.toString());
-	log.debug("locData:");
-	for (int i = 0; i < 7; i++) {
-	    log.debug("" + locData[0][i]);
-	}
-	    
-	JPanel locPanel = new JPanel();
-	locPanel.setLayout(new BoxLayout(locPanel, BoxLayout.LINE_AXIS));
-	JScrollPane locScrollPanel = new JScrollPane();
-	locModel = new ListenerTableModel(locData);
-	JTable locTable = new JTable(locModel);
-	locTable.setFillsViewportHeight(true);
-	locTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
+        // Build Listener Locations Table
+        locData = new Object[1][7];
+        locData[0][0] = listenerLoc.getName();
+        locData[0][1] = true;
+        locData[0][2] = listenerLoc.getLocation().x;
+        locData[0][3] = listenerLoc.getLocation().y;
+        locData[0][4] = listenerLoc.getLocation().z;
+        locData[0][5] = listenerLoc.getBearing();
+        locData[0][6] = listenerLoc.getAzimuth();
 
-	locScrollPanel.getViewport().add(locTable);
+        log.debug("Listener:" + listenerLoc.toString());
+        log.debug("locData:");
+        for (int i = 0; i < 7; i++) {
+            log.debug("" + locData[0][i]);
+        }
 
-	listenerPanel.add(modePanel);
-	listenerPanel.add(locScrollPanel);
+        JPanel locPanel = new JPanel();
+        locPanel.setLayout(new BoxLayout(locPanel, BoxLayout.LINE_AXIS));
+        JScrollPane locScrollPanel = new JScrollPane();
+        locModel = new ListenerTableModel(locData);
+        JTable locTable = new JTable(locModel);
+        locTable.setFillsViewportHeight(true);
+        locTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
-	reporterPanel = new JPanel();
-	reporterPanel.setLayout(new GridBagLayout());
-	JScrollPane reporterScrollPanel = new JScrollPane();
-	reporterModel = new LocationTableModel(reporterData);
-	JTable reporterTable = new JTable(reporterModel);
-	reporterTable.setFillsViewportHeight(true);
-	reporterScrollPanel.getViewport().add(reporterTable);
-	reporterTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
+        locScrollPanel.getViewport().add(locTable);
 
-	blockPanel = new JPanel();
-	blockPanel.setLayout(new GridBagLayout());
-	JScrollPane blockScrollPanel = new JScrollPane();
-	blockModel = new LocationTableModel(blockData);
-	JTable blockTable = new JTable(blockModel);
-	blockTable.setFillsViewportHeight(true);
-	blockScrollPanel.getViewport().add(blockTable);
-	blockTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
+        listenerPanel.add(modePanel);
+        listenerPanel.add(locScrollPanel);
 
-	opsPanel = new JPanel();
-	opsPanel.setLayout(new GridBagLayout());
-	opsPanel.revalidate();
-	JScrollPane opsScrollPanel = new JScrollPane();
-	opsModel = new LocationTableModel(opsData);
-	JTable opsTable = new JTable(opsModel);
-	opsTable.setFillsViewportHeight(true);
-	opsTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
+        reporterPanel = new JPanel();
+        reporterPanel.setLayout(new GridBagLayout());
+        JScrollPane reporterScrollPanel = new JScrollPane();
+        reporterModel = new LocationTableModel(reporterData);
+        JTable reporterTable = new JTable(reporterModel);
+        reporterTable.setFillsViewportHeight(true);
+        reporterScrollPanel.getViewport().add(reporterTable);
+        reporterTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
-	opsScrollPanel.getViewport().add(opsTable);
+        blockPanel = new JPanel();
+        blockPanel.setLayout(new GridBagLayout());
+        JScrollPane blockScrollPanel = new JScrollPane();
+        blockModel = new LocationTableModel(blockData);
+        JTable blockTable = new JTable(blockModel);
+        blockTable.setFillsViewportHeight(true);
+        blockScrollPanel.getViewport().add(blockTable);
+        blockTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
-	tabbedPane = new JTabbedPane();
-	tabbedPane.addTab(Bundle.getMessage("FieldReportersTabTitle"), reporterScrollPanel);
-	tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
-	tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
-	tabbedPane.addTab(Bundle.getMessage("FieldBlockTabTitle"), blockScrollPanel);
-	tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
-	tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
-	tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
-	tabbedPane.setToolTipTextAt(1, Bundle.getMessage("ToolTipOpsTab"));
-	tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab")); // NOI18N
-	tabbedPane.addTab(Bundle.getMessage("FieldListenersTabTitle"), listenerPanel);
-	tabbedPane.setToolTipTextAt(2, Bundle.getMessage("ToolTipListenerTab"));
-	tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab")); // NOI18N
+        opsPanel = new JPanel();
+        opsPanel.setLayout(new GridBagLayout());
+        opsPanel.revalidate();
+        JScrollPane opsScrollPanel = new JScrollPane();
+        opsModel = new LocationTableModel(opsData);
+        JTable opsTable = new JTable(opsModel);
+        opsTable.setFillsViewportHeight(true);
+        opsTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
 
-	JPanel buttonPane = new JPanel();
-	buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
-	JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
-	closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
-	closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
-	closeButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    closeButtonPressed(e);
-		}
-	    });
-	JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
-	saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFSave"));
-	saveButton.setMnemonic(	Mnemonics.get("SaveButton")); // NOI18N
-	saveButton.addActionListener(new ActionListener() {
-		public void actionPerformed(ActionEvent e) {
-		    saveButtonPressed(e);
-		}
-	    });
-	buttonPane.add(closeButton);
-	buttonPane.add(saveButton);
+        opsScrollPanel.getViewport().add(opsTable);
 
-	this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
-	this.getContentPane().add(tabbedPane);
-	this.getContentPane().add(buttonPane);
-	this.pack();
-	this.setVisible(true);
+        tabbedPane = new JTabbedPane();
+        tabbedPane.addTab(Bundle.getMessage("FieldReportersTabTitle"), reporterScrollPanel);
+        tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipReporterTab"));
+        tabbedPane.setMnemonicAt(0, Mnemonics.get("ReporterTab")); // NOI18N
+        tabbedPane.addTab(Bundle.getMessage("FieldBlockTabTitle"), blockScrollPanel);
+        tabbedPane.setToolTipTextAt(0, Bundle.getMessage("ToolTipBlockTab"));
+        tabbedPane.setMnemonicAt(0, Mnemonics.get("BlockTab")); // NOI18N
+        tabbedPane.addTab(Bundle.getMessage("FieldOpsTabTitle"), opsScrollPanel);
+        tabbedPane.setToolTipTextAt(1, Bundle.getMessage("ToolTipOpsTab"));
+        tabbedPane.setMnemonicAt(1, Mnemonics.get("OpsTab")); // NOI18N
+        tabbedPane.addTab(Bundle.getMessage("FieldListenersTabTitle"), listenerPanel);
+        tabbedPane.setToolTipTextAt(2, Bundle.getMessage("ToolTipListenerTab"));
+        tabbedPane.setMnemonicAt(2, Mnemonics.get("ListenerTab")); // NOI18N
+
+        JPanel buttonPane = new JPanel();
+        buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.LINE_AXIS));
+        JButton closeButton = new JButton(Bundle.getMessage("ButtonClose"));
+        closeButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFClose"));
+        closeButton.setMnemonic(Mnemonics.get("CloseButton")); // NOI18N
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                closeButtonPressed(e);
+            }
+        });
+        JButton saveButton = new JButton(Bundle.getMessage("ButtonSave"));
+        saveButton.setToolTipText(Bundle.getMessage("ToolTipButtonMLFSave"));
+        saveButton.setMnemonic(Mnemonics.get("SaveButton")); // NOI18N
+        saveButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveButtonPressed(e);
+            }
+        });
+        buttonPane.add(closeButton);
+        buttonPane.add(saveButton);
+
+        this.getContentPane().setLayout(new BoxLayout(this.getContentPane(), BoxLayout.Y_AXIS));
+        this.getContentPane().add(tabbedPane);
+        this.getContentPane().add(buttonPane);
+        this.pack();
+        this.setVisible(true);
     }
 
     private void buildMenu() {
-	JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
+        JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
 
-        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile" )));
-        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile" )));
+        fileMenu.add(new LoadVSDFileAction(Bundle.getMessage("MenuItemLoadVSDFile")));
+        fileMenu.add(new StoreXmlVSDecoderAction(Bundle.getMessage("MenuItemSaveProfile")));
         fileMenu.add(new LoadXmlVSDecoderAction(Bundle.getMessage("MenuItemLoadProfile")));
 
-	JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
-	editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
+        JMenu editMenu = new JMenu(Bundle.getMessage("MenuEdit"));
+        editMenu.add(new VSDPreferencesAction(Bundle.getMessage("MenuItemEditPreferences")));
 
-	fileMenu.getItem(1).setEnabled(false); // disable XML store
-	fileMenu.getItem(2).setEnabled(false); // disable XML load
+        fileMenu.getItem(1).setEnabled(false); // disable XML store
+        fileMenu.getItem(2).setEnabled(false); // disable XML load
 
-	menuList = new ArrayList<JMenu>(3);
+        menuList = new ArrayList<JMenu>(3);
 
-	menuList.add(fileMenu);
-	menuList.add(editMenu);
+        menuList.add(fileMenu);
+        menuList.add(editMenu);
 
-	this.setJMenuBar(new JMenuBar());
-	this.getJMenuBar().add(fileMenu);
-	this.getJMenuBar().add(editMenu);
-	this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
-	
+        this.setJMenuBar(new JMenuBar());
+        this.getJMenuBar().add(fileMenu);
+        this.getJMenuBar().add(editMenu);
+        this.addHelpMenu("package.jmri.jmrit.vsdecoder.swing.ManageLocationsFrame", true); // NOI18N
+
     }
 
     /**
      * Add a standard help menu, including window specific help item.
+     *
      * @param ref JHelp reference for the desired window-specific help page
      * @param direct true if the help menu goes directly to the help system,
-     *        e.g. there are no items in the help menu
+     * e.g. there are no items in the help menu
      *
-     * WARNING: BORROWED FROM JmriJFrame.  
+     * WARNING: BORROWED FROM JmriJFrame.
      */
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
         JMenuBar bar = getJMenuBar();
-        if (bar == null) bar = new JMenuBar();
+        if (bar == null) {
+            bar = new JMenuBar();
+        }
         // add Window menu
-	bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
-	// add Help menu
+        bar.add(new WindowMenu(this)); // * GT 28-AUG-2008 Added window menu
+        // add Help menu
         jmri.util.HelpUtil.helpMenu(bar, ref, direct);
         setJMenuBar(bar);
     }
 
     private void saveButtonPressed(ActionEvent e) {
-	int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"), 
-						  Bundle.getMessage("FieldMLFSaveDialogTitle"), 
-						  JOptionPane.YES_NO_OPTION);
-	if (value == JOptionPane.YES_OPTION) {
-	    saveTableValues();
-	    OperationsXml.save();
-	}
-	if (Setup.isCloseWindowOnSaveEnabled())
-	    dispose();
+        int value = JOptionPane.showConfirmDialog(null, Bundle.getMessage("FieldMLFSaveDialogConfirmMessage"),
+                Bundle.getMessage("FieldMLFSaveDialogTitle"),
+                JOptionPane.YES_NO_OPTION);
+        if (value == JOptionPane.YES_OPTION) {
+            saveTableValues();
+            OperationsXml.save();
+        }
+        if (Setup.isCloseWindowOnSaveEnabled()) {
+            dispose();
+        }
     }
 
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="WMI_WRONG_MAP_ITERATOR", justification="only in slow debug") 
+    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
-        if ((Boolean)locModel.getValueAt(0,1)) {
-            listenerLoc.setLocation((Double)locModel.getValueAt(0,2), 
-                        (Double)locModel.getValueAt(0,3),
-                        (Double)locModel.getValueAt(0,4));
-            listenerLoc.setOrientation((Double)locModel.getValueAt(0,5),
-                           (Double)locModel.getValueAt(0,6));
+        if ((Boolean) locModel.getValueAt(0, 1)) {
+            listenerLoc.setLocation((Double) locModel.getValueAt(0, 2),
+                    (Double) locModel.getValueAt(0, 3),
+                    (Double) locModel.getValueAt(0, 4));
+            listenerLoc.setOrientation((Double) locModel.getValueAt(0, 5),
+                    (Double) locModel.getValueAt(0, 6));
             VSDecoderManager.instance().getVSDecoderPreferences().setListenerPosition(listenerLoc);
         }
-    
+
         HashMap<String, PhysicalLocation> data = reporterModel.getDataMap();
         ReporterManager mgr = jmri.InstanceManager.reporterManagerInstance();
         for (String s : data.keySet()) {
@@ -368,21 +372,23 @@ public class ManageLocationsFrame extends JmriJFrame {
     }
 
     private void closeButtonPressed(ActionEvent e) {
-	dispose();
+        dispose();
     }
 
     static private Logger log = LoggerFactory.getLogger(ManageLocationsFrame.class.getName());
 
-    /** Private class to serve as TableModel for Reporters and Ops Locations */
+    /**
+     * Private class to serve as TableModel for Reporters and Ops Locations
+     */
     private static class LocationTableModel extends AbstractTableModel {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -6422871979102501443L;
-		// These get internationalized at runtime in the constructor below.
+         *
+         */
+        private static final long serialVersionUID = -6422871979102501443L;
+        // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[6];
-        private Object[][]rowData;
+        private Object[][] rowData;
 
         public LocationTableModel(Object[][] dataMap) {
             super();
@@ -400,55 +406,67 @@ public class ManageLocationsFrame extends JmriJFrame {
             // Includes only the ones with the checkbox made
             HashMap<String, PhysicalLocation> retv = new HashMap<String, PhysicalLocation>();
             for (Object[] row : rowData) {
-                if ((Boolean)row[1]) {
-                    retv.put((String)row[0],
-                             new PhysicalLocation((Float)row[2], (Float)row[3], (Float)row[4], (Boolean)row[5]));
+                if ((Boolean) row[1]) {
+                    retv.put((String) row[0],
+                            new PhysicalLocation((Float) row[2], (Float) row[3], (Float) row[4], (Boolean) row[5]));
                 }
             }
-            return(retv);
+            return (retv);
         }
 
         public String getColumnName(int col) {
             return columnNames[col].toString();
         }
 
-        public int getRowCount() { return rowData.length; }
-        public int getColumnCount() { return columnNames.length; }
+        public int getRowCount() {
+            return rowData.length;
+        }
+
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
         public Object getValueAt(int row, int col) {
             return rowData[row][col];
         }
-        public boolean isCellEditable(int row, int col) { return true; }
+
+        public boolean isCellEditable(int row, int col) {
+            return true;
+        }
+
         public void setValueAt(Object value, int row, int col) {
             rowData[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
         public Class<?> getColumnClass(int columnIndex) {
-            switch(columnIndex) {
-            case 1:
-            case 5:
-                return Boolean.class;
-            case 4:
-            case 3:
-            case 2:
-                return Float.class;
-            case 0:
-            default:
-                return super.getColumnClass(columnIndex);
+            switch (columnIndex) {
+                case 1:
+                case 5:
+                    return Boolean.class;
+                case 4:
+                case 3:
+                case 2:
+                    return Float.class;
+                case 0:
+                default:
+                    return super.getColumnClass(columnIndex);
             }
         }
     }
 
-    /** Private class for use as TableModel for Listener Locations */
+    /**
+     * Private class for use as TableModel for Listener Locations
+     */
     private class ListenerTableModel extends AbstractTableModel {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = -6375914030167059399L;
-		// These get internationalized at runtime in the constructor below.
+         *
+         */
+        private static final long serialVersionUID = -6375914030167059399L;
+        // These get internationalized at runtime in the constructor below.
         private String[] columnNames = new String[7];
-        private Object[][]rowData = null;
+        private Object[][] rowData = null;
 
         public ListenerTableModel(Object[][] dataMap) {
             super();
@@ -464,50 +482,60 @@ public class ManageLocationsFrame extends JmriJFrame {
         }
 
         @SuppressWarnings("unused")
-		public HashMap<String, ListeningSpot> getDataMap() {
+        public HashMap<String, ListeningSpot> getDataMap() {
             // Includes only the ones with the checkbox made
             HashMap<String, ListeningSpot> retv = new HashMap<String, ListeningSpot>();
             ListeningSpot spot = null;
             for (Object[] row : rowData) {
-                if ((Boolean)row[1]) {
+                if ((Boolean) row[1]) {
                     spot = new ListeningSpot();
-                    spot.setName((String)row[0]);
-                    spot.setLocation((Double)row[2], (Double)row[3], (Double)row[4]);
-                    spot.setOrientation((Double)row[5], (Double)row[6]);
-                    retv.put((String)row[0], spot);
+                    spot.setName((String) row[0]);
+                    spot.setLocation((Double) row[2], (Double) row[3], (Double) row[4]);
+                    spot.setOrientation((Double) row[5], (Double) row[6]);
+                    retv.put((String) row[0], spot);
                 }
             }
-            return(retv);
+            return (retv);
         }
 
         public String getColumnName(int col) {
             return columnNames[col].toString();
         }
 
-        public int getRowCount() { return rowData.length; }
-        public int getColumnCount() { return columnNames.length; }
+        public int getRowCount() {
+            return rowData.length;
+        }
+
+        public int getColumnCount() {
+            return columnNames.length;
+        }
+
         public Object getValueAt(int row, int col) {
             return rowData[row][col];
         }
-        public boolean isCellEditable(int row, int col) { return true; }
+
+        public boolean isCellEditable(int row, int col) {
+            return true;
+        }
+
         public void setValueAt(Object value, int row, int col) {
             rowData[row][col] = value;
             fireTableCellUpdated(row, col);
         }
 
         public Class<?> getColumnClass(int columnIndex) {
-            switch(columnIndex) {
-            case 1:
-                return Boolean.class;
-            case 6:
-            case 5:
-            case 4:
-            case 3:
-            case 2:
-                return Double.class;
-            case 0:
-            default:
-                return super.getColumnClass(columnIndex);
+            switch (columnIndex) {
+                case 1:
+                    return Boolean.class;
+                case 6:
+                case 5:
+                case 4:
+                case 3:
+                case 2:
+                    return Double.class;
+                case 0:
+                default:
+                    return super.getColumnClass(columnIndex);
             }
         }
 

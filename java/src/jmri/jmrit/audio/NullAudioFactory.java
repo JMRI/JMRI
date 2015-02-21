@@ -1,36 +1,33 @@
 // NullAudioFactory.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.List;
 import jmri.Audio;
 import jmri.AudioManager;
 import jmri.InstanceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This is the null audio system specific AudioFactory.
- * 
- * It is a dummy factory which provides the necessary object generation but
- * does not produce any sound. This will normally only be used when running on
- * a system that has no sound-card installed.
+ *
+ * It is a dummy factory which provides the necessary object generation but does
+ * not produce any sound. This will normally only be used when running on a
+ * system that has no sound-card installed.
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class NullAudioFactory extends AbstractAudioFactory {
@@ -41,7 +38,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
 
     @Override
     public boolean init() {
-        if(_initialised) {
+        if (_initialised) {
             return true;
         }
 
@@ -69,10 +66,12 @@ public class NullAudioFactory extends AbstractAudioFactory {
 
         // Retrieve list of Audio Objects and remove the sources
         List<String> audios = am.getSystemNameList();
-        for (String audioName: audios) {
+        for (String audioName : audios) {
             Audio audio = am.getAudio(audioName);
-            if (audio.getSubType()==Audio.SOURCE) {
-                if (log.isDebugEnabled()) log.debug("Removing NullAudioSource: "+ audioName);
+            if (audio.getSubType() == Audio.SOURCE) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Removing NullAudioSource: " + audioName);
+                }
                 // Cast to NullAudioSource and cleanup
                 ((NullAudioSource) audio).cleanUp();
             }
@@ -80,10 +79,12 @@ public class NullAudioFactory extends AbstractAudioFactory {
 
         // Now, re-retrieve list of Audio objects and remove the buffers
         audios = am.getSystemNameList();
-        for (String audioName: audios) {
+        for (String audioName : audios) {
             Audio audio = am.getAudio(audioName);
-            if (audio.getSubType()==Audio.BUFFER) {
-                if (log.isDebugEnabled()) log.debug("Removing NullAudioBuffer: "+ audioName);
+            if (audio.getSubType() == Audio.BUFFER) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Removing NullAudioBuffer: " + audioName);
+                }
                 // Cast to NullAudioBuffer and cleanup
                 ((NullAudioBuffer) audio).cleanUp();
             }
@@ -91,10 +92,12 @@ public class NullAudioFactory extends AbstractAudioFactory {
 
         // Lastly, re-retrieve list and remove listener.
         audios = am.getSystemNameList();
-        for (String audioName: audios) {
+        for (String audioName : audios) {
             Audio audio = am.getAudio(audioName);
-            if (audio.getSubType()==Audio.LISTENER) {
-                if (log.isDebugEnabled()) log.debug("Removing NullAudioListener: "+ audioName);
+            if (audio.getSubType() == Audio.LISTENER) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Removing NullAudioListener: " + audioName);
+                }
                 // Cast to NullAudioListener and cleanup
                 ((NullAudioListener) audio).cleanUp();
             }
@@ -112,7 +115,7 @@ public class NullAudioFactory extends AbstractAudioFactory {
 
     @Override
     public AudioListener createNewListener(String systemName, String userName) {
-        activeAudioListener =  new NullAudioListener(systemName, userName);
+        activeAudioListener = new NullAudioListener(systemName, userName);
         return activeAudioListener;
     }
 

@@ -1,42 +1,46 @@
 // IndexedEnumVariableValue.java
-
 package jmri.jmrit.symbolicprog;
 
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import javax.swing.ComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.awt.*;
-import java.awt.event.*;
-import java.beans.*;
-import javax.swing.*;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.HashMap;
 
 /**
  * Extends VariableValue to represent a enumerated indexed variable.
  *
- * @author    Howard G. Penny   Copyright (C) 2005
- * @author	  Bob Jacobsen   Copyright (C) 2013
- * @version   $Revision$
+ * @author Howard G. Penny Copyright (C) 2005
+ * @author	Bob Jacobsen Copyright (C) 2013
+ * @version $Revision$
  * @deprecated // since 3.7.1
  *
  */
 @Deprecated // since 3.7.1
 public class IndexedEnumVariableValue extends VariableValue
-    implements ActionListener, PropertyChangeListener {
+        implements ActionListener, PropertyChangeListener {
 
     public IndexedEnumVariableValue(String name, String comment, String cvName,
-                                    boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
-                                    String cvNum, String mask,
-                                    HashMap<String, CvValue> v, JLabel status, String stdname) {
+            boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
+            String cvNum, String mask,
+            HashMap<String, CvValue> v, JLabel status, String stdname) {
         super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, v, status, stdname);
     }
 
     /**
-     * Create a null object.  Normally only used for tests and to pre-load classes.
+     * Create a null object. Normally only used for tests and to pre-load
+     * classes.
      */
-    protected IndexedEnumVariableValue() {}
+    protected IndexedEnumVariableValue() {
+    }
 
     int _minVal;
     int _maxVal;
@@ -46,15 +50,13 @@ public class IndexedEnumVariableValue extends VariableValue
             _cvMap.get(getCvName())};
     }
 
-    /** 
-     * Provide a user-readable description of
-     * the CVs accessed by this variable.
+    /**
+     * Provide a user-readable description of the CVs accessed by this variable.
      */
-     
-     public String getCvDescription() {
-        return "CV"+getCvName();
-     }
-     
+    public String getCvDescription() {
+        return "CV" + getCvName();
+    }
+
     public void nItems(int n) {
         _itemArray = new String[n];
         _valueArray = new int[n];
@@ -62,23 +64,23 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     /**
-     * Create a new item in the enumeration, with an associated
-     * value one more than the last item (or zero if this is the first
-     * one added)
-     * @param s  Name of the enumeration item
+     * Create a new item in the enumeration, with an associated value one more
+     * than the last item (or zero if this is the first one added)
+     *
+     * @param s Name of the enumeration item
      */
     public void addItem(String s) {
         if (_nstored == 0) {
             addItem(s, 0);
         } else {
-            addItem(s, _valueArray[_nstored-1]+1);
+            addItem(s, _valueArray[_nstored - 1] + 1);
         }
     }
 
     /**
-     * Create a new item in the enumeration, with a specified
-     * associated value.
-     * @param s  Name of the enumeration item
+     * Create a new item in the enumeration, with a specified associated value.
+     *
+     * @param s Name of the enumeration item
      */
     public void addItem(String s, int value) {
         if (_nstored == 0) {
@@ -90,7 +92,7 @@ public class IndexedEnumVariableValue extends VariableValue
 
     public void lastItem() {
         // we now know the maxVal, store it for whatever reason
-        _maxVal = _valueArray[_nstored-1];
+        _maxVal = _valueArray[_nstored - 1];
         _value = new JComboBox<String>(_itemArray);
         // finish initialization
         _value.setActionCommand("8");
@@ -100,7 +102,7 @@ public class IndexedEnumVariableValue extends VariableValue
         // connect to the JComboBox model and the CV so we'll see changes.
         _value.addActionListener(this);
         CvValue cv = (_cvMap.get(getCvName()));
-        if (cv!=null) {
+        if (cv != null) {
             cv.addPropertyChangeListener(this);
             if (cv.getInfoOnly()) {
                 cv.setState(CvValue.READ);
@@ -108,7 +110,7 @@ public class IndexedEnumVariableValue extends VariableValue
                 cv.setState(CvValue.FROMFILE);
             }
         } else {
-            log.warn("Did not find CV "+getCvName());
+            log.warn("Did not find CV " + getCvName());
         }
     }
 
@@ -128,7 +130,7 @@ public class IndexedEnumVariableValue extends VariableValue
     Color _defaultColor;
 
     public Object rangeVal() {
-        return "enum: "+_minVal+" - "+_maxVal;
+        return "enum: " + _minVal + " - " + _maxVal;
     }
 
     public void actionPerformed(ActionEvent e) {
@@ -138,7 +140,9 @@ public class IndexedEnumVariableValue extends VariableValue
             // is from alternate rep
             _value.setSelectedItem(e.getActionCommand());
         }
-        if (log.isDebugEnabled()) log.debug("action event: "+e);
+        if (log.isDebugEnabled()) {
+            log.debug("action event: " + e);
+        }
 
         // called for new values - set the CV as needed
         CvValue cv = _cvMap.get(getCvName());
@@ -156,8 +160,9 @@ public class IndexedEnumVariableValue extends VariableValue
     // to complete this class, fill in the routines to handle "Value" parameter
     // and to read/write/hear parameter changes.
     public String getValueString() {
-        return ""+_value.getSelectedIndex();
+        return "" + _value.getSelectedIndex();
     }
+
     public void setIntValue(int i) {
         selectValue(i);
     }
@@ -169,39 +174,46 @@ public class IndexedEnumVariableValue extends VariableValue
     /**
      * Set to a specific value.
      *
-     * This searches for the displayed value, and sets the
-     * enum to that particular one.
+     * This searches for the displayed value, and sets the enum to that
+     * particular one.
      *
      * If the value is larger than any defined, a new one is created.
+     *
      * @param value
      */
     protected void selectValue(int value) {
-        if (value>256) log.error("Saw unreasonable internal value: "+value);
-        for (int i = 0; i<_valueArray.length; i++)
-            if (_valueArray[i]==value) {
+        if (value > 256) {
+            log.error("Saw unreasonable internal value: " + value);
+        }
+        for (int i = 0; i < _valueArray.length; i++) {
+            if (_valueArray[i] == value) {
                 //found it, select it
                 _value.setSelectedIndex(i);
                 return;
             }
+        }
 
         // We can be commanded to a number that hasn't been defined.
         // But that's OK for certain applications.  Instead, we add them as needed
-        log.debug("Create new item with value "+value+" count was "+_value.getItemCount()
-                        +" in "+label());
-        _value.addItem("Reserved value "+value);
+        log.debug("Create new item with value " + value + " count was " + _value.getItemCount()
+                + " in " + label());
+        _value.addItem("Reserved value " + value);
         // and value array is too short
         int[] oldArray = _valueArray;
-        _valueArray = new int[oldArray.length+1];
-        for (int i = 0; i<oldArray.length; i++) _valueArray[i] = oldArray[i];
+        _valueArray = new int[oldArray.length + 1];
+        for (int i = 0; i < oldArray.length; i++) {
+            _valueArray[i] = oldArray[i];
+        }
         _valueArray[oldArray.length] = value;
 
-        _value.setSelectedItem("Reserved value "+value);
+        _value.setSelectedItem("Reserved value " + value);
     }
 
     public int getIntValue() {
-        if ((_value.getSelectedIndex()>=_valueArray.length) || _value.getSelectedIndex()<0)
-            log.error("trying to get value "+_value.getSelectedIndex()+" too large"
-                    +" for array length "+_valueArray.length);
+        if ((_value.getSelectedIndex() >= _valueArray.length) || _value.getSelectedIndex() < 0) {
+            log.error("trying to get value " + _value.getSelectedIndex() + " too large"
+                    + " for array length " + _valueArray.length);
+        }
         return _valueArray[_value.getSelectedIndex()];
     }
 
@@ -209,14 +221,17 @@ public class IndexedEnumVariableValue extends VariableValue
         return Integer.valueOf(_value.getSelectedIndex());
     }
 
-    public Component getCommonRep()  { return _value; }
+    public Component getCommonRep() {
+        return _value;
+    }
 
     public void setValue(int value) {
         int oldVal = getIntValue();
         selectValue(value);
 
-        if ((oldVal != value) || (getState() == VariableValue.UNKNOWN))
+        if ((oldVal != value) || (getState() == VariableValue.UNKNOWN)) {
             prop.firePropertyChange("Value", null, Integer.valueOf(value));
+        }
     }
 
     public Component getNewRep(String format) {
@@ -226,22 +241,21 @@ public class IndexedEnumVariableValue extends VariableValue
             IndexedComboCheckBox b = new IndexedComboCheckBox(_value, this);
             comboCBs.add(b);
             updateRepresentation(b);
-            if (!getAvailable()) b.setVisible(false);
+            if (!getAvailable()) {
+                b.setVisible(false);
+            }
             return b;
-        }
-        else if (format.equals("radiobuttons")) {
+        } else if (format.equals("radiobuttons")) {
             ComboRadioButtons b = new ComboRadioButtons(_value, this);
             comboRBs.add(b);
             updateRepresentation(b);
             return b;
-        }
-        else if (format.equals("onradiobutton")) {
+        } else if (format.equals("onradiobutton")) {
             ComboRadioButtons b = new ComboOnRadioButton(_value, this);
             comboRBs.add(b);
             updateRepresentation(b);
             return b;
-        }
-        else if (format.equals("offradiobutton")) {
+        } else if (format.equals("offradiobutton")) {
             ComboRadioButtons b = new ComboOffRadioButton(_value, this);
             comboRBs.add(b);
             updateRepresentation(b);
@@ -265,7 +279,7 @@ public class IndexedEnumVariableValue extends VariableValue
         if (_value != null) {
             if (c != null) {
                 _value.setBackground(c);
-        } else {
+            } else {
                 _value.setBackground(_defaultColor);
             }
         }
@@ -277,12 +291,18 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     public void setAvailable(boolean a) {
-        for (IndexedComboCheckBox c : comboCBs) c.setVisible(a);
-        for (IVarComboBox c : comboVars) c.setVisible(a);
-        for (ComboRadioButtons c : comboRBs) c.setVisible(a);
+        for (IndexedComboCheckBox c : comboCBs) {
+            c.setVisible(a);
+        }
+        for (IVarComboBox c : comboVars) {
+            c.setVisible(a);
+        }
+        for (ComboRadioButtons c : comboRBs) {
+            c.setVisible(a);
+        }
         super.setAvailable(a);
     }
-    
+
     private int _progState = 0;
     private static final int IDLE = 0;
     private static final int WRITING_PI4R = 1;
@@ -295,18 +315,20 @@ public class IndexedEnumVariableValue extends VariableValue
     private static final int WRITING_SI4C = 8;
     private static final int COMPARE_CV = 9;
 
-   /**
+    /**
      * Count number of retries done
      */
     private int retries = 0;
-    
+
     /**
-     * Define maximum number of retries of read/write operations before moving on
+     * Define maximum number of retries of read/write operations before moving
+     * on
      */
     private static final int RETRY_MAX = 2;
 
     /**
      * Notify the connected CVs of a state change from above
+     *
      * @param state
      */
     public void setCvState(int state) {
@@ -314,16 +336,26 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     public void setToRead(boolean state) {
-        if (getInfoOnly() || getWriteOnly()) state = false;
+        if (getInfoOnly() || getWriteOnly()) {
+            state = false;
+        }
         (_cvMap.get(getCvName())).setToRead(state);
     }
-    public boolean isToRead() { return getAvailable() && (_cvMap.get(getCvName())).isToRead(); }
+
+    public boolean isToRead() {
+        return getAvailable() && (_cvMap.get(getCvName())).isToRead();
+    }
 
     public void setToWrite(boolean state) {
-        if (getInfoOnly() || getReadOnly()) state = false;
+        if (getInfoOnly() || getReadOnly()) {
+            state = false;
+        }
         (_cvMap.get(getCvName())).setToWrite(state);
     }
-    public boolean isToWrite() { return getAvailable() && (_cvMap.get(getCvName())).isToWrite(); }
+
+    public boolean isToWrite() {
+        return getAvailable() && (_cvMap.get(getCvName())).isToWrite();
+    }
 
     public boolean isChanged() {
         CvValue cv = (_cvMap.get(getCvName()));
@@ -331,25 +363,33 @@ public class IndexedEnumVariableValue extends VariableValue
     }
 
     public void readChanges() {
-         if (isChanged()) readAll();
+        if (isChanged()) {
+            readAll();
+        }
     }
 
     public void writeChanges() {
-         if (isChanged()) writeAll();
+        if (isChanged()) {
+            writeAll();
+        }
     }
 
     public void readAll() {
         setBusy(true);  // will be reset when value changes
         setToRead(false);
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
-         // lets skip the SI step if SI is not used
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+        }
+        // lets skip the SI step if SI is not used
         if ((_cvMap.get(getCvName())).siVal() >= 0) {
             _progState = WRITING_PI4R;
         } else { // lets skip this step if SI is not used
             _progState = WRITING_SI4R;
         }
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("invoke PI write for CV read");
+        if (log.isDebugEnabled()) {
+            log.debug("invoke PI write for CV read");
+        }
         // to read any indexed CV we must write the PI
         (_cvMap.get(getCvName())).writePI(_status);
     }
@@ -360,7 +400,9 @@ public class IndexedEnumVariableValue extends VariableValue
         }
         setBusy(true);  // will be reset when value changes
         setToWrite(false);
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in write()");
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in write()");
+        }
         // lets skip the SI step if SI is not used
         if ((_cvMap.get(getCvName())).siVal() >= 0) {
             _progState = WRITING_PI4W;
@@ -368,15 +410,19 @@ public class IndexedEnumVariableValue extends VariableValue
             _progState = WRITING_SI4W;
         }
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("invoke PI write for CV write");
+        if (log.isDebugEnabled()) {
+            log.debug("invoke PI write for CV write");
+        }
         // to write any indexed CV we must write the PI first
         (_cvMap.get(getCvName())).writePI(_status);
     }
-    
+
     public void confirmAll() {
         setBusy(true);  // will be reset when value changes
         setToRead(false);
-        if (_progState != IDLE) log.warn("Programming state "+_progState+", not IDLE, in read()");
+        if (_progState != IDLE) {
+            log.warn("Programming state " + _progState + ", not IDLE, in read()");
+        }
         // lets skip the SI step if SI is not used
         if ((_cvMap.get(getCvName())).siVal() >= 0) {
             _progState = WRITING_PI4C;
@@ -384,129 +430,146 @@ public class IndexedEnumVariableValue extends VariableValue
             _progState = WRITING_SI4C;
         }
         retries = 0;
-        if (log.isDebugEnabled()) log.debug("invoke PI write for CV confirm");
+        if (log.isDebugEnabled()) {
+            log.debug("invoke PI write for CV confirm");
+        }
         // to read any indexed CV we must write the PI
         (_cvMap.get(getCvName())).writePI(_status);
     }
 
     // handle incoming parameter notification
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (log.isDebugEnabled()) log.debug("Property changed: "+e.getPropertyName());
+        if (log.isDebugEnabled()) {
+            log.debug("Property changed: " + e.getPropertyName());
+        }
         // notification from CV; check for Value being changed
-        if (e.getPropertyName().equals("Busy") && ((Boolean)e.getNewValue()).equals(Boolean.FALSE)) {
+        if (e.getPropertyName().equals("Busy") && ((Boolean) e.getNewValue()).equals(Boolean.FALSE)) {
             // busy transitions drive the state
             switch (_progState) {
-            case IDLE:  // no, just an Indexed CV update
-                if (log.isDebugEnabled()) log.error("Busy goes false with state IDLE");
-                return;
-            case WRITING_PI4R:   // have written the PI, now write SI if needed
-            case WRITING_PI4C:
-            case WRITING_PI4W:
-                if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_PI");
-                // check for success
-                if ((retries < RETRY_MAX)
-                    && ( (_cvMap.get(getCvName())).getState() != CvValue.STORED) ) {
-                    // need to retry on error; leave progState as it was
-                    log.debug("retry");
-                    retries++;
-                    (_cvMap.get(getCvName())).writePI(_status);
+                case IDLE:  // no, just an Indexed CV update
+                    if (log.isDebugEnabled()) {
+                        log.error("Busy goes false with state IDLE");
+                    }
                     return;
-                }
-                // success, move on to next
-                retries = 0;
+                case WRITING_PI4R:   // have written the PI, now write SI if needed
+                case WRITING_PI4C:
+                case WRITING_PI4W:
+                    if (log.isDebugEnabled()) {
+                        log.debug("Busy goes false with state WRITING_PI");
+                    }
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                            && ((_cvMap.get(getCvName())).getState() != CvValue.STORED)) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        (_cvMap.get(getCvName())).writePI(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
 
-                if (_progState == WRITING_PI4R )
-                	_progState = WRITING_SI4R;
-                else if (_progState == WRITING_PI4C )
-                	_progState = WRITING_SI4C;
-                else
-                	_progState = WRITING_SI4W;
-                (_cvMap.get(getCvName())).writeSI(_status);
-                return;
-            case WRITING_SI4R:  // have written the SI if needed, now read or write CV
-            case WRITING_SI4C:
-            case WRITING_SI4W:
-                if (log.isDebugEnabled()) log.debug("Busy goes false with state WRITING_SI");
-                // check for success
-                if ((retries < RETRY_MAX)
-                    && ( (_cvMap.get(getCvName())).getState() != CvValue.STORED) ) {
-                    // need to retry on error; leave progState as it was
-                    log.debug("retry");
-                    retries++;
+                    if (_progState == WRITING_PI4R) {
+                        _progState = WRITING_SI4R;
+                    } else if (_progState == WRITING_PI4C) {
+                        _progState = WRITING_SI4C;
+                    } else {
+                        _progState = WRITING_SI4W;
+                    }
                     (_cvMap.get(getCvName())).writeSI(_status);
                     return;
-                }
-                // success, move on to next
-                retries = 0;
-                if (_progState == WRITING_SI4R ) {
-                    _progState = READING_CV;
-                    (_cvMap.get(getCvName())).readIcV(_status);
-                } else if (_progState == WRITING_SI4C ) {
-                    _progState = COMPARE_CV;
-                    (_cvMap.get(getCvName())).confirmIcV(_status);
-                 } else {
-                    _progState = WRITING_CV;
-                    (_cvMap.get(getCvName())).writeIcV(_status);
-                }
-                return;
-            case READING_CV:  // now done with the read request
-                if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV");
-                // check for success
-                if ((retries < RETRY_MAX)
-                    && ( (_cvMap.get(getCvName())).getState() != CvValue.READ) ) {
-                    // need to retry on error; leave progState as it was
-                    log.debug("retry");
-                    retries++;
-                    (_cvMap.get(getCvName())).readIcV(_status);
+                case WRITING_SI4R:  // have written the SI if needed, now read or write CV
+                case WRITING_SI4C:
+                case WRITING_SI4W:
+                    if (log.isDebugEnabled()) {
+                        log.debug("Busy goes false with state WRITING_SI");
+                    }
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                            && ((_cvMap.get(getCvName())).getState() != CvValue.STORED)) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        (_cvMap.get(getCvName())).writeSI(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    if (_progState == WRITING_SI4R) {
+                        _progState = READING_CV;
+                        (_cvMap.get(getCvName())).readIcV(_status);
+                    } else if (_progState == WRITING_SI4C) {
+                        _progState = COMPARE_CV;
+                        (_cvMap.get(getCvName())).confirmIcV(_status);
+                    } else {
+                        _progState = WRITING_CV;
+                        (_cvMap.get(getCvName())).writeIcV(_status);
+                    }
                     return;
-                }
-                // success, move on to next
-                retries = 0;
-                _progState = IDLE;
-                setBusy(false);
-                return;
-            case COMPARE_CV:  // now done with the read request
-                if (log.isDebugEnabled()) log.debug("Finished reading the Indexed CV for compare");
+                case READING_CV:  // now done with the read request
+                    if (log.isDebugEnabled()) {
+                        log.debug("Finished reading the Indexed CV");
+                    }
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                            && ((_cvMap.get(getCvName())).getState() != CvValue.READ)) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        (_cvMap.get(getCvName())).readIcV(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    _progState = IDLE;
+                    setBusy(false);
+                    return;
+                case COMPARE_CV:  // now done with the read request
+                    if (log.isDebugEnabled()) {
+                        log.debug("Finished reading the Indexed CV for compare");
+                    }
 
-                // check for success SAME or DIFF?
-                if ((retries < RETRY_MAX)
-						&& (( _cvMap.get(getCvName()))
-								.getState() != CvValue.SAME)
-						&& (( _cvMap.get(getCvName()))
-								.getState() != CvValue.DIFF)) {
-					// need to retry on error; leave progState as it was
-                    log.debug("retry");
-                    retries++;
-                    (_cvMap.get(getCvName())).confirmIcV(_status);
-                    return;
-                }
-                // success, move on to next
-                retries = 0;
+                    // check for success SAME or DIFF?
+                    if ((retries < RETRY_MAX)
+                            && ((_cvMap.get(getCvName()))
+                            .getState() != CvValue.SAME)
+                            && ((_cvMap.get(getCvName()))
+                            .getState() != CvValue.DIFF)) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        (_cvMap.get(getCvName())).confirmIcV(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
 
-                _progState = IDLE;
-                setBusy(false);
-                return;
-            case WRITING_CV:  // now done with the write request
-                if (log.isDebugEnabled()) log.debug("Finished writing the Indexed CV");
-                // check for success
-                if ((retries < RETRY_MAX)
-                    && ( (_cvMap.get(getCvName())).getState() != CvValue.STORED) ) {
-                    // need to retry on error; leave progState as it was
-                    log.debug("retry");
-                    retries++;
-                    (_cvMap.get(getCvName())).writeIcV(_status);
+                    _progState = IDLE;
+                    setBusy(false);
                     return;
-                }
-                // success, move on to next
-                retries = 0;
-                _progState = IDLE;
-                super.setState(STORED);
-                setBusy(false);
-                return;
-            default:  // unexpected!
-                log.error("Unexpected state found: "+_progState);
-                _progState = IDLE;
-                return;
+                case WRITING_CV:  // now done with the write request
+                    if (log.isDebugEnabled()) {
+                        log.debug("Finished writing the Indexed CV");
+                    }
+                    // check for success
+                    if ((retries < RETRY_MAX)
+                            && ((_cvMap.get(getCvName())).getState() != CvValue.STORED)) {
+                        // need to retry on error; leave progState as it was
+                        log.debug("retry");
+                        retries++;
+                        (_cvMap.get(getCvName())).writeIcV(_status);
+                        return;
+                    }
+                    // success, move on to next
+                    retries = 0;
+                    _progState = IDLE;
+                    super.setState(STORED);
+                    setBusy(false);
+                    return;
+                default:  // unexpected!
+                    log.error("Unexpected state found: " + _progState);
+                    _progState = IDLE;
+                    return;
             }
         } else if (e.getPropertyName().equals("State")) {
             CvValue cv = _cvMap.get(getCvName());
@@ -532,21 +595,23 @@ public class IndexedEnumVariableValue extends VariableValue
     public static class IVarComboBox extends JComboBox<String> {
 
         /**
-		 * 
-		 */
-		private static final long serialVersionUID = 2425259609787639833L;
-		IndexedEnumVariableValue _var;
+         *
+         */
+        private static final long serialVersionUID = 2425259609787639833L;
+        IndexedEnumVariableValue _var;
         transient java.beans.PropertyChangeListener _l = null;
 
         IVarComboBox(ComboBoxModel<String> m, IndexedEnumVariableValue var) {
             super(m);
             _var = var;
             _l = new java.beans.PropertyChangeListener() {
-                    public void propertyChange(java.beans.PropertyChangeEvent e) {
-                        if (log.isDebugEnabled()) log.debug("VarComboBox saw property change: "+e);
-                        originalPropertyChanged(e);
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (log.isDebugEnabled()) {
+                        log.debug("VarComboBox saw property change: " + e);
                     }
-                };
+                    originalPropertyChanged(e);
+                }
+            };
             // get the original color right
             setBackground(_var._value.getBackground());
             setOpaque(true);
@@ -563,7 +628,9 @@ public class IndexedEnumVariableValue extends VariableValue
         }
 
         public void dispose() {
-            if (_var != null && _l != null ) _var.removePropertyChangeListener(_l);
+            if (_var != null && _l != null) {
+                _var.removePropertyChangeListener(_l);
+            }
             _l = null;
             _var = null;
         }
@@ -571,17 +638,21 @@ public class IndexedEnumVariableValue extends VariableValue
 
     // clean up connections when done
     public void dispose() {
-        if (log.isDebugEnabled()) log.debug("dispose");
-        if (_value != null) _value.removeActionListener(this);
+        if (log.isDebugEnabled()) {
+            log.debug("dispose");
+        }
+        if (_value != null) {
+            _value.removeActionListener(this);
+        }
         (_cvMap.get(getCvName())).removePropertyChangeListener(this);
 
-        for (int i = 0; i<comboCBs.size(); i++) {
+        for (int i = 0; i < comboCBs.size(); i++) {
             comboCBs.get(i).dispose();
         }
-        for (int i = 0; i<comboVars.size(); i++) {
+        for (int i = 0; i < comboVars.size(); i++) {
             comboVars.get(i).dispose();
         }
-        for (int i = 0; i<comboRBs.size(); i++) {
+        for (int i = 0; i < comboRBs.size(); i++) {
             comboRBs.get(i).dispose();
         }
 

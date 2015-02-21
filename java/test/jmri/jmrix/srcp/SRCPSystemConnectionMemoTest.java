@@ -1,10 +1,10 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * SRCPSystemConnectionMemoTest.java
@@ -22,9 +22,9 @@ public class SRCPSystemConnectionMemoTest extends TestCase {
     }
 
     public void testTCCtor() {
-        SRCPTrafficController et = new SRCPTrafficController(){
+        SRCPTrafficController et = new SRCPTrafficController() {
             @Override
-            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
         };
@@ -34,13 +34,13 @@ public class SRCPSystemConnectionMemoTest extends TestCase {
 
     // Full Constructor specifies prefix,name, and traffic controller.
     public void testFullCtor() {
-        SRCPTrafficController et = new SRCPTrafficController(){
+        SRCPTrafficController et = new SRCPTrafficController() {
             @Override
-            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
         };
-        SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo("D","SRCP",et);
+        SRCPSystemConnectionMemo m = new SRCPSystemConnectionMemo("D", "SRCP", et);
         Assert.assertNotNull(m);
     }
 

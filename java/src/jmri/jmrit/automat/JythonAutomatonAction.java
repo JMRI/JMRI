@@ -1,27 +1,26 @@
 // JythonAutomatonAction.java
-
 package jmri.jmrit.automat;
 
-import javax.swing.AbstractAction;
 import java.awt.event.ActionEvent;
-import java.io.*;
-import javax.swing.*;
+import java.io.File;
+import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 
 /**
- * Swing action to create and register a
- * JythonAutomaton object
+ * Swing action to create and register a JythonAutomaton object
  *
- * @author	    Bob Jacobsen    Copyright (C) 2003, 2007
- * @version         $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003, 2007
+ * @version $Revision$
  */
 public class JythonAutomatonAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6659056356505294196L;
+     *
+     */
+    private static final long serialVersionUID = -6659056356505294196L;
 
-	public JythonAutomatonAction(String s, JPanel who) {
+    public JythonAutomatonAction(String s, JPanel who) {
         super(s);
         _who = who;
     }

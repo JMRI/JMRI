@@ -1,10 +1,10 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * SRCPTurnoutManagerTest.java
@@ -22,14 +22,14 @@ public class SRCPTurnoutManagerTest extends TestCase {
     }
 
     public void testBusCtor() {
-        SRCPTrafficController et = new SRCPTrafficController(){
+        SRCPTrafficController et = new SRCPTrafficController() {
             @Override
-            public void sendSRCPMessage(SRCPMessage m,SRCPListener l){
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener l) {
                 // we aren't actually sending anything to a layout.
             }
         };
-        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et,"TEST",1);
-        SRCPTurnoutManager m = new SRCPTurnoutManager(memo,memo.getBus());
+        SRCPBusConnectionMemo memo = new SRCPBusConnectionMemo(et, "TEST", 1);
+        SRCPTurnoutManager m = new SRCPTurnoutManager(memo, memo.getBus());
         Assert.assertNotNull(m);
     }
 

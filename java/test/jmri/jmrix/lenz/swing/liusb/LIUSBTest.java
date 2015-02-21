@@ -1,22 +1,20 @@
 // LIUSBTest.java
-
-
 package jmri.jmrix.lenz.swing.liusb;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.liusb package
- * @author                      Paul Bender  
- * @version                     $Revision$
+ *
+ * @author Paul Bender
+ * @version $Revision$
  */
 public class LIUSBTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public LIUSBTest(String s) {
         super(s);
     }
@@ -37,4 +35,3 @@ public class LIUSBTest extends TestCase {
     static Logger log = Logger.getLogger(LIUSBTest.class.getName());
 
 }
-

@@ -1,5 +1,4 @@
 // PrintRosterAction.java
-
 package jmri.jmrit.roster;
 
 import java.awt.Frame;
@@ -14,42 +13,40 @@ import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
 /**
  * Action to print a summary of the Roster contents
  * <P>
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author  Dennis Miller  Copyright (C) 2005
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
+ * @version $Revision$
  */
-public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
+public class PrintRosterAction extends jmri.util.swing.JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8641271368187099365L;
+     *
+     */
+    private static final long serialVersionUID = -8641271368187099365L;
 
-
-	public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
-    	super(s, wi);
+    public PrintRosterAction(String s, jmri.util.swing.WindowInterface wi) {
+        super(s, wi);
         isPreview = true;
     }
-     
- 	public PrintRosterAction(String s, javax.swing.Icon i, jmri.util.swing.WindowInterface wi) {
-    	super(s, i, wi);
+
+    public PrintRosterAction(String s, javax.swing.Icon i, jmri.util.swing.WindowInterface wi) {
+        super(s, i, wi);
         isPreview = true;
     }
-    
+
     public PrintRosterAction(String actionName, Frame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;
     }
-    
-    public void setPreview(boolean preview){
+
+    public void setPreview(boolean preview) {
         isPreview = preview;
     }
 
@@ -61,7 +58,6 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
      * Variable to set whether this is to be printed or previewed
      */
     boolean isPreview;
-    
 
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter to do this
@@ -74,7 +70,7 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         if (Beans.hasProperty(wi, "selectedRosterGroup")) {
             rosterGroup = (String) Beans.getProperty(wi, "selectedRosterGroup");
         }
-        if(rosterGroup==null){
+        if (rosterGroup == null) {
             title = title + " All Entries";
         } else {
             title = title + " Group " + rosterGroup + " Entires";
@@ -93,19 +89,20 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         writer.write(icon.getImage(), new JLabel(icon));
         //Add a number of blank lines, so that the roster entry starts below the decoderpro logo
         int height = icon.getImage().getHeight(null);
-        int blanks = (height-writer.getLineAscent())/writer.getLineHeight();
-        
-        try{
-            for(int i = 0; i<blanks; i++){
+        int blanks = (height - writer.getLineAscent()) / writer.getLineHeight();
+
+        try {
+            for (int i = 0; i < blanks; i++) {
                 String s = "\n";
-                writer.write(s,0,s.length());
+                writer.write(s, 0, s.length());
             }
-        } catch (IOException ex) { log.warn("error during printing: "+ex);
+        } catch (IOException ex) {
+            log.warn("error during printing: " + ex);
         }
 
         // Loop through the Roster, printing as needed
         List<RosterEntry> l = r.matchingList(null, null, null, null, null, null, null); // take all
-        log.debug("Roster list size: "+l.size());
+        log.debug("Roster list size: " + l.size());
         for (RosterEntry re : l) {
             if (rosterGroup != null) {
                 if (re.getAttribute(Roster.getRosterGroupProperty(rosterGroup)) != null
@@ -120,20 +117,21 @@ public class PrintRosterAction  extends jmri.util.swing.JmriAbstractAction {
         // and force completion of the printing
         writer.close();
     }
-    
+
     // never invoked, because we overrode actionPerformed above
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-    
-    public void setParameter(String parameter, String value){
+
+    public void setParameter(String parameter, String value) {
         parameter = parameter.toLowerCase();
         value = value.toLowerCase();
-        if(parameter.equals("ispreview")){
-            if(value.equals("true"))
-                isPreview=true;
-            else
-                isPreview=false;
+        if (parameter.equals("ispreview")) {
+            if (value.equals("true")) {
+                isPreview = true;
+            } else {
+                isPreview = false;
+            }
         }
     }
 

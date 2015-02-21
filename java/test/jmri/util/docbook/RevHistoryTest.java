@@ -1,5 +1,4 @@
 // RevHistoryTest.java
-
 package jmri.util.docbook;
 
 import junit.framework.Assert;
@@ -9,8 +8,9 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.util.docbook.RevHistory class.
- * @author	Bob Jacobsen     Copyright (C) 2010
- * @version     $Revision$
+ *
+ * @author	Bob Jacobsen Copyright (C) 2010
+ * @version $Revision$
  */
 public class RevHistoryTest extends TestCase {
 
@@ -22,7 +22,7 @@ public class RevHistoryTest extends TestCase {
         RevHistory r = new RevHistory();
         r.addRevision("one");
         r.addRevision("two");
-        
+
         Assert.assertEquals(2, r.list.size());
 
         Assert.assertEquals(1, r.list.get(0).revnumber);
@@ -38,15 +38,13 @@ public class RevHistoryTest extends TestCase {
         r2.addRevision(3, "date 3", "initials 3", "remark 3");
 
         String result = r2.toString(" ");
-        String expected = " 2, date 2, initials 2, remark 2\n"+
-                          " 3, date 3, initials 3, remark 3\n";
+        String expected = " 2, date 2, initials 2, remark 2\n"
+                + " 3, date 3, initials 3, remark 3\n";
 
         Assert.assertEquals(expected, result);
     }
-    
 
     // from here down is testing infrastructure
-
     public RevHistoryTest(String s) {
         super(s);
     }
@@ -64,7 +62,12 @@ public class RevHistoryTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
 }

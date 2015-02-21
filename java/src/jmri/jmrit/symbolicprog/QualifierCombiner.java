@@ -1,5 +1,4 @@
 // QualifierCombiner.java
-
 package jmri.jmrit.symbolicprog;
 
 import java.util.List;
@@ -7,24 +6,24 @@ import java.util.List;
 /**
  * Force a set of Qualifiers to work in an AND relationship.
  * <P>
- * On transition, the qualifiers are evaluated in order, 
- * stopping when the outcome is known.
+ * On transition, the qualifiers are evaluated in order, stopping when the
+ * outcome is known.
  *
- * @author			Bob Jacobsen   Copyright (C) 2011
- * @version			$Revision: -1$
+ * @author	Bob Jacobsen Copyright (C) 2011
+ * @version	$Revision: -1$
  *
  */
 public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeListener {
-    
+
     public QualifierCombiner(List<Qualifier> qualifiers) {
         this.qualifiers = qualifiers;
-        
+
         setWatchedAvailable(currentDesiredState());
 
     }
 
     List<Qualifier> qualifiers;
-    
+
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         // this was a change, may want to change it back
         setWatchedAvailable(currentDesiredState());  // relies on non-propogation of null changes
@@ -35,13 +34,15 @@ public class QualifierCombiner implements Qualifier, java.beans.PropertyChangeLi
     }
 
     public boolean currentDesiredState() {
-        for (Qualifier q: qualifiers) {
-            if (! q.currentDesiredState()) return false;
+        for (Qualifier q : qualifiers) {
+            if (!q.currentDesiredState()) {
+                return false;
+            }
         }
         return true;
     }
-       
+
     public void update() {
         setWatchedAvailable(currentDesiredState());
-    } 
+    }
 }

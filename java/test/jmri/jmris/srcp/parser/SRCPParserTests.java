@@ -1,21 +1,20 @@
 //SRCPParserTests.java
-
 package jmri.jmris.srcp.parser;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmris.srcp.parser package
- * @author                      Paul Bender
- * @version                     $Revision$
+ *
+ * @author Paul Bender
+ * @version $Revision$
  */
 public class SRCPParserTests extends TestCase {
 
     // from here down is testing infrastructure
-
     public SRCPParserTests(String s) {
         super(s);
     }
@@ -33,8 +32,8 @@ public class SRCPParserTests extends TestCase {
         suite.addTest(new TestSuite(SRCPParserTest.class));
         suite.addTest(new TestSuite(SRCPVisitorTest.class));
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-           // put any tests that require a UI here.
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            // put any tests that require a UI here.
         }
 
         return suite;
@@ -43,4 +42,3 @@ public class SRCPParserTests extends TestCase {
     static Logger log = Logger.getLogger(SRCPParserTests.class.getName());
 
 }
-

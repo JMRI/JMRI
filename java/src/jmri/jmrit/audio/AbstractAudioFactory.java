@@ -1,12 +1,11 @@
 // AbstractAudioFactory.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.util.LinkedList;
 import java.util.List;
 import jmri.Audio;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Abstract implementation of the AudioFactory class.
@@ -15,18 +14,16 @@ import jmri.Audio;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public abstract class AbstractAudioFactory implements AudioFactory {
@@ -86,7 +83,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
 
         if (!dieException) {
             // wait for up to 5 seconds for thread to end
-            for (int i=0; i<50; i++) {
+            for (int i = 0; i < 50; i++) {
                 if (!audioCommandThread.alive()) {
                     break;
                 }
@@ -104,9 +101,10 @@ public abstract class AbstractAudioFactory implements AudioFactory {
             while (commandQueue != null && commandQueue.size() > 0) {
                 audioCommand = commandQueue.remove(0);
                 if (audioCommand != null) {
-                    if (log.isDebugEnabled())
+                    if (log.isDebugEnabled()) {
                         log.debug("Process command: " + audioCommand.toString()
                                 + " (" + commandQueue.size() + " remaining)");
+                    }
                     Audio audio = audioCommand.getAudio();
 
                     // Process AudioSource commands
@@ -117,10 +115,10 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 audioSource.setBound(audioSource.bindAudioBuffer(audioSource.getAssignedBuffer()));
                                 break;
                             case Audio.CMD_QUEUE_BUFFERS:
-				    audioSource.setQueued(audioSource.queueAudioBuffers(audioSource.getQueuedBuffers()));
+                                audioSource.setQueued(audioSource.queueAudioBuffers(audioSource.getQueuedBuffers()));
                                 break;
                             case Audio.CMD_UNQUEUE_BUFFERS:
-				    audioSource.setQueued(audioSource.unqueueAudioBuffers());
+                                audioSource.setQueued(audioSource.unqueueAudioBuffers());
                                 break;
                             case Audio.CMD_PLAY:
                                 audioSource.doPlay();
@@ -156,9 +154,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 log.warn("Command " + audioCommand.toString()
                                         + " not suitable for AudioSource (" + audioSource.getSystemName() + ")");
                         }
-                    }
-
-                    // Process AudioBuffer commands
+                    } // Process AudioBuffer commands
                     else if (audio instanceof AudioBuffer) {
                         AbstractAudioBuffer audioBuffer = (AbstractAudioBuffer) audio;
                         switch (audioCommand.getCommand()) {
@@ -169,9 +165,7 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                                 log.warn("Command " + audioCommand.toString()
                                         + " not suitable for AudioBuffer (" + audioBuffer.getSystemName() + ")");
                         }
-                    }
-
-                    // Process AudioListener commands
+                    } // Process AudioListener commands
                     else if (audio instanceof AudioListener) {
                         AbstractAudioListener audioListener = (AbstractAudioListener) audio;
                         switch (audioCommand.getCommand()) {
@@ -185,14 +179,16 @@ public abstract class AbstractAudioFactory implements AudioFactory {
                     }
                 }
             }
-            return (commandQueue != null && commandQueue.size()>0);
+            return (commandQueue != null && commandQueue.size() > 0);
         } else {
             if (commandQueue == null) {
                 log.warn("Audio commandQueue not initialised");
                 return false;
             }
             commandQueue.add(queueAudioCommand);
-            if (log.isDebugEnabled()) log.debug("New audio command: " + queueAudioCommand.toString());
+            if (log.isDebugEnabled()) {
+                log.debug("New audio command: " + queueAudioCommand.toString());
+            }
             return true;
         }
     }

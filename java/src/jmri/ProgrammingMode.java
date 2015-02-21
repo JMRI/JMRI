@@ -1,33 +1,31 @@
 /* ProgrammingMode.java */
-
 package jmri;
 
 /**
  * Denote a single programming mode.
  * <P>
- * User code gets a list of available modes from the {@link Programmer} or 
+ * User code gets a list of available modes from the {@link Programmer} or
  * {@link AddressedProgrammer} in use. It then selects a mode to use and
- * indicates it via a setMode() call. 
+ * indicates it via a setMode() call.
  * <p>
  * A ProgrammingMode has a user-readable name to help humans select it.
- *<P>
- * We define a number of modes as constants in {@link jmri.managers.DefaultProgrammerManager}
- * because they are common across so
- * many DCC-specific implementations, they've become defacto standards.
+ * <P>
+ * We define a number of modes as constants in
+ * {@link jmri.managers.DefaultProgrammerManager} because they are common across
+ * so many DCC-specific implementations, they've become defacto standards.
  * <p>
- * More specific definitions (and Bundle entries) should
- * retreat to specific Programmer implementations.  The whole idea
- * is to have code deal with the modes that a specific {@link Programmer} provides, 
- * not make assumptions about global values.
+ * More specific definitions (and Bundle entries) should retreat to specific
+ * Programmer implementations. The whole idea is to have code deal with the
+ * modes that a specific {@link Programmer} provides, not make assumptions about
+ * global values.
  *
- * @see         jmri.Programmer
- * @see         jmri.ProgrammerManager
- * @see         jmri.managers.DefaultProgrammerManager
+ * @see jmri.Programmer
+ * @see jmri.ProgrammerManager
+ * @see jmri.managers.DefaultProgrammerManager
  * @author	Bob Jacobsen Copyright (C) 2014
  */
 @net.jcip.annotations.Immutable
-public final class ProgrammingMode  {
-
+public final class ProgrammingMode {
 
     public ProgrammingMode(String standardName) {
         this.standardName = standardName;
@@ -51,26 +49,34 @@ public final class ProgrammingMode  {
      * Display the localized (human readable) name
      */
     @Override
-    public String toString() { return localName; }
-    
+    public String toString() {
+        return localName;
+    }
+
     /**
      * Return the standard (not localized, human readable) name
      */
-    public String getStandardName() { return standardName; }
-        
+    public String getStandardName() {
+        return standardName;
+    }
+
     @Override
     public boolean equals(Object o) {
-        if (this == o ) return true;
-        if (! (o instanceof ProgrammingMode)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof ProgrammingMode)) {
+            return false;
+        }
         ProgrammingMode that = (ProgrammingMode) o;
         return this.standardName.equals(that.standardName);
     }
-    
+
     @Override
     public int hashCode() {
         return standardName.hashCode();
     }
-    
+
     private String standardName;
     private String localName;
 

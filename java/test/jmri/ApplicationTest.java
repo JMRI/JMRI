@@ -1,17 +1,17 @@
 // ApplicationTest.java
-
 package jmri;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the Application class
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
+ *
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
  */
 public class ApplicationTest extends TestCase {
 
@@ -28,7 +28,7 @@ public class ApplicationTest extends TestCase {
         Assert.assertEquals("Changed Application name to 'JMRI Testing 2' prevented", "JMRI Testing", Application.getApplicationName());
         jmri.util.JUnitAppender.assertWarnMessage("Unable to set application name java.lang.IllegalAccessException: Application name cannot be modified once set.");
     }
-    
+
     private static void setApplication(String name) {
         try {
             jmri.Application.setApplicationName(name);
@@ -39,9 +39,7 @@ public class ApplicationTest extends TestCase {
         }
     }
 
-
     // from here down is testing infrastructure
-
     public ApplicationTest(String s) {
         super(s);
     }
@@ -51,7 +49,7 @@ public class ApplicationTest extends TestCase {
         String[] testCaseName = {ApplicationTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
-    
+
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(ApplicationTest.class);
@@ -63,8 +61,11 @@ public class ApplicationTest extends TestCase {
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
     }
+
     @Override
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     private static final Logger log = Logger.getLogger(ApplicationTest.class.getName());
 

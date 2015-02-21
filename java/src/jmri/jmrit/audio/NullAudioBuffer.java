@@ -1,10 +1,9 @@
 // NullAudioBuffer.java
-
 package jmri.jmrit.audio;
 
+import java.io.InputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.io.InputStream;
 
 /**
  * Null implementation of the Audio Buffer sub-class.
@@ -15,35 +14,35 @@ import java.io.InputStream;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009, 2011
+ * @author Matthew Harris copyright (c) 2009, 2011
  * @version $Revision$
  */
 public class NullAudioBuffer extends AbstractAudioBuffer {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -2227618459689268908L;
+     *
+     */
+    private static final long serialVersionUID = -2227618459689268908L;
 
-	/**
+    /**
      * Constructor for new NullAudioBuffer with system name
      *
      * @param systemName AudioBuffer object system name (e.g. IAB4)
      */
     public NullAudioBuffer(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) log.debug("New NullAudioBuffer: "+systemName);
+        if (log.isDebugEnabled()) {
+            log.debug("New NullAudioBuffer: " + systemName);
+        }
     }
 
     /**
@@ -54,12 +53,14 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
      */
     public NullAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) log.debug("New NullAudioBuffer: "+userName+" ("+systemName+")");
+        if (log.isDebugEnabled()) {
+            log.debug("New NullAudioBuffer: " + userName + " (" + systemName + ")");
+        }
     }
 
     @Override
     public String toString() {
-        if (this.getState()!=STATE_LOADED) {
+        if (this.getState() != STATE_LOADED) {
             return "Empty buffer";
         } else {
             return this.getURL() + " (" + parseFormat() + ", " + "?? Hz)";
@@ -69,9 +70,9 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     @Override
     protected boolean loadBuffer(InputStream stream) {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
-        return true;        
+        return true;
     }
-    
+
     @Override
     protected boolean loadBuffer() {
         // No need to do this for the NullAudioBuffer - it's always successful ;-)
@@ -98,7 +99,7 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
     public int getFormat() {
         return FORMAT_UNKNOWN;
     }
-    
+
     @Override
     public long getLength() {
         // Nothing stored for the NullAudioBuffer - always zero
@@ -113,6 +114,7 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
 
     /**
      * Internal method to return a string representation of the audio format
+     *
      * @return string representation
      */
     private String parseFormat() {
@@ -121,7 +123,9 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     protected void cleanUp() {
-        if (log.isDebugEnabled()) log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Cleanup NullAudioBuffer (" + this.getSystemName() + ")");
+        }
         this.dispose();
     }
 

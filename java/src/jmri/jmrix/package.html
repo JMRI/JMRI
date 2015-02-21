@@ -1,44 +1,44 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Interfaces and implementations for system-specific code.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <P>
+            This package provides a few interfaces and abstract implementations
+            for the system-specific code, and serves as the parent
+            to the system-specific packages. 
+        <P>
+            We intend that this will still compile and run with
+            any of the system-specific subpackages missing. And that
+            might even work.
 
-  Copyright 2003
+        <P>
+            Most of the system specific code is organized as follows:
+        <ul>
+            <LI>PortController classes handle the connection to the serial
+                port or other communications link.
+                That code is usually in the "SsssPortController"
+                class in the "ssss.serialdriver" package
+            <LI>TrafficController classes handle the sequencing and scheduling
+                of messages and replies through a port. The intention is that
+                a particular system use one (or few) traffic controllers
+                with perhaps multiple port controllers for different connections
+            <LI>System-specific tools are generally given their own sub-package
+                under the system package
+        </ul>
 
--->
-</head>
-<body bgcolor="white">
-
-Interfaces and implementations for system-specific code.
-
-<P>
-This package provides a few interfaces and abstract implementations
-for the system-specific code, and serves as the parent
-to the system-specific packages. 
-<P>
-We intend that this will still compile and run with
-any of the system-specific subpackages missing. And that
-might even work.
-
-<P>
-Most of the system specific code is organized as follows:
-<ul>
-<LI>PortController classes handle the connection to the serial
-port or other communications link.
-That code is usually in the "SsssPortController"
-class in the "ssss.serialdriver" package
-<LI>TrafficController classes handle the sequencing and scheduling
-of messages and replies through a port. The intention is that
-a particular system use one (or few) traffic controllers
-with perhaps multiple port controllers for different connections
-<LI>System-specific tools are generally given their own sub-package
-under the system package
-</ul>
-
-</body>
+    </body>
 </html>

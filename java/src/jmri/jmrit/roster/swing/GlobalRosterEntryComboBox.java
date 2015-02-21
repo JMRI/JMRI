@@ -14,11 +14,11 @@ import jmri.jmrit.roster.Roster;
 public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7160579198258524537L;
+     *
+     */
+    private static final long serialVersionUID = -7160579198258524537L;
 
-	/**
+    /**
      * Create a combo box with all roster entries in the default Roster.
      */
     public GlobalRosterEntryComboBox() {
@@ -27,6 +27,7 @@ public class GlobalRosterEntryComboBox extends RosterEntryComboBox {
 
     /**
      * Create a combo box with all roster entries in an arbitrary Roster.
+     *
      * @param roster
      */
     public GlobalRosterEntryComboBox(Roster roster) {

@@ -1,5 +1,4 @@
 // DecoderProPane.java
-
 package apps.DecoderPro;
 
 import apps.Apps;
@@ -20,27 +19,25 @@ import org.slf4j.LoggerFactory;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author	Bob Jacobsen   Copyright 2003, 2014
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003, 2014
+ * @version $Revision$
  */
 public class DecoderProPane extends apps.AppsLaunchPane {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4713040816106118873L;
+     *
+     */
+    private static final long serialVersionUID = 4713040816106118873L;
 
-	DecoderProPane() {
+    DecoderProPane() {
         super();
     }
 
@@ -57,7 +54,7 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
     protected String line1() {
         return MessageFormat.format(Bundle.getMessage("DecoderProVersionCredit"),
-                                new Object[]{jmri.Version.name()});
+                new Object[]{jmri.Version.name()});
     }
 
     protected String line2() {
@@ -69,27 +66,26 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         j.setLayout(new BoxLayout(j, BoxLayout.Y_AXIS));
         j.add(super.statusPanel());
 
-       // Buttons
-
+        // Buttons
         Action serviceprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         Action opsprog = new jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction(Bundle.getMessage("DpButtonProgramOnMainTrack"));
-        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")){
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = 2382260205232391687L;
+        Action quit = new AbstractAction(Bundle.getMessage("MenuItemQuit")) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = 2382260205232391687L;
 
-				public void actionPerformed(ActionEvent e) {
-					Apps.handleQuit();
-                }
-            };
+            public void actionPerformed(ActionEvent e) {
+                Apps.handleQuit();
+            }
+        };
 
         JButton b1 = new JButton(Bundle.getMessage("DpButtonUseProgrammingTrack"));
         b1.addActionListener(serviceprog);
         b1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(b1);
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.programmerManagerInstance() == null
+                || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             b1.setEnabled(false);
             b1.setToolTipText(Bundle.getMessage("MsgServiceButtonDisabled"));
         }
@@ -97,8 +93,8 @@ public class DecoderProPane extends apps.AppsLaunchPane {
         m1.addActionListener(opsprog);
         m1.setAlignmentX(JLabel.CENTER_ALIGNMENT);
         j.add(m1);
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
+        if (jmri.InstanceManager.programmerManagerInstance() == null
+                || !jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             m1.setEnabled(false);
             m1.setToolTipText(Bundle.getMessage("MsgOpsButtonDisabled"));
         }
@@ -120,5 +116,3 @@ public class DecoderProPane extends apps.AppsLaunchPane {
 
     static Logger log = LoggerFactory.getLogger(DecoderProPane.class.getName());
 }
-
-

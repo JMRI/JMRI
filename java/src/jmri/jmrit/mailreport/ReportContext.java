@@ -1,8 +1,6 @@
 // ReportContext.java
-
 package jmri.jmrit.mailreport;
 
-import jmri.util.JmriInsets;
 import gnu.io.CommPortIdentifier;
 import java.awt.Dimension;
 import java.awt.GraphicsConfiguration;
@@ -12,28 +10,29 @@ import java.awt.HeadlessException;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.io.File;
-import java.net.SocketException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
-import java.util.ArrayList;
 import javax.swing.JFrame;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
+import jmri.util.JmriInsets;
 import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import jmri.util.zeroconf.ZeroConfService;
 
 /**
  * Provide the JMRI context info.
- *<p>
+ * <p>
  *
- * @author          Bob Jacobsen    Copyright (C) 2007, 2009
- * @author          Matt Harris     Copyright (C) 2008, 2009
+ * @author Bob Jacobsen Copyright (C) 2007, 2009
+ * @author Matt Harris Copyright (C) 2008, 2009
  *
- * @version         $Revision$
+ * @version $Revision$
  */
 public class ReportContext {
 
@@ -41,25 +40,27 @@ public class ReportContext {
 
     /**
      * Provide a report of the current JMRI context
+     *
      * @param reportNetworkInfo true if network connection and zeroconf service
-     *                          information to be included
+     * information to be included
      * @return current JMRI context
      */
     public String getReport(boolean reportNetworkInfo) {
 
-        addString("JMRI Version: "+jmri.Version.name()+"   ");	 
+        addString("JMRI Version: " + jmri.Version.name() + "   ");
         addString("JMRI configuration file name: "
-                    +System.getProperty("org.jmri.apps.Apps.configFilename")+"   ");	 
-        if (jmri.util.JmriJFrame.getFrameList().get(0)!=null)
+                + System.getProperty("org.jmri.apps.Apps.configFilename") + "   ");
+        if (jmri.util.JmriJFrame.getFrameList().get(0) != null) {
             addString("JMRI main window name: "
-                    +jmri.util.JmriJFrame.getFrameList().get(0).getTitle()+"   ");	 
+                    + jmri.util.JmriJFrame.getFrameList().get(0).getTitle() + "   ");
+        }
 
-        addString("JMRI Application: "+jmri.Application.getApplicationName()+"   ");
+        addString("JMRI Application: " + jmri.Application.getApplicationName() + "   ");
         ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-        if (connList!=null){
-            for (int x = 0; x<connList.size(); x++){
-                jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig)connList.get(x);
-                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo()+ " Disabled " + conn.getDisabled() + "   ");
+        if (connList != null) {
+            for (int x = 0; x < connList.size(); x++) {
+                jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig) connList.get(x);
+                addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
             }
         }
 
@@ -67,28 +68,27 @@ public class ReportContext {
         addCommunicationPortInfo();
 
         Profile profile = ProfileManager.defaultManager().getActiveProfile();
-        addString("Active profile: "+profile.getName()+"   ");
-        addString("Profile location: "+profile.getPath().getPath()+"   ");
-        addString("Profile ID: "+profile.getId()+"   ");
+        addString("Active profile: " + profile.getName() + "   ");
+        addString("Profile location: " + profile.getPath().getPath() + "   ");
+        addString("Profile ID: " + profile.getId() + "   ");
 
         String prefs = FileUtil.getUserFilesPath();
-        addString("Preferences directory: "+prefs+"   ");
+        addString("Preferences directory: " + prefs + "   ");
 
         String prog = System.getProperty("user.dir");
-        addString("Program directory: "+prog+"   ");
+        addString("Program directory: " + prog + "   ");
 
         String roster = jmri.jmrit.roster.Roster.defaultRosterFilename();
-        addString("Roster index location: "+roster+"   ");
+        addString("Roster index location: " + roster + "   ");
 
         File panel = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
-        addString("Current panel file: "+(panel==null?"[none]":panel.getPath())+"   ");
+        addString("Current panel file: " + (panel == null ? "[none]" : panel.getPath()) + "   ");
 
         //String operations = jmri.jmrit.operations.setup.OperationsSetupXml.getFileLocation();
         //addString("Operations files location: "+operations+"  ");
-
         jmri.jmrit.audio.AudioFactory af = jmri.InstanceManager.audioManagerInstance().getActiveAudioFactory();
-        String audio = af!=null?af.toString():"[not initialised]";
-        addString("Audio factory type: "+audio+"   ");
+        String audio = af != null ? af.toString() : "[not initialised]";
+        addString("Audio factory type: " + audio + "   ");
 
         addProperty("java.version");
         addProperty("java.vendor");
@@ -129,24 +129,26 @@ public class ReportContext {
 
         addScreenSize();
 
-        if (reportNetworkInfo) addNetworkInfo();
-        
+        if (reportNetworkInfo) {
+            addNetworkInfo();
+        }
+
         return report;
 
     }
 
     void addString(String val) {
-        report = report + val+"\n";
-    }
-    void addProperty(String prop) {
-        addString(prop+": "+System.getProperty(prop)+"   ");	    
+        report = report + val + "\n";
     }
 
-    /** 
-     * Provide screen - size information.  This is
-     * based on the jmri.util.JmriJFrame calculation, 
-     * but isn't refactored to there because we 
-     * also want diagnostic info
+    void addProperty(String prop) {
+        addString(prop + ": " + System.getProperty(prop) + "   ");
+    }
+
+    /**
+     * Provide screen - size information. This is based on the
+     * jmri.util.JmriJFrame calculation, but isn't refactored to there because
+     * we also want diagnostic info
      */
     public void addScreenSize() {
         try {
@@ -157,22 +159,22 @@ public class ReportContext {
             try {
                 Insets insets = dummy.getToolkit().getScreenInsets(dummy.getGraphicsConfiguration());
                 Dimension screen = dummy.getToolkit().getScreenSize();
-                addString("Screen size h:"+screen.height+", w:"+screen.width+" Inset t:"+insets.top+", b:"+insets.bottom
-                        +"; l:"+insets.left+", r:"+insets.right);
+                addString("Screen size h:" + screen.height + ", w:" + screen.width + " Inset t:" + insets.top + ", b:" + insets.bottom
+                        + "; l:" + insets.left + ", r:" + insets.right);
             } catch (NoSuchMethodError ex) {
                 Dimension screen = dummy.getToolkit().getScreenSize();
-                addString("Screen size h:"+screen.height+", w:"+screen.width
-                            +" (No Inset method available)");
+                addString("Screen size h:" + screen.height + ", w:" + screen.width
+                        + " (No Inset method available)");
             }
         } catch (HeadlessException ex) {
             // failed, fall back to standard method
-            addString("(Cannot sense screen size due to "+ex.toString()+")");
+            addString("(Cannot sense screen size due to " + ex.toString() + ")");
         }
 
         try {
             // Find screen resolution. Not expected to fail, but just in case....
             int dpi = Toolkit.getDefaultToolkit().getScreenResolution();
-            addString("Screen resolution: "+dpi);
+            addString("Screen resolution: " + dpi);
         } catch (HeadlessException ex) {
             addString("Screen resolution not available");
         }
@@ -181,34 +183,33 @@ public class ReportContext {
         //Rectangle virtualBounds = new Rectangle();
         try {
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
-            addString("Environment max bounds: "+ge.getMaximumWindowBounds());
+            addString("Environment max bounds: " + ge.getMaximumWindowBounds());
 
             try {
                 GraphicsDevice[] gs = ge.getScreenDevices();
                 for (GraphicsDevice gd : gs) {
                     GraphicsConfiguration[] gc = gd.getConfigurations();
-                    for (int i=0; i < gc.length; i++) {
-                        addString("bounds["+i+"] = "+gc[i].getBounds());
+                    for (int i = 0; i < gc.length; i++) {
+                        addString("bounds[" + i + "] = " + gc[i].getBounds());
                         // virtualBounds = virtualBounds.union(gc[i].getBounds());
                     }
-                    addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds() +
-                            " " + gd.getDefaultConfiguration().toString());
-                } 
+                    addString("Device: " + gd.getIDstring() + " bounds = " + gd.getDefaultConfiguration().getBounds()
+                            + " " + gd.getDefaultConfiguration().toString());
+                }
             } catch (HeadlessException ex) {
-                addString("Exception getting device bounds "+ex.getMessage());
+                addString("Exception getting device bounds " + ex.getMessage());
             }
         } catch (HeadlessException ex) {
-            addString("Exception getting max window bounds "+ex.getMessage());
+            addString("Exception getting max window bounds " + ex.getMessage());
         }
         // Return the insets using a custom class
         // which should return the correct values under
         // various Linux window managers
         try {
             Insets jmriInsets = JmriInsets.getInsets();
-            addString("JmriInsets t:"+jmriInsets.top+", b:"+jmriInsets.bottom
-                     +"; l:"+jmriInsets.left+", r:"+jmriInsets.right);
-        }
-        catch (Throwable ex) {
+            addString("JmriInsets t:" + jmriInsets.top + ", b:" + jmriInsets.bottom
+                    + "; l:" + jmriInsets.left + ", r:" + jmriInsets.right);
+        } catch (Throwable ex) {
             addString("Exception getting JmriInsets" + ex.getMessage());
         }
     }
@@ -243,28 +244,28 @@ public class ReportContext {
         for (InetAddress address : ZeroConfService.netServices().keySet()) {
             addString("ZeroConfService host: " + ZeroConfService.hostName(address) + " running " + services.size() + " service(s)");
         }
-        if (services.size()>0) {
-            for (ZeroConfService service: services) {
+        if (services.size() > 0) {
+            for (ZeroConfService service : services) {
                 addString("ZeroConfService: " + service.serviceInfo().getQualifiedName() + "  ");
                 addString(" Name: " + service.name() + "   ");
                 try {
-                    for (String address: service.serviceInfo().getHostAddresses()) {
+                    for (String address : service.serviceInfo().getHostAddresses()) {
                         addString(" Address:" + address + "   ");
                     }
                 } catch (NullPointerException ex) {
-                        addString(" Address: [unknown due to NPE]");
+                    addString(" Address: [unknown due to NPE]");
                 }
                 addString(" Port: " + service.serviceInfo().getPort() + "   ");
                 addString(" Server: " + service.serviceInfo().getServer() + "   ");
                 addString(" Type: " + service.type() + "   ");
                 try {
-                    for (String url: service.serviceInfo().getURLs()) {
-                        addString(" URL: " + url + "   ");                    
+                    for (String url : service.serviceInfo().getURLs()) {
+                        addString(" URL: " + url + "   ");
                     }
                 } catch (NullPointerException ex) {
-                        addString(" URL: [unknown due to NPE]");
+                    addString(" URL: [unknown due to NPE]");
                 }
-                addString(" Published: " + (service.isPublished()?"yes":"no"));
+                addString(" Published: " + (service.isPublished() ? "yes" : "no"));
             }
         }
     }
@@ -275,9 +276,9 @@ public class ReportContext {
     private void addCommunicationPortInfo() {
         @SuppressWarnings("unchecked")
         Enumeration<CommPortIdentifier> portIDs = CommPortIdentifier.getPortIdentifiers();
-        
+
         ArrayList<CommPortIdentifier> ports = new ArrayList<CommPortIdentifier>();
-        
+
         // find the names of suitable ports
         while (portIDs.hasMoreElements()) {
             CommPortIdentifier id = portIDs.nextElement();
@@ -290,17 +291,17 @@ public class ReportContext {
         addString(String.format(" Found %s serial ports", ports.size()));
 
         // now output the details
-        for (CommPortIdentifier id: ports) {
+        for (CommPortIdentifier id : ports) {
             // output details
             SerialPortFriendlyName port = PortNameMapper.getPortNameMap().get(id.getName());
-            if(port==null){
+            if (port == null) {
                 port = new SerialPortFriendlyName(id.getName(), null);
                 PortNameMapper.getPortNameMap().put(id.getName(), port);
             }
-                addString(" Port: " + port.getDisplayName()
-                        + (id.isCurrentlyOwned()
-                        ? " - in use by: " + id.getCurrentOwner()
-                        : " - not in use") + "   ");
+            addString(" Port: " + port.getDisplayName()
+                    + (id.isCurrentlyOwned()
+                            ? " - in use by: " + id.getCurrentOwner()
+                            : " - not in use") + "   ");
         }
     }
 

@@ -20,8 +20,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to display the JMRI directory locations. <P> Although this has
- * "XML" in it's name, it's actually much more general. It displays: <ul>
+ * Swing action to display the JMRI directory locations.
+ * <P>
+ * Although this has "XML" in it's name, it's actually much more general. It
+ * displays: <ul>
  * <li>The preferences directory <li>The program directory <li>and any log files
  * seen in the program directory </ul>
  *
@@ -31,11 +33,11 @@ import org.slf4j.LoggerFactory;
 public class XmlFileLocationAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5884867804946089268L;
+     *
+     */
+    private static final long serialVersionUID = -5884867804946089268L;
 
-	public XmlFileLocationAction() {
+    public XmlFileLocationAction() {
         super();
     }
 
@@ -54,9 +56,8 @@ public class XmlFileLocationAction extends AbstractAction {
         if (!new File(configName).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
-            configName = profile+configName;
+            configName = profile + configName;
         }
-
 
         JFrame frame = new jmri.util.JmriJFrame();  // to ensure fits
 
@@ -188,7 +189,7 @@ public class XmlFileLocationAction extends AbstractAction {
 
         textPane.append("Program Location: " + prog + "\n");
 
-        textPane.append("Log Files Location: "+ log + "\n");
+        textPane.append("Log Files Location: " + log + "\n");
 
         addLogFiles(textPane, log);
 

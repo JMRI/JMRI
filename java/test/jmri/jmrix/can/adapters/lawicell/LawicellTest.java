@@ -1,5 +1,4 @@
 // LawicellTest.java
-
 package jmri.jmrix.can.adapters.lawicell;
 
 import junit.framework.Test;
@@ -8,16 +7,16 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.can.adapters.lawicell package.
- * @author      Bob Jacobsen  Copyright 2009
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2009
+ * @version $Revision$
  */
 public class LawicellTest extends TestCase {
 
     public void testDefinitions() {
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public LawicellTest(String s) {
         super(s);
     }
@@ -38,6 +37,11 @@ public class LawicellTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 }

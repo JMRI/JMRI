@@ -1,17 +1,18 @@
 package jmri.jmrix.roco.z21;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * z21SystemConnectionMemoTest.java
  *
- * Description:	    tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
- * @author			Paul Bender
- * @version         $Revision$
+ * Description:	tests for the jmri.jmrix.roco.z21.z21SystemConnectionMemo class
+ *
+ * @author	Paul Bender
+ * @version $Revision$
  */
 public class z21SystemConnectionMemoTest extends TestCase {
 
@@ -21,9 +22,8 @@ public class z21SystemConnectionMemoTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public z21SystemConnectionMemoTest(String s) {
-       super(s);
+        super(s);
     }
 
     // Main entry point
@@ -39,8 +39,13 @@ public class z21SystemConnectionMemoTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(z21SystemConnectionMemoTest.class.getName());
 

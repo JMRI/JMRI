@@ -1,5 +1,4 @@
 // AudioTableFrame.java
-
 package jmri.jmrit.beantable;
 
 import javax.swing.Box;
@@ -12,36 +11,33 @@ import javax.swing.JMenuBar;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Bob Jacobsen   Copyright (C) 2003
- * @author Matthew Harris  copyright (c) 2009
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class AudioTableFrame extends BeanTableFrame {
 
     //static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
-
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -92682823885444455L;
-	AudioTablePanel audioPanel;
-    
+     *
+     */
+    private static final long serialVersionUID = -92682823885444455L;
+    AudioTablePanel audioPanel;
+
     public AudioTableFrame(AudioTablePanel panel,
-                           String helpTarget) {
+            String helpTarget) {
 
         super();
-        
+
         audioPanel = panel;
 
         // general GUI config
@@ -54,10 +50,9 @@ public class AudioTableFrame extends BeanTableFrame {
         fileMenu.add(new jmri.configurexml.SaveMenu());
 
         //fileMenu.add(panel.getPrintItem());
-
         setJMenuBar(menuBar);
 
-        addHelpMenu(helpTarget,true);
+        addHelpMenu(helpTarget, true);
 
         // install items in GUI
         getContentPane().add(audioPanel);
@@ -74,8 +69,9 @@ public class AudioTableFrame extends BeanTableFrame {
 
     @Override
     public void dispose() {
-        if (audioPanel!=null)
+        if (audioPanel != null) {
             audioPanel.dispose();
+        }
         super.dispose();
     }
 

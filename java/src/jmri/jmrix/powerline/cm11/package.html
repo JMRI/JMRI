@@ -1,42 +1,42 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2008
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        This package handles communications for CM11 powerline adapters.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <h2>Related Documentation</h2>
 
-  Copyright 2008
+        Other sources of documentation
+        <ul>
+            <li><a href="http://x10.com/homepage.htm">X10.com web site</a> (consumer oriented)
+            <li><a href="http://www.x10.com/support/technical_support.htm">X10.com support site</a>
+        </ul>
 
--->
-</head>
-<body bgcolor="white">
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
 
-This package handles communications for CM11 powerline adapters.
+        @since 2.1.4
 
-<h2>Related Documentation</h2>
-
-Other sources of documentation
-<ul>
-  <li><a href="http://x10.com/homepage.htm">X10.com web site</a> (consumer oriented)
-  <li><a href="http://www.x10.com/support/technical_support.htm">X10.com support site</a>
-</ul>
-
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
-
-@since 2.1.4
-
-<h2>To Do</h2>
-<ul>
-<li>The 0x00 that's send as part of the interlocking doesn't show
-in the serial monitor
-<li>The clock setting is way too simple, see setClock in CM11AGateway.
-Also, does that have the right house code handling?  Can the interface handle 
-more than one house code?
-<li>No provision for e.g. a CM10, with it's slightly separate codes.
-</ul>
-</body>
+        <h2>To Do</h2>
+        <ul>
+            <li>The 0x00 that's send as part of the interlocking doesn't show
+                in the serial monitor
+            <li>The clock setting is way too simple, see setClock in CM11AGateway.
+                Also, does that have the right house code handling?  Can the interface handle 
+                more than one house code?
+            <li>No provision for e.g. a CM10, with it's slightly separate codes.
+        </ul>
+    </body>
 </html>

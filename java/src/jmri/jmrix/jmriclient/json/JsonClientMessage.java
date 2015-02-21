@@ -47,7 +47,7 @@ public class JsonClientMessage extends AbstractMRMessage {
     public int getElement(int n) {
         return message.toString().charAt(n);
     }
-    
+
     @Override
     public String toString() {
         return message.toString();

@@ -1,23 +1,28 @@
 // PaneProgPaneTest.java
-
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import org.apache.log4j.Logger;
-import java.awt.*;
-import javax.swing.*;
-import junit.framework.Test;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.symbolicprog.CvTableModel;
+import jmri.jmrit.symbolicprog.IndexedCvTableModel;
+import jmri.jmrit.symbolicprog.VariableTableModel;
+import jmri.progdebugger.ProgDebugger;
 import junit.framework.Assert;
+import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom2.*;
-
-import jmri.progdebugger.*;
-import jmri.jmrit.symbolicprog.*;
-import jmri.jmrit.roster.*;
+import org.apache.log4j.Logger;
+import org.jdom2.DocType;
+import org.jdom2.Document;
+import org.jdom2.Element;
 
 /**
  * @author	Bob Jacobsen Copyright 2001, 2002, 2003, 2004
- * @version         $Revision$
+ * @version $Revision$
  */
 public class PaneProgPaneTest extends TestCase {
 
@@ -27,34 +32,43 @@ public class PaneProgPaneTest extends TestCase {
     public void testColumn() {
         setupDoc();
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            /**
-													 * 
-													 */
-													private static final long serialVersionUID = 4282192984429206254L;
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 4282192984429206254L;
 
-			// dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
-        if (log.isDebugEnabled()) log.debug("CvTableModel ctor complete");
+        if (log.isDebugEnabled()) {
+            log.debug("CvTableModel ctor complete");
+        }
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) {
+            log.debug("VariableTableModel ctor complete");
+        }
 
         // create test object with special implementation of the newColumn(String) operation
         colCount = 0;
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = 7358324141533141966L;
+            /**
+             *
+             */
+            private static final long serialVersionUID = 7358324141533141966L;
 
-				public JPanel newColumn(Element e, boolean a, Element el) { colCount++; return new JPanel();}
-            };
-        assertNotNull("exists", p );
+            public JPanel newColumn(Element e, boolean a, Element el) {
+                colCount++;
+                return new JPanel();
+            }
+        };
+        assertNotNull("exists", p);
         assertEquals("column count", 2, colCount);
     }
 
@@ -62,34 +76,39 @@ public class PaneProgPaneTest extends TestCase {
     public void testVariables() {
         setupDoc();  // make sure XML document is ready
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            /**
-													 * 
-													 */
-													private static final long serialVersionUID = -4284222445404792610L;
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = -4284222445404792610L;
 
-			// dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) {
+            log.debug("VariableTableModel ctor complete");
+        }
 
         // create test object with special implementation of the newVariable(String) operation
         varCount = 0;
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null) {
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = 4810838962908126464L;
+            /**
+             *
+             */
+            private static final long serialVersionUID = 4810838962908126464L;
 
-				public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a)
-                { varCount++; }
-            };
-        assertNotNull("exists", p );
+            public void newVariable(Element e, JComponent p, GridBagLayout g, GridBagConstraints c, boolean a) {
+                varCount++;
+            }
+        };
+        assertNotNull("exists", p);
         assertEquals("variable defn count", 7, varCount);
     }
 
@@ -97,40 +116,52 @@ public class PaneProgPaneTest extends TestCase {
     public void testVarListFill() {
         setupDoc();  // make sure XML document is ready
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            /**
-													 * 
-													 */
-													private static final long serialVersionUID = 5421457356996971001L;
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 5421457356996971001L;
 
-			// dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) {
+            log.debug("VariableTableModel ctor complete");
+        }
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
-            .setAttribute("CV","17")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Start voltage")
-            .addContent( new Element("longAddressVal"));
-        if (log.isDebugEnabled()) log.debug("First element created");
+                .setAttribute("CV", "17")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Start voltage")
+                .addContent(new Element("longAddressVal"));
+        if (log.isDebugEnabled()) {
+            log.debug("First element created");
+        }
         varModel.setRow(0, el0);
-        if (log.isDebugEnabled()) log.debug("First element loaded");
+        if (log.isDebugEnabled()) {
+            log.debug("First element loaded");
+        }
         Element el1 = new Element("variable")
-            .setAttribute("CV","17")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Primary Address")
-            .addContent( new Element("decVal"));
-        if (log.isDebugEnabled()) log.debug("Second element created");
+                .setAttribute("CV", "17")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Primary Address")
+                .addContent(new Element("decVal"));
+        if (log.isDebugEnabled()) {
+            log.debug("Second element created");
+        }
         varModel.setRow(1, el1);
-        if (log.isDebugEnabled()) log.debug("Two elements loaded");
+        if (log.isDebugEnabled()) {
+            log.debug("Two elements loaded");
+        }
 
         // test by invoking
         PaneProgPane p = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
@@ -141,40 +172,46 @@ public class PaneProgPaneTest extends TestCase {
 
     // test storage of programming info in list
     public void testPaneRead() {
-        if (log.isDebugEnabled()) log.debug("testPaneRead starts");
+        if (log.isDebugEnabled()) {
+            log.debug("testPaneRead starts");
+        }
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            /**
-													 * 
-													 */
-													private static final long serialVersionUID = 3718742250875057900L;
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = 3718742250875057900L;
 
-			// dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
 
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) {
+            log.debug("VariableTableModel ctor complete");
+        }
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
-            .setAttribute("CV","2")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Start voltage")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "2")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Start voltage")
+                .addContent(new Element("decVal"));
         Element el1 = new Element("variable")
-            .setAttribute("CV","3")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Primary Address")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "3")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Primary Address")
+                .addContent(new Element("decVal"));
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
 
@@ -187,107 +224,131 @@ public class PaneProgPaneTest extends TestCase {
         progPane.readAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
-        if (log.isDebugEnabled()) log.debug("Start to wait for reply");
+        if (log.isDebugEnabled()) {
+            log.debug("Start to wait for reply");
+        }
         int i = 0;
-        while ( progPane.isBusy() && i++ < 100 )  {
+        while (progPane.isBusy() && i++ < 100) {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i);
-        assertTrue("busy period ends before timeout ", i<=100);
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i);
+        }
+        assertTrue("busy period ends before timeout ", i <= 100);
 
         Assert.assertEquals("CV 2 value ", "20", varModel.getValString(0));
         Assert.assertEquals("CV 3 value ", "30", varModel.getValString(1));
 
-        if (log.isDebugEnabled()) log.debug("testPaneRead ends ok");
+        if (log.isDebugEnabled()) {
+            log.debug("testPaneRead ends ok");
+        }
     }
 
     public void testPaneWrite() {
-        if (log.isDebugEnabled()) log.debug("testPaneWrite starts");
+        if (log.isDebugEnabled()) {
+            log.debug("testPaneWrite starts");
+        }
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            /**
-													 * 
-													 */
-													private static final long serialVersionUID = -1592842528954612678L;
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = -1592842528954612678L;
 
-			// dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
         VariableTableModel varModel = new VariableTableModel(null, args, cvModel, icvModel);
-        if (log.isDebugEnabled()) log.debug("VariableTableModel ctor complete");
+        if (log.isDebugEnabled()) {
+            log.debug("VariableTableModel ctor complete");
+        }
         // have to add a couple of defined variables
         Element el0 = new Element("variable")
-           .setAttribute("CV","2")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("default","20")
-            .setAttribute("label","Start voltage")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "2")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("default", "20")
+                .setAttribute("label", "Start voltage")
+                .addContent(new Element("decVal"));
         Element el1 = new Element("variable")
-            .setAttribute("CV","3")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("default","30")
-            .setAttribute("label","Primary Address")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "3")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("default", "30")
+                .setAttribute("label", "Primary Address")
+                .addContent(new Element("decVal"));
         varModel.setRow(0, el0);
         varModel.setRow(1, el1);
-        if (log.isDebugEnabled()) log.debug("Two elements loaded");
+        if (log.isDebugEnabled()) {
+            log.debug("Two elements loaded");
+        }
 
 //        PaneProgPane progPane = new PaneProgPane("name", pane1, cvModel, varModel, null);
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
 
         p.resetCv(2, -1);
         p.resetCv(3, -1);
-        
+
         // test by invoking
         progPane.writeAllButton.setSelected(true);
 
         // wait for reply (normally, done by callback; will check that later)
-        if (log.isDebugEnabled()) log.debug("Start to wait for reply");
+        if (log.isDebugEnabled()) {
+            log.debug("Start to wait for reply");
+        }
         int i = 0;
-        while ( progPane.isBusy() && i++ < 100 )  {
+        while (progPane.isBusy() && i++ < 100) {
             try {
                 Thread.sleep(50);
             } catch (Exception e) {
             }
         }
-        if (log.isDebugEnabled()) log.debug("past loop, i="+i);
-        assertTrue("busy period ends before timeout ", i<=100);
+        if (log.isDebugEnabled()) {
+            log.debug("past loop, i=" + i);
+        }
+        assertTrue("busy period ends before timeout ", i <= 100);
 
         Assert.assertEquals("CV 2 value ", 20, p.getCvVal(2));
         Assert.assertEquals("CV 3 value ", 30, p.getCvVal(3));
 
-        if (log.isDebugEnabled()) log.debug("testPaneWrite ends ok");
+        if (log.isDebugEnabled()) {
+            log.debug("testPaneWrite ends ok");
+        }
     }
 
     // test counting of read operations needed
     public void testPaneReadOpCount() {
-        if (log.isDebugEnabled()) log.debug("testPaneReadOpCount starts");
+        if (log.isDebugEnabled()) {
+            log.debug("testPaneReadOpCount starts");
+        }
         // initialize the system
         setupDoc();  // make sure XML document is ready
 
         PaneProgFrame pFrame = new PaneProgFrame(null, new RosterEntry(),
-                                                 "test frame", "programmers/Basic.xml",
-                                                 p, false) {
-            /**
-													 * 
-													 */
-													private static final long serialVersionUID = -6820598809604324879L;
+                "test frame", "programmers/Basic.xml",
+                p, false) {
+                    /**
+                     *
+                     */
+                    private static final long serialVersionUID = -6820598809604324879L;
 
-			// dummy implementations
-            protected JPanel getModePane() { return null; }
-        };
+                    // dummy implementations
+                    protected JPanel getModePane() {
+                        return null;
+                    }
+                };
         CvTableModel cvModel = new CvTableModel(new JLabel(), p);
         IndexedCvTableModel icvModel = new IndexedCvTableModel(new JLabel(), p);
         String[] args = {"CV", "Name"};
@@ -298,65 +359,67 @@ public class PaneProgPaneTest extends TestCase {
 
         // note these +have+ to be on this pane, e.g. named in setupDoc
         Element el0 = new Element("variable")
-            .setAttribute("CV","1")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Start voltage")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "1")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Start voltage")
+                .addContent(new Element("decVal"));
         varModel.setRow(row++, el0);
 
         Element el1 = new Element("variable")
-            .setAttribute("CV","1")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Primary Address")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "1")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Primary Address")
+                .addContent(new Element("decVal"));
         varModel.setRow(row++, el1);
 
         Element el2 = new Element("variable")
-            .setAttribute("CV","67")
-            .setAttribute("label","Normal direction of motion")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .addContent( new Element("speedTableVal"));
+                .setAttribute("CV", "67")
+                .setAttribute("label", "Normal direction of motion")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .addContent(new Element("speedTableVal"));
         varModel.setRow(row++, el2);
 
         Element el3 = new Element("variable")
-            .setAttribute("CV","68")
-            .setAttribute("readOnly","no")
-            .setAttribute("mask","VVVVVVVV")
-            .setAttribute("label","Address")
-            .addContent( new Element("decVal"));
+                .setAttribute("CV", "68")
+                .setAttribute("readOnly", "no")
+                .setAttribute("mask", "VVVVVVVV")
+                .setAttribute("label", "Address")
+                .addContent(new Element("decVal"));
         varModel.setRow(row++, el3);
 
         PaneProgPane progPane = new PaneProgPane(pFrame, "name", pane1, cvModel, icvModel, varModel, null, null);
 
         // start actual testing
-        Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true,false));
-        Assert.assertEquals("number of all CVs to write ", 29, progPane.countOpsNeeded(false,false));
+        Assert.assertEquals("number of all CVs to read ", 29, progPane.countOpsNeeded(true, false));
+        Assert.assertEquals("number of all CVs to write ", 29, progPane.countOpsNeeded(false, false));
 
-        Assert.assertEquals("number of changed CVs to read ", 0, progPane.countOpsNeeded(true,true));
-        Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false,true));
+        Assert.assertEquals("number of changed CVs to read ", 0, progPane.countOpsNeeded(true, true));
+        Assert.assertEquals("number of changed CVs to write ", 0, progPane.countOpsNeeded(false, true));
 
         // mark some as needing to be written
         (cvModel.allCvMap().get("1")).setValue(12);
 
-        Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true,false));
-        Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false,false));
+        Assert.assertEquals("modified all CVs to read ", 29, progPane.countOpsNeeded(true, false));
+        Assert.assertEquals("modified all CVs to write ", 29, progPane.countOpsNeeded(false, false));
 
-        Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true,true));
-        Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false,true));
+        Assert.assertEquals("modified changed CVs to read ", 1, progPane.countOpsNeeded(true, true));
+        Assert.assertEquals("modified changed CVs to write ", 1, progPane.countOpsNeeded(false, true));
 
         (cvModel.allCvMap().get("69")).setValue(12);
-            // careful - might change more than one CV!
+        // careful - might change more than one CV!
 
-        Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true,false));
-        Assert.assertEquals("spdtbl all CVs to write ", 29, progPane.countOpsNeeded(false,false));
+        Assert.assertEquals("spdtbl all CVs to read ", 29, progPane.countOpsNeeded(true, false));
+        Assert.assertEquals("spdtbl all CVs to write ", 29, progPane.countOpsNeeded(false, false));
 
-        Assert.assertEquals("spdtbl changed CVs to read ", 2, progPane.countOpsNeeded(true,true));
-        Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false,true));
+        Assert.assertEquals("spdtbl changed CVs to read ", 2, progPane.countOpsNeeded(true, true));
+        Assert.assertEquals("spdtbl changed CVs to write ", 2, progPane.countOpsNeeded(false, true));
 
-        if (log.isDebugEnabled()) log.debug("testPaneReadOpCount ends ok");
+        if (log.isDebugEnabled()) {
+            log.debug("testPaneReadOpCount ends ok");
+        }
     }
 
     // static variables for internal classes to report their interpretations
@@ -376,66 +439,66 @@ public class PaneProgPaneTest extends TestCase {
         // create a JDOM tree with just some elements
         root = new Element("programmer-config");
         doc = new Document(root);
-        doc.setDocType(new DocType("programmer-config","programmer-config.dtd"));
+        doc.setDocType(new DocType("programmer-config", "programmer-config.dtd"));
 
         // add some elements
         root.addContent(new Element("programmer")
-            .addContent(pane1 = new Element("pane")
-                .setAttribute("name","Basic")
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Primary Address")
+                .addContent(pane1 = new Element("pane")
+                        .setAttribute("name", "Basic")
+                        .addContent(new Element("column")
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Primary Address")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Start voltage")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                )
                         )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Start voltage")
+                        .addContent(new Element("column")
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Address")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                        .setAttribute("format", "checkbox")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                        .setAttribute("format", "radiobuttons")
+                                )
                         )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    )
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        .setAttribute("format","checkbox")
-                        )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        .setAttribute("format","radiobuttons")
-                        )
-                    )
                 )
-            .addContent(pane2 = new Element("pane")
-                .setAttribute("name", "CV")
-                .addContent(new Element("column")
-                    .addContent(new Element("cvtable"))
-                    )
-                )
-            .addContent(pane3 = new Element("pane")
-                .setAttribute("name", "Other")
-                .addContent(new Element("column")
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Address")
+                .addContent(pane2 = new Element("pane")
+                        .setAttribute("name", "CV")
+                        .addContent(new Element("column")
+                                .addContent(new Element("cvtable"))
                         )
-                    .addContent(new Element("display")
-                        .setAttribute("item", "Normal direction of motion")
-                        )
-                    )
                 )
-            )
-            ; // end of adding contents
+                .addContent(pane3 = new Element("pane")
+                        .setAttribute("name", "Other")
+                        .addContent(new Element("column")
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Address")
+                                )
+                                .addContent(new Element("display")
+                                        .setAttribute("item", "Normal direction of motion")
+                                )
+                        )
+                )
+        ); // end of adding contents
 
-        if (log.isDebugEnabled()) log.debug("setupDoc complete");
+        if (log.isDebugEnabled()) {
+            log.debug("setupDoc complete");
+        }
         return;
     }
 
     // from here down is testing infrastructure
-
     public PaneProgPaneTest(String s) {
         super(s);
     }
@@ -453,8 +516,13 @@ public class PaneProgPaneTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(PaneProgPaneTest.class.getName());
 

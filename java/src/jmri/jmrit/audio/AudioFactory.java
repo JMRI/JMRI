@@ -1,5 +1,4 @@
 // AudioFactory.java
-
 package jmri.jmrit.audio;
 
 /**
@@ -9,8 +8,8 @@ package jmri.jmrit.audio;
  * implementation.
  * <p>
  * Each factory varies in its capabilities with regard the faithfulness of the
- * audio rendering model (such as spatial positioning approximation), number
- * of concurrent sounds (polyphony), hardware required, etc.
+ * audio rendering model (such as spatial positioning approximation), number of
+ * concurrent sounds (polyphony), hardware required, etc.
  * <p>
  * Current implemented audio systems include:
  * <ul>
@@ -21,25 +20,23 @@ package jmri.jmrit.audio;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public interface AudioFactory {
 
     /**
      * Perform any implementation specific initialisation routines.
-     * 
+     *
      * @return true, if initialisation successful
      */
     public boolean init();
@@ -51,7 +48,7 @@ public interface AudioFactory {
 
     /**
      * Provide a specific new AudioBuffer object.
-     * 
+     *
      * @param systemName for this object instance
      * @param userName for this object instance
      * @return a new specific AudioBuffer
@@ -60,7 +57,7 @@ public interface AudioFactory {
 
     /**
      * Provide a specific new AudioListener object.
-     * 
+     *
      * @param systemName for this object instance
      * @param userName for this object instance
      * @return a new specific AudioListener
@@ -76,7 +73,7 @@ public interface AudioFactory {
 
     /**
      * Provide a specific new AudioSource object.
-     * 
+     *
      * @param systemName for this object instance
      * @param userName for this object instance
      * @return a new specific AudioSource
@@ -87,7 +84,7 @@ public interface AudioFactory {
      * Queues a new AudioCommand for subsequent execution.
      * <p>
      * If newAudioCommand is null the current queue is executed and cleaned
-     * 
+     *
      * @param newAudioCommand AudioCommand to queue or null to execute queue
      * @return true, if further commands exist; false, if empty
      */
@@ -95,7 +92,7 @@ public interface AudioFactory {
 
     /**
      * Return the currently active Command thread
-     * 
+     *
      * @return active CommandThread
      */
     public Thread getCommandThread();

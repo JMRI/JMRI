@@ -1,17 +1,16 @@
 package jmri.jmrix.lenz.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
- * Provides load and store functionality for
- * configuring XNetSensorManagers.
+ * Provides load and store functionality for configuring XNetSensorManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
- * @author  Paul Bender Copyright (c) 2003
+ * @author Paul Bender Copyright (c) 2003
  * @version $Revision$
  */
 public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
@@ -21,7 +20,7 @@ public class XNetSensorManagerXml extends jmri.managers.configurexml.AbstractSen
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class","jmri.jmrix.lenz.configurexml.XNetSensorManagerXml");
+        sensors.setAttribute("class", "jmri.jmrix.lenz.configurexml.XNetSensorManagerXml");
     }
 
     public void load(Element element, Object o) {

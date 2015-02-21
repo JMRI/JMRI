@@ -1,5 +1,4 @@
 // AnalogClock2Display.java
-
 package jmri.jmrit.display;
 
 import java.awt.Color;
@@ -28,20 +27,22 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * <p>An Analog Clock for displaying in a panel</p>
+ * <p>
+ * An Analog Clock for displaying in a panel</p>
  *
- * <p>Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
+ * <p>
+ * Time code copied in part from code for the Nixie clock by Bob Jacobsen </p>
  *
- * @author  Howard G. Penny - Copyright (C) 2005
+ * @author Howard G. Penny - Copyright (C) 2005
  * @version $Revision$
  */
 public class AnalogClock2Display extends PositionableJComponent implements LinkingObject {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7053647033852039593L;
-	Timebase clock;
+     *
+     */
+    private static final long serialVersionUID = -7053647033852039593L;
+    Timebase clock;
     double rate;
     double minuteAngle;
     double hourAngle;
@@ -57,13 +58,13 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     NamedIcon clockIcon;
 
     int hourX[] = {
-         -12, -11, -25, -10, -10, 0, 10, 10, 25, 11, 12};
+        -12, -11, -25, -10, -10, 0, 10, 10, 25, 11, 12};
     int hourY[] = {
-         -31, -163, -170, -211, -276, -285, -276, -211, -170, -163, -31};
+        -31, -163, -170, -211, -276, -285, -276, -211, -170, -163, -31};
     int minuteX[] = {
-         -12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
+        -12, -11, -24, -11, -11, 0, 11, 11, 24, 11, 12};
     int minuteY[] = {
-         -31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
+        -31, -261, -266, -314, -381, -391, -381, -314, -266, -261, -31};
     int scaledHourX[] = new int[hourX.length];
     int scaledHourY[] = new int[hourY.length];
     int scaledMinuteX[] = new int[minuteX.length];
@@ -90,10 +91,11 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     // centreX, centreY are the coordinates of the centre of the clock
     int centreX;
     int centreY;
-    
+
     String _url;
 
     public enum Colors {
+
         Black(Color.BLACK, Bundle.getMessage("Black")),
         DarkGray(Color.DARK_GRAY, Bundle.getMessage("DarkGray")),
         Gray(Color.GRAY, Bundle.getMessage("Gray")),
@@ -135,6 +137,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
         init();
     }
+
     public AnalogClock2Display(Editor editor, String url) {
         this(editor);
         _url = url;
@@ -143,7 +146,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     @Override
     public Positionable deepClone() {
         AnalogClock2Display pos;
-        if (_url==null || _url.trim().length()==0) {
+        if (_url == null || _url.trim().length() == 0) {
             pos = new AnalogClock2Display(_editor);
         } else {
             pos = new AnalogClock2Display(_editor, _url);
@@ -153,7 +156,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
     @Override
     public Positionable finishClone(Positionable p) {
-        AnalogClock2Display pos = (AnalogClock2Display)p;
+        AnalogClock2Display pos = (AnalogClock2Display) p;
         pos.setScale(getScale());
         return super.finishClone(pos);
     }
@@ -198,11 +201,16 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
     ButtonGroup rateButtonGroup = null;
     JMenuItem runMenu = null;
 
-    public int getFaceWidth() {return faceSize;}
-    public int getFaceHeight() {return faceSize;}
+    public int getFaceWidth() {
+        return faceSize;
+    }
+
+    public int getFaceHeight() {
+        return faceSize;
+    }
 
     @Override
-    public boolean setScaleMenu(JPopupMenu popup){
+    public boolean setScaleMenu(JPopupMenu popup) {
 
         popup.add(new JMenuItem(Bundle.getMessage("FastClock")));
         JMenu rateMenu = new JMenu("Clock rate");
@@ -225,7 +233,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         popup.addSeparator();
         JMenu colorMenu = new JMenu(Bundle.getMessage("Color"));
         colorButtonGroup = new ButtonGroup();
-        for (Colors c: Colors.values()) {
+        for (Colors c : Colors.values()) {
             addColorMenuEntry(colorMenu, c);
         }
         popup.add(colorMenu);
@@ -240,19 +248,19 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
     @Override
     public void setScale(double scale) {
-        if (scale==1.0) {
+        if (scale == 1.0) {
             init();
             return;
         }
         AffineTransform t = AffineTransform.getScaleInstance(scale, scale);
-        int w = (int)Math.ceil(scale*clockIcon.getIconWidth());
-        int h = (int)Math.ceil(scale*clockIcon.getIconHeight());
+        int w = (int) Math.ceil(scale * clockIcon.getIconWidth());
+        int h = (int) Math.ceil(scale * clockIcon.getIconHeight());
         clockIcon.transformImage(w, h, t, null);
-        w = (int)Math.ceil(scale*scaledIcon.getIconWidth());
-        h = (int)Math.ceil(scale*scaledIcon.getIconHeight());
+        w = (int) Math.ceil(scale * scaledIcon.getIconWidth());
+        h = (int) Math.ceil(scale * scaledIcon.getIconHeight());
         scaledIcon.transformImage(w, h, t, null);
-        w = (int)Math.ceil(scale*jmriIcon.getIconWidth());
-        h = (int)Math.ceil(scale*jmriIcon.getIconHeight());
+        w = (int) Math.ceil(scale * jmriIcon.getIconWidth());
+        h = (int) Math.ceil(scale * jmriIcon.getIconHeight());
         jmriIcon.transformImage(w, h, t, null);
         setSize(clockIcon.getIconHeight());
         scale *= getScale();
@@ -263,22 +271,21 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         JRadioButtonMenuItem button = new JRadioButtonMenuItem("" + newrate + ":1");
         button.addActionListener(new ActionListener() {
             final int r = newrate;
+
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
                     clock.userSetRate(r);
                     rate = r;
-                }
-                catch (TimebaseRateException t) {
-                    log.error("TimebaseRateException for rate= "+r+". "+t);
+                } catch (TimebaseRateException t) {
+                    log.error("TimebaseRateException for rate= " + r + ". " + t);
                 }
             }
         });
         rateButtonGroup.add(button);
         if (rate == newrate) {
             button.setSelected(true);
-        }
-        else {
+        } else {
             button.setSelected(false);
         }
         menu.add(button);
@@ -297,8 +304,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         colorButtonGroup.add(button);
         if (color == newcolor) {
             button.setSelected(true);
-        }
-        else {
+        } else {
             button.setSelected(false);
         }
         menu.add(button);
@@ -324,41 +330,41 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
         // Draw the JMRI logo
         g.drawImage(scaledLogo, -logoWidth / 2, -faceSize / 4, logoWidth,
-                    logoHeight, this);
+                logoHeight, this);
 
         // Draw hour hand rotated to appropriate angle
         // Calculation mimics the AffineTransform class calculations in Graphics2D
         // Grpahics2D and AffineTransform not used to maintain compatabilty with Java 1.1.8
         for (int i = 0; i < scaledMinuteX.length; i++) {
-            rotatedMinuteX[i] = (int) ( scaledMinuteX[i] *
-                                       Math.cos(toRadians(minuteAngle)) -
-                                       scaledMinuteY[i] *
-                                       Math.sin(toRadians(minuteAngle)));
-            rotatedMinuteY[i] = (int) ( scaledMinuteX[i] *
-                                       Math.sin(toRadians(minuteAngle)) +
-                                       scaledMinuteY[i] *
-                                       Math.cos(toRadians(minuteAngle)));
+            rotatedMinuteX[i] = (int) (scaledMinuteX[i]
+                    * Math.cos(toRadians(minuteAngle))
+                    - scaledMinuteY[i]
+                    * Math.sin(toRadians(minuteAngle)));
+            rotatedMinuteY[i] = (int) (scaledMinuteX[i]
+                    * Math.sin(toRadians(minuteAngle))
+                    + scaledMinuteY[i]
+                    * Math.cos(toRadians(minuteAngle)));
         }
         scaledMinuteHand = new Polygon(rotatedMinuteX, rotatedMinuteY,
-                                       rotatedMinuteX.length);
+                rotatedMinuteX.length);
         for (int i = 0; i < scaledHourX.length; i++) {
-            rotatedHourX[i] = (int) ( scaledHourX[i] *
-                                     Math.cos(toRadians(hourAngle)) -
-                                     scaledHourY[i] *
-                                     Math.sin(toRadians(hourAngle)));
-            rotatedHourY[i] = (int) ( scaledHourX[i] *
-                                     Math.sin(toRadians(hourAngle)) +
-                                     scaledHourY[i] *
-                                     Math.cos(toRadians(hourAngle)));
+            rotatedHourX[i] = (int) (scaledHourX[i]
+                    * Math.cos(toRadians(hourAngle))
+                    - scaledHourY[i]
+                    * Math.sin(toRadians(hourAngle)));
+            rotatedHourY[i] = (int) (scaledHourX[i]
+                    * Math.sin(toRadians(hourAngle))
+                    + scaledHourY[i]
+                    * Math.cos(toRadians(hourAngle)));
         }
         scaledHourHand = new Polygon(rotatedHourX, rotatedHourY,
-                                     rotatedHourX.length);
+                rotatedHourX.length);
 
         g.fillPolygon(scaledHourHand);
         g.fillPolygon(scaledMinuteHand);
 
         // Draw AM/PM indicator in slightly smaller font than hour digits
-        int amPmFontSize = (int) ( faceSize * .075);
+        int amPmFontSize = (int) (faceSize * .075);
         if (amPmFontSize < 1) {
             amPmFontSize = 1;
         }
@@ -405,32 +411,31 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         // Had trouble getting the proper sizes when using Images by themselves so
         // use the NamedIcon as a source for the sizes
         int logoScaleWidth = faceSize / 6;
-        int logoScaleHeight = (int) ( (float) logoScaleWidth *
-                                     (float) jmriIcon.getIconHeight() /
-                                     jmriIcon.getIconWidth());
+        int logoScaleHeight = (int) ((float) logoScaleWidth
+                * (float) jmriIcon.getIconHeight()
+                / jmriIcon.getIconWidth());
         scaledLogo = logo.getScaledInstance(logoScaleWidth, logoScaleHeight,
-                                            Image.SCALE_SMOOTH);
+                Image.SCALE_SMOOTH);
         scaledIcon.setImage(scaledLogo);
         logoWidth = scaledIcon.getIconWidth();
         logoHeight = scaledIcon.getIconHeight();
 
         scaleRatio = faceSize / 2.7 / minuteHeight;
         for (int i = 0; i < minuteX.length; i++) {
-            scaledMinuteX[i] = (int) ( minuteX[i] * scaleRatio);
-            scaledMinuteY[i] = (int) ( minuteY[i] * scaleRatio);
-            scaledHourX[i] = (int) ( hourX[i] * scaleRatio);
-            scaledHourY[i] = (int) ( hourY[i] * scaleRatio);
+            scaledMinuteX[i] = (int) (minuteX[i] * scaleRatio);
+            scaledMinuteY[i] = (int) (minuteY[i] * scaleRatio);
+            scaledHourX[i] = (int) (hourX[i] * scaleRatio);
+            scaledHourY[i] = (int) (hourY[i] * scaleRatio);
         }
         scaledHourHand = new Polygon(scaledHourX, scaledHourY,
-                                     scaledHourX.length);
+                scaledHourX.length);
         scaledMinuteHand = new Polygon(scaledMinuteX, scaledMinuteY,
-                                       scaledMinuteX.length);
+                scaledMinuteX.length);
 
         if (panelHeight > 0 && panelWidth > 0) {
             centreX = panelWidth / 2;
             centreY = panelHeight / 2;
-        }
-        else {
+        } else {
             centreX = centreY = size / 2;
         }
     }
@@ -441,15 +446,14 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         scaleFace();
     }
 
-/* This needs to be updated if resizing becomes an option
-    public void resize() {
-        int panelHeight = this.getSize().height;
-        int panelWidth = this.getSize().width;
-        size = Math.min(panelHeight, panelWidth);
-        scaleFace();
-    }
-*/
-
+    /* This needs to be updated if resizing becomes an option
+     public void resize() {
+     int panelHeight = this.getSize().height;
+     int panelWidth = this.getSize().width;
+     size = Math.min(panelHeight, panelWidth);
+     scaleFace();
+     }
+     */
     @SuppressWarnings("deprecation")
     public void update() {
         Date now = clock.getTime();
@@ -462,8 +466,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
         hourAngle = hours * 30. + 30. * minuteAngle / 360.;
         if (hours < 12) {
             amPm = "AM " + (int) clock.userGetRate() + ":1";
-        }
-        else {
+        } else {
             amPm = "PM " + (int) clock.userGetRate() + ":1";
         }
         if (hours == 12 && minutes == 0) {
@@ -504,7 +507,7 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
     @Override
     public boolean setLinkMenu(JPopupMenu popup) {
-        if (_url==null || _url.trim().length()==0) {
+        if (_url == null || _url.trim().length() == 0) {
             return false;
         }
         popup.add(CoordinateEdit.getLinkEditAction(this, "EditLink"));
@@ -513,8 +516,8 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
 
     @Override
     public void doMouseClicked(MouseEvent event) {
-        log.debug("click to "+_url);
-        if (_url==null || _url.trim().length()==0) {
+        log.debug("click to " + _url);
+        if (_url == null || _url.trim().length() == 0) {
             return;
         }
         try {
@@ -532,7 +535,9 @@ public class AnalogClock2Display extends PositionableJComponent implements Linki
             } else {
                 jmri.util.ExternalLinkContentViewerUI.activateURL(new java.net.URL(_url));
             }
-        } catch (IOException t) { log.error("Error handling link", t); } catch (URISyntaxException t) {
+        } catch (IOException t) {
+            log.error("Error handling link", t);
+        } catch (URISyntaxException t) {
             log.error("Error handling link", t);
         }
         super.doMouseClicked(event);

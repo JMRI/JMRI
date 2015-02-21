@@ -1,9 +1,6 @@
 // DefaultIdTag.java
-
 package jmri.implementation;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.Calendar;
@@ -13,35 +10,35 @@ import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Reporter;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Concrete implementation of the {@link jmri.IdTag} interface
- * for the Internal system.
+ * Concrete implementation of the {@link jmri.IdTag} interface for the Internal
+ * system.
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
 public class DefaultIdTag extends AbstractIdTag {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7077891597878576793L;
-	private int _currentState = UNKNOWN;
+     *
+     */
+    private static final long serialVersionUID = -7077891597878576793L;
+    private int _currentState = UNKNOWN;
 
     public DefaultIdTag(String systemName) {
         super(systemName.toUpperCase());
@@ -58,14 +55,14 @@ public class DefaultIdTag extends AbstractIdTag {
         Reporter oldWhere = this._whereLastSeen;
         Date oldWhen = this._whenLastSeen;
         this._whereLastSeen = r;
-        if (r!=null) {
-            this._whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()?
-                InstanceManager.clockControlInstance().getTime():
-                Calendar.getInstance().getTime();
+        if (r != null) {
+            this._whenLastSeen = InstanceManager.getDefault(IdTagManager.class).isFastClockUsed()
+                    ? InstanceManager.clockControlInstance().getTime()
+                    : Calendar.getInstance().getTime();
         } else {
             this._whenLastSeen = null;
         }
-        setCurrentState(r!=null?SEEN:UNSEEN);
+        setCurrentState(r != null ? SEEN : UNSEEN);
         firePropertyChange("whereLastSeen", oldWhere, this._whereLastSeen); //NOI18N
         firePropertyChange("whenLastSeen", oldWhen, this._whenLastSeen);    //NOI18N
     }
@@ -93,17 +90,17 @@ public class DefaultIdTag extends AbstractIdTag {
         Element e = new Element("idtag"); //NOI18N
         // e.setAttribute("systemName", this.mSystemName); // not needed from 2.11.1
         e.addContent(new Element("systemName").addContent(this.mSystemName)); //NOI18N
-        if (this.mUserName!=null && this.mUserName.length()>0) {
+        if (this.mUserName != null && this.mUserName.length() > 0) {
             // e.setAttribute("userName", this.mUserName); // not needed from 2.11.1
             e.addContent(new Element("userName").addContent(this.mUserName)); //NOI18N
         }
-        if (this.getComment()!=null && this.getComment().length()>0) {
+        if (this.getComment() != null && this.getComment().length() > 0) {
             e.addContent(new Element("comment").addContent(this.getComment())); //NOI18N
         }
-        if (this.getWhereLastSeen()!=null && storeState) {
+        if (this.getWhereLastSeen() != null && storeState) {
             e.addContent(new Element("whereLastSeen").addContent(this.getWhereLastSeen().getSystemName())); //NOI18N
         }
-        if (this.getWhenLastSeen()!=null && storeState) {
+        if (this.getWhenLastSeen() != null && storeState) {
             e.addContent(new Element("whenLastSeen").addContent(DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).format(this.getWhenLastSeen()))); //NOI18N
         }
         return e;
@@ -112,19 +109,24 @@ public class DefaultIdTag extends AbstractIdTag {
     @Override
     public void load(Element e) {
         if (e.getName().equals("idtag")) { //NOI18N
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Load IdTag element for " + this.getSystemName());
-            if (e.getChild("userName")!=null) //NOI18N
+            }
+            if (e.getChild("userName") != null) //NOI18N
+            {
                 this.setUserName(e.getChild("userName").getText()); //NOI18N
-            if (e.getChild("comment")!=null) //NOI18N
+            }
+            if (e.getChild("comment") != null) //NOI18N
+            {
                 this.setComment(e.getChild("comment").getText()); //NOI18N
-            if (e.getChild("whereLastSeen")!=null) { //NOI18N
+            }
+            if (e.getChild("whereLastSeen") != null) { //NOI18N
                 this.setWhereLastSeen(
                         InstanceManager.reporterManagerInstance().provideReporter(
-                            e.getChild("whereLastSeen").getText())); //NOI18N
+                                e.getChild("whereLastSeen").getText())); //NOI18N
                 this._whenLastSeen = null;
             }
-            if (e.getChild("whenLastSeen")!=null) { //NOI18N
+            if (e.getChild("whenLastSeen") != null) { //NOI18N
                 log.debug("When Last Seen: " + e.getChild("whenLastSeen").getText());
                 try {
                     this._whenLastSeen = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM).parse(e.getChild("whenLastSeen").getText()); //NOI18N

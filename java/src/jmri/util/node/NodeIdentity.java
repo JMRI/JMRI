@@ -223,8 +223,8 @@ public class NodeIdentity {
             fw = new FileWriter(this.identityFile());
             XMLOutputter fmt = new XMLOutputter();
             fmt.setFormat(Format.getPrettyFormat()
-                                .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.PRESERVE));
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.PRESERVE));
             fmt.output(doc, fw);
             fw.close();
         } catch (IOException ex) {

@@ -1,249 +1,249 @@
 package jmri.jmrit.operations;
 
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
+import java.awt.Component;
+import java.awt.FlowLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
+import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JButton;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-
-import java.awt.FlowLayout;
-import javax.swing.BoxLayout;
-import java.awt.Component;
+import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 /**
- * Dialog to display the details of an Exception. The Exception and additional details about what was happening when the
- * exception occurred are passed in using an ExceptionContext object.
- * 
- * This is a preliminary version that is incomplete, but works. Copy to the clipboard needs to be added.
- * 
+ * Dialog to display the details of an Exception. The Exception and additional
+ * details about what was happening when the exception occurred are passed in
+ * using an ExceptionContext object.
+ *
+ * This is a preliminary version that is incomplete, but works. Copy to the
+ * clipboard needs to be added.
+ *
  * @author Gregory Madsen Copyright (C) 2012
- * 
+ *
  */
 public class ExceptionDisplayFrame extends JDialog {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -6188978764804662351L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -6188978764804662351L;
 
-	private ExceptionContext context;
+    private ExceptionContext context;
 
-	// This needs MAJOR clean-up to better organize the controls and their
-	// hierarchy.
+    // This needs MAJOR clean-up to better organize the controls and their
+    // hierarchy.
+    private JPanel contentPane;
+    JTextArea stackTraceTextArea;
+    private JPanel buttonPanel;
+    private JButton copyButton;
+    private JButton closeButton;
 
-	private JPanel contentPane;
-	JTextArea stackTraceTextArea;
-	private JPanel buttonPanel;
-	private JButton copyButton;
-	private JButton closeButton;
+    private JLabel stackTraceLabel;
+    private JButton showDetailsButton;
+    private JPanel panel;
+    private JPanel panel_2;
+    private JLabel lblNewLabel;
+    private JLabel lblNewLabel_2;
 
-	private JLabel stackTraceLabel;
-	private JButton showDetailsButton;
-	private JPanel panel;
-	private JPanel panel_2;
-	private JLabel lblNewLabel;
-	private JLabel lblNewLabel_2;
+    // New stuff
+    private JTextArea operationTextArea;
+    private JTextArea messageTextArea;
+    private JTextArea hintTextArea;
+    private JPanel summaryPanel;
+    private JPanel panel_4;
+    private JLabel lblNewLabel_3;
+    private JLabel lblNewLabel_4;
+    private JTextArea summaryTextArea2;
 
-	// New stuff
-	private JTextArea operationTextArea;
-	private JTextArea messageTextArea;
-	private JTextArea hintTextArea;
-	private JPanel summaryPanel;
-	private JPanel panel_4;
-	private JLabel lblNewLabel_3;
-	private JLabel lblNewLabel_4;
-	private JTextArea summaryTextArea2;
+    private JPanel panel_5;
+    private JLabel lblNewLabel_5;
+    private JTextArea typeTextArea;
 
-	private JPanel panel_5;
-	private JLabel lblNewLabel_5;
-	private JTextArea typeTextArea;
+    private JPanel panel_6;
+    private JLabel lblNewLabel_6;
+    private JTextArea toStringTextArea;
 
-	private JPanel panel_6;
-	private JLabel lblNewLabel_6;
-	private JTextArea toStringTextArea;
+    private JPanel panel_7;
+    private JLabel lblNewLabel_7;
+    private JTextArea causeTextArea;
 
-	private JPanel panel_7;
-	private JLabel lblNewLabel_7;
-	private JTextArea causeTextArea;
+    private JPanel detailsPanel;
+    private JLabel lblNewLabel_1;
 
-	private JPanel detailsPanel;
-	private JLabel lblNewLabel_1;
+    /**
+     * Create the frame.
+     *
+     */
+    public ExceptionDisplayFrame(ExceptionContext context) {
+        if (context == null) {
+            throw new IllegalArgumentException(
+                    "ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
+        }
+        this.context = context;
 
-	/**
-	 * Create the frame.
-	 * 
-	 */
-	public ExceptionDisplayFrame(ExceptionContext context) {
-		if (context == null)
-			throw new IllegalArgumentException(
-					"ExceptionContext argument passed to ErrorDisplayFrame constructor cannot be null."); // NOI18N
+        InitComponents();
+    }
 
-		this.context = context;
+    /**
+     * Constructor that takes just an Exception and defaults everything else.
+     *
+     * @param ex
+     */
+    public ExceptionDisplayFrame(Exception ex) {
+        this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N
+                "Hint unavailable"); // NOI18N
 
-		InitComponents();
-	}
+        InitComponents();
+    }
 
-	/**
-	 * Constructor that takes just an Exception and defaults everything else.
-	 * 
-	 * @param ex
-	 */
-	public ExceptionDisplayFrame(Exception ex) {
-		this.context = new ExceptionContext(ex, "Operation unavailable", // NOI18N
-				"Hint unavailable"); // NOI18N
+    private void InitComponents() {
+        setTitle(context.getTitle());
 
-		InitComponents();
-	}
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-	private void InitComponents() {
-		setTitle(context.getTitle());
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        setContentPane(contentPane);
 
-		contentPane = new JPanel();
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        lblNewLabel_1 = new JLabel(
+                "This is a prototype dialog for displaying details about exceptions that are thrown during program execution. It still needs a lot of work!"); // NOI18N
+        lblNewLabel_1.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-		setContentPane(contentPane);
+        contentPane.add(lblNewLabel_1);
 
-		lblNewLabel_1 = new JLabel(
-				"This is a prototype dialog for displaying details about exceptions that are thrown during program execution. It still needs a lot of work!"); // NOI18N
-		lblNewLabel_1.setAlignmentX(Component.CENTER_ALIGNMENT);
+        summaryPanel = new JPanel();
+        contentPane.add(summaryPanel);
 
-		contentPane.add(lblNewLabel_1);
+        lblNewLabel_3 = new JLabel("Summary:"); // NOI18N
+        summaryPanel.add(lblNewLabel_3);
 
-		summaryPanel = new JPanel();
-		contentPane.add(summaryPanel);
+        summaryTextArea2 = new JTextArea();
+        summaryPanel.add(summaryTextArea2);
 
-		lblNewLabel_3 = new JLabel("Summary:"); // NOI18N
-		summaryPanel.add(lblNewLabel_3);
+        showDetailsButton = new JButton("Show details"); // NOI18N
+        showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        showDetailsButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                detailsPanel.setVisible(true);
+                pack();
+            }
+        });
+        contentPane.add(showDetailsButton);
 
-		summaryTextArea2 = new JTextArea();
-		summaryPanel.add(summaryTextArea2);
+        detailsPanel = new JPanel();
+        detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
+        detailsPanel.setVisible(false);
+        contentPane.add(detailsPanel);
 
-		showDetailsButton = new JButton("Show details"); // NOI18N
-		showDetailsButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-		showDetailsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				detailsPanel.setVisible(true);
-				pack();
-			}
-		});
-		contentPane.add(showDetailsButton);
+        stackTraceTextArea = new JTextArea();
+        stackTraceTextArea
+                .setToolTipText("This is the trace of all of the methods that were active when the exception occurred."); // NOI18N
 
-		detailsPanel = new JPanel();
-		detailsPanel.setLayout(new BoxLayout(detailsPanel, BoxLayout.Y_AXIS));
-		detailsPanel.setVisible(false);
-		contentPane.add(detailsPanel);
+        stackTraceLabel = new JLabel("Stack trace:"); // NOI18N
+        stackTraceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        stackTraceLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        detailsPanel.add(stackTraceLabel);
+        detailsPanel.add(stackTraceTextArea);
 
-		stackTraceTextArea = new JTextArea();
-		stackTraceTextArea
-				.setToolTipText("This is the trace of all of the methods that were active when the exception occurred."); // NOI18N
+        panel = new JPanel();
+        detailsPanel.add(panel);
 
-		stackTraceLabel = new JLabel("Stack trace:"); // NOI18N
-		stackTraceLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		stackTraceLabel.setHorizontalAlignment(SwingConstants.LEFT);
-		detailsPanel.add(stackTraceLabel);
-		detailsPanel.add(stackTraceTextArea);
+        lblNewLabel = new JLabel("Operation:"); // NOI18N
+        panel.add(lblNewLabel);
 
-		panel = new JPanel();
-		detailsPanel.add(panel);
+        operationTextArea = new JTextArea();
+        panel.add(operationTextArea);
 
-		lblNewLabel = new JLabel("Operation:"); // NOI18N
-		panel.add(lblNewLabel);
+        panel_4 = new JPanel();
+        detailsPanel.add(panel_4);
 
-		operationTextArea = new JTextArea();
-		panel.add(operationTextArea);
+        lblNewLabel_4 = new JLabel("Messsage:"); // NOI18N
+        panel_4.add(lblNewLabel_4);
 
-		panel_4 = new JPanel();
-		detailsPanel.add(panel_4);
+        messageTextArea = new JTextArea();
+        panel_4.add(messageTextArea);
 
-		lblNewLabel_4 = new JLabel("Messsage:"); // NOI18N
-		panel_4.add(lblNewLabel_4);
+        panel_2 = new JPanel();
+        detailsPanel.add(panel_2);
 
-		messageTextArea = new JTextArea();
-		panel_4.add(messageTextArea);
+        lblNewLabel_2 = new JLabel("Hint:"); // NOI18N
+        panel_2.add(lblNewLabel_2);
 
-		panel_2 = new JPanel();
-		detailsPanel.add(panel_2);
+        hintTextArea = new JTextArea();
+        panel_2.add(hintTextArea);
 
-		lblNewLabel_2 = new JLabel("Hint:"); // NOI18N
-		panel_2.add(lblNewLabel_2);
+        panel_5 = new JPanel();
+        detailsPanel.add(panel_5);
 
-		hintTextArea = new JTextArea();
-		panel_2.add(hintTextArea);
+        lblNewLabel_5 = new JLabel("Exception Type:"); // NOI18N
+        panel_5.add(lblNewLabel_5);
 
-		panel_5 = new JPanel();
-		detailsPanel.add(panel_5);
+        typeTextArea = new JTextArea();
+        panel_5.add(typeTextArea);
 
-		lblNewLabel_5 = new JLabel("Exception Type:"); // NOI18N
-		panel_5.add(lblNewLabel_5);
+        panel_6 = new JPanel();
+        detailsPanel.add(panel_6);
 
-		typeTextArea = new JTextArea();
-		panel_5.add(typeTextArea);
+        lblNewLabel_6 = new JLabel("Exception toString():"); // NOI18N
+        panel_6.add(lblNewLabel_6);
 
-		panel_6 = new JPanel();
-		detailsPanel.add(panel_6);
+        toStringTextArea = new JTextArea();
+        panel_6.add(toStringTextArea);
 
-		lblNewLabel_6 = new JLabel("Exception toString():"); // NOI18N
-		panel_6.add(lblNewLabel_6);
+        panel_7 = new JPanel();
+        detailsPanel.add(panel_7);
 
-		toStringTextArea = new JTextArea();
-		panel_6.add(toStringTextArea);
+        lblNewLabel_7 = new JLabel("Cause (Inner Ex):"); // NOI18N
+        panel_7.add(lblNewLabel_7);
 
-		panel_7 = new JPanel();
-		detailsPanel.add(panel_7);
+        causeTextArea = new JTextArea();
+        panel_7.add(causeTextArea);
 
-		lblNewLabel_7 = new JLabel("Cause (Inner Ex):"); // NOI18N
-		panel_7.add(lblNewLabel_7);
+        buttonPanel = new JPanel();
+        buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        contentPane.add(buttonPanel);
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
 
-		causeTextArea = new JTextArea();
-		panel_7.add(causeTextArea);
+        copyButton = new JButton("Copy to Clipboard"); // NOI18N
+        copyButton.setEnabled(false);
+        buttonPanel.add(copyButton);
 
-		buttonPanel = new JPanel();
-		buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-		contentPane.add(buttonPanel);
-		buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 5, 5));
+        closeButton = new JButton("Close"); // NOI18N
+        closeButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent arg0) {
+                dispose();
+            }
+        });
+        buttonPanel.add(closeButton);
 
-		copyButton = new JButton("Copy to Clipboard"); // NOI18N
-		copyButton.setEnabled(false);
-		buttonPanel.add(copyButton);
+        // Now fill in the controls...
+        stackTraceTextArea.setText(context.getStackTraceAsString(10));
 
-		closeButton = new JButton("Close"); // NOI18N
-		closeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				dispose();
-			}
-		});
-		buttonPanel.add(closeButton);
+        // New controls
+        operationTextArea.setText(context.getOperation());
+        messageTextArea.setText(context.getException().getMessage());
+        hintTextArea.setText(context.getHint());
+        summaryTextArea2.setText(context.getSummary());
+        typeTextArea.setText(context.getException().getClass().getName());
 
-		// Now fill in the controls...
-		stackTraceTextArea.setText(context.getStackTraceAsString(10));
+        toStringTextArea.setText(context.getException().toString());
 
-		// New controls
-		operationTextArea.setText(context.getOperation());
-		messageTextArea.setText(context.getException().getMessage());
-		hintTextArea.setText(context.getHint());
-		summaryTextArea2.setText(context.getSummary());
-		typeTextArea.setText(context.getException().getClass().getName());
+        Throwable cause = context.getException().getCause();
 
-		toStringTextArea.setText(context.getException().toString());
+        if (cause != null) {
+            causeTextArea.setText(cause.toString());
+        } else {
+            causeTextArea.setText("null"); // NOI18N
+        }
 
-		Throwable cause = context.getException().getCause();
+        pack();
 
-		if (cause != null) {
-			causeTextArea.setText(cause.toString());
-		} else {
-			causeTextArea.setText("null"); // NOI18N
-		}
-
-		pack();
-
-		setModalityType(ModalityType.DOCUMENT_MODAL);
-		setModal(true);
-		setLocationRelativeTo(null);
-		setVisible(true);
-	}
+        setModalityType(ModalityType.DOCUMENT_MODAL);
+        setModal(true);
+        setLocationRelativeTo(null);
+        setVisible(true);
+    }
 }

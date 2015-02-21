@@ -1,17 +1,17 @@
 // RouteTableActionTest.java
-
 package jmri.jmrit.beantable;
 
-import org.apache.log4j.Logger;
 import javax.swing.JFrame;
-
-import junit.framework.*;
-
-
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
- * @author	Bob Jacobsen  Copyright 2004, 2007
+ *
+ * @author	Bob Jacobsen Copyright 2004, 2007
  * @version	$Revision$
  */
 public class RouteTableActionTest extends TestCase {
@@ -24,16 +24,14 @@ public class RouteTableActionTest extends TestCase {
     public void testInvoke() {
         new RouteTableAction().actionPerformed(null);
     }
-    
+
     public void testX() {
-    	JFrame f = jmri.util.JmriJFrame.getFrame("Route Table");
-    	Assert.assertTrue("found frame", f !=null );
-    	f.dispose();
+        JFrame f = jmri.util.JmriJFrame.getFrame("Route Table");
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
     }
 
-
     // from here down is testing infrastructure
-
     public RouteTableActionTest(String s) {
         super(s);
     }
@@ -51,8 +49,13 @@ public class RouteTableActionTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(RouteTableActionTest.class.getName());
 }

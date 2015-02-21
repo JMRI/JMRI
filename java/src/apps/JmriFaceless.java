@@ -29,7 +29,6 @@ package apps;
 public class JmriFaceless extends apps.AppsBase {
 
     //private static final Logger log = LoggerFactory.getLogger(JmriFaceless.class);
-
     public JmriFaceless(String[] args) {
         super("JmriFaceless", "JmriFacelessConfig3.xml", args);
     }

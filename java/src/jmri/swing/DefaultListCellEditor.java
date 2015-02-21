@@ -5,7 +5,11 @@
 package jmri.swing;
 
 import java.awt.Component;
-import javax.swing.*;
+import javax.swing.DefaultCellEditor;
+import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JList;
+import javax.swing.JTextField;
 
 /**
  *
@@ -14,11 +18,11 @@ import javax.swing.*;
 public class DefaultListCellEditor<E> extends DefaultCellEditor implements ListCellEditor<E> {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7557104352512667759L;
+     *
+     */
+    private static final long serialVersionUID = 7557104352512667759L;
 
-	public DefaultListCellEditor(final JCheckBox checkBox) {
+    public DefaultListCellEditor(final JCheckBox checkBox) {
         super(checkBox);
     }
 
@@ -35,9 +39,11 @@ public class DefaultListCellEditor<E> extends DefaultCellEditor implements ListC
         delegate.setValue(value);
         return editorComponent;
     }
-    
+
     @Override
     @SuppressWarnings("unchecked") // made safe by construction
-    public E getCellEditorValue() { return (E) super.getCellEditorValue(); }
+    public E getCellEditorValue() {
+        return (E) super.getCellEditorValue();
+    }
 
 }

@@ -1,16 +1,15 @@
 // JavaSoundAudioSource.java
-
 package jmri.jmrit.audio;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.Mixer;
-import jmri.InstanceManager;
 import javax.vecmath.Vector3f;
+import jmri.InstanceManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JavaSound implementation of the Audio Source sub-class.
@@ -24,18 +23,16 @@ import javax.vecmath.Vector3f;
  * <hr>
  * This file is part of JMRI.
  * <p>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <p>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <p>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public class JavaSoundAudioSource extends AbstractAudioSource {
@@ -65,7 +62,6 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
      */
     private transient JavaSoundAudioChannel _audioChannel = null;
 
-
     private boolean _jsState;
 
     /**
@@ -75,7 +71,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
      */
     public JavaSoundAudioSource(String systemName) {
         super(systemName);
-        if (log.isDebugEnabled()) log.debug("New JavaSoundAudioSource: "+systemName);
+        if (log.isDebugEnabled()) {
+            log.debug("New JavaSoundAudioSource: " + systemName);
+        }
         _initialised = init();
     }
 
@@ -87,7 +85,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
      */
     public JavaSoundAudioSource(String systemName, String userName) {
         super(systemName, userName);
-        if (log.isDebugEnabled()) log.debug("New JavaSoundAudioSource: "+userName+" ("+systemName+")");
+        if (log.isDebugEnabled()) {
+            log.debug("New JavaSoundAudioSource: " + userName + " (" + systemName + ")");
+        }
         _initialised = init();
     }
 
@@ -110,15 +110,16 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
         // Wait for AudioBuffer to be loaded, or 20 seconds
         long startTime = System.currentTimeMillis();
-        while (audioBuffer.getState()!=AudioBuffer.STATE_LOADED &&
-                System.currentTimeMillis()-startTime < 20000) {
+        while (audioBuffer.getState() != AudioBuffer.STATE_LOADED
+                && System.currentTimeMillis() - startTime < 20000) {
             try {
                 Thread.sleep(50);
-            } catch (InterruptedException ex) {}            
+            } catch (InterruptedException ex) {
+            }
         }
 
         if (audioBuffer instanceof JavaSoundAudioBuffer
-                && audioBuffer.getState()==AudioBuffer.STATE_LOADED) {
+                && audioBuffer.getState() == AudioBuffer.STATE_LOADED) {
             // Cast to JavaSoundAudioBuffer to enable easier access to specific methods
             JavaSoundAudioBuffer buffer = (JavaSoundAudioBuffer) audioBuffer;
 
@@ -129,8 +130,8 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             try {
                 newClip = (Clip) _mixer.getLine(lineInfo);
             } catch (LineUnavailableException ex) {
-                log.warn("Error binding JavaSoundSource (" + this.getSystemName() +
-                         ") to AudioBuffer (" + this.getAssignedBufferName() + ") " + ex);
+                log.warn("Error binding JavaSoundSource (" + this.getSystemName()
+                        + ") to AudioBuffer (" + this.getAssignedBufferName() + ") " + ex);
                 return false;
             }
 
@@ -139,19 +140,21 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
             try {
                 _clip.open(buffer.getAudioFormat(),
-                           buffer.getDataStorageBuffer(),
-                           0,
-                           buffer.getDataStorageBuffer().length);
+                        buffer.getDataStorageBuffer(),
+                        0,
+                        buffer.getDataStorageBuffer().length);
             } catch (LineUnavailableException ex) {
-                log.warn("Error binding JavaSoundSource (" + this.getSystemName() +
-                         ") to AudioBuffer (" + this.getAssignedBufferName() + ")" + ex );
+                log.warn("Error binding JavaSoundSource (" + this.getSystemName()
+                        + ") to AudioBuffer (" + this.getAssignedBufferName() + ")" + ex);
             }
-            if (log.isDebugEnabled()) log.debug("Bind JavaSoundAudioSource (" + this.getSystemName() +
-                                            ") to JavaSoundAudioBuffer (" + audioBuffer.getSystemName() + ")");
+            if (log.isDebugEnabled()) {
+                log.debug("Bind JavaSoundAudioSource (" + this.getSystemName()
+                        + ") to JavaSoundAudioBuffer (" + audioBuffer.getSystemName() + ")");
+            }
             return true;
         } else {
-            log.warn("AudioBuffer not loaded error when binding JavaSoundSource (" + this.getSystemName() +
-                     ") to AudioBuffer (" + this.getAssignedBufferName() + ")");
+            log.warn("AudioBuffer not loaded error when binding JavaSoundSource (" + this.getSystemName()
+                    + ") to AudioBuffer (" + this.getAssignedBufferName() + ")");
             return false;
         }
 
@@ -164,7 +167,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             calculatePan();
         }
     }
-    
+
     @Override
     public void setGain(float gain) {
         super.setGain(gain);
@@ -172,7 +175,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             calculateGain();
         }
     }
-    
+
     @Override
     public void setPitch(float pitch) {
         super.setPitch(pitch);
@@ -180,7 +183,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             calculatePitch();
         }
     }
-    
+
     @Override
     public void setReferenceDistance(float referenceDistance) {
         super.setReferenceDistance(referenceDistance);
@@ -192,7 +195,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     @Override
     public int getState() {
         boolean old = _jsState;
-        _jsState = (this._clip!=null?this._clip.isActive():false);
+        _jsState = (this._clip != null ? this._clip.isActive() : false);
         if (_jsState != old) {
             if (_jsState == true) {
                 this.setState(STATE_PLAYING);
@@ -213,12 +216,14 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         } else {
             _initialised = init();
         }
-        
+
     }
 
     @Override
     protected void doPlay() {
-        if (log.isDebugEnabled()) log.debug("Play JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Play JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             doRewind();
             doResume();
@@ -227,7 +232,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doStop() {
-        if (log.isDebugEnabled()) log.debug("Stop JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Stop JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             doPause();
             doRewind();
@@ -236,12 +243,15 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doPause() {
-        if (log.isDebugEnabled()) log.debug("Pause JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Pause JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             this._clip.stop();
             if (_audioChannel != null) {
-                if (log.isDebugEnabled())
+                if (log.isDebugEnabled()) {
                     log.debug("Remove JavaSoundAudioChannel for Source " + this.getSystemName());
+                }
                 _audioChannel = null;
             }
         }
@@ -250,11 +260,14 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doResume() {
-        if (log.isDebugEnabled()) log.debug("Resume JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Resume JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             if (_audioChannel == null) {
-                if (log.isDebugEnabled())
+                if (log.isDebugEnabled()) {
                     log.debug("Create JavaSoundAudioChannel for Source " + this.getSystemName());
+                }
                 _audioChannel = new JavaSoundAudioChannel(this);
             }
             this._clip.loop(this.getNumLoops());
@@ -264,7 +277,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doRewind() {
-        if (log.isDebugEnabled()) log.debug("Rewind JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Rewind JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             this._clip.setFramePosition(0);
         }
@@ -272,7 +287,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doFadeIn() {
-        if (log.isDebugEnabled()) log.debug("Fade-in JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Fade-in JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             doPlay();
             AudioSourceFadeThread asft = new AudioSourceFadeThread(this);
@@ -282,7 +299,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
     @Override
     protected void doFadeOut() {
-        if (log.isDebugEnabled()) log.debug("Fade-out JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Fade-out JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         if (_initialised && isBound()) {
             AudioSourceFadeThread asft = new AudioSourceFadeThread(this);
             asft.start();
@@ -296,16 +315,18 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             this._clip.close();
             this._clip = null;
         }
-        if (log.isDebugEnabled()) log.debug("Cleanup JavaSoundAudioSource (" + this.getSystemName() + ")");
+        if (log.isDebugEnabled()) {
+            log.debug("Cleanup JavaSoundAudioSource (" + this.getSystemName() + ")");
+        }
         this.dispose();
     }
 
     /**
-     * Calculates the panning of this Source between fully left (-1.0f)
-     * and fully right (1.0f)
+     * Calculates the panning of this Source between fully left (-1.0f) and
+     * fully right (1.0f)
      * <p>
-     * Calculated internally from the relative positions of this source and
-     * the listener.
+     * Calculated internally from the relative positions of this source and the
+     * listener.
      */
     protected void calculatePan() {
         Vector3f side = new Vector3f();
@@ -315,15 +336,16 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         Vector3f vecZ = new Vector3f(this.getCurrentPosition());
         float x = vecX.dot(side);
         float z = vecZ.dot(_activeAudioListener.getOrientation(AT));
-        float angle = (float) Math.atan2( x, z );
-        float pan = (float) - Math.sin( angle );
+        float angle = (float) Math.atan2(x, z);
+        float pan = (float) -Math.sin(angle);
 
         // If playing, update the pan
         if (_audioChannel != null) {
             _audioChannel.setPan(pan);
         }
-        if (log.isDebugEnabled())
+        if (log.isDebugEnabled()) {
             log.debug("Set pan of JavaSoundAudioSource " + this.getSystemName() + " to " + pan);
+        }
     }
 
     @Override
@@ -335,33 +357,36 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             distance.sub(_activeAudioListener.getCurrentPosition());
         }
 
-        float distanceFromListener =
-                (float) Math.sqrt( distance.dot(distance));
-        if (log.isDebugEnabled())
+        float distanceFromListener
+                = (float) Math.sqrt(distance.dot(distance));
+        if (log.isDebugEnabled()) {
             log.debug("Distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
+        }
 
         // Default value to start with (used for no distance attenuation)
         float currentGain = 1.0f;
 
-        if (InstanceManager.audioManagerInstance().getActiveAudioFactory().isDistanceAttenuated())
-        {
+        if (InstanceManager.audioManagerInstance().getActiveAudioFactory().isDistanceAttenuated()) {
             // Calculate gain of this source using clamped inverse distance
             // attenuation model
 
             distanceFromListener = Math.max(distanceFromListener, this.getReferenceDistance());
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("After initial clamping, distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
+            }
             distanceFromListener = Math.min(distanceFromListener, this.getMaximumDistance());
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("After final clamping, distance of JavaSoundAudioSource " + this.getSystemName() + " from Listener = " + distanceFromListener);
+            }
 
-            currentGain =
-                    _activeAudioListener.getMetersPerUnit()
+            currentGain
+                    = _activeAudioListener.getMetersPerUnit()
                     * (this.getReferenceDistance()
-                        / (this.getReferenceDistance() + this.getRollOffFactor()
-                        * (distanceFromListener - this.getReferenceDistance())));
-            if (log.isDebugEnabled())
+                    / (this.getReferenceDistance() + this.getRollOffFactor()
+                    * (distanceFromListener - this.getReferenceDistance())));
+            if (log.isDebugEnabled()) {
                 log.debug("Calculated for JavaSoundAudioSource " + this.getSystemName() + " gain = " + currentGain);
+            }
 
             // Ensure that gain is between 0 and 1
             if (currentGain > 1.0f) {
@@ -378,8 +403,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         // If playing, update the gain
         if (_audioChannel != null) {
             _audioChannel.setGain(currentGain);
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Set current gain of JavaSoundAudioSource " + this.getSystemName() + " to " + currentGain);
+            }
         }
     }
 
@@ -398,18 +424,18 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
     private static class JavaSoundAudioChannel {
 
         /**
-        * Control for changing the gain of this AudioSource
-        */
+         * Control for changing the gain of this AudioSource
+         */
         private FloatControl _gainControl = null;
 
         /**
-        * Control for changing the pan of this AudioSource
-        */
+         * Control for changing the pan of this AudioSource
+         */
         private FloatControl _panControl = null;
 
         /**
-        * Control for changing the sample rate of this AudioSource
-        */
+         * Control for changing the sample rate of this AudioSource
+         */
         private FloatControl _sampleRateControl = null;
 
         /**
@@ -435,7 +461,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
         /**
          * Constructor for creating an AudioChannel for a specific
          * JavaSoundAudioSource
-         * 
+         *
          * @param audio the specific JavaSoundAudioSource
          */
         public JavaSoundAudioChannel(JavaSoundAudioSource audio) {
@@ -461,8 +487,9 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
             if (this._clip.isControlSupported(FloatControl.Type.PAN)) {
                 // Yes, so create a new pan control
                 this._panControl = (FloatControl) this._clip.getControl(FloatControl.Type.PAN);
-                if (log.isDebugEnabled())
+                if (log.isDebugEnabled()) {
                     log.debug("JavaSound pan control created");
+                }
             } else {
                 log.info("Pan control is not supported");
                 this._panControl = null;
@@ -486,7 +513,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
 
         /**
          * Sets the gain of this AudioChannel
-         * 
+         *
          * @param gain the gain (0.0f to 1.0f)
          */
         protected void setGain(float gain) {
@@ -497,47 +524,51 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
                 } else if (gain > 1.0f) {
                     gain = 1.0f;
                 }
-                
+
                 // Convert this linear gain to a decibel value
-                float dB = (float) ( Math.log( gain ) / Math.log( 10.0 ) * 20.0 );
+                float dB = (float) (Math.log(gain) / Math.log(10.0) * 20.0);
 
                 this._gainControl.setValue(dB);
-                if (log.isDebugEnabled())
+                if (log.isDebugEnabled()) {
                     log.debug("Actual gain value of JavaSoundAudioSource " + this._audio + " is " + this._gainControl.getValue());
+                }
             }
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Set gain of JavaSoundAudioSource " + this._audio + " to " + gain);
+            }
         }
 
         /**
          * Sets the pan of this AudioChannel
-         * 
+         *
          * @param pan the pan (-1.0f to 1.0f)
          */
         protected void setPan(float pan) {
             if (this._panControl != null) {
                 this._panControl.setValue(pan);
             }
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Set pan of JavaSoundAudioSource " + this._audio + " to " + pan);
+            }
         }
 
         /**
          * Sets the pitch of this AudioChannel
          * <p>
          * Calculated as a ratio of the initial sample rate
-         * 
+         *
          * @param pitch the pitch
          */
         protected void setPitch(float pitch) {
             if (this._sampleRateControl != null) {
                 this._sampleRateControl.setValue(pitch * this._initialSampleRate);
             }
-            if (log.isDebugEnabled())
+            if (log.isDebugEnabled()) {
                 log.debug("Set pitch of JavaSoundAudioSource " + this._audio + " to " + pitch);
+            }
         }
     }
-    
+
     private static final long serialVersionUID = 1L;
 }
 

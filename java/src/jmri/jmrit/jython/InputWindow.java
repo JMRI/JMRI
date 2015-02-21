@@ -1,42 +1,42 @@
 // InputWindow.java
-
 package jmri.jmrit.jython;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import javax.swing.JPanel;
-import javax.swing.JButton;
-import javax.swing.JCheckBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JLabel;
-import java.awt.Font;
-import java.awt.FlowLayout;
 import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import java.awt.Font;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import jmri.util.PythonInterp;
-import javax.swing.event.*;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import jmri.util.FileUtil;
+import jmri.util.PythonInterp;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * This Action runs creates a JFrame for sending input to the
- * global jython interpreter
+ * This Action runs creates a JFrame for sending input to the global jython
+ * interpreter
  *
- * @author      Bob Jacobsen    Copyright (C) 2004
- * @version     $Revision$
+ * @author Bob Jacobsen Copyright (C) 2004
+ * @version $Revision$
  */
 public class InputWindow extends JPanel {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8043631915757357490L;
-	JTextArea area;
+     *
+     */
+    private static final long serialVersionUID = -8043631915757357490L;
+    JTextArea area;
     JButton button;
     JButton loadButton;
     JButton storeButton;
@@ -45,10 +45,10 @@ public class InputWindow extends JPanel {
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
     public InputWindow() {
-    
+
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
         setLayout(new BorderLayout());
-        
+
         area = new JTextArea(12, 50);
 
         // from: http://stackoverflow.com/questions/5139995/java-column-number-and-line-number-of-cursors-current-position
@@ -56,7 +56,7 @@ public class InputWindow extends JPanel {
             // Each time the caret is moved, it will trigger the listener and its method caretUpdate.
             // It will then pass the event to the update method including the source of the event (which is our textarea control)
             public void caretUpdate(CaretEvent e) {
-                JTextArea editArea = (JTextArea)e.getSource();
+                JTextArea editArea = (JTextArea) e.getSource();
 
                 // Lets start with some default values for the line and column.
                 int linenum = 1;
@@ -77,8 +77,8 @@ public class InputWindow extends JPanel {
 
                     // We have to add one here because line numbers start at 0 for getLineOfOffset and we want it to start at 1 for display.
                     linenum += 1;
+                } catch (Exception ex) {
                 }
-                catch(Exception ex) { }
 
                 // Once we know the position of the line and the column, pass it to a helper function for updating the status bar.
                 updateStatus(linenum, columnnum);
@@ -89,13 +89,13 @@ public class InputWindow extends JPanel {
         js.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         js.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(js, BorderLayout.CENTER);
-        
+
         JPanel p = new JPanel();
         p.setLayout(new FlowLayout());
         p.add(loadButton = new JButton(rb.getString("ButtonLoad")));
         p.add(storeButton = new JButton(rb.getString("ButtonStore")));
         p.add(button = new JButton(rb.getString("ButtonExecute")));
-        
+
         alwaysOnTopCheckBox.setText("Window always on Top");
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText("If checked, this window be always be displayed in front of any other window");
@@ -103,10 +103,10 @@ public class InputWindow extends JPanel {
 
         status = new JLabel("         ");   // create some space for the counters
         p.add(status);
-        updateStatus(1,0);
+        updateStatus(1, 0);
 
         add(p, BorderLayout.SOUTH);
-        
+
         button.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 buttonPressed();
@@ -124,11 +124,11 @@ public class InputWindow extends JPanel {
                 storeButtonPressed();
             }
         });
-        
+
         alwaysOnTopCheckBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
-                if (getTopLevelAncestor()!=null){
-                    ((jmri.util.JmriJFrame)getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
+                if (getTopLevelAncestor() != null) {
+                    ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
                 }
             }
         });
@@ -138,12 +138,12 @@ public class InputWindow extends JPanel {
         area.setFont(new Font("Monospaced", Font.PLAIN, size));
 
     }
-    
 
     // This helper function updates the status bar with the line number and column number.
     private void updateStatus(int linenumber, int columnnumber) {
         status.setText("    " + linenumber + ":" + columnnumber);
     }
+
     /**
      *
      * @param fileChooser
@@ -176,7 +176,7 @@ public class InputWindow extends JPanel {
         return results;
     }
 
-        /**
+    /**
      *
      * @param fileChooser
      * @return true if successful
@@ -228,7 +228,6 @@ public class InputWindow extends JPanel {
         }
         return fileChooser.getSelectedFile();
     }
-
 
     void loadButtonPressed() {
         JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());

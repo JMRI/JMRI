@@ -1,41 +1,39 @@
 package jmri.jmrit.picker;
 
+import javax.swing.JMenuBar;
+import jmri.util.JmriJFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.util.JmriJFrame;
-import javax.swing.JMenuBar;
 
 public class PickFrame extends JmriJFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -3288532933990677427L;
+     *
+     */
+    private static final long serialVersionUID = -3288532933990677427L;
 
-	public PickFrame(String title) {
+    public PickFrame(String title) {
         setTitle(title);
         /*
-        addWindowListener(new java.awt.event.WindowAdapter() {
-                public void windowClosing(java.awt.event.WindowEvent e) {
-                    dispose();
-                }
-            });
-        */
+         addWindowListener(new java.awt.event.WindowAdapter() {
+         public void windowClosing(java.awt.event.WindowEvent e) {
+         dispose();
+         }
+         });
+         */
         makeMenus();
 
-        PickListModel[] models = { PickListModel.turnoutPickModelInstance(),
-                                    PickListModel.sensorPickModelInstance(),
-                                    PickListModel.signalHeadPickModelInstance(),
-                                    PickListModel.signalMastPickModelInstance(),
-                                    PickListModel.memoryPickModelInstance(),
-                                    PickListModel.reporterPickModelInstance(),
-                                    PickListModel.lightPickModelInstance(),
-                                    PickListModel.warrantPickModelInstance(),
-                                    PickListModel.oBlockPickModelInstance(),
-                                    PickListModel.conditionalPickModelInstance(),
-                                    PickListModel.entryExitPickModelInstance(),
-                                    
-            };
+        PickListModel[] models = {PickListModel.turnoutPickModelInstance(),
+            PickListModel.sensorPickModelInstance(),
+            PickListModel.signalHeadPickModelInstance(),
+            PickListModel.signalMastPickModelInstance(),
+            PickListModel.memoryPickModelInstance(),
+            PickListModel.reporterPickModelInstance(),
+            PickListModel.lightPickModelInstance(),
+            PickListModel.warrantPickModelInstance(),
+            PickListModel.oBlockPickModelInstance(),
+            PickListModel.conditionalPickModelInstance(),
+            PickListModel.entryExitPickModelInstance(),};
         setContentPane(new PickPanel(models));
         setVisible(true);
         pack();

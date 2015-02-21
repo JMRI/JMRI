@@ -1,35 +1,35 @@
 //SimpleLightServerTest.java
-
 package jmri.jmris.simpleserver;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleLightServer class
- * @author                      Paul Bender
- * @version                     $Revision$
+ *
+ * @author Paul Bender
+ * @version $Revision$
  */
 public class SimpleLightServerTest extends TestCase {
 
     public void testCtor() {
-	    java.io.DataOutputStream output=new java.io.DataOutputStream(
-	        new java.io.OutputStream() {
-	        // null output string drops characters
-	        // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {}
-	    });
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleLightServer a = new SimpleLightServer(input,output);
+        SimpleLightServer a = new SimpleLightServer(input, output);
         Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-
     public SimpleLightServerTest(String s) {
         super(s);
     }
@@ -50,4 +50,3 @@ public class SimpleLightServerTest extends TestCase {
     static Logger log = Logger.getLogger(SimpleLightServerTest.class.getName());
 
 }
-

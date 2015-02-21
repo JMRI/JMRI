@@ -12,11 +12,11 @@ import jmri.jmrit.operations.OperationsFrame;
 public class OptionFrame extends OperationsFrame {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 6966221440054475425L;
+     *
+     */
+    private static final long serialVersionUID = 6966221440054475425L;
 
-	public OptionFrame() {
+    public OptionFrame() {
         super(Bundle.getMessage("TitleOptions"), new OptionPanel());
     }
 
@@ -26,7 +26,7 @@ public class OptionFrame extends OperationsFrame {
 
         // build menu
         addHelpMenu("package.jmri.jmrit.operations.Operations_SettingsOptions", true); // NOI18N
-        
+
         initMinimumSize();
     }
 

@@ -1,5 +1,4 @@
 // ResetAction.java
-
 package jmri.jmrit.operations.setup;
 
 import apps.Apps;
@@ -15,7 +14,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Swing action to load the operation demo files.
- * 
+ *
  * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @author Gregory Madsen Copyright (C) 2012
@@ -23,56 +22,57 @@ import org.slf4j.LoggerFactory;
  */
 public class ResetAction extends AbstractAction {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -3591765950664839428L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -3591765950664839428L;
 
-	public ResetAction(String s) {
-		super(s);
-	}
+    public ResetAction(String s) {
+        super(s);
+    }
 
-	public void actionPerformed(ActionEvent e) {
-		// check to see if files are dirty
-		if (OperationsXml.areFilesDirty()) {
-			if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("OperationsFilesModified"),
-					Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
-				OperationsXml.save();
-			}
-		}
+    public void actionPerformed(ActionEvent e) {
+        // check to see if files are dirty
+        if (OperationsXml.areFilesDirty()) {
+            if (JOptionPane.showConfirmDialog(null, Bundle.getMessage("OperationsFilesModified"),
+                    Bundle.getMessage("SaveOperationFiles"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                OperationsXml.save();
+            }
+        }
 
-		int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("AreYouSureDeleteAll"),
-				Bundle.getMessage("ResetOperations"), JOptionPane.OK_CANCEL_OPTION);
-		if (results != JOptionPane.OK_OPTION)
-			return;
+        int results = JOptionPane.showConfirmDialog(null, Bundle.getMessage("AreYouSureDeleteAll"),
+                Bundle.getMessage("ResetOperations"), JOptionPane.OK_CANCEL_OPTION);
+        if (results != JOptionPane.OK_OPTION) {
+            return;
+        }
 
-		AutoBackup backup = new AutoBackup();
+        AutoBackup backup = new AutoBackup();
 
-		try {
-			backup.autoBackup();
+        try {
+            backup.autoBackup();
 
-			// now delete the operations files
-			backup.deleteOperationsFiles();
+            // now delete the operations files
+            backup.deleteOperationsFiles();
 
-			// now deregister shut down task
-			// If Trains window was opened, then task is active
-			// otherwise it is normal to not have the task running
-			OperationsManager.getInstance().setShutDownTask(null);
+            // now deregister shut down task
+            // If Trains window was opened, then task is active
+            // otherwise it is normal to not have the task running
+            OperationsManager.getInstance().setShutDownTask(null);
 
-			JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterReset"),
-					Bundle.getMessage("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, Bundle.getMessage("YouMustRestartAfterReset"),
+                    Bundle.getMessage("ResetSuccessful"), JOptionPane.INFORMATION_MESSAGE);
 
-			Apps.handleRestart();
+            Apps.handleRestart();
 
-		} catch (Exception ex) {
-			UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
-					"Deleting Operations files"); // NOI18N
-			new ExceptionDisplayFrame(context);
-		}
-	}
+        } catch (Exception ex) {
+            UnexpectedExceptionContext context = new UnexpectedExceptionContext(ex,
+                    "Deleting Operations files"); // NOI18N
+            new ExceptionDisplayFrame(context);
+        }
+    }
 
-	static Logger log = LoggerFactory.getLogger(ResetAction.class
-			.getName());
+    static Logger log = LoggerFactory.getLogger(ResetAction.class
+            .getName());
 }
 
 /* @(#)ResetAction.java */

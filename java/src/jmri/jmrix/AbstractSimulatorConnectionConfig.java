@@ -1,5 +1,4 @@
 // AbstractSimulatorConnectionConfig.java
-
 package jmri.jmrix;
 
 import java.awt.Color;
@@ -20,31 +19,32 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base class for common implementation of the Simulator ConnectionConfig
- * Currently uses the serial adapter, but this will change to the simulator adapter
- * in due course.
+ * Abstract base class for common implementation of the Simulator
+ * ConnectionConfig Currently uses the serial adapter, but this will change to
+ * the simulator adapter in due course.
  *
- * @author      Kevin Dickerson   Copyright (C) 2001, 2003
+ * @author Kevin Dickerson Copyright (C) 2001, 2003
  * @version	$Revision$
  */
-
 //
 abstract public class AbstractSimulatorConnectionConfig extends AbstractConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process
-     * Currently uses the serialportadapter, but this will 
-     * change to a simulator port adapter in due course.
+     * Ctor for an object being created during load process Currently uses the
+     * serialportadapter, but this will change to a simulator port adapter in
+     * due course.
      */
-    public AbstractSimulatorConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public AbstractSimulatorConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         adapter = p;
     }
 
-    public jmri.jmrix.SerialPortAdapter getAdapter() { return adapter; }
-    
+    public jmri.jmrix.SerialPortAdapter getAdapter() {
+        return adapter;
+    }
+
     /**
-     * Ctor for a functional object with no prexisting adapter.
-     * Expect that the subclass setInstance() will fill the adapter member.
+     * Ctor for a functional object with no prexisting adapter. Expect that the
+     * subclass setInstance() will fill the adapter member.
      */
     public AbstractSimulatorConnectionConfig() {
         adapter = null;
@@ -53,48 +53,56 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     protected boolean init = false;
 
     protected void checkInitDone() {
-    	if (log.isDebugEnabled()) log.debug("init called for "+name());
-        if (init) return;
+        if (log.isDebugEnabled()) {
+            log.debug("init called for " + name());
+        }
+        if (init) {
+            return;
+        }
 
-        if(adapter.getSystemConnectionMemo()!=null){
+        if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
             });
-            systemPrefixField.addFocusListener( new FocusListener() {
-                public void focusLost(FocusEvent e){
-                    if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+            systemPrefixField.addFocusListener(new FocusListener() {
+                public void focusLost(FocusEvent e) {
+                    if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
                         JOptionPane.showMessageDialog(null, "System Prefix " + systemPrefixField.getText() + " is already assigned");
                         systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
                     }
                 }
-                public void focusGained(FocusEvent e){ }
+
+                public void focusGained(FocusEvent e) {
+                }
             });
             connectionNameField.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
-                    if(!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())){
+                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
             });
-            connectionNameField.addFocusListener( new FocusListener() {
-                public void focusLost(FocusEvent e){
-                    if(!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())){
+            connectionNameField.addFocusListener(new FocusListener() {
+                public void focusLost(FocusEvent e) {
+                    if (!adapter.getSystemConnectionMemo().setUserName(connectionNameField.getText())) {
                         JOptionPane.showMessageDialog(null, "Connection Name " + connectionNameField.getText() + " is already assigned");
                         connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
                     }
                 }
-                public void focusGained(FocusEvent e){ }
+
+                public void focusGained(FocusEvent e) {
+                }
             });
-            for(String i:options.keySet()){
+            for (String i : options.keySet()) {
                 final String item = i;
-                if(options.get(i).getComponent() instanceof JComboBox){
-                    ((JComboBox)options.get(i).getComponent()).addActionListener(new ActionListener() {
+                if (options.get(i).getComponent() instanceof JComboBox) {
+                    ((JComboBox) options.get(i).getComponent()).addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             adapter.setOptionState(item, options.get(item).getItem());
                         }
@@ -106,18 +114,17 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         init = true;
     }
 
-    public void updateAdapter(){
-        for(String i:options.keySet()){
+    public void updateAdapter() {
+        for (String i : options.keySet()) {
             adapter.setOptionState(i, options.get(i).getItem());
         }
 
-        if(!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())){
+        if (!adapter.getSystemConnectionMemo().setSystemPrefix(systemPrefixField.getText())) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
     }
 
-    
     protected String[] baudList;
     protected jmri.jmrix.SerialPortAdapter adapter = null;
 
@@ -131,56 +138,55 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     abstract protected void setInstance();
 
     /**
-     * Returns the port the simulator is connected to
-     * which is "none";
+     * Returns the port the simulator is connected to which is "none";
      */
     public String getInfo() {
         return rb.getString("none");
     }
 
-    static java.util.ResourceBundle rb = 
-        java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
-    
-	public void loadDetails(final JPanel details) {
+    static java.util.ResourceBundle rb
+            = java.util.ResourceBundle.getBundle("jmri.jmrix.JmrixBundle");
+
+    public void loadDetails(final JPanel details) {
         _details = details;
         setInstance();
-        if(!init){
+        if (!init) {
             String[] optionsAvailable = adapter.getOptions();
             options = new Hashtable<String, Option>();
-            for(String i:optionsAvailable){
+            for (String i : optionsAvailable) {
                 JComboBox<String> opt = new JComboBox<String>(adapter.getOptionChoices(i));
                 opt.setSelectedItem(adapter.getOptionState(i));
                 // check that it worked
-                if (! adapter.getOptionState(i).equals(opt.getSelectedItem())) {
+                if (!adapter.getOptionState(i).equals(opt.getSelectedItem())) {
                     // no, set 1st option choice
                     opt.setSelectedIndex(0);
-                    adapter.setOptionState(i, (String)opt.getSelectedItem());
+                    adapter.setOptionState(i, (String) opt.getSelectedItem());
                     log.warn("Loading found invalid value for option {}, found \"{}\", setting to \"{}\"", i, adapter.getOptionState(i), opt.getSelectedItem());
                 }
                 options.put(i, new Option(adapter.getOptionDisplayName(i), opt, adapter.isOptionAdvanced(i)));
             }
         }
 
-        if(adapter.getSystemConnectionMemo()!=null){
+        if (adapter.getSystemConnectionMemo() != null) {
             systemPrefixField.setText(adapter.getSystemConnectionMemo().getSystemPrefix());
             connectionNameField.setText(adapter.getSystemConnectionMemo().getUserName());
         }
-        NUMOPTIONS = NUMOPTIONS+options.size();
-    
+        NUMOPTIONS = NUMOPTIONS + options.size();
+
         showAdvanced.setFont(showAdvanced.getFont().deriveFont(9f));
         showAdvanced.setForeground(Color.blue);
         showAdvanced.addItemListener(
-            new ItemListener() {
-                public void itemStateChanged(ItemEvent e){
-                    showAdvancedItems();
-                }
-            });
+                new ItemListener() {
+                    public void itemStateChanged(ItemEvent e) {
+                        showAdvancedItems();
+                    }
+                });
         showAdvancedItems();
         init = false;		// need to reload action listeners
         checkInitDone();
     }
-    
-    protected void showAdvancedItems(){
+
+    protected void showAdvancedItems() {
         _details.removeAll();
         cL.anchor = GridBagConstraints.WEST;
         cL.insets = new Insets(2, 5, 0, 5);
@@ -190,18 +196,19 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
         cL.gridx = 0;
         _details.setLayout(gbLayout);
         int i = 0;
-        
-        boolean incAdvancedOptions=false;
-        for(String item:options.keySet()){
-            if(options.get(item).isAdvanced())
-                incAdvancedOptions=true;
+
+        boolean incAdvancedOptions = false;
+        for (String item : options.keySet()) {
+            if (options.get(item).isAdvanced()) {
+                incAdvancedOptions = true;
+            }
         }
-        
+
         i = addStandardDetails(adapter, incAdvancedOptions, i);
-        
+
         if (showAdvanced.isSelected()) {
-            for(String item:options.keySet()){
-                if(options.get(item).isAdvanced()){
+            for (String item : options.keySet()) {
+                if (options.get(item).isAdvanced()) {
                     cR.gridy = i;
                     cL.gridy = i;
                     gbLayout.setConstraints(options.get(item).getLabel(), cL);
@@ -212,40 +219,52 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
                 }
             }
         }
-        cL.gridwidth=2;
-        for(JComponent item: additionalItems){
+        cL.gridwidth = 2;
+        for (JComponent item : additionalItems) {
             cL.gridy = i;
             gbLayout.setConstraints(item, cL);
             _details.add(item);
             i++;
         }
-        cL.gridwidth=1;
-        if (_details.getParent()!=null && _details.getParent() instanceof javax.swing.JViewport){
-            javax.swing.JViewport vp = (javax.swing.JViewport)_details.getParent();
+        cL.gridwidth = 1;
+        if (_details.getParent() != null && _details.getParent() instanceof javax.swing.JViewport) {
+            javax.swing.JViewport vp = (javax.swing.JViewport) _details.getParent();
             vp.revalidate();
             vp.repaint();
         }
     }
-    
-    public String getManufacturer() { return adapter.getManufacturer(); }
-    public void setManufacturer(String manufacturer) { adapter.setManufacturer(manufacturer); }
-    
-    public String getConnectionName() {
-        if(adapter.getSystemConnectionMemo()!=null)
-            return adapter.getSystemConnectionMemo().getUserName();
-        else return null;
+
+    public String getManufacturer() {
+        return adapter.getManufacturer();
     }
-    
+
+    public void setManufacturer(String manufacturer) {
+        adapter.setManufacturer(manufacturer);
+    }
+
+    public String getConnectionName() {
+        if (adapter.getSystemConnectionMemo() != null) {
+            return adapter.getSystemConnectionMemo().getUserName();
+        } else {
+            return null;
+        }
+    }
+
     public boolean getDisabled() {
-        if (adapter==null) return true;
+        if (adapter == null) {
+            return true;
+        }
         return adapter.getDisabled();
     }
-    public void setDisabled(boolean disabled) { adapter.setDisabled(disabled); }
-    
-    public void dispose(){
-        if (adapter!=null){
+
+    public void setDisabled(boolean disabled) {
+        adapter.setDisabled(disabled);
+    }
+
+    public void dispose() {
+        if (adapter != null) {
             adapter.dispose();
-            adapter=null;
+            adapter = null;
         }
     }
 

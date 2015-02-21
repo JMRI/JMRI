@@ -1,9 +1,6 @@
 // RfidSensorManager.java
-
 package jmri.jmrix.rfid.generic.standalone;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -13,17 +10,18 @@ import jmri.jmrix.rfid.RfidReply;
 import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.rfid.TimeoutRfidSensor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Manage the Rfid-specific Sensor implementation.
  * <P>
- * System names are "FSpppp", where ppp is a
- * representation of the RFID reader.
+ * System names are "FSpppp", where ppp is a representation of the RFID reader.
  * <P>
- * @author      Bob Jacobsen Copyright (C) 2007
- * @author      Matthew Harris Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Bob Jacobsen Copyright (C) 2007
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
 public class SpecificSensorManager extends RfidSensorManager {
 
@@ -52,8 +50,8 @@ public class SpecificSensorManager extends RfidSensorManager {
 
     @Override
     public void message(RfidMessage m) {
-        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(),0).toString())) {
-            log.info("Sent init string: "+m);
+        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
+            log.info("Sent init string: " + m);
         } else {
             super.message(m);
         }
@@ -61,8 +59,9 @@ public class SpecificSensorManager extends RfidSensorManager {
 
     @Override
     public synchronized void reply(RfidReply r) {
-        if (r instanceof SpecificReply)
+        if (r instanceof SpecificReply) {
             processReply((SpecificReply) r);
+        }
     }
 
     private void processReply(SpecificReply r) {
@@ -71,7 +70,7 @@ public class SpecificSensorManager extends RfidSensorManager {
             return;
         }
         IdTag idTag = InstanceManager.getDefault(IdTagManager.class).provideIdTag(tc.getAdapterMemo().getProtocol().getTag(r));
-        TimeoutRfidSensor sensor = (TimeoutRfidSensor) provideSensor(prefix+typeLetter()+"1");
+        TimeoutRfidSensor sensor = (TimeoutRfidSensor) provideSensor(prefix + typeLetter() + "1");
         sensor.notify(idTag);
     }
 

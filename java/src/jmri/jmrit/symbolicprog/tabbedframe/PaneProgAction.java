@@ -1,9 +1,6 @@
 // PaneProgAction.java
-
 package jmri.jmrit.symbolicprog.tabbedframe;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import java.awt.event.ActionEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -21,30 +18,31 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CombinedLocoSelTreePane;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.JmriJFrame;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Swing action to create and register a
- * frame for selecting the information needed to
- * open a PaneProgFrame in service mode.
+ * Swing action to create and register a frame for selecting the information
+ * needed to open a PaneProgFrame in service mode.
  * <P>
- * The name is a historical accident, and probably should have
- * included "ServiceMode" or something.
+ * The name is a historical accident, and probably should have included
+ * "ServiceMode" or something.
  * <P>
- * The resulting JFrame
- * is constructed on the fly here, and has no specific type.
+ * The resulting JFrame is constructed on the fly here, and has no specific
+ * type.
  *
- * @see  jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
+ * @see jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgAction
  *
- * @author			Bob Jacobsen    Copyright (C) 2001
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision$
  */
-public class PaneProgAction 			extends AbstractAction {
+public class PaneProgAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -6931284008411705904L;
-	Object o1, o2, o3, o4;
+     *
+     */
+    private static final long serialVersionUID = -6931284008411705904L;
+    Object o1, o2, o3, o4;
     JLabel statusLabel;
     jmri.jmrit.progsupport.ProgModeSelector modePane = new jmri.jmrit.progsupport.ProgServiceModeComboBox();
 
@@ -58,28 +56,32 @@ public class PaneProgAction 			extends AbstractAction {
         statusLabel = new JLabel(SymbolicProgBundle.getMessage("StateIdle"));
 
         // disable ourself if programming is not possible
-        if (jmri.InstanceManager.programmerManagerInstance()==null ||
-            !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
+        if (jmri.InstanceManager.programmerManagerInstance() == null
+                || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
             setEnabled(false);
             // This needs to return, so we don't start the xmlThread
-	    return;
+            return;
         }
 
     }
 
     public void actionPerformed(ActionEvent e) {
 
-        if (log.isDebugEnabled()) log.debug("Pane programmer requested");
+        if (log.isDebugEnabled()) {
+            log.debug("Pane programmer requested");
+        }
 
         // create the initial frame that steers
         final JmriJFrame f = new JmriJFrame(SymbolicProgBundle.getMessage("FrameServiceProgrammerSetup"));
         f.getContentPane().setLayout(new BoxLayout(f.getContentPane(), BoxLayout.Y_AXIS));
-        
+
         // ensure status line is cleared on close so it is normal if re-opened
-        f.addWindowListener(new WindowAdapter(){
-            public void windowClosing(WindowEvent we){
-            	statusLabel.setText(SymbolicProgBundle.getMessage("StateIdle"));
-            	f.windowClosing(we);}});
+        f.addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent we) {
+                statusLabel.setText(SymbolicProgBundle.getMessage("StateIdle"));
+                f.windowClosing(we);
+            }
+        });
 
         // add the Roster menu
         JMenuBar menuBar = new JMenuBar();
@@ -92,28 +94,30 @@ public class PaneProgAction 			extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
-        JPanel pane1 = new CombinedLocoSelTreePane(statusLabel){
-                /**
-			 * 
-			 */
-			private static final long serialVersionUID = -4214840180299703440L;
+        JPanel pane1 = new CombinedLocoSelTreePane(statusLabel) {
+            /**
+             *
+             */
+            private static final long serialVersionUID = -4214840180299703440L;
 
-				protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
-                                                String filename) {
-                    String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
-                                                        new Object[]{"new decoder"});
-                    if (re!=null) title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
-                                                        new Object[]{re.getId()});
-                    JFrame p = new PaneServiceProgFrame(decoderFile, re,
-                                                 title, "programmers"+File.separator+filename+".xml",
-                                                 modePane.getProgrammer());
-                    p.pack();
-                    p.setVisible(true);
-
-                    // f.setVisible(false);
-                    // f.dispose();
+            protected void startProgrammer(DecoderFile decoderFile, RosterEntry re,
+                    String filename) {
+                String title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
+                        new Object[]{"new decoder"});
+                if (re != null) {
+                    title = java.text.MessageFormat.format(SymbolicProgBundle.getMessage("FrameServiceProgrammerTitle"),
+                            new Object[]{re.getId()});
                 }
-            };
+                JFrame p = new PaneServiceProgFrame(decoderFile, re,
+                        title, "programmers" + File.separator + filename + ".xml",
+                        modePane.getProgrammer());
+                p.pack();
+                p.setVisible(true);
+
+                // f.setVisible(false);
+                // f.dispose();
+            }
+        };
 
         // load primary frame
         JPanel tempPane = new JPanel();
@@ -129,7 +133,9 @@ public class PaneProgAction 			extends AbstractAction {
         f.getContentPane().add(statusLabel);
 
         f.pack();
-        if (log.isDebugEnabled()) log.debug("Tab-Programmer setup created");
+        if (log.isDebugEnabled()) {
+            log.debug("Tab-Programmer setup created");
+        }
         f.setVisible(true);
     }
 

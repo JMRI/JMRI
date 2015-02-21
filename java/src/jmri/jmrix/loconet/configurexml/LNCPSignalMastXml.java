@@ -1,17 +1,16 @@
 package jmri.jmrix.loconet.configurexml;
 
 //import jmri.SignalHead;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.jmrix.loconet.LNCPSignalMast;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
 
 /*import java.util.List;
-import org.jdom2.DataConversionException;
-import org.jdom2.Element;*/
-
+ import org.jdom2.DataConversionException;
+ import org.jdom2.Element;*/
 /**
  * Handle XML configuration for loconet.LNCPSignalMast objects.
  *
@@ -22,16 +21,17 @@ public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSigna
 
     public LNCPSignalMastXml() {
     }
-    
+
     public boolean load(Element element) {
         LNCPSignalMast m;
         String sys = getSystemName(element);
-            m = new jmri.jmrix.loconet.LNCPSignalMast(sys);
-        
-        if (getUserName(element) != null)
+        m = new jmri.jmrix.loconet.LNCPSignalMast(sys);
+
+        if (getUserName(element) != null) {
             m.setUserName(getUserName(element));
+        }
         return loadCommonDCCMast(m, element);
-        
+
     }
 
     static Logger log = LoggerFactory.getLogger(LNCPSignalMastXml.class.getName());

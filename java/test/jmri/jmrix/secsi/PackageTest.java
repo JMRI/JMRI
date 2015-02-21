@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.jmrix.secsi;
 
 import junit.framework.Assert;
@@ -9,20 +8,20 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.secsi package.
- * @author      Bob Jacobsen  Copyright 2003, 2007, 2008
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2003, 2007, 2008
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
 
     public void testDefinitions() {
         Assert.assertEquals("Node definitions match", SerialSensorManager.SENSORSPERNODE,
-                                    SerialNode.MAXSENSORS+1);
+                SerialNode.MAXSENSORS + 1);
     }
 
     // Main entry point

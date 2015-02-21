@@ -1,5 +1,4 @@
 // VirtualSignalHead.java
-
 package jmri.implementation;
 
 import org.slf4j.Logger;
@@ -16,28 +15,28 @@ import org.slf4j.LoggerFactory;
 public class VirtualSignalHead extends DefaultSignalHead {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 165874268187040428L;
+     *
+     */
+    private static final long serialVersionUID = 165874268187040428L;
 
-	public VirtualSignalHead(String sys, String user) {
+    public VirtualSignalHead(String sys, String user) {
         super(sys, user);
     }
 
     public VirtualSignalHead(String sys) {
         super(sys);
     }
-	
-	protected void updateOutput() {
-	}
-    
-    boolean isTurnoutUsed(jmri.Turnout t){
+
+    protected void updateOutput() {
+    }
+
+    boolean isTurnoutUsed(jmri.Turnout t) {
         return false;
     }
-	
+
     /**
-     * Remove references to and from this object, so that it can
-     * eventually be garbage-collected.
+     * Remove references to and from this object, so that it can eventually be
+     * garbage-collected.
      */
     public void dispose() {
         super.dispose();

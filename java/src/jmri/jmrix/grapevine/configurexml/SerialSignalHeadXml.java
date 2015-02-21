@@ -1,16 +1,14 @@
 // SerialSignalHeadXml.java
-
 package jmri.jmrix.grapevine.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.SignalHead;
 import jmri.jmrix.grapevine.SerialSignalHead;
 import jmri.managers.configurexml.AbstractNamedBeanManagerConfigXML;
-
 import org.jdom2.Attribute;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML configuration for Grapevine SerialSignalHead objects.
@@ -20,16 +18,18 @@ import org.jdom2.Element;
  */
 public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
-    public SerialSignalHeadXml() {}
+    public SerialSignalHeadXml() {
+    }
 
     /**
-     * Default implementation for storing the contents of a
-     * Grapevine SerialSignalHead
+     * Default implementation for storing the contents of a Grapevine
+     * SerialSignalHead
+     *
      * @param o Object to store, of type SerialSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        SerialSignalHead p = (SerialSignalHead)o;
+        SerialSignalHead p = (SerialSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -44,20 +44,22 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
 
     /**
      * Create a Grapevine SerialSignalHead
+     *
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-	public boolean load(Element element) {
+    public boolean load(Element element) {
         String sys = element.getAttribute("systemName").getValue();
         Attribute a = element.getAttribute("userName");
         SignalHead h;
-        if (a == null)
+        if (a == null) {
             h = new SerialSignalHead(sys);
-        else
+        } else {
             h = new SerialSignalHead(sys, a.getValue());
-        
+        }
+
         loadCommon(h, element);
-        
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }

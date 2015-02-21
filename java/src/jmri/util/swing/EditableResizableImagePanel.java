@@ -16,10 +16,10 @@ import org.slf4j.LoggerFactory;
 public class EditableResizableImagePanel extends ResizableImagePanel implements FileDrop.Listener {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -8966988787277300571L;
-	private transient MyMouseAdapter myMouseAdapter = null;
+     *
+     */
+    private static final long serialVersionUID = -8966988787277300571L;
+    private transient MyMouseAdapter myMouseAdapter = null;
     private String dropFolder;
 
     /**

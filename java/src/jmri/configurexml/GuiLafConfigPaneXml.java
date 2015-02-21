@@ -1,6 +1,5 @@
 package jmri.configurexml;
 
-
 /**
  * Migration stand-in for {@link apps.configurexml.GuiLafConfigPaneXml}
  *
@@ -9,6 +8,6 @@ package jmri.configurexml;
  * @deprecated 2.9.5
  */
 @Deprecated
-@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "NM_SAME_SIMPLE_NAME_AS_SUPERCLASS")
 public class GuiLafConfigPaneXml extends apps.configurexml.GuiLafConfigPaneXml {
 }

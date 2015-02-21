@@ -1,5 +1,4 @@
 // SprogProgrammer.java
-
 package jmri.jmrix.sprog;
 
 import org.slf4j.Logger;
@@ -8,15 +7,14 @@ import jmri.PowerManager;
 import jmri.*;
 import jmri.jmrix.AbstractProgrammer;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.util.*;
 import jmri.managers.DefaultProgrammerManager;
 
 /**
- * Implements the jmri.Programmer interface via commands for the Sprog programmer.
+ * Implements the jmri.Programmer interface via commands for the Sprog
+ * programmer.
  *
- * @author      Bob Jacobsen  Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
  */
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
@@ -29,21 +27,22 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 //        // register this as the default, register as the Programmer
 //        self = this;
 //        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
-
     }
 
     /*
      * method to find the existing SprogProgrammer object, if need be creating one
      */
     static public final SprogProgrammer instance() {
-        if (self == null) self = new SprogProgrammer();
+        if (self == null) {
+            self = new SprogProgrammer();
+        }
         // change default
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
+        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             self.setMode(DefaultProgrammerManager.OPSBYTEMODE);
+        }
         return self;
     }
     static volatile private SprogProgrammer self = null;
-
 
     /**
      * Types implemented here.
@@ -58,26 +57,28 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     @Override
     public boolean getCanRead() {
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible())
+        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
             return false;
-        else 
+        } else {
             return true;
+        }
     }
 
     // members for handling the programmer interface
-
     int progState = 0;
     static final int NOTPROGRAMMING = 0;// is notProgramming
     static final int MODESENT = 1; 		// waiting reply to command to go into programming mode
     static final int COMMANDSENT = 2; 	// read/write command sent, waiting reply
     static final int RETURNSENT = 4; 	// waiting reply to go back to ops mode
-    boolean  _progRead = false;
+    boolean _progRead = false;
     int _val;	// remember the value being read/written for confirmative reply
     int _cv;	// remember the cv being read/written
 
     // programming interface
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("writeCV "+CV+" listens "+p);
+        if (log.isDebugEnabled()) {
+            log.debug("writeCV " + CV + " listens " + p);
+        }
         useProgrammer(p);
         _progRead = false;
         // set commandPending state
@@ -98,7 +99,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     }
 
     synchronized public void readCV(int CV, jmri.ProgListener p) throws jmri.ProgrammerException {
-        if (log.isDebugEnabled()) log.debug("readCV "+CV+" listens "+p);
+        if (log.isDebugEnabled()) {
+            log.debug("readCV " + CV + " listens " + p);
+        }
         useProgrammer(p);
         _progRead = true;
         // set commandPending state
@@ -121,10 +124,11 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     protected void useProgrammer(jmri.ProgListener p) throws jmri.ProgrammerException {
         // test for only one!
         if (_usingProgrammer != null && _usingProgrammer != p) {
-            if (log.isInfoEnabled()) log.info("programmer already in use by "+_usingProgrammer);
+            if (log.isInfoEnabled()) {
+                log.info("programmer already in use by " + _usingProgrammer);
+            }
             throw new jmri.ProgrammerException("programmer in use");
-        }
-        else {
+        } else {
             _usingProgrammer = p;
             return;
         }
@@ -140,18 +144,25 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
         }
     }
 
-    public void notifyMessage(SprogMessage m) {}
-    
+    public void notifyMessage(SprogMessage m) {
+    }
+
     synchronized public void notifyReply(SprogReply reply) {
-    	
+
         if (progState == NOTPROGRAMMING) {
             // we get the complete set of replies now, so ignore these
-            if (log.isDebugEnabled()) log.debug("reply in NOTPROGRAMMING state");
+            if (log.isDebugEnabled()) {
+                log.debug("reply in NOTPROGRAMMING state");
+            }
             return;
         } else if (progState == MODESENT) {
-            if (log.isDebugEnabled()) log.debug("reply in MODESENT state");
+            if (log.isDebugEnabled()) {
+                log.debug("reply in MODESENT state");
+            }
             // see if reply is the acknowledge of program mode; if not, wait
-            if ( reply.match("P") == -1 ) return;
+            if (reply.match("P") == -1) {
+                return;
+            }
             // here ready to send the read/write command
             progState = COMMANDSENT;
             // see why waiting
@@ -166,23 +177,26 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
                 }
             } catch (Exception e) {
                 // program op failed, go straight to end
-                log.error("program operation failed, exception "+e);
+                log.error("program operation failed, exception " + e);
                 progState = RETURNSENT;
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
             }
         } else if (progState == COMMANDSENT) {
-            if (log.isDebugEnabled()) log.debug("reply in COMMANDSENT state");
+            if (log.isDebugEnabled()) {
+                log.debug("reply in COMMANDSENT state");
+            }
             // operation done, capture result, then have to leave programming mode
             progState = RETURNSENT;
             // check for errors
             if (reply.match("No Ack") >= 0) {
-                if (log.isDebugEnabled()) log.debug("handle error reply "+reply);
+                if (log.isDebugEnabled()) {
+                    log.debug("handle error reply " + reply);
+                }
                 // perhaps no loco present? Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
-            }
-            else {
+            } else {
                 // see why waiting
                 if (_progRead) {
                     // read was in progress - get return value
@@ -191,17 +205,19 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
                 startShortTimer();
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
             }
-            
+
             // SPROG always leaves power off after programming so we inform the
             // power manager of the new state
             //try {
-                controller().getAdapterMemo().getPowerManager().notePowerState(PowerManager.OFF);
+            controller().getAdapterMemo().getPowerManager().notePowerState(PowerManager.OFF);
             //}
             //catch (JmriException e) {
             //    log.error("Exception trying to turn power off " +e);
             //}
         } else if (progState == RETURNSENT) {
-            if (log.isDebugEnabled()) log.debug("reply in RETURNSENT state");
+            if (log.isDebugEnabled()) {
+                log.debug("reply in RETURNSENT state");
+            }
             // all done, notify listeners of completion
             progState = NOTPROGRAMMING;
             stopTimer();
@@ -209,7 +225,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             // write, we're to return the original write value
             notifyProgListenerEnd(_val, jmri.ProgListener.OK);
         } else {
-            if (log.isDebugEnabled()) log.debug("reply in un-decoded state");
+            if (log.isDebugEnabled()) {
+                log.debug("reply in un-decoded state");
+            }
         }
     }
 
@@ -219,7 +237,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
     synchronized protected void timeout() {
         if (progState != NOTPROGRAMMING) {
             // we're programming, time to stop
-            if (log.isDebugEnabled()) log.debug("timeout!");
+            if (log.isDebugEnabled()) {
+                log.debug("timeout!");
+            }
             // perhaps no loco present? Fail back to end of programming
             progState = NOTPROGRAMMING;
             controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
@@ -229,7 +249,9 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     // internal method to notify of the final result
     protected void notifyProgListenerEnd(int value, int status) {
-        if (log.isDebugEnabled()) log.debug("notifyProgListenerEnd value "+value+" status "+status);
+        if (log.isDebugEnabled()) {
+            log.debug("notifyProgListenerEnd value " + value + " status " + status);
+        }
         // the programmingOpReply handler might send an immediate reply, so
         // clear the current listener _first_
         if (_usingProgrammer == null) {

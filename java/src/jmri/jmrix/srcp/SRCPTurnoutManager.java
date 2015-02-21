@@ -1,10 +1,9 @@
 // SRCPTurnoutManager.java
-
 package jmri.jmrix.srcp;
 
+import jmri.Turnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.Turnout;
 
 /**
  * Implement turnout manager for SRCP systems
@@ -14,7 +13,6 @@ import jmri.Turnout;
  * @author	Bob Jacobsen Copyright (C) 2001, 2008
  * @version	$Revision$
  */
-
 public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     int _bus = 0;
@@ -22,27 +20,31 @@ public class SRCPTurnoutManager extends jmri.managers.AbstractTurnoutManager {
 
     @Deprecated
     public SRCPTurnoutManager() {
-    	
+
     }
 
-    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus){
-      _bus = bus;
-      _memo=memo;
+    public SRCPTurnoutManager(SRCPBusConnectionMemo memo, int bus) {
+        _bus = bus;
+        _memo = memo;
     }
 
-    public String getSystemPrefix() { return _memo.getSystemPrefix(); }
+    public String getSystemPrefix() {
+        return _memo.getSystemPrefix();
+    }
 
     public Turnout createNewTurnout(String systemName, String userName) {
         Turnout t;
-        int addr = Integer.valueOf(systemName.substring(_memo.getSystemPrefix().length()+1)).intValue();
-        t = new SRCPTurnout(addr,_memo);
+        int addr = Integer.valueOf(systemName.substring(_memo.getSystemPrefix().length() + 1)).intValue();
+        t = new SRCPTurnout(addr, _memo);
         t.setUserName(userName);
 
         return t;
     }
 
     static public SRCPTurnoutManager instance() {
-        if (_instance == null) _instance = new SRCPTurnoutManager();
+        if (_instance == null) {
+            _instance = new SRCPTurnoutManager();
+        }
         return _instance;
     }
     static SRCPTurnoutManager _instance = null;

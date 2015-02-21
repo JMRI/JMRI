@@ -1,5 +1,4 @@
 // ReporterTest.java
-
 package jmri.implementation;
 
 import jmri.Reporter;
@@ -13,19 +12,17 @@ import junit.framework.TestSuite;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
  */
 public class ReporterTest extends TestCase {
 
@@ -75,8 +72,8 @@ public class ReporterTest extends TestCase {
         Assert.assertTrue("CurrentReport Object is 'ObjectToReport'", r.getCurrentReport() instanceof ObjectToReport);
         Assert.assertTrue("LastReport Object is 'ObjectToReport'", r.getLastReport() instanceof ObjectToReport);
         // Check the value of the ObjectToReport objects
-        Assert.assertEquals("CurrentReport value is '42'", 42, ((ObjectToReport)r.getCurrentReport()).getValue());
-        Assert.assertEquals("LastReport value is '42'", 42, ((ObjectToReport)r.getLastReport()).getValue());
+        Assert.assertEquals("CurrentReport value is '42'", 42, ((ObjectToReport) r.getCurrentReport()).getValue());
+        Assert.assertEquals("LastReport value is '42'", 42, ((ObjectToReport) r.getLastReport()).getValue());
         // Check that the returned object is the earlier created ObjectToReport
         Assert.assertSame("CurrentReport Object is identical to otr", otr, r.getCurrentReport());
         Assert.assertSame("LastReport Object is identical to otr", otr, r.getCurrentReport());
@@ -91,32 +88,44 @@ public class ReporterTest extends TestCase {
         r.setReport(null);
         // Check that CurrentReport returns a null value, but LastReport returns the first created ObjectToReport
         Assert.assertEquals("After null report, CurrentReport Object is null", null, r.getCurrentReport());
-        Assert.assertEquals("After null report, LastReport value is '42'", 42, ((ObjectToReport)r.getLastReport()).getValue());
-        Assert.assertSame("After null report, LastReport Object is identical to otr",otr, r.getLastReport());
+        Assert.assertEquals("After null report, LastReport value is '42'", 42, ((ObjectToReport) r.getLastReport()).getValue());
+        Assert.assertSame("After null report, LastReport Object is identical to otr", otr, r.getLastReport());
     }
 
     // Utility method to create a concrete AbstractReporter
     private Reporter createNewReporter(String systemName, String userName) {
-        return new AbstractReporter(systemName, userName){
+        return new AbstractReporter(systemName, userName) {
             /**
-			 * 
-			 */
-			private static final long serialVersionUID = -7115796893268006682L;
-			public int getState() { return state; }
-            public void setState(int s) { state = s; }
+             *
+             */
+            private static final long serialVersionUID = -7115796893268006682L;
+
+            public int getState() {
+                return state;
+            }
+
+            public void setState(int s) {
+                state = s;
+            }
             int state = 0;
         };
     }
 
     // Utility class for testing reporter
     public static class ObjectToReport {
+
         private int value;
-        public ObjectToReport(int value) { this.value = value; }
-        public int getValue() { return this.value; }
+
+        public ObjectToReport(int value) {
+            this.value = value;
+        }
+
+        public int getValue() {
+            return this.value;
+        }
     }
 
     // from here down is testing infrastructure
-
     public ReporterTest(String s) {
         super(s);
     }

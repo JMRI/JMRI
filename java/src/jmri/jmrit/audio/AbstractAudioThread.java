@@ -1,5 +1,4 @@
 // AbstractAudioThread.java
-
 package jmri.jmrit.audio;
 
 /**
@@ -9,27 +8,25 @@ package jmri.jmrit.audio;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author Matthew Harris  copyright (c) 2009
+ * @author Matthew Harris copyright (c) 2009
  * @version $Revision$
  */
 public abstract class AbstractAudioThread extends Thread implements AudioThread {
-    
+
     /**
      * True while the thread is running
      */
     private boolean _alive = true;
-    
+
     /**
      * True when thread should die
      */
@@ -52,10 +49,10 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
      * Perform necessary cleanup routines before shutting down
      */
     protected void cleanup() {
-        
+
         // Thread is to shutdown
         die(SET, true);
-        
+
         // End of thread
         alive(SET, false);
     }
@@ -64,7 +61,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     public boolean alive() {
         return alive(GET, NA);
     }
-    
+
     @Override
     public void die() {
         die(SET, true);
@@ -72,6 +69,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
 
     /**
      * Checks if the thread is in the process of shutting down
+     *
      * @return true, if thread should die
      */
     protected boolean dying() {
@@ -80,25 +78,27 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
 
     /**
      * Based on the 'action' parameter, sets or returns if the thread is running
+     *
      * @param action GET or SET
      * @param value for action==SET, new value; for action==GET, NA
      * @return true, when thread is alive
      */
     private synchronized boolean alive(boolean action, boolean value) {
-        if (action==SET) {
+        if (action == SET) {
             _alive = value;
         }
         return _alive;
     }
-    
+
     /**
      * Based on the 'action' parameter, sets or returns if the thread should die
+     *
      * @param action GET or SET
      * @param value for action==SET, new value; for action==GET, NA
      * @return true, when thread should die
      */
     private synchronized boolean die(boolean action, boolean value) {
-        if (action==SET) {
+        if (action == SET) {
             _die = value;
         }
         return _die;
@@ -114,7 +114,8 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     protected static void snooze(long ms) {
         try {
             Thread.sleep(ms);
-        } catch (InterruptedException ex) {}
+        } catch (InterruptedException ex) {
+        }
     }
 }
 

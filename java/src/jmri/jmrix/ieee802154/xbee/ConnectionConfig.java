@@ -1,25 +1,26 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.ieee802154.xbee;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
 import jmri.jmrix.ieee802154.xbee.swing.nodeconfig.NodeConfigAction;
 
 /**
  * Definition of objects to handle configuring a layout connection
  *
- * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007, 2008
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
  * @version	$Revision$
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
+
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
@@ -29,23 +30,27 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
 
     JButton b = new JButton("Configure XBee noddes");
 
-    @Override	
+    @Override
     public void loadDetails(JPanel details) {
-        b.addActionListener(new NodeConfigAction());		
-        if(!additionalItems.contains(b))
-           additionalItems.add(b);
+        b.addActionListener(new NodeConfigAction());
+        if (!additionalItems.contains(b)) {
+            additionalItems.add(b);
+        }
         super.loadDetails(details);
     }
 
-    public String name() { return "XBee Network"; }
+    public String name() {
+        return "XBee Network";
+    }
 
-    public boolean isOptList1Advanced() { return false; }
-    
-    protected void setInstance() { 
+    public boolean isOptList1Advanced() {
+        return false;
+    }
+
+    protected void setInstance() {
         if (adapter == null) {
             adapter = new XBeeAdapter();
         }
     }
-    
-}
 
+}

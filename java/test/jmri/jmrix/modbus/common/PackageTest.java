@@ -1,19 +1,19 @@
 package jmri.jmrix.modbus.common;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.modbus.common package.
+ *
  * @author	Bob Jacobsen Copyright 2001, 2003, 2014
- * @version     $Revision$
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -29,11 +29,10 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.modbus.common.PackageTest");  // no tests in this class itself
 
         // suite.addTest(jmri.jmrix.modbus.common.FooTest.suite());
-
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             //suite.addTest(jmri.jmrix.modbus.common.FooTest.suite());
         }
-        
+
         return suite;
     }
 

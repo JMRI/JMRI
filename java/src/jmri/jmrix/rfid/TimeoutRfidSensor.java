@@ -1,16 +1,15 @@
 // MergRfidReporter.java
-
 package jmri.jmrix.rfid;
 
+import jmri.IdTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.IdTag;
 
 /**
  * Timeout specific implementation of an RfidSensor.
  * <p>
- * Certain RFID readers only send a message when an RFID tag is within
- * the proximity of the reader - no message is sent when it leaves.
+ * Certain RFID readers only send a message when an RFID tag is within the
+ * proximity of the reader - no message is sent when it leaves.
  * <p>
  * As a result, this implementation simulates this message using a timeout
  * mechanism - if no further tags are sensed within a pre-defined time period,
@@ -18,23 +17,21 @@ import jmri.IdTag;
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under
- * the terms of version 2 of the GNU General Public License as published
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author      Matthew Harris  Copyright (C) 2014
- * @version     $Revision$
- * @since       3.9.2
+ * @author Matthew Harris Copyright (C) 2014
+ * @version $Revision$
+ * @since 3.9.2
  */
 public class TimeoutRfidSensor extends RfidSensor {
-    
+
     /**
      * Timeout in ms
      */
@@ -64,12 +61,15 @@ public class TimeoutRfidSensor extends RfidSensor {
     public void notify(IdTag t) {
         super.notify(t);
         whenLastSensed = System.currentTimeMillis();
-        if (timeoutThread==null)
+        if (timeoutThread == null) {
             (timeoutThread = new TimeoutThread()).start();
+        }
     }
 
     private void cleanUpTimeout() {
-        if (logDebug) log.debug("Cleanup timeout thread for "+mSystemName);
+        if (logDebug) {
+            log.debug("Cleanup timeout thread for " + mSystemName);
+        }
         timeoutThread = null;
     }
 
@@ -77,19 +77,22 @@ public class TimeoutRfidSensor extends RfidSensor {
 
         TimeoutThread() {
             super();
-            this.setName("Timeout-"+mSystemName);
+            this.setName("Timeout-" + mSystemName);
         }
 
         @Override
         @SuppressWarnings("SleepWhileInLoop")
         public void run() {
-            while((whenLastSensed+timeout)>System.currentTimeMillis()) {
+            while ((whenLastSensed + timeout) > System.currentTimeMillis()) {
                 try {
                     Thread.sleep(50);
-                } catch (InterruptedException ex) { }
+                } catch (InterruptedException ex) {
+                }
             }
             TimeoutRfidSensor.super.notify(null);
-            if (logDebug) log.debug("Timeout-"+mSystemName);
+            if (logDebug) {
+                log.debug("Timeout-" + mSystemName);
+            }
             cleanUpTimeout();
         }
 

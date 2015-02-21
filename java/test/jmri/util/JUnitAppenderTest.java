@@ -1,24 +1,23 @@
 // JUnitAppenderTest.java
-
 package jmri.util;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.util.JUnitAppender class.
- * @author	Bob Jacobsen  Copyright 2007
+ *
+ * @author	Bob Jacobsen Copyright 2007
  * @version	$Revision$
  */
 public class JUnitAppenderTest extends TestCase {
 
     /**
-     * If this constant is true, some tests will
-     * run that are expected to log output; this
-     * output has to be checked by hand.
+     * If this constant is true, some tests will run that are expected to log
+     * output; this output has to be checked by hand.
      */
     boolean allTests = false;
 
@@ -51,28 +50,32 @@ public class JUnitAppenderTest extends TestCase {
             log.warn(msg);
         }
     }
-        
-	// from here down is testing infrastructure
 
-	public JUnitAppenderTest(String s) {
-		super(s);
-	}
+    // from here down is testing infrastructure
+    public JUnitAppenderTest(String s) {
+        super(s);
+    }
 
-	// Main entry point
-	static public void main(String[] args) {
-		String[] testCaseName = {JUnitAppenderTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
-	}
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {JUnitAppenderTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 
-	// test suite from all defined tests
-	public static Test suite() {
-		TestSuite suite = new TestSuite(JUnitAppenderTest.class);
-		return suite;
-	}
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite(JUnitAppenderTest.class);
+        return suite;
+    }
 
     // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
+    }
 
-	static Logger log = Logger.getLogger(JUnitAppenderTest.class.getName());
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+    static Logger log = Logger.getLogger(JUnitAppenderTest.class.getName());
 }

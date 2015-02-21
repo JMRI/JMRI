@@ -34,11 +34,11 @@ import org.slf4j.LoggerFactory;
 public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implements Timebase {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -5893225952525687431L;
+     *
+     */
+    private static final long serialVersionUID = -5893225952525687431L;
 
-	public SimpleTimebase() {
+    public SimpleTimebase() {
         super("SIMPLECLOCK");
         // initialize time-containing memory
         clockMemory = jmri.InstanceManager.memoryManagerInstance().provideMemory("IMCURRENTTIME");
@@ -76,11 +76,11 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
             }
         }
     }
-    
-    public String getBeanType(){
+
+    public String getBeanType() {
         return Bundle.getMessage("BeanNameTime");
     }
-    
+
     // methods for getting and setting the current Fast Clock time
     public Date getTime() {
         // is clock stopped?

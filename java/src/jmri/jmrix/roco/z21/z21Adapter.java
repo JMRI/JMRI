@@ -1,5 +1,4 @@
 // z21Adapter.java
-
 package jmri.jmrix.roco.z21;
 
 import java.net.DatagramSocket;
@@ -9,13 +8,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Adapter representing a Z21 communication port
- * Note: This connection uses UDP for communication.
+ * Adapter representing a Z21 communication port Note: This connection uses UDP
+ * for communication.
  * <p>
  *
- * @author			Bob Jacobsen    Copyright (C) 2001, 2008
- * @author			Paul Bender    Copyright (C) 2004,2010,2011,2014
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author	Paul Bender Copyright (C) 2004,2010,2011,2014
+ * @version	$Revision$
  */
 public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
@@ -24,25 +23,25 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
     static String DEFAULT_IP_ADDRESS;
 
     private javax.swing.Timer keepAliveTimer; // Timer used to periodically
-                                              // send a message to both
-                                              // ports to keep the ports
-                                              // open
+    // send a message to both
+    // ports to keep the ports
+    // open
     private static final int keepAliveTimeoutValue = 30000; // Interval
-                                                            // to send a message
-                                                            // Must be < 60s.
+    // to send a message
+    // Must be < 60s.
 
     private DatagramSocket socket = null;
 
-    public z21Adapter(){
-       super(new z21SystemConnectionMemo());
-       rb = ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21AdapterConfigurationBundle");
-       COMMUNICATION_UDP_PORT= java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
-       DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
-       setHostName(DEFAULT_IP_ADDRESS);
-       setPort(COMMUNICATION_UDP_PORT);
-       allowConnectionRecovery = true; // all classes derived from this class
-                                       // can recover from a connection failure
-       
+    public z21Adapter() {
+        super(new z21SystemConnectionMemo());
+        rb = ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21AdapterConfigurationBundle");
+        COMMUNICATION_UDP_PORT = java.lang.Integer.parseInt(rb.getString("z21UDPPort1"));
+        DEFAULT_IP_ADDRESS = rb.getString("defaultZ21IPAddress");
+        setHostName(DEFAULT_IP_ADDRESS);
+        setPort(COMMUNICATION_UDP_PORT);
+        allowConnectionRecovery = true; // all classes derived from this class
+        // can recover from a connection failure
+
     }
 
     /**
@@ -50,41 +49,42 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      */
     @Override
     public void configure() {
-       if(log.isDebugEnabled()) log.debug("configure called");
-       // connect to a packetizing traffic controller
-       z21TrafficController packets = new z21TrafficController();
-       packets.connectPort(this);
+        if (log.isDebugEnabled()) {
+            log.debug("configure called");
+        }
+        // connect to a packetizing traffic controller
+        z21TrafficController packets = new z21TrafficController();
+        packets.connectPort(this);
 
-       // start operation
-       this.getSystemConnectionMemo().setTrafficController(packets);
+        // start operation
+        this.getSystemConnectionMemo().setTrafficController(packets);
 
-       // add an XPressNet Tunnel.
-       new z21XPressNetTunnel(this.getSystemConnectionMemo());
+        // add an XPressNet Tunnel.
+        new z21XPressNetTunnel(this.getSystemConnectionMemo());
 
-       jmri.jmrix.lenz.ActiveFlag.setActive();
+        jmri.jmrix.lenz.ActiveFlag.setActive();
     }
-
 
     @Override
     public void connect() throws Exception {
         opened = false;
         if (getHostAddress() == null || m_port == 0) {
-            log.error("No host name or port set : {}:{}",m_HostName,m_port);
+            log.error("No host name or port set : {}:{}", m_HostName, m_port);
             return;
         }
-        try{
-           socket=new DatagramSocket();
-           opened = true;
-        } catch(java.net.SocketException se) {
-             log.error("Socket Exception creating connection.");
-             if (m_port != 0) {
+        try {
+            socket = new DatagramSocket();
+            opened = true;
+        } catch (java.net.SocketException se) {
+            log.error("Socket Exception creating connection.");
+            if (m_port != 0) {
                 ConnectionStatus.instance().setConnectionState(
                         m_HostName + ":" + m_port, ConnectionStatus.CONNECTION_DOWN);
-             } else {
+            } else {
                 ConnectionStatus.instance().setConnectionState(
                         m_HostName, ConnectionStatus.CONNECTION_DOWN);
-             }
-             throw(se);
+            }
+            throw (se);
         }
         if (opened && m_port != 0) {
             ConnectionStatus.instance().setConnectionState(
@@ -102,23 +102,26 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      * @return the DatagramSocket of this connection.  Returns null
      *         if not connected.
      */
-    public DatagramSocket getSocket() { return socket; }
-
+    public DatagramSocket getSocket() {
+        return socket;
+    }
 
     /**
-     * Check that this object is ready to operate. This is a question
-     * of configuration, not transient hardware status.
+     * Check that this object is ready to operate. This is a question of
+     * configuration, not transient hardware status.
      */
-    public boolean status() { return opened; }
-    
+    public boolean status() {
+        return opened;
+    }
+
     @Override
-    public z21SystemConnectionMemo getSystemConnectionMemo(){
+    public z21SystemConnectionMemo getSystemConnectionMemo() {
         return (z21SystemConnectionMemo) super.getSystemConnectionMemo();
     }
 
     /**
-     * Customizable method to deal with resetting a system connection after
-     * a successful recovery of a connection.
+     * Customizable method to deal with resetting a system connection after a
+     * successful recovery of a connection.
      */
     @Override
     protected void resetupConnection() {
@@ -128,24 +131,22 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
      * Set up the keepAliveTimer, and start it.
      */
     private void keepAliveTimer() {
-        if(keepAliveTimer==null) {
-            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue,new java.awt.event.ActionListener() {
-                    public void actionPerformed(java.awt.event.ActionEvent e) {
-                        // If the timer times out, send a request for status
-                        z21Adapter.this.getSystemConnectionMemo().getTrafficController()
-                                   .sendz21Message(
-                                   jmri.jmrix.roco.z21.z21Message.getSerialNumberRequestMessage(),
-                                   null);
-                    }
-                });
+        if (keepAliveTimer == null) {
+            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent e) {
+                    // If the timer times out, send a request for status
+                    z21Adapter.this.getSystemConnectionMemo().getTrafficController()
+                            .sendz21Message(
+                                    jmri.jmrix.roco.z21.z21Message.getSerialNumberRequestMessage(),
+                                    null);
+                }
+            });
         }
         keepAliveTimer.stop();
         keepAliveTimer.setInitialDelay(keepAliveTimeoutValue);
         keepAliveTimer.setRepeats(true);
         keepAliveTimer.start();
     }
-
-
 
     static Logger log = LoggerFactory.getLogger(z21Adapter.class.getName());
 

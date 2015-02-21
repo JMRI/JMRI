@@ -1,13 +1,11 @@
 // PrintAction.java
-
 package jmri.jmrit.symbolicprog;
 
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractAction;
+import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.symbolicprog.tabbedframe.*;
-import java.awt.event.*;
-
-import javax.swing.*;
 
 /**
  * Action to print the information in a VariableTable.
@@ -15,18 +13,18 @@ import javax.swing.*;
  * This uses the older style printing, for compatibility with Java 1.1.8 in
  * Macintosh MRJ
  *
- * @author		Bob Jacobsen   Copyright (C) 2003
- * @author      Dennis Miller  Copyright (C) 2005
- * @version             $Revision$
+ * @author	Bob Jacobsen Copyright (C) 2003
+ * @author Dennis Miller Copyright (C) 2005
+ * @version $Revision$
  */
-public class PrintAction  extends AbstractAction {
+public class PrintAction extends AbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -633211100496026121L;
+     *
+     */
+    private static final long serialVersionUID = -633211100496026121L;
 
-	public PrintAction(String actionName, PaneProgFrame frame, boolean preview) {
+    public PrintAction(String actionName, PaneProgFrame frame, boolean preview) {
         super(actionName);
         mFrame = frame;
         isPreview = preview;

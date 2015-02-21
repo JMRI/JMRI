@@ -21,52 +21,55 @@ import org.slf4j.LoggerFactory;
 /**
  * Provide a JPanel with a JComboBox to configure the service mode programmer.
  * <P>
- * The using code should get a configured programmer with getProgrammer. 
+ * The using code should get a configured programmer with getProgrammer.
  * <P>
- * A ProgModePane may "share" between one of these and a ProgOpsModePane,
- * which means that there might be _none_ of these buttons selected.  When
- * that happens, the mode of the underlying programmer is left unchanged
- * and no message is propagated.
+ * A ProgModePane may "share" between one of these and a ProgOpsModePane, which
+ * means that there might be _none_ of these buttons selected. When that
+ * happens, the mode of the underlying programmer is left unchanged and no
+ * message is propagated.
  * <P>
- * Note that you should call the dispose() method when you're really done, so that
- * a ProgModePane object can disconnect its listeners.
+ * Note that you should call the dispose() method when you're really done, so
+ * that a ProgModePane object can disconnect its listeners.
  *
  * <hr>
  * This file is part of JMRI.
  * <P>
- * JMRI is free software; you can redistribute it and/or modify it under 
- * the terms of version 2 of the GNU General Public License as published 
- * by the Free Software Foundation. See the "COPYING" file for a copy
- * of this license.
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
  * <P>
- * JMRI is distributed in the hope that it will be useful, but WITHOUT 
- * ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or 
- * FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License 
- * for more details.
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
- * @author			Bob Jacobsen   Copyright (C) 2001
- * @version			$Revision$
+ * @author	Bob Jacobsen Copyright (C) 2001
+ * @version	$Revision$
  */
 public class ProgServiceModeComboBox extends ProgModeSelector implements PropertyChangeListener, ActionListener {
 
-	private static final long serialVersionUID = -337689867042266871L;
-	// GUI member declarations
-    JComboBox<GlobalProgrammerManager>  progBox;
-    JComboBox<ProgrammingMode>          modeBox;
+    private static final long serialVersionUID = -337689867042266871L;
+    // GUI member declarations
+    JComboBox<GlobalProgrammerManager> progBox;
+    JComboBox<ProgrammingMode> modeBox;
     ArrayList<Integer> modes = new ArrayList<Integer>();
 
     /**
      * Get the configured programmer
      */
     public Programmer getProgrammer() {
-        if (progBox == null) return null;
-        GlobalProgrammerManager pm = (GlobalProgrammerManager)progBox.getSelectedItem();
-        if (pm == null) return null;
+        if (progBox == null) {
+            return null;
+        }
+        GlobalProgrammerManager pm = (GlobalProgrammerManager) progBox.getSelectedItem();
+        if (pm == null) {
+            return null;
+        }
         return pm.getGlobalProgrammer();
     }
 
     /**
      * Are any of the modes selected?
+     *
      * @return true
      */
     public boolean isSelected() {
@@ -76,17 +79,16 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     public ProgServiceModeComboBox() {
         this(BoxLayout.X_AXIS);
     }
-    
+
     protected List<GlobalProgrammerManager> getMgrList() {
         return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
     }
 
-    
     public ProgServiceModeComboBox(int direction) {
         log.trace("ctor starts");
         modeBox = new JComboBox<ProgrammingMode>();
         modeBox.addActionListener(this);
-        
+
         // general GUI config
         setLayout(new BoxLayout(this, direction));
 
@@ -105,23 +107,23 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         }
         add(progBox = new JComboBox<GlobalProgrammerManager>(v));
         // if only one, don't show
-        if (progBox.getItemCount()<2) {
+        if (progBox.getItemCount() < 2) {
             progBox.setVisible(false);
         } else {
             progBox.setSelectedItem(InstanceManager.getDefault(jmri.GlobalProgrammerManager.class)); // set default
-            progBox.addActionListener(new ActionListener(){
+            progBox.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     // new programmer selection
                     programmerSelected();
                 }
             });
         }
-        
+
         // install items in GUI
         add(new JLabel(Bundle.getMessage("ProgrammingMode")));
 
         add(modeBox);
-        
+
         // and execute the setup for 1st time
         programmerSelected();
 
@@ -133,7 +135,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
     void programmerSelected() {
         DefaultComboBoxModel<ProgrammingMode> model = new DefaultComboBoxModel<ProgrammingMode>();
         Programmer p = getProgrammer();
-        if (p!=null) {
+        if (p != null) {
             for (ProgrammingMode mode : getProgrammer().getSupportedModes()) {
                 model.addElement(mode);
             }
@@ -141,11 +143,11 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
         log.trace("programmerSelected sets model");
         modeBox.setModel(model);
         ProgrammingMode mode = (getProgrammer() != null) ? getProgrammer().getMode() : null;
-        log.trace("programmerSelected sets mode {}",mode);
+        log.trace("programmerSelected sets mode {}", mode);
         modeBox.setSelectedItem(mode);
-        
+
     }
-    
+
     /**
      * Listen to box for mode changes
      */
@@ -156,7 +158,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             getProgrammer().setMode((ProgrammingMode) modeBox.getSelectedItem());
         }
     }
-    
+
     /**
      * Listen to programmer for mode changes
      */
@@ -168,7 +170,7 @@ public class ProgServiceModeComboBox extends ProgModeSelector implements Propert
             }
         }
     }
-    
+
     // no longer needed, disconnect if still connected
     public void dispose() {
     }

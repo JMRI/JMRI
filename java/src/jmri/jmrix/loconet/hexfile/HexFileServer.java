@@ -1,5 +1,4 @@
 // HexFileServer.java
-
 package jmri.jmrix.loconet.hexfile;
 
 import jmri.jmrix.loconet.LnCommandStationType;
@@ -8,31 +7,31 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *  copied from HexFileFrame, then all ui-related elements removed.  ConnectionConfigXml.load()
- *     calls HexFileServer instead of HexFileFrame if jmri is running in headless mode.
- * @author			Steve Todd  Copyright 2012
- * @version                     $Revision: 18841 $
+ * copied from HexFileFrame, then all ui-related elements removed.
+ * ConnectionConfigXml.load() calls HexFileServer instead of HexFileFrame if
+ * jmri is running in headless mode.
+ *
+ * @author	Steve Todd Copyright 2012
+ * @version $Revision: 18841 $
  */
 public class HexFileServer {
 
     // member declarations
-
     // to find and remember the log file
 //    final javax.swing.JFileChooser inputFileChooser = 
 //            jmri.jmrit.XmlFile.userFileChooser("Hex files", "hex");
-
     public HexFileServer() {
     }
-    
+
     boolean connected = false;
 
     public void dispose() {
     }
-    
+
     LnPacketizer packets = null;
 
     public void configure() {
-        if (port==null){
+        if (port == null) {
             log.error("initComponents called before adapter has been set");
             return;
         }
@@ -45,7 +44,7 @@ public class HexFileServer {
         port.getSystemConnectionMemo().setLnTrafficController(packets);
 
         // do the common manager config
-        port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100,   // full featured by default
+        port.getSystemConnectionMemo().configureCommandStation(LnCommandStationType.COMMAND_STATION_DCS100, // full featured by default
                 false, false);
         port.getSystemConnectionMemo().configureManagers();
 
@@ -64,16 +63,21 @@ public class HexFileServer {
         packets.startThreads();
         sourceThread = new Thread(port);
         sourceThread.start();
-            
+
         jmri.jmrix.loconet.ActiveFlag.setActive();
 
     }
 
     private Thread sourceThread;
     //private Thread sinkThread;
-    
-    public void setAdapter(LnHexFilePort adapter) { port = adapter; }
-    public LnHexFilePort getAdapter() { return port; }
+
+    public void setAdapter(LnHexFilePort adapter) {
+        port = adapter;
+    }
+
+    public LnHexFilePort getAdapter() {
+        return port;
+    }
     private LnHexFilePort port = null;
 
     static Logger log = LoggerFactory.getLogger(HexFileServer.class.getName());

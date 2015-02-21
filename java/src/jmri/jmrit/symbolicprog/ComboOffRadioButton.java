@@ -1,10 +1,10 @@
 //ComboOffRadioButton.java
-
 package jmri.jmrit.symbolicprog;
 
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
 
 /* Represents a JComboBox as a JPanel containing just the "off" button
  *
@@ -14,11 +14,11 @@ import javax.swing.*;
 public class ComboOffRadioButton extends ComboRadioButtons {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 8850743261536717555L;
+     *
+     */
+    private static final long serialVersionUID = 8850743261536717555L;
 
-	ComboOffRadioButton(JComboBox box, EnumVariableValue var) {
+    ComboOffRadioButton(JComboBox box, EnumVariableValue var) {
         super(box, var);
     }
 
@@ -30,7 +30,9 @@ public class ComboOffRadioButton extends ComboRadioButtons {
      * Make only the "on" button visible
      */
     void addToPanel(JRadioButton b, int i) {
-        if (i==0) add(b);
+        if (i == 0) {
+            add(b);
+        }
     }
 
     // initialize logging

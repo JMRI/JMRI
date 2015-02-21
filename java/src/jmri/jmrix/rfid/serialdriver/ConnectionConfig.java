@@ -1,5 +1,4 @@
 // ConnectionConfig.java
-
 package jmri.jmrix.rfid.serialdriver;
 
 import java.awt.event.ActionEvent;
@@ -10,41 +9,43 @@ import javax.swing.JPanel;
 /**
  * Definition of objects to handle configuring a layout connection
  *
- * @author      Bob Jacobsen   Copyright (C) 2003, 2006, 2007, 2008
- * @author      Matthew Harris  Copyright (C) 2011
- * @version     $Revision$
- * @since       2.11.4
+ * @author Bob Jacobsen Copyright (C) 2003, 2006, 2007, 2008
+ * @author Matthew Harris Copyright (C) 2011
+ * @version $Revision$
+ * @since 2.11.4
  */
-public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig {
+public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig {
 
     /**
-     * Ctor for an object being created during load process;
-     * Swing init is deferred.
+     * Ctor for an object being created during load process; Swing init is
+     * deferred.
+     *
      * @param p {@link jmri.jmrix.SerialPortAdapter} to configure
      */
-    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p){
+    public ConnectionConfig(jmri.jmrix.SerialPortAdapter p) {
         super(p);
     }
+
     /**
      * Ctor for a functional Swing object with no preexisting adapter
      */
     public ConnectionConfig() {
         super();
     }
-	
+
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
-        
+
         //Add a listener to the combo box
-        ((JComboBox)options.get(adapter.getOption1Name()).getComponent()).addActionListener(new ActionListener() {
+        ((JComboBox) options.get(adapter.getOption1Name()).getComponent()).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 enableOpt2(options.get(adapter.getOption1Name()).getItem());
                 enableOpt3(options.get(adapter.getOption1Name()).getItem());
             }
         });
-        
+
         enableOpt2(options.get(adapter.getOption1Name()).getItem());
         enableOpt3(options.get(adapter.getOption1Name()).getItem());
 
@@ -54,9 +55,9 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         boolean enable = o.equals("MERG Concentrator");
         options.get(adapter.getOption2Name()).getLabel().setEnabled(enable);
         options.get(adapter.getOption2Name()).getComponent().setEnabled(enable);
-        options.get(adapter.getOption2Name()).getComponent().setToolTipText(enable?
-            "Choose RFID concentrator range setting":
-            "Range setting not applicable for selected RFID reader type");
+        options.get(adapter.getOption2Name()).getComponent().setToolTipText(enable
+                ? "Choose RFID concentrator range setting"
+                : "Range setting not applicable for selected RFID reader type");
     }
 
     private void enableOpt3(Object o) {
@@ -64,19 +65,23 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractSerialConnectionConfig
         options.get(adapter.getOption3Name()).getLabel().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
         options.get(adapter.getOption3Name()).getComponent().setEnabled(enable);
-        options.get(adapter.getOption3Name()).getComponent().setToolTipText(enable?
-            "Choose RFID protocol":
-            "Protocol setting not applicable for selected RFID reader type");
-        if (!enable) ((JComboBox)options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
+        options.get(adapter.getOption3Name()).getComponent().setToolTipText(enable
+                ? "Choose RFID protocol"
+                : "Protocol setting not applicable for selected RFID reader type");
+        if (!enable) {
+            ((JComboBox) options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
         }
+    }
 
     @Override
-    public String name() { return "RFID Device Connection"; }
-    
+    public String name() {
+        return "RFID Device Connection";
+    }
+
     @Override
     protected void setInstance() {
-        if (adapter==null)
+        if (adapter == null) {
             adapter = new SerialDriverAdapter();
+        }
     }
 }
-

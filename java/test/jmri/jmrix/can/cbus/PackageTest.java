@@ -1,5 +1,4 @@
 // PackageTest.java
-
 package jmri.jmrix.can.cbus;
 
 import junit.framework.Test;
@@ -8,13 +7,13 @@ import junit.framework.TestSuite;
 
 /**
  * Tests for the jmri.jmrix.can.cbus package.
- * @author      Bob Jacobsen  Copyright 2008
- * @version   $Revision$
+ *
+ * @author Bob Jacobsen Copyright 2008
+ * @version $Revision$
  */
 public class PackageTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PackageTest(String s) {
         super(s);
     }
@@ -38,7 +37,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorManagerTest.suite());
         suite.addTest(jmri.jmrix.can.cbus.CbusSensorTest.suite());
 
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrix.can.cbus.swing.SwingTest.suite());
         }
 

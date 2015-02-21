@@ -1,22 +1,19 @@
 // ComboRadioButtonsTest.java
-
 package jmri.jmrit.symbolicprog;
 
-import javax.swing.*;
+import java.util.HashMap;
+import javax.swing.JComboBox;
+import jmri.progdebugger.ProgDebugger;
+import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import junit.framework.Assert;
-
-import jmri.progdebugger.*;
-
-import java.util.*;
 
 /**
  * ComboRadioButtonsTest.java
  *
- * @author			Bob Jacobsen Copyright 2006
- * @version  $Release:$
+ * @author	Bob Jacobsen Copyright 2006
+ * @version $Release:$
  */
 public class ComboRadioButtonsTest extends TestCase {
 
@@ -27,10 +24,10 @@ public class ComboRadioButtonsTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox)(var.getCommonRep());
+        JComboBox combo = (JComboBox) (var.getCommonRep());
 
         // create object under test
         ComboRadioButtons b = new ComboRadioButtons(combo, var);
@@ -43,10 +40,10 @@ public class ComboRadioButtonsTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox)(var.getCommonRep());
+        JComboBox combo = (JComboBox) (var.getCommonRep());
 
         // create object under test
         ComboRadioButtons b = new ComboRadioButtons(combo, var);
@@ -79,10 +76,10 @@ public class ComboRadioButtonsTest extends TestCase {
         HashMap<String, CvValue> v = createCvMap();
         CvValue cv = new CvValue("81", p);
         cv.setValue(3);
-        v.put("81",cv);
+        v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox)(var.getCommonRep());
+        JComboBox combo = (JComboBox) (var.getCommonRep());
 
         // create object under test
         ComboRadioButtons b = new ComboRadioButtons(combo, var);
@@ -124,7 +121,6 @@ public class ComboRadioButtonsTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-
     public ComboRadioButtonsTest(String s) {
         super(s);
     }
@@ -142,5 +138,4 @@ public class ComboRadioButtonsTest extends TestCase {
     }
 
     // static Logger log = Logger.getLogger(ComboRadioButtonsTest.class.getName());
-
 }

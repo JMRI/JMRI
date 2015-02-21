@@ -1,91 +1,91 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
+        Provides access to LocoNet systems, along with a lot of Swing-based tools.
 
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        <h2>Initialization Sequence</h2>
 
-  Copyright 2003
+        This section describes the LocoNet implementation of the new (2010)
+        configuration system.
 
--->
-</head>
-<body bgcolor="white">
+        <ol>
+            <li>jmri.jmrix.loconet.NN.configurexml.ConnectionConfigXml is invoked 
+                by the configurexml when the specific class is named in an XML
+                input file.
 
-Provides access to LocoNet systems, along with a lot of Swing-based tools.
+            <li>It is a child of the jmri.jmrix.configurexml.AbstractConnectionConfigXml, 
+                which invokes the getInstance() method of it (not a static
+                method) in its load() method 
+                to load the "adapter" member variable with a 
+                specific *Adapter class, e.g. MS100Adapter.
 
-<h2>Initialization Sequence</h2>
+            <li>More importantly, that getInstance()
 
-This section describes the LocoNet implementation of the new (2010)
-configuration system.
+            <li>Later, after the port is (hopefully) up,
+                AbstractConnectionConfigXml invokes the Adapter's 
+                configure() method.
 
-<ol>
-<li>jmri.jmrix.loconet.NN.configurexml.ConnectionConfigXml is invoked 
-    by the configurexml when the specific class is named in an XML
-    input file.
+            <li>That Adapter configure() method does, in order:
+                <ol>
+                    <li>sets up Packetizer/port/etc as needed
+                    <li>configureCommandStation() from LnPortController
+                    <li>configureManagers() from LnPortController,
+                        but overridden in e.g. PR3Adapter.
+                    <li>does any other initialization of it's own, e.g. startThreads()
+                        <p>
+                            At this point, the system is basically up and ready for operation.
 
-<li>It is a child of the jmri.jmrix.configurexml.AbstractConnectionConfigXml, 
-    which invokes the getInstance() method of it (not a static
-    method) in its load() method 
-    to load the "adapter" member variable with a 
-    specific *Adapter class, e.g. MS100Adapter.
+                    <li>Finally, a jmri.jmrix.loconet.LocoNetSystemConnectionMemo object is
+                        created and registered with the InstanceManager.
 
-<li>More importantly, that getInstance()
+                </ol>
 
-<li>Later, after the port is (hopefully) up,
-    AbstractConnectionConfigXml invokes the Adapter's 
-    configure() method.
-    
-<li>That Adapter configure() method does, in order:
-    <ol>
-    <li>sets up Packetizer/port/etc as needed
-    <li>configureCommandStation() from LnPortController
-    <li>configureManagers() from LnPortController,
-        but overridden in e.g. PR3Adapter.
-    <li>does any other initialization of it's own, e.g. startThreads()
-    <p>
-    At this point, the system is basically up and ready for operation.
+            <li>Later, jmri.jmrix.ActiveSystemsMenu and.or jmri.jmrix.SystemsMenu
+                wants to create user menus, and finds the LocoNetSystemConnectionMemo
+                object in the InstanceManager
 
-    <li>Finally, a jmri.jmrix.loconet.LocoNetSystemConnectionMemo object is
-        created and registered with the InstanceManager.
+            <li>The menu code asks that specific SystemConnectionMemo object
+                to create and return the menu.  It does so, in the process
+                connecting each Action to itself so that the individual tools
+                will be able to connect to the proper e.g. TrafficController, 
+                SlotMonitor, etc.
 
-    </ol>
-    
-<li>Later, jmri.jmrix.ActiveSystemsMenu and.or jmri.jmrix.SystemsMenu
-    wants to create user menus, and finds the LocoNetSystemConnectionMemo
-    object in the InstanceManager
-    
-<li>The menu code asks that specific SystemConnectionMemo object
-    to create and return the menu.  It does so, in the process
-    connecting each Action to itself so that the individual tools
-    will be able to connect to the proper e.g. TrafficController, 
-    SlotMonitor, etc.
-    
-<li>When an Action is fired later on, the invoked class(es) enquire
-    of the LocoNetSystemConnectionMemo when they need a resource, 
-    instead of referring to an instance() method in the 
-    resource's class.
-    
-</ol>
+            <li>When an Action is fired later on, the invoked class(es) enquire
+                of the LocoNetSystemConnectionMemo when they need a resource, 
+                instead of referring to an instance() method in the 
+                resource's class.
 
-To adapt a type, e.g. Turnout:
-<ol>
-<li>Basic manager needs to have getSystemPrefix in addition to letter
-<li>ProxyManager has to check for system prefix, not letter
+        </ol>
 
-</ol>
+        To adapt a type, e.g. Turnout:
+        <ol>
+            <li>Basic manager needs to have getSystemPrefix in addition to letter
+            <li>ProxyManager has to check for system prefix, not letter
 
-<h2>Related Documentation</h2>
+        </ol>
 
-For overviews, tutorials, examples, guides, and tool documentation, please see:
-<ul>
-  <li><a href="http://jmri.org/help/en/html/hardware/loconet/Digitrax.shtml">JMRI LocoNet page</a>
-</ul>
+        <h2>Related Documentation</h2>
 
-<!-- Put @see and @since tags down here. -->
-<!-- @see jmri.InstanceManager -->
+        For overviews, tutorials, examples, guides, and tool documentation, please see:
+        <ul>
+            <li><a href="http://jmri.org/help/en/html/hardware/loconet/Digitrax.shtml">JMRI LocoNet page</a>
+        </ul>
 
-</body>
+        <!-- Put @see and @since tags down here. -->
+        <!-- @see jmri.InstanceManager -->
+
+    </body>
 </html>

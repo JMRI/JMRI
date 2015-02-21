@@ -1,5 +1,4 @@
 // RecreateRosterAction.java
-
 package jmri.jmrit.roster;
 
 import java.awt.event.ActionEvent;
@@ -15,22 +14,22 @@ import org.slf4j.LoggerFactory;
  * <P>
  * Scans the roster directory for xml files, including any that are found.
  *
- * @author	Bob Jacobsen   Copyright (C) 2001
+ * @author	Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
  */
 public class RecreateRosterAction extends JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 2421095427974812157L;
+     *
+     */
+    private static final long serialVersionUID = 2421095427974812157L;
 
-	public RecreateRosterAction(String s, WindowInterface wi) {
-    	super(s, wi);
+    public RecreateRosterAction(String s, WindowInterface wi) {
+        super(s, wi);
     }
-     
- 	public RecreateRosterAction(String s, Icon i, WindowInterface wi) {
-    	super(s, i, wi);
+
+    public RecreateRosterAction(String s, Icon i, WindowInterface wi) {
+        super(s, i, wi);
     }
 
     public RecreateRosterAction() {
@@ -44,7 +43,7 @@ public class RecreateRosterAction extends JmriAbstractAction {
     public void actionPerformed(ActionEvent e) {
         Roster roster = new Roster();
         String[] list = Roster.getAllFileNames();
-        for (int i=0; i<list.length; i++) {
+        for (int i = 0; i < list.length; i++) {
             // get next filename
             String fullFromFilename = list[i];
 
@@ -52,9 +51,9 @@ public class RecreateRosterAction extends JmriAbstractAction {
             LocoFile lf = new LocoFile();  // used as a temporary
             Element lroot = null;
             try {
-                lroot = lf.rootFromName(LocoFile.getFileLocation()+fullFromFilename);
+                lroot = lf.rootFromName(LocoFile.getFileLocation() + fullFromFilename);
             } catch (Exception ex) {
-                log.error("Exception while loading loco XML file: "+fullFromFilename+" exception: "+ex);
+                log.error("Exception while loading loco XML file: " + fullFromFilename + " exception: " + ex);
                 continue;
             }
 
@@ -76,15 +75,15 @@ public class RecreateRosterAction extends JmriAbstractAction {
         try {
             roster.writeFile(Roster.defaultRosterFilename());
         } catch (Exception ex) {
-            log.error("Exception while writing the new roster file, may not be complete: "+ex);
+            log.error("Exception while writing the new roster file, may not be complete: " + ex);
         }
         // use the new one
         Roster.resetInstance();
         Roster.instance();
-        log.info("Roster rebuilt, stored in "+Roster.defaultRosterFilename());
+        log.info("Roster rebuilt, stored in " + Roster.defaultRosterFilename());
 
     }
-    
+
     // never invoked, because we overrode actionPerformed above
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");

@@ -1,5 +1,4 @@
 // Receiver.java
-
 package jmri.jmrix.rps;
 
 import javax.vecmath.Point3d;
@@ -7,7 +6,7 @@ import javax.vecmath.Point3d;
 /**
  * Holds all the state information for a single receiver.
  *
- * @author	Bob Jacobsen  Copyright (C) 2008
+ * @author	Bob Jacobsen Copyright (C) 2008
  * @version	$Revision$
  */
 public class Receiver {
@@ -24,22 +23,45 @@ public class Receiver {
         return position;
     }
     private Point3d position;
-    
-    public boolean isActive() { return active; }
-    public void setActive(boolean active) { this.active = active; }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
     boolean active = false;
-    
+
     int last = -1;
-    public int getLastTime() { return last; }
-    public void setLastTime(int m) { last = m; }
-    
+
+    public int getLastTime() {
+        return last;
+    }
+
+    public void setLastTime(int m) {
+        last = m;
+    }
+
     int min = 0;
-    public int getMinTime() { return min; }
-    public void setMinTime(int m) { min = m; }
-    
+
+    public int getMinTime() {
+        return min;
+    }
+
+    public void setMinTime(int m) {
+        min = m;
+    }
+
     int max = 99999;
-    public int getMaxTime() { return max; }
-    public void setMaxTime(int m) { max = m; }
+
+    public int getMaxTime() {
+        return max;
+    }
+
+    public void setMaxTime(int m) {
+        max = m;
+    }
 }
 
 /* @(#)Receiver.java */

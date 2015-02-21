@@ -1,17 +1,15 @@
 package jmri.jmrix.dcc.configurexml;
 
+import jmri.jmrix.dcc.DccTurnoutManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
-
-import jmri.jmrix.dcc.DccTurnoutManager;
 
 /**
- * Provides load and store functionality for
- * configuring DccTurnoutManagers.
+ * Provides load and store functionality for configuring DccTurnoutManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2014
  * @version $Revision$
@@ -23,7 +21,7 @@ public class DccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
     }
 
     public void setStoreElementClass(Element turnouts) {
-        turnouts.setAttribute("class","jmri.jmrix.dcc.configurexml.DccTurnoutManagerXml");
+        turnouts.setAttribute("class", "jmri.jmrix.dcc.configurexml.DccTurnoutManagerXml");
     }
 
     public void load(Element element, Object o) {
@@ -37,6 +35,6 @@ public class DccTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         return loadTurnouts(turnouts);
     }
 
-	// initialize logging
+    // initialize logging
     static Logger log = LoggerFactory.getLogger(DccTurnoutManagerXml.class.getName());
 }

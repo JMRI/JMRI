@@ -1,35 +1,35 @@
 //JmriSRCPSensorServerTest.java
-
 package jmri.jmris.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmris.srcp.JmriSRCPSensorServer class
- * @author                      Paul Bender
- * @version                     $Revision$
+ *
+ * @author Paul Bender
+ * @version $Revision$
  */
 public class JmriSRCPSensorServerTest extends TestCase {
 
     public void testCtor() {
-	    java.io.DataOutputStream output=new java.io.DataOutputStream(
-	        new java.io.OutputStream() {
-	        // null output string drops characters
-	        // could be replaced by one that checks for specific outputs
-            @Override
-            public void write(int b) throws java.io.IOException {}
-	    });
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        JmriSRCPSensorServer a = new JmriSRCPSensorServer(input,output);
+        JmriSRCPSensorServer a = new JmriSRCPSensorServer(input, output);
         Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-
     public JmriSRCPSensorServerTest(String s) {
         super(s);
     }
@@ -50,4 +50,3 @@ public class JmriSRCPSensorServerTest extends TestCase {
     static Logger log = Logger.getLogger(JmriSRCPSensorServerTest.class.getName());
 
 }
-

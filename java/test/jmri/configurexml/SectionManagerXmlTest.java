@@ -1,5 +1,4 @@
 // SectionManagerXmlTest.java
-
 package jmri.configurexml;
 
 import java.util.ArrayList;
@@ -9,22 +8,20 @@ import jmri.EntryPoint;
 import jmri.InstanceManager;
 import jmri.Memory;
 import jmri.Path;
-
 import jmri.Section;
 import jmri.Sensor;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
-
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for SectionManagerXml.
  * <P>
  * Just tests Elements, not actual files.
- * 
+ *
  * @author Bob Coleman Copyright 2012
  * @version $Revision$
  */
@@ -39,14 +36,13 @@ public class SectionManagerXmlTest extends TestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initMemoryManager();
         JUnitUtil.initLayoutBlockManager();
-    	JUnitUtil.initSectionManager();
+        JUnitUtil.initSectionManager();
         InstanceManager.configureManagerInstance()
-            .load(new java.io.File("java/test/jmri/configurexml/load/SectionManagerXmlTest.xml"));
-    
+                .load(new java.io.File("java/test/jmri/configurexml/load/SectionManagerXmlTest.xml"));
+
         // Note: This test assumes that BlockManagerXMLTest passes and more importantly (weakly)
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
-    
         // check existance of sections
         Assert.assertNotNull(InstanceManager.sectionManagerInstance().getSection("IY:AUTO:0001"));
         Assert.assertNull(InstanceManager.sectionManagerInstance().getSection("no section"));
@@ -136,7 +132,7 @@ public class SectionManagerXmlTest extends TestCase {
         previousblock = new Block[12][4];         //Make sure this is bigger than the list below
         Block[][] nextblock;
         nextblock = new Block[12][4];             //Make sure this is bigger than the list below
-        
+
         //  This matches up with the test file, ..., just be sure
         //       that LoadSectionManagerFileText.xml and LoadBlockManagerFileText.xml refer to the
         //       same block / section layout definition.
@@ -249,8 +245,8 @@ public class SectionManagerXmlTest extends TestCase {
         expectednextpaths[11] = 1;
         nextblock[11][0] = blockstotest[0];
 
-	for (int testblockfocus = 0; testblockfocus<12; testblockfocus++) {  // Set to one greater than above
-            int expectedcentrepaths = expectedpreviouspaths[testblockfocus]+expectednextpaths[testblockfocus];
+        for (int testblockfocus = 0; testblockfocus < 12; testblockfocus++) {  // Set to one greater than above
+            int expectedcentrepaths = expectedpreviouspaths[testblockfocus] + expectednextpaths[testblockfocus];
             Block focusBlock = blockstotest[testblockfocus];
             Memory expectedtestmemory = InstanceManager.memoryManagerInstance().getMemory("blocknorthmemory");
             expectedtestmemory.setValue("Memory test: " + testblockfocus);
@@ -262,31 +258,31 @@ public class SectionManagerXmlTest extends TestCase {
             Assert.assertEquals("Sensor where Focus was: " + testblockfocus, occupiedsensor[testblockfocus].getSystemName(), focusBlock.getSensor().getSystemName());
             List<Path> testpaths = focusBlock.getPaths();
             Assert.assertEquals("Block Path size where Block Focus was: " + testblockfocus, expectedcentrepaths, testpaths.size());
-	    for (int p = 0; p<expectedpreviouspaths[testblockfocus]; p++) {
+            for (int p = 0; p < expectedpreviouspaths[testblockfocus]; p++) {
                 passprevioustest[p] = false;
             }
-	    for (int n = 0; n<expectednextpaths[testblockfocus]; n++) {
+            for (int n = 0; n < expectednextpaths[testblockfocus]; n++) {
                 passnexttest[n] = false;
             }
-	    for (int i = 0; i<testpaths.size(); i++) {
+            for (int i = 0; i < testpaths.size(); i++) {
                 Block testblock = testpaths.get(i).getBlock();
                 Assert.assertNotNull(testblock);
-                for (int p = 0; p<expectedpreviouspaths[testblockfocus]; p++) {
+                for (int p = 0; p < expectedpreviouspaths[testblockfocus]; p++) {
                     if (testblock == previousblock[testblockfocus][p]) {
                         passprevioustest[p] = true;
                     }
-                }    
-                for (int n = 0; n<expectednextpaths[testblockfocus]; n++) {
+                }
+                for (int n = 0; n < expectednextpaths[testblockfocus]; n++) {
                     if (testblock == nextblock[testblockfocus][n]) {
                         passnexttest[n] = true;
                     }
-                }    
+                }
             }
 
-	    for (int p = 0; p<expectedpreviouspaths[testblockfocus]; p++) {
+            for (int p = 0; p < expectedpreviouspaths[testblockfocus]; p++) {
                 Assert.assertTrue("Block Focus was: " + testblockfocus + " previous path: " + p, passprevioustest[p]);
             }
-	    for (int n = 0; n<expectednextpaths[testblockfocus]; n++) {
+            for (int n = 0; n < expectednextpaths[testblockfocus]; n++) {
                 Assert.assertTrue("Block Focus was: " + testblockfocus + " next path: " + n, passnexttest[n]);
             }
 
@@ -486,19 +482,19 @@ public class SectionManagerXmlTest extends TestCase {
         expectedForwardStoppingSensors[11] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPF12");
         expectedReverseStoppingSensors[11] = InstanceManager.sensorManagerInstance().getSensor("ISSSTOPR12");
 
-	for (int testsectionfocus = 0; testsectionfocus<12; testsectionfocus++) {  // Set to one greater than above
+        for (int testsectionfocus = 0; testsectionfocus < 12; testsectionfocus++) {  // Set to one greater than above
             // check existance of sections
             Section testsection = sectionstotest[testsectionfocus];
             ArrayList<Block> blockList = testsection.getBlockList();
             Assert.assertEquals("Section size where Focus was: " + testsectionfocus, expectedsectionblocklistsize[testsectionfocus], blockList.size());
-        
+
             Block entryblock = testsection.getEntryBlock();
             Assert.assertNotNull(entryblock);
-            Assert.assertEquals("Section entry block where Focus was: " + testsectionfocus, expectedsectionentryblock[testsectionfocus].getSystemName() , entryblock.getSystemName());
-        
+            Assert.assertEquals("Section entry block where Focus was: " + testsectionfocus, expectedsectionentryblock[testsectionfocus].getSystemName(), entryblock.getSystemName());
+
             List<EntryPoint> forwardEntryPointList = testsection.getForwardEntryPointList();
             Assert.assertEquals("Section forward size where Focus was: " + testsectionfocus, expectedforwardEntryPointList[testsectionfocus], forwardEntryPointList.size());
-	    for (int e = 0; e<forwardEntryPointList.size(); e++) {
+            for (int e = 0; e < forwardEntryPointList.size(); e++) {
                 EntryPoint get = forwardEntryPointList.get(e);
                 Assert.assertEquals("Focus was: " + testsectionfocus + " next forward entry point: " + e, expectedsectionentryblock[testsectionfocus].getSystemName(), get.getBlock().getSystemName());
                 Assert.assertEquals("Focus was: " + testsectionfocus + " next forward from: " + e, expectedsectionforwardblock[testsectionfocus][e].getUserName(), get.getFromBlock().getUserName());
@@ -506,7 +502,7 @@ public class SectionManagerXmlTest extends TestCase {
             }
             List<EntryPoint> reverseEntryPointList = testsection.getReverseEntryPointList();
             Assert.assertEquals("Section forward size where Focus was: " + testsectionfocus, expectedreverseEntryPointList[testsectionfocus], reverseEntryPointList.size());
-	    for (int e = 0; e<reverseEntryPointList.size(); e++) {
+            for (int e = 0; e < reverseEntryPointList.size(); e++) {
                 EntryPoint get = reverseEntryPointList.get(e);
                 Assert.assertEquals("Focus was: " + testsectionfocus + " next reverse entry point: " + e, expectedsectionentryblock[testsectionfocus].getSystemName(), get.getBlock().getSystemName());
                 Assert.assertEquals("Focus was: " + testsectionfocus + " next reverse from: " + e, expectedsectionreverseblock[testsectionfocus][e].getUserName(), get.getFromBlock().getUserName());
@@ -536,17 +532,16 @@ public class SectionManagerXmlTest extends TestCase {
         }
 
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public SectionManagerXmlTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-		String[] testCaseName = {SectionManagerXmlTest.class.getName()};
-		junit.swingui.TestRunner.main(testCaseName);
+        String[] testCaseName = {SectionManagerXmlTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
@@ -554,11 +549,11 @@ public class SectionManagerXmlTest extends TestCase {
         TestSuite suite = new TestSuite(SectionManagerXmlTest.class);
         return suite;
     }
-/*
-    static Logger log = Logger.getLogger(SectionManagerXmlTest.class.getName());
+    /*
+     static Logger log = Logger.getLogger(SectionManagerXmlTest.class.getName());
 
-    // The minimal setup for log4J
-    protected void setUp() { apps.tests.Log4JFixture.setUp(); }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
-*/
+     // The minimal setup for log4J
+     protected void setUp() { apps.tests.Log4JFixture.setUp(); }
+     protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+     */
 }

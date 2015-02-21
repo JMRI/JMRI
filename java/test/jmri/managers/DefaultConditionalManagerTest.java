@@ -1,28 +1,24 @@
 // DefaultConditionalManagerTest.java
-
 package jmri.managers;
 
 import org.apache.log4j.Logger;
 
-import jmri.*;
-
-import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- Tests for the jmri.managers.DefaultConditionalManager class.
- * @author	Bob Jacobsen  Copyright (C) 2015
+ * Tests for the jmri.managers.DefaultConditionalManager class.
+ *
+ * @author	Bob Jacobsen Copyright (C) 2015
  */
 public class DefaultConditionalManagerTest extends TestCase {
 
     public void testCtor() {
         new DefaultConditionalManager();
     }
-    
-    // from here down is testing infrastructure
 
+    // from here down is testing infrastructure
     public DefaultConditionalManagerTest(String s) {
         super(s);
     }

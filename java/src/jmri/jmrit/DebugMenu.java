@@ -1,25 +1,26 @@
 // DebugMenu.java
-
 package jmri.jmrit;
 
+import javax.swing.JMenu;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
 
 /**
- * Create a "Debug" menu containing the JMRI system-independent 
- * debugging tools.
+ * Create a "Debug" menu containing the JMRI system-independent debugging tools.
  *
- * @author	Bob Jacobsen   Copyright 2003
- * @version     $Revision$
+ * @author	Bob Jacobsen Copyright 2003
+ * @version $Revision$
  */
 public class DebugMenu extends JMenu {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -954409766062724149L;
 
-	public DebugMenu(String name, JPanel panel) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -954409766062724149L;
+
+    public DebugMenu(String name, JPanel panel) {
         this(panel);
         setText(name);
     }
@@ -43,23 +44,20 @@ public class DebugMenu extends JMenu {
         add(new jmri.jmrit.decoderdefn.NameCheckAction(Bundle.getMessage("MenuItemCheckDecoderNames"), panel));
         add(new jmri.jmrit.symbolicprog.tabbedframe.ProgCheckAction(Bundle.getMessage("MenuItemCheckProgrammerNames"), panel));
         add(new JSeparator());
-		add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));
+        add(new jmri.jmrit.LogixLoadAction(Bundle.getMessage("MenuItemLogixDisabled"), panel));
         add(new jmri.jmrit.log.LogAction(Bundle.getMessage("MenuItemLogAction")));
         add(new jmri.jmrit.log.LogOutputWindowAction(Bundle.getMessage("MenuItemLogOutputWindowAction")));
-        add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"), 
-            new jmri.util.swing.sdi.JmriJFrameInterface(),
-            "jmri.jmrit.log.Log4JTreePane"));
+        add(new jmri.util.swing.JmriNamedPaneAction(Bundle.getMessage("MenuItemLogTreeAction"),
+                new jmri.util.swing.sdi.JmriJFrameInterface(),
+                "jmri.jmrit.log.Log4JTreePane"));
         add(new JSeparator());
-	JMenu vsdMenu = new JMenu(Bundle.getMessage("MenuItemVSDecoder"));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager"), true));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager"), null));
-	vsdMenu.add(new jmri.jmrit.vsdecoder.swing.VSDPreferencesAction(Bundle.getMessage("MenuItemVSDecoderPreferences")));
-	add(vsdMenu);
-
+        JMenu vsdMenu = new JMenu(Bundle.getMessage("MenuItemVSDecoder"));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.VSDecoderCreationAction(Bundle.getMessage("MenuItemVSDecoderManager"), true));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.swing.ManageLocationsAction(Bundle.getMessage("MenuItemVSDecoderLocationManager"), null));
+        vsdMenu.add(new jmri.jmrit.vsdecoder.swing.VSDPreferencesAction(Bundle.getMessage("MenuItemVSDecoderPreferences")));
+        add(vsdMenu);
 
     }
 
     static Logger log = LoggerFactory.getLogger(DebugMenu.class.getName());
 }
-
-

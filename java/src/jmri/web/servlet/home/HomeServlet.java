@@ -16,11 +16,11 @@ import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 public class HomeServlet extends HttpServlet {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -1852868042825396772L;
+     *
+     */
+    private static final long serialVersionUID = -1852868042825396772L;
 
-	protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         if (!request.getRequestURI().equals("/")) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;

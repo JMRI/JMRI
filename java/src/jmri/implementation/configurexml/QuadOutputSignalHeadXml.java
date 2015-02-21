@@ -1,17 +1,14 @@
 package jmri.implementation.configurexml;
 
+import java.util.List;
+import jmri.InstanceManager;
+import jmri.NamedBeanHandle;
+import jmri.SignalHead;
+import jmri.Turnout;
+import jmri.implementation.QuadOutputSignalHead;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
-import jmri.SignalHead;
-import jmri.implementation.QuadOutputSignalHead;
-import jmri.Turnout;
-
-import jmri.NamedBeanHandle;
-
-import java.util.List;
-
-import org.jdom2.Element;
 
 /**
  * Handle XML configuration for QuadOutputSignalHead objects.
@@ -21,16 +18,17 @@ import org.jdom2.Element;
  */
 public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
-    public QuadOutputSignalHeadXml() {}
+    public QuadOutputSignalHeadXml() {
+    }
 
     /**
-     * Default implementation for storing the contents of a
-     * QuadOutputSignalHead
+     * Default implementation for storing the contents of a QuadOutputSignalHead
+     *
      * @param o Object to store, of type TripleTurnoutSignalHead
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-        QuadOutputSignalHead p = (QuadOutputSignalHead)o;
+        QuadOutputSignalHead p = (QuadOutputSignalHead) o;
 
         Element element = new Element("signalhead");
         element.setAttribute("class", this.getClass().getName());
@@ -40,7 +38,7 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
         element.addContent(new Element("systemName").addContent(p.getSystemName()));
 
         storeCommon(p, element);
-        
+
         element.addContent(addTurnoutElement(p.getGreen(), "green"));
         element.addContent(addTurnoutElement(p.getYellow(), "yellow"));
         element.addContent(addTurnoutElement(p.getRed(), "red"));
@@ -51,12 +49,15 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
 
     /**
      * Create a QuadOutputSignalHead
+     *
      * @param element Top level Element to unpack.
      * @return true if successful
      */
-	public boolean load(Element element) {
+    public boolean load(Element element) {
         List<Element> l = element.getChildren("turnoutname");
-        if (l.size() == 0) l = element.getChildren("turnout");
+        if (l.size() == 0) {
+            l = element.getChildren("turnout");
+        }
         NamedBeanHandle<Turnout> green = loadTurnout(l.get(0));
         NamedBeanHandle<Turnout> yellow = loadTurnout(l.get(1));
         NamedBeanHandle<Turnout> red = loadTurnout(l.get(2));
@@ -66,13 +67,14 @@ public class QuadOutputSignalHeadXml extends TripleTurnoutSignalHeadXml {
         String sys = getSystemName(element);
         String uname = getUserName(element);
         SignalHead h;
-        if (uname == null)
+        if (uname == null) {
             h = new QuadOutputSignalHead(sys, green, yellow, red, lunar);
-        else
+        } else {
             h = new QuadOutputSignalHead(sys, uname, green, yellow, red, lunar);
+        }
 
         loadCommon(h, element);
-        
+
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;
     }

@@ -1,17 +1,15 @@
 // NceLightManagerXml.java
-
 package jmri.jmrix.nce.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
- * Provides load and store functionality for
- * configuring NceLightManagers.
+ * Provides load and store functionality for configuring NceLightManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  * <P>
  * @author Dave Duchamp Copyright (c) 2010
  * @version $Revision$
@@ -23,7 +21,7 @@ public class NceLightManagerXml extends jmri.managers.configurexml.AbstractLight
     }
 
     public void setStoreElementClass(Element lights) {
-        lights.setAttribute("class","jmri.jmrix.nce.configurexml.NceLightManagerXml");
+        lights.setAttribute("class", "jmri.jmrix.nce.configurexml.NceLightManagerXml");
     }
 
     public void load(Element element, Object o) {

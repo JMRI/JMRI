@@ -351,15 +351,14 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         JPanel pC = new JPanel();
         pC.setLayout(new GridBagLayout());
         pC.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Comment")));
-    	JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
-    			JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
+                JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
         addItem(pC, commentScroller, 0, 0);
-        
+
         pIcon.add(pC);
 
         // adjust text area width based on window size
 //        adjustTextAreaColumnWidth(commentScroller, commentTextArea);
-
         // row 15
         JPanel pControl = new JPanel();
         pControl.setLayout(new GridBagLayout());

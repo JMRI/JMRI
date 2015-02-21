@@ -24,9 +24,9 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     private JmriConnection connection;
 
     public SimpleTurnoutServer(JmriConnection connection) {
-    	this.connection = connection;
+        this.connection = connection;
     }
-    
+
     public SimpleTurnoutServer(DataInputStream inStream, DataOutputStream outStream) {
 
         output = outStream;
@@ -63,14 +63,14 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout THROWN");
             }
-             // create turnout if it does not exist since throwTurnout() no longer does so
+            // create turnout if it does not exist since throwTurnout() no longer does so
             this.initTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
             throwTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else if (statusString.contains("CLOSED")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Turnout CLOSED");
             }
-             // create turnout if it does not exist since closeTurnout() no longer does so
+            // create turnout if it does not exist since closeTurnout() no longer does so
             this.initTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
             closeTurnout(statusString.substring(index, statusString.indexOf(" ", index + 1)));
         } else {
@@ -81,12 +81,12 @@ public class SimpleTurnoutServer extends AbstractTurnoutServer {
     }
 
     private void sendMessage(String message) throws IOException {
-    	if (this.output != null) {
-    		this.output.writeBytes(message);
-    	} else {
-    		this.connection.sendMessage(message);
-    	}
+        if (this.output != null) {
+            this.output.writeBytes(message);
+        } else {
+            this.connection.sendMessage(message);
+        }
     }
-    
+
     static Logger log = LoggerFactory.getLogger(SimpleTurnoutServer.class.getName());
 }

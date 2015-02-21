@@ -87,8 +87,8 @@ public class ControlPanelServlet extends AbstractPanelServlet {
             Document doc = new Document(panel);
             XMLOutputter out = new XMLOutputter();
             out.setFormat(Format.getPrettyFormat()
-                                .setLineSeparator(System.getProperty("line.separator"))
-                                .setTextMode(Format.TextMode.TRIM));
+                    .setLineSeparator(System.getProperty("line.separator"))
+                    .setTextMode(Format.TextMode.TRIM));
 
             return out.outputString(doc);
         } catch (NullPointerException ex) {

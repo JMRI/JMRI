@@ -32,10 +32,10 @@ import org.slf4j.LoggerFactory;
 public class AboutDialog extends JDialog {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = -769569735384243080L;
-	ConnectionConfig[] connection = {null, null, null, null};
+     *
+     */
+    private static final long serialVersionUID = -769569735384243080L;
+    ConnectionConfig[] connection = {null, null, null, null};
 
     // this should probably be changed to a JmriAbstractAction that opens a JOptionPane with the contents and an OK button instead.
     public AboutDialog(JFrame frame, boolean modal) {
@@ -101,7 +101,7 @@ public class AboutDialog extends JDialog {
 
         pane1.add(new JLabel(Bundle.getMessage("DefaultVersionCredit", Version.name())));
         pane1.add(new JLabel(Version.getCopyright()));
-        pane1.add(new JLabel(Bundle.getMessage("JavaVersionCredit", 
+        pane1.add(new JLabel(Bundle.getMessage("JavaVersionCredit",
                 System.getProperty("java.version", "<unknown>"),
                 Locale.getDefault().toString())));
         pane1.setAlignmentX(Component.CENTER_ALIGNMENT);

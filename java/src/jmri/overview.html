@@ -1,43 +1,43 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
-<head>
-<!--
+    <head>
+        <!--
+        
+          $Id$
+        
+          Made with permission from the Sun version at
+          http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
+        
+          Copyright 2003 Bob Jacobsen
+        
+        -->
+    </head>
+    <body bgcolor="white">
 
-  $Id$
-
-  Made with permission from the Sun version at
-  http://java.sun.com/j2se/javadoc/writingdoccomments/package-template
-
-  Copyright 2003 Bob Jacobsen
-
--->
-</head>
-<body bgcolor="white">
-
-JMRI consists of the jmri package of basic interfaces,
-the jmri.jmrix package of external layout interfaces,
-the jmri.jmrit package of system-independent tools,
-plus various utility and test packages.
-<P>
-The primary JMRI concepts are defined by interfaces in the
-{@link jmri} package.  Objects such as 
-{@link jmri.Turnout Turnouts},
-{@link jmri.Sensor Sensors}, and
-{@link jmri.SignalHead SignalHeads} can be directly manipulated
-as analogs of items on the layout.
-<P>
-To get access to these objects, you ask for them 
-from a manager, e.g. a
-{@link jmri.TurnoutManager}.
-The manager can provide an existing object, or 
-create a new one of the needed concrete type.
-<P>
-To find the managers, you start with the 
-static members in the 
-{@link jmri.InstanceManager} class.
+        JMRI consists of the jmri package of basic interfaces,
+        the jmri.jmrix package of external layout interfaces,
+        the jmri.jmrit package of system-independent tools,
+        plus various utility and test packages.
+        <P>
+            The primary JMRI concepts are defined by interfaces in the
+            {@link jmri} package.  Objects such as 
+            {@link jmri.Turnout Turnouts},
+            {@link jmri.Sensor Sensors}, and
+            {@link jmri.SignalHead SignalHeads} can be directly manipulated
+            as analogs of items on the layout.
+        <P>
+            To get access to these objects, you ask for them 
+            from a manager, e.g. a
+            {@link jmri.TurnoutManager}.
+            The manager can provide an existing object, or 
+            create a new one of the needed concrete type.
+        <P>
+            To find the managers, you start with the 
+            static members in the 
+            {@link jmri.InstanceManager} class.
 
 
-<!-- Put @see and @since tags down here. -->
+            <!-- Put @see and @since tags down here. -->
 
-</body>
+    </body>
 </html>

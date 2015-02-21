@@ -1,15 +1,14 @@
 package jmri.jmrix.loconet.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
- * Provides load and store functionality for
- * configuring LnReporterManagers.
+ * Provides load and store functionality for configuring LnReporterManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2002
  * @version $Revision$
@@ -21,7 +20,7 @@ public class LnReporterManagerXml extends jmri.managers.configurexml.AbstractRep
     }
 
     public void setStoreElementClass(Element reporters) {
-        reporters.setAttribute("class","jmri.jmrix.loconet.configurexml.LnReporterManagerXml");
+        reporters.setAttribute("class", "jmri.jmrix.loconet.configurexml.LnReporterManagerXml");
     }
 
     public void load(Element element, Object o) {

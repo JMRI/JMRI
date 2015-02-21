@@ -1,22 +1,20 @@
 // PacketGenTest.java
-
-
 package jmri.jmrix.lenz.swing.packetgen;
 
-import org.apache.log4j.Logger;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing.packetgen.package
- * @author                      Paul Bender  
- * @version                     $Revision$
+ *
+ * @author Paul Bender
+ * @version $Revision$
  */
 public class PacketGenTest extends TestCase {
 
     // from here down is testing infrastructure
-
     public PacketGenTest(String s) {
         super(s);
     }
@@ -37,4 +35,3 @@ public class PacketGenTest extends TestCase {
     static Logger log = Logger.getLogger(PacketGenTest.class.getName());
 
 }
-

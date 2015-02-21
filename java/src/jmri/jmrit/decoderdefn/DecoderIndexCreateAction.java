@@ -18,10 +18,11 @@ import org.slf4j.LoggerFactory;
 public class DecoderIndexCreateAction extends JmriAbstractAction {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 4750974443596415652L;
-	public DecoderIndexCreateAction(String s, WindowInterface wi) {
+     *
+     */
+    private static final long serialVersionUID = 4750974443596415652L;
+
+    public DecoderIndexCreateAction(String s, WindowInterface wi) {
         super(s, wi);
     }
 
@@ -34,8 +35,11 @@ public class DecoderIndexCreateAction extends JmriAbstractAction {
     }
 
     boolean increment = false;
-    public void setIncrement(boolean increment) { this.increment = increment; }
-    
+
+    public void setIncrement(boolean increment) {
+        this.increment = increment;
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         DecoderIndexFile.forceCreationOfNewIndex(increment);

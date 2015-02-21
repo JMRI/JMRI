@@ -1,10 +1,10 @@
 package jmri.jmrix.srcp;
 
-import org.apache.log4j.Logger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.apache.log4j.Logger;
 
 /**
  * SRCPBusConnectionMemoTest.java
@@ -17,11 +17,11 @@ import junit.framework.TestSuite;
 public class SRCPBusConnectionMemoTest extends TestCase {
 
     public void testCtor() {
-        SRCPBusConnectionMemo m = new SRCPBusConnectionMemo(new SRCPTrafficController(){
-          @Override
-          public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
-           }
-        },"A",1);
+        SRCPBusConnectionMemo m = new SRCPBusConnectionMemo(new SRCPTrafficController() {
+            @Override
+            public void sendSRCPMessage(SRCPMessage m, SRCPListener reply) {
+            }
+        }, "A", 1);
         Assert.assertNotNull(m);
     }
 

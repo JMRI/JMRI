@@ -1,26 +1,25 @@
 /**
  * XpaMenu.java
  */
-
 package jmri.jmrix.xpa;
 
 import java.util.ResourceBundle;
-
 import javax.swing.JMenu;
 
 /**
  * Create a "Systems" menu containing the Jmri XPA-specific tools
  *
- * @author	Paul Bender   Copyright 2004
- * @version     $Revision$
+ * @author	Paul Bender Copyright 2004
+ * @version $Revision$
  */
 public class XpaMenu extends JMenu {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = -7777240221430757170L;
 
-	public XpaMenu(String name) {
+    /**
+     *
+     */
+    private static final long serialVersionUID = -7777240221430757170L;
+
+    public XpaMenu(String name) {
         this();
         setText(name);
     }
@@ -36,10 +35,8 @@ public class XpaMenu extends JMenu {
 
         add(new jmri.jmrix.xpa.xpamon.XpaMonAction(rb.getString("MenuItemCommandMonitor")));
         add(new jmri.jmrix.xpa.packetgen.XpaPacketGenAction(rb.getString("MenuItemSendCommand")));
-	add(new jmri.jmrix.xpa.xpaconfig.XpaConfigureAction(rb1.getString("MenuItemXpaConfigTool")));
+        add(new jmri.jmrix.xpa.xpaconfig.XpaConfigureAction(rb1.getString("MenuItemXpaConfigTool")));
 
     }
 
 }
-
-

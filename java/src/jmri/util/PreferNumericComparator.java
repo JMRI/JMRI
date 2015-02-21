@@ -3,24 +3,24 @@ package jmri.util;
 import java.util.Comparator;
 
 /**
- * If the two objects are Strings
- * that can be made into integers, compare like that
- * otherwise as Strings.
+ * If the two objects are Strings that can be made into integers, compare like
+ * that otherwise as Strings.
  *
- * @author	Bob Jacobsen   Copyright (C) 2013
+ * @author	Bob Jacobsen Copyright (C) 2013
  * @version	$Revision: 24569 $
  */
-
 public class PreferNumericComparator implements Comparator<Object>, java.io.Serializable {
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 7992060080109727828L;
 
-	public PreferNumericComparator() {}
-    
+    /**
+     *
+     */
+    private static final long serialVersionUID = 7992060080109727828L;
+
+    public PreferNumericComparator() {
+    }
+
     public int compare(Object oo1, Object oo2) {
-                
+
         boolean isFirstNumeric, isSecondNumeric;
         String o1 = oo1.toString(), o2 = oo2.toString();
 

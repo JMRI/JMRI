@@ -157,10 +157,10 @@ abstract public class AbstractNetworkPortController extends AbstractPortControll
     @Override
     public String getCurrentPortName() {
         String t;
-        if(getMdnsConfigure()){
-           t=getHostAddress();
+        if (getMdnsConfigure()) {
+            t = getHostAddress();
         } else {
-           t = getHostName();
+            t = getHostName();
         }
         int p = getPort();
         if (t != null && !t.equals("")) {

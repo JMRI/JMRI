@@ -1,10 +1,10 @@
 package jmri.jmrit.display.controlPanelEditor.shape.configurexml;
 
+import jmri.jmrit.display.Editor;
+import jmri.jmrit.display.controlPanelEditor.shape.PositionableRectangle;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.jmrit.display.Editor;
-import jmri.jmrit.display.controlPanelEditor.shape.*;
-import org.jdom2.Element;
 
 /**
  * Handle configuration for display.PositionableShape objects
@@ -18,28 +18,29 @@ public class PositionableRectangleXml extends PositionableShapeXml {
     }
 
     /**
-     * Default implementation for storing the contents of a
-     * PositionableShape
+     * Default implementation for storing the contents of a PositionableShape
+     *
      * @param o Object to store, of type PositionableShape
      * @return Element containing the complete info
      */
     public Element store(Object o) {
-    	PositionableRectangle p = (PositionableRectangle)o;
+        PositionableRectangle p = (PositionableRectangle) o;
 
-        if (!p.isActive()) return null;  // if flagged as inactive, don't store
-
+        if (!p.isActive()) {
+            return null;  // if flagged as inactive, don't store
+        }
         Element element = new Element("positionableRectangle");
         storeCommonAttributes(p, element);
 
         Element elem = new Element("size");
-        elem.setAttribute("width", ""+p.getWidth());
-        elem.setAttribute("height", ""+p.getHeight());
+        elem.setAttribute("width", "" + p.getWidth());
+        elem.setAttribute("height", "" + p.getHeight());
         element.addContent(elem);
-        
+
         element.setAttribute("class", "jmri.jmrit.display.controlPanelEditor.shape.configurexml.PositionableRectangleXml");
         return element;
     }
-   
+
     public boolean load(Element element) {
         log.error("Invalid method called");
         return false;
@@ -47,18 +48,19 @@ public class PositionableRectangleXml extends PositionableShapeXml {
 
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
+     *
      * @param element Top level Element to unpack.
-     * @param o  Editor as an Object
+     * @param o Editor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects
-        Editor ed = (Editor)o;
-    	PositionableRectangle ps = new PositionableRectangle(ed);
-    	
-		Element elem = element.getChild("size");
+        Editor ed = (Editor) o;
+        PositionableRectangle ps = new PositionableRectangle(ed);
+
+        Element elem = element.getChild("size");
         ps.setWidth(getInt(elem, "width"));
         ps.setHeight(getInt(elem, "height"));
-       
+
         ed.putItem(ps);
         // load individual item's option settings after editor has set its global settings
         loadCommonAttributes(ps, Editor.MARKERS, element);

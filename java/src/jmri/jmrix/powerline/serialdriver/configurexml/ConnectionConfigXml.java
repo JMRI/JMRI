@@ -1,25 +1,23 @@
 package jmri.jmrix.powerline.serialdriver.configurexml;
 
-import org.jdom2.Element;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import java.util.List;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.powerline.serialdriver.ConnectionConfig;
 import jmri.jmrix.powerline.serialdriver.SerialDriverAdapter;
-
-import java.util.List;
+import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of layout connections by persisting
- * the SerialDriverAdapter (and connections). Note this is
- * named as the XML version of a ConnectionConfig object,
- * but it's actually persisting the SerialDriverAdapter.
+ * Handle XML persistance of layout connections by persisting the
+ * SerialDriverAdapter (and connections). Note this is named as the XML version
+ * of a ConnectionConfig object, but it's actually persisting the
+ * SerialDriverAdapter.
  * <P>
- * This class is invoked from jmrix.JmrixConfigPaneXml on write,
- * as that class is the one actually registered. Reads are brought
- * here directly via the class attribute in the XML.
+ * This class is invoked from jmrix.JmrixConfigPaneXml on write, as that class
+ * is the one actually registered. Reads are brought here directly via the class
+ * attribute in the XML.
  *
  * @author Bob Jacobsen Copyright: Copyright (c) 2003, 2006, 2007, 2008
  * @version $Revision$
@@ -50,20 +48,19 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 //            index ++;
 //        }
 //    }
-
-	protected Element makeParameter(String name, String value) {
-    	Element p = new Element("parameter");
-       	p.setAttribute("name",name);
+    protected Element makeParameter(String name, String value) {
+        Element p = new Element("parameter");
+        p.setAttribute("name", name);
         p.addContent(value);
         return p;
-	}
+    }
 
     protected void getInstance() {
         adapter = new SerialDriverAdapter();
     }
 
     protected void getInstance(Object object) {
-        adapter = ((ConnectionConfig)object).getAdapter();
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
 
 //    /**
@@ -84,20 +81,21 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 //            SerialTrafficController.instance().initializeSerialNode(node);
 //        }
 //    }
-
     /**
-     * Service routine to look through "parameter" child elements
-     * to find a particular parameter value
+     * Service routine to look through "parameter" child elements to find a
+     * particular parameter value
+     *
      * @param e Element containing parameters
      * @param name name of desired parameter
      * @return String value
      */
     String findParmValue(Element e, String name) {
         List<Element> l = e.getChildren("parameter");
-        for (int i = 0; i<l.size(); i++) {
+        for (int i = 0; i < l.size(); i++) {
             Element n = l.get(i);
-            if (n.getAttributeValue("name").equals(name))
+            if (n.getAttributeValue("name").equals(name)) {
                 return n.getTextTrim();
+            }
         }
         return null;
     }
@@ -105,7 +103,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     protected void register() {
         InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
     }
-     
+
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
 

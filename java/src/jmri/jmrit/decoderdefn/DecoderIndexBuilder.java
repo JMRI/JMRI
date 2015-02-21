@@ -5,7 +5,7 @@ package jmri.jmrit.decoderdefn;
  * Update the decoder index and store as a command-line action
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2011, 2014
- * @author      Randall Wood Copyright (C) 2013
+ * @author Randall Wood Copyright (C) 2013
  * @version	$Revision$
  * @see jmri.jmrit.XmlFile
  */
@@ -26,7 +26,7 @@ public class DecoderIndexBuilder {
 
         // print the location where the result is stored
         System.out.println(jmri.util.FileUtil.getUserFilesPath() + "decoderIndex.xml");
-        
+
         // recreate the index
         DecoderIndexCreateAction da = new DecoderIndexCreateAction(null);
         da.setIncrement(true);

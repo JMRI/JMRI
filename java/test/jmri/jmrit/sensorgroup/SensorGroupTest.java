@@ -1,13 +1,15 @@
 // SensorGroupTest.java
-
 package jmri.jmrit.sensorgroup;
 
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 import org.apache.log4j.Logger;
-import junit.framework.*;
 
 /**
  * Tests for classes in the jmri.jmrit.sensorgroup package
- * @author	Bob Jacobsen  Copyright 2003, 2007
+ *
+ * @author	Bob Jacobsen Copyright 2003, 2007
  * @version	$Revision$
  */
 public class SensorGroupTest extends TestCase {
@@ -21,9 +23,7 @@ public class SensorGroupTest extends TestCase {
         a.actionPerformed(null);
     }
 
-
     // from here down is testing infrastructure
-
     public SensorGroupTest(String s) {
         super(s);
     }
@@ -41,16 +41,17 @@ public class SensorGroupTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
         super.setUp();
         jmri.util.JUnitUtil.resetInstanceManager();
         jmri.util.JUnitUtil.initInternalSensorManager();
     }
-    protected void tearDown() throws Exception { 
+
+    protected void tearDown() throws Exception {
         jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
+        apps.tests.Log4JFixture.tearDown();
     }
 
     static Logger log = Logger.getLogger(SensorGroupTest.class.getName());

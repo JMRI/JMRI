@@ -1,26 +1,23 @@
 // AcelaSensorManagerXml.java
-
 package jmri.jmrix.acela.configurexml;
 
+import jmri.jmrix.acela.AcelaSensorManager;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
-import jmri.jmrix.acela.*;
 
 /**
- * Provides load and store functionality for
- * configuring SerialSensorManagers.
+ * Provides load and store functionality for configuring SerialSensorManagers.
  * <P>
- * Uses the store method from the abstract base class, but
- * provides a load method here.
+ * Uses the store method from the abstract base class, but provides a load
+ * method here.
  *
- * @author      Bob Jacobsen Copyright: Copyright (c) 2003
- * @version     $Revision$
+ * @author Bob Jacobsen Copyright: Copyright (c) 2003
+ * @version $Revision$
  *
- * @author      Bob Coleman, Copyright (c) 2007, 2008
- *              Based on CMRI serial example, modified to establish Acela support. 
+ * @author Bob Coleman, Copyright (c) 2007, 2008 Based on CMRI serial example,
+ * modified to establish Acela support.
  */
-
 public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSensorManagerConfigXML {
 
     public AcelaSensorManagerXml() {
@@ -28,7 +25,7 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
     }
 
     public void setStoreElementClass(Element sensors) {
-        sensors.setAttribute("class","jmri.jmrix.acela.configurexml.AcelaSensorManagerXml");
+        sensors.setAttribute("class", "jmri.jmrix.acela.configurexml.AcelaSensorManagerXml");
     }
 
     public void load(Element element, Object o) {
@@ -37,12 +34,12 @@ public class AcelaSensorManagerXml extends jmri.managers.configurexml.AbstractSe
 
     public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
         // create the master object
-        try { 
+        try {
             AcelaSensorManager.instance();
         } catch (Exception e) {
-            creationErrorEncountered ("Could not create Acela Sensor Manager",
-                                      null,null,null);
-            
+            creationErrorEncountered("Could not create Acela Sensor Manager",
+                    null, null, null);
+
             return false;
         }
 

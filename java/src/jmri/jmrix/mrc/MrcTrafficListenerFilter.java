@@ -74,10 +74,11 @@ public class MrcTrafficListenerFilter {
             l.notifyRcv(timestamp, m);
         }
     }
-    
-    boolean forwardMessage(int messageClass){
-        if((mask & messageClass) != 0)
+
+    boolean forwardMessage(int messageClass) {
+        if ((mask & messageClass) != 0) {
             return true;
+        }
         return false;
     }
 }

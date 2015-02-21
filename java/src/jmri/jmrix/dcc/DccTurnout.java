@@ -1,85 +1,96 @@
 // DccTurnout.java
-
 package jmri.jmrix.dcc;
 
+import jmri.CommandStation;
+import jmri.InstanceManager;
+import jmri.NmraPacket;
+import jmri.Turnout;
+import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.implementation.AbstractTurnout;
-import jmri.*;
-
 
 /**
  * Dcc-only implementation of the Turnout interface.
  * <P>
- *  This object can't listen to the DCC communications.  This is because
- *  it should be the only object that is sending messages for this turnout;
- *  more than one Turnout object pointing to a single device is not allowed.
+ * This object can't listen to the DCC communications. This is because it should
+ * be the only object that is sending messages for this turnout; more than one
+ * Turnout object pointing to a single device is not allowed.
  *
- * Description:		extend jmri.AbstractTurnout for DCC-only layouts
- * @author			Bob Jacobsen Copyright (C) 2014
- * @version			$Revision$
+ * Description:	extend jmri.AbstractTurnout for DCC-only layouts
+ *
+ * @author	Bob Jacobsen Copyright (C) 2014
+ * @version	$Revision$
  */
 public class DccTurnout extends AbstractTurnout {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 2120643169908605976L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = 2120643169908605976L;
 
-	/**
-	 * DCC turnouts use the NMRA number (0-511) as their numerical identification.
-	 */
-	public DccTurnout(int number) {
-            super("BT"+number);
-            _number = number;
-            // At construction, register for messages
-	}
+    /**
+     * DCC turnouts use the NMRA number (0-511) as their numerical
+     * identification.
+     */
+    public DccTurnout(int number) {
+        super("BT" + number);
+        _number = number;
+        // At construction, register for messages
+    }
 
-	public int getNumber() { return _number; }
+    public int getNumber() {
+        return _number;
+    }
 
     // Turnouts do support inversion
     @Override
-    public boolean canInvert(){return true;}
-
-	// Handle a request to change state by sending a formatted DCC packet
-	protected void forwardCommandChangeToLayout(int s) {
-		// sort out states
-		if ( (s & Turnout.CLOSED) > 0) {
-			// first look for the double case, which we can't handle
-			if ( (s & Turnout.THROWN) > 0) {
-				// this is the disaster case!
-				log.error("Cannot command both CLOSED and THROWN "+s);
-				return;
-			} else {
-				// send a CLOSED command
-				sendMessage(true^getInverted());
-			}
-		} else {
-			// send a THROWN command
-			sendMessage(false^getInverted());
-		}
-	}
-    protected void turnoutPushbuttonLockout(boolean _pushButtonLockout){
-		if (log.isDebugEnabled()) log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock")+ " Pushbutton BT"+_number);
+    public boolean canInvert() {
+        return true;
     }
 
-	// data members
-	int _number;   // turnout number
+    // Handle a request to change state by sending a formatted DCC packet
+    protected void forwardCommandChangeToLayout(int s) {
+        // sort out states
+        if ((s & Turnout.CLOSED) > 0) {
+            // first look for the double case, which we can't handle
+            if ((s & Turnout.THROWN) > 0) {
+                // this is the disaster case!
+                log.error("Cannot command both CLOSED and THROWN " + s);
+                return;
+            } else {
+                // send a CLOSED command
+                sendMessage(true ^ getInverted());
+            }
+        } else {
+            // send a THROWN command
+            sendMessage(false ^ getInverted());
+        }
+    }
 
-	protected void sendMessage(boolean closed) {
-		// get the packet
-		byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
-		if (log.isDebugEnabled()) log.debug("packet: "
-											+Integer.toHexString(0xFF & bl[0])
-											+" "+Integer.toHexString(0xFF & bl[1])
-											+" "+Integer.toHexString(0xFF & bl[2]));
+    protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
+        if (log.isDebugEnabled()) {
+            log.debug("Send command to " + (_pushButtonLockout ? "Lock" : "Unlock") + " Pushbutton BT" + _number);
+        }
+    }
 
+    // data members
+    int _number;   // turnout number
 
-		InstanceManager.getDefault(CommandStation.class).sendPacket(bl, 1);
+    protected void sendMessage(boolean closed) {
+        // get the packet
+        byte[] bl = NmraPacket.accDecoderPkt(_number, closed);
+        if (log.isDebugEnabled()) {
+            log.debug("packet: "
+                    + Integer.toHexString(0xFF & bl[0])
+                    + " " + Integer.toHexString(0xFF & bl[1])
+                    + " " + Integer.toHexString(0xFF & bl[2]));
+        }
 
-	}
+        InstanceManager.getDefault(CommandStation.class).sendPacket(bl, 1);
 
-	static Logger log = LoggerFactory.getLogger(DccTurnout.class.getName());
+    }
+
+    static Logger log = LoggerFactory.getLogger(DccTurnout.class.getName());
 
 }
 

@@ -1,29 +1,28 @@
 // EliteXNetTurnoutManagerTest.java
-
 package jmri.jmrix.lenz.hornbyelite;
 
-import org.apache.log4j.Logger;
+import java.util.ArrayList;
+import java.util.List;
 import jmri.Turnout;
 import jmri.TurnoutAddress;
 import jmri.TurnoutManager;
-import java.util.ArrayList;
-import java.util.List;
+import jmri.jmrix.lenz.XNetInterfaceScaffold;
+import jmri.jmrix.lenz.XNetReply;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-
-import jmri.jmrix.lenz.XNetInterfaceScaffold;
-import jmri.jmrix.lenz.XNetReply;
+import org.apache.log4j.Logger;
 
 /**
- Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
- * @author			Bob Jacobsen Copyright 2004
- * @version         $Revision$
+ * Tests for the jmri.jmrix.lenz.hornbyelite.EliteXNetTurnoutManager class.
+ *
+ * @author	Bob Jacobsen Copyright 2004
+ * @version $Revision$
  */
-public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest  {
+public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
     public String getSystemName(int i) {
-        return "XT"+i;
+        return "XT" + i;
     }
 
     XNetInterfaceScaffold lnis;
@@ -31,7 +30,7 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     public void testArraySort() {
         String[] str = new String[]{"8567", "8456"};
         jmri.util.StringUtil.sort(str);
-        Assert.assertEquals("first ","8456",str[0]);
+        Assert.assertEquals("first ", "8456", str[0]);
     }
 
     public void testMisses() {
@@ -62,7 +61,6 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         m2.setElement(3, 0x43);
         lnis.sendTestMessage(m2);
 
-
         // try to get turnouts to see if they exist
         Assert.assertTrue(null != l.getBySystemName("XT20"));
         Assert.assertTrue(null != l.getBySystemName("XT21"));
@@ -74,10 +72,10 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
         Assert.assertEquals("system name list", testList, l.getSystemNameList());
     }
 
-    public void testAsAbstractFactory () {
+    public void testAsAbstractFactory() {
         lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         // create and register the manager object
-        EliteXNetTurnoutManager l = new EliteXNetTurnoutManager(lnis,"X");
+        EliteXNetTurnoutManager l = new EliteXNetTurnoutManager(lnis, "X");
         jmri.InstanceManager.setTurnoutManager(l);
 
         // ask for a Turnout, and check type
@@ -85,22 +83,25 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
 
         Turnout o = t.newTurnout("XT21", "my name");
 
-
-        if (log.isDebugEnabled()) log.debug("received turnout value "+o);
-        Assert.assertTrue( null != (EliteXNetTurnout)o);
+        if (log.isDebugEnabled()) {
+            log.debug("received turnout value " + o);
+        }
+        Assert.assertTrue(null != (EliteXNetTurnout) o);
 
         // make sure loaded into tables
-        if (log.isDebugEnabled()) log.debug("by system name: "+t.getBySystemName("XT21"));
-        if (log.isDebugEnabled()) log.debug("by user name:   "+t.getByUserName("my name"));
+        if (log.isDebugEnabled()) {
+            log.debug("by system name: " + t.getBySystemName("XT21"));
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("by user name:   " + t.getByUserName("my name"));
+        }
 
         Assert.assertTrue(null != t.getBySystemName("XT21"));
         Assert.assertTrue(null != t.getByUserName("my name"));
 
     }
 
-
     // from here down is testing infrastructure
-
     public EliteXNetTurnoutManagerTest(String s) {
         super(s);
     }
@@ -118,15 +119,18 @@ public class EliteXNetTurnoutManagerTest extends jmri.managers.AbstractTurnoutMg
     }
 
     // The minimal setup for log4J
-    protected void setUp() { 
-        apps.tests.Log4JFixture.setUp(); 
+    protected void setUp() {
+        apps.tests.Log4JFixture.setUp();
         // prepare an interface, register
         lnis = new XNetInterfaceScaffold(new HornbyEliteCommandStation());
         // create and register the manager object
-        l = new EliteXNetTurnoutManager(lnis,"X");
+        l = new EliteXNetTurnoutManager(lnis, "X");
         jmri.InstanceManager.setTurnoutManager(l);
     }
-    protected void tearDown() { apps.tests.Log4JFixture.tearDown(); }
+
+    protected void tearDown() {
+        apps.tests.Log4JFixture.tearDown();
+    }
 
     static Logger log = Logger.getLogger(EliteXNetTurnoutManagerTest.class.getName());
 

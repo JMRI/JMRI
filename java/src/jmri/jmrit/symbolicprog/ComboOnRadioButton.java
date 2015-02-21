@@ -1,10 +1,10 @@
 //ComboOnRadioButton.java
-
 package jmri.jmrit.symbolicprog;
 
+import javax.swing.JComboBox;
+import javax.swing.JRadioButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import javax.swing.*;
 
 /* Represents a JComboBox as a JPanel containing just the "on" button
  *
@@ -13,27 +13,29 @@ import javax.swing.*;
  */
 public class ComboOnRadioButton extends ComboRadioButtons {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1301681065479961160L;
+    /**
+     *
+     */
+    private static final long serialVersionUID = -1301681065479961160L;
 
-	ComboOnRadioButton(JComboBox box, EnumVariableValue var) {
-		super(box, var);
-	}		
+    ComboOnRadioButton(JComboBox box, EnumVariableValue var) {
+        super(box, var);
+    }
 
-	ComboOnRadioButton(JComboBox box, IndexedEnumVariableValue var) {
-		super(box, var);
-	}		
+    ComboOnRadioButton(JComboBox box, IndexedEnumVariableValue var) {
+        super(box, var);
+    }
 
-	/**
-	 * Make only the "on" button visible
-	 */
-	void addToPanel(JRadioButton b, int i) {
-		if (i==1) add(b);
-	}
+    /**
+     * Make only the "on" button visible
+     */
+    void addToPanel(JRadioButton b, int i) {
+        if (i == 1) {
+            add(b);
+        }
+    }
 
-	// initialize logging	
+    // initialize logging	
     static Logger log = LoggerFactory.getLogger(ComboOnRadioButton.class.getName());
 
 }

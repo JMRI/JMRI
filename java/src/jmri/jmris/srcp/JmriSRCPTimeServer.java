@@ -1,6 +1,8 @@
 //JmriSRCPTimeServer.java
 package jmri.jmris.srcp;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import jmri.JmriException;
@@ -8,10 +10,6 @@ import jmri.TimebaseRateException;
 import jmri.jmris.AbstractTimeServer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
-
 
 /**
  * interface between the JMRI (fast) clock and an SRCP network connection
@@ -41,12 +39,12 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
         java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
         cal.setTime(timebase.getTime());
         long day = jmri.util.DateUtil.julianDayFromCalendar(cal);
-        TimeStampedOutput.writeTimestamp(output,"100 INFO 0 TIME " + day +" " + sdf.format(timebase.getTime()) + "\n\r");
+        TimeStampedOutput.writeTimestamp(output, "100 INFO 0 TIME " + day + " " + sdf.format(timebase.getTime()) + "\n\r");
     }
 
     @Override
     public void sendRate() throws IOException {
-        TimeStampedOutput.writeTimestamp(output,"101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r");
+        TimeStampedOutput.writeTimestamp(output, "101 INFO 0 TIME " + modelrate + " " + realrate + "\n\r");
     }
 
     @Override
@@ -99,8 +97,10 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
     }
 
     public void setAlarm(long JulDay, int Hour, int Minute, int Second) {
-        if(log.isDebugEnabled()) log.debug("setting alarm for " +JulDay + " " +
-                               Hour+":"+Minute+":"+Second ); 
+        if (log.isDebugEnabled()) {
+            log.debug("setting alarm for " + JulDay + " "
+                    + Hour + ":" + Minute + ":" + Second);
+        }
 
         java.util.GregorianCalendar cal = jmri.util.DateUtil.calFromJulianDate(JulDay);
         cal.set(java.util.Calendar.HOUR, Hour);
@@ -109,75 +109,81 @@ public class JmriSRCPTimeServer extends AbstractTimeServer {
 
         java.util.GregorianCalendar now = new java.util.GregorianCalendar();
         now.setTime(timebase.getTime());
-        if(now.after(cal)){
-           try {
-              sendTime();
-           } catch (IOException ex) {
-              log.warn("Unable to send message to client: {}", ex.getMessage());
-           }
+        if (now.after(cal)) {
+            try {
+                sendTime();
+            } catch (IOException ex) {
+                log.warn("Unable to send message to client: {}", ex.getMessage());
+            }
         } else {
-           // add this alarm to the list of alarms.
-           if(alarmList==null)
-              alarmList=new java.util.ArrayList<java.util.GregorianCalendar>();
-           alarmList.add(cal);
-           // and start the timeListener.
-           listenToTimebase(true);
-           try {
-              TimeStampedOutput.writeTimestamp(output,"200 Ok\n\r");
-           } catch(IOException ie) {
-             log.warn("Unable to send message to client: {}", ie.getMessage());
-           }
-       }
+            // add this alarm to the list of alarms.
+            if (alarmList == null) {
+                alarmList = new java.util.ArrayList<java.util.GregorianCalendar>();
+            }
+            alarmList.add(cal);
+            // and start the timeListener.
+            listenToTimebase(true);
+            try {
+                TimeStampedOutput.writeTimestamp(output, "200 Ok\n\r");
+            } catch (IOException ie) {
+                log.warn("Unable to send message to client: {}", ie.getMessage());
+            }
+        }
     }
 
-    private java.util.ArrayList<java.util.GregorianCalendar> alarmList= null;
+    private java.util.ArrayList<java.util.GregorianCalendar> alarmList = null;
 
     private void checkAlarmList() throws IOException {
-         if(alarmList==null) return;
+        if (alarmList == null) {
+            return;
+        }
 
-         java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
-         cal.setTime(timebase.getTime());
-         if(log.isDebugEnabled()) log.debug("checking alarms at " +
-                               jmri.util.DateUtil.julianDayFromCalendar(cal)+ 
-                               " " +
-                               cal.get(java.util.Calendar.HOUR_OF_DAY)+":"+
-                               cal.get(java.util.Calendar.MINUTE)+":"+
-                               cal.get(java.util.Calendar.SECOND));
-         java.util.Iterator<java.util.GregorianCalendar> alarm=alarmList.iterator();
-         while(alarm.hasNext()) {
-            if(cal.after(alarm.next())) {
-               sendTime();
-               alarm.remove();
+        java.util.GregorianCalendar cal = new java.util.GregorianCalendar();
+        cal.setTime(timebase.getTime());
+        if (log.isDebugEnabled()) {
+            log.debug("checking alarms at "
+                    + jmri.util.DateUtil.julianDayFromCalendar(cal)
+                    + " "
+                    + cal.get(java.util.Calendar.HOUR_OF_DAY) + ":"
+                    + cal.get(java.util.Calendar.MINUTE) + ":"
+                    + cal.get(java.util.Calendar.SECOND));
+        }
+        java.util.Iterator<java.util.GregorianCalendar> alarm = alarmList.iterator();
+        while (alarm.hasNext()) {
+            if (cal.after(alarm.next())) {
+                sendTime();
+                alarm.remove();
             }
-         }
+        }
     }
 
     @Override
-    public void listenToTimebase(boolean listen){
-        if(listen==false && timeListener==null ) return; // nothing to do.
-        if(timeListener==null ) {
-           timeListener = new PropertyChangeListener() {
+    public void listenToTimebase(boolean listen) {
+        if (listen == false && timeListener == null) {
+            return; // nothing to do.
+        }
+        if (timeListener == null) {
+            timeListener = new PropertyChangeListener() {
 
-               @Override
-               public void propertyChange(PropertyChangeEvent evt) {
-                   try {
-                       if (evt.getPropertyName().equals("minutes")) {
-                           checkAlarmList();
-                       }
-                   } catch (IOException ex) {
-                       log.warn("Unable to send message to client: {}", ex.getMessage());
-                       timebase.removeMinuteChangeListener(timeListener);
-                   }
-               }
-       };
-       if(listen==true ) {
-           timebase.addMinuteChangeListener(timeListener);
-       } else {
-           timebase.removeMinuteChangeListener(timeListener);
-       }
-      }
-   }
-
+                @Override
+                public void propertyChange(PropertyChangeEvent evt) {
+                    try {
+                        if (evt.getPropertyName().equals("minutes")) {
+                            checkAlarmList();
+                        }
+                    } catch (IOException ex) {
+                        log.warn("Unable to send message to client: {}", ex.getMessage());
+                        timebase.removeMinuteChangeListener(timeListener);
+                    }
+                }
+            };
+            if (listen == true) {
+                timebase.addMinuteChangeListener(timeListener);
+            } else {
+                timebase.removeMinuteChangeListener(timeListener);
+            }
+        }
+    }
 
     static Logger log = LoggerFactory.getLogger(JmriSRCPTimeServer.class.getName());
 
