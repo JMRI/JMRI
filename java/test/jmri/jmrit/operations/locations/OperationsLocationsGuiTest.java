@@ -53,6 +53,9 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
 		Assert.assertEquals("3rd loc length", "1003", f.locationsModel.getValueAt(2, LocationsTableModel.LENGTHCOLUMN));
 		Assert.assertEquals("4th loc length", "1002", f.locationsModel.getValueAt(3, LocationsTableModel.LENGTHCOLUMN));
 		Assert.assertEquals("5th loc length", "1001", f.locationsModel.getValueAt(4, LocationsTableModel.LENGTHCOLUMN));
+		   
+        // create edit location frame
+		f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
 		
 		// create add location frame by clicking add button
         getHelper().enterClickAndLeave( new MouseEventData( this, f.addButton ) );
@@ -60,13 +63,18 @@ public class OperationsLocationsGuiTest extends jmri.util.SwingTestCase {
         // confirm location add frame creation
         JmriJFrame lef = JmriJFrame.getFrame("Add Location");
         Assert.assertNotNull(lef);
-        
-        // create edit location frame
-		f.locationsModel.setValueAt(null, 2, LocationsTableModel.EDITCOLUMN);
+		
+        // confirm location edit frame creation
+        JmriJFrame lef2 = JmriJFrame.getFrame("Edit Location");
+        Assert.assertNotNull(lef2);
 		
 		// close windows
-		f.dispose();
 		lef.dispose();
+		f.dispose();
+		
+		Assert.assertNull(JmriJFrame.getFrame("Add Location"));
+		Assert.assertNull(JmriJFrame.getFrame("Edit Location"));
+
 	}
 
 	public void testLocationEditFrame(){
