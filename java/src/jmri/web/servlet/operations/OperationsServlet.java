@@ -1,5 +1,13 @@
 package jmri.web.servlet.operations;
 
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.LOCATION;
+import static jmri.jmris.json.JSON.NULL;
+import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,10 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.jmris.json.JSON;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.LOCATION;
-import static jmri.jmris.json.JSON.NULL;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.OperationsManager;
@@ -24,9 +28,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -203,18 +204,10 @@ public class OperationsServlet extends HttpServlet {
         }
         if (data.path("format").asText().equals("html")) {
             if (!data.path(LOCATION).isMissingNode()) {
-// need to consider that the train could be moved by other methods, the commented out code incorrectly assumes that the train hasn't been moved
-//              String location = data.path(LOCATION).asText();
-//              if (location.equals(NULL)) {
-//                  train.terminate();
-//              } else if (!train.move(location)) {
-//                  response.sendError(412, String.format(Bundle.getMessage(request.getLocale(), "ErrorTrainMovement"), id, location));
-//              }
                 String location = data.path(LOCATION).asText();
-                if (location.equals(NULL)) {
-                    train.terminate();
-                } else if (train.getNextLocationName().equals(location)) {
+                if (location.equals(NULL) || train.getNextLocationName().equals(location)) {
                     train.move();
+                    return; // done property change will cause update to client
                 }
             }
             log.debug("Getting conductor HTML code for train {}", id);
