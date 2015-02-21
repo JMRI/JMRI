@@ -6,19 +6,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Interact with a programmer to identify the RosterEntry for a loco on the
+ * Interact with a programmer to identify the {@link jmri.jmrit.roster.RosterEntry} for a loco on the
  * programming track.
- *
- * This is a class (instead of a Roster member function) to simplify use of
+ * <p>
+ * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member function) to simplify use of
  * ProgListener callbacks. It is abstract as we expect that local classes will
  * define the message and done members.
+ * <p>
  *
- * Once started, this maintains a List of possible RosterEntrys as it works
- * through the identification progress.
- *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author	Bob Jacobsen Copyright (C) 2001, 2015
  * @version $Revision$
- * @see jmri.jmrit.roster.RosterEntry
+ * @see jmri.jmrit.symbolicprog.CombinedLocoSelPane
+ * @see jmri.jmrit.symbolicprog.NewLocoSelPane
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
