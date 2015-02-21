@@ -1,4 +1,5 @@
 // Train.java
+
 package jmri.jmrit.operations.trains;
 
 import java.awt.Color;
@@ -42,16 +43,17 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Represents a train on the layout
- *
+ * 
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- * 2014
+ *         2014
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
 public class Train implements java.beans.PropertyChangeListener {
     /*
-     * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT CAUSES A RECURSIVE LOOP AT LOAD TIME,
-     * SEE EXAMPLES BELOW CarManager carManager = CarManager.instance(); EngineManager engineManager =
+     * WARNING DO NOT LOAD CAR OR ENGINE MANAGERS WHEN Train.java IS CREATED IT
+     * CAUSES A RECURSIVE LOOP AT LOAD TIME, SEE EXAMPLES BELOW CarManager
+     * carManager = CarManager.instance(); EngineManager engineManager =
      * EngineManager.instance();
      */
 
@@ -60,68 +62,129 @@ public class Train implements java.beans.PropertyChangeListener {
     protected String _id = NONE;
     protected String _name = NONE;
     protected String _description = NONE;
-    protected RouteLocation _current = null;// where the train is located in its route
-    protected String _buildFailedMessage = NONE; // the build failed message for this train
-    protected boolean _built = false; // when true, a train manifest has been built
-    protected boolean _modified = false; // when true, user has modified train after being built
+    protected RouteLocation _current = null;// where the train is located in its
+                                            // route
+    protected String _buildFailedMessage = NONE; // the build failed message for
+                                                 // this train
+    protected boolean _built = false; // when true, a train manifest has been
+                                      // built
+    protected boolean _modified = false; // when true, user has modified train
+                                         // after being built
     protected boolean _build = true; // when true, build this train
-    protected boolean _buildFailed = false; // when true, build for this train failed
+    protected boolean _buildFailed = false; // when true, build for this train
+                                            // failed
     protected boolean _printed = false; // when true, manifest has been printed
-    protected boolean _sendToTerminal = false; // when true, cars picked up by train only go to terminal
-    protected boolean _allowLocalMoves = true; // when true, cars with custom loads can be moved locally
-    protected boolean _allowThroughCars = true; // when true, cars from the origin can be sent to the terminal
-    protected boolean _buildNormal = false; // when true build this train in normal mode
-    protected boolean _allowCarsReturnStaging = false; // when true allow cars to return to staging if necessary
-    protected boolean _serviceAllCarsWithFinalDestinations = false; // when true, service cars with final destinations
-    protected boolean _buildConsist = false; // when true, build a consist for this train using single locomotives
-    protected boolean _sendCarsWithCustomLoadsToStaging = false; // when true, send cars to staging if spurs full
+    protected boolean _sendToTerminal = false; // when true, cars picked up by
+                                               // train only go to terminal
+    protected boolean _allowLocalMoves = true; // when true, cars with custom
+                                               // loads can be moved locally
+    protected boolean _allowThroughCars = true; // when true, cars from the
+                                                // origin can be sent to the
+                                                // terminal
+    protected boolean _buildNormal = false; // when true build this train in
+                                            // normal mode
+    protected boolean _allowCarsReturnStaging = false; // when true allow cars
+                                                       // to return to staging
+                                                       // if necessary
+    protected boolean _serviceAllCarsWithFinalDestinations = false; // when
+                                                                    // true,
+                                                                    // service
+                                                                    // cars with
+                                                                    // final
+                                                                    // destinations
+    protected boolean _buildConsist = false; // when true, build a consist for
+                                             // this train using single
+                                             // locomotives
+    protected boolean _sendCarsWithCustomLoadsToStaging = false; // when true,
+                                                                 // send cars to
+                                                                 // staging if
+                                                                 // spurs full
     protected Route _route = null;
     protected Track _departureTrack; // the departure track from staging
     protected Track _terminationTrack; // the termination track into staging
     protected String _roadOption = ALL_ROADS;// train road name restrictions
     protected int _requires = 0; // train requirements, caboose, FRED
-    protected String _numberEngines = "0"; // number of engines this train requires
-    protected String _engineRoad = NONE; // required road name for engines assigned to this train
-    protected String _engineModel = NONE; // required model of engines assigned to this train
-    protected String _cabooseRoad = NONE; // required road name for cabooses assigned to this train
-    protected Calendar _departureTime = Calendar.getInstance(); // departure time for this train
+    protected String _numberEngines = "0"; // number of engines this train
+                                           // requires
+    protected String _engineRoad = NONE; // required road name for engines
+                                         // assigned to this train
+    protected String _engineModel = NONE; // required model of engines assigned
+                                          // to this train
+    protected String _cabooseRoad = NONE; // required road name for cabooses
+                                          // assigned to this train
+    protected Calendar _departureTime = Calendar.getInstance(); // departure
+                                                                // time for this
+                                                                // train
     protected String _leadEngineId = NONE; // lead engine for train icon info
     protected String _builtStartYear = NONE; // built start year
     protected String _builtEndYear = NONE; // built end year
     protected String _loadOption = ALL_LOADS;// train load restrictions
     protected String _ownerOption = ALL_OWNERS;// train owner name restrictions
-    protected List<String> _buildScripts = new ArrayList<String>(); // list of script pathnames to run before train is
-    // built
-    protected List<String> _afterBuildScripts = new ArrayList<String>(); // list of script pathnames to run after train
-    // is built
-    protected List<String> _moveScripts = new ArrayList<String>(); // list of script pathnames to run when train is
-    // moved
-    protected List<String> _terminationScripts = new ArrayList<String>(); // list of script pathnames to run when train
-    // is terminated
-    protected String _railroadName = NONE; // optional railroad name for this train
+    protected List<String> _buildScripts = new ArrayList<String>(); // list of
+                                                                    // script
+                                                                    // pathnames
+                                                                    // to run
+                                                                    // before
+                                                                    // train is
+                                                                    // built
+    protected List<String> _afterBuildScripts = new ArrayList<String>(); // list
+                                                                         // of
+                                                                         // script
+                                                                         // pathnames
+                                                                         // to
+                                                                         // run
+                                                                         // after
+                                                                         // train
+                                                                         // is
+                                                                         // built
+    protected List<String> _moveScripts = new ArrayList<String>(); // list of
+                                                                   // script
+                                                                   // pathnames
+                                                                   // to run
+                                                                   // when train
+                                                                   // is
+                                                                   // moved
+    protected List<String> _terminationScripts = new ArrayList<String>(); // list
+                                                                          // of
+                                                                          // script
+                                                                          // pathnames
+                                                                          // to
+                                                                          // run
+                                                                          // when
+                                                                          // train
+                                                                          // is
+                                                                          // terminated
+    protected String _railroadName = NONE; // optional railroad name for this
+                                           // train
     protected String _logoURL = NONE; // optional manifest logo for this train
-    protected boolean _showTimes = true; // when true, show arrival and departure times for this train
+    protected boolean _showTimes = true; // when true, show arrival and
+                                         // departure times for this train
     protected Engine _leadEngine = null; // lead engine for icon
     protected String _switchListStatus = UNKNOWN; // print switch list status
     protected String _comment = NONE;
-    protected String _serviceStatus = NONE; // status only if train is being built
+    protected String _serviceStatus = NONE; // status only if train is being
+                                            // built
     protected int _statusCode = CODE_UNKNOWN;
     protected String _statusTerminatedDate = NONE;
     protected int _statusCarsRequested = 0;
-    protected String _tableRowColorName = NONE;	//color of row in Trains table
+    protected String _tableRowColorName = NONE; // color of row in Trains table
 
     // Engine change and helper engines
     protected int _leg2Options = 0; // options
-    protected RouteLocation _leg2Start = null; // route location when 2nd leg begins
-    protected RouteLocation _end2Leg = null; // route location where 2nd leg ends
+    protected RouteLocation _leg2Start = null; // route location when 2nd leg
+                                               // begins
+    protected RouteLocation _end2Leg = null; // route location where 2nd leg
+                                             // ends
     protected String _leg2Engines = "0"; // number of engines 2nd leg
     protected String _leg2Road = NONE; // engine road name 2nd leg
     protected String _leg2Model = NONE; // engine model 2nd leg
     protected String _leg2CabooseRoad = NONE; // road name for caboose 2nd leg
 
     protected int _leg3Options = 0; // options
-    protected RouteLocation _leg3Start = null; // route location when 3rd leg begins
-    protected RouteLocation _leg3End = null; // route location where 3rd leg ends
+    protected RouteLocation _leg3Start = null; // route location when 3rd leg
+                                               // begins
+    protected RouteLocation _leg3End = null; // route location where 3rd leg
+                                             // ends
     protected String _leg3Engines = "0"; // number of engines 3rd leg
     protected String _leg3Road = NONE; // engine road name 3rd leg
     protected String _leg3Model = NONE; // engine model 3rd leg
@@ -160,7 +223,8 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final String BUILD_FAILED = Bundle.getMessage("BuildFailed");
     public static final String BUILT = Bundle.getMessage("Built");
     public static final String PARTIAL_BUILT = Bundle.getMessage("Partial");
-    public static final String TRAIN_IN_ROUTE = Bundle.getMessage("TrainInRoute");
+    public static final String TRAIN_IN_ROUTE = Bundle
+            .getMessage("TrainInRoute");
     public static final String TERMINATED = Bundle.getMessage("Terminated");
 
     // Train status codes
@@ -180,17 +244,27 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final int FRED = 2;
 
     // road options
-    public static final String ALL_ROADS = Bundle.getMessage("All"); // train services all road names
+    public static final String ALL_ROADS = Bundle.getMessage("All"); // train
+                                                                     // services
+                                                                     // all road
+                                                                     // names
     public static final String INCLUDE_ROADS = Bundle.getMessage("Include");
     public static final String EXCLUDE_ROADS = Bundle.getMessage("Exclude");
 
     // owner options
-    public static final String ALL_OWNERS = Bundle.getMessage("All"); // train services all owner names
+    public static final String ALL_OWNERS = Bundle.getMessage("All"); // train
+                                                                      // services
+                                                                      // all
+                                                                      // owner
+                                                                      // names
     public static final String INCLUDE_OWNERS = Bundle.getMessage("Include");
     public static final String EXCLUDE_OWNERS = Bundle.getMessage("Exclude");
 
     // load options
-    public static final String ALL_LOADS = Bundle.getMessage("All"); // train services all loads
+    public static final String ALL_LOADS = Bundle.getMessage("All"); // train
+                                                                     // services
+                                                                     // all
+                                                                     // loads
     public static final String INCLUDE_LOADS = Bundle.getMessage("Include");
     public static final String EXCLUDE_LOADS = Bundle.getMessage("Exclude");
 
@@ -198,7 +272,10 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final String UNKNOWN = "";
     public static final String PRINTED = Bundle.getMessage("Printed");
 
-    public static final String AUTO = Bundle.getMessage("Auto"); // how engines are assigned to this train
+    public static final String AUTO = Bundle.getMessage("Auto"); // how engines
+                                                                 // are assigned
+                                                                 // to this
+                                                                 // train
 
     public Train(String id, String name) {
         log.debug("New train ({}) id: {}", name, id);
@@ -217,8 +294,9 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Sets the name of this train, normally a short name that can fit within
      * the train icon.
-     *
-     * @param name the train's name.
+     * 
+     * @param name
+     *            the train's name.
      */
     public void setName(String name) {
         String old = _name;
@@ -231,7 +309,7 @@ public class Train implements java.beans.PropertyChangeListener {
     // for combo boxes
     /**
      * Get's a train's name
-     *
+     * 
      * @return train's name
      */
     public String toString() {
@@ -240,7 +318,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get's a train's name
-     *
+     * 
      * @return train's name
      */
     public String getName() {
@@ -248,7 +326,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     /**
-     *
+     * 
      * @return The name of the color when highlighting the train's row
      */
     public String getTableRowColorName() {
@@ -259,12 +337,13 @@ public class Train implements java.beans.PropertyChangeListener {
         String old = _tableRowColorName;
         _tableRowColorName = colorName;
         if (!old.equals(colorName)) {
-            setDirtyAndFirePropertyChange(TRAIN_ROW_COLOR_CHANGED_PROPERTY, old, colorName);
+            setDirtyAndFirePropertyChange(TRAIN_ROW_COLOR_CHANGED_PROPERTY,
+                    old, colorName);
         }
     }
 
     /**
-     *
+     * 
      * @return The color when highlighting the train's row
      */
     public Color getTableRowColor() {
@@ -273,7 +352,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get's train's departure time
-     *
+     * 
      * @return train's departure time in the String format hh:mm
      */
     public String getDepartureTime() {
@@ -289,18 +368,16 @@ public class Train implements java.beans.PropertyChangeListener {
         int hour = _departureTime.get(Calendar.HOUR_OF_DAY);
         int minute = _departureTime.get(Calendar.MINUTE);
         String h = Integer.toString(hour);
-        if (hour < 10) {
+        if (hour < 10)
             h = "0" + h;
-        }
-        if (minute < 10) {
+        if (minute < 10)
             return h + ":0" + minute; // NOI18N
-        }
         return h + ":" + minute;
     }
 
     /**
      * Get's train's departure time in 12hr or 24hr format
-     *
+     * 
      * @return train's departure time in the String format hh:mm or hh:mm(AM/PM)
      */
     public String getFormatedDepartureTime() {
@@ -317,26 +394,23 @@ public class Train implements java.beans.PropertyChangeListener {
         String am_pm = "";
         if (Setup.is12hrFormatEnabled()) {
             hour = _departureTime.get(Calendar.HOUR);
-            if (hour == 0) {
+            if (hour == 0)
                 hour = 12;
-            }
-            am_pm = (_departureTime.get(Calendar.AM_PM) == Calendar.AM) ? " " + Bundle.getMessage("AM") : " "
-                    + Bundle.getMessage("PM");
+            am_pm = (_departureTime.get(Calendar.AM_PM) == Calendar.AM) ? " "
+                    + Bundle.getMessage("AM") : " " + Bundle.getMessage("PM");
         }
         int minute = _departureTime.get(Calendar.MINUTE);
         String h = Integer.toString(hour);
-        if (hour < 10) {
+        if (hour < 10)
             h = "0" + h;
-        }
-        if (minute < 10) {
+        if (minute < 10)
             return h + ":0" + minute + am_pm; // NOI18N
-        }
         return h + ":" + minute + am_pm;
     }
 
     /**
      * Get train's departure time in minutes from midnight for sorting
-     *
+     * 
      * @return int hh*60+mm
      */
     public int getDepartTimeMinutes() {
@@ -350,12 +424,12 @@ public class Train implements java.beans.PropertyChangeListener {
         String oldMinute = getDepartureTimeMinute();
         // new departure time?
         if (Integer.parseInt(hour) == Integer.parseInt(oldHour)
-                && Integer.parseInt(minute) == Integer.parseInt(oldMinute)) {
+                && Integer.parseInt(minute) == Integer.parseInt(oldMinute))
             return;
-        }
         _departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
         _departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
-        setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour + ":" + oldMinute, hour + ":" + minute);
+        setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour
+                + ":" + oldMinute, hour + ":" + minute);
     }
 
     public String getDepartureTimeHour() {
@@ -368,7 +442,7 @@ public class Train implements java.beans.PropertyChangeListener {
         return time[1];
     }
 
-    public static final String ALREADY_SERVICED = "-1";  // NOI18N
+    public static final String ALREADY_SERVICED = "-1"; // NOI18N
 
     /**
      * Gets the expected time when this train will arrive at the location rl.
@@ -376,16 +450,15 @@ public class Train implements java.beans.PropertyChangeListener {
      * for this train. TODO Doesn't provide expected arrival time if train is in
      * route, instead provides relative time. If train has passed the location
      * return -1.
-     *
+     * 
      * @return expected arrival time
      */
     public String getExpectedArrivalTime(RouteLocation routeLocation) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
-        if (minutes == -1) {
+        if (minutes == -1)
             return ALREADY_SERVICED;
-        }
-        log.debug("Expected arrival time for train (" + getName() + ") at (" + routeLocation.getName()
-                + "), minutes from departure: " + minutes); // NOI18N
+        log.debug("Expected arrival time for train ({}) at ({}), {} minutes",
+                getName(), routeLocation.getName(), minutes);
         // TODO use fast clock to get current time vs departure time
         // for now use relative
         return parseTime(minutes);
@@ -393,12 +466,10 @@ public class Train implements java.beans.PropertyChangeListener {
 
     public String getExpectedDepartureTime(RouteLocation routeLocation) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
-        if (minutes == -1) {
+        if (minutes == -1)
             return ALREADY_SERVICED;
-        }
-        log.debug("Expected departure time for train (" + getName() + ") at (" + routeLocation.getName() + ")");
-
-        // figure out the work at this location, note that there can be consecutive locations with the same name
+        // figure out the work at this location, note that there can be
+        // consecutive locations with the same name
         if (getRoute() != null) {
             boolean foundRouteLocation = false;
             for (RouteLocation rl : getRoute().getLocationsBySequenceList()) {
@@ -406,14 +477,16 @@ public class Train implements java.beans.PropertyChangeListener {
                     foundRouteLocation = true;
                 }
                 if (foundRouteLocation) {
-                    if (TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(routeLocation.getName()))) {
+                    if (TrainCommon.splitString(rl.getName()).equals(
+                            TrainCommon.splitString(routeLocation.getName())))
                         minutes = minutes + calculateWorkTimeAtLocation(rl);
-                    } else {
+                    else
                         break; // done
-                    }
                 }
             }
         }
+        log.debug("Expected departure time {} for train ({}) at ({})", minutes,
+                getName(), routeLocation.getName());
         return parseTime(minutes);
     }
 
@@ -421,7 +494,8 @@ public class Train implements java.beans.PropertyChangeListener {
         int minutes = 0;
         // add any work at this location
         for (RollingStock rs : CarManager.instance().getList(this)) {
-            if (rs.getRouteLocation() == routeLocation && !rs.getTrackName().equals(RollingStock.NONE)) {
+            if (rs.getRouteLocation() == routeLocation
+                    && !rs.getTrackName().equals(RollingStock.NONE)) {
                 minutes += Setup.getSwitchTime();
             }
             if (rs.getRouteDestination() == routeLocation) {
@@ -442,12 +516,13 @@ public class Train implements java.beans.PropertyChangeListener {
         // boolean trainAt = false;
         boolean trainLocFound = false;
         if (getRoute() != null) {
-            List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
+            List<RouteLocation> routeList = getRoute()
+                    .getLocationsBySequenceList();
             for (int i = 0; i < routeList.size(); i++) {
                 RouteLocation rl = routeList.get(i);
-                if (rl == routeLocation) {
+                if (rl == routeLocation)
                     break; // done
-                }				// start recording time after finding where the train is
+                // start recording time after finding where the train is
                 if (!trainLocFound && isTrainInRoute()) {
                     if (rl == getCurrentLocation()) {
                         trainLocFound = true;
@@ -459,9 +534,11 @@ public class Train implements java.beans.PropertyChangeListener {
                 // is there a departure time from this location?
                 if (!rl.getDepartureTime().equals(RouteLocation.NONE)) {
                     String dt = rl.getDepartureTime();
-                    log.debug("Location " + rl.getName() + " departure time " + dt);
+                    log.debug("Location " + rl.getName() + " departure time "
+                            + dt);
                     String[] time = dt.split(":");
-                    minutes = 60 * Integer.parseInt(time[0]) + Integer.parseInt(time[1]);
+                    minutes = 60 * Integer.parseInt(time[0])
+                            + Integer.parseInt(time[1]);
                     // log.debug("New minutes: "+minutes);
                 }
                 // add wait time
@@ -469,13 +546,12 @@ public class Train implements java.beans.PropertyChangeListener {
                 // add travel time if new location
                 RouteLocation next = routeList.get(i + 1);
                 if (next != null
-                        && !TrainCommon.splitString(rl.getName()).equals(TrainCommon.splitString(next.getName()))) {
+                        && !TrainCommon.splitString(rl.getName()).equals(
+                                TrainCommon.splitString(next.getName())))
                     minutes += Setup.getTravelTime();
-                }
                 // don't count work if there's a departure time
-                if (i == 0 || !rl.getDepartureTime().equals(RouteLocation.NONE)) {
+                if (i == 0 || !rl.getDepartureTime().equals(RouteLocation.NONE))
                     continue;
-                }
                 // now add the work at the location
                 minutes = minutes + calculateWorkTimeAtLocation(rl);
             }
@@ -509,39 +585,36 @@ public class Train implements java.beans.PropertyChangeListener {
                 hours = hours - 12;
                 am_pm = " " + Bundle.getMessage("PM");
             }
-            if (hours == 0) {
+            if (hours == 0)
                 hours = 12;
-            }
         }
 
         String h = Integer.toString(hours);
-        if (hours < 10) {
+        if (hours < 10)
             h = "0" + h;
-        }
-        if (minutes < 10) {
+        if (minutes < 10)
             return d + h + ":0" + minutes + am_pm; // NOI18N
-        }
         return d + h + ":" + minutes + am_pm;
     }
 
     /**
      * Set train requirements. If NONE, then train doesn't require a caboose or
      * car with FRED.
-     *
-     * @param requires NONE CABOOSE FRED
+     * 
+     * @param requires
+     *            NONE CABOOSE FRED
      */
     public void setRequirements(int requires) {
         int old = _requires;
         _requires = requires;
-        if (old != requires) {
-            setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY, Integer.toString(old), Integer
-                    .toString(requires));
-        }
+        if (old != requires)
+            setDirtyAndFirePropertyChange(TRAIN_REQUIREMENTS_CHANGED_PROPERTY,
+                    Integer.toString(old), Integer.toString(requires));
     }
 
     /**
      * Get a train's requirements with regards to the last car in the train.
-     *
+     * 
      * @return NONE CABOOSE FRED
      */
     public int getRequirements() {
@@ -563,13 +636,14 @@ public class Train implements java.beans.PropertyChangeListener {
         _route = route;
         _skipLocationsList.clear();
         if (old == null || !old.equals(route)) {
-            setDirtyAndFirePropertyChange(TRAIN_ROUTE_CHANGED_PROPERTY, oldRoute, newRoute);
+            setDirtyAndFirePropertyChange(TRAIN_ROUTE_CHANGED_PROPERTY,
+                    oldRoute, newRoute);
         }
     }
 
     /**
      * Gets the train's route
-     *
+     * 
      * @return train's route
      */
     public Route getRoute() {
@@ -578,19 +652,18 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get's the train's route name.
-     *
+     * 
      * @return Train's route name.
      */
     public String getTrainRouteName() {
-        if (_route == null) {
+        if (_route == null)
             return NONE;
-        }
         return _route.getName();
     }
 
     /**
      * Get the train's departure location's name
-     *
+     * 
      * @return train's departure location's name
      */
     public String getTrainDepartsName() {
@@ -601,23 +674,22 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     protected RouteLocation getTrainDepartsRouteLocation() {
-        if (_route == null) {
+        if (_route == null)
             return null;
-        }
         return _route.getDepartsRouteLocation();
     }
 
     public String getTrainDepartsDirection() {
         String direction = NONE;
-        if (getTrainDepartsRouteLocation() != null) {
-            direction = getTrainDepartsRouteLocation().getTrainDirectionString();
-        }
+        if (getTrainDepartsRouteLocation() != null)
+            direction = getTrainDepartsRouteLocation()
+                    .getTrainDirectionString();
         return direction;
     }
 
     /**
      * Get train's final location's name
-     *
+     * 
      * @return train's final location's name
      */
     public String getTrainTerminatesName() {
@@ -640,42 +712,40 @@ public class Train implements java.beans.PropertyChangeListener {
     protected void setCurrentLocation(RouteLocation location) {
         RouteLocation old = _current;
         _current = location;
-        if ((old != null && !old.equals(location)) || (old == null && location != null)) {
+        if ((old != null && !old.equals(location))
+                || (old == null && location != null)) {
             setDirtyAndFirePropertyChange("current", old, location); // NOI18N
         }
     }
 
     /**
      * Get train's current location name
-     *
+     * 
      * @return Train's current route location name
      */
     public String getCurrentLocationName() {
-        if (getCurrentLocation() == null) {
+        if (getCurrentLocation() == null)
             return NONE;
-        }
         return getCurrentLocation().getName();
     }
 
     /**
      * Get train's current location
-     *
+     * 
      * @return Train's current route location
      */
     public RouteLocation getCurrentLocation() {
-        if (getRoute() == null) {
+        if (getRoute() == null)
             return null;
-        }
-        if (_current == null) {
+        if (_current == null)
             return null;
-        }
         // this will verify that the current location still exists
         return getRoute().getLocationById(_current.getId());
     }
 
     /**
      * Get the train's next location name
-     *
+     * 
      * @return Train's next route location name
      */
     public String getNextLocationName() {
@@ -685,30 +755,29 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Get a location name in a train's route from the current train's location.
      * A number of "1" means get the next location name in a train's route.
-     *
-     * @param number The stop number, must be greater than 0
+     * 
+     * @param number
+     *            The stop number, must be greater than 0
      * @return Name of the location that is the number of stops away from the
-     * train's current location.
+     *         train's current location.
      */
     public String getNextLocationName(int number) {
         RouteLocation rl = getCurrentLocation();
         while (number-- > 0) {
             rl = getNextLocation(rl);
-            if (rl == null) {
+            if (rl == null)
                 return NONE;
-            }
         }
         return rl.getName();
     }
 
-    public RouteLocation getNextLocation(RouteLocation rlc) {
-        if (getRoute() == null) {
+    public RouteLocation getNextLocation(RouteLocation currentRouteLocation) {
+        if (getRoute() == null)
             return null;
-        }
         List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
         for (int i = 0; i < routeList.size(); i++) {
             RouteLocation rl = routeList.get(i);
-            if (rl == rlc) {
+            if (rl == currentRouteLocation) {
                 i++;
                 if (i < routeList.size()) {
                     return routeList.get(i);
@@ -746,8 +815,9 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Set the train's machine readable status. Calls update train table row
      * color.
-     *
-     * @param status machine readable stringCode
+     * 
+     * @param status
+     *            machine readable stringCode
      */
     public void setStatus(int status) {
         String oldStatus = this.getStatus();
@@ -755,7 +825,8 @@ public class Train implements java.beans.PropertyChangeListener {
         _statusCode = status;
         // always fire property change for train in route
         if (oldCode != this._statusCode || status == CODE_TRAIN_EN_ROUTE) {
-            setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus, this.getStatus());
+            setDirtyAndFirePropertyChange(STATUS_CHANGED_PROPERTY, oldStatus,
+                    this.getStatus());
         }
         updateTrainTableRowColor();
     }
@@ -763,31 +834,35 @@ public class Train implements java.beans.PropertyChangeListener {
     private void updateTrainTableRowColor() {
         if (!TrainManager.instance().isRowColorManual()) {
             switch (_statusCode) {
-                case CODE_TRAIN_RESET:
-                    setTableRowColorName(NONE);
-                    break;
-                case CODE_BUILT:
-                case CODE_PARTIAL_BUILT:
-                    setTableRowColorName(TrainManager.instance().getRowColorNameForBuilt());
-                    break;
-                case CODE_BUILD_FAILED:
-                    setTableRowColorName(TrainManager.instance().getRowColorNameForBuildFailed());
-                    break;
-                case CODE_TRAIN_EN_ROUTE:
-                    setTableRowColorName(TrainManager.instance().getRowColorNameForTrainEnRoute());
-                    break;
-                case CODE_TERMINATED:
-                    setTableRowColorName(TrainManager.instance().getRowColorNameForTerminated());
-                    break;
-                default: // all other cases do nothing
-                    break;
+            case CODE_TRAIN_RESET:
+                setTableRowColorName(NONE);
+                break;
+            case CODE_BUILT:
+            case CODE_PARTIAL_BUILT:
+                setTableRowColorName(TrainManager.instance()
+                        .getRowColorNameForBuilt());
+                break;
+            case CODE_BUILD_FAILED:
+                setTableRowColorName(TrainManager.instance()
+                        .getRowColorNameForBuildFailed());
+                break;
+            case CODE_TRAIN_EN_ROUTE:
+                setTableRowColorName(TrainManager.instance()
+                        .getRowColorNameForTrainEnRoute());
+                break;
+            case CODE_TERMINATED:
+                setTableRowColorName(TrainManager.instance()
+                        .getRowColorNameForTerminated());
+                break;
+            default: // all other cases do nothing
+                break;
             }
         }
     }
 
     /**
      * Get train's status in the default locale.
-     *
+     * 
      * @return Human-readable status
      */
     public String getStatus() {
@@ -796,7 +871,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get train's status in the specified locale.
-     *
+     * 
      * @param locale
      * @return Human-readable status
      */
@@ -806,47 +881,52 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get the human-readable status for the requested status code.
-     *
+     * 
      * @param locale
-     * @param code requested status
+     * @param code
+     *            requested status
      * @return Human-readable status
      */
     public String getStatus(Locale locale, int code) {
         switch (code) {
-            case CODE_RUN_SCRIPTS:
-                return RUN_SCRIPTS;
-            case CODE_BUILDING:
-                return BUILDING;
-            case CODE_BUILD_FAILED:
-                return BUILD_FAILED;
-            case CODE_BUILT:
-                // getNumberCarsWorked() is assumed to be constant if status is "built" or "partially built"
-                return Bundle.getMessage(locale, "StatusBuilt", this.getNumberCarsWorked()); // NOI18N
-            case CODE_PARTIAL_BUILT:
-                // 0 should be number of cars requested to be worked
-                return Bundle.getMessage(locale, "StatusPartialBuilt", this.getNumberCarsWorked(), this
-                        .getNumberCarsRequested()); // NOI18N
-            case CODE_TERMINATED:
-                return Bundle.getMessage(locale, "StatusTerminated", this.getTerminationDate()); // NOI18N
-            case CODE_TRAIN_EN_ROUTE:
-                return Bundle.getMessage(locale, "StatusEnRoute", this.getNumberCarsInTrain(), this.getTrainLength(), Setup
-                        .getLengthUnit().toLowerCase(), this.getTrainWeight()); // NOI18N
-            case CODE_TRAIN_RESET:
-                return TRAIN_RESET;
-            case CODE_UNKNOWN:
-            default:
-                return UNKNOWN;
+        case CODE_RUN_SCRIPTS:
+            return RUN_SCRIPTS;
+        case CODE_BUILDING:
+            return BUILDING;
+        case CODE_BUILD_FAILED:
+            return BUILD_FAILED;
+        case CODE_BUILT:
+            // getNumberCarsWorked() is assumed to be constant if status is
+            // "built" or "partially built"
+            return Bundle.getMessage(locale, "StatusBuilt",
+                    this.getNumberCarsWorked()); // NOI18N
+        case CODE_PARTIAL_BUILT:
+            // 0 should be number of cars requested to be worked
+            return Bundle.getMessage(locale, "StatusPartialBuilt",
+                    this.getNumberCarsWorked(), this.getNumberCarsRequested()); // NOI18N
+        case CODE_TERMINATED:
+            return Bundle.getMessage(locale, "StatusTerminated",
+                    this.getTerminationDate()); // NOI18N
+        case CODE_TRAIN_EN_ROUTE:
+            return Bundle.getMessage(locale, "StatusEnRoute", this
+                    .getNumberCarsInTrain(), this.getTrainLength(), Setup
+                    .getLengthUnit().toLowerCase(), this.getTrainWeight()); // NOI18N
+        case CODE_TRAIN_RESET:
+            return TRAIN_RESET;
+        case CODE_UNKNOWN:
+        default:
+            return UNKNOWN;
         }
     }
 
     public String getMRStatus() {
         switch (this._statusCode) {
-            case CODE_PARTIAL_BUILT:
-                return this._statusCode + "||" + this.getNumberCarsRequested(); // NOI18N
-            case CODE_TERMINATED:
-                return this._statusCode + "||" + this.getTerminationDate(); // NOI18N
-            default:
-                return Integer.toString(this._statusCode);
+        case CODE_PARTIAL_BUILT:
+            return this._statusCode + "||" + this.getNumberCarsRequested(); // NOI18N
+        case CODE_TERMINATED:
+            return this._statusCode + "||" + this.getTerminationDate(); // NOI18N
+        default:
+            return Integer.toString(this._statusCode);
         }
     }
 
@@ -857,11 +937,12 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Used to determine if train has departed the first location in the train's
      * route
-     *
+     * 
      * @return true if train has departed
      */
     public boolean isTrainInRoute() {
-        return !getCurrentLocationName().equals(NONE) && getTrainDepartsRouteLocation() != getCurrentLocation();
+        return !getCurrentLocationName().equals(NONE)
+                && getTrainDepartsRouteLocation() != getCurrentLocation();
     }
 
     /**
@@ -869,7 +950,7 @@ public class Train implements java.beans.PropertyChangeListener {
      * the the train can have more than location in its route, but all location
      * names must be "same". See TrainCommon.splitString(String name) for the
      * definition of the "same" name.
-     *
+     * 
      * @return true if local switcher
      */
     public boolean isLocalSwitcher() {
@@ -878,9 +959,8 @@ public class Train implements java.beans.PropertyChangeListener {
         if (route != null) {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 String name = TrainCommon.splitString(rl.getName());
-                if (!departureName.equals(name)) {
+                if (!departureName.equals(name))
                     return false; // not a local switcher
-                }
             }
         }
         return true;
@@ -890,47 +970,47 @@ public class Train implements java.beans.PropertyChangeListener {
 
     protected String[] getTrainSkipsLocations() {
         String[] locationIds = new String[_skipLocationsList.size()];
-        for (int i = 0; i < _skipLocationsList.size(); i++) {
+        for (int i = 0; i < _skipLocationsList.size(); i++)
             locationIds[i] = _skipLocationsList.get(i);
-        }
         return locationIds;
     }
 
     protected void setTrainSkipsLocations(String[] locationIds) {
-        if (locationIds.length == 0) {
+        if (locationIds.length == 0)
             return;
-        }
         jmri.util.StringUtil.sort(locationIds);
-        for (String id : locationIds) {
+        for (String id : locationIds)
             _skipLocationsList.add(id);
-        }
     }
 
     /**
      * Train will skip the RouteLocation
-     *
-     * @param locationId RouteLocation Id
+     * 
+     * @param locationId
+     *            RouteLocation Id
      */
     public void addTrainSkipsLocation(String locationId) {
         // insert at start of _skipLocationsList, sort later
-        if (_skipLocationsList.contains(locationId)) {
+        if (_skipLocationsList.contains(locationId))
             return;
-        }
         _skipLocationsList.add(0, locationId);
         log.debug("train does not stop at " + locationId);
-        setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() - 1, _skipLocationsList.size());
+        setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY,
+                _skipLocationsList.size() - 1, _skipLocationsList.size());
     }
 
     public void deleteTrainSkipsLocation(String locationId) {
         _skipLocationsList.remove(locationId);
         log.debug("train will stop at " + locationId);
-        setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY, _skipLocationsList.size() + 1, _skipLocationsList.size());
+        setDirtyAndFirePropertyChange(STOPS_CHANGED_PROPERTY,
+                _skipLocationsList.size() + 1, _skipLocationsList.size());
     }
 
     /**
      * Determines if this train skips a location (doesn't service the location).
-     *
-     * @param locationId The route location id.
+     * 
+     * @param locationId
+     *            The route location id.
      * @return true if the train will not service the location.
      */
     public boolean skipsLocation(String locationId) {
@@ -941,89 +1021,85 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get's the type names of rolling stock this train will service
-     *
+     * 
      * @return The type names for cars and or engines
      */
     protected String[] getTypeNames() {
         String[] types = new String[_typeList.size()];
-        for (int i = 0; i < _typeList.size(); i++) {
+        for (int i = 0; i < _typeList.size(); i++)
             types[i] = _typeList.get(i);
-        }
         return types;
     }
 
     protected String[] getCarTypeNames() {
         List<String> list = new ArrayList<String>();
         for (String type : _typeList) {
-            if (CarTypes.instance().containsName(type)) {
+            if (CarTypes.instance().containsName(type))
                 list.add(type);
-            }
         }
         String[] types = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++)
             types[i] = list.get(i);
-        }
         return types;
     }
 
     protected String[] getLocoTypeNames() {
         List<String> list = new ArrayList<String>();
         for (String type : _typeList) {
-            if (EngineTypes.instance().containsName(type)) {
+            if (EngineTypes.instance().containsName(type))
                 list.add(type);
-            }
         }
         String[] types = new String[list.size()];
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < list.size(); i++)
             types[i] = list.get(i);
-        }
         return types;
     }
 
     /**
      * Set the type of cars or engines this train will service, see types in
      * Cars and Engines.
-     *
-     * @param types The type names for cars and or engines
+     * 
+     * @param types
+     *            The type names for cars and or engines
      */
     protected void setTypeNames(String[] types) {
-        if (types.length == 0) {
+        if (types.length == 0)
             return;
-        }
         jmri.util.StringUtil.sort(types);
-        for (String type : types) {
+        for (String type : types)
             _typeList.add(type);
-        }
     }
 
     /**
      * Add a car or engine type name that this train will service.
-     *
-     * @param type The new type name to service.
+     * 
+     * @param type
+     *            The new type name to service.
      */
     public void addTypeName(String type) {
         // insert at start of list, sort later
-        if (type == null || _typeList.contains(type)) {
+        if (type == null || _typeList.contains(type))
             return;
-        }
         _typeList.add(0, type);
         log.debug("Train ({}) add car type ({})", getName(), type);
-        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() - 1, _typeList.size());
+        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY,
+                _typeList.size() - 1, _typeList.size());
     }
 
     public void deleteTypeName(String type) {
-        if (!_typeList.contains(type)) {
+        if (!_typeList.contains(type))
             return;
-        }
         _typeList.remove(type);
         log.debug("Train ({}) delete car type ({})", getName(), type);
-        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY, _typeList.size() + 1, _typeList.size());
+        setDirtyAndFirePropertyChange(TYPES_CHANGED_PROPERTY,
+                _typeList.size() + 1, _typeList.size());
     }
 
     /**
      * Returns true if this train will service the type of car or engine.
-     *
-     * @param type The car or engine type name.
+     * 
+     * @param type
+     *            The car or engine type name.
      * @return true if this train will service the particular type.
      */
     public boolean acceptsTypeName(String type) {
@@ -1052,7 +1128,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get how this train deals with road names.
-     *
+     * 
      * @return ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
      */
     public String getRoadOption() {
@@ -1061,8 +1137,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set how this train deals with car road names.
-     *
-     * @param option ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
+     * 
+     * @param option
+     *            ALL_ROADS INCLUDE_ROADS EXCLUDE_ROADS
      */
     public void setRoadOption(String option) {
         String old = _roadOption;
@@ -1073,31 +1150,27 @@ public class Train implements java.beans.PropertyChangeListener {
     List<String> _roadList = new ArrayList<String>();
 
     protected void setRoadNames(String[] roads) {
-        if (roads.length == 0) {
+        if (roads.length == 0)
             return;
-        }
         jmri.util.StringUtil.sort(roads);
         for (String road : roads) {
-            if (!road.equals("")) {
+            if (!road.equals(""))
                 _roadList.add(road);
-            }
         }
     }
 
     /**
      * Provides a list of road names that the train will either service or
      * exclude. See setRoadOption
-     *
+     * 
      * @return Array of road names as Strings
      */
     public String[] getRoadNames() {
         String[] roads = new String[_roadList.size()];
-        for (int i = 0; i < _roadList.size(); i++) {
+        for (int i = 0; i < _roadList.size(); i++)
             roads[i] = _roadList.get(i);
-        }
-        if (_roadList.size() == 0) {
+        if (_roadList.size() == 0)
             return roads;
-        }
         jmri.util.StringUtil.sort(roads);
         return roads;
     }
@@ -1105,41 +1178,42 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Add a road name that the train will either service or exclude. See
      * setRoadOption
-     *
+     * 
      * @return true if road name was added, false if road name wasn't in the
-     * list.
+     *         list.
      */
     public boolean addRoadName(String road) {
-        if (_roadList.contains(road)) {
+        if (_roadList.contains(road))
             return false;
-        }
         _roadList.add(road);
         log.debug("train (" + getName() + ") add car road " + road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() - 1, _roadList.size());
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY,
+                _roadList.size() - 1, _roadList.size());
         return true;
     }
 
     /**
      * Delete a road name that the train will either service or exclude. See
      * setRoadOption
-     *
+     * 
      * @return true if road name was removed, false if road name wasn't in the
-     * list.
+     *         list.
      */
     public boolean deleteRoadName(String road) {
-        if (!_roadList.contains(road)) {
+        if (!_roadList.contains(road))
             return false;
-        }
         _roadList.remove(road);
         log.debug("train (" + getName() + ") delete car road " + road);
-        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY, _roadList.size() + 1, _roadList.size());
+        setDirtyAndFirePropertyChange(ROADS_CHANGED_PROPERTY,
+                _roadList.size() + 1, _roadList.size());
         return true;
     }
 
     /**
      * Determine if train will service a specific road name.
-     *
-     * @param road the road name to check.
+     * 
+     * @param road
+     *            the road name to check.
      * @return true if train will service this road name.
      */
     public boolean acceptsRoadName(String road) {
@@ -1155,33 +1229,26 @@ public class Train implements java.beans.PropertyChangeListener {
 
     private void replaceRoad(String oldRoad, String newRoad) {
         if (newRoad != null) {
-            if (deleteRoadName(oldRoad)) {
+            if (deleteRoadName(oldRoad))
                 addRoadName(newRoad);
-            }
-            if (getEngineRoad().equals(oldRoad)) {
+            if (getEngineRoad().equals(oldRoad))
                 setEngineRoad(newRoad);
-            }
-            if (getCabooseRoad().equals(oldRoad)) {
+            if (getCabooseRoad().equals(oldRoad))
                 setCabooseRoad(newRoad);
-            }
-            if (getSecondLegEngineRoad().equals(oldRoad)) {
+            if (getSecondLegEngineRoad().equals(oldRoad))
                 setSecondLegEngineRoad(newRoad);
-            }
-            if (getSecondLegCabooseRoad().equals(oldRoad)) {
+            if (getSecondLegCabooseRoad().equals(oldRoad))
                 setSecondLegCabooseRoad(newRoad);
-            }
-            if (getThirdLegEngineRoad().equals(oldRoad)) {
+            if (getThirdLegEngineRoad().equals(oldRoad))
                 setThirdLegEngineRoad(newRoad);
-            }
-            if (getThirdLegCabooseRoad().equals(oldRoad)) {
+            if (getThirdLegCabooseRoad().equals(oldRoad))
                 setThirdLegCabooseRoad(newRoad);
-            }
         }
     }
 
     /**
      * Gets the car load option for this train.
-     *
+     * 
      * @return ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
      */
     public String getLoadOption() {
@@ -1190,8 +1257,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set how this train deals with car loads
-     *
-     * @param option ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
+     * 
+     * @param option
+     *            ALL_LOADS INCLUDE_LOADS EXCLUDE_LOADS
      */
     public void setLoadOption(String option) {
         String old = _loadOption;
@@ -1202,31 +1270,27 @@ public class Train implements java.beans.PropertyChangeListener {
     List<String> _loadList = new ArrayList<String>();
 
     protected void setLoadNames(String[] loads) {
-        if (loads.length == 0) {
+        if (loads.length == 0)
             return;
-        }
         jmri.util.StringUtil.sort(loads);
         for (String load : loads) {
-            if (!load.equals("")) {
+            if (!load.equals(""))
                 _loadList.add(load);
-            }
         }
     }
 
     /**
      * Provides a list of loads that the train will either service or exclude.
      * See setLoadOption
-     *
+     * 
      * @return Array of load names as Strings
      */
     public String[] getLoadNames() {
         String[] loads = new String[_loadList.size()];
-        for (int i = 0; i < _loadList.size(); i++) {
+        for (int i = 0; i < _loadList.size(); i++)
             loads[i] = _loadList.get(i);
-        }
-        if (_loadList.size() == 0) {
+        if (_loadList.size() == 0)
             return loads;
-        }
         jmri.util.StringUtil.sort(loads);
         return loads;
     }
@@ -1234,41 +1298,42 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Add a load that the train will either service or exclude. See
      * setLoadOption
-     *
+     * 
      * @return true if load name was added, false if load name wasn't in the
-     * list.
+     *         list.
      */
     public boolean addLoadName(String load) {
-        if (_loadList.contains(load)) {
+        if (_loadList.contains(load))
             return false;
-        }
         _loadList.add(load);
         log.debug("train (" + getName() + ") add car load " + load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() - 1, _loadList.size());
+        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY,
+                _loadList.size() - 1, _loadList.size());
         return true;
     }
 
     /**
      * Delete a load name that the train will either service or exclude. See
      * setLoadOption
-     *
+     * 
      * @return true if load name was removed, false if load name wasn't in the
-     * list.
+     *         list.
      */
     public boolean deleteLoadName(String load) {
-        if (!_loadList.contains(load)) {
+        if (!_loadList.contains(load))
             return false;
-        }
         _loadList.remove(load);
         log.debug("train (" + getName() + ") delete car load " + load);
-        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY, _loadList.size() + 1, _loadList.size());
+        setDirtyAndFirePropertyChange(LOADS_CHANGED_PROPERTY,
+                _loadList.size() + 1, _loadList.size());
         return true;
     }
 
     /**
      * Determine if train will service a specific load name.
-     *
-     * @param load the load name to check.
+     * 
+     * @param load
+     *            the load name to check.
      * @return true if train will service this load.
      */
     public boolean acceptsLoadName(String load) {
@@ -1284,9 +1349,11 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Determine if train will service a specific load and car type.
-     *
-     * @param load the load name to check.
-     * @param type the type of car used to carry the load.
+     * 
+     * @param load
+     *            the load name to check.
+     * @param type
+     *            the type of car used to carry the load.
      * @return true if train will service this load.
      */
     public boolean acceptsLoad(String load, String type) {
@@ -1294,10 +1361,12 @@ public class Train implements java.beans.PropertyChangeListener {
             return true;
         }
         if (_loadOption.equals(INCLUDE_LOADS)) {
-            return _loadList.contains(load) || _loadList.contains(type + CarLoad.SPLIT_CHAR + load);
+            return _loadList.contains(load)
+                    || _loadList.contains(type + CarLoad.SPLIT_CHAR + load);
         }
         // exclude!
-        return !_loadList.contains(load) && !_loadList.contains(type + CarLoad.SPLIT_CHAR + load);
+        return !_loadList.contains(load)
+                && !_loadList.contains(type + CarLoad.SPLIT_CHAR + load);
     }
 
     public String getOwnerOption() {
@@ -1306,8 +1375,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set how this train deals with car owner names
-     *
-     * @param option ALL_OWNERS INCLUDE_OWNERS EXCLUDE_OWNERS
+     * 
+     * @param option
+     *            ALL_OWNERS INCLUDE_OWNERS EXCLUDE_OWNERS
      */
     public void setOwnerOption(String option) {
         String old = _ownerOption;
@@ -1318,31 +1388,27 @@ public class Train implements java.beans.PropertyChangeListener {
     List<String> _ownerList = new ArrayList<String>();
 
     protected void setOwnerNames(String[] owners) {
-        if (owners.length == 0) {
+        if (owners.length == 0)
             return;
-        }
         jmri.util.StringUtil.sort(owners);
         for (String owner : owners) {
-            if (!owner.equals("")) {
+            if (!owner.equals(""))
                 _ownerList.add(owner);
-            }
         }
     }
 
     /**
      * Provides a list of owner names that the train will either service or
      * exclude. See setOwnerOption
-     *
+     * 
      * @return Array of owner names as Strings
      */
     public String[] getOwnerNames() {
         String[] owners = new String[_ownerList.size()];
-        for (int i = 0; i < _ownerList.size(); i++) {
+        for (int i = 0; i < _ownerList.size(); i++)
             owners[i] = _ownerList.get(i);
-        }
-        if (_ownerList.size() == 0) {
+        if (_ownerList.size() == 0)
             return owners;
-        }
         jmri.util.StringUtil.sort(owners);
         return owners;
     }
@@ -1350,41 +1416,42 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Add a owner name that the train will either service or exclude. See
      * setOwnerOption
-     *
+     * 
      * @return true if owner name was added, false if owner name wasn't in the
-     * list.
+     *         list.
      */
     public boolean addOwnerName(String owner) {
-        if (_ownerList.contains(owner)) {
+        if (_ownerList.contains(owner))
             return false;
-        }
         _ownerList.add(owner);
         log.debug("train (" + getName() + ") add car owner " + owner);
-        setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, _ownerList.size() - 1, _ownerList.size());
+        setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY,
+                _ownerList.size() - 1, _ownerList.size());
         return true;
     }
 
     /**
      * Delete a owner name that the train will either service or exclude. See
      * setOwnerOption
-     *
+     * 
      * @return true if owner name was removed, false if owner name wasn't in the
-     * list.
+     *         list.
      */
     public boolean deleteOwnerName(String owner) {
-        if (!_ownerList.contains(owner)) {
+        if (!_ownerList.contains(owner))
             return false;
-        }
         _ownerList.remove(owner);
         log.debug("train (" + getName() + ") delete car owner " + owner);
-        setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY, _ownerList.size() + 1, _ownerList.size());
+        setDirtyAndFirePropertyChange(OWNERS_CHANGED_PROPERTY,
+                _ownerList.size() + 1, _ownerList.size());
         return true;
     }
 
     /**
      * Determine if train will service a specific owner name.
-     *
-     * @param owner the owner name to check.
+     * 
+     * @param owner
+     *            the owner name to check.
      * @return true if train will service this owner name.
      */
     public boolean acceptsOwnerName(String owner) {
@@ -1399,22 +1466,21 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void replaceOwner(String oldName, String newName) {
-        if (deleteOwnerName(oldName)) {
+        if (deleteOwnerName(oldName))
             addOwnerName(newName);
-        }
     }
 
     /**
      * Only rolling stock built in or after this year will be used.
-     *
+     * 
      * @param year
      */
     public void setBuiltStartYear(String year) {
         String old = _builtStartYear;
         _builtStartYear = year;
-        if (!old.equals(year)) {
-            setDirtyAndFirePropertyChange(BUILT_YEAR_CHANGED_PROPERTY, old, year);
-        }
+        if (!old.equals(year))
+            setDirtyAndFirePropertyChange(BUILT_YEAR_CHANGED_PROPERTY, old,
+                    year);
     }
 
     public String getBuiltStartYear() {
@@ -1423,15 +1489,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Only rolling stock built in or before this year will be used.
-     *
+     * 
      * @param year
      */
     public void setBuiltEndYear(String year) {
         String old = _builtEndYear;
         _builtEndYear = year;
-        if (!old.equals(year)) {
-            setDirtyAndFirePropertyChange(BUILT_YEAR_CHANGED_PROPERTY, old, year);
-        }
+        if (!old.equals(year))
+            setDirtyAndFirePropertyChange(BUILT_YEAR_CHANGED_PROPERTY, old,
+                    year);
     }
 
     public String getBuiltEndYear() {
@@ -1440,52 +1506,51 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Determine if train will service rolling stock by built date.
-     *
+     * 
      * @param date
      * @return true is built date is in the acceptable range.
      */
     public boolean acceptsBuiltDate(String date) {
-        if (getBuiltStartYear().equals(NONE) && getBuiltEndYear().equals(NONE)) {
+        if (getBuiltStartYear().equals(NONE) && getBuiltEndYear().equals(NONE))
             return true; // range dates not defined
-        }
         int startYear = 0; // default start year;
         int endYear = 99999; // default end year;
         try {
             startYear = Integer.parseInt(getBuiltStartYear());
         } catch (NumberFormatException e1) {
-            log.debug("Train (" + getName() + ") built start date not initialized, start: " + getBuiltStartYear());
+            log.debug("Train (" + getName()
+                    + ") built start date not initialized, start: "
+                    + getBuiltStartYear());
         }
         try {
             endYear = Integer.parseInt(getBuiltEndYear());
         } catch (NumberFormatException e1) {
-            log.debug("Train (" + getName() + ") built end date not initialized, end: " + getBuiltEndYear());
+            log.debug("Train (" + getName()
+                    + ") built end date not initialized, end: "
+                    + getBuiltEndYear());
         }
         try {
             int builtYear = Integer.parseInt(date);
-            if (startYear < builtYear && builtYear < endYear) {
+            if (startYear < builtYear && builtYear < endYear)
                 return true;
-            } else {
+            else
                 return false;
-            }
         } catch (NumberFormatException e1) {
             // log.debug("Built date: "+date+" isn't an integer");
             // maybe the built date is in the format month-year
             String[] built = date.split("-");
-            if (built.length > 1) {
+            if (built.length > 1)
                 try {
                     int builtYear = Integer.parseInt(built[1]);
-                    if (builtYear < 100) {
+                    if (builtYear < 100)
                         builtYear = builtYear + 1900;
-                    }
-                    if (startYear < builtYear && builtYear < endYear) {
+                    if (startYear < builtYear && builtYear < endYear)
                         return true;
-                    } else {
+                    else
                         return false;
-                    }
                 } catch (NumberFormatException e2) {
                     log.debug("Unable to parse car built date " + date);
                 }
-            }
             return false;
         }
     }
@@ -1496,8 +1561,9 @@ public class Train implements java.beans.PropertyChangeListener {
      * Determines if this train will service this car. Note this code doesn't
      * check the location or tracks that needs to be done separately. See
      * Router.java.
-     *
-     * @param car The car to be tested.
+     * 
+     * @param car
+     *            The car to be tested.
      * @return true if this train can service the car.
      */
     public boolean services(Car car) {
@@ -1511,50 +1577,54 @@ public class Train implements java.beans.PropertyChangeListener {
         setServiceStatus(NONE);
         // check to see if train can carry car
         if (!acceptsTypeName(car.getTypeName())) {
-            if (addToReport) {
-                TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                        .getMessage("trainCanNotServiceCarType"), new Object[]{getName(), car.toString(),
-                            car.getTypeName()}));
-            }
+            if (addToReport)
+                TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(
+                        Bundle.getMessage("trainCanNotServiceCarType"),
+                        new Object[] { getName(), car.toString(),
+                                car.getTypeName() }));
             return false;
         }
         if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {
-            if (addToReport) {
-                TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                        .getMessage("trainCanNotServiceCarLoad"), new Object[]{getName(), car.toString(),
-                            car.getTypeName(), car.getLoadName()}));
-            }
+            if (addToReport)
+                TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(
+                        Bundle.getMessage("trainCanNotServiceCarLoad"),
+                        new Object[] { getName(), car.toString(),
+                                car.getTypeName(), car.getLoadName() }));
             return false;
         }
-        if (!acceptsBuiltDate(car.getBuilt()) || !acceptsOwnerName(car.getOwner())
+        if (!acceptsBuiltDate(car.getBuilt())
+                || !acceptsOwnerName(car.getOwner())
                 || !acceptsRoadName(car.getRoadName())) {
-            if (addToReport) {
+            if (addToReport)
                 TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(
-                        Bundle.getMessage("trainCanNotServiceCar"), new Object[]{getName(), car.toString()}));
-            }
+                        Bundle.getMessage("trainCanNotServiceCar"),
+                        new Object[] { getName(), car.toString() }));
             return false;
         }
 
         int length = car.getTotalLength();
         // car can be a kernel so get total length
-        if (car.getKernel() != null) {
+        if (car.getKernel() != null)
             length = car.getKernel().getTotalLength();
-        }
         Route route = getRoute();
         if (route != null) {
-            // determine if the car's location and destination is serviced by this train
+            // determine if the car's location and destination is serviced by
+            // this train
             if (route.getLastLocationByName(car.getLocationName()) == null) {
-                if (addToReport) {
-                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                            .getMessage("trainNotThisLocation"), new Object[]{getName(), car.getLocationName()}));
-                }
+                if (addToReport)
+                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat
+                            .format(Bundle.getMessage("trainNotThisLocation"),
+                                    new Object[] { getName(),
+                                            car.getLocationName() }));
                 return false;
             }
-            if (car.getDestination() != null && route.getLastLocationByName(car.getDestinationName()) == null) {
-                if (addToReport) {
-                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                            .getMessage("trainNotThisLocation"), new Object[]{getName(), car.getDestinationName()}));
-                }
+            if (car.getDestination() != null
+                    && route.getLastLocationByName(car.getDestinationName()) == null) {
+                if (addToReport)
+                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat
+                            .format(Bundle.getMessage("trainNotThisLocation"),
+                                    new Object[] { getName(),
+                                            car.getDestinationName() }));
                 return false;
             }
             List<RouteLocation> rLocations = route.getLocationsBySequenceList();
@@ -1564,34 +1634,48 @@ public class Train implements java.beans.PropertyChangeListener {
                         && rLoc.isPickUpAllowed()
                         && rLoc.getMaxCarMoves() > 0
                         && !skipsLocation(rLoc.getId())
-                        && ((car.getLocation().getTrainDirections() & rLoc.getTrainDirection()) > 0 || isLocalSwitcher())) {
+                        && ((car.getLocation().getTrainDirections() & rLoc
+                                .getTrainDirection()) > 0 || isLocalSwitcher())) {
                     if (car.getTrack() != null) {
-                        if (((car.getTrack().getTrainDirections() & rLoc.getTrainDirection()) == 0 && !isLocalSwitcher())
+                        if (((car.getTrack().getTrainDirections() & rLoc
+                                .getTrainDirection()) == 0 && !isLocalSwitcher())
                                 || !car.getTrack().acceptsPickupTrain(this)) {
-                            if (addToReport) {
-                                TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                        .getMessage("trainCanNotServiceCarFrom"), new Object[]{getName(),
-                                            car.toString(), car.getLocationName(), car.getTrackName(), rLoc.getId()}));
-                            }
+                            if (addToReport)
+                                TrainCommon
+                                        .addLine(
+                                                buildReport,
+                                                SEVEN,
+                                                MessageFormat.format(
+                                                        Bundle.getMessage("trainCanNotServiceCarFrom"),
+                                                        new Object[] {
+                                                                getName(),
+                                                                car.toString(),
+                                                                car.getLocationName(),
+                                                                car.getTrackName(),
+                                                                rLoc.getId() }));
                             continue;
                         }
                     }
-                    if (debugFlag) {
-                        log.debug("Car (" + car.toString() + ") can be picked up by train (" + getName()
-                                + ") location (" + car.getLocationName() + ", " + car.getTrackName()// NOI18N
+                    if (debugFlag)
+                        log.debug("Car (" + car.toString()
+                                + ") can be picked up by train (" + getName()
+                                + ") location (" + car.getLocationName() + ", "
+                                + car.getTrackName()// NOI18N
                                 + ") destination ("// NOI18N
                                 + car.getDestinationName() + ", "// NOI18N
                                 + car.getDestinationTrackName() + ")"); // NOI18N
-                    }
-                    if (addToReport) {
-                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("trainCanPickUpCar"), new Object[]{getName(), car.toString(),
-                                    car.getLocationName(), car.getTrackName(), rLoc.getId()}));
-                    }
+                    if (addToReport)
+                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat
+                                .format(Bundle.getMessage("trainCanPickUpCar"),
+                                        new Object[] { getName(),
+                                                car.toString(),
+                                                car.getLocationName(),
+                                                car.getTrackName(),
+                                                rLoc.getId() }));
                     if (car.getDestination() == null) {
-                        if (debugFlag) {
-                            log.debug("Car (" + car.toString() + ") does not have a destination");
-                        }
+                        if (debugFlag)
+                            log.debug("Car (" + car.toString()
+                                    + ") does not have a destination");
                         return true;
                     }
                     // now check car's destination
@@ -1601,132 +1685,230 @@ public class Train implements java.beans.PropertyChangeListener {
                                 && rldest.isDropAllowed()
                                 && rldest.getMaxCarMoves() > 0
                                 && !skipsLocation(rldest.getId())
-                                && ((car.getDestination().getTrainDirections() & rldest.getTrainDirection()) > 0 || isLocalSwitcher())
-                                && (!Setup.isCheckCarDestinationEnabled() || car.getTrack() == null || car.getTrack()
-                                .acceptsDestination(car.getDestination()))) {
+                                && ((car.getDestination().getTrainDirections() & rldest
+                                        .getTrainDirection()) > 0 || isLocalSwitcher())
+                                && (!Setup.isCheckCarDestinationEnabled()
+                                        || car.getTrack() == null || car
+                                        .getTrack().acceptsDestination(
+                                                car.getDestination()))) {
                             // found a destination, now check destination track
                             if (car.getDestinationTrack() != null) {
-                                if ((car.getDestinationTrack().getTrainDirections() & rldest.getTrainDirection()) == 0
+                                if ((car.getDestinationTrack()
+                                        .getTrainDirections() & rldest
+                                        .getTrainDirection()) == 0
                                         && !isLocalSwitcher()) {
                                     if (addToReport) {
-                                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                .getMessage("buildCanNotDropRsUsingTrain"), new Object[]{
-                                                    car.toString(), rldest.getTrainDirectionString()}));
-                                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                .getMessage("buildCanNotDropRsUsingTrain2"), new Object[]{car
-                                                    .getDestinationTrackName()}));
+                                        TrainCommon
+                                                .addLine(
+                                                        buildReport,
+                                                        SEVEN,
+                                                        MessageFormat.format(
+                                                                Bundle.getMessage("buildCanNotDropRsUsingTrain"),
+                                                                new Object[] {
+                                                                        car.toString(),
+                                                                        rldest.getTrainDirectionString() }));
+                                        TrainCommon
+                                                .addLine(
+                                                        buildReport,
+                                                        SEVEN,
+                                                        MessageFormat.format(
+                                                                Bundle.getMessage("buildCanNotDropRsUsingTrain2"),
+                                                                new Object[] { car
+                                                                        .getDestinationTrackName() }));
                                     }
                                     continue;
                                 }
-                                if (!car.getDestinationTrack().acceptsDropTrain(this)) {
-                                    if (addToReport) {
-                                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                .getMessage("buildCanNotDropCarTrain"), new Object[]{car.toString(),
-                                                    getName(), car.getDestinationTrack().getTrackTypeName(),
-                                                    car.getDestinationTrackName()}));
-                                    }
+                                if (!car.getDestinationTrack()
+                                        .acceptsDropTrain(this)) {
+                                    if (addToReport)
+                                        TrainCommon
+                                                .addLine(
+                                                        buildReport,
+                                                        SEVEN,
+                                                        MessageFormat.format(
+                                                                Bundle.getMessage("buildCanNotDropCarTrain"),
+                                                                new Object[] {
+                                                                        car.toString(),
+                                                                        getName(),
+                                                                        car.getDestinationTrack()
+                                                                                .getTrackTypeName(),
+                                                                        car.getDestinationTrackName() }));
                                     continue;
                                 }
                             } else if (rldest.getLocation().isStaging()
-                                    && getStatusCode() == CODE_BUILDING && getTerminationTrack() != null
-                                    && getTerminationTrack().getLocation() == rldest.getLocation()) {
-                                if (debugFlag) {
-                                    log.debug("Car (" + car.toString() + ") destination is staging, check train ("
-                                            + getName() + ") termination track (" + getTerminationTrack().getName() // NOI18N
+                                    && getStatusCode() == CODE_BUILDING
+                                    && getTerminationTrack() != null
+                                    && getTerminationTrack().getLocation() == rldest
+                                            .getLocation()) {
+                                if (debugFlag)
+                                    log.debug("Car ("
+                                            + car.toString()
+                                            + ") destination is staging, check train ("
+                                            + getName()
+                                            + ") termination track ("
+                                            + getTerminationTrack().getName() // NOI18N
                                             + ")");
-                                }
-                                String status = car.testDestination(getTerminationTrack().getLocation(),
+                                String status = car.testDestination(
+                                        getTerminationTrack().getLocation(),
                                         getTerminationTrack());
                                 if (!status.equals(Track.OKAY)) {
-                                    if (addToReport) {
-                                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                .getMessage("trainCanNotDeliverToStaging"), new Object[]{getName(),
-                                                    car.toString(), getTerminationTrack().getLocation().getName(),
-                                                    getTerminationTrack().getName(), status}));
-                                    }
+                                    if (addToReport)
+                                        TrainCommon
+                                                .addLine(
+                                                        buildReport,
+                                                        SEVEN,
+                                                        MessageFormat.format(
+                                                                Bundle.getMessage("trainCanNotDeliverToStaging"),
+                                                                new Object[] {
+                                                                        getName(),
+                                                                        car.toString(),
+                                                                        getTerminationTrack()
+                                                                                .getLocation()
+                                                                                .getName(),
+                                                                        getTerminationTrack()
+                                                                                .getName(),
+                                                                        status }));
                                     continue;
                                 }
                             } else {
-                                if (debugFlag) {
-                                    log.debug("Find track for car (" + car.toString() + ") at destination "
+                                if (debugFlag)
+                                    log.debug("Find track for car ("
+                                            + car.toString()
+                                            + ") at destination "
                                             + car.getDestinationName());
-                                }
-                                // determine if there's a track that is willing to accept this car
+                                // determine if there's a track that is willing
+                                // to accept this car
                                 String status = "";
-                                List<Track> tracks = rldest.getLocation().getTrackList();
+                                List<Track> tracks = rldest.getLocation()
+                                        .getTrackList();
                                 for (Track track : tracks) {
-                                    if ((track.getTrainDirections() & rldest.getTrainDirection()) == 0
+                                    if ((track.getTrainDirections() & rldest
+                                            .getTrainDirection()) == 0
                                             && !isLocalSwitcher()) {
                                         if (addToReport) {
-                                            TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                    .getMessage("buildCanNotDropRsUsingTrain"), new Object[]{
-                                                        car.toString(), rldest.getTrainDirectionString()}));
-                                            TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                    .getMessage("buildCanNotDropRsUsingTrain2"), new Object[]{track
-                                                        .getName()}));
+                                            TrainCommon
+                                                    .addLine(
+                                                            buildReport,
+                                                            SEVEN,
+                                                            MessageFormat
+                                                                    .format(Bundle
+                                                                            .getMessage("buildCanNotDropRsUsingTrain"),
+                                                                            new Object[] {
+                                                                                    car.toString(),
+                                                                                    rldest.getTrainDirectionString() }));
+                                            TrainCommon
+                                                    .addLine(
+                                                            buildReport,
+                                                            SEVEN,
+                                                            MessageFormat
+                                                                    .format(Bundle
+                                                                            .getMessage("buildCanNotDropRsUsingTrain2"),
+                                                                            new Object[] { track
+                                                                                    .getName() }));
                                         }
                                         continue;
                                     }
                                     if (!track.acceptsDropTrain(this)) {
-                                        if (addToReport) {
-                                            TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                    .getMessage("buildCanNotDropCarTrain"), new Object[]{
-                                                        car.toString(), getName(), track.getTrackTypeName(),
-                                                        track.getName()}));
-                                        }
+                                        if (addToReport)
+                                            TrainCommon
+                                                    .addLine(
+                                                            buildReport,
+                                                            SEVEN,
+                                                            MessageFormat
+                                                                    .format(Bundle
+                                                                            .getMessage("buildCanNotDropCarTrain"),
+                                                                            new Object[] {
+                                                                                    car.toString(),
+                                                                                    getName(),
+                                                                                    track.getTrackTypeName(),
+                                                                                    track.getName() }));
                                         continue;
                                     }
                                     // will the track accept this car?
                                     status = track.accepts(car);
-                                    if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
-                                        if (debugFlag) {
-                                            log.debug("Found track (" + track.getName() + ") for car ("
+                                    if (status.equals(Track.OKAY)
+                                            || status.startsWith(Track.LENGTH)) {
+                                        if (debugFlag)
+                                            log.debug("Found track ("
+                                                    + track.getName()
+                                                    + ") for car ("
                                                     + car.toString() + ")");
-                                        }
                                         break; // yes, done
                                     }
                                 }
-                                if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
-                                    if (debugFlag) {
-                                        log.debug("Destination (" + car.getDestinationName() // NOI18N
-                                                + ") can not service car (" + car.toString() // NOI18N
-                                                + ") using train (" + getName() + ") no track available"); // NOI18N
-                                    }
-                                    if (addToReport) {
-                                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                                .getMessage("trainCanNotDeliverNoTracks"), new Object[]{getName(),
-                                                    car.toString(), car.getDestinationName(), rldest.getId()}));
-                                    }
+                                if (!status.equals(Track.OKAY)
+                                        && !status.startsWith(Track.LENGTH)) {
+                                    if (debugFlag)
+                                        log.debug("Destination ("
+                                                + car.getDestinationName() // NOI18N
+                                                + ") can not service car ("
+                                                + car.toString() // NOI18N
+                                                + ") using train (" + getName()
+                                                + ") no track available"); // NOI18N
+                                    if (addToReport)
+                                        TrainCommon
+                                                .addLine(
+                                                        buildReport,
+                                                        SEVEN,
+                                                        MessageFormat.format(
+                                                                Bundle.getMessage("trainCanNotDeliverNoTracks"),
+                                                                new Object[] {
+                                                                        getName(),
+                                                                        car.toString(),
+                                                                        car.getDestinationName(),
+                                                                        rldest.getId() }));
                                     continue;
                                 }
                             }
                             // carry cars only to terminal?
                             if (isSendCarsToTerminalEnabled()
-                                    && !TrainCommon.splitString(car.getLocationName()).equals(
-                                            TrainCommon.splitString(getTrainDepartsName()))
-                                    && !TrainCommon.splitString(car.getDestinationName()).equals(
-                                            TrainCommon.splitString(getTrainTerminatesName()))) {
-                                if (debugFlag) {
+                                    && !TrainCommon
+                                            .splitString(car.getLocationName())
+                                            .equals(TrainCommon
+                                                    .splitString(getTrainDepartsName()))
+                                    && !TrainCommon
+                                            .splitString(
+                                                    car.getDestinationName())
+                                            .equals(TrainCommon
+                                                    .splitString(getTrainTerminatesName()))) {
+                                if (debugFlag)
                                     log.debug("option send cars to terminal is enabled");
-                                }
-                                if (addToReport) {
-                                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                            .getMessage("trainCanNotCarryCarOption"), new Object[]{getName(),
-                                                car.toString(), car.getLocationName(), car.getTrackName(),
-                                                car.getDestinationName(), car.getDestinationTrackName()}));
-                                }
+                                if (addToReport)
+                                    TrainCommon
+                                            .addLine(
+                                                    buildReport,
+                                                    SEVEN,
+                                                    MessageFormat.format(
+                                                            Bundle.getMessage("trainCanNotCarryCarOption"),
+                                                            new Object[] {
+                                                                    getName(),
+                                                                    car.toString(),
+                                                                    car.getLocationName(),
+                                                                    car.getTrackName(),
+                                                                    car.getDestinationName(),
+                                                                    car.getDestinationTrackName() }));
 
                                 continue;
 
                             }
                             // allow car to return to staging?
-                            if (isAllowReturnToStagingEnabled() && car.getTrack().getTrackType().equals(Track.STAGING)
-                                    && rldest.getLocation() == car.getLocation()) {
-                                if (addToReport) {
-                                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                            .getMessage("trainCanReturnCarToStaging"), new Object[]{getName(),
-                                                car.toString(), car.getDestinationName(), car.getDestinationTrackName()}));
-                                }
+                            if (isAllowReturnToStagingEnabled()
+                                    && car.getTrack().getTrackType()
+                                            .equals(Track.STAGING)
+                                    && rldest.getLocation() == car
+                                            .getLocation()) {
+                                if (addToReport)
+                                    TrainCommon
+                                            .addLine(
+                                                    buildReport,
+                                                    SEVEN,
+                                                    MessageFormat.format(
+                                                            Bundle.getMessage("trainCanReturnCarToStaging"),
+                                                            new Object[] {
+                                                                    getName(),
+                                                                    car.toString(),
+                                                                    car.getDestinationName(),
+                                                                    car.getDestinationTrackName() }));
                                 return true;
                             }
                             // is this a local move?
@@ -1734,88 +1916,139 @@ public class Train implements java.beans.PropertyChangeListener {
                                     && !car.isCaboose()
                                     && !car.hasFred()
                                     && !car.isPassenger()
-                                    && TrainCommon.splitString(car.getLocationName()).equals(
-                                            TrainCommon.splitString(car.getDestinationName()))) {
-                                if (debugFlag) {
+                                    && TrainCommon.splitString(
+                                            car.getLocationName()).equals(
+                                            TrainCommon.splitString(car
+                                                    .getDestinationName()))) {
+                                if (debugFlag)
                                     log.debug("Local moves is disabled");
-                                }
-                                if (addToReport) {
-                                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                            .getMessage("trainCanNotPerformLocalMove"), new Object[]{getName(),
-                                                car.toString(), car.getLocationName()}));
-                                }
+                                if (addToReport)
+                                    TrainCommon
+                                            .addLine(
+                                                    buildReport,
+                                                    SEVEN,
+                                                    MessageFormat.format(
+                                                            Bundle.getMessage("trainCanNotPerformLocalMove"),
+                                                            new Object[] {
+                                                                    getName(),
+                                                                    car.toString(),
+                                                                    car.getLocationName() }));
                                 continue;
                             }
                             // Can cars travel from origin to terminal?
                             if (!isAllowThroughCarsEnabled()
-                                    && TrainCommon.splitString(getTrainDepartsName()).equals(
-                                            TrainCommon.splitString(rLoc.getName()))
-                                    && TrainCommon.splitString(getTrainTerminatesName()).equals(
-                                            TrainCommon.splitString(rldest.getName())) && !isLocalSwitcher()
-                                    && !car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
-                                if (debugFlag) {
-                                    log.debug("Through car (" + car.toString() + ") not allowed");
-                                }
-                                if (addToReport) {
-                                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                            .getMessage("trainDoesNotCarryOriginTerminal"), new Object[]{getName(),
-                                                car.getLocationName(), car.getDestinationName()}));
-                                }
+                                    && TrainCommon.splitString(
+                                            getTrainDepartsName()).equals(
+                                            TrainCommon.splitString(rLoc
+                                                    .getName()))
+                                    && TrainCommon.splitString(
+                                            getTrainTerminatesName()).equals(
+                                            TrainCommon.splitString(rldest
+                                                    .getName()))
+                                    && !isLocalSwitcher() && !car.isCaboose()
+                                    && !car.hasFred() && !car.isPassenger()) {
+                                if (debugFlag)
+                                    log.debug("Through car (" + car.toString()
+                                            + ") not allowed");
+                                if (addToReport)
+                                    TrainCommon
+                                            .addLine(
+                                                    buildReport,
+                                                    SEVEN,
+                                                    MessageFormat.format(
+                                                            Bundle.getMessage("trainDoesNotCarryOriginTerminal"),
+                                                            new Object[] {
+                                                                    getName(),
+                                                                    car.getLocationName(),
+                                                                    car.getDestinationName() }));
                                 continue;
                             }
                             // check to see if moves are available
-                            if (getStatusCode() == CODE_BUILDING && rldest.getMaxCarMoves() - rldest.getCarMoves() <= 0) {
-                                setServiceStatus(MessageFormat.format(Bundle.getMessage("trainNoMoves"), new Object[]{
-                                    getName(), getRoute().getName(), rldest.getId(), rldest.getName()}));
-                                if (debugFlag) {
-                                    log.debug("No available moves for destination " + rldest.getName());
-                                }
-                                if (addToReport) {
-                                    TrainCommon.addLine(buildReport, SEVEN, getServiceStatus());
-                                }
+                            if (getStatusCode() == CODE_BUILDING
+                                    && rldest.getMaxCarMoves()
+                                            - rldest.getCarMoves() <= 0) {
+                                setServiceStatus(MessageFormat.format(
+                                        Bundle.getMessage("trainNoMoves"),
+                                        new Object[] { getName(),
+                                                getRoute().getName(),
+                                                rldest.getId(),
+                                                rldest.getName() }));
+                                if (debugFlag)
+                                    log.debug("No available moves for destination "
+                                            + rldest.getName());
+                                if (addToReport)
+                                    TrainCommon.addLine(buildReport, SEVEN,
+                                            getServiceStatus());
                                 continue;
                             }
-                            if (debugFlag) {
-                                log.debug("Car (" + car.toString() + ") can be dropped by train (" + getName()
-                                        + ") to (" + car.getDestinationName() + ", " // NOI18N
+                            if (debugFlag)
+                                log.debug("Car (" + car.toString()
+                                        + ") can be dropped by train ("
+                                        + getName() + ") to ("
+                                        + car.getDestinationName() + ", " // NOI18N
                                         + car.getDestinationTrackName() + ")");
-                            }
                             return true;
                         }
                         // check to see if train length is okay
                         if (getStatusCode() == CODE_BUILDING
-                                && rLoc.getTrainLength() + length > rLoc.getMaxTrainLength()) {
-                            setServiceStatus(MessageFormat.format(Bundle.getMessage("trainExceedsMaximumLength"),
-                                    new Object[]{getName(), getRoute().getName(), rLoc.getId(),
-                                        rLoc.getMaxTrainLength(), Setup.getLengthUnit().toLowerCase(),
-                                        rLoc.getName(), car.toString()}));
-                            if (debugFlag) {
-                                log.debug("Car (" + car.toString() + ") exceeds maximum train length "
-                                        + rldest.getMaxTrainLength() + " when departing (" // NOI18N
+                                && rLoc.getTrainLength() + length > rLoc
+                                        .getMaxTrainLength()) {
+                            setServiceStatus(MessageFormat
+                                    .format(Bundle
+                                            .getMessage("trainExceedsMaximumLength"),
+                                            new Object[] {
+                                                    getName(),
+                                                    getRoute().getName(),
+                                                    rLoc.getId(),
+                                                    rLoc.getMaxTrainLength(),
+                                                    Setup.getLengthUnit()
+                                                            .toLowerCase(),
+                                                    rLoc.getName(),
+                                                    car.toString() }));
+                            if (debugFlag)
+                                log.debug("Car (" + car.toString()
+                                        + ") exceeds maximum train length "
+                                        + rldest.getMaxTrainLength()
+                                        + " when departing (" // NOI18N
                                         + rldest.getName() + ")");
-                            }
-                            if (addToReport) {
-                                TrainCommon.addLine(buildReport, SEVEN, getServiceStatus());
-                            }
+                            if (addToReport)
+                                TrainCommon.addLine(buildReport, SEVEN,
+                                        getServiceStatus());
                             return false;
                         }
                     }
-                    if (addToReport) {
-                        TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("trainCanNotDeliverToDestination"), new Object[]{getName(),
-                                    car.toString(), car.getDestinationName(), car.getDestinationTrackName()}));
-                    }
-                } else if (addToReport && rLoc.getName().equals(car.getLocationName())) {
-                    TrainCommon.addLine(buildReport, SEVEN, MessageFormat.format(Bundle
-                            .getMessage("trainCanNotServiceCarFrom"), new Object[]{getName(), car.toString(),
-                                car.getLocationName(), car.getTrackName(), rLoc.getId()}));
+                    if (addToReport)
+                        TrainCommon
+                                .addLine(
+                                        buildReport,
+                                        SEVEN,
+                                        MessageFormat.format(
+                                                Bundle.getMessage("trainCanNotDeliverToDestination"),
+                                                new Object[] {
+                                                        getName(),
+                                                        car.toString(),
+                                                        car.getDestinationName(),
+                                                        car.getDestinationTrackName() }));
+                } else if (addToReport
+                        && rLoc.getName().equals(car.getLocationName())) {
+                    TrainCommon
+                            .addLine(
+                                    buildReport,
+                                    SEVEN,
+                                    MessageFormat.format(
+                                            Bundle.getMessage("trainCanNotServiceCarFrom"),
+                                            new Object[] { getName(),
+                                                    car.toString(),
+                                                    car.getLocationName(),
+                                                    car.getTrackName(),
+                                                    rLoc.getId() }));
                 }
             }
         }
-        if (debugFlag) {
-            log.debug("Train ({}) can't service car ({}) from ({}, {})", getName(), car.toString(), car
-                    .getLocationName(), car.getTrackName());
-        }
+        if (debugFlag)
+            log.debug("Train ({}) can't service car ({}) from ({}, {})",
+                    getName(), car.toString(), car.getLocationName(),
+                    car.getTrackName());
         return false;
     }
 
@@ -1836,7 +2069,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     /**
-     *
+     * 
      * @return The number of cars worked by this train
      */
     public int getNumberCarsWorked() {
@@ -1868,7 +2101,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the number of cars in the train at the current location in the
      * train's route.
-     *
+     * 
      * @return The number of cars currently in the train
      */
     public int getNumberCarsInTrain() {
@@ -1878,7 +2111,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the number of cars in the train when train departs the route
      * location.
-     *
+     * 
      * @return The number of cars in the train departing the route location.
      */
     public int getNumberCarsInTrain(RouteLocation routeLocation) {
@@ -1895,9 +2128,8 @@ public class Train implements java.beans.PropertyChangeListener {
                         number--;
                     }
                 }
-                if (rl == routeLocation) {
+                if (rl == routeLocation)
                     break;
-                }
             }
         }
         return number;
@@ -1906,9 +2138,9 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the number of empty cars in the train when train departs the route
      * location.
-     *
+     * 
      * @return The number of empty cars in the train departing the route
-     * location.
+     *         location.
      */
     public int getNumberEmptyCarsInTrain(RouteLocation routeLocation) {
         int number = 0;
@@ -1917,9 +2149,8 @@ public class Train implements java.beans.PropertyChangeListener {
             for (RouteLocation rl : route.getLocationsBySequenceList()) {
                 for (RollingStock rs : CarManager.instance().getList(this)) {
                     Car car = (Car) rs;
-                    if (!car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                    if (!car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY))
                         continue;
-                    }
                     if (car.getRouteLocation() == rl) {
                         number++;
                     }
@@ -1927,9 +2158,8 @@ public class Train implements java.beans.PropertyChangeListener {
                         number--;
                     }
                 }
-                if (rl == routeLocation) {
+                if (rl == routeLocation)
                     break;
-                }
             }
         }
 
@@ -1938,7 +2168,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets the train's length at the current location in the train's route.
-     *
+     * 
      * @return The train length at the train's current location
      */
     public int getTrainLength() {
@@ -1947,8 +2177,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets the train's length at the route location specified
-     *
-     * @param routeLocation The route location
+     * 
+     * @param routeLocation
+     *            The route location
      * @return The train length at the route location
      */
     public int getTrainLength(RouteLocation routeLocation) {
@@ -1974,9 +2205,8 @@ public class Train implements java.beans.PropertyChangeListener {
                         length += -car.getTotalLength();
                     }
                 }
-                if (rl == routeLocation) {
+                if (rl == routeLocation)
                     break;
-                }
             }
         }
         return length;
@@ -1984,7 +2214,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get the train's weight at the current location.
-     *
+     * 
      * @return Train's weight in tons.
      */
     public int getTrainWeight() {
@@ -2014,9 +2244,8 @@ public class Train implements java.beans.PropertyChangeListener {
                         weight += -car.getAdjustedWeightTons();
                     }
                 }
-                if (rl == routeLocation) {
+                if (rl == routeLocation)
                     break;
-                }
             }
         }
         return weight;
@@ -2024,8 +2253,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets the train's locomotive horsepower at the route location specified
-     *
-     * @param routeLocation The route location
+     * 
+     * @param routeLocation
+     *            The route location
      * @return The train's locomotive horsepower at the route location
      */
     public int getTrainHorsePower(RouteLocation routeLocation) {
@@ -2046,9 +2276,8 @@ public class Train implements java.beans.PropertyChangeListener {
                         hp += -Integer.parseInt(eng.getHp());
                     }
                 }
-                if (rl == routeLocation) {
+                if (rl == routeLocation)
                     break;
-                }
             }
         }
         return hp;
@@ -2057,7 +2286,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Gets the current caboose road and number if there's one assigned to the
      * train.
-     *
+     * 
      * @return Road and number of caboose.
      */
     public String getCabooseRoadAndNumber() {
@@ -2066,9 +2295,9 @@ public class Train implements java.beans.PropertyChangeListener {
         List<RollingStock> cars = CarManager.instance().getByTrainList(this);
         for (RollingStock rs : cars) {
             Car car = (Car) rs;
-            if (car.getRouteLocation() == rl && car.getRouteDestination() != rl && car.isCaboose()) {
+            if (car.getRouteLocation() == rl && car.getRouteDestination() != rl
+                    && car.isCaboose())
                 cabooseRoadNumber = car.toString();
-            }
         }
         return cabooseRoadNumber;
     }
@@ -2077,7 +2306,8 @@ public class Train implements java.beans.PropertyChangeListener {
         String old = _description;
         _description = description;
         if (!old.equals(description)) {
-            setDirtyAndFirePropertyChange(DESCRIPTION_CHANGED_PROPERTY, old, description);
+            setDirtyAndFirePropertyChange(DESCRIPTION_CHANGED_PROPERTY, old,
+                    description);
         }
     }
 
@@ -2090,21 +2320,21 @@ public class Train implements java.beans.PropertyChangeListener {
      * engine number, {1} = train's departure direction.
      */
     public String getDescription() {
-        String description = MessageFormat.format(_description, new Object[]{getLeadEngineRoadAndNumber(), getTrainDepartsDirection()});
+        String description = MessageFormat.format(_description, new Object[] {
+                getLeadEngineRoadAndNumber(), getTrainDepartsDirection() });
         return description;
     }
 
     public void setNumberEngines(String number) {
         String old = _numberEngines;
         _numberEngines = number;
-        if (!old.equals(number)) {
+        if (!old.equals(number))
             setDirtyAndFirePropertyChange("trainNmberEngines", old, number); // NOI18N
-        }
     }
 
     /**
      * Get the number of engines that this train requires.
-     *
+     * 
      * @return The number of engines that this train requires.
      */
     public String getNumberEngines() {
@@ -2113,7 +2343,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Get the number of engines needed for the second set.
-     *
+     * 
      * @return The number of engines needed in route
      */
     public String getSecondLegNumberEngines() {
@@ -2123,14 +2353,13 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setSecondLegNumberEngines(String number) {
         String old = _leg2Engines;
         _leg2Engines = number;
-        if (!old.equals(number)) {
+        if (!old.equals(number))
             setDirtyAndFirePropertyChange("trainNmberEngines", old, number); // NOI18N
-        }
     }
 
     /**
      * Get the number of engines needed for the third set.
-     *
+     * 
      * @return The number of engines needed in route
      */
     public String getThirdLegNumberEngines() {
@@ -2140,27 +2369,26 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setThirdLegNumberEngines(String number) {
         String old = _leg3Engines;
         _leg3Engines = number;
-        if (!old.equals(number)) {
+        if (!old.equals(number))
             setDirtyAndFirePropertyChange("trainNmberEngines", old, number); // NOI18N
-        }
     }
 
     /**
      * Set the road name of engines servicing this train.
-     *
-     * @param road The road name of engines servicing this train.
+     * 
+     * @param road
+     *            The road name of engines servicing this train.
      */
     public void setEngineRoad(String road) {
         String old = _engineRoad;
         _engineRoad = road;
-        if (!old.equals(road)) {
+        if (!old.equals(road))
             setDirtyAndFirePropertyChange("trainEngineRoad", old, road); // NOI18N
-        }
     }
 
     /**
      * Get the road name of engines servicing this train.
-     *
+     * 
      * @return The road name of engines servicing this train.
      */
     public String getEngineRoad() {
@@ -2169,20 +2397,20 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the road name of engines servicing this train 2nd leg.
-     *
-     * @param road The road name of engines servicing this train.
+     * 
+     * @param road
+     *            The road name of engines servicing this train.
      */
     public void setSecondLegEngineRoad(String road) {
         String old = _leg2Road;
         _leg2Road = road;
-        if (!old.equals(road)) {
+        if (!old.equals(road))
             setDirtyAndFirePropertyChange("trainEngineRoad", old, road); // NOI18N
-        }
     }
 
     /**
      * Get the road name of engines servicing this train 2nd leg.
-     *
+     * 
      * @return The road name of engines servicing this train.
      */
     public String getSecondLegEngineRoad() {
@@ -2191,20 +2419,20 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the road name of engines servicing this train 3rd leg.
-     *
-     * @param road The road name of engines servicing this train.
+     * 
+     * @param road
+     *            The road name of engines servicing this train.
      */
     public void setThirdLegEngineRoad(String road) {
         String old = _leg3Road;
         _leg3Road = road;
-        if (!old.equals(road)) {
+        if (!old.equals(road))
             setDirtyAndFirePropertyChange("trainEngineRoad", old, road); // NOI18N
-        }
     }
 
     /**
      * Get the road name of engines servicing this train 3rd leg.
-     *
+     * 
      * @return The road name of engines servicing this train.
      */
     public String getThirdLegEngineRoad() {
@@ -2213,15 +2441,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the model name of engines servicing this train.
-     *
-     * @param model The model name of engines servicing this train.
+     * 
+     * @param model
+     *            The model name of engines servicing this train.
      */
     public void setEngineModel(String model) {
         String old = _engineModel;
         _engineModel = model;
-        if (!old.equals(model)) {
+        if (!old.equals(model))
             setDirtyAndFirePropertyChange("trainEngineModel", old, model); // NOI18N
-        }
     }
 
     public String getEngineModel() {
@@ -2230,15 +2458,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the model name of engines servicing this train's 2nd leg.
-     *
-     * @param model The model name of engines servicing this train.
+     * 
+     * @param model
+     *            The model name of engines servicing this train.
      */
     public void setSecondLegEngineModel(String model) {
         String old = _leg2Model;
         _leg2Model = model;
-        if (!old.equals(model)) {
+        if (!old.equals(model))
             setDirtyAndFirePropertyChange("trainEngineModel", old, model); // NOI18N
-        }
     }
 
     public String getSecondLegEngineModel() {
@@ -2247,15 +2475,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the model name of engines servicing this train's 3rd leg.
-     *
-     * @param model The model name of engines servicing this train.
+     * 
+     * @param model
+     *            The model name of engines servicing this train.
      */
     public void setThirdLegEngineModel(String model) {
         String old = _leg3Model;
         _leg3Model = model;
-        if (!old.equals(model)) {
+        if (!old.equals(model))
             setDirtyAndFirePropertyChange("trainEngineModel", old, model); // NOI18N
-        }
     }
 
     public String getThirdLegEngineModel() {
@@ -2263,28 +2491,25 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     private void replaceModel(String oldModel, String newModel) {
-        if (getEngineModel().equals(oldModel)) {
+        if (getEngineModel().equals(oldModel))
             setEngineModel(newModel);
-        }
-        if (getSecondLegEngineModel().equals(oldModel)) {
+        if (getSecondLegEngineModel().equals(oldModel))
             setSecondLegEngineModel(newModel);
-        }
-        if (getThirdLegEngineModel().equals(oldModel)) {
+        if (getThirdLegEngineModel().equals(oldModel))
             setThirdLegEngineModel(newModel);
-        }
     }
 
     /**
      * Set the road name of the caboose servicing this train.
-     *
-     * @param road The road name of the caboose servicing this train.
+     * 
+     * @param road
+     *            The road name of the caboose servicing this train.
      */
     public void setCabooseRoad(String road) {
         String old = _cabooseRoad;
         _cabooseRoad = road;
-        if (!old.equals(road)) {
+        if (!old.equals(road))
             setDirtyAndFirePropertyChange("trainCabooseRoad", old, road); // NOI18N
-        }
     }
 
     public String getCabooseRoad() {
@@ -2293,15 +2518,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the road name of the second leg caboose servicing this train.
-     *
-     * @param road The road name of the caboose servicing this train's 2nd leg.
+     * 
+     * @param road
+     *            The road name of the caboose servicing this train's 2nd leg.
      */
     public void setSecondLegCabooseRoad(String road) {
         String old = _leg2CabooseRoad;
         _leg2CabooseRoad = road;
-        if (!old.equals(road)) {
+        if (!old.equals(road))
             setDirtyAndFirePropertyChange("trainCabooseRoad", old, road); // NOI18N
-        }
     }
 
     public String getSecondLegCabooseRoad() {
@@ -2310,15 +2535,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Set the road name of the third leg caboose servicing this train.
-     *
-     * @param road The road name of the caboose servicing this train's 3rd leg.
+     * 
+     * @param road
+     *            The road name of the caboose servicing this train's 3rd leg.
      */
     public void setThirdLegCabooseRoad(String road) {
         String old = _leg3CabooseRoad;
         _leg3CabooseRoad = road;
-        if (!old.equals(road)) {
+        if (!old.equals(road))
             setDirtyAndFirePropertyChange("trainCabooseRoad", old, road); // NOI18N
-        }
     }
 
     public String getThirdLegCabooseRoad() {
@@ -2334,9 +2559,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public String getSecondLegStartLocationName() {
-        if (getSecondLegStartLocation() == null) {
+        if (getSecondLegStartLocation() == null)
             return NONE;
-        }
         return getSecondLegStartLocation().getName();
     }
 
@@ -2349,9 +2573,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public String getThirdLegStartLocationName() {
-        if (getThirdLegStartLocation() == null) {
+        if (getThirdLegStartLocation() == null)
             return NONE;
-        }
         return getThirdLegStartLocation().getName();
     }
 
@@ -2360,9 +2583,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public String getSecondLegEndLocationName() {
-        if (getSecondLegEndLocation() == null) {
+        if (getSecondLegEndLocation() == null)
             return NONE;
-        }
         return getSecondLegEndLocation().getName();
     }
 
@@ -2379,24 +2601,23 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public String getThirdLegEndLocationName() {
-        if (getThirdLegEndLocation() == null) {
+        if (getThirdLegEndLocation() == null)
             return NONE;
-        }
         return getThirdLegEndLocation().getName();
     }
 
     /**
      * Optional changes to train while in route.
-     *
-     * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
-     * REMOVE_CABOOSE
+     * 
+     * @param options
+     *            NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
+     *            REMOVE_CABOOSE
      */
     public void setSecondLegOptions(int options) {
         int old = _leg2Options;
         _leg2Options = options;
-        if (old != options) {
+        if (old != options)
             setDirtyAndFirePropertyChange("trainLegOptions", old, options); // NOI18N
-        }
     }
 
     public int getSecondLegOptions() {
@@ -2405,16 +2626,16 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Optional changes to train while in route.
-     *
-     * @param options NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
-     * REMOVE_CABOOSE
+     * 
+     * @param options
+     *            NONE, CHANGE_ENGINES, ADD_CABOOSE, HELPER_ENGINES,
+     *            REMOVE_CABOOSE
      */
     public void setThirdLegOptions(int options) {
         int old = _leg3Options;
         _leg3Options = options;
-        if (old != options) {
+        if (old != options)
             setDirtyAndFirePropertyChange("trainLegOptions", old, options); // NOI18N
-        }
     }
 
     public int getThirdLegOptions() {
@@ -2424,9 +2645,8 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setComment(String comment) {
         String old = _comment;
         _comment = comment;
-        if (!old.equals(comment)) {
+        if (!old.equals(comment))
             setDirtyAndFirePropertyChange("trainComment", old, comment); // NOI18N
-        }
     }
 
     public String getComment() {
@@ -2435,8 +2655,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Add a script to run before a train is built
-     *
-     * @param pathname The script's pathname
+     * 
+     * @param pathname
+     *            The script's pathname
      */
     public void addBuildScript(String pathname) {
         _buildScripts.add(pathname);
@@ -2450,7 +2671,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets a list of pathnames (scripts) to run before this train is built
-     *
+     * 
      * @return A list of pathnames to run before this train is built
      */
     public List<String> getBuildScripts() {
@@ -2459,8 +2680,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Add a script to run after a train is built
-     *
-     * @param pathname The script's pathname
+     * 
+     * @param pathname
+     *            The script's pathname
      */
     public void addAfterBuildScript(String pathname) {
         _afterBuildScripts.add(pathname);
@@ -2474,7 +2696,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets a list of pathnames (scripts) to run after this train is built
-     *
+     * 
      * @return A list of pathnames to run after this train is built
      */
     public List<String> getAfterBuildScripts() {
@@ -2483,8 +2705,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Add a script to run when train is moved
-     *
-     * @param pathname The script's pathname
+     * 
+     * @param pathname
+     *            The script's pathname
      */
     public void addMoveScript(String pathname) {
         _moveScripts.add(pathname);
@@ -2498,7 +2721,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets a list of pathnames (scripts) to run when this train moved
-     *
+     * 
      * @return A list of pathnames to run when this train moved
      */
     public List<String> getMoveScripts() {
@@ -2507,8 +2730,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Add a script to run when train is terminated
-     *
-     * @param pathname The script's pathname
+     * 
+     * @param pathname
+     *            The script's pathname
      */
     public void addTerminationScript(String pathname) {
         _terminationScripts.add(pathname);
@@ -2522,7 +2746,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets a list of pathnames (scripts) to run when this train terminates
-     *
+     * 
      * @return A list of pathnames to run when this train terminates
      */
     public List<String> getTerminationScripts() {
@@ -2531,7 +2755,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Gets the optional railroad name for this train.
-     *
+     * 
      * @return Train's railroad name.
      */
     public String getRailroadName() {
@@ -2540,15 +2764,15 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Overrides the default railroad name for this train.
-     *
-     * @param name The railroad name for this train.
+     * 
+     * @param name
+     *            The railroad name for this train.
      */
     public void setRailroadName(String name) {
         String old = _railroadName;
         _railroadName = name;
-        if (!old.equals(name)) {
+        if (!old.equals(name))
             setDirtyAndFirePropertyChange("trainRailroadName", old, name); // NOI18N
-        }
     }
 
     public String getManifestLogoURL() {
@@ -2557,8 +2781,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Overrides the default logo for this train.
-     *
-     * @param pathName file location for the logo.
+     * 
+     * @param pathName
+     *            file location for the logo.
      */
     public void setManifestLogoURL(String pathName) {
         _logoURL = pathName;
@@ -2572,7 +2797,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _showTimes;
         _showTimes = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes", old ? "true" : "false", // NOI18N
+            setDirtyAndFirePropertyChange("showArrivalAndDepartureTimes",
+                    old ? "true" : "false", // NOI18N
                     enable ? "true" : "false"); // NOI18N
         }
     }
@@ -2585,7 +2811,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _sendToTerminal;
         _sendToTerminal = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("send cars to terminal", old ? "true" : "false", enable ? "true" // NOI18N
+            setDirtyAndFirePropertyChange("send cars to terminal", old ? "true"
+                    : "false", enable ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
@@ -2598,7 +2825,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _allowLocalMoves;
         _allowLocalMoves = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow local moves", old ? "true" : "false", enable ? "true" // NOI18N
+            setDirtyAndFirePropertyChange("allow local moves", old ? "true"
+                    : "false", enable ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
@@ -2611,7 +2839,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _allowThroughCars;
         _allowThroughCars = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow through cars", old ? "true" : "false", enable ? "true" // NOI18N
+            setDirtyAndFirePropertyChange("allow through cars", old ? "true"
+                    : "false", enable ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
@@ -2624,7 +2853,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _buildNormal;
         _buildNormal = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("build train normal", old ? "true" : "false", enable ? "true" // NOI18N
+            setDirtyAndFirePropertyChange("build train normal", old ? "true"
+                    : "false", enable ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
@@ -2632,7 +2862,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * When true allow a turn to return cars to staging. A turn is a train that
      * departs and terminates at the same location.
-     *
+     * 
      * @return true if cars can return to staging
      */
     public boolean isAllowReturnToStagingEnabled() {
@@ -2643,7 +2873,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _allowCarsReturnStaging;
         _allowCarsReturnStaging = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("allow cars to return to staging", old ? "true" : "false", // NOI18N
+            setDirtyAndFirePropertyChange("allow cars to return to staging",
+                    old ? "true" : "false", // NOI18N
                     enable ? "true" : "false"); // NOI18N
         }
     }
@@ -2656,7 +2887,9 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _serviceAllCarsWithFinalDestinations;
         _serviceAllCarsWithFinalDestinations = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("TrainServiceAllCarsWithFinalDestinations", old ? "true" : "false", // NOI18N
+            setDirtyAndFirePropertyChange(
+                    "TrainServiceAllCarsWithFinalDestinations", old ? "true"
+                            : "false", // NOI18N
                     enable ? "true" : "false"); // NOI18N
         }
     }
@@ -2669,7 +2902,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _buildConsist;
         _buildConsist = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("TrainBuildConsist", old ? "true" : "false", // NOI18N
+            setDirtyAndFirePropertyChange("TrainBuildConsist", old ? "true"
+                    : "false", // NOI18N
                     enable ? "true" : "false"); // NOI18N
         }
     }
@@ -2682,7 +2916,8 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _sendCarsWithCustomLoadsToStaging;
         _sendCarsWithCustomLoadsToStaging = enable;
         if (old != enable) {
-            setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging", old ? "true" : "false", // NOI18N
+            setDirtyAndFirePropertyChange("SendCarsWithCustomLoadsToStaging",
+                    old ? "true" : "false", // NOI18N
                     enable ? "true" : "false"); // NOI18N
         }
     }
@@ -2691,14 +2926,15 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _built;
         _built = built;
         if (old != built) {
-            setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old ? "true" : "false", built ? "true" // NOI18N
+            setDirtyAndFirePropertyChange(BUILT_CHANGED_PROPERTY, old ? "true"
+                    : "false", built ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
 
     /**
      * Used to determine if this train has been built.
-     *
+     * 
      * @return true if the train was successfully built.
      */
     public boolean isBuilt() {
@@ -2708,11 +2944,11 @@ public class Train implements java.beans.PropertyChangeListener {
     public void setModified(boolean modified) {
         boolean old = _modified;
         _modified = modified;
-        if (modified) {
+        if (modified)
             setPrinted(false);
-        }
         if (old != modified) {
-            setDirtyAndFirePropertyChange("TrainModified", old ? "true" : "false", modified ? "true" // NOI18N
+            setDirtyAndFirePropertyChange("TrainModified", old ? "true"
+                    : "false", modified ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
@@ -2723,9 +2959,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Deprecated, kept for user scripts. Use isBuilt()
-     *
+     * 
      * @return true if the train was successfully built.
-     *
+     * 
      */
     @Deprecated
     public boolean getBuilt() {
@@ -2734,21 +2970,23 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Control flag used to decide if this train is to be built.
-     *
-     * @param build When true, build this train.
+     * 
+     * @param build
+     *            When true, build this train.
      */
     public void setBuildEnabled(boolean build) {
         boolean old = _build;
         _build = build;
         if (old != build) {
-            setDirtyAndFirePropertyChange(BUILD_CHANGED_PROPERTY, old ? "true" : "false", build ? "true" // NOI18N
+            setDirtyAndFirePropertyChange(BUILD_CHANGED_PROPERTY, old ? "true"
+                    : "false", build ? "true" // NOI18N
                     : "false"); // NOI18N
         }
     }
 
     /**
      * Used to determine if train is to be built.
-     *
+     * 
      * @return true if train is to be built.
      */
     public boolean isBuildEnabled() {
@@ -2757,8 +2995,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Deprecated, use setBuildEnabled(build).
-     *
-     * @param build When true, build this train.
+     * 
+     * @param build
+     *            When true, build this train.
      */
     @Deprecated
     public void setBuild(boolean build) {
@@ -2767,7 +3006,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Deprecated, use isBuildEnabled()
-     *
+     * 
      * @return true if train is to be built.
      */
     @Deprecated
@@ -2777,7 +3016,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Build this train if the build control flag is true.
-     *
+     * 
      * @return True only if train is successfully built.
      */
     public boolean buildIfSelected() {
@@ -2785,7 +3024,8 @@ public class Train implements java.beans.PropertyChangeListener {
             build();
             return true;
         }
-        log.debug("Train (" + getName() + ") not selected or already built, skipping build");
+        log.debug("Train (" + getName()
+                + ") not selected or already built, skipping build");
         return false;
     }
 
@@ -2812,14 +3052,16 @@ public class Train implements java.beans.PropertyChangeListener {
             // save the current status
             int savedStatus = getStatusCode();
             setStatus(CODE_RUN_SCRIPTS);
-            jmri.util.PythonInterp.getPythonInterpreter(); // create the python interpreter thread
+            jmri.util.PythonInterp.getPythonInterpreter(); // create the python
+                                                           // interpreter thread
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
             int numberOfThreads = root.activeCount();
-//			log.debug("Number of active threads: {}", numberOfThreads);
+            // log.debug("Number of active threads: {}", numberOfThreads);
             for (String scriptPathname : scripts) {
                 try {
-                    jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathname));
+                    jmri.util.PythonInterp.runScript(jmri.util.FileUtil
+                            .getExternalFilename(scriptPathname));
                 } catch (Exception e) {
                     log.error("Problem with script: {}", scriptPathname);
                 }
@@ -2828,15 +3070,16 @@ public class Train implements java.beans.PropertyChangeListener {
             int count = 0;
             while (root.activeCount() > numberOfThreads) {
                 synchronized (this) {
-                    log.debug("Number of active threads: {}, at start: {}", root.activeCount(), numberOfThreads);
+                    log.debug("Number of active threads: {}, at start: {}",
+                            root.activeCount(), numberOfThreads);
                     try {
                         wait(20);
                     } catch (InterruptedException e) {
-                        Thread.currentThread().interrupt(); // retain if needed later
+                        Thread.currentThread().interrupt(); // retain if needed
+                                                            // later
                     }
-                    if (count++ > 100) {
+                    if (count++ > 100)
                         break; // 2 seconds maximum 20*100 = 2000
-                    }
                 }
             }
             setStatus(savedStatus);
@@ -2850,19 +3093,20 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public boolean printBuildReport(boolean isPreview) {
-        File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(getName());
+        File buildFile = TrainManagerXml.instance().getTrainBuildReportFile(
+                getName());
         if (!buildFile.exists()) {
             log.warn("Build file missing for train " + getName());
             return false;
         }
 
-        if (isPreview && Setup.isBuildReportEditorEnabled()) {
+        if (isPreview && Setup.isBuildReportEditorEnabled())
             TrainPrintUtilities.editReport(buildFile, getName());
-        } else {
-            TrainPrintUtilities.printReport(buildFile, MessageFormat.format(Bundle.getMessage("buildReport"),
-                    new Object[]{getDescription()}), isPreview, NONE, true, NONE, NONE, Setup.PORTRAIT, Setup
-                    .getBuildReportFontSize());
-        }
+        else
+            TrainPrintUtilities.printReport(buildFile, MessageFormat.format(
+                    Bundle.getMessage("buildReport"),
+                    new Object[] { getDescription() }), isPreview, NONE, true,
+                    NONE, NONE, Setup.PORTRAIT, Setup.getBuildReportFontSize());
         return true;
     }
 
@@ -2870,14 +3114,15 @@ public class Train implements java.beans.PropertyChangeListener {
         boolean old = _buildFailed;
         _buildFailed = status;
         if (old != status) {
-            setDirtyAndFirePropertyChange("buildFailed", old ? "true" : "false", status ? "true" : "false"); // NOI18N
+            setDirtyAndFirePropertyChange("buildFailed",
+                    old ? "true" : "false", status ? "true" : "false"); // NOI18N
         }
     }
 
     /**
      * Returns true if the train build failed. Note that returning false doesn't
      * mean the build was successful.
-     *
+     * 
      * @return true if train build failed.
      */
     public boolean getBuildFailed() {
@@ -2898,7 +3143,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Print manifest for train if already built.
-     *
+     * 
      * @return true if print successful.
      */
     public boolean printManifestIfBuilt() {
@@ -2906,7 +3151,8 @@ public class Train implements java.beans.PropertyChangeListener {
             boolean isPreview = TrainManager.instance().isPrintPreviewEnabled();
             printManifest(isPreview);
         } else {
-            log.debug("Need to build train (" + getName() + ") before printing manifest");
+            log.debug("Need to build train (" + getName()
+                    + ") before printing manifest");
             return false;
         }
         return true;
@@ -2914,7 +3160,7 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Print manifest for train.
-     *
+     * 
      * @return true if print successful.
      */
     public boolean printManifest(boolean isPreview) {
@@ -2923,11 +3169,11 @@ public class Train implements java.beans.PropertyChangeListener {
             try {
                 new JsonManifest(this).build();
             } catch (IOException ex) {
-                log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+                log.error("Unable to create JSON manifest {}",
+                        ex.getLocalizedMessage());
             }
-            if (Setup.isGenerateCsvManifestEnabled()) {
+            if (Setup.isGenerateCsvManifestEnabled())
                 new TrainCsvManifest(this);
-            }
         }
         File file = TrainManagerXml.instance().getTrainManifestFile(getName());
         if (!file.exists()) {
@@ -2939,21 +3185,20 @@ public class Train implements java.beans.PropertyChangeListener {
             return true;
         }
         String logoURL = NONE;
-        if (!getManifestLogoURL().equals(NONE)) {
+        if (!getManifestLogoURL().equals(NONE))
             logoURL = FileUtil.getExternalFilename(getManifestLogoURL());
-        } else if (!Setup.getManifestLogoURL().equals(Setup.NONE)) {
+        else if (!Setup.getManifestLogoURL().equals(Setup.NONE))
             logoURL = FileUtil.getExternalFilename(Setup.getManifestLogoURL());
-        }
-        Location departs = LocationManager.instance().getLocationByName(getTrainDepartsName());
+        Location departs = LocationManager.instance().getLocationByName(
+                getTrainDepartsName());
         String printerName = Location.NONE;
-        if (departs != null) {
+        if (departs != null)
             printerName = departs.getDefaultPrinterName();
-        }
-        TrainPrintUtilities.printReport(file, getDescription(), isPreview, Setup.getFontName(), false, logoURL,
-                printerName, Setup.getManifestOrientation(), Setup.getManifestFontSize());
-        if (!isPreview) {
+        TrainPrintUtilities.printReport(file, getDescription(), isPreview,
+                Setup.getFontName(), false, logoURL, printerName,
+                Setup.getManifestOrientation(), Setup.getManifestFontSize());
+        if (!isPreview)
             setPrinted(true);
-        }
         return true;
     }
 
@@ -2978,9 +3223,11 @@ public class Train implements java.beans.PropertyChangeListener {
         if (!TrainCustomManifest.process()) {
             if (!TrainCustomManifest.manifestCreatorFileExists()) {
                 JOptionPane.showMessageDialog(null, MessageFormat.format(
-                        Bundle.getMessage("LoadDirectoryNameFileName"), new Object[]{
-                            TrainCustomManifest.getDirectoryName(), TrainCustomManifest.getFileName()}), Bundle
-                        .getMessage("ManifestCreatorNotFound"), JOptionPane.ERROR_MESSAGE);
+                        Bundle.getMessage("LoadDirectoryNameFileName"),
+                        new Object[] { TrainCustomManifest.getDirectoryName(),
+                                TrainCustomManifest.getFileName() }), Bundle
+                        .getMessage("ManifestCreatorNotFound"),
+                        JOptionPane.ERROR_MESSAGE);
             }
             return false;
         }
@@ -2993,13 +3240,14 @@ public class Train implements java.beans.PropertyChangeListener {
             try {
                 new JsonManifest(this).build();
             } catch (IOException ex) {
-                log.error("Unable to create JSON manifest {}", ex.getLocalizedMessage());
+                log.error("Unable to create JSON manifest {}",
+                        ex.getLocalizedMessage());
             }
-            if (Setup.isGenerateCsvManifestEnabled()) {
+            if (Setup.isGenerateCsvManifestEnabled())
                 new TrainCsvManifest(this);
-            }
         }
-        File file = TrainManagerXml.instance().getTrainCsvManifestFile(getName());
+        File file = TrainManagerXml.instance().getTrainCsvManifestFile(
+                getName());
         if (!file.exists()) {
             log.warn("CSV manifest file was not created for train " + getName());
             return null;
@@ -3010,16 +3258,16 @@ public class Train implements java.beans.PropertyChangeListener {
     private void setPrinted(boolean printed) {
         boolean old = _printed;
         _printed = printed;
-        if (old != printed) {
-            setDirtyAndFirePropertyChange("trainPrinted", old ? "true" : "false", printed ? "true" : "false"); // NOI18N
-        }
+        if (old != printed)
+            setDirtyAndFirePropertyChange("trainPrinted", old ? "true"
+                    : "false", printed ? "true" : "false"); // NOI18N
     }
 
     /**
      * Used to determine if train manifest was printed.
-     *
+     * 
      * @return true if the train manifest was printed.
-     *
+     * 
      */
     public boolean isPrinted() {
         return _printed;
@@ -3027,28 +3275,29 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Deprecated, kept for user scripts. Use isPrinted()
-     *
+     * 
      * @return true if the train manifest was printed.
-     *
+     * 
      */
     @Deprecated
     public boolean getPrinted() {
         return _printed;
     }
 
-    protected RouteLocation _trainIconRl = null; // saves the icon current route location
+    protected RouteLocation _trainIconRl = null; // saves the icon current route
+                                                 // location
 
     /**
      * Sets the panel position for the train icon for the current route
      * location.
-     *
+     * 
      * @return true if train coordinates can be set
      */
     public boolean setTrainIconCoordinates() {
         if (Setup.isTrainIconCordEnabled()) {
             _trainIconRl.setTrainIconX(_trainIcon.getX());
             _trainIconRl.setTrainIconY(_trainIcon.getY());
-//			RouteManagerXml.instance().setDirty(true);
+            // RouteManagerXml.instance().setDirty(true);
             return true;
         }
         return false;
@@ -3058,9 +3307,8 @@ public class Train implements java.beans.PropertyChangeListener {
      * Terminate train.
      */
     public void terminate() {
-        while (isBuilt()) {
+        while (isBuilt())
             move();
-        }
     }
 
     /**
@@ -3074,25 +3322,18 @@ public class Train implements java.beans.PropertyChangeListener {
             setBuilt(false); // break terminate loop
             return;
         }
-        List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
-        for (int i = 0; i < routeList.size(); i++) {
-            RouteLocation rl = routeList.get(i);
-            if (getCurrentLocation() == rl) {
-                i++;
-                RouteLocation rlNew = null; // use null if end of route
-                if (i < routeList.size()) {
-                    rlNew = routeList.get(i);
-                }
-                setCurrentLocation(rlNew);
-                moveTrainIcon(rlNew);
-                // cars and engines will move via property change
-                setDirtyAndFirePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl, rlNew);
-                updateStatus(rl, rlNew);
-                // tell GUI that train has complete its move
-                setDirtyAndFirePropertyChange(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY, rl, rlNew);
-                break;
-            }
-        }
+        RouteLocation rl = getCurrentLocation();
+        RouteLocation rlNext = getNextLocation(rl);
+
+        setCurrentLocation(rlNext);
+        moveTrainIcon(rlNext);
+        // cars and engines will move via property change
+        setDirtyAndFirePropertyChange(TRAIN_LOCATION_CHANGED_PROPERTY, rl,
+                rlNext);
+        updateStatus(rl, rlNext);
+        // tell GUI that train has complete its move
+        setDirtyAndFirePropertyChange(TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY, rl,
+                rlNext);
     }
 
     /**
@@ -3101,15 +3342,16 @@ public class Train implements java.beans.PropertyChangeListener {
      * already visited the location. This command can only move the train
      * forward in its route. Note that you can not terminate the train using
      * this command. See move() or terminate().
-     *
-     * @param locationName The name of the location to move this train.
+     * 
+     * @param locationName
+     *            The name of the location to move this train.
      * @return true if train was able to move to the named location.
      */
     public boolean move(String locationName) {
-        log.info("Move train (" + getName() + ") to location (" + locationName + ")");
-        if (getRoute() == null || getCurrentLocation() == null) {
+        log.info("Move train (" + getName() + ") to location (" + locationName
+                + ")");
+        if (getRoute() == null || getCurrentLocation() == null)
             return false;
-        }
         List<RouteLocation> routeList = getRoute().getLocationsBySequenceList();
         for (int i = 0; i < routeList.size(); i++) {
             RouteLocation rl = routeList.get(i);
@@ -3117,13 +3359,13 @@ public class Train implements java.beans.PropertyChangeListener {
                 for (int j = i + 1; j < routeList.size(); j++) {
                     rl = routeList.get(j);
                     if (rl.getName().equals(locationName)) {
-                        log.debug("Found location (" + locationName + ") moving train to this location");
+                        log.debug("Found location (" + locationName
+                                + ") moving train to this location");
                         for (j = i + 1; j < routeList.size(); j++) {
                             rl = routeList.get(j);
                             move();
-                            if (rl.getName().equals(locationName)) {
+                            if (rl.getName().equals(locationName))
                                 return true;
-                            }
                         }
                     }
                 }
@@ -3136,8 +3378,9 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Move train to the next location in the train's route. The location name
      * provided must be equal to the next location name in the train's route.
-     *
-     * @param locationName The next location name in the train's route.
+     * 
+     * @param locationName
+     *            The next location name in the train's route.
      * @return true if successful.
      */
     public boolean moveToNextLocation(String locationName) {
@@ -3149,9 +3392,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void loadTrainIcon() {
-        if (getCurrentLocation() != null) {
+        if (getCurrentLocation() != null)
             moveTrainIcon(getCurrentLocation());
-        }
     }
 
     private boolean animation = true; // when true use animation for icon moves
@@ -3167,29 +3409,35 @@ public class Train implements java.beans.PropertyChangeListener {
             createTrainIcon();
         }
         // is the lead engine still in train
-        if (getLeadEngine() != null && getLeadEngine().getRouteDestination() == rl && rl != null) {
-            log.debug("Engine (" + getLeadEngine().toString() + ") arriving at destination " + rl.getName());
+        if (getLeadEngine() != null
+                && getLeadEngine().getRouteDestination() == rl && rl != null) {
+            log.debug("Engine (" + getLeadEngine().toString()
+                    + ") arriving at destination " + rl.getName());
         }
         if (_trainIcon != null && _trainIcon.isActive()) {
             setTrainIconColor();
             _trainIcon.setShowTooltip(true);
             String txt = null;
-            if (getCurrentLocationName().equals(NONE)) {
-                txt = getDescription() + " " + Bundle.getMessage("Terminated") + " (" + getTrainTerminatesName() + ")";
-            } else {
-                txt = MessageFormat.format(Bundle.getMessage("TrainAtNext"), new Object[]{getDescription(),
-                    getCurrentLocationName(), getNextLocationName()});
-            }
+            if (getCurrentLocationName().equals(NONE))
+                txt = getDescription() + " " + Bundle.getMessage("Terminated")
+                        + " (" + getTrainTerminatesName() + ")";
+            else
+                txt = MessageFormat
+                        .format(Bundle.getMessage("TrainAtNext"), new Object[] {
+                                getDescription(), getCurrentLocationName(),
+                                getNextLocationName() });
             _trainIcon.getTooltip().setText(txt);
             _trainIcon.getTooltip().setBackgroundColor(Color.white);
             if (rl != null) {
                 if (rl.getTrainIconX() != 0 || rl.getTrainIconY() != 0) {
                     if (animation) {
-                        TrainIconAnimation ta = new TrainIconAnimation(_trainIcon, rl, _ta);
+                        TrainIconAnimation ta = new TrainIconAnimation(
+                                _trainIcon, rl, _ta);
                         ta.start(); // start the animation
                         _ta = ta;
                     } else {
-                        _trainIcon.setLocation(rl.getTrainIconX(), rl.getTrainIconY());
+                        _trainIcon.setLocation(rl.getTrainIconX(),
+                                rl.getTrainIconY());
                     }
                 }
             }
@@ -3198,29 +3446,27 @@ public class Train implements java.beans.PropertyChangeListener {
 
     public String getIconName() {
         String name = getName();
-        if (isBuilt() && getLeadEngine() != null && Setup.isTrainIconAppendEnabled()) {
+        if (isBuilt() && getLeadEngine() != null
+                && Setup.isTrainIconAppendEnabled())
             name += " " + getLeadEngine().getNumber();
-        }
         return name;
     }
 
     public String getLeadEngineNumber() {
-        if (getLeadEngine() == null) {
+        if (getLeadEngine() == null)
             return NONE;
-        }
         return getLeadEngine().getNumber();
     }
 
     public String getLeadEngineRoadAndNumber() {
-        if (getLeadEngine() == null) {
+        if (getLeadEngine() == null)
             return NONE;
-        }
         return getLeadEngine().toString();
     }
 
     /**
      * Gets the lead engine, will create it if the program has been restarted
-     *
+     * 
      * @return lead engine for this train
      */
     public Engine getLeadEngine() {
@@ -3231,9 +3477,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void setLeadEngine(Engine engine) {
-        if (engine == null) {
+        if (engine == null)
             _leadEngineId = NONE;
-        }
         _leadEngine = engine;
     }
 
@@ -3250,30 +3495,36 @@ public class Train implements java.beans.PropertyChangeListener {
         }
         // if there's a panel specified, get it and place icon
         if (!Setup.getPanelName().equals(Setup.NONE)) {
-            Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());
+            Editor editor = PanelMenu.instance().getEditorByName(
+                    Setup.getPanelName());
             if (editor != null) {
                 _trainIcon = editor.addTrainIcon(getIconName());
                 _trainIcon.setTrain(this);
                 if (getIconName().length() > 9) {
-                    _trainIcon.setFont(jmri.util.FontUtil.deriveFont(_trainIcon.getFont(), 8.f));
+                    _trainIcon.setFont(jmri.util.FontUtil.deriveFont(
+                            _trainIcon.getFont(), 8.f));
                 }
-                if (getCurrentLocation() != null) {
-                    _trainIcon.setLocation(getCurrentLocation().getTrainIconX(), getCurrentLocation().getTrainIconY());
-                }
+                if (getCurrentLocation() != null)
+                    _trainIcon.setLocation(
+                            getCurrentLocation().getTrainIconX(),
+                            getCurrentLocation().getTrainIconY());
                 // add throttle if there's a throttle manager
                 if (jmri.InstanceManager.throttleManagerInstance() != null) {
                     // add throttle if JMRI loco roster entry exist
                     RosterEntry entry = null;
                     if (getLeadEngine() != null) {
                         // first try and find a match based on loco road number
-                        List<RosterEntry> entries = Roster.instance().matchingList(null, getLeadEngine().getNumber(),
-                                null, null, null, null, null);
+                        List<RosterEntry> entries = Roster.instance()
+                                .matchingList(null,
+                                        getLeadEngine().getNumber(), null,
+                                        null, null, null, null);
                         if (entries.size() > 0) {
                             entry = entries.get(0);
                         }
                         if (entry == null) {
                             // now try finding a match based on DCC address
-                            entries = Roster.instance().matchingList(null, null, getLeadEngine().getNumber(), null,
+                            entries = Roster.instance().matchingList(null,
+                                    null, getLeadEngine().getNumber(), null,
                                     null, null, null);
                             if (entries.size() > 0) {
                                 entry = entries.get(0);
@@ -3282,11 +3533,12 @@ public class Train implements java.beans.PropertyChangeListener {
                     }
                     if (entry != null) {
                         _trainIcon.setRosterEntry(entry);
-                        if (getLeadEngine().getConsist() != null) {
-                            _trainIcon.setConsistNumber(getLeadEngine().getConsist().getConsistNumber());
-                        }
+                        if (getLeadEngine().getConsist() != null)
+                            _trainIcon.setConsistNumber(getLeadEngine()
+                                    .getConsist().getConsistNumber());
                     } else {
-                        log.debug("Loco roster entry not found for train (" + getName() + ")");
+                        log.debug("Loco roster entry not found for train ("
+                                + getName() + ")");
                     }
                 }
             }
@@ -3305,21 +3557,18 @@ public class Train implements java.beans.PropertyChangeListener {
             return;
         }
         // set color based on train direction at current location
-        if (_trainIconRl.getTrainDirection() == RouteLocation.NORTH) {
+        if (_trainIconRl.getTrainDirection() == RouteLocation.NORTH)
             _trainIcon.setLocoColor(Setup.getTrainIconColorNorth());
-        }
-        if (_trainIconRl.getTrainDirection() == RouteLocation.SOUTH) {
+        if (_trainIconRl.getTrainDirection() == RouteLocation.SOUTH)
             _trainIcon.setLocoColor(Setup.getTrainIconColorSouth());
-        }
-        if (_trainIconRl.getTrainDirection() == RouteLocation.EAST) {
+        if (_trainIconRl.getTrainDirection() == RouteLocation.EAST)
             _trainIcon.setLocoColor(Setup.getTrainIconColorEast());
-        }
-        if (_trainIconRl.getTrainDirection() == RouteLocation.WEST) {
+        if (_trainIconRl.getTrainDirection() == RouteLocation.WEST)
             _trainIcon.setLocoColor(Setup.getTrainIconColorWest());
-        }
     }
 
     // LocationManager locationManager = LocationManager.instance();
+
     private void updateStatus(RouteLocation old, RouteLocation next) {
         if (next != null) {
             setStatus(CODE_TRAIN_EN_ROUTE);
@@ -3337,15 +3586,16 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Sets the print status for switch lists
-     *
-     * @param status UNKNOWN PRINTED
+     * 
+     * @param status
+     *            UNKNOWN PRINTED
      */
     public void setSwitchListStatus(String status) {
         String old = _switchListStatus;
         _switchListStatus = status;
-        if (!old.equals(status)) {
-            setDirtyAndFirePropertyChange("switch list train status", old, status); // NOI18N
-        }
+        if (!old.equals(status))
+            setDirtyAndFirePropertyChange("switch list train status", old,
+                    status); // NOI18N
     }
 
     public String getSwitchListStatus() {
@@ -3354,13 +3604,14 @@ public class Train implements java.beans.PropertyChangeListener {
 
     /**
      * Resets the train, removes engines and cars from this train.
-     *
+     * 
      * @return true if reset successful
      */
     public boolean reset() {
         // is this train in route?
         if (isTrainInRoute()) {
-            log.info("Train (" + getName() + ") has started its route, can not be reset");
+            log.info("Train (" + getName()
+                    + ") has started its route, can not be reset");
             return false;
         }
         setCurrentLocation(null);
@@ -3381,9 +3632,8 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void dispose() {
-        if (getRoute() != null) {
+        if (getRoute() != null)
             getRoute().removePropertyChangeListener(this);
-        }
         CarRoads.instance().removePropertyChangeListener(this);
         CarTypes.instance().removePropertyChangeListener(this);
         EngineTypes.instance().removePropertyChangeListener(this);
@@ -3396,25 +3646,24 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Construct this Entry from XML. This member has to remain synchronized
      * with the detailed DTD in operations-trains.dtd
-     *
-     * @param e Consist XML element
+     * 
+     * @param e
+     *            Consist XML element
      */
     public Train(Element e) {
         org.jdom2.Attribute a;
-        if ((a = e.getAttribute(Xml.ID)) != null) {
+        if ((a = e.getAttribute(Xml.ID)) != null)
             _id = a.getValue();
-        } else {
+        else
             log.warn("no id attribute in train element when reading operations");
-        }
-        if ((a = e.getAttribute(Xml.NAME)) != null) {
+        if ((a = e.getAttribute(Xml.NAME)) != null)
             _name = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.DESCRIPTION)) != null) {
+        if ((a = e.getAttribute(Xml.DESCRIPTION)) != null)
             _description = a.getValue();
-        }
         // create the train calendar
         _departureTime = Calendar.getInstance();
-        _departureTime.set(2008, 10, 29, 12, 00); // The first release date for JMRI operations
+        _departureTime.set(2008, 10, 29, 12, 00); // The first release date for
+                                                  // JMRI operations
         if ((a = e.getAttribute(Xml.DEPART_HOUR)) != null) {
             String hour = a.getValue();
             if ((a = e.getAttribute(Xml.DEPART_MINUTE)) != null) {
@@ -3437,7 +3686,8 @@ public class Train implements java.beans.PropertyChangeListener {
             }
             if (eRoute.getChild(Xml.SKIPS) != null) {
                 @SuppressWarnings("unchecked")
-                List<Element> skips = eRoute.getChild(Xml.SKIPS).getChildren(Xml.LOCATION);
+                List<Element> skips = eRoute.getChild(Xml.SKIPS).getChildren(
+                        Xml.LOCATION);
                 String[] locs = new String[skips.size()];
                 for (int i = 0; i < skips.size(); i++) {
                     Element loc = skips.get(i);
@@ -3458,14 +3708,16 @@ public class Train implements java.beans.PropertyChangeListener {
             if ((a = e.getAttribute(Xml.SKIP)) != null) {
                 String locationIds = a.getValue();
                 String[] locs = locationIds.split("%%"); // NOI18N
-                // if (log.isDebugEnabled()) log.debug("Train skips : "+locationIds);
+                // if (log.isDebugEnabled())
+                // log.debug("Train skips : "+locationIds);
                 setTrainSkipsLocations(locs);
             }
         }
         // new way of reading car types using elements
         if (e.getChild(Xml.TYPES) != null) {
             @SuppressWarnings("unchecked")
-            List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(Xml.CAR_TYPE);
+            List<Element> carTypes = e.getChild(Xml.TYPES).getChildren(
+                    Xml.CAR_TYPE);
             String[] types = new String[carTypes.size()];
             for (int i = 0; i < carTypes.size(); i++) {
                 Element type = carTypes.get(i);
@@ -3475,7 +3727,8 @@ public class Train implements java.beans.PropertyChangeListener {
             }
             setTypeNames(types);
             @SuppressWarnings("unchecked")
-            List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(Xml.LOCO_TYPE);
+            List<Element> locoTypes = e.getChild(Xml.TYPES).getChildren(
+                    Xml.LOCO_TYPE);
             types = new String[locoTypes.size()];
             for (int i = 0; i < locoTypes.size(); i++) {
                 Element type = locoTypes.get(i);
@@ -3484,7 +3737,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             setTypeNames(types);
-        } // old way of reading car types up to version 2.99.6
+        }
+        // old way of reading car types up to version 2.99.6
         else if ((a = e.getAttribute(Xml.CAR_TYPES)) != null) {
             String names = a.getValue();
             String[] types = names.split("%%"); // NOI18N
@@ -3492,16 +3746,15 @@ public class Train implements java.beans.PropertyChangeListener {
             setTypeNames(types);
         }
         // old misspelled format
-        if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null) {
+        if ((a = e.getAttribute(Xml.CAR_ROAD_OPERATION)) != null)
             _roadOption = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null) {
+        if ((a = e.getAttribute(Xml.CAR_ROAD_OPTION)) != null)
             _roadOption = a.getValue();
-        }
         // new way of reading car roads using elements
         if (e.getChild(Xml.CAR_ROADS) != null) {
             @SuppressWarnings("unchecked")
-            List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(Xml.CAR_ROAD);
+            List<Element> carRoads = e.getChild(Xml.CAR_ROADS).getChildren(
+                    Xml.CAR_ROAD);
             String[] roads = new String[carRoads.size()];
             for (int i = 0; i < carRoads.size(); i++) {
                 Element road = carRoads.get(i);
@@ -3510,32 +3763,30 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             setRoadNames(roads);
-        } // old way of reading car roads up to version 2.99.6
+        }
+        // old way of reading car roads up to version 2.99.6
         else if ((a = e.getAttribute(Xml.CAR_ROADS)) != null) {
             String names = a.getValue();
             String[] roads = names.split("%%"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Train (" + getName() + ") " + getRoadOption() + " car roads: " + names);
-            }
+            if (log.isDebugEnabled())
+                log.debug("Train (" + getName() + ") " + getRoadOption()
+                        + " car roads: " + names);
             setRoadNames(roads);
         }
 
-        if ((a = e.getAttribute(Xml.CAR_LOAD_OPTION)) != null) {
+        if ((a = e.getAttribute(Xml.CAR_LOAD_OPTION)) != null)
             _loadOption = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.CAR_OWNER_OPTION)) != null) {
+        if ((a = e.getAttribute(Xml.CAR_OWNER_OPTION)) != null)
             _ownerOption = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.BUILT_START_YEAR)) != null) {
+        if ((a = e.getAttribute(Xml.BUILT_START_YEAR)) != null)
             _builtStartYear = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.BUILT_END_YEAR)) != null) {
+        if ((a = e.getAttribute(Xml.BUILT_END_YEAR)) != null)
             _builtEndYear = a.getValue();
-        }
         // new way of reading car loads using elements
         if (e.getChild(Xml.CAR_LOADS) != null) {
             @SuppressWarnings("unchecked")
-            List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(Xml.CAR_LOAD);
+            List<Element> carLoads = e.getChild(Xml.CAR_LOADS).getChildren(
+                    Xml.CAR_LOAD);
             String[] loads = new String[carLoads.size()];
             for (int i = 0; i < carLoads.size(); i++) {
                 Element load = carLoads.get(i);
@@ -3544,19 +3795,21 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             setLoadNames(loads);
-        } // old way of reading car loads up to version 2.99.6
+        }
+        // old way of reading car loads up to version 2.99.6
         else if ((a = e.getAttribute(Xml.CAR_LOADS)) != null) {
             String names = a.getValue();
             String[] loads = names.split("%%"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Train (" + getName() + ") " + getLoadOption() + " car loads: " + names);
-            }
+            if (log.isDebugEnabled())
+                log.debug("Train (" + getName() + ") " + getLoadOption()
+                        + " car loads: " + names);
             setLoadNames(loads);
         }
         // new way of reading car owners using elements
         if (e.getChild(Xml.CAR_OWNERS) != null) {
             @SuppressWarnings("unchecked")
-            List<Element> carOwners = e.getChild(Xml.CAR_OWNERS).getChildren(Xml.CAR_OWNER);
+            List<Element> carOwners = e.getChild(Xml.CAR_OWNERS).getChildren(
+                    Xml.CAR_OWNER);
             String[] owners = new String[carOwners.size()];
             for (int i = 0; i < carOwners.size(); i++) {
                 Element owner = carOwners.get(i);
@@ -3565,116 +3818,86 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             setOwnerNames(owners);
-        } // old way of reading car owners up to version 2.99.6
+        }
+        // old way of reading car owners up to version 2.99.6
         else if ((a = e.getAttribute(Xml.CAR_OWNERS)) != null) {
             String names = a.getValue();
             String[] owners = names.split("%%"); // NOI18N
-            if (log.isDebugEnabled()) {
-                log.debug("Train (" + getName() + ") " + getOwnerOption() + " car owners: " + names);
-            }
+            if (log.isDebugEnabled())
+                log.debug("Train (" + getName() + ") " + getOwnerOption()
+                        + " car owners: " + names);
             setOwnerNames(owners);
         }
 
-        if ((a = e.getAttribute(Xml.NUMBER_ENGINES)) != null) {
+        if ((a = e.getAttribute(Xml.NUMBER_ENGINES)) != null)
             _numberEngines = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG2_ENGINES)) != null) {
+        if ((a = e.getAttribute(Xml.LEG2_ENGINES)) != null)
             _leg2Engines = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG3_ENGINES)) != null) {
+        if ((a = e.getAttribute(Xml.LEG3_ENGINES)) != null)
             _leg3Engines = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.ENGINE_ROAD)) != null) {
+        if ((a = e.getAttribute(Xml.ENGINE_ROAD)) != null)
             _engineRoad = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG2_ROAD)) != null) {
+        if ((a = e.getAttribute(Xml.LEG2_ROAD)) != null)
             _leg2Road = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG3_ROAD)) != null) {
+        if ((a = e.getAttribute(Xml.LEG3_ROAD)) != null)
             _leg3Road = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.ENGINE_MODEL)) != null) {
+        if ((a = e.getAttribute(Xml.ENGINE_MODEL)) != null)
             _engineModel = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG2_MODEL)) != null) {
+        if ((a = e.getAttribute(Xml.LEG2_MODEL)) != null)
             _leg2Model = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG3_MODEL)) != null) {
+        if ((a = e.getAttribute(Xml.LEG3_MODEL)) != null)
             _leg3Model = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.REQUIRES)) != null) {
+        if ((a = e.getAttribute(Xml.REQUIRES)) != null)
             _requires = Integer.parseInt(a.getValue());
-        }
-        if ((a = e.getAttribute(Xml.CABOOSE_ROAD)) != null) {
+        if ((a = e.getAttribute(Xml.CABOOSE_ROAD)) != null)
             _cabooseRoad = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG2_CABOOSE_ROAD)) != null) {
+        if ((a = e.getAttribute(Xml.LEG2_CABOOSE_ROAD)) != null)
             _leg2CabooseRoad = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG3_CABOOSE_ROAD)) != null) {
+        if ((a = e.getAttribute(Xml.LEG3_CABOOSE_ROAD)) != null)
             _leg3CabooseRoad = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEG2_OPTIONS)) != null) {
+        if ((a = e.getAttribute(Xml.LEG2_OPTIONS)) != null)
             _leg2Options = Integer.parseInt(a.getValue());
-        }
-        if ((a = e.getAttribute(Xml.LEG3_OPTIONS)) != null) {
+        if ((a = e.getAttribute(Xml.LEG3_OPTIONS)) != null)
             _leg3Options = Integer.parseInt(a.getValue());
-        }
-        if ((a = e.getAttribute(Xml.BUILD_NORMAL)) != null) {
+        if ((a = e.getAttribute(Xml.BUILD_NORMAL)) != null)
             _buildNormal = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.TO_TERMINAL)) != null) {
+        if ((a = e.getAttribute(Xml.TO_TERMINAL)) != null)
             _sendToTerminal = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.ALLOW_LOCAL_MOVES)) != null) {
+        if ((a = e.getAttribute(Xml.ALLOW_LOCAL_MOVES)) != null)
             _allowLocalMoves = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.ALLOW_THROUGH_CARS)) != null) {
+        if ((a = e.getAttribute(Xml.ALLOW_THROUGH_CARS)) != null)
             _allowThroughCars = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.ALLOW_RETURN)) != null) {
+        if ((a = e.getAttribute(Xml.ALLOW_RETURN)) != null)
             _allowCarsReturnStaging = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.SERVICE_ALL)) != null) {
-            _serviceAllCarsWithFinalDestinations = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.BUILD_CONSIST)) != null) {
+        if ((a = e.getAttribute(Xml.SERVICE_ALL)) != null)
+            _serviceAllCarsWithFinalDestinations = a.getValue()
+                    .equals(Xml.TRUE);
+        if ((a = e.getAttribute(Xml.BUILD_CONSIST)) != null)
             _buildConsist = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.SEND_CUSTOM_STAGING)) != null) {
+        if ((a = e.getAttribute(Xml.SEND_CUSTOM_STAGING)) != null)
             _sendCarsWithCustomLoadsToStaging = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.BUILT)) != null) {
+        if ((a = e.getAttribute(Xml.BUILT)) != null)
             _built = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.BUILD)) != null) {
+        if ((a = e.getAttribute(Xml.BUILD)) != null)
             _build = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.BUILD_FAILED)) != null) {
+        if ((a = e.getAttribute(Xml.BUILD_FAILED)) != null)
             _buildFailed = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.BUILD_FAILED_MESSAGE)) != null) {
+        if ((a = e.getAttribute(Xml.BUILD_FAILED_MESSAGE)) != null)
             _buildFailedMessage = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.PRINTED)) != null) {
+        if ((a = e.getAttribute(Xml.PRINTED)) != null)
             _printed = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.MODIFIED)) != null) {
+        if ((a = e.getAttribute(Xml.MODIFIED)) != null)
             _modified = a.getValue().equals(Xml.TRUE);
-        }
-        if ((a = e.getAttribute(Xml.SWITCH_LIST_STATUS)) != null) {
+        if ((a = e.getAttribute(Xml.SWITCH_LIST_STATUS)) != null)
             _switchListStatus = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.LEAD_ENGINE)) != null) {
+        if ((a = e.getAttribute(Xml.LEAD_ENGINE)) != null)
             _leadEngineId = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.TERMINATION_DATE)) != null) {
+        if ((a = e.getAttribute(Xml.TERMINATION_DATE)) != null)
             _statusTerminatedDate = a.getValue();
-        }
-        if ((a = e.getAttribute(Xml.REQUESTED_CARS)) != null) {
+        if ((a = e.getAttribute(Xml.REQUESTED_CARS)) != null)
             _statusCarsRequested = Integer.parseInt(a.getValue());
-        }
-        if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.STATUS_CODE) == null) {
+        if ((a = e.getAttribute(Xml.STATUS)) != null
+                && e.getAttribute(Xml.STATUS_CODE) == null) {
             String status = a.getValue();
             if (status.startsWith(BUILD_FAILED)) {
                 _statusCode = CODE_BUILD_FAILED;
@@ -3684,9 +3907,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 _statusCode = CODE_PARTIAL_BUILT;
             } else if (status.startsWith(TERMINATED)) {
                 String[] splitStatus = status.split(" ");
-                if (splitStatus.length > 1) {
+                if (splitStatus.length > 1)
                     _statusTerminatedDate = splitStatus[1];
-                }
                 _statusCode = CODE_TERMINATED;
             } else if (status.startsWith(TRAIN_IN_ROUTE)) {
                 _statusCode = CODE_TRAIN_EN_ROUTE;
@@ -3699,40 +3921,36 @@ public class Train implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
             _statusCode = Integer.parseInt(a.getValue());
         }
-        if ((a = e.getAttribute(Xml.COMMENT)) != null) {
+        if ((a = e.getAttribute(Xml.COMMENT)) != null)
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
-        }
         if (_route != null) {
-            if ((a = e.getAttribute(Xml.CURRENT)) != null) {
+            if ((a = e.getAttribute(Xml.CURRENT)) != null)
                 _current = _route.getLocationById(a.getValue());
-            }
-            if ((a = e.getAttribute(Xml.LEG2_START)) != null) {
+            if ((a = e.getAttribute(Xml.LEG2_START)) != null)
                 _leg2Start = _route.getLocationById(a.getValue());
-            }
-            if ((a = e.getAttribute(Xml.LEG3_START)) != null) {
+            if ((a = e.getAttribute(Xml.LEG3_START)) != null)
                 _leg3Start = _route.getLocationById(a.getValue());
-            }
-            if ((a = e.getAttribute(Xml.LEG2_END)) != null) {
+            if ((a = e.getAttribute(Xml.LEG2_END)) != null)
                 _end2Leg = _route.getLocationById(a.getValue());
-            }
-            if ((a = e.getAttribute(Xml.LEG3_END)) != null) {
+            if ((a = e.getAttribute(Xml.LEG3_END)) != null)
                 _leg3End = _route.getLocationById(a.getValue());
-            }
             if ((a = e.getAttribute(Xml.DEPARTURE_TRACK)) != null) {
-                Location location = LocationManager.instance().getLocationByName(getTrainDepartsName());
-                if (location != null) {
+                Location location = LocationManager.instance()
+                        .getLocationByName(getTrainDepartsName());
+                if (location != null)
                     _departureTrack = location.getTrackById(a.getValue());
-                } else {
-                    log.error("Departure location not found for track " + a.getValue());
-                }
+                else
+                    log.error("Departure location not found for track "
+                            + a.getValue());
             }
             if ((a = e.getAttribute(Xml.TERMINATION_TRACK)) != null) {
-                Location location = LocationManager.instance().getLocationByName(getTrainTerminatesName());
-                if (location != null) {
+                Location location = LocationManager.instance()
+                        .getLocationByName(getTrainTerminatesName());
+                if (location != null)
                     _terminationTrack = location.getTrackById(a.getValue());
-                } else {
-                    log.error("Termiation location not found for track " + a.getValue());
-                }
+                else
+                    log.error("Termiation location not found for track "
+                            + a.getValue());
             }
         }
 
@@ -3746,7 +3964,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             @SuppressWarnings("unchecked")
-            List<Element> lab = e.getChild(Xml.SCRIPTS).getChildren(Xml.AFTER_BUILD);
+            List<Element> lab = e.getChild(Xml.SCRIPTS).getChildren(
+                    Xml.AFTER_BUILD);
             for (Element es : lab) {
                 if ((a = es.getAttribute(Xml.NAME)) != null) {
                     addAfterBuildScript(a.getValue());
@@ -3760,7 +3979,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 }
             }
             @SuppressWarnings("unchecked")
-            List<Element> lt = e.getChild(Xml.SCRIPTS).getChildren(Xml.TERMINATE);
+            List<Element> lt = e.getChild(Xml.SCRIPTS).getChildren(
+                    Xml.TERMINATE);
             for (Element es : lt) {
                 if ((a = es.getAttribute(Xml.NAME)) != null) {
                     addTerminationScript(a.getValue());
@@ -3768,7 +3988,8 @@ public class Train implements java.beans.PropertyChangeListener {
             }
         }
         // check for optional railroad name and logo
-        if ((e.getChild(Xml.RAIL_ROAD) != null) && (a = e.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
+        if ((e.getChild(Xml.RAIL_ROAD) != null)
+                && (a = e.getChild(Xml.RAIL_ROAD).getAttribute(Xml.NAME)) != null) {
             String name = a.getValue();
             setRailroadName(name);
         }
@@ -3777,9 +3998,8 @@ public class Train implements java.beans.PropertyChangeListener {
                 setManifestLogoURL(a.getValue());
             }
         }
-        if ((a = e.getAttribute(Xml.SHOW_TIMES)) != null) {
+        if ((a = e.getAttribute(Xml.SHOW_TIMES)) != null)
             _showTimes = a.getValue().equals(Xml.TRUE);
-        }
 
         addPropertyChangeListerners();
     }
@@ -3795,7 +4015,7 @@ public class Train implements java.beans.PropertyChangeListener {
     /**
      * Create an XML element to represent this Entry. This member has to remain
      * synchronized with the detailed DTD in operations-trains.dtd.
-     *
+     * 
      * @return Contents in a JDOM Element
      */
     public Element store() {
@@ -3847,18 +4067,20 @@ public class Train implements java.beans.PropertyChangeListener {
             }
             e.setAttribute(Xml.SKIP, buf.toString());
         }
-        if (getCurrentLocation() != null) {
+        if (getCurrentLocation() != null)
             e.setAttribute(Xml.CURRENT, getCurrentLocation().getId());
-        }
-        if (getDepartureTrack() != null) {
+        if (getDepartureTrack() != null)
             e.setAttribute(Xml.DEPARTURE_TRACK, getDepartureTrack().getId());
-        }
-        if (getTerminationTrack() != null) {
+        if (getTerminationTrack() != null)
             e.setAttribute(Xml.TERMINATION_TRACK, getTerminationTrack().getId());
-        }
-        if (Control.backwardCompatible) {
-            e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // misspelled should have been option not operation
-        }
+        if (Control.backwardCompatible)
+            e.setAttribute(Xml.CAR_ROAD_OPERATION, getRoadOption()); // misspelled
+                                                                     // should
+                                                                     // have
+                                                                     // been
+                                                                     // option
+                                                                     // not
+                                                                     // operation
         e.setAttribute(Xml.BUILT_START_YEAR, getBuiltStartYear());
         e.setAttribute(Xml.BUILT_END_YEAR, getBuiltEndYear());
         e.setAttribute(Xml.NUMBER_ENGINES, getNumberEngines());
@@ -3866,30 +4088,42 @@ public class Train implements java.beans.PropertyChangeListener {
         e.setAttribute(Xml.ENGINE_MODEL, getEngineModel());
         e.setAttribute(Xml.REQUIRES, Integer.toString(getRequirements()));
         e.setAttribute(Xml.CABOOSE_ROAD, getCabooseRoad());
-        e.setAttribute(Xml.BUILD_NORMAL, isBuildTrainNormalEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.TO_TERMINAL, isSendCarsToTerminalEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.ALLOW_LOCAL_MOVES, isAllowLocalMovesEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.ALLOW_RETURN, isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.ALLOW_THROUGH_CARS, isAllowThroughCarsEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.SERVICE_ALL, isServiceAllCarsWithFinalDestinationsEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.SEND_CUSTOM_STAGING, isSendCarsWithCustomLoadsToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.BUILD_CONSIST, isBuildConsistEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.BUILD_NORMAL, isBuildTrainNormalEnabled() ? Xml.TRUE
+                : Xml.FALSE);
+        e.setAttribute(Xml.TO_TERMINAL,
+                isSendCarsToTerminalEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.ALLOW_LOCAL_MOVES,
+                isAllowLocalMovesEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.ALLOW_RETURN,
+                isAllowReturnToStagingEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.ALLOW_THROUGH_CARS,
+                isAllowThroughCarsEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.SERVICE_ALL,
+                isServiceAllCarsWithFinalDestinationsEnabled() ? Xml.TRUE
+                        : Xml.FALSE);
+        e.setAttribute(Xml.SEND_CUSTOM_STAGING,
+                isSendCarsWithCustomLoadsToStagingEnabled() ? Xml.TRUE
+                        : Xml.FALSE);
+        e.setAttribute(Xml.BUILD_CONSIST, isBuildConsistEnabled() ? Xml.TRUE
+                : Xml.FALSE);
         e.setAttribute(Xml.BUILT, isBuilt() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.BUILD, isBuildEnabled() ? Xml.TRUE : Xml.FALSE);
-        e.setAttribute(Xml.BUILD_FAILED, getBuildFailed() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.BUILD_FAILED, getBuildFailed() ? Xml.TRUE
+                : Xml.FALSE);
         e.setAttribute(Xml.BUILD_FAILED_MESSAGE, getBuildFailedMessage());
         e.setAttribute(Xml.PRINTED, isPrinted() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.MODIFIED, isModified() ? Xml.TRUE : Xml.FALSE);
         e.setAttribute(Xml.SWITCH_LIST_STATUS, getSwitchListStatus());
-        if (getLeadEngine() != null) {
+        if (getLeadEngine() != null)
             e.setAttribute(Xml.LEAD_ENGINE, getLeadEngine().getId());
-        }
         e.setAttribute(Xml.STATUS, getStatus());
         e.setAttribute(Xml.TERMINATION_DATE, getTerminationDate());
-        e.setAttribute(Xml.REQUESTED_CARS, Integer.toString(getNumberCarsRequested()));
+        e.setAttribute(Xml.REQUESTED_CARS,
+                Integer.toString(getNumberCarsRequested()));
         e.setAttribute(Xml.STATUS_CODE, Integer.toString(getStatusCode()));
         e.setAttribute(Xml.COMMENT, getComment());
-        e.setAttribute(Xml.SHOW_TIMES, isShowArrivalAndDepartureTimesEnabled() ? Xml.TRUE : Xml.FALSE);
+        e.setAttribute(Xml.SHOW_TIMES,
+                isShowArrivalAndDepartureTimesEnabled() ? Xml.TRUE : Xml.FALSE);
         // build list of car types for this train
         String[] types = getTypeNames();
         // Old way of saving car types
@@ -3897,9 +4131,9 @@ public class Train implements java.beans.PropertyChangeListener {
             StringBuffer buf = new StringBuffer();
             for (String type : types) {
                 // remove types that have been deleted by user
-                if (CarTypes.instance().containsName(type) || EngineTypes.instance().containsName(type)) {
+                if (CarTypes.instance().containsName(type)
+                        || EngineTypes.instance().containsName(type))
                     buf.append(type + "%%"); // NOI18N
-                }
             }
             e.setAttribute(Xml.CAR_TYPES, buf.toString());
         }
@@ -3982,7 +4216,8 @@ public class Train implements java.beans.PropertyChangeListener {
             e.addContent(eOwners);
         }
         // save list of scripts for this train
-        if (getBuildScripts().size() > 0 || getAfterBuildScripts().size() > 0 || getMoveScripts().size() > 0
+        if (getBuildScripts().size() > 0 || getAfterBuildScripts().size() > 0
+                || getMoveScripts().size() > 0
                 || getTerminationScripts().size() > 0) {
             Element es = new Element(Xml.SCRIPTS);
             if (getBuildScripts().size() > 0) {
@@ -4028,74 +4263,83 @@ public class Train implements java.beans.PropertyChangeListener {
         }
 
         if (getSecondLegOptions() != NO_CABOOSE_OR_FRED) {
-            e.setAttribute(Xml.LEG2_OPTIONS, Integer.toString(getSecondLegOptions()));
+            e.setAttribute(Xml.LEG2_OPTIONS,
+                    Integer.toString(getSecondLegOptions()));
             e.setAttribute(Xml.LEG2_ENGINES, getSecondLegNumberEngines());
             e.setAttribute(Xml.LEG2_ROAD, getSecondLegEngineRoad());
             e.setAttribute(Xml.LEG2_MODEL, getSecondLegEngineModel());
             e.setAttribute(Xml.LEG2_CABOOSE_ROAD, getSecondLegCabooseRoad());
-            if (getSecondLegStartLocation() != null) {
-                e.setAttribute(Xml.LEG2_START, getSecondLegStartLocation().getId());
-            }
-            if (getSecondLegEndLocation() != null) {
+            if (getSecondLegStartLocation() != null)
+                e.setAttribute(Xml.LEG2_START, getSecondLegStartLocation()
+                        .getId());
+            if (getSecondLegEndLocation() != null)
                 e.setAttribute(Xml.LEG2_END, getSecondLegEndLocation().getId());
-            }
         }
         if (getThirdLegOptions() != NO_CABOOSE_OR_FRED) {
-            e.setAttribute(Xml.LEG3_OPTIONS, Integer.toString(getThirdLegOptions()));
+            e.setAttribute(Xml.LEG3_OPTIONS,
+                    Integer.toString(getThirdLegOptions()));
             e.setAttribute(Xml.LEG3_ENGINES, getThirdLegNumberEngines());
             e.setAttribute(Xml.LEG3_ROAD, getThirdLegEngineRoad());
             e.setAttribute(Xml.LEG3_MODEL, getThirdLegEngineModel());
             e.setAttribute(Xml.LEG3_CABOOSE_ROAD, getThirdLegCabooseRoad());
-            if (getThirdLegStartLocation() != null) {
-                e.setAttribute(Xml.LEG3_START, getThirdLegStartLocation().getId());
-            }
-            if (getThirdLegEndLocation() != null) {
+            if (getThirdLegStartLocation() != null)
+                e.setAttribute(Xml.LEG3_START, getThirdLegStartLocation()
+                        .getId());
+            if (getThirdLegEndLocation() != null)
                 e.setAttribute(Xml.LEG3_END, getThirdLegEndLocation().getId());
-            }
         }
         return e;
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
-            log.debug("train (" + getName() + ") sees property change: " + e.getPropertyName() + " old: "
-                    + e.getOldValue() + " new: " // NOI18N
+        if (Control.showProperty && log.isDebugEnabled())
+            log.debug("train (" + getName() + ") sees property change: "
+                    + e.getPropertyName() + " old: " + e.getOldValue()
+                    + " new: " // NOI18N
                     + e.getNewValue());
-        }
         if (e.getPropertyName().equals(Route.DISPOSE)) {
             setRoute(null);
         }
         if (e.getPropertyName().equals(CarTypes.CARTYPES_NAME_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
+                || e.getPropertyName().equals(
+                        CarTypes.CARTYPES_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(
+                        EngineTypes.ENGINETYPES_NAME_CHANGED_PROPERTY)) {
             replaceType((String) e.getOldValue(), (String) e.getNewValue());
         }
         if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)) {
             replaceRoad((String) e.getOldValue(), (String) e.getNewValue());
         }
-        if (e.getPropertyName().equals(CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(
+                CarOwners.CAROWNERS_NAME_CHANGED_PROPERTY)) {
             replaceOwner((String) e.getOldValue(), (String) e.getNewValue());
         }
-        if (e.getPropertyName().equals(EngineModels.ENGINEMODELS_NAME_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(
+                EngineModels.ENGINEMODELS_NAME_CHANGED_PROPERTY)) {
             replaceModel((String) e.getOldValue(), (String) e.getNewValue());
         }
         // forward route departure time property changes
-        if (e.getPropertyName().equals(RouteLocation.DEPARTURE_TIME_CHANGED_PROPERTY)) {
-            setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, e.getOldValue(), e.getNewValue());
+        if (e.getPropertyName().equals(
+                RouteLocation.DEPARTURE_TIME_CHANGED_PROPERTY)) {
+            setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY,
+                    e.getOldValue(), e.getNewValue());
         }
         // forward any property changes in this train's route
-        if (e.getSource().getClass().equals(Route.class)) {
-            setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
-        }
+        if (e.getSource().getClass().equals(Route.class))
+            setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(),
+                    e.getNewValue());
     }
 
-    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);
+    java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(
+            this);
 
-    public synchronized void addPropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void addPropertyChangeListener(
+            java.beans.PropertyChangeListener l) {
         pcs.addPropertyChangeListener(l);
     }
 
-    public synchronized void removePropertyChangeListener(java.beans.PropertyChangeListener l) {
+    public synchronized void removePropertyChangeListener(
+            java.beans.PropertyChangeListener l) {
         pcs.removePropertyChangeListener(l);
     }
 
