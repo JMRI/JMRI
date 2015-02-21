@@ -147,6 +147,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
     }
 
 	private void update() {
+	    log.debug("queue update");
 		// use invokeLater to prevent deadlock
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -168,10 +169,10 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
 					// block cars by destination
 					for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
 						for (Car car : carManager.getByTrainDestinationList(_train)) {
-							log.debug("car ({}) track ({}) routelocation ({})", car.toString(), car.getTrackName(), car
-									.getRouteLocation().getName());
 							if ((car.getTrack() == null || car.getRouteLocation() == rl)
 									&& car.getRouteDestination() == rld) {
+		                         log.debug("car ({}) routelocation ({}) track ({}) route destination ({})", car.toString(),  car
+		                                    .getRouteLocation().getName(), car.getTrackName(), car.getRouteDestination().getName());
 								JCheckBox checkBox = new JCheckBox(car.toString());
 								if (car.getRouteDestination() == rl) {
 									addItemLeft(pCars, checkBox, 2, i++); // set out

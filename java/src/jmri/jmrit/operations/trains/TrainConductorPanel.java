@@ -163,6 +163,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
     }
 
 	private void update() {
+	    log.debug("queue update");
 		// use invokeLater to prevent deadlock
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
@@ -211,10 +212,10 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
-            log.debug("Property change " + e.getPropertyName() + " for: " + e.getSource().toString()
-                    + " old: " + e.getOldValue() + " new: " + e.getNewValue()); // NOI18N
-        }
+        if (Control.showProperty && log.isDebugEnabled())
+            log.debug("Property change ({}) for: ({}) old: {} new: {}",
+                    e.getPropertyName(), e.getSource().toString(),
+                    e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             clearAndUpdate();
@@ -229,7 +230,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                 carCheckBoxes.remove("p" + car.getId());
                 carCheckBoxes.remove("s" + car.getId());
                 carCheckBoxes.remove("m" + car.getId());
-                log.debug("Car " + car.toString() + " removed from list");
+                log.debug("Car ({}) removed from list", car.toString());
             }
             update();
         }

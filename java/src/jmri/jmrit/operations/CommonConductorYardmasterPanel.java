@@ -264,6 +264,8 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         selectButton.setEnabled(carCheckBoxes.size() > 0);
         clearButton.setEnabled(carCheckBoxes.size() > 0);
         check();
+        
+        log.debug("update complete");
     }
 
     CarSetFrame csf = null;
