@@ -5,18 +5,20 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Interact with a programmer to identify the DecoderIndexFile entry for a
- * decoder on the programming track.
- *
+ * Interact with a programmer to identify the DecoderIndexFile entry for a decoder
+ * on the programming track. Create a subclass of this which implements {@link #done}
+ * to handle the results of the identification.
+ * <p>
  * This is a class (instead of a Roster member function) to simplify use of
  * ProgListener callbacks.
- *
- * Once started, this maintains a List of possible RosterEntrys as it works
- * through the identification progress.
- *
- * Contains special case code for QSI: mfgID == 113 write 254=>49, write 4=>50,
- * 56 is high byte, 5=>50, 56 is low byte Harman: mfgID = 98 112 is high byte,
- * 113 is low byte TCS: mfgID == 153 249 is ID Zimo: mfgID == 145 250 is ID
+ * <p>
+ * Contains manufacturer-specific code to generate a 3rd "productID" identifier, in addition 
+ * to the manufacturer ID and model ID:<ul>
+ *     <li>QSI: (mfgID == 113)   write 254=>CV49, write 4=>CV50, then CV56 is high byte, write 5=>CV50, then CV56 is low byte of ID
+ *     <li>Harman:  (mfgID = 98)  CV112 is high byte, CV113 is low byte of ID
+ *     <li>TCS: (mfgID == 153)  CV249 is ID
+ *     <li>Zimo: (mfgID == 145)  CV250 is ID
+ * </ul>
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2010
  * @author Howard G. Penny Copyright (C) 2005
@@ -145,8 +147,14 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
         }
     }
 
+    /** 
+     * Invoked with the identifier numbers when the identification is complete.
+     */
     abstract protected void done(int mfgID, int modelID, int productID);
 
+    /**
+     * Invoked to provide a user-readable message about progress
+     */
     abstract protected void message(String m);
 
     // initialize logging
