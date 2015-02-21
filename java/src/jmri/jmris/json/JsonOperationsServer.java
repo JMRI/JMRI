@@ -4,10 +4,14 @@ package jmri.jmris.json;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.beans.PropertyChangeEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Locale;
+
 import javax.management.Attribute;
+
 import jmri.JmriException;
 import jmri.jmris.AbstractOperationsServer;
 import jmri.jmris.JmriConnection;
@@ -18,6 +22,7 @@ import static jmri.jmris.json.JSON.MESSAGE;
 import static jmri.jmris.json.JSON.METHOD;
 import static jmri.jmris.json.JSON.TYPE;
 import jmri.jmrit.operations.trains.Train;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -125,6 +130,20 @@ public class JsonOperationsServer extends AbstractOperationsServer {
             this.connection.sendMessage(this.mapper.writeValueAsString(ex.getJsonMessage()));
         }
     }
+    
+    @Override
+    public void propertyChange(PropertyChangeEvent e) {
+        log.debug("property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
+        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY) || 
+        		e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)) {
+            try {
+                sendFullStatus((Train) e.getSource());
+            } catch (IOException e1) {
+                log.error(e1.getLocalizedMessage(), e1);
+            }
+        }
+    }
+
 
     void parseTrainRequest(Locale locale, JsonNode data) throws IOException, JsonException {
         String id = data.path(ID).asText();
