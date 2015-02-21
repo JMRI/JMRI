@@ -1,6 +1,7 @@
 //SimpleOperationsServer.java
 package jmri.jmris.simpleserver;
 
+import java.beans.PropertyChangeEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -387,6 +388,17 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
             status.add(new Attribute(TRAINLEADLOCO, constructTrainLeadLoco(train.getName())));
             status.add(new Attribute(TRAINCABOOSE, constructTrainCaboose(train.getName())));
             sendMessage(status);
+        }
+    }
+    
+    public void propertyChange(PropertyChangeEvent e) {
+        log.debug("property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
+        if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
+            try {
+                sendFullStatus((Train) e.getSource());
+            } catch (IOException e1) {
+                log.error(e1.getLocalizedMessage(), e1);
+            }
         }
     }
 
