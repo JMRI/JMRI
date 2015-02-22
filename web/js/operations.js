@@ -17,6 +17,7 @@ function getTrains(showAll) {
                 $("#warning-no-trains").removeClass("hidden").addClass("show");
                 $("#trains").removeClass("show").addClass("hidden");
             } else {
+                $("#warning-no-trains").removeClass("show").addClass("hidden");
                 $("#trains").removeClass("hidden").addClass("show");
                 $("#trains > tbody").empty();
                 $("#trains > tbody").append(data);
@@ -172,9 +173,7 @@ $(document).ready(function () {
         $("#conductor").removeClass("hidden").addClass("show");
     } else {
         view = "trains";
-        if (window.localStorage.getItem("jmri.operations.trains.showAll")) {
-            $("#show-all-trains > input").prop("checked", window.localStorage.getItem("jmri.operations.trains.showAll"));
-        }
+        $("#show-all-trains > input").prop("checked", window.localStorage.getItem("jmri.operations.trains.showAll") === "true");
         $("#show-all-trains > span").tooltip({delay: {show: 500, hide: 0}});
         $("#show-all-trains > input").change(function () {
             getTrains($(this).is(":checked"));
@@ -195,10 +194,8 @@ $(document).ready(function () {
                     getConductor(id, false);
                 }
             } else if (view === "trains") {
-                jmri.log("Processing train " + id);
                 var row = $("tr[data-train=" + id + "]");
                 if ($(row).length) {
-                    console.log ($(row).eq(1));
                     $(row).children(".train-description").text(data.description); // description
                     $(row).children(".train-leadEngine").text(data.leadEngine); // leadEngine
                     $(row).children(".train-trainDepartsName").text(data.trainDepartsName); // origin ("departs")
