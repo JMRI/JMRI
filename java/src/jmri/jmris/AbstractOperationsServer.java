@@ -50,7 +50,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * constructs a String containing the status of a train
      *
      * @param trainName is the name of the train. If not found in Operations, an
-     *            error message is sent to the client.
+     *                  error message is sent to the client.
      * @return the train's status as known by Operations
      * @throws IOException on failure to send an error message to the client
      */
@@ -67,7 +67,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * constructs a String containing the location of a train
      *
      * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     *                  Operations, an error message is sent to the client
      * @return the train's location, as known by Operations
      * @throws IOException on failure to send an error message to the client
      */
@@ -83,8 +83,8 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
     /**
      * constructs a String containing the location of a train
      *
-     * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     * @param trainName    is the name of the desired train. If not found in
+     *                     Operations, an error message is sent to the client
      * @param locationName
      * @return the train's location, as known by Operations
      * @throws IOException on failure to send an error message ot the client
@@ -122,7 +122,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * constructs a String containing the length of a train
      *
      * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     *                  Operations, an error message is sent to the client
      * @return the train's length, as known by Operations
      * @throws IOException on failure to send an error message to the client
      */
@@ -139,7 +139,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * constructs a String containing the tonnage of a train
      *
      * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     *                  Operations, an error message is sent to the client
      * @return the train's tonnage, as known by Operations
      * @throws IOException on failure to send an error message to the client
      */
@@ -156,7 +156,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * constructs a String containing the number of cars in a train
      *
      * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     *                  Operations, an error message is sent to the client
      * @return the number of cars in a train, as known by Operations
      * @throws IOException on failure to send an error message to the client
      */
@@ -174,7 +174,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * there's one assigned to the train.
      *
      * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     *                  Operations, an error message is sent to the client
      * @return the lead loco
      * @throws IOException on failure to send an error message to the client
      */
@@ -194,7 +194,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * constructs a String containing the caboose on a train
      *
      * @param trainName is the name of the desired train. If not found in
-     *            Operations, an error message is sent to the client
+     *                  Operations, an error message is sent to the client
      * @return the caboose on a train, as known by Operations
      * @throws IOException on failure to send an error message to the client
      */
@@ -229,7 +229,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * sends the full status for a train to a client
      *
      * @param trainName is the name of the desired train. If not found, an error
-     *            is sent to the client
+     *                  is sent to the client
      * @throws IOException on failure to send an error message
      */
     //    public void sendFullStatus(String trainName) throws IOException {
@@ -240,7 +240,6 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
     //            sendErrorStatus("ERROR train name doesn't exist " + trainName);
     //        }
     //    }
-
     public abstract void sendFullStatus(Train train) throws IOException;
 
     private void addPropertyChangeListeners() {
@@ -307,28 +306,23 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      */
     protected class TrainListener implements PropertyChangeListener {
 
-        private final String id;
         private final Train train;
 
         protected TrainListener(String trainId) {
-            id = trainId;
-            train = TrainManager.instance().getTrainById(id);
+            this.train = TrainManager.instance().getTrainById(trainId);
         }
 
         @Override
         public void propertyChange(PropertyChangeEvent e) {
-            // "KnownState" doesn't exist for operations, this is a NOP.
-            if (e.getPropertyName().equals("KnownState")) {
-                try {
-                    sendFullStatus(train);
-                } catch (IOException ie) {
-                    log.debug("Error Sending Status");
-                    // if we get an error, de-register
-                    train.removePropertyChangeListener(this);
-                    removeTrainFromList(id);
-                }
+            try {
+                sendFullStatus(this.train);
+            } catch (IOException ie) {
+                log.debug("Error Sending Status");
+                // if we get an error, de-register
+                this.train.removePropertyChangeListener(this);
+                removeTrainFromList(this.train.getId());
             }
         }
     }
-    
+
 }
