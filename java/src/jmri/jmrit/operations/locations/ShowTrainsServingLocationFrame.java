@@ -41,7 +41,7 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
     // panels
     JPanel pTrains = new JPanel();
 
-	// radio buttons
+    // radio buttons
     // for padding out panel
     // combo boxes
     JComboBox<String> typeComboBox = new JComboBox<>();

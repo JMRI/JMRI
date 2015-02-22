@@ -39,9 +39,9 @@ public class FullBackupExportAction
     private Component _parent;
 
     /**
-     * @param s Name of this action, e.g. in menus
+     * @param s      Name of this action, e.g. in menus
      * @param parent Component that action is associated with, used to ensure
-     * proper position in of dialog boxes
+     *               proper position in of dialog boxes
      */
     public FullBackupExportAction(String s, Component parent) {
         super(s);
@@ -112,8 +112,8 @@ public class FullBackupExportAction
      * the file will be placed in the root level of the zip file.
      *
      * @param filename the file to copy
-     * @param dirname the zip file "directory" to place this file in
-     * @param zipper the ZipOutputStream
+     * @param dirname  the zip file "directory" to place this file in
+     * @param zipper   the ZipOutputStream
      * @throws IOException
      */
     private void copyFileToStream(String filename, String dirname, ZipOutputStream zipper, String comment)

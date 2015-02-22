@@ -502,7 +502,7 @@ public class SecurityElement implements LocoNetListener {
      * This OPC_SE message is from the SE attached to a leg, find whether its
      * asserting a reservation toward us
      *
-     * @param l Se message
+     * @param l   Se message
      * @param leg Leg on the message-sending SE which this SE is attached to.
      */
     boolean getReservedFromMsg(LocoNetMessage l, int leg) {

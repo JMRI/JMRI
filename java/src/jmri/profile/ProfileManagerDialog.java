@@ -66,7 +66,7 @@ public class ProfileManagerDialog extends JDialog {
      * Creates new form ProfileManagerDialog
      *
      * @param parent {@inheritDoc}
-     * @param modal {@inheritDoc}
+     * @param modal  {@inheritDoc}
      */
     public ProfileManagerDialog(Frame parent, boolean modal) {
         super(parent, modal);

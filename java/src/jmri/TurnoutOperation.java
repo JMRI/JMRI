@@ -141,7 +141,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      *
      * @param other another TurnoutOperation
      * @return true iff the two operations are equivalent, i.e. same subclass
-     * and same parameters
+     *         and same parameters
      */
     public abstract boolean equivalentTo(TurnoutOperation other);
 
@@ -150,7 +150,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
      *
      * @param newName
      * @return true iff the name was changed to the new value - otherwise name
-     * is unchanged
+     *         is unchanged
      */
     public boolean rename(String newName) {
         boolean result = false;
@@ -180,8 +180,8 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      *
      * @return	true iff this is the "defining instance" of the class, which we
-     * determine by the name of the instance being the same as the prefix of the
-     * class
+     *         determine by the name of the instance being the same as the
+     *         prefix of the class
      */
     public boolean isDefinitive() {
         String[] classNames = jmri.util.StringUtil.split(this.getClass().getName(), ".");
@@ -274,7 +274,7 @@ public abstract class TurnoutOperation implements Comparable<Object> {
     /**
      * @param mode feedback mode for a turnout
      * @return	true iff this operation's feedback mode is one we know how to
-     * deal with
+     *         deal with
      */
     public boolean matchFeedbackMode(int mode) {
         return (mode & feedbackModes) != 0;

@@ -28,7 +28,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * static function returning the TrafficController instance to use.
      *
      * @return The registered TrafficController instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     @Deprecated
     static public XNetTrafficController instance() {
@@ -52,7 +52,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * Must provide a LenzCommandStation reference at creation time
      *
      * @param pCommandStation reference to associated command station object,
-     * preserved for later.
+     *                        preserved for later.
      */
     XNetTrafficController(LenzCommandStation pCommandStation) {
         mCommandStation = pCommandStation;
@@ -86,7 +86,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * this drops the packet if the checksum is bad.
      *
      * @param m Message to send # @param client is the client getting the
-     * message
+     *          message
      */
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
@@ -248,7 +248,7 @@ public abstract class XNetTrafficController extends AbstractMRTrafficController 
      * <P>
      * Only used in the Receive thread.
      *
-     * @param msg message to fill
+     * @param msg     message to fill
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */

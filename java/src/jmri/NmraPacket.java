@@ -334,8 +334,8 @@ public class NmraPacket {
      * supported by hardware.
      *
      * @param outputAddr Address of accessory output, starting with 1 and a
-     * maximum of 2044
-     * @param aspect Aspect Number starting with 0 and a maximum of 31
+     *                   maximum of 2044
+     * @param aspect     Aspect Number starting with 0 and a maximum of 31
      */
     public static byte[] accSignalDecoderPkt(int outputAddr, int aspect) {
 
@@ -397,8 +397,8 @@ public class NmraPacket {
      * see Basic Accessory Packet.
      *
      * @param outputAddr Address of accessory output, starting with 1 and a
-     * maximum of 2044
-     * @param aspect Aspect Number starting with 0 and a maximum of 31
+     *                   maximum of 2044
+     * @param aspect     Aspect Number starting with 0 and a maximum of 31
      */
     public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
 
@@ -438,7 +438,7 @@ public class NmraPacket {
      *
      * @param number Address of accessory output, starting with 1
      * @param closed true if the output is to be configured to the "closed",
-     * a.k.a. the "normal" or "unset" position
+     *               a.k.a. the "normal" or "unset" position
      */
     public static byte[] accDecoderPkt(int number, boolean closed) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -465,8 +465,8 @@ public class NmraPacket {
      * interface
      *
      * @param number Address of accessory, starting with 1
-     * @param cvNum CV number to access
-     * @param data Data to be written
+     * @param cvNum  CV number to access
+     * @param data   Data to be written
      */
     public static byte[] accDecoderPktOpsMode(int number, int cvNum, int data) {
         // dBit is the "channel" info, least 7 bits, for the packet
@@ -489,8 +489,8 @@ public class NmraPacket {
      * interface
      *
      * @param number Address of accessory, starting with 1
-     * @param cvNum CV number to access
-     * @param data Data to be written
+     * @param cvNum  CV number to access
+     * @param data   Data to be written
      */
     public static byte[] accDecoderPktOpsModeLegacy(int number, int cvNum, int data) {
 
@@ -658,10 +658,10 @@ public class NmraPacket {
      * consistent with the 128 and 14 step methods which do no further
      * processing of the speed value.
      *
-     * @param full must be true
+     * @param full     must be true
      * @param address
      * @param longAddr
-     * @param speed speed step value 0 - 31 for insertion into DC packet
+     * @param speed    speed step value 0 - 31 for insertion into DC packet
      * @param fwd
      */
     public static byte[] speedStep28Packet(Boolean full, int address, boolean longAddr, int speed, boolean fwd) {
@@ -945,10 +945,10 @@ public class NmraPacket {
      * However, DCC systems in the wild have been observed to use 0x7F for the
      * function byte for volume control.
      *
-     * @param address DCC locomotive address
+     * @param address  DCC locomotive address
      * @param longAddr true if this is a long address, false if short address
      * @param function see note above
-     * @param value value to be sent in analog control instruction
+     * @param value    value to be sent in analog control instruction
      */
     public static byte[] analogControl(int address, boolean longAddr,
             int function, int value) {
@@ -985,12 +985,15 @@ public class NmraPacket {
     /**
      * Provide an NMRA consist control instruction
      *
-     * @param address DCC locomotive address
-     * @param longAddr true if this is a long address, false if short address
-     * @param consist the consist address to set for this locomotive. Send 00 as
-     * consist address if deleteing from consist.
+     * @param address         DCC locomotive address
+     * @param longAddr        true if this is a long address, false if short
+     *                        address
+     * @param consist         the consist address to set for this locomotive.
+     *                        Send 00 as consist address if deleteing from
+     *                        consist.
      * @param directionNormal true if the normal direction of travel for this
-     * address is the normal direction of travel for the consist.
+     *                        address is the normal direction of travel for the
+     *                        consist.
      */
     public static byte[] consistControl(int address, boolean longAddr,
             int consist, boolean directionNormal) {

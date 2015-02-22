@@ -37,7 +37,7 @@ public interface GlobalProgrammerManager {
      * Gain access to the Global Mode Programmer without reservation.
      *
      * @return null only if there isn't a Global Mode Programmer available via
-     * this Manager.
+     *         this Manager.
      */
     public Programmer getGlobalProgrammer();
 

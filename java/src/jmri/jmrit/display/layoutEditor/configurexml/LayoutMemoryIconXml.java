@@ -40,7 +40,7 @@ public class LayoutMemoryIconXml extends AbstractXmlAdapter {
      * Load, starting with the memoryicon element, then all the value-icon pairs
      *
      * @param element Top level Element to unpack.
-     * @param o LayoutEditor as an Object
+     * @param o       LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
         MemoryIconXml tmp = new MemoryIconXml();

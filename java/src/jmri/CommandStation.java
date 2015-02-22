@@ -36,8 +36,8 @@ public interface CommandStation {
     /**
      * Send a specific packet to the rails.
      *
-     * @param packet Byte array representing the packet, including the
-     * error-correction byte.
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte.
      * @param repeats Number of times to repeat the transmission.
      */
     public void sendPacket(@NonNull byte[] packet, int repeats);

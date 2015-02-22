@@ -210,7 +210,7 @@ abstract public class SystemConnectionMemo {
      * Does this connection provide a manager of this type?
      *
      * @param <T> Type of manager to get
-     * @param T Type of manager to get
+     * @param T   Type of manager to get
      * @return The manager or null
      */
     public <T> T get(Class<?> T) {

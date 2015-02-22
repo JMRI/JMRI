@@ -83,7 +83,7 @@ public class TrainCustomManifest {
             return false;
         }
 
-		// Build our command string out of these bits
+        // Build our command string out of these bits
         // We need to use cmd and start to allow launching data files like
         // Excel spreadsheets
         // It should work OK with actual programs.

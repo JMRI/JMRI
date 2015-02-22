@@ -73,7 +73,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * Set PAN address.
      *
      * @param addr byte array containing upper and lower bytes of the 16 bit PAN
-     * address.
+     *             address.
      */
     public void setPANAddress(byte addr[]) {
         for (int i = 0; i < panaddress.length; i++) {
@@ -85,7 +85,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * Get the PAN address
      *
      * @return byte array containing the upper and lower bytes of the PAN
-     * address
+     *         address
      */
     public byte[] getPANAddress() {
         return panaddress;
@@ -95,7 +95,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * Set User address.
      *
      * @param addr byte array containing upper and lower bytes of the 16 bit
-     * user assigned address.
+     *             user assigned address.
      */
     public void setUserAddress(byte addr[]) {
         for (int i = 0; i < useraddress.length; i++) {
@@ -107,7 +107,7 @@ public abstract class IEEE802154Node extends AbstractNode {
      * Get the User address
      *
      * @return byte array containing the upper and lower bytes of the User
-     * assigned address
+     *         assigned address
      */
     public byte[] getUserAddress() {
         return useraddress;

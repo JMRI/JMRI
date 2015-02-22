@@ -103,7 +103,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * Constructor for new JoalAudioBuffer with system name and user name
      *
      * @param systemName AudioBuffer object system name (e.g. IAB4)
-     * @param userName AudioBuffer object user name
+     * @param userName   AudioBuffer object user name
      */
     public JoalAudioBuffer(String systemName, String userName) {
         super(systemName, userName);

@@ -61,7 +61,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         // general GUI config
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		// Set up the panels
+        // Set up the panels
         // Layout the panel by rows
         // row 1
         JPanel pName = new JPanel();

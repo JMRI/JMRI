@@ -374,7 +374,7 @@ public class RosterEntryPane extends javax.swing.JPanel {
     /**
      *
      * @return true if the value in the id JTextField is a duplicate of some
-     * other RosterEntry in the roster
+     *         other RosterEntry in the roster
      */
     public boolean checkDuplicate() {
         // check its not a duplicate

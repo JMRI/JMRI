@@ -194,7 +194,7 @@ public final class XpaTrafficController implements XpaInterface, Runnable {
      * static function returning the XpaTrafficController instance to use.
      *
      * @return The registered XpaTrafficController instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     static public XpaTrafficController instance() {
         if (self == null) {

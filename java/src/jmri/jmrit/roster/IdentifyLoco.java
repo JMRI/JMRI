@@ -6,12 +6,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Interact with a programmer to identify the {@link jmri.jmrit.roster.RosterEntry} for a loco on the
- * programming track.
+ * Interact with a programmer to identify the
+ * {@link jmri.jmrit.roster.RosterEntry} for a loco on the programming track.
  * <p>
- * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member function) to simplify use of
- * ProgListener callbacks. It is abstract as we expect that local classes will
- * define the message and done members.
+ * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member
+ * function) to simplify use of ProgListener callbacks. It is abstract as we
+ * expect that local classes will define the message and done members.
  * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2015

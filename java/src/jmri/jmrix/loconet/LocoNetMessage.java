@@ -41,7 +41,7 @@ public class LocoNetMessage implements Serializable {
      * Create a new object, representing a specific-length message.
      *
      * @param len Total bytes in message, including opcode and error-detection
-     * byte.
+     *            byte.
      */
     public LocoNetMessage(int len) {
         if (len < 1) {
@@ -55,8 +55,8 @@ public class LocoNetMessage implements Serializable {
      * Create a message with specified contents
      *
      * @param contents The array of contents for the message. The error check
-     * word must be present, e.g. a 4-byte message must have four values in the
-     * array
+     *                 word must be present, e.g. a 4-byte message must have
+     *                 four values in the array
      */
     public LocoNetMessage(int[] contents) {
         this(contents.length);
@@ -284,9 +284,9 @@ public class LocoNetMessage implements Serializable {
     /**
      * Return a newly created OPC_PEER_XFR message.
      *
-     * @param src Source address
-     * @param dst Destination address
-     * @param d int[8] for the data contents or null
+     * @param src  Source address
+     * @param dst  Destination address
+     * @param d    int[8] for the data contents or null
      * @param code The instruction code placed in the pcxt1 pcxt2 bytes
      * @return The formatted message
      */

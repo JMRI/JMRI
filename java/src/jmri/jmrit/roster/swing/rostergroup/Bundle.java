@@ -52,7 +52,7 @@ public class Bundle extends jmri.jmrit.roster.swing.Bundle {
      * Note that this is intentionally package-local access.
      *
      * @see java.text.MessageFormat
-     * @param key Bundle key to be translated
+     * @param key  Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */

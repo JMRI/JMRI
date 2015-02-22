@@ -155,8 +155,8 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Set the locking state of the button
      *
      * @param isLockable True if the a clicking and releasing the button changes
-     * the function state. False if the state is changed back when the button is
-     * released
+     *                   the function state. False if the state is changed back
+     *                   when the button is released
      */
     public void setIsLockable(boolean isLockable) {
         this.isLockable = isLockable;
@@ -173,8 +173,8 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Get the locking state of the function
      *
      * @return True if the a clicking and releasing the button changes the
-     * function state. False if the state is changed back when the button is
-     * released
+     *         function state. False if the state is changed back when the
+     *         button is released
      */
     public boolean getIsLockable() {
         return isLockable;
@@ -184,7 +184,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Set the display state of the button
      *
      * @param displayed True if the button exists False if the button has been
-     * removed by the user
+     *                  removed by the user
      */
     public void setDisplay(boolean displayed) {
         this.isDisplayed = displayed;
@@ -194,7 +194,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Get the display state of the button
      *
      * @return True if the button exists False if the button has been removed by
-     * the user
+     *         the user
      */
     public boolean getDisplay() {
         return isDisplayed;
@@ -302,7 +302,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Add a listener to this button, probably some sort of keypad panel.
      *
      * @param l The FunctionListener that wants notifications via the
-     * FunctionListener.notifyFunctionStateChanged.
+     *          FunctionListener.notifyFunctionStateChanged.
      */
     public void setFunctionListener(FunctionListener l) {
         addFunctionListener(l);
@@ -312,7 +312,7 @@ public class FunctionButton extends JToggleButton implements ActionListener {
      * Add a listener to this button, probably some sort of keypad panel.
      *
      * @param l The FunctionListener that wants notifications via the
-     * FunctionListener.notifyFunctionStateChanged.
+     *          FunctionListener.notifyFunctionStateChanged.
      */
     public void addFunctionListener(FunctionListener l) {
         if (!listeners.contains(l)) {

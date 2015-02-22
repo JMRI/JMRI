@@ -645,12 +645,13 @@ public class ProfileManager extends Bean {
     /**
      * Export the {@link jmri.profile.Profile} to a JAR file.
      *
-     * @param profile The profile to export
-     * @param target The file to export the profile into
+     * @param profile                 The profile to export
+     * @param target                  The file to export the profile into
      * @param exportExternalUserFiles If the User Files are not within the
-     * profile directory, should they be included?
-     * @param exportExternalRoster It the roster is not within the profile
-     * directory, should it be included?
+     *                                profile directory, should they be
+     *                                included?
+     * @param exportExternalRoster    It the roster is not within the profile
+     *                                directory, should it be included?
      * @throws IOException
      * @throws org.jdom2.JDOMException
      */

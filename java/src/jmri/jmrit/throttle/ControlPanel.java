@@ -162,7 +162,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Enable/Disable all buttons and slider.
      *
      * @param isEnabled True if the buttons/slider should be enabled, false
-     * otherwise.
+     *                  otherwise.
      */
     public void setEnabled(boolean isEnabled) {
         //super.setEnabled(isEnabled);
@@ -236,8 +236,10 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * the speed step setting and the max speed for the particular loco
      *
      * @param speedStepMode Desired speed step mode. One of:
-     * DccThrottle.SpeedStepMode128, DccThrottle.SpeedStepMode28,
-     * DccThrottle.SpeedStepMode27, DccThrottle.SpeedStepMode14 step mode
+     *                      DccThrottle.SpeedStepMode128,
+     *                      DccThrottle.SpeedStepMode28,
+     *                      DccThrottle.SpeedStepMode27,
+     *                      DccThrottle.SpeedStepMode14 step mode
      */
     private void setSpeedStepsMode(int speedStepMode) {
         internalAdjust = true;
@@ -321,7 +323,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Is this Speed Control selection method possible?
      *
      * @param displaySlider integer value. possible values: SLIDERDISPLAY = use
-     * speed slider display STEPDISPLAY = use speed step display
+     *                      speed slider display STEPDISPLAY = use speed step
+     *                      display
      */
     public boolean isSpeedControllerAvailable(int displaySlider) {
         switch (displaySlider) {
@@ -345,7 +348,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * object instead.
      *
      * @param displaySlider integer value. possible values: SLIDERDISPLAY = use
-     * speed slider display STEPDISPLAY = use speed step display
+     *                      speed slider display STEPDISPLAY = use speed step
+     *                      display
      */
     public void setSpeedController(int displaySlider) {
         _displaySlider = displaySlider;
@@ -420,8 +424,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      *
      *
      * @param speedIncrement The throttle back end's speed increment value - %
-     * increase for each speed step.
-     * @param speed The speed value of the loco.
+     *                       increase for each speed step.
+     * @param speed          The speed value of the loco.
      */
     private void setSpeedValues(float speedIncrement, float speed) {
         //This is an internal speed adjustment

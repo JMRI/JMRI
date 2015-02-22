@@ -43,7 +43,7 @@ public interface SignalMastLogicManager extends Manager {
      * reachable from the source signalmast
      *
      * @param sourceMast Source SignalMast
-     * @param destMast Destination SignalMast
+     * @param destMast   Destination SignalMast
      * @return true if valid, false if not valid.
      */
     // public boolean checkValidDest(SignalMast sourceMast, SignalMast destMast) throws JmriException;
@@ -86,7 +86,7 @@ public interface SignalMastLogicManager extends Manager {
     /**
      * Remove a destination mast from the signalmast logic
      *
-     * @param sml The signalmast logic of the source signal
+     * @param sml  The signalmast logic of the source signal
      * @param dest The destination mast
      */
     public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest);

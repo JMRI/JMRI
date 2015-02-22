@@ -113,7 +113,7 @@ public class EcosTrafficController extends AbstractMRTrafficController implement
      * static function returning the EcosTrafficController instance to use.
      *
      * @return The registered EcosTrafficController instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     static public EcosTrafficController instance() {
         return self;

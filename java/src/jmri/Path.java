@@ -107,7 +107,7 @@ public class Path {
      * to the proper CLOSED or OPEN status.
      *
      * @return true if the path can be traversed; always true if no path
-     * elements (BeanSettings) are defined.
+     *         elements (BeanSettings) are defined.
      */
     public boolean checkPathSet() {
         // empty conditions are always set

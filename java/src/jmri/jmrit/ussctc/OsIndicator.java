@@ -33,9 +33,9 @@ public class OsIndicator implements Constants {
     /**
      * Create one from scratch
      *
-     * @param output User- or System name of output turnout to be driven
+     * @param output   User- or System name of output turnout to be driven
      * @param osSensor User- or System name of Sensor determining OS occupancy
-     * @param lock Name of NamedBean used for Locking (type to be decided)
+     * @param lock     Name of NamedBean used for Locking (type to be decided)
      */
     public OsIndicator(String output, String osSensor, String lock) {
         this.lock = lock;
@@ -96,7 +96,7 @@ public class OsIndicator implements Constants {
      *
      * @param outputName name of output Turnout that drives the indicator
      * @throws JmriException if no such OsIndicator exists, or some problem
-     * found
+     *                       found
      */
     public OsIndicator(String outputName) throws jmri.JmriException {
         this.output = outputName;

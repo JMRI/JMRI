@@ -263,7 +263,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         addComboBoxAction(modelComboBox);
         addComboBoxAction(locationBox);
 
-		// setup checkbox
+        // setup checkbox
         // build menu
         // JMenuBar menuBar = new JMenuBar();
         // JMenu toolMenu = new JMenu("Tools");

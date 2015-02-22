@@ -237,9 +237,9 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
     /**
      * Place icon by its localized bean state name
      *
-     * @param status - the track condition of the icon
+     * @param status    - the track condition of the icon
      * @param stateName - NamedBean name of turnout state
-     * @param icon - icon corresponding to status and state
+     * @param icon      - icon corresponding to status and state
      */
     public void setIcon(String status, String stateName, NamedIcon icon) {
         if (log.isDebugEnabled()) {

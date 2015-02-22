@@ -27,7 +27,7 @@ public abstract class Mx1TrafficController implements Mx1Interface {
      * Must provide a ZimoCommandStation reference at creation time
      *
      * @param pCommandStation reference to associated command station object,
-     * preserved for later.
+     *                        preserved for later.
      */
     Mx1TrafficController(Mx1CommandStation pCommandStation, boolean prot) {
         mCommandStation = pCommandStation;
@@ -75,9 +75,9 @@ public abstract class Mx1TrafficController implements Mx1Interface {
     /**
      * Forward a message to all registered listeners.
      *
-     * @param m Message to forward. Listeners should not modify it!
+     * @param m       Message to forward. Listeners should not modify it!
      * @param replyTo Listener for the reply to this message, doesn't get the
-     * echo of it.
+     *                echo of it.
      */
     @SuppressWarnings("unchecked")
     protected void notify(Mx1Message m, Mx1Listener replyTo) {

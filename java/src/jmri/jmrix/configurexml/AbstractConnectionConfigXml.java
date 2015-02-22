@@ -152,7 +152,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
      * Update static data from XML file
      *
      * @param element Top level Element to unpack.
-     * @param o An object to update with data from element.
+     * @param o       An object to update with data from element.
      */
     @Override
     public void load(Element element, Object o) {

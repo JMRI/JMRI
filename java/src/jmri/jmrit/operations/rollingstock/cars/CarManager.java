@@ -60,7 +60,7 @@ public class CarManager extends RollingStockManager {
      * Finds an existing Car or creates a new Car if needed requires car's road
      * and number
      *
-     * @param road car road
+     * @param road   car road
      * @param number car number
      * @return new car or existing Car
      */
@@ -83,7 +83,7 @@ public class CarManager extends RollingStockManager {
     /**
      * Get Car by road and number
      *
-     * @param road Car road
+     * @param road   Car road
      * @param number Car number
      * @return requested Car object or null if none exists
      */
@@ -484,7 +484,7 @@ public class CarManager extends RollingStockManager {
     /**
      * Replace car loads
      *
-     * @param type type of car
+     * @param type        type of car
      * @param oldLoadName old load name
      * @param newLoadName new load name
      */

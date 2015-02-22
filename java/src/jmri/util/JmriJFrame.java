@@ -82,7 +82,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Creates a JFrame with standard settings, optional save/restore of size
      * and position.
      *
-     * @param saveSize - Set true to save the last known size
+     * @param saveSize     - Set true to save the last known size
      * @param savePosition - Set true to save the last known location
      */
     public JmriJFrame(boolean saveSize, boolean savePosition) {
@@ -144,8 +144,8 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Creates a JFrame with with given name plus standard settings, including
      * optional save/restore of size and position.
      *
-     * @param name - Title of the JFrame
-     * @param saveSize - Set true to save the last knowm size
+     * @param name         - Title of the JFrame
+     * @param saveSize     - Set true to save the last knowm size
      * @param savePosition - Set true to save the last known location
      */
     public JmriJFrame(String name, boolean saveSize, boolean savePosition) {
@@ -337,9 +337,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     /**
      * Add a standard help menu, including window specific help item.
      *
-     * @param ref JHelp reference for the desired window-specific help page
+     * @param ref    JHelp reference for the desired window-specific help page
      * @param direct true if the help menu goes directly to the help system,
-     * e.g. there are no items in the help menu
+     *               e.g. there are no items in the help menu
      */
     public void addHelpMenu(String ref, boolean direct) {
         // only works if no menu present?
@@ -423,7 +423,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * The action associated with the Escape key.
      *
      * @return An AbstractAction or null if no action is bound to the Escape
-     * key.
+     *         key.
      * @see #setEscapeKeyAction(javax.swing.AbstractAction)
      * @see javax.swing.AbstractAction
      */
@@ -466,7 +466,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * Does the Escape key close the window?
      *
      * @return <code>true</code> if Escape key is bound to action created by
-     * setEscapeKeyClosesWindow, <code>false</code> in all other cases.
+     *         setEscapeKeyClosesWindow, <code>false</code> in all other cases.
      * @see #setEscapeKeyClosesWindow
      * @see #setEscapeKeyAction
      */

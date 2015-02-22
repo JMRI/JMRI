@@ -54,7 +54,7 @@ public class SignalMastIconXml extends PositionableLabelXml {
      * Create a SignalMastIcon, then add
      *
      * @param element Top level Element to unpack.
-     * @param o an Editor as an Object
+     * @param o       an Editor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects

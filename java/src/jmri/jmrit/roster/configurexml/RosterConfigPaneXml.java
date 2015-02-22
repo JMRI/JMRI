@@ -72,7 +72,7 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * Update static data from XML file
      *
      * @param element Top level Element to unpack.
-     * @param o ignored
+     * @param o       ignored
      */
     public void load(Element element, Object o) {
         if (log.isDebugEnabled()) {

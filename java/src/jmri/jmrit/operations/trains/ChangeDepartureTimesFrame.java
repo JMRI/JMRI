@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory;
  */
 public class ChangeDepartureTimesFrame extends OperationsFrame {
 
-	// labels
+    // labels
     // text field
     /**
      *
@@ -40,7 +40,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 
-		// Set up the panels
+        // Set up the panels
         // Layout the panel by rows
         for (int i = 1; i < 24; i++) {
             hourBox.addItem(Integer.toString(i));

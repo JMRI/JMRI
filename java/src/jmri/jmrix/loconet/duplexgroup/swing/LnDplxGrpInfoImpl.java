@@ -177,7 +177,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * <p>
      * @param sGroupPassword
      * @return true if and only if sGroupPassword is a valid Duplex Group
-     * Password.
+     *         Password.
      */
     public static final boolean validateGroupPassword(String sGroupPassword) {
         // force the value to uppercase
@@ -196,7 +196,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param iGroupChannel
      * @return true if and only if iGroupChannel is a valid Duplex Group
-     * Channel.
+     *         Channel.
      */
     public static final boolean validateGroupChannel(Integer iGroupChannel) {
         if ((iGroupChannel < LnDplxGrpInfoImplConstants.DPLX_MIN_CH)
@@ -253,9 +253,9 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * <p>
      * @param sGroupName is the desired group name value as a string
      * @return The LocoNet packet which writes the Group Name to the UR92
-     * device(s)
+     *         device(s)
      * @throws jmri.jmrix.loconet.LocoNetException if sGroupName is not a valid
-     * Duplex Group Name
+     *                                             Duplex Group Name
      */
     public static final LocoNetMessage createSetUr92GroupNamePacket(String sGroupName) throws jmri.jmrix.loconet.LocoNetException {
         int gr_msb1 = 0;
@@ -318,11 +318,11 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      * the end of the string.
      * <p>
      * @param iChannelNumber The desired group channel number value as an
-     * integer
+     *                       integer
      * @return The packet which writes the Group Channel Number to the UR92
-     * device(s)
+     *         device(s)
      * @throws jmri.jmrix.loconet.LocoNetException if sGroupName is not a valid
-     * Duplex Group Name
+     *                                             Duplex Group Name
      */
     public static final LocoNetMessage createSetUr92GroupChannelPacket(Integer iChannelNumber) throws jmri.jmrix.loconet.LocoNetException {
         int i;
@@ -445,7 +445,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param m
      * @return true if message is query, report, or write of Duplex Group Name,
-     * Channel, Password or ID
+     *         Channel, Password or ID
      */
     public static final boolean isDuplexGroupMessage(LocoNetMessage m) {
         if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
@@ -476,13 +476,16 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param m - a LocoNetMessage
      * @return DuplexGroupMessageType, encoded as one of the following
-     * NOT_A_DUPLEX_GROUP_MESSAGE DUPLEX_GROUP_CHANNEL_QUERY_MESSAGE
-     * DUPLEX_GROUP_CHANNEL_REPORT_MESSAGE DUPLEX_GROUP_CHANNEL_WRITE_MESSAGE
-     * DUPLEX_GROUP_NAME_QUERY_MESSAGE DUPLEX_GROUP_NAME_ETC_REPORT_MESSAGE
-     * DUPLEX_GROUP_NAME_WRITE_MESSAGE DUPLEX_GROUP_PASSWORD_QUERY_MESSAGE
-     * DUPLEX_GROUP_PASSWORD_REPORT_MESSAGE DUPLEX_GROUP_PASSWORD_WRITE_MESSAGE
-     * DUPLEX_GROUP_ID_QUERY_MESSAGE DUPLEX_GROUP_ID_REPORT_MESSAGE
-     * DUPLEX_GROUP_ID_WRITE_MESSAGE
+     *         NOT_A_DUPLEX_GROUP_MESSAGE DUPLEX_GROUP_CHANNEL_QUERY_MESSAGE
+     *         DUPLEX_GROUP_CHANNEL_REPORT_MESSAGE
+     *         DUPLEX_GROUP_CHANNEL_WRITE_MESSAGE
+     *         DUPLEX_GROUP_NAME_QUERY_MESSAGE
+     *         DUPLEX_GROUP_NAME_ETC_REPORT_MESSAGE
+     *         DUPLEX_GROUP_NAME_WRITE_MESSAGE
+     *         DUPLEX_GROUP_PASSWORD_QUERY_MESSAGE
+     *         DUPLEX_GROUP_PASSWORD_REPORT_MESSAGE
+     *         DUPLEX_GROUP_PASSWORD_WRITE_MESSAGE DUPLEX_GROUP_ID_QUERY_MESSAGE
+     *         DUPLEX_GROUP_ID_REPORT_MESSAGE DUPLEX_GROUP_ID_WRITE_MESSAGE
      */
     public static final DuplexGroupMessageType getDuplexGroupIdentityMessageType(LocoNetMessage m) {
         if ((m.getElement(0) == LnConstants.OPC_PEER_XFER)
@@ -772,7 +775,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param m
      * @return true if message is an IPL device report indicating a UR92
-     * present, else return false.
+     *         present, else return false.
      */
     private boolean handleMessageIplResult(LocoNetMessage m) {
         if (LnIPLImplementation.isIplUr92IdentityReportMessage(m)) {
@@ -800,7 +803,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param m
      * @return true if message is a Duplex Group Identity Report, else return
-     * false.
+     *         false.
      */
     private boolean handleMessageDuplexInfoReport(LocoNetMessage m) {
 
@@ -889,7 +892,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param dgn - String containing the new Duplex Group Name
      * @throws jmri.jmrix.loconet.LocoNetException if dgn is not a valid Duplex
-     * Group Name.
+     *                                             Group Name.
      */
     public void setDuplexGroupName(String dgn) throws jmri.jmrix.loconet.LocoNetException {
         memo.getLnTrafficController().sendLocoNetMessage(
@@ -902,7 +905,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param dgc - Integer containing the new Duplex Group Channel
      * @throws jmri.jmrix.loconet.LocoNetException if dgc is not a valid Duplex
-     * Group Channel number.
+     *                                             Group Channel number.
      */
     public void setDuplexGroupChannel(Integer dgc) throws jmri.jmrix.loconet.LocoNetException {
         memo.getLnTrafficController().sendLocoNetMessage(createSetUr92GroupChannelPacket(
@@ -914,7 +917,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param dgp - String containing the new Duplex Group Password
      * @throws jmri.jmrix.loconet.LocoNetException if dgp is not a valid Duplex
-     * Group Password.
+     *                                             Group Password.
      */
     public void setDuplexGroupPassword(String dgp) throws jmri.jmrix.loconet.LocoNetException {
         memo.getLnTrafficController().sendLocoNetMessage(createSetUr92GroupPasswordPacket(
@@ -926,7 +929,7 @@ public class LnDplxGrpInfoImpl extends javax.swing.JComponent implements jmri.jm
      *
      * @param dgi - String containing the new Duplex Group Id
      * @throws jmri.jmrix.loconet.LocoNetException if dgi is not a valid Duplex
-     * Group Id.
+     *                                             Group Id.
      */
     public void setDuplexGroupId(String dgi) throws jmri.jmrix.loconet.LocoNetException {
         memo.getLnTrafficController().sendLocoNetMessage(createSetUr92GroupIDPacket(

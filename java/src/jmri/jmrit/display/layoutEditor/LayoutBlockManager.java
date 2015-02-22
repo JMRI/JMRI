@@ -1311,10 +1311,11 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * <P>
      * @param facingBlock
      * @param protectedBlock
-     * @param panel the layout editor panel the block is assigned, if null then
-     * the maximum connected panel of the facing block is used
-     * @param T The class of the item that we are looking for, either SignalMast
-     * or Sensor
+     * @param panel          the layout editor panel the block is assigned, if
+     *                       null then the maximum connected panel of the facing
+     *                       block is used
+     * @param T              The class of the item that we are looking for,
+     *                       either SignalMast or Sensor
      * @return The assigned sensor.
      */
     public NamedBean getFacingBean(Block facingBlock, Block protectedBlock, LayoutEditor panel, Class<?> T) {
@@ -1638,7 +1639,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * Method to return the block that a given bean object (Sensor, SignalMast
      * or SignalHead) is protecting
      * <P>
-     * @param nb NamedBean
+     * @param nb    NamedBean
      * @param panel - panel that this bean is on
      * @return The block that the bean object is facing
      */
@@ -1828,7 +1829,7 @@ public class LayoutBlockManager extends AbstractManager implements jmri.Instance
      * Method to return the block facing a given bean object (Sensor, SignalMast
      * or SignalHead).
      * <P>
-     * @param nb NamedBean
+     * @param nb    NamedBean
      * @param panel - panel that this bean is on
      * @return The block that the bean object is facing
      */

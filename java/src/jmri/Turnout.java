@@ -112,7 +112,7 @@ public interface Turnout extends NamedBean {
      * Show whether state is one you can safely run trains over
      *
      * @return	true iff state is a valid one and the known state is the same as
-     * commanded
+     *         commanded
      */
     public boolean isConsistentState();
 

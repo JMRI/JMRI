@@ -464,7 +464,7 @@ public class NceTrafficController extends AbstractMRTrafficController implements
      * static function returning the NceTrafficController instance to use.
      *
      * @return The registered NceTrafficController instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     @Deprecated
     public static synchronized NceTrafficController instance() {

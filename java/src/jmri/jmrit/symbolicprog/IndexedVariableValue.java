@@ -32,7 +32,7 @@ public class IndexedVariableValue extends VariableValue
 
     /**
      * @param cvName address of this indexed CV e.g. "12.34.56"
-     * @param cvNum the CV finally written after the index operations
+     * @param cvNum  the CV finally written after the index operations
      */
     public IndexedVariableValue(String name, String comment, String cvName,
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,

@@ -163,16 +163,16 @@ public class Analytic_AAlgorithm extends AbstractCalculator {
      * *************************************************************************
      *
      * @param	Xs	array with 3 columns and 32 rows, for the coordinates of the
-     * sat's
+     *           sat's
      * @param	SV	valid prn's
-     * @param	P	pseudoranges
+     * @param	P	 pseudoranges
      *
      * (note: arrays actually have 33 rows, but row 0 is unused, in order to
      * index by actual prn number)
      *
      * @param	Xr	input of initial guess ( user position in ECEF)
      * @return	[X, X, X, Cr]	output of final position and receiver clock error
-     * return null if calculation failed //do: throw exception instead
+     *         return null if calculation failed //do: throw exception instead
      */
     public double[] solve(double[][] Xs, boolean[] SV, double[] P, double[] Xr) {
 

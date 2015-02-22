@@ -82,7 +82,7 @@ public class Profile {
      *
      * This method exists purely to support subclasses.
      *
-     * @param path The Profile's directory
+     * @param path       The Profile's directory
      * @param isReadable
      * @throws IOException
      */

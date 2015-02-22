@@ -70,8 +70,8 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
      * Attached a named turnout to this display item
      *
      * @param pName Used as a system/user name to lookup the turnout object
-     * @param turn is used to determine which turnout position this is for. 0x01
-     * - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
+     * @param turn  is used to determine which turnout position this is for.
+     *              0x01 - West 0x02 - East 0x04 - Lower West 0x06 - Upper East
      */
     public void setTurnout(String pName, int turn) {
         if (InstanceManager.turnoutManagerInstance() != null) {
@@ -90,7 +90,7 @@ public class SlipTurnoutIcon extends PositionableLabel implements java.beans.Pro
     /**
      * Attached a namedBean Handle turnout to this display item
      *
-     * @param to Used as the NamedBeanHandle to lookup the turnout object
+     * @param to   Used as the NamedBeanHandle to lookup the turnout object
      * @param turn is used to determine which turnout position this is for.
      * <ul>
      * <li>0x01 - West

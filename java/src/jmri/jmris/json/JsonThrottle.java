@@ -62,8 +62,9 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
      * } is used as the "best guess" of the address length.
      *
      * @param throttleId The client's identity token for this throttle
-     * @param data JSON object containing either an ADDRESS or an ID
-     * @param server The server requesting this throttle on behalf of a client
+     * @param data       JSON object containing either an ADDRESS or an ID
+     * @param server     The server requesting this throttle on behalf of a
+     *                   client
      * @return The throttle
      * @throws JmriException
      * @throws IOException

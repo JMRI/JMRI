@@ -46,11 +46,12 @@ public interface LightManager extends Manager {
      * one if nothing found
      *
      * @param name User name, system name, or address which can be promoted to
-     * system name
+     *             system name
      * @return Never null
      * @throws IllegalArgumentException if Light doesn't already exist and the
-     * manager cannot create the Light due to e.g. an illegal name or name that
-     * can't be parsed.
+     *                                  manager cannot create the Light due to
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
      */
     public Light getLight(String name);
 
@@ -78,7 +79,8 @@ public interface LightManager extends Manager {
      *
      * @return requested Light object (never null)
      * @throws IllegalArgumentException if cannot create the Light due to e.g.
-     * an illegal name or name that can't be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     public Light newLight(String systemName, String userName);
 

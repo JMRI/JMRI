@@ -162,18 +162,18 @@ public interface SignalGroup extends NamedBean {
     /**
      * Sets the On State of the Signal in the Group
      *
-     * @param head The SignalHead Bean
+     * @param head  The SignalHead Bean
      * @param state The Apperance that the SignalHead will change to when the
-     * conditions are met.
+     *              conditions are met.
      */
     public void setSignalHeadOnState(SignalHead head, int state);
 
     /**
      * Sets the Off State of the Signal in the Group
      *
-     * @param head The SignalHead Bean
+     * @param head  The SignalHead Bean
      * @param state The Apperance that the SignalHead will change to when the
-     * conditions are NOT met.
+     *              conditions are NOT met.
      */
     public void setSignalHeadOffState(SignalHead head, int state);
 
@@ -206,7 +206,7 @@ public interface SignalGroup extends NamedBean {
     /**
      * Inquire if a Turnout is included in the Signal Head Calculation.
      *
-     * @param pSignal Signal Head Bean
+     * @param pSignal  Signal Head Bean
      * @param pTurnout Turnout Bean
      */
     public boolean isTurnoutIncluded(SignalHead pSignal, Turnout pTurnout);
@@ -214,7 +214,7 @@ public interface SignalGroup extends NamedBean {
     /**
      * Gets the state of the Turnout for the given Signal Head in the group
      *
-     * @param pSignal Signal Head Bean
+     * @param pSignal  Signal Head Bean
      * @param pTurnout Name of the Turnout within the Group
      * @return -1 if the turnout or signal head is invalid
      */
@@ -223,7 +223,7 @@ public interface SignalGroup extends NamedBean {
     /**
      * Gets the state of the Turnout for the given Signal Head at index x
      *
-     * @param x Signal Head at index x
+     * @param x        Signal Head at index x
      * @param pTurnout Name of the Turnout within the Group
      * @return -1 if the turnout or signal head is invalid
      */
@@ -233,7 +233,7 @@ public interface SignalGroup extends NamedBean {
      * Gets the state of the Turnout at index x, for the given Signal Head at
      * index x
      *
-     * @param x Signal Head at index x
+     * @param x        Signal Head at index x
      * @param pTurnout Turnout at index pTurnout
      * @return -1 if the turnout or signal head is invalid
      */
@@ -243,7 +243,7 @@ public interface SignalGroup extends NamedBean {
      * Gets the Name of the Turnout at index x, for the given Signal Head at
      * index x
      *
-     * @param x Signal Head at index x
+     * @param x        Signal Head at index x
      * @param pTurnout Turnout at index pTurnout
      * @return null if the turnout or signal head is invalid
      */
@@ -253,7 +253,7 @@ public interface SignalGroup extends NamedBean {
      * Gets the Name of the Turnout at index x, for the given Signal Head at
      * index x
      *
-     * @param x Signal Head at index x
+     * @param x        Signal Head at index x
      * @param pTurnout Turnout at index pTurnout
      * @return null if the turnout or signal head is invalid
      */
@@ -262,9 +262,9 @@ public interface SignalGroup extends NamedBean {
     /**
      * Method to add a Sensor and its state to a signal head.
      * <p>
-     * @param mHead SignalHead we are adding the sensor to
+     * @param mHead   SignalHead we are adding the sensor to
      * @param mSensor Sensor Bean
-     * @param state The State that the sensor must be set to.
+     * @param state   The State that the sensor must be set to.
      */
     public void setSignalHeadAlignSensor(SignalHead mHead, Sensor mSensor, int state);
 
@@ -288,7 +288,7 @@ public interface SignalGroup extends NamedBean {
     /**
      * Gets the state of the Sensor for the given Signal Head at index x
      *
-     * @param x Signal Head at index x
+     * @param x       Signal Head at index x
      * @param pSensor Name of the Sensor within the Group
      * @return -1 if the sensor or signal head is invalid
      */
@@ -298,7 +298,7 @@ public interface SignalGroup extends NamedBean {
      * Gets the state of the Sensor at index x, for the given Signal Head at
      * index x
      *
-     * @param x Signal Head at index x
+     * @param x       Signal Head at index x
      * @param pSensor Sensor at index pTurnout
      * @return null if the sensor or signal head is invalid
      */
@@ -308,7 +308,7 @@ public interface SignalGroup extends NamedBean {
      * Gets the state of the Sensor at index x, for the given Signal Head at
      * index x
      *
-     * @param x Signal Head at index x
+     * @param x       Signal Head at index x
      * @param pSensor Sensor at index pTurnout
      * @return null if the sensor or signal head is invalid
      */

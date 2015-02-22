@@ -34,10 +34,10 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     /**
      * Send a specific packet to the rails.
      *
-     * @param packet Byte array representing the packet, including the
-     * error-correction byte. Must not be null.
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission, but is ignored
-     * in the current implementation
+     *                in the current implementation
      */
     @Override
     public void sendPacket(byte[] packet, int repeats) {
@@ -90,7 +90,7 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     /**
      * Set loco speed and direction
      *
-     * @param handle The handle of the session to which it applies
+     * @param handle    The handle of the session to which it applies
      * @param speed_dir Bit 7 is direction (1 = forward) 6:0 are speed
      */
     public void setSpeedDir(int handle, int speed_dir) {
@@ -105,8 +105,8 @@ public class CbusCommandStation implements CommandStation, DccCommandStation, Ca
     /**
      * Send a CBUS message to set functions
      *
-     * @param group The function group
-     * @param handle The handle of the session for the loco being controlled
+     * @param group     The function group
+     * @param handle    The handle of the session for the loco being controlled
      * @param functions Function bits
      */
     protected void setFunctions(int group, int handle, int functions) {

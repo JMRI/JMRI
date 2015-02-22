@@ -50,7 +50,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * status did not change.
      * <p>
      *
-     * @param column the column to show/hide
+     * @param column  the column to show/hide
      * @param visible its new visibility status
      */
     // listeners will receive columnAdded()/columnRemoved() event
@@ -109,7 +109,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      *
      * @param modelColumnIndex index of column in table model
      * @return table column object or null if no such column in this column
-     * model
+     *         model
      */
     public TableColumn getColumnByModelIndex(int modelColumnIndex) {
         for (int columnIndex = 0; columnIndex < allTableColumns.size(); ++columnIndex) {
@@ -126,7 +126,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      *
      * @param aColumn column to check
      * @return visibility of specified column (false if there is no such column
-     * at all. [It's not visible, right?])
+     *         at all. [It's not visible, right?])
      */
     public boolean isColumnVisible(TableColumn aColumn) {
         return (tableColumns.indexOf(aColumn) >= 0);
@@ -139,7 +139,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * @param column The column to be added
      * @see #removeColumn
      * @exception IllegalArgumentException if <code>column</code> is
-     * <code>null</code>
+     *                                     <code>null</code>
      */
     public void addColumn(TableColumn column) {
         allTableColumns.addElement(column);
@@ -170,7 +170,8 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * @param	oldIndex	index of column to be moved
      * @param	newIndex	new index of the column
      * @exception IllegalArgumentException	if either <code>oldIndex</code> or
-     * <code>newIndex</code> are not in [0, getColumnCount() - 1]
+     *                                     <code>newIndex</code> are not in [0,
+     *                                     getColumnCount() - 1]
      */
     public void moveColumn(int oldIndex, int newIndex) {
         if ((oldIndex < 0) || (oldIndex >= getColumnCount())
@@ -208,7 +209,7 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * Returns an <code>Enumeration</code> of all the columns in the model.
      *
      * @param onlyVisible if set all invisible columns will be missing from the
-     * enumeration.
+     *                    enumeration.
      * @return an <code>Enumeration</code> of the columns in the model
      */
     public Enumeration<TableColumn> getColumns(boolean onlyVisible) {
@@ -222,15 +223,16 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      * <code>identifier</code>. Position is the the index in all visible columns
      * if <code>onlyVisible</code> is true or else the index in all columns.
      *
-     * @param	identifier the identifier object to search for
+     * @param	identifier  the identifier object to search for
      * @param	onlyVisible if set searches only visible columns
      *
      * @return	the index of the first column whose identifier equals
-     * <code>identifier</code>
+     *         <code>identifier</code>
      *
      * @exception IllegalArgumentException if <code>identifier</code> is
-     * <code>null</code>, or if no <code>TableColumn</code> has this
-     * <code>identifier</code>
+     *                                     <code>null</code>, or if no
+     *                                     <code>TableColumn</code> has this
+     *                                     <code>identifier</code>
      * @see	#getColumn
      */
     public int getColumnIndex(Object identifier, boolean onlyVisible) {
@@ -259,10 +261,11 @@ public class XTableColumnModel extends DefaultTableColumnModel {
      *
      * @param	columnIndex	the index of the column desired
      * @param	onlyVisible	if set columnIndex is meant to be relative to all
-     * visible columns only else it is the index in all columns
+     *                    visible columns only else it is the index in all
+     *                    columns
      *
      * @return	the <code>TableColumn</code> object for the column at
-     * <code>columnIndex</code>
+     *         <code>columnIndex</code>
      */
     public TableColumn getColumn(int columnIndex, boolean onlyVisible) {
         return tableColumns.elementAt(columnIndex);

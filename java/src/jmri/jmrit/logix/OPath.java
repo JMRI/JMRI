@@ -154,12 +154,12 @@ public class OPath extends jmri.Path {
     /**
      * Set path turnout commanded state and lock state
      *
-     * @param delay following actions in seconds
-     * @param set when true, command turnout to settings, false don't set
-     * command - just do lock setting
+     * @param delay     following actions in seconds
+     * @param set       when true, command turnout to settings, false don't set
+     *                  command - just do lock setting
      * @param lockState set when lock==true, lockState unset when lock==false
-     * @param lock If lockState==0 setLocked() is not called. (lockState should
-     * be 1,2,3)
+     * @param lock      If lockState==0 setLocked() is not called. (lockState
+     *                  should be 1,2,3)
      */
     public void setTurnouts(int delay, boolean set, int lockState, boolean lock) {
         if (delay > 0) {

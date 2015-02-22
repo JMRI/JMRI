@@ -236,7 +236,7 @@ public class LocoIOData
      * The addr field (for the address info used in each LocoIO channel)
      *
      * @param channel integer value of the addresses in use for this row
-     * (0=invalid)
+     *                (0=invalid)
      */
     public void setAddr(int channel, int value) {
         addr[channel] = value & 0x7FF;

@@ -142,7 +142,7 @@ public class MakePacket {
      *
      * @param preambleLen int
      * @return boolean - true if preamble is a multiple of 5 otherwise fails and
-     * returns alse
+     *         returns alse
      */
     public static boolean setPreambleLength(int preambleLen) {
         //Just make sure that no negatives values are passed.

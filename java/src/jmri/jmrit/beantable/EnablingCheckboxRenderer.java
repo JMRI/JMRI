@@ -32,13 +32,13 @@ public class EnablingCheckboxRenderer extends JCheckBox implements TableCellRend
      * the row isn't selected Paint every other row a color very similiar to the
      * base color, just a little darker
      *
-     * @param table the JTable component
-     * @param value the cell content's object
+     * @param table      the JTable component
+     * @param value      the cell content's object
      * @param isSelected boolean so we know if this is the currently selected
-     * row
-     * @param hasFocus does this cell currently have focus?
-     * @param row the row number
-     * @param column the column number
+     *                   row
+     * @param hasFocus   does this cell currently have focus?
+     * @param row        the row number
+     * @param column     the column number
      * @return the JCheckBox to display
      */
     public Component getTableCellRendererComponent(JTable table, java.lang.Object value, boolean isSelected, boolean hasFocus, int row, int column) {

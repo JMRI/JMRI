@@ -86,7 +86,7 @@ public class SprogSlot {
      *
      * @param address int
      * @param payload byte[]
-     * @param repeat int
+     * @param repeat  int
      */
     public void set(int address, byte[] payload, int repeat) {
         addr = address;

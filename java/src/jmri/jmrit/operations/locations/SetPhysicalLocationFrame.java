@@ -37,7 +37,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     Location _location;
 
-	// labels
+    // labels
     // text field
     // check boxes
     // major buttons

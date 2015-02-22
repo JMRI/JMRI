@@ -225,7 +225,7 @@ public class SprogHexFile extends jmri.util.JmriJFrame {
      * Read a single hex digit. returns 16 if digit is invalid
      *
      * @return byte low nibble contains the hex digit read. high nibble set if
-     * error
+     *         error
      */
     private int rdHexDigit() {
         int b = 0;

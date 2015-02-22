@@ -84,7 +84,7 @@ public abstract class AbstractAudioSource extends AbstractAudio implements Audio
      * Abstract constructor for new AudioSource with system name and user name
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
-     * @param userName AudioSource object user name
+     * @param userName   AudioSource object user name
      */
     public AbstractAudioSource(String systemName, String userName) {
         super(systemName, userName);

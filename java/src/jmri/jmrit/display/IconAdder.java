@@ -209,10 +209,10 @@ public class IconAdder extends JPanel implements ListSelectionListener {
 
     /**
      * @param order -the index to Sensor's name and the inverse order that icons
-     * are drawn in doIconPanel()
+     *              are drawn in doIconPanel()
      * @param label -the Sensor's name displayed in the icon panel and the key
-     * to the icon button in _iconMap
-     * @param icon -the icon displayed in the icon button
+     *              to the icon button in _iconMap
+     * @param icon  -the icon displayed in the icon button
      */
     protected void setIcon(int order, String label, NamedIcon icon) {
         // make a button to change that icon
@@ -255,8 +255,8 @@ public class IconAdder extends JPanel implements ListSelectionListener {
      * edited
      *
      * @param label - the state name to display, Must be unique from all other
-     * calls to this method.
-     * @param name - the resource name of the icon image to displa
+     *              calls to this method.
+     * @param name  - the resource name of the icon image to displa
      * @param order - (reverse) order of display, (0 last, to N first)
      */
     public void setIcon(int order, String label, String name) {

@@ -60,7 +60,7 @@ public class LocationsByCarLoadFrame extends OperationsFrame implements java.bea
     // JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
 
-	// radio buttons
+    // radio buttons
     // text field
     // combo boxes
     JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();

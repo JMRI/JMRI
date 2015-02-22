@@ -102,10 +102,10 @@ public class ZeroConfService {
      * {@link jmri.web.server.WebServerPreferences#getRailRoadName()}
      * reformatted to replace dots and dashes with spaces.
      *
-     * @param type The service protocol
-     * @param port The port the service runs over
+     * @param type       The service protocol
+     * @param port       The port the service runs over
      * @param properties Additional information to be listed in service
-     * advertisement
+     *                   advertisement
      * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, int port, HashMap<String, String> properties) {
@@ -121,13 +121,13 @@ public class ZeroConfService {
      * If a service with the same key as the new service is already published,
      * the original service is returned unmodified.
      *
-     * @param type The service protocol
-     * @param name The name of the JMRI server listed on client devices
-     * @param port The port the service runs over
-     * @param weight Default value is 0
-     * @param priority Default value is 0
+     * @param type       The service protocol
+     * @param name       The name of the JMRI server listed on client devices
+     * @param port       The port the service runs over
+     * @param weight     Default value is 0
+     * @param priority   Default value is 0
      * @param properties Additional information to be listed in service
-     * advertisement
+     *                   advertisement
      * @return An unpublished ZeroConfService
      */
     public static ZeroConfService create(String type, String name, int port, int weight, int priority, HashMap<String, String> properties) {
@@ -184,7 +184,7 @@ public class ZeroConfService {
      * creating the object.
      *
      * @return The service name as reported by the
-     * {@link javax.jmdns.ServiceInfo} object.
+     *         {@link javax.jmdns.ServiceInfo} object.
      */
     public String name() {
         return this.serviceInfo().getName();
@@ -195,7 +195,7 @@ public class ZeroConfService {
      * creating the object.
      *
      * @return The service type as reported by the
-     * {@link javax.jmdns.ServiceInfo} object.
+     *         {@link javax.jmdns.ServiceInfo} object.
      */
     public String type() {
         return this.serviceInfo().getType();
@@ -351,7 +351,7 @@ public class ZeroConfService {
      * The list of JmDNS handlers.
      *
      * @return a {@link java.util.HashMap} of {@link javax.jmdns.JmDNS} objects,
-     * accessible by {@link java.net.InetAddress} keys.
+     *         accessible by {@link java.net.InetAddress} keys.
      */
     synchronized public static HashMap<InetAddress, JmDNS> netServices() {
         if (ZeroConfService.netServices.isEmpty()) {

@@ -278,9 +278,9 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * Typically one JMRI turnout driving two switches where each switch is in a
      * different block.
      *
-     * @param key a path in this block
+     * @param key   a path in this block
      * @param block another block
-     * @param path a path in that block sharing a turnout with key
+     * @param path  a path in that block sharing a turnout with key
      */
     public boolean addSharedTurnout(OPath key, OBlock block, OPath path) {
         if (log.isDebugEnabled()) {
@@ -385,7 +385,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      *
      * @param path that uses a common shared turnout
      * @return If warrant exists and path==pathname, return warrant display
-     * name, else null.
+     *         name, else null.
      */
     protected String isPathSet(String path) {
         String msg = null;
@@ -505,7 +505,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      *
      * @param warrant
      * @return name of block if block is already allocated to another warrant or
-     * block is OUT_OF_SERVICE
+     *         block is OUT_OF_SERVICE
      */
     protected String allocate(Warrant warrant) {
         if (log.isDebugEnabled()) {
@@ -786,7 +786,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * However, if the block is under a warrant the call will be rejected.
      *
      * @param pathName name of the path
-     * @param warrant warrant the block is allocated to
+     * @param warrant  warrant the block is allocated to
      * @return error message if the call fails. null if the call succeeds
      */
     protected String setPath(String pathName, Warrant warrant) {

@@ -1181,9 +1181,9 @@ public class AcelaNode extends AbstractNode {
     /**
      * The numbers here are 0 to MAXSENSORBITS, not 1 to MAXSENSORBITS.
      *
-     * @param s - Sensor object
+     * @param s       - Sensor object
      * @param rawaddr - 0 to MAXSENSORBITS number of sensor's input bit on this
-     * node
+     *                node
      */
     public void registerSensor(Sensor s, int rawaddr) {
         // validate the sensor ordinal

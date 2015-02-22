@@ -74,8 +74,9 @@ public interface Route extends NamedBean {
      * Add an output Turnout to this Route.
      *
      * @param systemName The turnout system name
-     * @param state must be Turnout.CLOSED, Turnout.THROWN, or Route.TOGGLE,
-     * which determines how the Turnout is to be switched when this Route is set
+     * @param state      must be Turnout.CLOSED, Turnout.THROWN, or
+     *                   Route.TOGGLE, which determines how the Turnout is to be
+     *                   switched when this Route is set
      */
     public boolean addOutputTurnout(String systemName, int state);
 
@@ -123,8 +124,9 @@ public interface Route extends NamedBean {
      * Add an output Sensor to this Route.
      *
      * @param systemName The sensor system name
-     * @param state must be Sensor.ACTIVE, Sensor.INACTIVE, or Route.TOGGLE,
-     * which determines how the Sensor is to be switched when this Route is set
+     * @param state      must be Sensor.ACTIVE, Sensor.INACTIVE, or
+     *                   Route.TOGGLE, which determines how the Sensor is to be
+     *                   switched when this Route is set
      */
     public boolean addOutputSensor(String systemName, int state);
 
@@ -231,7 +233,7 @@ public interface Route extends NamedBean {
      *
      * @param index The index in the Sensor array of the requested Sensor.
      * @return null If there is no Sensor with that 'index', or if 'index' is
-     * not in the range 0 thru MAX_SENSORS-1.
+     *         not in the range 0 thru MAX_SENSORS-1.
      */
     public String getRouteSensorName(int index);
 
@@ -240,7 +242,7 @@ public interface Route extends NamedBean {
      *
      * @param index The index in the Sensor array of the requested Sensor.
      * @return null If there is no Sensor with that 'index', or if 'index' is
-     * not in the range 0 thru MAX_SENSORS-1.
+     *         not in the range 0 thru MAX_SENSORS-1.
      */
     public Sensor getRouteSensor(int index);
 
@@ -249,7 +251,7 @@ public interface Route extends NamedBean {
      *
      * @param index The index in the Sensor array of the requested Sensor.
      * @return ONACTIVE if there is no Sensor with that 'index', or if 'index'
-     * is not in the range 0 thru MAX_SENSORS-1
+     *         is not in the range 0 thru MAX_SENSORS-1
      */
     public int getRouteSensorMode(int index);
 

@@ -105,7 +105,7 @@ public class ManagerDefaultSelector {
      * a specific class.
      *
      * @param managerClass the specific type, e.g. TurnoutManager, for which a
-     * default system is desired
+     *                     default system is desired
      * @return userName of the system, or null if none set
      */
     public String getDefault(Class<?> managerClass) {
@@ -121,8 +121,8 @@ public class ManagerDefaultSelector {
      * file will just have irrelevant items ignored.
      *
      * @param managerClass the specific type, e.g. TurnoutManager, for which a
-     * default system is desired
-     * @param userName of the system, or null if none set
+     *                     default system is desired
+     * @param userName     of the system, or null if none set
      */
     public void setDefault(Class<?> managerClass, String userName) {
         for (Item item : knownManagers) {

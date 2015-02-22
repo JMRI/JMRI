@@ -29,11 +29,11 @@ import org.slf4j.LoggerFactory;
 public class AddressedHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param top CVs above this use the indirect method
+     * @param top        CVs above this use the indirect method
      * @param addrCVhigh CV to which the high part of address is to be written
-     * @param addrCVlow CV to which the low part of address is to be written
-     * @param valueCV Value read/written here once address has been written
-     * @param modulo Modulus for determining high/low address parts
+     * @param addrCVlow  CV to which the low part of address is to be written
+     * @param valueCV    Value read/written here once address has been written
+     * @param modulo     Modulus for determining high/low address parts
      */
     public AddressedHighCvProgrammerFacade(Programmer prog, String top, String addrCVhigh, String addrCVlow, String valueCV, String modulo) {
         super(prog);

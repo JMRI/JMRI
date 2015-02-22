@@ -185,9 +185,10 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * ThrottleListener.notifyThrottleFound method.
      *
      * @param la DccLocoAddress of the decoder desired.
-     * @param l The ThrottleListener awaiting notification of a found throttle.
+     * @param l  The ThrottleListener awaiting notification of a found throttle.
      * @return True if the request will continue, false if the request will not
-     * be made. False may be returned if a the throttle is already in use.
+     *         be made. False may be returned if a the throttle is already in
+     *         use.
      */
     public boolean requestThrottle(DccLocoAddress la, BasicRosterEntry re, ThrottleListener l) {
         boolean throttleFree = true;
@@ -246,9 +247,11 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * logic to tell whether the address is a short or long form.
      *
      * @param address The decoder address desired.
-     * @param l The ThrottleListener awaiting notification of a found throttle.
+     * @param l       The ThrottleListener awaiting notification of a found
+     *                throttle.
      * @return True if the request will continue, false if the request will not
-     * be made. False may be returned if a the throttle is already in use.
+     *         be made. False may be returned if a the throttle is already in
+     *         use.
      */
     public boolean requestThrottle(int address, ThrottleListener l) {
         boolean isLong = true;
@@ -276,9 +279,9 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * Cancel a request for a throttle
      *
      * @param address The decoder address desired.
-     * @param isLong True if this is a request for a DCC long (extended)
-     * address.
-     * @param l The ThrottleListener cancelling request for a throttle.
+     * @param isLong  True if this is a request for a DCC long (extended)
+     *                address.
+     * @param l       The ThrottleListener cancelling request for a throttle.
      */
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {
         if (throttleListeners != null) {
@@ -317,7 +320,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * logic to tell whether the address is a short or long form.
      *
      * @param address The decoder address desired.
-     * @param l The ThrottleListener cancelling request for a throttle.
+     * @param l       The ThrottleListener cancelling request for a throttle.
      */
     public void cancelThrottleRequest(int address, ThrottleListener l) {
         boolean isLong = true;
@@ -336,7 +339,7 @@ abstract public class AbstractThrottleManager implements ThrottleManager {
      * the request has failed.
      *
      * @param address The DCC Loco Address that the request failed on.
-     * @param reason A text string passed by the ThrottleManae as to why
+     * @param reason  A text string passed by the ThrottleManae as to why
      */
     public void failedThrottleRequest(DccLocoAddress address, String reason) {
         ArrayList<WaitingThrottle> a = throttleListeners.get(address);

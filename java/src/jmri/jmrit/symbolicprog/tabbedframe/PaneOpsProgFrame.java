@@ -44,7 +44,7 @@ public class PaneOpsProgFrame extends PaneProgFrame
      * (no)
      *
      * @param decoderFile XML file defining the decoder contents
-     * @param r RosterEntry for information on this locomotive
+     * @param r           RosterEntry for information on this locomotive
      * @param name
      * @param file
      */

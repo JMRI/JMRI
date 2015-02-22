@@ -300,9 +300,9 @@ public class ManageLocationsFrame extends JmriJFrame {
     /**
      * Add a standard help menu, including window specific help item.
      *
-     * @param ref JHelp reference for the desired window-specific help page
+     * @param ref    JHelp reference for the desired window-specific help page
      * @param direct true if the help menu goes directly to the help system,
-     * e.g. there are no items in the help menu
+     *               e.g. there are no items in the help menu
      *
      * WARNING: BORROWED FROM JmriJFrame.
      */

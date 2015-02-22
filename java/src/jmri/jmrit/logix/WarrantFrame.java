@@ -749,9 +749,9 @@ public class WarrantFrame extends WarrantRoute {
 
     /**
      *
-     * @param vertical	Label orientation true = above, false = left
+     * @param vertical	 Label orientation true = above, false = left
      * @param textField
-     * @param label	String label message
+     * @param label	    String label message
      * @return
      */
     static protected JPanel makeBoxPanel(boolean vertical, JComponent textField, String label) {

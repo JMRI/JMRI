@@ -82,7 +82,7 @@ public class BlockContentsIconXml extends PositionableLabelXml {
      * value-icon pairs
      *
      * @param element Top level Element to unpack.
-     * @param o an Editor as an Object
+     * @param o       an Editor as an Object
      */
     public void load(Element element, Object o) {
 

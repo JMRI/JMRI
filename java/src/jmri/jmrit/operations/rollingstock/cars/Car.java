@@ -539,7 +539,7 @@ public class Car extends RollingStock {
      * performs, spurs with schedules are also checked.
      *
      * @return status OKAY, TYPE, ROAD, LENGTH, ERROR_TRACK, CAPACITY, SCHEDULE,
-     * CUSTOM
+     *         CUSTOM
      */
     public String testDestination(Location destination, Track track) {
         String status = super.testDestination(destination, track);
@@ -557,12 +557,13 @@ public class Car extends RollingStock {
      * Sets the car's destination on the layout
      *
      * @param destination
-     * @param track (yard, spur, staging, or interchange track)
+     * @param track       (yard, spur, staging, or interchange track)
      * @return "okay" if successful, "type" if the rolling stock's type isn't
-     * acceptable, or "length" if the rolling stock length didn't fit, or
-     * Schedule if the destination will not accept the car because the spur has
-     * a schedule and the car doesn't meet the schedule requirements. Also
-     * changes the car load status when the car reaches its destination.
+     *         acceptable, or "length" if the rolling stock length didn't fit,
+     *         or Schedule if the destination will not accept the car because
+     *         the spur has a schedule and the car doesn't meet the schedule
+     *         requirements. Also changes the car load status when the car
+     *         reaches its destination.
      */
     public String setDestination(Location destination, Track track) {
         return setDestination(destination, track, false);
@@ -572,14 +573,15 @@ public class Car extends RollingStock {
      * Sets the car's destination on the layout
      *
      * @param destination
-     * @param track (yard, spur, staging, or interchange track)
-     * @param force when true ignore track length, type, & road when setting
-     * destination
+     * @param track       (yard, spur, staging, or interchange track)
+     * @param force       when true ignore track length, type, & road when
+     *                    setting destination
      * @return "okay" if successful, "type" if the rolling stock's type isn't
-     * acceptable, or "length" if the rolling stock length didn't fit, or
-     * Schedule if the destination will not accept the car because the spur has
-     * a schedule and the car doesn't meet the schedule requirements. Also
-     * changes the car load status when the car reaches its destination.
+     *         acceptable, or "length" if the rolling stock length didn't fit,
+     *         or Schedule if the destination will not accept the car because
+     *         the spur has a schedule and the car doesn't meet the schedule
+     *         requirements. Also changes the car load status when the car
+     *         reaches its destination.
      */
     public String setDestination(Location destination, Track track, boolean force) {
         // save destination name and track in case car has reached its destination

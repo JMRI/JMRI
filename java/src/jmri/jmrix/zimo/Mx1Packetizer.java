@@ -175,7 +175,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
      * Make connection to existing Mx1PortController object.
      *
      * @param p Port controller for connected. Save this for a later disconnect
-     * call
+     *          call
      */
     public void connectPort(Mx1PortController p) {
         istream = p.getInputStream();

@@ -72,7 +72,7 @@ public class InstanceManager {
      *
      * @param item The object of type T to be stored
      * @param type The class Object for the item's type. This will be used as
-     * the key to retrieve the object later.
+     *             the key to retrieve the object later.
      */
     static public <T> void store(T item, Class<T> type) {
         ArrayList<Object> l = managerLists.get(type);

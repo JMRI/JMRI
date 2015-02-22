@@ -17,7 +17,7 @@ public class DefaultUserMessagePreferencesXml extends jmri.configurexml.Abstract
      * Preferences
      *
      * @param o Object to store, but not really used, because info to be stored
-     * comes from the DefaultUserMessagePreferences
+     *          comes from the DefaultUserMessagePreferences
      * @return Element containing the complete info
      */
     public Element store(Object o) {

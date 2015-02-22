@@ -350,7 +350,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     /**
      * Load path into an existing Block.
      *
-     * @param block Block to receive path
+     * @param block   Block to receive path
      * @param element Element containing path information
      */
     public void loadPath(Block block, Element element) throws jmri.configurexml.JmriConfigureXmlException {
@@ -386,7 +386,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
     /**
      * Load BeanSetting into an existing Path.
      *
-     * @param path Path to receive BeanSetting
+     * @param path    Path to receive BeanSetting
      * @param element Element containing beansetting information
      */
     public void loadBeanSetting(Path path, Element element) {

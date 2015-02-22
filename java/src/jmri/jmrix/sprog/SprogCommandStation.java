@@ -71,8 +71,8 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * create a new runnable object to despatch the message to the traffic
      * controller.
      *
-     * @param packet Byte array representing the packet, including the
-     * error-correction byte. Must not be null.
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte. Must not be null.
      * @param repeats number of times to repeat the packet
      */
     public void sendPacket(byte[] packet, int repeats) {
@@ -580,7 +580,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     /**
      *
      * @return a boolean if the command station is busy - i.e. it has at least
-     * one occupied slot
+     *         one occupied slot
      */
     public boolean isBusy() {
         for (SprogSlot s : slots) {

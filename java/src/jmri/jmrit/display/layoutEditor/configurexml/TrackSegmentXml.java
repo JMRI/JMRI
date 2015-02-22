@@ -67,7 +67,7 @@ public class TrackSegmentXml extends AbstractXmlAdapter {
      * Load, starting with the tracksegment element, then all all attributes
      *
      * @param element Top level Element to unpack.
-     * @param o LayoutEditor as an Object
+     * @param o       LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects

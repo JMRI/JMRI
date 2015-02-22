@@ -29,11 +29,12 @@ public interface SensorManager extends Manager {
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
-     * system name
+     *             system name
      * @return Never null
      * @throws IllegalArgumentException if Sensor doesn't already exist and the
-     * manager cannot create the Sensor due to e.g. an illegal name or name that
-     * can't be parsed.
+     *                                  manager cannot create the Sensor due to
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
      */
     public Sensor provideSensor(String name);
 
@@ -73,7 +74,8 @@ public interface SensorManager extends Manager {
      *
      * @return requested Sensor object (never null)
      * @throws IllegalArgumentException if cannot create the Sensor due to e.g.
-     * an illegal name or name that can't be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     public Sensor newSensor(String systemName, String userName);
 
@@ -107,9 +109,9 @@ public interface SensorManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix - The System Prefix used to make up the systemName
+     * @param prefix     - The System Prefix used to make up the systemName
      * @param curAddress - The hardware address of the turnout we which to
-     * check.
+     *                   check.
      */
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException;
 

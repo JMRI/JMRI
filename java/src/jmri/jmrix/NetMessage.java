@@ -31,7 +31,7 @@ public abstract class NetMessage implements Serializable {
      * Create a new object, representing a specific-length message.
      *
      * @param len Total bytes in message, including opcode and error-detection
-     * byte.
+     *            byte.
      */
     public NetMessage(int len) {
         if (len < 0) {

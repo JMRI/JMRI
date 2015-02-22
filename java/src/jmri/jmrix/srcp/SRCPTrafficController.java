@@ -248,7 +248,7 @@ public class SRCPTrafficController extends AbstractMRTrafficController
      * static function returning the SRCPTrafficController instance to use.
      *
      * @return The registered SRCPTrafficController instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     static public SRCPTrafficController instance() {
         if (self == null) {
@@ -287,9 +287,9 @@ public class SRCPTrafficController extends AbstractMRTrafficController
     /**
      * Forward a "Reply" from layout to registered listeners.
      *
-     * @param r Reply to be forwarded intact
+     * @param r    Reply to be forwarded intact
      * @param dest One (optional) listener to be skipped, usually because it's
-     * the originating object.
+     *             the originating object.
      */
     @SuppressWarnings("unchecked")
     protected void notifyReply(SimpleNode r, AbstractMRListener dest) {

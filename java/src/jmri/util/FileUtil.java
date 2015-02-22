@@ -283,7 +283,8 @@ public final class FileUtil {
      * In any case, absolute pathnames will work.
      *
      * @param pName The name string, possibly starting with file:, home:,
-     * profile:, program:, preference:, scripts:, settings, or resource:
+     *              profile:, program:, preference:, scripts:, settings, or
+     *              resource:
      * @return Absolute or relative file name to use, or null.
      * @since 2.7.2
      */
@@ -420,11 +421,13 @@ public final class FileUtil {
      * for the Users file directory. In most cases, the use of
      * {@link #getPortableFilename(java.io.File)} is preferable.
      *
-     * @param file File at path to be represented
+     * @param file                File at path to be represented
      * @param ignoreUserFilesPath true if paths in the User files path should be
-     * stored as absolute paths, which is often not desirable.
-     * @param ignoreProfilePath true if paths in the profile should be stored as
-     * absolute paths, which is often not desirable.
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
+     * @param ignoreProfilePath   true if paths in the profile should be stored
+     *                            as absolute paths, which is often not
+     *                            desirable.
      * @return Storage format representation
      * @since 3.5.5
      */
@@ -514,11 +517,13 @@ public final class FileUtil {
      * for the Users file directory. In most cases, the use of
      * {@link #getPortableFilename(java.io.File)} is preferable.
      *
-     * @param filename Filename to be represented
+     * @param filename            Filename to be represented
      * @param ignoreUserFilesPath true if paths in the User files path should be
-     * stored as absolute paths, which is often not desirable.
-     * @param ignoreProfilePath true if paths in the profile path should be
-     * stored as absolute paths, which is often not desirable.
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
+     * @param ignoreProfilePath   true if paths in the profile path should be
+     *                            stored as absolute paths, which is often not
+     *                            desirable.
      * @return Storage format representation
      * @since 3.5.5
      */
@@ -730,7 +735,7 @@ public final class FileUtil {
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      * No limits are placed on search locations.
      *
-     * @param path The relative path of the file or resource
+     * @param path        The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
      * @return InputStream or null.
      * @see #findInputStream(java.lang.String)
@@ -746,7 +751,7 @@ public final class FileUtil {
      * {@link java.io.InputStream} for that file. Search order is defined by
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      *
-     * @param path The relative path of the file or resource
+     * @param path      The relative path of the file or resource
      * @param locations The type of locations to limit the search to
      * @return InputStream or null.
      * @see #findInputStream(java.lang.String)
@@ -762,8 +767,8 @@ public final class FileUtil {
      * {@link java.io.InputStream} for that file. Search order is defined by
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...) }.
      *
-     * @param path The relative path of the file or resource
-     * @param locations The type of locations to limit the search to
+     * @param path        The relative path of the file or resource
+     * @param locations   The type of locations to limit the search to
      * @param searchPaths a list of paths to search for the path in
      * @return InputStream or null.
      * @see #findInputStream(java.lang.String)
@@ -813,7 +818,7 @@ public final class FileUtil {
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
      *
-     * @param path The relative path of the file or resource
+     * @param path        The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
      * @return The URL or null
      * @see #findURL(java.lang.String)
@@ -830,7 +835,7 @@ public final class FileUtil {
      * {@link java.net.URL} for that file. Search order is defined by
      * {@link #findURL(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      *
-     * @param path The relative path of the file or resource
+     * @param path      The relative path of the file or resource
      * @param locations The types of locations to limit the search to
      * @return The URL or null
      * @see #findURL(java.lang.String)
@@ -867,8 +872,8 @@ public final class FileUtil {
      * path</li><li>{@link Location#USER} limits the search to the
      * {@link #PROFILE} directory</li></ol>
      *
-     * @param path The relative path of the file or resource
-     * @param locations The types of locations to limit the search to
+     * @param path        The relative path of the file or resource
+     * @param locations   The types of locations to limit the search to
      * @param searchPaths a list of paths to search for the path in
      * @return The URL or null
      * @see #findURL(java.lang.String)
@@ -929,7 +934,7 @@ public final class FileUtil {
      *
      * @param url
      * @return a URI or null if the conversion would have caused a
-     * {@link java.net.URISyntaxException}
+     *         {@link java.net.URISyntaxException}
      */
     static public URI urlToURI(URL url) {
         try {
@@ -949,7 +954,7 @@ public final class FileUtil {
      *
      * @param file The File to convert.
      * @return a URL or null if the conversion would have caused a
-     * MalformedURLException
+     *         MalformedURLException
      */
     static public URL fileToURL(File file) {
         try {
@@ -1119,7 +1124,7 @@ public final class FileUtil {
      * Copy a file. Not needed in Java 1.7.
      *
      * @param source
-     * @param dest must be the file, not the destination directory.
+     * @param dest   must be the file, not the destination directory.
      * @throws IOException
      */
     public static void copy(File source, File dest) throws IOException {

@@ -363,7 +363,7 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em> and may not contain the equals sign (=).
      *
-     * @param def Default value if no other is provided
+     * @param def  Default value if no other is provided
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {

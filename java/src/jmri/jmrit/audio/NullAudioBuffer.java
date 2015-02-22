@@ -49,7 +49,7 @@ public class NullAudioBuffer extends AbstractAudioBuffer {
      * Constructor for new NullAudioBuffer with system name and user name
      *
      * @param systemName AudioBuffer object system name (e.g. IAB4)
-     * @param userName AudioBuffer object user name
+     * @param userName   AudioBuffer object user name
      */
     public NullAudioBuffer(String systemName, String userName) {
         super(systemName, userName);

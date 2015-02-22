@@ -62,7 +62,7 @@ public class XNetPacketizer extends XNetTrafficController {
      * Add trailer to the outgoing byte stream. This version adds the checksum
      * to the last byte.
      *
-     * @param msg The output byte stream
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
     @Override

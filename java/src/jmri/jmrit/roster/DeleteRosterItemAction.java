@@ -55,9 +55,9 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
     }
 
     /**
-     * @param s Name of this action, e.g. in menus
+     * @param s   Name of this action, e.g. in menus
      * @param who Component that action is associated with, used to ensure
-     * proper position in of dialog boxes
+     *            proper position in of dialog boxes
      */
     public DeleteRosterItemAction(String s, Component who) {
         super(s);

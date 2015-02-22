@@ -55,7 +55,7 @@ public class JavaSoundAudioListener extends AbstractAudioListener {
      * Constructor for new JavaSoundAudioListener with system name and user name
      *
      * @param systemName AudioListener object system name (e.g. IAL)
-     * @param userName AudioListener object user name
+     * @param userName   AudioListener object user name
      */
     public JavaSoundAudioListener(String systemName, String userName) {
         super(systemName, userName);

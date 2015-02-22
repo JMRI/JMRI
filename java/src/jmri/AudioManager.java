@@ -117,7 +117,7 @@ public interface AudioManager extends Manager {
      * Audio objects when you should be looking them up.
      *
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
-     * @param userName Audio object user name
+     * @param userName   Audio object user name
      * @return requested Audio object (never null)
      * @throws AudioException if error occurs during creation
      */

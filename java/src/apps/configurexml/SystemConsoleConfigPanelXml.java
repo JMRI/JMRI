@@ -121,7 +121,7 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
      * Update static data from XML file
      *
      * @param element Top level Element to unpack.
-     * @param o ignored
+     * @param o       ignored
      */
     @Override
     public void load(Element element, Object o) {

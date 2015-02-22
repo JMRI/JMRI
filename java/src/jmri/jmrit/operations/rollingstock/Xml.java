@@ -55,7 +55,7 @@ public class Xml {
     // Car.java
     static final String PASSENGER = "passenger"; // NOI18N
 
-	// Location.java
+    // Location.java
 //	static final String OPS = "ops"; // NOI18N
 //	static final String SWITCH_LIST = "switchList"; // NOI18N
 //	static final String SWITCH_LIST_STATE = "switchListState"; // NOI18N

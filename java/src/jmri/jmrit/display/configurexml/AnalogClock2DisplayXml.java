@@ -63,7 +63,7 @@ public class AnalogClock2DisplayXml
      * Create an AnalogClock2Display, then add to a target JLayeredPane
      *
      * @param element Top level Element to unpack.
-     * @param o an Editor as an Object
+     * @param o       an Editor as an Object
      */
     @Override
     public void load(Element element, Object o) {

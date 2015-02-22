@@ -1349,7 +1349,7 @@ public class Llnmon {
                      * should reset their local * sub-minute phase counter and
                      * invalidate the SYNC update ping generator. * * Clock Slot
                      * Format:
-                     * *
+                     *
                      * <0xEF>,<0E>,<7B>,<CLK_RATE>,<FRAC_MINSL>,<FRAC_MINSH>,<256-MINS_60>,
                      *
                      * <TRK><256-HRS_24>,<DAYS>,<CLK_CNTRL>,<ID1>,<1D2>,<CHK>
@@ -1524,7 +1524,7 @@ public class Llnmon {
                      * position. * * Programmer Task Final Reply: *
                      * ---------------------------- * (if saw LACK
                      * <B4>,<7F>,<1>,<chk> code reply at task start)
-                     * *
+                     *
                      * <0xE7>,<0E>,<7C>,<PCMD>,<PSTAT>,<HOPSA>,<LOPSA>,<TRK>;<CVH>,<CVL>,
                      *
                      * <DATA7>,<0>,<0>,<CHK> * * <PSTAT> Programmer Status error

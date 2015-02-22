@@ -105,7 +105,7 @@ public class MarklinTrafficController extends AbstractMRTrafficController implem
      * static function returning the MarklinTrafficController instance to use.
      *
      * @return The registered MarklinTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public MarklinTrafficController instance() {
         return self;

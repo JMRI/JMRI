@@ -27,9 +27,10 @@ public interface ProgListener extends java.util.EventListener {
     /**
      * Receive a callback at the end of a programming operation.
      *
-     * @param value Value from a read operation, or value written on a write
+     * @param value  Value from a read operation, or value written on a write
      * @param status Denotes the completion code. Note that this is a bitwise
-     * combination of the various status coded defined in this interface.
+     *               combination of the various status coded defined in this
+     *               interface.
      */
     public void programmingOpReply(int value, int status);
 

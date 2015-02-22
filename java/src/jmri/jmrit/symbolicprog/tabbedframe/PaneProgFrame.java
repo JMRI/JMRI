@@ -399,12 +399,13 @@ abstract public class PaneProgFrame extends JmriJFrame
      * <LI> Create the programmer panes
      * </UL>
      *
-     * @param pDecoderFile XML file defining the decoder contents; if null, the
-     * decoder definition is found from the RosterEntry
-     * @param pRosterEntry RosterEntry for information on this locomotive
-     * @param pFrameTitle Name/title for the frame
+     * @param pDecoderFile    XML file defining the decoder contents; if null,
+     *                        the decoder definition is found from the
+     *                        RosterEntry
+     * @param pRosterEntry    RosterEntry for information on this locomotive
+     * @param pFrameTitle     Name/title for the frame
      * @param pProgrammerFile Name of the programmer file to use
-     * @param pProg Programmer object to be used to access CVs
+     * @param pProg           Programmer object to be used to access CVs
      */
     public PaneProgFrame(DecoderFile pDecoderFile, @NonNull RosterEntry pRosterEntry,
             String pFrameTitle, String pProgrammerFile, Programmer pProg, boolean opsMode) {
@@ -534,11 +535,11 @@ abstract public class PaneProgFrame extends JmriJFrame
      * attributes.</li>
      * </ul>
      *
-     * @param e XML element with possible "include" and "exclude" attributes to
-     * be checked
+     * @param e             XML element with possible "include" and "exclude"
+     *                      attributes to be checked
      * @param aModelElement "model" element from the Decoder Index, used to get
-     * "model" and "productID".
-     * @param aRosterEntry The current roster entry, used to get "family".
+     *                      "model" and "productID".
+     * @param aRosterEntry  The current roster entry, used to get "family".
      * @param extraIncludes additional "include" terms
      * @param extraExcludes additional "exclude" terms
      */
@@ -1337,7 +1338,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * happen again, reading the next pane, until there's nothing left to read.
      * <P>
      * @return true if a read has been started, false if the operation is
-     * complete.
+     *         complete.
      */
     public boolean readChanges() {
         if (log.isDebugEnabled()) {
@@ -1363,7 +1364,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * reading the next pane, until there's nothing left to read.
      * <P>
      * @return true if a read has been started, false if the operation is
-     * complete.
+     *         complete.
      */
     public boolean readAll() {
         if (log.isDebugEnabled()) {
@@ -1429,7 +1430,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * again, writing the next pane, until there's nothing left to write.
      * <P>
      * @return true if a write has been started, false if the operation is
-     * complete.
+     *         complete.
      */
     public boolean writeAll() {
         if (log.isDebugEnabled()) {
@@ -1454,7 +1455,7 @@ abstract public class PaneProgFrame extends JmriJFrame
      * happen again, writing the next pane, until there's nothing left to write.
      * <P>
      * @return true if a write has been started, false if the operation is
-     * complete.
+     *         complete.
      */
     public boolean writeChanges() {
         if (log.isDebugEnabled()) {

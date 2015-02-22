@@ -53,8 +53,9 @@ public interface Mx1Interface {
      * object, so that we can notify of an incoming message to multiple places
      * and then move on.
      *
-     * @param mask The OR of the key values of messages to be reported (to
-     * reduce traffic, provide for listeners interested in different things)
+     * @param mask     The OR of the key values of messages to be reported (to
+     *                 reduce traffic, provide for listeners interested in
+     *                 different things)
      *
      * @param listener Object to be notified of new messages as they arrive.
      *

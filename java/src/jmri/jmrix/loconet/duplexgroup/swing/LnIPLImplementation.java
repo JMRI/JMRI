@@ -26,7 +26,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * method.
      *
      * @param lnMemo - LocoNetSystemConnectionMemo for the LocoNet communication
-     * interface
+     *               interface
      */
     public LnIPLImplementation(LocoNetSystemConnectionMemo lnMemo) {
         super();
@@ -57,7 +57,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * sending the message to LocoNet.
      *
      * @return a LocoNetMessage containing the packet required to query UR92
-     * device Duplex Group Identity information
+     *         device Duplex Group Identity information
      */
     public static final LocoNetMessage createQueryAllIplDevicesPacket() {
         LocoNetMessage m = new LocoNetMessage(LnConstants.RE_IPL_OP_LEN);
@@ -93,11 +93,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * host manufacturer and host type are defined. Others devices will respond
      * when host manufacturer and host type are left as zero.
      * <p>
-     * @param hostMfr defines the host manufacturer number
+     * @param hostMfr    defines the host manufacturer number
      * @param hostDevice defines the host device type number
      * @return a LocoNetMessage containing the packet required to request IPL
-     * identity information from devices of the specified host manufacturer and
-     * host device type.
+     *         identity information from devices of the specified host
+     *         manufacturer and host device type.
      */
     public static final LocoNetMessage createIplSpecificHostQueryPacket(
             Integer hostMfr,
@@ -117,11 +117,11 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * message. Other devices may only respond if both manufacturer and device
      * type information is specified for both host and slave.
      * <p>
-     * @param slaveMfr defines the slave manufacturer number
+     * @param slaveMfr    defines the slave manufacturer number
      * @param slaveDevice defines the slave device type number
      * @return a LocoNetMessage containing the packet required to request IPL
-     * identity information from devices of the specified slave manufacturer and
-     * slave device type.
+     *         identity information from devices of the specified slave
+     *         manufacturer and slave device type.
      */
     public static final LocoNetMessage createIplSpecificSlaveQueryPacket(
             Integer slaveMfr,
@@ -141,13 +141,13 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * Note: Different devices respond differently depending on whether host
      * and/or slave manufacturer and/or device type information are provided.
      * <p>
-     * @param hostMfr defines the host manufacturer number
-     * @param hostDevice defines the host device type number
-     * @param slaveMfr defines the slave manufacturer number
+     * @param hostMfr     defines the host manufacturer number
+     * @param hostDevice  defines the host device type number
+     * @param slaveMfr    defines the slave manufacturer number
      * @param slaveDevice defines the slave device type number
      * @return a LocoNetMessage containing the packet required to request IPL
-     * identity information from devices of the specified host and slave
-     * manufacturers and host and slave device types.
+     *         identity information from devices of the specified host and slave
+     *         manufacturers and host and slave device types.
      */
     public static final LocoNetMessage createIplSpecificSlaveQueryPacket(
             Integer hostMfr,
@@ -168,7 +168,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * sending the message to LocoNet.
      *
      * @return a LocoNetMessage containing the packet required to query UR92
-     * devices for IPL identification information
+     *         devices for IPL identification information
      */
     public static final LocoNetMessage createIplUr92QueryPacket() {
         return createIplSpecificHostQueryPacket(
@@ -182,7 +182,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * sending the message to LocoNet.
      *
      * @return a LocoNetMessage containing the packet required to query DT402x
-     * devices for IPL identification information
+     *         devices for IPL identification information
      */
     public static final LocoNetMessage createIplDt402QueryPacket() {
         return createIplSpecificHostQueryPacket(
@@ -199,7 +199,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * devices may respond to this query.
      * <p>
      * @return a LocoNetMessage containing the packet required to query (some)
-     * UT4 devices for IPL identification information
+     *         UT4 devices for IPL identification information
      */
     public static final LocoNetMessage createIplUt4QueryPacket() {
         return createIplSpecificHostQueryPacket(
@@ -213,7 +213,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * sending the message to LocoNet.
      *
      * @return a LocoNetMessage containing the packet required to query DCS51
-     * devices for IPL identification information
+     *         devices for IPL identification information
      */
     public static final LocoNetMessage createIplDcs51QueryPacket() {
         return createIplSpecificHostQueryPacket(
@@ -227,7 +227,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * to LocoNet.
      *
      * @return a LocoNetMessage containing the packet required to query PR3
-     * devices for IPL identification information
+     *         devices for IPL identification information
      */
     public static final LocoNetMessage createIplPr3QueryPacket() {
         return createIplSpecificHostQueryPacket(
@@ -392,7 +392,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m
      * @return true if m contains IPL Identity Report with RF24 as slave, else
-     * false
+     *         false
      */
     private static final boolean isIplRf24SlaveIdentityReportMessage(LocoNetMessage m) {
         if ((extractIplIdentitySlaveManufacturer(m) == LnConstants.RE_IPL_MFR_DIGITRAX)
@@ -411,7 +411,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m
      * @return String containing the interpreted IPL Host Manufacturer and
-     * Device
+     *         Device
      */
     public static final String extractInterpretedIplHostDevice(LocoNetMessage m) {
         if (!isIplIdentityReportMessage(m)) {
@@ -452,7 +452,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m
      * @return String containing the interpreted IPL Slave Manufacturer and
-     * Device
+     *         Device
      */
     public static final String extractInterpretedIplSlaveDevice(LocoNetMessage m) {
         if (!isIplIdentityReportMessage(m)) {
@@ -532,7 +532,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m
      * @return String containing the IPL host firmware revision in the format
-     * x.y
+     *         x.y
      */
     public static final String extractIplIdentityHostFrimwareRev(LocoNetMessage m) {
         StringBuilder s = new StringBuilder();
@@ -589,7 +589,7 @@ public class LnIPLImplementation extends javax.swing.JComponent implements jmri.
      * <p>
      * @param m
      * @return String containing the IPL slave firmware revision in the format
-     * x.y
+     *         x.y
      */
     public static final String extractIplIdentitySlaveFrimwareRev(LocoNetMessage m) {
         StringBuilder s = new StringBuilder();

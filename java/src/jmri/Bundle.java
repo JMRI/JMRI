@@ -77,7 +77,7 @@ public class Bundle {
      * Note that this is intentionally package-local access.
      *
      * @param locale The locale to be used
-     * @param key Bundle key to be translated
+     * @param key    Bundle key to be translated
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key) {
@@ -93,7 +93,7 @@ public class Bundle {
      * Note that this is intentionally package-local access.
      *
      * @see java.text.MessageFormat
-     * @param key Bundle key to be translated
+     * @param key  Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
@@ -111,8 +111,8 @@ public class Bundle {
      *
      * @see java.text.MessageFormat
      * @param locale The locale to be used
-     * @param key Bundle key to be translated
-     * @param subs One or more objects to be inserted into the message
+     * @param key    Bundle key to be translated
+     * @param subs   One or more objects to be inserted into the message
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {
@@ -140,7 +140,7 @@ public class Bundle {
      * definition of retry().
      *
      * @param locale The locale to be used
-     * @param key Bundle key to be translated
+     * @param key    Bundle key to be translated
      * @return Internationalized text
      * @throws MissingResourceException
      */
@@ -164,7 +164,7 @@ public class Bundle {
      * Uses the transformation conventions of the Java MessageFormat utility.
      *
      * @see java.text.MessageFormat
-     * @param key Bundle key to be translated
+     * @param key  Bundle key to be translated
      * @param subs Array of objects to be inserted into the message
      * @return Internationalized text
      */
@@ -180,8 +180,8 @@ public class Bundle {
      *
      * @see java.text.MessageFormat
      * @param locale The locale to be used
-     * @param key Bundle key to be translated
-     * @param subs Array of objects to be inserted into the message
+     * @param key    Bundle key to be translated
+     * @param subs   Array of objects to be inserted into the message
      * @return Internationalized text
      */
     public String handleGetMessage(Locale locale, String key, Object[] subs) {

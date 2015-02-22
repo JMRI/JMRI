@@ -98,11 +98,12 @@ public class LocoNetSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo
     /**
      * Configure the programming manager and "command station" objects
      *
-     * @param type Command station type, used to configure various operations
-     * @param mTurnoutNoRetry Is the user configuration set for no turnout
-     * operation retries?
+     * @param type               Command station type, used to configure various
+     *                           operations
+     * @param mTurnoutNoRetry    Is the user configuration set for no turnout
+     *                           operation retries?
      * @param mTurnoutExtraSpace Is the user configuration set for extra time
-     * between turnout operations?
+     *                           between turnout operations?
      */
     public void configureCommandStation(LnCommandStationType type, boolean mTurnoutNoRetry, boolean mTurnoutExtraSpace) {
 

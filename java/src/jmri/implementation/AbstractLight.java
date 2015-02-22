@@ -99,8 +99,8 @@ public abstract class AbstractLight extends AbstractNamedBean
      * Check if this object can handle variable intensity.
      * <P>
      * @return false, as this abstract class does not implement variable
-     * intensity. See e.g. {@link AbstractVariableLight} for an abstract
-     * implementation of variable intensity.
+     *         intensity. See e.g. {@link AbstractVariableLight} for an abstract
+     *         implementation of variable intensity.
      */
     public boolean isIntensityVariable() {
         return false;
@@ -122,9 +122,9 @@ public abstract class AbstractLight extends AbstractNamedBean
      * because this class does not implement analog intensity
      * <P>
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      * @throws IllegalArgumentException when intensity is more than MinIntensity
-     * and less than MaxIntensity
+     *                                  and less than MaxIntensity
      */
     public void setTargetIntensity(double intensity) {
         if (log.isDebugEnabled()) {
@@ -219,9 +219,10 @@ public abstract class AbstractLight extends AbstractNamedBean
      * full on.
      *
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not greater than the
-     * current value of the minIntensity property
+     *                                  current value of the minIntensity
+     *                                  property
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMaxIntensity(double intensity) {
@@ -259,9 +260,10 @@ public abstract class AbstractLight extends AbstractNamedBean
      * full on.
      *
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not less than the
-     * current value of the maxIntensity property
+     *                                  current value of the maxIntensity
+     *                                  property
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "FE_FLOATING_POINT_EQUALITY") // OK to compare floating point
     public void setMinIntensity(double intensity) {

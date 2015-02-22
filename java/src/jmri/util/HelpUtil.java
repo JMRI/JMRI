@@ -35,7 +35,7 @@ public class HelpUtil {
 
     /**
      * @param direct true if this call should complete the help menu by adding
-     * the general help
+     *               the general help
      * @return new Help menu, in case user wants to add more items
      */
     static public JMenu helpMenu(JMenuBar menuBar, String ref, boolean direct) {

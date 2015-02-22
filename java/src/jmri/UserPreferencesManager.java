@@ -48,7 +48,7 @@ public interface UserPreferencesManager {
      * free-form, but to avoid ambiguity it should start with the package name
      * (package.Class) for the primary using class.
      *
-     * @param name A unique name to identify the state being stored
+     * @param name  A unique name to identify the state being stored
      * @param state simple boolean.
      */
     void setSimplePreferenceState(String name, boolean state);
@@ -73,9 +73,9 @@ public interface UserPreferencesManager {
      * reference.
      *
      * @param strClass The class that this preference should be stored or
-     * grouped with.
-     * @param item The specific item that is to be stored
-     * @param state Boolean state of the item.
+     *                 grouped with.
+     * @param item     The specific item that is to be stored
+     * @param state    Boolean state of the item.
      */
     public void setPreferenceState(String strClass, String item, boolean state);
 
@@ -90,11 +90,11 @@ public interface UserPreferencesManager {
      * displayed in the GUI and provide a meaning full description when
      * presented to the user.
      *
-     * @param strClass A string form of the class that the preference is stored
-     * or grouped with
-     * @param item The specific item that is being stored.
+     * @param strClass    A string form of the class that the preference is
+     *                    stored or grouped with
+     * @param item        The specific item that is being stored.
      * @param description A meaningful decription of the item that the user will
-     * understand.
+     *                    understand.
      */
     public void preferenceItemDetails(String strClass, String item, String description);
 
@@ -134,7 +134,7 @@ public interface UserPreferencesManager {
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name A unique identifer for preference.
+     * @param name  A unique identifer for preference.
      * @param state
      */
     public void setSessionPreferenceState(String name, boolean state);
@@ -148,10 +148,10 @@ public interface UserPreferencesManager {
      * in the future. The classString & item parameters should form a unique
      * value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
+     * @param title       Message Box title
+     * @param message     Message to be displayed
      * @param classString String value of the calling class
-     * @param item String value of the specific item this is used for
+     * @param item        String value of the specific item this is used for
      */
     public void showInfoMessage(String title, String message, String classString, String item);
 
@@ -162,14 +162,14 @@ public interface UserPreferencesManager {
      * suppressed JMRI session only. The classString & item parameters should
      * form a unique value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
-     * @param classString String value of the calling class
-     * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI
-     * session and not be remembered
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param classString    String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be
-     * saved
+     *                       saved
      */
     public void showErrorMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
@@ -180,14 +180,14 @@ public interface UserPreferencesManager {
      * suppressed JMRI session only. The classString & item parameters should
      * form a unique value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
-     * @param classString String value of the calling class
-     * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI
-     * session and not be remembered
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param classString    String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be
-     * saved
+     *                       saved
      */
     public void showInfoMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
@@ -198,14 +198,14 @@ public interface UserPreferencesManager {
      * suppressed JMRI session only. The classString & item parameters should
      * form a unique value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
-     * @param classString String value of the calling class
-     * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI
-     * session and not be remembered
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param classString    String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be
-     * saved
+     *                       saved
      */
     public void showWarningMessage(String title, String message, String classString, String item, boolean sessionOnly, boolean alwaysRemember);
 
@@ -290,13 +290,13 @@ public interface UserPreferencesManager {
      * to be reset in the preferences, then it is easily identifiable. displayed
      * to the user in the preferences GUI.
      *
-     * @param strClass String value of the calling class/group
-     * @param item String value of the specific item this is used for.
-     * @param description A meaningful description that can be used in a label
-     * to describe the item
-     * @param msgOption Description of each option valid option.
-     * @param msgNumber The references number against which the Description is
-     * refering too.
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param msgOption     Description of each option valid option.
+     * @param msgNumber     The references number against which the Description
+     *                      is refering too.
      * @param defaultOption The default option for the given item.
      */
     public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption);
@@ -306,12 +306,12 @@ public interface UserPreferencesManager {
      * to be reset in the preferences, then it is easily identifiable. displayed
      * to the user in the preferences GUI.
      *
-     * @param strClass String value of the calling class/group
-     * @param item String value of the specific item this is used for.
-     * @param description A meaningful description that can be used in a label
-     * to describe the item
-     * @param options A map of the integer value of the option against a
-     * meaningful description.
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param options       A map of the integer value of the option against a
+     *                      meaningful description.
      * @param defaultOption The default option for the given item.
      */
     public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption);
@@ -321,7 +321,7 @@ public interface UserPreferencesManager {
      * a given class. This information can then be used to build a Combo box.
      *
      * @param strClass Class or group of the given item
-     * @param item the item which we wish to return the details about.
+     * @param item     the item which we wish to return the details about.
      */
     public HashMap<Integer, String> getChoiceOptions(String strClass, String item);
 
@@ -382,7 +382,7 @@ public interface UserPreferencesManager {
      * location is not stored
      *
      * @param strClass This is a unique identifier for window location being
-     * saved
+     *                 saved
      * @param location The x,y location of the window given in a Point
      */
     public void setWindowLocation(String strClass, Point location);
@@ -395,7 +395,7 @@ public interface UserPreferencesManager {
      * size is not stored
      *
      * @param strClass This is a unique identifier for window size being saved
-     * @param dim The width, height size of the window given in a Dimension
+     * @param dim      The width, height size of the window given in a Dimension
      */
     public void setWindowSize(String strClass, Dimension dim);
 
@@ -449,11 +449,11 @@ public interface UserPreferencesManager {
      * Stores the details of a tables column, so that it can be saved and
      * re-applied when jmri is re-started
      *
-     * @param table The reference for the table
+     * @param table  The reference for the table
      * @param column The column name
-     * @param order The position that the column appears in the header
-     * @param width The width of the column
-     * @param sort The sort order of the column
+     * @param order  The position that the column appears in the header
+     * @param width  The width of the column
+     * @param sort   The sort order of the column
      * @param hidden Should the column be hidden
      */
     public void setTableColumnPreferences(String table, String column, int order, int width, int sort, boolean hidden);
@@ -461,7 +461,7 @@ public interface UserPreferencesManager {
     /**
      * Get the stored position of the column for a given table
      *
-     * @param table The reference for the table
+     * @param table  The reference for the table
      * @param column The column name
      * @return -1 if not found
      */
@@ -470,7 +470,7 @@ public interface UserPreferencesManager {
     /**
      * Get the stored column width for a given table
      *
-     * @param table The reference for the table
+     * @param table  The reference for the table
      * @param column The column name
      * @return -1 if not found
      */
@@ -479,7 +479,7 @@ public interface UserPreferencesManager {
     /**
      * Get the stored column sort order for a given table
      *
-     * @param table The reference for the table
+     * @param table  The reference for the table
      * @param column The column name
      * @return 0 if not found
      */
@@ -488,7 +488,7 @@ public interface UserPreferencesManager {
     /**
      * Get the stored column hidden state for a given table
      *
-     * @param table The reference for the table
+     * @param table  The reference for the table
      * @param column The column name
      * @return 0 if not found
      */
@@ -498,8 +498,8 @@ public interface UserPreferencesManager {
      * Get a name for a column at index i
      *
      * @param table The reference for the table
-     * @param i The column index returns null if not found, otherwise the column
-     * name
+     * @param i     The column index returns null if not found, otherwise the
+     *              column name
      */
     public String getTableColumnAtNum(String table, int i);
 
@@ -507,7 +507,7 @@ public interface UserPreferencesManager {
      * Get a list of all the table preferences stored
      *
      * @return a List of all the tables, if no tables exist then an empty list
-     * is returned
+     *         is returned
      */
     public List<String> getTablesList();
 
@@ -516,7 +516,7 @@ public interface UserPreferencesManager {
      *
      * @param table
      * @return a List of all the columns in a table, if the table is not valid
-     * an empty list is returned
+     *         an empty list is returned
      */
     public List<String> getTablesColumnList(String table);
     /*

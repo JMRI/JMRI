@@ -557,7 +557,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handles problems locally to the extent that it can, by routing them to
      * the creationErrorEncountered method.
      *
-     * @param fi file to load
+     * @param fi               file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
      * @throws JmriConfigureXmlException
@@ -575,7 +575,7 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * Handles problems locally to the extent that it can, by routing them to
      * the creationErrorEncountered method.
      *
-     * @param url URL of file to load
+     * @param url              URL of file to load
      * @param registerDeferred true to register objects to defer
      * @return true if no problems during the load
      * @throws JmriConfigureXmlException
@@ -854,15 +854,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * <p>
      * Exceptions passed into this are absorbed.
      *
-     * @param adapter Object that encountered the error (for reporting), may be
-     * null
-     * @param operation description of the operation being attempted, may be
-     * null
+     * @param adapter     Object that encountered the error (for reporting), may
+     *                    be null
+     * @param operation   description of the operation being attempted, may be
+     *                    null
      * @param description description of error encountered
-     * @param systemName System name of bean being handled, may be null
-     * @param userName used name of the bean being handled, may be null
-     * @param exception Any exception being handled in the processing, may be
-     * null
+     * @param systemName  System name of bean being handled, may be null
+     * @param userName    used name of the bean being handled, may be null
+     * @param exception   Any exception being handled in the processing, may be
+     *                    null
      */
     static public void creationErrorEncountered(
             XmlAdapter adapter,
@@ -888,15 +888,15 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
      * <p>
      * Exceptions passed into this are absorbed.
      *
-     * @param adapter Object that encountered the error (for reporting), may be
-     * null
-     * @param operation description of the operation being attempted, may be
-     * null
+     * @param adapter     Object that encountered the error (for reporting), may
+     *                    be null
+     * @param operation   description of the operation being attempted, may be
+     *                    null
      * @param description description of error encountered
-     * @param systemName System name of bean being handled, may be null
-     * @param userName used name of the bean being handled, may be null
-     * @param exception Any exception being handled in the processing, may be
-     * null
+     * @param systemName  System name of bean being handled, may be null
+     * @param userName    used name of the bean being handled, may be null
+     * @param exception   Any exception being handled in the processing, may be
+     *                    null
      */
     static public void storingErrorEncountered(
             XmlAdapter adapter,

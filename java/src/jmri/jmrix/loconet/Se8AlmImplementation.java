@@ -36,7 +36,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * Create an object representing the ALM entries for a single SE8 unit
      *
      * @param pNumber Number of this ALM
-     * @param pImage Does this appear on LocoNet?
+     * @param pImage  Does this appear on LocoNet?
      */
     public Se8AlmImplementation(int pNumber, boolean pImage) {
         super(pNumber, pImage);
@@ -123,7 +123,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * block*4+item is the ALM address
      *
      * @param block The block number, starting with 0
-     * @param item Item number within the block, as 0,1,2,3
+     * @param item  Item number within the block, as 0,1,2,3
      * @param value The integer argument value to store
      */
     void store(int block, int item, int value) {
@@ -136,7 +136,7 @@ public class Se8AlmImplementation extends AbstractAlmImplementation {
      * block*4+item is the ALM address
      *
      * @param block The block number, starting with 0
-     * @param item Item number within the block, as 0,1,2,3
+     * @param item  Item number within the block, as 0,1,2,3
      * @return The integer argument value
      */
     int retrieve(int block, int item) {

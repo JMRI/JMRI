@@ -377,7 +377,7 @@ public class VSDFile extends ZipFile {
             return (false);
         }
 
-	// Now, if the elements exist, make sure the files they point to exist.
+        // Now, if the elements exist, make sure the files they point to exist.
         // Would like to get rid of this suppression, but I think it's fairly safe to assume a list of children
         // returned from an Element is going to be a list of Elements.
         Iterator<Element> ns_i = elist.iterator();

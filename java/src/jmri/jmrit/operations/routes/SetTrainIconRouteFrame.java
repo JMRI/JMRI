@@ -48,7 +48,7 @@ public class SetTrainIconRouteFrame extends OperationsFrame implements PropertyC
 
     JLabel routeLocationName = new JLabel();
 
-	// text field
+    // text field
     // check boxes
     // major buttons
     JButton previousButton = new JButton(Bundle.getMessage("Previous"));

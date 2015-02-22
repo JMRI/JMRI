@@ -345,7 +345,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * block*4+item is the ALM address
      *
      * @param block The block number, starting with 0
-     * @param item Item number within the block, as 0,1,2,3
+     * @param item  Item number within the block, as 0,1,2,3
      * @param value The integer argument value to store
      */
     abstract void store(int block, int item, int value);
@@ -356,7 +356,7 @@ public abstract class AbstractAlmImplementation implements LocoNetListener {
      * block*4+item is the ALM address
      *
      * @param block The block number, starting with 0
-     * @param item Item number within the block, as 0,1,2,3
+     * @param item  Item number within the block, as 0,1,2,3
      * @return The integer argument value
      */
     abstract int retrieve(int block, int item);

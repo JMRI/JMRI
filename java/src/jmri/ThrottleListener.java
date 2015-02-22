@@ -32,7 +32,7 @@ public interface ThrottleListener extends EventListener {
      * Get notification that an attempt to request a throttle has failed
      *
      * @param address DccLocoAddress of the failed loco request.
-     * @param reason The reason why the throttle request failed.
+     * @param reason  The reason why the throttle request failed.
      */
     public void notifyFailedThrottleRequest(DccLocoAddress address, String reason);
 

@@ -114,7 +114,7 @@ public class Pool extends Bean {
      * tracks in the same pool may have their length shortened or lengthened by
      * this operation.
      *
-     * @param track the track requesting additional length
+     * @param track  the track requesting additional length
      * @param length the length of rolling stock
      * @return true if successful
      */

@@ -1632,7 +1632,7 @@ public class Setup {
     /**
      *
      * @return JComboBox loaded with the strings (North, South, East, West)
-     * showing the available train directions for this railroad
+     *         showing the available train directions for this railroad
      */
     public static JComboBox<String> getTrainDirectionComboBox() {
         JComboBox<String> box = new JComboBox<>();

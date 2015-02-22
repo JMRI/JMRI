@@ -35,7 +35,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * Create a new object, representing a specific-length message.
      *
      * @param len Total bytes in message, including opcode and error-detection
-     * byte.
+     *            byte.
      */
     public XNetMessage(int len) {
         super(len);
@@ -1382,7 +1382,7 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * Generate the message to set or request the Computer Interface Address
      *
      * @param address Interface address (0-31). Send invalid address to request
-     * the address (32-255).
+     *                the address (32-255).
      *
      */
     public static XNetMessage getLIAddressRequestMsg(int address) {
@@ -1398,7 +1398,8 @@ public class XNetMessage extends jmri.jmrix.AbstractMRMessage implements Seriali
      * Generate the message to set or request the Computer Interface speed
      *
      * @param speed 1 is 19,200bps, 2 is 38,400bps, 3 is 57,600bps, 4 is
-     * 115,200bps. Send invalid speed to request the current setting.
+     *              115,200bps. Send invalid speed to request the current
+     *              setting.
      *
      */
     public static XNetMessage getLISpeedRequestMsg(int speed) {

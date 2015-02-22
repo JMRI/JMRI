@@ -75,7 +75,7 @@ public interface ConfigureManager {
      * There may be synchronization issues associated with this, although they
      * are expected to be rare in practice.
      *
-     * @param c Class of the desired objects
+     * @param c     Class of the desired objects
      * @param index a 1-based index of the object to return
      * @return an object of class c or null
      */
@@ -148,7 +148,7 @@ public interface ConfigureManager {
     /**
      * Create the objects defined in a particular configuration file
      *
-     * @param file Input file
+     * @param file             Input file
      * @param registerDeferred true to register actions for deferred load
      * @return true if succeeded
      * @throws JmriException
@@ -159,7 +159,7 @@ public interface ConfigureManager {
     /**
      * Create the objects defined in a particular configuration file
      *
-     * @param file Input URL
+     * @param file             Input URL
      * @param registerDeferred true to register actions for deferred load
      * @return true if succeeded
      * @throws JmriException

@@ -56,10 +56,10 @@ public class TrafficController implements jmri.CommandStation {
     /**
      * Send a specific packet to the rails.
      *
-     * @param packet Byte array representing the packet, including the
-     * error-correction byte. Must not be null.
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission, but is ignored
-     * in the current implementation
+     *                in the current implementation
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem

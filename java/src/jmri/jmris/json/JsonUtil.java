@@ -106,7 +106,6 @@ import static jmri.jmris.json.JSON.OFF;
 import static jmri.jmris.json.JSON.ON;
 import static jmri.jmris.json.JSON.OWNER;
 import static jmri.jmris.json.JSON.PANEL;
-//import static jmri.jmris.json.JSON.PANEL_PANEL;
 import static jmri.jmris.json.JSON.PORT;
 import static jmri.jmris.json.JSON.POSITION;
 import static jmri.jmris.json.JSON.POWER;
@@ -210,10 +209,10 @@ public class JsonUtil {
     /**
      * Delete the consist at the given address.
      *
-     * @param locale The locale to format exceptions in
+     * @param locale  The locale to format exceptions in
      * @param address The address of the consist to delete.
      * @throws JsonException This exception has code 404 if the consist does not
-     * exist.
+     *                       exist.
      */
     static public void delConsist(Locale locale, DccLocoAddress address) throws JsonException {
         try {
@@ -249,11 +248,11 @@ public class JsonUtil {
      * </ul>
      * </ul>
      *
-     * @param locale The locale to throw exceptions in.
+     * @param locale  The locale to throw exceptions in.
      * @param address The address of the consist to get.
      * @return The JSON representation of the consist.
      * @throws JsonException This exception has code 404 if the consist does not
-     * exist.
+     *                       exist.
      */
     static public JsonNode getConsist(Locale locale, DccLocoAddress address) throws JsonException {
         try {
@@ -290,10 +289,11 @@ public class JsonUtil {
      *
      * Adds a consist, populating it with information from data.
      *
-     * @param locale The locale to throw exceptions in.
+     * @param locale  The locale to throw exceptions in.
      * @param address The address of the new consist.
-     * @param data The JSON representation of the consist. See
-     * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the JSON structure.
+     * @param data    The JSON representation of the consist. See
+     * {@link #getConsist(Locale, jmri.DccLocoAddress) } for the
+     *                JSON structure.
      * @throws JsonException
      */
     static public void putConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
@@ -345,9 +345,9 @@ public class JsonUtil {
      * node.</li>
      * </ul>
      *
-     * @param locale the locale to throw exceptions in
+     * @param locale  the locale to throw exceptions in
      * @param address the consist address
-     * @param data the consist as a JsonObject
+     * @param data    the consist as a JsonObject
      * @throws JsonException
      */
     static public void setConsist(Locale locale, DccLocoAddress address, JsonNode data) throws JsonException {
@@ -748,7 +748,7 @@ public class JsonUtil {
      * server IP address and port as they know it to be.
      *
      * @param locale
-     * @param id The id of an entry in the roster.
+     * @param id     The id of an entry in the roster.
      * @return a roster entry in JSON notation
      */
     static public JsonNode getRosterEntry(Locale locale, String id) {
@@ -763,7 +763,7 @@ public class JsonUtil {
      * server IP address and port as they know it to be.
      *
      * @param locale
-     * @param re A RosterEntry that may or may not be in the roster.
+     * @param re     A RosterEntry that may or may not be in the roster.
      * @return a roster entry in JSON notation
      */
     static public JsonNode getRosterEntry(Locale locale, RosterEntry re) {
@@ -888,8 +888,8 @@ public class JsonUtil {
      * equal to <em>8</em> (the aspect of {@link jmri.Route#TOGGLE}).
      *
      * @param locale The locale to throw exceptions in
-     * @param name The name of the route
-     * @param data A JsonNode containing route attributes to set
+     * @param name   The name of the route
+     * @param data   A JsonNode containing route attributes to set
      * @throws JsonException
      * @see jmri.Route#TOGGLE
      */
@@ -1261,8 +1261,8 @@ public class JsonUtil {
      * throws error code 428.
      *
      * @param locale The locale to throw exceptions in.
-     * @param id The id of the train.
-     * @param data Train data to change.
+     * @param id     The id of the train.
+     * @param data   Train data to change.
      * @throws JsonException
      */
     static public void setTrain(Locale locale, String id, JsonNode data) throws JsonException {

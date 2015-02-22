@@ -259,8 +259,8 @@ public class CarLoads extends RollingStockAttribute {
     /**
      * Sets the load type, empty or load.
      *
-     * @param type car type.
-     * @param name load name.
+     * @param type     car type.
+     * @param name     load name.
      * @param loadType load type: LOAD_TYPE_EMPTY or LOAD_TYPE_LOAD.
      */
     public void setLoadType(String type, String name, String loadType) {
@@ -302,8 +302,8 @@ public class CarLoads extends RollingStockAttribute {
     /**
      * Sets a loads priority.
      *
-     * @param type car type.
-     * @param name load name.
+     * @param type     car type.
+     * @param name     load name.
      * @param priority load priority, PRIORITY_LOW or PRIORITY_HIGH.
      */
     public void setPriority(String type, String name, String priority) {

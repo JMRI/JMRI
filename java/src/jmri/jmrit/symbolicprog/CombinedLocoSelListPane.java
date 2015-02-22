@@ -211,9 +211,9 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      * Decoder identify has not matched specific types, but did find
      * manufacturer match
      *
-     * @param pMfg Manufacturer name. This is passed to save time, as it has
-     * already been determined once.
-     * @param pMfgID Manufacturer ID number (CV8)
+     * @param pMfg     Manufacturer name. This is passed to save time, as it has
+     *                 already been determined once.
+     * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {

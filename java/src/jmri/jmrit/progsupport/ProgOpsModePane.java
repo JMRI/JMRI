@@ -103,7 +103,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * @param direction controls layout, either BoxLayout.X_AXIS or
-     * BoxLayout.Y_AXIS
+     *                  BoxLayout.Y_AXIS
      */
     public ProgOpsModePane(int direction) {
         this(direction, new javax.swing.ButtonGroup());
@@ -111,7 +111,7 @@ public class ProgOpsModePane extends ProgModeSelector implements PropertyChangeL
 
     /**
      * @param direction controls layout, either BoxLayout.X_AXIS or
-     * BoxLayout.Y_AXIS
+     *                  BoxLayout.Y_AXIS
      */
     public ProgOpsModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;

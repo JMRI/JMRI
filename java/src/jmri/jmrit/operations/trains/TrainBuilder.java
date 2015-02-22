@@ -1103,8 +1103,8 @@ public class TrainBuilder extends TrainCommon {
      * train.
      *
      * @param road Optional road name for this car.
-     * @param rl Where in the route to pick up this car.
-     * @param rld Where in the route to set out this car.
+     * @param rl   Where in the route to pick up this car.
+     * @param rld  Where in the route to set out this car.
      * @throws BuildFailedException If car not found.
      */
     private void getCarWithFred(String road, RouteLocation rl, RouteLocation rld) throws BuildFailedException {
@@ -1188,11 +1188,11 @@ public class TrainBuilder extends TrainCommon {
      * isn't a road name required for the caboose, tries to find a caboose with
      * the same road name as the lead engine.
      *
-     * @param roadCaboose Optional road name for this car.
-     * @param leadEngine The lead engine for this train. Used to find a caboose
-     * with the same road name as the the engine.
-     * @param rl Where in the route to pick up this car.
-     * @param rld Where in the route to set out this car.
+     * @param roadCaboose     Optional road name for this car.
+     * @param leadEngine      The lead engine for this train. Used to find a
+     *                        caboose with the same road name as the the engine.
+     * @param rl              Where in the route to pick up this car.
+     * @param rld             Where in the route to set out this car.
      * @param requiresCaboose When true, the train requires a caboose.
      * @throws BuildFailedException If car not found.
      */
@@ -1853,7 +1853,7 @@ public class TrainBuilder extends TrainCommon {
      * Returns the routeLocation with the most available moves.
      *
      * @param routeList The route for this train.
-     * @param blockId Where these cars were originally picked up from.
+     * @param blockId   Where these cars were originally picked up from.
      * @return The location in the route with the most available moves.
      */
     private RouteLocation getLocationWithMaximumMoves(List<RouteLocation> routeList, String blockId) {
@@ -2008,10 +2008,10 @@ public class TrainBuilder extends TrainCommon {
      * Attempts to find a destinations for cars departing a specific route
      * location.
      *
-     * @param rl The route location.
-     * @param routeIndex Where in the route to add cars to this train.
+     * @param rl           The route location.
+     * @param routeIndex   Where in the route to add cars to this train.
      * @param isSecondPass When true this is the second time we've looked at
-     * these cars.
+     *                     these cars.
      * @throws BuildFailedException
      */
     private void findDestinationsForCarsFromLocation(RouteLocation rl, int routeIndex, boolean isSecondPass)
@@ -2265,12 +2265,13 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Add car to train
      *
-     * @param car The car!
-     * @param rl the planned origin for this car
-     * @param rld the planned destination for this car
+     * @param car   The car!
+     * @param rl    the planned origin for this car
+     * @param rld   the planned destination for this car
      * @param track the final destination for car
      * @return true if car was successfully added to train. Also makes the
-     * boolean "success" true if location doesn't need any more pick ups.
+     *         boolean "success" true if location doesn't need any more pick
+     *         ups.
      */
     private void addCarToTrain(Car car, RouteLocation rl, RouteLocation rld, Track track) {
         addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildCarAssignedDest"), new Object[]{
@@ -2391,7 +2392,7 @@ public class TrainBuilder extends TrainCommon {
      * the train.
      *
      * @param car the car
-     * @param rl the planned origin for this car
+     * @param rl  the planned origin for this car
      * @param rld the planned destination for this car
      * @return true if car can be added to train
      */
@@ -2485,7 +2486,7 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Determinate if car can be dropped by this train to the track specified.
      *
-     * @param car the car.
+     * @param car   the car.
      * @param track the destination track.
      * @return true if able to drop.
      */
@@ -2720,7 +2721,7 @@ public class TrainBuilder extends TrainCommon {
      * Checks to see if staging track can accept train.
      *
      * @return true if staging track is empty, not reserved, and accepts car and
-     * engine types, roads, and loads.
+     *         engine types, roads, and loads.
      */
     private boolean checkTerminateStagingTrack(Track terminateStageTrack) {
         // In normal mode, find a completely empty track. In aggressive mode, a track that scheduled to depart is okay
@@ -2878,7 +2879,7 @@ public class TrainBuilder extends TrainCommon {
      *
      * @param car the car with the load
      * @return true if there's a schedule that can be routed to for this car and
-     * load
+     *         load
      * @throws BuildFailedException
      */
     private boolean findFinalDestinationForCarLoad(Car car) throws BuildFailedException {
@@ -3252,7 +3253,7 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Used when generating a car load from staging.
      *
-     * @param car the car.
+     * @param car   the car.
      * @param track the car's destination track that has the schedule.
      * @return ScheduleItem si if match found, null otherwise.
      * @throws BuildFailedException
@@ -3295,8 +3296,8 @@ public class TrainBuilder extends TrainCommon {
      * car that matches a schedule item. Therefore, schedule items that request
      * don't request a custom load are ignored.
      *
-     * @param si the schedule item
-     * @param car the car to check
+     * @param si    the schedule item
+     * @param car   the car to check
      * @param track the destination track
      * @return Schedule item si if okay, null otherwise.
      */
@@ -3422,11 +3423,11 @@ public class TrainBuilder extends TrainCommon {
      * Checks to see if car has a destination and tries to add car to train
      *
      * @param car
-     * @param rl the car's route location
+     * @param rl         the car's route location
      * @param routeIndex where in the route the car pick up is
      * @return true if car has a destination.
      * @throws BuildFailedException if destination was staging and can't place
-     * car there
+     *                              car there
      */
     private boolean checkCarForDestinationAndTrack(Car car, RouteLocation rl, int routeIndex)
             throws BuildFailedException {
@@ -3653,7 +3654,7 @@ public class TrainBuilder extends TrainCommon {
      * Find a destination for the car at a specified location.
      *
      * @param car the car!
-     * @param rl The car's route location
+     * @param rl  The car's route location
      * @param rld The car's route destination
      * @return true if successful.
      * @throws BuildFailedException
@@ -3674,12 +3675,12 @@ public class TrainBuilder extends TrainCommon {
     /**
      * Find a destination and track for a car, and add the car to the train.
      *
-     * @param car The car that is looking for a destination and destination
-     * track.
-     * @param rl The current route location for this car.
+     * @param car        The car that is looking for a destination and
+     *                   destination track.
+     * @param rl         The current route location for this car.
      * @param routeIndex Where in the train's route to begin a search for a
-     * destination for this car.
-     * @param routeEnd Where to stop looking for a destination.
+     *                   destination for this car.
+     * @param routeEnd   Where to stop looking for a destination.
      * @return true if successful, car has destination, track and a train.
      * @throws BuildFailedException
      */

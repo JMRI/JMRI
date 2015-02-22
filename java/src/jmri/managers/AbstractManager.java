@@ -140,12 +140,13 @@ abstract public class AbstractManager
      * actions, then a "DoDelete" can be called which inform the listeners to
      * delete the bean, then it will be deregistered and disposed of.
      *
-     * @param bean The NamedBean to be deleted
+     * @param bean     The NamedBean to be deleted
      * @param property The programmatic name of the property that is to be
-     * changed. "CanDelete" will enquire with all listerners if the item can be
-     * deleted "DoDelete" tells the listerner to delete the item
+     *                 changed. "CanDelete" will enquire with all listerners if
+     *                 the item can be deleted "DoDelete" tells the listerner to
+     *                 delete the item
      * @throws java.beans.PropertyVetoException - if the recipients wishes the
-     * delete to be aborted.
+     *                                          delete to be aborted.
      */
     public void deleteBean(NamedBean bean, String property) throws java.beans.PropertyVetoException {
         try {
@@ -283,13 +284,13 @@ abstract public class AbstractManager
      * exception with a property name of "DoNotDelete", this is thrown back up
      * to the user and the delete process should be aborted.
      *
-     * @param p The programmatic name of the property that is to be changed.
-     * "CanDelete" will enquire with all listerners if the item can be deleted.
-     * "DoDelete" tells the listerner to delete the item.
+     * @param p   The programmatic name of the property that is to be changed.
+     *            "CanDelete" will enquire with all listerners if the item can
+     *            be deleted. "DoDelete" tells the listerner to delete the item.
      * @param old The old value of the property.
-     * @param n The new value of the property.
+     * @param n   The new value of the property.
      * @throws java.beans.PropertyVetoException - if the recipients wishes the
-     * delete to be aborted.
+     *                                          delete to be aborted.
      */
     protected void fireVetoableChange(String p, Object old, Object n) throws java.beans.PropertyVetoException {
         java.beans.PropertyChangeEvent evt = new java.beans.PropertyChangeEvent(this, p, old, n);

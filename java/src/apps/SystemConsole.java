@@ -384,7 +384,7 @@ public final class SystemConsole extends JTextArea {
     /**
      * Add text to the console
      *
-     * @param text the text to add
+     * @param text  the text to add
      * @param which the stream that this text is for
      */
     private void updateTextArea(final String text, final int which) {
@@ -405,7 +405,7 @@ public final class SystemConsole extends JTextArea {
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *
-     * @param ta Reference to JTextArea
+     * @param ta     Reference to JTextArea
      * @param scroll True to move to end
      */
     private void doAutoScroll(final JTextArea ta, final boolean scroll) {
@@ -515,7 +515,8 @@ public final class SystemConsole extends JTextArea {
      * Set the console font style
      *
      * @param style one of
-     * {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN} (default)
+     *              {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN}
+     *              (default)
      */
     public void setFontStyle(int style) {
 
@@ -539,7 +540,8 @@ public final class SystemConsole extends JTextArea {
      * Retrieve the current console font style
      *
      * @return selected font style - one of
-     * {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN} (default)
+     *         {@link Font#BOLD}, {@link Font#ITALIC}, {@link Font#PLAIN}
+     *         (default)
      */
     public int getFontStyle() {
         return fontStyle;
@@ -549,7 +551,7 @@ public final class SystemConsole extends JTextArea {
      * Update the system console font with the specified parameters
      *
      * @param style font style
-     * @param size font size
+     * @param size  font size
      */
     private void updateFont(String family, int style, int size) {
         console.setFont(new Font(family, style, size));

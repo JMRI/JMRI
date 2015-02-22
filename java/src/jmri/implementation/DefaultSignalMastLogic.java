@@ -290,7 +290,8 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * editor to determine the which blocks, turnouts will make up the logic
      * between the source and destination signal mast.
      *
-     * @param boo Use the layout editor details to determine logic details.
+     * @param boo         Use the layout editor details to determine logic
+     *                    details.
      * @param destination Destination SignalMast.
      *
      */
@@ -328,7 +329,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      *
      * @param destination Destination SignalMast.
      * @return true if we are using the layout editor to build the signal mast
-     * logic.
+     *         logic.
      */
     public boolean useLayoutEditor(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -342,10 +343,10 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * either blocks or turnouts.
      *
      * @param destination Destination SignalMast.
-     * @param blocks set false if not to use the block information gathered from
-     * the layouteditor
-     * @param turnouts set false if not to use the turnout information gathered
-     * from the layouteditor
+     * @param blocks      set false if not to use the block information gathered
+     *                    from the layouteditor
+     * @param turnouts    set false if not to use the turnout information
+     *                    gathered from the layouteditor
      */
     public void useLayoutEditorDetails(boolean turnouts, boolean blocks, SignalMast destination) throws jmri.JmriException {
         if (!destList.containsKey(destination)) {
@@ -364,7 +365,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      *
      * @param destination Destination SignalMast.
      * @return true if we are using the turnout information from the layout
-     * editor.
+     *         editor.
      */
     public boolean useLayoutEditorTurnouts(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -379,7 +380,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      *
      * @param destination Destination SignalMast.
      * @return true if we are using the block information from the layout
-     * editor.
+     *         editor.
      */
     public boolean useLayoutEditorBlocks(SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -421,7 +422,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * of signal masts that could cause a conflicting route.
      *
      * @param destination Destination SignalMast.
-     * @param allow set true if we are to allow automatic generation.
+     * @param allow       set true if we are to allow automatic generation.
      */
     public void allowAutoMaticSignalMastGeneration(boolean allow, SignalMast destination) {
         if (!destList.containsKey(destination)) {
@@ -436,7 +437,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
      * being changed. This is dependant upon the hardware allowing for this.
      *
      * @param destination Destination SignalMast.
-     * @param lock set true if the system should lock the turnout.
+     * @param lock        set true if the system should lock the turnout.
      */
     public void allowTurnoutLock(boolean lock, SignalMast destination) {
         if (!destList.containsKey(destination)) {

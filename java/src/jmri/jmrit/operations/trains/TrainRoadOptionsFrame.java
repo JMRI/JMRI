@@ -58,7 +58,7 @@ public class TrainRoadOptionsFrame extends OperationsFrame implements java.beans
 
     ButtonGroup roadGroup = new ButtonGroup();
 
-	// check boxes
+    // check boxes
     // text field
     // combo boxes
     JComboBox<String> comboBoxRoads = CarRoads.instance().getComboBox();

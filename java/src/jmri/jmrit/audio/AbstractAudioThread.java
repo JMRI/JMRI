@@ -80,7 +80,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
      * Based on the 'action' parameter, sets or returns if the thread is running
      *
      * @param action GET or SET
-     * @param value for action==SET, new value; for action==GET, NA
+     * @param value  for action==SET, new value; for action==GET, NA
      * @return true, when thread is alive
      */
     private synchronized boolean alive(boolean action, boolean value) {
@@ -94,7 +94,7 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
      * Based on the 'action' parameter, sets or returns if the thread should die
      *
      * @param action GET or SET
-     * @param value for action==SET, new value; for action==GET, NA
+     * @param value  for action==SET, new value; for action==GET, NA
      * @return true, when thread should die
      */
     private synchronized boolean die(boolean action, boolean value) {

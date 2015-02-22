@@ -148,7 +148,7 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
      * forward a z21 message from the layout.
      *
      * @param msg The received z21 message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void reply(z21Reply msg) {
         // This funcction forwards the payload of an XPressNet message 
@@ -174,7 +174,7 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
      * nothing.
      *
      * @param msg The received z21 message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void message(z21Message msg) {
         // this function does nothing.
@@ -186,7 +186,7 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
      * forward a XNet message from the layout.
      *
      * @param msg The received XNet message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void message(XNetReply msg) {
         // we don't do anything with replies.
@@ -198,7 +198,7 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
      * do nothing.
      *
      * @param msg The received XNet message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void message(XNetMessage msg) {
         // when an XPressNet message shows up here, package it in a z21Message

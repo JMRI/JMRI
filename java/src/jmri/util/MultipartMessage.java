@@ -53,7 +53,7 @@ public class MultipartMessage {
      * This allows for additional binary data to be uploaded.
      *
      * @param requestURL URL to which this request should be sent
-     * @param charSet character set encoding of this message
+     * @param charSet    character set encoding of this message
      * @throws IOException
      */
     public MultipartMessage(String requestURL, String charSet) throws IOException {
@@ -75,7 +75,7 @@ public class MultipartMessage {
     /**
      * Adds form field data to the request
      *
-     * @param name field name
+     * @param name  field name
      * @param value field value
      */
     public void addFormField(String name, String value) {
@@ -95,8 +95,8 @@ public class MultipartMessage {
      * Adds an upload file section to the request. MIME type of the file is
      * determined based on the file extension.
      *
-     * @param fieldName name attribute in form &lt;input name="{fieldName}"
-     * type="file" /&gt;
+     * @param fieldName  name attribute in form &lt;input name="{fieldName}"
+     *                   type="file" /&gt;
      * @param uploadFile file to be uploaded
      * @throws IOException
      */
@@ -108,10 +108,10 @@ public class MultipartMessage {
      * Adds an upload file section to the request. MIME type of the file is
      * explicitly set.
      *
-     * @param fieldName name attribute in form &lt;input name="{fieldName}"
-     * type="file" /&gt;
+     * @param fieldName  name attribute in form &lt;input name="{fieldName}"
+     *                   type="file" /&gt;
      * @param uploadFile file to be uploaded
-     * @param fileType MIME type of file
+     * @param fileType   MIME type of file
      * @throws IOException
      */
     public void addFilePart(String fieldName, File uploadFile, String fileType) throws IOException {
@@ -145,7 +145,7 @@ public class MultipartMessage {
     /**
      * Adds a header field to the request
      *
-     * @param name name of header field
+     * @param name  name of header field
      * @param value value of header field
      */
     public void addHeaderField(String name, String value) {

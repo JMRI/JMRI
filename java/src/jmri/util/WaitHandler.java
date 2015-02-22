@@ -28,7 +28,7 @@ public class WaitHandler {
     /**
      * Wait for a specified interval, robustly handling "spurious wake"
      *
-     * @param self waiting Object
+     * @param self     waiting Object
      * @param interval in milliseconds
      */
     public WaitHandler(Object self, long interval) {

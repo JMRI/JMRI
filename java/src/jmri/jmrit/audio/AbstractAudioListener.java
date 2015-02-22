@@ -62,7 +62,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
      * Abstract constructor for new AudioListener with system name and user name
      *
      * @param systemName AudioListener object system name (e.g. IAL)
-     * @param userName AudioListener object user name
+     * @param userName   AudioListener object user name
      */
     public AbstractAudioListener(String systemName, String userName) {
         super(systemName, userName);

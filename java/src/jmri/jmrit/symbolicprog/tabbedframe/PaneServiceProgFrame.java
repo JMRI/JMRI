@@ -53,7 +53,7 @@ public class PaneServiceProgFrame extends PaneProgFrame
      * programmer based on what's in the decoder file.
      *
      * @param decoderFile XML file defining the decoder contents
-     * @param r RosterEntry for information on this locomotive
+     * @param r           RosterEntry for information on this locomotive
      * @param name
      * @param file
      */

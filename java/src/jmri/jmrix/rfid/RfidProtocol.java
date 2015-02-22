@@ -32,8 +32,8 @@ abstract public class RfidProtocol {
      * a character range is used to determine the specific reader port.
      *
      * @param concentratorFirst - character representing first concentrator port
-     * @param concentratorLast - character representing last concentrator port
-     * @param portPosition - position of port character in reply string
+     * @param concentratorLast  - character representing last concentrator port
+     * @param portPosition      - position of port character in reply string
      */
     public RfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         isConcentrator = concentratorFirst != '\u0000' && concentratorLast != '\u0000' && portPosition != 0;
@@ -99,11 +99,13 @@ abstract public class RfidProtocol {
     /**
      * Sets this protocol to use a concentrator.
      *
-     * @param enabled true to use a concentrator
-     * @param start character representing the first port - ignored if disabled
-     * @param end character representing the last port - ignored if disabled
+     * @param enabled  true to use a concentrator
+     * @param start    character representing the first port - ignored if
+     *                 disabled
+     * @param end      character representing the last port - ignored if
+     *                 disabled
      * @param position position of port character in message; 1 for first
-     * character
+     *                 character
      */
     public void setAsConcentrator(boolean enabled, char start, char end, int position) {
         this.isConcentrator = enabled;
@@ -197,8 +199,8 @@ abstract public class RfidProtocol {
      * case hex codes are permitted.
      *
      * @param s String representation of a hex number. Must be a whole number of
-     * bytes (i.e. an even number of characters) and be formed only of digits
-     * 0..9, a..f or A..F
+     *          bytes (i.e. an even number of characters) and be formed only of
+     *          digits 0..9, a..f or A..F
      * @return corresponding unsigned byte array
      * @throws IllegalArgumentException when s is not a valid hex string
      */

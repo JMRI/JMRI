@@ -34,7 +34,7 @@ public class AudioCommand {
     /**
      * Constructor to process a command on an Audio object
      *
-     * @param audio Audio object to process
+     * @param audio   Audio object to process
      * @param command Action to perform
      */
     public AudioCommand(Audio audio, int command) {

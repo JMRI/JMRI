@@ -38,10 +38,10 @@ import org.slf4j.LoggerFactory;
 public class ResettingOffsetHighCvProgrammerFacade extends AbstractProgrammerFacade implements ProgListener {
 
     /**
-     * @param top CVs above this use the indirect method
-     * @param addrCV CV to which the high part of address is to be written
+     * @param top      CVs above this use the indirect method
+     * @param addrCV   CV to which the high part of address is to be written
      * @param cvFactor CV to which the low part of address is to be written
-     * @param modulo Modulus for determining high/low address parts
+     * @param modulo   Modulus for determining high/low address parts
      */
     public ResettingOffsetHighCvProgrammerFacade(Programmer prog, String top, String addrCV, String cvFactor, String modulo, String indicator) {
         super(prog);

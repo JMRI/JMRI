@@ -81,7 +81,7 @@ public class JavaSoundAudioSource extends AbstractAudioSource {
      * Constructor for new JavaSoundAudioSource with system name and user name
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
-     * @param userName AudioSource object user name
+     * @param userName   AudioSource object user name
      */
     public JavaSoundAudioSource(String systemName, String userName) {
         super(systemName, userName);

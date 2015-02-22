@@ -49,9 +49,9 @@ public class CarRosterMenu extends JMenu {
      *
      * @param pMenuName Name for the menu
      * @param pMenuType Select where the menu will be used, hence the right set
-     * of items to be enabled.
-     * @param pWho The Component using this menu, used to ensure that dialog
-     * boxes will pop in the right place.
+     *                  of items to be enabled.
+     * @param pWho      The Component using this menu, used to ensure that
+     *                  dialog boxes will pop in the right place.
      */
     public CarRosterMenu(String pMenuName, int pMenuType, Component pWho) {
         super(pMenuName);

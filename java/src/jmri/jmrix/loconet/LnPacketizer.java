@@ -134,7 +134,7 @@ public class LnPacketizer extends LnTrafficController {
      * Make connection to existing LnPortController object.
      *
      * @param p Port controller for connected. Save this for a later disconnect
-     * call
+     *          call
      */
     public void connectPort(LnPortController p) {
         istream = p.getInputStream();

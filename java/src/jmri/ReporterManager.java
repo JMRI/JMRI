@@ -46,11 +46,12 @@ public interface ReporterManager extends Manager {
      * it into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
-     * system name
+     *             system name
      * @return Never null
      * @throws IllegalArgumentException if Reporter doesn't already exist and
-     * the manager cannot create the Reporter due to e.g. an illegal name or
-     * name that can't be parsed.
+     *                                  the manager cannot create the Reporter
+     *                                  due to e.g. an illegal name or name that
+     *                                  can't be parsed.
      */
     public Reporter provideReporter(String name);
 
@@ -111,7 +112,8 @@ public interface ReporterManager extends Manager {
      *
      * @return requested Reporter object (never null)
      * @throws IllegalArgumentException if cannot create the Reporter due to
-     * e.g. an illegal name or name that can't be parsed.
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
      */
     public Reporter newReporter(String systemName, String userName);
 
@@ -133,9 +135,9 @@ public interface ReporterManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix - The System Prefix used to make up the systemName
+     * @param prefix     - The System Prefix used to make up the systemName
      * @param curAddress - The hardware address of the turnout we which to
-     * check.
+     *                   check.
      */
     public String getNextValidAddress(String curAddress, String prefix);
 

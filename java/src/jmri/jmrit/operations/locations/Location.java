@@ -277,7 +277,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @param trackType
      * @return True if location has the track type specified Track.INTERCHANGE
-     * Track.YARD Track.SPUR Track.Staging
+     *         Track.YARD Track.SPUR Track.Staging
      */
     public boolean hasTrackType(String trackType) {
         Track track;
@@ -585,7 +585,7 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      *
      * @return the number of cars and engines that are scheduled for pick up at
-     * this location.
+     *         this location.
      */
     public int getPickupRS() {
         return _pickupRS;
@@ -594,7 +594,7 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      *
      * @return the number of cars and engines that are scheduled for drop at
-     * this location.
+     *         this location.
      */
     public int getDropRS() {
         return _dropRS;
@@ -676,7 +676,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @param name of track
      * @param type of track, Track.INTERCHANGE, Track.SPUR, Track.STAGING,
-     * Track.YARD
+     *             Track.YARD
      * @return Track
      */
     public Track addTrack(String name, String type) {
@@ -845,7 +845,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * type. If type is null returns all tracks for the location.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
-     * Track.STAGING
+     *             Track.STAGING
      * @return list of tracks ordered by name for this location
      */
     public List<Track> getTrackByNameList(String type) {
@@ -876,7 +876,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * removed.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
-     * Track.STAGING
+     *             Track.STAGING
      * @return list of tracks at this location ordered by moves
      */
     public List<Track> getTrackByMovesList(String type) {
@@ -949,9 +949,9 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Updates a JComboBox with tracks that can service the rolling stock.
      *
-     * @param box JComboBox to be updated.
-     * @param rs Rolling Stock to be serviced
-     * @param filter When true, remove tracks not able to service rs.
+     * @param box         JComboBox to be updated.
+     * @param rs          Rolling Stock to be serviced
+     * @param filter      When true, remove tracks not able to service rs.
      * @param destination When true, the tracks are destinations for the rs.
      */
     public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean destination) {

@@ -221,7 +221,7 @@ public class TamsTrafficController extends AbstractMRTrafficController implement
     /**
      * Add trailer to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {

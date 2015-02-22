@@ -50,11 +50,11 @@ public class CatalogTreeModel extends DefaultTreeModel {
      * Recursively add a representation of the resources below a particular
      * resource
      *
-     * @param pName Name of the resource to be scanned; this is only used for
-     * the human-readable tree
-     * @param pPath Path to this resource, including the pName part
+     * @param pName   Name of the resource to be scanned; this is only used for
+     *                the human-readable tree
+     * @param pPath   Path to this resource, including the pName part
      * @param pParent Node for the parent of the resource to be scanned, e.g.
-     * where in the tree to insert it.
+     *                where in the tree to insert it.
      */
     void insertResourceNodes(String pName, String pPath, DefaultMutableTreeNode pParent) {
         // the following (commented) line only worked in JBuilder (July 27 2002)
@@ -91,7 +91,7 @@ public class CatalogTreeModel extends DefaultTreeModel {
     /**
      * Recursively add a representation of the files below a particular file
      *
-     * @param name Name of the file to be scanned
+     * @param name   Name of the file to be scanned
      * @param parent Node for the parent of the file to be scanned
      */
     void insertFileNodes(String name, String path, DefaultMutableTreeNode parent) {

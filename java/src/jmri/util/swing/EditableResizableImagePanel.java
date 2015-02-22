@@ -46,8 +46,8 @@ public class EditableResizableImagePanel extends ResizableImagePanel implements 
      * Constructor for DnDImagePanel with forced initial size
      *
      * @param imagePath Path to image to display
-     * @param w Panel width
-     * @param h Panel height
+     * @param w         Panel width
+     * @param h         Panel height
      */
     public EditableResizableImagePanel(String imagePath, int w, int h) {
         super(imagePath, w, h);

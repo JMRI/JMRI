@@ -19,8 +19,8 @@ import org.slf4j.LoggerFactory;
 public class JTreeUtil extends GuiUtilBase {
 
     /**
-     * @param name XML file to be read and processed
-     * @param wi WindowInterface to be passed to the nodes in the tree
+     * @param name    XML file to be read and processed
+     * @param wi      WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
      */
     static public DefaultMutableTreeNode loadTree(String name, WindowInterface wi, Object context) {
@@ -30,8 +30,8 @@ public class JTreeUtil extends GuiUtilBase {
     }
 
     /**
-     * @param main Element to be processed
-     * @param wi WindowInterface to be passed to the nodes in the tree
+     * @param main    Element to be processed
+     * @param wi      WindowInterface to be passed to the nodes in the tree
      * @param context Blind context Object passed to the nodes in the tree
      */
     static DefaultMutableTreeNode treeFromElement(Element main, WindowInterface wi, Object context) {

@@ -228,7 +228,7 @@ public class SprogTrafficController implements SprogInterface, SerialPortEventLi
      * static function returning the SprogTrafficController instance to use.
      *
      * @return The registered SprogTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public SprogTrafficController instance() {
         if (self == null) {

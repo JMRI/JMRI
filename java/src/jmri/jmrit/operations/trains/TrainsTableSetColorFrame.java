@@ -33,7 +33,7 @@ public class TrainsTableSetColorFrame extends OperationsFrame implements java.be
 
     TrainManager trainManager = TrainManager.instance();
 
-	// labels
+    // labels
     // text field
     // radio buttons
     JRadioButton manualRadioButton = new JRadioButton(Bundle.getMessage("Manual"));

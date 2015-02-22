@@ -441,8 +441,7 @@ abstract public class AbstractBoardProgPanel extends jmri.jmrix.loconet.swing.Ln
      * value (specified by opswIndex), rather than a sequence of OpSws as done
      * by writeAll().
      * <p>
-     * @param opswIndex
-     * <p>
+     * @param opswIndex <p>
      * @see jmri.jmrix.loconet.AbstractBoardProgPanel#writeAll()
      */
     public void writeOne(int opswIndex) {

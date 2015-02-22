@@ -93,7 +93,7 @@ public class SwingShutDownTask extends AbstractShutDownTask {
      * passes, causing message to be emitted.
      *
      * @return true if ready to shutdown, and no prompt needed. false to present
-     * dialog before shutdown proceeds
+     *         dialog before shutdown proceeds
      */
     protected boolean checkPromptNeeded() {
         return false;

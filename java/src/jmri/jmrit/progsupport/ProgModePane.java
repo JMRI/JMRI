@@ -42,7 +42,7 @@ public class ProgModePane extends ProgModeSelector {
 
     /**
      * @param direction controls layout, either BoxLayout.X_AXIS or
-     * BoxLayout.Y_AXIS
+     *                  BoxLayout.Y_AXIS
      */
     public ProgModePane(int direction) {
 

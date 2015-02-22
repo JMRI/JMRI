@@ -50,11 +50,12 @@ public interface TurnoutManager extends Manager {
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
-     * system name
+     *             system name
      * @return Never null
      * @throws IllegalArgumentException if Turnout doesn't already exist and the
-     * manager cannot create the Turnout due to e.g. an illegal name or name
-     * that can't be parsed.
+     *                                  manager cannot create the Turnout due to
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
      */
     public Turnout provideTurnout(String name);
 
@@ -107,7 +108,8 @@ public interface TurnoutManager extends Manager {
      *
      * @return requested Turnout object (never null)
      * @throws IllegalArgumentException if cannot create the Turnout due to e.g.
-     * an illegal name or name that can't be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     public Turnout newTurnout(String systemName, String userName);
 
@@ -187,9 +189,9 @@ public interface TurnoutManager extends Manager {
      * return the next free valid address up to a maximum of 10 address away
      * from the initial address.
      *
-     * @param prefix - The System Prefix used to make up the systemName
+     * @param prefix     - The System Prefix used to make up the systemName
      * @param curAddress - The hardware address of the turnout we which to
-     * check.
+     *                   check.
      */
     public String getNextValidAddress(String curAddress, String prefix) throws JmriException;
 

@@ -210,7 +210,7 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * static function returning the SerialTrafficController instance to use.
      *
      * @return The registered SerialTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public SerialTrafficController instance() {
         if (self == null) {
@@ -387,9 +387,9 @@ public class SerialTrafficController extends AbstractMRNodeTrafficController imp
      * Although this protocol doesn't use a trailer, we implement this method to
      * set the expected reply address for this message.
      *
-     * @param msg The output byte stream
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
-     * @param m the original message
+     * @param m      the original message
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
         currentAddr = ((SerialMessage) m).getAddr();

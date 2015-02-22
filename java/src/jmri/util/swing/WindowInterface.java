@@ -26,7 +26,7 @@ public interface WindowInterface {
     /**
      * Show, in whatever way is appropriate, a specific JmriPanel
      *
-     * @param child new JmriPanel to show
+     * @param child  new JmriPanel to show
      * @param action JmriAbstractAction making the request
      */
     public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action);
@@ -34,9 +34,9 @@ public interface WindowInterface {
     /**
      * Show, in whatever way is appropriate, a specific JmriPanel
      *
-     * @param child new JmriPanel to show
+     * @param child  new JmriPanel to show
      * @param action JmriAbstractAction making the request
-     * @param hint suggestion on where to put the content
+     * @param hint   suggestion on where to put the content
      */
     public void show(jmri.util.swing.JmriPanel child, JmriAbstractAction action, Hint hint);
 
@@ -49,7 +49,7 @@ public interface WindowInterface {
      * another.
      *
      * @return true if multiple instances should be provided, false if only one
-     * should be provided.
+     *         should be provided.
      */
     public boolean multipleInstances();
 

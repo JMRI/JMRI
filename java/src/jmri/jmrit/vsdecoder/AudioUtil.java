@@ -52,14 +52,15 @@ public class AudioUtil {
      * This method is meant to be used in tandem with getAudioBufferList(), at
      * least for now.
      *
-     * @param stream : Input Stream, assumed to be WAV-format data
+     * @param stream   : Input Stream, assumed to be WAV-format data
      * @param max_time : maximum (target) length of each split Buffer, in
-     * milliseconds
+     *                 milliseconds
      * @param min_time : minimum length of buffer to return, in milliseconds.
-     * Any buffer that would be smaller than this will be discarded.
+     *                 Any buffer that would be smaller than this will be
+     *                 discarded.
      *
      * @return (List<AudioByteBuffer>) List of AudioByteBuffers containing the
-     * (split-up) data from stream
+     *         (split-up) data from stream
      */
     static private List<AudioByteBuffer> splitInputStream(InputStream stream, int max_time, int min_time) {
         List<AudioByteBuffer> rlist = new ArrayList<AudioByteBuffer>();
@@ -103,7 +104,7 @@ public class AudioUtil {
      * AudioBuffers
      *
      * @param prefix : prefix to use when generating AudioBuffer system names.
-     * @param blist : list of AudioByteBuffers to convert.
+     * @param blist  : list of AudioByteBuffers to convert.
      *
      * @return (List<AudioBuffer>) List of AudioBuffers
      */
@@ -224,8 +225,8 @@ public class AudioUtil {
      *
      * bytes = frame_size * time_ms * sample_frequency / 1000
      *
-     * @param fmt : audio data format
-     * @param freq : sample frequency in Hz
+     * @param fmt     : audio data format
+     * @param freq    : sample frequency in Hz
      * @param time_ms : time interval in milliseconds
      *
      * @return (int) number of bytes.
@@ -248,11 +249,11 @@ public class AudioUtil {
      * Works only for AL.AL_FORMAT_MONO8 or AL.AL_FORMAT_MONO16. Returns false
      * otherwise.
      *
-     * @param buf : (minimum) 3-sample buffer of WAV data
-     * @param len : size of buf. Minimum 3 bytes for 8-bit, 6 bytes for 16-bit
-     * mono data.
+     * @param buf    : (minimum) 3-sample buffer of WAV data
+     * @param len    : size of buf. Minimum 3 bytes for 8-bit, 6 bytes for
+     *               16-bit mono data.
      * @param format : AL.format identifier.
-     * @param order : ByteOrder of data in buf
+     * @param order  : ByteOrder of data in buf
      *
      * @return true if a zero crossing is detected.
      */
@@ -289,14 +290,14 @@ public class AudioUtil {
      * "source" Returns between min_time and (max_time + samples to next zero
      * crossing) samples if enough bytes are available.
      *
-     * @param source : ByteBuffer of source data.
+     * @param source   : ByteBuffer of source data.
      * @param max_time : time interval (ms) to slice the source buffer.
      * @param min_time : minimum size (ms) of the output buffer.
-     * @param format : audio format of source data
-     * @param freq : sample frequency of source data (in Hz)
+     * @param format   : audio format of source data
+     * @param freq     : sample frequency of source data (in Hz)
      *
      * @return ByteBuffer of data copied from "source". Note: source position
-     * will be incremented by the number of bytes copied.
+     *         will be incremented by the number of bytes copied.
      */
     private static ByteBuffer getSubBuffer(ByteBuffer source, int max_time, int min_time, int format, int freq) {
         int time_size = calcTimeIndex(format, freq, max_time);

@@ -282,24 +282,28 @@ public class MemoryContents {
      * <code>! KeyName: Value</code>
      *
      * @param filename string containing complete filename with path
-     * @throws FileNotFoundException if the file does not exist
-     * @throws MemoryFileRecordLengthException if a record line is too long or
-     * short
-     * @throws MemoryFileChecksumException if a record checksum does not match
-     * the computed record checksum
-     * @throws MemoryFileUnknownRecordType if a record contains an unsupported
-     * record type
-     * @throws MemoryFileRecordContentException if a record contains
-     * inappropriate characters
-     * @throws MemoryFileNoEOFRecordException if a file does not contain an EOF
-     * record
-     * @throws MemoryFileNoDataRecordsException if a file does not contain any
-     * data records
+     * @throws FileNotFoundException               if the file does not exist
+     * @throws MemoryFileRecordLengthException     if a record line is too long
+     *                                             or short
+     * @throws MemoryFileChecksumException         if a record checksum does not
+     *                                             match the computed record
+     *                                             checksum
+     * @throws MemoryFileUnknownRecordType         if a record contains an
+     *                                             unsupported record type
+     * @throws MemoryFileRecordContentException    if a record contains
+     *                                             inappropriate characters
+     * @throws MemoryFileNoEOFRecordException      if a file does not contain an
+     *                                             EOF record
+     * @throws MemoryFileNoDataRecordsException    if a file does not contain
+     *                                             any data records
      * @throws MemoryFileRecordFoundAfterEOFRecord if a file contains records
-     * after the EOF record
-     * @throws MemoryFileAddressingRangeException if a file contains an Extended
-     * Linear Address record outside of the supported address range
-     * @throws IOException if a file cannot be opened via newBufferedReader
+     *                                             after the EOF record
+     * @throws MemoryFileAddressingRangeException  if a file contains an
+     *                                             Extended Linear Address
+     *                                             record outside of the
+     *                                             supported address range
+     * @throws IOException                         if a file cannot be opened
+     *                                             via newBufferedReader
      */
     public void readHex(String filename) throws FileNotFoundException,
             MemoryFileRecordLengthException, MemoryFileChecksumException,
@@ -356,24 +360,28 @@ public class MemoryContents {
      * <code>! KeyName: Value</code>
      *
      * @param file
-     * @throws FileNotFoundException if the file does not exist
-     * @throws MemoryFileRecordLengthException if a record line is too long or
-     * short
-     * @throws MemoryFileChecksumException if a record checksum does not match
-     * the computed record checksum
-     * @throws MemoryFileUnknownRecordType if a record contains an unsupported
-     * record type
-     * @throws MemoryFileRecordContentException if a record contains
-     * inappropriate characters
-     * @throws MemoryFileNoEOFRecordException if a file does not contain an EOF
-     * record
-     * @throws MemoryFileNoDataRecordsException if a file does not contain any
-     * data records
+     * @throws FileNotFoundException               if the file does not exist
+     * @throws MemoryFileRecordLengthException     if a record line is too long
+     *                                             or short
+     * @throws MemoryFileChecksumException         if a record checksum does not
+     *                                             match the computed record
+     *                                             checksum
+     * @throws MemoryFileUnknownRecordType         if a record contains an
+     *                                             unsupported record type
+     * @throws MemoryFileRecordContentException    if a record contains
+     *                                             inappropriate characters
+     * @throws MemoryFileNoEOFRecordException      if a file does not contain an
+     *                                             EOF record
+     * @throws MemoryFileNoDataRecordsException    if a file does not contain
+     *                                             any data records
      * @throws MemoryFileRecordFoundAfterEOFRecord if a file contains records
-     * after the EOF record
-     * @throws MemoryFileAddressingRangeException if a file contains an Extended
-     * Linear Address record outside of the supported address range
-     * @throws IOException if a file cannot be opened via newBufferedReader
+     *                                             after the EOF record
+     * @throws MemoryFileAddressingRangeException  if a file contains an
+     *                                             Extended Linear Address
+     *                                             record outside of the
+     *                                             supported address range
+     * @throws IOException                         if a file cannot be opened
+     *                                             via newBufferedReader
      */
     public void readHex(File file) throws FileNotFoundException,
             MemoryFileRecordLengthException, MemoryFileChecksumException,
@@ -714,8 +722,8 @@ public class MemoryContents {
      * any comment lines in its output.
      *
      * @param w Writer to which the character stream is sent
-     * @throws IOException upon file access problem
-     * @throws jmri.jmrit.MemoryContents.MemoryFileAddressingFormatException
+     * @throws IOException                         upon file access problem
+     * @throws MemoryFileAddressingFormatException
      */
     public void writeHex(Writer w) throws IOException, MemoryFileAddressingFormatException {
         writeHex(w, 16);
@@ -738,12 +746,13 @@ public class MemoryContents {
      * The method generates only RECTYPs "00" and "01", and does not generate
      * any comment lines in its output.
      *
-     * @param writer Writer to which the character stream is sent
+     * @param writer       Writer to which the character stream is sent
      * @param writeKeyVals determines whether key/value pairs (if any) are
-     * written at the beginning of the stream
-     * @param blockSize is the maximum number of bytes defined in a data record
-     * @throws IOException upon file access problem
-     * @throws jmri.jmrit.MemoryContents.MemoryFileAddressingFormatException
+     *                     written at the beginning of the stream
+     * @param blockSize    is the maximum number of bytes defined in a data
+     *                     record
+     * @throws IOException                         upon file access problem
+     * @throws MemoryFileAddressingFormatException
      */
     public void writeHex(Writer writer, boolean writeKeyVals, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
@@ -766,10 +775,10 @@ public class MemoryContents {
      * The method generates only RECTYPs "00" and "01", and does not generate
      * any comment lines in its output.
      *
-     * @param writer Writer to which the character stream is sent
+     * @param writer    Writer to which the character stream is sent
      * @param blocksize is the maximum number of bytes defined in a data record
-     * @throws IOException upon file access problem
-     * @throws jmri.jmrit.MemoryContents.MemoryFileAddressingFormatException
+     * @throws IOException                         upon file access problem
+     * @throws MemoryFileAddressingFormatException
      */
     private void writeHex(Writer writer, int blockSize)
             throws IOException, MemoryFileAddressingFormatException {
@@ -877,7 +886,7 @@ public class MemoryContents {
      * location in the argument
      *
      * @param location indicates the address from which the next location is
-     * determined
+     *                 determined
      * @return the next location
      */
     public int nextContent(int location) {
@@ -901,9 +910,9 @@ public class MemoryContents {
      * value.
      *
      * @param location location within programmatic representation of memory to
-     * modify
-     * @param value value to be placed at location within programmatic
-     * representation of memory
+     *                 modify
+     * @param value    value to be placed at location within programmatic
+     *                 representation of memory
      */
     public void setLocation(int location, int value) {
         currentPage = location / PAGESIZE;
@@ -917,9 +926,9 @@ public class MemoryContents {
      * location is represented.
      *
      * @param location location within programmatic representation of memory to
-     * inspect
+     *                 inspect
      * @return true if location exists within programmatic representation of
-     * memory
+     *         memory
      */
     public boolean locationInUse(int location) {
         currentPage = location / PAGESIZE;
@@ -940,7 +949,7 @@ public class MemoryContents {
      * represented in the programmatic representation of memory.
      *
      * @param location location within programmatic representation of memory to
-     * report
+     *                 report
      * @return the value found at the specified location.\
      */
     public int getLocation(int location) {
@@ -991,7 +1000,7 @@ public class MemoryContents {
      *
      * @param recordString the ASCII record, including the leading ':'
      * @return the inferred addressing type, or ADDRESSFIELDSIZEUNKNOWN if the
-     * addressing type cannot be inferred
+     *         addressing type cannot be inferred
      */
     private LoadOffsetFieldType inferRecordAddressType(String recordString) {
         if (recordString.charAt(0) != LEADING_CHAR_RECORD_MARK) {
@@ -1088,7 +1097,7 @@ public class MemoryContents {
      * may check for a non-zero return value to indicate a checksum error.
      *
      * @param infoString a string of characters for which the checksum is
-     * calculated
+     *                   calculated
      * @return the calculated 8-bit checksum, or -1 if not a valid infoString
      */
     private int calculate8BitChecksum(String infoString) {
@@ -1112,10 +1121,10 @@ public class MemoryContents {
      * Determines if a given amount of data will pass a segment boundary when
      * added to the memory image beginning at a given address.
      *
-     * @param addr address for begin of a sequence of bytes
+     * @param addr  address for begin of a sequence of bytes
      * @param count number of bytes
      * @return true if string of bytes will not cross into another page, else
-     * false.
+     *         false.
      */
     private boolean addressAndCountIsOk(int addr, int count) {
         int beginPage = addr / PAGESIZE;
@@ -1165,7 +1174,7 @@ public class MemoryContents {
      *
      * @param keyName Key to search for in the internal storage
      * @return index in the arraylist for the specified key, or -1 if the key is
-     * not found in the list
+     *         not found in the list
      */
     private int findKeyCommentIndex(String keyName) {
         for (int i = 0; i < keyValComments.size(); i++) {

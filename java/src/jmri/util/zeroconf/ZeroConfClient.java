@@ -39,7 +39,7 @@ public class ZeroConfClient {
      *
      * @param service string service name
      * @return JmDNS service entry for the first service of a particular
-     * service.
+     *         service.
      */
     public ServiceInfo getService(String service) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
@@ -71,10 +71,10 @@ public class ZeroConfClient {
     /**
      * Request the first service of a particular service on a specified host.
      *
-     * @param service string service service
+     * @param service  string service service
      * @param hostname string host name
      * @return JmDNS service entry for the first service of a particular service
-     * on the specified host..
+     *         on the specified host..
      */
     public ServiceInfo getServiceOnHost(String service, String hostname) {
         for (JmDNS server : ZeroConfService.netServices().values()) {
@@ -93,9 +93,9 @@ public class ZeroConfClient {
      * service name.
      *
      * @param service string service service
-     * @param adName string qualified service advertisement name
+     * @param adName  string qualified service advertisement name
      * @return JmDNS service entry for the first service of a particular service
-     * on the specified host..
+     *         on the specified host..
      */
     public ServiceInfo getServicebyAdName(String service, String adName) {
         for (JmDNS server : ZeroConfService.netServices().values()) {

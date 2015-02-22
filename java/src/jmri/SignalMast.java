@@ -97,7 +97,7 @@ public interface SignalMast extends NamedBean {
      * aspect, or if it is always lit.
      *
      * @param boo Set true to allow the UnLit to be used, set false it is not
-     * supported or allowed.
+     *            supported or allowed.
      */
     public void setAllowUnLit(boolean boo);
 

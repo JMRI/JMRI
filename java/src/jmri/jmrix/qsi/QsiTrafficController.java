@@ -248,7 +248,7 @@ public class QsiTrafficController implements QsiInterface, Runnable {
      * static function returning the QsiTrafficController instance to use.
      *
      * @return The registered QsiTrafficController instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     static public QsiTrafficController instance() {
         if (self == null) {

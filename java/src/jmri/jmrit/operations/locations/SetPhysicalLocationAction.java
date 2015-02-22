@@ -63,7 +63,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         Location _location;
 
-		// labels
+        // labels
         // text field
         // check boxes
         // major buttons

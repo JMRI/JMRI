@@ -59,7 +59,7 @@ public interface SignalMastLogic {
      * of signal masts that could cause a conflicting route.
      *
      * @param destination Destination SignalMast.
-     * @param allow set true if we are to allow automatic generation.
+     * @param allow       set true if we are to allow automatic generation.
      */
     public void allowAutoMaticSignalMastGeneration(boolean allow, SignalMast destination);
 
@@ -69,7 +69,7 @@ public interface SignalMastLogic {
      * being changed. This is dependant upon the hardware allowing for this.
      *
      * @param destination Destination SignalMast.
-     * @param lock set true if the system should lock the turnout.
+     * @param lock        set true if the system should lock the turnout.
      */
     public void allowTurnoutLock(boolean lock, SignalMast destination);
 
@@ -306,7 +306,8 @@ public interface SignalMastLogic {
      * editor to determine the which blocks, turnouts will make up the logic
      * between the source and destination signal mast.
      *
-     * @param boo Use the layout editor details to determine logic details.
+     * @param boo         Use the layout editor details to determine logic
+     *                    details.
      * @param destination Destination SignalMast.
      *
      */
@@ -318,7 +319,7 @@ public interface SignalMastLogic {
      *
      * @param destination Destination SignalMast.
      * @return true if we are using the layout editor to build the signal mast
-     * logic.
+     *         logic.
      */
     public boolean useLayoutEditor(SignalMast destination);
 
@@ -328,7 +329,7 @@ public interface SignalMastLogic {
      *
      * @param destination Destination SignalMast.
      * @return true if we are using the block information from the layout
-     * editor.
+     *         editor.
      */
     public boolean useLayoutEditorBlocks(SignalMast destination);
 
@@ -337,10 +338,10 @@ public interface SignalMastLogic {
      * either blocks or turnouts.
      *
      * @param destination Destination SignalMast.
-     * @param blocks set false if not to use the block information gathered from
-     * the layouteditor
-     * @param turnouts set false if not to use the turnout information gathered
-     * from the layouteditor
+     * @param blocks      set false if not to use the block information gathered
+     *                    from the layouteditor
+     * @param turnouts    set false if not to use the turnout information
+     *                    gathered from the layouteditor
      */
     public void useLayoutEditorDetails(boolean turnouts, boolean blocks, SignalMast destination) throws JmriException;
 
@@ -350,7 +351,7 @@ public interface SignalMastLogic {
      *
      * @param destination Destination SignalMast.
      * @return true if we are using the turnout information from the layout
-     * editor.
+     *         editor.
      */
     public boolean useLayoutEditorTurnouts(SignalMast destination);
 
@@ -376,10 +377,11 @@ public interface SignalMastLogic {
      * Set the auto turnouts based upon a given list of layout blocks for a
      * specific destination mast
      *
-     * @param blks List of Layout Blockt.
+     * @param blks        List of Layout Blockt.
      * @param destination Destination SignalMast.
      * @return A LinkedHashMap of the original blocks and the required state,
-     * plus any blocks found on double-overs that also need to be un-occupied
+     *         plus any blocks found on double-overs that also need to be
+     *         un-occupied
      */
     public LinkedHashMap<Block, Integer> setupLayoutEditorTurnoutDetails(List<LayoutBlock> blks, SignalMast destination);
 

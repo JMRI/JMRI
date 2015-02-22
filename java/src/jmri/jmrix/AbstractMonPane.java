@@ -485,7 +485,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *
-     * @param ta Reference to JTextArea
+     * @param ta     Reference to JTextArea
      * @param scroll True to move to end
      */
     private void doAutoScroll(final JTextArea ta, final boolean scroll) {

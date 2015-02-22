@@ -141,7 +141,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * Get the User name of the selected namedBean
      *
      * @return the user name of the selected bean or null if there is no
-     * selection
+     *         selection
      */
     public String getSelectedUserName() {
         String selectedName = (String) super.getSelectedItem();
@@ -157,7 +157,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * Get the system name of the selected namedBean
      *
      * @return the system name of the selected bean or null if there is no
-     * selection
+     *         selection
      */
     public String getSelectedSystemName() {
         String selectedName = (String) super.getSelectedItem();
@@ -172,7 +172,7 @@ public class JmriBeanComboBox extends JComboBox<String> implements java.beans.Pr
      * Get the display name of the selected namedBean
      *
      * @return the display name of the selected bean or null if there is no
-     * selection
+     *         selection
      */
     public String getSelectedDisplayName() {
         String selectedName = (String) super.getSelectedItem();

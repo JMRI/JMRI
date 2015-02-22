@@ -96,7 +96,7 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
      * Update static data from XML file
      *
      * @param element Top level Element to unpack.
-     * @param o ignored
+     * @param o       ignored
      */
     public void load(Element element, Object o) {
         log.warn("unexpected call of 2nd load form");

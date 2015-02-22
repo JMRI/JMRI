@@ -162,45 +162,45 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         update();
     }
 
-	private void update() {
-	    log.debug("queue update");
-		// use invokeLater to prevent deadlock
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
-				log.debug("update, setMode " + isSetMode);
-				initialize();
-				if (_train != null && _train.getRoute() != null) {
-					textTrainName.setText(_train.getIconName());
-					RouteLocation rl = _train.getCurrentLocation();
-					if (rl != null) {
-						textTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
-						textTrainRouteLocationComment.setText(rl.getComment());
-						textLocationName.setText(rl.getLocation().getName());
-						pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled()
-								&& !rl.getDepartureTime().equals(""));
-						textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
-						textLocationComment.setVisible(!rl.getLocation().getComment().equals("")
-								&& Setup.isPrintLocationCommentsEnabled());
-						textLocationComment.setText(rl.getLocation().getComment());
-						textNextLocationName.setText(_train.getNextLocationName());
+    private void update() {
+        log.debug("queue update");
+        // use invokeLater to prevent deadlock
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                log.debug("update, setMode " + isSetMode);
+                initialize();
+                if (_train != null && _train.getRoute() != null) {
+                    textTrainName.setText(_train.getIconName());
+                    RouteLocation rl = _train.getCurrentLocation();
+                    if (rl != null) {
+                        textTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
+                        textTrainRouteLocationComment.setText(rl.getComment());
+                        textLocationName.setText(rl.getLocation().getName());
+                        pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled()
+                                && !rl.getDepartureTime().equals(""));
+                        textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
+                        textLocationComment.setVisible(!rl.getLocation().getComment().equals("")
+                                && Setup.isPrintLocationCommentsEnabled());
+                        textLocationComment.setText(rl.getLocation().getComment());
+                        textNextLocationName.setText(_train.getNextLocationName());
 
-						// check for locos
-						updateLocoPanes(rl);
+                        // check for locos
+                        updateLocoPanes(rl);
 
-						// now update the car pick ups and set outs
-						blockCars(rl, IS_MANIFEST);
+                        // now update the car pick ups and set outs
+                        blockCars(rl, IS_MANIFEST);
 
-						textStatus.setText(getStatus(rl, IS_MANIFEST));
+                        textStatus.setText(getStatus(rl, IS_MANIFEST));
 
-					} else {
-						moveButton.setEnabled(false);
-						setButton.setEnabled(false);
-					}
-					updateComplete();
-				}
-			}
-		});
-	}
+                    } else {
+                        moveButton.setEnabled(false);
+                        setButton.setEnabled(false);
+                    }
+                    updateComplete();
+                }
+            }
+        });
+    }
 
     @Override
     public void dispose() {
@@ -212,10 +212,11 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled())
+        if (Control.showProperty && log.isDebugEnabled()) {
             log.debug("Property change ({}) for: ({}) old: {} new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());
+        }
         if (e.getPropertyName().equals(Train.TRAIN_MOVE_COMPLETE_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {
             clearAndUpdate();

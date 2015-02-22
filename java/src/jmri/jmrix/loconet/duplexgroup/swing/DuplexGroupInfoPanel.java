@@ -256,7 +256,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * with an appropriate message.
      * <p>
      * @return true if current swingChannelValueField is a valid Duplex group
-     * channel
+     *         channel
      */
     private boolean validateGroupChannelField() {
         return swingChannelValueField.isValid();
@@ -268,7 +268,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * appropriate message.
      * <p>
      * @return true if current swingIdValueField is a valid Duplex group ID
-     * number
+     *         number
      */
     private boolean validateGroupIDField() {
         return swingIdValueField.isValid();
@@ -278,7 +278,7 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Validates the Duplex group password currently specified in the GUI.
      * <p>
      * @return true if current swingNameValueField is a valid Duplex group
-     * password
+     *         password
      */
     private boolean validateGroupPasswordField() {
         return swingPasswordValueField.isValid();
@@ -372,8 +372,8 @@ public class DuplexGroupInfoPanel extends jmri.jmrix.loconet.swing.LnPanel
 
     /**
      *
-     * @param s - Name of tag in .properties file for string to be converted to
-     * HTML
+     * @param s     - Name of tag in .properties file for string to be converted
+     *              to HTML
      * @param width - Width of resulting HTML, in Swing dimensional units
      * @return String - String containing HTML for input string s
      */

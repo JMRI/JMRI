@@ -567,7 +567,7 @@ public class AddressPanel extends JInternalFrame implements ThrottleListener, Pr
      * </ul>
      *
      * @return org.jdom2.Element for this objects preferences. Defined in
-     * DTD/throttle-config
+     *         DTD/throttle-config
      */
     public Element getXml() {
         Element me = new Element("AddressPanel");

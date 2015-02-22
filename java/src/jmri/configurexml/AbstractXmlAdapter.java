@@ -19,12 +19,13 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
      * given a plug-in structure for e.g. posting a Swing dialog, etc.
      *
      * @param description description of error encountered
-     * @param systemName System name of bean being handled, may be null
-     * @param userName used name of the bean being handled, may be null
-     * @param exception Any exception being handled in the processing, may be
-     * null
+     * @param systemName  System name of bean being handled, may be null
+     * @param userName    used name of the bean being handled, may be null
+     * @param exception   Any exception being handled in the processing, may be
+     *                    null
      * @throws JmriConfigureXmlException in place for later expansion; should be
-     * propagated upward to higher-level error handling
+     *                                   propagated upward to higher-level error
+     *                                   handling
      */
     public void creationErrorEncountered(
             String description,

@@ -102,7 +102,7 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Get notification that a function has changed state
      *
      * @param functionNumber The function that has changed (0-9).
-     * @param isSet True if the function is now active (or set).
+     * @param isSet          True if the function is now active (or set).
      */
     public void notifyFunctionStateChanged(int functionNumber, boolean isSet) {
         if (log.isDebugEnabled()) {
@@ -204,8 +204,8 @@ public class FunctionPanel extends JInternalFrame implements FunctionListener, j
      * Get notification that a function's lockable status has changed.
      *
      * @param functionNumber The function that has changed (0-28).
-     * @param isLockable True if the function is now Lockable (continuously
-     * active).
+     * @param isLockable     True if the function is now Lockable (continuously
+     *                       active).
      */
     public void notifyFunctionLockableChanged(int functionNumber, boolean isLockable) {
         if (log.isDebugEnabled()) {

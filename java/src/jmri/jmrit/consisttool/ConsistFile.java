@@ -261,7 +261,7 @@ public class ConsistFile extends XmlFile {
      * Write all consists to a file.
      *
      * @param consistList an ArrayList of consists to write
-     * @param fileName - with location and file type
+     * @param fileName    - with location and file type
      * @throws IOException
      */
     public void writeFile(ArrayList<DccLocoAddress> consistList, String fileName) throws IOException {

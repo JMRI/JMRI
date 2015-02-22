@@ -43,11 +43,12 @@ public interface SignalMastManager extends Manager {
      * system name if needed
      *
      * @param name User name, system name, or address which can be promoted to
-     * system name
+     *             system name
      * @return Never null
      * @throws IllegalArgumentException if SignalMast doesn't already exist and
-     * the manager cannot create the SignalMast due to e.g. an illegal name or
-     * name that can't be parsed.
+     *                                  the manager cannot create the SignalMast
+     *                                  due to e.g. an illegal name or name that
+     *                                  can't be parsed.
      */
     public SignalMast provideSignalMast(String name);
 

@@ -234,7 +234,7 @@ public class SprogMessage extends jmri.jmrix.AbstractMRMessage {
      * format of the message as a byte array
      *
      * @param sprogState a SprogState variable representing the current state of
-     * the Sprog
+     *                   the Sprog
      * @return the formatted message as a byte array
      */
     public byte[] getFormattedMessage(SprogState sprogState) {

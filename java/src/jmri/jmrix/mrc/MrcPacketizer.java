@@ -149,7 +149,7 @@ public class MrcPacketizer extends MrcTrafficController {
      * Make connection to existing MrcPortController object.
      *
      * @param p Port controller for connected. Save this for a later disconnect
-     * call
+     *          call
      */
     public void connectPort(MrcPortController p) {
         istream = p.getInputStream();

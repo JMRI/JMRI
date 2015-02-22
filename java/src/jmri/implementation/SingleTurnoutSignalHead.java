@@ -35,10 +35,10 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     private static final long serialVersionUID = -6275671809339636536L;
 
     /**
-     * @param on Appearance constant from {@link jmri.SignalHead} for the output
-     * on (Turnout thrown) appearance
+     * @param on  Appearance constant from {@link jmri.SignalHead} for the
+     *            output on (Turnout thrown) appearance
      * @param off Appearance constant from {@link jmri.SignalHead} for the
-     * signal off (Turnout closed) appearance
+     *            signal off (Turnout closed) appearance
      */
     public SingleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> lit, int on, int off) {
         super(sys, user);
@@ -49,10 +49,10 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     }
 
     /**
-     * @param on Appearance constant from {@link jmri.SignalHead} for the output
-     * on (Turnout thrown) appearance
+     * @param on  Appearance constant from {@link jmri.SignalHead} for the
+     *            output on (Turnout thrown) appearance
      * @param off Appearance constant from {@link jmri.SignalHead} for the
-     * signal off (Turnout closed) appearance
+     *            signal off (Turnout closed) appearance
      */
     public SingleTurnoutSignalHead(String sys, NamedBeanHandle<Turnout> lit, int on, int off) {
         super(sys);

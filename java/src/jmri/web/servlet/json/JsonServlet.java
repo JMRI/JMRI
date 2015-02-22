@@ -173,12 +173,12 @@ public class JsonServlet extends WebSocketServlet {
      * </ul>
      * Note that data will vary for each type.
      *
-     * @param request an HttpServletRequest object that contains the request the
-     * client has made of the servlet
+     * @param request  an HttpServletRequest object that contains the request
+     *                 the client has made of the servlet
      * @param response an HttpServletResponse object that contains the response
-     * the servlet sends to the client
+     *                 the servlet sends to the client
      * @throws java.io.IOException if an input or output error is detected when
-     * the servlet handles the GET request
+     *                             the servlet handles the GET request
      */
     @Override
     protected void doGet(final HttpServletRequest request, HttpServletResponse response) throws IOException {

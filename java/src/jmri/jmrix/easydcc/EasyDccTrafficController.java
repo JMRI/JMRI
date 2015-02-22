@@ -82,7 +82,7 @@ public class EasyDccTrafficController extends AbstractMRTrafficController
      * static function returning the EasyDccTrafficController instance to use.
      *
      * @return The registered EasyDccTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public EasyDccTrafficController instance() {
         if (self == null) {

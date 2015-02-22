@@ -65,7 +65,7 @@ public class TrainIconXml extends LocoIconXml {
      * TrainIcons should be loaded by the operations function, not here
      *
      * @param element Top level Element to unpack.
-     * @param o an Editor as an Object
+     * @param o       an Editor as an Object
      */
     public void load(Element element, Object o) {
         //NOTE: this method should not be populated.  

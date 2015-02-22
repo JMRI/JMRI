@@ -139,15 +139,16 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Construct the Pane from the XML definition element.
      *
-     * @param name Name to appear on tab of pane
-     * @param pane The JDOM Element for the pane definition
-     * @param cvModel Already existing TableModel containing the CV definitions
-     * @param icvModel Already existing TableModel containing the Indexed CV
-     * definitions
-     * @param varModel Already existing TableModel containing the variable
-     * definitions
-     * @param modelElem "model" element from the Decoder Index, used to check
-     * what decoder options are present.
+     * @param name         Name to appear on tab of pane
+     * @param pane         The JDOM Element for the pane definition
+     * @param cvModel      Already existing TableModel containing the CV
+     *                     definitions
+     * @param icvModel     Already existing TableModel containing the Indexed CV
+     *                     definitions
+     * @param varModel     Already existing TableModel containing the variable
+     *                     definitions
+     * @param modelElem    "model" element from the Decoder Index, used to check
+     *                     what decoder options are present.
      * @param pRosterEntry The current roster entry, used to get sound labels.
      */
     public PaneProgPane(PaneContainer parent, String name, Element pane, CvTableModel cvModel, IndexedCvTableModel icvModel, VariableTableModel varModel, Element modelElem, RosterEntry pRosterEntry) {
@@ -454,9 +455,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Estimate the number of CVs that will be accessed when reading or writing
      * the contents of this pane.
      *
-     * @param read true if counting for read, false for write
+     * @param read    true if counting for read, false for write
      * @param changes true if counting for a *Changes operation; false, if
-     * counting for a *All operation
+     *                counting for a *All operation
      * @return the total number of CV reads/writes needed for this pane
      */
     public int countOpsNeeded(boolean read, boolean changes) {
@@ -468,14 +469,14 @@ public class PaneProgPane extends javax.swing.JPanel
      * Produce a set of CVs that will be accessed when reading or writing the
      * contents of this pane.
      *
-     * @param read true if counting for read, false for write
+     * @param read    true if counting for read, false for write
      * @param changes true if counting for a *Changes operation; false, if
-     * counting for a *All operation
-     * @param set The set to fill. Any CVs already in here will not be
-     * duplicated, which provides a way to aggregate a set of CVs across
-     * multiple panes.
+     *                counting for a *All operation
+     * @param set     The set to fill. Any CVs already in here will not be
+     *                duplicated, which provides a way to aggregate a set of CVs
+     *                across multiple panes.
      * @return the same set as the parameter, for convenient chaining of
-     * operations.
+     *         operations.
      */
     public Set<Integer> makeOpsNeededSet(boolean read, boolean changes, Set<Integer> set) {
 
@@ -601,9 +602,9 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Set the "ToRead" parameter in all variables and CVs on this pane
      *
-     * @param justChanges true if this is read changes, false if read all
+     * @param justChanges  true if this is read changes, false if read all
      * @param startProcess true if this is the start of processing, false if
-     * cleaning up at end
+     *                     cleaning up at end
      */
     void setToRead(boolean justChanges, boolean startProcess) {
         if (!container.isBusy() || // the frame has already setToRead
@@ -656,9 +657,9 @@ public class PaneProgPane extends javax.swing.JPanel
     /**
      * Set the "ToWrite" parameter in all variables and CVs on this pane
      *
-     * @param justChanges true if this is read changes, false if read all
+     * @param justChanges  true if this is read changes, false if read all
      * @param startProcess true if this is the start of processing, false if
-     * cleaning up at end
+     *                     cleaning up at end
      */
     void setToWrite(boolean justChanges, boolean startProcess) {
         if (log.isDebugEnabled()) {
@@ -879,7 +880,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * nothing left to read.
      * <P>
      * @return true is a compare has been started, false if the pane is
-     * complete.
+     *         complete.
      */
     boolean nextConfirm() {
         // look for possible CVs
@@ -1163,7 +1164,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Pane. Only variables in states marked as "changed" will be checked.
      *
      * @return true is a confirm has been started, false if the pane is
-     * complete.
+     *         complete.
      */
     public boolean confirmPaneChanges() {
         if (log.isDebugEnabled()) {
@@ -1185,7 +1186,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * prepReadPaneAll, then starting the execution.
      *
      * @return true is a confirm has been started, false if the pane is
-     * complete.
+     *         complete.
      */
     public boolean confirmPaneAll() {
         if (log.isDebugEnabled()) {
@@ -2443,9 +2444,9 @@ public class PaneProgPane extends javax.swing.JPanel
      * Get a GUI representation of a particular variable for display.
      *
      * @param name Name used to look up the Variable object
-     * @param var XML Element which might contain a "format" attribute to be
-     * used in the {@link VariableValue#getNewRep} call from the Variable
-     * object; "tooltip" elements are also processed here.
+     * @param var  XML Element which might contain a "format" attribute to be
+     *             used in the {@link VariableValue#getNewRep} call from the
+     *             Variable object; "tooltip" elements are also processed here.
      * @return JComponent representing this variable
      */
     public JComponent getRepresentation(String name, Element var) {
@@ -2516,7 +2517,7 @@ public class PaneProgPane extends javax.swing.JPanel
      * Ensures any appended text is added prior to the closing </html> tag, if
      * there is one.
      *
-     * @param baseText original text
+     * @param baseText  original text
      * @param extraText text to be appended to original text
      * @return combined text
      */

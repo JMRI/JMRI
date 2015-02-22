@@ -119,8 +119,8 @@ public class TransferableObject implements java.awt.datatransfer.Transferable {
      *
      * @see Fetcher
      * @param dataClass The {@link java.lang.Class} to use in the custom data
-     * flavor
-     * @param fetcher The {@link Fetcher} that will return the data object
+     *                  flavor
+     * @param fetcher   The {@link Fetcher} that will return the data object
      * @since 1.1
      */
     public TransferableObject(Class<?> dataClass, Fetcher fetcher) {

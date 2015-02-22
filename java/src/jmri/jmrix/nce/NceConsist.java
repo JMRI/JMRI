@@ -76,9 +76,9 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
     /**
      * Add a Locomotive to a Consist
      *
-     * @param locoAddress is the Locomotive address to add to the consist
+     * @param locoAddress     is the Locomotive address to add to the consist
      * @param directionNormal is True if the locomotive is traveling the same
-     * direction as the consist, or false otherwise.
+     *                        direction as the consist, or false otherwise.
      */
     public synchronized void add(DccLocoAddress locoAddress, boolean directionNormal) {
         if (!contains(locoAddress)) {
@@ -195,7 +195,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
      * Used to determine if consist has been initialized properly.
      *
      * @return true if command station memory has been read for this consist
-     * number.
+     *         number.
      */
     public boolean isValid() {
         return _valid;
@@ -210,7 +210,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
      *
      * @param address The address of the loco to be added
      * @param command There are six NCE commands to add a loco to a consist. Add
-     * Lead, Rear, Mid, and the loco direction 3x2 = 6 commands.
+     *                Lead, Rear, Mid, and the loco direction 3x2 = 6 commands.
      */
     private void addLocoToConsist(int address, boolean isLong, byte command) {
         if (isLong) {
@@ -224,7 +224,7 @@ public class NceConsist extends jmri.implementation.DccConsist implements jmri.j
      * NCE.
      *
      * @param address The address of the loco to be removed
-     * @param isLong true if long address
+     * @param isLong  true if long address
      */
     private void removeLocoFromConsist(int address, boolean isLong) {
         if (isLong) {

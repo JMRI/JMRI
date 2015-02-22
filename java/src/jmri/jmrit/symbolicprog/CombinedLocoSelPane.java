@@ -362,8 +362,8 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Identify decoder complete, act on it by setting the GUI This will fire
      * "GUI changed" events which will reset the locomotive GUI.
      *
-     * @param mfgID the decoder's manufacturer ID value from CV8
-     * @param modelID the decoder's model ID value from CV7
+     * @param mfgID     the decoder's manufacturer ID value from CV8
+     * @param modelID   the decoder's model ID value from CV7
      * @param productID the decoder's product ID
      */
     protected void selectDecoder(int mfgID, int modelID, int productID) {
@@ -417,9 +417,9 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      * Decoder identify has not matched specific types, but did find
      * manufacturer match
      *
-     * @param pMfg Manufacturer name. This is passed to save time, as it has
-     * already been determined once.
-     * @param pMfgID Manufacturer ID number (CV8)
+     * @param pMfg     Manufacturer name. This is passed to save time, as it has
+     *                 already been determined once.
+     * @param pMfgID   Manufacturer ID number (CV8)
      * @param pModelID Model ID number (CV7)
      */
     void updateForDecoderMfgID(String pMfg, int pMfgID, int pModelID) {

@@ -183,7 +183,7 @@ public class TurnoutOperationManager {
      * Find a suitable operation for this turnout, based on its feedback type.
      * The mode is passed separately so the caller can transform it
      *
-     * @param t	turnout
+     * @param t	           turnout
      * @param apparentMode	mode(s) to be used when finding a matching operation
      */
     public TurnoutOperation getMatchingOperationAlways(Turnout t, int apparentMode) {
@@ -211,7 +211,7 @@ public class TurnoutOperationManager {
      * find the correct operation for this turnout. If operations are globally
      * disabled, return nothing
      *
-     * @param t	turnout
+     * @param t	           turnout
      * @param apparentMode	mode(s) to be used when finding a matching operation
      * @return operation
      */

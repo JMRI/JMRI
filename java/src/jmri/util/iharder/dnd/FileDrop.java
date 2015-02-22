@@ -70,7 +70,7 @@ public class FileDrop {
      * elements contained within as drop targets, though only the top level
      * container will change borders.
      *
-     * @param c Component on which files will be dropped.
+     * @param c        Component on which files will be dropped.
      * @param listener Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
@@ -90,9 +90,9 @@ public class FileDrop {
      * its children components will also listen for drops, though only the
      * parent will change borders.
      *
-     * @param c Component on which files will be dropped.
+     * @param c         Component on which files will be dropped.
      * @param recursive Recursively set children as drop targets.
-     * @param listener Listens for <tt>filesDropped</tt>.
+     * @param listener  Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
     public FileDrop(
@@ -113,8 +113,9 @@ public class FileDrop {
      * <tt>System.out</tt> or <tt>System.err</tt>. A <tt>null</tt> value for the
      * parameter <tt>out</tt> will result in no debugging output.
      *
-     * @param out PrintStream to record debugging info or null for no debugging.
-     * @param c Component on which files will be dropped.
+     * @param out      PrintStream to record debugging info or null for no
+     *                 debugging.
+     * @param c        Component on which files will be dropped.
      * @param listener Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
@@ -139,10 +140,11 @@ public class FileDrop {
      * <tt>System.out</tt> or <tt>System.err</tt>. A <tt>null</tt> value for the
      * parameter <tt>out</tt> will result in no debugging output.
      *
-     * @param out PrintStream to record debugging info or null for no debugging.
-     * @param c Component on which files will be dropped.
+     * @param out       PrintStream to record debugging info or null for no
+     *                  debugging.
+     * @param c         Component on which files will be dropped.
      * @param recursive Recursively set children as drop targets.
-     * @param listener Listens for <tt>filesDropped</tt>.
+     * @param listener  Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
     public FileDrop(
@@ -160,10 +162,10 @@ public class FileDrop {
     /**
      * Constructor with a specified border
      *
-     * @param c Component on which files will be dropped.
+     * @param c          Component on which files will be dropped.
      * @param dragBorder Border to use on <tt>JComponent</tt> when dragging
-     * occurs.
-     * @param listener Listens for <tt>filesDropped</tt>.
+     *                   occurs.
+     * @param listener   Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
     public FileDrop(
@@ -184,11 +186,11 @@ public class FileDrop {
      * each of its children components will also listen for drops, though only
      * the parent will change borders.
      *
-     * @param c Component on which files will be dropped.
+     * @param c          Component on which files will be dropped.
      * @param dragBorder Border to use on <tt>JComponent</tt> when dragging
-     * occurs.
-     * @param recursive Recursively set children as drop targets.
-     * @param listener Listens for <tt>filesDropped</tt>.
+     *                   occurs.
+     * @param recursive  Recursively set children as drop targets.
+     * @param listener   Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
     public FileDrop(
@@ -211,11 +213,12 @@ public class FileDrop {
      * <tt>System.out</tt> or <tt>System.err</tt>. A <tt>null</tt> value for the
      * parameter <tt>out</tt> will result in no debugging output.
      *
-     * @param out PrintStream to record debugging info or null for no debugging.
-     * @param c Component on which files will be dropped.
+     * @param out        PrintStream to record debugging info or null for no
+     *                   debugging.
+     * @param c          Component on which files will be dropped.
      * @param dragBorder Border to use on <tt>JComponent</tt> when dragging
-     * occurs.
-     * @param listener Listens for <tt>filesDropped</tt>.
+     *                   occurs.
+     * @param listener   Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
     public FileDrop(
@@ -238,12 +241,13 @@ public class FileDrop {
      * <tt>System.out</tt> or <tt>System.err</tt>. A <tt>null</tt> value for the
      * parameter <tt>out</tt> will result in no debugging output.
      *
-     * @param out PrintStream to record debugging info or null for no debugging.
-     * @param c Component on which files will be dropped.
+     * @param out        PrintStream to record debugging info or null for no
+     *                   debugging.
+     * @param c          Component on which files will be dropped.
      * @param dragBorder Border to use on <tt>JComponent</tt> when dragging
-     * occurs.
-     * @param recursive Recursively set children as drop targets.
-     * @param listener Listens for <tt>filesDropped</tt>.
+     *                   occurs.
+     * @param recursive  Recursively set children as drop targets.
+     * @param listener   Listens for <tt>filesDropped</tt>.
      * @since 1.0
      */
     public FileDrop(
@@ -553,9 +557,9 @@ public class FileDrop {
      * the all children. You should call this if you add and remove components
      * after you've set up the drag-and-drop.
      *
-     * @param out Optional {@link java.io.PrintStream} for logging drag and drop
-     * messages
-     * @param c The component to unregister
+     * @param out       Optional {@link java.io.PrintStream} for logging drag
+     *                  and drop messages
+     * @param c         The component to unregister
      * @param recursive Recursively unregister components within a container
      * @since 1.0
      */

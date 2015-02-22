@@ -52,11 +52,11 @@ public abstract class AbstractCatalogTree extends DefaultTreeModel implements Ca
     /**
      * Recursively add nodes to the tree
      *
-     * @param pName Name of the resource to be scanned; this is only used for
-     * the human-readable tree
-     * @param pPath Path to this resource, including the pName part
+     * @param pName   Name of the resource to be scanned; this is only used for
+     *                the human-readable tree
+     * @param pPath   Path to this resource, including the pName part
      * @param pParent Node for the parent of the resource to be scanned, e.g.
-     * where in the tree to insert it.
+     *                where in the tree to insert it.
      */
     public abstract void insertNodes(String pName, String pPath, CatalogTreeNode pParent);
 

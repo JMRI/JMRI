@@ -861,9 +861,9 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * Invoked by LnOpsModeProgrammer to start an ops-mode read operation.
      *
-     * @param CV Which CV to read
-     * @param p Who to notify on complete
-     * @param addr Address of the locomotive
+     * @param CV       Which CV to read
+     * @param p        Who to notify on complete
+     * @param addr     Address of the locomotive
      * @param longAddr true if a long address, false if short address
      * @throws ProgrammerException
      */
@@ -964,7 +964,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
     /**
      * internal method to notify of the final result
      *
-     * @param value The cv value to be returned
+     * @param value  The cv value to be returned
      * @param status The error code, if any
      */
     protected void notifyProgListenerEnd(int value, int status) {
@@ -996,7 +996,7 @@ public class SlotManager extends AbstractProgrammer implements LocoNetListener, 
      * Internal routine to forward a programing reply. This is delayed to
      * prevent overruns of the command station.
      *
-     * @param value the value to return
+     * @param value  the value to return
      * @param status The error code, if any
      */
     protected void sendProgrammingReply(ProgListener p, int value, int status) {

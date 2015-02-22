@@ -41,7 +41,7 @@ public interface AddressedProgrammerManager {
      * Gain access to a Addressed Mode Programmer without reservation.
      *
      * @param pLongAddress true if this is a long (14 bit) address, else false
-     * @param pAddress Specific decoder address to use.
+     * @param pAddress     Specific decoder address to use.
      * @return null only if there isn't an Ops Mode Programmer in the system
      */
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress);
@@ -51,7 +51,7 @@ public interface AddressedProgrammerManager {
      * reserving it for yourself.
      *
      * @param pLongAddress true if this is a long (14 bit) address, else false
-     * @param pAddress Specific decoder address to use.
+     * @param pAddress     Specific decoder address to use.
      * @return null if the address is in use by a reserved programmer
      */
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress);

@@ -1011,13 +1011,13 @@ public class CbusConsolePane extends jmri.jmrix.can.swing.CanPanel implements Ca
      * respectively. Entries with no prefix are parsed as decimal if decimal
      * flag is true, otherwise hex.
      *
-     * @param s string to be parsed
-     * @param limit upper bound of value to be parsed
-     * @param decimal flag for decimal or hex default
+     * @param s        string to be parsed
+     * @param limit    upper bound of value to be parsed
+     * @param decimal  flag for decimal or hex default
      * @param errTitle Title of error dialogue box if Number FormatException
-     * encountered
-     * @param errMsg Message to be displayed if Number FormatException
-     * encountered
+     *                 encountered
+     * @param errMsg   Message to be displayed if Number FormatException
+     *                 encountered
      * @return the byte value, -1 indicates failure
      */
     public int parseBinDecHexByte(String s, int limit, boolean decimal, String errTitle, String errMsg) {

@@ -113,7 +113,7 @@ public class SprogThrottle extends AbstractThrottle {
      * speedIncrement value.
      *
      * @param Mode - the current speed step mode - default should be 128 speed
-     * step mode in most cases
+     *             step mode in most cases
      */
     public void setSpeedStepMode(int Mode) {
         SprogMessage m;

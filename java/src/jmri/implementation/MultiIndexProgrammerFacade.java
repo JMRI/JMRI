@@ -38,9 +38,9 @@ public class MultiIndexProgrammerFacade extends AbstractProgrammerFacade impleme
 
     /**
      * @param indexPI CV to which the first value is to be written for NN.NN and
-     * NN.NN.NN forms
+     *                NN.NN.NN forms
      * @param indexSI CV to which the second value is to be written for NN.NN.NN
-     * forms
+     *                forms
      */
     public MultiIndexProgrammerFacade(Programmer prog, String indexPI, String indexSI, boolean cvFirst) {
         super(prog);

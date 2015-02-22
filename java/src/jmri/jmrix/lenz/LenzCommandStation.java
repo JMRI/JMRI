@@ -191,8 +191,8 @@ public class LenzCommandStation implements jmri.jmrix.DccCommandStation, jmri.Co
     /**
      * Send a specific packet to the rails.
      *
-     * @param packet Byte array representing the packet, including the
-     * error-correction byte. Must not be null.
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission.
      */
     public void sendPacket(byte[] packet, int repeats) {

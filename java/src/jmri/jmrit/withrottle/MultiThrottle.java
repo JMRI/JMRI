@@ -51,8 +51,8 @@ public class MultiThrottle {
      * this MultiThrottle.
      *
      * @param message Consists of a control character, the loco's key, a
-     * separator "<;>", and the action to forward to the
-     * MultiThrottleController.
+     *                separator "<;>", and the action to forward to the
+     *                MultiThrottleController.
      */
     public void handleMessage(String message) {
         log.debug("MT handleMessage: " + message);

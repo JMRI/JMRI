@@ -143,7 +143,7 @@ public class SerialSensorManager extends jmri.managers.AbstractSensorManager
      * static function returning the SerialSensorManager instance to use.
      *
      * @return The registered SerialSensorManager instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     static public SerialSensorManager instance() {
         if (_instance == null) {

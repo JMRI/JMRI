@@ -142,7 +142,7 @@ public abstract class AbstractAudioManager extends AbstractManager
      * an existing method has been invoked.
      *
      * @param systemName Audio object system name (e.g. IAS1, IAB4)
-     * @param userName Audio object user name
+     * @param userName   Audio object user name
      * @return never null
      * @throws AudioException if error occurs during creation
      */

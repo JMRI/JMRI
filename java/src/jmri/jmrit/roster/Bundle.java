@@ -50,7 +50,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * Note that this is intentionally package-local access.
      *
      * @param locale The locale to be used
-     * @param key Bundle key to be translated
+     * @param key    Bundle key to be translated
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key) {
@@ -66,7 +66,7 @@ public class Bundle extends jmri.jmrit.Bundle {
      * Note that this is intentionally package-local access.
      *
      * @see java.text.MessageFormat
-     * @param key Bundle key to be translated
+     * @param key  Bundle key to be translated
      * @param subs One or more objects to be inserted into the message
      * @return Internationalized text
      */
@@ -84,8 +84,8 @@ public class Bundle extends jmri.jmrit.Bundle {
      *
      * @see java.text.MessageFormat
      * @param locale The locale to be used
-     * @param key Bundle key to be translated
-     * @param subs One or more objects to be inserted into the message
+     * @param key    Bundle key to be translated
+     * @param subs   One or more objects to be inserted into the message
      * @return Internationalized text
      */
     static String getMessage(Locale locale, String key, Object... subs) {

@@ -107,7 +107,7 @@ public class Dcc4PcTrafficController extends AbstractMRTrafficController impleme
      * static function returning the Dcc4PcTrafficController instance to use.
      *
      * @return The registered Dcc4PcTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public Dcc4PcTrafficController instance() {
         return self;

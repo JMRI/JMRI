@@ -208,7 +208,7 @@ public interface AudioSource extends Audio {
      * </ul>
      *
      * @return sysName the SystemName of the AudioBuffer bound to this
-     * AudioSource
+     *         AudioSource
      */
     public String getAssignedBufferName();
 
@@ -233,7 +233,7 @@ public interface AudioSource extends Audio {
      * </ul>
      *
      * @param sysName the SystemName of the AudioBuffer (i.e. IAB1) to bind to
-     * this AudioSource
+     *                this AudioSource
      */
     public void setAssignedBuffer(String sysName);
 

@@ -587,7 +587,7 @@ public class EcosLocoToRoster implements EcosListener {
     /**
      *
      * @return true if the value in the Ecos Description is a duplicate of some
-     * other RosterEntry in the roster
+     *         other RosterEntry in the roster
      */
     public boolean checkDuplicate(String id) {
         // check its not a duplicate

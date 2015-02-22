@@ -143,7 +143,7 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
      *
      * @param elem The existing Element
      * @param name Name of desired Attribute
-     * @param def Default value for attribute
+     * @param def  Default value for attribute
      */
     boolean getAttributeBool(Element elem, String name, boolean def) {
         String v = getAttributeString(elem, name);

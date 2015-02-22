@@ -167,7 +167,7 @@ public interface AudioListener extends Audio {
      * </ul>
      *
      * @param which the orientation vector to return: == AT - position; == UP -
-     * look-at point
+     *              look-at point
      * @return vector representing the chosen orientation vector
      */
     public Vector3f getOrientation(int which);
@@ -181,7 +181,7 @@ public interface AudioListener extends Audio {
      * </ul>
      *
      * @param which the orientation vector to return: == AT - position; == UP -
-     * look-at point
+     *              look-at point
      * @return vector representing the chosen orientation vector
      */
     public Vector3f getCurrentOrientation(int which);

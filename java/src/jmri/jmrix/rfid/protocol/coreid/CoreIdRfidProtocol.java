@@ -41,8 +41,8 @@ public class CoreIdRfidProtocol extends RfidProtocol {
      * where a character range is used to determine the specific reader port.
      *
      * @param concentratorFirst - character representing first concentrator port
-     * @param concentratorLast - character representing last concentrator port
-     * @param portPosition - position of port character in reply string
+     * @param concentratorLast  - character representing last concentrator port
+     * @param portPosition      - position of port character in reply string
      */
     public CoreIdRfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         super(concentratorFirst, concentratorLast, portPosition);

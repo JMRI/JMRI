@@ -512,7 +512,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * This does not include the development menu.
      *
      * @param menuBar Menu bar to be populated
-     * @param wi WindowInterface where this menu bar will appear
+     * @param wi      WindowInterface where this menu bar will appear
      */
     protected void createMenus(JMenuBar menuBar, WindowInterface wi) {
         // the debugging statements in the following are
@@ -549,8 +549,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Create default File menu
      *
      * @param menuBar Menu bar to be populated
-     * @param wi WindowInterface where this menu will appear as part of the menu
-     * bar
+     * @param wi      WindowInterface where this menu will appear as part of the
+     *                menu bar
      */
     protected void fileMenu(JMenuBar menuBar, WindowInterface wi) {
         JMenu fileMenu = new JMenu(Bundle.getMessage("MenuFile"));
@@ -586,7 +586,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Made a separate method so if can be overridden for application specific
      * preferences help
      *
-     * @param frame The frame being described in the help system
+     * @param frame    The frame being described in the help system
      * @param location The location within the JavaHelp system
      */
     protected void setPrefsFrameHelp(JmriJFrame frame, String location) {
@@ -1117,7 +1117,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * not exist when the program first starts up. This name may be proceeded
      * with <em>config=</em> and may not contain the equals sign (=).
      *
-     * @param def Default value if no other is provided
+     * @param def  Default value if no other is provided
      * @param args Argument array from the main routine
      */
     static protected void setConfigFilename(String def, String[] args) {

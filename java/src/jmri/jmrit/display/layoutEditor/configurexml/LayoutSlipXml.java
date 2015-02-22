@@ -160,7 +160,7 @@ public class LayoutSlipXml extends AbstractXmlAdapter {
      * Load, starting with the levelxing element, then all the other data
      *
      * @param element Top level Element to unpack.
-     * @param o LayoutEditor as an Object
+     * @param o       LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects

@@ -189,7 +189,7 @@ public class Track {
     /**
      * Creates a copy of this track.
      *
-     * @param newName The name of the new track.
+     * @param newName     The name of the new track.
      * @param newLocation The location of the new track.
      * @return Track
      */
@@ -629,7 +629,7 @@ public class Track {
     /**
      *
      * @return the number of rolling stock (cars and or locos) that are
-     * scheduled for pick up from this track.
+     *         scheduled for pick up from this track.
      */
     public int getPickupRS() {
         return _pickupRS;
@@ -908,7 +908,7 @@ public class Track {
      * setLoadOption
      *
      * @return true if load name was added, false if load name wasn't in the
-     * list.
+     *         list.
      */
     public boolean addLoadName(String load) {
         if (_loadList.contains(load)) {
@@ -925,7 +925,7 @@ public class Track {
      * See setLoadOption
      *
      * @return true if load name was removed, false if load name wasn't in the
-     * list.
+     *         list.
      */
     public boolean deleteLoadName(String load) {
         if (!_loadList.contains(load)) {
@@ -1029,7 +1029,7 @@ public class Track {
      * setShipLoadOption
      *
      * @return true if load name was added, false if load name wasn't in the
-     * list.
+     *         list.
      */
     public boolean addShipLoadName(String load) {
         if (_shipLoadList.contains(load)) {
@@ -1046,7 +1046,7 @@ public class Track {
      * See setLoadOption
      *
      * @return true if load name was removed, false if load name wasn't in the
-     * list.
+     *         list.
      */
     public boolean deleteShipLoadName(String load) {
         if (!_shipLoadList.contains(load)) {
@@ -1386,7 +1386,7 @@ public class Track {
      *
      * @param length
      * @return true if the program should ignore some percentage of the car's
-     * length currently consuming track space.
+     *         length currently consuming track space.
      */
     private boolean checkPlannedPickUps(int length) {
         if (getIgnoreUsedLengthPercentage() > 0) {
@@ -2144,7 +2144,7 @@ public class Track {
      * destinations.
      *
      * @param option Track.ALL_DESTINATIONS, Track.INCLUDE_DESTINATIONS, or
-     * Track.EXCLUDE_DESTINATIONS
+     *               Track.EXCLUDE_DESTINATIONS
      */
     public void setDestinationOption(String option) {
         String old = _destinationOption;

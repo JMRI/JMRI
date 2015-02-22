@@ -126,7 +126,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * free-form, but to avoid ambiguity it should start with the package name
      * (package.Class) for the primary using class.
      *
-     * @param name A unique name to identify the state being stored
+     * @param name  A unique name to identify the state being stored
      * @param state simple boolean.
      */
     public void setSimplePreferenceState(String name, boolean state) {
@@ -176,9 +176,9 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * reference.
      *
      * @param strClass The class that this preference should be stored or
-     * grouped with.
-     * @param item The specific item that is to be stored
-     * @param state Boolean state of the item.
+     *                 grouped with.
+     * @param item     The specific item that is to be stored
+     * @param state    Boolean state of the item.
      */
     public void setPreferenceState(String strClass, String item, boolean state) {
         if (!classPreferenceList.containsKey(strClass)) {
@@ -221,11 +221,11 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * displayed in the GUI and provide a meaning full description when
      * presented to the user.
      *
-     * @param strClass A string form of the class that the preference is stored
-     * or grouped with
-     * @param item The specific item that is being stored.
+     * @param strClass    A string form of the class that the preference is
+     *                    stored or grouped with
+     * @param item        The specific item that is being stored.
      * @param description A meaningful decription of the item that the user will
-     * understand.
+     *                    understand.
      */
     public void preferenceItemDetails(String strClass, String item, String description) {
         if (!classPreferenceList.containsKey(strClass)) {
@@ -294,7 +294,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * should start with the package name (package.Class) for the primary using
      * class.
      *
-     * @param name A unique identifer for preference.
+     * @param name  A unique identifer for preference.
      * @param state
      */
     public void setSessionPreferenceState(String name, boolean state) {
@@ -328,10 +328,10 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * in the future. The classString & item parameters should form a unique
      * value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
+     * @param title    Message Box title
+     * @param message  Message to be displayed
      * @param strClass String value of the calling class
-     * @param item String value of the specific item this is used for
+     * @param item     String value of the specific item this is used for
      */
     public void showInfoMessage(String title, String message, String strClass, java.lang.String item) {
         showInfoMessage(title, message, strClass, item, false, true);
@@ -344,14 +344,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * suppressed JMRI session only. The classString & item parameters should
      * form a unique value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
-     * @param strClass String value of the calling class
-     * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI
-     * session and not be remembered
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param strClass       String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be
-     * saved
+     *                       saved
      */
     public void showErrorMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
@@ -364,14 +364,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * suppressed JMRI session only. The classString & item parameters should
      * form a unique value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
-     * @param strClass String value of the calling class
-     * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI
-     * session and not be remembered
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param strClass       String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be
-     * saved
+     *                       saved
      */
     public void showInfoMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.ERROR_MESSAGE);
@@ -384,14 +384,14 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * suppressed JMRI session only. The classString & item parameters should
      * form a unique value
      *
-     * @param title Message Box title
-     * @param message Message to be displayed
-     * @param strClass String value of the calling class
-     * @param item String value of the specific item this is used for
-     * @param sessionOnly Means this message will be suppressed in this JMRI
-     * session and not be remembered
+     * @param title          Message Box title
+     * @param message        Message to be displayed
+     * @param strClass       String value of the calling class
+     * @param item           String value of the specific item this is used for
+     * @param sessionOnly    Means this message will be suppressed in this JMRI
+     *                       session and not be remembered
      * @param alwaysRemember Means that the suppression of the message will be
-     * saved
+     *                       saved
      */
     public void showWarningMessage(String title, String message, final String strClass, final String item, final boolean sessionOnly, final boolean alwaysRemember) {
         this.showMessage(title, message, strClass, item, sessionOnly, alwaysRemember, JOptionPane.WARNING_MESSAGE);
@@ -869,13 +869,13 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * to be reset in the preferences, then it is easily identifiable. displayed
      * to the user in the preferences GUI.
      *
-     * @param strClass String value of the calling class/group
-     * @param item String value of the specific item this is used for.
-     * @param description A meaningful description that can be used in a label
-     * to describe the item
-     * @param msgOption Description of each option valid option.
-     * @param msgNumber The references number against which the Description is
-     * refering too.
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param msgOption     Description of each option valid option.
+     * @param msgNumber     The references number against which the Description
+     *                      is refering too.
      * @param defaultOption The default option for the given item.
      */
     public void messageItemDetails(String strClass, String item, String description, String[] msgOption, int[] msgNumber, int defaultOption) {
@@ -891,12 +891,12 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * to be reset in the preferences, then it is easily identifiable. displayed
      * to the user in the preferences GUI.
      *
-     * @param strClass String value of the calling class/group
-     * @param item String value of the specific item this is used for.
-     * @param description A meaningful description that can be used in a label
-     * to describe the item
-     * @param options A map of the integer value of the option against a
-     * meaningful description.
+     * @param strClass      String value of the calling class/group
+     * @param item          String value of the specific item this is used for.
+     * @param description   A meaningful description that can be used in a label
+     *                      to describe the item
+     * @param options       A map of the integer value of the option against a
+     *                      meaningful description.
      * @param defaultOption The default option for the given item.
      */
     public void messageItemDetails(String strClass, String item, String description, HashMap<Integer, String> options, int defaultOption) {
@@ -918,7 +918,7 @@ public class DefaultUserMessagePreferences extends jmri.jmrit.XmlFile implements
      * a given class. This information can then be used to build a Combo box.
      *
      * @param strClass Class or group of the given item
-     * @param item the item which we wish to return the details about.
+     * @param item     the item which we wish to return the details about.
      */
     public HashMap<Integer, String> getChoiceOptions(String strClass, String item) {
         if (classPreferenceList.containsKey(strClass)) {

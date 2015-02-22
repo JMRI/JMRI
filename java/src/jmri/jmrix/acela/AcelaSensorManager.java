@@ -221,7 +221,7 @@ public class AcelaSensorManager extends jmri.managers.AbstractSensorManager
      * static function returning the AcelaSensorManager instance to use.
      *
      * @return The registered AcelaSensorManager instance for general use, if
-     * need be creating one.
+     *         need be creating one.
      */
     static public AcelaSensorManager instance() {
         if (_instance == null) {

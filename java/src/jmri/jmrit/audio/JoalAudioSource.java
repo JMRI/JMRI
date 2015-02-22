@@ -96,7 +96,7 @@ public class JoalAudioSource extends AbstractAudioSource {
      * Constructor for new JoalAudioSource with system name and user name
      *
      * @param systemName AudioSource object system name (e.g. IAS1)
-     * @param userName AudioSource object user name
+     * @param userName   AudioSource object user name
      */
     public JoalAudioSource(String systemName, String userName) {
         super(systemName, userName);
@@ -580,7 +580,7 @@ public class JoalAudioSource extends AbstractAudioSource {
          * Constructor that takes handle to looping AudioSource to monitor
          *
          * @param audioSource looping AudioSource to monitor
-         * @param numLoops number of loops for this AudioSource to make
+         * @param numLoops    number of loops for this AudioSource to make
          */
         AudioSourceLoopThread(JoalAudioSource audioSource, int numLoops) {
             super();

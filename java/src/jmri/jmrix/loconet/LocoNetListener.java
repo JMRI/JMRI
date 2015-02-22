@@ -21,7 +21,8 @@ public interface LocoNetListener extends java.util.EventListener {
      * to forward a LocoNet message from the layout.
      *
      * @param msg The received LocoNet message. Note that this same object may
-     * be presented to multiple users. It should not be modified here.
+     *            be presented to multiple users. It should not be modified
+     *            here.
      */
     public void message(LocoNetMessage msg);
 }

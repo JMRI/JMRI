@@ -20,8 +20,8 @@ public class EasyDccCommandStation implements CommandStation {
     /**
      * Send a specific packet to the rails.
      *
-     * @param packet Byte array representing the packet, including the
-     * error-correction byte. Must not be null.
+     * @param packet  Byte array representing the packet, including the
+     *                error-correction byte. Must not be null.
      * @param repeats Number of times to repeat the transmission, capped at 9
      */
     public void sendPacket(byte[] packet, int repeats) {

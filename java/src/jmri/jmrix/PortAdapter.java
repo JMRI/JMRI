@@ -151,7 +151,7 @@ public interface PortAdapter {
      *
      * @param systemPrefix
      * @throws IllegalArgumentException if another adapter has this system
-     * prefix
+     *                                  prefix
      */
     public void setSystemPrefix(String systemPrefix) throws IllegalArgumentException;
 

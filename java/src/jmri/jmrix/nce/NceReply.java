@@ -73,7 +73,7 @@ public class NceReply extends jmri.jmrix.AbstractMRReply {
      * Examine message to see if it is an asynchronous sensor (AIU) state report
      *
      * @return true if message asynch sensor message Boudreau: Improved
-     * detection to check three bytes and message length of exactly 3
+     *         detection to check three bytes and message length of exactly 3
      */
     public boolean isSensorMessage() {
         return getElement(0) == 0x61 && getElement(1) >= 0x30

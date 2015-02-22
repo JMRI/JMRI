@@ -93,7 +93,7 @@ public class StringUtil {
     /**
      * Quickly append an int to a String as exactly two hexadecimal characters
      *
-     * @param val Value to append in hex
+     * @param val      Value to append in hex
      * @param inString String to be extended
      * @return String exactly two characters long
      */
@@ -143,7 +143,7 @@ public class StringUtil {
      *
      * @param s String of hex values, ala "01 02 0A B1 21".
      * @return byte array, with one byte for each pair. Can be zero length, but
-     * will not be null.
+     *         will not be null.
      */
     static public byte[] bytesFromHexString(String s) {
         String ts = s + "  "; // ensure blanks on end to make scan easier
@@ -298,7 +298,7 @@ public class StringUtil {
     /**
      * Join a collection of strings, separated by a delimiter
      *
-     * @param s	collection of strings
+     * @param s	        collection of strings
      * @param delimiter
      * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
      */
@@ -317,7 +317,7 @@ public class StringUtil {
     /**
      * Join an array of strings, separated by a delimiter
      *
-     * @param s	collection of strings
+     * @param s	        collection of strings
      * @param delimiter
      * @return e.g. join({"abc","def,"ghi"}, ".") ==> "abc.def.ghi"
      */
@@ -337,7 +337,7 @@ public class StringUtil {
      * similar to the new String.split method, except that this does not provide
      * regular expression handling; the divider string is just a string.
      *
-     * @param input String to split
+     * @param input   String to split
      * @param divider Where to divide the input; this does not appear in output
      */
     static public String[] split(String input, String divider) {

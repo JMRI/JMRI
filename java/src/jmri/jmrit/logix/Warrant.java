@@ -870,7 +870,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * blocks
      *
      * @return error message, if unable to allocate first block or if any block
-     * is OUT_OF_SERVICE
+     *         is OUT_OF_SERVICE
      */
     public String allocateRoute(List<BlockOrder> orders) {
         if (_totalAllocated) {
@@ -934,10 +934,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * block detection, only the first block must be allocated and have its path
      * set.
      *
-     * @param delay - delay in seconds, between setting signals and throwing
-     * turnouts
+     * @param delay  - delay in seconds, between setting signals and throwing
+     *               turnouts
      * @param orders - BlockOrder list of route. If null, use permanent warrant
-     * copy.
+     *               copy.
      * @return message of block that failed allocation to this warrant or null
      */
     public String setRoute(int delay, List<BlockOrder> orders) {

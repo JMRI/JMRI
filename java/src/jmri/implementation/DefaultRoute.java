@@ -259,10 +259,10 @@ public class DefaultRoute extends AbstractNamedBean
     /**
      * Add an output Turnout to this Route
      *
-     * @param turnoutName The turnout system name
+     * @param turnoutName  The turnout system name
      * @param turnoutState must be Turnout.CLOSED, Turnout.THROWN, or
-     * Route.TOGGLE, which determines how the Turnout is to be switched when
-     * this Route is set
+     *                     Route.TOGGLE, which determines how the Turnout is to
+     *                     be switched when this Route is set
      */
     public boolean addOutputTurnout(String turnoutName, int turnoutState) {
         OutputTurnout outputTurnout = new OutputTurnout(turnoutName);
@@ -379,8 +379,9 @@ public class DefaultRoute extends AbstractNamedBean
      * Add an output Sensor to this Route
      *
      * @param sensorName The sensor name either system or user
-     * @param state must be Sensor.ACTIVE, Sensor.INACTIVE, or Route.TOGGLE,
-     * which determines how the Sensor is to be set when this Route is set
+     * @param state      must be Sensor.ACTIVE, Sensor.INACTIVE, or
+     *                   Route.TOGGLE, which determines how the Sensor is to be
+     *                   set when this Route is set
      */
     public boolean addOutputSensor(String sensorName, int state) {
         OutputSensor outputSensor = new OutputSensor(sensorName);

@@ -54,7 +54,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     JLabel textSouthX = new JLabel("   X  ");
     JLabel textSouthY = new JLabel("   Y  ");
 
-	// text field
+    // text field
     // check boxes
     // major buttons
     JButton placeButton = new JButton(Bundle.getMessage("PlaceTestIcon"));

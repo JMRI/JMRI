@@ -69,9 +69,9 @@ public class LayoutBlockConnectivityTools {
      * assigned to a block boundary are reachable.
      *
      * @return true if source and destination beans are reachable, or false if
-     * they are not
+     *         they are not
      * @throws jmri.JmriException if no blocks can be found that related to the
-     * named beans.
+     *                            named beans.
      */
     public boolean checkValidDest(NamedBean sourceBean, NamedBean destBean, int pathMethod) throws jmri.JmriException {
         if (log.isDebugEnabled()) {
@@ -125,19 +125,22 @@ public class LayoutBlockConnectivityTools {
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be termined, eg east to west, south to north etc.
      * <p>
-     * @param sourceBean - The source bean (SignalHead, SignalMast or Sensor)
-     * assigned to a block boundary that we are starting from.
-     * @param destBean - The destination bean.
+     * @param sourceBean   - The source bean (SignalHead, SignalMast or Sensor)
+     *                     assigned to a block boundary that we are starting
+     *                     from.
+     * @param destBean     - The destination bean.
      * @param validateOnly - When set false, the system will not use layout
-     * blocks that are set as either reserved(useExtraColor set) or occupied, if
-     * it finds any then it will try to find an alternative path When set false,
-     * no block state checking is performed.
-     * @param pathMethod - Performs a check to see if any signal heads/masts are
-     * in the path, if there are then the system will try to find an alternative
-     * path. If set to NONE, then no checking is performed.
+     *                     blocks that are set as either reserved(useExtraColor
+     *                     set) or occupied, if it finds any then it will try to
+     *                     find an alternative path When set false, no block
+     *                     state checking is performed.
+     * @param pathMethod   - Performs a check to see if any signal heads/masts
+     *                     are in the path, if there are then the system will
+     *                     try to find an alternative path. If set to NONE, then
+     *                     no checking is performed.
      * @return an ArrayList of all the layoutblocks in the path.
      * @throws jmri.JmriException if it can not find a valid path or the routing
-     * has not been enabled.
+     *                            has not been enabled.
      */
     public ArrayList<LayoutBlock> getLayoutBlocks(NamedBean sourceBean, NamedBean destBean, boolean validateOnly, int pathMethod) throws jmri.JmriException {
         ArrayList<LayoutEditor> layout = jmri.jmrit.display.PanelMenu.instance().getLayoutEditorPanelList();
@@ -179,9 +182,11 @@ public class LayoutBlockConnectivityTools {
      * assinged to block boundaries in a given list
      *
      * @param blocklist The list of block in order that need to be checked.
-     * @param panel (Optional) panel that the blocks need to be checked against
-     * @param T (Optional) the class that we want to check against, either
-     * Sensor, SignalMast or SignalHead, set null will return any.
+     * @param panel     (Optional) panel that the blocks need to be checked
+     *                  against
+     * @param T         (Optional) the class that we want to check against,
+     *                  either Sensor, SignalMast or SignalHead, set null will
+     *                  return any.
      */
     public List<NamedBean> getBeansInPath(List<LayoutBlock> blocklist, LayoutEditor panel, Class<?> T) {
         ArrayList<NamedBean> beansInPath = new ArrayList<NamedBean>();
@@ -221,7 +226,7 @@ public class LayoutBlockConnectivityTools {
      * the whether the destBlock comes before the destBlock+1.
      *
      * @return true if destBlock comes before destBlock+1 or false if destBlock
-     * comes after destBlock+1
+     *         comes after destBlock+1
      * @throws jmri.JmriException if any Block is null;
      */
     public boolean checkValidDest(LayoutBlock currentBlock, LayoutBlock nextBlock, LayoutBlock destBlock, LayoutBlock destBlockn1, int pathMethod) throws jmri.JmriException {
@@ -329,9 +334,9 @@ public class LayoutBlockConnectivityTools {
      * This uses the layout editor to check if the destination location is
      * reachable from the source location
      *
-     * @param facing Layout Block that is considered our first block
+     * @param facing     Layout Block that is considered our first block
      * @param protecting Layout Block that is considered first block +1
-     * @param dest Layout Block that we want to get to
+     * @param dest       Layout Block that we want to get to
      * @return true if valid, false if not valid.
      */
     public boolean checkValidDest(LayoutBlock facing, LayoutBlock protecting, FacingProtecting dest, int pathMethod) throws JmriException {
@@ -365,22 +370,27 @@ public class LayoutBlockConnectivityTools {
      * protectingLayoutBlock or sourceLayoutBlock+1, a direction of travel can
      * then be termined, eg east to west, south to north etc.
      * <p>
-     * @param sourceLayoutBlock - The layout block that we are starting from,
-     * can also be considered as the block facing a signal.
+     * @param sourceLayoutBlock      - The layout block that we are starting
+     *                               from, can also be considered as the block
+     *                               facing a signal.
      * @param destinationLayoutBlock - The layout block that we want to get to
-     * @param protectingLayoutBlock - The next layout block connected to the
-     * source block, this can also be considered as the block being protected by
-     * a signal
-     * @param validateOnly - When set false, the system will not use layout
-     * blocks that are set as either reserved(useExtraColor set) or occupied, if
-     * it finds any then it will try to find an alternative path When set true,
-     * no block state checking is performed.
-     * @param pathMethod - Performs a check to see if any signal heads/masts are
-     * in the path, if there are then the system will try to find an alternative
-     * path. If set to NONE, then no checking is performed.
+     * @param protectingLayoutBlock  - The next layout block connected to the
+     *                               source block, this can also be considered
+     *                               as the block being protected by a signal
+     * @param validateOnly           - When set false, the system will not use
+     *                               layout blocks that are set as either
+     *                               reserved(useExtraColor set) or occupied, if
+     *                               it finds any then it will try to find an
+     *                               alternative path When set true, no block
+     *                               state checking is performed.
+     * @param pathMethod             - Performs a check to see if any signal
+     *                               heads/masts are in the path, if there are
+     *                               then the system will try to find an
+     *                               alternative path. If set to NONE, then no
+     *                               checking is performed.
      * @return an ArrayList of all the layoutblocks in the path.
      * @throws jmri.JmriException if it can not find a valid path or the routing
-     * has not been enabled.
+     *                            has not been enabled.
      */
     public ArrayList<LayoutBlock> getLayoutBlocks(LayoutBlock sourceLayoutBlock, LayoutBlock destinationLayoutBlock, LayoutBlock protectingLayoutBlock, boolean validateOnly, int pathMethod) throws jmri.JmriException {
         lastErrorMessage = "Unknown Error Occured";
@@ -697,8 +707,8 @@ public class LayoutBlockConnectivityTools {
      * If no editor is provided, then all editors are considered
      *
      * @param pathMethod Determine whether or not we should reject pairs if
-     * there are other beans in the way. Constant values of NONE, ANY,
-     * MASTTOMAST, HEADTOHEAD
+     *                   there are other beans in the way. Constant values of
+     *                   NONE, ANY, MASTTOMAST, HEADTOHEAD
      */
     public Hashtable<NamedBean, ArrayList<NamedBean>> discoverValidBeanPairs(LayoutEditor editor, Class<?> T, int pathMethod) {
         LayoutBlockManager lbm = InstanceManager.getDefault(LayoutBlockManager.class);
@@ -732,14 +742,14 @@ public class LayoutBlockConnectivityTools {
      * Returns a list of valid destination beans reachable from a given source
      * bean.
      *
-     * @param source Either a SignalMast or Sensor
-     * @param editor The layout editor that the source is located on, if null,
-     * then all editors are considered
-     * @param T The class of the remote destination, if null, then both
-     * SignalMasts and Sensors are considered
+     * @param source     Either a SignalMast or Sensor
+     * @param editor     The layout editor that the source is located on, if
+     *                   null, then all editors are considered
+     * @param T          The class of the remote destination, if null, then both
+     *                   SignalMasts and Sensors are considered
      * @param pathMethod Determine whether or not we should reject pairs if
-     * there are other beans in the way. Constant values of NONE, ANY,
-     * MASTTOMAST, HEADTOHEAD
+     *                   there are other beans in the way. Constant values of
+     *                   NONE, ANY, MASTTOMAST, HEADTOHEAD
      * @return A list of all reachable NamedBeans
      */
     public List<NamedBean> discoverPairDest(NamedBean source, LayoutEditor editor, Class<?> T, int pathMethod) throws JmriException {

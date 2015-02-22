@@ -73,7 +73,7 @@ public class GcTrafficController extends TrafficController {
     /**
      * Add trailer to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {
@@ -159,7 +159,7 @@ public class GcTrafficController extends TrafficController {
      * <P>
      * Handles timeouts on read by ignoring zero-length reads.
      *
-     * @param msg message to fill
+     * @param msg     message to fill
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */

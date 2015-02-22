@@ -91,7 +91,7 @@ public class JoalAudioListener extends AbstractAudioListener {
      * Constructor for new JoalAudioListener with system name and user name
      *
      * @param systemName AudioListener object system name (e.g. IAL)
-     * @param userName AudioListener object user name
+     * @param userName   AudioListener object user name
      */
     public JoalAudioListener(String systemName, String userName) {
         super(systemName, userName);

@@ -212,7 +212,7 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
      * not, adjust.
      *
      * @param modifiedStepIndex number (index) of the entry
-     * @param value new value
+     * @param value             new value
      */
     void forceMonotonic(int modifiedStepIndex, int value) {
         // check the neighbors, and force them if needed

@@ -31,7 +31,7 @@ public class DecoderPro3Panes extends javax.swing.JPanel
      * enabled.
      *
      * @param enable Are reads possible? If false, so not enable the read
-     * buttons.
+     *               buttons.
      */
     public void enableButtons(boolean enable) {
     }

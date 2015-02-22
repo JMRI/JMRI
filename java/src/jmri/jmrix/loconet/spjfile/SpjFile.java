@@ -327,7 +327,7 @@ public class SpjFile {
     /**
      * Write the content from a specific header as a new "subfile"
      *
-     * @param i index of the specific header
+     * @param i    index of the specific header
      * @param name filename
      */
     void writeSubFile(int i, String name) throws IOException {
@@ -499,8 +499,8 @@ public class SpjFile {
          * Provide new content. The data start and data length values are
          * computed from the arguments, and stored relative to the length.
          *
-         * @param array New byte array; copied into header
-         * @param start data start location within array
+         * @param array  New byte array; copied into header
+         * @param start  data start location within array
          * @param length data length in bytes (not record length)
          */
         public void setContent(byte[] array, int start, int length) {

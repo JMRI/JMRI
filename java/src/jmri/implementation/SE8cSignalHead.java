@@ -44,7 +44,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Primary ctor
      *
-     * @param lowTO Lower-numbered Turnout reference
+     * @param lowTO  Lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO,
@@ -64,7 +64,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Primary ctor without user name
      *
-     * @param lowTO Lower-numbered Turnout reference
+     * @param lowTO  Lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(NamedBeanHandle<Turnout> lowTO,
@@ -80,7 +80,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor for specifying system name
      *
-     * @param lowTO Lower-numbered Turnout reference
+     * @param lowTO  Lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO,
@@ -97,7 +97,7 @@ public class SE8cSignalHead extends DefaultSignalHead {
     /**
      * Ctor for specifying system name
      *
-     * @param lowTO Lower-numbered Turnout reference
+     * @param lowTO  Lower-numbered Turnout reference
      * @param highTO higher-numbered Turnout reference
      */
     public SE8cSignalHead(String sname, NamedBeanHandle<Turnout> lowTO,

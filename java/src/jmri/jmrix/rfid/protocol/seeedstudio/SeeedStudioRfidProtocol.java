@@ -42,8 +42,8 @@ public class SeeedStudioRfidProtocol extends RfidProtocol {
      * reader port.
      *
      * @param concentratorFirst - character representing first concentrator port
-     * @param concentratorLast - character representing last concentrator port
-     * @param portPosition - position of port character in reply string
+     * @param concentratorLast  - character representing last concentrator port
+     * @param portPosition      - position of port character in reply string
      */
     public SeeedStudioRfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         super(concentratorFirst, concentratorLast, portPosition);

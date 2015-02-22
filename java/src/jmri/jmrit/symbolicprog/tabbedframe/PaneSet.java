@@ -156,7 +156,7 @@ public class PaneSet {
      * Create a set of panes from a programmer definition and roster entry
      *
      * @param root Root element of programmer XML definition
-     * @param r Locomotive to load from
+     * @param r    Locomotive to load from
      */
     public void makePanes(Element root, RosterEntry r) {
         // check for "programmer" element at start

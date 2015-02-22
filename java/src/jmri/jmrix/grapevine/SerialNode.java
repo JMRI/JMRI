@@ -351,7 +351,7 @@ public class SerialNode extends AbstractNode {
     /**
      * Mark and act on a single input bit.
      *
-     * @param input True if sensor says active
+     * @param input     True if sensor says active
      * @param sensorNum from 1 to lastUsedSensor+1 on this node
      */
     void markBit(boolean input, int sensorNum) {
@@ -397,7 +397,7 @@ public class SerialNode extends AbstractNode {
      *
      * @param s Sensor object
      * @param i bit number corresponding, a 1-based value corresponding to the
-     * low digits of the system name
+     *          low digits of the system name
      */
     public void registerSensor(Sensor s, int i) {
         if (log.isDebugEnabled()) {

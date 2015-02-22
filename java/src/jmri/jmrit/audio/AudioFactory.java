@@ -50,7 +50,7 @@ public interface AudioFactory {
      * Provide a specific new AudioBuffer object.
      *
      * @param systemName for this object instance
-     * @param userName for this object instance
+     * @param userName   for this object instance
      * @return a new specific AudioBuffer
      */
     public AudioBuffer createNewBuffer(String systemName, String userName);
@@ -59,7 +59,7 @@ public interface AudioFactory {
      * Provide a specific new AudioListener object.
      *
      * @param systemName for this object instance
-     * @param userName for this object instance
+     * @param userName   for this object instance
      * @return a new specific AudioListener
      */
     public AudioListener createNewListener(String systemName, String userName);
@@ -75,7 +75,7 @@ public interface AudioFactory {
      * Provide a specific new AudioSource object.
      *
      * @param systemName for this object instance
-     * @param userName for this object instance
+     * @param userName   for this object instance
      * @return a new specific AudioSource
      */
     public AudioSource createNewSource(String systemName, String userName);

@@ -47,7 +47,7 @@ public abstract class SdfMacro implements SdfConstants {
      * Provide number of bytes defined by this macro
      *
      * @return Fixed numher of bytes defined (a constant for the instruction
-     * type)
+     *         type)
      */
     abstract public int length();
 
@@ -74,7 +74,7 @@ public abstract class SdfMacro implements SdfConstants {
      *
      * @return Newline terminated string, never null
      * @param indent String inserted at the start of each output line, typically
-     * some number of spaces.
+     *               some number of spaces.
      */
     abstract public String allInstructionString(String indent);
 
@@ -186,13 +186,14 @@ public abstract class SdfMacro implements SdfConstants {
      * Note that multiple values can be returned, e.g. this can be used to scan
      * for individual bits set in a variable.
      *
-     * @param input Single value to be matched
+     * @param input  Single value to be matched
      * @param values Array of possible values which the input might match
-     * @param masks Array of masks to be applied when comparing against the
-     * corresponding items in the values array. This is separate for each
-     * possible value to e.g. allow the encoding of a set of independent bits.
+     * @param masks  Array of masks to be applied when comparing against the
+     *               corresponding items in the values array. This is separate
+     *               for each possible value to e.g. allow the encoding of a set
+     *               of independent bits.
      * @param labels Should there be a match-under-mask of a value, the
-     * corresponding label is returned
+     *               corresponding label is returned
      * @return "+" separated list of labels, or "&lt;ERROR&gt;" if none matched
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")

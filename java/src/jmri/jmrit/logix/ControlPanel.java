@@ -165,7 +165,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Enable/Disable all buttons and slider.
      *
      * @param isEnabled True if the buttons/slider should be enabled, false
-     * otherwise.
+     *                  otherwise.
      */
     public void setEnabled(boolean isEnabled) {
         SpeedStep128Button.setEnabled(isEnabled);
@@ -190,7 +190,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Set the GUI to match the speed steps of the current address.
      *
      * @param steps Desired number of speed steps. One of 14,27,28,or 128.
-     * Defaults to 128 step mode
+     *              Defaults to 128 step mode
      */
     public void setSpeedSteps(int steps) {
         // Save the old speed as a float
@@ -247,7 +247,8 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Set the Speed Control selection method
      *
      * @param displaySlider integer value. possible values: SLIDERDISPLAY = use
-     * speed slider display STEPDISPLAY = use speed step display
+     *                      speed slider display STEPDISPLAY = use speed step
+     *                      display
      */
     public void setSpeedController(boolean displaySlider) {
         if (displaySlider) {
@@ -270,7 +271,7 @@ public class ControlPanel extends JInternalFrame implements java.beans.PropertyC
      * Set the GUI to match that the loco speed.
      *
      * @param speedIncrement : TODO
-     * @param speed The speed value of the loco.
+     * @param speed          The speed value of the loco.
      */
     public void setSpeedValues(int speedIncrement, int speed) {
         //this.speedIncrement = speedIncrement;

@@ -33,7 +33,7 @@ public class XnTcpXNetPacketizer extends XNetPacketizer {
      * <P>
      * Only used in the Receive thread.
      *
-     * @param msg message to fill
+     * @param msg     message to fill
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */

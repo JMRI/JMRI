@@ -32,10 +32,10 @@ public class Pr1ExportAction extends AbstractAction {
      * Create the action
      *
      * @param actionName String name to be displayed in menus, etc
-     * @param pModel CvTableModel that contains the data to (eventually) be
-     * exported
-     * @param pParent JFrame that will eventually invoke the action, used to
-     * anchor a file dialog
+     * @param pModel     CvTableModel that contains the data to (eventually) be
+     *                   exported
+     * @param pParent    JFrame that will eventually invoke the action, used to
+     *                   anchor a file dialog
      */
     public Pr1ExportAction(String actionName, CvTableModel pModel, JFrame pParent) {
         super(actionName);

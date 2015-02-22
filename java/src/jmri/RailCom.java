@@ -193,7 +193,7 @@ public interface RailCom extends IdTag {
     /**
      * Sets the value of a CV reported back from the decoder.
      *
-     * @param cv CV number that the value relates to.
+     * @param cv    CV number that the value relates to.
      * @param value Value of the CV
      */
     public void setCv(int cv, int value);

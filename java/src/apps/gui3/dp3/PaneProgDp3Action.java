@@ -616,7 +616,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
     /**
      *
      * @return true if the value in the id JTextField is a duplicate of some
-     * other RosterEntry in the roster
+     *         other RosterEntry in the roster
      */
     boolean checkDuplicate() {
         // check its not a duplicate
@@ -699,7 +699,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
      * enabled.
      *
      * @param enable Are reads possible? If false, so not enable the read
-     * buttons.
+     *               buttons.
      */
     public void enableButtons(boolean enable) {
     }

@@ -140,7 +140,7 @@ public class JythonWindow extends AbstractAction {
     /**
      * Method to position caret at end of JTextArea ta when scroll true.
      *
-     * @param ta Reference to JTextArea
+     * @param ta     Reference to JTextArea
      * @param scroll True to move to end
      */
     private void doAutoScroll(JTextArea ta, boolean scroll) {

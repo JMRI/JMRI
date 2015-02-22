@@ -52,7 +52,7 @@ public interface ConditionalManager extends Manager {
      * lookup. If this fails, or if x == null, looks up assuming that name is a
      * System Name. If both fail, returns null.
      *
-     * @param x - parent Logix (may be null)
+     * @param x    - parent Logix (may be null)
      * @param name - name to look up
      * @return null if no match found
      */

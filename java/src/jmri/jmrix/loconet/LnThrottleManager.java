@@ -208,9 +208,9 @@ public class LnThrottleManager extends AbstractThrottleManager implements Thrott
      * Cancel a request for a throttle
      *
      * @param address The decoder address desired.
-     * @param isLong True if this is a request for a DCC long (extended)
-     * address.
-     * @param l The ThrottleListener cancelling request for a throttle.
+     * @param isLong  True if this is a request for a DCC long (extended)
+     *                address.
+     * @param l       The ThrottleListener cancelling request for a throttle.
      */
     @Override
     public void cancelThrottleRequest(int address, boolean isLong, ThrottleListener l) {

@@ -22,7 +22,7 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
      * forward a XNet message from the layout.
      *
      * @param msg The received XNet message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void message(XNetReply msg);
 
@@ -32,7 +32,7 @@ public interface XNetListener extends jmri.jmrix.AbstractMRListener {
      * do nothing.
      *
      * @param msg The received XNet message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void message(XNetMessage msg);
 

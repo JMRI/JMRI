@@ -85,7 +85,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
      * Constructor for new JavaSoundAudioBuffer with system name and user name
      *
      * @param systemName AudioBuffer object system name (e.g. IAB4)
-     * @param userName AudioBuffer object user name
+     * @param userName   AudioBuffer object user name
      */
     public JavaSoundAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
@@ -344,7 +344,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
      * Converts the endianness of an AudioBuffer to the format required by the
      * JRE.
      *
-     * @param audioData byte array containing the read PCM data
+     * @param audioData      byte array containing the read PCM data
      * @param twoByteSamples true if 16-bits per sample
      * @return byte array containing converted PCM data
      */

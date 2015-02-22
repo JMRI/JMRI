@@ -819,7 +819,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * locomotive files.
      *
      * @param f Absolute pathname to use. A null or "" argument flags a return
-     * to the original default in the user's files directory.
+     *          to the original default in the user's files directory.
      */
     public static void setFileLocation(String f) {
         if (f != null && !f.equals("")) {

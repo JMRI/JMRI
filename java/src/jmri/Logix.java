@@ -84,9 +84,9 @@ public interface Logix extends NamedBean {
      * has been exceeded.
      *
      * @param systemName The Conditional system name
-     * @param order - the order this conditional should calculate in if order is
-     * negative, the conditional is added at the end of current group of
-     * conditionals
+     * @param order      - the order this conditional should calculate in if
+     *                   order is negative, the conditional is added at the end
+     *                   of current group of conditionals
      */
     public boolean addConditional(String systemName, int order);
 

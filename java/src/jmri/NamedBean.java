@@ -70,13 +70,13 @@ public interface NamedBean {
      * Request a call-back when a bound property changes. Bound properties are
      * the known state, commanded state, user and system names.
      *
-     * @param l - Listener
-     * @param name - The name (either system or user) that the listener uses for
-     * this namedBean, this parameter is used to help determine when which
-     * listeners should be moved when the username is moved from one bean to
-     * another.
+     * @param l           - Listener
+     * @param name        - The name (either system or user) that the listener
+     *                    uses for this namedBean, this parameter is used to
+     *                    help determine when which listeners should be moved
+     *                    when the username is moved from one bean to another.
      * @param listenerRef - A textual reference for the listener, that can be
-     * presented to the user when a delete is called
+     *                    presented to the user when a delete is called
      */
     public void addPropertyChangeListener(java.beans.PropertyChangeListener l, String name, String listenerRef);
 
@@ -113,7 +113,7 @@ public interface NamedBean {
      * a specific name
      *
      * @param name - The name (either system or user) that the listener has
-     * registered as referencing this namedBean
+     *             registered as referencing this namedBean
      */
     public ArrayList<java.beans.PropertyChangeListener> getPropertyChangeListeners(String name);
 

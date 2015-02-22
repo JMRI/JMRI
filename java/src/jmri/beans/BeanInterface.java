@@ -30,7 +30,7 @@ public interface BeanInterface {
      * overflow. Implementing methods may call
      * <code>Beans.setIntrospectedIndexedProperty()</code> instead.
      *
-     * @param key name of the property
+     * @param key   name of the property
      * @param index index of the property element to change
      * @param value the value to set the property to
      */
@@ -44,7 +44,7 @@ public interface BeanInterface {
      * overflow. Implementing methods may call
      * <code>Beans.getIntrospectedIndexedProperty()</code> instead.
      *
-     * @param key name of the property
+     * @param key   name of the property
      * @param index index of the property element to change
      * @return value of the property or null
      */
@@ -58,7 +58,7 @@ public interface BeanInterface {
      * Implementing methods may call
      * <code>Beans.setIntrospectedProperty()</code> instead.
      *
-     * @param key name of the property
+     * @param key   name of the property
      * @param value the value to set the property to
      */
     public void setProperty(String key, Object value);

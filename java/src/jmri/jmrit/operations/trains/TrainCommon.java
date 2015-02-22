@@ -641,7 +641,7 @@ public class TrainCommon {
      * and yardmaster.
      *
      * @param isManifest when true use manifest format, when false use switch
-     * list format
+     *                   list format
      * @param car
      * @return pick up car string
      */
@@ -736,7 +736,7 @@ public class TrainCommon {
      *
      * @param car
      * @param isManifest when true use manifest format, when false use switch
-     * list format
+     *                   list format
      * @return drop car string
      */
     public String dropCar(Car car, boolean isManifest, boolean isTwoColumnTrack) {
@@ -771,7 +771,7 @@ public class TrainCommon {
      * yardmaster.
      *
      * @param isManifest when true use manifest format, when false use switch
-     * list format
+     *                   list format
      * @param car
      * @return move car string
      */
@@ -1075,8 +1075,8 @@ public class TrainCommon {
     /**
      * Writes a line to the build report file
      *
-     * @param file build report file
-     * @param level print level
+     * @param file   build report file
+     * @param level  print level
      * @param string string to write
      */
     protected static void addLine(PrintWriter file, String level, String string) {
@@ -1176,7 +1176,7 @@ public class TrainCommon {
      * @param file
      * @param string
      * @param isManifest set true for manifest page orientation, false for
-     * switch list orientation
+     *                   switch list orientation
      */
     protected void newLine(PrintWriter file, String string, boolean isManifest) {
         String[] lines = string.split(NEW_LINE);

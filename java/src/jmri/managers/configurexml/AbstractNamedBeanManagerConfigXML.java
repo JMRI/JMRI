@@ -31,7 +31,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * <li>comment
      * </ul>
      *
-     * @param t The NamedBean being stored
+     * @param t    The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
     protected void storeCommon(NamedBean t, Element elem) {
@@ -48,7 +48,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * The username is not loaded, because it had to be provided in the ctor
      * earlier.
      *
-     * @param t The NamedBean being loaded
+     * @param t    The NamedBean being loaded
      * @param elem The JDOM element containing the NamedBean
      */
     protected void loadCommon(NamedBean t, Element elem) {
@@ -59,7 +59,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     /**
      * Store the comment parameter from a NamedBean
      *
-     * @param t The NamedBean being stored
+     * @param t    The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
     void storeComment(NamedBean t, Element elem) {
@@ -79,7 +79,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * <li>Starting in 3.1/2.11.1, this will be just an element
      * </ul>
      *
-     * @param t The NamedBean being stored
+     * @param t    The NamedBean being stored
      * @param elem The JDOM element for storing the NamedBean
      */
     void storeUserName(NamedBean t, Element elem) {
@@ -95,7 +95,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * defining NamedBeans
      *
      * @param beanList List, where each entry is an Element
-     * @param i index of Element in list to examine
+     * @param i        index of Element in list to examine
      */
     protected String getUserName(List<Element> beanList, int i) {
         return getUserName(beanList.get(i));
@@ -145,9 +145,9 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * Load the comment attribute into a NamedBean from one element of a list of
      * Elements defining NamedBeans
      *
-     * @param t The NamedBean being loaded
+     * @param t        The NamedBean being loaded
      * @param beanList List, where each entry is an Element
-     * @param i index of Element in list to examine
+     * @param i        index of Element in list to examine
      */
     void loadComment(NamedBean t, List<Element> beanList, int i) {
         loadComment(t, beanList.get(i));
@@ -157,7 +157,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      * Load the comment attribute into a NamedBean from an Element defining a
      * NamedBean
      *
-     * @param t The NamedBean being loaded
+     * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
     void loadComment(NamedBean t, Element elem) {
@@ -190,7 +190,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
      *
      * @param elem The existing Element
      * @param name Name of desired Attribute
-     * @param def Default value for attribute
+     * @param def  Default value for attribute
      */
     boolean getAttributeBool(Element elem, String name, boolean def) {
         String v = getAttributeString(elem, name);
@@ -206,7 +206,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     /**
      * Store all key/value properties
      *
-     * @param t The NamedBean being loaded
+     * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
     void storeProperties(NamedBean t, Element elem) {
@@ -236,7 +236,7 @@ public abstract class AbstractNamedBeanManagerConfigXML extends jmri.configurexm
     /**
      * Load all key/value properties
      *
-     * @param t The NamedBean being loaded
+     * @param t    The NamedBean being loaded
      * @param elem The existing Element
      */
     void loadProperties(NamedBean t, Element elem) {

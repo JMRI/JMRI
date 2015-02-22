@@ -405,11 +405,11 @@ public class DefaultConditional extends AbstractNamedBean
      * are dectected by the parsing, therefore the internal negation of a
      * variable is washed.
      *
-     * @param s The expression to be parsed
+     * @param s            The expression to be parsed
      * @param variableList ConditionalVariables for R1, R2, etc
      * @return a data pair consisting of the truth value of the level a count of
-     * the indices consumed to parse the level and a bitmap of the variable
-     * indices used.
+     *         the indices consumed to parse the level and a bitmap of the
+     *         variable indices used.
      */
     DataPair parseCalculate(String s, ArrayList<ConditionalVariable> variableList)
             throws JmriException {

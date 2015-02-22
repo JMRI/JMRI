@@ -139,7 +139,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * composed of a set of attributes.
      *
      * @param contents is the ArrayList of Attributes to be sent. A linefeed
-     * ('\n") is appended to the String.
+     *                 ('\n") is appended to the String.
      * @throws java.io.IOException
      */
     @Override
@@ -157,7 +157,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * </ul>
      *
      * @param errorStatus is the error message. It need not include any padding
-     * - this method will add it. It should be plain text.
+     *                    - this method will add it. It should be plain text.
      * @throws IOException if there is a problem sending the error message
      */
     @Override
@@ -181,12 +181,13 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      * a response.
      *
      * @param contents is an array of Attributes. An Attribute is a String (tag)
-     * and a value. For this use, the value will always be a String or null.
-     * Thus, "=" and REQUEST_DELIMITER are illegal in a tag and
-     * REQUEST_DELIMITER is illegal in a value.
+     *                 and a value. For this use, the value will always be a
+     *                 String or null. Thus, "=" and REQUEST_DELIMITER are
+     *                 illegal in a tag and REQUEST_DELIMITER is illegal in a
+     *                 value.
      * @return a String which is a serialized version of the attribute array,
-     * which can be sent to an SimpleOperationsServer or received from a
-     * SimpleOperationsServer
+     *         which can be sent to an SimpleOperationsServer or received from a
+     *         SimpleOperationsServer
      */
     public static String constructOperationsMessage(ArrayList<Attribute> contents) {
         StringBuilder result = new StringBuilder(OPERATIONS);
@@ -211,7 +212,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
      *
      * @param message is the String received
      * @return an ArrayList of Attributes of the constituent pieces of the
-     * message
+     *         message
      */
     public static ArrayList<Attribute> parseOperationsMessage(String message) {
         ArrayList<Attribute> contents = new ArrayList<Attribute>();
@@ -390,7 +391,7 @@ public class SimpleOperationsServer extends AbstractOperationsServer {
             sendMessage(status);
         }
     }
-    
+
     public void propertyChange(PropertyChangeEvent e) {
         log.debug("property change: {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(Train.BUILT_CHANGED_PROPERTY)) {

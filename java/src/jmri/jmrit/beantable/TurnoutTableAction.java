@@ -836,7 +836,7 @@ public class TurnoutTableAction extends AbstractTableAction {
      * Add the content and make the appropriate selection to a combox box for a
      * turnout's automation choices
      *
-     * @param t	turnout
+     * @param t	 turnout
      * @param cb	the JComboBox
      */
     public static void updateAutomationBox(Turnout t, JComboBox<String> cb) {
@@ -896,7 +896,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * set the turnout's operation info based on the contents of the combo box
      *
-     * @param t	turnout
+     * @param t	 turnout
      * @param cb JComboBox
      */
     protected void setTurnoutOperation(Turnout t, JComboBox<String> cb) {
@@ -926,7 +926,7 @@ public class TurnoutTableAction extends AbstractTableAction {
     /**
      * pop up a TurnoutOperationConfig for the turnout
      *
-     * @param t turnout
+     * @param t   turnout
      * @param box JComboBox that triggered the edit
      */
     protected void editTurnoutOperation(Turnout t, JComboBox<String> box) {

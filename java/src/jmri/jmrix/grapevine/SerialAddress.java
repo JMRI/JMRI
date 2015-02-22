@@ -273,7 +273,7 @@ public class SerialAddress {
      *
      * @return 'true' if system name has a valid format, else returns 'false'
      * @param systemName name to check
-     * @param type expected device type letter
+     * @param type       expected device type letter
      */
     public static boolean validSystemNameFormat(String systemName, char type) {
         // validate the System Name leader characters

@@ -103,7 +103,7 @@ public class MergMessage extends GridConnectMessage {
      * message.
      *
      * @param val the value to set
-     * @param n the index of the byte to be set
+     * @param n   the index of the byte to be set
      */
     public void setByte(int val, int n) {
         if ((n >= 0) && (n <= 7)) {

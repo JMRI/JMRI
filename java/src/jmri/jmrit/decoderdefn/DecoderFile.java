@@ -266,14 +266,14 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * @param e XML element with possible "include" and "exclude" attributes to
-     * be checked
-     * @param productID the specific ID of the decoder being loaded, to check
-     * against include/exclude conditions
-     * @param modelID the model ID of the decoder being loaded, to check against
-     * include/exclude conditions
-     * @param familyID the family ID of the decoder being loaded, to check
-     * against include/exclude conditions
+     * @param e            XML element with possible "include" and "exclude"
+     *                     attributes to be checked
+     * @param productID    the specific ID of the decoder being loaded, to check
+     *                     against include/exclude conditions
+     * @param modelID      the model ID of the decoder being loaded, to check
+     *                     against include/exclude conditions
+     * @param familyID     the family ID of the decoder being loaded, to check
+     *                     against include/exclude conditions
      * @param extraInclude additional "include" terms
      * @param extraExclude additional "exclude" terms
      */
@@ -310,7 +310,7 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * @param checkFor see if this value is present within
+     * @param checkFor     see if this value is present within
      * @param okProductIDs this comma-separated list of id numbers
      */
     private static boolean isInList(String checkFor, String okProductIDs) {

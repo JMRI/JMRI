@@ -35,7 +35,7 @@ public abstract class Bean extends UnboundBean {
      * Add a PropertyChangeListener for a specific property.
      *
      * @param propertyName The name of the property to listen on.
-     * @param listener The PropertyChangeListener to be added
+     * @param listener     The PropertyChangeListener to be added
      */
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(propertyName, listener);

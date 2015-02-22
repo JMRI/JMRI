@@ -32,7 +32,7 @@ public class Application {
      * Return the current JMRI application name.
      *
      * @return String containing JMRI application name or "JMRI" if name has not
-     * been set.
+     *         been set.
      */
     public static String getApplicationName() {
         if (Application.name == null) {

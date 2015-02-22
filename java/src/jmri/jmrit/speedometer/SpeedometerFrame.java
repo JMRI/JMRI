@@ -92,9 +92,9 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
     /**
      *
      * @param d1 First timer distance in current units. Express with the decimal
-     * marker in the current Locale.
+     *           marker in the current Locale.
      * @param d2 Second timer distance in current units. Express with the
-     * decimal marker in the current Locale.
+     *           decimal marker in the current Locale.
      */
     public void setInputs(String start, String stop1, String stop2, String d1, String d2) {
         startSensor.setText(start);
@@ -492,7 +492,7 @@ public class SpeedometerFrame extends jmri.util.JmriJFrame {
      *
      * @param warn true if warning messages to be displayed
      * @return 0 if not verified; otherwise the number of valid stop sensors
-     * defined
+     *         defined
      */
     private int verifyInputs(boolean warn) {
 

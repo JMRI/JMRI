@@ -48,11 +48,12 @@ public interface IdTagManager extends Manager {
      * attempt to turn it into a valid system name.
      *
      * @param name Tag ID, user name, system name, or address which can be
-     * promoted to system name
+     *             promoted to system name
      * @return Never null
      * @throws IllegalArgumentException if IdTag doesn't already exist and the
-     * manager cannot create the IdTag due to e.g. an illegal name or name that
-     * can't be parsed.
+     *                                  manager cannot create the IdTag due to
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
      */
     public IdTag provideIdTag(String name);
 
@@ -116,7 +117,8 @@ public interface IdTagManager extends Manager {
      *
      * @return requested IdTag object (never null)
      * @throws IllegalArgumentException if cannot create the IdTag due to e.g.
-     * an illegal name or name that can't be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     public IdTag newIdTag(String systemName, String userName);
 
@@ -129,7 +131,7 @@ public interface IdTagManager extends Manager {
      * Get a list of all IdTags seen by a specified Reporter within a specific
      * time threshold from the most recently seen.
      *
-     * @param reporter Reporter to return list for (can be null)
+     * @param reporter  Reporter to return list for (can be null)
      * @param threshold Time threshold (in ms)
      * @return List of matching IdTags
      */
@@ -155,7 +157,7 @@ public interface IdTagManager extends Manager {
      * when a given IdTag was last seen
      *
      * @param fastClock True to use the fast clock; False to use the system
-     * clock
+     *                  clock
      */
     public void setFastClockUsed(boolean fastClock);
 

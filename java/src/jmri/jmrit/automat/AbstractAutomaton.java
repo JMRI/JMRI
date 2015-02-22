@@ -301,7 +301,7 @@ public class AbstractAutomaton implements Runnable {
      * thread. That listener then interrupts the automaton's thread, who
      * confirms the change.
      *
-     * @param mState Current state of the sensor
+     * @param mState  Current state of the sensor
      * @param mSensor Sensor to watch
      * @return newly detected Sensor state
      */
@@ -428,7 +428,7 @@ public class AbstractAutomaton implements Runnable {
      * confirms the change.
      *
      * @param mSensors Array of sensors to watch
-     * @param state State to check (static value from jmri.Sensors)
+     * @param state    State to check (static value from jmri.Sensors)
      */
     public synchronized void waitSensorState(Sensor[] mSensors, int state) {
         if (!inThread) {
@@ -639,9 +639,9 @@ public class AbstractAutomaton implements Runnable {
      *
      * @param address
      * @param longAddress true if this is a long address, false for a short
-     * address
-     * @param waitSecs number of seconds to wait for throttle to acquire before
-     * returning null
+     *                    address
+     * @param waitSecs    number of seconds to wait for throttle to acquire
+     *                    before returning null
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(int address, boolean longAddress, int waitSecs) {
@@ -702,9 +702,9 @@ public class AbstractAutomaton implements Runnable {
      * Obtains a DCC throttle, including waiting for the command station
      * response.
      *
-     * @param re specifies the desired locomotive
+     * @param re       specifies the desired locomotive
      * @param waitSecs number of seconds to wait for throttle to acquire before
-     * returning null
+     *                 returning null
      * @return A usable throttle, or null if error
      */
     public DccThrottle getThrottle(BasicRosterEntry re, int waitSecs) {
@@ -764,7 +764,7 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Write a CV on the service track, including waiting for completion.
      *
-     * @param CV Number 1 through 512
+     * @param CV    Number 1 through 512
      * @param value
      * @return true if completed OK
      */
@@ -828,9 +828,9 @@ public class AbstractAutomaton implements Runnable {
     /**
      * Write a CV in ops mode, including waiting for completion.
      *
-     * @param CV Number 1 through 512
+     * @param CV          Number 1 through 512
      * @param value
-     * @param loco Locomotive decoder address
+     * @param loco        Locomotive decoder address
      * @param longAddress true is the locomotive is using a long address
      * @return true if completed OK
      */

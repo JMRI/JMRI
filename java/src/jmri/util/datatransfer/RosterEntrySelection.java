@@ -95,7 +95,7 @@ public class RosterEntrySelection implements Transferable, ClipboardOwner {
      * Get an ArrayList of RosterEntries from a RosterEntrySelection.
      *
      * @param t - a Transferable object. This should be a RosterEntrySelection,
-     * but for simplicity, will accept any Transferable object.
+     *          but for simplicity, will accept any Transferable object.
      * @throws UnsupportedFlavorException
      * @throws IOException
      */

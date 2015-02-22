@@ -30,7 +30,7 @@ public class ServletUtil {
      * Get the railroad name for HTML documents.
      *
      * @param inComments Return the railroad name prepended and appended by
-     * closing and opening comment markers
+     *                   closing and opening comment markers
      * @return the Railroad name, possibly with formatting
      */
     public String getRailroadName(boolean inComments) {
@@ -134,7 +134,7 @@ public class ServletUtil {
      * title specific to the document.
      *
      * @param locale The requested Locale
-     * @param title Portion of title specific to page
+     * @param title  Portion of title specific to page
      * @return The complete title
      */
     public String getTitle(Locale locale, String title) {

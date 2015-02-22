@@ -1,13 +1,16 @@
 // AbstractProgrammer.java
 package jmri.jmrix;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import jmri.*;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
-import java.util.*;
+import java.util.List;
+import jmri.ProgListener;
+import jmri.Programmer;
+import jmri.ProgrammerException;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common implementations for the Programmer interface.
@@ -203,9 +206,9 @@ public abstract class AbstractProgrammer implements Programmer {
      * Find the register number that corresponds to a specific CV number.
      *
      * @throws ProgrammerException if the requested CV does not correspond to a
-     * register
+     *                             register
      * @param cv CV number (1 through 512) for which equivalent register is
-     * desired
+     *           desired
      * @return register number corresponding to cv
      */
     public int registerFromCV(int cv) throws ProgrammerException {

@@ -25,7 +25,7 @@ public class FileDropEvent extends java.util.EventObject {
      * Constructs a {@link FileDropEvent} with the array of files that were
      * dropped and the object that initiated the event.
      *
-     * @param files The array of files that were dropped
+     * @param files  The array of files that were dropped
      * @param source The event source
      * @since 1.1
      */

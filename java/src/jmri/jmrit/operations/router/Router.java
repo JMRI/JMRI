@@ -74,7 +74,7 @@ public class Router extends TrainCommon {
      * car.
      *
      * @return Track.OKAY, STATUS_NOT_THIS_TRAIN, STATUS_NOT_ABLE,
-     * STATUS_CAR_AT_DESINATION, or STATUS_ROUTER_DISABLED
+     *         STATUS_CAR_AT_DESINATION, or STATUS_ROUTER_DISABLED
      */
     public String getStatus() {
         return _status;
@@ -84,8 +84,8 @@ public class Router extends TrainCommon {
      * Attempts to set the car's destination if a final destination exists. Only
      * sets the car's destination if the train is part of the car's route.
      *
-     * @param car the car to route
-     * @param train the first train to carry this car, can be null
+     * @param car         the car to route
+     * @param train       the first train to carry this car, can be null
      * @param buildReport PrintWriter for build report, and can be null
      * @return true if car can be routed.
      */
@@ -263,7 +263,7 @@ public class Router extends TrainCommon {
      * @param car
      * @param clone
      * @return true for all cases except if car is departing staging and is
-     * stuck there.
+     *         stuck there.
      */
     private boolean routeUsingOneTrain(Train testTrain, Car car, Car clone) {
         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"), new Object[]{
@@ -364,8 +364,8 @@ public class Router extends TrainCommon {
      *
      * @param car the car to be routed
      * @return true if car's destination has been modified to an interchange.
-     * False if an interchange track wasn't found that could service the car's
-     * final destination.
+     *         False if an interchange track wasn't found that could service the
+     *         car's final destination.
      */
     private boolean setCarDestinationInterchange(Car car) {
         return setCarDestinationTwoTrains(car, Track.INTERCHANGE);
@@ -377,7 +377,8 @@ public class Router extends TrainCommon {
      *
      * @param car the car to be routed
      * @return true if car's destination has been modified to a yard. False if a
-     * yard track wasn't found that could service the car's final destination.
+     *         yard track wasn't found that could service the car's final
+     *         destination.
      */
     private boolean setCarDestinationYard(Car car) {
         if (Setup.isCarRoutingViaYardsEnabled()) {
@@ -392,8 +393,8 @@ public class Router extends TrainCommon {
      *
      * @param car the car to be routed
      * @return true if car's destination has been modified to a staging track.
-     * False if a staging track wasn't found that could service the car's final
-     * destination.
+     *         False if a staging track wasn't found that could service the
+     *         car's final destination.
      */
     private boolean setCarDestinationStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {

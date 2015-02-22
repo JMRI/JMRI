@@ -635,7 +635,8 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      * Format a package to be sent to the device for roster list selections.
      *
      * @return String containing a formatted list of some of each RosterEntry's
-     * info. Include a header with the length of the string to be received.
+     *         info. Include a header with the length of the string to be
+     *         received.
      */
     public String sendRoster() {
         if (rosterList == null) {

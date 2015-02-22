@@ -382,7 +382,7 @@ public class RosterServlet extends HttpServlet {
      *
      * @param request
      * @param response
-     * @param file {@link java.io.File} object containing an image
+     * @param file     {@link java.io.File} object containing an image
      * @throws ServletException
      * @throws IOException
      */

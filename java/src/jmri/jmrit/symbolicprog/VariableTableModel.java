@@ -209,7 +209,7 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * Invoked from DecoderFile
      *
      * @param row number of row to fill
-     * @param e Element of type "variable"
+     * @param e   Element of type "variable"
      */
     public void setRow(int row, Element e) {
         // get the values for the VariableValue ctor
@@ -399,10 +399,10 @@ public class VariableTableModel extends AbstractTableModel implements ActionList
      * <p>
      * Invoked from DecoderFile
      *
-     * @param row number of row to fill
-     * @param e Element of type "variable"
+     * @param row       number of row to fill
+     * @param e         Element of type "variable"
      * @param productID product ID of decoder, passed in so that subparts of the
-     * variable can use it for selection
+     *                  variable can use it for selection
      */
     public int setIndxRow(int row, Element e, String productID, String modelID, String familyID) {
 

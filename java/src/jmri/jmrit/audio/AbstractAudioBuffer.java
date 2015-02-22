@@ -94,7 +94,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      * Abstract constructor for new AudioBuffer with system name and user name
      *
      * @param systemName AudioBuffer object system name (e.g. IAB4)
-     * @param userName AudioBuffer object user name
+     * @param userName   AudioBuffer object user name
      */
     public AbstractAudioBuffer(String systemName, String userName) {
         super(systemName, userName);
@@ -196,7 +196,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      * Internal method used to set the start loop point of this buffer with
      * optional generation of loop buffers
      *
-     * @param startLoopPoint position of start loop point in samples
+     * @param startLoopPoint      position of start loop point in samples
      * @param generateLoopBuffers True if loop buffers to be generated
      */
     protected void setStartLoopPoint(long startLoopPoint, boolean generateLoopBuffers) {
@@ -223,7 +223,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      * Internal method used to set the end loop point of this buffer with
      * optional generation of loop buffers
      *
-     * @param endLoopPoint position of end loop point in samples
+     * @param endLoopPoint        position of end loop point in samples
      * @param generateLoopBuffers True if loop buffers to be generated
      */
     protected void setEndLoopPoint(long endLoopPoint, boolean generateLoopBuffers) {

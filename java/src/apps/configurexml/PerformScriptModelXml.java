@@ -74,7 +74,7 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
      * Update static data from XML file
      *
      * @param element Top level Element to unpack.
-     * @param o ignored
+     * @param o       ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");

@@ -25,10 +25,11 @@ public abstract class QualifierAdder {
      * Invoked to create the qualifier object and connect as needed. If extra
      * state is needed, provide it via the subclass constructor.
      *
-     * @param var The variable that qualifies this, e.g. the one that's watched
+     * @param var      The variable that qualifies this, e.g. the one that's
+     *                 watched
      * @param relation The relation term from the qualifier definition, e.g.
-     * greater than
-     * @param value The value for the comparison
+     *                 greater than
+     * @param value    The value for the comparison
      */
     // e.g. return new PaneQualifier(pane, var, Integer.parseInt(value), relation, tabPane, index);
     abstract protected Qualifier createQualifier(VariableValue var, String relation, String value);

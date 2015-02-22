@@ -50,11 +50,12 @@ public interface MemoryManager extends Manager {
      * into a valid system name.
      *
      * @param name User name, system name, or address which can be promoted to
-     * system name
+     *             system name
      * @return Never null
      * @throws IllegalArgumentException if Memory doesn't already exist and the
-     * manager cannot create the Memory due to e.g. an illegal name or name that
-     * can't be parsed.
+     *                                  manager cannot create the Memory due to
+     *                                  e.g. an illegal name or name that can't
+     *                                  be parsed.
      */
     public Memory provideMemory(String name);
 
@@ -107,7 +108,8 @@ public interface MemoryManager extends Manager {
      *
      * @return requested Memory object (never null)
      * @throws IllegalArgumentException if cannot create the Memory due to e.g.
-     * an illegal name or name that can't be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     public Memory newMemory(String systemName, String userName);
 
@@ -127,7 +129,8 @@ public interface MemoryManager extends Manager {
      *
      * @return requested Memory object (never null)
      * @throws IllegalArgumentException if cannot create the Memory due to e.g.
-     * an illegal name or name that can't be parsed.
+     *                                  an illegal name or name that can't be
+     *                                  parsed.
      */
     public Memory newMemory(String userName);
 

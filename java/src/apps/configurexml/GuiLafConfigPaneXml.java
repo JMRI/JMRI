@@ -112,7 +112,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * Change the look-and-feel to the specified class. Alert the user if there
      * were problems loading the PLAF.
      *
-     * @param name (String) the presentable name for the class
+     * @param name      (String) the presentable name for the class
      * @param className (String) the className to be fed to the UIManager
      */
     public void updateLookAndFeel(String name, String className) {
@@ -138,7 +138,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
      * Update static data from XML file
      *
      * @param element Top level Element to unpack.
-     * @param o ignored
+     * @param o       ignored
      */
     public void load(Element element, Object o) {
         log.error("Unexpected call of load(Element, Object)");

@@ -220,7 +220,7 @@ public class LnSensorAddress {
      * Name in the BDL16 space
      *
      * @return e.g. LSnnnA3, with nnn the BDL16 number, A the section number,
-     * and 3 the channel number
+     *         and 3 the channel number
      */
     public String getBDL16Address() {
         String letter = null;

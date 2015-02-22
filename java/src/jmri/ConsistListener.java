@@ -29,9 +29,10 @@ public interface ConsistListener extends EventListener {
      * Receive notification at the end of a consisting operation.
      *
      * @param locoaddress Address of specific locomotive involved, if error is
-     * locomotive specific.
-     * @param status Denotes the completion code. Note that this is a bitwise
-     * combination of the various status coded defined in this interface.
+     *                    locomotive specific.
+     * @param status      Denotes the completion code. Note that this is a
+     *                    bitwise combination of the various status coded
+     *                    defined in this interface.
      */
     public void consistReply(DccLocoAddress locoaddress, int status);
     /**

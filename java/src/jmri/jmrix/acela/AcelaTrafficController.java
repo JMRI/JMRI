@@ -394,7 +394,7 @@ public class AcelaTrafficController extends AbstractMRNodeTrafficController impl
      * static function returning the AcelaTrafficController instance to use.
      *
      * @return The registered AcelaTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public AcelaTrafficController instance() {
         // Bob C: This seems wrong

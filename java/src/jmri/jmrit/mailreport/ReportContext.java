@@ -42,7 +42,7 @@ public class ReportContext {
      * Provide a report of the current JMRI context
      *
      * @param reportNetworkInfo true if network connection and zeroconf service
-     * information to be included
+     *                          information to be included
      * @return current JMRI context
      */
     public String getReport(boolean reportNetworkInfo) {

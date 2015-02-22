@@ -515,7 +515,7 @@ public class JoalAudioFactory extends AbstractAudioFactory {
      * If no error has occurred, return False.
      *
      * @param alcDevice OpenAL context device to check
-     * @param msg additional message prepended to the log
+     * @param msg       additional message prepended to the log
      * @return True if an error has occured
      */
     public static boolean checkALCError(ALCdevice alcDevice, String msg) {

@@ -276,7 +276,7 @@ public class XNetReply extends jmri.jmrix.AbstractMRReply {
      * </p>
      *
      * @param startByte address byte of the address byte/data byte pair.
-     * @param turnout <ul>
+     * @param turnout   <ul>
      * <li>0 for the even turnout associated with the pair. This is the upper
      * half of the data nibble asociated with the pair </li>
      * <li>1 for the odd turnout associated with the pair. This is the lower

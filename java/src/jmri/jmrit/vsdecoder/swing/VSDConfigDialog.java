@@ -110,8 +110,8 @@ public class VSDConfigDialog extends JDialog {
      * Constructor
      *
      * @param parent Ancestor panel
-     * @param title title for the dialog
-     * @param c Config object to be set by the dialog
+     * @param title  title for the dialog
+     * @param c      Config object to be set by the dialog
      */
     public VSDConfigDialog(JPanel parent, String title, VSDConfig c) {
         super(SwingUtilities.getWindowAncestor(parent), title);

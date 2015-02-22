@@ -53,7 +53,7 @@ public class DccAddressPanel extends JPanel {
      * Ctor using default label for the address.
      *
      * @param mod The current table of variables, used to locate the status
-     * information needed.
+     *            information needed.
      */
     public DccAddressPanel(VariableTableModel mod) {
         this(mod, ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("TextDccAddress"));

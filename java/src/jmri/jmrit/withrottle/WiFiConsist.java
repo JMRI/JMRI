@@ -32,7 +32,7 @@ public class WiFiConsist extends DccConsist {
     /**
      * Send an NMRA consisting command to add or remove a loco from a consist
      *
-     * @param loco The loco to add or remove
+     * @param loco    The loco to add or remove
      * @param dirNorm true for normal, false for reverse
      * @param consist The short consist address for a loco, null to remove
      */

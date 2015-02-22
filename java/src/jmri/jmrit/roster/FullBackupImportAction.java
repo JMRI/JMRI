@@ -43,9 +43,9 @@ public class FullBackupImportAction extends ImportRosterItemAction {
     }
 
     /**
-     * @param title Name of this action, e.g. in menus
+     * @param title  Name of this action, e.g. in menus
      * @param parent Component that action is associated with, used to ensure
-     * proper position in of dialog boxes
+     *               proper position in of dialog boxes
      */
     public FullBackupImportAction(String title, Component parent) {
         super(title, parent);

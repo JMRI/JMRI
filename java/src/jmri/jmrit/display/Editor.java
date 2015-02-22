@@ -756,7 +756,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Get the setting for the specified option.
      *
      * @param whichOption The option to get
-     * @param localFlag is the current setting of the item
+     * @param localFlag   is the current setting of the item
      * @return The setting for the option
      */
     public boolean getFlag(int whichOption, boolean localFlag) {
@@ -1090,7 +1090,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Add a checkbox to lock the position of the Positionable item
      *
-     * @param p the item
+     * @param p     the item
      * @param popup the menu to add the lock menu item to
      */
     public void setPositionableMenu(Positionable p, JPopupMenu popup) {
@@ -1119,7 +1119,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Display the X & Y coordinates of the Positionable item and provide a
      * dialog menu item to edit them.
      *
-     * @param p The item to add the menu item to
+     * @param p     The item to add the menu item to
      * @param popup The menu item to add the action to
      * @return always returns true
      */
@@ -1147,7 +1147,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Horizontally (at average y coordinates) or Vertically (at average x
      * coordinates).
      *
-     * @param p The positionable item
+     * @param p     The positionable item
      * @param popup The menu to add entries to
      * @return true if entries added to menu
      */
@@ -1356,7 +1356,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * Display display 'z' level of the Positionable item and provide a dialog
      * menu item to edit it.
      *
-     * @param p The item
+     * @param p     The item
      * @param popup the menu to add entries to
      */
     public void setDisplayLevelMenu(Positionable p, JPopupMenu popup) {
@@ -1369,7 +1369,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Add a menu entry to set visibility of the Positionable item
      *
-     * @param p the item
+     * @param p     the item
      * @param popup the menu to add the entry to
      */
     public void setHiddenMenu(Positionable p, JPopupMenu popup) {
@@ -2662,7 +2662,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
     /**
      * Provide a method for external code to add items to context menus.
      *
-     * @param nb The namedBean associated with the postionable item.
+     * @param nb   The namedBean associated with the postionable item.
      * @param item The entry to add to the menu.
      * @param menu The menu to add the entry to.
      */
@@ -2744,7 +2744,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *
      * Note that items can not be moved past the left or top edges of the panel.
      *
-     * @param p The item to move.
+     * @param p      The item to move.
      * @param deltaX The horizontal displacement.
      * @param deltaY The vertical displacement.
      */
@@ -3312,7 +3312,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      * The returned list is a copy made at the time of the call, so it can be
      * manipulated as needed by the caller.
      *
-     * @param <T> the Class the list should be limited to.
+     * @param <T>  the Class the list should be limited to.
      * @param type the Class the list should be limited to.
      * @return a List of Editors.
      */

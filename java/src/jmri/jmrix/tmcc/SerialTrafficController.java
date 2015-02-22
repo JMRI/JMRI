@@ -93,7 +93,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
      * static function returning the SerialTrafficController instance to use.
      *
      * @return The registered SerialTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public SerialTrafficController instance() {
         if (self == null) {
@@ -155,7 +155,7 @@ public class SerialTrafficController extends AbstractMRTrafficController impleme
     /**
      * Add trailer to the outgoing byte stream.
      *
-     * @param msg The output byte stream
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
     protected void addTrailerToOutput(byte[] msg, int offset, AbstractMRMessage m) {

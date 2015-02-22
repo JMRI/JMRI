@@ -23,7 +23,7 @@ public interface Mx1Listener extends java.util.EventListener {
      * forward a MX-1 message from the layout.
      *
      * @param msg The received MX-1 message. Note that this same object may be
-     * presented to multiple users. It should not be modified here.
+     *            presented to multiple users. It should not be modified here.
      */
     public void message(Mx1Message msg);
 }

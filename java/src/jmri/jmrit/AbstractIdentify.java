@@ -5,14 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Abstract base for common code of {@link jmri.jmrit.roster.IdentifyLoco} 
- * and {@link jmri.jmrit.decoderdefn.IdentifyDecoder}, the two
- * classes that use a programmer to match Roster entries to what's on the
- * programming track.
+ * Abstract base for common code of {@link jmri.jmrit.roster.IdentifyLoco} and
+ * {@link jmri.jmrit.decoderdefn.IdentifyDecoder}, the two classes that use a
+ * programmer to match Roster entries to what's on the programming track.
  * <p>
- * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member function) to simplify use of
- * {@link jmri.Programmer} callbacks.
- *<p>
+ * This is a class (instead of a {@link jmri.jmrit.roster.Roster} member
+ * function) to simplify use of {@link jmri.Programmer} callbacks.
+ * <p>
  *
  * @author	Bob Jacobsen Copyright (C) 2001, 2015
  * @version	$Revision$

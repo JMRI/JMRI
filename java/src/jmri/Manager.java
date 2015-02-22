@@ -135,12 +135,13 @@ public interface Manager {
      * if a property name of "DoNotDelete" is thrown back in the VetoException
      * then the delete process should be aborted.
      *
-     * @param n The NamedBean to be deleted
+     * @param n        The NamedBean to be deleted
      * @param property The programmatic name of the request "CanDelete" will
-     * enquire with all listerners if the item can be deleted "DoDelete" tells
-     * the listerner to delete the item
+     *                 enquire with all listerners if the item can be deleted
+     *                 "DoDelete" tells the listerner to delete the item
      * @throws java.beans.PropertyVetoException - if the recipients wishes the
-     * delete to be aborted (see above).
+     *                                          delete to be aborted (see
+     *                                          above).
      */
     public void deleteBean(NamedBean n, String property) throws java.beans.PropertyVetoException;
 
@@ -194,7 +195,7 @@ public interface Manager {
      * message needs to be passed to the user or in a log.
      *
      * @return a string of the bean type that the manager handles, eg Turnout,
-     * Sensor etc
+     *         Sensor etc
      */
     public String getBeanTypeHandled();
 }

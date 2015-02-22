@@ -42,7 +42,7 @@ public class NamedIcon extends ImageIcon {
      * Create a NamedIcon that is a complete copy of an existing NamedIcon
      *
      * @param pOld Object to copy i.e. copy of the original icon, but NOT a
-     * complete copy of pOld (no transformations done)
+     *             complete copy of pOld (no transformations done)
      */
     public NamedIcon(NamedIcon pOld) {
         this(pOld.mURL, pOld.mName);
@@ -66,7 +66,7 @@ public class NamedIcon extends ImageIcon {
      * The default access form is "file:", so a bare pathname to an icon file
      * will also work for the URL argument
      *
-     * @param pUrl URL of image file to load
+     * @param pUrl  URL of image file to load
      * @param pName Human-readable name for the icon
      */
     public NamedIcon(String pUrl, String pName) {
@@ -87,7 +87,7 @@ public class NamedIcon extends ImageIcon {
     /**
      * Create a named icon that includes an image to be loaded from a URL.
      *
-     * @param pUrl String-form URL of image file to load
+     * @param pUrl  String-form URL of image file to load
      * @param pName Human-readable name for the icon
      */
     public NamedIcon(URL pUrl, String pName) {
@@ -199,10 +199,11 @@ public class NamedIcon extends ImageIcon {
      * The following was based on a text-rotating applet from David Risner,
      * available at http://www.risner.org/java/rotate_text.html
      *
-     * @param pImage Image to transform
+     * @param pImage     Image to transform
      * @param pComponent Component containing the image, needed to obtain a
-     * MediaTracker to process the image consistently with display
-     * @param pRotation 0-3 number of 90-degree rotations needed
+     *                   MediaTracker to process the image consistently with
+     *                   display
+     * @param pRotation  0-3 number of 90-degree rotations needed
      * @return new Image object containing the rotated input image
      */
     public Image createRotatedImage(Image pImage, Component pComponent, int pRotation) {

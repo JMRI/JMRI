@@ -160,7 +160,7 @@ public class DefaultSignalMastLogicManager implements jmri.SignalMastLogicManage
     /**
      * Remove a destination mast from the signalmast logic
      *
-     * @param sml The signalmast logic of the source signal
+     * @param sml  The signalmast logic of the source signal
      * @param dest The destination mast
      */
     public void removeSignalMastLogic(SignalMastLogic sml, SignalMast dest) {

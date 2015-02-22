@@ -166,7 +166,7 @@ abstract public class IEEE802154TrafficController extends AbstractMRNodeTrafficC
      * Add trailer to the outgoing byte stream. This version adds the checksum
      * to the end of the message.
      *
-     * @param msg The output byte stream
+     * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
     @Override

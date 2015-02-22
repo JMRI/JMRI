@@ -105,7 +105,7 @@ public class PdiFile {
      *
      * @param n number of data bytes to include
      * @return byte buffer, starting with address info and containing data, but
-     * not CRC
+     *         not CRC
      */
     public byte[] getNext(int n) {
         byte[] buffer = new byte[n + 3 + 2]; // 3 at front, 2 at back for CRC

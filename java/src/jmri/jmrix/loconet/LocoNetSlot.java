@@ -546,8 +546,8 @@ public class LocoNetSlot {
      * Only valid for fast-clock slot.
      *
      * @return Return frac_mins field which is the number of 65ms ticks until
-     * then next minute rollover. These ticks step at the current fast clock
-     * rate
+     *         then next minute rollover. These ticks step at the current fast
+     *         clock rate
      */
     public int getFcFracMins() {
         if (getSlot() != LnConstants.FC_SLOT) {

@@ -415,8 +415,8 @@ public abstract class VariableValue extends AbstractValue implements java.beans.
 
     /**
      *
-     * @param oldCv Value of the CV before this update is applied
-     * @param newVal Value for this variable (e.g. not the CV value)
+     * @param oldCv      Value of the CV before this update is applied
+     * @param newVal     Value for this variable (e.g. not the CV value)
      * @param maskString The bit mask for this variable in character form
      * @return int new value for the CV
      */

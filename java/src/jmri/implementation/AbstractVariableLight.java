@@ -148,7 +148,7 @@ public abstract class AbstractVariableLight extends AbstractLight
      * property will result in the Light going to the ON state immediately.
      * <p>
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      */
     public void setTargetIntensity(double intensity) {
         if (log.isDebugEnabled()) {

@@ -317,7 +317,7 @@ abstract public class AbstractProxyManager implements Manager {
 
     /**
      * @return A system name from a user input, typically a number, from the
-     * primary system.
+     *         primary system.
      */
     public String makeSystemName(String s) {
         return getMgr(0).makeSystemName(s);

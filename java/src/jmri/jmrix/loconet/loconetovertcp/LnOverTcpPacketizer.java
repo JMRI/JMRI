@@ -66,7 +66,7 @@ public class LnOverTcpPacketizer extends LnPacketizer {
      * Make connection to existing LnPortnetworkController object.
      *
      * @param p Port networkController for connected. Save this for a later
-     * disconnect call
+     *          disconnect call
      */
     public void connectPort(LnNetworkPortController p) {
         istream = p.getInputStream();

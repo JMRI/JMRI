@@ -245,8 +245,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *
      * @see Reporter
      * @return true if populated by
-     * {@link Reporter#getCurrentReport() current report}; false if from
-     * {@link Reporter#getLastReport() last report}.
+     *         {@link Reporter#getCurrentReport() current report}; false if from
+     *         {@link Reporter#getLastReport() last report}.
      */
     public boolean isReportingCurrent() {
         return _reportingCurrent;
@@ -735,8 +735,8 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *
      * @param rep String to be parsed
      * @return LocoAddress address parsed from string, or null if this Block
-     * isn't associated with a Reporter, or is associated with a Reporter that
-     * is not also a PhysicalLocationReporter
+     *         isn't associated with a Reporter, or is associated with a
+     *         Reporter that is not also a PhysicalLocationReporter
      */
     public LocoAddress getLocoAddress(String rep) {
         // Defer parsing to our associated Reporter if we can.
@@ -769,8 +769,9 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
      *
      * @param rep String to be parsed
      * @return PhysicalLocationReporter.Direction direction parsed from string,
-     * or null if this Block isn't associated with a Reporter, or is associated
-     * with a Reporter that is not also a PhysicalLocationReporter
+     *         or null if this Block isn't associated with a Reporter, or is
+     *         associated with a Reporter that is not also a
+     *         PhysicalLocationReporter
      */
     public PhysicalLocationReporter.Direction getDirection(String rep) {
         if (rep == null) {

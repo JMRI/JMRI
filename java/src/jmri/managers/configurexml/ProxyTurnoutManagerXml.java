@@ -36,7 +36,7 @@ public class ProxyTurnoutManagerXml extends AbstractXmlAdapter {
      * Doesn't need to do anything, shouldn't get invoked
      *
      * @param element Top level Element to unpack.
-     * @param o PanelEditor as an Object
+     * @param o       PanelEditor as an Object
      */
     public void load(Element element, Object o) {
     }

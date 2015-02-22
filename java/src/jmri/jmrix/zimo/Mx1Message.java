@@ -33,7 +33,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
      * Create a new object, representing a specific-length message.
      *
      * @param len Total bytes in message, including opcode and error-detection
-     * byte.
+     *            byte.
      */
     public Mx1Message(int len, boolean protocol) {
         super(len);
@@ -513,11 +513,12 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
 
     /**
      * @param locoAddress : address of the loco, if left blank then programming
-     * track is used
-     * @param cv : CV that is to be either read in or written
-     * @param value : Value to be written to the CV, if set to -1, then a read
-     * is done
-     * @param dcc : Is the decoder Protocol DCC, true = DCC, false = Motorola
+     *                    track is used
+     * @param cv          : CV that is to be either read in or written
+     * @param value       : Value to be written to the CV, if set to -1, then a
+     *                    read is done
+     * @param dcc         : Is the decoder Protocol DCC, true = DCC, false =
+     *                    Motorola
      */
     static public Mx1Message getDecProgCmd(int locoAddress, int cv, int value, boolean dcc) {
         Mx1Message m;
@@ -549,12 +550,12 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
     /**
      *
      * @param locoAddress Address of the loco that we are issuing the command
-     * too.
-     * @param speed Speed Step in the actual Speed Step System
-     * @param dcc Is this a packet for a DCC or Motorola device
+     *                    too.
+     * @param speed       Speed Step in the actual Speed Step System
+     * @param dcc         Is this a packet for a DCC or Motorola device
      * @param cData1
-     * @param cData2 - Functions Output 0-7
-     * @param cData3 - Functions Output 9-12
+     * @param cData2      - Functions Output 0-7
+     * @param cData3      - Functions Output 9-12
      * @return Mx1Message
      */
     static public Mx1Message getLocoControl(int locoAddress, int speed, boolean dcc, int cData1, int cData2, int cData3) {

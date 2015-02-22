@@ -296,8 +296,8 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
      *
      * @param isPreview true if print preview
      * @param isChanged true if print changes was requested
-     * @param isCsv true if building a CSV switch list files
-     * @param isUpdate true if only updating switch lists
+     * @param isCsv     true if building a CSV switch list files
+     * @param isUpdate  true if only updating switch lists
      */
     private void buildSwitchList(boolean isPreview, boolean isChanged, boolean isCsv, boolean isUpdate) {
         TrainSwitchLists trainSwitchLists = new TrainSwitchLists();

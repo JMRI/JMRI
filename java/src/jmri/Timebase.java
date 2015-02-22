@@ -52,7 +52,7 @@ public interface Timebase extends NamedBean {
      * Set fast clock rate factor
      *
      * @throws TimebaseRateException if the implementation can't do the
-     * requested rate
+     *                               requested rate
      */
     public void setRate(double factor) throws TimebaseRateException;
 
@@ -103,7 +103,7 @@ public interface Timebase extends NamedBean {
      * Set 12 or 24 hour display option
      *
      * @param display true if a 12-hour display is requested, false for 24-hour
-     * display
+     *                display
      */
     public void set12HourDisplay(boolean display, boolean update);
 

@@ -179,9 +179,10 @@ public interface Light extends NamedBean {
      * TRANSITIONTOFULLOFF until the transition is complete.
      * <P>
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      * @throws IllegalArgumentException if isIntensityVariable is false and the
-     * new value is between MaxIntensity and MinIntensity
+     *                                  new value is between MaxIntensity and
+     *                                  MinIntensity
      */
     public void setTargetIntensity(double intensity);
 
@@ -215,9 +216,10 @@ public interface Light extends NamedBean {
      * full on.
      *
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not greater than the
-     * current value of the minIntensity property
+     *                                  current value of the minIntensity
+     *                                  property
      */
     public void setMaxIntensity(double intensity);
 
@@ -238,9 +240,10 @@ public interface Light extends NamedBean {
      * full on.
      *
      * @throws IllegalArgumentException when intensity is less than 0.0 or more
-     * than 1.0
+     *                                  than 1.0
      * @throws IllegalArgumentException when intensity is not less than the
-     * current value of the maxIntensity property
+     *                                  current value of the maxIntensity
+     *                                  property
      */
     public void setMinIntensity(double intensity);
 
@@ -275,7 +278,7 @@ public interface Light extends NamedBean {
      * Bound property
      * <p>
      * @throws IllegalArgumentException if isTransitionAvailable() is false and
-     * minutes is not 0.0
+     *                                  minutes is not 0.0
      * @throws IllegalArgumentException if minutes is negative
      */
     public void setTransitionTime(double minutes);

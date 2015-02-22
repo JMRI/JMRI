@@ -41,7 +41,7 @@ public class LayoutSensorIconXml extends AbstractXmlAdapter {
      * Create a PositionableLabel, then add to a target JLayeredPane
      *
      * @param element Top level Element to unpack.
-     * @param o LayoutEditor as an Object
+     * @param o       LayoutEditor as an Object
      */
     public void load(Element element, Object o) {
         // create the objects

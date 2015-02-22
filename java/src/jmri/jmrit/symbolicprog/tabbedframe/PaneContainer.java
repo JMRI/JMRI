@@ -22,7 +22,7 @@ public interface PaneContainer {
      * enabled.
      *
      * @param enable Are reads possible? If false, so not enable the read
-     * buttons.
+     *               buttons.
      */
     public void enableButtons(boolean enable);
 

@@ -52,7 +52,7 @@ public class MrcTrafficListenerFilter {
      * Constructor
      *
      * @param _mask Type of traffic the listener is interested in.
-     * @param _l The listener interface.
+     * @param _l    The listener interface.
      */
     public MrcTrafficListenerFilter(int _mask, MrcTrafficListener _l) {
         mask = _mask;

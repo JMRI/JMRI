@@ -52,9 +52,10 @@ public interface XNetInterface {
      * and then move on.
      *
      * @param mask The OR of the key values of messages to be reported (to
-     * reduce traffic, provide for listeners interested in different things)
+     *             reduce traffic, provide for listeners interested in different
+     *             things)
      *
-     * @param l Object to be notified of new messages as they arrive.
+     * @param l    Object to be notified of new messages as they arrive.
      *
      */
     void addXNetListener(int mask, XNetListener l);

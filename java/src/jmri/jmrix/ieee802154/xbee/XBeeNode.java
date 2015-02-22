@@ -161,7 +161,7 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * Set the bean associated with the specified pin
      *
-     * @param pin is the XBee pin assigned.
+     * @param pin  is the XBee pin assigned.
      * @param bean is the bean we are attempting to add.
      * @return true if bean added, false if previous assignment exists.
      *
@@ -179,10 +179,10 @@ public class XBeeNode extends IEEE802154Node {
     /**
      * Remove the bean associated with the specified pin
      *
-     * @param pin is the XBee pin assigned.
+     * @param pin  is the XBee pin assigned.
      * @param bean is the bean we are attempting to remove.
      * @return true if bean removed, false if specified bean was not assigned to
-     * the pin.
+     *         the pin.
      *
      */
     public boolean removePinBean(int pin, NamedBean bean) {
@@ -219,8 +219,8 @@ public class XBeeNode extends IEEE802154Node {
      * Get the prefered name for this XBee Node.
      *
      * @return the Identifier string if it is not blank then a string
-     * representation of the bytes of the 16 bit address if it is not a
-     * broadcast address. Otherwise return the 64 bit GUID.
+     *         representation of the bytes of the 16 bit address if it is not a
+     *         broadcast address. Otherwise return the 64 bit GUID.
      *
      */
     public String getPreferedName() {
@@ -239,7 +239,7 @@ public class XBeeNode extends IEEE802154Node {
      * Get the prefered transmit address for this XBee Node.
      *
      * @return the 16 bit address if it is not a broadcast address. Otherwise
-     * return the 64 bit GUID.
+     *         return the 64 bit GUID.
      *
      */
     public com.rapplogic.xbee.api.XBeeAddress getPreferedTransmitAddress() {

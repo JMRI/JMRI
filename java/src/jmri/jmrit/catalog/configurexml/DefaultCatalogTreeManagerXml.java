@@ -106,7 +106,7 @@ public class DefaultCatalogTreeManagerXml extends XmlFile /* extends jmri.config
     /**
      * Default implementation for storing the contents of a CatalogTreeManager
      *
-     * @param cat Element to load with contents
+     * @param cat   Element to load with contents
      * @param trees List of contents
      */
     public void store(Element cat, List<String> trees) {

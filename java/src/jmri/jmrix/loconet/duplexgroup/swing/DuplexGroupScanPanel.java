@@ -256,7 +256,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      *
      * @param m
      * @return true if message is an IPL device report indicating a UR92
-     * present, else return false.
+     *         present, else return false.
      */
     private boolean handleMessageDuplexScanReport(LocoNetMessage m) {
         if ((m.getElement(0) != LnConstants.OPC_PEER_XFER)
@@ -329,7 +329,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
      * Create a LocoNet packet to get the current Duplex group channel number.
      * <p>
      * @return The packet which writes the Group Channel Number to the UR92
-     * device(s)
+     *         device(s)
      */
     private LocoNetMessage createGetGroupChannelPacketInt() {
         int i;
@@ -578,7 +578,7 @@ public class DuplexGroupScanPanel extends jmri.jmrix.loconet.swing.LnPanel
          * this class' repaint() method is required to cause the GUI update.
          * <p>
          * @param channelNum - integer representing a Duplex Group channel
-         * number.
+         *                   number.
          */
         public void setChannelBeingScanned(int channelNum) {
             if ((channelNum < 11) || (channelNum > 26)) {

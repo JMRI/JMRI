@@ -61,10 +61,10 @@ public final class TreeModel extends DefaultTreeModel {
     /**
      * Add a node to the tree if it doesn't already exist
      *
-     * @param pChild Node to possibly be inserted; relies on equals() to avoid
-     * duplicates
+     * @param pChild  Node to possibly be inserted; relies on equals() to avoid
+     *                duplicates
      * @param pParent Node for the parent of the resource to be scanned, e.g.
-     * where in the tree to insert it.
+     *                where in the tree to insert it.
      * @return node, regardless of whether needed or not
      */
     DefaultMutableTreeNode insertNode(DefaultMutableTreeNode pChild, DefaultMutableTreeNode pParent) {

@@ -120,7 +120,7 @@ public class SpeedoTrafficController implements SpeedoInterface, SerialPortEvent
      * static function returning the SpeedoTrafficController instance to use.
      *
      * @return The registered SpeedoTrafficController instance for general use,
-     * if need be creating one.
+     *         if need be creating one.
      */
     static public SpeedoTrafficController instance() {
         if (self == null) {

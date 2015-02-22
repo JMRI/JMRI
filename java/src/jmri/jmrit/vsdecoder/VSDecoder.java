@@ -74,7 +74,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Parameters:
      *
-     * @param id (String) System Name of this VSDecoder
+     * @param id   (String) System Name of this VSDecoder
      * @param name (String) Sound Profile name for this VSDecoder
      */
     @Deprecated
@@ -153,7 +153,7 @@ public class VSDecoder implements PropertyChangeListener {
      *
      * Parameters:
      *
-     * @param id (String) System name for this VSDecoder
+     * @param id   (String) System name for this VSDecoder
      * @param name (String) Profile name
      * @param path (String) Path to a VSD file to pull the given Profile from
      */
@@ -452,7 +452,7 @@ public class VSDecoder implements PropertyChangeListener {
      * USER's chosen origin) is always the OpenAL Context's origin.
      *
      * @param p (PhysicalLocation) location relative to the user's chosen
-     * Origin.
+     *          Origin.
      */
     public void setPosition(PhysicalLocation p) {
         // Store the actual position relative to the user's Origin locally.

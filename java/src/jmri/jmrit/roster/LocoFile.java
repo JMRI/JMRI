@@ -41,10 +41,10 @@ class LocoFile extends XmlFile {
     /**
      * Load a CvTableModel from the locomotive element in the File
      *
-     * @param loco A JDOM Element containing the locomotive definition
+     * @param loco    A JDOM Element containing the locomotive definition
      * @param cvModel An existing CvTableModel object which will have the CVs
-     * from the loco Element appended. It is intended, but not required, that
-     * this be empty.
+     *                from the loco Element appended. It is intended, but not
+     *                required, that this be empty.
      */
     public static void loadCvModel(Element loco, CvTableModel cvModel, IndexedCvTableModel iCvModel, String family) {
         CvValue cvObject;
@@ -184,11 +184,12 @@ class LocoFile extends XmlFile {
      * Does not do an automatic backup of the file, so that should be done
      * elsewhere.
      *
-     * @param file Destination file. This file is overwritten if it exists.
-     * @param cvModel provides the CV numbers and contents
-     * @param iCvModel provides the Indexed CV numbers and contents
+     * @param file          Destination file. This file is overwritten if it
+     *                      exists.
+     * @param cvModel       provides the CV numbers and contents
+     * @param iCvModel      provides the Indexed CV numbers and contents
      * @param variableModel provides the variable names and contents
-     * @param r RosterEntry providing name, etc, information
+     * @param r             RosterEntry providing name, etc, information
      */
     public void writeFile(File file, CvTableModel cvModel, IndexedCvTableModel iCvModel, VariableTableModel variableModel, RosterEntry r) {
         if (log.isDebugEnabled()) {
@@ -277,11 +278,12 @@ class LocoFile extends XmlFile {
      * information in the roster entry is updated. Note that any multi-line
      * comments are not changed here.
      *
-     * @param pFile Destination file. This file is overwritten if it exists.
+     * @param pFile        Destination file. This file is overwritten if it
+     *                     exists.
      * @param pRootElement Root element of the JDOM tree to write. This should
-     * be of type "locomotive-config", and should not be in use elsewhere (clone
-     * it first!)
-     * @param pEntry RosterEntry providing name, etc, information
+     *                     be of type "locomotive-config", and should not be in
+     *                     use elsewhere (clone it first!)
+     * @param pEntry       RosterEntry providing name, etc, information
      */
     public void writeFile(File pFile, Element pRootElement, RosterEntry pEntry) {
         if (log.isDebugEnabled()) {
@@ -314,11 +316,12 @@ class LocoFile extends XmlFile {
      * elsewhere. This is intended for writing out changes to the RosterEntry
      * information only.
      *
-     * @param pFile Destination file. This file is overwritten if it exists.
+     * @param pFile           Destination file. This file is overwritten if it
+     *                        exists.
      * @param existingElement Root element of the existing JDOM tree containing
-     * the CV and variable contents
-     * @param newLocomotive Element from RosterEntry providing name, etc,
-     * information
+     *                        the CV and variable contents
+     * @param newLocomotive   Element from RosterEntry providing name, etc,
+     *                        information
      */
     public void writeFile(File pFile, Element existingElement, Element newLocomotive) {
         if (log.isDebugEnabled()) {

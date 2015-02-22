@@ -127,9 +127,9 @@ public class Version {
      *
      * @param version
      * @return -1, 0, or 1 if version is less than, equal to, or greater than
-     * JMRI canonical version
+     *         JMRI canonical version
      * @throws IllegalArgumentException if version is not a canonical version
-     * string
+     *                                  string
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     static public int compareCanonicalVersions(String version) throws IllegalArgumentException {
@@ -144,9 +144,9 @@ public class Version {
      * @param version1 a canonical version string
      * @param version2 a canonical version string
      * @return -1, 0, or 1 if version1 is less than, equal to, or greater than
-     * version2
+     *         version2
      * @throws IllegalArgumentException if either version string is not a
-     * canonical version string
+     *                                  canonical version string
      * @see java.lang.Comparable#compareTo(java.lang.Object)
      */
     static public int compareCanonicalVersions(String version1, String version2) throws IllegalArgumentException {

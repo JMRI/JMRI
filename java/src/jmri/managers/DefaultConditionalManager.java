@@ -57,7 +57,7 @@ public class DefaultConditionalManager extends AbstractManager
      * loaded from a file after its Conditionals.
      *
      * @return null if a Conditional with the same systemName or userName
-     * already exists, or if there is trouble creating a new Conditional
+     *         already exists, or if there is trouble creating a new Conditional
      */
     public Conditional createNewConditional(String systemName, String userName) {
         // check that Conditional with same system name does not already exist
@@ -129,7 +129,7 @@ public class DefaultConditionalManager extends AbstractManager
      * lookup. If this fails, or if x == null, looks up assuming that name is a
      * System Name. If both fail, returns null.
      *
-     * @param x - parent Logix (may be null)
+     * @param x    - parent Logix (may be null)
      * @param name - name to look up
      * @return null if no match found
      */

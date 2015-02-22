@@ -221,7 +221,8 @@ public class NewLocoSelPane extends jmri.util.swing.JmriPanel {
      * Meant to be overridden to start the desired type of programmer
      *
      * @param decoderFile selected file, passed to eventual implementation
-     * @param r RosterEntry defining this locomotive, to be filled in later
+     * @param r           RosterEntry defining this locomotive, to be filled in
+     *                    later
      */
     protected void startProgrammer(DecoderFile decoderFile, RosterEntry r) {
         log.error("startProgrammer method in NewLocoSelPane should have been overridden");

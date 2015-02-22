@@ -62,7 +62,7 @@ public class NceAIU {
     /**
      * set state of a single sensor based on AIU input
      *
-     * @param offset sensor number within the current array
+     * @param offset   sensor number within the current array
      * @param newState new state (Sensor.ACTIVE / .INACTIVE)
      */
     public void sensorChange(int offset, int newState) {

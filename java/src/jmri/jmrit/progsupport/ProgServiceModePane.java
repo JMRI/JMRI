@@ -77,7 +77,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
 
     /**
      * @param direction controls layout, either BoxLayout.X_AXIS or
-     * BoxLayout.Y_AXIS
+     *                  BoxLayout.Y_AXIS
      */
     public ProgServiceModePane(int direction) {
         this(direction, new javax.swing.ButtonGroup());
@@ -89,7 +89,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
 
     /**
      * @param direction controls layout, either BoxLayout.X_AXIS or
-     * BoxLayout.Y_AXIS
+     *                  BoxLayout.Y_AXIS
      */
     public ProgServiceModePane(int direction, javax.swing.ButtonGroup group) {
         modeGroup = group;
