@@ -176,7 +176,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
 import jmri.util.zeroconf.ZeroConfService;
 import jmri.web.server.WebServerManager;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -484,10 +483,10 @@ public class JsonUtil {
         ObjectNode data = root.putObject(DATA);
         try {
             Location location = LocationManager.instance().getLocationById(id);
-            data.put(NAME, StringEscapeUtils.escapeHtml4(location.getName()));
+            data.put(NAME, location.getName());
             data.put(ID, location.getId());
             data.put(LENGTH, location.getLength());
-            data.put(COMMENT, StringEscapeUtils.escapeHtml4(location.getComment()));
+            data.put(COMMENT, location.getComment());
         } catch (NullPointerException e) {
             log.error("Unable to get location id [{}].", id);
             throw new JsonException(404, Bundle.getMessage(locale, "ErrorObject", LOCATION, id));
@@ -847,7 +846,7 @@ public class JsonUtil {
             SensorManager s = InstanceManager.sensorManagerInstance();
             data.put(NAME, route.getSystemName());
             data.put(USERNAME, route.getUserName());
-            data.put(COMMENT, StringEscapeUtils.escapeHtml4(route.getComment()));
+            data.put(COMMENT, route.getComment());
             Sensor sensor = s.getSensor(route.getTurnoutsAlignedSensor());
             if (sensor != null) {
                 switch (sensor.getKnownState()) {
@@ -1012,7 +1011,7 @@ public class JsonUtil {
         try {
             data.put(NAME, name);
             data.put(USERNAME, signalHead.getUserName());
-            data.put(COMMENT, StringEscapeUtils.escapeHtml4(signalHead.getComment()));
+            data.put(COMMENT, signalHead.getComment());
             data.put(LIT, signalHead.getLit());
             data.put(APPEARANCE, signalHead.getAppearance());
             data.put(TOKEN_HELD, signalHead.getHeld());
@@ -1076,7 +1075,7 @@ public class JsonUtil {
             data.put(NAME, name);
             data.put(USERNAME, signalMast.getUserName());
             if (signalMast.getComment() != null) {
-                data.put(COMMENT, StringEscapeUtils.escapeHtml4(signalMast.getComment()));
+                data.put(COMMENT, signalMast.getComment());
             }
             String aspect = signalMast.getAspect();
             if (aspect == null) {
@@ -1205,24 +1204,24 @@ public class JsonUtil {
         ObjectNode data = root.putObject(DATA);
         try {
             Train train = TrainManager.instance().getTrainById(id);
-            data.put(NAME, StringEscapeUtils.escapeHtml4(train.getName()));
+            data.put(NAME, train.getName());
             data.put(ICON_NAME, train.getIconName());
             data.put(ID, train.getId());
             data.put(DEPARTURE_TIME, train.getFormatedDepartureTime());
-            data.put(DESCRIPTION, StringEscapeUtils.escapeHtml4(train.getDescription()));
-            data.put(COMMENT, StringEscapeUtils.escapeHtml4(train.getComment()));
-            data.put(ROUTE, StringEscapeUtils.escapeHtml4(train.getRoute().getName()));
+            data.put(DESCRIPTION, train.getDescription());
+            data.put(COMMENT, train.getComment());
+            data.put(ROUTE, train.getRoute().getName());
             data.put(ROUTE_ID, train.getRoute().getId());
             data.put(LOCATIONS, getRouteLocationsForTrain(locale, train));
             data.put(ENGINES, getEnginesForTrain(locale, train));
             data.put(CARS, getCarsForTrain(locale, train));
             if (train.getTrainDepartsName() != null) {
-                data.put(DEPARTURE_LOCATION, StringEscapeUtils.escapeHtml4(train.getTrainDepartsName()));
+                data.put(DEPARTURE_LOCATION, train.getTrainDepartsName());
             }
             if (train.getTrainTerminatesName() != null) {
-                data.put(TERMINATES_LOCATION, StringEscapeUtils.escapeHtml4(train.getTrainTerminatesName()));
+                data.put(TERMINATES_LOCATION, train.getTrainTerminatesName());
             }
-            data.put(LOCATION, StringEscapeUtils.escapeHtml4(train.getCurrentLocationName()));
+            data.put(LOCATION, train.getCurrentLocationName());
             if (train.getCurrentLocation() != null) {
                 data.put(LOCATION_ID, train.getCurrentLocation().getId());
             }
@@ -1389,9 +1388,9 @@ public class JsonUtil {
             ObjectNode rln = mapper.createObjectNode();
             RouteLocation rl = route;
             rln.put(ID, rl.getId());
-            rln.put(NAME, StringEscapeUtils.escapeHtml4(rl.getName()));
+            rln.put(NAME, rl.getName());
             rln.put(DIRECTION, rl.getTrainDirectionString());
-            rln.put(COMMENT, StringEscapeUtils.escapeHtml4(rl.getComment()));
+            rln.put(COMMENT, rl.getComment());
             rln.put(SEQUENCE, rl.getSequenceId());
             rln.put(EXPECTED_ARRIVAL, train.getExpectedArrivalTime(rl));
             rln.put(EXPECTED_DEPARTURE, train.getExpectedDepartureTime(rl));
@@ -1408,7 +1407,7 @@ public class JsonUtil {
         data.put(JMRI, jmri.Version.name());
         data.put(JSON, JSON_PROTOCOL_VERSION);
         data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
-        data.put(RAILROAD, StringEscapeUtils.escapeHtml4(WebServerManager.getWebServerPreferences().getRailRoadName()));
+        data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
         data.put(NODE, NodeIdentity.identity());
         return root;
     }
@@ -1475,11 +1474,11 @@ public class JsonUtil {
 
     static public ObjectNode getCar(Car car) {
         ObjectNode node = JsonUtil.getRollingStock(car);
-        node.put(LOAD, StringEscapeUtils.escapeHtml4(car.getLoadName())); // NOI18N
+        node.put(LOAD, car.getLoadName()); // NOI18N
         node.put(HAZARDOUS, car.isHazardous());
-        node.put(REMOVE_COMMENT, StringEscapeUtils.escapeHtml4(car.getDropComment()));
-        node.put(ADD_COMMENT, StringEscapeUtils.escapeHtml4(car.getPickupComment()));
-        node.put(KERNEL, StringEscapeUtils.escapeHtml4(car.getKernelName()));
+        node.put(REMOVE_COMMENT, car.getDropComment());
+        node.put(ADD_COMMENT, car.getPickupComment());
+        node.put(KERNEL, car.getKernelName());
         node.put(UTILITY, car.isUtility());
         if (car.getFinalDestinationTrack() != null) {
             node.put(FINAL_DESTINATION, JsonUtil.getLocationAndTrack(car.getFinalDestinationTrack(), null));
@@ -1496,8 +1495,8 @@ public class JsonUtil {
 
     static public ObjectNode getEngine(Engine engine) {
         ObjectNode node = JsonUtil.getRollingStock(engine);
-        node.put(MODEL, StringEscapeUtils.escapeHtml4(engine.getModel()));
-        node.put(CONSIST, StringEscapeUtils.escapeHtml4(engine.getConsistName()));
+        node.put(MODEL, engine.getModel());
+        node.put(CONSIST, engine.getConsistName());
         return node;
     }
 
@@ -1505,14 +1504,14 @@ public class JsonUtil {
         ObjectNode node = mapper.createObjectNode();
         node.put(ID, rs.getId());
         node.put(NUMBER, splitString(rs.getNumber()));
-        node.put(ROAD, StringEscapeUtils.escapeHtml4(rs.getRoadName()));
+        node.put(ROAD, rs.getRoadName());
         String[] type = rs.getTypeName().split("-"); // second half of string
         // can be anything
-        node.put(TYPE, StringEscapeUtils.escapeHtml4(type[0]));
+        node.put(TYPE, type[0]);
         node.put(LENGTH, rs.getLength());
-        node.put(COLOR, StringEscapeUtils.escapeHtml4(rs.getColor()));
-        node.put(OWNER, StringEscapeUtils.escapeHtml4(rs.getOwner()));
-        node.put(COMMENT, StringEscapeUtils.escapeHtml4(rs.getComment()));
+        node.put(COLOR, rs.getColor());
+        node.put(OWNER, rs.getOwner());
+        node.put(COMMENT, rs.getComment());
         if (rs.getTrack() != null) {
             node.put(LOCATION, JsonUtil.getLocationAndTrack(rs.getTrack(), rs.getRouteLocation()));
         } else if (rs.getLocation() != null) {
@@ -1528,7 +1527,7 @@ public class JsonUtil {
 
     static private ObjectNode getLocation(Location location, RouteLocation routeLocation) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, StringEscapeUtils.escapeHtml4(location.getName()));
+        node.put(NAME, location.getName());
         node.put(ID, location.getId());
         if (routeLocation != null) {
             node.put(ROUTE, routeLocation.getId());
@@ -1544,7 +1543,7 @@ public class JsonUtil {
 
     static private ObjectNode getTrack(Track track) {
         ObjectNode node = mapper.createObjectNode();
-        node.put(NAME, StringEscapeUtils.escapeHtml4(track.getName()));
+        node.put(NAME, track.getName());
         node.put(ID, track.getId());
         return node;
     }
