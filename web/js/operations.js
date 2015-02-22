@@ -198,14 +198,15 @@ $(document).ready(function () {
                 jmri.log("Processing train " + id);
                 var row = $("tr[data-train=" + id + "]");
                 if ($(row).length) {
-                    $(row).eq(1).text(data.description); // description
-                    $(row).eq(2).text(data.leadEngine); // leadEngine
-                    $(row).eq(3).text(data.trainDepartsName); // origin ("departs")
-                    $(row).eq(4).text(data.departureTime); // origin departure time
-                    $(row).eq(5).text(data.status); // status
-                    $(row).eq(6).text(data.location); // location
-                    $(row).eq(7).text(data.trainTerminatesName); // destination
-                    $(row).eq(8).text(data.route); // route
+                    console.log ($(row).eq(1));
+                    $(row).children(".train-description").text(data.description); // description
+                    $(row).children(".train-leadEngine").text(data.leadEngine); // leadEngine
+                    $(row).children(".train-trainDepartsName").text(data.trainDepartsName); // origin ("departs")
+                    $(row).children(".train-departureTime").text(data.departureTime); // origin departure time
+                    $(row).children(".train-status").text(data.status); // status
+                    $(row).children(".train-location").text(data.location); // location
+                    $(row).children(".train-trainTerminatesName").text(data.trainTerminatesName); // destination
+                    $(row).children(".train-route").text(data.route); // route
                 } else {
                     // how should I add a new train?
                     // reload the page for now
