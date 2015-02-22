@@ -3,6 +3,7 @@
  */
 
 var jmri = null;
+var view = "";
 
 /*
  * request and show a list of available trains from JMRI server
@@ -163,20 +164,14 @@ function getTrainName(id) {
 //-----------------------------------------javascript processing starts here (main) ---------------------------------------------
 $(document).ready(function () {
     if (window.location.pathname.indexOf("/manifest") >= 0) {
+        view = "manifest";
         $("#manifest").removeClass("hidden").addClass("show");
         getManifest($("html").data("train"));
     } else if (window.location.pathname.indexOf("/conductor") >= 0) {
+        view = "conductor";
         $("#conductor").removeClass("hidden").addClass("show");
-        jmri = $.JMRI({
-            open: function () {
-                jmri.getTrain($("html").data("train"));
-            },
-            train: function (id, data) {
-                getConductor(id, false);
-            }
-        });
-        jmri.connect();
     } else {
+        view = "trains";
         if (window.localStorage.getItem("jmri.operations.trains.showAll")) {
             $("#show-all-trains > input").prop("checked", window.localStorage.getItem("jmri.operations.trains.showAll"));
         }
@@ -185,11 +180,19 @@ $(document).ready(function () {
             getTrains($(this).is(":checked"));
             window.localStorage.setItem("jmri.operations.trains.showAll", $(this).is(":checked"));
         });
-        jmri = $.JMRI({
-            open: function () {
+    }
+    jmri = $.JMRI({
+        open: function () {
+            if (view === "conductor") {
+                jmri.getTrain($("html").data("train"));
+            } else if (view === "trains") {
                 getTrains($("#show-all-trains > input").is(":checked"));
-            },
-            train: function (id, data) {
+            }
+        },
+        train: function (id, data) {
+            if (view === "conductor") {
+                getConductor(id, false);
+            } else if (view === "trains") {
                 var row = $("tr[data-train=" + id + "]");
                 if ($(row).length) {
                     $(row).eq(1).text(data.description); // description
@@ -201,9 +204,8 @@ $(document).ready(function () {
                     location.reload(false);
                 }
             }
-        });
-        jmri.connect();
-    }
+        }
+    });
     // setup the functional menu items
     if ($("html").data("train") !== "") {
         getTrainName($("html").data("train"));
@@ -215,4 +217,5 @@ $(document).ready(function () {
         $("#navbar-operations-manifest").addClass("hidden").removeClass("show");
         $("#navbar-operations-conductor").addClass("hidden").removeClass("show");
     }
+    jmri.connect();
 });
