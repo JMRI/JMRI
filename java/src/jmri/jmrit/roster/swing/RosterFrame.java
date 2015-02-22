@@ -85,6 +85,7 @@ import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
+import jmri.profile.ProfileManager;
 import jmri.progdebugger.ProgDebugger;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
@@ -1455,6 +1456,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
         statusField.setText(Bundle.getMessage("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
+        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.defaultManager().getActiveProfile().getName())));
     }
 
     protected void systemsMenu() {

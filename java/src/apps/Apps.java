@@ -847,6 +847,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         pane2.add(new JLabel(line1()));
         pane2.add(new JLabel(line2()));
         pane2.add(new JLabel(line3()));
+        pane2.add(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.defaultManager().getActiveProfile().getName())));
 
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
