@@ -39,7 +39,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         lm = LocationManager.instance();
         lm.addPropertyChangeListener(this);
         addPropertyChangeListeners();
-        trains = new HashMap<String, TrainListener>();
+        trains = new HashMap<>();
     }
 
     public abstract void sendTrainList();
@@ -69,7 +69,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      * @param trainName is the name of the desired train. If not found in
      *            Operations, an error message is sent to the client
      * @return the train's location, as known by Operations
-     * @throws IOException on failure to send an error message ot the client
+     * @throws IOException on failure to send an error message to the client
      */
     public String constructTrainLocation(String trainName) throws IOException {
         Train train = tm.getTrainByName(trainName);
@@ -273,8 +273,8 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
         }
     }
 
-    protected TrainListener getListener(String turnoutName) {
-        return new TrainListener(turnoutName);
+    protected TrainListener getListener(String trainId) {
+        return new TrainListener(trainId);
     }
 
     public void dispose() {
