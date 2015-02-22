@@ -2,8 +2,8 @@
  * Common JavaScript functionality for BootStrap-based servlets.
  */
 
-var minFontSize = parseInt(12);
-var maxFontSize = parseInt(24);
+var minFontSize = parseInt(10);
+var maxFontSize = parseInt(48);
 var nbJmri = null;
 
 /*
