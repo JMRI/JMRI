@@ -952,7 +952,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     for (int i = 0; i < advancedAspect.length; i++) {
                         String div = null;
                         if (!getSourceMast().isAspectDisabled(advancedAspect[i])) {
-                            div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], " route");
+                            div = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "route");
                         }
                         if (div != null) {
                             if (div.equals("Diverging")) {
@@ -985,7 +985,7 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     log.debug("path max speed : " + maxPathSpeed);
                     for (int i = 0; i < advancedAspect.length; i++) {
                         if (!getSourceMast().isAspectDisabled(advancedAspect[i])) {
-                            String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], " speed");
+                            String strSpeed = (String) getSourceMast().getSignalSystem().getProperty(advancedAspect[i], "speed");
                             if (log.isDebugEnabled()) {
                                 log.debug("Aspect Speed = " + strSpeed + " for aspect " + advancedAspect[i]);
                             }
