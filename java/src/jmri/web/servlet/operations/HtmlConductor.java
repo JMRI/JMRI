@@ -149,7 +149,7 @@ public class HtmlConductor extends HtmlTrainCommon {
             builder.append(getTrackComments(routeLocation, carList));
 
             // add location comment
-            if (Setup.isPrintLocationCommentsEnabled() && !routeLocation.getLocation().getComment().equals("")) {
+            if (Setup.isPrintLocationCommentsEnabled() && !routeLocation.getLocation().getComment().isEmpty()) {
                 builder.append(String.format(locale, strings.getProperty("LocationComment"), StringEscapeUtils  // NOI18N
                         .escapeHtml4(routeLocation.getLocation().getComment())));
             }
@@ -225,53 +225,57 @@ public class HtmlConductor extends HtmlTrainCommon {
     }
 
     private String performWork(boolean pickup, boolean local) {
-        if (pickup) { // pick up
-            StringBuilder builder = new StringBuilder();
-            RouteLocation location = train.getCurrentLocation();
-            List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
-            List<Track> tracks = location.getLocation().getTrackByNameList(null);
-            List<String> trackNames = new ArrayList<String>();
-            List<String> pickedUp = new ArrayList<String>();
-            this.clearUtilityCarTypes();
-            for (Track track : tracks) {
-                if (trackNames.contains(splitString(track.getName()))) {
-                    continue;
-                }
-                trackNames.add(splitString(track.getName())); // use a track name once
-                // block cars by destination
-                for (RouteLocation rld : train.getRoute().getLocationsBySequenceList()) {
-                    for (Car car : carList) {
-                        if (pickedUp.contains(car.getId())
-                                || (Setup.isSortByTrackEnabled() && !splitString(track.getName()).equals(
-                                        splitString(car.getTrackName())))) {
-                            continue;
+        if (pickup) {
+           return pickupCars();
+        } else {
+            return dropCars(local);
+        }
+    }
+    
+    private String pickupCars() {
+        StringBuilder builder = new StringBuilder();
+        RouteLocation location = train.getCurrentLocation();
+        List<Car> carList = CarManager.instance().getByTrainDestinationList(train);
+        List<Track> tracks = location.getLocation().getTrackByNameList(null);
+        List<String> trackNames = new ArrayList<String>();
+        List<String> pickedUp = new ArrayList<String>();
+        this.clearUtilityCarTypes();
+        for (Track track : tracks) {
+            if (trackNames.contains(splitString(track.getName()))) {
+                continue;
+            }
+            trackNames.add(splitString(track.getName())); // use a track name once
+            // block cars by destination
+            for (RouteLocation rld : train.getRoute().getLocationsBySequenceList()) {
+                for (Car car : carList) {
+                    if (pickedUp.contains(car.getId())
+                            || (Setup.isSortByTrackEnabled() && !splitString(track.getName()).equals(
+                                    splitString(car.getTrackName())))) {
+                        continue;
+                    }
+                    // note that a car in train doesn't have a track assignment
+                    if (car.getRouteLocation() == location && car.getTrack() != null
+                            && car.getRouteDestination() == rld) {
+                        pickedUp.add(car.getId());
+                        if (car.isUtility()) {
+                            builder.append(pickupUtilityCars(carList, car, location, rld, TrainCommon.IS_MANIFEST));
+                         // use truncated format if there's a switch list
+                        } else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+                            builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
+                        } else {
+                            builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
                         }
-                        // note that a car in train doesn't have a track assignment
-                        if (car.getRouteLocation() == location && car.getTrack() != null
-                                && car.getRouteDestination() == rld) {
-                            pickedUp.add(car.getId());
-                            if (car.isUtility()) {
-                                builder.append(pickupUtilityCars(carList, car, location, rld, TrainCommon.IS_MANIFEST));
-                            } // use truncated format if there's a switch list
-                            else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
-                                builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
-                            } else {
-                                builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
-                            }
-                            pickupCars = true;
-                            cars++;
-                            newWork = true;
-                            if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                                emptyCars++;
-                            }
+                        pickupCars = true;
+                        cars++;
+                        newWork = true;
+                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
+                            emptyCars++;
                         }
                     }
                 }
             }
-            return builder.toString();
-        } else { // local move
-            return dropCars(local);
         }
+        return builder.toString();
     }
 
     private String dropCars(boolean local) {
@@ -297,16 +301,9 @@ public class HtmlConductor extends HtmlTrainCommon {
                     dropped.add(car.getId());
                     if (car.isUtility()) {
                         builder.append(setoutUtilityCars(carList, car, location, local));
-                        // } else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled())
-                        // {
-                        // // use truncated format if there's a switch list
-                        // builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
                     } else {
                         String[] format = (!local) ? Setup.getDropManifestMessageFormat() : Setup
                                 .getLocalManifestMessageFormat();
-                        // if (Setup.isSwitchListFormatSameAsManifest()) {
-                        // format = (!local) ? Setup.getDropCarMessageFormat() : Setup.getLocalMessageFormat();
-                        // }
                         builder.append(dropCar(car, format, local));
                     }
                     dropCars = true;
