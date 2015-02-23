@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Locale;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
@@ -265,12 +264,6 @@ public class HtmlConductor extends HtmlTrainCommon {
                         } else {
                             builder.append(pickUpCar(car, Setup.getPickupManifestMessageFormat()));
                         }
-                        pickupCars = true;
-                        cars++;
-                        newWork = true;
-                        if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                            emptyCars++;
-                        }
                     }
                 }
             }
@@ -305,12 +298,6 @@ public class HtmlConductor extends HtmlTrainCommon {
                         String[] format = (!local) ? Setup.getDropManifestMessageFormat() : Setup
                                 .getLocalManifestMessageFormat();
                         builder.append(dropCar(car, format, local));
-                    }
-                    dropCars = true;
-                    cars--;
-                    newWork = true;
-                    if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
-                        emptyCars--;
                     }
                 }
             }

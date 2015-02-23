@@ -55,8 +55,6 @@ public class HtmlTrainCommon extends TrainCommon {
             }
             throw ex;
         }
-        this.cars = 0;
-        this.emptyCars = 0;
     }
 
     public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {

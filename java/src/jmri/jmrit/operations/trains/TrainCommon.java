@@ -64,7 +64,6 @@ public class TrainCommon {
     // for manifests
     protected int cars = 0;
     protected int emptyCars = 0;
-    protected boolean newWork = false; // when true there is work at the location, add train departure info to manifest
 
     // for switch lists
     protected boolean pickupCars;
@@ -254,7 +253,6 @@ public class TrainCommon {
                         }
                         pickupCars = true;
                         cars++;
-                        newWork = true;
                         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                             emptyCars++;
                         }
@@ -306,7 +304,6 @@ public class TrainCommon {
                     }
                     dropCars = true;
                     cars--;
-                    newWork = true;
                     if (CarLoads.instance().getLoadType(car.getTypeName(), car.getLoadName()).equals(
                             CarLoad.LOAD_TYPE_EMPTY)) {
                         emptyCars--;
@@ -355,7 +352,6 @@ public class TrainCommon {
                         }
                         pickupCars = true;
                         cars++;
-                        newWork = true;
                         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                             emptyCars++;
                         }
@@ -442,7 +438,6 @@ public class TrainCommon {
                         trackNames.add(trackName); // use a track name once
                         pickupCars = true;
                         cars++;
-                        newWork = true;
                         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                             emptyCars++;
                         }
@@ -563,7 +558,6 @@ public class TrainCommon {
             boolean isTwoColumnTrack) {
         dropCars = true;
         cars--;
-        newWork = true;
         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
             emptyCars--;
         }
