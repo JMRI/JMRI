@@ -15,6 +15,7 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.JsonManifest;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -431,7 +432,7 @@ public class HtmlManifest extends HtmlTrainCommon {
     }
 
     protected String getFormattedAttribute(String attribute, String value) {
-        return String.format(locale, strings.getProperty("Attribute"), value, attribute);
+        return String.format(locale, strings.getProperty("Attribute"), StringEscapeUtils.escapeHtml4(value), attribute);
     }
 
     protected String getFormattedLocation(JsonNode location, ShowLocation show, String prefix) {
