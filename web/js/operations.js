@@ -189,13 +189,19 @@ $(document).ready(function () {
             }
         },
         train: function (id, data) {
-            if (view === "conductor") {
+            if (view === "manifest") {
                 if (id == $("html").data("train")) {
+                    $("title").text(data.iconName + " (" + data.description + ") Manifest | " + $("html").data("railroad"));
+                }
+            } else if (view === "conductor") {
+                if (id == $("html").data("train")) {
+                    $("title").text(data.iconName + " (" + data.description + ") Conductor | " + $("html").data("railroad"));
                     getConductor(id, false);
                 }
             } else if (view === "trains") {
                 var row = $("tr[data-train=" + id + "]");
                 if ($(row).length) {
+                    $(row).find(".train-name").text(data.iconName); // train icon name
                     $(row).children(".train-description").text(data.description); // description
                     $(row).children(".train-leadEngine").text(data.leadEngine); // leadEngine
                     $(row).children(".train-trainDepartsName").text(data.trainDepartsName); // origin ("departs")
