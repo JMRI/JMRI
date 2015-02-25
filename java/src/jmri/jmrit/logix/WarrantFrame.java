@@ -30,6 +30,7 @@ import javax.swing.table.AbstractTableModel;
 import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
+import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.picker.PickListModel;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
@@ -52,7 +53,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  * This class is a window for creating and editing Warrants.
  * <p>
- * @author	Pete Cressman Copyright (C) 2009, 2010
+ * @author  Pete Cressman Copyright (C) 2009, 2010
  */
 public class WarrantFrame extends WarrantRoute {
 
@@ -101,15 +102,13 @@ public class WarrantFrame extends WarrantRoute {
     /**
      * Constructor for existing warrant
      */
-    public WarrantFrame(Warrant w) {
+    protected WarrantFrame(Warrant w) {
         super();
         _saveWarrant = w;
         // temp unregistered version until editing is saved.
         _warrant = new Warrant(_saveWarrant.getSystemName(), _saveWarrant.getUserName());
         _create = false;
         setup(_saveWarrant);
-        _warrant.setBlockOrders(_saveWarrant.getBlockOrders());
-        _warrant.setThrottleCommands(_saveWarrant.getThrottleCommands());
         init();
         if (routeIsValid() != null) {
             findRoute();
@@ -119,7 +118,7 @@ public class WarrantFrame extends WarrantRoute {
     /**
      * Constructor for new warrant and GUI warrant is unregistered
      */
-    public WarrantFrame(Warrant warrant, boolean create) {
+    protected WarrantFrame(Warrant warrant, boolean create) {
         super();
         // unregistered warrant
         _warrant = warrant;
@@ -128,6 +127,7 @@ public class WarrantFrame extends WarrantRoute {
             setup(_warrant);
             create = true;  // allows warrant to be registered
         } else {
+            _throttleFactorBox.setText(Float.toString(SignalSpeedMap.getMap().getDefaultThrottleFactor()));
             getRoster();    // also done in setup()
             WarrantTableAction.newWarrantFrame(this);
         }
@@ -148,7 +148,7 @@ public class WarrantFrame extends WarrantRoute {
         for (int i = 0; i < list.size(); i++) {
             orders.add(new BlockOrder(list.get(i)));
         }
-        setOrders(orders);		// makes copy
+        setOrders(orders);      // makes copy
 
         List<ThrottleSetting> tList = warrant.getThrottleCommands();
         for (int i = 0; i < tList.size(); i++) {
@@ -165,6 +165,7 @@ public class WarrantFrame extends WarrantRoute {
         }
         _trainNameBox.setText(warrant.getTrainName());
         _runBlind.setSelected(warrant.getRunBlind());
+        _throttleFactorBox.setText(Float.toString(warrant.getThrottleFactor()));
         WarrantTableAction.newWarrantFrame(this);
     }
 
@@ -474,16 +475,13 @@ public class WarrantFrame extends WarrantRoute {
 
         _throttleFactorBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                // Transient variable, just verify it is a float.
-                try {
-                    Float.parseFloat(_throttleFactorBox.getText());
-                } catch (NumberFormatException nfe) {
-                    showWarning(Bundle.getMessage("MustBeFloat"));
-                    _throttleFactorBox.setText("1.0");
+                String msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
+               if (msg!=null) {
+                    showWarning(msg);
                 }
             }
         });
-        _throttleFactorBox.setToolTipText(Bundle.getMessage("TooltipThrottleFactor"));
+        _throttleFactorBox.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         _runBlind.setSelected(_warrant.getRunBlind());
 
         panel = new JPanel();
@@ -503,7 +501,6 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(makeTextBoxPanel(true, _throttleFactorBox, "ThrottleFactor", true));
         _throttleFactorBox.setMaximumSize(new Dimension(100, _throttleFactorBox.getPreferredSize().height));
         _throttleFactorBox.setMinimumSize(new Dimension(30, _throttleFactorBox.getPreferredSize().height));
-        _throttleFactorBox.setText("1.0");
         runPanel.add(panel);
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -749,9 +746,9 @@ public class WarrantFrame extends WarrantRoute {
 
     /**
      *
-     * @param vertical	 Label orientation true = above, false = left
+     * @param vertical  Label orientation true = above, false = left
      * @param textField
-     * @param label	    String label message
+     * @param label String label message
      * @return
      */
     static protected JPanel makeBoxPanel(boolean vertical, JComponent textField, String label) {
@@ -893,7 +890,7 @@ public class WarrantFrame extends WarrantRoute {
             msg = Bundle.getMessage("NoRouteSet", _origin.getBlockName(), _destination.getBlockName());
             return msg;
         }
-        msg = _warrant.setRoute(0, orders);		// calls allocateRoute
+        msg = _warrant.setRoute(0, orders);     // calls allocateRoute
         if (msg != null) {
             return msg;
         }
@@ -1177,26 +1174,29 @@ public class WarrantFrame extends WarrantRoute {
 
     private void save() {
         String msg = routeIsValid();
-        if (msg != null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("SaveError") + " - " + msg,
+        if (msg==null) {
+            msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());         
+        }
+        if (msg!=null) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("SaveError")+" - "+msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
         }
         if (_train == null) {
             msg = getLocoAddress();
         }
-        if (_throttleCommands.size() == 0) {
+        if (_throttleCommands.size()==0) {
             msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
         }
-        if (msg != null) {
-            int result = JOptionPane.showConfirmDialog(this, msg + Bundle.getMessage("SaveQuestion"), Bundle.getMessage("QuestionTitle"),
+        if (msg!=null) {
+            int result = JOptionPane.showConfirmDialog(this, msg+Bundle.getMessage("SaveQuestion"), Bundle.getMessage("QuestionTitle"), 
                     JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
-            if (result == JOptionPane.NO_OPTION) {
+            if (result==JOptionPane.NO_OPTION) {
                 return;
-            }
+            }       
         }
         if (_saveWarrant != null) {
-            _warrant = _saveWarrant;		// _warrant now registered.      	
+            _warrant = _saveWarrant;        // _warrant now registered.         
         }
         if (_train != null) {
             _warrant.setTrainId(_train.getId());
@@ -1212,15 +1212,15 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setAvoidOrder(getAvoidBlockOrder());
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
-
-        if (log.isDebugEnabled()) {
-            log.debug("warrant saved _train " + _train + ", name= " + _trainNameBox.getText());
-        }
+        _warrant.setThrottleFactor(_throttleFactorBox.getText());
+        
+        if (log.isDebugEnabled()) log.debug("warrant saved _train "+_train+", name= "+_trainNameBox.getText());
 
         if (_create) {
             InstanceManager.getDefault(WarrantManager.class).register(_warrant);
             WarrantTableAction.updateWarrantMenu();
         }
+        WarrantTableFrame.getInstance().getModel().fireTableDataChanged();
     }
 
     protected void setWarrant(Warrant w) {

@@ -15,7 +15,7 @@ package jmri.jmrit.beantable.oblock;
  * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
  * <P>
  *
- * @author	Pete Cressman (C) 2010
+ * @author  Pete Cressman (C) 2010
  * @version $Revision$
  */
 import java.awt.BorderLayout;
@@ -105,6 +105,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         super(actionName);
     }
 
+    @Override
     public void initComponents() {
         setTitle(Bundle.getMessage("TitleOBlocks"));
         JMenuBar menuBar = new JMenuBar();
@@ -287,13 +288,13 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     /**
      * Add the cut/copy/paste actions to the action map.
      */
-    private void setActionMappings(JTable table) {
+    static private void setActionMappings(JTable table) {
         ActionMap map = table.getActionMap();
         map.put(TransferHandler.getCutAction().getValue(Action.NAME), TransferHandler.getCutAction());
         map.put(TransferHandler.getCopyAction().getValue(Action.NAME), TransferHandler.getCopyAction());
         map.put(TransferHandler.getPasteAction().getValue(Action.NAME), TransferHandler.getPasteAction());
     }
-
+    @Override
     public void windowClosing(java.awt.event.WindowEvent e) {
         errorCheck();
         setDefaultCloseOperation(javax.swing.WindowConstants.HIDE_ON_CLOSE);
@@ -435,7 +436,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockTable.getTableHeader().setReorderingAllowed(true);
         _oBlockTable.createDefaultColumnsFromModel();
         _oBlockModel.addHeaderListener(_oBlockTable);
-
+            
         _oBlockTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
@@ -452,10 +453,11 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         _oBlockTable.getColumnModel().getColumn(OBlockTableModel.PERMISSIONCOL).setCellRenderer(
                 new MyBooleanRenderer(Bundle.getMessage("Permissive"), Bundle.getMessage("Absolute")));
         _oBlockTable.addMouseListener(new MouseAdapter() {
+            @Override
             public void mousePressed(MouseEvent me) {
                 showPopup(me);
             }
-
+            @Override
             public void mouseReleased(MouseEvent me) {
                 showPopup(me);
             }
@@ -570,7 +572,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         setActionMappings(_blockPortalTable);
         int tableWidth = _blockPortalTable.getPreferredSize().width;
         _blockPortalTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 25));
-//			_blockPortalTable.setPreferredScrollableViewportSize( new java.awt.Dimension(275, ROW_HEIGHT*25));
+//          _blockPortalTable.setPreferredScrollableViewportSize( new java.awt.Dimension(275, ROW_HEIGHT*25));
         JScrollPane tablePane = new JScrollPane(_blockPortalTable);
 
         JPanel contentPane = new JPanel();
@@ -681,7 +683,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         blockPathTable.sizeColumnsToFit(-1);
         int tableWidth = blockPathTable.getPreferredSize().width;
         blockPathTable.setPreferredScrollableViewportSize(new java.awt.Dimension(tableWidth, ROW_HEIGHT * 10));
-//			blockPathTable.setPreferredScrollableViewportSize( new java.awt.Dimension(766, ROW_HEIGHT*10));
+//          blockPathTable.setPreferredScrollableViewportSize( new java.awt.Dimension(766, ROW_HEIGHT*10));
         JScrollPane tablePane = new JScrollPane(blockPathTable);
 
         JPanel contentPane = new JPanel();
@@ -806,10 +808,6 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
     }
 
     static class MyBooleanRenderer extends javax.swing.table.DefaultTableCellRenderer {
-
-        /**
-         *
-         */
         private static final long serialVersionUID = 934007494903837404L;
         String _trueValue;
         String _falseValue;

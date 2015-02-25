@@ -152,10 +152,10 @@ public class BlockOrder {
         return null;
     }
 
-    protected long getEntranceSpeedChangeWait() {
+    protected long getEntranceSpace() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal != null) {
-            return portal.getEntranceSpeedChangeWaitForBlock(_block);
+            return portal.getEntranceSpaceForBlock(_block);
         }
         return 0;
     }

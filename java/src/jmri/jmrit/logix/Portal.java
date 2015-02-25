@@ -24,7 +24,7 @@ import org.slf4j.LoggerFactory;
  * The Portal also supplies speed information from any signals set at its
  * location that the Warrant passes on the Engineer.
  *
- * @author	Pete Cressman Copyright (C) 2009
+ * @author  Pete Cressman Copyright (C) 2009
  */
 public class Portal extends jmri.implementation.AbstractNamedBean {
 
@@ -91,7 +91,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
      */
     private boolean addPath(List<OPath> list, OPath path) {
         if (list.contains(path)) {
-            return true;	//OK already there
+            return true;    //OK already there
         }
         String pName = path.getName();
         for (int i = 0; i < list.size(); i++) {
@@ -102,8 +102,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
                 return false;
             }
             if (p.equals(path)) {
-                log.error("Path \"" + path.getName() + "\" is duplicate of path \"" + p.getName()
-                        + "\" in Portal \"" + getUserName() + "\".");
+                log.warn("Path \""+path.getName()+"\" is duplicate of path \""+p.getName()+
+                        "\" in Portal \""+getUserName()+"\".");
                 return false;
             }
         }
@@ -441,7 +441,7 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
 
-    public long getEntranceSpeedChangeWaitForBlock(OBlock block) {
+    public long getEntranceSpaceForBlock(OBlock block) {
         if (block.equals(_toBlock)) {
             if (_fromSignal != null) {
                 return _fromSignalDelay;
