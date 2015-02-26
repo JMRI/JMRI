@@ -1,7 +1,7 @@
 package jmri.jmrit.operations.trains;
 
 /**
- * Builds a train and creates the train's manifest.
+ * Build failed exception.
  *
  * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
  * 2014

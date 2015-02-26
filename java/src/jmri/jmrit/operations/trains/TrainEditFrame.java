@@ -328,7 +328,6 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             trainNameTextField.setText(_train.getName());
             trainDescriptionTextField.setText(_train.getRawDescription());
             routeBox.setSelectedItem(_train.getRoute());
-            numEnginesBox.setSelectedItem(_train.getNumberEngines());
             modelEngineBox.setSelectedItem(_train.getEngineModel());
             commentTextArea.setText(_train.getComment());
             cabooseRadioButton.setSelected((_train.getRequirements() & Train.CABOOSE) > 0);
@@ -341,7 +340,10 @@ public class TrainEditFrame extends OperationsFrame implements java.beans.Proper
             Route route = _train.getRoute();
             if (route != null) {
                 route.addPropertyChangeListener(this);
+                if (_train.getTrainDepartsRouteLocation() != null && !_train.getTrainDepartsRouteLocation().getLocation().isStaging())
+                    numEnginesBox.addItem(Train.AUTO_HPT);
             }
+           numEnginesBox.setSelectedItem(_train.getNumberEngines());
         } else {
             setTitle(Bundle.getMessage("TitleTrainAdd"));
             enableButtons(false);

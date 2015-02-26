@@ -199,6 +199,7 @@ public class Train implements java.beans.PropertyChangeListener {
     public static final String PRINTED = Bundle.getMessage("Printed");
 
     public static final String AUTO = Bundle.getMessage("Auto"); // how engines are assigned to this train
+    public static final String AUTO_HPT = Bundle.getMessage("AutoHPT"); // how engines are assigned to this train
 
     public Train(String id, String name) {
         log.debug("New train ({}) id: {}", name, id);

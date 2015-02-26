@@ -342,6 +342,8 @@ public class TrainBuilder extends TrainCommon {
         // get engine requirements for this train
         if (_train.getNumberEngines().equals(Train.AUTO)) {
             _reqNumEngines = getAutoEngines();
+        } else if (_train.getNumberEngines().equals(Train.AUTO_HPT)) {
+            _reqNumEngines = 1; // get one loco for now, check HP requirements after train is built
         } else {
             _reqNumEngines = Integer.parseInt(_train.getNumberEngines());
         }
@@ -631,6 +633,8 @@ public class TrainBuilder extends TrainCommon {
                     + Bundle.getMessage("cars"));
         }
 
+        // check that engine assigned to the train has the appropriate HP
+        checkEngineHP();
         // check to see if additional engines are needed for this train
         checkNumnberOfEnginesNeeded();
 
@@ -671,11 +675,11 @@ public class TrainBuilder extends TrainCommon {
     private void showTrainRequirements() {
         addLine(_buildReport, ONE, BLANK_LINE); // add line
         addLine(_buildReport, ONE, Bundle.getMessage("TrainRequrements"));
-        if (_reqNumEngines == 0) {
+        if (_train.getNumberEngines().equals("0")) {
             addLine(_buildReport, ONE, Bundle.getMessage("buildTrainReq0Engine"));
-        } else if (_reqNumEngines == 1) {
+        } else if (_train.getNumberEngines().equals("1")) {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReq1Engine"), new Object[]{
-                _train.getEngineModel(), _train.getEngineRoad()}));
+                _train.getTrainDepartsName(), _train.getEngineModel(), _train.getEngineRoad()}));
         } else {
             addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildTrainReqEngine"), new Object[]{
                 _train.getTrainDepartsName(), _train.getNumberEngines(), _train.getEngineModel(),
@@ -848,41 +852,15 @@ public class TrainBuilder extends TrainCommon {
 
         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildBegineSearchEngines"), new Object[]{
             numberOfEngines, model, road, rl.getName(), rld.getName()}));
-        boolean foundLoco = false;
-        List<Engine> singleLocos = new ArrayList<Engine>();
+        
+        // first remove any locos that the train can't use
         for (int indexEng = 0; indexEng < _engineList.size(); indexEng++) {
             Engine engine = _engineList.get(indexEng);
-            log.debug("Engine ({}) at location ({}, {})", engine.toString(), engine.getLocationName(), engine
-                    .getTrackName());
-
-            // use engines that are departing from the selected staging track (departTrack != null if staging)
-            if (departStageTrack != null && !departStageTrack.equals(engine.getTrack())) {
-                continue;
-            }
-
-            // use engines that are departing from the correct location
-            if (!engine.getLocationName().equals(rl.getName())) {
-                log.debug("Skipping engine ({}) at location ({})", engine.toString(), engine.getLocationName());
-                continue;
-            }
-
             // remove engines types that train does not service
             if (!_train.acceptsTypeName(engine.getTypeName())) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineType"),
                         new Object[]{engine.toString(), engine.getTypeName()}));
                 _engineList.remove(indexEng--);
-                continue;
-            }
-            // skip engines models that train does not service
-            if (!model.equals(Train.NONE) && !engine.getModel().equals(model)) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineModel"),
-                        new Object[]{engine.toString(), engine.getModel(), engine.getLocationName()}));
-                continue;
-            }
-            // Does the train have a very specific engine road name requirement?
-            if (!road.equals(Train.NONE) && !engine.getRoadName().equals(road)) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineRoad"),
-                        new Object[]{engine.toString(), engine.getRoadName()}));
                 continue;
             }
             // remove rolling stock with roads that train does not service
@@ -906,6 +884,43 @@ public class TrainBuilder extends TrainCommon {
                 _engineList.remove(indexEng--);
                 continue;
             }
+            // remove engines that are out of service
+            if (engine.isOutOfService()) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineOutOfService"),
+                        new Object[]{engine.toString(), engine.getLocationName(), engine.getTrackName()}));
+                _engineList.remove(indexEng--);
+                continue;
+            }
+        }
+        
+        boolean foundLoco = false;
+        List<Engine> singleLocos = new ArrayList<Engine>();
+        for (int indexEng = 0; indexEng < _engineList.size(); indexEng++) {
+            Engine engine = _engineList.get(indexEng);
+            log.debug("Engine ({}) at location ({}, {})", engine.toString(), engine.getLocationName(), engine
+                    .getTrackName());
+
+            // use engines that are departing from the selected staging track (departTrack != null if staging)
+            if (departStageTrack != null && !departStageTrack.equals(engine.getTrack())) {
+                continue;
+            }
+            // use engines that are departing from the correct location
+            if (!engine.getLocationName().equals(rl.getName())) {
+                log.debug("Skipping engine ({}) at location ({})", engine.toString(), engine.getLocationName());
+                continue;
+            }
+            // skip engines models that train does not service
+            if (!model.equals(Train.NONE) && !engine.getModel().equals(model)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineModel"),
+                        new Object[]{engine.toString(), engine.getModel(), engine.getLocationName()}));
+                continue;
+            }
+            // Does the train have a very specific engine road name requirement?
+            if (!road.equals(Train.NONE) && !engine.getRoadName().equals(road)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineRoad"),
+                        new Object[]{engine.toString(), engine.getRoadName()}));
+                continue;
+            }
             // skip engines on tracks that don't service the train's departure direction
             if (!checkPickUpTrainDirection(engine, rl)) {
                 continue;
@@ -914,13 +929,6 @@ public class TrainBuilder extends TrainCommon {
             if (engine.getDestination() != null && !engine.getDestinationName().equals(rld.getName())) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineDestination"),
                         new Object[]{engine.toString(), engine.getDestinationName()}));
-                continue;
-            }
-            // remove engines that are out of service
-            if (engine.isOutOfService()) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeEngineOutOfService"),
-                        new Object[]{engine.toString(), engine.getLocationName(), engine.getTrackName()}));
-                _engineList.remove(indexEng--);
                 continue;
             }
             // don't use non lead locos in a consist
@@ -948,22 +956,18 @@ public class TrainBuilder extends TrainCommon {
                     singleLocos.add(engine);
                     continue;
                 }
-                // engine is part of a consist
-            } else {
-                // Keep only lead engines in consist if required number is correct.
-                if (engine.getConsist().isLead(engine)) {
-                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildEngineLeadConsist"),
-                            new Object[]{engine.toString(), engine.getConsist().getName(),
+            // engine is part of a consist
+            } else if (engine.getConsist().isLead(engine)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildEngineLeadConsist"),
+                        new Object[]{engine.toString(), engine.getConsist().getName(),
                                 engine.getConsist().getSize()}));
-                    if (engine.getConsist().getSize() == numberOfEngines) {
-                        log.debug("Consist ({}) has the required number of engines", engine.getConsist().getName()); // NOI18N
-                    } else if (numberOfEngines != 0) {
-                        // log.debug("Consist ("+engine.getConsist().getName()+") doesn't have the required number of engines");
-                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
-                                .getMessage("buildExcludeEngConsistNumber"), new Object[]{engine.toString(),
-                                    engine.getConsist().getName(), engine.getConsist().getSize()}));
-                        continue;
-                    }
+                if (engine.getConsist().getSize() == numberOfEngines) {
+                    log.debug("Consist ({}) has the required number of engines", engine.getConsist().getName()); // NOI18N
+                } else if (numberOfEngines != 0) {
+                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle
+                            .getMessage("buildExcludeEngConsistNumber"), new Object[]{engine.toString(),
+                            engine.getConsist().getName(), engine.getConsist().getSize()}));
+                    continue;
                 }
             }
             // found a loco!
@@ -971,14 +975,13 @@ public class TrainBuilder extends TrainCommon {
 
             // now find terminal track for engine(s)
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildEngineRoadModelType"),
-                    new Object[]{engine.toString(), engine.getRoadName(), engine.getModel(), engine.getTypeName()}));
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildAtLocation"), new Object[]{
-                (engine.getLocationName() + ", " + engine.getTrackName()), rld.getName()}));
+                    new Object[]{engine.toString(), engine.getRoadName(), engine.getModel(), engine.getTypeName(),
+                            engine.getLocationName(), engine.getTrackName(), rld.getName()}));
             if (setLocoDestination(engine, rl, rld, terminateStageTrack)) {
                 _engineList.remove(indexEng--);
                 return true; // done
             }
-        }
+       }
         // build a consist out of non-consisted locos
         if (!foundLoco && numberOfEngines > 1 && _train.isBuildConsistEnabled()) {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOptionBuildConsist"),
@@ -2232,8 +2235,15 @@ public class TrainBuilder extends TrainCommon {
         }
     }
 
+    /**
+     * 
+     * @param engine
+     * @param rl    where in the train's route to pick up the engine
+     * @param rld   where in the train's route to set out the engine
+     * @param track destination track for this engine
+     */
     private void addEngineToTrain(Engine engine, RouteLocation rl, RouteLocation rld, Track track) {
-        _leadEngine = engine;
+        _leadEngine = engine; // needed in case there's a engine change in the train's route
         if (_train.getLeadEngine() == null) {
             _train.setLeadEngine(engine); // load lead engine
         }
@@ -4280,6 +4290,120 @@ public class TrainBuilder extends TrainCommon {
         }
         addLine(_buildReport, SEVEN, BLANK_LINE);
     }
+    
+    /**
+     * Checks to see if the engine assigned to the train has the appropriate HP.
+     * If the train's HP requirements are significantly higher or lower than the
+     * engine that was assigned, the program will search for a more appropriate
+     * engine, and assign that engine to the train.
+     * 
+     * The HP calculation is based on a minimum train speed of 36 MPH. The
+     * formula HPT x 12 / % Grade = Speed, is used to determine the horsepower
+     * required. Speed is fixed at 36 MPH. For example a 1% grade requires a
+     * minimum of 3 HPT.
+     */
+    private void checkEngineHP() throws BuildFailedException {
+        if (!_train.getNumberEngines().equals(Train.AUTO_HPT) || Setup.getHorsePowerPerTon() == 0 || _departStageTrack != null)
+            return;
+        // there should be at lease one engine assigned to this train
+        Engine leadEngine = _train.getLeadEngine();
+        if (leadEngine == null)
+            return; // TODO throw an exception
+        addLine(_buildReport, ONE, BLANK_LINE);
+        addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildDetermineHpNeeded"), new Object[]{
+                leadEngine.toString(), leadEngine.getHp(), Setup.getHorsePowerPerTon()}));
+        // now determine the HP needed for this train
+        int hpNeeded = 0;
+        int hpAvailable = 0;
+        Route route = _train.getRoute();
+        if (route != null) {
+            boolean helper = false;
+            for (RouteLocation rl : route.getLocationsBySequenceList()) {
+                if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegStartLocation())
+                        || (_train.getThirdLegOptions() == Train.HELPER_ENGINES && rl == _train
+                                .getThirdLegStartLocation())) {
+                    addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("AddHelpersAt"),
+                            new Object[]{rl.getName()}));
+                    helper = true;
+                }
+                if ((_train.getSecondLegOptions() == Train.HELPER_ENGINES && rl == _train.getSecondLegEndLocation())
+                        || (_train.getThirdLegOptions() == Train.HELPER_ENGINES && rl == _train
+                                .getThirdLegEndLocation())) {
+                    addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("RemoveHelpersAt"),
+                            new Object[]{rl.getName()}));
+                    helper = false;
+                }
+                if (helper) {
+                    continue; // ignore HP needed when helpers are assigned to the train
+                }
+                // check for a change of engines in the train's route
+                if (((_train.getSecondLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES && rl == _train
+                        .getSecondLegStartLocation())
+                        || ((_train.getThirdLegOptions() & Train.CHANGE_ENGINES) == Train.CHANGE_ENGINES && rl == _train
+                                .getThirdLegStartLocation())) {
+                    log.debug("Loco change at ({})", rl.getName());
+                    break; // done
+                }
+                if (_train.getTrainHorsePower(rl) > hpAvailable)
+                    hpAvailable = _train.getTrainHorsePower(rl);
+                int weight = rl.getTrainWeight();
+                int hpRequired = (int) ((36 * rl.getGrade() / 12) * weight);
+                if (hpRequired < Setup.getHorsePowerPerTon() * weight)
+                    hpRequired = Setup.getHorsePowerPerTon() * weight;  // minimum HPT
+                if (hpRequired > hpNeeded) {
+                    addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildReportTrainHpNeeds"), new Object[]{
+                            weight, _train.getNumberCarsInTrain(rl), rl.getGrade(), rl.getName(), rl.getId(), hpRequired}));
+                    hpNeeded = hpRequired;
+                }
+            }
+        }
+        if (hpNeeded > hpAvailable) {
+            addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildAssignedHpNotEnough"), new Object[]{
+                    leadEngine.toString(), hpAvailable, hpNeeded}));
+            findNewEngine(hpNeeded, leadEngine);
+        } else if (hpAvailable > 2 * hpNeeded) {
+            addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildAssignedHpTooMuch"), new Object[]{
+                    leadEngine.toString(), hpAvailable, hpNeeded}));
+            findNewEngine(hpNeeded, leadEngine);
+        } else {
+            log.debug("Keeping engine ({}) it meets the train's HP requirement", leadEngine.toString());
+        }
+    }
+    
+    private void findNewEngine(int hpNeeded, Engine leadEngine) throws BuildFailedException {
+        // save lead engine's rl, and rld
+        RouteLocation rl = leadEngine.getRouteLocation();
+        RouteLocation rld = leadEngine.getRouteDestination();
+        leadEngine.reset(); // remove this engine from the train
+        _engineList.add(0, leadEngine); // put engine back into the pool
+        _train.setLeadEngine(null);
+        
+        int hpMax = hpNeeded;
+        // largest single engine HP known today is less than 15,000
+        hpLoop: while (hpMax < 20000) {
+            hpMax += hpNeeded / 2; // start off looking for an engine with no more than 50% extra HP
+            log.debug("Max hp {}", hpMax);
+            for (Engine engine : _engineList) {
+                if (engine.getLocation() != _train.getTrainDepartsRouteLocation().getLocation())
+                    continue;
+                int engineHp = 0;
+                try {
+                    engineHp = Integer.parseInt(engine.getHp());
+                } catch (NumberFormatException e) {
+                    log.warn("Locomotive ({}) horsepower isn't a number", engine.toString());
+                    continue;
+                }
+                if (engineHp > hpNeeded && engineHp <= hpMax) {
+                    log.debug("Loco ({}) has the required HP ({})", engine.toString(), engine.getHp());
+                    if (setLocoDestination(engine, rl, rld, null))
+                        break hpLoop;
+                }
+            }
+        }
+        if (_train.getLeadEngine() == null && !_train.isBuildConsistEnabled()) {
+            throw new BuildFailedException(Bundle.getMessage("buildErrorEngHp"));
+        }
+    }
 
     /**
      * Checks to see if additional engines are needed for the train based on the
@@ -4336,22 +4460,22 @@ public class TrainBuilder extends TrainCommon {
                 }
                 int weight = rl.getTrainWeight();
                 if (weight > 0) {
-                    int hptMinimum = Setup.getHorsePowerPerTon();
-                    int hptGrade = (int) (36 * rl.getGrade() / 12);
+                    double hptMinimum = Setup.getHorsePowerPerTon();
+                    double hptGrade = (36 * rl.getGrade() / 12);
                     int hp = _train.getTrainHorsePower(rl);
                     int hpt = hp / weight;
                     if (hptGrade > hptMinimum) {
                         hptMinimum = hptGrade;
                     }
                     if (hptMinimum > hpt) {
-                        int addHp = hptMinimum * weight - hp;
+                        int addHp = (int) (hptMinimum * weight - hp);
                         if (addHp > extraHpNeeded) {
                             hpAvailable = hp;
                             extraHpNeeded = addHp;
                             rlNeedHp = rl;
                         }
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildAddLocosStatus"),
-                                new Object[]{weight, hp, rl.getGrade(), hpt, hptMinimum, rl.getName()}));
+                                new Object[]{weight, hp, rl.getGrade(), hpt, hptMinimum, rl.getName(), rl.getId()}));
                         addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildTrainRequiresAddHp"),
                                 new Object[]{addHp, rl.getName(), hptMinimum}));
                     }
@@ -4373,8 +4497,7 @@ public class TrainBuilder extends TrainCommon {
         // determine how many locos have already been assigned to the train
         List<RollingStock> engines = EngineManager.instance().getList(_train);
         for (RollingStock rs : engines) {
-            Engine eng = (Engine) rs;
-            if (eng.getRouteLocation() == rl) {
+            if (rs.getRouteLocation() == rl) {
                 numberLocos++;
             }
         }
