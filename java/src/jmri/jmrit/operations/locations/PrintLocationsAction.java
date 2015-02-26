@@ -90,7 +90,7 @@ public class PrintLocationsAction extends AbstractAction {
             title = _location.getName();
         }
         try {
-            writer = new HardcopyWriter(new Frame(), title, 10, .5, .5, .5, .5, _isPreview);
+            writer = new HardcopyWriter(new Frame(), title, Control.reportFontSize, .5, .5, .5, .5, _isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

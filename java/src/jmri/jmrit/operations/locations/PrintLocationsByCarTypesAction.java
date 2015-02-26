@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractAction;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,7 +56,7 @@ public class PrintLocationsByCarTypesAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         // obtain a HardcopyWriter
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleLocationsByType"), 10, .5,
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleLocationsByType"), Control.reportFontSize, .5,
                     .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");

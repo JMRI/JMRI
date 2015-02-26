@@ -1,7 +1,10 @@
 package jmri.jmrit.operations.setup;
 
 import org.jdom2.Attribute;
+import org.jdom2.DataConversionException;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Controls for operations developers. Debug Property changes and instance
@@ -79,6 +82,9 @@ public class Control {
     // Backward compatibility for xml saves (pre 2013 releases)
     // backward compatibility to false in 2014
     public static boolean backwardCompatible = false;
+    
+    public static int reportFontSize = 10;
+    public static String reportFontName = ""; // use default
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
@@ -110,22 +116,26 @@ public class Control {
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_train_name));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_ROUTE_NAME));
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_route_name));
+        // reports
+        e.addContent(values = new Element(Xml.REPORTS));
+        values.setAttribute(Xml.FONT_SIZE, Integer.toString(reportFontSize));
+        values.setAttribute(Xml.FONT_NAME, reportFontName);
         return e;
     }
 
     public static void load(Element e) {
-        Element control = e.getChild(Xml.CONTROL);
-        if (control == null) {
+        Element eControl = e.getChild(Xml.CONTROL);
+        if (eControl == null) {
             return;
         }
-        Element backwardCompatibility = control.getChild(Xml.BACKWARD_COMPATIBILITY);
+        Element backwardCompatibility = eControl.getChild(Xml.BACKWARD_COMPATIBILITY);
         if (backwardCompatibility != null) {
             Attribute format;
             if ((format = backwardCompatibility.getAttribute(Xml.SAVE_USING_PRE_2013_FORMAT)) != null) {
                 backwardCompatible = format.getValue().equals(Xml.TRUE);
             }
         }
-        Element maximumStringLengths = control.getChild(Xml.MAXIMUM_STRING_LENGTHS);
+        Element maximumStringLengths = eControl.getChild(Xml.MAXIMUM_STRING_LENGTHS);
         if (maximumStringLengths != null) {
             Attribute length;
             if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ATTRIBUTE) != null)
@@ -169,5 +179,21 @@ public class Control {
                 max_len_string_route_name = Integer.parseInt(length.getValue());
             }
         }
+        Element eReports = eControl.getChild(Xml.REPORTS);
+        if (eReports != null) {
+            Attribute a;
+            if ((a = eReports.getAttribute(Xml.FONT_SIZE)) != null) {
+                try {
+                    reportFontSize = a.getIntValue();
+                } catch (DataConversionException e1) {
+                    log.error("Report font size ({}) isn't a number", a.getValue());
+                }
+            }
+            if ((a = eReports.getAttribute(Xml.FONT_NAME)) != null) {
+                reportFontName = a.getValue();
+            }
+        }
     }
+    
+    static Logger log = LoggerFactory.getLogger(Control.class.getName());
 }

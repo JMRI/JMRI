@@ -61,7 +61,7 @@ public class PrintEngineRosterAction extends AbstractAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleEngineRoster"), 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleEngineRoster"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

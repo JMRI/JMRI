@@ -35,6 +35,7 @@ public class Xml {
     static final String MAX_LEN_STRING_BUILT_NAME = "max_len_string_built_name"; // NOI18N
     static final String MAX_LEN_STRING_TRAIN_NAME = "max_len_string_train_name"; // NOI18N
     static final String MAX_LEN_STRING_ROUTE_NAME = "max_len_string_route_name"; // NOI18N
+    static final String REPORTS = "reports"; // NOI18N
 
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N

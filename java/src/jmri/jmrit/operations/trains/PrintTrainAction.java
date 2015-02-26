@@ -8,6 +8,7 @@ import java.text.MessageFormat;
 import javax.swing.AbstractAction;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,7 +61,7 @@ public class PrintTrainAction extends AbstractAction {
         HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getMessage("TitleTrain"),
-                    new Object[]{train.getName()}), 10, .5, .5, .5, .5, isPreview);
+                    new Object[]{train.getName()}), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

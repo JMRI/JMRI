@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.AbstractAction;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -65,7 +66,7 @@ public class PrintCarLoadsAction extends AbstractAction {
             HardcopyWriter writer = null;
             Frame mFrame = new Frame();
             try {
-                writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarLoads"), 10, .5, .5, .5, .5, isPreview);
+                writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarLoads"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
             } catch (HardcopyWriter.PrintCanceledException ex) {
                 log.debug("Print cancelled");
                 return;

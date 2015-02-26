@@ -58,7 +58,7 @@ public class PrintRouteAction extends AbstractAction {
         HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(mFrame, MessageFormat.format(Bundle.getMessage("TitleRoute"),
-                    new Object[]{route.getName()}), 10, .5, .5, .5, .5, isPreview);
+                    new Object[]{route.getName()}), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

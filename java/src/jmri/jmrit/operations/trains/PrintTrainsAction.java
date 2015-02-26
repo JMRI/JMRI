@@ -46,7 +46,7 @@ public class PrintTrainsAction extends PrintTrainAction {
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsTable"), 10, .5, .5, .5, .5, isPreview);
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleTrainsTable"), Control.reportFontSize, .5, .5, .5, .5, isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;

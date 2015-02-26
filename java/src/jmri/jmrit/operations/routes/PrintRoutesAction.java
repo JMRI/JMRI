@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.text.MessageFormat;
 import java.util.List;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.davidflanagan.HardcopyWriter;
 
 /**
@@ -31,7 +32,7 @@ public class PrintRoutesAction extends PrintRouteAction {
         HardcopyWriter writer = null;
         try {
             writer = new HardcopyWriter(mFrame, MessageFormat.format(
-                    Bundle.getMessage("TitleRoutesTable"), new Object[]{}), 10, .5, .5, .5, .5,
+                    Bundle.getMessage("TitleRoutesTable"), new Object[]{}), Control.reportFontSize, .5, .5, .5, .5,
                     isPreview);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
