@@ -3030,20 +3030,37 @@
    the locomotive's model and road. If you don't want the program assigning locomotives to your
    train, select 0 as the number of locos required. If you want two or more locomotives assigned to
    a train, the locomotives must be part of a
-   <A HREF="#LocomotivesAdd">consist</A>. If you select "Auto", the program will calculate the
-   number of locomotives required for this train based on the weight of the train, the track grade,
-   and the horsepower of the locomotives.
+   <A HREF="#LocomotivesAdd">consist</A> or you can select the option to build a consist from single
+   locos. See <A
+    HREF="#BuildlocoConsist">Build loco consist from single locos</A> under the <A
+    HREF="#TrainBuildOptions">Train Build Options</A> for more information.
+
    <P>
-    You can also on a per train basis, ask the program to dynamically construct the consist for the
-    train. See <A HREF="#BuildlocoConsist">Build loco consist from single locos</A> under
-    the <A HREF="#TrainBuildOptions">Train Build Options</A> for more information.
+    There are two other options available when requesting locomotives, "Auto" and "Auto HPT". "Auto"
+    determines the maximum number of cars that could be assigned to a train, and does a simple
+    locomotive consist assignment based on the number of cars and the route grades. The assignment
+    is done before building the train, so the number of locomotives assigned has nothing to due with
+    engine HP or the train's tonnage. A better choice is the <A HREF="#BuildlocoConsist">Build
+     loco consist from single locos</A>, that option determines the number of locomotives to assign to a
+    train by tonnage and route grades.
+   </P>
+
+   <P>
+    "Auto HPT" is useful when you want to assign a single locomotive to a train based on the train's
+    tonnage, route grades, and locomotive horsepower. You can if you wish use this option along with
+    the <A HREF="#BuildlocoConsist">Build loco consist from single locos</A> option. The program
+    will first assign a single locomotive at the start of the train build process, and at the end of
+    the build, determine if the assigned locomotive has the appropriate HP for the train's tonnage
+    and grades. If a single locomotive can't be found that meets the requirements, the build will
+    fail unless you've also selected the option to <A HREF="#BuildlocoConsist">Build loco
+     consist from single locos</A>.
    </P>
 
    <P>
     You can also require a <A HREF="#CabooseFredHazardous">caboose or car with FRED (Flashing
-     Rear End Device)</A> as the last car in the train, and you can optionally specify the road for
-    the caboose or car with FRED. If you leave the road blank, the program will try and find a
-    caboose with the same road as the locomotive.
+     Rear End Device)</A> as the last car in the train, and you can optionally specify the road for the
+    caboose or car with FRED. If you leave the road blank, the program will try and find a caboose
+    with the same road as the locomotive.
    </P>
 
    <A NAME="TrainReset"></A>
