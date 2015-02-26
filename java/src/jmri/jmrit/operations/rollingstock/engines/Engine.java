@@ -92,6 +92,15 @@ public class Engine extends RollingStock {
         }
         return hp;
     }
+    
+    public int getHpInteger() {
+        try {
+            return Integer.parseInt(getHp());
+        } catch (NumberFormatException e) {
+            log.warn("Locomotive ({}) horsepower ({}) isn't a number", toString(), getHp());
+            return 0;
+        }
+    }
 
     /**
      * Set the locomotive length for this locomotive's model

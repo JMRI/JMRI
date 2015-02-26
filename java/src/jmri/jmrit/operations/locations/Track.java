@@ -1307,9 +1307,9 @@ public class Track {
             return ROAD + " (" + rs.getRoadName() + ")";
         }
         // now determine if there's enough space for the rolling stock
-        int length = 0;
+        int length = rs.getTotalLength();
         try {
-            length = Integer.parseInt(rs.getLength()) + RollingStock.COUPLER;
+            Integer.parseInt(rs.getLength());
         } catch (Exception e) {
             return LENGTH + " (" + rs.getLength() + ")";
         }
@@ -1331,7 +1331,7 @@ public class Track {
                             && c.getDestinationTrack().equals(this)) {
                         continue;
                     }
-                    length = length + Integer.parseInt(c.getLength()) + RollingStock.COUPLER;
+                    length += c.getTotalLength();
                 }
             }
             if (!acceptsLoad(car.getLoadName(), car.getTypeName())) {

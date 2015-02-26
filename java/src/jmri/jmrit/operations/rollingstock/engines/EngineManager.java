@@ -190,10 +190,16 @@ public class EngineManager extends RollingStockManager {
     public List<RollingStock> getByConsistList() {
         return getByList(getByRoadNameList(), BY_CONSIST);
     }
+    
+    public List<RollingStock> getByHpList() {
+        return getByIntList(getByModelList(), BY_HP);
+    }
 
     // The special sort options for engines
     private static final int BY_MODEL = 4;
     private static final int BY_CONSIST = 5;
+    private static final int BY_HP = 13;
+    
 
     // provide model and consist sorts
     protected Object getRsAttribute(RollingStock rs, int attribute) {
@@ -203,6 +209,8 @@ public class EngineManager extends RollingStockManager {
                 return eng.getModel();
             case BY_CONSIST:
                 return eng.getConsistName();
+            case BY_HP:
+                return eng.getHpInteger();
             default:
                 return super.getRsAttribute(rs, attribute);
         }

@@ -2250,7 +2250,7 @@ public class TrainBuilder extends TrainCommon {
         addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildEngineAssigned"), new Object[]{
             engine.toString(), rld.getName(), track.getName()}));
         engine.setDestination(track.getLocation(), track);
-        int length = Integer.parseInt(engine.getLength()) + Engine.COUPLER;
+        int length = engine.getTotalLength();
         int weightTons = engine.getAdjustedWeightTons();
         // engine in consist?
         if (engine.getConsist() != null) {
@@ -4386,13 +4386,7 @@ public class TrainBuilder extends TrainCommon {
             for (Engine engine : _engineList) {
                 if (engine.getLocation() != _train.getTrainDepartsRouteLocation().getLocation())
                     continue;
-                int engineHp = 0;
-                try {
-                    engineHp = Integer.parseInt(engine.getHp());
-                } catch (NumberFormatException e) {
-                    log.warn("Locomotive ({}) horsepower isn't a number", engine.toString());
-                    continue;
-                }
+                int engineHp = engine.getHpInteger();
                 if (engineHp > hpNeeded && engineHp <= hpMax) {
                     log.debug("Loco ({}) has the required HP ({})", engine.toString(), engine.getHp());
                     if (setLocoDestination(engine, rl, rld, null))

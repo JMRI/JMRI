@@ -33,20 +33,21 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     EngineManager manager = EngineManager.instance(); // There is only one manager
 
     // Defines the columns
-    private static final int NUMCOLUMN = 0;
-    private static final int ROADCOLUMN = 1;
-    private static final int MODELCOLUMN = 2;
-    private static final int TYPECOLUMN = 3;
-    private static final int LENGTHCOLUMN = 4;
-    private static final int CONSISTCOLUMN = 5;
-    private static final int LOCATIONCOLUMN = 6;
-    private static final int DESTINATIONCOLUMN = 7;
-    private static final int TRAINCOLUMN = 8;
-    private static final int MOVESCOLUMN = 9;
-    private static final int SETCOLUMN = 10;
-    private static final int EDITCOLUMN = 11;
+    private static final int NUM_COLUMN = 0;
+    private static final int ROAD_COLUMN = 1;
+    private static final int MODEL_COLUMN = 2;
+    private static final int HP_COLUMN = 3;
+    private static final int TYPE_COLUMN = 4;
+    private static final int LENGTH_COLUMN = 5;
+    private static final int CONSIST_COLUMN = 6;
+    private static final int LOCATION_COLUMN = 7;
+    private static final int DESTINATION_COLUMN = 8;
+    private static final int TRAIN_COLUMN = 9;
+    private static final int MOVES_COLUMN = 10;
+    private static final int SET_COLUMN = 11;
+    private static final int EDIT_COLUMN = 12;
 
-    private static final int HIGHESTCOLUMN = EDITCOLUMN + 1;
+    private static final int HIGHEST_COLUMN = EDIT_COLUMN + 1;
 
     private static final int SHOWMOVES = 0;
     private static final int SHOWBUILT = 1;
@@ -75,6 +76,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public final int SORTBYVALUE = 11;
     public final int SORTBYRFID = 12;
     public final int SORTBYLAST = 13;
+    public final int SORTBYHP = 14;
 
     private int _sort = SORTBYNUMBER;
 
@@ -218,17 +220,17 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     // Engines frame table column widths (12), starts with Number column and ends with Edit
-    private int[] _enginesTableColumnWidths = {60, 60, 65, 65, 35, 75, 190, 190, 65, 50, 65, 70};
+    private int[] _enginesTableColumnWidths = {60, 60, 65, 50, 65, 35, 75, 190, 190, 65, 50, 65, 70};
 
     void initTable() {
         // Install the button handlers
         TableColumnModel tcm = _table.getColumnModel();
         ButtonRenderer buttonRenderer = new ButtonRenderer();
-        tcm.getColumn(SETCOLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(SET_COLUMN).setCellRenderer(buttonRenderer);
         TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
-        tcm.getColumn(SETCOLUMN).setCellEditor(buttonEditor);
-        tcm.getColumn(EDITCOLUMN).setCellRenderer(buttonRenderer);
-        tcm.getColumn(EDITCOLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(SET_COLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(EDIT_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(EDIT_COLUMN).setCellEditor(buttonEditor);
 
         // set column preferred widths
         if (!_frame.loadTableDetails(_table)) {
@@ -246,30 +248,32 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     }
 
     public int getColumnCount() {
-        return HIGHESTCOLUMN;
+        return HIGHEST_COLUMN;
     }
 
     public String getColumnName(int col) {
         switch (col) {
-            case NUMCOLUMN:
+            case NUM_COLUMN:
                 return Bundle.getMessage("Number");
-            case ROADCOLUMN:
+            case ROAD_COLUMN:
                 return Bundle.getMessage("Road");
-            case MODELCOLUMN:
+            case MODEL_COLUMN:
                 return Bundle.getMessage("Model");
-            case TYPECOLUMN:
+            case HP_COLUMN:
+                return Bundle.getMessage("HP");
+            case TYPE_COLUMN:
                 return Bundle.getMessage("Type");
-            case LENGTHCOLUMN:
+            case LENGTH_COLUMN:
                 return Bundle.getMessage("Len");
-            case CONSISTCOLUMN:
+            case CONSIST_COLUMN:
                 return Bundle.getMessage("Consist");
-            case LOCATIONCOLUMN:
+            case LOCATION_COLUMN:
                 return Bundle.getMessage("Location");
-            case DESTINATIONCOLUMN:
+            case DESTINATION_COLUMN:
                 return Bundle.getMessage("Destination");
-            case TRAINCOLUMN:
+            case TRAIN_COLUMN:
                 return Bundle.getMessage("Train");
-            case MOVESCOLUMN: {
+            case MOVES_COLUMN: {
                 if (showMoveCol == SHOWBUILT) {
                     return Bundle.getMessage("Built");
                 } else if (showMoveCol == SHOWOWNER) {
@@ -284,9 +288,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     return Bundle.getMessage("Moves");
                 }
             }
-            case SETCOLUMN:
+            case SET_COLUMN:
                 return Bundle.getMessage("Set");
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 return Bundle.getMessage("Edit");
             default:
                 return "unknown"; // NOI18N
@@ -295,29 +299,31 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     public Class<?> getColumnClass(int col) {
         switch (col) {
-            case NUMCOLUMN:
+            case NUM_COLUMN:
                 return String.class;
-            case ROADCOLUMN:
+            case ROAD_COLUMN:
                 return String.class;
-            case LENGTHCOLUMN:
+            case LENGTH_COLUMN:
                 return String.class;
-            case MODELCOLUMN:
+            case MODEL_COLUMN:
                 return String.class;
-            case TYPECOLUMN:
+            case HP_COLUMN:
                 return String.class;
-            case CONSISTCOLUMN:
+            case TYPE_COLUMN:
                 return String.class;
-            case LOCATIONCOLUMN:
+            case CONSIST_COLUMN:
                 return String.class;
-            case DESTINATIONCOLUMN:
+            case LOCATION_COLUMN:
                 return String.class;
-            case TRAINCOLUMN:
+            case DESTINATION_COLUMN:
                 return String.class;
-            case MOVESCOLUMN:
+            case TRAIN_COLUMN:
                 return String.class;
-            case SETCOLUMN:
+            case MOVES_COLUMN:
+                return String.class;
+            case SET_COLUMN:
                 return JButton.class;
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 return JButton.class;
             default:
                 return null;
@@ -326,9 +332,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
 
     public boolean isCellEditable(int row, int col) {
         switch (col) {
-            case SETCOLUMN:
-            case EDITCOLUMN:
-            case MOVESCOLUMN:
+            case SET_COLUMN:
+            case EDIT_COLUMN:
+            case MOVES_COLUMN:
                 return true;
             default:
                 return false;
@@ -344,44 +350,46 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             return "ERROR engine unknown " + row; // NOI18N
         }
         switch (col) {
-            case NUMCOLUMN:
+            case NUM_COLUMN:
                 return eng.getNumber();
-            case ROADCOLUMN:
+            case ROAD_COLUMN:
                 return eng.getRoadName();
-            case LENGTHCOLUMN:
-                return eng.getLength();
-            case MODELCOLUMN:
+            case LENGTH_COLUMN:
+                return eng.getLengthInteger();
+            case MODEL_COLUMN:
                 return eng.getModel();
-            case TYPECOLUMN:
+            case HP_COLUMN:
+                return eng.getHpInteger();
+            case TYPE_COLUMN:
                 return eng.getTypeName();
-            case CONSISTCOLUMN: {
+            case CONSIST_COLUMN: {
                 if (eng.getConsist() != null && eng.getConsist().isLead(eng)) {
                     return eng.getConsistName() + "*";
                 }
                 return eng.getConsistName();
             }
-            case LOCATIONCOLUMN: {
+            case LOCATION_COLUMN: {
                 String s = eng.getStatus();
                 if (!eng.getLocationName().equals("")) {
                     s = eng.getStatus() + eng.getLocationName() + " (" + eng.getTrackName() + ")";
                 }
                 return s;
             }
-            case DESTINATIONCOLUMN: {
+            case DESTINATION_COLUMN: {
                 String s = "";
                 if (!eng.getDestinationName().equals("")) {
                     s = eng.getDestinationName() + " (" + eng.getDestinationTrackName() + ")";
                 }
                 return s;
             }
-            case TRAINCOLUMN: {
+            case TRAIN_COLUMN: {
                 // if train was manually set by user add an asterisk
                 if (eng.getTrain() != null && eng.getRouteLocation() == null) {
                     return eng.getTrainName() + "*";
                 }
                 return eng.getTrainName();
             }
-            case MOVESCOLUMN: {
+            case MOVES_COLUMN: {
                 if (showMoveCol == SHOWBUILT) {
                     return eng.getBuilt();
                 } else if (showMoveCol == SHOWOWNER) {
@@ -396,9 +404,9 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     return eng.getMoves();
                 }
             }
-            case SETCOLUMN:
+            case SET_COLUMN:
                 return Bundle.getMessage("Set");
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 return Bundle.getMessage("Edit");
             default:
                 return "unknown " + col; // NOI18N
@@ -411,7 +419,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
     public void setValueAt(Object value, int row, int col) {
         Engine engine = (Engine) sysList.get(row);
         switch (col) {
-            case SETCOLUMN:
+            case SET_COLUMN:
                 log.debug("Set engine location");
                 if (esf != null) {
                     esf.dispose();
@@ -425,7 +433,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     }
                 });
                 break;
-            case EDITCOLUMN:
+            case EDIT_COLUMN:
                 log.debug("Edit engine");
                 if (eef != null) {
                     eef.dispose();
@@ -439,7 +447,7 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
                     }
                 });
                 break;
-            case MOVESCOLUMN:
+            case MOVES_COLUMN:
                 if (showMoveCol == SHOWBUILT) {
                     engine.setBuilt(value.toString());
                 } else if (showMoveCol == SHOWOWNER) {

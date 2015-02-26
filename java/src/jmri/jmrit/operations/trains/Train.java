@@ -2036,14 +2036,10 @@ public class Train implements java.beans.PropertyChangeListener {
                 for (RollingStock rs : EngineManager.instance().getList(this)) {
                     Engine eng = (Engine) rs;
                     if (eng.getRouteLocation() == rl) {
-                        try {
-                            hp += Integer.parseInt(eng.getHp());
-                        } catch (Exception e) {
-                            break; // done engine hp rating not available
-                        }
+                        hp += eng.getHpInteger();
                     }
                     if (eng.getRouteDestination() == rl) {
-                        hp += -Integer.parseInt(eng.getHp());
+                        hp += -eng.getHpInteger();
                     }
                 }
                 if (rl == routeLocation) {

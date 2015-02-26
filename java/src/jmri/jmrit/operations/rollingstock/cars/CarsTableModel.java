@@ -518,7 +518,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
             case COLOR_COLUMN:
                 return car.getColor();
             case LENGTH_COLUMN:
-                return car.getLength();
+                return car.getLengthInteger();
             case TYPE_COLUMN: {
                 StringBuffer buf = new StringBuffer(car.getTypeName());
                 if (car.isCaboose()) {
