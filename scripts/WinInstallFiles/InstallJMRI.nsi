@@ -50,6 +50,14 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.21.5
+; - Updated "-CleanUp" so that another set of old files are removed, 
+;    including:
+;       jetty(release 8.1.0.v20120127)-related libraries
+;       old log4j library
+;       jspwin DLL 
+;    are removed before installation.
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.4
 ; - Updated "-CleanUp" so that any previous jetty-related .jar files and
 ;   servlet .jar files are removed before installation.
@@ -238,7 +246,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.6"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.4"                    ; Installer version
+!define INST_VER  "0.1.21.5"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -412,6 +420,20 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\jh.1.1.2.jar"
     Delete "$OUTDIR\jh.jar"
     Delete "$OUTDIR\jdom-jdk11.jar"
+
+    ; -- Delete older outmoded jetty .jar and outmoded servlet files, as of 
+    ;    JMRI 3.11.3 (added for version 0.1.21.5 of Windows installer)
+    Delete "$OUTDIR\lib\jetty-continuation-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-http-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-io-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-security-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-server-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-servlet-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-util-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\jetty-websocket-8.1.0.v20120127.jar"
+    Delete "$OUTDIR\lib\log4j.jar"
+    Delete "$OUTDIR\lib\jspWin.dll" 
+
 
     ; -- Delete outmoded jetty .jar and outmoded servlet files, as of JMRI 3.11.3
     Delete "$OUTDIR\lib\jetty-continuation-8.1.11.v20130520.jar"
