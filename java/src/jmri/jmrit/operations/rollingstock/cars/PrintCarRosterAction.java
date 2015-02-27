@@ -71,7 +71,7 @@ public class PrintCarRosterAction extends AbstractAction {
         cpof.initComponents();
     }
 
-    int numberCharPerLine = 90;
+    int numberCharPerLine;
 
     private void printCars() {
 
@@ -79,18 +79,21 @@ public class PrintCarRosterAction extends AbstractAction {
         if (manifestOrientationComboBox.getSelectedItem() != null
                 && manifestOrientationComboBox.getSelectedItem() == Setup.LANDSCAPE) {
             landscape = true;
-            numberCharPerLine = 120;
         }
+        
+        int fontSize = (int) fontSizeComboBox.getSelectedItem();
 
         // obtain a HardcopyWriter to do this
         HardcopyWriter writer = null;
         try {
-            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarRoster"), Control.reportFontSize, .5, .5, .5, .5, isPreview, "",
+            writer = new HardcopyWriter(mFrame, Bundle.getMessage("TitleCarRoster"), fontSize, .5, .5, .5, .5, isPreview, "",
                     landscape, true, null);
         } catch (HardcopyWriter.PrintCanceledException ex) {
             log.debug("Print cancelled");
             return;
         }
+        
+        numberCharPerLine = writer.getCharactersPerLine();
 
         // Loop through the Roster, printing as needed
         String location = "";
@@ -286,7 +289,8 @@ public class PrintCarRosterAction extends AbstractAction {
     }
 
     JComboBox<String> sortByComboBox = new JComboBox<>();
-    JComboBox<String> manifestOrientationComboBox = Setup.getOrientationComboBox();
+    JComboBox<String> manifestOrientationComboBox = new JComboBox<>();
+    JComboBox<Integer> fontSizeComboBox = new JComboBox<>();
 
     JCheckBox printCarsWithLocation = new JCheckBox(Bundle.getMessage("PrintCarsWithLocation"));
     JCheckBox printCarLength = new JCheckBox(Bundle.getMessage("PrintCarLength"));
@@ -335,6 +339,20 @@ public class PrintCarRosterAction extends AbstractAction {
             JPanel pOrientation = new JPanel();
             pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOrientation")));
             pOrientation.add(manifestOrientationComboBox);
+            
+            manifestOrientationComboBox.addItem(Setup.PORTRAIT);
+            manifestOrientationComboBox.addItem(Setup.LANDSCAPE);
+            
+            JPanel pFontSize = new JPanel();
+            pFontSize.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutFontSize")));
+            pFontSize.add(fontSizeComboBox);
+            
+            // load font sizes 5 through 14
+            for (int i = 5; i < 15; i++) {
+                fontSizeComboBox.addItem(i);
+            }
+            
+            fontSizeComboBox.setSelectedItem(Control.reportFontSize);
 
             JPanel pPanel = new JPanel();
             pPanel.setLayout(new GridBagLayout());
@@ -402,6 +420,7 @@ public class PrintCarRosterAction extends AbstractAction {
             getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
             getContentPane().add(pSortBy);
             getContentPane().add(pOrientation);
+            getContentPane().add(pFontSize);
             getContentPane().add(panePanel);
             getContentPane().add(pButtons);
 
