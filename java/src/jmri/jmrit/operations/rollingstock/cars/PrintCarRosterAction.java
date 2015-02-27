@@ -120,7 +120,7 @@ public class PrintCarRosterAction extends AbstractAction {
 
         try {
             printTitleLine(writer);
-            String previousLocation = "";
+            String previousLocation = null;
             List<RollingStock> cars = panel.carsTableModel.getCarList(sortByComboBox.getSelectedIndex());
             for (RollingStock rs : cars) {
                 Car car = (Car) rs;
@@ -139,12 +139,12 @@ public class PrintCarRosterAction extends AbstractAction {
                     location = padAttribute(location, LocationManager.instance().getMaxLocationAndTrackNameLength() + 3);
                 }
                 // Page break between locations?
-                if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation)
+                if (previousLocation != null && !car.getLocationName().trim().equals(previousLocation)
                         && printPage.isSelected()) {
                     writer.pageBreak();
                     printTitleLine(writer);
                 } // Add a line between locations?
-                else if (!previousLocation.equals("") && !car.getLocationName().trim().equals(previousLocation)
+                else if (previousLocation != null && !car.getLocationName().trim().equals(previousLocation)
                         && printSpace.isSelected()) {
                     writer.write(NEW_LINE);
                 }
@@ -335,6 +335,7 @@ public class PrintCarRosterAction extends AbstractAction {
             JPanel pSortBy = new JPanel();
             pSortBy.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("SortBy")));
             pSortBy.add(sortByComboBox);
+            addComboBoxAction(sortByComboBox);
 
             JPanel pOrientation = new JPanel();
             pOrientation.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOrientation")));
@@ -452,6 +453,18 @@ public class PrintCarRosterAction extends AbstractAction {
         public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
             setVisible(false);
             pcr.printCars();
+        }
+        
+        public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+            if (sortByComboBox.getSelectedItem() != null && sortByComboBox.getSelectedItem().equals(panel.carsTableModel.getSortByName(panel.carsTableModel.SORTBY_LOCATION))) {
+                printSpace.setEnabled(true);
+                printPage.setEnabled(true);
+            } else {
+                printSpace.setEnabled(false);
+                printPage.setEnabled(false);
+                printSpace.setSelected(false);
+                printPage.setSelected(false);
+            }
         }
     }
 
