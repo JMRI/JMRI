@@ -49,6 +49,7 @@ public class PrintLocationsAction extends AbstractAction {
     static final String NEW_LINE = "\n"; // NOI18N
     static final String FORM_FEED = "\f"; // NOI18N
     static final String TAB = "\t"; // NOI18N
+    static final int TAB_LENGTH = 10;
     static final String SPACE = "   ";
 
     static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
@@ -82,6 +83,8 @@ public class PrintLocationsAction extends AbstractAction {
         }
         lpof.initComponents();
     }
+    
+    private int charactersPerLine = 70;
 
     public void printLocations() {
         // obtain a HardcopyWriter
@@ -95,6 +98,9 @@ public class PrintLocationsAction extends AbstractAction {
             log.debug("Print cancelled");
             return;
         }
+        
+        charactersPerLine = writer.getCharactersPerLine();
+        
         try {
             // print locations?
             if (printLocations.isSelected()) {
@@ -298,32 +304,35 @@ public class PrintLocationsAction extends AbstractAction {
             }
             s = location.getName() + NEW_LINE;
             writer.write(s);
-            s = location.getComment() + NEW_LINE;
+            s = SPACE + location.getComment() + NEW_LINE;
             writer.write(s);
             for (Track track : location.getTrackByNameList(null)) {
-                s = SPACE + track.getName() + NEW_LINE;
-                writer.write(s);
-                if (!track.getComment().equals(Track.NONE)) {
-                    s = SPACE + SPACE + track.getComment() + NEW_LINE;
+                if (!track.getComment().equals(Track.NONE) || !track.getCommentBoth().equals(Track.NONE) || !track.getCommentPickup().equals(Track.NONE)
+                        || !track.getCommentSetout().equals(Track.NONE)) {
+                    s = SPACE + track.getName() + NEW_LINE;
                     writer.write(s);
-                }
-                if (!track.getCommentBoth().equals(Track.NONE)) {
-                    s = SPACE + SPACE + Bundle.getMessage("CommentBoth") + ":" + NEW_LINE;
-                    writer.write(s);
-                    s = SPACE + SPACE + track.getCommentBoth() + NEW_LINE;
-                    writer.write(s);
-                }
-                if (!track.getCommentPickup().equals(Track.NONE)) {
-                    s = SPACE + SPACE + Bundle.getMessage("CommentPickup") + ":" + NEW_LINE;
-                    writer.write(s);
-                    s = SPACE + SPACE + track.getCommentPickup() + NEW_LINE;
-                    writer.write(s);
-                }
-                if (!track.getCommentSetout().equals(Track.NONE)) {
-                    s = SPACE + SPACE + Bundle.getMessage("CommentSetout") + ":" + NEW_LINE;
-                    writer.write(s);
-                    s = SPACE + SPACE + track.getCommentSetout() + NEW_LINE;
-                    writer.write(s);
+                    if (!track.getComment().equals(Track.NONE)) {
+                        s = SPACE + SPACE + track.getComment() + NEW_LINE;
+                        writer.write(s);
+                    }
+                    if (!track.getCommentBoth().equals(Track.NONE)) {
+                        s = SPACE + SPACE + Bundle.getMessage("CommentBoth") + ":" + NEW_LINE;
+                        writer.write(s);
+                        s = SPACE + SPACE + track.getCommentBoth() + NEW_LINE;
+                        writer.write(s);
+                    }
+                    if (!track.getCommentPickup().equals(Track.NONE)) {
+                        s = SPACE + SPACE + Bundle.getMessage("CommentPickup") + ":" + NEW_LINE;
+                        writer.write(s);
+                        s = SPACE + SPACE + track.getCommentPickup() + NEW_LINE;
+                        writer.write(s);
+                    }
+                    if (!track.getCommentSetout().equals(Track.NONE)) {
+                        s = SPACE + SPACE + Bundle.getMessage("CommentSetout") + ":" + NEW_LINE;
+                        writer.write(s);
+                        s = SPACE + SPACE + track.getCommentSetout() + NEW_LINE;
+                        writer.write(s);
+                    }
                 }
             }
         }
@@ -401,11 +410,11 @@ public class PrintLocationsAction extends AbstractAction {
             for (RollingStock car : cars) {
                 if (car.getTypeName().equals(type) && car.getLocation() != null) {
                     numberOfCars++;
-                    totalTrackLength = totalTrackLength + car.getTotalLength();
+                    totalTrackLength += car.getTotalLength();
                 }
             }
             writer.write(MessageFormat.format(Bundle.getMessage("NumberTypeLength"), new Object[]{numberOfCars, type,
-                totalTrackLength})
+                totalTrackLength, Setup.getLengthUnit().toLowerCase()})
                     + NEW_LINE);
             // don't bother reporting when the number of cars for a given type is zero
             if (numberOfCars > 0) {
@@ -417,7 +426,7 @@ public class PrintLocationsAction extends AbstractAction {
                 if (trackLength > 0) {
                     writer.write(SPACE
                             + MessageFormat.format(Bundle.getMessage("TotalLengthSpur"), new Object[]{type,
-                                trackLength, 100 * totalTrackLength / trackLength}) + NEW_LINE);
+                                trackLength, Setup.getLengthUnit().toLowerCase(), 100 * totalTrackLength / trackLength}) + NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
@@ -429,7 +438,7 @@ public class PrintLocationsAction extends AbstractAction {
                 if (trackLength > 0) {
                     writer.write(SPACE
                             + MessageFormat.format(Bundle.getMessage("TotalLengthYard"), new Object[]{type,
-                                trackLength, 100 * totalTrackLength / trackLength}) + NEW_LINE);
+                                trackLength, Setup.getLengthUnit().toLowerCase(), 100 * totalTrackLength / trackLength}) + NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
@@ -441,7 +450,7 @@ public class PrintLocationsAction extends AbstractAction {
                 if (trackLength > 0) {
                     writer.write(SPACE
                             + MessageFormat.format(Bundle.getMessage("TotalLengthInterchange"), new Object[]{type,
-                                trackLength, 100 * totalTrackLength / trackLength}) + NEW_LINE);
+                                trackLength, Setup.getLengthUnit().toLowerCase(), 100 * totalTrackLength / trackLength}) + NEW_LINE);
                 } else {
                     writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                 }
@@ -454,7 +463,7 @@ public class PrintLocationsAction extends AbstractAction {
                     if (trackLength > 0) {
                         writer.write(SPACE
                                 + MessageFormat.format(Bundle.getMessage("TotalLengthStage"), new Object[]{type,
-                                    trackLength, 100 * totalTrackLength / trackLength}) + NEW_LINE);
+                                    trackLength, Setup.getLengthUnit().toLowerCase(), 100 * totalTrackLength / trackLength}) + NEW_LINE);
                     } else {
                         writer.write(SPACE + Bundle.getMessage("None") + NEW_LINE);
                     }
@@ -476,7 +485,7 @@ public class PrintLocationsAction extends AbstractAction {
                     writer.write(SPACE
                             + SPACE
                             + MessageFormat.format(Bundle.getMessage("LocationTrackLength"), new Object[]{
-                                location.getName(), track.getName(), track.getLength()}) + NEW_LINE);
+                                location.getName(), track.getName(), track.getLength(), Setup.getLengthUnit().toLowerCase()}) + NEW_LINE);
                 }
             }
         }
@@ -515,9 +524,8 @@ public class PrintLocationsAction extends AbstractAction {
 
     private void printTrackInfo(Location location, List<Track> tracks) {
         for (Track track : tracks) {
-            String name = track.getName();
             try {
-                String s = TAB + name + getDirection(location.getTrainDirections() & track.getTrainDirections());
+                String s = TAB + track.getName() + getDirection(location.getTrainDirections() & track.getTrainDirections());
                 writer.write(s);
                 writer.write(getTrackTypes(location, track));
                 writer.write(getTrackRoads(track));
@@ -534,7 +542,7 @@ public class PrintLocationsAction extends AbstractAction {
         }
     }
 
-    private int characters = 70;
+    
 
     private String getLocationTypes(Location location) {
         StringBuffer buf = new StringBuffer(TAB + TAB + Bundle.getMessage("TypesServiced") + NEW_LINE + TAB + TAB);
@@ -545,7 +553,7 @@ public class PrintLocationsAction extends AbstractAction {
             if (location.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = type.length() + 2;
                 }
@@ -557,7 +565,7 @@ public class PrintLocationsAction extends AbstractAction {
             if (location.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = type.length() + 2;
                 }
@@ -583,7 +591,7 @@ public class PrintLocationsAction extends AbstractAction {
             if (track.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = type.length() + 2;
                 }
@@ -595,7 +603,7 @@ public class PrintLocationsAction extends AbstractAction {
             if (track.acceptsTypeName(type)) {
                 typeCount++;
                 charCount += type.length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = type.length() + 2;
                 }
@@ -627,7 +635,7 @@ public class PrintLocationsAction extends AbstractAction {
 
         for (String road : track.getRoadNames()) {
             charCount += road.length() + 2;
-            if (charCount > characters) {
+            if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                 buf.append(NEW_LINE + TAB + TAB);
                 charCount = road.length() + 2;
             }
@@ -655,7 +663,7 @@ public class PrintLocationsAction extends AbstractAction {
 
         for (String load : track.getLoadNames()) {
             charCount += load.length() + 2;
-            if (charCount > characters) {
+            if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                 buf.append(NEW_LINE + TAB + TAB);
                 charCount = load.length() + 2;
             }
@@ -686,7 +694,7 @@ public class PrintLocationsAction extends AbstractAction {
 
         for (String load : track.getShipLoadNames()) {
             charCount += load.length() + 2;
-            if (charCount > characters) {
+            if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                 buf.append(NEW_LINE + TAB + TAB);
                 charCount = load.length() + 2;
             }
@@ -731,7 +739,7 @@ public class PrintLocationsAction extends AbstractAction {
                     continue;
                 }
                 charCount += train.getName().length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = train.getName().length() + 2;
                 }
@@ -751,7 +759,7 @@ public class PrintLocationsAction extends AbstractAction {
                     continue;
                 }
                 charCount += route.getName().length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = route.getName().length() + 2;
                 }
@@ -785,7 +793,7 @@ public class PrintLocationsAction extends AbstractAction {
                     continue;
                 }
                 charCount += train.getName().length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = train.getName().length() + 2;
                 }
@@ -805,7 +813,7 @@ public class PrintLocationsAction extends AbstractAction {
                     continue;
                 }
                 charCount += route.getName().length() + 2;
-                if (charCount > characters) {
+                if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                     buf.append(NEW_LINE + TAB + TAB);
                     charCount = route.getName().length() + 2;
                 }
@@ -839,7 +847,7 @@ public class PrintLocationsAction extends AbstractAction {
                 continue;
             }
             charCount += location.getName().length() + 2;
-            if (charCount > characters) {
+            if (charCount > charactersPerLine - 2*TAB_LENGTH) {
                 buf.append(NEW_LINE + TAB + TAB);
                 charCount = location.getName().length() + 2;
             }

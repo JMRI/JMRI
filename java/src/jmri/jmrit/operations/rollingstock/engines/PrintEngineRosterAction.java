@@ -31,7 +31,7 @@ public class PrintEngineRosterAction extends AbstractAction {
      *
      */
     private static final long serialVersionUID = -5500987959098367364L;
-    private static final int numberCharPerLine = 90;
+    private int numberCharPerLine = 90;
     final int ownerMaxLen = 5; // Only show the first 5 characters of the owner's name
 
     EngineManager manager = EngineManager.instance();
@@ -66,6 +66,8 @@ public class PrintEngineRosterAction extends AbstractAction {
             log.debug("Print cancelled");
             return;
         }
+        
+        numberCharPerLine = writer.getCharactersPerLine();
 
         // Loop through the Roster, printing as needed
         String number;
