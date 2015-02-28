@@ -109,6 +109,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
                 + DEL + Bundle.getMessage("Load") + DEL + Bundle.getMessage("Location") + DEL
                 + Bundle.getMessage("Track") + DEL + Bundle.getMessage("FinalDestination") + DEL
                 + Bundle.getMessage("Track") + DEL + Bundle.getMessage("Train") + DEL + Bundle.getMessage("Moves")
+//                + DEL + Bundle.getMessage("DateAndTime") 
                 + DEL + Bundle.getMessage("DateAndTime");
         return header;
     }
@@ -173,6 +174,7 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
 
         String line = rs.getNumber() + DEL + rsRoad + DEL + rsType + DEL + carLoad + DEL + rsLocationName + DEL
                 + rsTrackName + DEL + carFinalDest + DEL + carFinalDestTrack + DEL + rsTrainName + DEL + rs.getMoves()
+//                + DEL + Calendar.getInstance().getTime().toString() 
                 + DEL + getTime();
 
         // append line to file
@@ -325,14 +327,14 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
     }
 
     /**
-     * Return the date and time in an Excel friendly format
-     * MMM dd 2015 hh:mm:ss
+     * Return the date and time in an MS Excel friendly format
+     * yyyy/MM/dd HH:mm:ss
      * @return
      */
     private String getTime() {
         String time = Calendar.getInstance().getTime().toString();
-        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");
-        SimpleDateFormat dtout = new SimpleDateFormat("MMM dd 2015 hh:mm:ss");
+        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd HH:mm:ss z yyyy");
+        SimpleDateFormat dtout = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
         try {
             return dtout.format(dt.parse(time));
         } catch (ParseException e) {
