@@ -97,7 +97,8 @@ public class ExportCars extends XmlFile {
                 + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Weight") + del
                 + Bundle.getMessage("Color") + del + Bundle.getMessage("Owner") + del + Bundle.getMessage("Built")
                 + del + Bundle.getMessage("Location") + del + "-" + del + Bundle.getMessage("Track") + del
-                + Bundle.getMessage("Load") + del + Bundle.getMessage("Kernel") + del + Setup.getValueLabel();
+                + Bundle.getMessage("Load") + del + Bundle.getMessage("Kernel") 
+                + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel();
         fileOut.println(header);
 
         // store car number, road, type, length, weight, color, owner, built date, location and track
@@ -124,12 +125,12 @@ public class ExportCars extends XmlFile {
             // only export value field if value has been set.
             value = "";
             if (!car.getValue().equals(Car.NONE)) {
-                value = del + ESC + car.getValue() + ESC;
+                value = ESC + car.getValue() + ESC;
             }
             line = car.getNumber() + del + car.getRoadName() + del + carType + del + car.getLength() + del
                     + car.getWeight() + del + car.getColor() + del + car.getOwner() + del + car.getBuilt() + del
-                    + carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName() // NOI18N
-                    + value; // NOI18N
+                    + carLocationName + ",-," + carTrackName + del + car.getLoadName() + del + car.getKernelName()
+                    + del + car.getMoves() + del + value ; // NOI18N
             fileOut.println(line);
         }
         fileOut.flush();

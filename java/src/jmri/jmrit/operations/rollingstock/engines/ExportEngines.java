@@ -97,7 +97,7 @@ public class ExportEngines extends XmlFile {
         String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del
                 + Bundle.getMessage("Model") + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Owner")
                 + del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") + del + "-" + del
-                + Bundle.getMessage("Track") + del + Setup.getValueLabel();
+                + Bundle.getMessage("Track") + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel();
         fileOut.println(header);
 
         // store engine number, road, model, length, owner, built date, location and track
@@ -124,11 +124,11 @@ public class ExportEngines extends XmlFile {
             // only export value field if value has been set.
             value = "";
             if (!engine.getValue().equals("")) {
-                value = del + ESC + engine.getValue() + ESC;
+                value = ESC + engine.getValue() + ESC;
             }
             line = engine.getNumber() + del + engine.getRoadName() + del + engineModel + del + engine.getLength() + del
                     + engine.getOwner() + del + engine.getBuilt() + del + engineLocationName + ",-," + engineTrackName // NOI18N
-                    + value;
+                    + del + engine.getMoves() + del + value;
             fileOut.println(line);
         }
         fileOut.flush();

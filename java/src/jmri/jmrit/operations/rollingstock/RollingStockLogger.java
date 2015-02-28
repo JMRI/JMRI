@@ -8,6 +8,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.List;
 import jmri.jmrit.XmlFile;
@@ -322,8 +324,20 @@ public class RollingStockLogger extends XmlFile implements java.beans.PropertyCh
         return date;
     }
 
+    /**
+     * Return the date and time in an Excel friendly format
+     * MMM dd 2015 hh:mm:ss
+     * @return
+     */
     private String getTime() {
-        return Calendar.getInstance().getTime().toString();
+        String time = Calendar.getInstance().getTime().toString();
+        SimpleDateFormat dt = new SimpleDateFormat("EEE MMM dd hh:mm:ss z yyyy");
+        SimpleDateFormat dtout = new SimpleDateFormat("MMM dd 2015 hh:mm:ss");
+        try {
+            return dtout.format(dt.parse(time));
+        } catch (ParseException e) {
+            return time; // there was an issue, use the old format
+        }
     }
 
     static Logger log = LoggerFactory.getLogger(RollingStockLogger.class.getName());

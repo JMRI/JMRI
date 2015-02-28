@@ -302,7 +302,7 @@ public class ImportCars extends ImportRollingStock {
                                     carLocation = carLocation + " " + inputLine[base + 10];
                                 }
                             }
-                            // create track location if there's one
+                            // get track name if there's one
                         }
                         log.debug("Car ({} {}) has location ({})", carRoad, carNumber, carLocation);
                         // now get the track name

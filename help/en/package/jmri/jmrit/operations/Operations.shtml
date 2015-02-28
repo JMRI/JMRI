@@ -57,6 +57,7 @@
    <UL>
     <LI><A HREF="#newUserAdvice">New User Advice</A></LI>
     <LI><A HREF="#demo">Operations Demo Files</A></LI>
+    <LI><A HREF="#Display">Display</A></LI>
     <LI><A HREF="#QuickStartHelp">Quick Start Help</A></LI>
     <LI><A HREF="#Settings">Settings</A>
      <UL>
@@ -243,6 +244,15 @@
     train using the "departure" track, car pulls directly into the train rather than to a specific
     departure track makes the operations run more smoothly.  By not specifying the A/D tracks, you're
     letting your operators, and not the program, decide which tracks to use when servicing a train.</P>
+    
+    <A NAME="Display"></A>
+    <H3>Display</H3>
+    
+    To adjust the display font size or appearance of the JMRI windows, select "Preferences.." found under
+    "Edit" in the main window menu bar. A new window will appear with options to make layout connections, change
+    the "Display" appearance and font size, and many other settings including the "Railroad Name". Most
+    JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get information
+    about the window you're using. 
 
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>

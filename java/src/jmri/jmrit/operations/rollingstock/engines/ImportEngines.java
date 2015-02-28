@@ -218,7 +218,7 @@ public class ImportEngines extends ImportRollingStock {
                                     engineLocation = engineLocation + " " + inputLine[base + 9];
                                 }
                             }
-                            // create track location if there's one
+                            // get track name if there's one
                         }
                         boolean foundDash = false;
                         for (int i = base + 8; i < inputLine.length; i++) {
@@ -227,7 +227,7 @@ public class ImportEngines extends ImportRollingStock {
                                 if (inputLine.length > i + 1) {
                                     engineTrack = inputLine[++i];
                                 }
-                            } else if (foundDash) {
+                            } else if (foundDash && !comma) {
                                 engineTrack = engineTrack + " " + inputLine[i];
                             }
                         }
