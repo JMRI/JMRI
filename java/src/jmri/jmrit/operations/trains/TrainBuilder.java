@@ -1928,7 +1928,7 @@ public class TrainBuilder extends TrainCommon {
                             && !Setup.isAllowReturnToStagingEnabled()) {
                         for (RollingStock rs : carManager.getList()) {
                             // don't remove caboose or car with FRED already assigned to train
-                            if (rs.getTrack() == _departStageTrack && rs.getDestinationTrack() != _departStageTrack) {
+                            if (rs.getTrack() == _departStageTrack && rs.getRouteDestination() == null) {
                                 rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
                             }
                         }
