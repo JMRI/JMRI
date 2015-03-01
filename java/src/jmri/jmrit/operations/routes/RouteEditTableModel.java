@@ -408,7 +408,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
         _route.deleteLocation(routeList.get(row));
     }
 
-    private int _trainDirection = Setup.getDirectionInt(Setup.getTrainDirectionComboBox().getItemAt(0));
+    private int _trainDirection = Setup.getDirectionInt(Setup.getTrainDirectionList().get(0));
 
     public int getLastTrainDirection() {
         return _trainDirection;

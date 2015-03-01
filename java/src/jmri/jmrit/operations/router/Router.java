@@ -145,7 +145,7 @@ public class Router extends TrainCommon {
                 }
             }
             if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterNoTracks"), new Object[]{
+                addLine(_buildReport, SEVEN, _status = MessageFormat.format(Bundle.getMessage("RouterNoTracks"), new Object[]{
                     clone.getDestinationName(), car.toString()}));
                 return false;
             }

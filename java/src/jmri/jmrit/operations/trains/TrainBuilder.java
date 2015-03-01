@@ -1927,7 +1927,8 @@ public class TrainBuilder extends TrainCommon {
                     if (_departStageTrack == _terminateStageTrack && !_train.isAllowReturnToStagingEnabled()
                             && !Setup.isAllowReturnToStagingEnabled()) {
                         for (RollingStock rs : carManager.getList()) {
-                            if (rs.getTrack() == _departStageTrack) {
+                            // don't remove caboose or car with FRED already assigned to train
+                            if (rs.getTrack() == _departStageTrack && rs.getDestinationTrack() != _departStageTrack) {
                                 rs.setLocation(rs.getLocation(), null); // takes care of cars in a kernel
                             }
                         }
@@ -2046,25 +2047,27 @@ public class TrainBuilder extends TrainCommon {
                 addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
                 continue; // no
             }
+            
             // check for car order?
             car = getCarOrder(car);
+            
             // is car departing staging and generate custom load?
             if (!generateCarLoadFromStaging(car)) {
                 if (!generateCarLoadStagingToStaging(car) && car.getTrack() == _departStageTrack
                         && !_departStageTrack.shipsLoad(car.getLoadName(), car.getTypeName())) {
-                    // build failure car departing staging with a restricted load
+                    // report build failure car departing staging with a restricted load
                     addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageLoad"),
                             new Object[]{car.toString(), car.getLoadName(), _departStageTrack.getName()}));
                     addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
-                    continue;
+                    continue; // keep going and see if there are other cars with issues outs of staging
                 }
             }
             // does car have a custom load without a destination?
-            // If departing staging, a destination for this car is needed.
+            // If departing staging, a destination for this car is needed, so keep going
             if (findFinalDestinationForCarLoad(car) && car.getDestination() == null
                     && car.getTrack() != _departStageTrack) {
                 // done with this car, it has a custom load, and there are spurs/schedules, but no destination found
-                addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                checkCarOrder(car);
                 continue;
             }
             // does car have a final destination, but no destination
@@ -2108,9 +2111,10 @@ public class TrainBuilder extends TrainCommon {
                             car.getTypeName(), car.getLoadName(), car.getLocationName(), car.getTrackName(),
                             car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
                 // does the car have a final destination track that is willing to service the car?
-                if (car.getFinalDestinationTrack() != null
-                        && car.getFinalDestinationTrack().getScheduleMode() == Track.MATCH) {
+                // note the default mode for all track types is MATCH
+                if (car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack().getScheduleMode() == Track.MATCH) {
                     String status = car.testDestination(car.getFinalDestination(), car.getFinalDestinationTrack());
+                    // keep going if the issue was track length and the track accepts the car's load
                     if (!status.equals(Track.OKAY) && !status.startsWith(Track.LENGTH)
                             && !(status.contains(Track.CUSTOM) && status.contains(Track.LOAD))) {
                         addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoDestTrackNewLoad"),
@@ -2123,7 +2127,7 @@ public class TrainBuilder extends TrainCommon {
                                     .getMessage("buildRemovingFinalDestination"), new Object[]{
                                         car.getFinalDestinationTrack().getName(), car.toString(),
                                         car.getFinalDestination().getName(), car.getFinalDestinationTrack().getName()}));
-                            car.setFinalDestination(null);
+                            car.setFinalDestination(null); // track is too short for this kernel, can never go there
                             car.setFinalDestinationTrack(null);
                         } else if (car.getTrack() == _departStageTrack) {
                             addLine(_buildReport, ONE, MessageFormat.format(
@@ -2140,43 +2144,38 @@ public class TrainBuilder extends TrainCommon {
                 if (!Router.instance().setDestination(car, _train, _buildReport)) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(
                             Bundle.getMessage("buildNotAbleToSetDestination"), new Object[]{car.toString(),
-                                Router.instance().getStatus()}));
+                                    Router.instance().getStatus()}));
                     // don't move car if routing issue was track space but not departing staging
-                    // if ((!Router.instance().getStatus().startsWith(Track.LENGTH) && !Router.instance()
-                    // .getStatus().startsWith(Track.CAPACITY))
-                    if ((!Router.instance().getStatus().startsWith(Track.LENGTH) && !_train
-                            .isServiceAllCarsWithFinalDestinationsEnabled())
-                            || (car.getLocationName().equals(_departLocation.getName()) && _departStageTrack != null)) {
+                    if ((!Router.instance().getStatus().startsWith(Track.LENGTH) && !_train.isServiceAllCarsWithFinalDestinationsEnabled())
+                            || (car.getTrack() == _departStageTrack)) {
                         // add car to not able to route list
                         if (!_notRoutable.contains(car)) {
                             _notRoutable.add(car);
                         }
                         // move this car, routing failed!
                         findDestinationAndTrack(car, rl, routeIndex, _routeList.size());
+                        continue;
                     } else {
-                        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                        checkCarOrder(car);
+                        continue;
                     }
                 } else {
                     // did the router assign a destination?
                     if (!checkCarForDestinationAndTrack(car, rl, routeIndex) && car.getTrack() != _departStageTrack) {
                         log.debug("Skipping car ({}) no car destination", car.toString()); // NOI18N
-                        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"),
-                                new Object[]{car.toString()}));
-                        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                        checkCarOrder(car);
                         continue;
                     } else {
                         // if departing staging try and find a destination for this car
-                        if (car.getDestination() == null && car.getTrack() == _departStageTrack
-                                && _terminateStageTrack != null) {
-                            log.debug(
-                                    "Car ({}) departing staging with final destination ({}) but no destination, try staging", // NOI18N
+                        if (car.getDestination() == null && car.getTrack() == _departStageTrack && _terminateStageTrack != null) {
+                            log.debug("Car ({}) departing staging with final destination ({}) but no destination, try staging", // NOI18N
                                     car.toString(), car.getFinalDestinationName());
                             findDestinationAndTrack(car, rl, _train.getTrainTerminatesRouteLocation());
                         }
                     }
                 }
-            } // does car have a destination?
-            else if (checkCarForDestinationAndTrack(car, rl, routeIndex)) {
+             // does car have a destination?
+            } else if (checkCarForDestinationAndTrack(car, rl, routeIndex)) {
                 // car does not have a destination, search for the best one
             } else {
                 findDestinationAndTrack(car, rl, routeIndex, _routeList.size());
@@ -3417,6 +3416,27 @@ public class TrainBuilder extends TrainCommon {
         }
         return bestCar;
     }
+    
+    /**
+     * Determines if car was sitting on a FIFO or LIFO track, and if the car
+     * wasn't given a destination, shifts the car's order earlier in the car
+     * list so it won't be evaluated again.
+     * 
+     * @param car
+     */
+    private void checkCarOrder(Car car) {
+        // is car sitting on a FIFO or LIFO track?
+        if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL) && _carList.contains(car)) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildBypassCarServiceOrder"),
+                    new Object[]{car.toString(), car.getTrackName(), car.getTrack().getServiceOrder()}));
+            // move car in front of current pointer so car is no longer used on this pass
+            _carList.remove(car);
+            _carList.add(_carIndex, car);
+        }
+        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"),
+                new Object[]{car.toString()}));
+        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+    }
 
     private boolean checkCarForDestinationAndTrack(Car car, RouteLocation rl, RouteLocation rld)
             throws BuildFailedException {
@@ -3646,17 +3666,8 @@ public class TrainBuilder extends TrainCommon {
         car.setFinalDestinationTrack(car.getPreviousFinalDestinationTrack());
         car.setDestination(null, null);
         car.updateKernel();
-        // is car sitting on a FIFO or LIFO track?
-        if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
-            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildBypassCarServiceOrder"),
-                    new Object[]{car.toString(), car.getTrackName(), car.getTrack().getServiceOrder()}));
-            // move car id in front of current pointer so car is no longer used on this pass
-            _carList.remove(car);
-            _carList.add(_carIndex, car);
-        }
-        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"), new Object[]{car
-            .toString()}));
-        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+        
+        checkCarOrder(car);
         return true; // car no longer has a destination, but it had one.
     }
 
@@ -4065,17 +4076,7 @@ public class TrainBuilder extends TrainCommon {
             addCarToTrain(car, rl, rldSave, trackSave);
             return true;
         }
-        // is car sitting on a FIFO or LIFO track?
-        if (car.getTrack() != null && !car.getTrack().getServiceOrder().equals(Track.NORMAL)) {
-            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildBypassCarServiceOrder"),
-                    new Object[]{car.toString(), car.getTrackName(), car.getTrack().getServiceOrder()}));
-            // move car in front of current pointer so car is no longer used on this pass
-            _carList.remove(car);
-            _carList.add(_carIndex, car);
-        }
-        addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildNoDestForCar"), new Object[]{car
-            .toString()}));
-        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+        checkCarOrder(car);
         return false; // no build errors, but car not given destination
     }
 

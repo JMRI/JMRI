@@ -1636,23 +1636,13 @@ public class Setup {
      */
     public static JComboBox<String> getTrainDirectionComboBox() {
         JComboBox<String> box = new JComboBox<>();
-        if ((traindir & EAST) > 0) {
-            box.addItem(EAST_DIR);
-        }
-        if ((traindir & WEST) > 0) {
-            box.addItem(WEST_DIR);
-        }
-        if ((traindir & NORTH) > 0) {
-            box.addItem(NORTH_DIR);
-        }
-        if ((traindir & SOUTH) > 0) {
-            box.addItem(SOUTH_DIR);
-        }
+        for (String direction : getTrainDirectionList())
+            box.addItem(direction);
         return box;
     }
 
     /**
-     * Get train directions
+     * Get train directions String format
      *
      * @return List of valid train directions
      */
