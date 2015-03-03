@@ -4026,14 +4026,14 @@ public class TrainBuilder extends TrainCommon {
                     double nextRatio = nextCarMoves / rld.getMaxCarMoves();
                     // bias cars to the terminal
                     if (rld == _train.getTrainTerminatesRouteLocation()) {
-                        log.debug("Location ({}) is terminate location {}", rld.getName(), Double.toString(nextRatio));
                         nextRatio = nextRatio * nextRatio;
+                        log.debug("Location ({}) is terminate location, adjusted nextRatio {}", rld.getName(), Double.toString(nextRatio));
                     }
                     // bias cars with default loads to a track with a schedule
                     if (!trackTemp.getScheduleId().equals(Track.NONE)) {
-                        log.debug("Track ({}) has schedule ({}) adjust nextRatio = {}", // NOI18N
-                                trackTemp.getName(), trackTemp.getScheduleName(), Double.toString(nextRatio));
                         nextRatio = nextRatio * nextRatio;
+                        log.debug("Track ({}) has schedule ({}), adjusted nextRatio {}",
+                                trackTemp.getName(), trackTemp.getScheduleName(), Double.toString(nextRatio));
                     }
                     // check for an earlier drop in the route
                     for (int m = start; m < routeEnd; m++) {
@@ -4100,17 +4100,17 @@ public class TrainBuilder extends TrainCommon {
                 return false;
             }
             if (!checkPickUpTrainDirection(car, rld)) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterDirection"),
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoPickupLaterDirection"),
                         new Object[]{car.toString(), rld.getName(), rld.getId()}));
                 return false;
             }
             if (!rld.isPickUpAllowed()) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLater"), new Object[]{
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoPickupLater"), new Object[]{
                     car.toString(), rld.getName(), rld.getId()}));
                 return false;
             }
             if (rld.getMaxCarMoves() - rld.getCarMoves() <= 0) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildPickupLaterNoMoves"),
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoPickupLaterMoves"),
                         new Object[]{car.toString(), rld.getName(), rld.getId()}));
                 return false;
             }
@@ -4127,6 +4127,7 @@ public class TrainBuilder extends TrainCommon {
      * staging.
      *
      * @param car the car!
+     * @param stageTrack the staging track the car will terminate to
      * @return true if a load was generated this this car.
      */
     private boolean generateLoadCarDepartingAndTerminatingIntoStaging(Car car, Track stageTrack) {

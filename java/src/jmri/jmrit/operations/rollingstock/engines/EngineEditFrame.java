@@ -403,7 +403,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                 return;
             }
             // check to see if engine with road and number already exists
-            Engine engine = manager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField
+            Engine engine = manager.getByRoadAndNumber((String)roadComboBox.getSelectedItem(), roadNumberTextField
                     .getText());
             if (engine != null) {
                 if (_engine == null || !engine.getId().equals(_engine.getId())) {
@@ -417,9 +417,9 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             if (_engine != null
                     && _engine.getRoadName() != null
                     && !_engine.getRoadName().equals("")
-                    && (!_engine.getRoadName().equals(roadComboBox.getSelectedItem().toString()) || !_engine
+                    && (!_engine.getRoadName().equals(roadComboBox.getSelectedItem()) || !_engine
                     .getNumber().equals(roadNumberTextField.getText()))) {
-                String road = roadComboBox.getSelectedItem().toString();
+                String road = (String)roadComboBox.getSelectedItem();
                 String number = roadNumberTextField.getText();
                 manager.changeId(_engine, road, number);
                 _engine.setRoadName(road);
@@ -437,14 +437,14 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         }
         if (ae.getSource() == deleteButton) {
             log.debug("engine delete button activated");
-            if (_engine != null && _engine.getRoadName().equals(roadComboBox.getSelectedItem().toString())
+            if (_engine != null && _engine.getRoadName().equals(roadComboBox.getSelectedItem())
                     && _engine.getNumber().equals(roadNumberTextField.getText())) {
                 manager.deregister(_engine);
                 _engine = null;
                 // save engine file
                 writeFiles();
             } else {
-                Engine e = manager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField
+                Engine e = manager.getByRoadAndNumber((String)roadComboBox.getSelectedItem(), roadNumberTextField
                         .getText());
                 if (e != null) {
                     manager.deregister(e);
@@ -460,7 +460,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                         .getMessage("engineRoadLong"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Engine e = manager.getByRoadAndNumber(roadComboBox.getSelectedItem().toString(), roadNumberTextField
+            Engine e = manager.getByRoadAndNumber((String)roadComboBox.getSelectedItem(), roadNumberTextField
                     .getText());
             if (e != null) {
                 log.info("Can not add, engine already exists");
@@ -479,23 +479,23 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     }
 
     private void addEngine() {
-        if (roadComboBox.getSelectedItem() != null && !roadComboBox.getSelectedItem().toString().equals("")) {
-            if (_engine == null || !_engine.getRoadName().equals(roadComboBox.getSelectedItem().toString())
+        if (roadComboBox.getSelectedItem() != null && !roadComboBox.getSelectedItem().equals("")) {
+            if (_engine == null || !_engine.getRoadName().equals(roadComboBox.getSelectedItem())
                     || !_engine.getNumber().equals(roadNumberTextField.getText())) {
-                _engine = manager.newEngine(roadComboBox.getSelectedItem().toString(), roadNumberTextField.getText());
+                _engine = manager.newEngine((String)roadComboBox.getSelectedItem(), roadNumberTextField.getText());
             }
             if (modelComboBox.getSelectedItem() != null) {
-                _engine.setModel(modelComboBox.getSelectedItem().toString());
+                _engine.setModel((String)modelComboBox.getSelectedItem());
             }
             if (typeComboBox.getSelectedItem() != null) {
-                _engine.setTypeName(typeComboBox.getSelectedItem().toString());
+                _engine.setTypeName((String)typeComboBox.getSelectedItem());
             }
             if (lengthComboBox.getSelectedItem() != null) {
-                _engine.setLength(lengthComboBox.getSelectedItem().toString());
+                _engine.setLength((String)lengthComboBox.getSelectedItem());
             }
             _engine.setBuilt(builtTextField.getText());
             if (ownerComboBox.getSelectedItem() != null) {
-                _engine.setOwner(ownerComboBox.getSelectedItem().toString());
+                _engine.setOwner((String)ownerComboBox.getSelectedItem());
             }
             if (consistComboBox.getSelectedItem() != null) {
                 if (consistComboBox.getSelectedItem().equals("")) {
