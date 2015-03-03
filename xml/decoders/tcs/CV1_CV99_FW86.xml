@@ -1081,7 +1081,7 @@
     <label xml:lang="it">Luminosità costante di smorzamento</label>
     <tooltip xml:lang="it">16 = 50% per bulbi incandescenti, 2-6 per LEDs</tooltip>
   </variable>
-  <variable CV="66" item="Forward Motor Trim" default="128" comment="Range 0-256">
+  <variable CV="66" item="Forward Trim" default="128" comment="Range 0-256">
     <decVal max="256"/>
     <label>Forward Motor Trim</label>
     <comment>Range 0-256</comment>
@@ -1093,7 +1093,7 @@
     <label>Speed Table</label>
     <label xml:lang="it">Tabella Velocità</label>
   </variable>
-  <variable CV="95" item="Reverse Motor Trim" default="128" comment="Range 0-256">
+  <variable CV="95" item="Reverse Trim" default="128" comment="Range 0-256">
     <decVal max="256"/>
     <label>Reverse Motor Trim</label>
     <comment>Range 0-256</comment>
