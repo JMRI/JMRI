@@ -99,11 +99,10 @@
         <output name="Brake"/>
         <size length="0.834" width="0.361" height="0.101" units="inches"/>
       </model>
-      <model model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" lowVersionID="86" highVersionID="88" productID="23">
+      <model model="CN-GP" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 3 functions" lowVersionID="86" highVersionID="88" productID="23">
         <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
         <output name="Dim"/>
         <output name="Ditch"/>
         <output name="Motor"/>
