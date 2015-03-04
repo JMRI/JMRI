@@ -2862,6 +2862,18 @@
     manifests. Press the "Add" button under the table heading "Comment" to add a comment to a
     location.</p>
 
+   <H3>Route Departing Staging</H3>
+
+   The program gives you several route options with regards to trains that depart from staging. You
+   can control which trains in staging have the proper length or number of cars by adjusting the
+   route's maximum train length and requested car moves. For example, if you set the route's
+   departure staging location maximum length train length to 800 feet, the program will ignore when
+   building the train all staging tracks that have more than 800 feet of rolling stock. And if you
+   set the car moves for the departure staging location to 12, the program will ignore all staging
+   tracks that have more than 12 cars. However, if you set the route's staging departure car moves
+   count to "0", the program will select a staging track that doesn't have any rolling stock, as
+   long as the train doesn't require a locomotive, caboose, or car with FRED.
+
    <H3>Save Route</H3>
 
    Press "Save Route" to save your route. The program will create a file (OperationsRouteRoster.xml)
