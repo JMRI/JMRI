@@ -45,36 +45,28 @@ get used to, but it is definitely worth buying a textbook (e.g. <a
 	href="http://www.amazon.com/exec/obidos/tg/detail/-/0321305027/qid=1124158635">
 The Java Developer's Guide to Eclipse</a>).</p>
 
-<P>JMRI developers use subversion (SVN) for source control as of
-July 2011. Previously we used CVS for source control, and using CVS is
-no longer supported. If you were already using Eclipse and CVS it is
-strongly recommended that you start fresh and download the latest
-version of Eclipse and create a new workspace before using SVN to get
-the latest files.</P>
+<P>JMRI developers use subversion (SVN) for source control.  The jmri repository is hosted on SourceForge.</P>
 
-<P>These instructions were developed and tested using "Eclipse IDE for Java Developers" version "Indigo Release".
-<P>Also note that at the time of writing this help document that JMRI required JAVA version 6.  You must confirm
-that JRE 6 is the default Java Runtime Environment.
+<P>These instructions were originally developed and tested using "Eclipse IDE for Java Developers" version "Indigo Release", then updated
+and tested using "Luna".</P>
+<P>Also note that at the time of writing this help document that JMRI requires JAVA version 8.  You must confirm
+that JRE 8 is the default Java Runtime Environment.  Eclipse recommends installing release Luna for Java 8, but there are 
+workarounds described online.</P>
 
 <h2>Setting up Eclipse for building JMRI using Subversion</h2>
 
 The standard Eclipse download doesn't have the subversion plugin
-enabled. To install subversion do the following:
+enabled. To install subversion tooling do the following:
 
  <OL>
-  <LI>Open Eclipse.</LI>
+  <LI>Open Eclipse, creating a workspace if needed.</LI>
   <LI>From the main menu bar select "Help" then "Install New Software..."</LI>
-  <LI>Now click on the "Available Software Sites" link.</LI>
-  <LI>Select "http://download.eclipse.org/technology/subversive/0.7/update-site/" and then
-   press the "Enable" button followed by "OK". This should return you to the Install window.</LI>
-    <LI>If the above link didn't appear in the available software sites, you can manually enter the 
-    entire site address into the "Work with" text window.
-  <LI>Now select "http://download.eclipse.org/technology/subversive/0.7/update-site/" in the
-   "Work with:" selection menu, and then select all of the checkboxes, followed by pressing the
-   "Next" button, and complete the SVN installation as prompted by the program.</LI>
+  <LI>Select the "--All Available Sites--" in the "Work with:" selection menu, 
+    and enter Subversive in the filter box.  When the results appear, select 
+   "Subversive SVN Team Provider", then the "Next" button, 
+   and complete the SVN installation as prompted by the program.</LI>
   <LI>You will be asked to restart the program, do so, and then complete the subversion
-   installation by selecting a connector or connectors, and again you will be asked to restart the
-   program when the install of the connectors is complete.</LI>
+   installation by selecting a connector (tested with SVN Kit 1.8.7), and follow the prompts..</LI>
  </OL>
 
  <h2>Getting the JMRI Source using Subversion</h2>
@@ -93,7 +85,7 @@ the following:
    your id and password.</P>
   <LI>Click "Next" then "Finish"</LI>
   <LI>You should now see a window called "Check Out As", click ""Finish"</LI>
-  <LI>If all is well, the check out should begin. It might take a while to download all of the
+  <LI>If all is well, the check out should begin. It will take a while to download all of the
    JMRI files.</LI>
  </OL>
 
@@ -120,8 +112,7 @@ use the JDK.
 <li>Select the build.xml file using the Package Explorer, then right click, and a menu should
 appear.</li>
 <li>Now select "Run As" then "2 Ant Build".</li>
-<Li>Confirm that under the menu tab JRE that you've selected a JDK.</Li>
-<!-- <LI>Select "Targets", and then select "copy resource files", leave the other targets selected.</LI> -->
+<Li>Confirm that under the menu tab JRE that you've selected a JDK, not a JRE.</Li>
 <LI>Now press the "Run" button, this should start the ant build.
 </OL>
 
@@ -130,7 +121,7 @@ Development Kit) rather than a JRE (Java Runtime Environment) which is
 the default. To change the JRE, select "Run As" "2 Ant Build" and a new
 window should appear. Select the "JRE" tab. The change the JRE, select
 the "Separate JRE:" radio button, and then press the "Installed JREs"
-button. If you don't see a JDK, you need to add one.</P>
+button. If you don't see a JDK, you need to add one (from site above).</P>
 
 <P>If the ant build succeeds, you can now launch any of the JMRI applications from ant, and create a jmri.jar file
 if you wish.  Use the "2 Ant Build" and in the window select the "Targets" tab, and
@@ -142,26 +133,14 @@ use the appropriate checkbox to generate what you want.</P>
   Right click on the jmri directory name and select "Refresh". The refresh operation should trigger
   a build of the workspace and the build should complete without error.
  
- <P>As of early 2012, the JMRI build path has a library reference to "jre6" which is Java version
-  6. When installing your JRE be sure and name it "jre6" or you will get an error message stating
-  that the reference to jre6 could not be found.
-  
  <P>To run an application do the following:</P>
  
 <ol>
 
-  <LI>You need to configure the complier compliance level to java 1.6. select under the main
-   control bar "Window-&gt;Preferences", then select "Java-&gt;Complier" Adjust the complier
-   compliance level to 1.6.
+  <LI>You need to verify the compiler compliance level is set to java 1.8. Select under the main
+   control bar "Window-&gt;Preferences", then select "Java-&gt;Compiler".
  
-  <LI>Next you need to configure the Java complier to not scrub the output folders, otherwise
-   some of the resources files that are loaded by the ant build will disappear. To stop the scrub,
-   select "Java-&gt;Complier-&gt;Building". In the building window deselect "Scrub output folders
-   when cleaning projects", then "OK".</LI>
-
-  <LI>Then run the ant build again to load the output folders.</LI>
-
-  <LI>From the "Run" menu, select "Run Configurations..." We'll use the window that opens to
+    <LI>From the "Run" menu, select "Run Configurations..." We'll use the window that opens to
    configure which program(s) to run. (If the Run menu does not have a "Run Configurations..."
    entry, be sure you selected the java directory in the navigation pane above - Eclipse menus are
    context sensitive)</LI>
@@ -209,17 +188,10 @@ use the appropriate checkbox to generate what you want.</P>
         
     </ol>
     
-    <H2>JavaCC</H2>
-
-In March of 2010 JMRI developers started using JavaCC (Java Compiler
-Compiler) to generate code. Currently the compiler places the output
-files in the "tmp" directory under "java". The easiest way to create and
-populate the "tmp" directory is to use the ant build.
-
-<H2>Installing JavaCC</H2>
+    <H2>Installing JavaCC Plugin (alternative to Run As Ant Build method above)</H2>
 
 Instead of using the ant build to populate the "tmp" directory, you can install the
-JavaCC plug-in.  Here's the steps:
+JavaCC plugin.  Here's the steps:
 <P>
 1) Download the Eclipse JavaCC plugin following the instructions found here:
 <A HREF="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</A>
@@ -235,10 +207,10 @@ JavaCC plug-in.  Here's the steps:
 <p>
 5) Confirm that the "Java Build Path" includes the tmp directory (see Project Properties).
 
-<H2>Complier Errors and Warnings</H2>
+<H2>Compiler Errors and Warnings</H2>
 
-The default Eclipse complier configuration produces many unnecessary warnings.  You can adjust the warnings to match the screen shots as
-shown below by going to Window-&gt;Preferences and selecting "Java-&gt;Complier-&gt;Errors/Warnings"
+The default Eclipse compiler configuration produces many unnecessary warnings.  You can adjust the warnings to match the screen shots as
+shown below by going to Window-&gt;Preferences and selecting "Java-&gt;Compiler-&gt;Errors/Warnings"
 
 <P>
 <img src="images/ErrorsWarningsCodeStyle.png">
