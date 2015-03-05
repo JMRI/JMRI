@@ -678,6 +678,8 @@
                 $("#no-websockets").addClass("show").removeClass("hidden");
             }
             $(window).unload(function() {
+                jmri.socket.close();
+                jmri.socket = null;
                 jmri = null;
             });
             return jmri;
