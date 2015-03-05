@@ -252,16 +252,28 @@ public class RosterServlet extends HttpServlet {
                 // this should be an entirely different format than the table
                 this.doRoster(request, response, this.mapper.createObjectNode().put(ID, id), false);
             } else if (type.equals(JSON.IMAGE)) {
-                this.doImage(request, response, FileUtil.getFile(re.getImagePath()));
+                if (re.getImagePath() != null) {
+                    this.doImage(request, response, FileUtil.getFile(re.getImagePath()));
+                } else {
+                    response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                }
             } else if (type.equals(JSON.ICON)) {
                 int function = -1;
                 if (pathInfo.length != (2 + idOffset)) {
                     function = Integer.parseInt(pathInfo[pathInfo.length - 2].substring(1));
                 }
                 if (function == -1) {
-                    this.doImage(request, response, FileUtil.getFile(re.getIconPath()));
+                    if (re.getIconPath() != null) {
+                        this.doImage(request, response, FileUtil.getFile(re.getIconPath()));
+                    } else {
+                        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    }
                 } else {
-                    this.doImage(request, response, FileUtil.getFile(re.getFunctionImage(function)));
+                    if (re.getFunctionImage(function) != null) {
+                        this.doImage(request, response, FileUtil.getFile(re.getFunctionImage(function)));
+                    } else {
+                        response.sendError(HttpServletResponse.SC_NOT_FOUND);
+                    }
                 }
             } else if (type.equals(JSON.SELECTED_ICON)) {
                 if (pathInfo.length != (2 + idOffset)) {
