@@ -2,12 +2,14 @@
 package jmri.managers;
 
 import java.io.File;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.Manager;
 import jmri.SignalGroup;
 import jmri.SignalGroupManager;
 import jmri.implementation.DefaultSignalGroup;
+import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,15 +92,21 @@ public class DefaultSignalGroupManager extends AbstractManager
         List<String> retval = new ArrayList<String>();
         // first locate the signal system directory
         // and get names of systems
-        File signalDir = new File("xml" + File.separator + "signals");
-        File[] files = signalDir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
+        File signalDir;
+        File[] files = new File[0];
+        try {
+            signalDir = new File(FileUtil.findURL("xml/signals", FileUtil.Location.INSTALLED).toURI());
+            files = signalDir.listFiles();
+        } catch (URISyntaxException | NullPointerException ex) {
+            log.error("No signals are defined.", ex);
+        }
+        for (File file : files) {
+            if (file.isDirectory()) {
                 // check that there's an aspects.xml file
-                File aspects = new File(files[i].getPath() + File.separator + "aspects.xml");
+                File aspects = new File(file.getPath() + File.separator + "aspects.xml");
                 if (aspects.exists()) {
-                    log.debug("found system: " + files[i].getName());
-                    retval.add(files[i].getName());
+                    log.debug("found system: " + file.getName());
+                    retval.add(file.getName());
                 }
             }
         }

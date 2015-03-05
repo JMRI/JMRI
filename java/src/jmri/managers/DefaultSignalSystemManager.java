@@ -3,6 +3,8 @@ package jmri.managers;
 
 import java.io.File;
 import java.lang.reflect.Constructor;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import jmri.NamedBean;
@@ -84,40 +86,50 @@ public class DefaultSignalSystemManager extends AbstractManager
         List<String> retval = new ArrayList<String>();
         // first locate the signal system directory
         // and get names of systems
-
+        File signalDir = null;
         //First get the default pre-configured signalling systems
-        File signalDir = new File("xml" + File.separator + "signals");
-        File[] files = signalDir.listFiles();
-        for (int i = 0; i < files.length; i++) {
-            if (files[i].isDirectory()) {
-                // check that there's an aspects.xml file
-                File aspects = new File(files[i].getPath() + File.separator + "aspects.xml");
-                if (aspects.exists()) {
-                    log.debug("found system: " + files[i].getName());
-                    retval.add(files[i].getName());
+        try {
+            signalDir = new File(FileUtil.findURL("xml/signals", FileUtil.Location.INSTALLED).toURI());
+        } catch (URISyntaxException | NullPointerException ex) {
+            log.error("Unable to get installed signals.", ex);
+        }
+        if (signalDir != null) {
+            File[] files = signalDir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
+                    // check that there's an aspects.xml file
+                    File aspects = new File(file.getPath() + File.separator + "aspects.xml");
+                    if (aspects.exists()) {
+                        log.debug("found system: " + file.getName());
+                        retval.add(file.getName());
+                    }
                 }
             }
         }
         //Now get the user defined systems.
-        signalDir = new File(FileUtil.getUserFilesPath()
-                + "resources" + File.separator + "signals");
-        if (!signalDir.exists()) {
-            log.info("User signal resource directory has not been created");
-            try {
-                signalDir.mkdir();
-            } catch (Exception ex) {
-                log.error("Unable to create signal resource directory " + ex);
+        try {
+            URL dir = FileUtil.findURL("signals", FileUtil.Location.USER, "resources", "xml");
+            if (dir == null) {
+                try {
+                    (new File(FileUtil.getUserFilesPath(), "xml/signals")).mkdirs();
+                } catch (Exception ex) {
+                    log.error("Unable to create user's signals directory.", ex);
+                }
+                dir = FileUtil.findURL("xml/signals", FileUtil.Location.USER);
             }
+            signalDir = new File(dir.toURI());
+        } catch (URISyntaxException ex) {
+            log.error("Unable to get installed signals.", ex);
         }
-        files = signalDir.listFiles();
-        if (files != null) {
-            for (int i = 0; i < files.length; i++) {
-                if (files[i].isDirectory()) {
+        if(signalDir != null){
+            File[] files = signalDir.listFiles();
+            for (File file : files) {
+                if (file.isDirectory()) {
                     // check that there's an aspects.xml file
-                    File aspects = new File(files[i].getPath() + File.separator + "aspects.xml");
-                    if ((aspects.exists()) && (!retval.contains(files[i].getName()))) {
-                        log.debug("found system: " + files[i].getName());
-                        retval.add(files[i].getName());
+                    File aspects = new File(file.getPath() + File.separator + "aspects.xml");
+                    if ((aspects.exists()) && (!retval.contains(file.getName()))) {
+                        log.debug("found system: " + file.getName());
+                        retval.add(file.getName());
                     }
                 }
             }

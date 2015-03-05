@@ -9,6 +9,8 @@ import java.awt.event.FocusListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.io.File;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,9 +56,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AddSignalMastPanel extends JPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 2027577182244302143L;
     jmri.UserPreferencesManager prefs = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
     String systemSelectionCombo = this.getClass().getName() + ".SignallingSystemSelected";
@@ -438,7 +437,7 @@ public class AddSignalMastPanel extends JPanel {
 
     void loadMastDefinitions() {
         // need to remove itemListener before addItem() or item event will occur
-        if (mastBox.getItemListeners().length > 0) {
+        if (mastBox.getItemListeners().length > 0) { // should this be a while loop?
             mastBox.removeItemListener(mastBox.getItemListeners()[0]);
         }
         mastBox.removeAllItems();
@@ -454,70 +453,59 @@ public class AddSignalMastPanel extends JPanel {
             // do file IO to get all the appearances
             // gather all the appearance files
             //Look for the default system defined ones first
-            File[] apps = new File("xml" + File.separator + "signals" + File.separator + sigsysname).listFiles();
-            if (apps != null) {
-                for (int j = 0; j < apps.length; j++) {
-                    if (apps[j].getName().startsWith("appearance")
-                            && apps[j].getName().endsWith(".xml")) {
-                        log.debug("   found file: " + apps[j].getName());
-                        // load it and get name 
-                        mastNames.add(apps[j]);
-
-                        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-                        };
-                        Element root = xf.rootFromFile(apps[j]);
-                        String name = root.getChild("name").getText();
-                        mastBox.addItem(name);
-
-                        map.put(name, Integer.valueOf(root.getChild("appearances")
-                                .getChild("appearance")
-                                .getChildren("show")
-                                .size()));
-                    }
+            File[] apps = new File(FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED).toURI()).listFiles();
+            for (File app : apps) {
+                if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
+                    log.debug("   found file: " + app.getName());
+                    // load it and get name
+                    mastNames.add(app);
+                    jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
+                    };
+                    Element root = xf.rootFromFile(app);
+                    String name = root.getChild("name").getText();
+                    mastBox.addItem(name);
+                    map.put(name, root.getChild("appearances")
+                            .getChild("appearance")
+                            .getChildren("show")
+                            .size());
                 }
             }
         } catch (org.jdom2.JDOMException e) {
             mastBox.addItem("Failed to create definition, did you select a system?");
             log.warn("in loadMastDefinitions", e);
-        } catch (java.io.IOException e) {
+        } catch (java.io.IOException | URISyntaxException | NullPointerException e) {
             mastBox.addItem("Failed to read definition, did you select a system?");
             log.warn("in loadMastDefinitions", e);
         }
 
         try {
-            File[] apps = new File(FileUtil.getUserFilesPath() + "resources" + File.separator
-                    + "signals" + File.separator + sigsysname).listFiles();
-            if (apps != null) {
-                for (int j = 0; j < apps.length; j++) {
-                    if (apps[j].getName().startsWith("appearance")
-                            && apps[j].getName().endsWith(".xml")) {
-                        log.debug("   found file: " + apps[j].getName());
+            URL path = FileUtil.findURL("signals/" + sigsysname, FileUtil.Location.USER, "xml", "resources");
+            if (path != null) {
+                File[] apps = new File(path.toURI()).listFiles();
+                for (File app : apps) {
+                    if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
+                        log.debug("   found file: " + app.getName());
                         // load it and get name 
-                        //If the mast file name already exists no point in re-adding it
-                        if (!mastNames.contains(apps[j])) {
-                            mastNames.add(apps[j]);
-
+                        // If the mast file name already exists no point in re-adding it
+                        if (!mastNames.contains(app)) {
+                            mastNames.add(app);
                             jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
                             };
-                            Element root = xf.rootFromFile(apps[j]);
+                            Element root = xf.rootFromFile(app);
                             String name = root.getChild("name").getText();
                             //if the mast name already exist no point in readding it.
                             if (!map.containsKey(name)) {
                                 mastBox.addItem(name);
-                                map.put(name, Integer.valueOf(root.getChild("appearances")
+                                map.put(name, root.getChild("appearances")
                                         .getChild("appearance")
                                         .getChildren("show")
-                                        .size()));
+                                        .size());
                             }
                         }
                     }
                 }
             }
-
-        } catch (org.jdom2.JDOMException e) {
-            log.warn("in loadMastDefinitions", e);
-        } catch (java.io.IOException e) {
-            //Can be considered normal
+        } catch (org.jdom2.JDOMException | java.io.IOException | URISyntaxException e) {
             log.warn("in loadMastDefinitions", e);
         }
         mastBox.addItemListener(new ItemListener() {

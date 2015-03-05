@@ -1,7 +1,7 @@
 // DefaultSignalAppearanceMap.java
 package jmri.implementation;
 
-import java.io.File;
+import java.net.URL;
 import java.util.List;
 import java.util.Vector;
 import jmri.SignalHead;
@@ -66,26 +66,17 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
                 = new DefaultSignalAppearanceMap("map:" + signalSystemName + ":" + aspectMapName);
         maps.put("map:" + signalSystemName + ":" + aspectMapName, map);
 
-        File file = new File(FileUtil.getUserFilesPath()
-                + "resources" + File.separator
-                + "signals" + File.separator
-                + signalSystemName + File.separator
-                + "appearance-" + aspectMapName + ".xml");
-        if (!file.exists()) {
-            file = new File("xml" + File.separator
-                    + "signals" + File.separator
-                    + signalSystemName + File.separator
-                    + "appearance-" + aspectMapName + ".xml");
-            if (!file.exists()) {
-                log.error("appearance file doesn't exist: " + file.getPath());
-                throw new IllegalArgumentException("appearance file doesn't exist: " + file.getPath());
-            }
+        String path = "signals/" + signalSystemName + "/appearance-" + aspectMapName + ".xml";
+        URL file = FileUtil.findURL(path, "resources", "xml");
+        if (file == null) {
+            log.error("appearance file (xml/{}) doesn't exist", path);
+            throw new IllegalArgumentException("appearance file (xml/" + path + ") doesn't exist");
         }
         jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
         };
         Element root;
         try {
-            root = xf.rootFromFile(file);
+            root = xf.rootFromURL(file);
             // get appearances
 
             List<Element> l = root.getChild("appearances").getChildren("appearance");
@@ -149,11 +140,8 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
             }
             loadSpecificMap(signalSystemName, aspectMapName, map, root);
             loadAspectRelationMap(signalSystemName, aspectMapName, map, root);
-        } catch (java.io.IOException e) {
-            log.error("error reading file \"" + file.getName(), e);
-            return null;
-        } catch (org.jdom2.JDOMException e) {
-            log.error("error parsing file \"" + file.getName(), e);
+        } catch (java.io.IOException | org.jdom2.JDOMException e) {
+            log.error("error reading file {}", file.getPath(), e);
             return null;
         }
 
