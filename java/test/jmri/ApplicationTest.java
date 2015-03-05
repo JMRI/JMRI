@@ -5,7 +5,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the Application class
@@ -67,6 +68,6 @@ public class ApplicationTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private static final Logger log = Logger.getLogger(ApplicationTest.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ApplicationTest.class.getName());
 
 }

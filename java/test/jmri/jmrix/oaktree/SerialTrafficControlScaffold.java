@@ -9,7 +9,8 @@
 package jmri.jmrix.oaktree;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SerialTrafficControlScaffold extends SerialTrafficController {
 
@@ -60,6 +61,6 @@ public class SerialTrafficControlScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(SerialTrafficControlScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTrafficControlScaffold.class.getName());
 
 }

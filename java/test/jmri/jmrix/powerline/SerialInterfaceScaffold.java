@@ -2,7 +2,8 @@
 package jmri.jmrix.powerline;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the SerialTrafficController class
@@ -64,6 +65,6 @@ class SerialInterfaceScaffold extends SerialTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(SerialInterfaceScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialInterfaceScaffold.class.getName());
 
 }

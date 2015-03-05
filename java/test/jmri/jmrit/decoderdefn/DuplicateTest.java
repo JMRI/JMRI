@@ -10,7 +10,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.filter.ElementFilter;
@@ -92,5 +93,5 @@ public class DuplicateTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(DuplicateTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(DuplicateTest.class.getName());
 }

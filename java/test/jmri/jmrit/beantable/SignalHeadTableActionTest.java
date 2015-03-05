@@ -13,7 +13,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.SignalHeadTableAction class
@@ -95,5 +96,5 @@ public class SignalHeadTableActionTest extends TestCase {
         super.tearDown();
     }
 
-    static Logger log = Logger.getLogger(SignalHeadTableActionTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SignalHeadTableActionTest.class.getName());
 }

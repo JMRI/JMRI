@@ -3,7 +3,8 @@ package jmri.jmrit.ussctc;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.OsIndicatorAction class
@@ -51,6 +52,6 @@ public class OsIndicatorActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(OsIndicatorActionTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(OsIndicatorActionTest.class.getName());
 
 }

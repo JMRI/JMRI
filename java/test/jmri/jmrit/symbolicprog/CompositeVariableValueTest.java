@@ -11,7 +11,8 @@ import jmri.progdebugger.ProgDebugger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test CompositeVariableValue class.
@@ -335,7 +336,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(CompositeVariableValueTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(CompositeVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

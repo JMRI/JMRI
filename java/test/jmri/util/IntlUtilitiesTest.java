@@ -6,7 +6,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.IntlUtilities class.
@@ -121,6 +122,6 @@ public class IntlUtilitiesTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(IntlUtilitiesTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(IntlUtilitiesTest.class.getName());
 
 }

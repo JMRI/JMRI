@@ -2,7 +2,8 @@
 package jmri.jmrix.qsi;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -60,6 +61,6 @@ public class QsiTrafficControlScaffold extends QsiTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(QsiTrafficControlScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(QsiTrafficControlScaffold.class.getName());
 
 }

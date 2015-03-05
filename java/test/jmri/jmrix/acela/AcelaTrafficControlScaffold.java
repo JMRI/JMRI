@@ -1,7 +1,8 @@
 package jmri.jmrix.acela;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the AcelaTrafficController class
@@ -68,6 +69,6 @@ public class AcelaTrafficControlScaffold extends AcelaTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(AcelaTrafficControlScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaTrafficControlScaffold.class.getName());
 
 }

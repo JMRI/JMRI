@@ -10,7 +10,8 @@ import jmri.progdebugger.ProgDebugger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SplitVariableValueTest.java
@@ -319,6 +320,6 @@ public class SplitVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(SplitVariableValueTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SplitVariableValueTest.class.getName());
 
 }

@@ -6,7 +6,8 @@ import jmri.jmrix.lenz.XNetReply;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.hornbyelite.EliteXNetTurnout} class.
@@ -130,6 +131,6 @@ public class EliteXNetTurnoutTest extends jmri.implementation.AbstractTurnoutTes
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(EliteXNetTurnoutTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EliteXNetTurnoutTest.class.getName());
 
 }

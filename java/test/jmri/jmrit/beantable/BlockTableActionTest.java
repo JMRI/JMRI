@@ -7,7 +7,8 @@ import jmri.util.JUnitUtil;
 import junit.extensions.jfcunit.TestHelper;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.BlockTableAction class
@@ -73,5 +74,5 @@ public class BlockTableActionTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(BlockTableActionTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(BlockTableActionTest.class.getName());
 }

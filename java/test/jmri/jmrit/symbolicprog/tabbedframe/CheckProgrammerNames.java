@@ -5,7 +5,8 @@ import java.io.File;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Check the names in an XML programmer file against the names.xml definitions
@@ -106,6 +107,6 @@ public class CheckProgrammerNames extends jmri.util.swing.GuiUtilBaseTest {
     }
 
     // initialize logging
-    static Logger log = Logger.getLogger(CheckProgrammerNames.class.getName());
+    static Logger log = LoggerFactory.getLogger(CheckProgrammerNames.class.getName());
 
 }

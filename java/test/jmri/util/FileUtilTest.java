@@ -15,7 +15,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.FileUtil class.
@@ -310,5 +311,5 @@ public class FileUtilTest extends TestCase {
         TestSuite suite = new TestSuite(FileUtilTest.class);
         return suite;
     }
-    static Logger log = Logger.getLogger(FileUtilTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(FileUtilTest.class.getName());
 }

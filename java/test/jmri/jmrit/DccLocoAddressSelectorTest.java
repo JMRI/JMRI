@@ -11,7 +11,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test simple functioning of DccLocoAddressSelector
@@ -158,6 +159,6 @@ public class DccLocoAddressSelectorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(DccLocoAddressSelectorTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(DccLocoAddressSelectorTest.class.getName());
 
 }

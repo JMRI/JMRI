@@ -5,7 +5,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmris.simpleserver.SimpleReporterServer class
@@ -47,6 +48,6 @@ public class SimpleReporterServerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(SimpleReporterServerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SimpleReporterServerTest.class.getName());
 
 }

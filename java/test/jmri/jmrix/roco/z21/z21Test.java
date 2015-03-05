@@ -4,7 +4,8 @@ package jmri.jmrix.roco.z21;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.roco.z21 package
@@ -38,6 +39,6 @@ public class z21Test extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(z21Test.class.getName());
+    static Logger log = LoggerFactory.getLogger(z21Test.class.getName());
 
 }

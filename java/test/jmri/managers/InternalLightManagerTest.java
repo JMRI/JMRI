@@ -5,7 +5,8 @@ import jmri.LightManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.managers.InternalTurnoutManager class.
@@ -88,6 +89,6 @@ public class InternalLightManagerTest extends jmri.managers.AbstractLightMgrTest
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(InternalLightManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(InternalLightManagerTest.class.getName());
 
 }

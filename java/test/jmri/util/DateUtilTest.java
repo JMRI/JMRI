@@ -7,7 +7,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.DateUtil class.
@@ -80,6 +81,6 @@ public class DateUtilTest extends TestCase {
         super.tearDown();
     }
 
-    static Logger log = Logger.getLogger(DateUtilTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(DateUtilTest.class.getName());
 
 }

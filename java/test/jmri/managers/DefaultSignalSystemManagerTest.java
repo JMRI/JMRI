@@ -5,7 +5,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.managers.InternalTurnoutManager class.
@@ -113,6 +114,6 @@ public class DefaultSignalSystemManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(DefaultSignalSystemManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(DefaultSignalSystemManagerTest.class.getName());
 
 }

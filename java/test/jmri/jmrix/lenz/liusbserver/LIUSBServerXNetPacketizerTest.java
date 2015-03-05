@@ -2,7 +2,8 @@ package jmri.jmrix.lenz.liusbserver;
 
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * <p>
@@ -42,6 +43,6 @@ public class LIUSBServerXNetPacketizerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(LIUSBServerXNetPacketizerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LIUSBServerXNetPacketizerTest.class.getName());
 
 }

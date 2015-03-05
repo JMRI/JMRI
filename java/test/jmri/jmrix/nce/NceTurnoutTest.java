@@ -12,7 +12,8 @@ import jmri.implementation.AbstractTurnoutTest;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NceTurnoutTest extends AbstractTurnoutTest {
 
@@ -60,6 +61,6 @@ public class NceTurnoutTest extends AbstractTurnoutTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(NceTurnoutTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceTurnoutTest.class.getName());
 
 }

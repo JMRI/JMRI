@@ -181,5 +181,5 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = Logger.getLogger(SignalMastIconTest.class.getName());
+	// static private Logger log = LoggerFactory.getLogger(SignalMastIconTest.class.getName());
 }

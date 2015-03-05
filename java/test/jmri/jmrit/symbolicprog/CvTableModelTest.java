@@ -33,5 +33,5 @@ public class CvTableModelTest extends TestCase {
         return suite;
     }
 
-    // static Logger log = Logger.getLogger(CvTableModelTest.class.getName());
+    // static Logger log = LoggerFactory.getLogger(CvTableModelTest.class.getName());
 }

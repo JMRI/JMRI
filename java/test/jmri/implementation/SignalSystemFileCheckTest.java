@@ -3,7 +3,8 @@ package jmri.implementation;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests of the signal system definition files.
@@ -42,5 +43,5 @@ public class SignalSystemFileCheckTest extends jmri.configurexml.SchemaTestBase 
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();
     }
-    static protected Logger log = Logger.getLogger(SignalSystemFileCheckTest.class.getName());
+    static protected Logger log = LoggerFactory.getLogger(SignalSystemFileCheckTest.class.getName());
 }

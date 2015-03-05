@@ -4,7 +4,8 @@ package jmri.jmrix.oaktree;
 import jmri.Turnout;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SerialTurnoutManagerTest.java
@@ -81,6 +82,6 @@ public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTe
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(SerialTurnoutManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialTurnoutManagerTest.class.getName());
 
 }

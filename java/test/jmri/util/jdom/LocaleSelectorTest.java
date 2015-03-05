@@ -5,7 +5,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom2.Element;
 import org.jdom2.Namespace;
 
@@ -207,5 +208,5 @@ public class LocaleSelectorTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(LocaleSelectorTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocaleSelectorTest.class.getName());
 }

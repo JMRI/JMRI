@@ -4,7 +4,8 @@ package jmri.jmrix.lenz.xntcp;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.xntcp package
@@ -33,6 +34,6 @@ public class XnTcpTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(XnTcpTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(XnTcpTest.class.getName());
 
 }

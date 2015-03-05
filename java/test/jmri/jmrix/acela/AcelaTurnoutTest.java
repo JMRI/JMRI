@@ -3,7 +3,8 @@ package jmri.jmrix.acela;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.acela.AcelaTurnout} class.
@@ -141,6 +142,6 @@ public class AcelaTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(AcelaTurnoutTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaTurnoutTest.class.getName());
 
 }

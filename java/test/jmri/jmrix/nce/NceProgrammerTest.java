@@ -12,7 +12,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the NceProgrammer class
@@ -522,6 +523,6 @@ public class NceProgrammerTest extends TestCase {
     // apps.tests.Log4JFixture log4jfixtureInst = new apps.tests.Log4JFixture(this);
     // protected void setUp() { log4jfixtureInst.setUp(); }
     // protected void tearDown() { log4jfixtureInst.tearDown(); }
-    static Logger log = Logger.getLogger(NceProgrammerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceProgrammerTest.class.getName());
 
 }

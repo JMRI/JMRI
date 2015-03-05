@@ -6,7 +6,8 @@ import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the NcePowerManager class.
@@ -133,6 +134,6 @@ public class NcePowerManagerTest extends AbstractPowerManagerTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(NcePowerManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(NcePowerManagerTest.class.getName());
 
 }

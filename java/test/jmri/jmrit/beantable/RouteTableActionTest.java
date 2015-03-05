@@ -6,7 +6,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrit.beantable.RouteTableAction class
@@ -57,5 +58,5 @@ public class RouteTableActionTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(RouteTableActionTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(RouteTableActionTest.class.getName());
 }

@@ -2,7 +2,8 @@
 package jmri.jmrix.loconet;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
@@ -70,7 +71,7 @@ public class LocoNetInterfaceScaffold extends LnTrafficController {
         return listeners.size();
     }
 
-    static Logger log = Logger.getLogger(LocoNetInterfaceScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(LocoNetInterfaceScaffold.class.getName());
 
 }
 

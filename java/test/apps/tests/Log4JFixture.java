@@ -1,6 +1,7 @@
 package apps.tests;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Log4JFixture extends java.lang.Object {
 

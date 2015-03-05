@@ -6,7 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SerialTurnoutManagerTest.java
@@ -97,6 +98,6 @@ public class SerialLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(SerialLightManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SerialLightManagerTest.class.getName());
 
 }

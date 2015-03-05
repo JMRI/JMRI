@@ -5,7 +5,8 @@ import jmri.jmrix.loconet.sdf.SdfBuffer;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.sdfeditor.EditorPane class.
@@ -37,7 +38,7 @@ public class EditorPaneTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(EditorPaneTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EditorPaneTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

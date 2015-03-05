@@ -10,7 +10,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the QsiTrafficController class
@@ -239,6 +240,6 @@ public class QsiTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(QsiTrafficControllerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(QsiTrafficControllerTest.class.getName());
 
 }

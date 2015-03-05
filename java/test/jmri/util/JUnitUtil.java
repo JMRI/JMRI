@@ -19,7 +19,8 @@ import jmri.managers.InternalLightManager;
 import jmri.managers.InternalSensorManager;
 import jmri.managers.InternalTurnoutManager;
 import junit.framework.Assert;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Common utility methods for working with JUnit.
@@ -212,5 +213,5 @@ public class JUnitUtil {
         InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
     }
 
-    static Logger log = Logger.getLogger(JUnitUtil.class.getName());
+    static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
 }

@@ -140,5 +140,5 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         JUnitUtil.resetInstanceManager();
     }
 
-	// static private Logger log = Logger.getLogger(TurnoutIconTest.class.getName());
+	// static private Logger log = LoggerFactory.getLogger(TurnoutIconTest.class.getName());
 }

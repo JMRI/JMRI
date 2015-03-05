@@ -136,5 +136,5 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-	// static private Logger log = Logger.getLogger(RpsPositionIconTest.class.getName());
+	// static private Logger log = LoggerFactory.getLogger(RpsPositionIconTest.class.getName());
 }

@@ -4,7 +4,8 @@ package jmri.jmrit.log;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Invokes complete set of tests in the jmri.jmrit.log tree
@@ -15,9 +16,9 @@ import org.apache.log4j.Logger;
 public class PackageTest extends TestCase {
 
     public void testShow() {
-        Logger.getLogger("jmri.jmrix");
-        Logger.getLogger("apps.foo");
-        Logger.getLogger("jmri.util");
+        LoggerFactory.getLogger("jmri.jmrix");
+        LoggerFactory.getLogger("apps.foo");
+        LoggerFactory.getLogger("jmri.util");
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
 

@@ -11,7 +11,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the SignalAppearanceMap interface
@@ -165,5 +166,5 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
         h2.dispose();
         apps.tests.Log4JFixture.tearDown();
     }
-    static protected Logger log = Logger.getLogger(DefaultSignalAppearanceMapTest.class.getName());
+    static protected Logger log = LoggerFactory.getLogger(DefaultSignalAppearanceMapTest.class.getName());
 }

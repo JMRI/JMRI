@@ -8,7 +8,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.OrderedHashtable class.
@@ -173,6 +174,6 @@ public class OrderedHashtableTest extends TestCase {
         }
     }
 
-    static Logger log = Logger.getLogger(OrderedHashtableTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(OrderedHashtableTest.class.getName());
 
 }

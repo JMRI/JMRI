@@ -6,7 +6,8 @@ import jmri.jmrix.can.CanReply;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbAddress class.
@@ -155,7 +156,7 @@ public class OlcbAddressTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(OlcbAddressTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbAddressTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

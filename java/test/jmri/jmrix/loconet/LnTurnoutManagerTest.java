@@ -9,7 +9,8 @@ import jmri.TurnoutManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnoutManager class
@@ -123,6 +124,6 @@ public class LnTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(LnTurnoutManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnTurnoutManagerTest.class.getName());
 
 }

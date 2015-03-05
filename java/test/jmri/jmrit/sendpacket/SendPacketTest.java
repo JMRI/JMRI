@@ -5,7 +5,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for classes in the jmri.jmrit.sendpacket package
@@ -56,6 +57,6 @@ public class SendPacketTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(SendPacketTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SendPacketTest.class.getName());
 
 }

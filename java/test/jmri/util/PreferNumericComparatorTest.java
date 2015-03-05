@@ -6,7 +6,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.StringUtil class.
@@ -61,6 +62,6 @@ public class PreferNumericComparatorTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(PreferNumericComparatorTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(PreferNumericComparatorTest.class.getName());
 
 }

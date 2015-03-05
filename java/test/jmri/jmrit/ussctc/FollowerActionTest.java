@@ -4,7 +4,8 @@ package jmri.jmrit.ussctc;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for classes in the jmri.jmrit.ussctc.FollowerAction class
@@ -39,6 +40,6 @@ public class FollowerActionTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(FollowerActionTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(FollowerActionTest.class.getName());
 
 }

@@ -12,7 +12,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base for testing load-and-store of configuration files.
@@ -150,5 +151,5 @@ public class LoadAndStoreTestBase extends TestCase {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = Logger.getLogger(LoadAndStoreTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoadAndStoreTest.class.getName());
 }

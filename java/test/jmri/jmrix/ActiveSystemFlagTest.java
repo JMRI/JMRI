@@ -5,7 +5,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the XmlFile class.
@@ -50,6 +51,6 @@ public class ActiveSystemFlagTest extends TestCase {
     }
 
     // protected access for subclass
-    static protected Logger log = Logger.getLogger(ActiveSystemFlagTest.class.getName());
+    static protected Logger log = LoggerFactory.getLogger(ActiveSystemFlagTest.class.getName());
 
 }

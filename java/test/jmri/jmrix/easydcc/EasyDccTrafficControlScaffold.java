@@ -2,7 +2,8 @@
 package jmri.jmrix.easydcc;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the EasyDccTrafficController class
@@ -59,6 +60,6 @@ public class EasyDccTrafficControlScaffold extends EasyDccTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(EasyDccTrafficControlScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccTrafficControlScaffold.class.getName());
 
 }

@@ -92,5 +92,5 @@ public class SwingShutDownTaskTest extends TestCase {
     }
 
 //    don't want log defined here, as makes the "log" references above ambiguous
-//    static protected Logger log = Logger.getLogger(SwingShutDownTaskTest.class.getName());
+//    static protected Logger log = LoggerFactory.getLogger(SwingShutDownTaskTest.class.getName());
 }

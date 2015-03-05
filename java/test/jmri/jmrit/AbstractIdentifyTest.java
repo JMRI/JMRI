@@ -196,5 +196,5 @@ public class AbstractIdentifyTest extends TestCase {
         return suite;
     }
 
-	// static private Logger log = Logger.getLogger(AbstractIdentifyTest.class.getName());
+	// static private Logger log = LoggerFactory.getLogger(AbstractIdentifyTest.class.getName());
 }

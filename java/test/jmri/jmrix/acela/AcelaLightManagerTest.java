@@ -5,7 +5,8 @@ import jmri.LightManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
@@ -76,6 +77,6 @@ public class AcelaLightManagerTest extends jmri.managers.AbstractLightMgrTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(AcelaLightManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaLightManagerTest.class.getName());
 
 }

@@ -2,7 +2,8 @@
 package jmri.jmrix.nce;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the NceTrafficController class
@@ -63,6 +64,6 @@ class NceInterfaceScaffold extends NceTrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(NceInterfaceScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceInterfaceScaffold.class.getName());
 
 }

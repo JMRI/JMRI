@@ -11,7 +11,8 @@ package jmri.jmrix.qsi.packetgen;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PacketGenFrameTest extends TestCase {
 
@@ -36,6 +37,6 @@ public class PacketGenFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(PacketGenFrameTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(PacketGenFrameTest.class.getName());
 
 }

@@ -93,5 +93,5 @@ public class FontComboUtilTest extends TestCase {
         return suite;
     }
 
-    //private static final Logger log = Logger.getLogger(FontComboUtilTest.class.getName());
+    //private static final Logger log = LoggerFactory.getLogger(FontComboUtilTest.class.getName());
 }

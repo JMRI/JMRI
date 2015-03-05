@@ -3,7 +3,8 @@ package jmri.configurexml;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 //import jmri.InstanceManager;
 /**
@@ -40,5 +41,5 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(SchemaTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SchemaTest.class.getName());
 }

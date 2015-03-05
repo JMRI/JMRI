@@ -10,7 +10,8 @@ import javax.swing.JTextField;
 import jmri.progdebugger.ProgDebugger;
 import junit.framework.Assert;
 import junit.framework.TestCase;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Base for tests of classes inheriting from VariableValue abstract class
@@ -501,7 +502,7 @@ public abstract class VariableValueTest extends TestCase {
     }
 
     // abstract class has no main entry point, test suite
-    static Logger log = Logger.getLogger(VariableValueTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(VariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

@@ -76,5 +76,5 @@ public class SwingTestCaseTest extends SwingTestCase {
         //apps.tests.Log4JFixture.tearDown();
     }
 
-	//static Logger log = Logger.getLogger(SwingTestCaseTest.class.getName());
+	//static Logger log = LoggerFactory.getLogger(SwingTestCaseTest.class.getName());
 }

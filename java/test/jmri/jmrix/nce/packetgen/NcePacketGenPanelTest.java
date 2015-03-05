@@ -6,7 +6,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.nce.packetgen.NcePacketGenPanel class
@@ -57,6 +58,6 @@ public class NcePacketGenPanelTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(NcePacketGenPanelTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(NcePacketGenPanelTest.class.getName());
 
 }

@@ -4,7 +4,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * XNetReplyTest.java
@@ -184,6 +185,6 @@ public class XNetReplyTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(XNetReplyTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetReplyTest.class.getName());
 
 }

@@ -5,7 +5,8 @@ import java.util.Vector;
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Stands in for the can.TrafficController class
@@ -87,6 +88,6 @@ public class TrafficControllerScaffold extends TrafficController {
         return cmdListeners.size();
     }
 
-    static Logger log = Logger.getLogger(TrafficControllerScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrafficControllerScaffold.class.getName());
 
 }

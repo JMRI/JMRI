@@ -2,7 +2,8 @@
 package jmri.jmrix.lenz;
 
 import java.util.Vector;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * XNetInterfaceScaffold.java
@@ -81,7 +82,7 @@ public class XNetInterfaceScaffold extends XNetTrafficController {
     public void receiveLoop() {
     }
 
-    static Logger log = Logger.getLogger(XNetInterfaceScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetInterfaceScaffold.class.getName());
 
 }
 

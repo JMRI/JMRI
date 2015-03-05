@@ -3,7 +3,8 @@ package jmri.util.swing;
 
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Checks of JMRI XML Schema for GUI definition files.
@@ -48,5 +49,5 @@ public class GuiUtilBaseTest extends jmri.configurexml.SchemaTestBase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(GuiUtilBaseTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(GuiUtilBaseTest.class.getName());
 }

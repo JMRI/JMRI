@@ -8,7 +8,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test the AddressedHighCvProgrammerFacade class.
@@ -164,6 +165,6 @@ public class AddressedHighCvProgrammerFacadeTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(AddressedHighCvProgrammerFacadeTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(AddressedHighCvProgrammerFacadeTest.class.getName());
 
 }

@@ -4,7 +4,8 @@ package jmri.jmrix.loconet;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.loconet.LnTurnout class
@@ -287,6 +288,6 @@ public class LnTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(LnTurnoutTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LnTurnoutTest.class.getName());
 
 }

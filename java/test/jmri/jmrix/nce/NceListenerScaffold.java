@@ -8,7 +8,8 @@
  */
 package jmri.jmrix.nce;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
 
@@ -28,6 +29,6 @@ class NceListenerScaffold implements jmri.jmrix.nce.NceListener {
     NceReply rcvdReply;
     NceMessage rcvdMsg;
 
-    static Logger log = Logger.getLogger(NceListenerScaffold.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceListenerScaffold.class.getName());
 
 }

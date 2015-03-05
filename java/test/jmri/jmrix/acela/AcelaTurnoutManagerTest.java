@@ -5,7 +5,8 @@ import jmri.TurnoutManager;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.acela.AcelaTurnoutManager class.
@@ -110,6 +111,6 @@ public class AcelaTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTes
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(AcelaTurnoutManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(AcelaTurnoutManagerTest.class.getName());
 
 }

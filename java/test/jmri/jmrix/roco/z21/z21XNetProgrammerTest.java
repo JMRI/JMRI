@@ -8,7 +8,8 @@
  */
 package jmri.jmrix.roco.z21;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import jmri.*;
 
 import junit.framework.Test;
@@ -217,6 +218,6 @@ public class z21XNetProgrammerTest extends jmri.jmrix.lenz.XNetProgrammerTest {
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
-    static Logger log = Logger.getLogger(z21XNetProgrammerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(z21XNetProgrammerTest.class.getName());
 
 }

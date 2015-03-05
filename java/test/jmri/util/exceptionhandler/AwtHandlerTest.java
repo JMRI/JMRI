@@ -5,7 +5,8 @@ import jmri.util.JUnitAppender;
 import jmri.util.SwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.util.AwtHandlerTest class.
@@ -57,6 +58,6 @@ public class AwtHandlerTest extends SwingTestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(AwtHandlerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(AwtHandlerTest.class.getName());
 
 }

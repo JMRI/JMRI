@@ -4,7 +4,8 @@ package jmri.jmrix.lenz;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the {@link jmri.jmrix.lenz.XNetTurnout} class.
@@ -187,6 +188,6 @@ public class XNetTurnoutTest extends jmri.implementation.AbstractTurnoutTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(XNetTurnoutTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(XNetTurnoutTest.class.getName());
 
 }

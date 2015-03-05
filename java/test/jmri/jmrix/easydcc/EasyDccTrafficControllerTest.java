@@ -10,7 +10,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the EasyDccTrafficController class
@@ -220,6 +221,6 @@ public class EasyDccTrafficControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(EasyDccTrafficControllerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccTrafficControllerTest.class.getName());
 
 }

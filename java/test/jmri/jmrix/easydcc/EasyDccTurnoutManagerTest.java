@@ -11,7 +11,8 @@ package jmri.jmrix.easydcc;
 import jmri.Turnout;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
@@ -65,6 +66,6 @@ public class EasyDccTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrT
         return suite;
     }
 
-    static Logger log = Logger.getLogger(EasyDccTurnoutManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccTurnoutManagerTest.class.getName());
 
 }

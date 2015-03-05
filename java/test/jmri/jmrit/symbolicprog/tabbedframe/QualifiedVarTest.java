@@ -7,7 +7,8 @@ import jmri.jmrit.roster.RosterEntry;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.jdom2.DocType;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -201,7 +202,7 @@ public class QualifiedVarTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(QualifiedVarTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(QualifiedVarTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

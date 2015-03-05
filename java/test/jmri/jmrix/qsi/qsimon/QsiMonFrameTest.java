@@ -17,7 +17,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class QsiMonFrameTest extends TestCase {
 
@@ -132,6 +133,6 @@ public class QsiMonFrameTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(QsiMonFrameTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(QsiMonFrameTest.class.getName());
 
 }

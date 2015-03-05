@@ -4,7 +4,8 @@ package jmri.jmrix.lenz.swing;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.lenz.swing package
@@ -42,6 +43,6 @@ public class SwingTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(SwingTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SwingTest.class.getName());
 
 }

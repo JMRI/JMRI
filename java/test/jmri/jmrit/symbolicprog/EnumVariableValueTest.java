@@ -8,7 +8,8 @@ import javax.swing.JLabel;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test EnumVariableValue
@@ -175,6 +176,6 @@ public class EnumVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(EnumVariableValueTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EnumVariableValueTest.class.getName());
 
 }

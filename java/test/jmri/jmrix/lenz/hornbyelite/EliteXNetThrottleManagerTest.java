@@ -6,7 +6,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * EliteXNetThrottleManagerTest.java
@@ -53,6 +54,6 @@ public class EliteXNetThrottleManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(EliteXNetThrottleManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EliteXNetThrottleManagerTest.class.getName());
 
 }

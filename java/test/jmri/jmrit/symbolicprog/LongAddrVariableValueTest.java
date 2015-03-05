@@ -10,7 +10,8 @@ import jmri.progdebugger.ProgDebugger;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Test LongAddrVariableValue class.
@@ -242,7 +243,7 @@ public class LongAddrVariableValueTest extends VariableValueTest {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(LongAddrVariableValueTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LongAddrVariableValueTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

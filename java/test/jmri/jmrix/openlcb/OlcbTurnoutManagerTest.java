@@ -4,7 +4,8 @@ package jmri.jmrix.openlcb;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Tests for the jmri.jmrix.openlcb.OlcbTurnoutManager class.
@@ -34,7 +35,7 @@ public class OlcbTurnoutManagerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(OlcbTurnoutManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(OlcbTurnoutManagerTest.class.getName());
 
     // The minimal setup for log4J
     protected void setUp() {

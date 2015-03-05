@@ -383,5 +383,5 @@ public class DecoderFileTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    // static Logger log = Logger.getLogger(DecoderFileTest.class.getName());
+    // static Logger log = LoggerFactory.getLogger(DecoderFileTest.class.getName());
 }

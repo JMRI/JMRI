@@ -9,7 +9,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * JUnit tests for the NceTrafficController class
@@ -287,6 +288,6 @@ public class NceTrafficControllerTest extends TestCase {
         return suite;
     }
 
-    static Logger log = Logger.getLogger(NceTrafficControllerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(NceTrafficControllerTest.class.getName());
 
 }

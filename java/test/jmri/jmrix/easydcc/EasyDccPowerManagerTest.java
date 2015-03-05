@@ -6,7 +6,8 @@ import jmri.JmriException;
 import jmri.jmrix.AbstractPowerManagerTest;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Description:	JUnit tests for the EasyDccPowerManager class
@@ -139,6 +140,6 @@ public class EasyDccPowerManagerTest extends AbstractPowerManagerTest {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(EasyDccPowerManagerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(EasyDccPowerManagerTest.class.getName());
 
 }

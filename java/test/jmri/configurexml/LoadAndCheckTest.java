@@ -6,7 +6,8 @@ import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Functional checks of loading basic configuration files. When done across
@@ -129,5 +130,5 @@ public class LoadAndCheckTest extends LoadAndStoreTestBase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(LoadAndCheckTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(LoadAndCheckTest.class.getName());
 }

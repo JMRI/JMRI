@@ -8,7 +8,8 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * z21XNetStreamPortControllerTest.java
@@ -65,6 +66,6 @@ public class z21XNetStreamPortControllerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = Logger.getLogger(z21XNetStreamPortControllerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(z21XNetStreamPortControllerTest.class.getName());
 
 }
