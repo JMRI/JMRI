@@ -73,6 +73,7 @@ public final class FileUtil {
      * Replaced with {@link #PREFERENCES}.
      *
      * @see #PREFERENCES
+     * @deprecated
      */
     @Deprecated
     static public final String FILE = "file:"; // NOI18N
@@ -241,7 +242,7 @@ public final class FileUtil {
             if (new File(path.substring(FILE.length())).isAbsolute()) {
                 path = path.substring(FILE.length());
             } else {
-                path = path.replaceFirst(FILE, Matcher.quoteReplacement(FileUtil.getUserFilesPath()));
+                path = path.replaceFirst(FILE, Matcher.quoteReplacement(FileUtil.getUserFilesPath() + "resources" + File.separator));
             }
         } else if (!new File(path).isAbsolute()) {
             return null;
@@ -285,106 +286,16 @@ public final class FileUtil {
      * @param pName The name string, possibly starting with file:, home:,
      *              profile:, program:, preference:, scripts:, settings, or
      *              resource:
-     * @return Absolute or relative file name to use, or null.
+     * @return Absolute file name to use, or null.
      * @since 2.7.2
      */
     static public String getExternalFilename(String pName) {
-        if (pName == null || pName.length() == 0) {
-            return null;
-        }
-        if (pName.startsWith(RESOURCE)) {
-            // convert to relative filename 
-            String temp = pName.substring(RESOURCE.length());
-            if ((new File(temp)).isAbsolute()) {
-                return temp.replace(SEPARATOR, File.separatorChar);
-            } else {
-                return temp.replace(SEPARATOR, File.separatorChar);
-            }
-        } else if (pName.startsWith(PROGRAM)) {
-            // both relative and absolute are just returned
-            return pName.substring(PROGRAM.length()).replace(SEPARATOR, File.separatorChar);
-        } else if (pName.startsWith(PREFERENCES)) {
-            String filename = pName.substring(PREFERENCES.length());
-
-            // Check for absolute path name
-            if ((new File(filename)).isAbsolute()) {
-                log.debug("Load from absolute path: {}", filename);
-                return filename.replace(SEPARATOR, File.separatorChar);
-            }
-            // assume this is a relative path from the
-            // preferences directory
-            filename = FileUtil.getUserFilesPath() + filename;
-            log.debug("load from user preferences file: {}", filename);
-            return filename.replace(SEPARATOR, File.separatorChar);
-        } else if (pName.startsWith(PROFILE)) {
-            String filename = pName.substring(PROFILE.length());
-            // Check for absolute path name
-            if ((new File(filename)).isAbsolute()) {
-                log.debug("Load from absolute path: {}", filename);
-                return filename.replace(SEPARATOR, File.separatorChar);
-            }
-            // assume this is a relative path from the profile directory
-            filename = FileUtil.getProfilePath() + filename;
-            log.debug("load from profile file: {}", filename);
-            return filename.replace(SEPARATOR, File.separatorChar);
-        } else if (pName.startsWith(SETTINGS)) {
-            String filename = pName.substring(SETTINGS.length());
-            // Check for absolute path name
-            if ((new File(filename)).isAbsolute()) {
-                log.debug("Load from absolute path: {}", filename);
-                return filename.replace(SEPARATOR, File.separatorChar);
-            }
-            // assume this is a relative path from the profile directory
-            filename = FileUtil.getPreferencesPath() + filename;
-            log.debug("load from settings file: {}", filename);
-            return filename.replace(SEPARATOR, File.separatorChar);
-        } else if (pName.startsWith(SCRIPTS)) {
-            String filename = pName.substring(SCRIPTS.length());
-            // Check for absolute path name
-            if ((new File(filename)).isAbsolute()) {
-                log.debug("Load from absolute path: {}", filename);
-                return filename.replace(SEPARATOR, File.separatorChar);
-            }
-            // assume this is a relative path from the scripts directory
-            filename = FileUtil.getScriptsPath() + filename;
-            log.debug("load from scripts file: {}", filename);
-            return filename.replace(SEPARATOR, File.separatorChar);
-        } else if (pName.startsWith(FILE)) {
-            String filename = pName.substring(FILE.length());
-
-            // historically, absolute path names could be stored 
-            // in the 'file' format.  Check for those, and
-            // accept them if present
-            if ((new File(filename)).isAbsolute()) {
-                log.debug("Load from absolute path: {}", filename);
-                return filename.replace(SEPARATOR, File.separatorChar);
-            }
-            // assume this is a relative path from the
-            // preferences directory
-            filename = FileUtil.getUserFilesPath() + "resources" + File.separator + filename; // NOI18N
-            log.debug("load from user preferences file: {}", filename);
-            return filename.replace(SEPARATOR, File.separatorChar);
-        } else if (pName.startsWith(HOME)) {
-            String filename = pName.substring(HOME.length());
-
-            // Check for absolute path name
-            if ((new File(filename)).isAbsolute()) {
-                log.debug("Load from absolute path: {}", filename);
-                return filename.replace(SEPARATOR, File.separatorChar);
-            }
-            // assume this is a relative path from the
-            // user.home directory
-            filename = FileUtil.getHomePath() + filename;
-            log.debug("load from user preferences file: {}", filename);
-            return filename.replace(SEPARATOR, File.separatorChar);
-        } else {
-            // must just be a (hopefully) valid name
-            return pName.replace(SEPARATOR, File.separatorChar);
-        }
+        String filename = FileUtil.pathFromPortablePath(pName);
+        return (filename != null) ? filename : pName;
     }
 
     /**
-     * Convert a portable filename into an absolute filename
+     * Convert a portable filename into an absolute filename.
      *
      * @param path
      * @return An absolute filename

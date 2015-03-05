@@ -2,14 +2,14 @@
 package jmri.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.MappedByteBuffer;
-import java.nio.channels.FileChannel;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -46,7 +46,7 @@ public class FileUtilTest extends TestCase {
     // resource: prefix with relative path, convert to relative in system-specific form
     public void testGEFResourceRel() {
         String name = FileUtil.getExternalFilename("resource:resources/non-existant-file-foo");
-        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name);
+        Assert.assertEquals(new File("resources/non-existant-file-foo").getAbsolutePath(), name);
     }
 
     // resource: prefix with absolute path, convert to absolute in system-specific form
@@ -59,7 +59,7 @@ public class FileUtilTest extends TestCase {
     // program: prefix with relative path, convert to relative in system-specific form
     public void testGEFProgramRel() {
         String name = FileUtil.getExternalFilename("program:jython");
-        Assert.assertEquals("jython", name);
+        Assert.assertEquals(new File("jython").getAbsolutePath(), name);
     }
 
     // program: prefix with absolute path, convert to absolute in system-specific form
@@ -85,7 +85,7 @@ public class FileUtilTest extends TestCase {
     // file: prefix with relative path, convert to absolute in system-specific form
     public void testGEFFileRel() {
         String name = FileUtil.getExternalFilename("file:non-existant-file-foo");
-        Assert.assertEquals(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo", name);
+        Assert.assertEquals(new File(FileUtil.getUserFilesPath() + "resources" + File.separator + "non-existant-file-foo").getAbsolutePath(), name);
     }
 
     // file: prefix with absolute path, convert to absolute in system-specific form
@@ -244,8 +244,8 @@ public class FileUtilTest extends TestCase {
     public void testCopyFile() throws FileNotFoundException {
         File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:default.lcf"));
         File dest = new File(FileUtil.getAbsoluteFilename("program:fileUtilTest.lcf"));
-        ArrayList<String> sl = new ArrayList<String>();
-        ArrayList<String> dl = new ArrayList<String>();
+        ArrayList<String> sl = new ArrayList<>();
+        ArrayList<String> dl = new ArrayList<>();
         try {
             FileUtil.copy(src, dest);
             Scanner s = new Scanner(src);
@@ -290,18 +290,8 @@ public class FileUtilTest extends TestCase {
         File file = File.createTempFile("FileUtilTest", null);
         String text = "jmri.util.FileUtil#appendTextToFile";
         FileUtil.appendTextToFile(file, text);
-        // Java 7 equivalent for following code
-        // List<String> lines = Files.readAllLines(Paths.get(path), encoding);
-        // Assert.assertEquals(text, lines.get(0));
-        FileInputStream stream = new FileInputStream(file);
-        try {
-            FileChannel fc = stream.getChannel();
-            MappedByteBuffer bb = fc.map(FileChannel.MapMode.READ_ONLY, 0, fc.size());
-            // test appends line.separator because appendTextToFile() method uses println() to append to file
-            Assert.assertEquals(text + System.getProperty("line.separator"), Charset.forName("UTF-8").decode(bb).toString());
-        } finally {
-            stream.close();
-        }
+        List<String> lines = Files.readAllLines(Paths.get(file.toURI()), Charset.forName("UTF-8"));
+        Assert.assertEquals(text, lines.get(0));
     }
 
     // from here down is testing infrastructure
