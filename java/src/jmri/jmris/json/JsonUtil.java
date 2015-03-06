@@ -623,9 +623,11 @@ public class JsonUtil {
             }
         }
         for (Editor editor : Editor.getEditors(PanelEditor.class)) {
-            ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
-            if (panel != null) {
-                root.add(panel);
+            if (!(LayoutEditor.class.isInstance(editor))) {  //skip LayoutEditor panels, as they will be added later
+                ObjectNode panel = JsonUtil.getPanel(locale, editor, format);
+                if (panel != null) {
+                    root.add(panel);
+                }
             }
         }
         for (Editor editor : Editor.getEditors(LayoutEditor.class)) {
