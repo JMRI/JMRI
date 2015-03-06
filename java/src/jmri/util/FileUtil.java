@@ -839,7 +839,10 @@ public final class FileUtil {
             }
             resource = FileUtil.class.getClassLoader().getResource(path);
             if (resource == null) {
-                log.debug("{} not found in classpath", path);
+                resource = FileUtil.class.getResource(path);
+                if (resource == null) {
+                    log.debug("{} not found in classpath", path);
+                }
             }
         }
         return resource;
