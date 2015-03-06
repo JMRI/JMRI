@@ -560,6 +560,10 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
             return MessageFormat.format(TrainManifestText.getStringTrainTerminates(), new Object[]{_train
                 .getTrainTerminatesName()});
         }
+        if (rl != _train.getCurrentLocation() && _train.getExpectedArrivalTime(rl).equals(Train.ALREADY_SERVICED)) {
+            return MessageFormat.format(TrainSwitchListText.getStringTrainDone(), new Object[]{_train
+                .getName()});
+        }
         if (Setup.isPrintLoadsAndEmptiesEnabled()) {
             int emptyCars = _train.getNumberEmptyCarsInTrain(rl);
             String text;

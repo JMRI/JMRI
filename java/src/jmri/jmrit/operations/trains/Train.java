@@ -375,12 +375,12 @@ public class Train implements java.beans.PropertyChangeListener {
      * Gets the expected time when this train will arrive at the location rl.
      * Expected arrival time is based on the number of car pick up and set outs
      * for this train. TODO Doesn't provide expected arrival time if train is in
-     * route, instead provides relative time. If train has passed the location
-     * return -1.
+     * route, instead provides relative time. If train is at or has passed the
+     * location return -1.
      *
      * @return expected arrival time
      */
-    public String getExpectedArrivalTime(RouteLocation routeLocation) {
+  public String getExpectedArrivalTime(RouteLocation routeLocation) {
         int minutes = getExpectedTravelTimeInMinutes(routeLocation);
         if (minutes == -1) {
             return ALREADY_SERVICED;

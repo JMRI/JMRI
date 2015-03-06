@@ -3,7 +3,6 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.text.MessageFormat;
 import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -11,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextPane;
+import javax.swing.SwingUtilities;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -21,7 +21,6 @@ import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManifestText;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -199,88 +198,85 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
     }
 
     private void update() {
-        log.debug("update, setMode: {}", isSetMode);
-        initialize();
+        log.debug("queue update");
+        // use invokeLater to prevent deadlock
+        SwingUtilities.invokeLater(new Runnable() {
+            public void run() {
+                log.debug("update, setMode: {}", isSetMode);
+                initialize();
 
-        // turn everything off and re-enable if needed
-        pButtons.setVisible(false);
-        pTrainVisit.setVisible(false);
-        trainVisitComboBox.setVisible(false); // Use visible as a flag to ignore updates
-        textTrainComment.setVisible(false);
-        textTrainRouteComment.setVisible(false);
-        textTrainRouteLocationComment.setVisible(false);
+                // turn everything off and re-enable if needed
+                pButtons.setVisible(false);
+                pTrainVisit.setVisible(false);
+                trainVisitComboBox.setVisible(false); // Use visible as a flag to ignore updates
+                textTrainComment.setVisible(false);
+                textTrainRouteComment.setVisible(false);
+                textTrainRouteLocationComment.setVisible(false);
 
-        textTrainDescription.setText("");
-        textStatus.setText("");
+                textTrainDescription.setText("");
+                textStatus.setText("");
 
-        if (_train != null && _train.getRoute() != null) {
-            Route route = _train.getRoute();
-            pButtons.setVisible(true);
-            textTrainDescription.setText(_train.getDescription());
-            // show train comment box only if there's a comment
-            textTrainComment.setVisible(!_train.getComment().equals(""));
-            textTrainComment.setText(_train.getComment());
-            // show route comment box only if there's a route comment
-            textTrainRouteComment.setVisible(!route.getComment().equals("") && Setup.isPrintRouteCommentsEnabled());
-            textTrainRouteComment.setText(route.getComment());
-            // Does this train have a unique railroad name?
-            if (!_train.getRailroadName().equals("")) {
-                textRailRoadName.setText(_train.getRailroadName());
-            } else {
-                textRailRoadName.setText(Setup.getRailroadName());
-            }
+                if (_train != null && _train.getRoute() != null) {
+                    Route route = _train.getRoute();
+                    pButtons.setVisible(true);
+                    textTrainDescription.setText(_train.getDescription());
+                    // show train comment box only if there's a comment
+                    textTrainComment.setVisible(!_train.getComment().equals(""));
+                    textTrainComment.setText(_train.getComment());
+                    // show route comment box only if there's a route comment
+                    textTrainRouteComment.setVisible(!route.getComment().equals("") && Setup.isPrintRouteCommentsEnabled());
+                    textTrainRouteComment.setText(route.getComment());
+                    // Does this train have a unique railroad name?
+                    if (!_train.getRailroadName().equals("")) {
+                        textRailRoadName.setText(_train.getRailroadName());
+                    } else {
+                        textRailRoadName.setText(Setup.getRailroadName());
+                    }
 
-            // determine how many times this train visits this location and if it is the last stop
-            RouteLocation rl = null;
-            boolean lastLocation = false;
-            List<RouteLocation> routeList = route.getLocationsBySequenceList();
-            int visitNumber = 0;
-            for (int i = 0; i < routeList.size(); i++) {
-                if (TrainCommon.splitString(routeList.get(i).getName()).equals(
-                        TrainCommon.splitString(_location.getName()))) {
-                    visitNumber++;
-                    if (visitNumber == _visitNumber) {
-                        rl = routeList.get(i);
-                        if (i == routeList.size() - 1) {
-                            lastLocation = true;
+                    // determine how many times this train visits this location and if it is the last stop
+                    RouteLocation rl = null;
+                    List<RouteLocation> routeList = route.getLocationsBySequenceList();
+                    int visitNumber = 0;
+                    for (int i = 0; i < routeList.size(); i++) {
+                        if (TrainCommon.splitString(routeList.get(i).getName()).equals(
+                                TrainCommon.splitString(_location.getName()))) {
+                            visitNumber++;
+                            if (visitNumber == _visitNumber) {
+                                rl = routeList.get(i);
+                            }
                         }
                     }
-                }
-            }
 
-            if (rl != null) {
-                // update visit numbers
-                if (visitNumber > 1) {
-                    trainVisitComboBox.removeAllItems(); // this fires an action change!
-                    for (int i = 0; i < visitNumber; i++) {
-                        trainVisitComboBox.addItem(i + 1);
+                    if (rl != null) {
+                        // update visit numbers
+                        if (visitNumber > 1) {
+                            trainVisitComboBox.removeAllItems(); // this fires an action change!
+                            for (int i = 0; i < visitNumber; i++) {
+                                trainVisitComboBox.addItem(i + 1);
+                            }
+                            trainVisitComboBox.setSelectedItem(_visitNumber);
+                            trainVisitComboBox.setVisible(true); // now pay attention to changes
+                            pTrainVisit.setVisible(true); // show the visit panel
+                        }
+
+                        // update comment and location name
+                        textTrainRouteLocationComment.setVisible(!rl.getComment().equals(RouteLocation.NONE)
+                                && Setup.isSwitchListRouteLocationCommentEnabled());
+                        textTrainRouteLocationComment.setText(rl.getComment());
+                        textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
+
+                        // check for locos
+                        updateLocoPanes(rl);
+
+                        // now update the car pick ups and set outs
+                        blockCars(rl, IS_MANIFEST);
+
+                        textStatus.setText(getStatus(rl, IS_MANIFEST));
                     }
-                    trainVisitComboBox.setSelectedItem(_visitNumber);
-                    trainVisitComboBox.setVisible(true); // now pay attention to changes
-                    pTrainVisit.setVisible(true); // show the visit panel
-                }
-
-                // update comment and location name
-                textTrainRouteLocationComment.setVisible(!rl.getComment().equals(RouteLocation.NONE)
-                        && Setup.isSwitchListRouteLocationCommentEnabled());
-                textTrainRouteLocationComment.setText(rl.getComment());
-                textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
-
-                // check for locos
-                updateLocoPanes(rl);
-
-                // now update the car pick ups and set outs
-                blockCars(rl, IS_MANIFEST);
-
-                if (lastLocation) {
-                    textStatus.setText(MessageFormat.format(TrainManifestText.getStringTrainTerminates(),
-                            new Object[]{TrainCommon.splitString(_train.getTrainTerminatesName())}));
-                } else {
-                    textStatus.setText(getStatus(rl, IS_MANIFEST));
+                    updateComplete();
                 }
             }
-            updateComplete();
-        }
+        });
     }
 
     private void updateTrainsComboBox() {
