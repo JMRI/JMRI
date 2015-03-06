@@ -389,7 +389,7 @@
    <H2>Settings</H2>
 
    The Settings window contains general parameters for the operations program. Select from the JMRI
-   main window "Tools-&gt;Operations-&gt;Settings" to open the Settings window. The Setting window
+   main window "Tools-&gt;Operations-&gt;Settings" to open the Settings window. The Settings window
    has fields and buttons to allow you to enter your railroad name, the directions your train's
    travel, the scale that you are using, printer and icon controls, and the ability to create
    backups and restore files for operations.
@@ -532,7 +532,7 @@
 
    <H3>Save</H3>
 
-   When you're finished with the settings window, press the save button to store the setting in a
+   When you're finished with the settings window, press the save button to store your settings in a
    file called "Operations.xml". You can find this file in your JMRI directory in a folder called
    "operations". OperationsPro&trade; will also create a backup file each time you press the save button. 
    
@@ -547,7 +547,7 @@
     of the automatic backups is to make a copy of the files for "safe keeping" before changes are
     made to the main operations files. This way, if anything gets messed up, there is a copy of the
     last known good data that can easily be restored to undo the damage. In normal operation, an
-    automatic backup is made each time OperationsPro&trade; starts (if the "Auto Backup" setting is checked
+    automatic backup is made each time OperationsPro&trade; starts (if the "Auto Backup" option is checked
     on the Settings page), and right before a Restore, Reset Database, or Load Demo Files operation
     is done.</p>
 
@@ -2016,11 +2016,11 @@
     the two industry tracks, the program can borrow space from the other industry if needed. So now
     the program could set out up to four cars at each industry, but no more than four cars total.</p>
 
-   <p>If you don't set a minimum, then one industry could hog all of the track. By setting a
+   <p>If you don't set a minimum, then one industry could hog all of the track. By entering a
     minimum of say 55' for each industry, it means that the most any one industry is going to get is
     three cars. There will always be space available for at least one car at each industry. Note
     that the maximum number of cars in all cases is four. It is only how the cars are distributed
-    that changes when setting a minimum.</p>
+    that changes when entering a minimum.</p>
 
    <p>Anther use of a "pool" is with regard to schedules. For the power user, you might find
     that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
@@ -2561,7 +2561,7 @@
    specifies happens to be full, the program will search for a yard to place the car. When the track
    becomes available, the program will move the car from the yard to the track specified.
 
-   <P>When setting a destination, you don't have to specify a track. And when setting a
+   <P>When selecting a destination, you don't have to specify a track. And when selecting a
     destination that is staging, you shouldn't select a destination track, let the program do that
     for you.</P>
 
