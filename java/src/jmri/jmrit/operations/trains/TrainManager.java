@@ -67,6 +67,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public static final String TRAIN_ACTION_CHANGED_PROPERTY = "TrainsAction"; // NOI18N
     public static final String ACTIVE_TRAIN_SCHEDULE_ID = "ActiveTrainScheduleId"; // NOI18N
     public static final String ROW_COLOR_NAME_CHANGED_PROPERTY = "TrainsRowColorChange"; // NOI18N
+    public static final String TRAINS_BUILT_CHANGED_PROPERTY = "TrainsBuiltChange"; // NOI18N
 
     public TrainManager() {
     }
@@ -881,6 +882,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
                 for (Train train : trains) {
                     train.buildIfSelected();
                 }
+                setDirtyAndFirePropertyChange(TRAINS_BUILT_CHANGED_PROPERTY, false, true);
             }
         });
         build.setName("Build Trains"); // NOI18N

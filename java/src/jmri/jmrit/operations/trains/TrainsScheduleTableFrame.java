@@ -1,6 +1,8 @@
 // TrainsScheduleTableFrame.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.setup.Control;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -23,7 +25,6 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -231,6 +232,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
             applySchedule();
         }
         if (ae.getSource() == buildButton) {
+            switchListsButton.setEnabled(false);
             // uses a thread which allows table updates during build
             trainManager.buildSelectedTrains(getSortByList());
         }
@@ -432,16 +434,17 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
-            log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-                    + e.getNewValue()); // NOI18N
-        }
+        if (Control.showProperty && log.isDebugEnabled())
+            log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {
             updateControlPanel();
         }
         if (e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)) {
             setPrintButtonText();
+        }
+        if (e.getPropertyName().equals(TrainManager.TRAINS_BUILT_CHANGED_PROPERTY)) {
+            switchListsButton.setEnabled(true);
         }
         if (e.getPropertyName().equals(Setup.REAL_TIME_PROPERTY_CHANGE)) {
             setSwitchListButtonText();
