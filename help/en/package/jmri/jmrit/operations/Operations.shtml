@@ -102,6 +102,7 @@
         <LI><A HREF="#StagingAndCarLoads">Staging and Car loads</A></LI>
         <LI><A HREF="#BlockingCarsFromStaging">Blocking Cars from Staging</A></LI>
         <LI><A HREF="#LoopingTrainsThroughStaging">Looping Trains through Staging</A></LI>
+        <LI><A HREF="#OffLayoutStorage">Off Layout Storage / Staging</A>
        </UL></LI>
       <LI><A HREF="#TrackTools">Track Tools</A>
        <UL>
@@ -1964,6 +1965,18 @@
     You can automate the restaging of a train by creating a <A HREF="#TrainScripts">script</A> that
     is activated when the train is terminated into staging.
    </P>
+   
+   <A Name="OffLayoutStorage"></A>
+   <H3>Off Layout Storage / Staging</H3>
+
+   Some lucky folks have more locomotives and cars than track on their layout and want the program to
+   gather rolling stock from storage boxes to build trains from staging. One way to do this is to
+   create a "five finger" route for a train that will visit your storage boxes, and pull cars from
+   each of the boxes to create a train. This train's route can depart and terminate to one of your
+   existing staging locations, this way the train also returns rolling stock to your storage
+   boxes. Some storage boxes only fit a certain number of cars, you can control how many cars a box
+   can hold by creating the right number of tracks of a certain length for the box. The "copy"
+   location and track features make the creation of storage boxes a bit easier. 
    
    <A NAME="TrackTools"></A>
    <H3>Track Tools</H3>
