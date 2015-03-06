@@ -832,9 +832,14 @@ public final class FileUtil {
         }
         if (locations == Location.ALL || locations == Location.INSTALLED) {
             // return path if in jmri.jar or null
+            // The ClassLoader needs paths to start with /
+            path = path.replace(File.separatorChar, '/');
+            if (!path.startsWith("/")) {
+                path = "/" + path;
+            }
             resource = FileUtil.class.getClassLoader().getResource(path);
             if (resource == null) {
-                log.debug("Unable to get URL for {}", path);
+                log.debug("{} not found in classpath", path);
             }
         }
         return resource;
