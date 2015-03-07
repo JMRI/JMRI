@@ -2928,11 +2928,6 @@ public class TrainBuilder extends TrainCommon {
                 locations.add(track.getLocation());
                 continue;
             }
-            if (!_train.isAllowLocalMovesEnabled()
-                    && splitString(car.getLocationName()).equals(splitString(track.getLocation().getName()))) {
-                log.debug("Skipping track ({}), it would require a local move", track.getName()); // NOI18N
-                continue;
-            }
             if (!_train.isAllowThroughCarsEnabled() && !_train.isLocalSwitcher() && !car.isCaboose() && !car.hasFred()
                     && !car.isPassenger()
                     && splitString(car.getLocationName()).equals(splitString(_departLocation.getName()))
@@ -2942,7 +2937,16 @@ public class TrainBuilder extends TrainCommon {
                         _terminateLocation.getName());
                 continue;
             }
+            
             String status = car.testDestination(track.getLocation(), track);
+            
+            if (status.equals(Track.OKAY) && !_train.isAllowLocalMovesEnabled()
+                    && splitString(car.getLocationName()).equals(splitString(track.getLocation().getName()))) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoLocalMoveToSpur"),
+                        new Object[]{_train.getName(), track.getLocation().getName(), track.getName()}));
+                // log.debug("Skipping track ({}), it would require a local move", track.getName()); // NOI18N
+                continue;
+            }     
             if (!status.equals(Track.OKAY)) {
                 if (track.getScheduleMode() == Track.SEQUENTIAL && status.startsWith(Track.SCHEDULE)) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackSequentialMode"),
@@ -3083,10 +3087,8 @@ public class TrainBuilder extends TrainCommon {
                 locations.add(track.getLocation()); // couldn't route to this staging location
                 car.setFinalDestination(null);
             }
-            if (locations.isEmpty()) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoStagingForCarLoad"),
-                        new Object[]{car.toString(), car.getLoadName()}));
-            }
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildNoStagingForCarLoad"),
+                    new Object[]{car.toString(), car.getLoadName()}));
         }
         return routeToSpurFound; // done
     }
