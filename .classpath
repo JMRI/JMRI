@@ -57,5 +57,9 @@
 	<classpathentry kind="lib" path="lib/websocket-common-9.2.7.v20150116.jar"/>
 	<classpathentry kind="lib" path="lib/websocket-server-9.2.7.v20150116.jar"/>
 	<classpathentry kind="lib" path="lib/websocket-servlet-9.2.7.v20150116.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-core.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-device.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-gpio-extension.jar"/>
+	<classpathentry kind="lib" path="lib/pi4j-service.jar"/>
 	<classpathentry kind="output" path="java/classes"/>
 </classpath>
