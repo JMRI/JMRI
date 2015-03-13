@@ -157,6 +157,10 @@
         <pathelement location="${libdir}/slf4j-api-1.7.6.jar"/>
         <pathelement location="${libdir}/slf4j-log4j12-1.7.6.jar"/>
         <pathelement location="${libdir}/xbee-api-0.9.jar"/>
+        <pathelement location="${libdir}/pi4j-core.jar"/>
+        <pathelement location="${libdir}/pi4j-device.jar"/>
+        <pathelement location="${libdir}/pi4j-gpio-extension.jar"/>
+        <pathelement location="${libdir}/pi4j-service.jar"/>
     </path>
 
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
