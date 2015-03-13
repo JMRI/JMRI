@@ -27,6 +27,7 @@ public class Xml {
     static final String MAXIMUM_STRING_LENGTHS = "maximumStringLengths"; // NOI18N
     static final String MAX_LEN_STRING_ATTRIBUTE = "max_len_string_attibute"; // NOI18N
     static final String MAX_LEN_STRING_ROAD_NUMBER = "max_len_string_road_number"; // NOI18N
+    static final String MAX_LEN_STRING_PRINT_ROAD_NUMBER = "max_len_string_print_road_number"; // NOI18N
     static final String MAX_LEN_STRING_LOCATION_NAME = "max_len_string_location_name"; // NOI18N
     static final String MAX_LEN_STRING_TRACK_NAME = "max_len_string_track_name"; // NOI18N
     static final String MAX_LEN_STRING_TRACK_LENGTH_NAME = "max_len_string_track_length_name"; // NOI18N

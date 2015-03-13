@@ -151,7 +151,7 @@ public class PrintCarRosterAction extends AbstractAction {
                 previousLocation = car.getLocationName().trim();
 
                 // car number
-                number = padAttribute(car.getNumber().trim(), 7);
+                number = padAttribute(car.getNumber().trim(), Control.max_len_string_print_road_number);
                 // car road
                 road = padAttribute(car.getRoadName().trim(), CarRoads.instance().getMaxNameLength());
                 // car type
@@ -242,8 +242,7 @@ public class PrintCarRosterAction extends AbstractAction {
     }
 
     private void printTitleLine(HardcopyWriter writer) throws IOException {
-        String s = Bundle.getMessage("Number")
-                + "  "
+        String s = padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number)
                 + padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getMaxNameLength())
                 + padAttribute(Bundle.getMessage("Type"), CarTypes.instance().getMaxFullNameLength())
                 + (printCarLength.isSelected() ? Bundle.getMessage("Len") + "  " : "")

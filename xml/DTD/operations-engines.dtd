@@ -52,6 +52,7 @@
 <!ATTLIST engine routeDestinationId		CDATA #IMPLIED> 
 <!ATTLIST engine routeLocationId		CDATA #IMPLIED> 
 <!ATTLIST engine lastRouteId			CDATA #IMPLIED> 
+<!ATTLIST engine lastLocationId			CDATA #IMPLIED>
 <!ATTLIST engine train					CDATA #IMPLIED>  
 <!ATTLIST engine owner					CDATA #IMPLIED>  
 <!ATTLIST engine moves					CDATA #IMPLIED>                    

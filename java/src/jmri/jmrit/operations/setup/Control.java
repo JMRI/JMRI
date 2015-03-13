@@ -54,6 +54,9 @@ public class Control {
 
     // Car and Engine number maximum string length	
     public static int max_len_string_road_number = 10;
+    
+    // Car and Engine number maximum string length when printing  
+    public static int max_len_string_print_road_number = 6;
 
     // Location name maximum string length
     public static int max_len_string_location_name = 25;
@@ -100,6 +103,8 @@ public class Control {
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_attibute));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_ROAD_NUMBER));
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_road_number));
+        values.addContent(length = new Element(Xml.MAX_LEN_STRING_PRINT_ROAD_NUMBER));
+        length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_print_road_number));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_LOCATION_NAME));
         length.setAttribute(Xml.LENGTH, Integer.toString(max_len_string_location_name));
         values.addContent(length = new Element(Xml.MAX_LEN_STRING_TRACK_NAME));
@@ -145,6 +150,10 @@ public class Control {
             if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROAD_NUMBER) != null)
                     && (length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_ROAD_NUMBER).getAttribute(Xml.LENGTH)) != null) {
                 max_len_string_road_number = Integer.parseInt(length.getValue());
+            }
+            if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_PRINT_ROAD_NUMBER) != null)
+                    && (length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_PRINT_ROAD_NUMBER).getAttribute(Xml.LENGTH)) != null) {
+                max_len_string_print_road_number = Integer.parseInt(length.getValue());
             }
             if ((maximumStringLengths.getChild(Xml.MAX_LEN_STRING_LOCATION_NAME) != null)
                     && (length = maximumStringLengths.getChild(Xml.MAX_LEN_STRING_LOCATION_NAME).getAttribute(Xml.LENGTH)) != null) {

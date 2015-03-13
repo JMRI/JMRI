@@ -1358,13 +1358,9 @@ public class TrainCommon {
         return getRollingStockAttribute(car, attribute, isPickup, isLocal);
     }
 
-    private static final int trimRoadNumber = 4; // trim the number of road numbers printed by 4
-
     private String getRollingStockAttribute(RollingStock rs, String attribute, boolean isPickup, boolean isLocal) {
         if (attribute.equals(Setup.NUMBER)) {
-            return " "
-                    + padAndTruncateString(splitString(rs.getNumber()), Control.max_len_string_road_number
-                            - trimRoadNumber);
+            return " " + padAndTruncateString(splitString(rs.getNumber()), Control.max_len_string_print_road_number);
         } else if (attribute.equals(Setup.ROAD)) {
             return " " + padAndTruncateString(rs.getRoadName(), CarRoads.instance().getMaxNameLength());
         } else if (attribute.equals(Setup.TYPE)) {
@@ -1432,8 +1428,8 @@ public class TrainCommon {
         } // the three utility attributes that don't get printed but need to be tabbed out
         else if (attribute.equals(Setup.NO_NUMBER)) {
             return " "
-                    + padAndTruncateString("", Control.max_len_string_road_number
-                            - (trimRoadNumber + UTILITY_CAR_COUNT_FIELD_SIZE + 1));
+                    + padAndTruncateString("", Control.max_len_string_print_road_number
+                            - (UTILITY_CAR_COUNT_FIELD_SIZE + 1));
         } else if (attribute.equals(Setup.NO_ROAD)) {
             return " " + padAndTruncateString("", CarRoads.instance().getMaxNameLength());
         } else if (attribute.equals(Setup.NO_COLOR)) {
@@ -1612,11 +1608,11 @@ public class TrainCommon {
                         + " ");
             } else if (attribute.equals(Setup.NUMBER) && !isEngine) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Number(),
-                        Control.max_len_string_road_number - trimRoadNumber)
+                        Control.max_len_string_print_road_number)
                         + " ");
             } else if (attribute.equals(Setup.NUMBER) && isEngine) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_EngineNumber(),
-                        Control.max_len_string_road_number - trimRoadNumber)
+                        Control.max_len_string_print_road_number)
                         + " ");
             } else if (attribute.equals(Setup.TYPE)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Type(), CarTypes.instance()

@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.util.List;
 import javax.swing.AbstractAction;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.davidflanagan.HardcopyWriter;
@@ -85,8 +86,8 @@ public class PrintEngineRosterAction extends AbstractAction {
         List<RollingStock> engines = panel.getSortByList();
         try {
             // header
-            String header = padAttribute(Bundle.getMessage("Number"), 7)
-                    + padAttribute(Bundle.getMessage("Road"), 7)
+            String header = padAttribute(Bundle.getMessage("Number"), Control.max_len_string_print_road_number)
+                    + padAttribute(Bundle.getMessage("Road"), CarRoads.instance().getMaxNameLength())
                     + padAttribute(Bundle.getMessage("Model"), EngineModels.instance().getMaxNameLength())
                     + padAttribute(Bundle.getMessage("Type"), EngineTypes.instance().getMaxNameLength())
                     + padAttribute(Bundle.getMessage("Len"), Control.max_len_string_length_name)
@@ -104,8 +105,8 @@ public class PrintEngineRosterAction extends AbstractAction {
                 Engine engine = (Engine) rs;
 
                 // loco number
-                number = padAttribute(engine.getNumber(), 7);
-                road = padAttribute(engine.getRoadName(), 7);
+                number = padAttribute(engine.getNumber(), Control.max_len_string_print_road_number);
+                road = padAttribute(engine.getRoadName(), CarRoads.instance().getMaxNameLength());
                 model = padAttribute(engine.getModel(), EngineModels.instance().getMaxNameLength());
                 type = padAttribute(engine.getTypeName(), EngineTypes.instance().getMaxNameLength());
                 length = padAttribute(engine.getLength(), Control.max_len_string_length_name);
