@@ -28,6 +28,7 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import static jmri.jmris.json.JSON.ACTIVE;
+import static jmri.jmris.json.JSON.ACTIVE_PROFILE;
 import static jmri.jmris.json.JSON.ADDRESS;
 import static jmri.jmris.json.JSON.ADD_COMMENT;
 import static jmri.jmris.json.JSON.APPEARANCE;
@@ -171,6 +172,7 @@ import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.SystemConnectionMemo;
+import jmri.profile.ProfileManager;
 import jmri.util.ConnectionNameFromSystemName;
 import jmri.util.JmriJFrame;
 import jmri.util.node.NodeIdentity;
@@ -1411,6 +1413,7 @@ public class JsonUtil {
         data.put(HEARTBEAT, Math.round(heartbeat * 0.9f));
         data.put(RAILROAD, WebServerManager.getWebServerPreferences().getRailRoadName());
         data.put(NODE, NodeIdentity.identity());
+        data.put(ACTIVE_PROFILE, ProfileManager.defaultManager().getActiveProfile().getName());
         return root;
     }
 

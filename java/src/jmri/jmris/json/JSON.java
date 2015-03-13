@@ -150,6 +150,12 @@ public final class JSON {
      */
     public static final String NODE = "node"; // NOI18N
     /**
+     * {@value #ACTIVE_PROFILE}
+     * <p>
+     * @since 3.0
+     */
+    public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
+    /**
      * {@value #FORMER_NODES}
      * <p>
      * @since 1.1
