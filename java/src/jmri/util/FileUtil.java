@@ -164,6 +164,25 @@ public final class FileUtil {
         }
     }
 
+    /**
+     * Convenience method to get the {@link java.net.URL} from a
+     * {@link java.net.URI}. Logs errors and returns null if any exceptions are
+     * thrown by the conversion.
+     *
+     * @param uri The URI to convert.
+     * @return URL or null if any errors exist.
+     */
+    static public URL getURL(URI uri) {
+        try {
+            return uri.toURL();
+        } catch (MalformedURLException | IllegalArgumentException ex) {
+            log.warn("Unable to get URL from {}", uri.toString());
+            return null;
+        } catch (NullPointerException ex) {
+            log.warn("Unable to get URL from null object.", ex);
+            return null;
+        }
+    }
     /*
      * Get the canonical path for a portable path. There are nine cases:
      * <ul>
@@ -195,6 +214,7 @@ public final class FileUtil {
      * @return Canonical path to use, or null if one cannot be found.
      * @since 2.7.2
      */
+
     static private String pathFromPortablePath(@Nonnull String path) {
         if (path.startsWith(PROGRAM)) {
             if (new File(path.substring(PROGRAM.length())).isAbsolute()) {
@@ -796,7 +816,11 @@ public final class FileUtil {
             log.debug("Attempting to find {} in {}", path, Arrays.toString(searchPaths));
         }
         if (FileUtil.isPortableFilename(path)) {
-            return FileUtil.findExternalFilename(path);
+            try {
+                return FileUtil.findExternalFilename(path);
+            } catch (NullPointerException ex) {
+                // do nothing
+            }
         }
         URI resource = null;
         for (String searchPath : searchPaths) {

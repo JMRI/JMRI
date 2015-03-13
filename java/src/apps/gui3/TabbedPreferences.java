@@ -144,8 +144,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         save = new JButton(
                 rb.getString("ButtonSave"),
-                new ImageIcon(
-                        FileUtil.findExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png")));
+                new ImageIcon(FileUtil.getURL(FileUtil.findExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png"))));
         save.addActionListener((ActionEvent e) -> {
             savePressed(invokeSaveOptions());
         });
