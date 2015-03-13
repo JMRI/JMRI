@@ -685,7 +685,8 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         } catch (Exception e) {
             log.warn("Blocking must be a number between 0 and 100");
         }
-        if (isSave && passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
+        // ask if blocking order should be the same
+        if (isSave && _car.getKernel() == null && passengerCheckBox.isSelected() && _car.getBlocking() != blocking) {
             if (JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("carChangeBlocking"),
                     new Object[]{blocking, _car.getTypeName()}), MessageFormat.format(Bundle
                             .getMessage("carModifyAllType"), new Object[]{_car.getTypeName()}), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
@@ -788,6 +789,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         _car.setValue(valueTextField.getText());
         _car.setRfid(rfidTextField.getText());
         autoTrackCheckBox.setEnabled(true);
+        
+        // update blocking
+        blockingTextField.setText(Integer.toString(_car.getBlocking()));
+        
         if (locationBox.getSelectedItem() != null) {
             if (!locationBox.getSelectedItem().equals(LocationManager.NONE)
                     && (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals(
