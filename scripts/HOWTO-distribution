@@ -66,7 +66,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     
     svn propset svn:eol-style native <file-path-name>
     
-    to fix it for good.
+    to fix it for good. (if you hit a 'has binary mime type`, svn propdel svn:mime-type <filename> )
     
 ( ) Confirm that properties, html, etc files have "CVS" properties set. They
     should, but new ones might not.
@@ -213,7 +213,7 @@ Actual release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.2/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.3/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
