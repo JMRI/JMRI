@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.li100f.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.li100f.ConnectionConfig;
 import jmri.jmrix.lenz.li100f.LI100Adapter;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
  */
-public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();

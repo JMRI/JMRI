@@ -1,7 +1,7 @@
 package jmri.jmrix.lenz.ztc640.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
+import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.ztc640.ConnectionConfig;
 import jmri.jmrix.lenz.ztc640.ZTC640Adapter;
 import org.slf4j.Logger;
@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @author Bob Jacobsen Copyright: Copyright (c) 2003
  * @version $Revision$
  */
-public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
+public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
 
     public ConnectionConfigXml() {
         super();
