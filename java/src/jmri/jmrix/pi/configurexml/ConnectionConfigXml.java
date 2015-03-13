@@ -1,0 +1,83 @@
+package jmri.jmrix.pi.configurexml;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import jmri.InstanceManager;
+import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
+import jmri.jmrix.pi.ConnectionConfig;
+import jmri.jmrix.pi.RaspberryPiAdapter;
+import org.jdom2.Element;
+
+/**
+ * Handle XML persistance of layout connections by persistening
+ * the RaspberryPiAdapter. Note this is named as the XML version of
+ * a ConnectionConfig object, but it's actually persisting the 
+ * RaspberryPiAdapter.
+ * <P>
+ * This class is invoked from jmrix.JmrixConfigPaneXml on write,
+ * as that class is the one actually registered. Reads are brought
+ * here directly via the class attribute in the XML.
+ *
+ * @author Paul Bender Copyright: Copyright (c) 2015
+ * @version $Revision$
+ */
+public class ConnectionConfigXml extends AbstractConnectionConfigXml {
+
+    private RaspberryPiAdapter adapter = null;
+
+    public ConnectionConfigXml() {
+        super();
+    }
+
+    @Override
+    protected void getInstance() {
+        if(adapter == null) adapter=new RaspberryPiAdapter();
+    }
+
+    protected void getInstance(Object object) {
+        adapter=(RaspberryPiAdapter)((ConnectionConfig) object).getAdapter();
+    }
+
+    @Override
+    protected void register() {
+        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+    }
+
+    /**
+     * Default implementation for storing the static contents of the serial port
+     * implementation
+     *
+     * @param o Object to store, of type PositionableLabel
+     * @return Element containing the complete info
+     */
+    @Override
+    public Element store(Object o){
+       getInstance(o);
+       Element e = new Element("connection");
+       storeCommon(e,adapter);
+       e.setAttribute("class", this.getClass().getName());
+       return e;
+    }
+
+   /**
+     * Update static data from XML file
+     *
+     * @param e Top level Element to unpack.
+     * @return true if successful
+     * @throws java.lang.Exception
+     */
+    @Override
+    public boolean load(Element e) throws Exception{
+       getInstance();
+       loadCommon(e,adapter);
+       InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+       adapter.configure();
+       return true;
+    }
+
+
+
+    // initialize logging
+    static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());
+
+}

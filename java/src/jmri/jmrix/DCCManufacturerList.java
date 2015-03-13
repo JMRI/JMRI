@@ -43,6 +43,7 @@ public class DCCManufacturerList {
     public static final String QSI = "QSI Solutions";
     public static final String RAIL = "RailDriver";
     public static final String RFID = "RFID";
+    public static final String PI = "Raspberry Pi Foundation";
     public static final String ROCO = "Roco";
     public static final String SPROG = "SPROG DCC";
     public static final String SRCP = "SRCP";
@@ -83,6 +84,7 @@ public class DCCManufacturerList {
         PROTRAK,
         QSI,
         RFID,
+        PI,
         ROCO,
         SPROG,
         SRCP,
@@ -165,6 +167,9 @@ public class DCCManufacturerList {
         }
         if (System.equals(OPENLCB)) {
             return new jmri.jmrix.openlcb.OlcbConnectionTypeList().getAvailableProtocolClasses();
+        }
+        if (System.equals(PI)) { 
+            return new jmri.jmrix.pi.RaspberryPiConnectionTypeList().getAvailableProtocolClasses(); 
         }
         if (System.equals(POWERLINE)) {
             return new jmri.jmrix.powerline.SerialConnectionTypeList().getAvailableProtocolClasses();
