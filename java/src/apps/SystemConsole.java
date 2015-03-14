@@ -68,10 +68,13 @@ public final class SystemConsole extends JTextArea {
     private static final int STD_ERR = 1;
     private static final int STD_OUT = 2;
 
-    private JTextArea console = null;
+    private final JTextArea console;
 
     private PrintStream originalOut;
     private PrintStream originalErr;
+
+    private final PrintStream outputStream;
+    private final PrintStream errorStream;
 
     private JmriJFrame frame = null;
 
@@ -123,28 +126,27 @@ public final class SystemConsole extends JTextArea {
     }
 
     private SystemConsole() {
-        if (console == null) {
+        // Record current System.out and System.err
+        // so that we can still send to them
+        originalOut = System.out;
+        originalErr = System.err;
 
-            // Record current System.out and System.err
-            // so that we can still send to them
-            originalOut = System.out;
-            originalErr = System.err;
+        // Create the console text area
+        console = new JTextArea();
 
-            // Create the console text area
-            console = new JTextArea();
+        // Setup the console text area
+        console.setRows(20);
+        console.setColumns(120);
+        console.setFont(new Font(fontFamily, fontStyle, fontSize));
+        console.setEditable(false);
+        setScheme(scheme);
+        setWrapStyle(wrapStyle);
 
-            // Setup the console text area
-            console.setRows(20);
-            console.setColumns(120);
-            console.setFont(new Font(fontFamily, fontStyle, fontSize));
-            console.setEditable(false);
-            setScheme(scheme);
-            setWrapStyle(wrapStyle);
+        this.outputStream = new PrintStream(outStream(STD_OUT), true);
+        this.errorStream = new PrintStream(outStream(STD_ERR), true);
 
-            // Then redirect to it
-            redirectSystemStreams();
-
-        }
+        // Then redirect to it
+        redirectSystemStreams();
     }
 
     public static SystemConsole getInstance() {
@@ -455,8 +457,8 @@ public final class SystemConsole extends JTextArea {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_DEFAULT_ENCODING",
             justification = "Can only be called from the same instance so default encoding OK")
     private void redirectSystemStreams() {
-        System.setOut(new PrintStream(outStream(STD_OUT), true));
-        System.setErr(new PrintStream(outStream(STD_ERR), true));
+        System.setOut(this.getOutputStream());
+        System.setErr(this.getErrorStream());
     }
 
     /**
@@ -620,6 +622,14 @@ public final class SystemConsole extends JTextArea {
         }
     }
 
+    public PrintStream getOutputStream() {
+        return this.outputStream;
+    }
+    
+    public PrintStream getErrorStream() {
+        return this.errorStream;
+    }
+    
     /**
      * Retrieve the current console colour scheme
      *
