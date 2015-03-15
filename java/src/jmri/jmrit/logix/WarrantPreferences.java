@@ -307,8 +307,8 @@ public class WarrantPreferences  {
      * Apply to classes that use this data
      */
     public void apply() {
-        setNXFrame();
         setSpeedMap();
+        setNXFrame();
     }
     private void setNXFrame() {
         NXFrame frame = NXFrame.getInstance();
@@ -317,6 +317,7 @@ public class WarrantPreferences  {
         frame.setThrottleScale(_throttleScale);
         frame.setTimeInterval(_msIncrTime);
         frame.setRampIncrement(_throttleIncr);
+        frame.updatePanel(_interpretation);
     }
     private void setSpeedMap() {
         SignalSpeedMap map = new SignalSpeedMap();

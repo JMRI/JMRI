@@ -389,8 +389,40 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         p.add(WarrantFrame.makeBoxPanel(vertical, _rampIncre, "RampIncrement"));
         _rampIncre.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
+        _rampIncre.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String text = _rampIncre.getText();
+                boolean showdialog = false;
+                try {
+                    float incr = Float.parseFloat(text);
+                    showdialog = (incr<0.002f || incr>0.2f);
+                } catch (NumberFormatException nfe) {
+                    showdialog = true;
+                }
+                if (showdialog) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("rampIncrWarning", text),
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                                        
+                }
+            }
+        });
         return p;
     }
+    /* alternative UI test
+    private JPanel throttleIncrementPanel(boolean vertical) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+        panel.add(new JLabel("Ramp step amount"));
+        JPanel p = new JPanel();
+        p.add(new javax.swing.JSpinner(new javax.swing.SpinnerNumberModel(1,1,20,1 )));
+        p.add(new JLabel(" steps, in"));
+        panel.add(p);
+        p = new JPanel();
+        String[] modes = {"14", "28", "128"};
+        p.add(new JComboBox<String>(modes));
+        p.add(new JLabel(" stepmode"));
+        panel.add(p);
+        return panel;
+    }*/
 
     /**
      * Compare GUI vaules with Preferences.  When different, update Preferences
@@ -410,7 +442,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         
         if (_preferences.getInterpretation()!=_interpretation) {
             _preferences.setInterpretation(_interpretation);
-            _isDirty = true;            
+            _isDirty = true;
         }
         
         int time = _preferences.getTimeIncre();

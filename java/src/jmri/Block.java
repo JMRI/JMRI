@@ -437,6 +437,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         }
         return _blockSpeed;
     }
+    
+    public void setBlockSpeedName(String s) {
+        if(s==null) {
+            _blockSpeed = "";
+        } else {
+            _blockSpeed = s;            
+        }
+    }
 
     public void setBlockSpeed(String s) throws JmriException {
         if ((s == null) || (_blockSpeed.equals(s))) {

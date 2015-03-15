@@ -27,7 +27,6 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.InstanceManager;
 import jmri.util.com.sun.TableSorter;
 import jmri.util.swing.XTableColumnModel;
 import jmri.util.table.ButtonEditor;
@@ -218,7 +217,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         warrantMenu.add(WarrantTableAction.makeLogMenu());
         menuBar.add(warrantMenu);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.logix.Warrant", true);
+        addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
 
         getContentPane().add(tablePanel);
 //        setLocation(50,0);
@@ -289,9 +288,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         _concatDialog.setVisible(true);
     }
     private void concatenate() {
+        /*
         WarrantManager manager = InstanceManager.getDefault(jmri.jmrit.logix.WarrantManager.class);
         Warrant startW = manager.getWarrant(_startWarrant.getText().trim());
         Warrant endW = manager.getWarrant(_endWarrant.getText().trim());
+        */
+        Warrant startW = _model.getWarrant(_startWarrant.getText().trim());
+        Warrant endW = _model.getWarrant(_endWarrant.getText().trim());
         if (startW==null || endW==null) {
             showWarning("BadWarrantNames");
             return;

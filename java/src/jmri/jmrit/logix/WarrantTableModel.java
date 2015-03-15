@@ -185,6 +185,23 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         }
         return _warList.get(index);
     }
+    
+    protected Warrant getWarrant(String name) {
+        if (name==null || name.length()==0) {
+            return null;
+        }
+        for (Warrant w: _warList) {
+            if (name.equals(w.getUserName()) || name.equals(w.getSystemName())) {
+                return w;
+            }
+        }
+        for (Warrant w: _warNX) {
+            if (name.equals(w.getUserName()) || name.equals(w.getSystemName())) {
+                return w;
+            }
+        }
+        return null;
+    }
 
     @Override
     public int getRowCount() {

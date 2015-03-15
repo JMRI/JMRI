@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import jmri.DccLocoAddress;
+import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,11 +49,11 @@ public class NXFrame extends WarrantRoute {
     private float _scale = 87.1f;
     private float _factor = 0.81f;  // ratio of throttle setting to scale speed
 
-    JTextField _dccNumBox = new JTextField();
-    JTextField _trainNameBox = new JTextField();
-    JTextField _nameBox = new JTextField();
-    JTextField _maxSpeedBox = new JTextField();
-    JTextField _minSpeedBox = new JTextField();
+    JTextField _dccNumBox = new JTextField(6);
+    JTextField _trainNameBox = new JTextField(6);
+    JTextField _nameBox = new JTextField(6);
+    JTextField _maxSpeedBox = new JTextField(6);
+    JTextField _minSpeedBox = new JTextField(6);
     JRadioButton _forward = new JRadioButton(Bundle.getMessage("forward"));
     JRadioButton _reverse = new JRadioButton(Bundle.getMessage("reverse"));
     JCheckBox _stageEStop = new JCheckBox();
@@ -62,6 +63,7 @@ public class NXFrame extends WarrantRoute {
     JTextField _factorbox = new JTextField(6);
     JRadioButton _runAuto = new JRadioButton(Bundle.getMessage("RunAuto"));
     JRadioButton _runManual = new JRadioButton(Bundle.getMessage("RunManual"));
+    JPanel      _controlPanel;
     JPanel      _autoRunPanel;
     JPanel      _manualPanel;
 //  static boolean _addTracker = false;
@@ -71,10 +73,17 @@ public class NXFrame extends WarrantRoute {
     private float _minSpeed = 0.05f;
     private float _intervalTime = 0.0f;
     private float _throttleIncr = 0.0f;
+    
+    private String _addr;
+    private int _dccNum;
+    private boolean  _isLong;
+    private float _rampLength;
+    private int _numSteps;
 
     private boolean _calibrate;
     private Warrant _calibrateWarrant;
     private int _calibrateIndex;
+    
     private static NXFrame _instance;
 
     static public NXFrame getInstance() {
@@ -97,11 +106,11 @@ public class NXFrame extends WarrantRoute {
         makeMenus();
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(10, 10));
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.add(Box.createVerticalGlue());
-        panel.add(makeBlockPanels());
-        panel.add(searchDepthPanel(false));
+        _controlPanel = new JPanel();
+        _controlPanel.setLayout(new BoxLayout(_controlPanel, BoxLayout.Y_AXIS));
+        _controlPanel.add(Box.createVerticalGlue());
+        _controlPanel.add(makeBlockPanels());
+        _controlPanel.add(searchDepthPanel(false));
         ButtonGroup bg = new ButtonGroup();
         bg.add(_runAuto);
         bg.add(_runManual);
@@ -123,74 +132,34 @@ public class NXFrame extends WarrantRoute {
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         pp.add(_runManual);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(pp);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        _controlPanel.add(pp);
+        _controlPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
-        JPanel p1 = new JPanel();
-        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
-        p1.add(WarrantFrame.makeTextBoxPanel(false, _maxSpeedBox, "MaxSpeed", true));
-        p1.add(WarrantFrame.makeTextBoxPanel(false, _minSpeedBox, "MinSpeed", true));
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-        p2.add(WarrantFrame.makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
-        p2.add(WarrantFrame.makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
-
-        _autoRunPanel = new JPanel();
-        _autoRunPanel.setLayout(new BoxLayout(_autoRunPanel, BoxLayout.Y_AXIS));
-        pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(p1);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(p2);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        _autoRunPanel.add(pp);
-        bg = new ButtonGroup();
-        bg.add(_forward);
-        bg.add(_reverse);
-        JPanel ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.X_AXIS));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(_forward);
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(_reverse);
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        _autoRunPanel.add(ppp);
-        _autoRunPanel.add(Box.createVerticalStrut(STRUT_SIZE));
-        pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
-        ppp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
-        ppp.add(WarrantFrame.makeBoxPanel(false, _haltStartBox, "HaltAtStart"));
-        pp.add(ppp);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
-        ppp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
-        ppp.add(WarrantFrame.makeTextBoxPanel(false, _factorbox, "throttleFactor", true));
-//        ppp.add(WarrantFrame.makeBoxPanel(false, _addTracker, "AddTracker"));
-        pp.add(ppp);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        _autoRunPanel.add(pp);
-
+        _autoRunPanel = makeAutoRunPanel(SignalSpeedMap.getMap().getInterpretation());
+        _factorbox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                updateSpeeds();
+            }
+        });
+        _maxSpeedBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                getBoxData();
+            }
+        });
         _manualPanel = new JPanel();
         _manualPanel.setLayout(new BoxLayout(_manualPanel, BoxLayout.X_AXIS));
         _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
         _manualPanel.add(WarrantFrame.makeTextBoxPanel(false, _nameBox, "TrainName", true));
         _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
 
-        panel.add(_autoRunPanel);
-        panel.add(_manualPanel);
+        _controlPanel.add(_autoRunPanel);
+        _controlPanel.add(_manualPanel);
         _manualPanel.setVisible(false);
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        _controlPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         _forward.setSelected(true);
         _stageEStop.setSelected(_eStop);
         _haltStartBox.setSelected(_haltStart);
-        _maxSpeedBox.setText(Float.toString(_maxSpeed));
-        _minSpeedBox.setText(Float.toString(_throttleIncr/2));
         _rampInterval.setText(Float.toString(_intervalTime / 1000));
         _factorbox.setText(Float.toString(_factor));
         _factorbox.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
@@ -220,8 +189,8 @@ public class NXFrame extends WarrantRoute {
         });
         p.add(button);
         p.add(Box.createGlue());
-        panel.add(p);
-        mainPanel.add(panel);
+        _controlPanel.add(p);
+        mainPanel.add(_controlPanel);
         getContentPane().add(mainPanel);
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
@@ -232,7 +201,125 @@ public class NXFrame extends WarrantRoute {
         setLocation(_parent.getLocation().x+200, _parent.getLocation().y+200);
         setAlwaysOnTop(true);
         pack();
-//        setVisible(false);            
+    }
+    
+    public void updatePanel(int interp) {
+        if (_controlPanel==null) {
+            return;
+        }
+        closeFrame();
+        java.awt.Component[] list = _controlPanel.getComponents();
+        int i = 0;
+        while (i<list.length && !list[i].equals(_autoRunPanel)) {
+            i++;
+        }
+        _controlPanel.remove(_autoRunPanel);
+        _autoRunPanel = makeAutoRunPanel(interp);
+        _controlPanel.add(_autoRunPanel, i);
+    }
+    
+    private void updateSpeeds() {
+        String msg = null;
+        String text = _factorbox.getText();
+        try {
+            _factor = Float.parseFloat(text);
+            if (_factor>10 || _factor<=0.1) {
+                msg = Bundle.getMessage("InvalidNumber", text);                                    
+            }
+        } catch (NumberFormatException nfe) {
+            msg = Bundle.getMessage("InvalidNumber", text);                                    
+        }
+        if (msg==null) {
+            updatePanel(SignalSpeedMap.getMap().getInterpretation());
+        } else {
+            JOptionPane.showMessageDialog(this, msg,
+                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);            
+        }
+    }
+    
+    private JPanel makeAutoRunPanel(int interpretation) {
+        JPanel p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
+        float maxSpeed;
+        float throttleIncr;
+        String maxSpeedLabel;
+        String throttleIncrLabel;
+        switch ( interpretation) {
+            case SignalSpeedMap.PERCENT_NORMAL:
+            case SignalSpeedMap.PERCENT_THROTTLE:
+                maxSpeed = _maxSpeed;
+                maxSpeedLabel = "MaxSpeed";
+                throttleIncr = _throttleIncr;
+                throttleIncrLabel = "MinSpeed";
+                break;
+            case SignalSpeedMap.SPEED_MPH:
+                maxSpeed = _maxSpeed*3600*1000/(_factor*12*5280);
+                maxSpeedLabel = "MaxMph";
+                throttleIncr = _throttleIncr*3600*1000/(_factor*12*5280);
+                throttleIncrLabel = "MinMph";
+                break;
+            case SignalSpeedMap.SPEED_KMPH:
+                maxSpeed = _maxSpeed*3600*25.4f/(_factor*1000);
+                maxSpeedLabel = "MaxKMph";
+                throttleIncr = _throttleIncr*3600*25.4f/(_factor*1000);
+                throttleIncrLabel = "MinKMph";
+                break;
+            default:
+                maxSpeed = _maxSpeed;                    
+                maxSpeedLabel = "MaxSpeed";
+                throttleIncr = _throttleIncr;
+                throttleIncrLabel = "MinSpeed";
+        }
+        p1.add(WarrantFrame.makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, true));
+        p1.add(WarrantFrame.makeTextBoxPanel(false, _minSpeedBox, throttleIncrLabel, true));
+        _maxSpeedBox.setText(Float.toString(maxSpeed));
+        _minSpeedBox.setText(Float.toString(throttleIncr/2));
+        
+        JPanel p2 = new JPanel();
+        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
+        p2.add(WarrantFrame.makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
+        p2.add(WarrantFrame.makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
+
+        JPanel autoRunPanel = new JPanel();
+        autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.Y_AXIS));
+        JPanel pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(p1);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(p2);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        autoRunPanel.add(pp);
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(_forward);
+        bg.add(_reverse);
+        JPanel ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.X_AXIS));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(_forward);
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(_reverse);
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        autoRunPanel.add(ppp);
+        autoRunPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
+        ppp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
+        ppp.add(WarrantFrame.makeBoxPanel(false, _haltStartBox, "HaltAtStart"));
+        pp.add(ppp);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
+        ppp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
+        ppp.add(WarrantFrame.makeTextBoxPanel(false, _factorbox, "throttleFactor", true));
+//        ppp.add(WarrantFrame.makeBoxPanel(false, _addTracker, "AddTracker"));
+        pp.add(ppp);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        autoRunPanel.add(pp);
+        return autoRunPanel;
     }
 
     private void makeMenus() {
@@ -361,12 +448,20 @@ public class NXFrame extends WarrantRoute {
         }
         OBlock calibBlock = _calibrateWarrant.getBlockAt(_calibrateIndex);
         long eTime =  _calibrateWarrant.getBlockAt(_calibrateIndex+1)._entryTime - calibBlock._entryTime;
-        float speed = calibBlock.getLengthIn()*_scale/eTime;        // ins/ms
+        float speed = calibBlock.getLengthIn()*_scale/eTime;        // scale ins/ms
         _factor = _maxSpeed/speed;
         _factorbox.setText(Float.toString(_factor));
         _calibrate = false;
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("calibrateDone", _dccNumBox.getText(),
-                calibBlock.getDisplayName(), speed*3600*1000/(12*5280), _maxSpeed, _factor),
+        String speedUnits;
+        if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+            speedUnits = Bundle.getMessage("speedKmph");
+            speed = speed*3600*25.4f/1000;
+        } else {
+            speedUnits = Bundle.getMessage("speedMph");
+            speed = speed*3600*1000/(12*5280);
+        }
+        JOptionPane.showMessageDialog(this, Bundle.getMessage("calibrateDone", _addr,
+                calibBlock.getDisplayName(), speed, _maxSpeed, _factor, speedUnits, _rampLength, (_numSteps+1)*_intervalTime/1000),
                 Bundle.getMessage("calibBlockTitle"), JOptionPane.INFORMATION_MESSAGE);
     }
     private String verifyCalibrate(Warrant warrant) {
@@ -461,7 +556,7 @@ public class NXFrame extends WarrantRoute {
     }
     public void setRampIncrement(float throttleIncr) {
         _throttleIncr = throttleIncr;        
-        _minSpeedBox.setText(Float.toString(_throttleIncr/2));
+//        _minSpeedBox.setText(Float.toString(_throttleIncr/2));
     }
 
     public void setStartHalt(boolean s) {
@@ -489,19 +584,44 @@ public class NXFrame extends WarrantRoute {
 
     private String getBoxData() {
         String text = null;
+        float maxSpeed = _maxSpeed;
+        float minSpeed = _minSpeed;
         try {
             text = _maxSpeedBox.getText();
-            _maxSpeed = Float.parseFloat(text);
-            if (_maxSpeed>1.0 || _maxSpeed<0) {
-                return Bundle.getMessage("badSpeed", text);                                 
-            }
+            maxSpeed = Float.parseFloat(text);
             text = _minSpeedBox.getText();
-            _minSpeed = Float.parseFloat(text);
-            if (_minSpeed>1.0 || _minSpeed<0 || _minSpeed>=_maxSpeed) {
-                return Bundle.getMessage("badSpeed", text);                                 
-            }
+            minSpeed = Float.parseFloat(text);
         } catch (NumberFormatException nfe) {
-            return Bundle.getMessage("badSpeed", text);             
+            return Bundle.getMessage("InvalidNumber", text);             
+        }
+        String speedErr;
+        switch ( SignalSpeedMap.getMap().getInterpretation()) {
+            case SignalSpeedMap.PERCENT_NORMAL:
+            case SignalSpeedMap.PERCENT_THROTTLE:
+                _maxSpeed = maxSpeed;
+                _minSpeed = minSpeed;
+                speedErr = Bundle.getMessage("throttlesetting");
+                break;
+            case SignalSpeedMap.SPEED_MPH:
+                _maxSpeed = maxSpeed*_factor*12*5280/(3600*1000);
+                _minSpeed = minSpeed*_factor*12*5280/(3600*1000);
+                speedErr = Bundle.getMessage("speedMph");
+                break;
+            case SignalSpeedMap.SPEED_KMPH:
+                _maxSpeed = maxSpeed*_factor*1000/(3600*25.4f);
+                _minSpeed = minSpeed*_factor*1000/(3600*25.4f);
+                speedErr = Bundle.getMessage("speedKmph");
+                break;
+            default:
+                _maxSpeed = maxSpeed;
+                _minSpeed = minSpeed;
+                speedErr = Bundle.getMessage("throttlesetting");
+        }
+        if (_maxSpeed>1.0 || _maxSpeed<0.008) {
+            return Bundle.getMessage("badSpeed", maxSpeed, speedErr);                                 
+        }
+        if (_minSpeed>1.0 || _minSpeed<0.002 || _minSpeed>=_maxSpeed) {
+            return Bundle.getMessage("badSpeed", minSpeed, speedErr);                                 
         }
         try {
             text = _rampInterval.getText();
@@ -554,32 +674,32 @@ public class NXFrame extends WarrantRoute {
         }
         totalLen += orders.get(orderSize-1).getBlock().getLengthIn()/2;     // OK if user has set to 0
         float curSpeed = _minSpeed;
-        float rampLength = (3*_minSpeed*_intervalTime/2)/(_factor*_scale);      // actual ramp distance to use.
-        int numSteps = 1;
-        while (rampLength<totalLen/2 && curSpeed<=_maxSpeed) {
-            rampLength += (curSpeed + delta/2)*_intervalTime/(_factor*_scale);
+        _rampLength = (3*_minSpeed*_intervalTime/2)/(_factor*_scale);      // actual ramp distance to use.
+        _numSteps = 1;
+        while (_rampLength<totalLen/2 && curSpeed<=_maxSpeed) {
+            _rampLength += (curSpeed + delta/2)*_intervalTime/(_factor*_scale);
             curSpeed += delta;
-            numSteps++;             
+            _numSteps++;             
         }
-        /* don't use final step, since it exceeds _maxSpeed
+        // don't use final step, since it exceeds _maxSpeed
         curSpeed -= delta;
-        rampLength -= (curSpeed + delta/2)*_intervalTime/(_factor*_scale);
-        numSteps--;*/
+        _rampLength -= (curSpeed + delta/2)*_intervalTime/(_factor*_scale);
+        _numSteps--;
 
-        if (log.isDebugEnabled()) log.debug("Route length= "+totalLen+" uses "+numSteps+" speed steps of delta= "+
-                delta+" for rampLength = "+rampLength);
+        if (log.isDebugEnabled()) log.debug("Route length= "+totalLen+" uses "+_numSteps+" speed steps of delta= "+
+                delta+" for _rampLength = "+_rampLength);
         if (log.isDebugEnabled()) {
             float rampDownLen = 0;
             log.debug("curSpeed= "+curSpeed);
             int downStep = 0;
-            for (int step=numSteps; step>0; step--) {
+            for (int step=_numSteps; step>0; step--) {
                 rampDownLen += (curSpeed - delta/2)*_intervalTime/(_factor*_scale);
                 curSpeed -= delta;
                 downStep++;
             }
             rampDownLen += (curSpeed/2)*_intervalTime/(_factor*_scale);
             log.debug("rampDownLen= "+rampDownLen+" uses "+downStep+" speed steps of delta= "+
-                    delta+" for rampLength = "+rampLength+" to last curSpeed= "+curSpeed);
+                    delta+" for _rampLength = "+_rampLength+" to last curSpeed= "+curSpeed);
         }
                 
         int idx = 0;        // block index
@@ -587,7 +707,7 @@ public class NXFrame extends WarrantRoute {
 
         float noopTime = 0;         // ms time for entry into next block
         float curDistance = 0;      // distance traveled in current block
-        float remRamp = rampLength;
+        float remRamp = _rampLength;
         // start train
         float speedTime = _intervalTime;        // ms time to complete speed step in next block
         curSpeed = delta;
@@ -596,7 +716,7 @@ public class NXFrame extends WarrantRoute {
         int curSteps = 1;
         
         boolean start = true;
-        while (curSteps < numSteps) {
+        while (curSteps < _numSteps) {
             if (start) {
                 curDistance = (_minSpeed*_intervalTime/2)/(_factor*_scale);
                 remRamp -= curDistance;
@@ -605,7 +725,7 @@ public class NXFrame extends WarrantRoute {
             int steps = 0;
             float speed = curSpeed;
             // Assume linear speed change
-            while (curSteps+steps < numSteps) {             
+            while (curSteps+steps < _numSteps) {             
                 float dist = (speed + delta/2)*_intervalTime/(_factor*_scale);
                 if (curDistance + dist < blockLen) {
                     curDistance += dist;
@@ -628,7 +748,7 @@ public class NXFrame extends WarrantRoute {
             }
 
             totalLen -= blockLen;
-            if (curSteps==numSteps) {               
+            if (curSteps==_numSteps) {               
                 noopTime = (blockLen-curDistance)*(_factor*_scale)/(curSpeed);  // constant
                 speedTime = 0;
                 curDistance = 0;
@@ -644,18 +764,18 @@ public class NXFrame extends WarrantRoute {
             blockName = block.getDisplayName();
             blockLen = block.getLengthIn();
             if (blockLen<=0 && idx<orderSize-1)  {
-                blockLen = rampLength;
+                blockLen = _rampLength;
             }
             w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
             if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
         }
         if (log.isDebugEnabled()) log.debug("Ramp Up done at block \""+blockName+"\" curSteps= "+curSteps+
                 ", curSpeed="+curSpeed+", blockLen= "+blockLen+" totalLen= "+totalLen+", rampLength= "+
-                rampLength+", remRamp= "+remRamp);
+                _rampLength+", remRamp= "+remRamp);
             
         // run through mid route at max speed
         while (idx<orderSize-1) {
-            if (totalLen-blockLen <= rampLength) {
+            if (totalLen-blockLen <= _rampLength) {
                 // Start ramp down in this block
                 break;
             }
@@ -670,7 +790,7 @@ public class NXFrame extends WarrantRoute {
             if (idx==orderSize-1) {
                 blockLen /= 2;
             } else if (blockLen<=0) {
-                blockLen = rampLength;
+                blockLen = _rampLength;
             }
             w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
             if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
@@ -678,10 +798,10 @@ public class NXFrame extends WarrantRoute {
         }
         if (log.isDebugEnabled()) log.debug("Start Ramp Down at block \""+blockName+"\", curSteps= "+curSteps+
                 ", curDistance= "+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen+
-                ", rampLength= "+rampLength+" curSpeed= "+curSpeed);
+                ", rampLength= "+_rampLength+" curSpeed= "+curSpeed);
         
         // Ramp down.  use negative delta
-        remRamp = rampLength;
+        remRamp = _rampLength;
         start = true;
         while (curSteps>1) {
             if (idx==orderSize-1) {
@@ -697,8 +817,8 @@ public class NXFrame extends WarrantRoute {
             }
             if (start) {
                 // constant speed
-                speedTime = (totalLen-curDistance-rampLength)*(_factor*_scale)/curSpeed;
-                curDistance = totalLen-rampLength;
+                speedTime = (totalLen-curDistance-_rampLength)*(_factor*_scale)/curSpeed;
+                curDistance = totalLen-_rampLength;
                 start = false;
             }
             int steps = 1;      // at least one speed change.  Maybe more.
@@ -735,7 +855,7 @@ public class NXFrame extends WarrantRoute {
                 blockName = block.getDisplayName();
                 blockLen = block.getLengthIn();
                 if (blockLen<=0 && idx<orderSize-1)  {
-                    blockLen = rampLength;
+                    blockLen = _rampLength;
                 }
                 w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
                 if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
@@ -769,10 +889,6 @@ public class NXFrame extends WarrantRoute {
         return speed;
     }
 
-    private String _addr;
-    private int _dccNum;
-    private boolean  _isLong;
- 
     private boolean makeAndRunWarrant() {
         String msg = null;
         _addr = _dccNumBox.getText();

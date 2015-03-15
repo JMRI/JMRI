@@ -127,7 +127,7 @@ public class SignalTableModel extends AbstractTableModel {
         for (int i = 0; i < NUMCOLS; i++) {
             tempRow[i] = null;
         }
-        tempRow[TIME_OFFSET] = "0";
+        tempRow[TIME_OFFSET] = "0.0";
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
@@ -158,7 +158,7 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private void addToList(List<SignalRow> tempList, SignalRow sr) {
+    static private void addToList(List<SignalRow> tempList, SignalRow sr) {
         // not in list, for the sort, insert at correct position
         boolean add = true;
         for (int j = 0; j < tempList.size(); j++) {
@@ -305,6 +305,7 @@ public class SignalTableModel extends AbstractTableModel {
         return _signalList.size() + 1;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case NAME_COLUMN:
@@ -348,13 +349,14 @@ public class SignalTableModel extends AbstractTableModel {
                 }
                 break;
             case TIME_OFFSET:
-                return Long.toString(_signalList.get(rowIndex).getDelayTime());
+                return Float.toString(_signalList.get(rowIndex).getDelayTime()/1000);
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
         }
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
         if (_signalList.size() == row) {
@@ -404,37 +406,20 @@ public class SignalTableModel extends AbstractTableModel {
                     msg = checkDuplicateSignal(signal);
                 }
             }
-            long time = 0;
-            try {
-                time = Long.parseLong(tempRow[TIME_OFFSET]);
-            } catch (NumberFormatException nfe) {
-                if (msg == null) {
-                    msg = Bundle.getMessage("DelayTriggerTime");
-                }
-            }
             if (msg == null) {
-                SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, time);
-                msg = checkSignalRow(signalRow);
-                if (msg == null) {
-                    portal = signalRow.getPortal();
-                    toBlock = signalRow.getToBlock();
-                    msg = checkDuplicateProtection(signalRow);
-                    if (msg == null && portal != null) {
-                        if (portal.setProtectSignal(signal, time, toBlock)) {
-                            if (signalRow.getFromBlock() == null) {
-                                signalRow.setFromBlock(portal.getOpposingBlock(toBlock));
-                            }
-                            _signalList.add(signalRow);
-                            initTempRow();
-                            fireTableDataChanged();
-                        } else {
-                            msg = Bundle.getMessage("PortalBlockConflict",
-                                    portal.getName(), toBlock.getDisplayName());
-                        }
+                long time = 0;
+                try {
+                    float f = Float.parseFloat(tempRow[TIME_OFFSET]);
+                    time = (long)f*1000;
+                } catch (NumberFormatException nfe) {
+                    if (msg == null) {
+                        msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);
                     }
                 }
+                if (time<-20000 || time>20000) {
+                    msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);                
+                }
             }
-
         } else {	// Editing existing signal configurations
             SignalRow signalRow = _signalList.get(row);
             OBlockManager OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
@@ -564,14 +549,21 @@ public class SignalTableModel extends AbstractTableModel {
                 case TIME_OFFSET:
                     long time = 0;
                     try {
-                        time = Long.parseLong((String) value);
+                        float f = Float.parseFloat((String) value);
+                        time = (long)f*1000;
                     } catch (NumberFormatException nfe) {
-                        msg = Bundle.getMessage("DelayTriggerTime");
+                        msg = Bundle.getMessage("DelayTriggerTime", (String) value);
                         signalRow.setDelayTime(0);
                         break;
                     }
+                    if (time<-20000 || time>20000) {
+                        msg = Bundle.getMessage("DelayTriggerTime", (String) value);                
+                    }
                     signalRow.setDelayTime(time);
-                    msg = setSignal(signalRow, false);
+                    String m = setSignal(signalRow, false);
+                    if (m!=null) {
+                        msg = m;
+                    }
                     fireTableRowsUpdated(row, row);
                     break;
                 case DELETE_COL:
@@ -607,7 +599,7 @@ public class SignalTableModel extends AbstractTableModel {
         }
     }
 
-    private String setSignal(SignalRow signalRow, boolean deletePortal) {
+    static private String setSignal(SignalRow signalRow, boolean deletePortal) {
         Portal portal = signalRow.getPortal();
         if (portal.setProtectSignal(signalRow.getSignal(), signalRow.getDelayTime(), signalRow.getToBlock())) {
             if (signalRow.getFromBlock() == null) {
@@ -625,14 +617,16 @@ public class SignalTableModel extends AbstractTableModel {
         return null;
     }
 
-    private boolean checkPortalBlock(Portal portal, OBlock block) {
+    static private boolean checkPortalBlock(Portal portal, OBlock block) {
         return (portal.getToBlock().equals(block) || portal.getFromBlock().equals(block));
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return true;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL) {
             return JButton.class;

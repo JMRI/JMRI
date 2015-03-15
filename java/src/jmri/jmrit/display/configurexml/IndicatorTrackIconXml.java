@@ -61,6 +61,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         if (p.showTrain()) {
             show = "yes";
         }
+        
         elem.addContent(show);
         element.addContent(elem);
 

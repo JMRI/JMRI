@@ -64,8 +64,6 @@ public class WarrantFrame extends WarrantRoute {
 
     static int ROW_HEIGHT;
 
-    JMenu _warrantMenu;
-
     private Warrant _warrant;
     private Warrant _saveWarrant;
     private ThrottleTableModel _commandModel;
@@ -805,7 +803,7 @@ public class WarrantFrame extends WarrantRoute {
         fileMenu.add(new jmri.configurexml.SaveMenu());
         menuBar.add(fileMenu);
         setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.logix.WarrantTable", true);
+        addHelpMenu("package.jmri.jmrit.logix.CreateEditWarrant", true);
     }
 
     private boolean setTrainInfo(String name, boolean isAddress) {
@@ -1234,7 +1232,7 @@ public class WarrantFrame extends WarrantRoute {
         f.setVisible(true);
         try {
             f.initComponents();
-            f.concatenate(_warrant, null);
+            f.concatenate(_saveWarrant, null);
         } catch (Exception ex) {
             log.error("error making CreateWarrantFrame", ex);
         }

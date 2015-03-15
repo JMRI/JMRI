@@ -606,16 +606,17 @@ public class WarrantTableAction extends AbstractAction {
          * */
         private void doConcatenate(Warrant w) {
             if (_startW!=null) {
-                List <BlockOrder> orders = _startW.getBlockOrders();
+                List <BlockOrder> orders = _startW.getOrders();
                 int limit = orders.size()-1;
                 for (int i=0; i<limit; i++) {
                     w.addBlockOrder(new BlockOrder(orders.get(i)));
                 }
                 w.setViaOrder(_startW.getViaOrder());
                 w.setAvoidOrder(_startW.getAvoidOrder());
+                if (log.isDebugEnabled()) log.debug("doConcatenate: limit= "+limit+",  orders.size()= "+ orders.size());
                 BlockOrder bo = new BlockOrder(orders.get(limit));
                 if (_endW!=null) {
-                    orders = _endW.getBlockOrders();
+                    orders = _endW.getOrders();
                     bo.setExitName(orders.get(0).getExitName());
                     w.addBlockOrder(bo);
                     for (int i=1; i<orders.size(); i++) {

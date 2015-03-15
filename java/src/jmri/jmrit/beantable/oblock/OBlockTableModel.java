@@ -100,7 +100,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         tempRow[CURVECOL] = noneText;
         tempRow[REPORT_CURRENTCOL] = Bundle.getMessage("Current");
         tempRow[PERMISSIONCOL] = Bundle.getMessage("Permissive");
-        tempRow[SPEEDCOL] = Bundle.getMessage("Normal");
+        tempRow[SPEEDCOL] = "";         // Bundle.getMessage("Normal");
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
@@ -402,12 +402,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     block.setCurvature(Block.SEVERE);
                 }
                 block.setPermissiveWorking(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
-                try {
-                    block.setBlockSpeed(tempRow[SPEEDCOL]);
-                } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + tempRow[SPEEDCOL]);
-                    return;
-                }
+                block.setBlockSpeedName(tempRow[SPEEDCOL]);
+                
                 if (tempRow[ERR_SENSORCOL] != null) {
                     if (tempRow[ERR_SENSORCOL].trim().length() > 0) {
                         if (!sensorExists(tempRow[ERR_SENSORCOL])) {
@@ -577,12 +573,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 fireTableRowsUpdated(row, row);
                 return;
             case SPEEDCOL:
-                try {
-                    block.setBlockSpeed((String) value);
-                } catch (jmri.JmriException ex) {
-                    JOptionPane.showMessageDialog(null, ex.getMessage() + "\n" + (String) value);
-                    return;
-                }
+                block.setBlockSpeedName((String) value);
                 fireTableRowsUpdated(row, row);
                 return;
             case EDIT_COL:
