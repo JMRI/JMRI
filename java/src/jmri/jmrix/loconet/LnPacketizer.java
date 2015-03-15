@@ -215,6 +215,14 @@ public class LnPacketizer extends LnTrafficController {
                         if (fulldebug) {
                             log.debug("Byte2: " + Integer.toHexString(byte2));
                         }
+                        if ((byte2 & 0x80) != 0) {
+                                log.warn("LocoNet message with opCode: "
+                                        +Integer.toHexString(opCode)
+                                        +" ended early. Byte2 is also an opcode: "
+                                        + Integer.toHexString(byte2));
+                                opCode = byte2;
+                                throw new LocoNetMessageException();
+                            }
                         // Decide length
                         switch ((opCode & 0x60) >> 5) {
                             case 0:     /* 2 byte message */

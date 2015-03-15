@@ -73,6 +73,14 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         super.dispose();
     }
 
+    protected boolean _binaryOutput = false;
+    protected boolean _useOffSwReqAsConfirmation = false;
+    public void setUhlenbrockMonitoring() {
+        _binaryOutput = true;
+        mTurnoutNoRetry = true;
+        _useOffSwReqAsConfirmation = true;
+    }
+
     public Turnout createNewTurnout(String systemName, String userName) {
         int addr;
         try {
@@ -80,8 +88,13 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Can't convert " + systemName.substring(getSystemPrefix().length() + 1) + " to LocoNet turnout address");
         }
-        Turnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
+        LnTurnout t = new LnTurnout(getSystemPrefix(), addr, throttledcontroller);
         t.setUserName(userName);
+        if (_binaryOutput) t.setBinaryOutput(true);
+        if (_useOffSwReqAsConfirmation) {
+            t.setUseOffSwReqAsConfirmation(true);
+            t.setFeedbackMode("MONITORING");
+        }
         return t;
     }
 
@@ -90,6 +103,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
 
     // listen for turnouts, creating them as needed
     public void message(LocoNetMessage l) {
+        //log.info("LnTurnoutManager message "+l);
         // parse message type
         int addr;
         switch (l.getOpCode()) {

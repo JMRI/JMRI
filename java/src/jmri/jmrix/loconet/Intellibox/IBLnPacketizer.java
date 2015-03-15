@@ -96,6 +96,14 @@ public class IBLnPacketizer extends LnPacketizer {
                             // Capture 2nd byte, always present
                             int byte2 = readNextByteFromUSB() & 0xFF;
                             //log.debug("Byte2: "+Integer.toHexString(byte2));
+                            if ((byte2 & 0x80) != 0) {
+                                log.warn("LocoNet message with opCode: "
+                                        +Integer.toHexString(opCode)
+                                        +" ended early. Byte2 is also an opcode: "
+                                        + Integer.toHexString(byte2));
+                                opCode = byte2;
+                                throw new LocoNetMessageException();
+                            }
                             // Decide length
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:     /* 2 byte message */
@@ -148,6 +156,7 @@ public class IBLnPacketizer extends LnPacketizer {
                         } catch (LocoNetMessageException e) {
                             // retry by going around again
                             // opCode is set for the newly-started packet
+                            msg = null;
                             continue;
                         }
                     }

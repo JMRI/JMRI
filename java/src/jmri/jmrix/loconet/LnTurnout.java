@@ -101,6 +101,11 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         return _number;
     }
 
+    boolean _useOffSwReqAsConfirmation = false;
+    public void setUseOffSwReqAsConfirmation(boolean state) {
+        _useOffSwReqAsConfirmation = state;
+    }
+
     // Handle a request to change state by sending a LocoNet command
     protected void forwardCommandChangeToLayout(final int newstate) {
 
@@ -150,6 +155,7 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         if (on) {
             hiadr |= 0x10;
         } else {
+            if (_useOffSwReqAsConfirmation) log.warn("Turnout "+_number+" is using OPC_SWREQ off as confirmation, but is sending OFF commands itself anyway");
             hiadr &= 0xEF;
         }
 
@@ -158,6 +164,18 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
         l.setElement(2, hiadr);
 
         this.controller.sendLocoNetMessage(l);
+        
+        if (_useOffSwReqAsConfirmation) {
+             // Start a timer to resend the command in a couple of seconds in case consistency is not obtained before then
+             consistencyTimer.schedule(new java.util.TimerTask(){
+                public void run() {
+                    if (!isConsistentState()) {
+                        log.debug("LnTurnout resending command for turnout "+_number);
+                        forwardCommandChangeToLayout(getCommandedState());
+    }
+                }
+             }, CONSISTENCYTIMER);
+         }
     }
 
     boolean pending = false;
@@ -196,7 +214,8 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
                     state = adjustStateForInversion(state);
 
                     newCommandedState(state);
-                    if (getFeedbackMode() == MONITORING || getFeedbackMode() == DIRECT) {
+                    boolean on = ((sw2 & LnConstants.OPC_SW_REQ_OUT) != 0);
+                    if (getFeedbackMode()==MONITORING && !on || getFeedbackMode()==MONITORING && on && !_useOffSwReqAsConfirmation || getFeedbackMode()==DIRECT) {
                         newKnownState(state);
                     }
                 }
@@ -343,6 +362,9 @@ public class LnTurnout extends AbstractTurnout implements LocoNetListener {
     static final int METERINTERVAL = 100;  // msec wait before closed
     static java.util.Timer meterTimer = new java.util.Timer(true);
 
+    static final int CONSISTENCYTIMER = 3000; // msec wait for command to take effect
+    static java.util.Timer consistencyTimer = new java.util.Timer();
+    
     static Logger log = LoggerFactory.getLogger(LnTurnout.class.getName());
 
 }

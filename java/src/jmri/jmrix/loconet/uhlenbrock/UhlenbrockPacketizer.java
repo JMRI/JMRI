@@ -142,6 +142,15 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             // Capture 2nd byte, always present
                             int byte2 = readByteProtected(istream) & 0xFF;
                             //log.debug("Byte2: "+Integer.toHexString(byte2));
+                            if ( (byte2&0x80) != 0) {
+                               log.warn("LocoNet message with opCode: "
+                                        +Integer.toHexString(opCode)
+                                        +" ended early. Byte2 is also an opcode: "
+                                        +Integer.toHexString(byte2));
+                               opCode = byte2;
+                               throw new LocoNetMessageException();
+                            }
+
                             // Decide length
                             switch ((opCode & 0x60) >> 5) {
                                 case 0:     /* 2 byte message */
@@ -194,6 +203,7 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                         } catch (LocoNetMessageException e) {
                             // retry by going around again
                             // opCode is set for the newly-started packet
+                            msg = null;
                             continue;
                         }
                     }
@@ -292,21 +302,11 @@ public class UhlenbrockPacketizer extends LnPacketizer implements LocoNetInterfa
                             if (debug) {
                                 log.debug("start write to stream");
                             }
-
-                            // The Intellibox cannot handle messges over 4 bytes without
-                            // stopping the sender via CTS/RTS hardware handshake
-                            // While this should work already by using the normal hardware
-                            // handshake - it doesn't seem to so we need to check/send/flush
-                            // each byte to make sure we don't overflow the IB input buffer
-                            for (int i = 0; i < msg.length; i++) {
                                 while (!controller.okToSend()) {
                                     Thread.yield();
                                 }
-
-                                ostream.write(msg[i]);
+                            ostream.write(msg);
                                 ostream.flush();
-                            }
-
                             if (debug) {
                                 log.debug("end write to stream");
                             }
