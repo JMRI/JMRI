@@ -26,19 +26,23 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2015-03-05</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Moved Flash-Rom option</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-10-13</date>
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
    </revhistory>
-<!-- Using JMRI item "Advanced Group 2 Option 1" --> 
-  <variable label="Flash-ROM protection" CV="360" mask="XXXXXXXV" default="0" item="Advanced Group 2 Option 1" readOnly="yes">
+  <variable label="Flash-ROM protection" CV="360" mask="XXXXXXXV" default="0" item="Sound Option 1" readOnly="yes">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
 	<label xml:lang="fr">Protection mémoire flash</label>
 	<label xml:lang="de">Schreibschutz Flash-ROM</label>
   </variable>
-<!-- Using JMRI items "Sound options" 13,14,21,22 (see "Sound_cv950.xml", "Sound_cv951-925.xml", "Sound_cv964-965.xml" for other items) --> 
   <variable label="Threshold ZVS" CV="361" tooltip="CV361 (0-14)" default="9" item="Sound Option 21">
 	<decVal min="0" max="14"/>
 	<label xml:lang="fr">Seuil ZVS</label>

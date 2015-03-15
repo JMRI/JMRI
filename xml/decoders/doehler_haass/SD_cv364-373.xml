@@ -26,6 +26,12 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2015-03-05</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Moved 2 options.Corrected cv371-373 exclusions.</revremark>
+    </revision>
+    <revision>
       <revnumber>1</revnumber>
       <date>2014-10-13</date>
       <authorinitials>PB</authorinitials>
@@ -48,12 +54,12 @@
     	<label xml:lang="fr">Pas de vitesse nécessaires avant son de freinage</label>
     	<label xml:lang="de">Bremsenquietschen Mindestverzögerung</label>
   	</variable>
-  	<variable label="Random stillstand sounds" CV="367" tooltip="CV367 bit 0" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 2">
+  	<variable label="Random stillstand sounds" CV="367" tooltip="CV367 bit 0" mask="XXXXXXXV" default="1" item="Sound Group 1 Option 8">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
 		<label xml:lang="fr">Sons aléatoire à l'arrêt</label>
 		<label xml:lang="de">Zufallsgeräusche im Stand</label>
   	</variable>
-  	<variable label="Random running sound" CV="367" tooltip="CV367 bit 1" mask="XXXXXXVX" default="1" item="Advanced Group 2 Option 3">
+  	<variable label="Random running sound" CV="367" tooltip="CV367 bit 1" mask="XXXXXXVX" default="1" item="Sound Group 1 Option 9">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
 		<label xml:lang="fr">Sons aléatoire en marche</label>
 		<label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
@@ -73,17 +79,17 @@
 		<label xml:lang="fr">Volume freinage dynamique</label>
 		<label xml:lang="de">Modulation dynamische Bremse</label>
 	</variable> 
-	<variable label="Volume dynamic run" CV="371" default="0" tooltip="CV371" item="Sound Setting 34" exclude="SD18A_1.00">
+	<variable label="Volume dynamic run" CV="371" default="0" tooltip="CV371" item="Sound Setting 34" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01">
 		<decVal/>
 		<label xml:lang="fr">Volume marche dynamique</label>
 		<label xml:lang="de">Modulation dynamische Fahrt</label>
 	</variable> 
-	<variable label="Volume turbo (proportional)" CV="372" default="0" tooltip="CV372" item="Sound Setting 35" exclude="SD18A_1.00">
+	<variable label="Volume turbo (proportional)" CV="372" default="0" tooltip="CV372" item="Sound Setting 35" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01">
 		<decVal/>
 		<label xml:lang="fr">Volume sons turbo (proportionnel)</label>
 		<label xml:lang="de">Modulation Turbogeräusche Proportionalteil</label>
 	</variable> 
-	<variable label="Volume turbo (integral)" CV="373" default="0" tooltip="CV373" item="Sound Setting 36" exclude="SD18A_1.00">
+	<variable label="Volume turbo (integral)" CV="373" default="0" tooltip="CV373" item="Sound Setting 36" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01">
 		<decVal/>
 		<label xml:lang="fr">Volume sons turbo (intégral)</label>
 		<label xml:lang="de">Modulation Turbogeräusche Integralteil</label>

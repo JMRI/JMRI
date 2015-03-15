@@ -52,6 +52,12 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Created from Vars_common.xml, customized for Trix 66840 default values</revremark>
     </revision>
+    <revision>
+      <revnumber>5</revnumber>
+      <date>2015-03-06</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Spelling change to match new DH def pane for start and brake options.</revremark>
+    </revision>
   </revhistory>
   <!-- Calls to std NMRA templates   -->
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
@@ -803,7 +809,7 @@
     <label xml:lang="fr">Courbe de vitesse</label>
     <label xml:lang="de">Kennlinie</label>
   </variable>
-  <variable CV="63" default="0" item="Motor Option 3" tooltip="CV63 (0-250)" exclude="Combo sound decoders">
+  <variable CV="63" default="0" item="Start delay for speed step 1" tooltip="CV63 (0-250)" exclude="Combo sound decoders">
     <decVal min="0" max="250"/>
     <label>Start delay for speed step 1</label>
     <label xml:lang="it">Inizio ritardo velocità step 1</label>
@@ -841,12 +847,12 @@
         <choice>2</choice>
       </enumChoice>
     </enumVal>
-    <label>Nbr of breaking sections</label>
+    <label>Nbr of braking sections</label>
     <label xml:lang="it">Numero zone frenate</label>
     <label xml:lang="fr">Sections de freinage</label>
     <label xml:lang="de">Bremsabschnitte</label>
   </variable>
-  <variable CV="62" default="0" item="Advanced Group 1 Option 9" tooltip="CV62 (0-255)">
+  <variable CV="62" default="0" item="Accel. time in shunting mode" tooltip="CV62 (0-255)">
     <decVal min="0" max="255"/>
     <label>Accel. time in shunting mode</label>
     <label xml:lang="it">Accellerazione in manovra</label>

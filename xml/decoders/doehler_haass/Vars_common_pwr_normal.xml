@@ -40,6 +40,12 @@
       <authorinitials>PB</authorinitials>
       <revremark>CV49 exclude for combo sound decoders</revremark>
     </revision>
+    <revision>
+      <revnumber>3</revnumber>
+      <date>2015-03-06</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Spelling change CV 61to match new DH def pane for start and brake options</revremark>
+    </revision>
   </revhistory>
   <!-- MOTOR SETTINGS -->
   <variable item="Vhigh" CV="5" default="92">
@@ -57,7 +63,7 @@
     <label xml:lang="fr">Largeur d'impulsion</label>
     <label xml:lang="de">Impulsbreite</label>
   </variable>
-  <variable CV="61" default="63" item="Advanced Group 1 Option 8" tooltip="CV61 (0-127)">
+  <variable CV="61" default="63" item="Speed in shunting mode" tooltip="CV61 (0-127)">
     <decVal min="0" max="127"/>
     <label>Speed in shunting mode</label>
     <label xml:lang="it">Velocità in Manovra</label>

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 3 - 2015-03-05 - PB - Spelling.  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
 <!-- version 1 - 2014-02-20 - PB - for common D&H software -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -418,39 +419,6 @@
       </column>
       <column>
         <display item="Function for AUX 1 and AUX 2 on"/>
-      </column>
-    </row>
-    <label>
-      <text> </text>
-    </label>
-    <row>
-      <column>
-        <display item="Break on asymmetrical signal (normal)" format="checkbox"/>
-        <display item="Break on asymmetrical signal (inverted)" format="checkbox"/>
-      </column>
-      <column>
-        <label>
-          <text>       </text>
-        </label>
-      </column>
-      <column>
-        <display item="Break on negative power" format="checkbox"/>
-        <display item="Break on positive power" format="checkbox"/>
-      </column>
-      <column>
-        <label>
-          <text>       </text>
-        </label>
-      </column>
-      <column>
-        <display item="Break with diode (normal)" format="checkbox"/>
-        <display item="Break with diode (inverted)" format="checkbox"/>
-      </column>
-    </row>
-    <row>
-      <column>
-        <display item="Reduced speed in breaking zones"/>
-        <display item="Threshold for asymmetric behavior"/>
       </column>
     </row>
     <label>

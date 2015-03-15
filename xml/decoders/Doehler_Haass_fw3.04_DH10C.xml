@@ -12,6 +12,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="5" author="PB, pierre.bln@me.com" lastUpdated="20150223"/>
+  <!--  Moved dimmed lights/shunting mode from Adv. Mapping tab to standard mapping table.
+		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane).
+		Added separate SUSI pane.
+		-->
   <version version="4" author="PB, pierre.bln@me.com" lastUpdated="20141013"/>
   <!-- 4 2014/10/13 Added trim options (CVs 66+95)
 		-->
@@ -42,15 +47,17 @@
   -->
   <decoder>
     <family name="Train Decoders (firmware 3.04 - May 2014)" mfg="Doehler und Haass">
-      <model model="DH10C v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="14" productID="DH10C_3.04" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
-        <output name="1" label="Front Light" maxcurrent="150mA"/>
-        <output name="2" label="Rear Light" maxcurrent="150mA"/>
-        <output name="3" label="AUX 1" maxcurrent="300mA"/>
-        <output name="4" label="AUX 2" maxcurrent="300mA"/>
-        <output name="5" label="AUX 3 (or SUSI ZCLK)" maxcurrent="300mA"/>
+      <model model="DH10C v3.04 (firmware 3.04+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH10C_3.04" comment="DH10C-0 / DH10C-1 / DH10C-3 with update from 31 May 2014" maxInputVolts="30V" maxMotorCurrent="1A" maxTotalCurrent="1A" connector="Wires/NEM651">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA"/>
         <!-- New from fw3.03  -->
-        <output name="6" label="AUX 4 (or SUSI ZDAT)" maxcurrent="300mA"/>
+        <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA"/>
         <!-- New from fw3.03  -->
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
         <size length="14.2" width="9.3" height="1.5" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
@@ -86,19 +93,21 @@
       <!-- SECTION 7	- Extra SUSI options as of fw3.03 -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv137_susi_fw3.03.xml"/>
       <!-- SECTION 8	- Motorola format as of fw3.04 -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv14_motorola.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/cv12_motorola.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs" CV="8" default="8">
-         <label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
-      </factReset>
+		<factReset label="Reset All CVs" CV="8" default="8">
+			<label xml:lang="fr">Reset - retour aux valeurs d'usine pour tous les CVs</label>
+			<label xml:lang="it">Reset delle CV ai valori di fabbrica</label>
+		</factReset>
     </resets>
   </decoder>
   <!-- Common pane(s) for all Doehler und Haass decoders  -->
-  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_map_adv.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_StartBrakeShunt.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_common.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_firmware.xml"/>
   <!-- Pane(s) valid for some decoders only  -->
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_railcom.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_motorola.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Pane_susi.xml"/>
 </decoder-config>
