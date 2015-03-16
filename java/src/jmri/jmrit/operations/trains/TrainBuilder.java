@@ -4188,7 +4188,7 @@ public class TrainBuilder extends TrainCommon {
             car.setLoadName(loads.get(rnd));
             // check to see if car is now accepted by staging
             String status = car.testDestination(stageTrack.getLocation(), stageTrack); // will staging accept this car?
-            if (status.equals(Track.OKAY) || status.startsWith(Track.LENGTH)) {
+            if (status.equals(Track.OKAY) || (status.startsWith(Track.LENGTH) && stageTrack != _terminateStageTrack)) {
                 car.setLoadGeneratedFromStaging(true);
                 car.setFinalDestination(stageTrack.getLocation());
                 car.setFinalDestinationTrack(null); // don't assign the track, that will be done later

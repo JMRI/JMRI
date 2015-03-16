@@ -2464,6 +2464,7 @@
      HREF="#EditCarAttributes">Car Edit Attributes</A> section, the edit car loads window allows you
     to set the load's type, priority, pick up and set out messages.</P>
  
+    <A NAME="LoadType"></A>
     <H4>Load Type</H4>   
     
     A load type of "Load" means the
@@ -2538,11 +2539,11 @@
 
    You can also optionally enter the location and track that you want the car to return to when the
    car's load status becomes empty. You can also replace the car's default empty load "E" with one
-   from the return when empty (RWE) load menu. Only custom loads that are type "Empty" are shown in
-   the combo box. When you specify a custom RWE load for a car, the program will use the RWE load
-   instead of the default empty "E" in all cases where the "E" load would normally occur. Note that
-   the RWE load also overrides the generation of custom loads out of staging since the "E" load
-   isn't used by the program for this car.
+   from the return when empty (RWE) load menu. Only custom loads that are type
+   <A HREF="#LoadType">Empty</A> are shown in the combo box. When you specify a custom RWE load for
+   a car, the program will use the RWE load instead of the default empty "E" in all cases where the
+   "E" load would normally occur. Note that the RWE load also overrides the generation of custom
+   loads out of staging since the "E" load isn't used by the program for this car.
 
    <P>Note that manually changing the load status to empty "E" will not cause the Return When
     Empty (RWE) destination to become active, only when the car is set out by the program will the
@@ -2574,7 +2575,7 @@
    specifies happens to be full, the program will search for a yard to place the car. When the track
    becomes available, the program will move the car from the yard to the track specified.
 
-   <P>When selecting a destination, you don't have to specify a track. And when selecting a
+   <P>When selecting a final destination, you don't have to specify a track. And when selecting a
     destination that is staging, you shouldn't select a destination track, let the program do that
     for you.</P>
 
