@@ -523,7 +523,7 @@ public class SlotMonDataModel extends javax.swing.table.AbstractTableModel imple
         for (int row = 0; row < (count - 1); row++) {
             LocoNetSlot s = memo.getSlotManager().slot(slotNum(row));
 
-            if (s.slotStatus() != LnConstants.LOCO_IN_USE) {
+            if ((s.slotStatus() != LnConstants.LOCO_IN_USE) && (s.consistStatus() == LnConstants.CONSIST_NO)) {
                 log.debug("Freeing {} from slot {}, old status: {}", s.locoAddr(), s.getSlot(), s.slotStatus());
                 memo.getLnTrafficController().sendLocoNetMessage(
                         s.writeStatus(LnConstants.LOCO_FREE
