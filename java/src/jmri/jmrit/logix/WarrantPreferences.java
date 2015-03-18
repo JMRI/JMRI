@@ -324,6 +324,7 @@ public class WarrantPreferences  {
         map.setAspectTable(getSpeedNameEntryIterator(), _interpretation);       
         map.setAppearanceTable(getAppearanceEntryIterator());
         map.setRampParams(_throttleIncr, _msIncrTime);
+        map.setLayoutScale(_scale);
         map.setMap(map);        
     }
 

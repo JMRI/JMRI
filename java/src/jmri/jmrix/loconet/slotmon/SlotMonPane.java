@@ -39,10 +39,10 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
      */
     javax.swing.JCheckBox showSystemCheckBox = new javax.swing.JCheckBox();
 
-    JButton estopAllButton = new JButton("Estop All");
+    JButton estopAllButton = new JButton(LocoNetBundle.bundle().getString("ButtonSlotMonEStopAll"));
 
     //Added by Jeffrey Machacek 2013
-    JButton clearAllButton = new JButton("Clear All Non-InUse Slots");
+    JButton clearAllButton = new JButton(LocoNetBundle.bundle().getString("ButtonSlotMonClearAll"));
     SlotMonDataModel slotModel;
     JTable slotTable;
     JScrollPane slotScroll;
@@ -59,15 +59,15 @@ public class SlotMonPane extends jmri.jmrix.loconet.swing.LnPanel {
         slotScroll = new JScrollPane(slotTable);
 
         // configure items for GUI
-        showAllCheckBox.setText("Show unused slots");
+        showAllCheckBox.setText(LocoNetBundle.bundle().getString("TextSlotMonShowUnused"));
         showAllCheckBox.setVisible(true);
         showAllCheckBox.setSelected(false);
-        showAllCheckBox.setToolTipText("if checked, even empty/idle slots will appear");
+        showAllCheckBox.setToolTipText(LocoNetBundle.bundle().getString("TooltipSlotMonShowUnused"));
 
-        showSystemCheckBox.setText("Show system slots");
+        showSystemCheckBox.setText(LocoNetBundle.bundle().getString("TextSlotMonShowSystem"));
         showSystemCheckBox.setVisible(true);
         showSystemCheckBox.setSelected(false);
-        showSystemCheckBox.setToolTipText("if checked, slots reserved for system use will be shown");
+        showSystemCheckBox.setToolTipText(LocoNetBundle.bundle().getString("TooltipSlotMonShowSystem"));
 
         slotModel.configureTable(slotTable);
 

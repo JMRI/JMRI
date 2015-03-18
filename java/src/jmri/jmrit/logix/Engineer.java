@@ -267,14 +267,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 break;
             case SignalSpeedMap.SPEED_MPH:          // miles per hour
                 mapSpeed = mapSpeed*_warrant.getThrottleFactor()*12*5280/(3600*1000);
-//                mapSpeed = _warrant.getThrottleFactor()*NXFrame.getInstance().getScale()*mapSpeed*12*5280/(3600*1000);       // in/ms
                 if (mapSpeed<throttleSpeed) {
                     throttleSpeed = mapSpeed;                  
                 }
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 mapSpeed = mapSpeed*_warrant.getThrottleFactor()*1000/(3600*25.4f);
-//                mapSpeed = _warrant.getThrottleFactor()*NXFrame.getInstance().getScale()*mapSpeed*12*5280*25.4f/(3600*1000); 
                 if (mapSpeed<throttleSpeed) {
                     throttleSpeed = mapSpeed;                  
                 }
@@ -624,7 +622,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     protected long getTimeForDistance(float distance, String speedtype) {
         float fromSpeed =  modifySpeed(_maxSpeed, speedtype);
-        return (long)(NXFrame.getInstance().getScale()*_warrant.getThrottleFactor()*distance/fromSpeed);
+        return (long)(_speedMap.getLayoutScale()*_warrant.getThrottleFactor()*distance/fromSpeed);
     }
     /**
      * Compute ramp length. Units depend on units of warrant's throttle factor
@@ -655,7 +653,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return 1.0f;
         }
         int time = _speedMap.getStepDelay();
-        float scale = NXFrame.getInstance().getScale()*_warrant.getThrottleFactor();
+        float scale = _speedMap.getLayoutScale()*_warrant.getThrottleFactor();
         // assume linear speed change to ramp down to stop
         float maxRampLength = 0.0f;
         speed = _maxSpeed;

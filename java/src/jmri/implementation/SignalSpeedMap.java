@@ -33,6 +33,7 @@ public class SignalSpeedMap {
     static private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
     private float _stepIncrement;       // ramp step throttle increment
     private float _throttleFactor;
+    private float _scale;
     
     public static final int PERCENT_NORMAL = 1;
     public static final int PERCENT_THROTTLE = 2;
@@ -243,6 +244,13 @@ public class SignalSpeedMap {
     }
     public float getDefaultThrottleFactor() {
         return _throttleFactor;
+    }
+    
+    public void setLayoutScale(float s) {
+        _scale = s;
+    }
+    public float getLayoutScale() {
+        return _scale;
     }
 
     public void setMap(SignalSpeedMap map) {
