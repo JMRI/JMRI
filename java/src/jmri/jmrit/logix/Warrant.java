@@ -84,6 +84,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private NamedBean _stoppingSignal;  // Signal stopping train movement
     private OBlock _shareTOBlock;       // Block in another warrant that controls a turnout in this block
     private String _message;            // last message returned from an action
+    private Calibrater _calibrater;     // Calibrates throttle speed factor
 
     // Throttle modes
     public static final int MODE_NONE = 0;
@@ -406,6 +407,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         _throttleFactor = fac;          
         return null;
+    }
+    
+    protected void setCalibrater(Calibrater c) {
+        _calibrater = c;
     }
 
     /**
@@ -1321,13 +1326,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         block.setState(block.getState() | OBlock.RUNNING);
         // _idxCurrentOrder has been incremented. Warranted train has entered this block. 
         // Do signals, speed etc.
-        if (_idxCurrentOrder == _orders.size() - 1) {
+        if (_idxCurrentOrder >= _orders.size() - 1) {
             // must be in destination block, No 'next block' for last BlockOrder
             // Let script finish according to recorded times. No speed changes
             // End of script will deallocate warrant.
             enterBlock(block.getState());
         } else {
-            NXFrame.getInstance().calibrateAt(_idxCurrentOrder);
+            if (_calibrater !=null) {
+                _calibrater.calibrateAt(_idxCurrentOrder);                
+            }
             boolean moveOK = moveIntoNextBlock(BEG);
 
             if (_runMode == MODE_LEARN || _tempRunBlind) {
@@ -1506,7 +1513,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _engineer.setHalt(true);
             // should not happen, but...what if...
             log.error("checkCurrentBlock, block \""+curBlock.getDisplayName()+"\" not occupied! warrant "+getDisplayName());
-            firePropertyChange("blockChange", curBlock, null);                          
             return false;
         }
         // An estimate for how far to look ahead for a possible speed change

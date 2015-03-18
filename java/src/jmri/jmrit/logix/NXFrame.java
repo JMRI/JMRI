@@ -81,8 +81,6 @@ public class NXFrame extends WarrantRoute {
     private int _numSteps;
 
     private boolean _calibrate;
-    private Warrant _calibrateWarrant;
-    private int _calibrateIndex;
     
     private static NXFrame _instance;
 
@@ -223,14 +221,22 @@ public class NXFrame extends WarrantRoute {
         String text = _factorbox.getText();
         try {
             _factor = Float.parseFloat(text);
-            if (_factor>10 || _factor<=0.1) {
+            if (_factor>8 || _factor<=0.1) {
                 msg = Bundle.getMessage("InvalidNumber", text);                                    
             }
         } catch (NumberFormatException nfe) {
             msg = Bundle.getMessage("InvalidNumber", text);                                    
         }
         if (msg==null) {
-            updatePanel(SignalSpeedMap.getMap().getInterpretation());
+            switch ( SignalSpeedMap.getMap().getInterpretation()) {
+                case SignalSpeedMap.SPEED_MPH:
+                    _maxSpeedBox.setText(Float.toString(_maxSpeed*3600*1000/(_factor*12*5280)));
+                    _minSpeedBox.setText(Float.toString(_throttleIncr*3600*1000/(_factor*24*5280)));
+                    break;
+                case SignalSpeedMap.SPEED_KMPH:
+                    _maxSpeedBox.setText(Float.toString(_maxSpeed*3600*25.4f/(_factor*1000)));
+                    _minSpeedBox.setText(Float.toString(_throttleIncr*3600*25.4f/(_factor*2000)));
+            }
         } else {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);            
@@ -384,19 +390,26 @@ public class NXFrame extends WarrantRoute {
                 warrant.setThrottleFactor(_factor);
             }
         }
-        if (msg==null && _calibrate) {
-            msg = verifyCalibrate(warrant);             
-        }
         if (msg==null) {
-            _parent.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
-            if (log.isDebugEnabled()) log.debug("NXWarrant added to table");
-            msg = _parent.runTrain(warrant);
+            Calibrater calib = null;
+            if (_calibrate) {
+                warrant.setViaOrder(getViaBlockOrder());
+                calib = new Calibrater(warrant);
+                msg = calib.verifyCalibrate();
+                if (msg!=null) {
+                    calib = null;
+                }                
+            }
+            warrant.setCalibrater(calib);
+            if (msg==null) {
+                _parent.getModel().addNXWarrant(warrant);   //need to catch propertyChange at start
+                if (log.isDebugEnabled()) log.debug("NXWarrant added to table");
+                msg = _parent.runTrain(warrant);                
+            }
             if (msg!=null) {
                 if (log.isDebugEnabled()) log.debug("WarrantTableFrame run warrant. msg= "+msg+" Remove warrant "+warrant.getDisplayName());
                 _parent.getModel().removeNXWarrant(warrant);
                 _calibrate = false;
-            } else if (_calibrate) {
-                _calibrateWarrant = warrant;
             }
         }
         if (msg==null) {
@@ -437,82 +450,6 @@ public class NXFrame extends WarrantRoute {
         }
     }
 
-    /**
-     * Called from Warrant goingActive
-     * Compute actual speed and set throttle factor
-     * @param index
-     */
-    protected void calibrateAt(int index) {
-        if (!_calibrate || _calibrateIndex+1 != index) {
-            return;
-        }
-        OBlock calibBlock = _calibrateWarrant.getBlockAt(_calibrateIndex);
-        long eTime =  _calibrateWarrant.getBlockAt(_calibrateIndex+1)._entryTime - calibBlock._entryTime;
-        float speed = calibBlock.getLengthIn()*_scale/eTime;        // scale ins/ms
-        _factor = _maxSpeed/speed;
-        _factorbox.setText(Float.toString(_factor));
-        _calibrate = false;
-        String speedUnits;
-        if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
-            speedUnits = Bundle.getMessage("speedKmph");
-            speed = speed*3600*25.4f/1000;
-        } else {
-            speedUnits = Bundle.getMessage("speedMph");
-            speed = speed*3600*1000/(12*5280);
-        }
-        JOptionPane.showMessageDialog(this, Bundle.getMessage("calibrateDone", _addr,
-                calibBlock.getDisplayName(), speed, _maxSpeed, _factor, speedUnits, _rampLength, (_numSteps+1)*_intervalTime/1000),
-                Bundle.getMessage("calibBlockTitle"), JOptionPane.INFORMATION_MESSAGE);
-    }
-    private String verifyCalibrate(Warrant warrant) {
-        BlockOrder bo = _via.getOrder();
-        OBlock calibBlock = null;
-        if (bo!=null) {
-            calibBlock = bo.getBlock();
-        }
-        if (calibBlock==null) {
-            return  Bundle.getMessage("noCalibBlock");                              
-        }
-        _calibrateIndex = warrant.getIndexOfBlock(calibBlock, 0);
-        if (_calibrateIndex<=0 || _calibrateIndex>=warrant.getThrottleCommands().size()-1) {
-            return  Bundle.getMessage("badCalibBlock", calibBlock.getDisplayName());                    
-        }
-        if (calibBlock.getLengthIn() <= 3.0) {
-            return  Bundle.getMessage("CalibBlockTooSmall", calibBlock.getDisplayName());   
-        }
-        List <ThrottleSetting> cmds = warrant.getThrottleCommands();
-        float speed = 0.0f;
-        String beforeBlk = null;
-        String afterBlock = null;
-        for (ThrottleSetting ts : cmds) {
-            if (ts.getCommand().toUpperCase().equals("SPEED")) {
-                try {
-                    float s = Float.parseFloat(ts.getValue());
-                    // get last acceleration block
-                    if ( s>speed) {
-                        speed = s;
-                        beforeBlk = ts.getBlockName();
-                    }
-                    // get first deceleration block
-                    if ( s<speed) {
-                        afterBlock = ts.getBlockName();
-                        break;
-                    }
-                } catch (NumberFormatException nfe) {
-                    log.error(ts.toString()+" - "+nfe);
-                }           
-            }
-        }
-        String msg = null;
-        if (warrant.getIndexOfBlock(beforeBlk, 0) >= _calibrateIndex) {
-            msg = Bundle.getMessage("speedChangeBlock", beforeBlk);         
-        } else if (warrant.getIndexOfBlock(afterBlock, 0) <= _calibrateIndex) {
-            msg = Bundle.getMessage("speedChangeBlock", afterBlock);            
-        } else {
-            _maxSpeed = speed;          
-        }
-        return msg;
-    }
     private void calibrationDialog() {
         _calibrate = (JOptionPane.showConfirmDialog(this, Bundle.getMessage("calibBlockMessage",
                 _dccNumBox.getText()), Bundle.getMessage("calibBlockTitle"), 
@@ -584,6 +521,15 @@ public class NXFrame extends WarrantRoute {
 
     private String getBoxData() {
         String text = null;
+        try {
+            text = _factorbox.getText();
+            _factor = Float.parseFloat(text);
+            if (_factor>10 || _factor<=0.1) {
+                return Bundle.getMessage("InvalidNumber", text);                                    
+            }
+        } catch (NumberFormatException nfe) {
+            return Bundle.getMessage("InvalidNumber", text);                                    
+        }
         float maxSpeed = _maxSpeed;
         float minSpeed = _minSpeed;
         try {
@@ -632,15 +578,6 @@ public class NXFrame extends WarrantRoute {
         } catch (NumberFormatException nfe) {
             return Bundle.getMessage("InvalidTime", text);                                  
         }
-        try {
-            text = _factorbox.getText();
-            _factor = Float.parseFloat(text);
-            if (_factor>10 || _factor<=0.1) {
-                return Bundle.getMessage("InvalidNumber", text);                                    
-            }
-        } catch (NumberFormatException nfe) {
-            return Bundle.getMessage("InvalidNumber", text);                                    
-        }
         return null;
     }
     
@@ -687,8 +624,8 @@ public class NXFrame extends WarrantRoute {
         _numSteps--;
 
         if (log.isDebugEnabled()) log.debug("Route length= "+totalLen+" uses "+_numSteps+" speed steps of delta= "+
-                delta+" for _rampLength = "+_rampLength);
-        if (log.isDebugEnabled()) {
+                delta+" and Factor= "+_factor+" for _rampLength = "+_rampLength);
+/*        if (log.isDebugEnabled()) {
             float rampDownLen = 0;
             log.debug("curSpeed= "+curSpeed);
             int downStep = 0;
@@ -700,7 +637,7 @@ public class NXFrame extends WarrantRoute {
             rampDownLen += (curSpeed/2)*_intervalTime/(_factor*_scale);
             log.debug("rampDownLen= "+rampDownLen+" uses "+downStep+" speed steps of delta= "+
                     delta+" for _rampLength = "+_rampLength+" to last curSpeed= "+curSpeed);
-        }
+        }*/
                 
         int idx = 0;        // block index
         float blockLen = block.getLengthIn()/2;
