@@ -16,9 +16,11 @@ import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
-import jmri.jmrix.rfid.generic.standalone.StandaloneSystemConnectionMemo;
+import jmri.jmrix.rfid.generic.standalone.StandaloneReporterManager;
+import jmri.jmrix.rfid.generic.standalone.StandaloneSensorManager;
 import jmri.jmrix.rfid.generic.standalone.StandaloneTrafficController;
-import jmri.jmrix.rfid.merg.concentrator.ConcentratorSystemConnectionMemo;
+import jmri.jmrix.rfid.merg.concentrator.ConcentratorReporterManager;
+import jmri.jmrix.rfid.merg.concentrator.ConcentratorSensorManager;
 import jmri.jmrix.rfid.merg.concentrator.ConcentratorTrafficController;
 import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
 import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
@@ -223,19 +225,25 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         if (opt1.equals("Generic Stand-alone")) {
             // create a Generic Stand-alone port controller
             log.debug("Create Generic Standalone SpecificTrafficController");
-            this.setSystemConnectionMemo(new StandaloneSystemConnectionMemo());
             control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+            this.getSystemConnectionMemo().configureManagers(
+                    new StandaloneSensorManager(control, this.getSystemPrefix()),
+                    new StandaloneReporterManager(control, this.getSystemPrefix()));
         } else if (opt1.equals("MERG Concentrator")) {
             // create a MERG Concentrator port controller
             log.debug("Create MERG Concentrator SpecificTrafficController");
-            this.setSystemConnectionMemo(new ConcentratorSystemConnectionMemo());
             control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+            this.getSystemConnectionMemo().configureManagers(
+                    new ConcentratorSensorManager(control, this.getSystemPrefix()),
+                    new ConcentratorReporterManager(control, this.getSystemPrefix()));
         } else {
             // no connection at all - warn
             log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone");
             // create a Generic Stand-alone port controller
-            this.setSystemConnectionMemo(new StandaloneSystemConnectionMemo());
             control = new StandaloneTrafficController(this.getSystemConnectionMemo());
+            this.getSystemConnectionMemo().configureManagers(
+                    new StandaloneSensorManager(control, this.getSystemPrefix()),
+                    new StandaloneReporterManager(control, this.getSystemPrefix()));
         }
 
         // Now do the protocol
@@ -269,7 +277,6 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         // connect to the traffic controller
         this.getSystemConnectionMemo().setRfidTrafficController(control);
         control.setAdapterMemo(this.getSystemConnectionMemo());
-        this.getSystemConnectionMemo().configureManagers();
         control.connectPort(this);
         control.sendInitString();
 

@@ -4,6 +4,8 @@ package jmri.jmrix.rfid;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import jmri.jmrix.AbstractStreamPortController;
+import jmri.jmrix.rfid.generic.standalone.StandaloneReporterManager;
+import jmri.jmrix.rfid.generic.standalone.StandaloneSensorManager;
 import jmri.jmrix.rfid.generic.standalone.StandaloneSystemConnectionMemo;
 import jmri.jmrix.rfid.generic.standalone.StandaloneTrafficController;
 import org.slf4j.Logger;
@@ -32,7 +34,9 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
         // connect to the traffic controller
         this.getSystemConnectionMemo().setRfidTrafficController(control);
         control.setAdapterMemo(this.getSystemConnectionMemo());
-        this.getSystemConnectionMemo().configureManagers();
+        this.getSystemConnectionMemo().configureManagers(
+                new StandaloneSensorManager(control, this.getSystemPrefix()),
+                new StandaloneReporterManager(control, this.getSystemPrefix()));
         control.connectPort(this);
 
         // declare up
