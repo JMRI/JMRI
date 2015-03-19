@@ -4,8 +4,10 @@ package jmri.jmrix.rfid;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import jmri.jmrix.AbstractStreamPortController;
-import jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo;
-import jmri.jmrix.rfid.generic.standalone.SpecificTrafficController;
+import jmri.jmrix.rfid.generic.standalone.StandaloneReporterManager;
+import jmri.jmrix.rfid.generic.standalone.StandaloneSensorManager;
+import jmri.jmrix.rfid.generic.standalone.StandaloneSystemConnectionMemo;
+import jmri.jmrix.rfid.generic.standalone.StandaloneTrafficController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,18 +23,20 @@ import org.slf4j.LoggerFactory;
 public class RfidStreamPortController extends AbstractStreamPortController implements RfidInterface {
 
     public RfidStreamPortController(DataInputStream in, DataOutputStream out, String pname) {
-        super(new SpecificSystemConnectionMemo(), in, out, pname);
+        super(new StandaloneSystemConnectionMemo(), in, out, pname);
     }
 
     @Override
     public void configure() {
         log.debug("configure() called.");
-        RfidTrafficController control = new SpecificTrafficController(this.getSystemConnectionMemo());
+        RfidTrafficController control = new StandaloneTrafficController(this.getSystemConnectionMemo());
 
         // connect to the traffic controller
         this.getSystemConnectionMemo().setRfidTrafficController(control);
         control.setAdapterMemo(this.getSystemConnectionMemo());
-        this.getSystemConnectionMemo().configureManagers();
+        this.getSystemConnectionMemo().configureManagers(
+                new StandaloneSensorManager(control, this.getSystemPrefix()),
+                new StandaloneReporterManager(control, this.getSystemPrefix()));
         control.connectPort(this);
 
         // declare up
@@ -76,6 +80,7 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
         this.getSystemConnectionMemo().getTrafficController().sendRfidMessage(m, l);
     }
 
+    @Override
     public RfidSystemConnectionMemo getSystemConnectionMemo() {
         return (RfidSystemConnectionMemo) super.getSystemConnectionMemo();
     }

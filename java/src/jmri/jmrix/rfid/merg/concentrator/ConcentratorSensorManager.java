@@ -23,12 +23,12 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  * @since 2.11.4
  */
-public class SpecificSensorManager extends RfidSensorManager {
+public class ConcentratorSensorManager extends RfidSensorManager {
 
     private final RfidTrafficController tc;
     private final String prefix;
 
-    public SpecificSensorManager(RfidTrafficController tc, String prefix) {
+    public ConcentratorSensorManager(RfidTrafficController tc, String prefix) {
         super(prefix);
         this.tc = tc;
         this.prefix = prefix;
@@ -50,7 +50,7 @@ public class SpecificSensorManager extends RfidSensorManager {
 
     @Override
     public void message(RfidMessage m) {
-        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
+        if (m.toString().equals(new ConcentratorMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
             log.info("Sent init string: " + m);
         } else {
             super.message(m);
@@ -59,12 +59,12 @@ public class SpecificSensorManager extends RfidSensorManager {
 
     @Override
     public synchronized void reply(RfidReply r) {
-        if (r instanceof SpecificReply) {
-            processReply((SpecificReply) r);
+        if (r instanceof ConcentratorReply) {
+            processReply((ConcentratorReply) r);
         }
     }
 
-    private void processReply(SpecificReply r) {
+    private void processReply(ConcentratorReply r) {
         if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
             log.warn("Invalid message - skipping " + r);
             return;
@@ -84,7 +84,7 @@ public class SpecificSensorManager extends RfidSensorManager {
         super.dispose();
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SpecificSensorManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorSensorManager.class.getName());
 
 }
 

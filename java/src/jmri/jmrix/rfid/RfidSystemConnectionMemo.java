@@ -59,9 +59,9 @@ public class RfidSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         rt.setAdapterMemo(this);
     }
 
-    public void configureManagers() {
-//        sensorManager = new RfidSensorManager(getTrafficController(), getSystemPrefix());
-//        reporterManager = new RfidReporterManager(getTrafficController(), getSystemPrefix());
+    public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
+        this.sensorManager = sensorManager;
+        this.reporterManager = reporterManager;
     }
 
     public RfidProtocol getProtocol() {

@@ -23,12 +23,12 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  * @since 2.11.4
  */
-public class SpecificReporterManager extends RfidReporterManager {
+public class ConcentratorReporterManager extends RfidReporterManager {
 
     private final RfidTrafficController tc;
     private final String prefix;
 
-    public SpecificReporterManager(RfidTrafficController tc, String prefix) {
+    public ConcentratorReporterManager(RfidTrafficController tc, String prefix) {
         super(prefix);
         this.tc = tc;
         this.prefix = prefix;
@@ -54,7 +54,7 @@ public class SpecificReporterManager extends RfidReporterManager {
 
     @Override
     public void message(RfidMessage m) {
-        if (m.toString().equals(new SpecificMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
+        if (m.toString().equals(new ConcentratorMessage(tc.getAdapterMemo().getProtocol().initString(), 0).toString())) {
             log.info("Sent init string: " + m);
         } else {
             super.message(m);
@@ -63,12 +63,12 @@ public class SpecificReporterManager extends RfidReporterManager {
 
     @Override
     public synchronized void reply(RfidReply r) {
-        if (r instanceof SpecificReply) {
-            processReply((SpecificReply) r);
+        if (r instanceof ConcentratorReply) {
+            processReply((ConcentratorReply) r);
         }
     }
 
-    private void processReply(SpecificReply r) {
+    private void processReply(ConcentratorReply r) {
         if (!tc.getAdapterMemo().getProtocol().isValid(r)) {
             log.warn("Invalid message - skipping " + r);
             return;
@@ -82,7 +82,7 @@ public class SpecificReporterManager extends RfidReporterManager {
         report.notify(idTag);
     }
 
-    private static final Logger log = LoggerFactory.getLogger(SpecificReporterManager.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorReporterManager.class.getName());
 
 }
 

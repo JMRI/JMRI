@@ -2,6 +2,8 @@
 package jmri.jmrix.rfid.generic.standalone;
 
 import jmri.InstanceManager;
+import jmri.jmrix.rfid.RfidReporterManager;
+import jmri.jmrix.rfid.RfidSensorManager;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 
 /**
@@ -27,9 +29,9 @@ import jmri.jmrix.rfid.RfidSystemConnectionMemo;
  * @version $Revision$
  * @since 2.11.4
  */
-public class SpecificSystemConnectionMemo extends RfidSystemConnectionMemo {
+public class StandaloneSystemConnectionMemo extends RfidSystemConnectionMemo {
 
-    public SpecificSystemConnectionMemo() {
+    public StandaloneSystemConnectionMemo() {
         super();
     }
 
@@ -38,14 +40,14 @@ public class SpecificSystemConnectionMemo extends RfidSystemConnectionMemo {
      * manager config in one place.
      */
     @Override
-    public void configureManagers() {
-        InstanceManager.setSensorManager(new SpecificSensorManager(getTrafficController(), getSystemPrefix()));
-        InstanceManager.setReporterManager(new SpecificReporterManager(getTrafficController(), getSystemPrefix()));
+    public void configureManagers(RfidSensorManager sensorManager, RfidReporterManager reporterManager) {
+        InstanceManager.setSensorManager(new StandaloneSensorManager(getTrafficController(), getSystemPrefix()));
+        InstanceManager.setReporterManager(new StandaloneReporterManager(getTrafficController(), getSystemPrefix()));
     }
 
     @Override
     public void dispose() {
-        InstanceManager.deregister(this, SpecificSystemConnectionMemo.class);
+        InstanceManager.deregister(this, StandaloneSystemConnectionMemo.class);
         super.dispose();
     }
 
