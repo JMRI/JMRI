@@ -80,6 +80,7 @@ public class RfidStreamPortController extends AbstractStreamPortController imple
         this.getSystemConnectionMemo().getTrafficController().sendRfidMessage(m, l);
     }
 
+    @Override
     public RfidSystemConnectionMemo getSystemConnectionMemo() {
         return (RfidSystemConnectionMemo) super.getSystemConnectionMemo();
     }
