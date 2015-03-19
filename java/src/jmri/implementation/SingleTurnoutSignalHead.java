@@ -1,6 +1,8 @@
 // SingleTurnoutSignalHead.java
 package jmri.implementation;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import jmri.NamedBeanHandle;
 import jmri.SignalHead;
 import jmri.Turnout;
@@ -18,16 +20,12 @@ import org.slf4j.LoggerFactory;
  * facility to set the aspect via any of the four aspect colors is provided,
  * however they all do the same.
  *
- * <P>
- * This class doesn't currently listen to the Turnout's to see if they've been
- * changed via some other mechanism.
- *
  * Based Upon DoubleTurnoutSignalHead by Bob Jacobsen
  *
  * @author	Kevin Dickerson Copyright (C) 2010
  * @version	$Revision$
  */
-public class SingleTurnoutSignalHead extends DefaultSignalHead {
+public class SingleTurnoutSignalHead extends DefaultSignalHead implements PropertyChangeListener {
 
     /**
      *
@@ -42,10 +40,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
      */
     public SingleTurnoutSignalHead(String sys, String user, NamedBeanHandle<Turnout> lit, int on, int off) {
         super(sys, user);
-        mOutput = lit;
-        mOnAppearance = on;
-        mOffAppearance = off;
-        setAppearance(off);
+        Initialize(lit, on, off);
     }
 
     /**
@@ -56,33 +51,55 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
      */
     public SingleTurnoutSignalHead(String sys, NamedBeanHandle<Turnout> lit, int on, int off) {
         super(sys);
-        mOutput = lit;
+        Initialize(lit, on, off);
+    }
+
+    /** Helper function for constructors. */
+    private void Initialize(NamedBeanHandle<Turnout> lit, int on, int off) {
+        setOutput(lit);
         mOnAppearance = on;
         mOffAppearance = off;
-        setAppearance(off);
+        if (lit.getBean().getKnownState() == jmri.Turnout.CLOSED) {
+          setAppearance(off);
+        } else if (lit.getBean().getKnownState() == jmri.Turnout.THROWN) {
+          setAppearance(on);
+        } else {
+          // Assumes "off" state to prevents setting turnouts at startup.
+          mAppearance = off;
+        }
     }
 
     int mOnAppearance = DARK;
     int mOffAppearance = LUNAR;
 
+    /**
+     * Holds the last state change we commanded our underlying turnout.
+     */
+    private int mTurnoutCommandedState = Turnout.CLOSED;
+
+    private void setTurnoutState(int s) {
+        mTurnoutCommandedState = s;
+        mOutput.getBean().setCommandedState(s);
+    }
+
     protected void updateOutput() {
         // assumes that writing a turnout to an existing state is cheap!
         if (mLit == false) {
-            mOutput.getBean().setCommandedState(Turnout.CLOSED);
+            setTurnoutState(Turnout.CLOSED);
             return;
         } else if (!mFlashOn
                 && (mAppearance == mOnAppearance * 2)) {
-            mOutput.getBean().setCommandedState(Turnout.CLOSED);
+            setTurnoutState(Turnout.CLOSED);
             return;
         } else if (!mFlashOn
                 && (mAppearance == mOffAppearance * 2)) {
-            mOutput.getBean().setCommandedState(Turnout.THROWN);
+            setTurnoutState(Turnout.THROWN);
             return;
         } else {
             if ((mAppearance == mOffAppearance) || (mAppearance == (mOffAppearance * 2))) {
-                mOutput.getBean().setCommandedState(Turnout.CLOSED);
+                setTurnoutState(Turnout.CLOSED);
             } else if ((mAppearance == mOnAppearance) || (mAppearance == (mOnAppearance * 2))) {
-                mOutput.getBean().setCommandedState(Turnout.THROWN);
+                setTurnoutState(Turnout.THROWN);
             } else {
                 log.warn("Unexpected new appearance: " + mAppearance);
             }
@@ -94,7 +111,7 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
      * garbage-collected.
      */
     public void dispose() {
-        mOutput = null;
+        setOutput(null);
         super.dispose();
     }
 
@@ -125,7 +142,13 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     }
 
     public void setOutput(NamedBeanHandle<Turnout> t) {
-        mOutput = t;
+      if (mOutput != null) {
+        mOutput.getBean().removePropertyChangeListener(this);
+      }
+      mOutput=t;
+      if (mOutput != null) {
+        mOutput.getBean().addPropertyChangeListener(this);
+      }
     }
 
     public int[] getValidStates() {
@@ -219,6 +242,34 @@ public class SingleTurnoutSignalHead extends DefaultSignalHead {
     }
 
     static Logger log = LoggerFactory.getLogger(SingleTurnoutSignalHead.class.getName());
+
+    /* (non-Javadoc)
+     * @see java.beans.PropertyChangeListener#propertyChange(java.beans.PropertyChangeEvent)
+     */
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getSource() == mOutput.getBean() && evt.getPropertyName() == "KnownState") {
+            // The underlying turnout has some state change. Check if its known state matches what we expected it to do.
+            int newTurnoutValue = ((Integer)evt.getNewValue()).intValue();
+            /*String oldTurnoutString = turnoutToString(mTurnoutCommandedState);
+            String newTurnoutString = turnoutToString(newTurnoutValue);
+            log.warn("signal " + this.mUserName + ": underlying turnout changed. last set state " +
+            oldTurnoutString + ", current turnout state " + newTurnoutString + ", current appearance " + getSignalColour(mAppearance));*/
+            if (mTurnoutCommandedState != newTurnoutValue) {
+                // The turnout state has changed against what we commanded.
+                int oldAppearance = mAppearance;
+                int newAppearance = mAppearance;
+                if (newTurnoutValue == Turnout.CLOSED) newAppearance = mOffAppearance;
+                if (newTurnoutValue == Turnout.THROWN) newAppearance = mOnAppearance;
+                if (newAppearance != oldAppearance) {
+                    mAppearance = newAppearance;
+                    // Updates last commanded state.
+                    mTurnoutCommandedState = newTurnoutValue;
+                    // notify listeners, if any
+                    firePropertyChange("Appearance", new Integer(oldAppearance), new Integer(newAppearance));
+                }
+            }
+        }
+    }
 }
 
 /* @(#)SingleTurnoutSignalHead.java */
