@@ -16,6 +16,14 @@ import jmri.jmrix.rfid.RfidPortController;
 import jmri.jmrix.rfid.RfidProtocol;
 import jmri.jmrix.rfid.RfidSystemConnectionMemo;
 import jmri.jmrix.rfid.RfidTrafficController;
+import jmri.jmrix.rfid.generic.standalone.StandaloneSystemConnectionMemo;
+import jmri.jmrix.rfid.generic.standalone.StandaloneTrafficController;
+import jmri.jmrix.rfid.merg.concentrator.ConcentratorSystemConnectionMemo;
+import jmri.jmrix.rfid.merg.concentrator.ConcentratorTrafficController;
+import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
+import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
+import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
+import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -215,19 +223,19 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         if (opt1.equals("Generic Stand-alone")) {
             // create a Generic Stand-alone port controller
             log.debug("Create Generic Standalone SpecificTrafficController");
-            this.setSystemConnectionMemo(new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo());
-            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(this.getSystemConnectionMemo());
+            this.setSystemConnectionMemo(new StandaloneSystemConnectionMemo());
+            control = new StandaloneTrafficController(this.getSystemConnectionMemo());
         } else if (opt1.equals("MERG Concentrator")) {
             // create a MERG Concentrator port controller
             log.debug("Create MERG Concentrator SpecificTrafficController");
-            this.setSystemConnectionMemo(new jmri.jmrix.rfid.merg.concentrator.SpecificSystemConnectionMemo());
-            control = new jmri.jmrix.rfid.merg.concentrator.SpecificTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
+            this.setSystemConnectionMemo(new ConcentratorSystemConnectionMemo());
+            control = new ConcentratorTrafficController(this.getSystemConnectionMemo(), getOptionState(option2Name));
         } else {
             // no connection at all - warn
             log.warn("adapter option " + opt1 + " defaults to Generic Stand-alone");
             // create a Generic Stand-alone port controller
-            this.setSystemConnectionMemo(new jmri.jmrix.rfid.generic.standalone.SpecificSystemConnectionMemo());
-            control = new jmri.jmrix.rfid.generic.standalone.SpecificTrafficController(this.getSystemConnectionMemo());
+            this.setSystemConnectionMemo(new StandaloneSystemConnectionMemo());
+            control = new StandaloneTrafficController(this.getSystemConnectionMemo());
         }
 
         // Now do the protocol
@@ -235,26 +243,26 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         if (!opt1.equals("MERG Concentrator")) {
             if (opt3.equals("CORE-ID")) {
                 log.info("set protocol to CORE-ID");
-                protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
+                protocol = new CoreIdRfidProtocol();
             } else if (opt3.equals("Olimex")) {
                 log.info("set protocol to Olimex");
-                protocol = new jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol();
+                protocol = new OlimexRfidProtocol();
             } else if (opt3.equals("Parallax")) {
                 log.info("set protocol to Parallax");
-                protocol = new jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol();
+                protocol = new ParallaxRfidProtocol();
             } else if (opt3.equals("SeeedStudio")) {
                 log.info("set protocol to SeeedStudio");
-                protocol = new jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol();
+                protocol = new SeeedStudioRfidProtocol();
             } else {
                 // no protocol at all - warn
                 log.warn("protocol option " + opt3 + " defaults to CORE-ID");
                 // create a coreid protocol
-                protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
+                protocol = new CoreIdRfidProtocol();
             }
         } else {
             // MERG Concentrator only supports CORE-ID
             log.info("set protocol to CORE-ID");
-            protocol = new jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol();
+            protocol = new CoreIdRfidProtocol();
         }
         this.getSystemConnectionMemo().setProtocol(protocol);
 

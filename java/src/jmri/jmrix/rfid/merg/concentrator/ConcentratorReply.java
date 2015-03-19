@@ -15,13 +15,13 @@ import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
  * @version $Revision$
  * @since 2.11.4
  */
-public class SpecificReply extends RfidReply {
+public class ConcentratorReply extends RfidReply {
 
     RfidTrafficController tc = null;
     RfidProtocol pr = null;
 
     // create a new one
-    public SpecificReply(RfidTrafficController tc) {
+    public ConcentratorReply(RfidTrafficController tc) {
         super(tc);
         this.tc = tc;
         this.pr = tc.getAdapterMemo().getProtocol();
@@ -29,7 +29,7 @@ public class SpecificReply extends RfidReply {
         setUnsolicited();
     }
 
-    public SpecificReply(RfidTrafficController tc, String s) {
+    public ConcentratorReply(RfidTrafficController tc, String s) {
         super(tc, s);
         this.tc = tc;
         this.pr = tc.getAdapterMemo().getProtocol();
@@ -37,7 +37,7 @@ public class SpecificReply extends RfidReply {
         setUnsolicited();
     }
 
-    public SpecificReply(RfidTrafficController tc, RfidReply l) {
+    public ConcentratorReply(RfidTrafficController tc, RfidReply l) {
         super(tc, l);
         this.tc = tc;
         this.pr = tc.getAdapterMemo().getProtocol();

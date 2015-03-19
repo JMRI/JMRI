@@ -1,5 +1,5 @@
 // SpecificTrafficController.java
-package jmri.jmrix.rfid.generic.standalone;
+package jmri.jmrix.rfid.merg.concentrator;
 
 import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
@@ -21,25 +21,19 @@ import org.slf4j.LoggerFactory;
  * This maintains a list of nodes, but doesn't currently do anything with it.
  *
  * @author Bob Jacobsen Copyright (C) 2001, 2003, 2005, 2006, 2008
- * @author Matthew Harris Copyright (c) 2011
+ * @author Matthew Harris Copyright (C) 2011
  * @version $Revision$
  * @since 2.11.4
  */
-public class SpecificTrafficController extends RfidTrafficController {
+public class ConcentratorTrafficController extends RfidTrafficController {
 
+    private final String range;
     private final RfidSystemConnectionMemo memo;
 
-    @Override
-    public void sendInitString() {
-        String init = memo.getProtocol().initString();
-        if (init.length() > 0) {
-            sendRfidMessage(new SpecificMessage(init, 0), null);
-        }
-    }
-
-    public SpecificTrafficController(RfidSystemConnectionMemo memo) {
+    public ConcentratorTrafficController(RfidSystemConnectionMemo memo, String range) {
         super();
         this.memo = memo;
+        this.range = range;
         logDebug = log.isDebugEnabled();
 
         // not polled at all, so allow unexpected messages, and
@@ -47,6 +41,19 @@ public class SpecificTrafficController extends RfidTrafficController {
         setAllowUnexpectedReply(true);
         mWaitBeforePoll = 1000;  // can take a long time to send
 
+    }
+
+    @Override
+    public void sendInitString() {
+        String init = memo.getProtocol().initString();
+        if (init.length() > 0) {
+            sendRfidMessage(new ConcentratorMessage(init, 0), null);
+        }
+    }
+
+    @Override
+    public RfidMessage getRfidMessage(int length) {
+        return new ConcentratorMessage(length);
     }
 
     @Override
@@ -59,19 +66,14 @@ public class SpecificTrafficController extends RfidTrafficController {
     }
 
     @Override
-    public RfidMessage getRfidMessage(int length) {
-        return new SpecificMessage(length);
-    }
-
-    @Override
     protected AbstractMRReply newReply() {
-        SpecificReply reply = new SpecificReply(memo.getTrafficController());
+        ConcentratorReply reply = new ConcentratorReply(memo.getTrafficController());
         return reply;
     }
 
     @Override
     public String getRange() {
-        return "1";
+        return range;
     }
 
     @Override
@@ -81,7 +83,7 @@ public class SpecificTrafficController extends RfidTrafficController {
 
     boolean sendInterlock = false; // send the 00 interlock when CRC received
 
-    private static final Logger log = LoggerFactory.getLogger(SpecificTrafficController.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(ConcentratorTrafficController.class.getName());
 }
 
 
