@@ -10,6 +10,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import org.jdom2.*;
+
 /**
  * Tests for the SignalSpeedMap class
  *
@@ -22,26 +24,55 @@ public class SignalSpeedMapTest extends TestCase {
         Assert.assertNotNull(SignalSpeedMap.getMap());
     }
     
+    static final String[] speeds = new String[]{
+        "Cab",
+        "Maximum",
+        "Normal",
+        "Sixty",
+        "Fifty",
+        "Limited",
+        "Medium",
+        "Slow",
+        "Restricted",
+        "RestrictedSlow",
+        "Stop"
+    };
+
     public void testMapMonoticity() {
         SignalSpeedMap m = SignalSpeedMap.getMap();
         
-        String[] speeds = new String[]{
-            "Maximum",
-            "Normal",
-            "Sixty",
-            "Fifty",
-            "Limited",
-            "Medium",
-            "Slow",
-            "Restricted",
-            "Stop"
-        };
-        
+        // check for monotonic values
         for (int i = 0; i < speeds.length-1; i++) {
             Assert.assertTrue(speeds[i+1]+" ("+m.getSpeed(speeds[i+1])+") must be less than "+speeds[i]+" ("+m.getSpeed(speeds[i])+")", 
                 m.getSpeed(speeds[i+1])<m.getSpeed(speeds[i]));
         }
          
+    }
+
+    String getFilename() {
+        return "xml/signals/signalSpeeds.xml";
+    }
+    
+    Element getSignalSpeedsXml() {
+        return null;
+    }
+    
+    public void testAllSpeedsPresent() {
+    }
+    
+    public void testNoExtraSpeedsPresent() {
+    }
+
+    public void testAppearanceSpeedsOK() {
+        SignalSpeedMap m = SignalSpeedMap.getMap();
+        // check that every speed in <appearanceSpeeds> is defined
+        java.util.Enumeration<String> e = m.getAppearanceIterator();
+        String name;
+        while (e.hasMoreElements()) {
+            name = e.nextElement();
+            Assert.assertNotNull("appearanceSpeed \""+name+"\" is defined", m.getAppearanceSpeed(name));
+            Assert.assertTrue("appearanceSpeed \""+name+"\" has value", m.getSpeed(m.getAppearanceSpeed(name)) >= 0.);
+        }        
     }
 
     // from here down is testing infrastructure
