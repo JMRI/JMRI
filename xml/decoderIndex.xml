@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150316-1347-jake on Mon Mar 16 06:47:20 PDT 2015 $Id$-->
-  <decoderIndex version="572">
+  <!--Written by JMRI version 20150320-0435-jake on Thu Mar 19 21:35:12 PDT 2015 $Id$-->
+  <decoderIndex version="574">
     <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4310,6 +4310,18 @@
       <family name="Turnouts" mfg="GFB Designs" comment="TT300 is a turnout motor with integral decoder, programmable by service mode or ops-mode for accessories" file="GFB_TT300.xml">
         <model model="TT300" lowVersionID="1" highVersionID="1" />
       </family>
+      <family name="Gaugemaster Opti DCC Loco Decoders" mfg="Gaugemaster" file="Gaugemaster.xml">
+        <model model="DCC25 4 Function" numOuts="4" numFns="14" lowVersionID="22" highVersionID="22" maxMotorCurrent="1.1A (peak=2A)">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+        </model>
+      </family>
       <family name="NFA_HFA_DCC" mfg="Haber and Koenig Electronics GmbH" file="Haber_u_Koenig.xml">
         <model model="NFA" numOuts="8" numFns="10" maxMotorCurrent="0.8 A" maxTotalCurrent="1.2 A" comment="NFA=Niederfrequenzansteuerung">
           <versionCV lowVersionID="32" highVersionID="47" />
@@ -4393,6 +4405,18 @@
           <output name="6" label="Output F" />
           <output name="7" label="Output G" />
           <output name="8" label="Output H" />
+        </model>
+      </family>
+      <family name="Hattons DCC Loco Decoders" mfg="Hattons Model Railways" file="Hattons.xml">
+        <model model="MD4 4 Function" numOuts="4" numFns="14" lowVersionID="21" highVersionID="21" maxMotorCurrent="1.1A (peak=2A)">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
         </model>
       </family>
       <family name="Sapphire-R8245" mfg="Hornby" highVersionID="10" lowVersionID="10" comment="Decoder with auntomous loco control and fuel/water simulation" file="Hornby8245_v2.xml">

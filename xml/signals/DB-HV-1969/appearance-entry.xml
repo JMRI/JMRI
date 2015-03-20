@@ -19,6 +19,10 @@
         <personname><firstname>Bob</firstname><surname>Jacobsen</surname></personname>
         <email>jake@physics.berkeley.edu</email>
     </author>    
+    <author>
+        <personname><firstname>Oscar</firstname><surname>Moutinho</surname></personname>
+        <email>oscar.moutinho@gmail.com</email>
+    </author>    
   </authorgroup>
     
   <revhistory xmlns="http://docbook.org/ns/docbook">
@@ -40,6 +44,12 @@
         <authorinitials>JCV</authorinitials>
         <revremark>Added small and medium size icons more suitable for panels</revremark>
     </revision>    
+    <revision>
+        <revnumber>4</revnumber>
+        <date>2015-03-03</date>
+        <authorinitials>OM</authorinitials>
+        <revremark>Add Speed and Route to Aspects. Add Aspect Mapping and Specific Aspects</revremark>
+    </revision>
   </revhistory>
 
   <aspecttable>DB-HV-1969</aspecttable>
@@ -54,26 +64,36 @@
     <appearance>
       <aspectname>Hp0</aspectname>
       <show>red</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry/hp0.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry/hp0.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry/hp0.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry/hp0.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry/hp0.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry/hp0.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp1</aspectname>
       <show>green</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry/hp1.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry/hp1.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry/hp1.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry/hp1.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry/hp1.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry/hp1.gif</imagelink>
     </appearance>
 
     <appearance>
       <aspectname>Hp2</aspectname>
       <show>yellow</show>
-      <imagelink type="prototype">../../../resources/icons/largeschematics/aspects/DB-HV-1969/entry/hp2.gif</imagelink>
-      <imagelink type="medium panel">../../../resources/icons/mediumschematics/aspects/DB-HV-1969/entry/hp2.gif</imagelink>
-      <imagelink type="small panel">../../../resources/icons/smallschematics/aspects/DB-HV-1969/entry/hp2.gif</imagelink>
+      <imagelink type="prototype">/resources/icons/largeschematics/aspects/DB-HV-1969/entry/hp2.gif</imagelink>
+      <imagelink type="medium panel">/resources/icons/mediumschematics/aspects/DB-HV-1969/entry/hp2.gif</imagelink>
+      <imagelink type="small panel">/resources/icons/smallschematics/aspects/DB-HV-1969/entry/hp2.gif</imagelink>
     </appearance>
 
   </appearances>
+
+  <specificappearances><!-- Start of Specific Appearances list -->
+    <danger>
+      <aspect>Hp0</aspect>
+    </danger>
+    <held>
+      <aspect>Hp0</aspect>
+    </held>
+  </specificappearances><!-- End of Specific Appearances list -->
+
 </appearancetable>  

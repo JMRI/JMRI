@@ -505,8 +505,29 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
     private java.beans.PropertyChangeListener _reporterListener = null;
     private boolean _reportingCurrent = false;
 
-    /**
-     * Handle change in sensor state.
+    private Path pListOfPossibleEntrancePaths[] = null;
+    private int CntOfPossibleEntrancePaths = 0;
+    void ResetCandidateEntrancePaths() {
+        pListOfPossibleEntrancePaths = null;
+        CntOfPossibleEntrancePaths = 0;
+    }
+    boolean SetAsEntryBlockIfPossible(Block b) {
+        for (int i=0; i< CntOfPossibleEntrancePaths; i++) {
+		 Block CandidateBlock = pListOfPossibleEntrancePaths[i].getBlock();
+            if (CandidateBlock == b) {
+                setValue(CandidateBlock.getValue());
+                setDirection(pListOfPossibleEntrancePaths[i].getFromBlockDirection());
+                //if (log.isDebugEnabled()) 
+                    log.info("Block "+getSystemName()+" gets LATE new value from "+ CandidateBlock.getSystemName()+", direction="+Path.decodeDirection(getDirection()));
+                ResetCandidateEntrancePaths();
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    
+    /** Handle change in sensor state.
      * <P>
      * Defers real work to goingActive, goingInactive methods
      */
@@ -546,6 +567,11 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         if (log.isDebugEnabled()) {
             log.debug("Block " + getSystemName() + " goes UNOCCUPIED");
         }
+        int currPathCnt = paths.size();
+        for (int i = 0; i < currPathCnt; i++) {
+           Block b = paths.get(i).getBlock();
+           if (b != null) b.SetAsEntryBlockIfPossible(this);
+        }
         setValue(null);
         setDirection(Path.NONE);
         setState(UNOCCUPIED);
@@ -562,6 +588,7 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         if (getState() == OCCUPIED) {
             return;
         }
+        ResetCandidateEntrancePaths();
         // index through the paths, counting
         int count = 0;
         Path next = null;
@@ -631,6 +658,14 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                     log.debug("next is null!");
                 }
             }
+            if (next == null) {
+                for (int i = 0; i < currPathCnt; i++) {
+                   if (isSet[i] && isActive[i]) {
+                       count++;
+                       next = pList[i];
+                   }  
+                }
+            }
             if (next != null && count == 1) {
                 // found one block with proper direction, assume that
                 setValue(next.getBlock().getValue());
@@ -640,10 +675,18 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
                 }
             } else {
                 // no unique path with correct direction - this happens frequently from noise in block detectors!!
-                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName());
+                log.warn("count of " + count + " ACTIVE neightbors with proper direction can't be handled for block " + getSystemName() 
+                                + " but maybe it can be determined when an other block becomes free");
+                pListOfPossibleEntrancePaths = new Path[currPathCnt];
+                CntOfPossibleEntrancePaths = 0;
+                for (int i = 0; i < currPathCnt; i++) {
+                    if (isSet[i] && isActive[i]) {
+                        pListOfPossibleEntrancePaths[CntOfPossibleEntrancePaths] = pList[i];
+                        CntOfPossibleEntrancePaths++;
             }
         }
-        // in any case, go OCCUPIED
+            }
+        }
         setState(OCCUPIED);
     }
 

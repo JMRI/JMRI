@@ -50,6 +50,7 @@ public class PackageTest extends TestCase {
         suite.addTest(RouteTest.suite());
         suite.addTest(SE8cSignalHeadTest.suite());
         suite.addTest(SignalHeadSignalMastTest.suite());
+        suite.addTest(SignalSpeedMapTest.suite());
         suite.addTest(SignalSystemFileCheckTest.suite());
         suite.addTest(SingleTurnoutSignalHeadTest.suite());
         suite.addTest(TwoIndexTcsProgrammerFacadeTest.suite());
