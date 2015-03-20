@@ -35,6 +35,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.rfid.PackageTest");
 
         suite.addTest(jmri.jmrix.rfid.RfidStreamPortControllerTest.suite());
+        suite.addTest(jmri.jmrix.rfid.RfidSystemConnectionMemoTest.suite());
 
         return suite;
     }
