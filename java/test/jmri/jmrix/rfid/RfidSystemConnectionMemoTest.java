@@ -20,8 +20,6 @@ public class RfidSystemConnectionMemoTest extends TestCase {
     public void testCtor() {
         RfidSystemConnectionMemo memo=new RfidSystemConnectionMemo();
         Assert.assertNotNull("exists", memo);
-        Assert.assertTrue("Default Prefix Stored",memo.getSystemPrefix().equals("F"));
-        Assert.assertTrue("Default Name Stored",memo.getSystemPrefix().equals("Rfid"));
     }
 
     // from here down is testing infrastructure
