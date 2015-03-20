@@ -336,6 +336,7 @@
     a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
 	<LI>John McAleely, who contributed Hornby and Bachmann decoder definitions
     <LI>David McGowan, who handled many aspects of JMRI legal defense against Matt Katzer
+    <li>Peter MacKenzie, who added definitions for the Hattons MD4 and Gaugemaster Opti DCC25 decoders.
     <LI>Randy McKenzie, who contributed some CTC panel background images
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
