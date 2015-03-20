@@ -35,6 +35,12 @@
       <authorinitials>ST</authorinitials>
       <revremark>Add new speeds of Sixty and Fifty to accomodate BNSF signal system definition</revremark>
     </revision>
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2015-03-20</date>
+      <authorinitials>BJ</authorinitials>
+      <revremark>Clean up, make monotonic (for use with new tests)</revremark>
+    </revision>
   </revhistory>
   <!-- This file sets the values returned by the SignalSpeedMap class.  It is designed to -->
   <!-- set the defaults for running Warrants.  However uses other Warrants are possible.  -->
@@ -72,6 +78,7 @@
   <!-- These speeds are enforced at the entrance to a block.  Any speed name used in  -->
   <!-- any signal aspect.xml file should appear in the aspect speeds table below.     -->
   <aspectSpeeds>
+    <Cab>120</Cab>
     <Maximum>100</Maximum>
     <Normal>80</Normal>
     <Sixty>60</Sixty>
@@ -80,6 +87,7 @@
     <Medium>20</Medium>
     <Slow>10</Slow>
     <Restricted>3</Restricted>
+    <RestrictedSlow>2</RestrictedSlow>
     <Stop>0</Stop>
   </aspectSpeeds>
   <!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
@@ -94,6 +102,6 @@
     <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
     <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
     <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
-    <SignalHeadStateFlashingLunar>slow</SignalHeadStateFlashingLunar>
+    <SignalHeadStateFlashingLunar>Slow</SignalHeadStateFlashingLunar>
   </appearanceSpeeds>
 </speedtable>
