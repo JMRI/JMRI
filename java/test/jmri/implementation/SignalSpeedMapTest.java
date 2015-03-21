@@ -40,6 +40,11 @@ public class SignalSpeedMapTest extends TestCase {
 
     SignalSpeedMap map = SignalSpeedMap.getMap();
     
+    /**
+     * To avoid breaking signal systems, speed definitions should
+     * never be removed from the default map. Hence we check that 
+     * all standard names are present.
+     */
     public void testAllSpeedsPresent() {
         for (int i = 0; i < speeds.length; i++) {
             Assert.assertTrue(map.getSpeed(speeds[i])+" must be ge 0 to be present",0<=map.getSpeed(speeds[i]));
@@ -56,6 +61,13 @@ public class SignalSpeedMapTest extends TestCase {
          
     }
 
+    /**
+     * To avoid breaking signal systems, speed definitions should
+     * never be removed from the default map. This test will fail
+     * if a new name is added, at which point you should add it to 
+     * the definition of the "speeds" array above so that it will be
+     * tested for in the future.
+     */
     public void testNoExtraSpeedsPresent() {
         java.util.Enumeration<String> e = map.getSpeedIterator();
         String name;
