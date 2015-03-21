@@ -163,6 +163,9 @@ public class SignalSpeedMap {
     public Enumeration<String> getAppearanceIterator() {
         return _headTable.keys();       
     }
+    public Enumeration<String> getSpeedIterator() {
+        return _table.keys();       
+    }
 
     public java.util.Vector<String> getValidSpeedNames() {
         java.util.Enumeration<String> e = _table.keys();
