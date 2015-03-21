@@ -390,7 +390,7 @@ public class NXFrame extends WarrantRoute {
                 warrant.setThrottleFactor(_factor);
             }
         }
-        if (msg==null) {
+        if (msg==null && warrant!=null) {
             Calibrater calib = null;
             if (_calibrate) {
                 warrant.setViaOrder(getViaBlockOrder());
@@ -413,7 +413,7 @@ public class NXFrame extends WarrantRoute {
             }
         }
         if (msg==null) {
-            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
+//            if (log.isDebugEnabled()) log.debug("Warrant "+warrant.getDisplayName()+" running.");
             if (_haltStartBox.isSelected()) {
                 _haltStart = true;
                 class Halter implements Runnable {

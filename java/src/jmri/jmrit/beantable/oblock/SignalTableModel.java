@@ -412,9 +412,7 @@ public class SignalTableModel extends AbstractTableModel {
                     float f = Float.parseFloat(tempRow[TIME_OFFSET]);
                     time = (long)f*1000;
                 } catch (NumberFormatException nfe) {
-                    if (msg == null) {
-                        msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);
-                    }
+                    msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);
                 }
                 if (time<-20000 || time>20000) {
                     msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);                

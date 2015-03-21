@@ -243,7 +243,7 @@ public class BlockTableAction extends AbstractTableAction {
                     try {
                         len = jmri.util.IntlUtilities.floatValue((String) value);
                     } catch (java.text.ParseException ex2) {
-                        log.error("Error parsing length value of \"{}\"", (String) value);
+                        log.error("Error parsing length value of \"{}\"", value);
                     }
                     if (inchBox.isSelected()) {
                         b.setLength(len * 25.4f);

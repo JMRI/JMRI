@@ -733,25 +733,27 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             if (str==null || data==null) {
                 msg = Bundle.getMessage("NoData");
             }
-            if (col==0) {
-                data.setKey((String)value);            
-            } else {
-                try { 
-                    float f = Float.parseFloat((String)value);
-                    if (f < 0) {
+            if (data!=null) {
+                if (col==0) {
+                    data.setKey((String)value);            
+                } else {
+                    try { 
+                        float f = Float.parseFloat((String)value);
+                        if (f < 0) {
+                            msg = Bundle.getMessage("InvalidNumber", (String)value); 
+                        } else {
+                            data.setValue(f);                                   
+                        }
+                    } catch (NumberFormatException nfe) {
                         msg = Bundle.getMessage("InvalidNumber", (String)value); 
-                    } else {
-                        data.setValue(f);                                   
                     }
-                } catch (NumberFormatException nfe) {
-                    msg = Bundle.getMessage("InvalidNumber", (String)value); 
-                }
-             }
-            if (msg!=null) {
-                JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    
-            } else {
-                fireTableRowsUpdated(row, row);             
+                 }
+                if (msg!=null) {
+                    JOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    
+                } else {
+                    fireTableRowsUpdated(row, row);             
+                }                
             }
         }
     }
@@ -818,16 +820,18 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             if (str==null || data==null) {
                 msg = Bundle.getMessage("NoData");
             }
-            if (col==0) {
-                data.setKey((String)value);            
-            } else {
-                data.setValue((String)value);                                   
-            }
-            if (msg!=null) {
-                JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    
-            } else {
-                fireTableRowsUpdated(row, row);             
+            if (data!=null) {
+                if (col==0) {
+                    data.setKey((String)value);            
+                } else {
+                    data.setValue((String)value);                                   
+                }
+                if (msg!=null) {
+                    JOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    
+                } else {
+                    fireTableRowsUpdated(row, row);             
+                }                
             }
         }
     }
@@ -894,25 +898,27 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             if (str==null || data==null) {
                 msg = Bundle.getMessage("NoData");
             }
-            if (col==0) {
-                data.setKey((String)value);            
-            } else {
-                try { 
-                    Integer f = Integer.parseInt((String)value);
-                    if (f < 1) {
+            if (data!=null) {
+                if (col==0) {
+                    data.setKey((String)value);            
+                } else {
+                    try { 
+                        Integer f = Integer.parseInt((String)value);
+                        if (f < 1) {
+                            msg = Bundle.getMessage("InvalidNumber", (String)value); 
+                        } else {
+                            data.setValue(f);                                   
+                        }
+                    } catch (NumberFormatException nfe) {
                         msg = Bundle.getMessage("InvalidNumber", (String)value); 
-                    } else {
-                        data.setValue(f);                                   
                     }
-                } catch (NumberFormatException nfe) {
-                    msg = Bundle.getMessage("InvalidNumber", (String)value); 
-                }
-             }
-            if (msg!=null) {
-                JOptionPane.showMessageDialog(null, msg,
-                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    
-            } else {
-                fireTableRowsUpdated(row, row);             
+                 }
+                if (msg!=null) {
+                    JOptionPane.showMessageDialog(null, msg,
+                            Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);                    
+                } else {
+                    fireTableRowsUpdated(row, row);             
+                }                
             }
         }
     }
