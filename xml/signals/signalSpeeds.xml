@@ -46,23 +46,26 @@
   <!-- set the defaults for running Warrants.  However uses other Warrants are possible.  -->
   <!-- If so, make the necessary changes you desire.  However,                            -->
   <!-- PLEASE DO NOT COMMIT ANY CHANGES TO THIS FILE THAT ARE INCOMPATIBLE WITH WARRANTS! -->
+  <!-- Of course, nobody knows what the above line means, so perhaps the relevant         -->
+  <!-- developers will define it further here.                                            -->
   
   <!-- If you want to have your own version of this file not be overwritten with each new -->
   <!-- release of JMRI, put your custom version into your user preferences directory.     -->
+  <!-- Note that the Warrants preferences pane can also write a file into the user        -->
+  <!-- preferences directory.                                                             -->
   
   <!-- The "aspectSpeeds" table below maps the speed names used in signal aspects.xml  -->
   <!-- files to a number. The number may be translated to a throttle setting.  The     -->
-  <!-- meaning of the number may be given two different interpretations.               -->
-
-  <!-- Interpretation: A hint for how the code may use the number.       -->
-  <!-- percentNormal is the percentage of the recorded speed.  The speed -->
-  <!-- when running with no signals or aspect clear.                     -->                               
-  <!-- percentThrottle is the percentage of the full throttle speed.     -->
-  <!-- That is, number is an absolute throttle setting.                  -->
+  <!-- meaning of the number may be given two different interpretations:               -->
+  <!--   "percentNormal" is the percentage of the recorded speed, i.e. the speed       -->
+  <!--      when running with no signals or aspect clear.                              -->                               
+  <!--   "percentThrottle" is the percentage of the full throttle speed, i.e. the      -->
+  <!--      number is an absolute throttle setting.                                    -->
   <interpretation>percentNormal</interpretation>
   
-  <!-- Speed changes are ramped from the current speed to the next in increments. -->
-  <!-- The delay in milliseconds between speed increments sent to the throttle.   -->
+  <!-- Speed changes are ramped from the current speed to the next in increments.      -->
+  <!-- The msPerIncrement parameter is the delay in milliseconds between sending speed -->
+  <!-- increments sent to the throttle.   -->
   <msPerIncrement>750</msPerIncrement>
   
   <!-- stepsPerIncrement is the number of throttle speed increments to use per the -->
@@ -71,12 +74,14 @@
   <stepsPerIncrement>1</stepsPerIncrement>
   
   <!-- Map speed names to ratios used in throttle settings                            -->
-  <!-- speed names may be put into aspect.xml files to indicate speed for the aspect  -->
+  <!-- Speed names may be put into aspect.xml files to indicate speed for the aspect. -->
   <!-- Each speed name is a "speed notch" and additional notch names can be added -   -->
   <!-- however the names must match those in the "appearanceSpeeds" table below for   -->
   <!-- signal Heads and those used in "aspects.xml" file for Signal Masts.            -->
   <!-- These speeds are enforced at the entrance to a block.  Any speed name used in  -->
   <!-- any signal aspect.xml file should appear in the aspect speeds table below.     -->
+  <!-- The order of these is enforced by the schema.  The values must be decreasing   -->
+  <!-- from one element to the next.                                                  -->
   <aspectSpeeds>
     <Cab>120</Cab>
     <Maximum>100</Maximum>
@@ -90,10 +95,11 @@
     <RestrictedSlow>2</RestrictedSlow>
     <Stop>0</Stop>
   </aspectSpeeds>
-  <!-- speeds associated with SignalHead appearances for heads NOT used in SignalMasts  -->
+  
+  <!-- Speeds associated with SignalHead appearances for heads NOT used in SignalMasts. -->
   <!-- Appearance names are those listed in jmri.implementation.DefaultSignalHead       -->
-  <!-- speed names must agree with the names in the above "speeds" elements             -->
-  <!-- These speeds are enforced at the entrance to a block                             -->
+  <!-- Speed names must agree with the names in the above "aspectSpeeds" element.       -->
+  <!-- Warrants enforce these speeds at the entrance to a block.                         -->
   <appearanceSpeeds>
     <SignalHeadStateRed>Stop</SignalHeadStateRed>
     <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
