@@ -38,40 +38,44 @@ public class SignalSpeedMapTest extends TestCase {
         "Stop"
     };
 
+    SignalSpeedMap map = SignalSpeedMap.getMap();
+    
+    public void testAllSpeedsPresent() {
+        for (int i = 0; i < speeds.length; i++) {
+            Assert.assertTrue(map.getSpeed(speeds[i])+" must be ge 0 to be present",0<=map.getSpeed(speeds[i]));
+        }
+    }
+
     public void testMapMonoticity() {
-        SignalSpeedMap m = SignalSpeedMap.getMap();
         
         // check for monotonic values
         for (int i = 0; i < speeds.length-1; i++) {
-            Assert.assertTrue(speeds[i+1]+" ("+m.getSpeed(speeds[i+1])+") must be less than "+speeds[i]+" ("+m.getSpeed(speeds[i])+")", 
-                m.getSpeed(speeds[i+1])<m.getSpeed(speeds[i]));
+            Assert.assertTrue(speeds[i+1]+" ("+map.getSpeed(speeds[i+1])+") must be less than "+speeds[i]+" ("+map.getSpeed(speeds[i])+")", 
+                map.getSpeed(speeds[i+1])<map.getSpeed(speeds[i]));
         }
          
     }
 
-    String getFilename() {
-        return "xml/signals/signalSpeeds.xml";
-    }
-    
-    Element getSignalSpeedsXml() {
-        return null;
-    }
-    
-    public void testAllSpeedsPresent() {
-    }
-    
     public void testNoExtraSpeedsPresent() {
+        java.util.Enumeration<String> e = map.getSpeedIterator();
+        String name;
+        check: while (e.hasMoreElements()) {
+            name = e.nextElement();
+            for (String test : speeds) {
+                if (test.equals(name)) continue check;
+            }
+            Assert.fail("Speed name \""+name+"\" not recognized");
+        }        
     }
-
+    
     public void testAppearanceSpeedsOK() {
-        SignalSpeedMap m = SignalSpeedMap.getMap();
         // check that every speed in <appearanceSpeeds> is defined
-        java.util.Enumeration<String> e = m.getAppearanceIterator();
+        java.util.Enumeration<String> e = map.getAppearanceIterator();
         String name;
         while (e.hasMoreElements()) {
             name = e.nextElement();
-            Assert.assertNotNull("appearanceSpeed \""+name+"\" is defined", m.getAppearanceSpeed(name));
-            Assert.assertTrue("appearanceSpeed \""+name+"\" has value", m.getSpeed(m.getAppearanceSpeed(name)) >= 0.);
+            Assert.assertNotNull("appearanceSpeed \""+name+"\" is defined", map.getAppearanceSpeed(name));
+            Assert.assertTrue("appearanceSpeed \""+name+"\" has value", map.getSpeed(map.getAppearanceSpeed(name)) >= 0.);
         }        
     }
 
