@@ -43,7 +43,6 @@ public class TamsSensor extends AbstractSensor {
     static String[] modeNames = null;
     static int[] modeValues = null;
 
-    private final static Logger log = LoggerFactory.getLogger(TamsSensor.class);
 }
 
 /* @(#)TamsSensor.java */
