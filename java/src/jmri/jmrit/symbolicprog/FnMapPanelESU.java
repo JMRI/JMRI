@@ -565,12 +565,16 @@ public class FnMapPanelESU extends JPanel {
         switch (state) {
             case AbstractValue.UNKNOWN:
                 value++;
+                    //$FALL-THROUGH$
             case AbstractValue.DIFF:
                 value++;
+                    //$FALL-THROUGH$
             case AbstractValue.EDITED:
                 value++;
+                    //$FALL-THROUGH$
             case AbstractValue.FROMFILE:
                 value++;
+                    //$FALL-THROUGH$
             default:
                 return value;
         }
