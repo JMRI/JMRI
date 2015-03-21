@@ -32,7 +32,7 @@ public class DccSpeedProfile {
     protected float _max;
     // index of last valid data point, -1 means no data
     protected int _lastPoint;
-    protected List<String> dccProfileData = new ArrayList();
+    protected List<String> dccProfileData = new ArrayList<String>();
 
     static ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.bachrus.BachrusBundle");
 
