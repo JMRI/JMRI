@@ -1400,8 +1400,8 @@ var requestPanelXML = function(panelName) {
         success: function(data, textStatus, jqXHR) {
             processPanelXML(data, textStatus, jqXHR);
         },
-        error: function() {
-            alert("Timeout waiting for panel xml from server.  Please press OK to retry.");
+        error: function( jqXHR, textStatus, errorThrown) {
+            alert("Error retrieving panel xml from server.  Please press OK to retry.\n\nDetails: " + textStatus + " - " + errorThrown);
             window.location = window.location.pathname;
         },
         async: true,
@@ -1517,7 +1517,7 @@ function updateWidgets(name, state, data) {
 function updateOccupancy(occupancyName, state) {
     if (occupancyNames[occupancyName]) {
         if (window.console)
-            console.log("setting occupancies for sensor" + occupancyName + " to " + state);
+            console.log("setting occupancies for sensor " + occupancyName + " to " + state);
         $.each(occupancyNames[occupancyName], function(index, widgetId) {
             $widget = $gWidgets[widgetId];
             if ($widget.blockname) {
