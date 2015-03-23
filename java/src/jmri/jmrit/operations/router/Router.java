@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * Router for car movement. This code attempts to find a way (a route) to move a
  * car to its final destination through the use of two or more trains. First the
  * code tries to move car using a single train. If that fails, attempts are made
- * to using two trains via a classification/interchange (C/I) tracks, then yard
+ * using two trains via a classification/interchange (C/I) tracks, then yard
  * tracks if enabled. Next attempts are made using three or more trains using
  * any combination of C/I and yard tracks. If that fails and routing via staging
  * is enabled, the code tries two trains using staging tracks, then multiple
@@ -404,6 +404,8 @@ public class Router extends TrainCommon {
      */
     private boolean setCarDestinationStaging(Car car) {
         if (Setup.isCarRoutingViaStagingEnabled()) {
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterAttemptStaging"), new Object[]{
+                    car.toString()}));
             return setCarDestinationTwoTrains(car, Track.STAGING);
         }
         return false;

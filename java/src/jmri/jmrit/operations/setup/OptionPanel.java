@@ -41,6 +41,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     // check boxes
     JCheckBox routerCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRouting"));
     JCheckBox routerYardCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingYard"));
+    JCheckBox routerStagingCheckBox = new JCheckBox(Bundle.getMessage("EnableCarRoutingStaging"));
     JCheckBox routerAllTrainsBox = new JCheckBox(Bundle.getMessage("AllTrains"));
     JCheckBox routerRestrictBox = new JCheckBox(Bundle.getMessage("EnableTrackDestinationRestrications"));
 
@@ -87,6 +88,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // router
         routerCheckBox.setSelected(Setup.isCarRoutingEnabled());
         routerYardCheckBox.setSelected(Setup.isCarRoutingViaYardsEnabled());
+        routerStagingCheckBox.setSelected(Setup.isCarRoutingViaStagingEnabled());
         routerAllTrainsBox.setSelected(!Setup.isOnlyActiveTrainsEnabled());
         routerRestrictBox.setSelected(Setup.isCheckCarDestinationEnabled());
         // logging options
@@ -170,8 +172,9 @@ public class OptionPanel extends OperationsPreferencesPanel {
         pRouter.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutRouterOptions")));
         addItemLeft(pRouter, routerCheckBox, 1, 0);
         addItemLeft(pRouter, routerYardCheckBox, 1, 1);
-        addItemLeft(pRouter, routerAllTrainsBox, 1, 2);
-        addItemLeft(pRouter, routerRestrictBox, 1, 3);
+        addItemLeft(pRouter, routerStagingCheckBox, 1, 2);
+        addItemLeft(pRouter, routerAllTrainsBox, 1, 3);
+        addItemLeft(pRouter, routerRestrictBox, 1, 4);
 
         // Logger panel
         JPanel pLogger = new JPanel();
@@ -267,6 +270,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
 
     private void setRouterCheckBoxesEnabled() {
         routerYardCheckBox.setEnabled(routerCheckBox.isSelected());
+        routerStagingCheckBox.setEnabled(routerCheckBox.isSelected());
         routerAllTrainsBox.setEnabled(routerCheckBox.isSelected());
         routerRestrictBox.setEnabled(routerCheckBox.isSelected());
     }
@@ -301,6 +305,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         // Car routing enabled?
         Setup.setCarRoutingEnabled(routerCheckBox.isSelected());
         Setup.setCarRoutingViaYardsEnabled(routerYardCheckBox.isSelected());
+        Setup.setCarRoutingViaStagingEnabled(routerStagingCheckBox.isSelected());
         Setup.setOnlyActiveTrainsEnabled(!routerAllTrainsBox.isSelected());
         Setup.setCheckCarDestinationEnabled(routerRestrictBox.isSelected());
         // Options
@@ -338,6 +343,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
                 // Car routing enabled?
                 || Setup.isCarRoutingEnabled() != routerCheckBox.isSelected()
                 || Setup.isCarRoutingViaYardsEnabled() != routerYardCheckBox.isSelected()
+                || Setup.isCarRoutingViaStagingEnabled() != routerStagingCheckBox.isSelected()
                 || Setup.isOnlyActiveTrainsEnabled() != !routerAllTrainsBox.isSelected()
                 || Setup.isCheckCarDestinationEnabled() != routerRestrictBox.isSelected()
                 // Options
