@@ -133,25 +133,16 @@ public class JsonServlet extends WebSocketServlet {
     private static final long longPollTimeout = 30000; // 5 minutes
     private ObjectMapper mapper;
     private static final Logger log = LoggerFactory.getLogger(JsonServlet.class);
-    private final PropertyChangeListener instanceManagerListener = (PropertyChangeEvent evt) -> {
-        if (evt.getPropertyName().equals(InstanceManager.CONSIST_MANAGER) && evt.getNewValue() != null) {
-            InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
-        }
-    };
 
     @Override
     public void init() throws ServletException {
         super.init();
-        if (InstanceManager.getDefault(jmri.ConsistManager.class) != null) {
-            InstanceManager.getDefault(jmri.ConsistManager.class).requestUpdateFromLayout();
-        }
-        InstanceManager.addPropertyChangeListener(this.instanceManagerListener);
         this.mapper = new ObjectMapper();
     }
 
     @Override
     public void destroy() {
-        InstanceManager.removePropertyChangeListener(this.instanceManagerListener);
+        super.destroy();
     }
 
     @Override
