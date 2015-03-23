@@ -4,6 +4,11 @@
  */
 package jmri.web.servlet.panel;
 
+import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
+import static jmri.web.servlet.ServletUtil.UTF8;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import java.awt.image.BufferedImage;
@@ -24,9 +29,6 @@ import jmri.util.JmriJFrame;
 import jmri.util.StringUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.IMAGE_PNG;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -87,7 +89,7 @@ abstract class AbstractPanelServlet extends HttpServlet {
                     response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, panel.substring(5).trim());
                 } else {
                     response.setStatus(HttpServletResponse.SC_OK);
-                    response.setContentLength(panel.length());
+                    response.setContentLength(panel.getBytes(UTF8).length);
                     response.getOutputStream().print(panel);
                 }
             }
