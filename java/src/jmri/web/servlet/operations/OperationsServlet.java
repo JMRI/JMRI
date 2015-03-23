@@ -1,5 +1,14 @@
 package jmri.web.servlet.operations;
 
+import static jmri.jmris.json.JSON.CODE;
+import static jmri.jmris.json.JSON.DATA;
+import static jmri.jmris.json.JSON.LOCATION;
+import static jmri.jmris.json.JSON.NULL;
+import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8;
+import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
+import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
+
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -9,10 +18,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import jmri.jmris.json.JSON;
-import static jmri.jmris.json.JSON.CODE;
-import static jmri.jmris.json.JSON.DATA;
-import static jmri.jmris.json.JSON.LOCATION;
-import static jmri.jmris.json.JSON.NULL;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonUtil;
 import jmri.jmrit.operations.OperationsManager;
@@ -24,9 +29,6 @@ import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.web.server.WebServer;
 import jmri.web.servlet.ServletUtil;
-import static jmri.web.servlet.ServletUtil.APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_APPLICATION_JSON;
-import static jmri.web.servlet.ServletUtil.UTF8_TEXT_HTML;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -166,7 +168,7 @@ public class OperationsServlet extends HttpServlet {
             }
             String content = this.mapper.writeValueAsString(manifest);
             response.setContentType(ServletUtil.UTF8_APPLICATION_JSON);
-            response.setContentLength(content.length());
+            response.setContentLength(content.getBytes(UTF8).length);
             response.getWriter().print(content);
         } else {
             response.setContentType(UTF8_TEXT_HTML);
