@@ -45,9 +45,12 @@
   <!-- This file sets the values returned by the SignalSpeedMap class.  It is designed to -->
   <!-- set the defaults for running Warrants.  However uses other Warrants are possible.  -->
   <!-- If so, make the necessary changes you desire.  However,                            -->
-  <!-- PLEASE DO NOT COMMIT ANY CHANGES TO THIS FILE THAT ARE INCOMPATIBLE WITH WARRANTS! -->
+  <!-- PLEASE DO NOT COMMIT ANY CHANGES TO THIS FILE THAT ARE INCOMPATIBLE WITH WARRANTS. -->
   <!-- Of course, nobody knows what the above line means, so perhaps the relevant         -->
   <!-- developers will define it further here.                                            -->
+  <!-- Please read the comment above the 'interpretation' element which explains that a   -->
+  <!-- warrant can use the values of 'aspectSpeeds' element in different ways.  More      -->
+  <!-- details have been added.	
   
   <!-- If you want to have your own version of this file not be overwritten with each new -->
   <!-- release of JMRI, put your custom version into your user preferences directory.     -->
@@ -58,9 +61,15 @@
   <!-- files to a number. The number may be translated to a throttle setting.  The     -->
   <!-- meaning of the number may be given two different interpretations:               -->
   <!--   "percentNormal" is the percentage of the recorded speed, i.e. the speed       -->
-  <!--      when running with no signals or aspect clear.                              -->                               
+  <!--      when running with no signals or aspect clear.  With this choice a speed    -->
+  <!--      change will always be made when a restrictive aspect is signaled.  Use     -->
+  <!--      care that the values are not too low, as that may stop the train when only -->
+  <!--      a reduction of speed was desired given that one may be taking a percentage -->
+  <!--      of a slow recorded speed.                                                  -->
   <!--   "percentThrottle" is the percentage of the full throttle speed, i.e. the      -->
-  <!--      number is an absolute throttle setting.                                    -->
+  <!--      number is an absolute throttle setting.  This choice is best when the      -->
+  <!--      motive roster is speed matched and one chooses values that has the trains  -->
+  <!--      moving at scale speeds close to what the aspect requires.                  -->
   <interpretation>percentNormal</interpretation>
   
   <!-- Speed changes are ramped from the current speed to the next in increments.      -->
@@ -84,15 +93,15 @@
   <!-- from one element to the next.                                                  -->
   <aspectSpeeds>
     <Cab>120</Cab>
-    <Maximum>100</Maximum>
-    <Normal>80</Normal>
-    <Sixty>60</Sixty>
-    <Fifty>50</Fifty>
-    <Limited>35</Limited>
-    <Medium>20</Medium>
-    <Slow>10</Slow>
-    <Restricted>3</Restricted>
-    <RestrictedSlow>2</RestrictedSlow>
+    <Maximum>119</Maximum>
+    <Normal>100</Normal>
+    <Sixty>90</Sixty>
+    <Fifty>80</Fifty>
+    <Limited>65</Limited>
+    <Medium>50</Medium>
+    <Slow>30</Slow>
+    <Restricted>15</Restricted>
+    <RestrictedSlow>10</RestrictedSlow>
     <Stop>0</Stop>
   </aspectSpeeds>
   
@@ -104,7 +113,7 @@
     <SignalHeadStateRed>Stop</SignalHeadStateRed>
     <SignalHeadStateFlashingRed>Restricted</SignalHeadStateFlashingRed>
     <SignalHeadStateGreen>Normal</SignalHeadStateGreen>
-    <SignalHeadStateFlashingGreen>Limited</SignalHeadStateFlashingGreen>
+    <SignalHeadStateFlashingGreen>Normal</SignalHeadStateFlashingGreen>
     <SignalHeadStateYellow>Medium</SignalHeadStateYellow>
     <SignalHeadStateFlashingYellow>Limited</SignalHeadStateFlashingYellow>
     <SignalHeadStateLunar>Restricted</SignalHeadStateLunar>
