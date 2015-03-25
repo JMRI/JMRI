@@ -92,7 +92,7 @@ public class XNetThrottleManager extends AbstractThrottleManager implements Thro
     /*
      * Local method for deciding short/long address
      */
-    static boolean isLongAddress(int num) {
+    static protected boolean isLongAddress(int num) {
         return (num >= 100);
     }
 

@@ -36,6 +36,8 @@ public class z21Test extends TestCase {
         suite.addTest(new TestSuite(z21SystemConnectionMemoTest.class));
         suite.addTest(new TestSuite(z21XPressNetTunnelTest.class));
         suite.addTest(new TestSuite(z21XNetProgrammerTest.class));
+        suite.addTest(new TestSuite(z21XNetThrottleManagerTest.class));
+        suite.addTest(new TestSuite(z21XNetThrottleTest.class));
         return suite;
     }
 

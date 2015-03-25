@@ -26,6 +26,7 @@ public class z21XNetStreamPortController extends jmri.jmrix.lenz.XNetStreamPortC
         packets.connectPort(this);
 
         this.getSystemConnectionMemo().setXNetTrafficController(packets);
+        this.getSystemConnectionMemo().setThrottleManager(new z21XNetThrottleManager(this.getSystemConnectionMemo()));
 
         new z21XNetInitializationManager(this.getSystemConnectionMemo());
 
