@@ -1015,6 +1015,7 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                     deleteButton8);
             // 9th word of macro
             memPtr += (8 * macroSize);
+            readPtr = 0;
             readSerialMemory4(memPtr);
             if (!waitNce()) {
                 return -1;
