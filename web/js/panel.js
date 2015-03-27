@@ -1496,8 +1496,9 @@ var $drawAllIconWidgets = function() {
 
 function updateWidgets(name, state, data) {
     //if systemName not in systemNames list, replace userName with systemName
-	if (!systemNames[name]) {
-		console.log("replacing userName " + data.userName + " with systemName " + name);    	
+	if (!systemNames[name] && name != data.userName) {
+        if (window.console)
+		  console.log("replacing userName " + data.userName + " with systemName " + name);    	
 		if (systemNames[data.userName]) {  										  //if found by userName
 			systemNames[name] = systemNames[data.userName];  //copy entry over
 			delete systemNames[data.userName];  							 //delete old one
