@@ -3,7 +3,7 @@
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <!--Written by JMRI version 20150320-0435-jake on Thu Mar 19 21:35:12 PDT 2015 $Id$-->
   <decoderIndex version="574">
-    <mfgList nmraListDate="2014-09-22" updated="2014-10-11" lastadd="107,124">
+    <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
       <manufacturer mfg="AMW" mfgID="19" />
@@ -47,6 +47,7 @@
       <manufacturer mfg="Electroniscript" mfgID="94" />
       <manufacturer mfg="Elproma Electronics Poland" mfgID="225" />
       <manufacturer mfg="Fleischmann" mfgID="155" />
+      <manufacturer mfg="Frateschi Model Trains" mfgID="128" />
       <manufacturer mfg="GFB Designs" mfgID="46" />
       <manufacturer mfg="Gaugemaster" mfgID="65" />
       <manufacturer mfg="GooVerModels" mfgID="81" />
@@ -75,6 +76,7 @@
       <manufacturer mfg="LS Models Sprl" mfgID="77" />
       <manufacturer mfg="LSdigital" mfgID="112" />
       <manufacturer mfg="Lahti Associates" mfgID="14" />
+      <manufacturer mfg="LaisDCC" mfgID="134" />
       <manufacturer mfg="Lenz" mfgID="99" />
       <manufacturer mfg="MAWE Elektronik" mfgID="68" />
       <manufacturer mfg="MBTronik - PiN GITmBH" mfgID="26" />
@@ -87,6 +89,7 @@
       <manufacturer mfg="Mistral Train Models" mfgID="29" />
       <manufacturer mfg="MoBaTrain.de" mfgID="24" />
       <manufacturer mfg="Modelleisenbahn GmbH" mfgID="161" />
+      <manufacturer mfg="Möllehem Gårdsproduktion" mfgID="126" />
       <manufacturer mfg="MyLocoSound" mfgID="116" />
       <manufacturer mfg="N&amp;Q Electronics" mfgID="50" />
       <manufacturer mfg="NAC Services, Inc" mfgID="37" />
