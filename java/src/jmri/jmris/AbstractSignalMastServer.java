@@ -59,7 +59,7 @@ abstract public class AbstractSignalMastServer {
             if (signalMast == null) {
                 log.error("SignalMast {} is not available.", signalMastName);
             } else {
-                if (!signalMast.getAspect().equals(signalMastState)) {
+                if (signalMast.getAspect() == null || !signalMast.getAspect().equals(signalMastState)) {
                     signalMast.setAspect(signalMastState);
                 } else {
                     try {
