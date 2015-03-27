@@ -2155,7 +2155,7 @@ public class Track {
     }
 
     public String getDestinationOption() {
-        if (getTrackType().equals(INTERCHANGE)) {
+        if (getTrackType().equals(INTERCHANGE) || getTrackType().equals(STAGING)) {
             return _destinationOption;
         }
         return ALL_DESTINATIONS;

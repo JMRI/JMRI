@@ -42,37 +42,9 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
         addTrackButton.setText(Bundle.getMessage("AddInterchange"));
         saveTrackButton.setText(Bundle.getMessage("SaveInterchange"));
 
-        updateDestinationOption();
-
         // finish
         pack();
         setVisible(true);
-    }
-
-    private void updateDestinationOption() {
-        if (_track != null) {
-            if (_track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS)) {
-                pDestinationOption.setVisible(true);
-                destinationOption.setText(Bundle.getMessage("AcceptOnly") + " "
-                        + _track.getDestinationListSize() + " " + Bundle.getMessage("Destinations"));
-            } else if (_track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
-                pDestinationOption.setVisible(true);
-                destinationOption.setText(Bundle.getMessage("Exclude")
-                        + " "
-                        + (LocationManager.instance().getNumberOfLocations() - _track
-                        .getDestinationListSize()) + " " + Bundle.getMessage("Destinations"));
-            } else {
-                destinationOption.setText(Bundle.getMessage("AcceptAll"));
-            }
-        }
-    }
-
-    public void propertyChange(java.beans.PropertyChangeEvent e) {
-        super.propertyChange(e);
-        if (e.getPropertyName().equals(Track.DESTINATIONS_CHANGED_PROPERTY)
-                || e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY)) {
-            updateDestinationOption();
-        }
     }
 
     static Logger log = LoggerFactory.getLogger(InterchangeEditFrame.class.getName());

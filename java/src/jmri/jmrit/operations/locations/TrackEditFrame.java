@@ -347,7 +347,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         updateDropOptions();
         updatePickupOptions();
         updateRoadOption();
-        updateLoadOption();
+        updateLoadOption();       
+        updateDestinationOption();
 
         setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
     }
@@ -1139,6 +1140,25 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             orderLIFO.setSelected(_track.getServiceOrder().equals(Track.LIFO));
         }
     }
+    
+    protected void updateDestinationOption() {
+        if (_track != null) {
+            if (_track.getDestinationOption().equals(Track.INCLUDE_DESTINATIONS)) {
+                pDestinationOption.setVisible(true);
+                destinationOption.setText(Bundle.getMessage("AcceptOnly") + " "
+                        + _track.getDestinationListSize() + " " + Bundle.getMessage("Destinations"));
+            } else if (_track.getDestinationOption().equals(Track.EXCLUDE_DESTINATIONS)) {
+                pDestinationOption.setVisible(true);
+                destinationOption.setText(Bundle.getMessage("Exclude")
+                        + " "
+                        + (LocationManager.instance().getNumberOfLocations() - _track
+                        .getDestinationListSize()) + " " + Bundle.getMessage("Destinations"));
+            } else {
+                destinationOption.setText(Bundle.getMessage("AcceptAll"));
+            }
+        }
+    }
+
 
     public void dispose() {
         if (_track != null) {
@@ -1196,6 +1216,10 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
         if (e.getPropertyName().equals(Track.SERVICE_ORDER_CHANGED_PROPERTY)) {
             updateCarOrder();
+        }
+        if (e.getPropertyName().equals(Track.DESTINATIONS_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Track.DESTINATION_OPTIONS_CHANGED_PROPERTY)) {
+            updateDestinationOption();
         }
     }
 
