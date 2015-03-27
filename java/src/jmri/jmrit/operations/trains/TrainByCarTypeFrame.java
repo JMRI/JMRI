@@ -151,7 +151,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
         setTitle(Bundle.getMessage("MenuItemShowCarTypes") + " " + _train.getName());
         _train.addPropertyChangeListener(this);
         setTitle(Bundle.getMessage("MenuItemShowCarTypes") + " " + _train.getName());
-        log.debug("update locations served by train {}", _train.getName());
+        log.debug("update locations served by train ({})", _train.getName());
 
         int y = 0;
         String carType = (String) typeComboBox.getSelectedItem();
@@ -417,14 +417,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
-        if (e.getSource().equals(_car) || e.getSource().equals(_train)) {
-            updateRoute();
-        }
-        if (e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class)
-                || e.getSource().getClass().equals(Schedule.class)) {
-            updateRoute();
-        }
-        if (e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
+        if (e.getSource().equals(_car) || e.getSource().equals(_train) 
+                || e.getSource().getClass().equals(Track.class) || e.getSource().getClass().equals(Location.class)
+                || e.getSource().getClass().equals(Schedule.class) 
+                || e.getPropertyName().equals(LocationManager.LISTLENGTH_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Route.LISTCHANGE_CHANGED_PROPERTY)) {
             updateRoute();
         }
