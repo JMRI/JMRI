@@ -9,6 +9,7 @@ import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.HashMap;
@@ -130,7 +131,7 @@ public class TabbedPreferences extends AppConfigBase {
         }
         this.setInitalisationState(INITIALISING);
 
-        list = new JList<String>();
+        list = new JList<>();
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
 
@@ -144,7 +145,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         save = new JButton(
                 rb.getString("ButtonSave"),
-                new ImageIcon(FileUtil.getURL(FileUtil.findExternalFilename("program:resources/icons/misc/gui3/SaveIcon.png"))));
+                new ImageIcon(FileUtil.findURL("program:resources/icons/misc/gui3/SaveIcon.png", FileUtil.Location.INSTALLED)));
         save.addActionListener((ActionEvent e) -> {
             savePressed(invokeSaveOptions());
         });
@@ -171,7 +172,7 @@ public class TabbedPreferences extends AppConfigBase {
                     log.error("Unable to add preferences class (" + className + ")", e);
                 }
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Unable to parse PreferencePanels property", e);
         }
         for (PreferencesCatItems preferences : preferencesArray) {
@@ -316,7 +317,7 @@ public class TabbedPreferences extends AppConfigBase {
     public void gotoPreferenceItem(String selection, String subCategory) {
         selection(selection);
         list.setSelectedIndex(getCategoryIndexFromString(selection));
-        if (subCategory == null || subCategory.equals("")) {
+        if (subCategory == null || subCategory.isEmpty()) {
             return;
         }
         preferencesArray.get(getCategoryIndexFromString(selection))
@@ -352,7 +353,7 @@ public class TabbedPreferences extends AppConfigBase {
     }
 
     public void disablePreferenceItem(String selection, String subCategory) {
-        if (subCategory == null || subCategory.equals("")) {
+        if (subCategory == null || subCategory.isEmpty()) {
             // need to do something here like just disable the item
 
         } else {
@@ -374,7 +375,7 @@ public class TabbedPreferences extends AppConfigBase {
         if (list.getListSelectionListeners().length > 0) {
             list.removeListSelectionListener(list.getListSelectionListeners()[0]);
         }
-        list = new JList<String>(new Vector<String>(getChoices()));
+        list = new JList<>(new Vector<>(getChoices()));
         listScroller = new JScrollPane(list);
         listScroller.setPreferredSize(new Dimension(100, 100));
 
