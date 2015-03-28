@@ -660,6 +660,9 @@ public class JsonUtil {
         } catch (JmriException e) {
             log.error("Unable to get Power state.", e);
             throw new JsonException(500, Bundle.getMessage(locale, "ErrorPower"));
+        } catch (NullPointerException e) {
+            // No PowerManager is defined; just report it as UNKNOWN
+            data.put(STATE, UNKNOWN);
         }
         return root;
     }

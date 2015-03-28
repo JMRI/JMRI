@@ -243,7 +243,7 @@ public class JsonServlet extends WebSocketServlet {
                                         context.start(new PowerPollingHandler(request.getLocale(), parameters.path(STATE).asInt(), context));
                                         return;
                                     }
-                                } catch (JmriException ex) {
+                                } catch (JmriException | NullPointerException ex) {
                                     // do nothing -- the following JsonUtil.getPower(request.getLocale()) statement should report the error to the client
                                 }
                             }
