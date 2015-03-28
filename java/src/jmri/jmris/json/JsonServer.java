@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.JmriConnection;
 import jmri.jmris.JmriServer;
 import static jmri.jmris.json.JSON.GOODBYE;
 import static jmri.jmris.json.JSON.JSON;
@@ -79,7 +78,7 @@ public class JsonServer extends JmriServer {
     @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         ObjectReader reader = this.mapper.reader();
-        JsonClientHandler handler = new JsonClientHandler(new JmriConnection(outStream), this.mapper);
+        JsonClientHandler handler = new JsonClientHandler(new JsonConnection(outStream), this.mapper);
 
         // Start by sending a welcome message
         handler.sendHello(this.timeout);

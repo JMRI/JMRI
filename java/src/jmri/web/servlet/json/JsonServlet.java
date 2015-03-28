@@ -29,7 +29,6 @@ import jmri.SignalHead;
 import jmri.SignalMast;
 import jmri.Turnout;
 import jmri.implementation.QuietShutDownTask;
-import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.ASPECT;
 import static jmri.jmris.json.JSON.CAR;
 import static jmri.jmris.json.JSON.CARS;
@@ -81,6 +80,7 @@ import static jmri.jmris.json.JSON.UNKNOWN;
 import static jmri.jmris.json.JSON.VALUE;
 import static jmri.jmris.json.JSON.XML;
 import jmri.jmris.json.JsonClientHandler;
+import jmri.jmris.json.JsonConnection;
 import jmri.jmris.json.JsonException;
 import jmri.jmris.json.JsonServerManager;
 import jmri.jmris.json.JsonUtil;
@@ -687,22 +687,22 @@ public class JsonServlet extends WebSocketServlet {
     @WebSocket
     public static class JsonWebSocket {
 
-        protected JmriConnection jmriConnection;
+        protected JsonConnection connection;
         protected ObjectMapper mapper;
         protected JsonClientHandler handler;
         protected QuietShutDownTask shutDownTask;
 
         public void sendMessage(String message) throws IOException {
-            this.jmriConnection.sendMessage(message);
+            this.connection.sendMessage(message);
         }
 
         @OnWebSocketConnect
         public void onOpen(Session sn) {
             log.debug("Opening connection");
-            this.jmriConnection = new JmriConnection(sn);
+            this.connection = new JsonConnection(sn);
             sn.setIdleTimeout((long) (JsonServerManager.getJsonServerPreferences().getHeartbeatInterval() * 1.1));
             this.mapper = new ObjectMapper();
-            this.handler = new JsonClientHandler(this.jmriConnection, this.mapper);
+            this.handler = new JsonClientHandler(this.connection, this.mapper);
             this.shutDownTask = new QuietShutDownTask("Close open web socket") { // NOI18N
                 @Override
                 public boolean execute() {
@@ -713,7 +713,7 @@ public class JsonServlet extends WebSocketServlet {
                     } catch (IOException e) {
                         log.warn("Unable to send goodbye while closing socket.\nError was {}", e.getMessage());
                     }
-                    JsonWebSocket.this.jmriConnection.getSession().close();
+                    JsonWebSocket.this.connection.getSession().close();
                     return true;
                 }
             };
@@ -749,7 +749,7 @@ public class JsonServlet extends WebSocketServlet {
                 this.handler.onMessage(string);
             } catch (IOException e) {
                 log.error("Error on WebSocket message:\n{}", e.getMessage());
-                this.jmriConnection.getSession().close();
+                this.connection.getSession().close();
                 InstanceManager.shutDownManagerInstance().deregister(this.shutDownTask);
             }
         }

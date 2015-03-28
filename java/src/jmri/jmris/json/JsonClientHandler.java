@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import java.io.IOException;
 import java.util.Locale;
 import jmri.JmriException;
-import jmri.jmris.JmriConnection;
 import static jmri.jmris.json.JSON.CARS;
 import static jmri.jmris.json.JSON.CONSIST;
 import static jmri.jmris.json.JSON.CONSISTS;
@@ -75,11 +74,11 @@ public class JsonClientHandler {
     private final JsonThrottleServer throttleServer;
     private final JsonTimeServer timeServer;
     private final JsonTurnoutServer turnoutServer;
-    private final JmriConnection connection;
+    private final JsonConnection connection;
     private final ObjectMapper mapper;
     private static final Logger log = LoggerFactory.getLogger(JsonClientHandler.class);
 
-    public JsonClientHandler(JmriConnection connection, ObjectMapper mapper) {
+    public JsonClientHandler(JsonConnection connection, ObjectMapper mapper) {
         this.connection = connection;
         this.mapper = mapper;
         this.consistServer = new JsonConsistServer(this.connection);
