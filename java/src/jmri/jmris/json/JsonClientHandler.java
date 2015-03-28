@@ -189,89 +189,128 @@ public class JsonClientHandler {
             } else if (type.equals(LIST)) {
                 JsonNode reply;
                 String list = root.path(LIST).asText();
-                if (list.equals(CARS)) {
-                    reply = JsonUtil.getCars(this.connection.getLocale());
-                } else if (list.equals(CONSISTS)) {
-                    reply = JsonUtil.getConsists(this.connection.getLocale());
-                } else if (list.equals(ENGINES)) {
-                    reply = JsonUtil.getEngines(this.connection.getLocale());
-                } else if (list.equals(LIGHTS)) {
-                    reply = JsonUtil.getLights(this.connection.getLocale());
-                } else if (list.equals(LOCATIONS)) {
-                    reply = JsonUtil.getLocations(this.connection.getLocale());
-                } else if (list.equals(MEMORIES)) {
-                    reply = JsonUtil.getMemories(this.connection.getLocale());
-                } else if (list.equals(METADATA)) {
-                    reply = JsonUtil.getMetadata(this.connection.getLocale());
-                } else if (list.equals(PANELS)) {
-                    reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
-                } else if (list.equals(REPORTERS)) {
-                    reply = JsonUtil.getReporters(this.connection.getLocale());
-                } else if (list.equals(ROSTER)) {
-                    reply = JsonUtil.getRoster(this.connection.getLocale(), data);
-                    this.rosterServer.listen();
-                } else if (list.equals(ROSTER_GROUPS)) {
-                    reply = JsonUtil.getRosterGroups(this.connection.getLocale());
-                    this.rosterServer.listen();
-                } else if (list.equals(ROUTES)) {
-                    reply = JsonUtil.getRoutes(this.connection.getLocale());
-                } else if (list.equals(SENSORS)) {
-                    reply = JsonUtil.getSensors(this.connection.getLocale());
-                } else if (list.equals(SIGNAL_HEADS)) {
-                    reply = JsonUtil.getSignalHeads(this.connection.getLocale());
-                } else if (list.equals(SIGNAL_MASTS)) {
-                    reply = JsonUtil.getSignalMasts(this.connection.getLocale());
-                } else if (list.equals(TRAINS)) {
-                    reply = JsonUtil.getTrains(this.connection.getLocale());
-                } else if (list.equals(TURNOUTS)) {
-                    reply = JsonUtil.getTurnouts(this.connection.getLocale());
-                } else if (list.equals(NETWORK_SERVICES)) {
-                    reply = JsonUtil.getNetworkServices(this.connection.getLocale());
-                } else if (list.equals(SYSTEM_CONNECTIONS)) {
-                    reply = JsonUtil.getSystemConnections(this.connection.getLocale());
-                } else {
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
-                    return;
+                switch (list) {
+                    case CARS:
+                        reply = JsonUtil.getCars(this.connection.getLocale());
+                        break;
+                    case CONSISTS:
+                        reply = JsonUtil.getConsists(this.connection.getLocale());
+                        break;
+                    case ENGINES:
+                        reply = JsonUtil.getEngines(this.connection.getLocale());
+                        break;
+                    case LIGHTS:
+                        reply = JsonUtil.getLights(this.connection.getLocale());
+                        break;
+                    case LOCATIONS:
+                        reply = JsonUtil.getLocations(this.connection.getLocale());
+                        break;
+                    case MEMORIES:
+                        reply = JsonUtil.getMemories(this.connection.getLocale());
+                        break;
+                    case METADATA:
+                        reply = JsonUtil.getMetadata(this.connection.getLocale());
+                        break;
+                    case PANELS:
+                        reply = JsonUtil.getPanels(this.connection.getLocale(), (data.path(FORMAT).isMissingNode()) ? XML : data.path(FORMAT).asText());
+                        break;
+                    case REPORTERS:
+                        reply = JsonUtil.getReporters(this.connection.getLocale());
+                        break;
+                    case ROSTER:
+                        reply = JsonUtil.getRoster(this.connection.getLocale(), data);
+                        this.rosterServer.listen();
+                        break;
+                    case ROSTER_GROUPS:
+                        reply = JsonUtil.getRosterGroups(this.connection.getLocale());
+                        this.rosterServer.listen();
+                        break;
+                    case ROUTES:
+                        reply = JsonUtil.getRoutes(this.connection.getLocale());
+                        break;
+                    case SENSORS:
+                        reply = JsonUtil.getSensors(this.connection.getLocale());
+                        break;
+                    case SIGNAL_HEADS:
+                        reply = JsonUtil.getSignalHeads(this.connection.getLocale());
+                        break;
+                    case SIGNAL_MASTS:
+                        reply = JsonUtil.getSignalMasts(this.connection.getLocale());
+                        break;
+                    case TRAINS:
+                        reply = JsonUtil.getTrains(this.connection.getLocale());
+                        break;
+                    case TURNOUTS:
+                        reply = JsonUtil.getTurnouts(this.connection.getLocale());
+                        break;
+                    case NETWORK_SERVICES:
+                        reply = JsonUtil.getNetworkServices(this.connection.getLocale());
+                        break;
+                    case SYSTEM_CONNECTIONS:
+                        reply = JsonUtil.getSystemConnections(this.connection.getLocale());
+                        break;
+                    default:
+                        this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownList", list));
+                        return;
                 }
                 //if (log.isDebugEnabled()) log.debug("Sending to client: " + this.mapper.writeValueAsString(reply));
                 this.connection.sendMessage(this.mapper.writeValueAsString(reply));
             } else if (!data.isMissingNode()) {
-                if (type.equals(CONSIST)) {
-                    this.consistServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(LIGHT)) {
-                    this.lightServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(MEMORY)) {
-                    this.memoryServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(METADATA)) {
-                    this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText())));
-                } else if (type.equals(POWER)) {
-                    this.powerServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(PROGRAMMER)) {
-                    this.programmerServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(SENSOR)) {
-                    this.sensorServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(SIGNAL_HEAD)) {
-                    this.signalHeadServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(SIGNAL_MAST)) {
-                    this.signalMastServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(REPORTER)) {
-                    this.reporterServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(ROSTER_ENTRY)) {
-                    this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
-                } else if (type.equals(ROSTER_GROUP)) {
-                    this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
-                } else if (type.equals(ROUTE)) {
-                    this.routeServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(THROTTLE)) {
-                    this.throttleServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(TIME)) {
-                    this.timeServer.parseRequest(this.connection.getLocale(), data);
-                } else if (type.equals(TRAIN)) {
-                    this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
-                } else if (type.equals(TURNOUT)) {
-                    this.turnoutServer.parseRequest(this.connection.getLocale(), data);
-                } else {
-                    this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                switch (type) {
+                    case CONSIST:
+                        this.consistServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case LIGHT:
+                        this.lightServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case MEMORY:
+                        this.memoryServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case METADATA:
+                        this.connection.sendMessage(this.mapper.writeValueAsString(JsonUtil.getMetadata(this.connection.getLocale(), data.path(NAME).asText())));
+                        break;
+                    case POWER:
+                        this.powerServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case PROGRAMMER:
+                        this.programmerServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case SENSOR:
+                        this.sensorServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case SIGNAL_HEAD:
+                        this.signalHeadServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case SIGNAL_MAST:
+                        this.signalMastServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case REPORTER:
+                        this.reporterServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case ROSTER_ENTRY:
+                        this.rosterServer.parseRosterEntryRequest(this.connection.getLocale(), data);
+                        break;
+                    case ROSTER_GROUP:
+                        this.rosterServer.parseRosterGroupRequest(this.connection.getLocale(), data);
+                        break;
+                    case ROUTE:
+                        this.routeServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case THROTTLE:
+                        this.throttleServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case TIME:
+                        this.timeServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    case TRAIN:
+                        this.operationsServer.parseTrainRequest(this.connection.getLocale(), data);
+                        break;
+                    case TURNOUT:
+                        this.turnoutServer.parseRequest(this.connection.getLocale(), data);
+                        break;
+                    default:
+                        this.sendErrorMessage(404, Bundle.getMessage(this.connection.getLocale(), "ErrorUnknownType", type));
+                        break;
                 }
             } else {
                 this.sendErrorMessage(400, Bundle.getMessage(this.connection.getLocale(), "ErrorMissingData"));
@@ -285,20 +324,7 @@ public class JsonClientHandler {
 
     private void receiveHello(JsonNode data) {
         if (!data.path(LOCALE).isMissingNode()) {
-            // the following would be a one liner in Java 1.7:
-            // this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
-            String[] parts = data.path(LOCALE).asText().split("-", 3);
-            switch (parts.length) {
-                case 3:
-                    this.connection.setLocale(new Locale(parts[0], parts[1], parts[2]));
-                    break;
-                case 2:
-                    this.connection.setLocale(new Locale(parts[0], parts[1]));
-                    break;
-                default:
-                    this.connection.setLocale(new Locale(parts[0]));
-                    break;
-            }
+            this.connection.setLocale(Locale.forLanguageTag(data.path(LOCALE).asText()));
         }
     }
 
