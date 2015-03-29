@@ -4,6 +4,7 @@ package jmri.util;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -293,6 +294,25 @@ public class FileUtilTest extends TestCase {
         FileUtil.appendTextToFile(file, text);
         List<String> lines = Files.readAllLines(Paths.get(file.toURI()), Charset.forName("UTF-8"));
         Assert.assertEquals(text, lines.get(0));
+    }
+
+    public void testFindURIPath() {
+        URI help = (new File("help")).toURI();
+        Assert.assertEquals(help, FileUtil.findURI("program:help"));
+    }
+
+    public void testFindURIPathLocation() {
+        URI help = (new File("help")).toURI();
+        Assert.assertEquals(help, FileUtil.findURI("help", FileUtil.Location.INSTALLED));
+        Assert.assertEquals(help, FileUtil.findURI("help", FileUtil.Location.ALL));
+        Assert.assertNotSame(help, FileUtil.findURI("help", FileUtil.Location.USER));
+    }
+
+    public void testFindURIPathSearchPaths() {
+        URI help = (new File("help")).toURI();
+        Assert.assertEquals(help, FileUtil.findURI("help", new String[]{FileUtil.getProgramPath()}));
+        Assert.assertEquals(help, FileUtil.findURI("help", new String[]{FileUtil.getPreferencesPath(), FileUtil.getProgramPath()}));
+        Assert.assertNotSame(help, FileUtil.findURI("help", new String[]{FileUtil.getPreferencesPath()}));
     }
 
     // from here down is testing infrastructure

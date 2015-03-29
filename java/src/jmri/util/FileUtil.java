@@ -637,7 +637,30 @@ public final class FileUtil {
      * @return URL of portable or absolute path
      */
     static public URI findExternalFilename(String path) {
-        return FileUtil.findURI(FileUtil.getExternalFilename(path));
+        String location;
+        log.debug("Finding external path {}", path);
+        try {
+            int index = path.indexOf(":") + 1;
+            location = path.substring(0, index);
+            path = path.substring(index);
+        } catch (IndexOutOfBoundsException ex) {
+            return FileUtil.findURI(path);
+        }
+        log.debug("Finding {} and {}", location, path);
+        switch (location) {
+            case FileUtil.PROGRAM:
+            case FileUtil.RESOURCE:
+                return FileUtil.findURI(path, Location.INSTALLED);
+            case FileUtil.PREFERENCES:
+            case FileUtil.FILE:
+                return FileUtil.findURI(path, Location.USER);
+            case FileUtil.PROFILE:
+            case FileUtil.SETTINGS:
+            case FileUtil.SCRIPTS:
+            case FileUtil.HOME:
+            default:
+                return FileUtil.findURI(FileUtil.getExternalFilename(location + ":" + path));
+        }
     }
 
     /**
