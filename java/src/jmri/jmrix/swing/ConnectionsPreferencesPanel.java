@@ -53,14 +53,14 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
         super();
         this.preferences = preferences;
         deleteIconRollOver = new ImageIcon(
-                FileUtil.getURL(FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete16x16.png")));
+                FileUtil.findURL("program:resources/icons/misc/gui3/Delete16x16.png"));
         deleteIcon = new ImageIcon(
-                FileUtil.getURL(FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Delete-bw16x16.png")));
+                FileUtil.findURL("program:resources/icons/misc/gui3/Delete-bw16x16.png"));
         deleteButtonSize = new Dimension(
                 deleteIcon.getIconWidth() + 2,
                 deleteIcon.getIconHeight() + 2);
         addIcon = new ImageIcon(
-                FileUtil.getURL(FileUtil.findExternalFilename("program:resources/icons/misc/gui3/Add16x16.png")));
+                FileUtil.findURL("program:resources/icons/misc/gui3/Add16x16.png"));
         if (this.preferences != null) {
             ArrayList<Object> connList = InstanceManager.configureManagerInstance()
                     .getInstanceList(ConnectionConfig.class);

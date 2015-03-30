@@ -70,8 +70,8 @@ public class NamedIcon extends ImageIcon {
      * @param pName Human-readable name for the icon
      */
     public NamedIcon(String pUrl, String pName) {
-        super(FileUtil.getURL(FileUtil.findExternalFilename(pUrl)));
-        URL u = FileUtil.getURL(FileUtil.findExternalFilename(pUrl));
+        super(FileUtil.findURL(pUrl));
+        URL u = FileUtil.findURL(pUrl);
         if (u == null) {
             log.warn("Could not load image from " + pUrl + " (file does not exist)");
         }
@@ -111,7 +111,7 @@ public class NamedIcon extends ImageIcon {
         if (pName == null || pName.length() == 0) {
             return null;
         }
-        URL u = FileUtil.getURL(FileUtil.findExternalFilename(pName));
+        URL u = FileUtil.findURL(pName);
         if (u == null) {
             return null;
         }
