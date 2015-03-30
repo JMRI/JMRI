@@ -37,8 +37,9 @@ import org.slf4j.LoggerFactory;
 
 public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
 
-    private final ArrayList<JsonThrottleServer> servers = new ArrayList<JsonThrottleServer>();
+    private final ArrayList<JsonThrottleServer> servers = new ArrayList<>();
     private Throttle throttle;
+    private int speedSteps = 1;
     private DccLocoAddress address = null;
     private final ObjectMapper mapper = new ObjectMapper();
     private static HashMap<DccLocoAddress, JsonThrottle> throttles = null;
@@ -92,7 +93,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             throw new JmriException("No address specified."); // NOI18N
         }
         if (JsonThrottle.throttles == null) {
-            JsonThrottle.throttles = new HashMap<DccLocoAddress, JsonThrottle>();
+            JsonThrottle.throttles = new HashMap<>();
         }
         if (JsonThrottle.throttles.containsKey(address)) {
             JsonThrottle throttle = JsonThrottle.throttles.get(address);
@@ -157,7 +158,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             } else if (k.equals(IDLE)) {
                 this.throttle.setSpeedSetting(0);
             } else if (k.equals(SPEED)) {
-                this.throttle.setSpeedSetting((float) v.asDouble());
+                this.throttle.setSpeedSetting((float) v.asDouble() / this.speedSteps);
             } else if (k.equals(FORWARD)) {
                 this.throttle.setIsForward(v.asBoolean());
             } else if (k.equals(Throttle.F0)) {
@@ -266,6 +267,22 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         try {
             this.throttle = throttle;
             throttle.addPropertyChangeListener(this);
+            switch (throttle.getSpeedStepMode()) {
+                case DccThrottle.SpeedStepMode14:
+                    this.speedSteps = 14;
+                    break;
+                case DccThrottle.SpeedStepMode27:
+                    this.speedSteps = 27;
+                    break;
+                case DccThrottle.SpeedStepMode28:
+                case DccThrottle.SpeedStepMode28Mot:
+                    this.speedSteps = 28;
+                    break;
+                case DccThrottle.SpeedStepMode128:
+                default:
+                    this.speedSteps = 126;
+                    break;
+            }
             this.sendStatus();
         } catch (Exception e) {
             log.debug(e.getLocalizedMessage(), e);
