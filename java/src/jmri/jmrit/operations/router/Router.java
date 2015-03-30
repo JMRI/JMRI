@@ -512,7 +512,7 @@ public class Router extends TrainCommon {
                                 testCar.getDestinationName(), testCar.getDestinationTrackName()}));
             }
             // Can the specific train carry this car out of staging?
-            if (car.getTrack().getTrackType().equals(Track.STAGING) && !specific.equals(YES)) {
+            if (_train != null && car.getTrack().getTrackType().equals(Track.STAGING) && !specific.equals(YES)) {
                 if (debugFlag) {
                     log.debug("Train ({}) can not deliver car to ({}, {})", _train.getName(), track.getLocation()
                             .getName(), track.getName());
