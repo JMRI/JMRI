@@ -637,30 +637,30 @@ public final class FileUtil {
      * @return URL of portable or absolute path
      */
     static public URI findExternalFilename(String path) {
-        String location;
+        String location = "";
         log.debug("Finding external path {}", path);
-        try {
+        if (FileUtil.isPortableFilename(path)) {
             int index = path.indexOf(":") + 1;
             location = path.substring(0, index);
             path = path.substring(index);
-        } catch (IndexOutOfBoundsException ex) {
-            return FileUtil.findURI(path);
+            log.debug("Finding {} and {}", location, path);
+            switch (location) {
+                case FileUtil.PROGRAM:
+                case FileUtil.RESOURCE:
+                    return FileUtil.findURI(path, Location.INSTALLED);
+                case FileUtil.PREFERENCES:
+                case FileUtil.FILE:
+                    return FileUtil.findURI(path, Location.USER);
+                case FileUtil.PROFILE:
+                case FileUtil.SETTINGS:
+                case FileUtil.SCRIPTS:
+                case FileUtil.HOME:
+                    return FileUtil.findURI(FileUtil.getExternalFilename(location + ":" + path));
+                default:
+                    break;
+            }
         }
-        log.debug("Finding {} and {}", location, path);
-        switch (location) {
-            case FileUtil.PROGRAM:
-            case FileUtil.RESOURCE:
-                return FileUtil.findURI(path, Location.INSTALLED);
-            case FileUtil.PREFERENCES:
-            case FileUtil.FILE:
-                return FileUtil.findURI(path, Location.USER);
-            case FileUtil.PROFILE:
-            case FileUtil.SETTINGS:
-            case FileUtil.SCRIPTS:
-            case FileUtil.HOME:
-            default:
-                return FileUtil.findURI(FileUtil.getExternalFilename(location + ":" + path));
-        }
+        return FileUtil.findURI(path, Location.ALL);
     }
 
     /**
@@ -771,6 +771,11 @@ public final class FileUtil {
      * {@link java.net.URI} for that file. Search order is defined by
      * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      * No limits are placed on search locations.
+     *
+     * Note that if the file for path is not found in one of the searchPaths,
+     * all standard locations are also be searched through to find the file. If
+     * you need to limit the locations where the file can be found use
+     * {@link #findURI(java.lang.String, jmri.util.FileUtil.Location, java.lang.String...)}.
      *
      * @param path        The relative path of the file or resource
      * @param searchPaths a list of paths to search for the path in
