@@ -108,7 +108,7 @@ public class ImportEngines extends ImportRollingStock {
                 continue;
             }
             int base = 0;
-            if (!inputLine[0].equals("")) {
+            if (comma || !inputLine[0].equals("")) {
                 base--; // skip over any spaces at start of line
             }
 
