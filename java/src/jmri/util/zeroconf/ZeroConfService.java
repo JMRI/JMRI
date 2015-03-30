@@ -69,12 +69,12 @@ import org.slf4j.LoggerFactory;
 public class ZeroConfService {
 
     // internal data members
-    private final HashMap<InetAddress, ServiceInfo> serviceInfos = new HashMap<InetAddress, ServiceInfo>();
+    private final HashMap<InetAddress, ServiceInfo> serviceInfos = new HashMap<>();
     private ServiceInfo serviceInfo = null;
     // static data objects
-    private static final HashMap<String, ZeroConfService> services = new HashMap<String, ZeroConfService>();
-    private static final HashMap<InetAddress, JmDNS> netServices = new HashMap<InetAddress, JmDNS>();
-    private final List<ZeroConfServiceListener> listeners = new ArrayList<ZeroConfServiceListener>();
+    private static final HashMap<String, ZeroConfService> services = new HashMap<>();
+    private static final HashMap<InetAddress, JmDNS> netServices = new HashMap<>();
+    private final List<ZeroConfServiceListener> listeners = new ArrayList<>();
     private static final Logger log = LoggerFactory.getLogger(ZeroConfService.class.getName());
     private static final NetworkListener networkListener = new NetworkListener();
     private static final ShutDownTask shutDownTask = new ShutDownTask("Stop ZeroConfServices");
@@ -91,7 +91,7 @@ public class ZeroConfService {
      * java.util.HashMap)
      */
     public static ZeroConfService create(String type, int port) {
-        return create(type, port, new HashMap<String, String>());
+        return create(type, port, new HashMap<>());
     }
 
     /**
@@ -371,7 +371,7 @@ public class ZeroConfService {
                 InstanceManager.shutDownManagerInstance().register(ZeroConfService.shutDownTask);
             }
         }
-        return new HashMap<InetAddress, JmDNS>(ZeroConfService.netServices);
+        return new HashMap<>(ZeroConfService.netServices);
     }
 
     /**
@@ -408,7 +408,7 @@ public class ZeroConfService {
      * @return The non-loopback IP addresses on the host.
      */
     public static List<InetAddress> hostAddresses() {
-        List<InetAddress> addrList = new ArrayList<InetAddress>();
+        List<InetAddress> addrList = new ArrayList<>();
         Enumeration<NetworkInterface> IFCs = null;
         try {
             IFCs = NetworkInterface.getNetworkInterfaces();
