@@ -1778,16 +1778,15 @@ public class LayoutTurnout {
      * Toggle turnout if clicked on, physical turnout exists, and not disabled
      */
     public void toggleTurnout() {
-        // toggle turnout
-        if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
-            setState(jmri.Turnout.THROWN);
-            /*if(getSecondTurnout()!=null)
-             getSecondTurnout().setState(jmri.Turnout.THROWN);*/
+        if (getTurnout()!=null){
+            // toggle turnout
+            if (getTurnout().getKnownState() == jmri.Turnout.CLOSED) {
+                setState(jmri.Turnout.THROWN);
+            } else {
+                setState(jmri.Turnout.CLOSED);
+            }
         } else {
-            setState(jmri.Turnout.CLOSED);
-            /*if(getSecondTurnout()!=null)
-             getSecondTurnout().setState(jmri.Turnout.CLOSED);*/
-
+            log.debug("Turnout Icon not associated with a Turnout");
         }
     }
 
