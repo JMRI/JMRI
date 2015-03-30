@@ -151,79 +151,119 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             Map.Entry<String, JsonNode> entry = nodeIterator.next();
             String k = entry.getKey();
             JsonNode v = entry.getValue();
-            if (k.equals(THROTTLE)) {
-                //no action for throttle item, but since it always exists, checking for it shortcuts the processing a bit
-            } else if (k.equals(ESTOP)) {
-                this.throttle.setSpeedSetting(-1);
-                break; // stop processing any commands that may conflict with ESTOP
-            } else if (k.equals(IDLE)) {
-                this.throttle.setSpeedSetting(0);
-            } else if (k.equals(SPEED)) {
-                this.throttle.setSpeedSetting((float) v.asDouble());
-            } else if (k.equals(FORWARD)) {
-                this.throttle.setIsForward(v.asBoolean());
-            } else if (k.equals(Throttle.F0)) {
-                this.throttle.setF0(v.asBoolean());
-            } else if (k.equals(Throttle.F1)) {
-                this.throttle.setF1(v.asBoolean());
-            } else if (k.equals(Throttle.F2)) {
-                this.throttle.setF2(v.asBoolean());
-            } else if (k.equals(Throttle.F3)) {
-                this.throttle.setF3(v.asBoolean());
-            } else if (k.equals(Throttle.F4)) {
-                this.throttle.setF4(v.asBoolean());
-            } else if (k.equals(Throttle.F5)) {
-                this.throttle.setF5(v.asBoolean());
-            } else if (k.equals(Throttle.F6)) {
-                this.throttle.setF6(v.asBoolean());
-            } else if (k.equals(Throttle.F7)) {
-                this.throttle.setF7(v.asBoolean());
-            } else if (k.equals(Throttle.F8)) {
-                this.throttle.setF8(v.asBoolean());
-            } else if (k.equals(Throttle.F9)) {
-                this.throttle.setF9(v.asBoolean());
-            } else if (k.equals(Throttle.F10)) {
-                this.throttle.setF10(v.asBoolean());
-            } else if (k.equals(Throttle.F11)) {
-                this.throttle.setF11(v.asBoolean());
-            } else if (k.equals(Throttle.F12)) {
-                this.throttle.setF12(v.asBoolean());
-            } else if (k.equals(Throttle.F13)) {
-                this.throttle.setF13(v.asBoolean());
-            } else if (k.equals(Throttle.F14)) {
-                this.throttle.setF14(v.asBoolean());
-            } else if (k.equals(Throttle.F15)) {
-                this.throttle.setF15(v.asBoolean());
-            } else if (k.equals(Throttle.F16)) {
-                this.throttle.setF16(v.asBoolean());
-            } else if (k.equals(Throttle.F17)) {
-                this.throttle.setF17(v.asBoolean());
-            } else if (k.equals(Throttle.F18)) {
-                this.throttle.setF18(v.asBoolean());
-            } else if (k.equals(Throttle.F19)) {
-                this.throttle.setF19(v.asBoolean());
-            } else if (k.equals(Throttle.F20)) {
-                this.throttle.setF20(v.asBoolean());
-            } else if (k.equals(Throttle.F21)) {
-                this.throttle.setF21(v.asBoolean());
-            } else if (k.equals(Throttle.F22)) {
-                this.throttle.setF22(v.asBoolean());
-            } else if (k.equals(Throttle.F23)) {
-                this.throttle.setF23(v.asBoolean());
-            } else if (k.equals(Throttle.F24)) {
-                this.throttle.setF24(v.asBoolean());
-            } else if (k.equals(Throttle.F25)) {
-                this.throttle.setF25(v.asBoolean());
-            } else if (k.equals(Throttle.F26)) {
-                this.throttle.setF26(v.asBoolean());
-            } else if (k.equals(Throttle.F27)) {
-                this.throttle.setF27(v.asBoolean());
-            } else if (k.equals(Throttle.F28)) {
-                this.throttle.setF28(v.asBoolean());
-            } else if (k.equals(RELEASE)) {
-                server.release(this);
-            } else if (k.equals(STATUS)) {
-                this.sendStatus(server);
+            switch (k) {
+                case ESTOP:
+                    this.throttle.setSpeedSetting(-1);
+                    return; // stop processing any commands that may conflict with ESTOP
+                case IDLE:
+                    this.throttle.setSpeedSetting(0);
+                    break;
+                case SPEED:
+                    this.throttle.setSpeedSetting((float) v.asDouble());
+                    break;
+                case FORWARD:
+                    this.throttle.setIsForward(v.asBoolean());
+                    break;
+                case Throttle.F0:
+                    this.throttle.setF0(v.asBoolean());
+                    break;
+                case Throttle.F1:
+                    this.throttle.setF1(v.asBoolean());
+                    break;
+                case Throttle.F2:
+                    this.throttle.setF2(v.asBoolean());
+                    break;
+                case Throttle.F3:
+                    this.throttle.setF3(v.asBoolean());
+                    break;
+                case Throttle.F4:
+                    this.throttle.setF4(v.asBoolean());
+                    break;
+                case Throttle.F5:
+                    this.throttle.setF5(v.asBoolean());
+                    break;
+                case Throttle.F6:
+                    this.throttle.setF6(v.asBoolean());
+                    break;
+                case Throttle.F7:
+                    this.throttle.setF7(v.asBoolean());
+                    break;
+                case Throttle.F8:
+                    this.throttle.setF8(v.asBoolean());
+                    break;
+                case Throttle.F9:
+                    this.throttle.setF9(v.asBoolean());
+                    break;
+                case Throttle.F10:
+                    this.throttle.setF10(v.asBoolean());
+                    break;
+                case Throttle.F11:
+                    this.throttle.setF11(v.asBoolean());
+                    break;
+                case Throttle.F12:
+                    this.throttle.setF12(v.asBoolean());
+                    break;
+                case Throttle.F13:
+                    this.throttle.setF13(v.asBoolean());
+                    break;
+                case Throttle.F14:
+                    this.throttle.setF14(v.asBoolean());
+                    break;
+                case Throttle.F15:
+                    this.throttle.setF15(v.asBoolean());
+                    break;
+                case Throttle.F16:
+                    this.throttle.setF16(v.asBoolean());
+                    break;
+                case Throttle.F17:
+                    this.throttle.setF17(v.asBoolean());
+                    break;
+                case Throttle.F18:
+                    this.throttle.setF18(v.asBoolean());
+                    break;
+                case Throttle.F19:
+                    this.throttle.setF19(v.asBoolean());
+                    break;
+                case Throttle.F20:
+                    this.throttle.setF20(v.asBoolean());
+                    break;
+                case Throttle.F21:
+                    this.throttle.setF21(v.asBoolean());
+                    break;
+                case Throttle.F22:
+                    this.throttle.setF22(v.asBoolean());
+                    break;
+                case Throttle.F23:
+                    this.throttle.setF23(v.asBoolean());
+                    break;
+                case Throttle.F24:
+                    this.throttle.setF24(v.asBoolean());
+                    break;
+                case Throttle.F25:
+                    this.throttle.setF25(v.asBoolean());
+                    break;
+                case Throttle.F26:
+                    this.throttle.setF26(v.asBoolean());
+                    break;
+                case Throttle.F27:
+                    this.throttle.setF27(v.asBoolean());
+                    break;
+                case Throttle.F28:
+                    this.throttle.setF28(v.asBoolean());
+                    break;
+                case RELEASE:
+                    server.release(this);
+                    break;
+                case STATUS:
+                    this.sendStatus(server);
+                    break;
+                case THROTTLE:
+                default:
+                    // no action for throttle item; it always exists
+                    // silently ignore unknown or unexpected items, since a
+                    // following item may be an ESTOP and we always want to
+                    // catch those
+                    break;
             }
         }
     }
