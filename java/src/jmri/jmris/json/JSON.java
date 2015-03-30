@@ -763,9 +763,9 @@ public final class JSON {
      */
     public static final String SPEED = "speed"; // NOI18N
     /**
-     * {@value #SSM}
+     * {@value #SPEED_STEPS}
      */
-    public static final String SSM = "SSM"; // NOI18N
+    public static final String SPEED_STEPS = "speedSteps"; // NOI18N
     /**
      * Prefix for the throttle function keys (F0-F28).
      * <p>

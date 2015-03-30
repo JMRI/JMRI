@@ -29,6 +29,7 @@ import static jmri.jmris.json.JSON.IS_LONG_ADDRESS;
 import static jmri.jmris.json.JSON.RELEASE;
 import static jmri.jmris.json.JSON.ROSTER_ENTRY;
 import static jmri.jmris.json.JSON.SPEED;
+import static jmri.jmris.json.JSON.SPEED_STEPS;
 import static jmri.jmris.json.JSON.STATUS;
 import static jmri.jmris.json.JSON.THROTTLE;
 import jmri.jmrit.roster.Roster;
@@ -357,6 +358,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
         data.put(Throttle.F26, this.throttle.getF26());
         data.put(Throttle.F27, this.throttle.getF27());
         data.put(Throttle.F28, this.throttle.getF28());
+        data.put(SPEED_STEPS, this.speedSteps);
         data.put(CLIENTS, this.servers.size());
         if (this.throttle.getRosterEntry() != null) {
             data.put(ROSTER_ENTRY, this.throttle.getRosterEntry().getId());
