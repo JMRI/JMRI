@@ -159,7 +159,7 @@ public class JsonThrottle implements ThrottleListener, PropertyChangeListener {
             } else if (k.equals(IDLE)) {
                 this.throttle.setSpeedSetting(0);
             } else if (k.equals(SPEED)) {
-                this.throttle.setSpeedSetting((float) v.asDouble() / this.speedSteps);
+                this.throttle.setSpeedSetting((float) v.asDouble());
             } else if (k.equals(FORWARD)) {
                 this.throttle.setIsForward(v.asBoolean());
             } else if (k.equals(Throttle.F0)) {
