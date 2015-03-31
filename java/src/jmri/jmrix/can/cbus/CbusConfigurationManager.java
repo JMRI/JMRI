@@ -12,12 +12,24 @@ import jmri.jmrix.can.CanSystemConnectionMemo;
  * <p>
  * It would be good to replace this with properties-based method for redirecting
  * to classes in particular subpackages.
+ * <hr>
+ * This file is part of JMRI.
+ * <P>
+ * JMRI is free software; you can redistribute it and/or modify it under the
+ * terms of version 2 of the GNU General Public License as published by the Free
+ * Software Foundation. See the "COPYING" file for a copy of this license.
+ * <P>
+ * JMRI is distributed in the hope that it will be useful, but WITHOUT ANY
+ * WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR
+ * A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+ * <P>
  *
- * @author	Bob Jacobsen Copyright (C) 2009
- * @version $Revision: 17977 $
+ * @author Bob Jacobsen Copyright (C) 2009
+ * @version $Revision$
  */
 public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManager {
 
+    @SuppressWarnings("LeakingThisInConstructor")
     public CbusConfigurationManager(CanSystemConnectionMemo memo) {
         super(memo);
         InstanceManager.store(this, CbusConfigurationManager.class);
@@ -27,6 +39,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
     jmri.jmrix.swing.ComponentFactory cf = null;
 
+    @Override
     public void configureManagers() {
 
         InstanceManager.setPowerManager(
@@ -46,61 +59,57 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         jmri.InstanceManager.setCommandStation(getCommandStation());
 
+        jmri.InstanceManager.setReporterManager(getReporterManager());
+
         jmri.jmrix.can.cbus.ActiveFlag.setActive();
     }
 
     /**
      * Tells which managers this provides by class
+     *
+     * @param type Class type to check
+     * @return true if supported; false if not
      */
+    @Override
     public boolean provides(Class<?> type) {
         if (adapterMemo.getDisabled()) {
             return false;
-        }
-        if (type.equals(jmri.ProgrammerManager.class)) {
+        } else if (type.equals(jmri.ProgrammerManager.class)) {
             return true;
-        }
-        if (type.equals(jmri.ThrottleManager.class)) {
+        } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
-        }
-        if (type.equals(jmri.PowerManager.class)) {
+        } else if (type.equals(jmri.PowerManager.class)) {
             return true;
-        }
-        if (type.equals(jmri.SensorManager.class)) {
+        } else if (type.equals(jmri.SensorManager.class)) {
             return true;
-        }
-        if (type.equals(jmri.TurnoutManager.class)) {
+        } else if (type.equals(jmri.TurnoutManager.class)) {
             return true;
-        }
-        if (type.equals(jmri.ReporterManager.class)) {
+        } else if (type.equals(jmri.ReporterManager.class)) {
             return true;
-        }
-        if (type.equals(jmri.CommandStation.class)) {
+        } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
         return false; // nothing, by default
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public <T> T get(Class<?> T) {
         if (adapterMemo.getDisabled()) {
             return null;
-        }
-        if (T.equals(jmri.ProgrammerManager.class)) {
+        } else if (T.equals(jmri.ProgrammerManager.class)) {
             return (T) getProgrammerManager();
-        }
-        if (T.equals(jmri.ThrottleManager.class)) {
+        } else if (T.equals(jmri.ThrottleManager.class)) {
             return (T) getThrottleManager();
-        }
-        if (T.equals(jmri.PowerManager.class)) {
+        } else if (T.equals(jmri.PowerManager.class)) {
             return (T) getPowerManager();
-        }
-        if (T.equals(jmri.SensorManager.class)) {
+        } else if (T.equals(jmri.SensorManager.class)) {
             return (T) getSensorManager();
-        }
-        if (T.equals(jmri.TurnoutManager.class)) {
+        } else if (T.equals(jmri.TurnoutManager.class)) {
             return (T) getTurnoutManager();
-        }
-        if (T.equals(jmri.CommandStation.class)) {
+        } else if (T.equals(jmri.ReporterManager.class)) {
+            return (T) getReporterManager();
+        } else if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
 
@@ -173,6 +182,18 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return sensorManager;
     }
 
+    protected CbusReporterManager reporterManager = null;
+
+    public CbusReporterManager getReporterManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (reporterManager == null) {
+            reporterManager = new CbusReporterManager(adapterMemo);
+        }
+        return reporterManager;
+    }
+
     protected CbusCommandStation commandStation;
 
     public CbusCommandStation getCommandStation() {
@@ -185,6 +206,7 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return commandStation;
     }
 
+    @Override
     public void dispose() {
         if (cf != null) {
             InstanceManager.deregister(cf, jmri.jmrix.swing.ComponentFactory.class);
@@ -198,12 +220,16 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         if (sensorManager != null) {
             InstanceManager.deregister(sensorManager, jmri.jmrix.can.cbus.CbusSensorManager.class);
         }
+        if (reporterManager != null) {
+            InstanceManager.deregister(reporterManager, jmri.jmrix.can.cbus.CbusReporterManager.class);
+        }
         if (throttleManager != null) {
             InstanceManager.deregister((CbusThrottleManager) throttleManager, jmri.jmrix.can.cbus.CbusThrottleManager.class);
         }
         InstanceManager.deregister(this, CbusConfigurationManager.class);
     }
 
+    @Override
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.can.CanActionListBundle");
     }
