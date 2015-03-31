@@ -398,6 +398,8 @@
     <li>Simon Reader, who improved the throttle, 
     added a check for completed status to Routes,
     and added the "invert" option to LocoNet Turnouts.
+    <li>Mark Riddoch, who provided the Reporter implementation for CBus to enable 
+    the use of CBus attached RFID readers.
 	<LI>Bill Robinson of Team Digital, who provided a schematic of their
 	MS100-equivalent level shifter, contributed the LnSendTool.py script
 	and decoder definitions for Team Digital products,
