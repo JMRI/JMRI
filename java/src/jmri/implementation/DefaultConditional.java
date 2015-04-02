@@ -1491,8 +1491,20 @@ public class DefaultConditional extends AbstractNamedBean
                 log.error(getDisplayName() + " Invalid delayed sensor name - " + action.getDeviceName());
             } else {
                 // set the sensor
+                
+                Sensor s = (Sensor) action.getNamedBean().getBean();
                 try {
-                    ((Sensor) action.getNamedBean().getBean()).setKnownState(action.getActionData());
+                    int act = action.getActionData();
+                    if (act == Route.TOGGLE) {
+                        // toggle from current state
+                        int state = s.getKnownState();
+                        if (state == Sensor.ACTIVE) {
+                            act = Sensor.INACTIVE;
+                        } else {
+                            act = Sensor.ACTIVE;
+                        }
+                    }
+                    s.setKnownState(act);
                 } catch (JmriException e) {
                     log.warn("Exception setting delayed sensor " + action.getDeviceName() + " in action");
                 }
@@ -1519,8 +1531,19 @@ public class DefaultConditional extends AbstractNamedBean
             if (action.getNamedBean() == null) {
                 log.error(getDisplayName() + " Invalid delayed turnout name - " + action.getDeviceName());
             } else {
+                Turnout t = (Turnout) action.getNamedBean().getBean();
+                int act = action.getActionData();
+                if (act == Route.TOGGLE) {
+                    // toggle from current state
+                    int state = t.getKnownState();
+                    if (state == Turnout.CLOSED) {
+                        act = Turnout.THROWN;
+                    } else {
+                        act = Turnout.CLOSED;
+                    }
+                }
                 // set the turnout
-                ((Turnout) action.getNamedBean().getBean()).setCommandedState(action.getActionData());
+                t.setCommandedState(act);
             }
             // Turn Timer OFF
             action.stopTimer();
