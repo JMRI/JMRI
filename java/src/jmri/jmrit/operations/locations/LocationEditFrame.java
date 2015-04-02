@@ -1,6 +1,7 @@
 // LocationEditFrame.java
 package jmri.jmrit.operations.locations;
 
+
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -12,6 +13,8 @@ import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
@@ -28,6 +31,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.Reporter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -96,6 +100,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTextArea commentTextArea = new JTextArea(2, 60);
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
+    // Reader selection dropdown.
+    JComboBox<String> readerSelector = new JComboBox<String>();
+    JLabel readerLabel = new JLabel();
 
     public static final String NAME = Bundle.getMessage("Name");
     public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
@@ -169,6 +177,20 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 stageRadioButton.setSelected(true);
             }
             setTrainDirectionBoxes();
+            if( Setup.isRfidEnabled() ) { 
+                // setup the Reader dropdown.
+                readerSelector.addItem(""); // add an empty entry.
+                for(jmri.NamedBean r:jmri.InstanceManager.reporterManagerInstance().getNamedBeanList()){
+                   readerSelector.addItem(((Reporter)r).getDisplayName());
+                }
+
+                try {
+                    readerSelector.setSelectedItem(_location.getReporter().getDisplayName()); 
+                } catch(java.lang.NullPointerException e){
+                    // if there is no reader set, getReporter 
+                    // will return null, so set a blank.
+                }
+            }
         } else {
             enableButtons(false);
             spurRadioButton.setSelected(true);
@@ -218,6 +240,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         pOp.add(interchangeRadioButton);
         pOp.add(stageRadioButton);
 
+
         // row 11
         JPanel pC = new JPanel();
         pC.setLayout(new GridBagLayout());
@@ -226,6 +249,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         // adjust text area width based on window size
         adjustTextAreaColumnWidth(commentScroller, commentTextArea);
+                
+        // reader row
+        JPanel readerPanel = new JPanel();
+        readerPanel.setLayout(new GridBagLayout());
+        readerLabel.setText(Bundle.getMessage("idReader"));
+        addItem(readerPanel,readerLabel,0,0);
+        addItem(readerPanel,readerSelector,1,0);
 
         // row 12
         JPanel pB = new JPanel();
@@ -246,6 +276,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         getContentPane().add(stagingPane);
         getContentPane().add(addStagingButton);
         getContentPane().add(pC);
+	getContentPane().add(readerPanel);
         getContentPane().add(pB);
 
         // setup buttons
@@ -442,6 +473,13 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         _location.setName(locationNameTextField.getText());
         _location.setComment(commentTextArea.getText());
+        if(Setup.isRfidEnabled() && 
+            readerSelector.getSelectedItem()!=null && 
+            !((String)readerSelector.getSelectedItem()).equals("")) {
+            _location.setReporter(
+            jmri.InstanceManager.reporterManagerInstance()
+                .getReporter((String)readerSelector.getSelectedItem()));
+        }
         setLocationOps();
         // save location file
         OperationsXml.save();
@@ -504,6 +542,8 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         stageRadioButton.setEnabled(enabled);
         //
         yardTable.setEnabled(enabled);
+        // enable readerSelect.
+        readerSelector.setEnabled(enabled && Setup.isRfidEnabled() );
     }
 
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {

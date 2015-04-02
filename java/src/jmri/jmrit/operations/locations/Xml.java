@@ -42,6 +42,7 @@ public class Xml {
     static final String NORTH_TRAIN_ICON_Y = "northTrainIconY"; // NOI18N
     static final String SOUTH_TRAIN_ICON_X = "southTrainIconX"; // NOI18N
     static final String SOUTH_TRAIN_ICON_Y = "southTrainIconY"; // NOI18N
+    static final String READER = "idReader"; // NOI18N
 
     static final String PHYSICAL_LOCATION = "physicalLocation"; // NOI18N
     static final String SWITCH_LIST_COMMENT = "switchListComment"; // NOI18N

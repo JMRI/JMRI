@@ -10,6 +10,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainCommon;
+import jmri.Reporter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -83,6 +84,21 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     public Location getLocationById(String id) {
         return _locationHashTable.get(id);
     }
+
+    /**
+     * Request a location associated with a given reporter.
+     *
+     * @param Reporter object associated with desired location.
+     * @return requested Location object or null if none exists 
+     */
+    public Location getLocationByReporter(Reporter r) {
+       for(Location location: _locationHashTable.values()) {
+          if (location.getReporter().equals(r))
+              return location;
+	  }
+        return null;
+    }
+
 
     /**
      * Finds an existing location or creates a new location if needed requires

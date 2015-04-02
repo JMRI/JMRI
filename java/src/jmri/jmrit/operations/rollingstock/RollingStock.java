@@ -1,6 +1,8 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -14,6 +16,10 @@ import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import jmri.InstanceManager;
+import jmri.IdTag;
+import jmri.IdTagManager;
 
 /**
  * Represents rolling stock, both powered (locomotives) and not powered (cars)
@@ -746,6 +752,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         return _value;
     }
 
+
     /**
      * Sets the value (cost, price) for this rolling stock. Currently has
      * nothing to do with operations. But nice to have.
@@ -760,21 +767,55 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
     }
 
+
+    private IdTag _tag = null;
+
     public String getRfid() {
-        return _rfid;
+       return _rfid;
+    }
+
+    public IdTag getIdTag() {
+        return _tag;
+    }
+
+    public void setIdTag(IdTag tag) {
+        _tag=tag;
     }
 
     /**
-     * Sets the RFID for this rolling stock.
-     *
-     * @param id 12 character RFID string.
-     */
+    * Sets the RFID for this rolling stock.
+    * 
+    * @param id
+    *            12 character RFID string.
+    */
     public void setRfid(String id) {
-        String old = _rfid;
-        _rfid = id;
-        if (!old.equals(id)) {
-            setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
-        }
+       String old = _rfid;
+       _rfid = id;
+       log.debug("Changing IdTag for {} to {}", toString(),id);  
+       if (!old.equals(id))
+           setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
+       //try {
+       _tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
+       log.debug("Tag {} Found",_tag.toString() );
+       _tag.addPropertyChangeListener( new PropertyChangeListener(){
+           @Override
+           public void propertyChange(java.beans.PropertyChangeEvent e){
+               if(e.getPropertyName().equals("whereLastSeen")){
+                   log.debug("Tag Reader Position update received for {}", toString());  
+                   // update the position of this piece of rolling
+                   // stock when it's IdTag is seen.
+                   if(e.getNewValue()!=null)
+                       setLocation(locationManager.getLocationByReporter(
+                                   (jmri.Reporter)e.getNewValue()),null);
+               }
+               if(e.getPropertyName().equals("whenLastSeen")){
+                   log.debug("Tag Reader Time at Location update received for {}", toString());  
+               }
+           }
+        });
+        //} catch( NullPointerException e) {
+        //  log.error("Tag {} Not Found", id );
+        //}
     }
 
     /**
@@ -1059,8 +1100,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.VALUE)) != null) {
             _value = a.getValue();
         }
-        if ((a = e.getAttribute(Xml.RFID)) != null) {
-            _rfid = a.getValue();
+	if ((a = e.getAttribute(Xml.RFID)) != null) {
+			setRfid(a.getValue());
         }
         if ((a = e.getAttribute(Xml.LOC_UNKNOWN)) != null) {
             _locationUnknown = a.getValue().equals(Xml.TRUE);

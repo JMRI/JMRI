@@ -11,6 +11,8 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
+import jmri.util.JUnitUtil;
+
 /**
  * Tests for the Operations RollingStock class Last manually cross-checked on
  * 20090131
@@ -42,6 +44,9 @@ public class OperationsRollingStockTest extends TestCase {
         rs1.setBuilt("TESTBUILT");
         rs1.setOwner("TESTOWNER");
         rs1.setComment("TESTCOMMENT");
+        // make sure the ID tags exist before we 
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("TESTRFID");
         rs1.setRfid("TESTRFID");
         rs1.setMoves(5);
 
@@ -176,9 +181,22 @@ public class OperationsRollingStockTest extends TestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
-
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initIdTagManager();
+        jmri.InstanceManager.setShutDownManager( new
+                 jmri.managers.DefaultShutDownManager() {
+                    @Override
+                    public void register(jmri.ShutDownTask s){
+                       // do nothing with registered shutdown tasks for testing.
+                    }
+                 });       
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
     }
@@ -201,7 +219,9 @@ public class OperationsRollingStockTest extends TestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    protected void tearDown() throws Exception {
+       JUnitUtil.resetInstanceManager();
+       apps.tests.Log4JFixture.tearDown();
+       super.tearDown();
     }
 }
