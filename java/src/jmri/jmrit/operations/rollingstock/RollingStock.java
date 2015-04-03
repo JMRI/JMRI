@@ -765,6 +765,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     private IdTag _tag = null;
+    private PropertyChangeListener _tagListener = null;
 
     public String getRfid() {
         return _rfid;
@@ -775,7 +776,30 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     public void setIdTag(IdTag tag) {
+        if(_tag!=null)
+           _tag.removePropertyChangeListener(_tagListener);
         _tag = tag;
+        if(_tagListener==null) {
+           // store the tag listener so we can reuse it and 
+           // dispose of it as necessary.
+           _tagListener = new PropertyChangeListener() {
+               @Override
+               public void propertyChange(java.beans.PropertyChangeEvent e) {
+                   if (e.getPropertyName().equals("whereLastSeen")) {
+                       log.debug("Tag Reader Position update received for {}", toString());
+                       // update the position of this piece of rolling
+                       // stock when it's IdTag is seen.
+                       if (e.getNewValue() != null)
+                           setLocation(locationManager.getLocationByReporter(
+                               (jmri.Reporter) e.getNewValue()), null);
+                       }
+                       if (e.getPropertyName().equals("whenLastSeen")) {
+                           log.debug("Tag Reader Time at Location update received for {}", toString());
+                       }
+                   }
+              };
+        }
+        _tag.addPropertyChangeListener(_tagListener);
     }
 
     /**
@@ -790,24 +814,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if (!old.equals(id))
             setDirtyAndFirePropertyChange("rolling stock rfid", old, id); // NOI18N
         try {
-            _tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
-            log.debug("Tag {} Found", _tag.toString());
-            _tag.addPropertyChangeListener(new PropertyChangeListener() {
-                @Override
-                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                    if (e.getPropertyName().equals("whereLastSeen")) {
-                        log.debug("Tag Reader Position update received for {}", toString());
-                        // update the position of this piece of rolling
-                        // stock when it's IdTag is seen.
-                        if (e.getNewValue() != null)
-                            setLocation(locationManager.getLocationByReporter(
-                                    (jmri.Reporter) e.getNewValue()), null);
-                    }
-                    if (e.getPropertyName().equals("whenLastSeen")) {
-                        log.debug("Tag Reader Time at Location update received for {}", toString());
-                    }
-                }
-            });
+            IdTag tag = InstanceManager.getDefault(IdTagManager.class).getIdTag(id.toUpperCase());
+            log.debug("Tag {} Found", tag.toString());
+            setIdTag(tag);
         } catch (NullPointerException e) {
             log.error("Tag {} Not Found", id);
         }
@@ -1009,6 +1018,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         CarRoads.instance().removePropertyChangeListener(this);
         CarOwners.instance().removePropertyChangeListener(this);
         CarColors.instance().removePropertyChangeListener(this);
+        if(_tag!=null){
+           _tag.removePropertyChangeListener(_tagListener);
+        }
     }
 
     /**
