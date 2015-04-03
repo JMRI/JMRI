@@ -40,10 +40,10 @@ public class Calibrater {
     
     protected String verifyCalibrate() {
         BlockOrder bo = _warrant.getViaOrder();
-        OBlock calibBlock = null;
-        if (bo!=null) {
-            calibBlock = bo.getBlock();
+        if (bo==null) {
+            return  Bundle.getMessage("noCalibBlock");                                          
         }
+        OBlock calibBlock = bo.getBlock();
         if (calibBlock==null) {
             return  Bundle.getMessage("noCalibBlock");                              
         }
