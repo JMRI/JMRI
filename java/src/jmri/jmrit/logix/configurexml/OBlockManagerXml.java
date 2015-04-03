@@ -190,6 +190,7 @@ public class OBlockManagerXml // extends XmlFile
         }
         elem.setAttribute("fromDirection", "" + path.getFromBlockDirection());
         elem.setAttribute("toDirection", "" + path.getToBlockDirection());
+        elem.setAttribute("length", "" + path.getLengthMm());
         return elem;
     }
 
@@ -513,8 +514,12 @@ public class OBlockManagerXml // extends XmlFile
             if (attr != null) {
                 path.setToBlockDirection(attr.getIntValue());
             }
+            attr =  elem.getAttribute("length");
+            if (attr != null) {
+                path.setLength(attr.getFloatValue());
+            }
         } catch (org.jdom2.DataConversionException e) {
-            log.error("Could not parse path (" + pName + ") block (" + block.getSystemName() + ") attribute");
+            log.error("Could not parse attribute of path (" + pName + ") block (" + block.getSystemName() + ")");
         }
 
         Attribute attr = elem.getAttribute("fromPortal");

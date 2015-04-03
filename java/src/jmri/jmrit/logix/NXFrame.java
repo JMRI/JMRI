@@ -584,8 +584,9 @@ public class NXFrame extends WarrantRoute {
     private String makeCommands(Warrant w) {
         
         List<BlockOrder> orders = getOrders();
-        OBlock block = orders.get(0).getBlock();
-        String blockName = block.getDisplayName();
+        BlockOrder bo = orders.get(0); 
+//        OPath path = bo.getPath();
+        String blockName = bo.getBlock().getDisplayName();
         w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
         w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
         w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
@@ -597,10 +598,10 @@ public class NXFrame extends WarrantRoute {
         float delta = _minSpeed*2;          // _throttleIncr;
         
         float defaultBlockLen = 5*_maxSpeed*_intervalTime/(_factor*_scale);
-        float totalLen = block.getLengthIn()/2;     // estimated distance of the route
+        float totalLen = bo.getPath().getLengthIn()/2;     // estimated distance of the route
         int orderSize = orders.size();
         for (int i=1; i<orderSize-1; i++) {
-            float len = orders.get(i).getBlock().getLengthIn();
+            float len = orders.get(i).getPath().getLengthIn();
             if (len<=0) {
                 // intermediate blocks should not be zero
                 log.warn(w.getDisplayName()+" route through block \""+orders.get(i).getBlock().getDisplayName()+"\" has length zero. Using "+
@@ -609,7 +610,8 @@ public class NXFrame extends WarrantRoute {
             }
             totalLen += len;
         }
-        totalLen += orders.get(orderSize-1).getBlock().getLengthIn()/2;     // OK if user has set to 0
+        bo = orders.get(orderSize-1);
+        totalLen += bo.getPath().getLengthIn()/2;     // OK if user has set to 0
         float curSpeed = _minSpeed;
         _rampLength = (3*_minSpeed*_intervalTime/2)/(_factor*_scale);      // actual ramp distance to use.
         _numSteps = 1;
@@ -640,7 +642,7 @@ public class NXFrame extends WarrantRoute {
         }*/
                 
         int idx = 0;        // block index
-        float blockLen = block.getLengthIn()/2;
+        float blockLen = bo.getPath().getLengthIn()/2;
 
         float noopTime = 0;         // ms time for entry into next block
         float curDistance = 0;      // distance traveled in current block
@@ -697,9 +699,9 @@ public class NXFrame extends WarrantRoute {
             if (log.isDebugEnabled()) log.debug("Leave RampUp block \""+blockName+"\" noopTime= "+noopTime+
                     ", in distance="+curSpeed*noopTime/(_factor*_scale)+", blockLen= "+blockLen+
                     ", remRamp= "+remRamp);
-            block = orders.get(++idx).getBlock();
-            blockName = block.getDisplayName();
-            blockLen = block.getLengthIn();
+            bo = orders.get(++idx);
+            blockName = bo.getBlock().getDisplayName();
+            blockLen = bo.getPath().getLengthIn();
             if (blockLen<=0 && idx<orderSize-1)  {
                 blockLen = _rampLength;
             }
@@ -721,9 +723,9 @@ public class NXFrame extends WarrantRoute {
             noopTime = (blockLen-curDistance)*(_factor*_scale)/curSpeed;                
             if (log.isDebugEnabled()) log.debug("Leave MidRoute block \""+blockName+"\" noopTime= "+noopTime+
                     ", curDistance="+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen);
-            block = orders.get(++idx).getBlock();
-            blockName = block.getDisplayName();
-            blockLen = block.getLengthIn();
+            bo = orders.get(++idx);
+            blockName = bo.getBlock().getDisplayName();
+            blockLen = bo.getPath().getLengthIn();
             if (idx==orderSize-1) {
                 blockLen /= 2;
             } else if (blockLen<=0) {
@@ -788,9 +790,9 @@ public class NXFrame extends WarrantRoute {
                 if (log.isDebugEnabled()) log.debug("Leave RampDown block \""+blockName+"\" noopTime= "+noopTime+
                         ", in distance="+curSpeed*noopTime/(_factor*_scale)+", blockLen= "+blockLen+
                         ", totalLen= "+totalLen+", remRamp= "+remRamp);
-                block = orders.get(++idx).getBlock();
-                blockName = block.getDisplayName();
-                blockLen = block.getLengthIn();
+                bo = orders.get(++idx);
+                blockName = bo.getBlock().getDisplayName();
+                blockLen = bo.getPath().getLengthIn();
                 if (blockLen<=0 && idx<orderSize-1)  {
                     blockLen = _rampLength;
                 }

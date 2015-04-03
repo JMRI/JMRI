@@ -28,6 +28,15 @@ import org.slf4j.LoggerFactory;
  * This implementation handles paths with a list of bean settings. This has been
  * extended from the initial implementation.
  *
+ * <P>
+ * The length of the path may also optionally be entered if desired. This
+ * attribute is for use in automatic running of trains. Length should be the
+ * actual length of model railroad track in the path. It is always stored here
+ * in millimeter units. A length of 0.0 indicates no entry of length by the
+ * user.  If there is no entry the length of the block the path is in
+ * will be returned.  An Entry is only needed when there are paths of greatly
+ * different lengths in the block.
+ *
  * @author	Bob Jacobsen Copyright (C) 2006, 2008
  * @version	$Revision$
  */
@@ -216,6 +225,34 @@ public class Path {
         return b.toString();
     }
 
+    public void setLength(float l) {
+        _length = l;
+    }  // l must be in millimeters
+
+    public float getLengthMm() {
+        if (_length == 0.0f) {
+            return _block.getLengthMm();
+        } else {
+            return _length;
+        }
+    } // return length in millimeters
+
+    public float getLengthCm() {
+        if (_length == 0.0f) {
+            return _block.getLengthCm();
+        } else {
+            return (_length / 10.0f);
+        }
+    }  // return length in centimeters
+
+    public float getLengthIn() {
+        if (_length == 0.0f) {
+            return _block.getLengthIn();
+        } else {
+            return (_length / 25.4f);
+        }
+    }  // return length in inches
+
     static private void appendOne(StringBuffer b, String t) {
         if (b.length() != 0) {
             b.append(", ");
@@ -227,6 +264,7 @@ public class Path {
     private Block _block;
     private int _toBlockDirection;
     private int _fromBlockDirection;
+    private float _length = 0.0f;  // always stored in millimeters
 
     static Logger log = LoggerFactory.getLogger(Path.class.getName());
 }

@@ -667,8 +667,10 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         BlockPathTableModel blockPathModel = frame.getModel();
         blockPathModel.init();
         JTable blockPathTable = new DnDJTable(blockPathModel, new int[]{BlockPathTableModel.EDIT_COL,
-            BlockPathTableModel.DELETE_COL});
+            BlockPathTableModel.DELETE_COL, BlockPathTableModel.UNITSCOL});
         //blockPathTable.setDefaultEditor(JComboBox.class, new jmri.jmrit.symbolicprog.ValueEditor());
+        blockPathTable.getColumnModel().getColumn(BlockPathTableModel.UNITSCOL).setCellRenderer(
+                new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellEditor(new ButtonEditor(new JButton()));
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.EDIT_COL).setCellRenderer(new ButtonRenderer());
         blockPathTable.getColumnModel().getColumn(BlockPathTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));

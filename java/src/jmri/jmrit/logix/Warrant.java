@@ -1484,10 +1484,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _engineer.rampSpeedTo(nextSpeed);   
     }
     
-    static private float getLength(OBlock block, float defaultLength) {
-        float len = block.getLengthIn();
+    private float getLength(OPath path) {
+        float len = path.getLengthIn();
         if (len <= 0) {
-            len = defaultLength;      //rampLen;
+            len = _lookAheadLen;      //rampLen;
         }
         return len;
     }
@@ -1517,7 +1517,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         // An estimate for how far to look ahead for a possible speed change
         float dist;
-        float len = getLength(curBlock, _lookAheadLen);
+        float len = getLength(blkOrder.getPath());
         switch (position) {
             case BEG:      // entering a new block
                 dist = len;
@@ -1568,13 +1568,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         allocateFromIndex(index);        // sets first stopping block found ahead
         
         OBlock nextBlock = blkOrder.getBlock();
-        len = getLength(nextBlock, _lookAheadLen);
+        len = getLength(blkOrder.getPath());
         dist += len;    // 
         
         while (dist<_lookAheadLen && index<_orders.size()-1 && !nextSpeed.equals(Stop) ) {
             blkOrder = getBlockOrderAt(index+1);   // speed change in this block
             nextBlock = blkOrder.getBlock();
-            len = getLength(nextBlock, _lookAheadLen);
+            len = getLength(blkOrder.getPath());
             
             if (!allocateNextBlock(blkOrder)) {
                 // next block occupied. stop before entering nextBlock

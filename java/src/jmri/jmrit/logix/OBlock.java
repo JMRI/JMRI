@@ -146,8 +146,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     private Warrant _warrant;       // when not null, block is allocated to this warrant
     private String _pathName;      // when not null, this is the allocated path
     protected long _entryTime;		// time when block became occupied
-    static private float _scaleRatio = 87.1f;
-    static private boolean _metric = false; // desired display mode
+    private boolean _metric = false; // desired display mode
     private NamedBeanHandle<Sensor> _errNamedSensor;
     // path keys a list of Blocks whose paths conflict with the path.  These Blocks key 
     // a list of their conflicting paths.
@@ -173,6 +172,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * return true if an existing Sensor is set or sensor is to be removed from
      * block
      */
+    @Override
     public boolean setSensor(String pName) {
         boolean ret = false;
         String oldName = null;
@@ -206,6 +206,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
     }
 
     // override to determine if not DARK
+    @Override
     public void setNamedSensor(NamedBeanHandle<Sensor> namedSensor) {
         super.setNamedSensor(namedSensor);
         if (namedSensor != null) {
@@ -409,28 +410,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return _pathName;
     }
 
-    public float getLengthScaleFeet() {
-        return getLengthIn() / 12 * _scaleRatio;
-    }
-
-    public float getLengthMeters() {
-        return getLengthMm() / 1000 * _scaleRatio;
-    }
-
     public void setMetricUnits(boolean type) {
         _metric = type;
     }
 
     public boolean isMetric() {
         return _metric;
-    }
-
-    public void setScaleRatio(float sr) {
-        _scaleRatio = sr;
-    }
-
-    public float getScaleRatio() {
-        return _scaleRatio;
     }
 
     public void setMarkerForeground(Color c) {
@@ -461,6 +446,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * override
      *
      */
+    @Override
     public void setValue(Object o) {
         super.setValue(o);
         if (o == null) {
@@ -763,6 +749,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         return true;
     }
 
+    @Override
     public void removePath(Path path) {
         if (!getSystemName().equals(path.getBlock().getSystemName())) {
             return;
@@ -841,6 +828,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * (Override) Handles Block sensor going INACTIVE: this block is empty.
      * Called by handleSensorChange
      */
+    @Override
     public void goingInactive() {
         if (log.isDebugEnabled()) {
             log.debug("Allocated OBlock \"" + getSystemName()
@@ -857,6 +845,7 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
      * (Override) Handles Block sensor going ACTIVE: this block is now occupied,
      * figure out from who and copy their value. Called by handleSensorChange
      */
+    @Override
     public void goingActive() {
         setState((getState() & ~UNOCCUPIED) | OCCUPIED);
 //        if (log.isDebugEnabled()) log.debug("Allocated OBlock \""+getSystemName()+
@@ -870,8 +859,8 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
         }
     }
 
+    @Override
     public void dispose() {
-
         List<Portal> list = getPortals();
         for (int i = 0; i < list.size(); i++) {
             Portal portal = list.get(i);
@@ -892,10 +881,12 @@ public class OBlock extends jmri.Block implements java.beans.PropertyChangeListe
                 Bundle.getMessage("BlockDescription"), getDisplayName());
     }
 
+    @Override
     public String toString() {
         return getDisplayName();
     }
 
+    @Override
     public String getBeanType() {
         return Bundle.getMessage("BeanNameOBlock");
     }

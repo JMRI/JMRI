@@ -51,7 +51,7 @@ public class Calibrater {
         if (_calibrateIndex<=0 || _calibrateIndex>=_warrant.getThrottleCommands().size()-1) {
             return  Bundle.getMessage("badCalibBlock", calibBlock.getDisplayName());                    
         }
-        if (calibBlock.getLengthIn() <= 3.0) {
+        if (bo.getPath().getLengthIn() <= 3.0) {
             return  Bundle.getMessage("CalibBlockTooSmall", calibBlock.getDisplayName());   
         }
         List <ThrottleSetting> cmds = _warrant.getThrottleCommands();
@@ -96,9 +96,10 @@ public class Calibrater {
         if (_calibrateIndex+1 != index) {
             return;
         }
-        OBlock calibBlock = _warrant.getBlockAt(_calibrateIndex);
+        BlockOrder bo = _warrant.getBlockOrderAt(_calibrateIndex);
+        OBlock calibBlock = bo.getBlock();
         long eTime =  _warrant.getBlockAt(_calibrateIndex+1)._entryTime - calibBlock._entryTime;
-        float speed = calibBlock.getLengthIn()*SignalSpeedMap.getMap().getLayoutScale()/eTime;        // scale ins/ms
+        float speed = bo.getPath().getLengthIn()*SignalSpeedMap.getMap().getLayoutScale()/eTime;        // scale ins/ms
         float factor = _maxSpeed/speed;
         String speedUnits;
         if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
