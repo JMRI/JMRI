@@ -6,6 +6,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import javax.swing.JComboBox;
+import jmri.Reporter;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
@@ -17,8 +18,6 @@ import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.PhysicalLocation;
-import jmri.Reporter;
-
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -1279,7 +1278,7 @@ public class Location implements java.beans.PropertyChangeListener {
             Reporter r = jmri.InstanceManager
                              .reporterManagerInstance()
                              .provideReporter(
-                                (String)e.getAttribute(Xml.READER).getValue());
+                                e.getAttribute(Xml.READER).getValue());
             setReporter(r);
         } 
         addPropertyChangeListeners();

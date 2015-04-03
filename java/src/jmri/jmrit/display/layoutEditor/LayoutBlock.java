@@ -2083,7 +2083,7 @@ public class LayoutBlock extends AbstractNamedBean implements java.beans.Propert
                         if (enableDeleteRouteLogging) {
                             log.info(msgPrefix + " We only have a single valid route left to " + destBlock.getDisplayName() + " So will tell " + layoutBlock.getDisplayName() + " we no longer have it");
                         }
-                        layoutBlock.removeRouteFromNeighbour(this, newUpdate);
+                        if (layoutBlock!=null) layoutBlock.removeRouteFromNeighbour(this, newUpdate);
                         getAdjacency(nextHop).removeRouteAdvertisedToNeighbour(routesToRemove.get(j));
                     }
 

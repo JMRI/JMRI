@@ -25,7 +25,7 @@ public class z21XNetMessage extends jmri.jmrix.lenz.XNetMessage implements Seria
      */
     private static final long serialVersionUID = -3422831570914017638L;
 
-    static private int _nRetries = 5;
+//    static private int _nRetries = 5;
 
     // constructors, just pass on to the supperclass.
     public z21XNetMessage(int len) {

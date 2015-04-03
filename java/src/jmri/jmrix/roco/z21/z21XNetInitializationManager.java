@@ -30,12 +30,12 @@ public class z21XNetInitializationManager extends XNetInitializationManager {
         if (log.isDebugEnabled()) {
             log.debug("Init called");
         }
-        float CSSoftwareVersion = systemMemo.getXNetTrafficController()
+/*        float CSSoftwareVersion = systemMemo.getXNetTrafficController()
                 .getCommandStation()
-                .getCommandStationSoftwareVersion();
+                .getCommandStationSoftwareVersion();*
         int CSType = systemMemo.getXNetTrafficController()
                 .getCommandStation()
-                .getCommandStationType();
+                .getCommandStationType();*/
 
         jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
         jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
