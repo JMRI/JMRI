@@ -249,33 +249,40 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
             }
         }
     }
+    
+//    JmriJFrame statusFrame;
+//    JLabel text;
 
     private void checkDestinationsValid() {
+        // create a status frame
+//      statusFrame = new JmriJFrame(Bundle.getMessage("TitleEditTrackDestinations"));
+//      JPanel ps = new JPanel();
+//      ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
+//      text = new JLabel("Start with this");
+//      ps.add(text);
+//    
+//      statusFrame.getContentPane().add(ps);
+//      statusFrame.pack();
+//      statusFrame.setSize(Control.panelWidth700, 100);
+//      statusFrame.setVisible(true);
+      
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 if (checkLocationsLoop())
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("OkayMessage"));
                 checkDestinationsButton.setEnabled(true);
+//                statusFrame.dispose();
             }
         });
     }
 
     private boolean checkLocationsLoop() {
-        // create a status frame
-//          JmriJFrame statusFrame = new JmriJFrame(Bundle.getMessage("TitleEditTrackDestinations"));
-//          JPanel ps = new JPanel();
-//          ps.setLayout(new BoxLayout(ps, BoxLayout.Y_AXIS));
-//          JLabel text = new JLabel();
-//          ps.add(text);
-//        
-//          statusFrame.pack();
-//          statusFrame.setSize(Control.panelWidth700, 100);
-//          statusFrame.getContentPane().add(ps);
-//          statusFrame.setVisible(true);
-
         for (Location destination : locationManager.getLocationsByNameList()) {
             if (_track.acceptsDestination(destination)) {
                 log.debug("Track ({}) accepts destination ({})", _track.getName(), destination.getName());
+//                text.setText("Destination : " + destination.getName());
+//                statusFrame.revalidate();
+//                statusFrame.repaint();
                 // now check to see if the track's rolling stock is accepted by the destination
                 checkTypes: for (String type : CarTypes.instance().getNames()) {
                     if (!_track.acceptsTypeName(type)) {
@@ -394,8 +401,6 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             car.setTrack(_track);
                             car.setFinalDestination(destination);
                             log.debug("Find train for car type ({}), road ({}), load ({})", type, road, load);
-//                            text.setText("Destination :" + destination.getName());
-//                            statusFrame.revalidate();
 
                             boolean results = Router.instance().setDestination(car, null, null);
                             car.setDestination(null, null); // clear destination if set by router
