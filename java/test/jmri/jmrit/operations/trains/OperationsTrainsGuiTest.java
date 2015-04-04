@@ -1,6 +1,7 @@
-//OperationsTrainsGuiTest.java
+// OperationsTrainsGuiTest.java
 package jmri.jmrit.operations.trains;
 
+import java.awt.Component;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
@@ -46,50 +47,41 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
 
         TrainsTableFrame f = new TrainsTableFrame();
         f.setLocation(10, 20);
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveButton);
 
         Assert.assertEquals("sort by name", TrainsTableModel.TIMECOLUMNNAME, f.getSortBy());
         Assert.assertTrue("Build Messages", tmanager.isBuildMessagesEnabled());
         Assert.assertFalse("Build Report", tmanager.isBuildReportEnabled());
         Assert.assertFalse("Print Review", tmanager.isPrintPreviewEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.showTime));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.buildMsgBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.buildReportBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.showTime);
+        enterClickAndLeave(f.buildMsgBox);
+        enterClickAndLeave(f.buildReportBox);
+        enterClickAndLeave(f.saveButton);
 
         Assert.assertFalse("Build Messages 2", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Report 2", tmanager.isBuildReportEnabled());
         Assert.assertFalse("Print Review 2", tmanager.isPrintPreviewEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.showId));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.buildMsgBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.printPreviewBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.showId);
+        enterClickAndLeave(f.buildMsgBox);
+        enterClickAndLeave(f.printPreviewBox);
+        enterClickAndLeave(f.saveButton);
 
         Assert.assertTrue("Build Messages 3", tmanager.isBuildMessagesEnabled());
         Assert.assertTrue("Build Report 3", tmanager.isBuildReportEnabled());
         Assert.assertTrue("Print Review 3", tmanager.isPrintPreviewEnabled());
 
         // create the TrainEditFrame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.addButton);
+
         // confirm panel creation
         JmriJFrame tef = JmriJFrame.getFrame("Add Train");
         Assert.assertNotNull("train edit frame", tef);
 
         // create the TrainSwichListEditFrame
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.switchListsButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.switchListsButton);
+
         // confirm panel creation
         JmriJFrame tsle = JmriJFrame.getFrame("Switch Lists by Location");
         Assert.assertNotNull("train switchlist edit frame", tsle);
@@ -113,8 +105,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         trainEditFrame.trainNameTextField.setText("Test Train Name");
         trainEditFrame.trainDescriptionTextField.setText("Test Train Description");
         trainEditFrame.commentTextArea.setText("Test Train Comment");
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.addTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.addTrainButton);
 
         TrainManager tmanager = TrainManager.instance();
         Train t = tmanager.getTrainByName("Test Train Name");
@@ -134,8 +125,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         trainEditFrame.minuteBox.setSelectedItem("45");
         // shouldn't change until Save
         Assert.assertEquals("train comment", "00:00", t.getDepartureTime());
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
+
         // clear no route dialogue box
         pressDialogButton(trainEditFrame, "OK");
 
@@ -146,8 +137,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         trainEditFrame.routeBox.setSelectedIndex(3); // the 3rd item should be "Test Route C"
         Assert.assertEquals("train route 2", "Test Route C", t.getRoute().getName());
         // test route edit button
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.editButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.editButton);
+
         // confirm panel creation
         JmriJFrame ref = JmriJFrame.getFrame("Edit Route");
         Assert.assertNotNull("route add frame", ref);
@@ -157,11 +148,11 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         trainEditFrame.setSize(trainEditFrame.getWidth(), trainEditFrame.getHeight() + 200);
 
         // test car types using the clear and set buttons
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.clearButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.clearButton);
+
         Assert.assertFalse("train accepts car type Boxcar", t.acceptsTypeName("Boxcar"));
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.setButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.setButton);
+
         Assert.assertTrue("train accepts car type Boxcar", t.acceptsTypeName("Boxcar"));
 
         // test engine fields
@@ -176,49 +167,48 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("number of engines 1", "0", t.getNumberEngines());
         Assert.assertEquals("engine model 1", "", t.getEngineModel());
         Assert.assertEquals("engine road 1", "", t.getEngineRoad());
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
+
         Assert.assertEquals("number of engines 2", "3", t.getNumberEngines());
         Assert.assertEquals("engine model 2", "FT", t.getEngineModel());
         Assert.assertEquals("engine road 2", "UP", t.getEngineRoad());
 
         // test caboose and FRED buttons and fields
         // require a car with FRED
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.fredRadioButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.fredRadioButton);
+
         // shouldn't change until Save
         Assert.assertEquals("train requirements 1", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
+
         Assert.assertEquals("train requirements 2", Train.FRED, t.getRequirements());
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.cabooseRadioButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.cabooseRadioButton);
+
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
+
         Assert.assertEquals("train requirements 3", Train.CABOOSE, t.getRequirements());
         Assert.assertEquals("caboose road 1", "", t.getCabooseRoad());
         // shouldn't change until Save
         trainEditFrame.roadCabooseBox.setSelectedItem("NH");
         Assert.assertEquals("caboose road 2", "", t.getCabooseRoad());
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
+
         Assert.assertEquals("caboose road 3", "NH", t.getCabooseRoad());
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.noneRadioButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.noneRadioButton);
+
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
+
         Assert.assertEquals("train requirements 4", Train.NO_CABOOSE_OR_FRED, t.getRequirements());
 
         // test frame size and location
         trainEditFrame.setSize(650, 600);
         trainEditFrame.setLocation(25, 30);
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.saveTrainButton);
 
         // test delete button
         // the delete opens a dialog window to confirm the delete
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.deleteTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.deleteTrainButton);
+
         // don't delete, we need this train for the next two tests
         // testTrainBuildOptionFrame() and testTrainEditFrameRead()
         pressDialogButton(trainEditFrame, "No");
@@ -287,30 +277,27 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
         // test options
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.buildNormalCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.buildNormalCheckBox);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", false, t.isSendCarsToTerminalEnabled());
         Assert.assertEquals("return to staging", false, t.isAllowReturnToStagingEnabled());
         Assert.assertEquals("allow local moves", true, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.sendToTerminalCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.sendToTerminalCheckBox);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
         Assert.assertEquals("return to staging", false, t.isAllowReturnToStagingEnabled());
         Assert.assertEquals("allow local moves", true, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.returnStagingCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.returnStagingCheckBox);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
         // the return to staging checkbox should be disabled
@@ -318,20 +305,18 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("allow local moves", true, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.allowLocalMovesCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.allowLocalMovesCheckBox);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
         Assert.assertEquals("return to staging", false, t.isAllowReturnToStagingEnabled());
         Assert.assertEquals("allow local moves", false, t.isAllowLocalMovesEnabled());
         Assert.assertEquals("allow through cars", true, t.isAllowThroughCarsEnabled());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.allowThroughCarsCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.allowThroughCarsCheckBox);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("Build normal", true, t.isBuildTrainNormalEnabled());
         Assert.assertEquals("send to terminal", true, t.isSendCarsToTerminalEnabled());
         Assert.assertEquals("return to staging", false, t.isAllowReturnToStagingEnabled());
@@ -339,55 +324,53 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("allow through cars", false, t.isAllowThroughCarsEnabled());
 
         // test car owner options
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameExclude));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.ownerNameExclude);
+
         Assert.assertEquals("train car owner exclude", Train.EXCLUDE_OWNERS, t.getOwnerOption());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameInclude));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.ownerNameInclude);
+
         Assert.assertEquals("train car owner include", Train.INCLUDE_OWNERS, t.getOwnerOption());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.ownerNameAll));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.ownerNameAll);
+
         Assert.assertEquals("train car owner all", Train.ALL_OWNERS, t.getOwnerOption());
 
         // test car date options
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.builtDateAfter));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.builtDateAfter);
+
         f.builtAfterTextField.setText("1956");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("train car built after", "1956", t.getBuiltStartYear());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.builtDateBefore));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.builtDateBefore);
+
         f.builtBeforeTextField.setText("2010");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("train car built before", "2010", t.getBuiltEndYear());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.builtDateRange));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.builtDateRange);
+
         f.builtAfterTextField.setText("1888");
         f.builtBeforeTextField.setText("2000");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("train car built after range", "1888", t.getBuiltStartYear());
         Assert.assertEquals("train car built before range", "2000", t.getBuiltEndYear());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.builtDateAll));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.builtDateAll);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("train car built after all", "", t.getBuiltStartYear());
         Assert.assertEquals("train car built before all", "", t.getBuiltEndYear());
 
         // test optional loco and caboose changes
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.change1Engine));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.change1Engine);
+        enterClickAndLeave(f.saveTrainButton);
+
         // clear dialogue box
         pressDialogButton(f, "OK");
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "", t.getSecondLegStartLocationName());
 
@@ -396,8 +379,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         f.modelEngine1Box.setSelectedItem("FT");
         f.roadEngine1Box.setSelectedItem("UP");
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("loco 1 change", Train.CHANGE_ENGINES, t.getSecondLegOptions());
         Assert.assertEquals("loco 1 departure name", "Test Train Location A", t
                 .getSecondLegStartLocationName());
@@ -405,57 +388,53 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("loco 1 model", "FT", t.getSecondLegEngineModel());
         Assert.assertEquals("loco 1 road", "UP", t.getSecondLegEngineRoad());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.modify1Caboose));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.modify1Caboose);
+
         f.routePickup1Box.setSelectedIndex(0);
         f.roadCaboose1Box.setSelectedItem("NH");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         // clear dialogue box
         pressDialogButton(f, "OK");
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+
         Assert.assertEquals("caboose 1 change", Train.ADD_CABOOSE, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2);
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("caboose 1 road", "NH", t.getSecondLegCabooseRoad());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.helper1Service));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.helper1Service);
+
         f.routePickup1Box.setSelectedIndex(0);
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         // clear dialogue box
         pressDialogButton(f, "OK");
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+
         Assert.assertEquals("helper 1 change", Train.HELPER_ENGINES, t.getSecondLegOptions());
 
         f.routePickup1Box.setSelectedIndex(2); // Should be "Test Train Location B"
         f.routeDrop1Box.setSelectedIndex(3); // Should be "Test Train Location C"
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Helper 1 start location name", "Test Train Location B", t
                 .getSecondLegStartLocationName());
         Assert.assertEquals("Helper 1 end location name", "Test Train Location C", t
                 .getSecondLegEndLocationName());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.none1));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.none1);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("none 1", 0, t.getSecondLegOptions());
 
         // now do the second set of locos and cabooses
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.change2Engine));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.change2Engine);
+        enterClickAndLeave(f.saveTrainButton);
+
         // clear dialogue box
         pressDialogButton(f, "OK");
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "", t.getThirdLegStartLocationName());
 
@@ -464,8 +443,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         f.modelEngine2Box.setSelectedItem("FT");
         f.roadEngine2Box.setSelectedItem("UP");
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("loco 2 change", Train.CHANGE_ENGINES, t.getThirdLegOptions());
         Assert.assertEquals("loco 2 departure name", "Test Train Location A", t
                 .getThirdLegStartLocationName());
@@ -473,83 +452,80 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("loco 2 model", "FT", t.getThirdLegEngineModel());
         Assert.assertEquals("loco 2 road", "UP", t.getThirdLegEngineRoad());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.modify2Caboose));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.modify2Caboose);
+
         f.routePickup2Box.setSelectedIndex(0);
         f.roadCaboose2Box.setSelectedItem("NH");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         // clear dialogue box
         pressDialogButton(f, "OK");
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+
         Assert.assertEquals("caboose 2 change", Train.ADD_CABOOSE, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2);
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("caboose 2 road", "NH", t.getThirdLegCabooseRoad());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.helper2Service));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.helper2Service);
+
         f.routePickup2Box.setSelectedIndex(0);
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
+
         // clear dialogue box
         pressDialogButton(f, "OK");
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+
         Assert.assertEquals("helper 2 change", Train.HELPER_ENGINES, t.getThirdLegOptions());
 
         f.routePickup2Box.setSelectedIndex(2); // Should be "Test Train Location B"
         f.routeDrop2Box.setSelectedIndex(3); // Should be "Test Train Location C"
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.saveTrainButton);
 
         Assert.assertEquals("Helper 2 start location name", "Test Train Location B", t
                 .getThirdLegStartLocationName());
         Assert.assertEquals("Helper 2 end location name", "Test Train Location C", t
                 .getThirdLegEndLocationName());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.none2));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveTrainButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.none2);
+        enterClickAndLeave(f.saveTrainButton);
+
         Assert.assertEquals("none 2", 0, t.getThirdLegOptions());
 
         trainEditFrame.dispose();
         f.dispose();
     }
 
-//	public void testTrainEditFrameRead() {
-//		TrainManager tmanager = TrainManager.instance();
-//		Train t = tmanager.newTrain("Test Train Name");
-//
-//		// change the train so it doesn't match the add test
-//		t.setRequirements(Train.CABOOSE);
-//		t.setCabooseRoad("CP");
-//
-//		TrainEditFrame f = new TrainEditFrame();
-//		f.initComponents(t);
-//		f.setTitle("Test Edit Train Frame");
-//
-//		Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
-//		Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField
-//				.getText());
-//		Assert.assertEquals("train comment", "Test Train Comment", f.commentTextArea.getText());
-//		Assert.assertEquals("train depart hour", "15", f.hourBox.getSelectedItem());
-//		Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
-//		Assert.assertEquals("train route", t.getRoute(), f.routeBox.getSelectedItem());
-//		Assert.assertEquals("number of engines", "3", f.numEnginesBox.getSelectedItem());
-//		Assert.assertEquals("engine model", "FT", f.modelEngineBox.getSelectedItem());
-//		Assert.assertEquals("engine road", "UP", f.roadEngineBox.getSelectedItem());
-//		Assert.assertEquals("caboose road", "CP", f.roadCabooseBox.getSelectedItem());
-//		// check radio buttons
-//		Assert.assertTrue("caboose selected", f.cabooseRadioButton.isSelected());
-//		Assert.assertFalse("none selected", f.noneRadioButton.isSelected());
-//		Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
-//
-//		f.dispose();
-//	}
+    //	public void testTrainEditFrameRead() {
+    //		TrainManager tmanager = TrainManager.instance();
+    //		Train t = tmanager.newTrain("Test Train Name");
+    //
+    //		// change the train so it doesn't match the add test
+    //		t.setRequirements(Train.CABOOSE);
+    //		t.setCabooseRoad("CP");
+    //
+    //		TrainEditFrame f = new TrainEditFrame();
+    //		f.initComponents(t);
+    //		f.setTitle("Test Edit Train Frame");
+    //
+    //		Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
+    //		Assert.assertEquals("train description", "Test Train Description", f.trainDescriptionTextField
+    //				.getText());
+    //		Assert.assertEquals("train comment", "Test Train Comment", f.commentTextArea.getText());
+    //		Assert.assertEquals("train depart hour", "15", f.hourBox.getSelectedItem());
+    //		Assert.assertEquals("train depart minute", "45", f.minuteBox.getSelectedItem());
+    //		Assert.assertEquals("train route", t.getRoute(), f.routeBox.getSelectedItem());
+    //		Assert.assertEquals("number of engines", "3", f.numEnginesBox.getSelectedItem());
+    //		Assert.assertEquals("engine model", "FT", f.modelEngineBox.getSelectedItem());
+    //		Assert.assertEquals("engine road", "UP", f.roadEngineBox.getSelectedItem());
+    //		Assert.assertEquals("caboose road", "CP", f.roadCabooseBox.getSelectedItem());
+    //		// check radio buttons
+    //		Assert.assertTrue("caboose selected", f.cabooseRadioButton.isSelected());
+    //		Assert.assertFalse("none selected", f.noneRadioButton.isSelected());
+    //		Assert.assertFalse("FRED selected", f.fredRadioButton.isSelected());
+    //
+    //		f.dispose();
+    //	}
     public void testTrainModifyFrame() {
         // confirm that train default accepts Boxcars
         TrainManager tmanager = TrainManager.instance();
@@ -560,17 +536,15 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         f.initComponents("Boxcar");
 
         // remove Boxcar from trains
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.clearButton);
+        enterClickAndLeave(f.saveButton);
+
         Assert.assertFalse("accepts Boxcar 2", t.acceptsTypeName("Boxcar"));
 
         // now add Boxcar to trains
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.setButton);
+        enterClickAndLeave(f.saveButton);
+
         Assert.assertTrue("accepts Boxcar 3", t.acceptsTypeName("Boxcar"));
 
         f.dispose();
@@ -594,48 +568,44 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
             Assert.assertTrue("print switchlist 1", l.isSwitchListEnabled());
         }
         // now clear all locations
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.clearButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.clearButton);
+
+        enterClickAndLeave(f.saveButton);
+
         for (int i = 0; i < locations.size(); i++) {
             Location l = locations.get(i);
             Assert.assertFalse("print switchlist 2", l.isSwitchListEnabled());
         }
         // now set all locations
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.setButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.setButton);
+        enterClickAndLeave(f.saveButton);
+
         for (int i = 0; i < locations.size(); i++) {
             Location l = locations.get(i);
             Assert.assertTrue("print switchlist 3", l.isSwitchListEnabled());
         }
 
         // test the two check box options
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.switchListRealTimeCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.switchListRealTimeCheckBox);
+        enterClickAndLeave(f.saveButton);
+
         Assert.assertTrue("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.switchListAllTrainsCheckBox));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.switchListAllTrainsCheckBox);
+        enterClickAndLeave(f.saveButton);
+
         Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
         Assert.assertTrue("Page per Train", Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL));
         Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
 
         // TODO add test for combo box
-//		getHelper().enterClickAndLeave(new MouseEventData(this, f.switchListPageComboBox));
-//		getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-//		jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
-//		Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
-//		Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
-//		Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
+        //		enterClickAndLeave(f.switchListPageComboBox);
+        //		enterClickAndLeave(f.saveButton);
+        //		Assert.assertFalse("All Trains", Setup.isSwitchListAllTrainsEnabled());
+        //		Assert.assertTrue("Page per Train", Setup.isSwitchListPagePerTrainEnabled());
+        //		Assert.assertFalse("Real Time", Setup.isSwitchListRealTime());
         f.dispose();
     }
 
@@ -651,18 +621,17 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         trainEditFrame.initComponents(t);
         trainEditFrame.setTitle("Test Delete Train Frame");
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.deleteTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.deleteTrainButton);
+
         // And now press the confirmation button
         pressDialogButton(trainEditFrame, "Yes");
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
 
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNull("train deleted", t);
 
         // Now add it back
-        getHelper().enterClickAndLeave(new MouseEventData(this, trainEditFrame.addTrainButton));
-        jmri.util.JUnitUtil.releaseThread(trainEditFrame, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(trainEditFrame.addTrainButton);
+
         t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull("train added", t);
 
@@ -692,19 +661,18 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("frame exists", f);
 
         f.addTextBox.setText("A New Day");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.addButton);
 
         TrainScheduleManager tsm = TrainScheduleManager.instance();
         Assert.assertNotNull("Train schedule manager exists", tsm);
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.deleteButton);
+
         Assert.assertNull("A new Day schedule does not exist", tsm.getScheduleByName("A New Day"));
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
-        jmri.util.JUnitUtil.releaseThread(f, 1); // compensate for race between GUI and test thread
+        enterClickAndLeave(f.replaceButton);
+
         Assert.assertNotNull("A new Day schedule exists", tsm.getScheduleByName("A New Day"));
 
         f.dispose();
@@ -1078,12 +1046,12 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         editor.getTargetFrame().dispose();
     }
 
-//	public void testTrainTestPanel() {
-//		// confirm panel creation
-//		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
-//		Assert.assertNotNull(f);
-//
-//	}
+    //	public void testTrainTestPanel() {
+    //		// confirm panel creation
+    //		JmriJFrame f = JmriJFrame.getFrame("Train Test Panel");
+    //		Assert.assertNotNull(f);
+    //
+    //	}
     @SuppressWarnings("unchecked")
     private void pressDialogButton(JmriJFrame f, String buttonName) {
         // (with JfcUnit, not pushing this off to another thread)
@@ -1099,7 +1067,12 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
         Assert.assertNotNull("button not found", button);
         // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        enterClickAndLeave(button);
+    }
+
+    private void enterClickAndLeave(Component comp) {
+        getHelper().enterClickAndLeave(new MouseEventData(this, comp));
+        jmri.util.JUnitUtil.releaseThread(comp.getParent(), 1); // compensate for race between GUI and test thread
     }
 
     // Ensure minimal setup for log4J
