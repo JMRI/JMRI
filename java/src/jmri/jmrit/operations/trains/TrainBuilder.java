@@ -4092,8 +4092,8 @@ public class TrainBuilder extends TrainCommon {
         if (trackSave != null) {
             if (finalDestinationTrackSave != null) {
                 car.setFinalDestination(finalDestinationTrackSave.getLocation());
+                car.setFinalDestinationTrack(finalDestinationTrackSave);
             }
-            car.setFinalDestinationTrack(finalDestinationTrackSave);
             addCarToTrain(car, rl, rldSave, trackSave);
             return true;
         }
