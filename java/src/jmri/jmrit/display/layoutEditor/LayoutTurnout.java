@@ -1631,6 +1631,12 @@ public class LayoutTurnout {
             double xi = 0.0;
             double yi = b;
             if ((dispC.getX() - x) != 0.0) {
+                if((-dispC.getX()+x)==0){
+                    /* we can in some situations eg 90' vertical end up with a 0 value,
+                    so hence remove a small amount so that we 
+                    don't have a divide by zero issue */
+                    x = x-0.0000000001;
+                }
                 a = (dispC.getY() - y) / (dispC.getX() - x);
                 b = y - (a * x);
                 xi = -b / (a + (1.0 / a));
@@ -1669,6 +1675,13 @@ public class LayoutTurnout {
             double xi = 0.0;
             double yi = b;
             if ((dispB.getX() + x) != 0.0) {
+                if((-dispB.getX()+x)==0){
+                    /* we can in some situations eg 90' vertical end up with a 0 value,
+                    so hence remove a small amount so that we 
+                    don't have a divide by zero issue */
+                    
+                    x = x-0.0000000001;
+                }
                 a = (-dispB.getY() + y) / (-dispB.getX() + x);
                 b = -y + (a * x);
                 xi = -b / (a + (1.0 / a));
@@ -1727,7 +1740,6 @@ public class LayoutTurnout {
         Point2D pt = new Point2D.Double(round(center.getX() * xFactor),
                 round(center.getY() * yFactor));
         center = pt;
-
         if (version == 2) {
             pointA = new Point2D.Double(round(pointA.getX() * xFactor),
                     round(pointA.getY() * yFactor));
