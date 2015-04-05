@@ -21,6 +21,7 @@ import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Operations Cars GUI class
@@ -467,6 +468,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         c1.setLoadName("L");
         c1.setMoves(55);
         c1.setOwner("Owner2");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         c1.setRfid("RFID 3");
         c1.setTypeName("Caboose");
         c1.setWeight("1.4");
@@ -481,6 +485,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         c2.setLoadName("E");
         c2.setMoves(50);
         c2.setOwner("AT");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         c2.setRfid("RFID 2");
         c2.setTypeName("Boxcar");
 
@@ -491,6 +498,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         c3.setLoadName("LA");
         c3.setMoves(40);
         c3.setOwner("AB");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
         c3.setRfid("RFID 5");
         c3.setTypeName("Gondola");
 
@@ -501,6 +511,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         c4.setLoadName("EA");
         c4.setMoves(30);
         c4.setOwner("AAA");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
         c4.setRfid("RFID 4");
         c4.setTypeName("Tank Food");
 
@@ -511,6 +524,9 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
         c5.setLoadName("LL");
         c5.setMoves(25);
         c5.setOwner("DAB");
+        // make sure the ID tags exist before we
+        // try to add it to a car.
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
         c5.setRfid("RFID 1");
         c5.setTypeName("Coilcar");
 
@@ -534,6 +550,12 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initDebugThrottleManager();
+        JUnitUtil.initIdTagManager();
         apps.tests.Log4JFixture.setUp();
 
         // set the locale to US English
