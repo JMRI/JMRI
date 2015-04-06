@@ -33,17 +33,18 @@ public interface DccThrottle extends Throttle {
     public static final int SpeedStepMode14 = 8;
     public static final int SpeedStepMode28Mot = 16;
 
-    /*
-     * setSpeedStepMode - set the speed step value.
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128 
-     *              speed step mode in most cases
+    /**
+     * Set the speed step value. Default should be 128 speed step mode in most
+     * cases
+     *
+     * @param Mode the current speed step mode
      */
     public void setSpeedStepMode(int Mode);
 
-    /*
-     * getSpeedStepMode - get the current speed step value.
-     * <P>
+    /**
+     * Get the current speed step value.
+     *
+     * @return the current speed step mode
      */
     public int getSpeedStepMode();
 
