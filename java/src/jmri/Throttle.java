@@ -100,6 +100,8 @@ public interface Throttle {
     /**
      * Speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound property.
+     *
+     * @return the speed as a percentage of maximum possible speed
      */
     public float getSpeedSetting();
 
@@ -107,6 +109,8 @@ public interface Throttle {
 
     /**
      * direction This is an bound property.
+     *
+     * @return true if forward, false if reverse or undefined
      */
     public boolean getIsForward();
 
@@ -355,6 +359,8 @@ public interface Throttle {
      * information.
      *
      * This is an unbound property.
+     *
+     * @return The locomotive address
      */
     public LocoAddress getLocoAddress();
 
@@ -427,6 +433,8 @@ public interface Throttle {
      * <P>
      * After this, further usage of this Throttle object will result in a
      * JmriException.
+     *
+     * @param l
      */
     public void dispose(ThrottleListener l);
 
@@ -438,6 +446,8 @@ public interface Throttle {
      * JmriException. Do not call dispose after release.
      * <P>
      * Normally, release ends with a call to dispose.
+     *
+     * @param l
      */
     public void release(ThrottleListener l);
 
@@ -451,6 +461,8 @@ public interface Throttle {
      * JmriException.
      * <P>
      * Normally, dispatch ends with a call to dispose.
+     *
+     * @param l
      */
     public void dispatch(ThrottleListener l);
 
