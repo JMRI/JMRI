@@ -66,160 +66,196 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * speed - expressed as a value 0.0 -> 1.0. Negative means emergency stop.
      * This is an bound parameter.
+     *
+     * @return speed
      */
+    @Override
     public float getSpeedSetting() {
         return speedSetting;
     }
 
-    /*
-     * setSpeedSetting - Implementing functions should override this 
-     * function, but should either make a call to super.setSpeedSetting()
-     * to notify the listeners, or should notify the listeners themselves.
+    /**
+     * setSpeedSetting - Implementing functions should override this function,
+     * but should either make a call to super.setSpeedSetting() to notify the
+     * listeners, or should notify the listeners themselves.
+     *
+     * @param speed
      */
+    @Override
     public void setSpeedSetting(float speed) {
         if (Math.abs(this.speedSetting - speed) > 0.0001) {
-            notifyPropertyChangeListener("SpeedSetting",
-                    new Float(this.speedSetting),
-                    new Float(this.speedSetting
-                            = speed));
+            notifyPropertyChangeListener("SpeedSetting", this.speedSetting, this.speedSetting = speed);
         }
         record(speed);
     }
 
     /**
      * direction This is an bound parameter.
+     *
+     * @return true if locomotive is running forward
      */
+    @Override
     public boolean getIsForward() {
         return isForward;
     }
 
-    /*
-     * setIsForward - Implementing functions should override this 
-     * function, but should either make a call to super.setIsForward()
-     * to notify the listeners, or should notify the listeners themselves.
+    /**
+     * setIsForward - Implementing functions should override this function, but
+     * should either make a call to super.setIsForward() to notify the
+     * listeners, or should notify the listeners themselves.
+     *
+     * @param forward
      */
+    @Override
     public void setIsForward(boolean forward) {
         if (forward != this.isForward) {
-            notifyPropertyChangeListener("IsForward",
-                    Boolean.valueOf(this.isForward),
-                    Boolean.valueOf(this.isForward = forward));
+            notifyPropertyChangeListener("IsForward", this.isForward, this.isForward = forward);
         }
     }
 
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
+    @Override
     public boolean getF0() {
         return f0;
     }
 
+    @Override
     public boolean getF1() {
         return f1;
     }
 
+    @Override
     public boolean getF2() {
         return f2;
     }
 
+    @Override
     public boolean getF3() {
         return f3;
     }
 
+    @Override
     public boolean getF4() {
         return f4;
     }
 
+    @Override
     public boolean getF5() {
         return f5;
     }
 
+    @Override
     public boolean getF6() {
         return f6;
     }
 
+    @Override
     public boolean getF7() {
         return f7;
     }
 
+    @Override
     public boolean getF8() {
         return f8;
     }
 
+    @Override
     public boolean getF9() {
         return f9;
     }
 
+    @Override
     public boolean getF10() {
         return f10;
     }
 
+    @Override
     public boolean getF11() {
         return f11;
     }
 
+    @Override
     public boolean getF12() {
         return f12;
     }
 
+    @Override
     public boolean getF13() {
         return f13;
     }
 
+    @Override
     public boolean getF14() {
         return f14;
     }
 
+    @Override
     public boolean getF15() {
         return f15;
     }
 
+    @Override
     public boolean getF16() {
         return f16;
     }
 
+    @Override
     public boolean getF17() {
         return f17;
     }
 
+    @Override
     public boolean getF18() {
         return f18;
     }
 
+    @Override
     public boolean getF19() {
         return f19;
     }
 
+    @Override
     public boolean getF20() {
         return f20;
     }
 
+    @Override
     public boolean getF21() {
         return f21;
     }
 
+    @Override
     public boolean getF22() {
         return f22;
     }
 
+    @Override
     public boolean getF23() {
         return f23;
     }
 
+    @Override
     public boolean getF24() {
         return f24;
     }
 
+    @Override
     public boolean getF25() {
         return f25;
     }
 
+    @Override
     public boolean getF26() {
         return f26;
     }
 
+    @Override
     public boolean getF27() {
         return f27;
     }
 
+    @Override
     public boolean getF28() {
         return f28;
     }
@@ -227,141 +263,174 @@ abstract public class AbstractThrottle implements DccThrottle {
     // function momentary status  - note that we use the naming for DCC, 
     // though that's not the implication;
     // see also DccThrottle interface
+    @Override
     public boolean getF0Momentary() {
         return f0Momentary;
     }
 
+    @Override
     public boolean getF1Momentary() {
         return f1Momentary;
     }
 
+    @Override
     public boolean getF2Momentary() {
         return f2Momentary;
     }
 
+    @Override
     public boolean getF3Momentary() {
         return f3Momentary;
     }
 
+    @Override
     public boolean getF4Momentary() {
         return f4Momentary;
     }
 
+    @Override
     public boolean getF5Momentary() {
         return f5Momentary;
     }
 
+    @Override
     public boolean getF6Momentary() {
         return f6Momentary;
     }
 
+    @Override
     public boolean getF7Momentary() {
         return f7Momentary;
     }
 
+    @Override
     public boolean getF8Momentary() {
         return f8Momentary;
     }
 
+    @Override
     public boolean getF9Momentary() {
         return f9Momentary;
     }
 
+    @Override
     public boolean getF10Momentary() {
         return f10Momentary;
     }
 
+    @Override
     public boolean getF11Momentary() {
         return f11Momentary;
     }
 
+    @Override
     public boolean getF12Momentary() {
         return f12Momentary;
     }
 
+    @Override
     public boolean getF13Momentary() {
         return f13Momentary;
     }
 
+    @Override
     public boolean getF14Momentary() {
         return f14Momentary;
     }
 
+    @Override
     public boolean getF15Momentary() {
         return f15Momentary;
     }
 
+    @Override
     public boolean getF16Momentary() {
         return f16Momentary;
     }
 
+    @Override
     public boolean getF17Momentary() {
         return f17Momentary;
     }
 
+    @Override
     public boolean getF18Momentary() {
         return f18Momentary;
     }
 
+    @Override
     public boolean getF19Momentary() {
         return f19Momentary;
     }
 
+    @Override
     public boolean getF20Momentary() {
         return f20Momentary;
     }
 
+    @Override
     public boolean getF21Momentary() {
         return f21Momentary;
     }
 
+    @Override
     public boolean getF22Momentary() {
         return f22Momentary;
     }
 
+    @Override
     public boolean getF23Momentary() {
         return f23Momentary;
     }
 
+    @Override
     public boolean getF24Momentary() {
         return f24Momentary;
     }
 
+    @Override
     public boolean getF25Momentary() {
         return f25Momentary;
     }
 
+    @Override
     public boolean getF26Momentary() {
         return f26Momentary;
     }
 
+    @Override
     public boolean getF27Momentary() {
         return f27Momentary;
     }
 
+    @Override
     public boolean getF28Momentary() {
         return f28Momentary;
     }
 
     // register for notification if any of the properties change
+    @Override
     public void removePropertyChangeListener(PropertyChangeListener l) {
         log.debug("Removing property change " + l);
         if (listeners.contains(l)) {
             listeners.removeElement(l);
         }
         log.debug("remove listeners size is " + listeners.size());
-        if ((listeners.size() == 0)) {
-            log.debug("Listener Size is 0 so will call the dispose in the InstanceManger with an empty throttleListenr null value");
+        if ((listeners.isEmpty())) {
+            log.debug("No listeners so will call the dispose in the InstanceManger with an empty throttleListenr null value");
             InstanceManager.throttleManagerInstance().disposeThrottle(this, new ThrottleListener() {
+                @Override
                 public void notifyFailedThrottleRequest(DccLocoAddress address, String reason) {
                 }
 
+                @Override
                 public void notifyThrottleFound(DccThrottle t) {
                 }
             });
         }
     }
 
+    @Override
     public void addPropertyChangeListener(PropertyChangeListener l) {
         log.debug("listeners added " + l);
         // add only if not already registered
@@ -373,6 +442,10 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Trigger the notification of all PropertyChangeListeners
+     *
+     * @param property
+     * @param oldValue
+     * @param newValue
      */
     @SuppressWarnings("unchecked")
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
@@ -397,18 +470,20 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public Vector<PropertyChangeListener> getListeners() {
         return listeners;
     }
 
     // data members to hold contact with the property listeners
-    final private Vector<PropertyChangeListener> listeners = new Vector<PropertyChangeListener>();
+    final private Vector<PropertyChangeListener> listeners = new Vector<>();
 
     /**
      * Dispose when finished with this object. After this, further usage of this
      * Throttle object will result in a JmriException.
      */
     @Deprecated
+    @Override
     public void dispose() {
         if (!active) {
             log.error("Dispose called when not active");
@@ -417,6 +492,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().disposeThrottle(this, null);
     }
 
+    @Override
     public void dispose(ThrottleListener l) {
         if (!active) {
             log.error("Dispose called when not active");
@@ -425,6 +501,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     @Deprecated
+    @Override
     public void dispatch() {
         if (!active) {
             log.warn("dispatch called when not active");
@@ -433,6 +510,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().dispatchThrottle(this, null);
     }
 
+    @Override
     public void dispatch(ThrottleListener l) {
         if (!active) {
             log.warn("dispatch called when not active");
@@ -441,6 +519,7 @@ abstract public class AbstractThrottle implements DccThrottle {
     }
 
     @Deprecated
+    @Override
     public void release() {
         if (!active) {
             log.warn("release called when not active");
@@ -449,6 +528,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         InstanceManager.throttleManagerInstance().releaseThrottle(this, null);
     }
 
+    @Override
     public void release(ThrottleListener l) {
         if (!active) {
             log.warn("release called when not active");
@@ -461,13 +541,17 @@ abstract public class AbstractThrottle implements DccThrottle {
     /**
      * to handle quantized speed. Note this can change! Valued returned is
      * always positive.
+     *
+     * @return 1 divided by the number of speed steps this DCC throttle supports
      */
+    @Override
     public float getSpeedIncrement() {
         return speedIncrement;
     }
 
     // functions - note that we use the naming for DCC, though that's not the implication;
     // see also DccThrottle interface
+    @Override
     public void setF0(boolean f0) {
         boolean old = this.f0;
         this.f0 = f0;
@@ -477,6 +561,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF1(boolean f1) {
         boolean old = this.f1;
         this.f1 = f1;
@@ -486,6 +571,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF2(boolean f2) {
         boolean old = this.f2;
         this.f2 = f2;
@@ -495,6 +581,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF3(boolean f3) {
         boolean old = this.f3;
         this.f3 = f3;
@@ -504,6 +591,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF4(boolean f4) {
         boolean old = this.f4;
         this.f4 = f4;
@@ -513,6 +601,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF5(boolean f5) {
         boolean old = this.f5;
         this.f5 = f5;
@@ -522,6 +611,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF6(boolean f6) {
         boolean old = this.f6;
         this.f6 = f6;
@@ -531,6 +621,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF7(boolean f7) {
         boolean old = this.f7;
         this.f7 = f7;
@@ -540,6 +631,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF8(boolean f8) {
         boolean old = this.f8;
         this.f8 = f8;
@@ -549,6 +641,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF9(boolean f9) {
         boolean old = this.f9;
         this.f9 = f9;
@@ -558,6 +651,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF10(boolean f10) {
         boolean old = this.f10;
         this.f10 = f10;
@@ -567,6 +661,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF11(boolean f11) {
         boolean old = this.f11;
         this.f11 = f11;
@@ -576,6 +671,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF12(boolean f12) {
         boolean old = this.f12;
         this.f12 = f12;
@@ -585,6 +681,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF13(boolean f13) {
         boolean old = this.f13;
         this.f13 = f13;
@@ -594,6 +691,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF14(boolean f14) {
         boolean old = this.f14;
         this.f14 = f14;
@@ -603,6 +701,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF15(boolean f15) {
         boolean old = this.f15;
         this.f15 = f15;
@@ -612,6 +711,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF16(boolean f16) {
         boolean old = this.f16;
         this.f16 = f16;
@@ -621,6 +721,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF17(boolean f17) {
         boolean old = this.f17;
         this.f17 = f17;
@@ -630,6 +731,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF18(boolean f18) {
         boolean old = this.f18;
         this.f18 = f18;
@@ -639,6 +741,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF19(boolean f19) {
         boolean old = this.f19;
         this.f19 = f19;
@@ -648,6 +751,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF20(boolean f20) {
         boolean old = this.f20;
         this.f20 = f20;
@@ -657,6 +761,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF21(boolean f21) {
         boolean old = this.f21;
         this.f21 = f21;
@@ -666,6 +771,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF22(boolean f22) {
         boolean old = this.f22;
         this.f22 = f22;
@@ -675,6 +781,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF23(boolean f23) {
         boolean old = this.f23;
         this.f23 = f23;
@@ -684,6 +791,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF24(boolean f24) {
         boolean old = this.f24;
         this.f24 = f24;
@@ -693,6 +801,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF25(boolean f25) {
         boolean old = this.f25;
         this.f25 = f25;
@@ -702,6 +811,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF26(boolean f26) {
         boolean old = this.f26;
         this.f26 = f26;
@@ -711,6 +821,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF27(boolean f27) {
         boolean old = this.f27;
         this.f27 = f27;
@@ -720,6 +831,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF28(boolean f28) {
         boolean old = this.f28;
         this.f28 = f28;
@@ -790,7 +902,6 @@ abstract public class AbstractThrottle implements DccThrottle {
         } else {
             log.error("Can't send F13-F20 since no command station defined");
         }
-        return;
     }
 
     /**
@@ -823,12 +934,12 @@ abstract public class AbstractThrottle implements DccThrottle {
         } else {
             log.error("Can't send F21-F28 since no command station defined");
         }
-        return;
     }
 
     // function momentary status  - note that we use the naming for DCC, 
     // though that's not the implication;
     // see also DccThrottle interface
+    @Override
     public void setF0Momentary(boolean f0Momentary) {
         boolean old = this.f0Momentary;
         this.f0Momentary = f0Momentary;
@@ -838,6 +949,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF1Momentary(boolean f1Momentary) {
         boolean old = this.f1Momentary;
         this.f1Momentary = f1Momentary;
@@ -847,6 +959,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF2Momentary(boolean f2Momentary) {
         boolean old = this.f2Momentary;
         this.f2Momentary = f2Momentary;
@@ -856,6 +969,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF3Momentary(boolean f3Momentary) {
         boolean old = this.f3Momentary;
         this.f3Momentary = f3Momentary;
@@ -865,6 +979,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF4Momentary(boolean f4Momentary) {
         boolean old = this.f4Momentary;
         this.f4Momentary = f4Momentary;
@@ -874,6 +989,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF5Momentary(boolean f5Momentary) {
         boolean old = this.f5Momentary;
         this.f5Momentary = f5Momentary;
@@ -883,6 +999,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF6Momentary(boolean f6Momentary) {
         boolean old = this.f6Momentary;
         this.f6Momentary = f6Momentary;
@@ -892,6 +1009,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF7Momentary(boolean f7Momentary) {
         boolean old = this.f7Momentary;
         this.f7Momentary = f7Momentary;
@@ -901,6 +1019,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF8Momentary(boolean f8Momentary) {
         boolean old = this.f8Momentary;
         this.f8Momentary = f8Momentary;
@@ -910,6 +1029,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF9Momentary(boolean f9Momentary) {
         boolean old = this.f9Momentary;
         this.f9Momentary = f9Momentary;
@@ -919,6 +1039,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF10Momentary(boolean f10Momentary) {
         boolean old = this.f10Momentary;
         this.f10Momentary = f10Momentary;
@@ -928,6 +1049,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF11Momentary(boolean f11Momentary) {
         boolean old = this.f11Momentary;
         this.f11Momentary = f11Momentary;
@@ -937,6 +1059,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF12Momentary(boolean f12Momentary) {
         boolean old = this.f12Momentary;
         this.f12Momentary = f12Momentary;
@@ -946,6 +1069,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF13Momentary(boolean f13Momentary) {
         boolean old = this.f13Momentary;
         this.f13Momentary = f13Momentary;
@@ -955,6 +1079,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF14Momentary(boolean f14Momentary) {
         boolean old = this.f14Momentary;
         this.f14Momentary = f14Momentary;
@@ -964,6 +1089,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF15Momentary(boolean f15Momentary) {
         boolean old = this.f15Momentary;
         this.f15Momentary = f15Momentary;
@@ -973,6 +1099,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF16Momentary(boolean f16Momentary) {
         boolean old = this.f16Momentary;
         this.f16Momentary = f16Momentary;
@@ -982,6 +1109,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF17Momentary(boolean f17Momentary) {
         boolean old = this.f17Momentary;
         this.f17Momentary = f17Momentary;
@@ -991,6 +1119,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF18Momentary(boolean f18Momentary) {
         boolean old = this.f18Momentary;
         this.f18Momentary = f18Momentary;
@@ -1000,6 +1129,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF19Momentary(boolean f19Momentary) {
         boolean old = this.f19Momentary;
         this.f19Momentary = f19Momentary;
@@ -1009,6 +1139,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF20Momentary(boolean f20Momentary) {
         boolean old = this.f20Momentary;
         this.f20Momentary = f20Momentary;
@@ -1018,6 +1149,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF21Momentary(boolean f21Momentary) {
         boolean old = this.f21Momentary;
         this.f21Momentary = f21Momentary;
@@ -1027,6 +1159,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF22Momentary(boolean f22Momentary) {
         boolean old = this.f22Momentary;
         this.f22Momentary = f22Momentary;
@@ -1036,6 +1169,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF23Momentary(boolean f23Momentary) {
         boolean old = this.f23Momentary;
         this.f23Momentary = f23Momentary;
@@ -1045,6 +1179,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF24Momentary(boolean f24Momentary) {
         boolean old = this.f24Momentary;
         this.f24Momentary = f24Momentary;
@@ -1054,6 +1189,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF25Momentary(boolean f25Momentary) {
         boolean old = this.f25Momentary;
         this.f25Momentary = f25Momentary;
@@ -1063,6 +1199,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF26Momentary(boolean f26Momentary) {
         boolean old = this.f26Momentary;
         this.f26Momentary = f26Momentary;
@@ -1072,6 +1209,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF27Momentary(boolean f27Momentary) {
         boolean old = this.f27Momentary;
         this.f27Momentary = f27Momentary;
@@ -1081,6 +1219,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
+    @Override
     public void setF28Momentary(boolean f28Momentary) {
         boolean old = this.f28Momentary;
         this.f28Momentary = f28Momentary;
@@ -1144,16 +1283,15 @@ abstract public class AbstractThrottle implements DccThrottle {
     protected void sendMomentaryFunctionGroup5() {
     }
 
-
-    /*
-     * setSpeedStepMode - set the speed step value and the related
-     *                    speedIncrement value.
-     * <P>
+    /**
+     * Set the speed step value and the related speedIncrement value. Default
+     * should be 128 speed step mode in most cases
+     *
      * specific implementations should override this function
-     * <P>
-     * @param Mode - the current speed step mode - default should be 128
-     *              speed step mode in most cases
+     *
+     * @param Mode the current speed step mode
      */
+    @Override
     public void setSpeedStepMode(int Mode) {
         if (log.isDebugEnabled()) {
             log.debug("Speed Step Mode Change to Mode: " + Mode
@@ -1175,10 +1313,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         }
     }
 
-    /*
-     * getSpeedStepMode - get the current speed step value.
-     * <P>
-     */
+    @Override
     public int getSpeedStepMode() {
         return speedStepMode;
     }
@@ -1222,7 +1357,7 @@ abstract public class AbstractThrottle implements DccThrottle {
         long currentDuration = 0;
         try {
             currentDuration = Long.valueOf(currentDurationString);
-        } catch (Exception e) {
+        } catch (NumberFormatException e) {
             log.warn("current stored duration is not a valid number \"" + currentDurationString + " \"");
         }
         currentDuration = currentDuration + durationRunning;
@@ -1240,10 +1375,12 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     BasicRosterEntry re = null;
 
+    @Override
     public void setRosterEntry(BasicRosterEntry re) {
         this.re = re;
     }
 
+    @Override
     public BasicRosterEntry getRosterEntry() {
         return re;
     }
