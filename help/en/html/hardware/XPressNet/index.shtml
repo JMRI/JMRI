@@ -164,7 +164,7 @@ this page
 	speeds of 19,200, 38,400, 57,600, and 115,200 baud.  The factory 
 	default is 19,200 baud.
 	
-	<li>The Lenz LI-USB is Lenz's first USB based computer interface.
+	<li>The Lenz LI-USB (Lenz part number 23150 ) is Lenz's first USB based computer interface.
 	Internally, the device contains a USB to RS232 serial adapter, and 
 	an XPressNet interface circuit similar to that of the LI101F.  
 	Note:  If you are using the XPressNet version 3.6 update in your command station, 
@@ -188,7 +188,7 @@ this page
 
 <p>The protocol used to connect to the device via USB is identical to the prior LIUSB device, so the 
 USB connection is supported by any JMRI version with support for the LIUSB.  
-When configuring to communicate with the device via USB, be sure that Flow Control is turned off.</p>
+When configuring to communicate with the device via USB, <b>be sure that Flow Control is turned off.</b></p>
   
 <p>Connection via the Ethernet connection is available through the LIUSB Ethernet connection type, 
 which was first made available in version 2.13.7.</p>
@@ -505,7 +505,9 @@ which was first made available in version 2.13.7.</p>
     connect the LIUSB to your computer's USB port using the supplied
     cable.
 
-    <li>In order to use the LIUSB with JMRI, you must first install a
+    <li>
+    Install the approprite drivers.
+    <ol> <li> For the LIUSB (Lenz part Number 23150) with JMRI, you must first install a
     software driver on your computer.  Internally, the device contains a
     FTDI FT232BM USB to Serial converter.  There are two drivers available
     for this device, make sure you obtain the Virtual Comm Port (VCP)
@@ -521,7 +523,17 @@ which was first made available in version 2.13.7.</p>
     available from the <a href="http://www.ftdichip.com/">FTDI  website</a>.
     (A direct link to the drivers that is current as of this writing is <a 
     href="http://www.ftdichip.com/Drivers/VCP.htm">http://www.ftdichip.com/Drivers/VCP.htm</a>)
-    
+    </li>
+    <li>Fort the LIUSB-Ethernet (Lenz part Number 23151) in USB mode with JMRI, you must first install a
+    software driver on your computer.  Internally, the device contains a
+    The USB connection on the device is provided by a Microchip chipset that 
+    registers itself as a USB CDC-ACM (Abstract Control Model) device.  
+    Functinally, the device acts like a serial port.  The Lenz documentation
+    indicates the drivers for Windows 7 and MacOS are installed automatically
+    if the computer is connected to the internet.  For Linux, the drivers are
+    part of the standard kernel distribution.
+    </li>
+    </ol>
     <P> When the device drivers are installed, and the LIUSB is connected
     to both your PC and your DCC system, the LIUSB should have a Red
     LED turned on, indicating the XPressNet connection is OK, and a green 
@@ -542,10 +554,13 @@ which was first made available in version 2.13.7.</p>
     
     <li>The baud rate selection box should be set to 57,600 baud.
     
-    <li>The fourth box should be left on "hardware flow control"
+    <li>The fourth box should be 
+    <ol><li> ( <b>for the Lenz LIUSB, Lenz Part 23150</b>) left on "hardware flow control"
     unless you later consistently get a message about the LIUSB control
     leads being improperly set up, in which case you might want to try to
-    bypass that by selecting "no flow control".
+    bypass that by selecting "no flow control".</li>
+        <li> ( <b>for  the Lenz LIUSB-Ethernet, Lenz Part 23151</b>) set to "no flow control" (The LIUSB-Ethernet does not support flow control).</li>
+    </ol>
 
     <li><b>This option has been removed starting in version 2.9.5</b>
     Check Buffer Status When Sending?  Defaults to "yes" on 
