@@ -449,7 +449,7 @@ abstract public class AbstractThrottle implements DccThrottle {
      */
     @SuppressWarnings("unchecked")
     protected void notifyPropertyChangeListener(String property, Object oldValue, Object newValue) {
-        if (oldValue.equals(newValue)) {
+        if ((oldValue != null && oldValue.equals(newValue)) || oldValue == newValue) {
             log.error("notifyPropertyChangeListener without change");
         }
         // make a copy of the listener vector to synchronized not needed for transmit
@@ -1384,6 +1384,51 @@ abstract public class AbstractThrottle implements DccThrottle {
     public BasicRosterEntry getRosterEntry() {
         return re;
     }
+
+    /**
+     * Get an integer speed for the given raw speed value. This is a convenience
+     * method that calls {@link #getSpeed(float, int) } with a maxStep of 127.
+     *
+     * @param rawSpeed
+     * @return an integer in the range 0-127
+     */
+    protected int getSpeed(float rawSpeed) {
+        return this.getSpeed(rawSpeed, 127);
+    }
+
+    /**
+     * Get an integer speed for the given raw speed value.
+     *
+     * @param rawSpeed the speed as a percentage of maximum possible speed.
+     *                 Negative values indicate a need for an emergency stop.
+     * @param maxStep  number of possible speeds. Values less than 2 will cause
+     *                 errors.
+     * @return an integer in the range 0-maxStep
+     */
+    protected int getSpeed(float rawSpeed, int maxStep) {
+        // test that rawSpeed is < 0 for emergency stop since calculation of
+        // value returns 0 for some values of -1 < rawSpeed < 0
+        if (rawSpeed < 0) {
+            return 1; // emergency stop
+        }
+        // since Emergency Stop (estop) is speed 1, and a negative rawSpeed
+        // is used for estop, subtract 1 from maxStep to avoid the estop
+        // Use ceil() to prevent smaller positive values from being 0
+        int value = (int) Math.ceil((maxStep - 1) * rawSpeed);
+        if (value < 0) {
+            // if we get here, something is wrong and needs to be reported.
+            Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
+            log.error(ex.getMessage(), ex);
+            return 1;
+        } else if (value >= maxStep) {
+            return maxStep; // maximum possible speed
+        } else if (value > 0) {
+            return value + 1; // add 1 to the value to avoid the estop
+        } else {
+            return 0; // non-emergency stop
+        }
+    }
+
     // initialize logging
     static Logger log = LoggerFactory.getLogger(AbstractThrottle.class.getName());
 
