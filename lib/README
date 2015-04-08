@@ -153,6 +153,9 @@ Joal 1.1.2
       libjoal_native.so
       libgluegen-rt.so
 
+UmlGraph-5.7
+    from http://www.umlgraph.org/download.html
+    only used for ant javadoc-uml
 
 jmdns.jar 
     Version 3.0, 84670 bytes, December 7, 2009
