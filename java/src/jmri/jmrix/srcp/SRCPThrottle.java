@@ -21,9 +21,17 @@ public class SRCPThrottle extends AbstractThrottle {
     /**
      * Constructor.
      */
-    public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address) {
+    public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address){
+        // default to 128 speed steps with 28 functions and NMRA protocl.
+        this(memo,address,"N",SpeedStepMode128,28);
+    }
+    
+    public SRCPThrottle(SRCPBusConnectionMemo memo, DccLocoAddress address,
+            String protocol,int mode,int functions){
         super(memo);
-        super.speedStepMode = SpeedStepMode128;
+        if(protocol!="N") 
+           throw new IllegalArgumentException("Protocol " + protocol + " not supported");
+        setSpeedStepMode(mode);
 
         bus = memo.getBus();
 
@@ -43,13 +51,31 @@ public class SRCPThrottle extends AbstractThrottle {
         this.f10 = false;
         this.f11 = false;
         this.f12 = false;
+        this.f13 = false;
+        this.f14 = false;
+        this.f15 = false;
+        this.f16 = false;
+        this.f17 = false;
+        this.f18 = false;
+        this.f19 = false;
+        this.f20 = false;
+        this.f21 = false;
+        this.f22 = false;
+        this.f23 = false;
+        this.f24 = false;
+        this.f26 = false;
+        this.f27 = false;
+        this.f28 = false;
         this.address = address;
         this.isForward = true;
 
         // send allocation message
         String msg = "INIT " + bus + " GL "
                 + (address.getNumber())
-                + " N 1 128 5\n";
+                + " " + protocol + " " 
+                + (address.isLongAddress()?" 2 ":" 1 ") 
+                + maxsteps + " " 
+                + functions +"\n";
         memo.getTrafficController()
                 .sendSRCPMessage(new SRCPMessage(msg), null);
     }
@@ -103,6 +129,7 @@ public class SRCPThrottle extends AbstractThrottle {
 
     private DccLocoAddress address;
     private int bus;
+    private int maxsteps;
 
     /**
      * Send the complete status
@@ -115,8 +142,9 @@ public class SRCPThrottle extends AbstractThrottle {
 
         // direction and speed
         msg += (isForward ? " 1" : " 0");
-        msg += " " + ((int) (speedSetting * 100));
-        msg += " 100";
+        msg += " " + ((int) (speedSetting * maxsteps));
+        msg += " "; 
+        msg +=maxsteps;
 
         // now add the functions
         msg += f0 ? " 1" : " 0";
@@ -154,6 +182,25 @@ public class SRCPThrottle extends AbstractThrottle {
 
         ((SRCPBusConnectionMemo) adapterMemo).getTrafficController().sendSRCPMessage(m, null);
     }
+
+    @Override
+    public void setSpeedStepMode(int Mode){
+       super.setSpeedStepMode(Mode);
+       switch(Mode){
+          case SpeedStepMode14:
+                 maxsteps = 14;
+                 break;
+          case SpeedStepMode27:
+                 maxsteps = 27;
+                 break;
+          case SpeedStepMode28:
+                 maxsteps = 14;
+                 break;
+          case SpeedStepMode128:
+          default:
+       }
+    }
+
 
     public LocoAddress getLocoAddress() {
         return address;
