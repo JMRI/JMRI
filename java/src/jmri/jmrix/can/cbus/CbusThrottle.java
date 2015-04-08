@@ -167,18 +167,6 @@ public class CbusThrottle extends AbstractThrottle {
     }
 
     /**
-     * Convert a float speed value to a CBUS speed integer
-     */
-    protected int intSpeed(float fSpeed) {
-        if (fSpeed == 0.f) {
-            return 0;
-        } else if (fSpeed < 0.f) {
-            return 1;   // estop
-        }      // add the 0.5 to handle float to int round for positive numbers
-        return (int) (fSpeed * 126.f + 0.5) + 1;
-    }
-
-    /**
      * Send the CBUS message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
      */

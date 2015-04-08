@@ -144,22 +144,20 @@ public class LocoNetThrottle extends AbstractThrottle implements SlotListener {
         }
     }
 
-    /**
-     * Convert a float speed value to a LocoNet speed integer
-     */
+    @Override
     protected int intSpeed(float fSpeed) {
-        if (fSpeed == 0.f) {
-            return 0;
-        } else if (fSpeed < 0.f) {
-            return 1;   // estop
+        int speed = super.intSpeed(fSpeed);
+        if (speed <= 0) {
+            return speed; // return idle and emergency stop
         }
-        if (getSpeedStepMode() == DccThrottle.SpeedStepMode28) {
-            return (int) ((fSpeed * 28) * 4) + 12;
-        } else if (getSpeedStepMode() == DccThrottle.SpeedStepMode14) {
-            return (int) ((fSpeed * 14) * 8) + 8;
+        switch (this.getSpeedStepMode()) {
+            case DccThrottle.SpeedStepMode28:
+            case DccThrottle.SpeedStepMode28Mot:
+                return (int) ((fSpeed * 28) * 4) + 12;
+            case DccThrottle.SpeedStepMode14:
+                return (int) ((fSpeed * 14) * 8) + 8;
         }
-        // add the 0.5 to handle float to int round for positive numbers
-        return (int) (fSpeed * 126.f + 0.5) + 1;
+        return speed;
     }
 
     /**

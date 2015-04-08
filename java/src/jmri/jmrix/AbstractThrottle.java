@@ -1389,39 +1389,39 @@ abstract public class AbstractThrottle implements DccThrottle {
      * Get an integer speed for the given raw speed value. This is a convenience
      * method that calls {@link #getSpeed(float, int) } with a maxStep of 127.
      *
-     * @param rawSpeed
+     * @param speed
      * @return an integer in the range 0-127
      */
-    protected int getSpeed(float rawSpeed) {
-        return this.getSpeed(rawSpeed, 127);
+    protected int intSpeed(float speed) {
+        return this.intSpeed(speed, 127);
     }
 
     /**
      * Get an integer speed for the given raw speed value.
      *
-     * @param rawSpeed the speed as a percentage of maximum possible speed.
-     *                 Negative values indicate a need for an emergency stop.
-     * @param maxStep  number of possible speeds. Values less than 2 will cause
-     *                 errors.
-     * @return an integer in the range 0-maxStep
+     * @param speed the speed as a percentage of maximum possible speed.
+     *              Negative values indicate a need for an emergency stop.
+     * @param steps number of possible speeds. Values less than 2 will cause
+     *              errors.
+     * @return an integer in the range 0-steps
      */
-    protected int getSpeed(float rawSpeed, int maxStep) {
-        // test that rawSpeed is < 0 for emergency stop since calculation of
+    protected int intSpeed(float speed, int steps) {
+        // test that speed is < 0 for emergency stop since calculation of
         // value returns 0 for some values of -1 < rawSpeed < 0
-        if (rawSpeed < 0) {
+        if (speed < 0) {
             return 1; // emergency stop
         }
-        // since Emergency Stop (estop) is speed 1, and a negative rawSpeed
-        // is used for estop, subtract 1 from maxStep to avoid the estop
+        // since Emergency Stop (estop) is speed 1, and a negative speed
+        // is used for estop, subtract 1 from steps to avoid the estop
         // Use ceil() to prevent smaller positive values from being 0
-        int value = (int) Math.ceil((maxStep - 1) * rawSpeed);
+        int value = (int) Math.ceil((steps - 1) * speed);
         if (value < 0) {
             // if we get here, something is wrong and needs to be reported.
             Exception ex = new Exception("Error calculating speed. Please send logs to the JMRI developers.");
             log.error(ex.getMessage(), ex);
             return 1;
-        } else if (value >= maxStep) {
-            return maxStep; // maximum possible speed
+        } else if (value >= steps) {
+            return steps; // maximum possible speed
         } else if (value > 0) {
             return value + 1; // add 1 to the value to avoid the estop
         } else {

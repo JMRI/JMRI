@@ -1454,39 +1454,39 @@ public class AbstractThrottleTest extends TestCase {
     }
 
     /**
-     * Test of getSpeed method, of class AbstractThrottle.
+     * Test of intSpeed method, of class AbstractThrottle.
      */
     public void testGetSpeed_float() {
         AbstractThrottle instance = new AbstractThrottleImpl();
-        assertEquals("Full Speed", 127, instance.getSpeed(1.0F));
+        assertEquals("Full Speed", 127, instance.intSpeed(1.0F));
     }
 
     /**
-     * Test of getSpeed method, of class AbstractThrottle.
+     * Test of intSpeed method, of class AbstractThrottle.
      */
     public void testGetSpeed_float_int() {
-        float rawSpeed = 0.001F;
+        float speed = 0.001F;
         int maxStepHi = 127;
         int maxStepLo = 28;
         AbstractThrottle instance = new AbstractThrottleImpl();
-        assertEquals("Idle", 0, instance.getSpeed(0.0F, maxStepHi));
-        assertEquals("Idle", 0, instance.getSpeed(0.0F, maxStepLo));
-        assertEquals("Emergency", 1, instance.getSpeed(-1.0F, maxStepHi));
-        assertEquals("Emergency", 1, instance.getSpeed(-1.0F, maxStepLo));
-        assertEquals("Emergency", 1, instance.getSpeed(-0.001F, maxStepHi));
-        assertEquals("Emergency", 1, instance.getSpeed(-0.001F, maxStepLo));
-        assertEquals("Full Speed", maxStepHi, instance.getSpeed(1.0F, maxStepHi));
-        assertEquals("Full Speed", maxStepLo, instance.getSpeed(1.0F, maxStepLo));
-        while (rawSpeed < 1.1F) { // loop ~ 1100 times 
-            int result = instance.getSpeed(rawSpeed, maxStepHi);
-            assertNotSame(rawSpeed + "(" + maxStepHi + " steps) should not idle", 0, result);
-            assertNotSame(rawSpeed + "(" + maxStepHi + " steps) should not eStop", 1, result);
-            assertTrue(rawSpeed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= 127);
-            result = instance.getSpeed(rawSpeed, maxStepLo);
-            assertNotSame(rawSpeed + "(" + maxStepLo + " steps) should not idle", 0, result);
-            assertNotSame(rawSpeed + "(" + maxStepLo + " steps) should not eStop", 1, result);
-            assertTrue(rawSpeed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= 127);
-            rawSpeed = rawSpeed + 0.001F;
+        assertEquals("Idle", 0, instance.intSpeed(0.0F, maxStepHi));
+        assertEquals("Idle", 0, instance.intSpeed(0.0F, maxStepLo));
+        assertEquals("Emergency", 1, instance.intSpeed(-1.0F, maxStepHi));
+        assertEquals("Emergency", 1, instance.intSpeed(-1.0F, maxStepLo));
+        assertEquals("Emergency", 1, instance.intSpeed(-0.001F, maxStepHi));
+        assertEquals("Emergency", 1, instance.intSpeed(-0.001F, maxStepLo));
+        assertEquals("Full Speed", maxStepHi, instance.intSpeed(1.0F, maxStepHi));
+        assertEquals("Full Speed", maxStepLo, instance.intSpeed(1.0F, maxStepLo));
+        while (speed < 1.1F) { // loop ~ 1100 times 
+            int result = instance.intSpeed(speed, maxStepHi);
+            assertNotSame(speed + "(" + maxStepHi + " steps) should not idle", 0, result);
+            assertNotSame(speed + "(" + maxStepHi + " steps) should not eStop", 1, result);
+            assertTrue(speed + "(" + maxStepHi + " steps) should not exceed " + maxStepHi, result <= 127);
+            result = instance.intSpeed(speed, maxStepLo);
+            assertNotSame(speed + "(" + maxStepLo + " steps) should not idle", 0, result);
+            assertNotSame(speed + "(" + maxStepLo + " steps) should not eStop", 1, result);
+            assertTrue(speed + "(" + maxStepLo + " steps) should not exceed " + maxStepLo, result <= 127);
+            speed = speed + 0.001F;
         }
     }
 
