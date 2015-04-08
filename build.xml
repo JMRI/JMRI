@@ -1048,6 +1048,7 @@
                 ]]>
             </bottom>
             <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
@@ -1056,7 +1057,6 @@
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/"/>
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
-            <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
@@ -1086,8 +1086,9 @@
             <packageset dir="${tmptarget}" defaultexcludes="yes">
                 <include name="jmri/**"/>
             </packageset>
+            <arg value="-Xdoclint:all,-missing,-accessibility,-html,-syntax"/> <!-- dropping some 1.8 warnings -->
             <doclet name="org.umlgraph.doclet.UmlGraphDoc"
-                                  path="${libdir}/UmlGraph-5.6.jar">
+                                  path="${libdir}/UmlGraph-5.7.jar">
                 <param name="-attributes"/>
                 <param name="-operations"/>
                 <param name="-qualify"/>
@@ -1118,18 +1119,18 @@
                        <img src="http://sflogo.sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads"/></a>
                 ]]>
             </bottom>
-            <link href="http://docs.oracle.com/javase/8/docs/api/"/>
+            <link href="http://docs.oracle.com/javase/8/docs/api/"/> 
+            <link href="http://download.oracle.com/javase/8/docs/api/"/>
             <link href="http://java.sun.com/products/javacomm/reference/api/"/>
             <link href="http://users.frii.com/jarvi/rxtx/doc/"/>
             <link href="http://www.jdom.org/docs/apidocs/"/>
-            <link href="http://javacsv.sourceforge.net/"/>
+            <link href="http://javacsv.sourceforge.net/"/> <!-- A -->
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
-            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
-            <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/"/>
-            <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
-            <link href="http://download.oracle.com/javase/8/docs/api/"/>
+            <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>  
+<!--            <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/"/>   failes, so bypassed -->
             <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
+
         </javadoc>
         <apply executable="dot" dest="${doctarget}" parallel="false">
             <arg value="-Tpng"/>
