@@ -32,7 +32,7 @@
 			product to read and present the DCC packets on your track.
 			It connects via a separate serial port from your 
 			command station connection.</P>
-			<P>If you do not have an NCE system, configure a new second connection in <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Connections" target="_blank">Preferences->Connections</a> to "NCE Simulator" so you can access the NCE "DCC Packet Analyzer" menu item. If you do this, you will need to restart JMRI and then open <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Defaults" target="_blank">Preferences->Defaults"</a> to check that the NCE Simulator has not "stolen" any of your real connections.</P>
+			<P>If you do not have an NCE system, configure a new second connection in <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Connections" target="_blank">Preferences->Connections</a> to "NCE Simulator" so you can access the NCE "DCC Packet Analyzer" menu item. If you do this, you will need to restart JMRI and then open <a href="/help/en/manual/DecoderPro/Start_Preferences.shtml#Defaults" target="_blank">Preferences->Defaults</a> to check that the NCE Simulator has not "stolen" any of your real connections.</P>
 		</td>
 			<td><img src="https://ncedcc.zendesk.com/hc/en-us/article_attachments/200950605/Packet_Analyzer.jpg" height="80" width="91" alt="Packet Analyzer" border="0"/>
 		</td>
