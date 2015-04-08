@@ -1387,7 +1387,7 @@ abstract public class AbstractThrottle implements DccThrottle {
 
     /**
      * Get an integer speed for the given raw speed value. This is a convenience
-     * method that calls {@link #getSpeed(float, int) } with a maxStep of 127.
+     * method that calls {@link #intSpeed(float, int) } with a maxStep of 127.
      *
      * @param speed
      * @return an integer in the range 0-127
