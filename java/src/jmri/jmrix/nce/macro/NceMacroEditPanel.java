@@ -104,8 +104,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
     Thread NceMemoryThread;
     private boolean readRequested = false;
     private boolean writeRequested = false;
-    private int readMacroId = -1;
-    private int writeMacroId = -1;
 
     private boolean macroSearchInc = false;		// next search
     private boolean macroSearchDec = false;		// previous search
@@ -643,9 +641,19 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         }
         if (macroSearchInc || macroSearchDec) {
             macroReply.setText(rb.getString("searching"));
-            mN++;
+            if (macroSearchInc) {
+                mN++;
+                if (mN >= maxNumMacros + 1) {
+                    mN = 0;
+                }
+            }
+            if (macroSearchDec) {
+                mN--;
+                if (mN <= -1) {
+                    mN = maxNumMacros;
+                }
+            }
         } else {
-            mN--;
             macroReply.setText(rb.getString("waiting"));
         }
 
@@ -752,13 +760,12 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
 
     private void processMemory(boolean doRead, boolean doWrite, int macroId, byte[] macroArray) {
         final byte[] macroData = new byte[macroSize];
+        macroValid = false;
         if (doRead) {
             readRequested = true;
-            readMacroId = macroId;
         }
         if (doWrite) {
             writeRequested = true;
-            writeMacroId = macroId;
             for (int i = 0; i < macroSize; i++) {
                 macroData[i] = macroArray[i];
             }
@@ -770,12 +777,23 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         NceMemoryThread = new Thread(new Runnable() {
             public void run() {
                 if (readRequested) {
+                    macroNum = macroId;
+                    int macroCount = 0;
                     while (true) {
-                        int macroCount = 0;
-                        int entriesRead = readMacroMemory(readMacroId);
+                        int entriesRead = readMacroMemory(macroNum);
+                        macroTextField.setText(Integer.toString(macroNum));
                         if (entriesRead == 0) {
+                            // Macro is empty so init the accessory fields
+                            initAccyFields();
                             macroReply.setText(rb.getString("macroEmpty"));
-                            macroValid = false;
+                            if (checkBoxEmpty.isSelected()) {
+                                if (macroCount > 0) {
+                                    macroValid = true;
+                                    macroSearchInc = false;
+                                    macroSearchDec = false;
+                                    break;
+                                }
+                            }
                         } else if (entriesRead < 0) {
                             macroReply.setText(rb.getString("error"));
                             macroValid = false;
@@ -784,34 +802,26 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                             break;
                         } else {
                             macroReply.setText(rb.getString("macroFound"));
-                            macroValid = true;
-                            break;
+                            if (checkBoxEmpty.isSelected() == false) {
+                                macroSearchInc = false;
+                                macroSearchDec = false;
+                                macroValid = true;
+                                break;
+                            }
                         }
                         if ((macroSearchInc || macroSearchDec) && !macroValid) {
                             macroCount++;
                             if (macroCount > maxNumMacros) {
                                 macroSearchInc = false;
                                 macroSearchDec = false;
+                                break;
                             }
-                            if (macroSearchInc) {
-                                macroNum++;
-                                if (macroNum == maxNumMacros + 1) {
-                                    macroNum = 0;
-                                }
-                            }
-                            if (macroSearchDec) {
-                                macroNum--;
-                                if (macroNum == -1) {
-                                    macroNum = maxNumMacros;
-                                }
-                            }
-                            macroTextField.setText(Integer.toString(macroNum));
                             macroNum = getMacro();
                         }
                     }
                 }
                 if (writeRequested) {
-                    writeMacroMemory(writeMacroId, macroData);
+                    writeMacroMemory(macroId, macroData);
                 }
             }
         });
@@ -1014,9 +1024,9 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
             setAccy(accyAddr, getAccyCmd(workBuf), textAccy8, accyTextField8, cmdButton8,
                     deleteButton8);
             // 9th word of macro
-            memPtr += (8 * macroSize);
+            memPtr += 16;
             readPtr = 0;
-            readSerialMemory4(memPtr);
+            readSerialMemory16(memPtr);
             if (!waitNce()) {
                 return -1;
             }
@@ -1493,15 +1503,6 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
         waiting++;
         byte[] bl = NceBinaryCommand.usbMemoryWrite1((byte) value);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_1);
-        tc.sendNceMessage(m, this);
-    }
-
-    // Reads 4 bytes of NCE memory 
-    private void readSerialMemory4(int nceCabAddr) {
-        replyLen = NceMessage.REPLY_4;			// Expect 4 byte response
-        waiting++;
-        byte[] bl = NceBinaryCommand.accMemoryRead(nceCabAddr);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_4);
         tc.sendNceMessage(m, this);
     }
 
