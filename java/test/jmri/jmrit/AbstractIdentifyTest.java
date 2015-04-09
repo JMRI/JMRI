@@ -167,6 +167,12 @@ public class AbstractIdentifyTest extends TestCase {
             return retval;
         }
 
+        public boolean test9(int value) {
+            invoked = 8;
+            ivalue = value;
+            return retval;
+        }
+
         protected void statusUpdate(String s) {
         }
 

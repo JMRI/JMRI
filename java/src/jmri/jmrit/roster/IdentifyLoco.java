@@ -119,6 +119,10 @@ abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
         log.error("unexpected step 8 reached with value: " + value);
         return true;
     }
+    public boolean test9(int value) {
+        log.error("unexpected step 9 reached with value: " + value);
+        return true;
+    }
 
     protected void statusUpdate(String s) {
         message(s);

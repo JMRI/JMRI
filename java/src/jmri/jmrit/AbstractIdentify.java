@@ -36,6 +36,8 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 
     abstract public boolean test8(int value);
 
+    abstract public boolean test9(int value);
+
     /**
      * Update the status field (if any). Invoked with "Done" when the results
      * are in.
@@ -132,8 +134,14 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
                 state = 8;
                 if (test8(value)) {
                     identifyDone();
+                }
+                return;
+            case 8:
+                state = 9;
+                if (test9(value)) {
+                    identifyDone();
                 } else {
-                    log.error("test8 with value = " + value + " returned false, but there is no next step");
+                    log.error("test9 with value = " + value + " returned false, but there is no next step");
                 }
                 return;
             default:

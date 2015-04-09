@@ -69,25 +69,33 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
             statusUpdate("Read decoder ID high CV 112");
             readCV(112);
             return false;
+        } else if (mfgID == 151) {  // ESU
+            statusUpdate("Set PI for Read productID");
+            writeCV(31, 0);
+            return false;
         }
         return true;
     }
 
     public boolean test4(int value) {
-        if (mfgID == 113) {
+        if (mfgID == 113) {  // QSI
             statusUpdate("Set SI for Read Product ID High Byte");
             writeCV(50, 4);
             return false;
-        } else if (mfgID == 153) {
+        } else if (mfgID == 153) {  // TCS
             productID = value;
             return true;
-        } else if (mfgID == 145) {
+        } else if (mfgID == 145) {  // Zimo
             productID = value;
             return true;
-        } else if (mfgID == 98) {
+        } else if (mfgID == 98) {  // Harman
             productIDhigh = value;
             statusUpdate("Read decoder ID low CV 113");
             readCV(113);
+            return false;
+        } else if (mfgID == 151) {  // ESU
+            statusUpdate("Set SI for Read productID");
+            writeCV(32, 255);
             return false;
         }
         log.error("unexpected step 4 reached with value: " + value);
@@ -95,24 +103,33 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     }
 
     public boolean test5(int value) {
-        if (mfgID == 113) {
+        if (mfgID == 113) {  // QSI
             statusUpdate("Read Product ID High Byte");
             readCV(56);
             return false;
-        } else if (mfgID == 98) {
+        } else if (mfgID == 98) {  // Harman
             productIDlow = value;
             productID = (productIDhigh << 8) | productIDlow;
             return true;
+        } else if (mfgID == 151) {  // ESU
+            statusUpdate("Read productID Byte 1");
+            readCV(261);
+            return false;
         }
         log.error("unexpected step 5 reached with value: " + value);
         return true;
     }
 
     public boolean test6(int value) {
-        if (mfgID == 113) {
+        if (mfgID == 113) {  // QSI
             productIDhigh = value;
             statusUpdate("Set SI for Read Product ID Low Byte");
             writeCV(50, 5);
+            return false;
+        } else if (mfgID == 151) {  // ESU
+            productID = value;
+            statusUpdate("Read productID Byte 2");
+            readCV(262);
             return false;
         }
         log.error("unexpected step 6 reached with value: " + value);
@@ -120,9 +137,14 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     }
 
     public boolean test7(int value) {
-        if (mfgID == 113) {
+        if (mfgID == 113) {  // QSI
             statusUpdate("Read Product ID Low Byte");
             readCV(56);
+            return false;
+        } else if (mfgID == 151) {  // ESU
+            productID = productID + (value * 256);
+            statusUpdate("Read productID Byte 3");
+            readCV(263);
             return false;
         }
         log.error("unexpected step 7 reached with value: " + value);
@@ -130,12 +152,28 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     }
 
     public boolean test8(int value) {
-        if (mfgID == 113) {
+        if (mfgID == 113) {  // QSI
             productIDlow = value;
             productID = (productIDhigh * 256) + productIDlow;
             return true;
+        } else if (mfgID == 151) {  // ESU
+            productID = productID + (value * 256 * 256);
+            statusUpdate("Read productID Byte 4");
+            readCV(264);
+            return false;
         }
         log.error("unexpected step 8 reached with value: " + value);
+        return true;
+    }
+
+    public boolean test9(int value) {
+        if (mfgID == 151) {  // ESU
+            productID = productID + (value * 256 * 256 * 256);
+        log.info("modelID: " + modelID);
+        log.info("productID: " + productID);
+            return true;
+        }
+        log.error("unexpected step 9 reached with value: " + value);
         return true;
     }
 
