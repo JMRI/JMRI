@@ -279,8 +279,9 @@ public class Router extends TrainCommon {
      *         stuck there.
      */
     private boolean routeUsingOneTrain(Train testTrain, Car car, Car clone) {
-        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterCarSingleTrain"), new Object[]{
-                testTrain.getName(), car.toString(), clone.getDestinationName(), clone.getDestinationTrackName()}));
+        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanTransport"), new Object[]{
+                testTrain.getName(), car.toString(), car.getTrack().getTrackTypeName(), car.getLocationName(), car.getTrackName(), 
+                clone.getDestinationName(), clone.getDestinationTrackName()}));
         // now check to see if specific train can service car directly
         if (_train != null && _train != testTrain) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
