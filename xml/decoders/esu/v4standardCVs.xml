@@ -14,7 +14,7 @@
 <!-- for more details.                                                      -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-  <variable item="Vstart" CV="2" default="3" exclude="LPfxV4">
+  <variable item="Vstart" CV="2" default="3" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Vstart</label>
     <label xml:lang="it">Volt Partenza</label>
@@ -35,11 +35,11 @@
         <label xml:lang="fr">Décélération (0-255)</label>
         <label xml:lang="de">Bremszeit (0-255)</label>
   </variable>
-  <variable item="Vhigh" CV="5" default="255" exclude="LPfxV4">
+  <variable item="Vhigh" CV="5" default="255" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Vhigh</label>
   </variable>
-  <variable item="Vmid" CV="6" default="88" exclude="LPfxV4">
+  <variable item="Vmid" CV="6" default="88" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Vmid</label>
   </variable>
@@ -187,7 +187,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Enable</label>
   </variable>
-  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LPfxV4">
+  <variable CV="29" mask="XXXVXXXX" item="Speed Table Definition" exclude="LokPilot Fx V4.0">
     <enumVal>
       <enumChoice choice="Use Vstart, Vmid, Vhigh">
         <choice>Use Vstart, Vmid, Vhigh</choice>
@@ -222,11 +222,11 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Selectrix Protocol</label>
   </variable>
-  <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Enable" exclude="LPfxV4">
+  <variable CV="49" mask="XXXXXXXV" default="1" item="EMF Enable" exclude="LokPilot Fx V4.0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>BEMF</label>
   </variable>
-  <variable item="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1" exclude="LPfxV4">
+  <variable item="Motor PWM Frequency" CV="49" mask="XXXXXXVX" default="1" exclude="LokPilot Fx V4.0">
     <enumVal>
       <enumChoice choice="20 kHz">
         <choice>20 kHz</choice>
@@ -270,7 +270,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DC Analog Mode</label>
   </variable>
-  <variables exclude="LPfxV4">
+  <variables exclude="LokPilot Fx V4.0">
     <variable CV="51" default="0" item="EMF Option 4">
       <decVal/>
       <label>BEMF Parameter 'I' Slow</label>
@@ -316,7 +316,7 @@
     <decVal/>
     <label>Rate for Blinking Effects</label>
   </variable>
-  <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1" exclude="LPfxV4">
+  <variable CV="113" default="50" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Power Handling Slider 1" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Power Pack Maintain Time</label>
   </variable>
@@ -346,11 +346,11 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Serial protocol for C-Sinus</label>
   </variable>
-  <variable CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period" exclude="LPfxV4">
+  <variable CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period" exclude="LokPilot Fx V4.0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Adaptive Regulation Frequency</label>
   </variable>
-  <variable CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2" exclude="LPfxV4">
+  <variable CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2" exclude="LokPilot Fx V4.0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Motor Overload Protection</label>
   </variable>
@@ -386,27 +386,27 @@
     <decVal min="4" max="32"/>
     <label>ABC detection threshold</label>
   </variable>
-  <variable CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2" exclude="LPfxV4">
+  <variable CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Smoke Unit Minimum Steam Chuff Duration</label>
   </variable>
-  <variable CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3" exclude="LPfxV4">
+  <variable CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Smoke Unit Maximum Steam Chuff Duration</label>
   </variable>
-  <variable CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1" exclude="LPfxV4">
+  <variable CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
   </variable>
-  <variable CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1" exclude="LPfxV4">
+  <variable CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Auto Uncoupling Speed</label>
   </variable>
-  <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3" exclude="LPfxV4">
+  <variable CV="247" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 3" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Auto Uncoupling Remove Time</label>
   </variable>
-  <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2" exclude="LPfxV4">
+  <variable CV="248" default="0" tooltip="Unit is 0.016384 seconds" item="ESU V4 Extra Auto Uncoupling Slider 2" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Auto Uncoupling Push Time</label>
   </variable>
@@ -414,15 +414,15 @@
     <decVal/>
     <label>Prime Mover Startup Delay if Virtual Drive Sound Enabled</label>
   </variable>
-  <variable CV="253" default="0" item="Advanced Group 1 Option 1" exclude="LPfxV4">
+  <variable CV="253" default="0" item="Advanced Group 1 Option 1" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Constant Brake Mode - Brake Rate</label>
   </variable>
-  <variable CV="254" default="0" item="Advanced Group 1 Option 2" exclude="LPfxV4">
+  <variable CV="254" default="0" item="Advanced Group 1 Option 2" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Constant Brake Mode - Brake Distance Forward</label>
   </variable>
-  <variable CV="255" default="0" item="Advanced Group 1 Option 3" exclude="LPfxV4">
+  <variable CV="255" default="0" item="Advanced Group 1 Option 3" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Constant Brake Mode - Brake Distance Backward</label>
   </variable>

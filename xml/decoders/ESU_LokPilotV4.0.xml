@@ -52,8 +52,8 @@
   <!-- ver9 refactor to use "|" instead of "/" for line break in custom output labels -->
   <version author="Dave Heap" version="10" lastUpdated="20140324"/>
   <decoder>
-    <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH">
-      <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4">
+    <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+      <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="4000">
         <output name="61" label="|"/>
         <output name="62" label="|"/>
         <output name="63" label="|"/>
@@ -71,7 +71,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LPV4DCC">
+      <model model="LokPilot DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="4000">
         <output name="61" label="|"/>
         <output name="62" label="|"/>
         <output name="63" label="|"/>
@@ -84,7 +84,7 @@
         <size length="21.3" width="15.5" height="5.5" units="mm"/>
         <!-- connector="NEM651, NEM 652, 21MTC" -->
       </model>
-      <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4">
+      <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="4000">
         <output name="61" label="|"/>
         <output name="62" label="|"/>
         <output name="63" label="|"/>
@@ -102,7 +102,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot Micro DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LPmV4DCC">
+      <model model="LokPilot Micro DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="4000">
         <output name="61" label="|"/>
         <output name="62" label="|"/>
         <output name="63" label="|"/>
@@ -115,7 +115,7 @@
         <size length="10.5" width="5.8" height="2.8" units="mm"/>
         <!-- connector="NEM651, Next18" -->
       </model>
-      <model model="LokPilot Fx V4.0" numOuts="69" numFns="32" extFnsESU="yes" productID="LPfxV4">
+      <model model="LokPilot Fx V4.0" numOuts="69" numFns="32" extFnsESU="yes" productID="33554518">
         <output name="29" label="|"/>
         <output name="30" label="|"/>
         <output name="31" label="|"/>
@@ -141,7 +141,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="LPV4">
+      <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="4000">
         <output name="61" label="|"/>
         <output name="62" label="|"/>
         <output name="63" label="|"/>
@@ -185,6 +185,7 @@
       </factReset>
     </resets>
   </decoder>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4extraPane.xml"/>
