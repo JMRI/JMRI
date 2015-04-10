@@ -7,9 +7,6 @@ import jmri.Memory;
  * Base for the Memory interface.
  * <P>
  * Implements the parameter binding support.
- * <P>
- * Note that we consider it an error for there to be more than one object that
- * corresponds to a particular physical Reporter on the layout.
  * <p>
  * Memory system names are always upper case.
  *
