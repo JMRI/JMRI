@@ -241,7 +241,7 @@ public class BlockTableAction extends AbstractTableAction {
                 } else if (col == LENGTHCOL) {
                     float len = 0.0f;
                     try {
-                        len = jmri.util.IntlUtilities.floatValue((String) value);
+                        len = jmri.util.IntlUtilities.floatValue(value.toString());
                     } catch (java.text.ParseException ex2) {
                         log.error("Error parsing length value of \"{}\"", value);
                     }
