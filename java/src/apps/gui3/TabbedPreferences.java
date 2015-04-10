@@ -421,8 +421,9 @@ public class TabbedPreferences extends AppConfigBase {
             }
             TabDetails tab = new TabDetails(labelkey, title, item, tooltip);
             TabDetailsArray.add(tab);
-            tabbedPane.addTab(tab.getTitle(), null, tab.getPanel(),
-                    tab.getToolTip());
+            JScrollPane scroller = new JScrollPane(tab.getPanel());
+            scroller.setBorder(BorderFactory.createEmptyBorder());
+            tabbedPane.addTab(tab.getTitle(), null, scroller, tab.getToolTip());
 
             for (String disableItem : disableItemsList) {
                 if (item.getClass().getName().equals(disableItem)) {
