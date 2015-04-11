@@ -14,7 +14,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
-import javax.swing.JFrame;
 import javax.swing.JPanel;
 import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
@@ -84,10 +83,8 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
     protected void addItem() {
         synchronized (self) {
             add(new Item());
-            validate();
-            if (getTopLevelAncestor() != null) {
-                ((JFrame) getTopLevelAncestor()).pack();
-            }
+            revalidate();
+            repaint();
             this.dirty = true;
         }
     }
@@ -190,12 +187,8 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
             synchronized (self) {
                 // remove this item from display
                 Container parent = this.getParent();  // have to do this before remove
-                Component topParent = this.getTopLevelAncestor();
                 parent.remove(this);
                 parent.revalidate();
-                if (topParent != null) {
-                    ((JFrame) topParent).pack();
-                }
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);

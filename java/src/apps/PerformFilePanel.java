@@ -70,10 +70,8 @@ public class PerformFilePanel extends JPanel implements PreferencesPanel {
                 return;  // cancelled
             }
             add(i);
-            validate();
-            if (getTopLevelAncestor() != null) {
-                ((JFrame) getTopLevelAncestor()).pack();
-            }
+            revalidate();
+            repaint();
             this.dirty = true;
         }
     }

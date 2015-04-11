@@ -24,7 +24,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         super(memo);
         if (mInstance != null) {
             log.warn("Creating too many objects");
-        }
+    }
         mInstance = this;
     }
 
@@ -40,14 +40,15 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         throttleInUse = false;
     }
 
-    public void requestThrottleSetup(LocoAddress address, boolean control) {
+    public void requestThrottleSetup(LocoAddress a, boolean control) {
         // The SPROG protocol doesn't require an interaction with the command
         // station for this, so set the address and immediately trigger the callback
         // if a throttle is not in use.
+            DccLocoAddress address = (DccLocoAddress) a;
         if (!throttleInUse) {
             throttleInUse = true;
             log.debug("new SprogThrottle for " + address);
-            String addr = "" + ((DccLocoAddress) address).getNumber();
+            String addr = "" + ((DccLocoAddress) address).getNumber() + (((DccLocoAddress) address).isLongAddress() ? " 0" : "");
             SprogMessage m = new SprogMessage(2 + addr.length());
             int i = 0;
             m.setElement(i++, 'A');
@@ -58,7 +59,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
             SprogTrafficController.instance().sendSprogMessage(m, null);
             notifyThrottleKnown(new SprogThrottle((SprogSystemConnectionMemo) adapterMemo, address), address);
         } else {
-            failedThrottleRequest((DccLocoAddress) address, "Only one Throttle can be in use at anyone time with the Sprog.");
+            failedThrottleRequest(address, "Only one Throttle can be in use at anyone time with the Sprog.");
             //javax.swing.JOptionPane.showMessageDialog(null,"Only one Throttle can be in use at anyone time with the Sprog.","Sprog Throttle",javax.swing.JOptionPane.WARNING_MESSAGE);
             log.warn("Single SPROG Throttle already in use");
         }
@@ -73,33 +74,26 @@ public class SprogThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 100 and above is a long address
+     * Addresses 0-10239 can be long
      *
      */
     public boolean canBeLongAddress(int address) {
-        return isLongAddress(address);
+        return ((address >= 0) && (address <= 10239));
     }
 
     /**
-     * Address 127 and below is a short address
+     * The short addresses 1-127 are available
      *
      */
     public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        return ((address >= 1) && (address <= 127));
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() {
-        return true;
-    }
-
-    /*
-     * Local method for deciding short/long address
-     */
-    static boolean isLongAddress(int num) {
-        return (num >= 127);
+        return false;
     }
 
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {

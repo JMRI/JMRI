@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import jmri.Sensor;
 import jmri.jmrit.display.IndicatorTrackIcon;
 import jmri.jmrit.display.IndicatorTurnoutIcon;
@@ -47,6 +48,8 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     private JTextField _blockState = new JTextField();
     private JTextField _numTrackSeg = new JTextField();
     private JTextField _numTurnouts = new JTextField();
+    private JTextField _length = new JTextField();
+    private JToggleButton _units;
 
     // Sensor list  
     private JFrame _pickFrame;
@@ -82,7 +85,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         JPanel panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(CircuitBuilder.makeTextBoxPanel(false, _blockState, "blockState", false, null));
         _blockState.setPreferredSize(new Dimension(150, _blockState.getPreferredSize().height));
         contentPane.add(panel);
@@ -93,7 +96,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
                 false, _blockName, "blockName", true, "TooltipBlockName"));
         _blockName.setPreferredSize(new Dimension(300, _blockName.getPreferredSize().height));
         contentPane.add(panel);
-
+        
         contentPane.add(MakeButtonPanel());
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
@@ -102,7 +105,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(p);
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.add(Box.createHorizontalGlue());
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _numTrackSeg, "Segments", false, null));
@@ -117,7 +120,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         _detectorSensorName.setPreferredSize(new Dimension(300, _detectorSensorName.getPreferredSize().height));
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _detectorSensorName, "DetectionSensor", true, "detectorSensorName"));
@@ -125,15 +128,31 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         contentPane.add(panel);
 
         panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         _errorSensorName.setPreferredSize(new Dimension(300, _errorSensorName.getPreferredSize().height));
         panel.add(CircuitBuilder.makeTextBoxPanel(
                 false, _errorSensorName, "ErrorSensor", true, "detectorErrorName"));
         _errorSensorName.setToolTipText(Bundle.getMessage("detectorErrorName"));
         contentPane.add(panel);
-        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         contentPane.add(MakePickListPanel());
+        contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
+
+        JPanel pp = new JPanel();
+//        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        _length.setText(Float.toString(_block.getLengthIn()));
+        pp.add(CircuitBuilder.makeTextBoxPanel(
+                false, _length, "length", true, "TooltipBlockLength"));
+        _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
+        _units = new JToggleButton("foo", !_block.isMetric());
+        _units.setToolTipText(Bundle.getMessage("TooltipBlockLength"));
+        _units.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                changeUnits();
+            }
+        });
+        pp.add(_units);
+        contentPane.add(pp);
         contentPane.add(Box.createVerticalStrut(STRUT_SIZE));
 
         contentPane.add(MakeDoneButtonPanel());
@@ -150,6 +169,7 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
             setSize(_dim);
         }
         setVisible(true);
+        changeUnits();
     }
 
     private JPanel MakePickListPanel() {
@@ -272,6 +292,16 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
     private void convertIcons() {
         _parent.convertIcons(_parent._editor.getSelectionGroup());
         this.toFront();
+    }
+    
+    private void changeUnits() {
+        if (_units.isSelected()) {
+            _units.setText("in");
+            _length.setText(Float.toString(_block.getLengthIn()));
+        } else {
+            _units.setText("cm");
+            _length.setText(Float.toString(_block.getLengthCm()));
+        }
     }
 
     /**
@@ -400,7 +430,20 @@ public class EditCircuitFrame extends jmri.util.JmriJFrame {
         } else {
             _block.setErrorSensor(null);
         }
-        closePickList();
+        name = _length.getText();
+        try {
+            float f = Float.parseFloat(name);
+            if (_units.isSelected()) {
+                f *= 25.4f;
+            } else {
+                f *= 10f;
+            }
+            _block.setLength(Math.max(f, 0.0f));
+        } catch (NumberFormatException nfe) {
+        }
+            
+       
+       closePickList();
 
         _parent.checkCircuitFrame(_block);
         _loc = getLocation(_loc);

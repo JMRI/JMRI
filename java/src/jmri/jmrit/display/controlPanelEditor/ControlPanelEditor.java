@@ -280,7 +280,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
     }
 
     protected void makeWarrantMenu(boolean edit) {
-        _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu();
+        _warrantMenu = jmri.jmrit.logix.WarrantTableAction.makeWarrantMenu(edit);
         if (_warrantMenu == null) {
             _warrantMenu = new JMenu(ResourceBundle.getBundle("jmri.jmrit.logix.WarrantBundle").getString("MenuWarrant"));
             JMenuItem aboutItem = new JMenuItem(Bundle.getMessage("AboutWarrant"));

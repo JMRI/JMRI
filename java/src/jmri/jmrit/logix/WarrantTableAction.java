@@ -71,6 +71,7 @@ public class WarrantTableAction extends AbstractAction {
     protected static WarrantFrame _openFrame;
     protected static NXFrame _nxFrame;
     private static OpSessionLog _log;
+    private static boolean _edit;
     static ShutDownTask     _shutDownTask;
 
     protected WarrantTableAction(String menuOption) {
@@ -103,20 +104,23 @@ public class WarrantTableAction extends AbstractAction {
             OBlock block = manager.getBySystemName(sysNames[i]);
             checkPathPortals(block);
         }
-        showPathPortalErrors();
+        if (_edit) {
+            showPathPortalErrors();            
+        }
     }
     
     /**
     *  Note: _warrantMenu is static
     */
-    synchronized public static JMenu makeWarrantMenu() {
-        _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
-        if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
-            updateWarrantMenu();
+    synchronized public static JMenu makeWarrantMenu(boolean edit) {
+         if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() > 1) {
+             _edit = edit;
+             _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
+             updateWarrantMenu();
+             return _warrantMenu;
         } else {
             return null;
         }
-        return _warrantMenu;
     }
 
     synchronized protected static void updateWarrantMenu() {
@@ -147,7 +151,7 @@ public class WarrantTableAction extends AbstractAction {
             private static final long serialVersionUID = 4129760191508866189L;
 
             public void actionPerformed(ActionEvent e) {
-//              setupWarrantTable();
+                setupWarrantTable();
                 _nxFrame = NXFrame.getInstance();
                 _nxFrame.setVisible(true);
             }           

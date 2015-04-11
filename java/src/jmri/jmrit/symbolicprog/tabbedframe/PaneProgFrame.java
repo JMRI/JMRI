@@ -592,6 +592,9 @@ abstract public class PaneProgFrame extends JmriJFrame
             } else if (a.getValue().equals("byteOnly")) {
                 directbit = false;
                 directbyte = true;
+            } else {
+                directbit = true;
+                directbyte = true;
             }
         }
         if ((a = programming.getAttribute("register")) != null) {
@@ -605,7 +608,10 @@ abstract public class PaneProgFrame extends JmriJFrame
 
         // find a mode to set it to
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
-        if (modes.contains(DefaultProgrammerManager.DIRECTBITMODE) && directbit) {
+        if (modes.contains(DefaultProgrammerManager.DIRECTMODE) && directbit && directbyte) {
+            mProgrammer.setMode(DefaultProgrammerManager.DIRECTMODE);
+            log.debug("Set to DIRECTMODE");
+        } else if (modes.contains(DefaultProgrammerManager.DIRECTBITMODE) && directbit) {
             mProgrammer.setMode(DefaultProgrammerManager.DIRECTBITMODE);
             log.debug("Set to DIRECTBITMODE");
         } else if (modes.contains(DefaultProgrammerManager.DIRECTBYTEMODE) && directbyte) {

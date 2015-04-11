@@ -9,10 +9,6 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle with code specific to an NCE connection.
  * <P>
- * Addresses of 99 and below are considered short addresses, and over 100 are
- * considered long addresses. This is not the NCE system standard, but is used
- * as an expedient here.
- * <P>
  * Based on Glen Oberhauser's original LnThrottleManager implementation
  *
  * @author	Bob Jacobsen Copyright (C) 2001

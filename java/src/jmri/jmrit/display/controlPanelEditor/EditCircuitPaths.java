@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.ListCellRenderer;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -55,6 +56,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private PathListModel _pathListModel;
 
     private boolean _pathChange = false;
+    private JTextField _length = new JTextField();
+    private JToggleButton _units;
 
     static int STRUT_SIZE = 10;
     static boolean _firstInstance = true;
@@ -85,10 +88,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         border.setLayout(new java.awt.BorderLayout(10, 10));
         border.add(contentPane);
         setContentPane(border);
+        _pathList.setPreferredSize(new java.awt.Dimension(_pathList.getFixedCellWidth(), _pathList.getFixedCellHeight()*4));
         pack();
         if (_firstInstance) {
             setLocationRelativeTo(_parent._editor);
-            setSize(500, 500);
+//            setSize(500, 500);
             _firstInstance = false;
         } else {
             setLocation(_loc);
@@ -138,10 +142,9 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _pathList.setCellRenderer(new PathCellRenderer());
         JScrollPane pane = new JScrollPane(_pathList);
         pathPanel.add(pane);
-        pathPanel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
+        pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         panel = new JPanel();
-//        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
         panel.setLayout(new FlowLayout());
 
         JButton clearButton = new JButton(Bundle.getMessage("buttonClearSelection"));
@@ -162,7 +165,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pathPanel.add(panel);
 
         panel = new JPanel();
-
         JButton addButton = new JButton(Bundle.getMessage("buttonAddPath"));
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -171,7 +173,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         });
         addButton.setToolTipText(Bundle.getMessage("ToolTipAddPath"));
         panel.add(addButton);
-
+        
         JButton changeButton = new JButton(Bundle.getMessage("buttonChangeName"));
         changeButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent a) {
@@ -193,6 +195,28 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pathPanel.add(panel);
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
+        JPanel pp = new JPanel();
+//      pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        _length.setText("");
+        pp.add(CircuitBuilder.makeTextBoxPanel(
+                false, _length, "length", true, "TooltipPathLength"));
+        _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
+        _length.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent event) {
+                _pathChange = true;
+            }            
+        });
+        _units = new JToggleButton("", !_block.isMetric());
+        _units.setToolTipText(Bundle.getMessage("TooltipPathLength"));
+        _units.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                changeUnits();
+            }
+        });
+        pp.add(_units);
+        pathPanel.add(pp);
+        pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        
         panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         JLabel l = new JLabel(Bundle.getMessage("enterNewPath"));
@@ -224,7 +248,33 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         pathPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         pathPanel.add(MakeButtonPanel());
+        changeUnits();
         return pathPanel;
+    }
+
+    private void changeUnits() {
+        String len =_length.getText();
+        if (len==null || len.length()==0) {
+            if (_block.isMetric()) {
+                _units.setText("cm");
+            } else {
+                _units.setText("in");
+            }                   
+            return;
+        }
+        try {
+            float f = Float.parseFloat(len);
+            if (_units.isSelected()) {
+                _length.setText(Float.toString(f/2.54f));
+                _units.setText("in");
+            } else {
+                _length.setText(Float.toString(f*2.54f));
+                _units.setText("cm");
+            }                   
+        } catch (NumberFormatException nfe) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidNumber", len),
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);                    
+        }
     }
 
     private static class PathCellRenderer extends JLabel implements ListCellRenderer<OPath> {
@@ -285,10 +335,16 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         OPath path = _pathList.getSelectedValue();
         if (path != null) {
             _pathName.setText(path.getName());
+            if (_units.isSelected()) {
+                _length.setText(Float.toString(path.getLengthIn()));                
+            } else {
+                _length.setText(Float.toString(path.getLengthCm()));                                
+            }
             showPath(path);
         } else {
             checkForSavePath();
             _pathName.setText(null);
+            _length.setText("");                
         }
         int state = _block.getState() | OBlock.ALLOCATED;
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
@@ -312,7 +368,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         java.util.List<Positionable> list = _parent.getCircuitGroup();
         if (log.isDebugEnabled()) {
-            log.debug("showPath for " + name + " CircuitGroup size= " + list.size());
+            log.debug("makePathGroup for " + name + " CircuitGroup size= " + list.size());
         }
         ArrayList<Positionable> pathGroup = new ArrayList<Positionable>();
         for (int i = 0; i < list.size(); i++) {
@@ -361,7 +417,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         if (name == null || name.length() == 0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("needPathName"),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
-
+        } else {
         }
     }
 
@@ -415,7 +471,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         return false;
     }
 
-    private boolean pathsEqual(OPath p1, OPath p2) {
+    private static boolean pathsEqual(OPath p1, OPath p2) {
         Portal toPortal1 = p1.getToPortal();
         Portal fromPortal1 = p1.getFromPortal();
         Portal toPortal2 = p2.getToPortal();
@@ -474,6 +530,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _pathList.clearSelection();
         int state = _block.getState() & ~OBlock.ALLOCATED;
         _block.pseudoPropertyChange("state", Integer.valueOf(0), Integer.valueOf(state));
+        _length.setText("");
     }
 
     /**
@@ -595,6 +652,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 if (p != null && !p.isValidPath(otherPath)) {
                     p.addPath(otherPath);
                 }
+                setPathLength(otherPath);
                 return;
             }
         }
@@ -626,10 +684,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 }
             }
             _pathList.setSelectedValue(otherPath, true);
-//    		return;
         }
-        // from here on, path is different
-
         Portal toPortal = path.getToPortal();
         Portal fromPortal = path.getFromPortal();
         if (fromPortal != null && fromPortal.equals(toPortal)) {
@@ -648,16 +703,39 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             OPath oldPath = _block.getPathByName(name);
             oldPath.setToPortal(toPortal);
             oldPath.setFromPortal(fromPortal);
+            setPathLength(oldPath);
             oldPath.clearSettings();
             Iterator<BeanSetting> it = path.getSettings().iterator();
             while (it.hasNext()) {
                 oldPath.addSetting(it.next());
             }
         } else {
-            _block.addPath(path);		// OBlock adds path to portals and checks for duplicate path names        	
+            _block.addPath(path);		// OBlock adds path to portals and checks for duplicate path names
+            setPathLength(path);
         }
         _pathList.setSelectedValue(path, true);
         _pathListModel.dataChange();
+    }
+    
+    private boolean setPathLength(OPath path) {
+        float f = 0.0f;
+        try {
+            f = Float.parseFloat(_length.getText());
+            if (_units.isSelected()) {
+                path.setLength(f*25.4f);
+            } else {
+                path.setLength(f*10f);                        
+            }                   
+        } catch (NumberFormatException nfe) {
+            f = -1.0f;
+        }
+        if (f<0.0f) {
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidNumber", _length.getText()),
+                    Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
+            return false;
+        }
+
+        return true;
     }
 
     private void changePathName() {

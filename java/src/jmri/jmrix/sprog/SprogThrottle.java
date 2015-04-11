@@ -11,9 +11,6 @@ import org.slf4j.LoggerFactory;
 /**
  * An implementation of DccThrottle with code specific to an SPROG connection.
  * <P>
- * Addresses of 127 and below are considered short addresses, and 128 and over
- * are considered long addresses.
- * <P>
  * Based on the {@link jmri.jmrix.nce.NceThrottle} implementation.
  * <P>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
@@ -26,7 +23,7 @@ public class SprogThrottle extends AbstractThrottle {
     /**
      * Constructor.
      */
-    public SprogThrottle(SprogSystemConnectionMemo memo, LocoAddress address) {
+    public SprogThrottle(SprogSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
 
         // cache settings.
@@ -44,19 +41,25 @@ public class SprogThrottle extends AbstractThrottle {
         this.f10 = false;
         this.f11 = false;
         this.f12 = false;
-        this.address = ((DccLocoAddress) address).getNumber();
+        this.address = address;
         this.isForward = true;
 
     }
 
     SprogCommandStation station = new SprogCommandStation();
-    private int address;
+
+    DccLocoAddress address;
+
+    public LocoAddress getLocoAddress() {
+        return address;
+    }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4.
      */
     protected void sendFunctionGroup1() {
-        byte[] result = jmri.NmraPacket.function0Through4Packet(address, (address >= 128),
+        byte[] result = jmri.NmraPacket.function0Through4Packet(
+                address.getNumber(), address.isLongAddress(),
                 getF0(), getF1(), getF2(), getF3(), getF4());
 
         station.sendPacket(result, 1);
@@ -67,7 +70,8 @@ public class SprogThrottle extends AbstractThrottle {
      */
     protected void sendFunctionGroup2() {
 
-        byte[] result = jmri.NmraPacket.function5Through8Packet(address, (address >= 128),
+        byte[] result = jmri.NmraPacket.function5Through8Packet(
+                address.getNumber(), address.isLongAddress(),
                 getF5(), getF6(), getF7(), getF8());
 
         station.sendPacket(result, 1);
@@ -78,7 +82,8 @@ public class SprogThrottle extends AbstractThrottle {
      */
     protected void sendFunctionGroup3() {
 
-        byte[] result = jmri.NmraPacket.function9Through12Packet(address, (address >= 128),
+        byte[] result = jmri.NmraPacket.function9Through12Packet(
+                address.getNumber(), address.isLongAddress(),
                 getF9(), getF10(), getF11(), getF12());
 
         station.sendPacket(result, 1);
@@ -89,7 +94,8 @@ public class SprogThrottle extends AbstractThrottle {
      */
     protected void sendFunctionGroup4() {
 
-        byte[] result = jmri.NmraPacket.function13Through20Packet(address, (address >= 128),
+        byte[] result = jmri.NmraPacket.function13Through20Packet(
+                address.getNumber(), address.isLongAddress(),
                 getF13(), getF14(), getF15(), getF16(),
                 getF17(), getF18(), getF19(), getF20());
 
@@ -101,7 +107,8 @@ public class SprogThrottle extends AbstractThrottle {
      */
     protected void sendFunctionGroup5() {
 
-        byte[] result = jmri.NmraPacket.function21Through28Packet(address, (address >= 128),
+        byte[] result = jmri.NmraPacket.function21Through28Packet(
+                address.getNumber(), address.isLongAddress(),
                 getF21(), getF22(), getF23(), getF24(),
                 getF25(), getF26(), getF27(), getF28());
 
@@ -117,7 +124,7 @@ public class SprogThrottle extends AbstractThrottle {
      */
     public void setSpeedStepMode(int Mode) {
         SprogMessage m;
-        int mode = SprogThrottleManager.isLongAddress(address)
+        int mode = address.isLongAddress()
                 ? SprogConstants.LONG_ADD : 0;
         try {
             mode |= (InstanceManager.powerManagerInstance().getPower() == SprogPowerManager.ON)
@@ -241,10 +248,6 @@ public class SprogThrottle extends AbstractThrottle {
         if (old != isForward) {
             notifyPropertyChangeListener("IsForward", old, isForward);
         }
-    }
-
-    public LocoAddress getLocoAddress() {
-        return new DccLocoAddress(address, SprogThrottleManager.isLongAddress(address));
     }
 
     protected void throttleDispose() {
