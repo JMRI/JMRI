@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Vector;
 import jmri.CommandStation;
+import jmri.DccLocoAddress;
 import jmri.jmrix.sprog.sprogslotmon.SprogSlotMonFrame;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,6 +43,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     private int currentSlot = 0;
+    private int currentSprogAddress = -1;
 
     private static LinkedList<SprogSlot> slots;
     private Queue<SprogSlot> sendNow = new LinkedList<SprogSlot>();
@@ -138,30 +140,24 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * @param a int
      * @return the slot or null if the address is not in the queue
      */
-    private SprogSlot findAddress(int a) {
+    private SprogSlot findAddress(DccLocoAddress address) {
         for (SprogSlot s : slots) {
-            if (s.getAddr() == a) {
+            if ( s.isActiveAddressMatch(address) ) {
                 return s;
             }
         }
         return (null);
     }
 
-    private SprogSlot findAddressSpeedPacket(int address) {
-        for (SprogSlot s : slots) {
-            if (s.getAddr() == address && s.isSpeedPacket()) {
-                return s;
+    private SprogSlot findAddressSpeedPacket(DccLocoAddress address) {
+            while ( (currentSprogAddress == -1) || ( findAddress(new DccLocoAddress(currentSprogAddress,true)) != null) ||
+                    ( address.isLongAddress() && (address.getNumber() == currentSprogAddress ) ) ) {
+                    currentSprogAddress++;
+                    currentSprogAddress = currentSprogAddress % 10240;
             }
-        }
-        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
-            return findFree();
-        }
-        return (null);
-    }
-
-    private SprogSlot findF0to4Packet(int address) {
-        for (SprogSlot s : slots) {
-            if (s.getAddr() == address && s.isF0to4Packet()) {
+            SprogTrafficController.instance().sendSprogMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
+            for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isSpeedPacket()) {
                 return s;
             }
         }
@@ -171,9 +167,9 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         return (null);
     }
 
-    private SprogSlot findF5to8Packet(int address) {
+    private SprogSlot findF0to4Packet(DccLocoAddress address) {
         for (SprogSlot s : slots) {
-            if (s.getAddr() == address && s.isF5to8Packet()) {
+            if (s.isActiveAddressMatch(address) && s.isF0to4Packet()) {
                 return s;
             }
         }
@@ -183,9 +179,21 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         return (null);
     }
 
-    private SprogSlot findF9to12Packet(int address) {
+    private SprogSlot findF5to8Packet(DccLocoAddress address) {
         for (SprogSlot s : slots) {
-            if (s.getAddr() == address && s.isF9to12Packet()) {
+            if (s.isActiveAddressMatch(address) && s.isF5to8Packet()) {
+                return s;
+            }
+        }
+        if (getInUseCount() < SprogConstants.MAX_SLOTS) {
+            return findFree();
+        }
+        return (null);
+    }
+
+    private SprogSlot findF9to12Packet(DccLocoAddress address) {
+        for (SprogSlot s : slots) {
+            if (s.isActiveAddressMatch(address) && s.isF9to12Packet()) {
                 return s;
             }
         }
@@ -205,14 +213,14 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
 
     }
 
-    public void function0Through4Packet(int address,
+    public void function0Through4Packet(DccLocoAddress address,
             boolean f0, boolean f0Momentary,
             boolean f1, boolean f1Momentary,
             boolean f2, boolean f2Momentary,
             boolean f3, boolean f3Momentary,
             boolean f4, boolean f4Momentary) {
         SprogSlot s = this.findF0to4Packet(address);
-        s.f0to4packet(address, f0, f0Momentary,
+        s.f0to4packet(address.getNumber(), address.isLongAddress(), f0, f0Momentary,
                 f1, f1Momentary,
                 f2, f2Momentary,
                 f3, f3Momentary,
@@ -220,23 +228,23 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         notifySlotListeners(s);
     }
 
-    public void function5Through8Packet(int address,
+    public void function5Through8Packet(DccLocoAddress address,
             boolean f5, boolean f5Momentary,
             boolean f6, boolean f6Momentary,
             boolean f7, boolean f7Momentary,
             boolean f8, boolean f8Momentary) {
         SprogSlot s = this.findF5to8Packet(address);
-        s.f5to8packet(address, f5, f5Momentary, f6, f6Momentary, f7, f7Momentary, f8, f8Momentary);
+        s.f5to8packet(address.getNumber(), address.isLongAddress(), f5, f5Momentary, f6, f6Momentary, f7, f7Momentary, f8, f8Momentary);
         notifySlotListeners(s);
     }
 
-    public void function9Through12Packet(int address,
+    public void function9Through12Packet(DccLocoAddress address,
             boolean f9, boolean f9Momentary,
             boolean f10, boolean f10Momentary,
             boolean f11, boolean f11Momentary,
             boolean f12, boolean f12Momentary) {
         SprogSlot s = this.findF9to12Packet(address);
-        s.f9to12packet(address, f9, f9Momentary, f10, f10Momentary, f11, f11Momentary, f12, f12Momentary);
+        s.f9to12packet(address.getNumber(), address.isLongAddress(), f9, f9Momentary, f10, f10Momentary, f11, f11Momentary, f12, f12Momentary);
         notifySlotListeners(s);
     }
 
@@ -253,10 +261,10 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
      * @param spd
      * @param isForward
      */
-    public void setSpeed(int mode, int address, int spd, boolean isForward) {
+    public void setSpeed(int mode, DccLocoAddress address, int spd, boolean isForward) {
         SprogSlot s = this.findAddressSpeedPacket(address);
         if (s != null) { // May need an error here - if all slots are full!
-            s.setSpeed(mode, address, spd, isForward);
+            s.setSpeed(mode, address.getNumber(), address.isLongAddress(), spd, isForward);
             notifySlotListeners(s);
             log.debug("Registering new speed");
             sendNow.add(s);
@@ -271,7 +279,7 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
         }
     }
 
-    public void release(int address) {
+    public void release(DccLocoAddress address) {
         SprogSlot s;
         while ((s = findAddress(address)) != null) {
             s.clear();

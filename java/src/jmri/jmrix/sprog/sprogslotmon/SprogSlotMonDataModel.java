@@ -131,15 +131,41 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //        case ESTOPCOLUMN:  //
 //            return "E Stop";          // will be name of button in default GUI
             case ADDRCOLUMN:  //
-                return Integer.valueOf(s.locoAddr());
+                    switch (s.slotStatus()) {
+                        case SprogConstants.SLOT_IN_USE:
+                            return Integer.toString(s.locoAddr()) + "("+ (s.getIsLong() ? "L" : "S") + ")";
+                        case SprogConstants.SLOT_FREE:
+                            return "-";
+                        default:
+                            return "<error>";
+                    }
             case SPDCOLUMN:  //
-                String t;
-                if (s.speed() == 1) {
-                    t = "(estop) 1";
-                } else {
-                    t = "          " + s.speed();
+                switch (s.slotStatus()) {
+                    case SprogConstants.SLOT_IN_USE:
+                        if (s.isF0to4Packet()) {
+                            return "F0to4Pkt";
+                        } else if (s.isF5to8Packet()) {
+                            return "F5to8Pkt";
+                        } else if (s.isF9to12Packet()) {
+                            return "F9to12Pkt";
+                        } else if (s.isOpsPkt()) {
+                            return "OpsPkt";
+                        } else if (s.isSpeedPacket()) {
+                            String t;
+                            if (s.speed() == 1) {
+                                t = "(estop) 1";
+                            } else {
+                                t = "          " + s.speed();
+                            }
+                            return t.substring(t.length() - 9, t.length()); // 9 comes from (estop)
+                        } else {
+                          return "<error>";
+                        }
+                    case SprogConstants.SLOT_FREE:
+                        return "-";
+                    default:
+                        return "<error>";
                 }
-                return t.substring(t.length() - 9, t.length()); // 9 comes from (estop)
             case STATCOLUMN:  //
                 switch (s.slotStatus()) {
                     case SprogConstants.SLOT_IN_USE:
@@ -154,7 +180,18 @@ public class SprogSlotMonDataModel extends javax.swing.table.AbstractTableModel 
 //        case DISPCOLUMN:  //
 //            return "Free";          // will be name of button in default GUI
             case DIRCOLUMN:  //
-                return (s.isForward() ? "Fwd" : "Rev");
+                    switch (s.slotStatus()) {
+                        case SprogConstants.SLOT_IN_USE:
+                            if (s.isSpeedPacket()) {
+                                return (s.isForward() ? "Fwd" : "Rev");
+                            } else {
+                                return "-";                               
+                            }
+                        case SprogConstants.SLOT_FREE:
+                            return "-";
+                        default:
+                            return "<error>";
+                    }
 
             default:
                 log.error("internal state inconsistent with table requst for " + row + " " + col);

@@ -41,33 +41,26 @@ public class SprogCSThrottleManager extends AbstractThrottleManager {
     }
 
     /**
-     * Address 100 and above is a long address
+     * Addresses 0-10239 can be long
      *
      */
     public boolean canBeLongAddress(int address) {
-        return isLongAddress(address);
+        return ((address >= 0) && (address <= 10239));
     }
 
     /**
-     * Address 99 and below is a short address
+     * The short addresses 1-127 are available
      *
      */
     public boolean canBeShortAddress(int address) {
-        return !isLongAddress(address);
+        return ((address >= 1) && (address <= 127));
     }
 
     /**
      * Are there any ambiguous addresses (short vs long) on this system?
      */
     public boolean addressTypeUnique() {
-        return true;
-    }
-
-    /*
-     * Local method for deciding short/long address
-     */
-    static boolean isLongAddress(int num) {
-        return (num >= 100);
+        return false;
     }
 
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {

@@ -2,6 +2,7 @@
 package jmri.jmrix.sprog;
 
 import java.util.Arrays;
+import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.NmraPacket;
 import org.slf4j.Logger;
@@ -33,6 +34,7 @@ public class SprogSlot {
         payload[2] = 0;
         repeat = -1;
         addr = 0;
+        isLong = false;
         spd = 0;
         forward = true;
         status = SprogConstants.SLOT_FREE;
@@ -44,6 +46,7 @@ public class SprogSlot {
     // repeat of -1 is a persistent entry, ie a loco slot
     private int repeat;
     private int addr;
+    private boolean isLong;
     private int spd;
     private boolean forward;
     private int status;
@@ -112,19 +115,20 @@ public class SprogSlot {
         return speedPacket;
     }
 
-    public void setSpeed(int mode, int address, int speed, boolean forward) {
+    public void setSpeed(int mode, int address, boolean isLongAddress, int speed, boolean forward) {
         addr = address;
+        isLong = isLongAddress;
         spd = speed;
         this.speedPacket = true;
         this.speedMode = mode;
         this.f0to4Packet = false;
         this.forward = forward;
         if ((mode & DccThrottle.SpeedStepMode28) != 0) {
-            this.payload = jmri.NmraPacket.speedStep28Packet(true, address,
-                    (address >= SprogConstants.LONG_START), spd, forward);
+            this.payload = jmri.NmraPacket.speedStep28Packet(true, addr,
+                    isLong, spd, forward);
         } else {
-            this.payload = jmri.NmraPacket.speedStep128Packet(address,
-                    (address >= SprogConstants.LONG_START), spd, forward);
+            this.payload = jmri.NmraPacket.speedStep128Packet(addr,
+                    isLong, spd, forward);
         }
         status = SprogConstants.SLOT_IN_USE;
     }
@@ -136,7 +140,7 @@ public class SprogSlot {
         status = SprogConstants.SLOT_IN_USE;
     }
 
-    public void f5to8packet(int address,
+    public void f5to8packet(int address, boolean isLongAddress,
             boolean f5, boolean f5Momentary,
             boolean f6, boolean f6Momentary,
             boolean f7, boolean f7Momentary,
@@ -144,6 +148,7 @@ public class SprogSlot {
 
         this.f5to8Packet = true;
         this.addr = address;
+        this.isLong = isLongAddress;
 
         //Were we repeating any functions which we are now not?
         if ((this.repeatF5 && !f5)
@@ -175,13 +180,13 @@ public class SprogSlot {
         }
 
         this.payload = jmri.NmraPacket.function5Through8Packet(address,
-                (address >= SprogConstants.LONG_START),
+                isLongAddress,
                 f5, f6, f7, f8);
         this.status = SprogConstants.SLOT_IN_USE;
 
     }
 
-    public void f9to12packet(int address,
+    public void f9to12packet(int address, boolean isLongAddress,
             boolean f9, boolean f9Momentary,
             boolean f10, boolean f10Momentary,
             boolean f11, boolean f11Momentary,
@@ -189,6 +194,7 @@ public class SprogSlot {
 
         this.f9to12Packet = true;
         this.addr = address;
+        this.isLong = isLongAddress;
 
         //Were we repeating any functions which we are now not?
         if ((this.repeatF9 && !f9)
@@ -220,13 +226,13 @@ public class SprogSlot {
         }
 
         this.payload = jmri.NmraPacket.function9Through12Packet(address,
-                (address >= SprogConstants.LONG_START),
+                isLongAddress,
                 f9, f10, f11, f12);
         this.status = SprogConstants.SLOT_IN_USE;
 
     }
 
-    public void f0to4packet(int address,
+    public void f0to4packet(int address, boolean isLongAddress,
             boolean f0, boolean f0Momentary,
             boolean f1, boolean f1Momentary,
             boolean f2, boolean f2Momentary,
@@ -235,6 +241,7 @@ public class SprogSlot {
 
         this.f0to4Packet = true;
         this.addr = address;
+        this.isLong = isLongAddress;
 
         //Were we repeating any functions which we are now not?
         if ((this.repeatF0 && !f0)
@@ -271,7 +278,7 @@ public class SprogSlot {
             this.repeatF4 = false;
         }
         this.payload = jmri.NmraPacket.function0Through4Packet(address,
-                (address >= SprogConstants.LONG_START),
+                isLongAddress,
                 f0, f1, f2, f3, f4);
         this.status = SprogConstants.SLOT_IN_USE;
 
@@ -305,7 +312,7 @@ public class SprogSlot {
     }
 
     public void eStop() {
-        this.setSpeed(this.speedMode, this.locoAddr(), 1, this.forward);
+        this.setSpeed(this.speedMode, this.addr, this.isLong, 1, this.forward);
     }
 
     // Access methods
@@ -324,7 +331,7 @@ public class SprogSlot {
     }
 
     public boolean isLongAddress() {
-        return (getAddr() >= 100);
+        return isLong;
     }
 
     public boolean isFree() {
@@ -371,12 +378,24 @@ public class SprogSlot {
         addr = a;
     }
 
+    public boolean getIsLong() {
+        return isLong;
+    }
+
+    public void setIsLong(boolean a) {
+        isLong = a;
+    }
+
     public boolean isForward() {
         return forward;
     }
 
     public boolean isOpsPkt() {
         return opsPkt;
+    }
+
+    public boolean isActiveAddressMatch(DccLocoAddress address) {
+        return ( status == SprogConstants.SLOT_IN_USE && getAddr() == address.getNumber() && getIsLong() == address.isLongAddress() );
     }
 
     /**

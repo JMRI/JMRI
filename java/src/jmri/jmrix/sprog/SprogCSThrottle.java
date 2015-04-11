@@ -11,9 +11,6 @@ import org.slf4j.LoggerFactory;
  * An implementation of DccThrottle with code specific to a SPROG Command
  * Station connection.
  * <P>
- * Addresses of 99 and below are considered short addresses, and over 100 are
- * considered long addresses.
- * <P>
  * Updated by Andrew Crosland February 2012 to enable 28 step speed packets</P>
  *
  * @author	Andrew Crosland Copyright (C) 2006, 2012
@@ -42,7 +39,7 @@ public class SprogCSThrottle extends AbstractThrottle {
         this.f10 = false;
         this.f11 = false;
         this.f12 = false;
-        this.address = ((DccLocoAddress) address).getNumber();
+        this.address = ((DccLocoAddress) address);
         this.isForward = true;
 
         //@TODO - this needs a little work. Current implementation looks like it
@@ -59,7 +56,12 @@ public class SprogCSThrottle extends AbstractThrottle {
     }
 
     private SprogCommandStation commandStation;
-    private int address;
+
+    DccLocoAddress address;
+
+    public LocoAddress getLocoAddress() {
+        return address;
+    }
 
     /**
      * Send the message to set the state of functions F0, F1, F2, F3, F4 by
@@ -164,10 +166,6 @@ public class SprogCSThrottle extends AbstractThrottle {
         active = false;
         commandStation.release(address);
         finishRecord();
-    }
-
-    public LocoAddress getLocoAddress() {
-        return new DccLocoAddress(address, SprogCSThrottleManager.isLongAddress(address));
     }
 
     // initialize logging

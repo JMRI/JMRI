@@ -35,9 +35,6 @@ public final class SprogConstants {
     /* How many times to repeat an ops mode programming packet */
     public final static int OPS_REPEATS = 3;
 
-    /* Start of long address range */
-    public final static int LONG_START = 100;
-
     /* Longest packet possible */
     public final static int MAX_PACKET_LENGTH = 6;
 
