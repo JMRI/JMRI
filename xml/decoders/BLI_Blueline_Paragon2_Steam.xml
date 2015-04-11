@@ -23,6 +23,8 @@
   <!-- Version 3 correct wording of CV8 = 254 reset -->
   <version author="Michael Mosher" version="4" lastUpdated="20141208"/>
   <!-- Version 4 fix CV246 bit 7 label -->
+  <version author="Michael Mosher" version="5" lastUpdated="20150325"/>
+  <!-- Add Var's now listed in V1.10 of steam tech ref and rearrange items on panes -->
   <decoder>
     <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
       <model model="Steam" numOuts="3" numFns="30" connector="9pin">
@@ -147,121 +149,92 @@
       <!-- This decoder doesn't do the bit-wise NMRA method of -->
       <!-- assigning functions to outputs. Instead, it has -->
       <!-- a much more civilized system of one CV per function -->
-      <variable CV="33" default="1" minFn="1" item="Function F0F effect generated">
+      <variable CV="33" default="1" minFn="1" item="F0 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F0 Output Function Definition</label>
       </variable>
-      <variable CV="34" default="2" minFn="1" item="Function 1 effect generated">
+      <variable CV="34" default="2" minFn="1" item="F1 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F1 Output Function Definition</label>
       </variable>
-      <variable CV="35" default="3" minFn="2" item="Function 2 effect generated">
+      <variable CV="35" default="3" minFn="2" item="F2 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F2 Output Function Definition</label>
       </variable>
-      <variable CV="36" default="17" minFn="3" item="Function 3 effect generated">
+      <variable CV="36" default="17" minFn="3" item="F3 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F3 Output Function Definition</label>
       </variable>
-      <variable CV="37" default="5" minFn="4" item="Function 4 effect generated">
+      <variable CV="37" default="5" minFn="4" item="F4 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F4 Output Function Definition</label>
       </variable>
-      <variable CV="38" default="6" minFn="5" item="Function 5 effect generated">
+      <variable CV="38" default="6" minFn="5" item="F5 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F5 Output Function Definition</label>
       </variable>
-      <variable CV="39" default="7" minFn="6" item="Function 6 effect generated">
+      <variable CV="39" default="7" minFn="6" item="F6 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F6 Output Function Definition</label>
       </variable>
-      <variable CV="40" default="21" minFn="7" item="Function 7 effect generated">
+      <variable CV="40" default="21" minFn="7" item="F7 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F7 Output Function Definition</label>
       </variable>
-      <variable CV="41" default="9" minFn="8" item="Function 8 effect generated">
+      <variable CV="41" default="9" minFn="8" item="F8 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F8 Output Function Definition</label>
       </variable>
-      <variable CV="42" default="10" minFn="9" item="Function 9 effect generated">
+      <variable CV="42" default="10" minFn="9" item="F9 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F9 Output Function Definition</label>
       </variable>
-      <variable CV="43" default="11" minFn="10" item="Function 10 effect generated">
+      <variable CV="43" default="11" minFn="10" item="F10 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F10 Output Function Definition</label>
       </variable>
-      <variable CV="44" default="12" minFn="11" item="Function 11 effect generated">
+      <variable CV="44" default="12" minFn="11" item="F11 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F11 Output Function Definition</label>
       </variable>
-      <variable CV="45" default="13" minFn="12" item="Function 12 effect generated">
+      <variable CV="45" default="13" minFn="12" item="F12 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F12 Output Function Definition</label>
       </variable>
-      <variable CV="46" default="30" minFn="13" item="Function 13 effect generated">
+      <variable CV="46" default="30" minFn="13" item="F13 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F13 Output Function Definition</label>
       </variable>
-      <variable CV="47" default="50" minFn="14" item="Function 14 effect generated">
+      <variable CV="47" default="50" minFn="14" item="F14 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F14 Output Function Definition</label>
       </variable>
-      <variable CV="48" default="51" minFn="15" item="Function 15 effect generated">
+      <variable CV="48" default="51" minFn="15" item="F15 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F15 Output Function Definition</label>
       </variable>
-      <variable CV="49" default="52" minFn="16" item="Function 16 effect generated">
+      <variable CV="49" default="52" minFn="16" item="F16 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F16 Output Function Definition</label>
       </variable>
-      <variable CV="50" default="53" minFn="17" item="Function 17 effect generated">
+      <variable CV="50" default="53" minFn="17" item="F17 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F17 Output Function Definition</label>
       </variable>
-      <variable CV="51" default="54" minFn="18" item="Function 18 effect generated">
+      <variable CV="51" default="54" minFn="18" item="F18 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F18 Output Function Definition</label>
       </variable>
-      <variable CV="52" default="55" minFn="19" item="Function 19 effect generated">
+      <variable CV="52" default="55" minFn="19" item="F19 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F19 Output Function Definition</label>
       </variable>
-      <variable CV="53" default="56" minFn="20" item="Function 20 effect generated">
+      <variable CV="53" default="56" minFn="20" item="F20 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F20 Output Function Definition</label>
       </variable>
-      <variable CV="54" default="57" minFn="21" item="Function 21 effect generated">
+      <variable CV="54" default="57" minFn="21" item="F21 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F21 Output Function Definition</label>
       </variable>
-      <variable CV="55" default="19" minFn="22" item="Function 22 effect generated">
+      <variable CV="55" default="19" minFn="22" item="F22 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F22 Output Function Definition</label>
       </variable>
-      <variable CV="56" default="8" minFn="23" item="Function 23 effect generated">
+      <variable CV="56" default="8" minFn="23" item="F23 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F23 Output Function Definition</label>
       </variable>
-      <variable CV="57" default="0" minFn="24" item="Function 24 effect generated">
+      <variable CV="57" default="0" minFn="24" item="F24 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F24 Output Function Definition</label>
       </variable>
-      <variable CV="58" default="0" minFn="25" item="Function 25 effect generated">
+      <variable CV="58" default="0" minFn="25" item="F25 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F25 Output Function Definition</label>
       </variable>
-      <variable CV="59" default="40" minFn="26" item="Function 26 effect generated">
+      <variable CV="59" default="40" minFn="26" item="F26 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F26 Output Function Definition</label>
       </variable>
-      <variable CV="60" default="41" minFn="27" item="Function 27 effect generated">
+      <variable CV="60" default="41" minFn="27" item="F27 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F27 Output Function Definition</label>
       </variable>
-      <variable CV="61" default="18" minFn="27" item="Function 28 effect generated">
+      <variable CV="61" default="18" minFn="28" item="F28 Output Function">
         <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-        <label>F28 Output Function Definition</label>
       </variable>
       <variable item="Kick Start" CV="65" default="40">
         <decVal/>
@@ -480,11 +453,11 @@
         <decVal/>
         <label>City/Farm/Industrial/Lumber Volume</label>
       </variable>
-      <variable item="Rule 17 Lighting" CV="159" mask="XXXXXXXV" default="0">
+      <variable item="Global lighting option 1" CV="159" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Rule 17 Lighting</label>
       </variable>
-      <variable item="L1 Inactive State" CV="159" mask="XXXXXXVX" default="1">
+      <variable item="Function F0R effect generated" CV="159" mask="XXXXXXVX" default="1">
         <enumVal>
           <enumChoice choice="Ditch Lights Off">
             <choice>Ditch Lights Off</choice>
@@ -495,7 +468,11 @@
         </enumVal>
         <label>L1 Inactive State</label>
       </variable>
-      <variable CV="160" mask="VXXXXXXX" default="1" item="Directional Headlights">
+      <variable item="Global lighting option 3" CV="159" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
+        <label>L1/Headlight Power Up State</label>
+      </variable>
+      <variable CV="160" mask="VXXXXXXX" default="1" item="Function F0F effect generated">
         <enumVal>
           <enumChoice choice="Not Directional">
             <choice>Not Directional</choice>
@@ -506,11 +483,11 @@
         </enumVal>
         <label>L1 Light Directional</label>
       </variable>
-      <variable CV="160" mask="XVXXXXXX" default="1" item="Global lighting option 1">
+      <variable CV="160" mask="XVXXXXXX" default="0" item="Function F0F behavior">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-FwdRev.xml"/>
         <label>L1 Light Active</label>
       </variable>
-      <variable CV="160" mask="XXVVVVVV" default="3" item="Global lighting option 2">
+      <variable CV="160" mask="XXVVVVVV" default="3" item="Function F0F options">
         <enumVal>
           <enumChoice choice="Disabled">
             <choice>Disabled</choice>
@@ -530,19 +507,19 @@
         </enumVal>
         <label>L1 Light Type</label>
       </variable>
-      <variable CV="161" default="0" item="Global lighting option 3" tooltip="-/On Time/On Time One/Start Point Power On">
+      <variable CV="161" default="0" item="Function F0F option 1" tooltip="-/On Time/On Time One/Start Point Power On">
         <decVal/>
         <label>L1 parameter 1</label>
       </variable>
-      <variable CV="162" default="30" item="Global lighting option 4" tooltip="-/Off Time/Off Time One/Ramp Up Time">
+      <variable CV="162" default="30" item="Function F0F option 2" tooltip="-/Off Time/Off Time One/Ramp Up Time">
         <decVal/>
         <label>L1 parameter 2</label>
       </variable>
-      <variable CV="163" default="180" item="Global lighting option 5" tooltip="-/-/On Time Two/End Point Power On">
+      <variable CV="163" default="180" item="Function F0F option 3" tooltip="-/-/On Time Two/End Point Power On">
         <decVal/>
         <label>L1 parameter 3</label>
       </variable>
-      <variable CV="164" default="30" item="Global lighting option 6" tooltip="-/-/Off Time Two/Ramp Down Time">
+      <variable CV="164" default="30" item="Function F0F option 4" tooltip="-/-/Off Time Two/Ramp Down Time">
         <decVal/>
         <label>L1 parameter 4</label>
       </variable>
@@ -580,7 +557,7 @@
       </variable>
       <variable item="Brake Timer" CV="186" default="3">
         <decVal/>
-        <label>Brake Timer</label>
+        <label>DCC Brake Timer</label>
       </variable>
       <variable item="DCC Uncouple Throttle Stop" CV="187" default="3">
         <decVal/>
@@ -661,9 +638,9 @@
         <decVal max="255"/>
         <label>DCC Throttle Magnitude Decrease</label>
       </variable>
-      <variable item="Motor Load Power Filter" CV="202" default="20">
+      <variable item="DC Track Change Magnitude Increase" CV="202" default="20">
         <decVal max="255"/>
-        <label>Motor Load Power Filter</label>
+        <label>DC Track Change Magnitude Increase</label>
       </variable>
       <variable item="DC Track Change Magnitude Decrease" CV="203" default="20">
         <decVal max="255"/>
@@ -830,19 +807,19 @@
         </enumVal>
         <label>Horn Select</label>
       </variable>
-      <variable item="DCC Front/Rear Lights" CV="225" mask="XXXXXXXV" default="1">
+      <variable item="Directional Headlights" CV="225" mask="XXXXXXXV" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC Front/Rear Lights</label>
+        <label>Front/Rear Lights</label>
       </variable>
-      <variable item="DCC L1 Light" CV="225" mask="XXXXXXVX" default="1">
+      <variable item="Function F0R options" CV="225" mask="XXXXXXVX" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC L1 Light</label>
+        <label>L1 Light</label>
       </variable>
-      <variable item="DCC L1 Activate on Bell or Horn" CV="225" mask="XXXVXXXX" default="0">
+      <variable item="Function F0R option 1" CV="225" mask="XXXVXXXX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC L1 Activate on Bell or Horn</label>
+        <label>L1 Activate on Bell or Horn</label>
       </variable>
-      <variable item="Activates L1 on DCC" CV="226" mask="XXXXXXXV" default="0">
+      <variable item="Function F0R option 2" CV="226" mask="XXXXXXXV" default="0">
         <enumVal>
           <enumChoice choice="Horn">
             <choice>Horn</choice>
@@ -851,7 +828,7 @@
             <choice>Bell</choice>
           </enumChoice>
         </enumVal>
-        <label>Activates L1 on DCC</label>
+        <label>Activates on L1</label>
       </variable>
       <variable item="Brake Set/Release" CV="227" mask="XXXXXXXV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
@@ -869,23 +846,35 @@
         <decVal max="255"/>
         <label>DCC Startup Timer</label>
       </variable>
-      <variable item="DCC Consist Rear Light" CV="229" mask="XXXXXXXV" default="1">
+      <variable item="Consist Rear Light" CV="229" mask="XXXXXXXV" default="1" tooltip="DCC and DC)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC Consist Rear Light</label>
+        <label>Consist Rear Light</label>
       </variable>
-      <variable item="DCC Consist Front Light" CV="229" mask="XXXXXXVX" default="1">
+      <variable item="Consist Front Light" CV="229" mask="XXXXXXVX" default="1" tooltip="DCC and DC)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC Consist Front Light</label>
+        <label>Consist Front Light</label>
       </variable>
-      <variable item="DCC Consist L1 Light" CV="229" mask="XXXXXVXX" default="1">
+      <variable item="Consist L1 Light" CV="229" mask="XXXXXVXX" default="1" tooltip="DCC and DC)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC Consist L1 Light</label>
+        <label>Consist L1 Light</label>
       </variable>
-      <variable item="DCC Consist Cab" CV="229" mask="VXXXXXXX" default="1">
+      <variable item="Consist Aux" CV="229" mask="XXXVXXXX" default="1" tooltip="DC only)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-        <label>DCC Consist Cab</label>
+        <label>Consist Aux</label>
       </variable>
-      <variable item="DCC Easy Consist" CV="230" default="0">
+      <variable item="Consist Bell" CV="229" mask="XXVXXXXX" default="1" tooltip="DC only)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Consist Bell</label>
+      </variable>
+      <variable item="Consist Horn" CV="229" mask="XVXXXXXX" default="1" tooltip="DC only)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Consist Horn</label>
+      </variable>
+      <variable item="Consist Cab" CV="229" mask="VXXXXXXX" default="1" tooltip="DCC and DC)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Consist Cab</label>
+      </variable>
+      <variable item="Easy Consist" CV="230" default="0">
         <enumVal>
           <enumChoice choice="Single">
             <choice>Single</choice>
@@ -900,11 +889,15 @@
             <choice>Rear</choice>
           </enumChoice>
         </enumVal>
-        <label>DCC Easy Consist</label>
+        <label>Easy Consist</label>
       </variable>
-      <variable item="Light Dimmer" CV="231" default="100">
+      <variable item="Global lighting option 4" CV="231" default="100">
         <decVal/>
         <label>Light Dimmer</label>
+      </variable>
+      <variable item="Chuff Adjust" CV="233" default="150" tooltip="For this to have any effect, Chuff Sensor must be off">
+        <decVal/>
+        <label>Chuff Adjust</label>
       </variable>
       <variable item="Smoke Unit Fan Chuff Time" CV="234" default="25">
         <decVal/>
@@ -947,9 +940,13 @@
         <decVal/>
         <label>Recorder Playback Loop Adjust</label>
       </variable>
-      <variable CV="240" default="5124" item="Sound Group 3 Option 8">
-        <splitVal highCV="241"/>
+      <variable CV="240" default="5124" item="Sound Group 1 Option 8">
+        <splitVal highCV="241" max="65535"/>
         <label>Random Sound Occurrence</label>
+      </variable>
+      <variable item="Broadcast Stop Packet Count" CV="244" default="0">
+        <decVal/>
+        <label>Broadcast Stop Packet Count</label>
       </variable>
       <variable item="GSC1 bit 7" CV="245" mask="VXXXXXXX" default="0">
         <enumVal>
@@ -1015,6 +1012,10 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Smoke unit power up</label>
       </variable>
+      <variable item="GSC2 bit 6" CV="246" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
+        <label>Chuff Sensor</label>
+      </variable>
       <variable item="GSC2 bit 1" CV="246" mask="XXXXXXVX" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
         <label>Motor loading</label>
@@ -1060,18 +1061,48 @@
   </decoder>
   <pane>
     <column>
-      <row>
-        <display item="Motor Load Power Filter" layout="above" label="">
-          <label/>
-        </display>
+        <display item="F0 Output Function"/>
+        <display item="F1 Output Function"/>
+        <display item="F2 Output Function"/>
+        <display item="F3 Output Function"/>
+        <display item="F4 Output Function"/>
+        <display item="F5 Output Function"/>
+        <display item="F6 Output Function"/>
+        <display item="F7 Output Function"/>
+        <display item="F8 Output Function"/>
         <label>
           <text> </text>
         </label>
-        <display item="Motor Load Power Filter" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
+        <display item="F9 Output Function"/>
+        <display item="F10 Output Function"/>
+        <display item="F11 Output Function"/>
+        <display item="F12 Output Function"/>
+    </column>
+    <column>
+        <display item="F13 Output Function"/>
+        <display item="F14 Output Function"/>
+        <display item="F15 Output Function"/>
+        <display item="F16 Output Function"/>
+        <display item="F17 Output Function"/>
+        <display item="F18 Output Function"/>
+        <display item="F19 Output Function"/>
+        <display item="F20 Output Function"/>
+        <label>
+          <text> </text>
+        </label>
+        <display item="F21 Output Function"/>
+        <display item="F22 Output Function"/>
+        <display item="F23 Output Function"/>
+        <display item="F24 Output Function"/>
+        <display item="F25 Output Function"/>
+        <display item="F26 Output Function"/>
+        <display item="F27 Output Function"/>
+        <display item="F28 Output Function"/>
+    </column>
+    <name>Function</name>
+  </pane>
+  <pane>
+    <column>
       <row>
         <display item="DCC Uncouple Throttle Stop" layout="above" label="">
           <label/>
@@ -1178,26 +1209,6 @@
       </row>
     </column>
     <column>
-      <display item="DCC Rule 17 Lighting"/>
-      <display item="DCC Front/Rear Lights"/>
-      <display item="DCC L1 Light"/>
-      <display item="DCC L1 Activate on Bell or Horn"/>
-      <display item="Activates L1 on DCC"/>
-      <display item="Brake Set/Release"/>
-      <display item="Brake Squeal"/>
-      <display item="Forward/Reverse Startup Toots"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="DCC Consist Rear Light"/>
-      <display item="DCC Consist Front Light"/>
-      <display item="DCC Consist L1 Light"/>
-      <display item="DCC Consist Cab"/>
-      <display item="DCC Easy Consist"/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Light Dimmer"/>
       <display item="Decoder Lock ID number"/>
       <display item="Macro Recorder Speed Steps"/>
       <display item="Recorder Repeats"/>
@@ -1231,13 +1242,13 @@
     </column>
     <column>
       <row>
-        <display item="DC Rev Level Motor Power Scalar" layout="above" label="">
+        <display item="DC Chuff Motor Power Scalar" layout="above" label="">
           <label/>
         </display>
         <label>
           <text> </text>
         </label>
-        <display item="DC Rev Level Motor Power Scalar" layout="above" format="hslider"/>
+        <display item="DC Chuff Motor Power Scalar" layout="above" format="hslider"/>
       </row>
       <label>
         <text> </text>
@@ -1327,13 +1338,13 @@
         <text> </text>
       </label>
       <row>
-        <display item="DC Motor Control Dmin" layout="above" label="">
+        <display item="DC Track Change Magnitude Increase" layout="above" label="">
           <label/>
         </display>
         <label>
           <text> </text>
         </label>
-        <display item="DC Motor Control Dmin" layout="above" format="hslider"/>
+        <display item="DC Track Change Magnitude Increase" layout="above" format="hslider"/>
       </row>
       <label>
         <text> </text>
@@ -1346,18 +1357,6 @@
           <text> </text>
         </label>
         <display item="DC Track Change Magnitude Decrease" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="DC Chuff Motor Power Scalar" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="DC Chuff Motor Power Scalar" layout="above" format="hslider"/>
       </row>
     </column>
     <column>
@@ -1372,12 +1371,12 @@
         <text> </text>
       </label>
       <display item="Analog Sound Setup"/>
+      <display item="Rev Level Power Threshold"/>
     </column>
     <name>DC Control</name>
   </pane>
   <pane>
     <column>
-      <display item="Rev Level Power Threshold"/>
       <display item="GSC1 bit 7"/>
       <display item="GSC1 bit 6"/>
       <display item="GSC1 bit 5"/>
@@ -1399,6 +1398,18 @@
       <display item="GSC2 bit 0"/>
     </column>
     <column>
+      <row>
+        <display item="Chuff Adjust" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Chuff Adjust" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
       <row>
         <display item="Smoke Unit Fan Chuff Time" layout="above" label="">
           <label/>
@@ -1459,18 +1470,23 @@
           <text> </text>
         </label>
       </row>
+    </column>
+    <column>
+      <display item="Consist Rear Light"/>
+      <display item="Consist Front Light"/>
+      <display item="Consist L1 Light"/>
+      <display item="Consist Cab"/>
+      <display item="Consist Aux"/>
+      <display item="Consist Bell"/>
+      <display item="Consist Horn"/>
+      <display item="Easy Consist"/>
       <label>
         <text> </text>
       </label>
-      <row>
-        <display item="N Gauge Rev Level Motor Power Scalar" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="N Gauge Rev Level Motor Power Scalar" layout="above" format="hslider"/>
-      </row>
+      <display item="Broadcast Stop Packet Count"/>
+      <display item="Brake Set/Release"/>
+      <display item="Brake Squeal"/>
+      <display item="Forward/Reverse Startup Toots"/>
     </column>
     <name>Settings</name>
   </pane>
