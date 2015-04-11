@@ -88,6 +88,11 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      */
     public static final ProgrammingMode DIRECTBITMODE = new ProgrammingMode("DIRECTBITMODE");
 
+    /**
+     * NMRA "Direct" mode, using both the bit-wise and byte-wise operations
+     */
+    public static final ProgrammingMode DIRECTMODE = new ProgrammingMode("DIRECTMODE");
+
     // For the record, these were the original numerical definitions:
     //     public static final ProgrammingMode NONE	    =  new ProgrammingMode("NONE", 0);
     //     public static final ProgrammingMode REGISTERMODE    = new ProgrammingMode("REGISTERMODE", 11);

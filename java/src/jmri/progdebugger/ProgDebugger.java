@@ -252,7 +252,8 @@ public class ProgDebugger implements AddressedProgrammer {
                     new ProgrammingMode[]{
                         DefaultProgrammerManager.PAGEMODE,
                         DefaultProgrammerManager.DIRECTBITMODE,
-                        DefaultProgrammerManager.DIRECTBYTEMODE
+                        DefaultProgrammerManager.DIRECTBYTEMODE,
+                        DefaultProgrammerManager.DIRECTMODE
                     }
             );
         }

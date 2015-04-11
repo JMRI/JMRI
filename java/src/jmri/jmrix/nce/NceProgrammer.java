@@ -46,7 +46,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         ret.add(DefaultProgrammerManager.REGISTERMODE);
 
         if (tc != null && tc.getCommandOptions() >= NceTrafficController.OPTION_2006) {
-            ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
+            ret.add(DefaultProgrammerManager.DIRECTMODE);
         }
         return ret;
     }
@@ -91,7 +91,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
         // prevent writing Prog Track mode CV > 256 on PowerHouse 2007C and earlier
         if ((CV > 256)
                 && ((getMode() == DefaultProgrammerManager.PAGEMODE)
-                || (getMode() == DefaultProgrammerManager.DIRECTBYTEMODE)
+                || (getMode() == DefaultProgrammerManager.DIRECTMODE)
                 || (getMode() == DefaultProgrammerManager.REGISTERMODE)) && ((tc != null) && ((tc.getCommandOptions() == NceTrafficController.OPTION_1999)
                 | (tc.getCommandOptions() == NceTrafficController.OPTION_2004)
                 | (tc.getCommandOptions() == NceTrafficController.OPTION_2006)))) {
@@ -165,7 +165,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             // read
             if (mode == DefaultProgrammerManager.PAGEMODE) {
                 return NceMessage.getReadPagedCV(tc, cvnum);
-            } else if (mode == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            } else if (mode == DefaultProgrammerManager.DIRECTMODE) {
                 return NceMessage.getReadDirectCV(tc, cvnum);
             } else {
                 return NceMessage.getReadRegister(tc, registerFromCV(cvnum));
@@ -174,7 +174,7 @@ public class NceProgrammer extends AbstractProgrammer implements NceListener {
             // write
             if (mode == DefaultProgrammerManager.PAGEMODE) {
                 return NceMessage.getWritePagedCV(tc, cvnum, val);
-            } else if (mode == DefaultProgrammerManager.DIRECTBYTEMODE) {
+            } else if (mode == DefaultProgrammerManager.DIRECTMODE) {
                 return NceMessage.getWriteDirectCV(tc, cvnum, val);
             } else {
                 return NceMessage.getWriteRegister(tc, registerFromCV(cvnum), val);
