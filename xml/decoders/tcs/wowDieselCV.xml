@@ -29,7 +29,7 @@
 		<comment xml:lang="it">Valori 0-255</comment>
 		<tooltip xml:lang="it">Progr. grado decellerazione (ritardo o inerzia), valori 0-255</tooltip>
 	</variable>
-	<variable item="Advanced Group 2 Option 4" CV="182" mask="XXXXVXXX" default="0">
+	<variable item="Advanced Group 2 Option 4" CV="182" mask="XXXXVXXX" default="1">
 		<xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
 		<label>Motor Delay</label>
 	</variable>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150411-0352-jake on Fri Apr 10 23:52:18 EDT 2015 $Id$-->
-  <decoderIndex version="580">
+  <!--Written by JMRI version 20150412-0136-jake on Sat Apr 11 21:36:55 EDT 2015 $Id$-->
+  <decoderIndex version="582">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5064,6 +5064,59 @@
           <!-- note All functions are NMRA compatible -->
           <size length="25.5" width="12.3" height="4.5" units="mm" />
         </model>
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="20" file="MRC_sound1617-1618.xml">
+        <!-- note All 28 functions are NMRA compatible -->
+        <model model="HO Gauge Steam Universal - 16 Bit 1617 Light Steam" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Brown" connection="wire" />
+          <size length="29.5" width="17.6" height="5" units="mm" />
+        </model>
+        <model model="HO Gauge Steam Universal - 16 Bit 1618 Heavy Steam" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Brown" connection="wire" />
+          <size length="29.5" width="17.6" height="5" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Acces. lights/Air release</functionlabel>
+          <!-- Accessory lights on/off, Long air release -->
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="false">Brake squeal/release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Chuff sound on/off</functionlabel>
+          <!-- Chuff sound on/off (Drifting) -all other sounds on -->
+          <functionlabel num="7" lockable="false">Fire box</functionlabel>
+          <functionlabel num="8" lockable="false">Water injector</functionlabel>
+          <functionlabel num="9" lockable="false">Metal crank/Steam</functionlabel>
+          <!-- Metal crank sound on/off (moving), steam associated sound (idle) -->
+          <functionlabel num="10" lockable="false">Water filling</functionlabel>
+          <functionlabel num="11" lockable="false">Blower hiss</functionlabel>
+          <functionlabel num="12" lockable="true">All sounds on/off</functionlabel>
+          <functionlabel num="13" lockable="false">Master vol. reduce by 2</functionlabel>
+          <functionlabel num="14" lockable="false">Master vol. increase by 2</functionlabel>
+          <functionlabel num="15" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+          <functionlabel num="17" lockable="false">Coal auger</functionlabel>
+          <functionlabel num="18" lockable="false">Bell type select</functionlabel>
+          <functionlabel num="19" lockable="false">Whistle type select</functionlabel>
+          <functionlabel num="20" lockable="false">Air hose firing/uncoupling lever</functionlabel>
+          <!-- Air hose firing/uncoupling lever -->
+          <functionlabel num="21" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="22" lockable="false">Associated loco sound</functionlabel>
+          <functionlabel num="23" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="24" lockable="false">Chuff type select</functionlabel>
+          <functionlabel num="25" lockable="false">Long air release</functionlabel>
+          <functionlabel num="26" lockable="false">Sand dropping</functionlabel>
+          <functionlabel num="27" lockable="false">Associated loco sound</functionlabel>
+          <functionlabel num="28" lockable="false">Associated loco sound</functionlabel>
+        </functionlabels>
       </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="0" highVersionID="60" file="MRC_sound1619to1624.xml">
         <model model="HO Gauge Diesel - 16 Bit 1619 EMD645E" numOuts="7" numFns="28" maxTotalCurrent="1.0A">
@@ -15706,7 +15759,7 @@
         </functionlabels>
       </family>
       <family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012" file="TCS_WOW_FW03.xml">
-        <model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin" lowVersionID="3" highVersionID="3" productID="130">
+        <model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="3" highVersionID="3" productID="130">
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
@@ -15720,7 +15773,7 @@
           <output name="Brake" />
           <size length="1.35" width="0.66" height="0.22" units="inches" />
         </model>
-        <model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="21pin" lowVersionID="3" highVersionID="3" productID="131">
+        <model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD" lowVersionID="3" highVersionID="3" productID="131">
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
@@ -15734,29 +15787,6 @@
           <output name="Brake" />
           <size length="1.28" width="0.69" height="0.22" units="inches" />
         </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Headlight</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="false">Whistle long</functionlabel>
-          <functionlabel num="3" lockable="false">Whistle short</functionlabel>
-          <functionlabel num="4" lockable="false">Whistle quill</functionlabel>
-          <functionlabel num="5" lockable="true">Cylinder cocks</functionlabel>
-          <functionlabel num="6" lockable="true">Brake release</functionlabel>
-          <functionlabel num="7" lockable="true">Brake</functionlabel>
-          <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <functionlabel num="9" lockable="true">Whistle rotate</functionlabel>
-          <functionlabel num="10" lockable="true">Coupler</functionlabel>
-          <functionlabel num="11" lockable="true">Coupler</functionlabel>
-          <functionlabel num="12" lockable="true">Injector</functionlabel>
-          <functionlabel num="13" lockable="true">Air pump</functionlabel>
-          <functionlabel num="14" lockable="true">Blower</functionlabel>
-          <functionlabel num="15" lockable="true">Idling</functionlabel>
-          <functionlabel num="16" lockable="true">Horn</functionlabel>
-          <functionlabel num="17" lockable="true">Shovelling</functionlabel>
-          <functionlabel num="18" lockable="true">Blow down</functionlabel>
-          <functionlabel num="19" lockable="true">Ash dump</functionlabel>
-          <functionlabel num="20" lockable="true">Water fill</functionlabel>
-        </functionlabels>
       </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" file="TCS_X.xml">
         <model show="no" model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="Jan 2000">
