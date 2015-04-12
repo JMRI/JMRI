@@ -1436,7 +1436,7 @@
 					<enumChoice choice="Wabco 2 chime Galloping Goose #3"/>
 					<enumChoice choice="Wabco E2 3 Chime"/>
 				</enumVal>
-				<label>Default Whistle Set</label>
+				<label>Default Horn Set</label>
 			</variable>
 			<variable item="Sound Option 2" CV="T2CV.4.11" default="0">
 				<enumVal>

@@ -13,11 +13,11 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20141024"/>
-	<version author="Michael Mosher" version="2" lastUpdated="20150214"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20150105"/>
 	<!-- add user preset reset types -->
 	<decoder>
 		<family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
-			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
+			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
 				lowVersionID="3" highVersionID="3" productID="130">
 				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
@@ -32,7 +32,7 @@
 				<output name="Brake"/>
 				<size length="1.35" width="0.66" height="0.22" units="inches"/>
 			</model>
-			<model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="21pin"
+			<model model="WOW Sound 121" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="TBD"
 				lowVersionID="3" highVersionID="3" productID="131">
 				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
 				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
@@ -47,34 +47,11 @@
 				<output name="Brake"/>
 				<size length="1.28" width="0.69" height="0.22" units="inches"/>
 			</model>
-			<functionlabels>
-				<functionlabel num="0" lockable="true">Headlight</functionlabel>
-				<functionlabel num="1" lockable="true">Bell</functionlabel>
-				<functionlabel num="2" lockable="false">Whistle long</functionlabel>
-				<functionlabel num="3" lockable="false">Whistle short</functionlabel>
-				<functionlabel num="4" lockable="false">Whistle quill</functionlabel>
-				<functionlabel num="5" lockable="true">Cylinder cocks</functionlabel>
-				<functionlabel num="6" lockable="true">Brake release</functionlabel>
-				<functionlabel num="7" lockable="true">Brake</functionlabel>
-				<functionlabel num="8" lockable="true">Mute</functionlabel>
-				<functionlabel num="9" lockable="true">Whistle rotate</functionlabel>
-				<functionlabel num="10" lockable="true">Coupler</functionlabel>
-				<functionlabel num="11" lockable="true">Coupler</functionlabel>
-				<functionlabel num="12" lockable="true">Injector</functionlabel>
-				<functionlabel num="13" lockable="true">Air pump</functionlabel>
-				<functionlabel num="14" lockable="true">Blower</functionlabel>
-				<functionlabel num="15" lockable="true">Idling</functionlabel>
-				<functionlabel num="16" lockable="true">Horn</functionlabel>
-				<functionlabel num="17" lockable="true">Shovelling</functionlabel>
-				<functionlabel num="18" lockable="true">Blow down</functionlabel>
-				<functionlabel num="19" lockable="true">Ash dump</functionlabel>
-				<functionlabel num="20" lockable="true">Water fill</functionlabel>
-			</functionlabels>
 		</family>
 		<programming direct="yes" paged="yes" register="yes" ops="yes">
-			<capability>
-				<name>TCS 4 CV access</name>
-			</capability>
+		<capability>
+			<name>TCS 4 CV access</name>
+		</capability>
 		</programming>
 		<variables>
 
@@ -1636,7 +1613,7 @@
 				<label>Waterfill 1</label>
 			</variable>
 			<!-- sound CVs -->
-			<variable item="Sound Option 1" CV="T2CV.4.8" default="0" tooltip="Rotate whistle function will change this setting">
+			<variable item="Sound Option 1" CV="T2CV.4.8" default="0">
 				<enumVal>
 					<enumChoice choice="Whistle Alamo Michigan Plant"/>
 					<enumChoice choice="Whistle Atchison, Topeka, and Santa Fe 6 Chime Original" />
@@ -1686,7 +1663,7 @@
 				<decVal max="100"/>
 				<label>Global volume</label>
 			</variable>
-			<variable item="Sound Option 2" CV="T2CV.4.11" default="1" mask="XXXXXXXXXVVVVVVV">
+			<variable item="Sound Option 2" CV="T2CV.4.11" default="1" mask="VVVVVVVVVVVVVVVV">
 				<enumVal>
 					<enumChoice choice="Heavy Steam"/>
 					<enumChoice choice="Medium Steam"/>
@@ -1695,7 +1672,7 @@
 				</enumVal>
 				<label>Steam locomotive type</label>
 			</variable>
-			<variable item="Sound Option 3" CV="T2CV.4.11" default="0" mask="XXXXXXXXVXXXXXXX" >
+			<variable item="Sound Option 3" CV="T2CV.4.19" default="0" mask="XXXXXXXXXXXXXXVX" >
 				<enumVal>
 					<enumChoice choice="Non Articulated"/>
 					<enumChoice choice="Articulated"/>
@@ -1837,7 +1814,6 @@
 		</resets>
 	</decoder>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Momentum.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_Brake.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_TCS.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_snd.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_chuff.xml"/>
@@ -1845,5 +1821,4 @@
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol0.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol1.xml"/>
 	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_vol2.xml"/>
-	<xi:include href="http://jmri.org/xml/decoders/tcs/Pane_wow_4cv.xml"/>
 </decoder-config>
