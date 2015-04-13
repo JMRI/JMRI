@@ -31,7 +31,10 @@ public class PackageTest extends TestCase {
 
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(OperationsEnginesGuiTest.suite());
+            suite.addTest(EnginesTableFrameTest.suite());
+            suite.addTest(EngineEditFrameTest.suite());
+            suite.addTest(EngineAttributeEditFrameTest.suite());
+            suite.addTest(EngineSetFrameTest.suite());
         }
 
         return suite;

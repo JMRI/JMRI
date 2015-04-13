@@ -1,4 +1,4 @@
-//OperationsEnginesGuiTest.java
+//EnginesTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
@@ -24,12 +24,12 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the Operations Engines GUI class
+ * Tests for the Operations EnginesTableFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2010
- * @version $Revision$
+ * @version $Revision: 28746 $
  */
-public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
+public class EnginesTableFrameTest extends jmri.util.SwingTestCase {
 
     public void testenginesTableFrame() throws Exception {
 
@@ -221,124 +221,6 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
         etf.dispose();
     }
 
-    List<String> tempEngines;
-
-    public void testEngineEditFrame() {
-
-        EngineEditFrame f = new EngineEditFrame();
-        f.setTitle("Test Add Engine Frame");
-        f.initComponents();
-
-        // add a new Engine
-        f.roadComboBox.setSelectedItem("SP");
-        f.roadNumberTextField.setText("6");
-        f.modelComboBox.setSelectedItem("SW8");
-        f.builtTextField.setText("1999");
-        f.ownerComboBox.setSelectedItem("Owner1");
-        f.commentTextField.setText("test Engine comment field");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-
-        EngineManager cManager = EngineManager.instance();
-        // should have 6 Engines
-        Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
-
-        Engine c6 = cManager.getByRoadAndNumber("SP", "6");
-
-        Assert.assertNotNull("Engine did not create", c6);
-        Assert.assertEquals("Engine type", "SW8", c6.getModel());
-        Assert.assertEquals("Engine type", "Diesel", c6.getTypeName());
-        Assert.assertEquals("Engine length", "44", c6.getLength()); //default for SW8 is 44
-        Assert.assertEquals("Engine built", "1999", c6.getBuilt());
-        Assert.assertEquals("Engine owner", "Owner1", c6.getOwner());
-        Assert.assertEquals("Engine comment", "test Engine comment field", c6.getComment());
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        // should have 6 Engines now
-        Assert.assertEquals("number of Engines", 6, cManager.getNumEntries());
-
-        f.dispose();
-    }
-
-    public void testEngineEditFrameRead() {
-        EngineManager cManager = EngineManager.instance();
-        Engine e1 = cManager.getByRoadAndNumber("NH", "1");
-        EngineEditFrame f = new EngineEditFrame();
-        f.initComponents();
-        f.setTitle("Test Edit Engine Frame");
-        f.loadEngine(e1);
-
-        Assert.assertEquals("Engine road", "NH", f.roadComboBox.getSelectedItem());
-        Assert.assertEquals("Engine number", "1", f.roadNumberTextField.getText());
-        Assert.assertEquals("Engine type", "RS1", f.modelComboBox.getSelectedItem());
-        Assert.assertEquals("Engine type", "Diesel", f.typeComboBox.getSelectedItem());
-        Assert.assertEquals("Engine length", "51", f.lengthComboBox.getSelectedItem());
-        Assert.assertEquals("Engine weight", "Tons of Weight", f.weightTextField.getText());
-        Assert.assertEquals("Engine built", "2009", f.builtTextField.getText());
-        Assert.assertEquals("Engine owner", "Owner2", f.ownerComboBox.getSelectedItem());
-        Assert.assertEquals("Engine comment", "Test Engine NH 1 Comment", f.commentTextField.getText());
-
-        // test delete button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
-
-        // should have 5 Engines now
-        Assert.assertEquals("number of Engines", 4, cManager.getNumEntries());
-
-        f.dispose();
-    }
-
-    public void testEngineAttributeEditFrameModel() {
-        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.MODEL);
-        // confirm that the right number of models were loaded
-        Assert.assertEquals(27, f.comboBox.getItemCount());
-        // now add a new model name
-        f.addTextBox.setText("New Model");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
-        // new model should appear at start of list
-        Assert.assertEquals("new model name", "New Model", f.comboBox.getItemAt(0));
-
-        // test replace
-        f.comboBox.setSelectedItem("SD45");
-        f.addTextBox.setText("DS54");
-        // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
-        // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, "Yes");
-        // did the replace work?
-        Assert.assertEquals("replaced SD45 with DS54", "DS54", f.comboBox.getItemAt(0));
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
-        // new model was next
-        Assert.assertEquals("new model after delete", "New Model", f.comboBox.getItemAt(0));
-
-        f.dispose();
-    }
-
-    public void testEngineAttributeEditFrame2() {
-        EngineAttributeEditFrame f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.LENGTH);
-        f.dispose();
-        f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.OWNER);
-        f.dispose();
-        f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.ROAD);
-        f.dispose();
-        f = new EngineAttributeEditFrame();
-        f.initComponents(EngineEditFrame.TYPE);
-        f.dispose();
-    }
-
-    public void testEngineSetFrame() {
-        EngineSetFrame f = new EngineSetFrame();
-        f.setTitle("Test Engine Set Frame");
-        f.initComponents();
-        EngineManager cManager = EngineManager.instance();
-        Engine e3 = cManager.getByRoadAndNumber("AA", "3");
-        f.loadEngine(e3);
-        f.dispose();
-    }
-
     @SuppressWarnings("unchecked")
     private void pressDialogButton(EngineAttributeEditFrame f, String buttonName) {
         //  (with JfcUnit, not pushing this off to another thread)			                                            
@@ -458,19 +340,19 @@ public class OperationsEnginesGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
     }
 
-    public OperationsEnginesGuiTest(String s) {
+    public EnginesTableFrameTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsEnginesGuiTest.class.getName()};
+        String[] testCaseName = {"-noloading", EnginesTableFrameTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsEnginesGuiTest.class);
+        TestSuite suite = new TestSuite(EnginesTableFrameTest.class);
         return suite;
     }
 
