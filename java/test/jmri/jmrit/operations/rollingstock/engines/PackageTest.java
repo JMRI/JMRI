@@ -27,7 +27,13 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.rollingstock.engines.PackageTest"); // no tests in class itself
-        suite.addTest(OperationsEnginesTest.suite());
+        suite.addTest(EngineTest.suite());
+        suite.addTest(EngineLengthsTest.suite());
+        suite.addTest(EngineTypesTest.suite());
+        suite.addTest(EngineModelsTest.suite());
+        suite.addTest(NceConsistEnginesTest.suite());
+        suite.addTest(EngineManagerTest.suite());
+        suite.addTest(XmlTest.suite());
 
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
