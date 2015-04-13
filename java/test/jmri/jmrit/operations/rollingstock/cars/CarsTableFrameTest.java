@@ -1,4 +1,4 @@
-//OperationsCarsGuiTest.java
+//CarsTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
@@ -24,12 +24,12 @@ import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
 
 /**
- * Tests for the Operations Cars GUI class
+ * Tests for the Operations CarsTableFrame class
  *
  * @author	Dan Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
+public class CarsTableFrameTest extends jmri.util.SwingTestCase {
 
     public void testCarsTableFrame() throws Exception {
         // remove previous cars
@@ -231,231 +231,6 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
     }
 
-    List<String> tempCars;
-
-    public void testCarEditFrame() {
-        loadCars();		// load cars
-        CarManager cManager = CarManager.instance();
-        Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
-
-        CarEditFrame f = new CarEditFrame();
-        f.setTitle("Test Add Car Frame");
-        f.initComponents();
-
-        // add a new car
-        f.roadNumberTextField.setText("6");
-        f.roadComboBox.setSelectedItem("SP");
-        f.typeComboBox.setSelectedItem("Caboose");
-        f.lengthComboBox.setSelectedItem("38");
-        f.colorComboBox.setSelectedItem("Black");
-        f.loadComboBox.setSelectedItem("L");
-        f.builtTextField.setText("1999");
-        f.ownerComboBox.setSelectedItem("Owner1");
-        f.commentTextField.setText("test car comment field");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-
-        Car c6 = cManager.getByRoadAndNumber("SP", "6");
-
-        Assert.assertNotNull("Car did not create", c6);
-        Assert.assertEquals("car type", "Caboose", c6.getTypeName());
-        Assert.assertEquals("car length", "38", c6.getLength());
-        Assert.assertEquals("car color", "Black", c6.getColor());
-        Assert.assertEquals("car load", "L", c6.getLoadName());
-        Assert.assertEquals("car built", "1999", c6.getBuilt());
-        Assert.assertEquals("car owner", "Owner1", c6.getOwner());
-        Assert.assertEquals("car comment", "test car comment field", c6.getComment());
-
-        // test type default check boxes
-        Assert.assertFalse("not a caboose", c6.isCaboose());
-        Assert.assertFalse("no fred", c6.hasFred());
-        Assert.assertFalse("not hazardous", c6.isHazardous());
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.cabooseCheckBox));
-        Assert.assertFalse("still not a caboose", c6.isCaboose());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        // Change all car type to caboose dialog window should appear
-        // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
-
-        Assert.assertTrue("now a caboose", c6.isCaboose());
-        Assert.assertFalse("not hazardous 2", c6.isHazardous());
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.fredCheckBox));
-        Assert.assertTrue("still a caboose", c6.isCaboose());
-        Assert.assertFalse("still no fred", c6.hasFred());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
-        Assert.assertFalse("no longer a caboose", c6.isCaboose());
-        Assert.assertTrue("now has a fred", c6.hasFred());
-        Assert.assertFalse("not hazardous 3", c6.isHazardous());
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.hazardousCheckBox));
-        Assert.assertFalse("still not hazardous 3", c6.isHazardous());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
-        Assert.assertFalse("still no longer a caboose", c6.isCaboose());
-        Assert.assertTrue("still has a fred", c6.hasFred());
-        Assert.assertTrue("now hazardous", c6.isHazardous());
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.utilityCheckBox));
-        Assert.assertFalse("not utility", c6.isUtility());
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.saveButton));
-        // need to push the "No" button in the dialog window to close
-        pressDialogButton(f, "No");
-        Assert.assertTrue("now utility", c6.isUtility());
-        Assert.assertFalse("not a caboose", c6.isCaboose());
-        Assert.assertTrue("still has a fred", c6.hasFred());
-        Assert.assertTrue("still hazardous", c6.isHazardous());
-
-        // should have 6 cars now
-        Assert.assertEquals("number of cars", 6, cManager.getNumEntries());
-
-        f.dispose();
-    }
-
-    public void testCarEditFrameRead() {
-        loadCars();		// load cars
-        CarManager cManager = CarManager.instance();
-        // should have 5 cars now
-        Assert.assertEquals("number of cars", 5, cManager.getNumEntries());
-        Car c1 = cManager.getByRoadAndNumber("NH", "1");
-
-        CarEditFrame f = new CarEditFrame();
-        f.initComponents();
-        f.setTitle("Test Edit Car Frame");
-        f.loadCar(c1);
-
-        Assert.assertEquals("car road", "NH", f.roadComboBox.getSelectedItem());
-        Assert.assertEquals("car number", "1", f.roadNumberTextField.getText());
-        Assert.assertEquals("car type", "Caboose", f.typeComboBox.getSelectedItem());
-        Assert.assertEquals("car length", "40", f.lengthComboBox.getSelectedItem());
-        Assert.assertEquals("car weight", "1.4", f.weightTextField.getText());
-        Assert.assertEquals("car weight tons", "Tons of Weight", f.weightTonsTextField.getText());
-        Assert.assertEquals("car color", "Red", f.colorComboBox.getSelectedItem());
-        Assert.assertEquals("car load", "L", f.loadComboBox.getSelectedItem());
-        Assert.assertEquals("car built", "2009", f.builtTextField.getText());
-        Assert.assertEquals("car owner", "Owner2", f.ownerComboBox.getSelectedItem());
-        Assert.assertEquals("car comment", "Test Car NH 1 Comment", f.commentTextField.getText());
-
-        Assert.assertTrue("car is a caboose", f.cabooseCheckBox.isSelected());
-        Assert.assertFalse("car does not have a fred", f.fredCheckBox.isSelected());
-        Assert.assertFalse("car is not hazardous", f.hazardousCheckBox.isSelected());
-
-        // test delete button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
-
-        // should have 5 cars now
-        Assert.assertEquals("number of cars", 4, cManager.getNumEntries());
-
-        f.dispose();
-    }
-
-    public void testCarAttributeEditFrameColor() {
-        CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.COLOR);
-        f.addTextBox.setText("Pink");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
-        // new color should appear at start of list
-        Assert.assertEquals("new color", "Pink", f.comboBox.getItemAt(0));
-
-        // test replace
-        f.comboBox.setSelectedItem("Pink");
-        f.addTextBox.setText("Pinker");
-        // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
-        // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, "Yes");
-        // did the replace work?
-        Assert.assertEquals("replaced Pink with Pinker", "Pinker", f.comboBox.getItemAt(0));
-
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
-        // black is the first default color
-        Assert.assertEquals("old color", "Black", f.comboBox.getItemAt(0));
-
-        f.dispose();
-    }
-
-    public void testCarAttributeEditFrameKernel() {
-        // remove all kernels
-        CarManager cm = CarManager.instance();
-        List<String> kList = cm.getKernelNameList();
-        for (int i = 0; i < kList.size(); i++) {
-            cm.deleteKernel(kList.get(i));
-        }
-        // create TwoCars kernel
-        cm.newKernel("TwoCars");
-
-        CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.KERNEL);
-        // confirm that space and TwoCar kernel exists
-        Assert.assertEquals("space 1", "", f.comboBox.getItemAt(0));
-        Assert.assertEquals("previous kernel 1", "TwoCars", f.comboBox.getItemAt(1));
-
-        f.addTextBox.setText("TestKernel");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
-        // new kernel should appear at start of list after blank
-        Assert.assertEquals("new kernel", "TestKernel", f.comboBox.getItemAt(1));
-
-        // test replace
-        f.comboBox.setSelectedItem("TestKernel");
-        f.addTextBox.setText("TestKernel2");
-        // push replace button
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.replaceButton));
-        // need to also push the "Yes" button in the dialog window
-        pressDialogButton(f, "Yes");
-        // did the replace work?
-        Assert.assertEquals("replaced TestKernel with TestKernel2", "TestKernel2", f.comboBox.getItemAt(1));
-
-        // now try and delete
-        f.comboBox.setSelectedItem("TestKernel2");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.deleteButton));
-        // blank is the first default kernel
-        Assert.assertEquals("space 2", "", f.comboBox.getItemAt(0));
-        Assert.assertEquals("previous kernel 2", "TwoCars", f.comboBox.getItemAt(1));
-
-        f.dispose();
-    }
-
-    public void testCarAttributeEditFrame2() {
-        CarAttributeEditFrame f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.LENGTH);
-        f.dispose();
-        f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.OWNER);
-        f.dispose();
-        f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.ROAD);
-        f.dispose();
-        f = new CarAttributeEditFrame();
-        f.initComponents(CarEditFrame.TYPE);
-        f.dispose();
-    }
-
-    public void testCarLoadEditFrame() {
-        CarLoadEditFrame f = new CarLoadEditFrame();
-        f.initComponents("Boxcar", "");
-        f.addTextBox.setText("New Load");
-        getHelper().enterClickAndLeave(new MouseEventData(this, f.addButton));
-        // new load should appear at start of list
-        Assert.assertEquals("new load", "New Load", f.loadComboBox.getItemAt(0));
-
-        f.dispose();
-    }
-
-    public void testCarSetFrame() {
-        loadCars();		// load cars
-        CarSetFrame f = new CarSetFrame();
-        f.setTitle("Test Car Set Frame");
-        f.initComponents();
-        CarManager cManager = CarManager.instance();
-        Car c3 = cManager.getByRoadAndNumber("AA", "3");
-        f.loadCar(c3);
-
-        f.dispose();
-    }
-
     private void loadCars() {
         CarManager cManager = CarManager.instance();
         // remove previous cars
@@ -576,19 +351,19 @@ public class OperationsCarsGuiTest extends jmri.util.SwingTestCase {
 
     }
 
-    public OperationsCarsGuiTest(String s) {
+    public CarsTableFrameTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsCarsGuiTest.class.getName()};
+        String[] testCaseName = {"-noloading", CarsTableFrameTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(OperationsCarsGuiTest.class);
+        TestSuite suite = new TestSuite(CarsTableFrameTest.class);
         return suite;
     }
 
