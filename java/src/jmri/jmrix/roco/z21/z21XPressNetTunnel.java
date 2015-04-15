@@ -219,6 +219,11 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
         // we don't do anything with timeouts.
     }
 
+    // package protected method to retrieve the stream port 
+    // controller associated with this tunnel.
+    jmri.jmrix.lenz.XNetStreamPortController getStreamPortController() {
+       return xsc;
+    }
     static Logger log = LoggerFactory.getLogger(z21XPressNetTunnel.class.getName());
 
 }

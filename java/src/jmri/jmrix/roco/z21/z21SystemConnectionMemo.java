@@ -20,6 +20,8 @@ import jmri.ProgrammerManager;
  */
 public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
+    private z21XPressNetTunnel _xnettunnel = null;
+
     public z21SystemConnectionMemo() {
         this("Z", "Z21");
     }
@@ -57,7 +59,10 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     private z21TrafficController _tc = null;
 
     public ProgrammerManager getProgrammerManager() {
-        //Do not want to return a programmer for now
+        if (_xnettunnel!=null) {
+            // deligate to the XPressnet tunnel.
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().getProgrammerManager();        
+        }
         return null;
     }
 
@@ -71,6 +76,10 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (getDisabled()) {
             return false;
         }
+        if (_xnettunnel!=null) {
+            // deligate to the XPressnet tunnel.
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().provides(type);        
+        }
         return false; // nothing, by default
     }
 
@@ -82,6 +91,10 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (getDisabled()) {
             return null;
         }
+        if (_xnettunnel!=null) {
+            // deligate to the XPressnet tunnel.
+            return _xnettunnel.getStreamPortController().getSystemConnectionMemo().get(T);        
+        }
         return null; // nothing, by default
     }
 
@@ -90,8 +103,11 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * manager config in one place.
      */
     public void configureManagers() {
-        // now does nothing here, it's done by the specific class
-    }
+
+        // add an XPressNet Tunnel.
+        _xnettunnel = new z21XPressNetTunnel(this);
+ 
+   }
 
     protected ResourceBundle getActionModelResourceBundle() {
         return ResourceBundle.getBundle("jmri.jmrix.roco.z21.z21ActionListBundle");
