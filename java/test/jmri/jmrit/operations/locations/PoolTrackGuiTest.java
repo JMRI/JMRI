@@ -12,7 +12,7 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the Operations Pool track GUI class
+ * Tests for the Operations PoolTrackFrame class
  *
  * @author Gregory Madsen Copyright (C) 2012
  */

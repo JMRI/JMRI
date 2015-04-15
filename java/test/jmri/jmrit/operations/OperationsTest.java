@@ -28,7 +28,7 @@ public class OperationsTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.OperationsTest"); // no tests in class itself
         suite.addTest(jmri.jmrit.operations.setup.OperationsSetupTest.suite());
-        suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsTest.suite()); // fixed references to Swing, 10/10/2012
+        suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.rollingstock.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesTest.suite());
         suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite());  // fixed references to Swing, 10/10/2012
@@ -37,7 +37,6 @@ public class OperationsTest extends TestCase {
         // GUI tests start here
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             suite.addTest(jmri.jmrit.operations.setup.OperationsSetupGuiTest.suite());
-            suite.addTest(jmri.jmrit.operations.locations.OperationsLocationsGuiTest.suite());
             suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesGuiTest.suite());
             suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsGuiTest.suite());
         }

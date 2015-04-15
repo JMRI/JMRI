@@ -27,7 +27,7 @@ import junit.framework.TestSuite;
  *
  * @author Gregory Madsen Copyright (C) 2012, based on OperationsLocationTest
  * class
- * @version $Revision: 20262 $
+ * @version $Revision$
  */
 public class OperationsPoolTest extends TestCase {
 
@@ -394,7 +394,7 @@ public class OperationsPoolTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", OperationsLocationsTest.class.getName()};
+        String[] testCaseName = {"-noloading", OperationsPoolTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
