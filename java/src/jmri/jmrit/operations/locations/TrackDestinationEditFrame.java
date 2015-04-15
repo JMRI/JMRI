@@ -277,6 +277,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
     }
 
     private boolean checkLocationsLoop() {
+        boolean noIssues = true;
         for (Location destination : locationManager.getLocationsByNameList()) {
             if (_track.acceptsDestination(destination)) {
                 log.debug("Track ({}) accepts destination ({})", _track.getName(), destination.getName());
@@ -289,6 +290,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                         continue;
                     }
                     if (!destination.acceptsTypeName(type)) {
+                        noIssues = false;
                         int response = JOptionPane.showConfirmDialog(this,
                                 MessageFormat.format(Bundle.getMessage("WarningDestinationCarType"), new Object[]{
                                         destination.getName(), type}), Bundle.getMessage("WarningCarMayNotMove"),
@@ -303,6 +305,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             continue checkTypes; // yes there's a track
                         }
                     }
+                    noIssues = false;
                     int response = JOptionPane.showConfirmDialog(this, MessageFormat
                             .format(Bundle.getMessage("WarningDestinationTrackCarType"), new Object[]{
                                     destination.getName(), type}), Bundle.getMessage("WarningCarMayNotMove"),
@@ -322,6 +325,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             continue checkRoads; // yes there's a track
                         }
                     }
+                    noIssues = false;
                     int response = JOptionPane.showConfirmDialog(this, MessageFormat
                             .format(Bundle.getMessage("WarningDestinationTrackCarRoad"), new Object[]{
                                     destination.getName(), road}), Bundle.getMessage("WarningCarMayNotMove"),
@@ -346,6 +350,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                 continue checkLoads;
                             }
                         }
+                        noIssues = false;
                         int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                                 .getMessage("WarningDestinationTrackCarLoad"), new Object[]{destination.getName(),
                                 type, load}), Bundle.getMessage("WarningCarMayNotMove"), JOptionPane.OK_CANCEL_OPTION);
@@ -364,6 +369,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                                 continue checkLoads;
                             }
                         }
+                        noIssues = false;
                         int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                                 .getMessage("WarningDestinationTrackCarLoad"), new Object[]{destination.getName(),
                                 type, load}), Bundle.getMessage("WarningCarMayNotMove"), JOptionPane.OK_CANCEL_OPTION);
@@ -415,6 +421,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             boolean results = Router.instance().setDestination(car, null, null);
                             car.setDestination(null, null); // clear destination if set by router
                             if (!results) {
+                                noIssues = false;
                                 int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                                         .getMessage("WarningNoTrain"), new Object[]{type, road, load,
                                         destination.getName()}), Bundle.getMessage("WarningCarMayNotMove"),
@@ -429,7 +436,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 }
             }
         }
-        return true;
+        return noIssues;
     }
 
     public void dispose() {
