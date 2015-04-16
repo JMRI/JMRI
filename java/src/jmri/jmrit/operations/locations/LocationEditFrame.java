@@ -479,6 +479,10 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             _location.setReporter(
             jmri.InstanceManager.reporterManagerInstance()
                 .getReporter((String)readerSelector.getSelectedItem()));
+        } else if( Setup.isRfidEnabled() && 
+            readerSelector.getSelectedItem()!=null && 
+            ((String)readerSelector.getSelectedItem()).equals("")) {
+            _location.setReporter(null);
         }
         setLocationOps();
         // save location file

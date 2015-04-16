@@ -93,9 +93,14 @@ public class LocationManager implements java.beans.PropertyChangeListener {
      */
     public Location getLocationByReporter(Reporter r) {
        for(Location location: _locationHashTable.values()) {
-          if (location.getReporter().equals(r))
-              return location;
-	  }
+          try {
+             if (location.getReporter().equals(r))
+                 return location;
+	  } catch(java.lang.NullPointerException npe) {
+             // it's valid for a reporter to be null (no reporter
+             // at a given location.
+          }
+        }
         return null;
     }
 
