@@ -818,6 +818,11 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                             }
                             macroNum = getMacro();
                         }
+                        if (!(macroSearchInc || macroSearchDec)) {
+                            // we were doing a get, not a search
+                            macroValid = true;
+                            break;
+                        }
                     }
                 }
                 if (writeRequested) {
