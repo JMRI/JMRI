@@ -134,43 +134,6 @@ public class LocationTest extends TestCase {
                 + Location.WEST, l.getTrainDirections());
     }
 
-    public void testTrackOrder() {
-        Location l = LocationManager.instance().newLocation("TestOrder");
-        Track t = l.addTrack("New track 1", Track.SPUR);
-        Assert.assertEquals("Location", l, t.getLocation());
-
-        // sidings and staging don't support this feature
-        t.setServiceOrder(Track.FIFO);
-        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
-        t.setServiceOrder(Track.LIFO);
-        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
-
-        t = l.addTrack("New track 2", Track.YARD);
-        Assert.assertEquals("Location", l, t.getLocation());
-
-        // yards and interchanges do support this feature
-        t.setServiceOrder(Track.FIFO);
-        Assert.assertEquals("Track Order", Track.FIFO, t.getServiceOrder());
-        t.setServiceOrder(Track.LIFO);
-        Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
-
-        t = l.addTrack("New track 3", Track.STAGING);
-        Assert.assertEquals("Location", l, t.getLocation());
-
-        t.setServiceOrder(Track.FIFO);
-        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
-        t.setServiceOrder(Track.LIFO);
-        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
-
-        t = l.addTrack("New track 4", Track.INTERCHANGE);
-        Assert.assertEquals("Location", l, t.getLocation());
-
-        t.setServiceOrder(Track.FIFO);
-        Assert.assertEquals("Track Order", Track.FIFO, t.getServiceOrder());
-        t.setServiceOrder(Track.LIFO);
-        Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
-    }
-
     // test car attributes
     public void testCarAttributes() {
         Location l = new Location("Test id", "Test Name");

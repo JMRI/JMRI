@@ -423,6 +423,53 @@ public class TrackTest extends TestCase {
         Assert.assertEquals("Location Track Add Loads false", false, t.isAddCustomLoadsEnabled());
     }
 
+    public void testSpurTrackOrder() {
+        Location l = LocationManager.instance().newLocation("TestOrder");
+        Track t = l.addTrack("New track 1", Track.SPUR);
+        Assert.assertEquals("Location", l, t.getLocation());
+
+        // sidings and staging don't support this feature
+        t.setServiceOrder(Track.FIFO);
+        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
+        t.setServiceOrder(Track.LIFO);
+        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
+    }
+
+    public void testYardTrackOrder() {
+        Location l = LocationManager.instance().newLocation("TestOrder");
+        Track t = l.addTrack("New track 2", Track.YARD);
+        Assert.assertEquals("Location", l, t.getLocation());
+
+        // yards and interchanges do support this feature
+        t.setServiceOrder(Track.FIFO);
+        Assert.assertEquals("Track Order", Track.FIFO, t.getServiceOrder());
+        t.setServiceOrder(Track.LIFO);
+        Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
+    }
+
+    public void testStagingTrackOrder() {
+        Location l = LocationManager.instance().newLocation("TestOrder");
+        Track t = l.addTrack("New track 3", Track.STAGING);
+        Assert.assertEquals("Location", l, t.getLocation());
+        
+        t.setServiceOrder(Track.FIFO);
+        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
+        t.setServiceOrder(Track.LIFO);
+        Assert.assertEquals("Track Order", Track.NORMAL, t.getServiceOrder());
+    }
+
+    public void testInterchangeTrackOrder() {
+        Location l = LocationManager.instance().newLocation("TestOrder");
+        Track t = l.addTrack("New track 4", Track.INTERCHANGE);
+        Assert.assertEquals("Location", l, t.getLocation());
+        
+        // yards and interchanges do support this feature
+        t.setServiceOrder(Track.FIFO);
+        Assert.assertEquals("Track Order", Track.FIFO, t.getServiceOrder());
+        t.setServiceOrder(Track.LIFO);
+        Assert.assertEquals("Track Order", Track.LIFO, t.getServiceOrder());
+    }        
+
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     /**
