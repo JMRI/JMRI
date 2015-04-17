@@ -1,0 +1,42 @@
+// PackageTest.java
+package jmri.jmrit.operations.trains;
+
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+/**
+ * Tests for the jmrit.operations.trains package
+ *
+ * @author	Bob Coleman
+ * @version $Revision$
+ */
+public class PackageTest extends TestCase {
+
+    // from here down is testing infrastructure
+    public PackageTest(String s) {
+        super(s);
+    }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {PackageTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
+
+    // test suite from all defined tests
+    public static Test suite() {
+        TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.PackageTest"); // no tests in class itself
+        suite.addTest(TrainManagerTest.suite());
+        suite.addTest(TrainTest.suite());
+        suite.addTest(XmlTest.suite());
+
+        // GUI tests start here
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            suite.addTest(OperationsTrainsGuiTest.suite());
+        }
+
+        return suite;
+    }
+
+}

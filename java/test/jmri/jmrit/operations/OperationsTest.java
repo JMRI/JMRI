@@ -27,19 +27,12 @@ public class OperationsTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.OperationsTest"); // no tests in class itself
-        suite.addTest(jmri.jmrit.operations.setup.OperationsSetupTest.suite());
+        suite.addTest(jmri.jmrit.operations.setup.PackageTest.suite());
         suite.addTest(jmri.jmrit.operations.locations.PackageTest.suite()); // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.rollingstock.PackageTest.suite());
-        suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesTest.suite());
-        suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsTest.suite());  // fixed references to Swing, 10/10/2012
+        suite.addTest(jmri.jmrit.operations.routes.PackageTest.suite());
+        suite.addTest(jmri.jmrit.operations.trains.PackageTest.suite());  // fixed references to Swing, 10/10/2012
         suite.addTest(jmri.jmrit.operations.router.OperationsCarRouterTest.suite());  // fixed references to Swing, 10/10/2012
-
-        // GUI tests start here
-        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrit.operations.setup.OperationsSetupGuiTest.suite());
-            suite.addTest(jmri.jmrit.operations.routes.OperationsRoutesGuiTest.suite());
-            suite.addTest(jmri.jmrit.operations.trains.OperationsTrainsGuiTest.suite());
-        }
 
         return suite;
     }
