@@ -284,6 +284,9 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 //                text.setText("Destination : " + destination.getName());
                 //                statusFrame.revalidate();
                 //                statusFrame.repaint();
+                if (_track.getLocation() == destination) {
+                    continue;
+                }
                 // now check to see if the track's rolling stock is accepted by the destination
                 checkTypes: for (String type : CarTypes.instance().getNames()) {
                     if (!_track.acceptsTypeName(type)) {
@@ -381,7 +384,7 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                 // now determine if there's a train or trains that can move a car from this track to the destinations
                 // need to check all car types, loads, and roads that this track services
                 Car car = new Car();
-                car.setLength("0");
+                car.setLength(Integer.toString(-RollingStock.COUPLER)); // set car length to net out to zero
                 for (String type : CarTypes.instance().getNames()) {
                     if (!_track.acceptsTypeName(type)) {
                         continue;
@@ -409,13 +412,43 @@ public class TrackDestinationEditFrame extends OperationsFrame implements java.b
                             if (!foundCar) {
                                 continue; // no car with this road name
                             }
-                            if (_track.getLocation() == destination)
-                                continue;
+
                             car.setTypeName(type);
                             car.setRoadName(road);
                             car.setLoadName(load);
                             car.setTrack(_track);
                             car.setFinalDestination(destination);
+                            
+                            // does the destination accept this car?
+                            // this checks tracks that have schedules
+                            String testDest = "";
+                            for (Track track : destination.getTrackList()) {
+                                if (track.getScheduleMode() == Track.SEQUENTIAL) {
+                                    // must test in match mode
+                                    track.setScheduleMode(Track.MATCH);
+                                    String itemId = track.getScheduleItemId();
+                                    testDest = car.testDestination(destination, track);
+                                    track.setScheduleMode(Track.SEQUENTIAL);
+                                    track.setScheduleItemId(itemId);
+                                } else {
+                                    testDest = car.testDestination(destination, track);
+                                }
+                                if (testDest.equals(Track.OKAY)) {
+                                    break; // done
+                                }
+                            }
+                            
+                            if (!testDest.equals(Track.OKAY)) {
+                                noIssues = false;
+                                int response = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
+                                        .getMessage("WarningNoTrack"), new Object[]{destination.getName(), type, road, load,
+                                        destination.getName()}), Bundle.getMessage("WarningCarMayNotMove"),
+                                        JOptionPane.OK_CANCEL_OPTION);
+                                if (response == JOptionPane.OK_OPTION)
+                                    continue;
+                                return false; // done
+                            }
+                            
                             log.debug("Find train for car type ({}), road ({}), load ({})", type, road, load);
 
                             boolean results = Router.instance().setDestination(car, null, null);
