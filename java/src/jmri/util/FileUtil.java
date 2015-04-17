@@ -655,7 +655,7 @@ public final class FileUtil {
                 case FileUtil.SETTINGS:
                 case FileUtil.SCRIPTS:
                 case FileUtil.HOME:
-                    return FileUtil.findURI(FileUtil.getExternalFilename(location + ":" + path));
+                    return FileUtil.findURI(FileUtil.getExternalFilename(location + path));
                 default:
                     break;
             }
