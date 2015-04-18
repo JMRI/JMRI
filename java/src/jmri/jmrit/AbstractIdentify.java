@@ -20,6 +20,8 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class AbstractIdentify implements jmri.ProgListener {
 
+    static final int RETRY_COUNT = 2;
+
     abstract public boolean test1();  // no argument to start
 
     abstract public boolean test2(int value);
@@ -58,6 +60,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 
         // The first test is invoked here; the rest are handled in the programmingOpReply callback
         state = 1;
+        retry = 0;
         test1();
     }
 
@@ -82,18 +85,34 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     public void programmingOpReply(int value, int status) {
         // we abort if the status isn't normal
         if (status != jmri.ProgListener.OK) {
-            log.warn("Stopping due to error: "
+            if ( retry < RETRY_COUNT) {
+                statusUpdate("Programmer error: "
                     + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
-            statusUpdate("Stopping due to error: "
+                state--;
+                retry++;
+            } else {
+                log.warn("Stopping due to error: "
+                    + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
+                statusUpdate("Stopping due to error: "
                     + jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer().decodeErrorCode(status));
             state = 0;
+            retry = 0;
             error();
             return;
+            }
+        } else {
+            retry = 0;            
         }
         // continuing for normal operation
         // this should eventually be something smarter, maybe using reflection,
         // but for now...
         switch (state) {
+            case 0:
+                state = 1;
+                if (test1()) {
+                    identifyDone();
+                }
+                return;
             case 1:
                 state = 2;
                 if (test2(value)) {
@@ -168,6 +187,7 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * State of the internal sequence
      */
     int state = 0;
+    int retry = 0;
 
     /**
      * Access a single CV for the next step
