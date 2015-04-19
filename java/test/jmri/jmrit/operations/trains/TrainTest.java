@@ -2,7 +2,6 @@
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
 import jmri.jmrit.operations.locations.Location;
@@ -40,7 +39,6 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom2.JDOMException;
 
 /**
  * Tests for the Operations Trains class Last manually cross-checked on 20090131
@@ -5929,6 +5927,7 @@ public class TrainTest extends TestCase {
         // Need to clear out TrainManager global variables
         TrainManager.instance().dispose();
         CarManager.instance().dispose();
+        EngineManager.instance().dispose();
         LocationManager.instance().dispose();
         RouteManager.instance().dispose();
         CarRoads.instance().dispose();
@@ -5937,6 +5936,9 @@ public class TrainTest extends TestCase {
         Setup.setTrainIntoStagingCheckEnabled(true);
         Setup.setMaxTrainLength(1000);
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        Setup.setLocalInterchangeMovesEnabled(false);
+        Setup.setLocalSpurMovesEnabled(false);
+        Setup.setLocalYardMovesEnabled(false);
     }
 
     public TrainTest(String s) {

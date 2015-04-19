@@ -17,6 +17,7 @@ import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
@@ -1099,6 +1100,7 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         TrainManager.instance().dispose();
         RouteManager.instance().dispose();
         LocationManager.instance().dispose();
+        EngineModels.instance().dispose();
 
         loadTrains();
 

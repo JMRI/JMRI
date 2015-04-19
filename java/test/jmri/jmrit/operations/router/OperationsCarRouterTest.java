@@ -2891,6 +2891,7 @@ public class OperationsCarRouterTest extends TestCase {
         CarManager.instance().dispose();
 
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
+        Setup.setCarRoutingEnabled(true);
     }
 
     public OperationsCarRouterTest(String s) {
