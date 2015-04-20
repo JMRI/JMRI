@@ -776,30 +776,31 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     }
 
     public void setIdTag(IdTag tag) {
-        if(_tag!=null)
-           _tag.removePropertyChangeListener(_tagListener);
+        if (_tag != null)
+            _tag.removePropertyChangeListener(_tagListener);
         _tag = tag;
-        if(_tagListener==null) {
-           // store the tag listener so we can reuse it and 
-           // dispose of it as necessary.
-           _tagListener = new PropertyChangeListener() {
-               @Override
-               public void propertyChange(java.beans.PropertyChangeEvent e) {
-                   if (e.getPropertyName().equals("whereLastSeen")) {
-                       log.debug("Tag Reader Position update received for {}", toString());
-                       // update the position of this piece of rolling
-                       // stock when it's IdTag is seen.
-                       if (e.getNewValue() != null)
-                           setLocation(locationManager.getLocationByReporter(
-                               (jmri.Reporter) e.getNewValue()), null);
-                       }
-                       if (e.getPropertyName().equals("whenLastSeen")) {
-                           log.debug("Tag Reader Time at Location update received for {}", toString());
-                       }
-                   }
-              };
+        if (_tagListener == null) {
+            // store the tag listener so we can reuse it and 
+            // dispose of it as necessary.
+            _tagListener = new PropertyChangeListener() {
+                @Override
+                public void propertyChange(java.beans.PropertyChangeEvent e) {
+                    if (e.getPropertyName().equals("whereLastSeen")) {
+                        log.debug("Tag Reader Position update received for {}", toString());
+                        // update the position of this piece of rolling
+                        // stock when it's IdTag is seen.
+                        if (e.getNewValue() != null)
+                            setLocation(locationManager.getLocationByReporter(
+                                    (jmri.Reporter) e.getNewValue()), null);
+                    }
+                    if (e.getPropertyName().equals("whenLastSeen")) {
+                        log.debug("Tag Reader Time at Location update received for {}", toString());
+                    }
+                }
+            };
         }
-        _tag.addPropertyChangeListener(_tagListener);
+        if (_tag != null)
+            _tag.addPropertyChangeListener(_tagListener);
     }
 
     /**
