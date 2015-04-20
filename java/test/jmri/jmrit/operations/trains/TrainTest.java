@@ -348,7 +348,23 @@ public class TrainTest extends TestCase {
         Assert.assertTrue("Train now accepts (EXCLUDELOADS) Load name WOOD", train1.acceptsLoadName("WOOD"));
     }
 
-    public void testBuild() {
+    public void noRouteBuildTest(){
+        TrainManager tmanager = TrainManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        Train train = tmanager.newTrain("Test");
+
+        // build train without a route, should fail
+        train.build();
+        Assert.assertFalse("Train should not build, no route", train.isBuilt());
+        Assert.assertEquals("Train build failed", Train.CODE_BUILD_FAILED, train.getStatusCode());
+
+    }
+
+    public void noRouteLocationBuildTest() {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
@@ -364,17 +380,33 @@ public class TrainTest extends TestCase {
         train.setRailroadName("Working Railroad");
         train.setComment("One Hard Working Train");
 
-        // build train without a route, should fail
-        train.build();
-        Assert.assertFalse("Train should not build, no route", train.isBuilt());
-        Assert.assertEquals("Train build failed", Train.CODE_BUILD_FAILED, train.getStatusCode());
-
         // now add a route that doesn't have any locations
         Route route = rmanager.newRoute("TestRoute");
         train.setRoute(route);
         train.build();
         Assert.assertFalse("Train should not build, no route locations", train.isBuilt());
         Assert.assertEquals("Train build failed", Train.CODE_BUILD_FAILED, train.getStatusCode());
+    }
+
+    public void testRouteLocationsBuild() {
+        TrainManager tmanager = TrainManager.instance();
+        RouteManager rmanager = RouteManager.instance();
+        LocationManager lmanager = LocationManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+
+        Train train = tmanager.newTrain("Test");
+
+        // exercise manifest build
+        train.setRailroadName("Working Railroad");
+        train.setComment("One Hard Working Train");
+
+        // now add a route that doesn't have any locations
+        Route route = rmanager.newRoute("TestRoute");
+        train.setRoute(route);
 
         // now add a location to the route
         Location depart = lmanager.newLocation("depart");
@@ -439,6 +471,38 @@ public class TrainTest extends TestCase {
         route.deleteLocation(rl);
         train.build();
         Assert.assertTrue("Train should build, two location route", train.isBuilt());
+
+    }
+
+    public void testBuildRequiresCars() {
+        TrainManager tmanager = TrainManager.instance();
+        RouteManager rmanager = RouteManager.instance();
+        LocationManager lmanager = LocationManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+
+        Train train = tmanager.newTrain("Test");
+
+        // exercise manifest build
+        train.setRailroadName("Working Railroad");
+        train.setComment("One Hard Working Train");
+
+        // now add a route that doesn't have any locations
+        Route route = rmanager.newRoute("TestRoute");
+        train.setRoute(route);
+
+        // now add locations to the route
+        Location depart = lmanager.newLocation("depart");
+        RouteLocation rl = route.addLocation(depart);
+
+        Location terminate = lmanager.newLocation("terminate");
+        rl = route.addLocation(terminate);
+
+        Location middle = lmanager.newLocation("middle");
+        rl = route.addLocation(middle, 2); // put location in middle of route
 
         // Build option require cars
         Control.fullTrainOnly = true;
