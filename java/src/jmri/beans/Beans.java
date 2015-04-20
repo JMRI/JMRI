@@ -1,7 +1,6 @@
 // Beans.java
 package jmri.beans;
 
-import edu.umd.cs.findbugs.annotations.SuppressWarnings;
 import java.beans.IndexedPropertyDescriptor;
 import java.beans.IntrospectionException;
 import java.beans.Introspector;
@@ -42,13 +41,7 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IllegalArgumentException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (InvocationTargetException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IntrospectionException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
@@ -72,13 +65,7 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IllegalArgumentException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (InvocationTargetException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IntrospectionException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
@@ -94,6 +81,7 @@ public class Beans extends java.beans.Beans {
      * {@link jmri.beans.Beans#setIntrospectedProperty(java.lang.Object, java.lang.String, java.lang.Object)}.
      *
      * @param object
+     * @param key
      * @param value
      * @see jmri.beans.BeanInterface#setProperty(java.lang.String,
      * java.lang.Object)
@@ -116,6 +104,7 @@ public class Beans extends java.beans.Beans {
      * other JMRI coding patterns accept that <i>key</i> can be an Object).
      *
      * @param object
+     * @param key
      * @param value
      */
     public static void setIntrospectedProperty(Object object, String key, Object value) {
@@ -129,13 +118,7 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IllegalArgumentException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (InvocationTargetException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IntrospectionException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
@@ -152,6 +135,7 @@ public class Beans extends java.beans.Beans {
      * {@link jmri.beans.Beans#getIntrospectedProperty(java.lang.Object, java.lang.String)}.
      *
      * @param object
+     * @param key
      * @return value of property <i>key</i>
      * @see jmri.beans.BeanInterface#getProperty(java.lang.String)
      */
@@ -175,6 +159,7 @@ public class Beans extends java.beans.Beans {
      * other JMRI coding patterns accept that <i>key</i> can be an Object).
      *
      * @param object
+     * @param key
      * @return value of property <i>key</i> or null
      */
     public static Object getIntrospectedProperty(Object object, String key) {
@@ -187,13 +172,7 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IllegalArgumentException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (InvocationTargetException ex) {
-                log.warn(ex.toString(), ex);
-            } catch (IntrospectionException ex) {
+            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
@@ -209,6 +188,7 @@ public class Beans extends java.beans.Beans {
      * {@link jmri.beans.Beans#hasIntrospectedProperty(java.lang.Object, java.lang.String)}.
      *
      * @param object
+     * @param key
      * @return true if <i>object</i> has property <i>key</i>
      */
     public static boolean hasProperty(Object object, String key) {
@@ -229,6 +209,7 @@ public class Beans extends java.beans.Beans {
      * accept that <i>key</i> can be an Object).
      *
      * @param object
+     * @param key
      * @return true if <i>object</i> has property <i>key</i>
      */
     public static boolean hasIntrospectedProperty(Object object, String key) {
@@ -256,11 +237,11 @@ public class Beans extends java.beans.Beans {
                 return getIntrospectedPropertyNames(object);
             }
         }
-        return new HashSet<String>(); // return an empty set instead of null
+        return new HashSet<>(); // return an empty set instead of null
     }
 
     public static Set<String> getIntrospectedPropertyNames(Object object) {
-        HashSet<String> names = new HashSet<String>();
+        HashSet<String> names = new HashSet<>();
         if (object != null) {
             try {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(object.getClass()).getPropertyDescriptors();
