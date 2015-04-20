@@ -12,7 +12,6 @@ import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -70,7 +69,6 @@ public class TabbedPreferences extends AppConfigBase {
     } // only one of these!
 
     ArrayList<Element> preferencesElements = new ArrayList<>();
-    HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
 
     JPanel detailpanel = new JPanel();
 
@@ -165,7 +163,7 @@ public class TabbedPreferences extends AppConfigBase {
                         if (!this.preferencesPanels.containsKey(className)) {
                             this.addPreferencesPanel((PreferencesPanel) Class.forName(className).newInstance());
                         }
-                        ((PreferencesSubPanel) panel).setParent(this.preferencesPanels.get(className));
+                        ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(className));
                     }
                     this.addPreferencesPanel(panel);
                 } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
@@ -206,7 +204,7 @@ public class TabbedPreferences extends AppConfigBase {
 
     // package only - for TabbedPreferencesFrame
     boolean isDirty() {
-        for (PreferencesPanel panel : this.preferencesPanels.values()) {
+        for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
                         panel.getClass().getName(),
@@ -223,7 +221,7 @@ public class TabbedPreferences extends AppConfigBase {
     // package only - for TabbedPreferencesFrame
     boolean invokeSaveOptions() {
         boolean restartRequired = false;
-        for (PreferencesPanel panel : this.preferencesPanels.values()) {
+        for (PreferencesPanel panel : this.getPreferencesPanels().values()) {
             if (log.isDebugEnabled()) {
                 log.debug("PreferencesPanel {} ({}) is {}.",
                         panel.getClass().getName(),
@@ -275,7 +273,7 @@ public class TabbedPreferences extends AppConfigBase {
     }
 
     public void addPreferencesPanel(PreferencesPanel panel) {
-        this.preferencesPanels.put(panel.getClass().getName(), panel);
+        this.getPreferencesPanels().put(panel.getClass().getName(), panel);
         addItem(panel.getPreferencesItem(),
                 panel.getPreferencesItemText(),
                 panel.getTabbedPreferencesTitle(),

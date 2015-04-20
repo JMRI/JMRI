@@ -31,16 +31,18 @@ import org.slf4j.LoggerFactory;
 public class AppConfigBase extends JmriPanel {
 
     /**
-     *
-     */
-    private static final long serialVersionUID = -341194769406457667L;
-
-    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
-
-    /**
      * Remember items to persist
      */
     protected List<PreferencesPanel> items = new ArrayList<>();
+    /**
+     * All preferences panels handled, whether persisted or not
+     */
+    protected HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
+
+    protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
+
+    private static final long serialVersionUID = -341194769406457667L;
+    private static final Logger log = LoggerFactory.getLogger(AppConfigBase.class);
 
     /**
      * Construct a configuration panel for inclusion in a preferences or
@@ -138,6 +140,7 @@ public class AppConfigBase extends JmriPanel {
     @Override
     public void dispose() {
         items.clear();
+        this.preferencesPanels.clear();
     }
 
     public void saveContents() {
@@ -212,7 +215,11 @@ public class AppConfigBase extends JmriPanel {
         return this.items;
     }
 
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(AppConfigBase.class.getName());
+    /**
+     * @return the preferencesPanels
+     */
+    public HashMap<String, PreferencesPanel> getPreferencesPanels() {
+        return preferencesPanels;
+    }
 
 }
