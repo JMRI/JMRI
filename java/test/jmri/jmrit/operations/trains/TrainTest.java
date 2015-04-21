@@ -516,7 +516,7 @@ public class TrainTest extends TestCase {
 
     }
 
-    public void testAutoEngines() {
+    public void testAutoEnginesBuildFailNoEngines() {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
@@ -556,6 +556,44 @@ public class TrainTest extends TestCase {
         // Auto Engines calculates the number of engines based on requested moves in the route
         train.build();
         Assert.assertFalse("Train should not build, no engines", train.isBuilt());
+    }
+   
+    public void testAutoEnginesSingleEngine() {
+        TrainManager tmanager = TrainManager.instance();
+        RouteManager rmanager = RouteManager.instance();
+        LocationManager lmanager = LocationManager.instance();
+        EngineManager emanager = EngineManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        // This test uses the maximum length of a train in route
+        Setup.setMaxTrainLength(1000);
+
+        Train train = tmanager.newTrain("AutoEngineTest");
+        train.setNumberEngines(Train.AUTO);
+
+        Route route = rmanager.newRoute("AutoEngineTest");
+        train.setRoute(route);
+
+        Location A = lmanager.newLocation("A");
+        Location B = lmanager.newLocation("B");
+        Location C = lmanager.newLocation("C");
+        Track At = A.addTrack("track", Track.SPUR);
+        Track Bt = B.addTrack("track", Track.SPUR);
+        Track Ct = C.addTrack("track", Track.SPUR);
+        At.setLength(300);
+        Bt.setLength(300);
+        Ct.setLength(300);
+
+        RouteLocation rA = route.addLocation(A);
+        RouteLocation rB = route.addLocation(B);
+        RouteLocation rC = route.addLocation(C);
+
+        rA.setMaxCarMoves(5);
+        rB.setMaxCarMoves(5);
+        rC.setMaxCarMoves(5);
 
         Engine e1 = emanager.newEngine("E", "1");
         e1.setModel("GP40");
@@ -573,6 +611,58 @@ public class TrainTest extends TestCase {
 
         train.build();
         Assert.assertTrue("Train should build, only needs a single engine", train.isBuilt());
+    }
+
+    public void testAutoEnginesTwoEngines() {
+        TrainManager tmanager = TrainManager.instance();
+        RouteManager rmanager = RouteManager.instance();
+        LocationManager lmanager = LocationManager.instance();
+        EngineManager emanager = EngineManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        // This test uses the maximum length of a train in route
+        Setup.setMaxTrainLength(1000);
+
+        Train train = tmanager.newTrain("AutoEngineTest");
+        train.setNumberEngines(Train.AUTO);
+
+        Route route = rmanager.newRoute("AutoEngineTest");
+        train.setRoute(route);
+
+        Location A = lmanager.newLocation("A");
+        Location B = lmanager.newLocation("B");
+        Location C = lmanager.newLocation("C");
+        Track At = A.addTrack("track", Track.SPUR);
+        Track Bt = B.addTrack("track", Track.SPUR);
+        Track Ct = C.addTrack("track", Track.SPUR);
+        At.setLength(300);
+        Bt.setLength(300);
+        Ct.setLength(300);
+
+        RouteLocation rA = route.addLocation(A);
+        RouteLocation rB = route.addLocation(B);
+        RouteLocation rC = route.addLocation(C);
+
+        rA.setMaxCarMoves(5);
+        rB.setMaxCarMoves(5);
+        rC.setMaxCarMoves(5);
+
+        Engine e1 = emanager.newEngine("E", "1");
+        e1.setModel("GP40");
+        Engine e2 = emanager.newEngine("E", "2");
+        e2.setModel("GP40");
+        Engine e3 = emanager.newEngine("E", "3");
+        e3.setModel("GP40");
+        Engine e4 = emanager.newEngine("E", "4");
+        e4.setModel("GP40");
+
+        e1.setLocation(A, At);
+        e2.setLocation(A, At);
+        e3.setLocation(A, At);
+        e4.setLocation(A, At);
 
         // change requirements
         rA.setMaxCarMoves(12);
@@ -593,7 +683,65 @@ public class TrainTest extends TestCase {
         Assert.assertEquals("e1 should be assigned to train", train, e1.getTrain());
         Assert.assertEquals("e2 should be assigned to train", train, e2.getTrain());
 
+    }
+ 
+    public void testAutoEnginesGrade() {
+        TrainManager tmanager = TrainManager.instance();
+        RouteManager rmanager = RouteManager.instance();
+        LocationManager lmanager = LocationManager.instance();
+        EngineManager emanager = EngineManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        // This test uses the maximum length of a train in route
+        Setup.setMaxTrainLength(1000);
+
+        Train train = tmanager.newTrain("AutoEngineTest");
+        train.setNumberEngines(Train.AUTO);
+
+        Route route = rmanager.newRoute("AutoEngineTest");
+        train.setRoute(route);
+
+        Location A = lmanager.newLocation("A");
+        Location B = lmanager.newLocation("B");
+        Location C = lmanager.newLocation("C");
+        Track At = A.addTrack("track", Track.SPUR);
+        Track Bt = B.addTrack("track", Track.SPUR);
+        Track Ct = C.addTrack("track", Track.SPUR);
+        At.setLength(300);
+        Bt.setLength(300);
+        Ct.setLength(300);
+
+        RouteLocation rA = route.addLocation(A);
+        RouteLocation rB = route.addLocation(B);
+        RouteLocation rC = route.addLocation(C);
+
+        rA.setMaxCarMoves(12);
+        rB.setMaxCarMoves(12);
+        rC.setMaxCarMoves(12);
+
         rB.setGrade(2.5); // 2.5% grade!
+
+        Engine e1 = emanager.newEngine("E", "1");
+        e1.setModel("GP40");
+        Engine e2 = emanager.newEngine("E", "2");
+        e2.setModel("GP40");
+        Engine e3 = emanager.newEngine("E", "3");
+        e3.setModel("GP40");
+        Engine e4 = emanager.newEngine("E", "4");
+        e4.setModel("GP40");
+
+        e1.setLocation(A, At);
+        e2.setLocation(A, At);
+        e3.setLocation(A, At);
+        e4.setLocation(A, At);
+
+        Consist c = emanager.newConsist("c");
+        e1.setConsist(c);
+        e2.setConsist(c);
+
 
         // train should require four engines
         train.build();
@@ -606,11 +754,72 @@ public class TrainTest extends TestCase {
         e4.setConsist(c);
         train.build();
         Assert.assertTrue("Train should build, four engines available", train.isBuilt());
+    }
+
+
+    public void testMaxEngines() {
+        TrainManager tmanager = TrainManager.instance();
+        RouteManager rmanager = RouteManager.instance();
+        LocationManager lmanager = LocationManager.instance();
+        EngineManager emanager = EngineManager.instance();
+
+        // disable build messages
+        tmanager.setBuildMessagesEnabled(false);
+        // disable build reports
+        tmanager.setBuildReportEnabled(false);
+        // This test uses the maximum length of a train in route
+        Setup.setMaxTrainLength(1000);
+
+        Train train = tmanager.newTrain("AutoEngineTest");
+        train.setNumberEngines(Train.AUTO);
+
+        Route route = rmanager.newRoute("AutoEngineTest");
+        train.setRoute(route);
+
+        Location A = lmanager.newLocation("A");
+        Location B = lmanager.newLocation("B");
+        Location C = lmanager.newLocation("C");
+        Track At = A.addTrack("track", Track.SPUR);
+        Track Bt = B.addTrack("track", Track.SPUR);
+        Track Ct = C.addTrack("track", Track.SPUR);
+        At.setLength(300);
+        Bt.setLength(300);
+        Ct.setLength(300);
+
+        RouteLocation rA = route.addLocation(A);
+        RouteLocation rB = route.addLocation(B);
+        RouteLocation rC = route.addLocation(C);
+
+        rA.setMaxCarMoves(12);
+        rB.setMaxCarMoves(12);
+        rC.setMaxCarMoves(12);
+        rB.setGrade(2.5); // 2.5% grade!
+
+        Engine e1 = emanager.newEngine("E", "1");
+        e1.setModel("GP40");
+        Engine e2 = emanager.newEngine("E", "2");
+        e2.setModel("GP40");
+        Engine e3 = emanager.newEngine("E", "3");
+        e3.setModel("GP40");
+        Engine e4 = emanager.newEngine("E", "4");
+        e4.setModel("GP40");
+
+        e1.setLocation(A, At);
+        e2.setLocation(A, At);
+        e3.setLocation(A, At);
+        e4.setLocation(A, At);
+
+        Consist c = emanager.newConsist("c");
+        e1.setConsist(c);
+        e2.setConsist(c);
+        e3.setConsist(c);
+        e4.setConsist(c);
 
         Setup.setMaxNumberEngines(3); // limit the maximum to three engines
         train.build();
         Assert.assertFalse("Train should not build, needs four engines, three is the maximum allowed", train
                 .isBuilt());
+
 
         // remove one engine from consist, train should build
         c.delete(e4);
