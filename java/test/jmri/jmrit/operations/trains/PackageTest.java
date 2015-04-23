@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrit.operations.trains.PackageTest"); // no tests in class itself
         suite.addTest(TrainManagerTest.suite());
         suite.addTest(TrainTest.suite());
+        suite.addTest(TrainBuilderTest.suite());
         suite.addTest(XmlTest.suite());
 
         // GUI tests start here
