@@ -1548,7 +1548,7 @@ function listPanels(name) {
         success: function(data, textStatus, jqXHR) {
             if (data.length !== 0) {
                 $.each(data, function(index, value) {
-                    $gPanelList[value.userName] = value.name;
+                    $gPanelList[value.data.userName] = value.data.name;
                 });
             }
             if (name === null || typeof (panelName) === undefined) {
