@@ -697,6 +697,7 @@ public class TrainTest extends TestCase {
         tmanager.setBuildReportEnabled(false);
         // This test uses the maximum length of a train in route
         Setup.setMaxTrainLength(1000);
+        Setup.setMaxNumberEngines(6);
 
         Train train = tmanager.newTrain("AutoEngineTest");
         train.setNumberEngines(Train.AUTO);
