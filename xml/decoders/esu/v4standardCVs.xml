@@ -145,15 +145,15 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Brake on DC, polarity same direction</label>
   </variable>
-  <variable CV="28" mask="XXXXXXXV" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 3" default="1">
+  <variable CV="28" mask="XXXXXXXV" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 3" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Channel 1 Address Broadcast</label>
   </variable>
-  <variable CV="28" mask="XXXXXXVX" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 4" default="1">
+  <variable CV="28" mask="XXXXXXVX" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 4" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Channel 2 Data Transmission</label>
   </variable>
-  <variable CV="28" mask="VXXXXXXX" include="54400,54499,54800,54899,5489,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 2" default="1">
+  <variable CV="28" mask="VXXXXXXX" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 2" default="1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Plus Auto Loco Recognition</label>
   </variable>
@@ -183,7 +183,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Analog Conversion Mode</label>
   </variable>
-  <variable CV="29" mask="XXXXVXXX" default="1" include="ESU LokSound V4.0,ESU LokPilot V4.0" item="ESU V4 Extra RailCom Option 1">
+  <variable CV="29" mask="XXXXVXXX" default="1" exclude="LokPilot Fx V4.0" item="ESU V4 Extra RailCom Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>RailCom Enable</label>
   </variable>
@@ -210,15 +210,15 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>DCC Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXXXVX" default="0" include="" item="ESU V4 Extra Protocols Option 4">
+  <variable CV="47" mask="XXXXXXVX" default="0" include="LokPilot XL V4.0,LokSound XL V4.0,LokSound XL V4.0 Screw Terminals,LokSound XL V4.0 PIN connector" item="ESU V4 Extra Protocols Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>M4 Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LPV4DCC,LPmV4DCC" item="ESU V4 Extra Protocols Option 2">
+  <variable CV="47" mask="XXXXXVXX" default="1" exclude="ESU LokSound Select,LokPilot DCC V4.0,LokPilot Micro DCC V4.0" item="ESU V4 Extra Protocols Option 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Marklin Motorola Protocol</label>
   </variable>
-  <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LPV4DCC,LPmV4DCC" item="ESU V4 Extra Protocols Option 3">
+  <variable CV="47" mask="XXXXVXXX" default="1" exclude="ESU LokSound Select,LokPilot DCC V4.0,LokPilot Micro DCC V4.0" item="ESU V4 Extra Protocols Option 3">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Selectrix Protocol</label>
   </variable>
@@ -237,11 +237,11 @@
     </enumVal>
     <label>Motor PWM Frequency</label>
   </variable>
-  <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Compatibility Option 2">
+  <variable CV="49" mask="XXXXXVXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Extra Compatibility Option 2">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Marklin Delta Mode</label>
   </variable>
-  <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LPV4,LPmV4" item="ESU V4 Extra Miscellaneous Option 3">
+  <variable CV="49" mask="VXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot Micro V4.0" item="ESU V4 Extra Miscellaneous Option 3">
     <enumVal>
       <enumChoice choice="No additional addresses" value="0"/>
       <enumChoice choice="Use 2 addresses" value="1"/>
@@ -254,7 +254,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Automatic Speed Step Detection</label>
   </variable>
-  <variable CV="49" mask="XXVXXXXX" default="0" exclude="LPmV4,LPmV4DCC" item="ESU V4 Extra Compatibility Option 1">
+  <variable CV="49" mask="XXVXXXXX" default="0" exclude="LokPilot Micro V4.0,LokPilot Micro DCC V4.0" item="ESU V4 Extra Compatibility Option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>LGB Function Button Mode</label>
   </variable>
@@ -262,7 +262,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>LGB Function Button Mode</label>
   </variable>
-  <variable CV="50" mask="XXXXXXXV" default="1" exclude="ESU LokSound Select,54800,54898,54899,LPV4DCC,LPmV4,LPmV4DCC" item="Analog (AC) Mode">
+  <variable CV="50" mask="XXXXXXXV" default="1" exclude="ESU LokSound Select,54800,54898,54899,LokPilot DCC V4.0,LokPilot Micro V4.0,LokPilot Micro DCC V4.0" item="Analog (AC) Mode">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>AC Analog Mode</label>
   </variable>
@@ -275,7 +275,7 @@
       <decVal/>
       <label>BEMF Parameter 'I' Slow</label>
     </variable>
-    <variable CV="52" default="32" item="Motor Option 1">
+    <variable CV="52" default="15" item="EMF Option 3">
       <decVal/>
       <label>BEMF Parameter 'K' Slow</label>
     </variable>
@@ -283,17 +283,21 @@
       <decVal/>
       <label>BEMF Reference Voltage</label>
     </variable>
-    <variable CV="54" default="48" item="EMF Option 1">
+    <variable CV="54" default="50" item="EMF Option 1">
       <decVal/>
       <label>BEMF Parameter 'K'</label>
     </variable>
-    <variable CV="55" default="32" item="EMF Option 2">
+    <variable CV="55" default="100" item="EMF Option 2">
       <decVal/>
       <label>BEMF Parameter 'I'</label>
     </variable>
-    <variable CV="56" default="255" item="EMF Option 3">
+    <variable CV="56" default="255" item="EMF Feedback Cutout">
       <decVal/>
-      <label>BEMF Dynamic Drive Control'</label>
+      <label>BEMF Control Range</label>
+    </variable>
+    <variable CV="10" default="8" item="Motor Option 1">
+      <decVal min="4" max="8"/>
+      <label>BEMF Sampling Period</label>
     </variable>
     <variable item="Forward Trim" CV="66" default="128" comment="Range 0-255">
       <decVal/>
@@ -342,7 +346,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
     <label>Decoder Lock</label>
   </variable>
-  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LPV4,LPV4DCC" item="ESU V4 Extra Compatibility Option 4">
+  <variable CV="124" mask="XXXXVXXX" default="0" include="ESU LokSound V4.0,LokPilot V4.0,LokPilot DCC V4.0" item="ESU V4 Extra Compatibility Option 4">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Serial protocol for C-Sinus</label>
   </variable>
@@ -350,7 +354,7 @@
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Adaptive Regulation Frequency</label>
   </variable>
-  <variable CV="124" mask="XXVXXXXX" default="0" include="54400,54499" item="Motor Option 2" exclude="LokPilot Fx V4.0">
+  <variable CV="124" mask="XXVXXXXX" default="0" include="ESU LokSound V4.0" item="Motor Option 2" exclude="LokSound Micro V4.0,LokSound Micro V4.0 NEM651,LokSound Micro V4.0 NEM652,LokSound Micro V4.0 Next18,LokSound XL V4.0">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Motor Overload Protection</label>
   </variable>
@@ -362,11 +366,11 @@
     <decVal/>
     <label>Maximum Speed in DC mode</label>
   </variable>
-  <variable CV="127" default="90" exclude="ESU LokSound Select,54800,54898,54899,LPV4DCC,LPmV4,LPmV4DCC" item="Analog (AC) Vstart">
+  <variable CV="127" default="90" exclude="ESU LokSound Select,54800,54898,54899,LokPilot DCC V4.0,LokPilot Micro V4.0,LokPilot Micro DCC V4.0" item="Analog (AC) Vstart">
     <decVal/>
     <label>Start Volts in AC Mode</label>
   </variable>
-  <variable CV="128" default="130" exclude="ESU LokSound Select,54800,54898,54899,LPV4DCC,LPmV4,LPmV4DCC" item="Analog (AC) Vhigh">
+  <variable CV="128" default="130" exclude="ESU LokSound Select,54800,54898,54899,LokPilot DCC V4.0,LokPilot Micro V4.0,LokPilot Micro DCC V4.0" item="Analog (AC) Vhigh">
     <decVal/>
     <label>Maximum Speed in AC mode</label>
   </variable>
@@ -433,19 +437,9 @@
   <!-- Indexed variables -->
   <constant item="PICV" default="31" comment="CV used for Primary Index"/>
   <constant item="SICV" default="32" comment="CV used for Secondary Index"/>
-  <!-- Firmware Version -->
-  <variable CV="0.255.285" readOnly="yes" item="Firmware Build Number">
-    <splitVal highCV="0.255.286"/>
-    <label>Firmware Build Number</label>
-  </variable>
-  <variable CV="0.255.287" readOnly="yes" item="Firmware Minor Version">
-    <decVal/>
-    <label>Firmware Minor Version</label>
-  </variable>
-  <variable CV="0.255.288" readOnly="yes" item="Firmware Major Version">
-    <decVal/>
-    <label>Firmware Major Version</label>
-  </variable>
+  <!-- Decoder Information -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
   <!-- Function Outputs -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
 </variables>
