@@ -12,6 +12,7 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.RollingStock;
+import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -92,12 +93,14 @@ public class ExportEngines extends XmlFile {
         String engineTrackName;
         // assume delimiter in the value field
         String value;
+        String comment;
 
         // create header
         String header = Bundle.getMessage("Number") + del + Bundle.getMessage("Road") + del
                 + Bundle.getMessage("Model") + del + Bundle.getMessage("Length") + del + Bundle.getMessage("Owner")
                 + del + Bundle.getMessage("Built") + del + Bundle.getMessage("Location") + del + "-" + del
-                + Bundle.getMessage("Track") + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel();
+                + Bundle.getMessage("Track") + del + Bundle.getMessage("Moves") + del + Setup.getValueLabel()
+                 + del + Bundle.getMessage("Comment");
         fileOut.println(header);
 
         // store engine number, road, model, length, owner, built date, location and track
@@ -126,9 +129,13 @@ public class ExportEngines extends XmlFile {
             if (!engine.getValue().equals("")) {
                 value = ESC + engine.getValue() + ESC;
             }
+            comment = "";
+            if (!engine.getComment().equals(Car.NONE)) {
+                comment = ESC + engine.getComment() + ESC;
+            }
             line = engine.getNumber() + del + engine.getRoadName() + del + engineModel + del + engine.getLength() + del
                     + engine.getOwner() + del + engine.getBuilt() + del + engineLocationName + ",-," + engineTrackName // NOI18N
-                    + del + engine.getMoves() + del + value;
+                    + del + engine.getMoves() + del + value + del + comment;
             fileOut.println(line);
         }
         fileOut.flush();
