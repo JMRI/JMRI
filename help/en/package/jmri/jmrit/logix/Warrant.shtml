@@ -245,12 +245,14 @@ following must be known:
 Given all the above, the throttle setting still must be related to actual track speed.
 This is the <b>Throttle Setting Speed Factor</b>.  A global value for this is
 also found at  <i>>Edit->Preferences->Warrants</i>, but its value is engine/decoder dependent.
+That is the decoder's speed curve to deliver voltage to the motor, and the motor's
+rpm response under load with that voltage.
 <p>
 A further assumption made in the speed change calculations is that
 the speed curve of the engine/decoder is linear - or approximately so.
 If the entire locomotive fleet is speed matched to a linear curve then a 
 global value is sufficient.  It might seem getting a throttle factor
-for each engine is not a problem.
+for each engine is a problem.
 <p>
 Not so.  NXWarrants have a feature whereby running the train over a block of known length
 will compute a Throttle Factor for the train.  Use the <b>Calibrate</b> button

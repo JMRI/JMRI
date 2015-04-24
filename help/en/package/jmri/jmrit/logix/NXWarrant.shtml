@@ -27,7 +27,8 @@
 
 An NXWarrant is a computer generated warrant.  Rather than recording speed changes and other locomotive commands from a
 throttle where the recording notes the elapsed time between commands, an algorithm generates the speed changes and 
-elapsed times for a smooth start up and slow down to a stop.
+elapsed times for a smooth start up and slow down to a stop. To review information about warrants see
+<A HREF="Warrant.shtml">About Warrants</A>. 
 In order to determine correct elapsed times and the blocks where the speed changes 
 should occur, the block lengths must be known.  Additionally, the proper scale must be known.  Nevertheless, even
 if OBlock lengths are not specified, the algorithm makes a best effort to generate a usable warrant.
@@ -132,7 +133,8 @@ Via block is crossed the warrant will report the speed and Throttle Factor.
 The Factor should then be used in any warrant where this engine address is used.
 <p>
 Choose a Via block of accurate length, reasonably long, where the train can fully reach the maximum speed set
-and exit the block before ramping down.
+and exit the block before ramping down.  The factors calculated for the mid and high ranges of speed ought to
+be relatively constant.  If not, perhaps modifying the decoder's speed curve will give a constant factor.
 <p>
 <H3>Saving NXWarrants to make them Permanently Saved</H3>
 If you press the <b>Edit</b> button on the Warrant List Table of the NXwarrant while it is still executing, the
@@ -160,7 +162,7 @@ no occupancy detection, it is very important it's block length is known since in
 be done.
 <p>
 For locos with no momentum,  
-short times would make smoother ramps.  For locos with lots of momentum, longer periods may be used. 
+short times make smoother ramps.  For locos with lots of momentum, longer periods should be used. 
 The defaults are set for a modest amount of momentum, i.e. perhaps less than prototype but visually OK.  Observe how 
 the train behaves and adjust accordingly.
 <p>

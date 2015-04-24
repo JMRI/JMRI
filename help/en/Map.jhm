@@ -894,6 +894,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Trains_Timetable" url="manual/JMRI_OPS_UsersGuide/Ops_Trains_Timetable.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_LocationReporter" url="package/jmri/jmrit/operations/Operations.shtml#LocationReporter"/>
+
 <mapID target="html.doc.Technical.JUnit_testSwingCode" url="html/doc/Technical/JUnit.shtml#testSwingCode"/>
 
 <mapID target="manual.DecoderPro.Multi_Decoder_Control" url="manual/DecoderPro/Multi_Decoder_Control.shtml"/>
@@ -1248,6 +1250,8 @@
 
 <mapID target="manual.DecoderPro.Main_Main" url="manual/DecoderPro/Main_Main.shtml"/>
 
+<mapID target="html.tools.signaling.AspectSignaling_logix" url="html/tools/signaling/AspectSignaling.shtml#logix"/>
+
 <mapID target="package.jmri.jmrix.grapevine.packetgen.SerialPacketGenFrame" url="package/jmri/jmrix/grapevine/packetgen/SerialPacketGenFrame.shtml"/>
 
 <mapID target="html.doc.Technical.NewSystem" url="html/doc/Technical/NewSystem.shtml"/>
@@ -1464,6 +1468,8 @@
 
 <mapID target="manual.DecoderPro3.Basic_BasicPane" url="manual/DecoderPro3/Basic_BasicPane.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_LocomotiveIDTAG" url="package/jmri/jmrit/operations/Operations.shtml#LocomotiveIDTAG"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_RouteComment" url="package/jmri/jmrit/operations/Operations.shtml#RouteComment"/>
 
 <mapID target="html.hardware.loconet.Digitrax_Setup" url="html/hardware/loconet/Digitrax.shtml#Setup"/>
@@ -1670,6 +1676,8 @@
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TripThruOperations_Top" url="manual/JMRI_OPS_UsersGuide/Ops_TripThruOperations.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_OffLayoutStorage" url="package/jmri/jmrit/operations/Operations.shtml#OffLayoutStorage"/>
+
 <mapID target="manual.DecoderPro.Main_ConsistControl" url="manual/DecoderPro/Main_ConsistControl.shtml"/>
 
 <mapID target="manual.DecoderPro3.Basic_Mode_Top" url="manual/DecoderPro3/Basic_Mode.shtml#Top"/>
@@ -1699,6 +1707,8 @@
 <mapID target="package.jmri.jmrix.loconet.soundloader.EditorFrame" url="package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_rsfromdtcs" url="html/hardware/loconet/StandaloneLocoNet.shtml#rsfromdtcs"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_CARIDTAG" url="package/jmri/jmrit/operations/Operations.shtml#CARIDTAG"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_ChangeTrainDepartureTimes" url="package/jmri/jmrit/operations/Operations.shtml#ChangeTrainDepartureTimes"/>
 
@@ -1879,6 +1889,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Main_Main_Top" url="manual/JMRI_OPS_UsersGuide/Main_Main.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Programmer_Multi_Decoder" url="manual/DecoderPro/Programmer_Multi_Decoder.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_LoadType" url="package/jmri/jmrit/operations/Operations.shtml#LoadType"/>
 
 <mapID target="manual.DecoderPro3.Comp_PrintData_Print" url="manual/DecoderPro3/Comp_PrintData.shtml#Print"/>
 
@@ -2209,6 +2221,8 @@
 <mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsModify_Preview" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsModify.shtml#Preview"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_Display" url="package/jmri/jmrit/operations/Operations.shtml#Display"/>
 
 <mapID target="manual.DecoderPro3.Main_RPS_Receiver" url="manual/DecoderPro3/Main_RPS.shtml#Receiver"/>
 
@@ -2637,6 +2651,8 @@
 <mapID target="html.tools.signaling.ldt.output3" url="html/tools/signaling/ldt/output3.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsBuild" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsBuild.shtml"/>
+
+<mapID target="package.jmri.jmrit.logix.CreateEditWarrant" url="package/jmri/jmrit/logix/CreateEditWarrant.shtml"/>
 
 <mapID target="html.apps.DispatcherPro.index" url="html/apps/DispatcherPro/index.shtml"/>
 

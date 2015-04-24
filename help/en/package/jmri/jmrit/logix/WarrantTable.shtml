@@ -163,7 +163,10 @@ track speed.  Thus to get train to begin and end its speed changes at the proper
 a factor that relates the throttle setting to the actual track speed is needed.  This 
 is the value in the <b>Factor column</b>.
 <p>
-The factor obviously depends upon the particular engine's power curve.  If the entire
+The factor obviously depends upon the particular engine's power curve.  This is a combination
+of decoder's throttle speed curve and the locomotive motor's response to the voltage
+set by the speed curve.  For most decoder/motor combinations a relatively constant 
+<b>throttle factor</b> can be found for the mid and high ranges.  If the entire
 locomotive fleet is speed matched, then the same factor will do for all.  
 Lacking that, individual 
 factors for the motive power used in a warrant can be determined by using the NXWarrant

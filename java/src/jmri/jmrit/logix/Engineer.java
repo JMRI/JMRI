@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 public class Engineer extends Thread implements Runnable, java.beans.PropertyChangeListener {
 
+    private static final long serialVersionUID = 7088050907933847146L;
+
     private int     _idxCurrentCommand;     // current throttle command
     private float   _currentSpeed = 0;      // Actual current throttle setting
     private float   _normalSpeed = 0;       // current commanded throttle setting (unmodified)
@@ -125,13 +127,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                     _lock.lock();
                     try {
                         _normalSpeed = speed;
-                        float speedMod;
-                        if (speed<=0.001f) {
-                            speedMod = speed;
-                            timeRatio =1.0f;
+                        float speedMod  = modifySpeed(speed, _speedType);
+                        if (Math.abs(speed - speedMod)>.0001f) {
+                            timeRatio = speed/speedMod;                            
                         } else {
-                            speedMod  = modifySpeed(speed, _speedType);
-                            timeRatio = speed/speedMod;
+                            timeRatio = 1.0f;                            
                         }
                         setSpeed(speedMod);
                     } finally {
@@ -282,15 +282,16 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     private void setSpeed(float speed) {
-        _throttle.setSpeedSetting(speed);
-        if (speed<0.002) {
+        float minIncre = _throttle.getSpeedIncrement();
+        if (0.0f < speed && speed < minIncre) {    // don't let speed be less than 1 speed step
             speed = 0.0f;
-            _throttle.setSpeedSetting(0.0f);    // prevent creep after EStop - according to Jim Betz        
         }
+        _throttle.setSpeedSetting(speed);
         _currentSpeed = speed;
         if (log.isDebugEnabled()) log.debug("_speedType="+_speedType+", Speed set to "+
-                speed+" _waitForClear= "+_waitForClear+" warrant "+_warrant.getDisplayName());
+                speed+" _waitForClear= "+_waitForClear+", warrant "+_warrant.getDisplayName());
     }
+    
     protected float getSpeed() {
         return _currentSpeed;
     }
@@ -364,7 +365,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         if (_throttle != null) {
             _throttle.setSpeedSetting(-1.0f);
-            setSpeed(0.0f);
+            setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
             setFunction(2, false);
             setFunction(0, false);
            try {
@@ -666,13 +667,16 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     
     protected String minSpeed(String speed1, String speed2) {
-        float s1 = modifySpeed(1.0f, speed1);
-        float s2 = modifySpeed(1.0f, speed2);
-        if (s1<s2) {
+        if (secondGreaterThanFirst(speed1, speed2)) {
             return speed1;
         } else {
             return speed2;
         }
+    }
+    protected boolean secondGreaterThanFirst(String speed1, String speed2) {
+        float s1 = modifySpeed(1.0f, speed1);
+        float s2 = modifySpeed(1.0f, speed2);
+        return (s1<s2);
     }
     
     private class ThrottleRamp implements Runnable {

@@ -578,6 +578,25 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return _avoid.getOrder();
     }
     
+    private Warrant _tempWarrant;   // only used in pickRoute() method
+    private void clearTempWarrant() {
+        if (_tempWarrant!=null) {
+            _tempWarrant.deAllocate();
+            _tempWarrant = null;
+        }        
+    }
+    private void showTempWarrant(ArrayList<BlockOrder> orders) {
+        String s = (""+Math.random()).substring(4);
+        _tempWarrant = new Warrant("IW"+s+"TEMP", null);
+        _tempWarrant.setBlockOrders(orders);
+        String msg = _tempWarrant.setRoute(0, orders);
+        if (msg!=null) {
+            JOptionPane.showMessageDialog(null, msg,
+                    Bundle.getMessage("WarningTitle"),
+                    JOptionPane.WARNING_MESSAGE);            
+        }
+    }
+
    /**
     *  Callback from RouteFinder - several routes found
     */
@@ -588,6 +607,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             return;
         }
         _pickRouteDialog = new JDialog(this, Bundle.getMessage("DialogTitle"), false);
+        _tempWarrant = null;
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(5,5));
         JPanel panel = new JPanel();
@@ -604,6 +624,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             JRadioButton button = new JRadioButton(Bundle.getMessage("RouteSize", Integer.valueOf(i+1), 
                     Integer.valueOf(destNodes.get(i).getLevel())) );
             button.setActionCommand(""+i);
+            button.addActionListener(new ActionListener() {
+                public void actionPerformed(ActionEvent e) {
+                    clearTempWarrant();
+                }               
+            });
             buttons.add(button);
             panel.add(button);
         }
@@ -617,6 +642,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 DefaultTreeModel tree;
                 public void actionPerformed(ActionEvent e) {
                     if (buts.getSelection()!=null) {
+                        clearTempWarrant();
                         int i = Integer.parseInt(buttons.getSelection().getActionCommand());
                         showRoute(dNodes.get(i), tree);
                         selectedRoute(_orders);
@@ -642,8 +668,10 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 DefaultTreeModel tree;
                 public void actionPerformed(ActionEvent e) {
                     if (buts.getSelection()!=null) {
+                        clearTempWarrant();
                         int i = Integer.parseInt(buttons.getSelection().getActionCommand());
                         showRoute(destinationNodes.get(i), tree);
+                        showTempWarrant(_orders);
                     } else {
                         showWarning(Bundle.getMessage("SelectRoute"));
                     }
@@ -674,7 +702,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
         _pickRouteDialog.getContentPane().add(panel);
-        _pickRouteDialog.setLocation(getLocation().x+50, getLocation().y+150);
+        _pickRouteDialog.setLocation(getLocation().x-20, getLocation().y+150);
         _pickRouteDialog.pack();
         _pickRouteDialog.setVisible(true);
     }
@@ -866,7 +894,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         }
 
         public int getPreferredWidth(int col) {
-            return new JTextField(20).getPreferredSize().width;
+            return new JTextField(15).getPreferredSize().width;
         }
 
         public Object getValueAt(int row, int col) {
