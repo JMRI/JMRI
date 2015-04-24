@@ -154,7 +154,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
         throttleManager = new jmri.jmrix.zimo.Mx1ThrottleManager(this);
         InstanceManager.setThrottleManager(throttleManager);
-        if (st.getProtocol() == Mx1Packetizer.BINARY) {
+        if (getProtocol() == Mx1Packetizer.BINARY) {
             turnoutManager = new Mx1TurnoutManager(getMx1TrafficController(), getSystemPrefix());
             InstanceManager.setTurnoutManager(turnoutManager);
         }
@@ -174,7 +174,7 @@ public class Mx1SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public ProgrammerManager getProgrammerManager() {
         if (programmerManager == null) {
-            if (st.getProtocol() == Mx1Packetizer.BINARY) {
+            if (getProtocol() == Mx1Packetizer.BINARY) {
                 programmerManager = new Mx1ProgrammerManager(new Mx1Programmer(getMx1TrafficController()), this);
             } else {
                 programmerManager = new jmri.managers.DefaultProgrammerManager(new jmri.jmrix.zimo.Mx1Programmer(getMx1TrafficController()), this);

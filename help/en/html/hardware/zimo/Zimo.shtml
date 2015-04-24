@@ -33,14 +33,25 @@
 	<H3>Supported Hardware</H3>
 
 	<UL>
-	<li>Zimo MX-1
+	<li>MX-1 - ASCII Protocol
+    <li>MXULF - Binary Protocol <b>Up to Software 0.61.05</b>
+    <li>MX-10 - Binary Protocol (Tentative)
 	</UL>
 
 	<H3>Limitations</H3>
 
-	<p>TBD</p>
+	<p>ASCII protocol currently only supports programming</p>
+    <p>Binary protocol supports the following
+    <ul>
+    <li>Programming, Both on the Main & Service Mode
+    <li>Throttle
+    <li>Turnout Control - Tentative
+    </ul>
+    <b>Note</b> Testing of the binary protocol has only been possible using the MXULF, with the turnout control
+    having not been fully tested.  Issues may occur when used with the MX-10 but we do not currently have any hardware
+    to test against.
 
-	<H3>Setup</H3>
+	<H3>MX-1 Setup</H3>
 
 	  <ol>
 	  <li> To connect your computer to a Zimo MX-1 system, you can
@@ -74,7 +85,26 @@
 
 	  <li> Restart the program. You should be up and running.</li>
 	  </ol>
+      
+    <h3>MXULF / MX-10 Set-up</h3>
+    <ol>
+    <li>Connect the MXULF to a Suitable power supply</li>
+    <li>Connect the MXULF to the computer via the USB interface, ensure that 
+    the display screen reads something along the lines of 
+    <code> PC <-> MXULF<br>
+    Rx:  0    Tx:  0</code><br>
+    If the bottom line is not displayed, then remove/re-insert the usb cable.</li>
+    
+    <li> Then go to the preferences panel of a JMRI-based program.
+	  This opens automatically the first time a program is run, or you
+	  can select it from the "Edit" menu.</li>
+    <li>From the Manufacturers List, select "Zimo" and from the system select "MXULF"</li>
+    <li>Select the appropriate comm port from the list</li>
+    <li>The Baud rate by default is set to 9600, you can change it if needs be from the advanced options</li>
+    <li> Click "Save". You'll be asked if it's OK for the program to
+	  quit and restart, click "Yes".</li>
 
+  <li> Restart the program. You should be up and running.</li>
 	<H3>Debugging</H3>
 
 	<p><a href="http://w3.zimo.at/">Zimo main web site</a></p>

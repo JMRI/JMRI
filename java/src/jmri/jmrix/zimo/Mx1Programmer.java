@@ -38,7 +38,8 @@ public class Mx1Programmer extends AbstractProgrammer implements Mx1Listener {
         this.tc = _tc;
         // connect to listen
         log.info("" + this.tc);
-        this.tc.addMx1Listener(~0, this);
+        if(this.tc!=null)
+            this.tc.addMx1Listener(~0, this);
     }
 
     /**
