@@ -787,12 +787,10 @@ public class NceMacroEditPanel extends jmri.jmrix.nce.swing.NcePanel implements 
                             initAccyFields();
                             macroReply.setText(rb.getString("macroEmpty"));
                             if (checkBoxEmpty.isSelected()) {
-                                if (macroCount > 0) {
-                                    macroValid = true;
-                                    macroSearchInc = false;
-                                    macroSearchDec = false;
-                                    break;
-                                }
+                                macroValid = true;
+                                macroSearchInc = false;
+                                macroSearchDec = false;
+                                break;
                             }
                         } else if (entriesRead < 0) {
                             macroReply.setText(rb.getString("error"));
