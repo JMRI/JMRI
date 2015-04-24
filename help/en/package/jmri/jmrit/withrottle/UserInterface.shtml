@@ -25,18 +25,8 @@
 JMRI: WiFi Throttle
 </h1>
 
-<a href="EngineDriverAndroidThrottle.shtml">
-  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right" 
-      style="margin:20px;" alt="EngineDriver for Android devices" title="EngineDriver for Android devices">
-</a>
-<a href="http://withrottle.com">
-  <img src="images/WiT150x250.png" height="250" width="150" align="right"
-   alt="WiThrottle for Apple devices" title="WiThrottle for Apple devices">
-</a>
-
 This window controls the connection between WiFi throttles, 
 e.g. an iPhone, iPod Touch, or Android Phone, and JMRI.  
-
 
 <p>
 It can be set to start automatically with the 
@@ -62,8 +52,22 @@ When using a WiFi throttle, if the computer enters sleep mode,
 control will be lost. System preferences may need to be adjusted
 to prevent the computer from putting itself to sleep when it is inactive.
 
+<a href="http://enginedriver.rrclubs.org">
+  <img src="images/EngineDriverScreen.png" height="200" width="120" align="right" 
+      style="margin:20px;" alt="EngineDriver for Android devices" title="EngineDriver for Android devices">
+</a>
+<a href="http://withrottle.com">
+  <img src="images/WiT150x250.png" height="250" width="150" align="right"
+   alt="WiThrottle for Apple devices" title="WiThrottle for Apple devices">
+</a>
+<a href="https://play.google.com/store/apps/details?id=hu.digitools.digitrains">
+  <img src="images/DigiTrainsScreen.png" height="120" width="200" align="right" style="margin:20px;" 
+   alt="DigiTrains for Android devices" title="DigiTrains for Android devices">
+</a>
+
+
 <P>
-To use your iPhone or iPod Touch with JMRI as a throttle, you
+To use your iPhone, iPad or iPod Touch with JMRI as a throttle, you
 run the 
 <a href="http://withrottle.com">WiThrottle</a>
 app on the iPhone or iPod Touch. The basic application is
@@ -73,7 +77,8 @@ available for free download from the iTunes store.
 To use your Android device with JMRI as a throttle, you
 run the 
 <a href="http://enginedriver.rrclubs.org">Engine Driver</a>
-program on the Android device.  This free app is available from the 
+program or <a href="https://play.google.com/store/apps/details?id=hu.digitools.digitrains">Digitrains</a> 
+on the Android device.  These free apps are available from the 
 <a href="https://play.google.com/store/apps/details?id=jmri.enginedriver">
 Google&nbsp;Play&nbsp;Store</a> or the 
 <a href="http://enginedriver.rrclubs.org">EngineDriver&nbsp;site</a>
