@@ -146,7 +146,7 @@ public class DecoderIndexFile extends XmlFile {
                 return false;
             }
         }
-        if (decoderProductID != null && !decoderProductID.equals(r.getProductID())) {
+        if (decoderProductID != null && !("," + r.getProductID()+ ",").contains("," + decoderProductID+ ",")) {
             return false;
         }
         return true;

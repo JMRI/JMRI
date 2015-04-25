@@ -310,12 +310,22 @@ public class DecoderFile extends XmlFile {
     }
 
     /**
-     * @param checkFor     see if this value is present within
-     * @param okProductIDs this comma-separated list of id numbers
+     * @param checkFor     see if this value is present within (this value could also be a comma-separated list)
+     * @param okList       this comma-separated list of items (familyID/modelID/productID)
      */
-    private static boolean isInList(String checkFor, String okProductIDs) {
-        String test = "," + okProductIDs + ",";
-        return test.contains("," + checkFor + ",");
+    private static boolean isInList(String checkFor, String okList) {
+        String test = "," + okList + ",";
+        if ( test.contains("," + checkFor + ",") ) {
+            return true;
+        } else if ( checkFor != null ) {
+            String testList[] = checkFor.split(",");
+            if ( testList.length > 1 ) {
+                for (String item : testList) {
+                if ( test.contains("," + item + ",") ) return true;
+                }
+            }
+        }
+        return false;
     }
 
     // use the decoder Element from the file to load a VariableTableModel for programming.
