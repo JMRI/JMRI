@@ -109,16 +109,23 @@ public abstract class AbstractMonPane extends JmriPanel {
      * By default, creates just one place (one data pane) to put trace data
      */
     protected void createDataPanes() {
-        monTextPane.setVisible(true);
-        monTextPane.setToolTipText(Bundle.getMessage("TooltipMonTextPane")); // NOI18N
-        monTextPane.setEditable(false);
+        configureDataPane(monTextPane);
+    }
+    
+    /**
+     * Do default configuration of a data pane
+     */
+    protected void configureDataPane(JTextArea textPane) {
+        textPane.setVisible(true);
+        textPane.setToolTipText(Bundle.getMessage("TooltipMonTextPane")); // NOI18N
+        textPane.setEditable(false);
 
         // Add document listener to scroll to end when modified if required
-        monTextPane.getDocument().addDocumentListener(new DocumentListener() {
+        textPane.getDocument().addDocumentListener(new DocumentListener() {
 
             // References to the JTextArea and JCheckBox
             // of this instantiation
-            JTextArea ta = monTextPane;
+            JTextArea ta = textPane;
             JCheckBox chk = autoScrollCheckBox;
 
             @Override
@@ -149,12 +156,11 @@ public abstract class AbstractMonPane extends JmriPanel {
      */
     protected int getInitialPreferredLineCount() { return 10; }
     
-    /**
-     * Do configuration of data pane(s)
-     */
-    protected void layoutDataPanes() {
     
-        // put in a correctly sized scroll area
+    /**
+     * Put data pane(s) in the GUI
+     */
+    protected void addDataPanes() {
 
         // fix a width for current character set
         JTextField t = new JTextField(getInitialPreferredLineLength());
@@ -165,13 +171,11 @@ public abstract class AbstractMonPane extends JmriPanel {
         jScrollPane1.setPreferredSize(new Dimension(x, y));
         jScrollPane1.setVisible(true);
 
-    }
-    
-    /**
-     * Put data pane(s) in the GUI
-     */
-    protected void addDataPanes() {
-        add(jScrollPane1);
+        // add in a JPanel that stays sized as the window changes size
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+        p.add(jScrollPane1);
+        add(p);
     }
     
     @Override
@@ -222,9 +226,6 @@ public abstract class AbstractMonPane extends JmriPanel {
                 }
             }
         });
-
-
-        layoutDataPanes();
 
         startLogButton.setText(Bundle.getMessage("ButtonStartLogging")); // NOI18N
         startLogButton.setVisible(true);
