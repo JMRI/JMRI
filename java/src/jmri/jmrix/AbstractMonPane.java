@@ -105,22 +105,10 @@ public abstract class AbstractMonPane extends JmriPanel {
         self = this;
     }
 
-    @Override
-    public void initComponents() throws Exception {
-        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-        // the following code sets the frame's initial state
-        clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
-        clearButton.setVisible(true);
-        clearButton.setToolTipText(Bundle.getMessage("TooltipClearMonHistory")); // NOI18N
-
-        freezeButton.setText(Bundle.getMessage("ButtonFreezeScreen")); // NOI18N
-        freezeButton.setVisible(true);
-        freezeButton.setToolTipText(Bundle.getMessage("TooltipStopScroll")); // NOI18N
-
-        enterButton.setText(Bundle.getMessage("ButtonAddMessage")); // NOI18N
-        enterButton.setVisible(true);
-        enterButton.setToolTipText(Bundle.getMessage("TooltipAddMessage")); // NOI18N
-
+    /**
+     * By default, creates just one place (one data pane) to put trace data
+     */
+    protected void createDataPanes() {
         monTextPane.setVisible(true);
         monTextPane.setToolTipText(Bundle.getMessage("TooltipMonTextPane")); // NOI18N
         monTextPane.setEditable(false);
@@ -148,6 +136,61 @@ public abstract class AbstractMonPane extends JmriPanel {
                 doAutoScroll(ta, chk.isSelected());
             }
         });
+    }
+    
+    /**
+     * Provide initial preferred line length.
+     * Used to size the initial GUI
+     */
+    protected int getInitialPreferredLineLength() { return 80; }
+    /**
+     * Provide initial number of lines to display
+     * Used to size the initial GUI
+     */
+    protected int getInitialPreferredLineCount() { return 10; }
+    
+    /**
+     * Do configuration of data pane(s)
+     */
+    protected void layoutDataPanes() {
+    
+        // put in a correctly sized scroll area
+
+        // fix a width for current character set
+        JTextField t = new JTextField(getInitialPreferredLineLength());
+        int x = jScrollPane1.getPreferredSize().width + t.getPreferredSize().width;
+        int y = jScrollPane1.getPreferredSize().height + getInitialPreferredLineCount() * t.getPreferredSize().height;
+
+        jScrollPane1.getViewport().add(monTextPane);
+        jScrollPane1.setPreferredSize(new Dimension(x, y));
+        jScrollPane1.setVisible(true);
+
+    }
+    
+    /**
+     * Put data pane(s) in the GUI
+     */
+    protected void addDataPanes() {
+        add(jScrollPane1);
+    }
+    
+    @Override
+    public void initComponents() throws Exception {
+        p = jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
+        // the following code sets the frame's initial state
+        clearButton.setText(Bundle.getMessage("ButtonClearScreen")); // NOI18N
+        clearButton.setVisible(true);
+        clearButton.setToolTipText(Bundle.getMessage("TooltipClearMonHistory")); // NOI18N
+
+        freezeButton.setText(Bundle.getMessage("ButtonFreezeScreen")); // NOI18N
+        freezeButton.setVisible(true);
+        freezeButton.setToolTipText(Bundle.getMessage("TooltipStopScroll")); // NOI18N
+
+        enterButton.setText(Bundle.getMessage("ButtonAddMessage")); // NOI18N
+        enterButton.setVisible(true);
+        enterButton.setToolTipText(Bundle.getMessage("TooltipAddMessage")); // NOI18N
+
+        createDataPanes();
 
         entryField.setToolTipText(Bundle.getMessage("TooltipEntryPane")); // NOI18N
         // cap vertical size to avoid over-growth
@@ -180,14 +223,8 @@ public abstract class AbstractMonPane extends JmriPanel {
             }
         });
 
-        // fix a width for current character set
-        JTextField t = new JTextField(80);
-        int x = jScrollPane1.getPreferredSize().width + t.getPreferredSize().width;
-        int y = jScrollPane1.getPreferredSize().height + 10 * t.getPreferredSize().height;
 
-        jScrollPane1.getViewport().add(monTextPane);
-        jScrollPane1.setPreferredSize(new Dimension(x, y));
-        jScrollPane1.setVisible(true);
+        layoutDataPanes();
 
         startLogButton.setText(Bundle.getMessage("ButtonStartLogging")); // NOI18N
         startLogButton.setVisible(true);
@@ -227,7 +264,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // add items to GUI
-        add(jScrollPane1);
+        addDataPanes();
 
         JPanel paneA = new JPanel();
         paneA.setLayout(new BoxLayout(paneA, BoxLayout.Y_AXIS));
