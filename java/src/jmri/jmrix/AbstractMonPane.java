@@ -200,17 +200,17 @@ public abstract class AbstractMonPane extends JmriPanel {
         rawCheckBox.setText(Bundle.getMessage("ButtonShowRaw")); // NOI18N
         rawCheckBox.setVisible(true);
         rawCheckBox.setToolTipText(Bundle.getMessage("TooltipShowRaw")); // NOI18N
-        rawCheckBox.setSelected(p.getSimplePreferenceState(rawDataCheck));
+        if (p!=null) rawCheckBox.setSelected(p.getSimplePreferenceState(rawDataCheck));
 
         timeCheckBox.setText(Bundle.getMessage("ButtonShowTimestamps")); // NOI18N
         timeCheckBox.setVisible(true);
         timeCheckBox.setToolTipText(Bundle.getMessage("TooltipShowTimestamps")); // NOI18N
-        timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
+        if (p!=null) timeCheckBox.setSelected(p.getSimplePreferenceState(timeStampCheck));
 
         alwaysOnTopCheckBox.setText(Bundle.getMessage("ButtonWindowOnTop")); // NOI18N
         alwaysOnTopCheckBox.setVisible(true);
         alwaysOnTopCheckBox.setToolTipText(Bundle.getMessage("TooltipWindowOnTop")); // NOI18N
-        alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
+        if (p!=null) alwaysOnTopCheckBox.setSelected(p.getSimplePreferenceState(alwaysOnTopCheck));
         if (getTopLevelAncestor() != null) {
             ((jmri.util.JmriJFrame) getTopLevelAncestor()).setAlwaysOnTop(alwaysOnTopCheckBox.isSelected());
         }
@@ -218,7 +218,7 @@ public abstract class AbstractMonPane extends JmriPanel {
         autoScrollCheckBox.setText(Bundle.getMessage("ButtonAutoScroll")); // NOI18N
         autoScrollCheckBox.setVisible(true);
         autoScrollCheckBox.setToolTipText(Bundle.getMessage("TooltipAutoScroll")); // NOI18N
-        autoScrollCheckBox.setSelected(!p.getSimplePreferenceState(autoScrollCheck));
+        if (p!=null) autoScrollCheckBox.setSelected(!p.getSimplePreferenceState(autoScrollCheck));
 
         openFileChooserButton.setText(Bundle.getMessage("ButtonChooseLogFile")); // NOI18N
         openFileChooserButton.setVisible(true);
@@ -339,11 +339,15 @@ public abstract class AbstractMonPane extends JmriPanel {
         nextLineWithTime(new Date(), line, raw);
     }
 
+    /**
+     * Handle display of traffic.
+     *
+     * @param timestamp
+     * @param line The traffic in normal parsed form, ending with \n
+     * @param raw The traffic in raw form, ending with \n
+     */
     public void nextLineWithTime(Date timestamp, String line, String raw) {
 
-        // handle display of traffic
-        // line is the traffic in 'normal form', raw is the "raw form"
-        // Both should be one or more well-formed lines, e.g. end with \n
         StringBuffer sb = new StringBuffer(120);
 
         // display the timestamp if requested
@@ -356,7 +360,7 @@ public abstract class AbstractMonPane extends JmriPanel {
             sb.append('[').append(raw).append("]  "); // NOI18N
         }
 
-        // display decoded data
+        // display parsed data
         sb.append(line);
         synchronized (self) {
             linesBuffer.append(sb.toString());
@@ -479,7 +483,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     }
 
     public synchronized String getFrameText() {
-        return linesBuffer.toString();
+        return monTextPane.getText();
     }
 
     /**
