@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.jmrix.PackageTest");
 
         suite.addTest(jmri.jmrix.ActiveSystemFlagTest.suite());
+        suite.addTest(jmri.jmrix.AbstractMonPaneTest.suite());
         suite.addTest(jmri.jmrix.AbstractProgrammerTest.suite());
         suite.addTest(jmri.jmrix.AbstractPortControllerTest.suite());
         suite.addTest(jmri.jmrix.AbstractMRReplyTest.suite());
