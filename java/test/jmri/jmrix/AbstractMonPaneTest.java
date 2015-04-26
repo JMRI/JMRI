@@ -78,12 +78,12 @@ public class AbstractMonPaneTest extends TestCase {
         a.initComponents();
         
         Assert.assertFalse(a.freezeButton.isSelected());
-        jmri.util.JUnitUtil.releaseThread(this, 20);
 
         a.entryField.setText("foo");
         a.enterButtonActionPerformed(null);
         
         a.freezeButton.setSelected(true);
+        jmri.util.JUnitUtil.releaseThread(this, 20);
         
         a.entryField.setText("bar");
         a.enterButtonActionPerformed(null);
