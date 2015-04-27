@@ -25,14 +25,15 @@
   <version author="Steve Todd" version="4" lastUpdated="20120522"/>
   <!-- fixed CV21, added function label defaults -->
   <version author="Alain Le Marchand" version="5" lastUpdated="20150427"/>
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!--  version 3 Replacement models - renamed decoder and family                    -->
+  <!--   version 5  New family for all MRC N scale: "Sound Decoders - N Scale"          -->
+  <!--              File MRC_soundbrilliance1944.xml renamed MRC_sound1944-1945.xml     -->
+  <!--              Merged 1944 and 1945 in a single file (very few differences)        -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="44">
-      <model show="no" model="Synch Diesel Sound 1644" replacementModel="1644 - N Scale - Kato SD70MAC/AC4400" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="44"  comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1644 - N Scale - Kato SD70MAC/AC4400" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1644" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaced by 0001960">
+        <size length="77" width="9.7" height="3.5" units="mm"/>
+      </model>
+      <model model="1645 - N Scale - Kato P42/E8/E9" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1645" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
         <size length="90" width="14" height="4.2" units="mm"/>
       </model>
       <functionlabels>
@@ -76,7 +77,7 @@
         <label xml:lang="it">Volt Partenza</label>
     <label xml:lang="fr">V démarr.</label>
     <label xml:lang="de">Anfahrspannung</label>
-        <comment>Range 0-32</comment>
+        <tooltip>Range 0-32</tooltip>
       </variable>
       <variable CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay), range 0(default)-32" comment="Range 0-32">
         <decVal max="32"/>
@@ -84,7 +85,7 @@
         <label xml:lang="it">Accellerazione (0-32)</label>
         <label xml:lang="fr">Accelération (0-32)</label>
         <label xml:lang="de">Anfahrverzögerung (0-32)</label>
-        <comment>Range 0-32</comment>
+        <tooltip>Range 0-32</tooltip>
       </variable>
       <variable CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay), range 0(default)-32" comment="Range 0-32">
         <decVal max="32"/>
@@ -92,14 +93,14 @@
         <label xml:lang="it">Decellerazione (1-32)</label>
         <label xml:lang="fr">Décélération (1-32)</label>
         <label xml:lang="de">Bremszeit (1-32)</label>
-        <comment>Range 0-32</comment>
+        <tooltip>Range 0-32</tooltip>
       </variable>
       <variable CV="5" item="Vhigh" default="32" tooltip="sets the motor voltage at top Speed Step, range 0-32(default)" comment="Range 0-32">
         <decVal max="32"/>
         <label>Top voltage</label>
         <label xml:lang="it">Volt Massimi (0-32):</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
-        <comment>Range 0-32</comment>
+        <tooltip>Range 0-32</tooltip>
       </variable>
       <variable CV="6" item="Vmid" default="0" tooltip="sets the motor voltage increase with Speed Steps, range 0(default)-2">
         <enumVal>
@@ -140,89 +141,89 @@
       <variable CV="50" item="Sound Option 2" default="4" tooltip="range 0-16" comment="Range 0-16">
         <decVal max="16"/>
         <label>Horn type</label>
-        <comment>Range 0-16</comment>
+        <tooltip>Range 0-16</tooltip>
       </variable>
       <variable CV="51" item="Sound Setting 1" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Horn volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="52" item="Sound Option 3" default="3" tooltip="range 0-6" comment="Range 0-6">
         <decVal max="6"/>
         <label>Bell type</label>
-        <comment>Range 0-6</comment>
+        <tooltip>Range 0-6</tooltip>
       </variable>
       <variable CV="53" item="Sound Setting 2" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Bell volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="54" item="Sound Setting 3" default="3" tooltip="range 0-50" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell ring rate</label>
-        <comment>Range 0-50</comment>
+        <tooltip>Range 0-50</tooltip>
       </variable>
       <variable CV="55" item="Sound Setting 4" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Diesel Rumble volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="56" item="Sound Setting 5" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake Squeal volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable item="Sound Setting 6" CV="57" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Dynamic Brake volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable item="Sound Setting 7" CV="58" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air Release volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="59" item="Sound Setting 8" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Air Pump volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="60" item="Sound Setting 9" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Safety Pop Valve volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="61" item="Sound Setting 10" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Engine Cooling Fan volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="62" item="Sound Setting 11" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="63" item="Sound Setting 12" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Random Noise volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="64" item="Sound Setting 13" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Rail Wheel Clack volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <!-- CV 105-106 -->
 <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="113" item="Sound Setting 16" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling Fire volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable CV="114" item="Sound Setting 17" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Brake Release volume</label>
-        <comment>Range 0-3</comment>
+        <tooltip>Range 0-3</tooltip>
       </variable>
       <variable item="Sound Option 5" CV="115" default="1" tooltip="Off(0) or On(1)(default)">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -259,15 +260,16 @@
         </enumVal>
         <label>Diesel Notch mode</label>
       </variable>
-      <variable item="Sound Option 8" CV="123" default="0" tooltip="SD45-2(0)(default) or MP-15(1)">
+      <variable item="Sound Option 8" CV="123" default="0" tooltip="[Range 0-1]">
         <enumVal>
-          <enumChoice choice="SD45-2" value="0">
-            <choice>SD45-2</choice>
+          <enumChoice choice="Large Diesel" value="0">
+            <choice>Large Diesel</choice>
           </enumChoice>
-          <enumChoice choice="MP-15" value="1">
-            <choice>MP-15</choice>
+          <enumChoice choice="Switcher" value="1">
+            <choice>Switcher</choice>
           </enumChoice>
-          <!-- Note per Mfg. recorded sounds ARE NOT for SD70MAC or AC4400! -->
+          <!-- Note per Mfg. 1644 recorded sounds ARE NOT for SD70MAC or AC4400! -->
+          <!-- Note per Mfg. 1645 recorded sounds ARE NOT for GE P42 or EMD E8/E9! -->
           <!-- these sounds are named as EMD large diesel, EMD switcher -->
         </enumVal>
         <label>Prime Mover sound</label>

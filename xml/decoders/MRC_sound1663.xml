@@ -11,14 +11,11 @@
   <!-- made from the MRC_1630 file by Pete Cesaro -->
   <!-- Version 2 - added many tooltips -->
   <!-- Version 3 - Corrected consist tab and some default values, modified how CV6 shows -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!--  version 4 Replacement models - renamed decoder and family                    -->
+  <!-- version 4  New family for all MRC HO scale: "Sound Decoders"          -->
+  <!--            File MRC_soundbrilliance1663.xml renamed MRC_sound1663.xml -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model show="no" model="Synch Diesel Sound 1663 - Atlas S2/S4" replacementModel="1663 - HO Scale - Atlas S2/S4" replacementFamily="Sound Decoders" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1663 - HO Scale - Atlas S2/S4" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <!-- Functions F0 to F28 are NMRA compatible -->
         <size length="95" width="14" height="9" units="mm"/>
       </model>

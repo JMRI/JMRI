@@ -15,12 +15,17 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20110128"/>
   <version author="John Crellin" version="2" lastUpdated="20120806"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
   <!-- Version 1 - made from the MRC_1906 file by Howard Garner -->
   <!-- Version 2 - updated to add BEMF programming in its own pane -->
+ <!--  Version 3 Renaming decoder models -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
-      <model model="HO Gauge Diesel - 16 Bit 1910" numOuts="7" numFns="30" maxTotalCurrent="1.0A">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="HO Gauge Diesel - 16 Bit 1910" replacementModel="1910 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.0A">
         <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="1910 - HO Scale - Diesel" numOuts="7" numFns="30" maxTotalCurrent="1.0A" connector="NMRAmedium" comment="16 bit, universal, with NMRA 8 pin">
+        <size length="25.2" width="17.2" height="4.4" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>

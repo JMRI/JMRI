@@ -13,11 +13,16 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
   <version author="Bill Chown" version="1" lastUpdated="20080503"/>
   <!-- made from the MRC_1636 file by Rick Beaber -->
+  <!-- version 2.0: Renaming decoder models       -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Synch Diesel Sound 1634" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="Synch Diesel Sound 1634" replacementModel="1634 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
+        <size length="70" width="9.2" height="5.8" units="mm"/>
+      </model>
+      <model model="1634 - HO Scale - Diesel" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="70" width="9.2" height="5.8" units="mm"/>
       </model>
     </family>

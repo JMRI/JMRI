@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
+<!-- $Id$ -->
+<!--                                                -->
+<!-- Created from MRC_soundbrilliance1957.xml       -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <enumChoice choice="EMD 645E" value="0">
+      <choice>EMD 645E</choice>
+    </enumChoice>
+    <enumChoice choice="EMD 645" value="1">
+      <choice>EMD 645</choice>
+    </enumChoice>
+    <enumChoice choice="EMD 710" value="2">
+      <choice>EMD 710</choice>
+    </enumChoice>
+    <enumChoice choice="ALCO 244" value="3">
+      <choice>ALCO 244</choice>
+    </enumChoice>
+    <enumChoice choice="ALCO 539T" value="4">
+      <choice>ALCO 539T</choice>
+    </enumChoice>
+    <enumChoice choice="EMD 567" value="5">
+      <choice>EMD 567</choice>
+    </enumChoice>
+</enumVal>

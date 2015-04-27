@@ -15,20 +15,26 @@
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Alain Le Marchand" version="4" lastUpdated="20150427"/>
-  <version author="Peter Ulvestad" version="3" lastUpdated="20131102"/>
+  <version author="Peter Ulvestad" version="2" lastUpdated="20131102"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
   <version author="John Sebastian, JohnSeb@pacbell.net" version="1" lastUpdated="20120217"/>
   <!--   version 1  Created from MRC 1810 ver. 1.6 by Peter Ulvestad-->
   <!--   version 2  Corrected Long address not showing and Switch to includes for common vars-->
   <!--   version 3  Corrected BEMF not showing and light pane-->
-  <!--   version 4  Replacement models - renamed decoder and family                  -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
+  <!--   version 4  New family for all MRC N scale: "Sound Decoders - N scale"     -->
+  <!--              File MRC_soundbrilliance1957.xml renamed MRC_sound1957.xml     -->
+  <!--              BEMF displayed on std. motor pane - specific MRC pane removed  -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model show="no" model="Synch Diesel Sound (16-bit) 1957 - N Scale KATO F Series" replacementModel="1957 - N Scale - Kato EMD F Series" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="28" maxTotalCurrent="1.00A" extFnsMRC="yes"/>
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1957 - N Scale - Kato EMD F Series" numOuts="2" numFns="28" maxTotalCurrent="1.00A" productID="1957" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In, 16-bit">
+        <size length="75.5" width="14.2" height="6.1" units="mm"/>
+      </model>
+      <model model="1958 - N Scale - Kato ALCO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.00A" productID="1958" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In, 16-bit">
+        <size length="" width="" height="" units="mm"/>
+      </model>
+      <model model="1959 - N Scale - Diesel Universal" numOuts="2" numFns="28" maxTotalCurrent="1.00A" productID="1959" extFnsMRC="yes" formFactor="N" connector="NMRAmedium" comment="N-Scale, small HO, with 8 pin NMRA plug, 16-bit">
+        <size length="27" width="9" height="3" units="mm"/>
+      </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -36,20 +42,20 @@
         <functionlabel num="3" lockable="true">Air Release</functionlabel>
         <functionlabel num="4" lockable="true">Coupling 1</functionlabel>
         <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
-        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake/Squeal</functionlabel>
         <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
         <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
         <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
         <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
         <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
-        <functionlabel num="12" lockable="true">Prime Mover Type (6 Types)</functionlabel>
+        <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
         <functionlabel num="13" lockable="true">Master Volume Decrease</functionlabel>
         <functionlabel num="14" lockable="true">Master Volume Increase</functionlabel>
         <functionlabel num="15" lockable="true">Air Compressor</functionlabel>
         <functionlabel num="16" lockable="true">Flange Squeal</functionlabel>
         <functionlabel num="17" lockable="true">Air Release</functionlabel>
-        <functionlabel num="18" lockable="true">Bell Type (8 types plus off)</functionlabel>
-        <functionlabel num="19" lockable="true">Horn Type (22 types plus off)</functionlabel>
+        <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="true">Horn Type</functionlabel>
         <functionlabel num="20" lockable="true">Associated Loco Sound</functionlabel>
         <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
         <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
@@ -100,17 +106,9 @@
         <decVal max="127"/>
         <label>Advanced Consist address</label>
       </variable>
-      <variable CV="21" item="Functions Respond To" mask="XXXXXXXV" tooltip="selects the address that functions will respond to, 0=own address, 1=consist address" default="0">
-        <enumVal>
-          <enumChoice choice="Functions respond to Locomotive Address Only">
-            <choice>Functions respond to Locomotive Address Only</choice>
-          </enumChoice>
-          <enumChoice choice="Functions respond to Consist Address Only">
-            <choice>Functions respond to Consist Address Only</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Consist Function</label>
-      </variable>
+      <!-- CV=21 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
+      <!-- MRC CVs -->
       <variable CV="49" item="Sound Setting 1" tooltip="sets sound volume [range 1-16]" default="16">
         <decVal max="16"/>
         <label>Master Volume Control</label>
@@ -282,14 +280,9 @@
         <decVal max="15"/>
         <label>Sand dropping volume</label>
       </variable>
-      <variable CV="113" item="Back EMF Load control, Kp" tooltip="sets the Back EMF Load control gain, Kp [range 0-31]" default="20">
-        <decVal max="31"/>
-        <label>Back EMF Load control proportional gain, Kp</label>
-      </variable>
-      <variable CV="114" item="Back EMF Load control, Ki" tooltip="sets the Back EMF Load control gain, Ki [range 0-31]" default="10">
-        <decVal max="31"/>
-        <label>Back EMF Load control integral gain, Ki</label>
-      </variable>
+      <!-- Motor Control Back EMF -->
+      <xi:include href="http://jmri.org/xml/decoders/mrc/motorBEMF_cv113_114_124.xml"/>
+      <!-- MRC CVs continue -->
       <variable CV="115" item="Sound Option 4" tooltip="sets the Auto Brake Squeal [1=Enable/0=Disable]" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
@@ -313,32 +306,17 @@
         </enumVal>
         <label>Diesel notch mode</label>
       </variable>
-      <variable CV="123" item="Sound Option 6" tooltip="selects the Prime Mover Type [Range 0-5]" default="5">
-        <enumVal>
-          <enumChoice choice="EMD645E" value="0">
-            <choice>Emd645E</choice>
-          </enumChoice>
-          <enumChoice choice="EMD645" value="1">
-            <choice>EMD645</choice>
-          </enumChoice>
-          <enumChoice choice="EMD710" value="2">
-            <choice>EMD710</choice>
-          </enumChoice>
-          <enumChoice choice="ALCO244" value="3">
-            <choice>ALCO244</choice>
-          </enumChoice>
-          <enumChoice choice="ALCO539T" value="4">
-            <choice>ALCO539T</choice>
-          </enumChoice>
-          <enumChoice choice="EMD567" value="5">
-            <choice>EMD567</choice>
-          </enumChoice>
-        </enumVal>
+      <variable CV="123" item="Sound Option 6" tooltip="selects the Prime Mover Type [Range 0-5]" default="5" include="1957">
+        <xi:include href="http://jmri.org/xml/decoders/mrc/enum-PrimeMover6.xml"/>
         <label>Prime Mover type</label>
       </variable>
-      <variable CV="124" item="Back EMF Load control intensity (0=off)" tooltip="sets the Back EMF Load control intensity [range 0-255]" default="160">
-        <decVal max="255"/>
-        <label>Back EMF Load control intensity (0=off)</label>
+      <variable CV="123" item="Sound Option 6" tooltip="selects the Prime Mover Type [Range 0-5]" default="3" include="1958">
+        <xi:include href="http://jmri.org/xml/decoders/mrc/enum-PrimeMover6.xml"/>
+        <label>Prime Mover type</label>
+      </variable>
+      <variable CV="123" item="Sound Option 6" tooltip="selects the Prime Mover Type [Range 0-5]" default="0" include="1959">
+        <xi:include href="http://jmri.org/xml/decoders/mrc/enum-PrimeMover6.xml"/>
+        <label>Prime Mover type</label>
       </variable>
     </variables>
     <resets>
@@ -347,12 +325,4 @@
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <column>
-      <display item="Back EMF Load control proportional gain, Kp"/>
-      <display item="Back EMF Load control integral gain, Ki"/>
-      <display item="Back EMF Load control intensity (0=off)"/>
-    </column>
-    <name>MRC</name>
-  </pane>
 </decoder-config>

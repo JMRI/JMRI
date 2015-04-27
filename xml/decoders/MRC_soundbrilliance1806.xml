@@ -18,6 +18,7 @@
 <!--                     LDEHAYES@COMCAST.NET                                -->
 <!--                                                                                                                                           -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.0" lastUpdated="20150426"/>
   <version author="John Crellin" version="1.9" lastUpdated="20140429"/>
   <version author="John Crellin" version="1.8" lastUpdated="20110512"/>
   <version author="Peter Ulvestad" version="1.7" lastUpdated="20091228"/>
@@ -25,20 +26,28 @@
   <version author="Peter Ulvestad" version="1.5" lastUpdated="20090826"/>
   <version author="Peter Ulvestad" version="1.4" lastUpdated="20090624"/>
   <version author="Lou DeHayes" version="1.3" lastUpdated="20090308"/>
-  <!--   version 1.9 Includes MRC 1955 in definition-->
-  <!--   version 1.8 Included MRC 1805 in definition 1811 is no longer sold by MRC-->
-  <!--   version 1.7 Included MRC 1802 and 1811 in difinition-->
-  <!--   version 1.6 Corrected Reset, modified CV 6 and MRC pane-->
-  <!--   version 1.5 Corrected CV 67-94 (Speed Table)  -->
-  <!--   version 1.4 Modified model name to match others in series and make easier to locate  -->
-  <!--   version 1.3 moved Consisting Configuration CV19 and CV21 to MRC Pane  -->
-  <!--   version 1.2 clarified CV122 with MRC and added all the tooltips -->
-  <!--   version 1.1 changed CV7 to "45" - MRC datasheet says "32"  but decoders say "45" -->
+  <!--  ...........................................................................  -->
+  <!--                                                                               -->
+  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility for 1955  -->
+  <!--  ...........................................................................  -->
+  <!--  version 2.0 Replacement model for 1955: "1955 - N Scale - Atlas GP7, GP9, GP30 and GP35"            -->
+  <!--              Redundant with MRC_soundbrilliance1804.xml, creating duplicates                         -->
+  <!--              Removed definitions for 1802, 1805, 1806 and 1811 that are already in MRC_sound1804.xml -->
+  <!--  version 1.9 Includes MRC 1955 in definition-->
+  <!--  version 1.8 Included MRC 1805 in definition 1811 is no longer sold by MRC-->
+  <!--  version 1.7 Included MRC 1802 and 1811 in difinition-->
+  <!--  version 1.6 Corrected Reset, modified CV 6 and MRC pane-->
+  <!--  version 1.5 Corrected CV 67-94 (Speed Table)  -->
+  <!--  version 1.4 Modified model name to match others in series and make easier to locate  -->
+  <!--  version 1.3 moved Consisting Configuration CV19 and CV21 to MRC Pane  -->
+  <!--  version 1.2 clarified CV122 with MRC and added all the tooltips -->
+  <!--  version 1.1 changed CV7 to "45" - MRC datasheet says "32"  but decoders say "45" -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45">
-      <model model="Synch Diesel Sound 1955 - N Gauge GP7, GP9, GP30 and GP35" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+      <model show="no" model="Synch Diesel Sound 1955 - N Gauge GP7, GP9, GP30 and GP35" replacementModel="1955 - N Scale - Atlas GP7, GP9, GP30 and GP35" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="83" width="16" height="7.5" units="mm"/>
       </model>
+<!--
       <model model="Synch Diesel Sound 1802 - HO Scale KATO SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="83" width="16" height="7.5" units="mm"/>
       </model>
@@ -51,6 +60,7 @@
       <model model="Synch Diesel Sound 1811 - G.E. U23B Prime Mover" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="" width="" height="" units="mm"/>
       </model>
+-->
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
         <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -266,13 +276,13 @@
       <variable CV="123" item="Sound Option 8" tooltip="CV123 selects the Prime Mover Type" default="1">
         <enumVal>
           <enumChoice choice="0" value="0">
-           
+            <choice>Type 1</choice>
           </enumChoice>
           <enumChoice choice="1" value="1">
-           
+            <choice>Type 2</choice>
           </enumChoice>
           <enumChoice choice="2" value="2">
-          
+            <choice>Off</choice>
           </enumChoice>
         </enumVal>
         <label>Prime Mover</label>

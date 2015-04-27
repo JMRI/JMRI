@@ -15,11 +15,16 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20110128"/>
   <version author="John Crellin  " version="2" lastUpdated="20120801"/>
+  <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
   <!-- version 1 made from the MRC_1634 file by Bill Chown -->
   <!-- version 2 Modified to add BEMF and fix 2 sound variables -->
+ <!--  Version 3 Renaming decoder models -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
-      <model model="Genset Diesel Sound 1906" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="Genset Diesel Sound 1906" replacementModel="1906 - HO Scale - Atlas Genset" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
+        <size length="73" width="17.6" height="8.4" units="mm"/>
+      </model>
+      <model model="1906 - HO Scale - Atlas Genset" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
         <size length="73" width="17.6" height="8.4" units="mm"/>
       </model>
       <functionlabels>

@@ -22,17 +22,37 @@
   <!-- version 2 fixed a problem in CV 115/116 -->
   <!-- version 3 added many tooltips -->
   <!-- restore function variables which were accidentaly removed -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!--  version 5 Replacement models - renamed decoder and family                    -->
+  <!-- version 5  New family for all MRC N scale: "Sound Decoders - N Scale" -->
+  <!--            File MRC_soundbrilliance1827.xml renamed MRC_sound1827.xml -->
+  <!--            Added function labels.                                     -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model show="no" model="Synch Diesel Sound 1636" replacementModel="1636 - N Scale - Atlas Diesels" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1636 - N Scale - Atlas Diesels" numOuts="2" numFns="19" maxTotalCurrent="0.75A" productID="1636" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaces most Atlas N scale loco’s PC boards">
         <!-- note only F0 to F12 are NMRA compatible -->
         <size length="70" width="9.2" height="5.8" units="mm"/>
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Air Release</functionlabel>
+        <functionlabel num="4" lockable="true">Coupling</functionlabel>
+        <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+        <functionlabel num="8" lockable="true">Notch Down/Loco Sound</functionlabel>
+        <functionlabel num="9" lockable="true">Notch Up/Loco Sound</functionlabel>
+        <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+        <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+        <functionlabel num="12" lockable="true">Engine cooling fan</functionlabel>
+        <functionlabel num="13" lockable="true">Short Air Release</functionlabel>
+        <functionlabel num="14" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+        <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="17" lockable="true">Flange Noise</functionlabel>
+        <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

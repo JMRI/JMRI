@@ -13,18 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Fred Dalzell" version="1" lastUpdated="20121231"/>
   <!-- made from the MRC_soundbrilliance1656 file by Pete Cesaro pdsteam@aol.com -->
   <!-- Corrected error in default of CV52 versus MTC chart to reflect decoder capabilities -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!--  version 2 Replacement models - renamed decoder and family                    -->
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
+  <!-- version 2  New family for all MRC HO scale: "Sound Decoders"          -->
+  <!--            File MRC_soundbrilliance1869.xml renamed MRC_sound1869.xml -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="19">
-      <model show="no" model="Synch Steam Sound 1869" replacementModel="1869 - HO Scale - Steam mini" replacementFamily="Sound Decoders" maxTotalCurrent="1.5A" extFnsMRC="yes">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="19" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1869 - HO Scale - Steam mini" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="with 12 different chuff sounds">
         <!-- note All functions are NMRA compatible -->
         <size length="28" width="17" height="6.5" units="mm"/>
       </model>

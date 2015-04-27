@@ -13,15 +13,21 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Paul Fraker" version="1.2" lastUpdated="20090921"/>
   <version author="Peter Ulvestad" version="1.1" lastUpdated="200900904"/>
   <version author="Paul Fraker" version="1.0" lastUpdated="20090731"/>
   <!-- used MRC_soundbrilliance1638 file as a starting point-->
   <!-- Version 1.1 Added speed table, corrected CV6-->
   <!-- Version 1.2 Added CV118 & CV119 parameters -->
+  <!-- version 2  File MRC_dieselsound1829.xml renamed MRC_sound1829.xml -->
+  <!--            Decoder renaming                                       -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="29" highVersionID="29">
-      <model model="Synch Diesel Sound 1829" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="29" highVersionID="29" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="Synch Diesel Sound 1829" replacementModel="1829 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+        <size length="73.0" width="17.8" height="7.7" units="mm"/>
+      </model>
+      <model model="1829 - HO Scale - Diesel" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <size length="73.0" width="17.8" height="7.7" units="mm"/>
       </model>
     </family>

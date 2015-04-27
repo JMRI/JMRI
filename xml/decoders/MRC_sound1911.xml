@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2005, 2006, 2007, 2008, 2015 All rights reserved -->
-<!-- $Id: MRC_sound1617-1618.xml 28249 2015-04-10 10:00:00Z alanus $ -->
+<!-- $Id: MRC_sound1911.xml 28249 2015-04-10 10:00:00Z alanus $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -13,41 +13,22 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="1.1" lastUpdated="20150427"/>
-  <version author="Alain Le Marchand" version="1" lastUpdated="20150410"/>
-  <!--  version 1   made from various existing MRC decoder definition files -->
-  <!--  version 1.1 used xinclude kickStart_63, motorBEMF_cv113_114_124.xml -->
-  <!--              Renaming decoder models                                 -->
+  <version author="Alain Le Marchand" version="1" lastUpdated="20150427"/>
+  <!-- Version 1 Initial release in JMRI SVN - replacement model for draft already circulated -->
+  <version author="Alain Le Marchand" version="0.1" lastUpdated="20150423"/>
+  <!-- made from MRC_sound1617-1618.xml version 1 -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="20" comment="Synchronized Sound Brilliance(TM) Decoders">
       <!-- note All 28 functions are NMRA compatible -->
-      <model show="no" model="HO Gauge Steam Universal - 16 Bit 1617 Light Steam" replacementModel="1617 - HO Scale - Light Steam - Universal" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Brown" connection="wire"/>
-	<size length="29.5" width="17.6" height="5" units="mm"/>
+      <model show="no" model="HO Gauge Steam Universal - 16 Bit 1911 with multi-chuffs, multi-whistles" replacementModel="1911 - HO Scale - Steam Universal" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
+	<size length="29.5" width="10.6" height="5" units="mm"/>
       </model>
-      <model model="1617 - HO Scale - Light Steam - Universal" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector, 16 bit">
+      <model model="1911 - HO Scale - Steam Universal" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="&lt;html&gt;HO-Scale, with NMRA 8 pin and 9 pin JST connector, &lt;br&gt;16 Bit, with multi-chuffs, multi-whistles&lt;/html&gt;">
         <output name="1" label="White" connection="plug"/>
         <output name="2" label="Yellow" connection="plug"/>
         <output name="3" label="Green" connection="wire"/>
         <output name="4" label="Brown" connection="wire"/>
-	<size length="29.5" width="17.6" height="5" units="mm"/>
-      </model>
-      <model show="no" model="HO Gauge Steam Universal - 16 Bit 1618 Heavy Steam" replacementModel="1618 - HO Scale - Heavy Steam - Universal" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Brown" connection="wire"/>
-        <size length="29.5" width="17.6" height="5" units="mm"/>
-      </model>
-      <model model="1618 - HO Scale - Heavy Steam - Universal" numOuts="4" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="HO" connector="NMRAmedium" comment="HO-Scale, with NMRA 8 pin and 9 pin JST connector, 16 bit">
-        <output name="1" label="White" connection="plug"/>
-        <output name="2" label="Yellow" connection="plug"/>
-        <output name="3" label="Green" connection="wire"/>
-        <output name="4" label="Brown" connection="wire"/>
-        <size length="29.5" width="17.6" height="5" units="mm"/>
+	<size length="29.5" width="10.6" height="5" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -143,7 +124,7 @@
         <label>Master Volume Control</label>
         <tooltip>Range 0-63</tooltip>
       </variable>
-      <variable CV="50" item="Sound Option 1" default="0">
+      <variable CV="50" item="Sound Option 1" default="4">
         <enumVal>
           <enumChoice choice="Whistle 1">
             <choice>Whistle 1</choice>
@@ -157,9 +138,51 @@
           <enumChoice choice="Whistle 4">
             <choice>Whistle 4</choice>
           </enumChoice>
+          <enumChoice choice="Whistle 5">
+            <choice>Whistle 5</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 6">
+            <choice>Whistle 6</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 7">
+            <choice>Whistle 7</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 8">
+            <choice>Whistle 8</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 9">
+            <choice>Whistle 9</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 10">
+            <choice>Whistle 10</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 11">
+            <choice>Whistle 11</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 12">
+            <choice>Whistle 12</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 13">
+            <choice>Whistle 13</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 14">
+            <choice>Whistle 14</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 15">
+            <choice>Whistle 15</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 16">
+            <choice>Whistle 16</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 17">
+            <choice>Whistle 17</choice>
+          </enumChoice>
+          <enumChoice choice="Whistle 18">
+            <choice>Whistle 18</choice>
+          </enumChoice>
         </enumVal>
         <label>Whistle type</label>
-        <tooltip>Range 0-3 (4 types)</tooltip>
+        <tooltip>Range 0-17 (18 types)</tooltip>
       </variable>
       <variable CV="51" item="Sound Setting 3" default="60">
         <decVal max="63"/>
@@ -174,9 +197,27 @@
           <enumChoice choice="Bell 2">
             <choice>Bell 2</choice>
           </enumChoice>
+          <enumChoice choice="Bell 3">
+            <choice>Bell 3</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 4">
+            <choice>Bell 4</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 5">
+            <choice>Bell 5</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 6">
+            <choice>Bell 6</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 7">
+            <choice>Bell 7</choice>
+          </enumChoice>
+          <enumChoice choice="Bell 8">
+            <choice>Bell 8</choice>
+          </enumChoice>
         </enumVal>
         <label>Bell type</label>
-        <tooltip>Range 0-1 (2 types)</tooltip>
+        <tooltip>Range 0-7 (8 types)</tooltip>
       </variable>
       <variable CV="53" item="Sound Setting 4" default="3">
         <decVal max="63"/>
@@ -196,9 +237,33 @@
           <enumChoice choice="Chuff 2">
             <choice>Chuff 2</choice>
           </enumChoice>
+          <enumChoice choice="Chuff 3">
+            <choice>Chuff 3</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 4">
+            <choice>Chuff 4</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 5">
+            <choice>Chuff 5</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 6">
+            <choice>Chuff 6</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 7">
+            <choice>Chuff 7</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 8">
+            <choice>Chuff 8</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 9">
+            <choice>Chuff 9</choice>
+          </enumChoice>
+          <enumChoice choice="Chuff 10">
+            <choice>Chuff 10</choice>
+          </enumChoice>
         </enumVal>
         <label>Chuff type</label>
-        <tooltip>Range 0-1 (2 types)</tooltip>
+        <tooltip>Range 0-9 (10 types)</tooltip>
       </variable>
       <variable CV="56" item="Sound Setting 5" default="60">
         <decVal max="63"/>

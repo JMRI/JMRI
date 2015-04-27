@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="4" lastUpdated="20150427"/>
   <version author="Bill Chown" version="3" lastUpdated="20080430"/>
   <!-- corrected more typos causing incorrect values -->
   <version author="Bill Chown" version="2" lastUpdated="20080221"/>
@@ -20,9 +21,14 @@
   <!-- made from the MRC_1636 file by Paul Bender -->
   <!-- version 2 corrected typos causing problems with some CV fields not appearing -->
   <!-- version 2 added many decoder-specific tool tips and added CV identities to all tool tips -->
+  <!--  ...........................................................................  -->
+  <!--                                                                               -->
+  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
+  <!--  ...........................................................................  -->
+  <!--  version 3 Replacement models - renamed decoder and family                    -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Synch Diesel Sound 1645" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
+      <model show="no" model="Synch Diesel Sound 1645" replacementModel="1645 - N Scale - Kato P42/E8/E9" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="90" width="14" height="4.2" units="mm"/>
       </model>
     </family>

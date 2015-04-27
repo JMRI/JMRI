@@ -13,11 +13,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Paul Fraker" version="1.1" lastUpdated="20081202"/>
   <!-- used MRC_soundbrilliance1639 file by Charles Dearden as a starting point-->
+  <!--  ...........................................................................  -->
+  <!--                                                                               -->
+  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
+  <!--  ...........................................................................  -->
+  <!--  version 2 Replacement models - renamed decoder and family                    -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Mini HO EMD Modern Large Diesel Sound 1638" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsMRC="yes">
+      <model show="no" model="Mini HO EMD Modern Large Diesel Sound 1638" replacementModel="1638 - N Scale/Mini HO - EMD Modern Large Diesel" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="19" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <size length="33.0" width="10.5" height="5.0" units="mm"/>
       </model>
     </family>

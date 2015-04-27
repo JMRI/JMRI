@@ -11,13 +11,19 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.                                       -->
 <!-- See the GNU General Public License for more details.                    -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Darryl Van Nort" version="1" lastUpdated="20110815"/>
   <!--   version 1 created from MRC 1800 v2 definition  -->
   <!--   MRC 1800 version  author="Peter Ulvestad" version="1" lastUpdated="20091228" -->
   <!--   MRC 1800 version  author="John Crellin" version="2" lastUpdated="20091229"  -->
+  <!-- version 2  File MRC_drop-in-1803.xml renamed MRC_soundbrilliance1803.xml -->
+  <!--  ...........................................................................  -->
+  <!--                                                                               -->
+  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
+  <!--  ...........................................................................  -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model model="Synch Diesel Sound 1803 - HO  Proto 2000 PA/PB Locomotives" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="Synch Diesel Sound 1803 - HO  Proto 2000 PA/PB Locomotives" replacementModel="1803 - HO Scale - Proto 2000 PA/PB" replacementFamily="Sound Decoders" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
         <size length="" width="" height="" units="mm"/>
       </model>
     </family>

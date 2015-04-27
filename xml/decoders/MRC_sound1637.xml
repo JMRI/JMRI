@@ -20,14 +20,11 @@
   <!-- made from the MRC_1639 file by Richard Sauerbrun -->
   <!-- Version 2 - Added tooltips -->
   <!-- Version 3 - Added missing Consist direction -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!--  version 4 Replacement models - renamed decoder and family                    -->
+  <!-- version 4  New family for all MRC HO scale: "Sound Decoders"          -->
+  <!--            File MRC_soundbrilliance1637.xml renamed MRC_sound1637.xml -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model show="no" model="Synch Steam Sound 1637" replacementModel="1637 - N Scale - Steam" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes">
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1637 - N Scale - Steam" numOuts="2" numFns="12" connector="NMRAmedium" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <!-- note only F0 to F12 are NMRA compatible -->
         <size length="33" width="10.5" height="5.0" units="mm"/>
       </model>

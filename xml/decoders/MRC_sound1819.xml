@@ -22,17 +22,46 @@
   <!-- works for both loco types, despite apparent differences in the documentation -->
   <!-- Ver. 2 - reset default values, small errors corrected -->
   <!-- Ver. 3 - Moved Consist functions to Consist pane, Cleaned up sound level pane -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!-- Ver. 4 - Replacement models - renamed decoder and family                    -->
+  <!-- Ver. 4 - New family for all MRC G scale: "Sound Decoders - G Scale"     -->
+  <!--          File MRC_soundbrilliance1819.xml renamed MRC_sound1819.xml     -->
+  <!--          Added function labels                                          -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
-      <model show="no" model="G Gauge Steam Decoder 1819" maxTotalCurrent="5A" replacementModel="1819 - G Scale - Steam" replacementFamily="Sound Decoders - G Scale" extFnsMRC="yes">
+    <family name="Sound Decoders - G Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1819 - G Scale - Steam" maxTotalCurrent="5A" extFnsMRC="yes">
         <!-- note All 28 functions are NMRA compatible -->
         <size length="70.5" width="34" height="11.4" units="mm"/>
       </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Lights</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="true">Whistle</functionlabel>
+        <functionlabel num="3" lockable="false">Air Release/Mars light</functionlabel>
+        <functionlabel num="4" lockable="false">Coupler</functionlabel>
+        <functionlabel num="5" lockable="false">Brake Release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="false">Conductor/Rail Clack</functionlabel>
+        <functionlabel num="7" lockable="false">Fire Box</functionlabel>
+        <functionlabel num="8" lockable="false">Injector</functionlabel>
+        <functionlabel num="9" lockable="false">Metal Crank</functionlabel>
+        <functionlabel num="10" lockable="false">Water</functionlabel>
+        <functionlabel num="11" lockable="false">Blower Hiss</functionlabel>
+        <functionlabel num="12" lockable="false">Master Volume</functionlabel>
+        <functionlabel num="13" lockable="false">Short Air Release</functionlabel>
+        <functionlabel num="14" lockable="false">Air Hose Firing</functionlabel>
+        <functionlabel num="15" lockable="false">Flange Noise</functionlabel>
+        <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+        <functionlabel num="17" lockable="false">Coal Auger</functionlabel>
+        <functionlabel num="18" lockable="false">Bell Select</functionlabel>
+        <functionlabel num="19" lockable="false">Whistle Select</functionlabel>
+        <functionlabel num="20" lockable="false">Bell Ring Rate</functionlabel>
+        <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+        <functionlabel num="22" lockable="false">Whistle Volume</functionlabel>
+        <functionlabel num="23" lockable="false">Chuff Volume</functionlabel>
+        <functionlabel num="24" lockable="false">Chuff Select</functionlabel>
+        <functionlabel num="25" lockable="false">Air Release</functionlabel>
+        <functionlabel num="26" lockable="false">Sand Dropping</functionlabel>
+        <functionlabel num="27" lockable="false">Loco Sounds</functionlabel>
+        <functionlabel num="28" lockable="false">Loco Sounds</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

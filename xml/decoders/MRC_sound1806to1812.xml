@@ -14,19 +14,66 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
-  <version author="Peter Ulvestad" version="1" lastUpdated="20091228"/>
-  <!--   version 1  Created from MRC 1806 ver. 1.6 -->
-  <!--  ...........................................................................  -->
-  <!--                                                                               -->
-  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
-  <!--  ...........................................................................  -->
-  <!--  version 2 Replacement models - renamed decoder and family                    -->
+  <version author="Alain Le Marchand" version="1.0" lastUpdated="20150426"/>
+  <!--  version 1.0 Created from MRC_soundbrilliance1804.xml so as to isolate N scale models    -->
+  <!--              also refactored from MRC soundbrilliance1808[10|12].xml in a single file    -->
+  <!--              New family for all MRC N scale: "Sound Decoders - N scale"                  -->
   <decoder>
-    <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45">
-      <model show="no" model="Synch Diesel Sound 1810 - N Scale KATO F40PH" replacementModel="1810 - N Scale - Kato F40PH" replacementFamily="Sound Decoders - N Scale" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes">
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1806 - N Scale - Kato SD40-2" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1806" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+        <size length="72" width="9.7" height="3.0" units="mm"/>
+        <functionlabels>
+          <functionlabel num="20" lockable="true">Reverser Gear</functionlabel>
+          <functionlabel num="24" lockable="true">Coupling 2</functionlabel>
+          <functionlabel num="25" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="true">Flange Noise 4</functionlabel>
+          <functionlabel num="28" lockable="true">Short Air Release</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="1808 - N Scale - Kato SD80 - SD90/43MAC" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1808" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+        <size length="77" width="9.7" height="3.5" units="mm"/>
+      </model>
+      <model model="1810 - N Scale - Kato F40PH" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1810" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
         <size length="66" width="14" height="3.5" units="mm"/>
       </model>
+      <model model="1811 - N Scale - Atlas GE U23B" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1811" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+        <size length="" width="" height="" units="mm"/>
+      </model>
+      <model model="1812 - N Scale - Atlas Short Board Diesels" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1812" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="&lt;html&gt;N-Scale, Drop-In, with 4 prime movers&lt;br&gt;Fits most Atlas N scale diesels with short chassis&lt;br&gt;Will NOT fit the longer chassis Atlas N scale SD50/SD60&lt;/html&gt;">
+        <size length="72" width="10" height="4.2" units="mm"/>
+      </model>
+      <functionlabels>
+        <functionlabel num="0" lockable="true">Light</functionlabel>
+        <functionlabel num="1" lockable="true">Bell</functionlabel>
+        <functionlabel num="2" lockable="false">Horn</functionlabel>
+        <functionlabel num="3" lockable="true">Air Release</functionlabel>
+        <functionlabel num="4" lockable="true">Uncoupling Lever</functionlabel>
+        <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+        <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+        <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+        <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+        <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+        <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+        <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+        <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+        <functionlabel num="13" lockable="true">Air Release</functionlabel>
+        <functionlabel num="14" lockable="true">Coupling Crash</functionlabel>
+        <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+        <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
+        <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+        <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+        <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+        <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+        <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+        <functionlabel num="24" lockable="true">Air Release</functionlabel>
+        <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
+        <functionlabel num="26" lockable="true">Loco Sound</functionlabel>
+        <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+        <functionlabel num="28" lockable="true">Air Release</functionlabel>
+      </functionlabels>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -48,6 +95,9 @@
       <variable CV="4" item="Decel" tooltip="sets the deceleration rate (delay) [range 0-32]" default="0">
         <decVal max="32"/>
         <label>Deceleration</label>
+        <label xml:lang="it">Decellerazione (1-32)</label>
+        <label xml:lang="fr">Décélération (1-32)</label>
+        <label xml:lang="de">Bremszeit (1-32)</label>
       </variable>
       <variable CV="5" item="Vhigh" tooltip="sets the motor voltage at top Speed Step [range 0-32]," default="32">
         <decVal max="32"/>
@@ -76,7 +126,7 @@
         <label xml:lang="fr">Version décodeur: </label>
         <label xml:lang="de">Decoder Version: </label>
       </variable>
-      <variable CV="8" readOnly="yes" item="Manufacturer" tooltip="is the Manufacturer ID, MRC-143, Read Only">
+      <variable CV="8" readOnly="yes" item="Manufacturer" default="143" tooltip="is the Manufacturer ID, MRC-143, Read Only">
         <decVal/>
         <label>Manufacturer ID</label>
         <label xml:lang="it">ID Costruttore: </label>
@@ -85,7 +135,7 @@
       </variable>
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
-     <!-- CV=21 -->
+ <!-- CV=21 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
@@ -96,7 +146,11 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound on/off</label>
       </variable>
-      <variable CV="50" item="Sound Option 2" tooltip="selects the Horn Type [range 0-33]" default="4">
+      <variable CV="50" item="Sound Option 2" tooltip="selects the Horn Type [range 0-16], 16=off" default="4" include="1806">
+        <decVal max="16"/>
+        <label>Horn Type</label>
+      </variable>
+      <variable CV="50" item="Sound Option 2" tooltip="selects the Horn Type [range 0-33]" default="4" include="1808,1810,1811,1812">
         <decVal max="33"/>
         <label>Horn Type</label>
       </variable>
@@ -116,11 +170,19 @@
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>
-      <variable CV="55" item="Sound Setting 4" tooltip="sets the Diesel Rumble Volume [range 0-3]" default="3">
+      <variable CV="55" item="Sound Setting 4" tooltip="sets the Diesel Rumble Volume [range 0-3]" default="3" include="1806,1808,1810,1812">
         <decVal max="3"/>
         <label>Diesel rumble volume</label>
       </variable>
-      <variable CV="56" item="Sound Setting 5" tooltip="sets the Brake Squeal Volume [range 0-3]" default="3">
+      <variable CV="55" item="Sound Setting 4" tooltip="sets the Diesel Rumble Volume [range 0-3]" default="1" include="1811">
+        <decVal max="3"/>
+        <label>Diesel rumble volume</label>
+      </variable>
+      <variable CV="56" item="Sound Setting 5" tooltip="sets the Brake Squeal Volume [range 0-3]" default="3" include="1806,1808,1810,1812">
+        <decVal max="3"/>
+        <label>Brake squeal volume</label>
+      </variable>
+      <variable CV="56" item="Sound Setting 5" tooltip="sets the Brake Squeal Volume [range 0-3]" default="2" include="1811">
         <decVal max="3"/>
         <label>Brake squeal volume</label>
       </variable>
@@ -148,6 +210,10 @@
         <decVal max="3"/>
         <label>Coupling Volume</label>
       </variable>
+      <variable CV="63" item="Global lighting option 1" tooltip="" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
+        <label>Auto Ditchlight flash with horn (for MRC 1802)</label>
+      </variable>
       <variable CV="64" item="Sound Setting 15" tooltip="sets the Rail Clack Volume [range 0-3]" default="3">
         <decVal max="3"/>
         <label>Rail clack volume</label>
@@ -163,7 +229,15 @@
         <decVal max="3"/>
         <label>Coupling fire volume</label>
       </variable>
-      <variable CV="114" item="Sound Setting 17" tooltip="sets the Brake Release Volume [range 0-3]" default="0">
+      <variable CV="114" item="Sound Setting 17" tooltip="sets the Brake Release Volume [range 0-3]" default="2" include="1806">
+        <decVal max="3"/>
+        <label>Brake Release volume</label>
+      </variable>
+      <variable CV="114" item="Sound Setting 17" tooltip="sets the Brake Release Volume [range 0-3]" default="0" include="1808,1810,1812">
+        <decVal max="3"/>
+        <label>Brake Release volume</label>
+      </variable>
+      <variable CV="114" item="Sound Setting 17" tooltip="sets the Brake Release Volume [range 0-3]" default="3" include="1811">
         <decVal max="3"/>
         <label>Brake Release volume</label>
       </variable>
@@ -171,7 +245,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
-      <variable CV="117" item="Global lighting option 1" tooltip="selects the Light Mode" default="0">
+      <variable CV="117" item="Global lighting option 2" tooltip="selects the Light Mode" default="0">
         <enumVal>
           <enumChoice choice="Normal Headlights" value="0">
             <choice>Normal Headlights</choice>
@@ -196,21 +270,72 @@
         </enumVal>
         <label>Diesel notch mode</label>
       </variable>
-      <variable CV="123" item="Sound Option 8" tooltip="selects the Prime Mover Type [Range 0-4]" default="2">
+      <variable CV="123" item="Sound Option 8" tooltip="selects the Prime Mover Type" default="1" include="1806">
         <enumVal>
           <enumChoice choice="0" value="0">
-            <choice/>
+            <choice>Type 1</choice>
           </enumChoice>
-          <enumChoice choice="1" value="1">
-            <choice/>
+          <enumChoice choice="1(default)" value="1">
+            <choice>Type 2</choice>
           </enumChoice>
-          <enumChoice choice="2" value="2">
-            <choice/>
+          <enumChoice choice="2(Off)" value="2">
+            <choice>Off</choice>
           </enumChoice>
-          <enumChoice choice="3" value="3">
-            <choice/>
+        </enumVal>
+        <tooltip>Range 0-2 (2 types - 2=diesel sound off)</tooltip>
+        <label>Prime Mover</label>
+      </variable>
+      <variable CV="123" item="Sound Option 8" tooltip="selects the Prime Mover Type" default="2" include="1808,1810">
+        <enumVal>
+          <enumChoice choice="Type 1" value="0">
+            <choice>Type 1</choice>
           </enumChoice>
-          <enumChoice choice="4(Off)" value="4">
+          <enumChoice choice="Type 2">
+            <choice>Type 2</choice>
+          </enumChoice>
+          <enumChoice choice="Type 3">
+            <choice>Type 3</choice>
+          </enumChoice>
+          <enumChoice choice="Type 4">
+            <choice>Type 4</choice>
+          </enumChoice>
+          <enumChoice choice="Off">
+            <choice>Off</choice>
+          </enumChoice>
+        </enumVal>
+        <tooltip>Range 0-4 (4 types - 4=diesel sound off)</tooltip>
+        <label>Prime Mover</label>
+      </variable>
+      <variable CV="123" item="Sound Option 8" tooltip="selects the Prime Mover Type" default="0" include="1811">
+        <enumVal>
+          <enumChoice choice="0" value="0">
+            <choice>GE 7FDL-12</choice>
+          </enumChoice>
+          <enumChoice choice="1(default)" value="1">
+            <choice>alternate type</choice>
+          </enumChoice>
+          <enumChoice choice="2(Off)" value="2">
+            <choice>Off</choice>
+          </enumChoice>
+        </enumVal>
+        <tooltip>Range 0-2 (2 types - 2=diesel sound off)</tooltip>
+        <label>Prime Mover</label>
+      </variable>
+      <variable CV="123" item="Sound Option 8" tooltip="selects the Prime Mover Type" default="2" include="1812">
+        <enumVal>
+          <enumChoice choice="ALCO 244" value="0">
+            <choice>ALCO 244</choice>
+          </enumChoice>
+          <enumChoice choice="SD60" value="1">
+            <choice>SD60</choice>
+          </enumChoice>
+          <enumChoice choice="SD70" value="2">
+            <choice>SD70</choice>
+          </enumChoice>
+          <enumChoice choice="EMD 567B" value="3">
+            <choice>EMD 567B</choice>
+          </enumChoice>
+          <enumChoice choice="Off" value="4">
             <choice>Off</choice>
           </enumChoice>
         </enumVal>

@@ -13,10 +13,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
   <version author="Rick Beaber rbeaber@gmail.com" version="1.0" lastUpdated="20050214"/>
+  <!-- version 2.0: Renaming decoder models                                       -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31">
-      <model model="Synch Steam Sound 1627" numOuts="2" numFns="12"/>
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="31" highVersionID="31" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="Synch Steam Sound 1627" replacementModel="1627 - HO Scale - Steam" replacementFamily="Sound Decoders" numOuts="2" numFns="12"/>
+      <model model="1627 - HO Scale - Steam" numOuts="2" numFns="12"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

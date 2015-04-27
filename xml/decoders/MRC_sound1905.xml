@@ -14,12 +14,17 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="John Crellin" version="1" lastUpdated="20120802"/>
   <!--   version 1 Based on several MRC decoder XML files-->
+  <!--   version 2 - Renaming decoder models -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
-      <model model="HO Guage DC DCC Diesel Sound Decoder 1905" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
-        <size length="90" width="17.2" height="8.2" units="mm"/>
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="HO Guage DC DCC Diesel Sound Decoder 1905" replacementModel="1905 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+        <size length="73.0" width="17.7" height="7.7" units="mm"/>
+      </model>
+      <model model="1905 - HO Scale - Diesel" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="Dual mode DC/DCC, fits Many Atlas/Kato/Athearn/Intermountain Locomotives">
+        <size length="73.0" width="17.7" height="7.7" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>

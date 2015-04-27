@@ -14,6 +14,7 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="4" lastUpdated="20150427"/>
   <version author="John Crellin" version="3.1" lastUpdated="20110512"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20090904"/>
@@ -22,9 +23,14 @@
   <!--   version 2 Modified CV6 to better match manual-->
   <!--   version 3 Modified MRC tab, added missing sound option and setting, corrected some defaults.-->
   <!--   version 3.1 Modified function lables so they are automatically inserted and corrected CV123-->
+  <!--  ...........................................................................  -->
+  <!--                                                                               -->
+  <!--  Deprecated file - DO NOT USE ANYMORE - only kept for compatibility           -->
+  <!--  ...........................................................................  -->
+  <!--  version 4 Replacement models - renamed decoder and family                    -->
   <decoder>
     <family name="Brilliance Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="60">
-      <model model="Synch Diesel Sound 1820 - Athearn RS3" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
+      <model show="no" model="Synch Diesel Sound 1820 - Athearn RS3" replacementModel="1820 - HO Scale - Athearn RS3" replacementFamily="Sound Decoders" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
         <size length="90" width="17.2" height="8.2" units="mm"/>
       </model>
       <functionlabels>

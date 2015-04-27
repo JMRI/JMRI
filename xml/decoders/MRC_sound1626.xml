@@ -13,10 +13,14 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
   <version author="Rick Beaber rbeaber@gmail.com" version="1.1" lastUpdated="20050208"/>
+  <!-- version 2.0: removed pane Sound Levels-2, all sound levels on regular pane -->
+  <!--              Renaming decoder models                                       -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="1">
-      <model model="Synch Diesel Sound 1626" numOuts="4" numFns="12"/>
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="1" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="Synch Diesel Sound 1626" replacementModel="1626 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="4" numFns="12"/>
+      <model model="1626 - HO Scale - Diesel" numOuts="4" numFns="12"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -113,27 +117,27 @@
         <label>Coupling Volume</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable CV="60" item="Sound Setting A" default="31" comment="Range 0-31">
+      <variable CV="60" item="Sound Setting 11" default="31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Conductor Volume</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable CV="61" item="Sound Setting B" default="31" comment="Range 0-31">
+      <variable CV="61" item="Sound Setting 12" default="31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Reverser Volume</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable CV="62" item="Sound Setting C" default="31" comment="Range 0-31">
+      <variable CV="62" item="Sound Setting 13" default="31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Exhaust Volume</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable CV="63" item="Sound Setting D" default="31" comment="Range 0-31">
+      <variable CV="63" item="Sound Setting 14" default="31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Sand Release Volume</label>
         <comment>Range 0-31</comment>
       </variable>
-      <variable CV="64" item="Sound Setting E" default="31" comment="Range 0-31">
+      <variable CV="64" item="Sound Setting 15" default="31" comment="Range 0-31">
         <decVal max="31"/>
         <label>Air Release Volume</label>
         <comment>Range 0-31</comment>
@@ -193,66 +197,4 @@
       </variable>
     </variables>
   </decoder>
-  <pane>
-    <column>
-      <row>
-        <display item="Sound Setting A" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Sound Setting A" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Sound Setting B" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Sound Setting B" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Sound Setting C" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Sound Setting C" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Sound Setting D" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Sound Setting D" layout="above" format="hslider"/>
-      </row>
-      <label>
-        <text> </text>
-      </label>
-      <row>
-        <display item="Sound Setting E" layout="above" label="">
-          <label/>
-        </display>
-        <label>
-          <text> </text>
-        </label>
-        <display item="Sound Setting E" layout="above" format="hslider"/>
-      </row>
-    </column>
-    <name>Sound Levels-2</name>
-  </pane>
 </decoder-config>

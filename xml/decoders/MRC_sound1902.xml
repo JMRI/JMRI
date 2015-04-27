@@ -13,11 +13,15 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="John Crellin   jcrellin0661@gmail.com" version="2" lastUpdated="20120801"/>
   <!-- made from another MRC file     UPDATED to fix BEMF portion -->
+ <!--  Version 2 - Renaming decoder models -->
   <decoder>
-    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2">
-      <model model="E unit and PA Stereo Diesel Sound 1902" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
+    <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model show="no" model="E unit and PA Stereo Diesel Sound 1902" replacementModel="1902 - HO Scale - E8/9 or ALCO PA" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
+      </model>
+      <model model="1902 - HO Scale - E8/9 or ALCO PA" numOuts="7" numFns="30" maxTotalCurrent="1.5A" comment="16 bit, Stereo">
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
