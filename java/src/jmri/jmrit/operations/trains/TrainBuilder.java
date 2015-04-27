@@ -3413,22 +3413,23 @@ public class TrainBuilder extends TrainCommon {
                 car.getTrack().getServiceOrder(), car.toString(), car.getTrack().getTrackType(), car.getTrackName(),
                 car.getLastDate());
         Car bestCar = car;
-        for (int i = _carIndex + 1; i < _carList.size(); i++) {
+        for (int i = _carIndex; i < _carList.size(); i++) {
             Car testCar = _carList.get(i);
             if (testCar.getTrack() == car.getTrack()) {
                 log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackType(), testCar.toString(), testCar
                         .getLastDate()); // NOI18N
-                if (car.getTrack().getServiceOrder().equals(Track.FIFO)
-                        && convertStringDateToDouble(bestCar.getLastDate()) > convertStringDateToDouble(testCar
+                if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
+                   if(convertStringDateToDouble(bestCar.getLastDate()) > convertStringDateToDouble(testCar
+                          .getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                       bestCar = testCar;
+                       log.debug("New best car ({})", bestCar.toString());
+                   }
+                } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
+                   if(convertStringDateToDouble(bestCar.getLastDate()) < convertStringDateToDouble(testCar
                                 .getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
-                    bestCar = testCar;
-                    log.debug("New best car ({})", bestCar.toString());
-                }
-                if (car.getTrack().getServiceOrder().equals(Track.LIFO)
-                        && convertStringDateToDouble(bestCar.getLastDate()) < convertStringDateToDouble(testCar
-                                .getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
-                    bestCar = testCar;
-                    log.debug("New best car ({})", bestCar.toString());
+                       bestCar = testCar;
+                       log.debug("New best car ({})", bestCar.toString());
+                   }
                 }
             }
         }
