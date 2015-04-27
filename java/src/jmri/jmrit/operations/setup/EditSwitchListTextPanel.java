@@ -52,6 +52,9 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
     JTextField trainDoneTextField = new JTextField(60);
     JTextField trainDepartsCarsTextField = new JTextField(60);
     JTextField trainDepartsLoadsTextField = new JTextField(60);
+    
+    JTextField switchListByTrackTextField = new JTextField(60);
+    JTextField holdCarTextField = new JTextField(60);
 
     public EditSwitchListTextPanel() {
 
@@ -175,6 +178,20 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         trainDepartsLoadsTextField.setText(TrainSwitchListText.getStringTrainDepartsLoads());
         trainDepartsLoadsTextField.setToolTipText(rb.getString("ToolTipTrainDepartsLoads"));
         pSwitchList.add(pTrainDepartsLoadsTextField);
+        
+        JPanel pSwitchListByTrackTextField = new JPanel();
+        pSwitchListByTrackTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("SwitchListByTrack")));
+        pSwitchListByTrackTextField.add(switchListByTrackTextField);
+        switchListByTrackTextField.setText(TrainSwitchListText.getStringSwitchListByTrack());
+        switchListByTrackTextField.setToolTipText(rb.getString("ToolTipSwitchListFor"));
+        pSwitchList.add(pSwitchListByTrackTextField);
+        
+        JPanel pHoldCarTextField = new JPanel();
+        pHoldCarTextField.setBorder(BorderFactory.createTitledBorder(rb.getString("HoldCar")));
+        pHoldCarTextField.add(holdCarTextField);
+        holdCarTextField.setText(TrainSwitchListText.getStringHoldCar());
+        holdCarTextField.setToolTipText(rb.getString("ToolTipHoldCar"));
+        pSwitchList.add(pHoldCarTextField);
 
         // add tool tips
         saveButton.setToolTipText(Bundle.getMessage("SaveToolTip"));
@@ -219,6 +236,9 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
             trainDoneTextField.setText(rb.getString("TrainDone"));
             trainDepartsCarsTextField.setText(rb.getString("TrainDepartsCars"));
             trainDepartsLoadsTextField.setText(rb.getString("TrainDepartsLoads"));
+            
+            switchListByTrackTextField.setText(rb.getString("SwitchListByTrack"));
+            holdCarTextField.setText(rb.getString("HoldCar"));
         }
         if (ae.getSource() == saveButton) {
             this.savePreferences();
@@ -259,6 +279,9 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
         TrainSwitchListText.setStringTrainDone(trainDoneTextField.getText());
         TrainSwitchListText.setStringTrainDepartsCars(trainDepartsCarsTextField.getText());
         TrainSwitchListText.setStringTrainDepartsLoads(trainDepartsLoadsTextField.getText());
+        
+        TrainSwitchListText.setStringSwitchListByTrack(switchListByTrackTextField.getText());
+        TrainSwitchListText.setStringHoldCar(holdCarTextField.getText());
 
         OperationsSetupXml.instance().writeOperationsFile();
     }
@@ -280,6 +303,9 @@ public class EditSwitchListTextPanel extends OperationsPreferencesPanel {
                 || TrainSwitchListText.getStringNoCarDrops().equals(noCarDropsTextField.getText())
                 || TrainSwitchListText.getStringTrainDone().equals(trainDoneTextField.getText()))
                 || TrainSwitchListText.getStringTrainDepartsCars().equals(trainDepartsCarsTextField.getText())
-                || TrainSwitchListText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText());
+                || TrainSwitchListText.getStringTrainDepartsLoads().equals(trainDepartsLoadsTextField.getText())
+                || TrainSwitchListText.getStringSwitchListByTrack().equals(switchListByTrackTextField.getText())
+                || TrainSwitchListText.getStringHoldCar().equals(holdCarTextField.getText())
+                ;
     }
 }

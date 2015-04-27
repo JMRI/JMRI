@@ -8,7 +8,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -20,11 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-
 import jmri.jmrit.operations.trains.TrainManager;
 import jmri.util.FileUtil;
 import jmri.util.swing.FontComboUtil;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,6 +78,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
     JCheckBox printHeadersCheckBox = new JCheckBox(Bundle.getMessage("PrintHeaders"));
     JCheckBox truncateCheckBox = new JCheckBox(Bundle.getMessage("Truncate"));
     JCheckBox departureTimeCheckBox = new JCheckBox(Bundle.getMessage("DepartureTime"));
+    JCheckBox trackSummaryCheckBox = new JCheckBox(Bundle.getMessage("TrackSummary"));
     JCheckBox routeLocationCheckBox = new JCheckBox(Bundle.getMessage("RouteLocation"));
 
     // text field
@@ -251,6 +249,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
 
         JPanel pSwitchOptions = new JPanel();
         pSwitchOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutSwitchListOptions")));
+        pSwitchOptions.add(trackSummaryCheckBox);
         pSwitchOptions.add(routeLocationCheckBox);
 
         pSl.add(pSwitchFormat);
@@ -349,6 +348,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         printHeadersCheckBox.setSelected(Setup.isPrintHeadersEnabled());
         truncateCheckBox.setSelected(Setup.isTruncateManifestEnabled());
         departureTimeCheckBox.setSelected(Setup.isUseDepartureTimeEnabled());
+        trackSummaryCheckBox.setSelected(Setup.isTrackSummaryEnabled());
         routeLocationCheckBox.setSelected(Setup.isSwitchListRouteLocationCommentEnabled());
         editManifestCheckBox.setSelected(Setup.isManifestEditorEnabled());
 
@@ -819,6 +819,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
         Setup.setTruncateManifestEnabled(truncateCheckBox.isSelected());
         Setup.setUseDepartureTimeEnabled(departureTimeCheckBox.isSelected());
         Setup.setManifestEditorEnabled(editManifestCheckBox.isSelected());
+        Setup.setTrackSummaryEnabled(trackSummaryCheckBox.isSelected());
         Setup.setSwitchListRouteLocationCommentEnabled(routeLocationCheckBox.isSelected());
 
         // reload combo boxes if tab changed
@@ -866,6 +867,7 @@ public class PrintOptionPanel extends OperationsPreferencesPanel {
                 || Setup.isUseDepartureTimeEnabled() != departureTimeCheckBox.isSelected()
                 || Setup.isManifestEditorEnabled() != editManifestCheckBox.isSelected()
                 || Setup.isSwitchListRouteLocationCommentEnabled() != routeLocationCheckBox.isSelected()
+                || Setup.isTrackSummaryEnabled() != trackSummaryCheckBox.isSelected()
                 || Setup.isTabEnabled() != this.tabFormatCheckBox.isSelected()) {
             return true;
         }

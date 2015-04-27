@@ -32,6 +32,9 @@ public class TrainSwitchListText {
 
     private static String trainDepartsCars = Bundle.getMessage("TrainDepartsCars");
     private static String trainDepartsLoads = Bundle.getMessage("TrainDepartsLoads");
+    
+    private static String switchListByTrack = Bundle.getMessage("SwitchListByTrack");
+    private static String holdCar = Bundle.getMessage("HoldCar"); 
 
     public static String getStringSwitchListFor() {
         return switchListFor;
@@ -160,6 +163,22 @@ public class TrainSwitchListText {
     public static void setStringTrainDepartsLoads(String s) {
         trainDepartsLoads = s;
     }
+    
+    public static String getStringSwitchListByTrack() {
+        return switchListByTrack;
+    }
+
+    public static void setStringSwitchListByTrack(String s) {
+        switchListByTrack = s;
+    }
+    
+    public static String getStringHoldCar() {
+        return holdCar;
+    }
+
+    public static void setStringHoldCar(String s) {
+        holdCar = s;
+    }
 
     // must synchronize changes with operation-config.dtd
     public static Element store() {
@@ -232,6 +251,14 @@ public class TrainSwitchListText {
         if (!getStringTrainDepartsLoads().equals(Bundle.getMessage("TrainDepartsLoads"))) {
             e.addContent(values = new Element(Xml.TRAIN_DEPARTS_LOADS));
             values.setAttribute(Xml.TEXT, getStringTrainDepartsLoads());
+        }
+        if (!getStringSwitchListByTrack().equals(Bundle.getMessage("SwitchListByTrack"))) {
+            e.addContent(values = new Element(Xml.SWITCH_LIST_TRACK));
+            values.setAttribute(Xml.TEXT, getStringSwitchListByTrack());
+        }
+        if (!getStringHoldCar().equals(Bundle.getMessage("HoldCar"))) {
+            e.addContent(values = new Element(Xml.HOLD_CAR));
+            values.setAttribute(Xml.TEXT, getStringHoldCar());
         }
 
         return e;
@@ -326,6 +353,15 @@ public class TrainSwitchListText {
                 setStringTrainDepartsLoads(a.getValue());
             }
         }
-
+        if (emts.getChild(Xml.SWITCH_LIST_TRACK) != null) {
+            if ((a = emts.getChild(Xml.SWITCH_LIST_TRACK).getAttribute(Xml.TEXT)) != null) {
+                setStringSwitchListByTrack(a.getValue());
+            }
+        }
+        if (emts.getChild(Xml.HOLD_CAR) != null) {
+            if ((a = emts.getChild(Xml.HOLD_CAR).getAttribute(Xml.TEXT)) != null) {
+                setStringHoldCar(a.getValue());
+            }
+        }
     }
 }

@@ -104,6 +104,7 @@ public class Xml {
     static final String PAGE_PER_TRAIN = "pagePerTrain"; // NOI18N
     static final String PAGE_PER_VISIT = "pagePerVisit"; // NOI18N
     static final String PRINT_ROUTE_LOCATION = "printRouteLocation"; // NOI18N
+    static final String TRACK_SUMMARY = "trackSummary"; // NOI18N
 
     static final String PREFIX = "prefix"; // NOI18N
     static final String SETTING = "setting"; // NOI18N

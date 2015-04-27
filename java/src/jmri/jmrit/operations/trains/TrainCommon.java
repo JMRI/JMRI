@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainCommon {
 
-    private static final String LENGTHABV = Setup.LENGTHABV; // Length symbol
+    protected static final String LENGTHABV = Setup.LENGTHABV; // Length symbol
     protected static final String TAB = "    "; // NOI18N
     protected static final String NEW_LINE = "\n"; // NOI18N
     protected static final String SPACE = " ";

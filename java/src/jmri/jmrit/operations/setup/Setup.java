@@ -253,6 +253,7 @@ public class Setup {
     private static boolean manifestTruncated = false; // when true, manifest is truncated if switch list is available
     private static boolean manifestDepartureTime = false; // when true, manifest shows train's departure time
     private static boolean switchListRouteComment = true; // when true, switch list have route location comments
+    private static boolean trackSummary = true; // when true, print switch list track summary
 
     private static boolean switchListRealTime = true; // when true switch list only show work for built trains
     private static boolean switchListAllTrains = true; // when true show all trains that visit the location
@@ -742,6 +743,14 @@ public class Setup {
 
     public static boolean isSwitchListFormatSameAsManifest() {
         return switchListSameManifest;
+    }
+    
+    public static void setTrackSummaryEnabled(boolean b) {
+        trackSummary = b;
+    }
+
+    public static boolean isTrackSummaryEnabled() {
+        return trackSummary;
     }
 
     public static void setSwitchListRouteLocationCommentEnabled(boolean b) {
@@ -1805,6 +1814,7 @@ public class Setup {
         values.setAttribute(Xml.PAGE_FORMAT, format);
 
         values.setAttribute(Xml.PRINT_ROUTE_LOCATION, isSwitchListRouteLocationCommentEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.TRACK_SUMMARY, isTrackSummaryEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT));
         storeXmlMessageFormat(values, getSwitchListPickupCarPrefix(), getPickupSwitchListMessageFormat());
@@ -2284,6 +2294,13 @@ public class Setup {
                     log.debug("print route location comment: {}", b);
                 }
                 setSwitchListRouteLocationCommentEnabled(b.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.SWITCH_LIST).getAttribute(Xml.TRACK_SUMMARY)) != null) {
+                String b = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("track summary: {}", b);
+                }
+                setTrackSummaryEnabled(b.equals(Xml.TRUE));
             }
         }
         if (operations.getChild(Xml.SWITCH_LIST_PICKUP_CAR_FORMAT) != null) {

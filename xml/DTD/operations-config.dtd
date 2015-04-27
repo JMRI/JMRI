@@ -195,6 +195,7 @@
 <!ATTLIST switchList pageMode			(true | false ) "false">
 <!ATTLIST switchList pageFormat			CDATA #IMPLIED>
 <!ATTLIST switchList printRouteLocation	(true | false ) "false">
+<!ATTLIST switchList trackSummary		(true | false ) "true">
 
 <!ATTLIST pageOrientation manifest		CDATA #IMPLIED>
 <!ATTLIST pageOrientation switchList	CDATA #IMPLIED>
@@ -310,7 +311,8 @@
 
 <!ELEMENT switchListTextStrings (switchListFor | scheduledWorkTrain | departsAt | departsExpectedArrival
 | departedExpected | visitNumber | visitNumberDeparted | visitNumberTerminates | visitNumberTerminatesDeparted
-| visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone | trainDepartsCars | trainDepartsLoads)*>
+| visitNumberDone | trainDirectionChange | noCarPickUps | noCarSetOuts | trainDone | trainDepartsCars | trainDepartsLoads
+| switchListTrack | holdCar)*>
 
 <!ELEMENT switchListFor EMPTY>
 <!ELEMENT scheduledWorkTrain EMPTY>
@@ -326,6 +328,8 @@
 <!ELEMENT noCarPickUps EMPTY>
 <!ELEMENT noCarSetOuts EMPTY>
 <!ELEMENT trainDone EMPTY>
+<!ELEMENT switchListTrack EMPTY>
+<!ELEMENT holdCar EMPTY>
 
 <!ATTLIST switchListFor text			CDATA #IMPLIED>
 <!ATTLIST scheduledWorkTrain text		CDATA #IMPLIED>
@@ -341,6 +345,8 @@
 <!ATTLIST noCarPickUps text				CDATA #IMPLIED>
 <!ATTLIST noCarSetOuts text				CDATA #IMPLIED>
 <!ATTLIST trainDone text				CDATA #IMPLIED>
+<!ATTLIST switchListTrack text			CDATA #IMPLIED>
+<!ATTLIST holdCar text					CDATA #IMPLIED>
 
 <!ELEMENT control (backwardCompatibility | maximumStringLengths | reports)*>
 

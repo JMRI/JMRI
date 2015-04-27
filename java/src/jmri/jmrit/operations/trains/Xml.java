@@ -191,6 +191,9 @@ public class Xml {
     static final String NO_CAR_PICK_UPS = "noCarPickUps"; // NOI18N
     static final String NO_CAR_SET_OUTS = "noCarSetOuts"; // NOI18N
     static final String TRAIN_DONE = "trainDone"; // NOI18N
+    
+    static final String SWITCH_LIST_TRACK = "switchListTrack";
+    static final String HOLD_CAR = "holdCar";
 
     // TrainManifestHeaderText.jafa
     static final String MANIFEST_HEADER_TEXT_STRINGS = "manifestHeaderTextStrings"; // NOI18N
