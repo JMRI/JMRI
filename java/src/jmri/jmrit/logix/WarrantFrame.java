@@ -948,30 +948,27 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         
-        if (msg == null) {
-            if (_throttleCommands.size() > 0) {
-                if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("deleteCommand"),
-                        Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
-                    return;
-                }
-                _throttleCommands = new ArrayList<ThrottleSetting>();
-                _commandModel.fireTableDataChanged();
+        if (_throttleCommands.size() > 0) {
+            if (JOptionPane.showConfirmDialog(this, Bundle.getMessage("deleteCommand"),
+                    Bundle.getMessage("QuestionTitle"), JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.NO_OPTION) {
+                return;
             }
-            if (_learnThrottle == null) {
-                _learnThrottle = new LearnThrottleFrame(this);
-            } else {
-                _learnThrottle.setVisible(true);
-            }
+            _throttleCommands = new ArrayList<ThrottleSetting>();
+            _commandModel.fireTableDataChanged();
+        }
+        if (_learnThrottle == null) {
+            _learnThrottle = new LearnThrottleFrame(this);
+        } else {
+            _learnThrottle.setVisible(true);
         }
 
-        if (msg == null) {
-            _warrant.setTrainName(getTrainName());
-            _startTime = System.currentTimeMillis();
-            _warrant.addPropertyChangeListener(this);
-            msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle,
-                    _throttleCommands, _runBlind.isSelected());
-        }
+        _warrant.setTrainName(getTrainName());
+        _startTime = System.currentTimeMillis();
+        _warrant.addPropertyChangeListener(this);
+        
+        msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle,
+                _throttleCommands, _runBlind.isSelected());
         if (msg != null) {
             stopRunTrain();
             JOptionPane.showMessageDialog(this, msg, Bundle.getMessage("WarningTitle"),
@@ -1047,23 +1044,25 @@ public class WarrantFrame extends WarrantRoute {
         }
         if (_warrant != null) {
             clearWarrant();
-
             if (orders.size()>0) {
-                OBlock lastBlock = orders.get(orders.size() - 1).getBlock();
-                OBlock currentBlock = _warrant.getCurrentBlockOrder().getBlock();
-                if (!lastBlock.equals(currentBlock)) {
-                    if ((lastBlock.getState() & OBlock.DARK) != 0
-                            && currentBlock.equals(orders.get(orders.size() - 2).getBlock())) {
-                        setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());
-                        setStatusText(Bundle.getMessage("LearningStop"), myGreen);
+                BlockOrder bo = _warrant.getCurrentBlockOrder();
+                if (bo!=null) {
+                    OBlock lastBlock = orders.get(orders.size() - 1).getBlock();
+                    OBlock currentBlock = bo.getBlock();
+                    if (!lastBlock.equals(currentBlock)) {
+                        if ((lastBlock.getState() & OBlock.DARK) != 0
+                                && currentBlock.equals(orders.get(orders.size() - 2).getBlock())) {
+                            setThrottleCommand("NoOp", Bundle.getMessage("Mark"), lastBlock.getDisplayName());
+                            setStatusText(Bundle.getMessage("LearningStop"), myGreen);
+                        } else {
+                            JOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock),
+                                    Bundle.getMessage("WarningTitle"),
+                                    JOptionPane.WARNING_MESSAGE);
+                        }
                     } else {
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("IncompleteScript", lastBlock),
-                                Bundle.getMessage("WarningTitle"),
-                                JOptionPane.WARNING_MESSAGE);
-                    }
-                } else {
-                    setStatusText(Bundle.getMessage("LearningStop"), myGreen);                
-                }                
+                        setStatusText(Bundle.getMessage("LearningStop"), myGreen);                
+                    }                                    
+                }
             }
         }        
     }
