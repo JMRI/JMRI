@@ -40,9 +40,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                                                         // implements
                                                                         // PropertyChangeListener
 {
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6318203351014416147L;
     public static final int WARRANT_COLUMN = 0;
     public static final int ROUTE_COLUMN = 1;
@@ -488,7 +485,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             }
             break;
         case FACTOR_COLUMN:
-            w.setThrottleFactor((String) value);
+            msg = w.setThrottleFactor((String) value);
             break;
         case ALLOCATE_COLUMN:
             msg = w.allocateRoute(null);

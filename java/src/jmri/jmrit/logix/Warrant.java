@@ -134,7 +134,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
     public void setState(int state) {
     }
-
+    
     /**
      * Return permanently saved BlockOrders
      */
@@ -402,7 +402,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         } catch (NumberFormatException nfe) {
             return Bundle.getMessage("MustBeFloat");
         }
-        if (fac > 10 || fac <0.01) {
+        if (fac > 10 || fac <0.05) {
             return Bundle.getMessage("InvalidNumber", sFactor);                                             
         }
         _throttleFactor = fac;          
@@ -597,7 +597,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
         return 0;
     }
-
+    
     protected void startTracker() {
         TrackerTableAction.markNewTracker(getCurrentBlockOrder().getBlock(), _trainName);
     }
@@ -851,8 +851,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             } else {
                 moveIntoNextBlock(MID);     //nextSpeed = checkCurrentBlock(MID);
             }
-            firePropertyChange("runMode", MODE_NONE, Integer.valueOf(_runMode));
             _delayStart = false;    // script should start when user resumes - no more delay
+            firePropertyChange("runMode", MODE_NONE, Integer.valueOf(_runMode));
         }
     }
 
@@ -1042,7 +1042,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if ((state & OBlock.DARK) != 0) {
             msg = Bundle.getMessage("BlockDark", block.getDisplayName());
         } else if ((state & OBlock.OCCUPIED) == 0) {
-            msg = Bundle.getMessage("warnStart", getTrainId(), block.getDisplayName());
+            msg = Bundle.getMessage("warnStart", getTrainName(), block.getDisplayName());
         } else {
             // check if tracker is on this train
             TrackerTableAction.stopTrackerIn(block);
@@ -1271,7 +1271,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             // Also, can force train to move into occupied block with "Move into next Block" command.
             // This is an unprotected move.
             if (_engineer != null
-                    && (_engineer.getRunState() == WAIT_FOR_CLEAR/* || _engineer.getRunState()==HALT8*/)) {
+                    && (_engineer.getRunState() == WAIT_FOR_CLEAR/* || _engineer.getRunState()==HALT*/)) {
                 // Ordinarily block just occupied would be this train, but train is stopped! - must be a rouge entry.
                 log.info("Forced move into next Block " + block.getDisplayName());
                 _engineer.setHalt(false);
@@ -1312,7 +1312,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 if (_runMode == MODE_LEARN) {
                     log.error("Block " + block.getDisplayName() + " became occupied before block "
                             + getBlockAt(_idxCurrentOrder + 1).getDisplayName() + " ABORT recording.");
-                    firePropertyChange("abortLearn", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
+                    firePropertyChange("abortLearn", Integer.valueOf(activeIdx), Integer.valueOf(_idxCurrentOrder));
                 } else {
                     log.warn("Rouge train ahead of train " + _trainName + " at block \"" + block.getDisplayName() + "\"!");
                 }
@@ -1335,16 +1335,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (_calibrater !=null) {
                 _calibrater.calibrateAt(_idxCurrentOrder);                
             }
-            boolean moveOK = moveIntoNextBlock(BEG);
-
-            if (_runMode == MODE_LEARN || _tempRunBlind) {
-                // recording must be done with signals and occupancy clear.
-                if (!moveOK) {
-                    log.error("Signals or occupancy ahead forces train " + _trainName + " to stop at block "
-                            + getBlockAt(_idxCurrentOrder).getDisplayName() + " ABORT recording.");
-                    firePropertyChange("abortLearn", Integer.valueOf(oldIndex), Integer.valueOf(_idxCurrentOrder));
-                }
-            }
+            moveIntoNextBlock(BEG);
 
             // attempt to allocate remaining blocks in the route up to next occupation
             for (int i = _idxCurrentOrder + 2; i < _orders.size(); i++) {
@@ -1450,6 +1441,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }           // end goingInactive
 
     private void enterBlock(int state) {
+        if (_runMode != Warrant.MODE_RUN) {
+            return;
+        }
         if (((state & OBlock.DARK) != 0) || _tempRunBlind) {
             _engineer.setRunOnET(true);
         } else if (!_tempRunBlind) {
@@ -1502,6 +1496,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return true if able to move
      */
     private boolean moveIntoNextBlock(int position) {
+        if (_runMode != Warrant.MODE_RUN) {
+            return true;
+        }
         if (_engineer==null) {
             controlRunTrain(ABORT);
             return false;

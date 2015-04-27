@@ -71,6 +71,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         _parent = parent;
 
         addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
             public void windowClosing(java.awt.event.WindowEvent e) {
                 closingEvent();
             }
@@ -272,7 +273,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
                 _units.setText("cm");
             }                   
         } catch (NumberFormatException nfe) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidNumber", len),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", len),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);                    
         }
     }

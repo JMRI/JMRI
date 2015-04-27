@@ -205,6 +205,7 @@ public class NXFrame extends WarrantRoute {
             return;
         }
         closeFrame();
+        clearTempWarrant();
         java.awt.Component[] list = _controlPanel.getComponents();
         int i = 0;
         while (i<list.length && !list[i].equals(_autoRunPanel)) {
@@ -224,7 +225,7 @@ public class NXFrame extends WarrantRoute {
                 msg = Bundle.getMessage("InvalidNumber", text);                                    
             }
         } catch (NumberFormatException nfe) {
-            msg = Bundle.getMessage("InvalidNumber", text);                                    
+            msg = Bundle.getMessage("MustBeFloat", text);                                    
         }
         if (msg==null) {
             switch ( SignalSpeedMap.getMap().getInterpretation()) {
@@ -527,7 +528,7 @@ public class NXFrame extends WarrantRoute {
                 return Bundle.getMessage("InvalidNumber", text);                                    
             }
         } catch (NumberFormatException nfe) {
-            return Bundle.getMessage("InvalidNumber", text);                                    
+            return Bundle.getMessage("MustBeFloat", text);                                    
         }
         float maxSpeed = _maxSpeed;
         float minSpeed = _minSpeed;
@@ -537,7 +538,7 @@ public class NXFrame extends WarrantRoute {
             text = _minSpeedBox.getText();
             minSpeed = Float.parseFloat(text);
         } catch (NumberFormatException nfe) {
-            return Bundle.getMessage("InvalidNumber", text);             
+            return Bundle.getMessage("MustBeFloat", text);             
         }
         String speedErr;
         switch ( SignalSpeedMap.getMap().getInterpretation()) {

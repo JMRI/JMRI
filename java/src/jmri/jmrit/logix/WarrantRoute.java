@@ -579,7 +579,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     }
     
     private Warrant _tempWarrant;   // only used in pickRoute() method
-    private void clearTempWarrant() {
+    protected void clearTempWarrant() {
         if (_tempWarrant!=null) {
             _tempWarrant.deAllocate();
             _tempWarrant = null;
@@ -607,6 +607,12 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             return;
         }
         _pickRouteDialog = new JDialog(this, Bundle.getMessage("DialogTitle"), false);
+        _pickRouteDialog.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                clearTempWarrant();
+            }
+        });
         _tempWarrant = null;
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout(5,5));
