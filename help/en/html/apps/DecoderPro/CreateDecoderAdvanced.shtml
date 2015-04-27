@@ -32,14 +32,15 @@ You can do limited formatting on the display using HTML formatting tags.
 
 <p>
 You can embed HTML in pane text, but it must be enclosed in &lt;html&gt;...&lt;/html&gt; tags. 
-
+</p>
 <P>This is made a bit tricky because of overlap between "tags as 
 part of XML structure of decoder file" and "HTML tags included in the decoder file".
 All of the HTML tags need to be quoted, with their &lt; and &gt; characters
 replaced by the &amp;lt; and &amp;gt; strings and any embedded double quotes
-being replaced by &amp;quot;.
+being replaced by &amp;quot;.</p>
 <p>
 For example:
+</p>
 <pre>
    &lt;label label="&amp;lt;html&amp;gt;&amp;lt;strong&amp;gt;JMRI 3.7.2 or later is required to use this definition.&amp;lt;/strong&amp;gt;&amp;lt;/html&amp;gt;"/&gt;
 </pre>
@@ -54,10 +55,11 @@ and will appear on the screen as
 For more examples see
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/esu/v4infoPane.xml" target="_blank">
     xml/decoders/esu/v4infoPane.xml</a>.
+</p>
 <p>
 This provides only HTML5 support, so if something isn't displaying as you expect, 
 see if an approach using simpler HTML will work.
-
+</p>
 <h3>Identification</h3>
 Three pieces:
 <dl>
@@ -91,7 +93,7 @@ If the user selects a decoder model manually, that selection sets
 all three values for use by when the decoder definition is expanded 
 for programming (see section <a href="#conditional">Conditional Decoder Definitions</a> below).
 
-<h3 name="visibility">Pane Visibility</h3>
+<h3 id="visibility">Pane Visibility</h3>
  
 The decoder-config (top-level) element has a showEmptyPanes attribute
 that can be used to control whether empty panes (panes with no variables) appear.
@@ -105,7 +107,7 @@ In some cases, e.g. a non-locomotive decoder for servos where none of the locomo
 panes make sense so the decoder definition contains lots of custom panes, 
 it's a simplification to set showEmptyPanes="no" and just remove all those.
 
-<h3 name="include">Including Fragment Files</h3>
+<h3 id="frag_include">Including Fragment Files</h3>
 
 Common parts of decoder definitions can be placed into "fragment files", 
 which can then be included into multiple decoder definition files.
@@ -129,7 +131,7 @@ fragment file to be found.
 <p>
 Use an existing file as an example for the top elements & format needed.
  
-<h3 name="update">Updates and Migration</h3>
+<h3 id="update">Updates and Migration</h3>
 
 Sometimes, we replace a decoder definition with a better one.  The old one is in use,
 but we'd like to move those users to the new one eventually.  There are model-level
@@ -218,7 +220,7 @@ For an example of where to position this capability element in the file, etc., s
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 <p>
-<a name="zimocapability"/>
+<a id="zimocapability"></a>
 Another approach, used by e.g. Zimo, is to provide a way to page the access.
 For example, to write 21 to CV614 with one of these, you need to:
 <ul>
@@ -254,7 +256,7 @@ The parameters must appear in the order shown. They mean:<ul>
 </ul>
 
 <p>
-<a name="zimobis"/>
+<a id="zimobis"></a>
 Another approach used by e.g. Zimo uses a page register that
 has to be reset afterwards. 
 For example, to write 21 to CV614 with one of these, you need to:
@@ -293,7 +295,7 @@ The parameters must appear in the order shown. They mean:<ul>
     to tell the decoder to use this mode.
 </ul>
 
-<a name="accessoryops"/>
+<a id="accessoryops"></a>
 <h4>Accessory Decoder Ops Mode</h4>
 Special programming packets are used by certain accessory decoders
 to configure their CVs from the DCC track signal.
@@ -328,7 +330,7 @@ For an example of where to position it etc., see the
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/xml/decoders/ESU_LokSoundV4_0.xml" target="_blank">
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
     
-<a name="tcsaccess"/>
+<a id="tcsaccess"></a>
 <h4>TCS WOW decoder access</h4>
 The TCS WOW decoders use several unique (to say the least) CV access methods.
 JMRI accommodates them via a special capability element:
@@ -390,12 +392,13 @@ These are particularly useful when using a common fragment file
 that might be included by multiple decoder definition files (defining
 different-but-similar families)
 
-<h4 name="include">Include/Exclude During Variable Expansion</h4>
+<h4 id="var_include">Include/Exclude During Variable Expansion</h4>
 
 Whether a variable element is expanded and used can be made conditional on the 
 decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
 <p>
 A variable definition will not be expanded and used:
+</p>
 <ul>
 <li>If an exclude attribute is present, neither the
 decoders product ID, model name, nor family name is found in the exclude list.
@@ -407,7 +410,7 @@ both include and exclude on the same element, but it's more usual to just
 use one.
 <p>
 Example:
-
+</p>
 <pre>
       &lt;variable label="My Variable" CV="72" include="ModelA,400"&gt;
         &lt;decVal/&gt;
@@ -417,20 +420,24 @@ Example:
 <p>
 The variable above will only appear when expanding the decoder definition
 for ModelA or product ID 400.
+</p>
 <p>
 You can also put include and exclude attributes on individual choices in an enumeration-type
 variable.  This can be used to e.g. only include specific lighting options in certain
 decoder families.
+</p>
 <p>
 Attributes on a &lt;variables&gt; element act on all the &lt;variable&gt; elements within it,
 along with any include or exclude attributes on those individual variables. 
+</p>
 
-<h4 name="pane_include">Include/Exclude During Pane Creation</h4>
+<h4 id="pane_include">Include/Exclude During Pane Creation</h4>
 
 Whether a pane (or part of a pane) is created can be made conditional on the 
 decoder type using "include" and "exclude" attributes on &lt;pane&gt; and &lt;group&gt; elements.
 <p>
 A pane will not be created:
+</p>
 <ul>
 <li>If an exclude attribute is present, neither the
 decoders product ID, model name, nor family name is found in the exclude list.
@@ -442,7 +449,7 @@ both include and exclude on the same element, but it's more usual to just
 use one.
 <p>
 Example:
-
+</p>
 <pre>
       &lt;pane label="My Pane" include="ModelA,400"&gt;
         ...
@@ -452,12 +459,14 @@ Example:
 <p>
 &quot;My Pane&quot; will be created only when expanding the decoder definition
 for ModelA or product ID 400.
+</p>
 <p>
 You can also create a &lt;group&gt; element with include and exclude attributes.
-Elements within the &lt;group&gt; will be created only if the <group> conditions are met.
+Elements within the &lt;group&gt; will be created only if the &lt;group&gt; conditions are met.
 This can be used to e.g. display specific text labels only for certain
 decoder models.
-<p>
+</p>
+<p></p>
 Example:
 
 <pre>
@@ -474,9 +483,9 @@ Example:
 <p>
 The text will be created only when expanding the decoder definition
 for ModelA or product ID 400.
+</p>
 
-
-<h4 name="qualify">Run-time Qualification of Variables</h4>
+<h4 id="qualify">Run-time Qualification of Variables</h4>
 <h5>Qualifying Variables</h5>
 
 A "qualifier" element on a variable element allows you to enable or disable the variable
@@ -488,7 +497,7 @@ If a variable is qualified as inactive, it doesn't appear in any
 panes and is neither read nor written to the decoder when you do "All" or "Changes only" 
 read or write operations.  The value is saved to the roster and will be
 reloaded when the roster entry is reopened later.
-
+</p>
 <p>In the following example, 
 a CV is interpreted as two different variables depending on whether the 
 decoder is set for short or long addressing.
@@ -519,8 +528,9 @@ means that it is, and a "0" means that it doesn't.
 <p>
 If multiple qualifier elements are present, all must be true for the 
 variable to be active and displayed.
+</p>
 
-<h5 name="panes">Qualifying Panes</h5>
+<h5 id="panes">Qualifying Panes</h5>
 
 A "qualifier" element on a pane element allows you to enable or disable the pane
 depending on the current value of a variable. 
@@ -537,7 +547,7 @@ this is what you want. You might need to qualify the individual overlapping vari
 <p>The following example enables
 one of two panes depending on whether the decoder is currently set for short or
 long addressing.
-
+</p>
 <pre>
   &lt;pane name="Short Only"&gt;
     &lt;qualifier&gt;
@@ -566,13 +576,13 @@ Other available operators include "gt", "ge", "ne", "lt" and "le".
 If multiple qualifier elements are present, all must be true for the 
 pane to be active and displayed.
 
-<h5 name="labels">Qualifying Elements on Panes</h5>
+<h5 id="labels">Qualifying Elements on Panes</h5>
 
 A "qualifier" element on a "label", "soundlabel", "row", "column", "grid" or "griditem" element
 allows you to enable or disable the  display of that element on a specific pane.
 
 <p>The following example displays a warning label if a version-number
-variable has a too-low value:
+variable has a too-low value:</p>
 <pre>
     &lt;label label="Version number too low!"&gt;
       &lt;qualifier&gt;
