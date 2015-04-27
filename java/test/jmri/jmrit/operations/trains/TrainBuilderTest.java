@@ -5961,6 +5961,211 @@ public class TrainBuilderTest extends TestCase {
 
     }
 
+    // test private method getCarOrder
+    public void testCarOrderNORMAL(){
+       resetManagers();
+       TrainBuilder tb = new TrainBuilder();
+       // start by creating a track
+        Location A = lmanager.newLocation("A");
+        Track interchangeTrack = A.addTrack("track", Track.INTERCHANGE);
+        interchangeTrack.setLength(1000);
+        interchangeTrack.setServiceOrder(Track.NORMAL);
+
+        java.util.Date date = java.util.Calendar.getInstance().getTime();
+
+        // place 3 cars on the track.
+        Car a = cmanager.newCar("ABC", "123");
+        a.setTypeName("Boxcar");
+        a.setLength("50");
+        a.setLastDate(tb.getDate(date));
+        a.setLocation(A, interchangeTrack);
+
+        date.setMinutes(date.getMinutes()+2);
+
+        Car b = cmanager.newCar("ABC", "321");
+        b.setTypeName("Boxcar");
+        b.setLength("50");
+        b.setLastDate(tb.getDate(date));
+        b.setLocation(A, interchangeTrack);
+
+        date.setMinutes(date.getMinutes()+2);
+
+        Car c = cmanager.newCar("ABC", "111");
+        c.setTypeName("Boxcar");
+        c.setLength("50");
+        c.setLastDate(tb.getDate(date));
+        c.setLocation(A, interchangeTrack);
+        
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method getCarOrderMethod=null;
+        try {
+          getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarOrder", Car.class);
+        } catch(java.lang.NoSuchMethodException nsm) {
+          Assert.fail("Could not find method getCarOrder in TrackBuilder class: " );
+        }
+
+        // override the default permissions.
+        getCarOrderMethod.setAccessible(true);
+  
+        // and set the car list up.
+        tb._carList = new java.util.ArrayList<Car>();
+        tb._carList.add(a);
+        tb._carList.add(b);
+        tb._carList.add(c);
+
+
+        try {
+          // with Track.NORMAL order, the car you ask for is the
+          // car you get.
+          Car d = (Car) getCarOrderMethod.invoke(tb,a);
+          Assert.assertEquals("NORMAL Order, 123 first",a,d);
+          d = (Car) getCarOrderMethod.invoke(tb,b);
+          Assert.assertEquals("NORMAL Order, 321 second",b,d);
+          d = (Car) getCarOrderMethod.invoke(tb,c);
+          Assert.assertEquals("NORMAL Order, 111 last",c,d);
+        } catch ( java.lang.IllegalAccessException iae ) {
+          Assert.fail("Could not access method getCarOrder in TrackBuilder class");
+        } catch (java.lang.reflect.InvocationTargetException ite){
+          Throwable cause = ite.getCause();
+          Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
+       }
+    }
+
+    public void testCarOrderFIFO(){
+       resetManagers();
+       TrainBuilder tb = new TrainBuilder();
+       // start by creating a track
+        Location A = lmanager.newLocation("A");
+        Track interchangeTrack = A.addTrack("track", Track.INTERCHANGE);
+        interchangeTrack.setLength(1000);
+        interchangeTrack.setServiceOrder(Track.FIFO);
+
+        java.util.Date date = java.util.Calendar.getInstance().getTime();
+
+        // and placing 3 cars on the track.
+        Car a = cmanager.newCar("ABC", "123");
+        a.setTypeName("Boxcar");
+        a.setLength("50");
+        a.setLastDate(tb.getDate(date));
+        a.setLocation(A, interchangeTrack);
+
+        date.setMinutes(date.getMinutes()+2);
+
+        Car b = cmanager.newCar("ABC", "321");
+        b.setTypeName("Boxcar");
+        b.setLength("50");
+        b.setLastDate(tb.getDate(date));
+        b.setLocation(A, interchangeTrack);
+
+        date.setMinutes(date.getMinutes()+2);
+
+        Car c = cmanager.newCar("ABC", "111");
+        c.setTypeName("Boxcar");
+        c.setLength("50");
+        c.setLastDate(tb.getDate(date));
+        c.setLocation(A, interchangeTrack);
+        
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method getCarOrderMethod=null;
+        try {
+          getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarOrder", Car.class);
+        } catch(java.lang.NoSuchMethodException nsm) {
+          Assert.fail("Could not find method getCarOrder in TrackBuilder class: " );
+        }
+
+        // override the default permissions.
+        getCarOrderMethod.setAccessible(true);
+  
+        // and set the car list up.
+        tb._carList = new java.util.ArrayList<Car>();
+        tb._carList.add(a);
+        tb._carList.add(b);
+        tb._carList.add(c);
+
+        try {
+          // FIFO order should always return 123.
+          Car d = (Car) getCarOrderMethod.invoke(tb,a);
+          Assert.assertEquals("FIFO Order, 123 first",a,d);
+          d = (Car) getCarOrderMethod.invoke(tb,b);
+          Assert.assertEquals("FIFO Order, 123 second",a,d);
+          d = (Car) getCarOrderMethod.invoke(tb,c);
+          Assert.assertEquals("FIFO Order, 123 third",a,d);
+        } catch ( java.lang.IllegalAccessException iae ) {
+          Assert.fail("Could not access method getCarOrder in TrackBuilder class");
+        } catch (java.lang.reflect.InvocationTargetException ite){
+          Throwable cause = ite.getCause();
+          Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
+       }
+    }
+
+
+    public void testCarOrderLIFO(){
+       resetManagers();
+       TrainBuilder tb = new TrainBuilder();
+       // start by creating a track
+        Location A = lmanager.newLocation("A");
+        Track interchangeTrack = A.addTrack("track", Track.INTERCHANGE);
+        interchangeTrack.setLength(1000);
+        interchangeTrack.setServiceOrder(Track.LIFO);
+
+        java.util.Date date = java.util.Calendar.getInstance().getTime();
+
+        // and placing 3 cars on the track.
+        Car a = cmanager.newCar("ABC", "123");
+        a.setTypeName("Boxcar");
+        a.setLength("50");
+        a.setLastDate(tb.getDate(date));
+        a.setLocation(A, interchangeTrack);
+
+        date.setMinutes(date.getMinutes()+2);
+
+        Car b = cmanager.newCar("ABC", "321");
+        b.setTypeName("Boxcar");
+        b.setLength("50");
+        b.setLastDate(tb.getDate(date));
+        b.setLocation(A, interchangeTrack);
+
+        date.setMinutes(date.getMinutes()+2);
+
+        Car c = cmanager.newCar("ABC", "111");
+        c.setTypeName("Boxcar");
+        c.setLength("50");
+        c.setLastDate(tb.getDate(date));
+        c.setLocation(A, interchangeTrack);
+        
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method getCarOrderMethod=null;
+        try {
+          getCarOrderMethod = tb.getClass().getDeclaredMethod("getCarOrder", Car.class);
+        } catch(java.lang.NoSuchMethodException nsm) {
+          Assert.fail("Could not find method getCarOrder in TrackBuilder class: " );
+        }
+
+        // override the default permissions.
+        getCarOrderMethod.setAccessible(true);
+  
+        // and set the car list up.
+        tb._carList = new java.util.ArrayList<Car>();
+        tb._carList.add(a);
+        tb._carList.add(b);
+        tb._carList.add(c);
+
+        try {
+          // LIFO order should always return 111.
+          Car d = (Car) getCarOrderMethod.invoke(tb,c);
+          Assert.assertEquals("LIFO Order, 111 first",c,d);
+          d = (Car) getCarOrderMethod.invoke(tb,b);
+          Assert.assertEquals("LIFO Order, 111 second",c,d);
+          d = (Car) getCarOrderMethod.invoke(tb,a);
+          Assert.assertEquals("LIFO Order, 111 third",c,d);
+        } catch ( java.lang.IllegalAccessException iae ) {
+          Assert.fail("Could not access method getCarOrder in TrackBuilder class");
+        } catch (java.lang.reflect.InvocationTargetException ite){
+          Throwable cause = ite.getCause();
+          Assert.fail("getCarOrder  executon failed reason: " + cause.getMessage());
+       }
+    }
+
     // reset managers
     private void resetManagers(){
         // Need to clear out TrainManager global variables
@@ -6059,4 +6264,5 @@ public class TrainBuilderTest extends TestCase {
         String[] status = train.getStatus().split(" ");
         return status[0];
     }
+
 }
