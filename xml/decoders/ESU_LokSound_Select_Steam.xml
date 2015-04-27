@@ -54,8 +54,10 @@
   <version author="Dave Heap" version="16" lastUpdated="20140324"/>
   <!-- ver17 added a Steam Generic model to use with as-yet undefined models -->
   <version author="Dave Heap" version="17" lastUpdated="20140205"/>
+  <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+  <version author="Dave Heap" version="18" lastUpdated="20150427"/>
   <decoder>
-    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
+    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
       <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
         <size length="1.41" width=".51" height=".25" units="inches"/>
         <functionlabels>
@@ -398,6 +400,7 @@
       <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>

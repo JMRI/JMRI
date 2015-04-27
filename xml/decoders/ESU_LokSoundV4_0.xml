@@ -50,36 +50,38 @@
   <version author="Dave Heap" version="14" lastUpdated="20140107"/>
   <!-- ver15 changed all indexed CVs to new form -->
   <version author="Dave Heap" version="15" lastUpdated="20140114"/>
+  <!-- ver16 renamed where necessary to match ESU practice and added decoder-matchable Product IDs-->
+  <version author="Dave Heap" version="16" lastUpdated="20150427"/>
   <decoder>
     <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
-      <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
+      <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
         <size length="30.5" width="15.5" height="5.5" units="mm"/>
       </model>
-      <model show="no" model="LokSound V4.0 NEM652" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
-        <size length="30.5" width="15.5" height="5.5" units="mm"/>
-      </model>
-      <model show="no" model="LokSound V4.0 21MTC" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
-        <size length="30.5" width="15.5" height="5.5" units="mm"/>
-      </model>
-      <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
+      <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497">
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
       </model>
-      <model show="no" model="LokSound Micro V4.0 NEM651" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
-        <size length="25.3" width="10.6" height="3.8" units="mm"/>
-      </model>
-      <model show="no" model="LokSound Micro V4.0 NEM652" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
-        <size length="25.3" width="10.6" height="3.8" units="mm"/>
-      </model>
-      <model show="no" model="LokSound Micro V4.0 Next18" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
-        <size length="25.3" width="10.6" height="3.8" units="mm"/>
-      </model>
-      <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+      <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="33554507,33554541">
         <size length="51" width="41" height="14" units="mm"/>
       </model>
-      <model show="no" model="LokSound XL V4.0 Screw Terminals" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+      <model show="no" model="LokSound V4.0 NEM652" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokSound V4.0">
+        <size length="30.5" width="15.5" height="5.5" units="mm"/>
+      </model>
+      <model show="no" model="LokSound V4.0 21MTC" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokSound V4.0">
+        <size length="30.5" width="15.5" height="5.5" units="mm"/>
+      </model>
+      <model show="no" model="LokSound Micro V4.0 NEM651" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+        <size length="25.3" width="10.6" height="3.8" units="mm"/>
+      </model>
+      <model show="no" model="LokSound Micro V4.0 NEM652" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+        <size length="25.3" width="10.6" height="3.8" units="mm"/>
+      </model>
+      <model show="no" model="LokSound Micro V4.0 Next18" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+        <size length="25.3" width="10.6" height="3.8" units="mm"/>
+      </model>
+      <model show="no" model="LokSound XL V4.0 Screw Terminals" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="LokSound XL V4.0">
         <size length="51" width="41" height="14" units="mm"/>
       </model>
-      <model show="no" model="LokSound XL V4.0 PIN connector" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
+      <model show="no" model="LokSound XL V4.0 PIN connector" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="LokSound XL V4.0">
         <size length="51" width="41" height="14" units="mm"/>
       </model>
       <functionlabels>
@@ -145,6 +147,7 @@
       <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>

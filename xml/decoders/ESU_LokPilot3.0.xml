@@ -16,6 +16,8 @@
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.1" lastUpdated="20090218"/>
   <version author="Jeff Schmaltz escopetas@comcast.net" version="1.0" lastUpdated="20080131"/>
   <version author="Jos Wils, wilsjos@orcon.net.nz" version="2.0" lastUpdated="20111103"/>
+  <!-- ver2.1 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+  <version author="Dave Heap" version="2.1" lastUpdated="20150427"/>
   <!--
      This decoder configuration file is based on ESU_LokPilotDCC.xml
      V 4, dated 20050619, by Walter Thompson. Which also acknowledged
@@ -44,7 +46,7 @@
 -->
   <decoder>
     <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255">
-      <model model="LokPilot micro 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
+      <model model="LokPilot Micro V3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554478">
         <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
         </output>
@@ -58,7 +60,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
+      <model model="LokPilot Micro V3.0 DCC" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554479">
         <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
         </output>
@@ -67,7 +69,7 @@
         </output>
         <size length="13.5" width="9" height="3.0" units="mm"/>
       </model>
-      <model model="LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
+      <model model="LokPilot V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554460,33554470,33554473">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
         </output>
@@ -83,7 +85,7 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
+      <model model="LokPilot V3.0 DCC" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554461,33554471,33554474">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
         </output>
@@ -94,7 +96,7 @@
         <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
         <size length="23.5" width="15.5" height="5.5" units="mm"/>
       </model>
-      <model model="LokPilot mfx 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
+      <model model="LokPilot Micro Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554486">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
           <label xml:lang="it">Luci Front</label>
         </output>
@@ -109,7 +111,24 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
+      <model model="LokPilot Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="33554476">
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+           <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
+        <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
+        <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
+        <output name="5" label="   AUX3    " maxcurrent="250 mA" connection="wire"/>
+        <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire"/>
+        <size length="17.5" width="15.5" height="5.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model model="LokPilot XL V3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="33554483">
         <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
           <label xml:lang="it">Luci Front</label>
         </output>
@@ -128,7 +147,91 @@
           <protocol>motorola</protocol>
         </protocols>
       </model>
-      <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
+      <model show="no" model="LokPilot micro 3.0" replacementModel="LokPilot Micro V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0">
+        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+        <label xml:lang="it">Luci Retro</label>
+        </output>
+        <size length="13.5" width="9" height="3.0" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="LokPilot micro DCC 3.0" replacementModel="LokPilot Micro V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0 DCC">
+        <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
+        <size length="13.5" width="9" height="3.0" units="mm"/>
+      </model>
+      <model show="no" model="LokPilot 3.0" replacementModel="LokPilot V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0">
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
+        <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
+        <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
+        <size length="23.5" width="15.5" height="5.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="LokPilot DCC 3.0" replacementModel="LokPilot V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0 DCC">
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
+        <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
+        <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
+        <size length="23.5" width="15.5" height="5.5" units="mm"/>
+      </model>
+      <model show="no" model="LokPilot mfx 3.0" replacementModel="LokPilot Micro Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot Micro Fx V3.0">
+        <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
+        <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire"/>
+        <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire"/>
+        <size length="23.5" width="15.5" height="5.5" units="mm"/>
+        <protocols>
+          <protocol>mfx</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="LokPilot XL 3.0" replacementModel="LokPilot XL V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="LokPilot XL V3.0">
+        <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
+          <label xml:lang="it">Luci Front</label>
+        </output>
+        <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
+          <label xml:lang="it">Luci Retro</label>
+        </output>
+        <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other"/>
+        <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other"/>
+        <output name="5" label="   AUX3    " maxcurrent="600 mA" connection="other"/>
+        <output name="6" label="   AUX4    " maxcurrent="600 mA" connection="other"/>
+        <output name="7" label="   AUX5    " maxcurrent="600 mA" connection="other"/>
+        <output name="8" label="   AUX6    " maxcurrent="600 mA" connection="other"/>
+        <size length="64" width="25" height="11.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>motorola</protocol>
+        </protocols>
+      </model>
+      <model show="no" model="LokPilot Fx 3.0" replacementModel="LokPilot Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="LokPilot Fx V3.0">
         <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
            <label xml:lang="it">Luci Front</label>
         </output>

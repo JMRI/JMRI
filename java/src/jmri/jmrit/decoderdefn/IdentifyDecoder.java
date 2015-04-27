@@ -169,8 +169,7 @@ abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
     public boolean test9(int value) {
         if (mfgID == 151) {  // ESU
             productID = productID + (value * 256 * 256 * 256);
-        log.info("modelID: " + modelID);
-        log.info("productID: " + productID);
+            log.info("Decoder returns mfgID:" +mfgID + ";modelID:" +modelID + ";productID:" + productID);
             return true;
         }
         log.error("unexpected step 9 reached with value: " + value);

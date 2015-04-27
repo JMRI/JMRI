@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150412-0136-jake on Sat Apr 11 21:36:55 EDT 2015 $Id$-->
-  <decoderIndex version="582">
+  <!--Written by JMRI version 20150427-0311-heap on Mon Apr 27 13:11:51 EST 2015 $Id$-->
+  <decoderIndex version="614">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -3516,7 +3516,7 @@
         </model>
       </family>
       <family name="ESU LokPilot 3.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="0" highVersionID="255" file="ESU_LokPilot3.0.xml">
-        <model model="LokPilot micro 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
+        <model model="LokPilot Micro V3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554478">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3530,7 +3530,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot micro DCC 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall">
+        <model model="LokPilot Micro V3.0 DCC" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="33554479">
           <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3539,7 +3539,7 @@
           </output>
           <size length="13.5" width="9" height="3.0" units="mm" />
         </model>
-        <model model="LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
+        <model model="LokPilot V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554460,33554470,33554473">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3555,7 +3555,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot DCC 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
+        <model model="LokPilot V3.0 DCC" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554461,33554471,33554474">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3566,7 +3566,7 @@
           <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
           <size length="23.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokPilot mfx 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium">
+        <model model="LokPilot Micro Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="33554486">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3581,7 +3581,24 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot XL 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other">
+        <model model="LokPilot Fx V3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="33554476">
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
+          <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
+          <output name="5" label="   AUX3    " maxcurrent="250 mA" connection="wire" />
+          <output name="6" label="   AUX4    " maxcurrent="250 mA" connection="wire" />
+          <size length="17.5" width="15.5" height="5.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model model="LokPilot XL V3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="33554483">
           <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3600,7 +3617,91 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot Fx 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium">
+        <model show="no" model="LokPilot micro 3.0" replacementModel="LokPilot Micro V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0">
+          <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <size length="13.5" width="9" height="3.0" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="LokPilot micro DCC 3.0" replacementModel="LokPilot Micro V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="25 V" maxMotorCurrent="0.75 A" maxTotalCurrent="1.03 A" numOuts="2" numFns="14" formFactor="N" connector="NMRAsmall" productID="LokPilot Micro V3.0 DCC">
+          <output name="1" label="Front light" maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="140 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <size length="13.5" width="9" height="3.0" units="mm" />
+        </model>
+        <model show="no" model="LokPilot 3.0" replacementModel="LokPilot V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0">
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
+          <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
+          <size length="23.5" width="15.5" height="5.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="LokPilot DCC 3.0" replacementModel="LokPilot V3.0 DCC" replacementFamily="ESU LokPilot 3.0" maxInputVolts="27 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot V3.0 DCC">
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
+          <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
+          <size length="23.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model show="no" model="LokPilot mfx 3.0" replacementModel="LokPilot Micro Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="1.1 A" maxTotalCurrent="1.6 A" numOuts="4" numFns="17" formFactor="HO" connector="NMRAmedium" productID="LokPilot Micro Fx V3.0">
+          <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="250 mA" connection="wire">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <output name="3" label="   AUX1    " maxcurrent="250 mA" connection="wire" />
+          <output name="4" label="   AUX2    " maxcurrent="250 mA" connection="wire" />
+          <size length="23.5" width="15.5" height="5.5" units="mm" />
+          <protocols>
+            <protocol>mfx</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="LokPilot XL 3.0" replacementModel="LokPilot XL V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="3.0 A" maxTotalCurrent="5.0 A" numOuts="8" numFns="17" formFactor="G" connector="other" productID="LokPilot XL V3.0">
+          <output name="1" label="Front light" maxcurrent="600 mA" connection="other">
+            <label xml:lang="it">Luci Front</label>
+          </output>
+          <output name="2" label="Rear light " maxcurrent="600 mA" connection="other">
+            <label xml:lang="it">Luci Retro</label>
+          </output>
+          <output name="3" label="   AUX1    " maxcurrent="600 mA" connection="other" />
+          <output name="4" label="   AUX2    " maxcurrent="600 mA" connection="other" />
+          <output name="5" label="   AUX3    " maxcurrent="600 mA" connection="other" />
+          <output name="6" label="   AUX4    " maxcurrent="600 mA" connection="other" />
+          <output name="7" label="   AUX5    " maxcurrent="600 mA" connection="other" />
+          <output name="8" label="   AUX6    " maxcurrent="600 mA" connection="other" />
+          <size length="64" width="25" height="11.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="LokPilot Fx 3.0" replacementModel="LokPilot Fx V3.0" replacementFamily="ESU LokPilot 3.0" maxInputVolts="40 V" maxMotorCurrent="N/A" maxTotalCurrent="0.5 A" numOuts="6" numFns="14" formFactor="HO" connector="NMRAmedium" productID="LokPilot Fx V3.0">
           <output name="1" label="Front light" maxcurrent="250 mA" connection="wire">
             <label xml:lang="it">Luci Front</label>
           </output>
@@ -3645,7 +3746,7 @@
         </model>
       </family>
       <family name="ESU LokPilot V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilotV4.0.xml">
-        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="4000">
+        <model model="LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554495">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -3663,7 +3764,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="4000">
+        <model model="LokPilot V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554498">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -3676,7 +3777,7 @@
           <size length="21.3" width="15.5" height="5.5" units="mm" />
           <!-- connector="NEM651, NEM 652, 21MTC" -->
         </model>
-        <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="4000">
+        <model model="LokPilot Micro V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554496">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -3694,7 +3795,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot Micro DCC V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="4000">
+        <model model="LokPilot Micro V4.0 DCC" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554502">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -3733,7 +3834,7 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="4000">
+        <model model="LokPilot XL V4.0" numOuts="69" numFns="32" maxMotorCurrent="4A" extFnsESU="yes" productID="33554517">
           <output name="61" label="|" />
           <output name="62" label="|" />
           <output name="63" label="|" />
@@ -3751,9 +3852,55 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
+        <model show="no" model="LokPilot DCC V4.0" replacementModel="LokPilot V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokPilot V4.0 DCC">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
+          <size length="21.3" width="15.5" height="5.5" units="mm" />
+          <!-- connector="NEM651, NEM 652, 21MTC" -->
+        </model>
+        <model show="no" model="LokPilot Micro DCC V4.0" replacementModel="LokPilot Micro V4.0 DCC" replacementFamily="ESU LokPilot V4.0" numOuts="69" numFns="32" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokPilot Micro V4.0 DCC">
+          <output name="61" label="|" />
+          <output name="62" label="|" />
+          <output name="63" label="|" />
+          <output name="64" label="|" />
+          <output name="65" label="|" />
+          <output name="66" label="|" />
+          <output name="67" label="|" />
+          <output name="68" label="|" />
+          <output name="69" label="Virtual drive sound" />
+          <size length="10.5" width="5.8" height="2.8" units="mm" />
+          <!-- connector="NEM651, Next18" -->
+        </model>
       </family>
       <family name="ESU LokPilot Standard V1.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokPilot_StandardV1_0.xml">
-        <model model="LokPilot Standard" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308">
+        <model model="LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="16777308">
+          <output name="1" label="Front|Light" maxcurrent="250 mA" />
+          <output name="2" label="Rear|Light" maxcurrent="250 mA" />
+          <output name="3" label="AUX|1" maxcurrent="250 mA" />
+          <output name="4" label="AUX|2" maxcurrent="250 mA" />
+          <output name="5" label="AUX|3" maxcurrent="logic" />
+          <output name="6" label="AUX|4" maxcurrent="logic" />
+          <output name="7" label="Shunt|Mode" />
+          <output name="8" label="Acceleration|Deceleration" />
+          <output name="9" label="Grade|Crossing" />
+          <output name="10" label="|Dimmer" />
+          <output name="11" label="Dynamic|Brake" />
+          <output name="12" label="Virtual|Sound" />
+          <output name="13" label="|" />
+          <output name="14" label="|" />
+          <output name="15" label="|" />
+          <output name="16" label="|" />
+          <size length="25.5" width="15.5" height="4.5" units="mm" />
+          <!-- connector="NEM651, 21MTC, Plux12, wires" -->
+        </model>
+        <model show="no" model="LokPilot Standard" replacementModel="LokPilot Standard V1.0" replacementFamily="ESU LokPilot Standard V1.0" numOuts="6" maxInputVolts="25 V" maxMotorCurrent="0.9 A" maxTotalCurrent="1.4 A" formFactor="HO" productID="LokPilot Standard V1.0">
           <output name="1" label="Front|Light" maxcurrent="250 mA" />
           <output name="2" label="Rear|Light" maxcurrent="250 mA" />
           <output name="3" label="AUX|1" maxcurrent="250 mA" />
@@ -3804,7 +3951,7 @@
         </model>
       </family>
       <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59" file="ESU_LokSoundV3_5.xml">
-        <model model="LokSound Version 3.5" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+        <model model="LokSound V3.5" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
           <output name="1" label="Front lights" maxcurrent="250mA" />
           <output name="2" label="Rear lights" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -3815,7 +3962,29 @@
             <protocol>motorola</protocol>
           </protocols>
         </model>
-        <model model="LokSound Version 3.5 (21 pin)" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes">
+        <model model="LokSound Micro V3.5" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777241,16777246">
+          <output name="1" label="Front lights" maxcurrent="250mA" />
+          <output name="2" label="Rear lights" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <size length="30" width="15.5" height="6.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="LokSound Version 3.5" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
+          <output name="1" label="Front lights" maxcurrent="250mA" />
+          <output name="2" label="Rear lights" maxcurrent="250mA" />
+          <output name="3" label="AUX 1" maxcurrent="250mA" />
+          <output name="4" label="AUX 2" maxcurrent="250mA" />
+          <size length="30" width="15.5" height="6.5" units="mm" />
+          <protocols>
+            <protocol>dcc</protocol>
+            <protocol>motorola</protocol>
+          </protocols>
+        </model>
+        <model show="no" model="LokSound Version 3.5 (21 pin)" replacementModel="LokSound V3.5" replacementFamily="ESU LokSound V3.5 Silent BEMF/Sound decoders" numOuts="6" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="LokSound V3.5">
           <output name="1" label="Front lights" maxcurrent="250mA" />
           <output name="2" label="Rear lights" maxcurrent="250mA" />
           <output name="3" label="AUX 1" maxcurrent="250mA" />
@@ -3847,34 +4016,34 @@
         </functionlabels>
       </family>
       <family name="ESU LokSound V4.0" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSoundV4_0.xml">
-        <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
+        <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model show="no" model="LokSound V4.0 NEM652" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54400">
-          <size length="30.5" width="15.5" height="5.5" units="mm" />
-        </model>
-        <model show="no" model="LokSound V4.0 21MTC" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="54499">
-          <size length="30.5" width="15.5" height="5.5" units="mm" />
-        </model>
-        <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
+        <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
-        <model show="no" model="LokSound Micro V4.0 NEM651" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54800">
-          <size length="25.3" width="10.6" height="3.8" units="mm" />
-        </model>
-        <model show="no" model="LokSound Micro V4.0 NEM652" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54899">
-          <size length="25.3" width="10.6" height="3.8" units="mm" />
-        </model>
-        <model show="no" model="LokSound Micro V4.0 Next18" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="54898">
-          <size length="25.3" width="10.6" height="3.8" units="mm" />
-        </model>
-        <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+        <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="33554507,33554541">
           <size length="51" width="41" height="14" units="mm" />
         </model>
-        <model show="no" model="LokSound XL V4.0 Screw Terminals" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54500">
+        <model show="no" model="LokSound V4.0 NEM652" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokSound V4.0">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model show="no" model="LokSound V4.0 21MTC" replacementModel="LokSound V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="LokSound V4.0">
+          <size length="30.5" width="15.5" height="5.5" units="mm" />
+        </model>
+        <model show="no" model="LokSound Micro V4.0 NEM651" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model show="no" model="LokSound Micro V4.0 NEM652" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model show="no" model="LokSound Micro V4.0 Next18" replacementModel="LokSound Micro V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="LokSound Micro V4.0">
+          <size length="25.3" width="10.6" height="3.8" units="mm" />
+        </model>
+        <model show="no" model="LokSound XL V4.0 Screw Terminals" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="LokSound XL V4.0">
           <size length="51" width="41" height="14" units="mm" />
         </model>
-        <model show="no" model="LokSound XL V4.0 PIN connector" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="54599">
+        <model show="no" model="LokSound XL V4.0 PIN connector" replacementModel="LokSound XL V4.0" replacementFamily="ESU LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="LokSound XL V4.0">
           <size length="51" width="41" height="14" units="mm" />
         </model>
         <functionlabels>
@@ -3947,7 +4116,196 @@
           <functionlabel num="15" lockable="false">Smash</functionlabel>
         </functionlabels>
       </family>
-      <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select.xml">
+      <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select.xml">
+        <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true" />
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="false" />
+            <functionlabel num="3" lockable="true" />
+            <functionlabel num="4" lockable="true" />
+            <functionlabel num="5" lockable="true" />
+            <functionlabel num="6" lockable="true" />
+            <functionlabel num="7" lockable="true" />
+            <functionlabel num="8" lockable="true" />
+            <functionlabel num="9" lockable="true" />
+            <functionlabel num="10" lockable="true" />
+            <functionlabel num="11" lockable="true" />
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true" />
+            <functionlabel num="14" lockable="true" />
+            <functionlabel num="15" lockable="true" />
+            <functionlabel num="16" lockable="true" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="true" />
+            <functionlabel num="22" lockable="true" />
+            <functionlabel num="23" lockable="true" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true" />
+            <functionlabel num="26" lockable="true" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1" />
+            <soundlabel num="2" />
+            <soundlabel num="3" />
+            <soundlabel num="4" />
+            <soundlabel num="5" />
+            <soundlabel num="6" />
+            <soundlabel num="7" />
+            <soundlabel num="8" />
+            <soundlabel num="9" />
+            <soundlabel num="10" />
+            <soundlabel num="11" />
+            <soundlabel num="12" />
+            <soundlabel num="13" />
+            <soundlabel num="14" />
+            <soundlabel num="15" />
+            <soundlabel num="16" />
+            <soundlabel num="17" />
+            <soundlabel num="18" />
+            <soundlabel num="19" />
+            <soundlabel num="20" />
+            <soundlabel num="21" />
+            <soundlabel num="22" />
+            <soundlabel num="23" />
+            <soundlabel num="24" />
+            <soundlabel num="25">Random sounds</soundlabel>
+            <soundlabel num="26">Automatic brake sound</soundlabel>
+            <soundlabel num="27">Gear shift sound</soundlabel>
+          </soundlabels>
+        </model>
+        <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true" />
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="false" />
+            <functionlabel num="3" lockable="true" />
+            <functionlabel num="4" lockable="true" />
+            <functionlabel num="5" lockable="true" />
+            <functionlabel num="6" lockable="true" />
+            <functionlabel num="7" lockable="true" />
+            <functionlabel num="8" lockable="true" />
+            <functionlabel num="9" lockable="true" />
+            <functionlabel num="10" lockable="true" />
+            <functionlabel num="11" lockable="true" />
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true" />
+            <functionlabel num="14" lockable="true" />
+            <functionlabel num="15" lockable="true" />
+            <functionlabel num="16" lockable="true" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="true" />
+            <functionlabel num="22" lockable="true" />
+            <functionlabel num="23" lockable="true" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true" />
+            <functionlabel num="26" lockable="true" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1" />
+            <soundlabel num="2" />
+            <soundlabel num="3" />
+            <soundlabel num="4" />
+            <soundlabel num="5" />
+            <soundlabel num="6" />
+            <soundlabel num="7" />
+            <soundlabel num="8" />
+            <soundlabel num="9" />
+            <soundlabel num="10" />
+            <soundlabel num="11" />
+            <soundlabel num="12" />
+            <soundlabel num="13" />
+            <soundlabel num="14" />
+            <soundlabel num="15" />
+            <soundlabel num="16" />
+            <soundlabel num="17" />
+            <soundlabel num="18" />
+            <soundlabel num="19" />
+            <soundlabel num="20" />
+            <soundlabel num="21" />
+            <soundlabel num="22" />
+            <soundlabel num="23" />
+            <soundlabel num="24" />
+            <soundlabel num="25">Random sounds</soundlabel>
+            <soundlabel num="26">Automatic brake sound</soundlabel>
+            <soundlabel num="27">Gear shift sound</soundlabel>
+          </soundlabels>
+        </model>
+        <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true" />
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="false" />
+            <functionlabel num="3" lockable="true" />
+            <functionlabel num="4" lockable="true" />
+            <functionlabel num="5" lockable="true" />
+            <functionlabel num="6" lockable="true" />
+            <functionlabel num="7" lockable="true" />
+            <functionlabel num="8" lockable="true" />
+            <functionlabel num="9" lockable="true" />
+            <functionlabel num="10" lockable="true" />
+            <functionlabel num="11" lockable="true" />
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true" />
+            <functionlabel num="14" lockable="true" />
+            <functionlabel num="15" lockable="true" />
+            <functionlabel num="16" lockable="true" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="true" />
+            <functionlabel num="22" lockable="true" />
+            <functionlabel num="23" lockable="true" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true" />
+            <functionlabel num="26" lockable="true" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1" />
+            <soundlabel num="2" />
+            <soundlabel num="3" />
+            <soundlabel num="4" />
+            <soundlabel num="5" />
+            <soundlabel num="6" />
+            <soundlabel num="7" />
+            <soundlabel num="8" />
+            <soundlabel num="9" />
+            <soundlabel num="10" />
+            <soundlabel num="11" />
+            <soundlabel num="12" />
+            <soundlabel num="13" />
+            <soundlabel num="14" />
+            <soundlabel num="15" />
+            <soundlabel num="16" />
+            <soundlabel num="17" />
+            <soundlabel num="18" />
+            <soundlabel num="19" />
+            <soundlabel num="20" />
+            <soundlabel num="21" />
+            <soundlabel num="22" />
+            <soundlabel num="23" />
+            <soundlabel num="24" />
+            <soundlabel num="25">Random sounds</soundlabel>
+            <soundlabel num="26">Automatic brake sound</soundlabel>
+            <soundlabel num="27">Gear shift sound</soundlabel>
+          </soundlabels>
+        </model>
         <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
@@ -4134,7 +4492,7 @@
           <soundlabel num="27">Gear shift sound</soundlabel>
         </soundlabels>
       </family>
-      <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168" file="ESU_LokSound_Select_Steam.xml">
+      <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select_Steam.xml">
         <model model="LokSound Select Steam Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Steam Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>

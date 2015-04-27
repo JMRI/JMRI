@@ -223,5 +223,6 @@
     <display item="Firmware Major Version"/>
     <display item="Firmware Minor Version"/>
     <display item="Firmware Build Number"/>
+<!--     <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoDisplay.xml"/> -->
   </column>
 </pane>

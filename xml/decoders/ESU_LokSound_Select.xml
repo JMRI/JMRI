@@ -54,8 +54,199 @@
   <version author="Dave Heap" version="16" lastUpdated="20140324"/>
   <!-- ver17 added a Diesel Generic model to use with as-yet undefined models -->
   <version author="Dave Heap" version="17" lastUpdated="20140205"/>
+  <!-- ver18 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
+  <version author="Dave Heap" version="18" lastUpdated="20150427"/>
   <decoder>
-    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="168" highVersionID="168">
+    <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255">
+      <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="0" lockable="true"></functionlabel>
+          <functionlabel num="1" lockable="true"></functionlabel>
+          <functionlabel num="2" lockable="false"></functionlabel>
+          <functionlabel num="3" lockable="true"></functionlabel>
+          <functionlabel num="4" lockable="true"></functionlabel>
+          <functionlabel num="5" lockable="true"></functionlabel>
+          <functionlabel num="6" lockable="true"></functionlabel>
+          <functionlabel num="7" lockable="true"></functionlabel>
+          <functionlabel num="8" lockable="true"></functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>
+          <functionlabel num="11" lockable="true"></functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+          <functionlabel num="13" lockable="true"></functionlabel>
+          <functionlabel num="14" lockable="true"></functionlabel>
+          <functionlabel num="15" lockable="true"></functionlabel>
+          <functionlabel num="16" lockable="true"></functionlabel>
+          <functionlabel num="17" lockable="true"></functionlabel>
+          <functionlabel num="18" lockable="true"></functionlabel>
+          <functionlabel num="19" lockable="true"></functionlabel>
+          <functionlabel num="20" lockable="true"></functionlabel>
+          <functionlabel num="21" lockable="true"></functionlabel>
+          <functionlabel num="22" lockable="true"></functionlabel>
+          <functionlabel num="23" lockable="true"></functionlabel>
+          <functionlabel num="24" lockable="true"></functionlabel>
+          <functionlabel num="25" lockable="true"></functionlabel>
+          <functionlabel num="26" lockable="true"></functionlabel>
+          <functionlabel num="27" lockable="true"></functionlabel>
+          <functionlabel num="28" lockable="true"></functionlabel>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="1"></soundlabel>
+          <soundlabel num="2"></soundlabel>
+          <soundlabel num="3"></soundlabel>
+          <soundlabel num="4"></soundlabel>
+          <soundlabel num="5"></soundlabel>
+          <soundlabel num="6"></soundlabel>
+          <soundlabel num="7"></soundlabel>
+          <soundlabel num="8"></soundlabel>
+          <soundlabel num="9"></soundlabel>
+          <soundlabel num="10"></soundlabel>
+          <soundlabel num="11"></soundlabel>
+          <soundlabel num="12"></soundlabel>
+          <soundlabel num="13"></soundlabel>
+          <soundlabel num="14"></soundlabel>
+          <soundlabel num="15"></soundlabel>
+          <soundlabel num="16"></soundlabel>
+          <soundlabel num="17"></soundlabel>
+          <soundlabel num="18"></soundlabel>
+          <soundlabel num="19"></soundlabel>
+          <soundlabel num="20"></soundlabel>
+          <soundlabel num="21"></soundlabel>
+          <soundlabel num="22"></soundlabel>
+          <soundlabel num="23"></soundlabel>
+          <soundlabel num="24"></soundlabel>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+          <soundlabel num="27">Gear shift sound</soundlabel>
+        </soundlabels>
+      </model>
+      <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="0" lockable="true"></functionlabel>
+          <functionlabel num="1" lockable="true"></functionlabel>
+          <functionlabel num="2" lockable="false"></functionlabel>
+          <functionlabel num="3" lockable="true"></functionlabel>
+          <functionlabel num="4" lockable="true"></functionlabel>
+          <functionlabel num="5" lockable="true"></functionlabel>
+          <functionlabel num="6" lockable="true"></functionlabel>
+          <functionlabel num="7" lockable="true"></functionlabel>
+          <functionlabel num="8" lockable="true"></functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>
+          <functionlabel num="11" lockable="true"></functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+          <functionlabel num="13" lockable="true"></functionlabel>
+          <functionlabel num="14" lockable="true"></functionlabel>
+          <functionlabel num="15" lockable="true"></functionlabel>
+          <functionlabel num="16" lockable="true"></functionlabel>
+          <functionlabel num="17" lockable="true"></functionlabel>
+          <functionlabel num="18" lockable="true"></functionlabel>
+          <functionlabel num="19" lockable="true"></functionlabel>
+          <functionlabel num="20" lockable="true"></functionlabel>
+          <functionlabel num="21" lockable="true"></functionlabel>
+          <functionlabel num="22" lockable="true"></functionlabel>
+          <functionlabel num="23" lockable="true"></functionlabel>
+          <functionlabel num="24" lockable="true"></functionlabel>
+          <functionlabel num="25" lockable="true"></functionlabel>
+          <functionlabel num="26" lockable="true"></functionlabel>
+          <functionlabel num="27" lockable="true"></functionlabel>
+          <functionlabel num="28" lockable="true"></functionlabel>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="1"></soundlabel>
+          <soundlabel num="2"></soundlabel>
+          <soundlabel num="3"></soundlabel>
+          <soundlabel num="4"></soundlabel>
+          <soundlabel num="5"></soundlabel>
+          <soundlabel num="6"></soundlabel>
+          <soundlabel num="7"></soundlabel>
+          <soundlabel num="8"></soundlabel>
+          <soundlabel num="9"></soundlabel>
+          <soundlabel num="10"></soundlabel>
+          <soundlabel num="11"></soundlabel>
+          <soundlabel num="12"></soundlabel>
+          <soundlabel num="13"></soundlabel>
+          <soundlabel num="14"></soundlabel>
+          <soundlabel num="15"></soundlabel>
+          <soundlabel num="16"></soundlabel>
+          <soundlabel num="17"></soundlabel>
+          <soundlabel num="18"></soundlabel>
+          <soundlabel num="19"></soundlabel>
+          <soundlabel num="20"></soundlabel>
+          <soundlabel num="21"></soundlabel>
+          <soundlabel num="22"></soundlabel>
+          <soundlabel num="23"></soundlabel>
+          <soundlabel num="24"></soundlabel>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+          <soundlabel num="27">Gear shift sound</soundlabel>
+        </soundlabels>
+      </model>
+      <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543">
+        <size length="1.41" width=".51" height=".25" units="inches"/>
+        <functionlabels>
+          <functionlabel num="0" lockable="true"></functionlabel>
+          <functionlabel num="1" lockable="true"></functionlabel>
+          <functionlabel num="2" lockable="false"></functionlabel>
+          <functionlabel num="3" lockable="true"></functionlabel>
+          <functionlabel num="4" lockable="true"></functionlabel>
+          <functionlabel num="5" lockable="true"></functionlabel>
+          <functionlabel num="6" lockable="true"></functionlabel>
+          <functionlabel num="7" lockable="true"></functionlabel>
+          <functionlabel num="8" lockable="true"></functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>
+          <functionlabel num="11" lockable="true"></functionlabel>
+          <functionlabel num="12" lockable="true"></functionlabel>
+          <functionlabel num="13" lockable="true"></functionlabel>
+          <functionlabel num="14" lockable="true"></functionlabel>
+          <functionlabel num="15" lockable="true"></functionlabel>
+          <functionlabel num="16" lockable="true"></functionlabel>
+          <functionlabel num="17" lockable="true"></functionlabel>
+          <functionlabel num="18" lockable="true"></functionlabel>
+          <functionlabel num="19" lockable="true"></functionlabel>
+          <functionlabel num="20" lockable="true"></functionlabel>
+          <functionlabel num="21" lockable="true"></functionlabel>
+          <functionlabel num="22" lockable="true"></functionlabel>
+          <functionlabel num="23" lockable="true"></functionlabel>
+          <functionlabel num="24" lockable="true"></functionlabel>
+          <functionlabel num="25" lockable="true"></functionlabel>
+          <functionlabel num="26" lockable="true"></functionlabel>
+          <functionlabel num="27" lockable="true"></functionlabel>
+          <functionlabel num="28" lockable="true"></functionlabel>
+        </functionlabels>
+        <soundlabels>
+          <soundlabel num="1"></soundlabel>
+          <soundlabel num="2"></soundlabel>
+          <soundlabel num="3"></soundlabel>
+          <soundlabel num="4"></soundlabel>
+          <soundlabel num="5"></soundlabel>
+          <soundlabel num="6"></soundlabel>
+          <soundlabel num="7"></soundlabel>
+          <soundlabel num="8"></soundlabel>
+          <soundlabel num="9"></soundlabel>
+          <soundlabel num="10"></soundlabel>
+          <soundlabel num="11"></soundlabel>
+          <soundlabel num="12"></soundlabel>
+          <soundlabel num="13"></soundlabel>
+          <soundlabel num="14"></soundlabel>
+          <soundlabel num="15"></soundlabel>
+          <soundlabel num="16"></soundlabel>
+          <soundlabel num="17"></soundlabel>
+          <soundlabel num="18"></soundlabel>
+          <soundlabel num="19"></soundlabel>
+          <soundlabel num="20"></soundlabel>
+          <soundlabel num="21"></soundlabel>
+          <soundlabel num="22"></soundlabel>
+          <soundlabel num="23"></soundlabel>
+          <soundlabel num="24"></soundlabel>
+          <soundlabel num="25">Random sounds</soundlabel>
+          <soundlabel num="26">Automatic brake sound</soundlabel>
+          <soundlabel num="27">Gear shift sound</soundlabel>
+        </soundlabels>
+      </model>
       <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
         <size length="1.41" width=".51" height=".25" units="inches"/>
         <functionlabels>
@@ -260,15 +451,19 @@
     </programming>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/esu/v4standardCVs.xml"/>
-      <variable CV="48" item="Sound Option 2" default="0" include="Diesel Generic">
+      <variable CV="48" item="Sound Option 2" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic">
         <decVal/>
         <label>Sound Configuration Value</label>
+      </variable>
+      <variable CV="48" mask="XXXXVVVV" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 1">
+        <decVal max="15"/>
+        <label>Horn/Whistle</label>
       </variable>
       <variable CV="48" mask="XXXXVVVV" default="0" include="Diesel Generic" item="Sound Select 1">
         <decVal max="15"/>
         <label>Airhorn</label>
       </variable>
-      <variable CV="48" mask="XXXXVVVV" default="3" exclude="Diesel Generic" item="Sound Select 1">
+      <variable CV="48" mask="XXXXVVVV" default="3" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 1">
         <enumVal>
           <enumChoice choice="Nathan K5LA">
             <choice>Nathan K5LA</choice>
@@ -320,6 +515,10 @@
           </enumChoice>
         </enumVal>
         <label>Airhorn</label>
+      </variable>
+      <variable CV="48" mask="XXVVXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro" item="Sound Select 2">
+        <decVal max="3"/>
+        <label>Loco Type</label>
       </variable>
       <variable CV="48" mask="XXVVXXXX" default="0" include="Diesel Generic" item="Sound Select 2">
         <decVal max="3"/>
@@ -567,11 +766,11 @@
         </enumVal>
         <label>Prime Mover</label>
       </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" include="Diesel Generic" item="Sound Select 3">
+      <variable CV="48" mask="XVXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
         <decVal max="1"/>
         <label>Bell</label>
       </variable>
-      <variable CV="48" mask="XVXXXXXX" default="0" exclude="Diesel Generic" item="Sound Select 3">
+      <variable CV="48" mask="XVXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 3">
         <enumVal>
           <enumChoice choice="Slow">
             <choice>Slow</choice>
@@ -582,11 +781,11 @@
         </enumVal>
         <label>Bell</label>
       </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" include="Diesel Generic" item="Sound Select 4">
+      <variable CV="48" mask="VXXXXXXX" default="0" include="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
         <decVal max="1"/>
         <label>Brake Squeal</label>
       </variable>
-      <variable CV="48" mask="VXXXXXXX" default="0" exclude="Diesel Generic" item="Sound Select 4">
+      <variable CV="48" mask="VXXXXXXX" default="0" exclude="LokSound Select,LokSound Select Direct,LokSound Select Micro,Diesel Generic" item="Sound Select 4">
         <enumVal>
           <enumChoice choice="Squeal #1">
             <choice>Squeal #1</choice>
@@ -603,6 +802,7 @@
       <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
     </resets>
   </decoder>
+<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
