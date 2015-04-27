@@ -2,7 +2,7 @@
 <?xml-stylesheet href="/xml/XSLT/operations-locations.xsl" type="text/xsl"?>
 <!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-locations.dtd">
 <operations-config>
-  <!--Written by JMRI version 20150304-1852-Daniel Boudreau on Sun Mar 08 11:42:31 EDT 2015 $Id$-->
+  <!--Written by JMRI version 20150330-1700-Daniel Boudreau on Mon Apr 27 16:27:23 EDT 2015 $Id$-->
   <locations>
     <location id="6" name="Farmington" ops="1" dir="15" switchList="true" physicalLocation="(0.0, 0.0, 0.0)" comment="Small Town, only sidings" switchListComment="">
       <types>
@@ -209,7 +209,7 @@
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="78s11" name="#67 Seeley's Milling Co" locType="Siding" dir="15" length="350" moves="35" schedule="Seeley" scheduleId="1" itemId="1c2" itemCount="0" factor="100" scheduleMode="1">
+      <track id="78s11" name="#67 Seeley's Milling Co" locType="Siding" dir="15" length="350" moves="37" schedule="Seeley" scheduleId="1" itemId="1c1" itemCount="0" factor="100" scheduleMode="1">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
@@ -288,7 +288,7 @@
           <carType name="Tank Oil" />
         </types>
       </track>
-      <track id="78s6" name="#68 Bkrsfld Grain" locType="Siding" dir="15" length="145" moves="41" schedule="Bakersfield Grain" scheduleId="3" itemId="3c1" itemCount="0" factor="100" scheduleMode="1">
+      <track id="78s6" name="#68 Bkrsfld Grain" locType="Siding" dir="15" length="145" moves="43" schedule="Bakersfield Grain" scheduleId="3" itemId="3c1" itemCount="0" factor="100" scheduleMode="1">
         <types>
           <carType name="Boxcar" />
           <carType name="HopGrain" />
@@ -459,7 +459,7 @@
         <carType name="Tank Veg" />
         <locoType name="Diesel" />
       </types>
-      <track id="83s1" name="yard" locType="Yard" dir="15" length="1300" moves="279">
+      <track id="83s1" name="yard" locType="Yard" dir="15" length="1300" moves="280">
         <types>
           <carType name="Boxcar" />
           <carType name="Caboose" />
@@ -505,7 +505,7 @@
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="83s4" name="Temple Stuart" locType="Siding" dir="15" length="144" moves="14">
+      <track id="83s4" name="Temple Stuart" locType="Siding" dir="15" length="144" moves="15">
         <types>
           <carType name="Boxcar" />
           <carType name="Flatcar" />
@@ -562,7 +562,7 @@
         <carType name="Tank Veg" />
         <locoType name="Diesel" />
       </types>
-      <track id="84s10" name="#46 Farmers Stock" locType="Siding" dir="11" length="165" moves="20">
+      <track id="84s10" name="#46 Farmers Stock" locType="Siding" dir="11" length="165" moves="21">
         <types>
           <carType name="Stock" />
         </types>
@@ -582,7 +582,7 @@
           <locoType name="Diesel" />
         </types>
       </track>
-      <track id="84s13" name="#427 Majestic HW &amp; Feed" locType="Siding" dir="15" length="88" moves="38">
+      <track id="84s13" name="#427 Majestic HW &amp; Feed" locType="Siding" dir="15" length="88" moves="39">
         <types>
           <carType name="Boxcar" />
         </types>
@@ -592,7 +592,7 @@
           <carType name="Boxcar" />
         </types>
       </track>
-      <track id="84s15" name="#45 Port Machine" locType="Siding" dir="15" length="55" moves="17">
+      <track id="84s15" name="#45 Port Machine" locType="Siding" dir="15" length="55" moves="18">
         <types>
           <carType name="Boxcar" />
           <carType name="Gondola" />
@@ -672,7 +672,7 @@
         <carType name="Tank Oil" />
         <carType name="Tank Veg" />
       </types>
-      <track id="89s1" name="yard" locType="Yard" dir="15" length="440" moves="186">
+      <track id="89s1" name="yard" locType="Yard" dir="15" length="440" moves="187">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -1044,7 +1044,7 @@
           <locoType name="Steam" />
         </types>
       </track>
-      <track id="92s2" name="#95 Yard Track" locType="Staging" dir="15" length="1300" moves="75" loadOptions="6">
+      <track id="92s2" name="#95 Yard Track" locType="Staging" dir="15" length="1300" moves="91" loadOptions="6">
         <types>
           <carType name="Baggage" />
           <carType name="Boxcar" />
@@ -2245,7 +2245,6 @@
           <carType name="Caboose" />
           <carType name="Coal" />
           <carType name="Coilcar" />
-          <locoType name="Diesel" />
           <carType name="Flat Timber" />
           <carType name="FlatBH" />
           <carType name="FlatBHPp" />
@@ -2271,7 +2270,6 @@
           <carType name="Reefer Meat" />
           <carType name="Reefer Milk" />
           <carType name="ReeferIce" />
-          <locoType name="Steam" />
           <carType name="Stock" />
           <carType name="Tank Chem" />
           <carType name="Tank Corn Sy" />
@@ -2280,6 +2278,8 @@
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
           <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
         </types>
       </track>
       <track id="96s2" name="#5" locType="Yard" dir="15" length="140" moves="2">
@@ -2289,7 +2289,6 @@
           <carType name="Caboose" />
           <carType name="Coal" />
           <carType name="Coilcar" />
-          <locoType name="Diesel" />
           <carType name="Flat Timber" />
           <carType name="FlatBH" />
           <carType name="FlatBHPp" />
@@ -2315,7 +2314,6 @@
           <carType name="Reefer Meat" />
           <carType name="Reefer Milk" />
           <carType name="ReeferIce" />
-          <locoType name="Steam" />
           <carType name="Stock" />
           <carType name="Tank Chem" />
           <carType name="Tank Corn Sy" />
@@ -2324,6 +2322,8 @@
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
           <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
         </types>
       </track>
       <track id="96s3" name="#4" locType="Yard" dir="15" length="140" moves="2">
@@ -2333,7 +2333,6 @@
           <carType name="Caboose" />
           <carType name="Coal" />
           <carType name="Coilcar" />
-          <locoType name="Diesel" />
           <carType name="Flat Timber" />
           <carType name="FlatBH" />
           <carType name="FlatBHPp" />
@@ -2359,7 +2358,6 @@
           <carType name="Reefer Meat" />
           <carType name="Reefer Milk" />
           <carType name="ReeferIce" />
-          <locoType name="Steam" />
           <carType name="Stock" />
           <carType name="Tank Chem" />
           <carType name="Tank Corn Sy" />
@@ -2368,6 +2366,8 @@
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
           <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
         </types>
       </track>
       <track id="96s4" name="#3" locType="Yard" dir="15" length="140" moves="2">
@@ -2377,7 +2377,6 @@
           <carType name="Caboose" />
           <carType name="Coal" />
           <carType name="Coilcar" />
-          <locoType name="Diesel" />
           <carType name="Flat Timber" />
           <carType name="FlatBH" />
           <carType name="FlatBHPp" />
@@ -2403,7 +2402,6 @@
           <carType name="Reefer Meat" />
           <carType name="Reefer Milk" />
           <carType name="ReeferIce" />
-          <locoType name="Steam" />
           <carType name="Stock" />
           <carType name="Tank Chem" />
           <carType name="Tank Corn Sy" />
@@ -2412,6 +2410,8 @@
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
           <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
         </types>
       </track>
       <track id="96s5" name="#2" locType="Yard" dir="15" length="140" moves="2">
@@ -2421,7 +2421,6 @@
           <carType name="Caboose" />
           <carType name="Coal" />
           <carType name="Coilcar" />
-          <locoType name="Diesel" />
           <carType name="Flat Timber" />
           <carType name="FlatBH" />
           <carType name="FlatBHPp" />
@@ -2447,7 +2446,6 @@
           <carType name="Reefer Meat" />
           <carType name="Reefer Milk" />
           <carType name="ReeferIce" />
-          <locoType name="Steam" />
           <carType name="Stock" />
           <carType name="Tank Chem" />
           <carType name="Tank Corn Sy" />
@@ -2456,6 +2454,8 @@
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
           <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
         </types>
       </track>
       <track id="96s6" name="#1" locType="Yard" dir="15" length="140" moves="2">
@@ -2465,7 +2465,6 @@
           <carType name="Caboose" />
           <carType name="Coal" />
           <carType name="Coilcar" />
-          <locoType name="Diesel" />
           <carType name="Flat Timber" />
           <carType name="FlatBH" />
           <carType name="FlatBHPp" />
@@ -2491,7 +2490,6 @@
           <carType name="Reefer Meat" />
           <carType name="Reefer Milk" />
           <carType name="ReeferIce" />
-          <locoType name="Steam" />
           <carType name="Stock" />
           <carType name="Tank Chem" />
           <carType name="Tank Corn Sy" />
@@ -2500,13 +2498,15 @@
           <carType name="Tank Kero" />
           <carType name="Tank Oil" />
           <carType name="Tank Veg" />
+          <locoType name="Diesel" />
+          <locoType name="Steam" />
         </types>
       </track>
     </location>
   </locations>
   <schedules>
     <schedule id="1" name="Seeley" comment="">
-      <item id="1c1" sequenceId="1" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="Boxcar" road="" load="" ship="" comment="" hits="0" />
+      <item id="1c1" sequenceId="1" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="Boxcar" road="" load="" ship="" comment="" hits="2" />
       <item id="1c2" sequenceId="2" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="Flatcar" road="OTTX" load="" ship="" comment="" hits="0" />
       <item id="1c3" sequenceId="3" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="Gondola" road="" load="" ship="" comment="" hits="0" />
     </schedule>
@@ -2514,7 +2514,7 @@
       <item id="2c1" sequenceId="1" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="HopGrain" road="" load="E&lt;mpty&gt;" ship="L&lt;wheat&gt;" comment="" hits="0" />
     </schedule>
     <schedule id="3" name="Bakersfield Grain" comment="">
-      <item id="3c1" sequenceId="1" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="HopGrain" road="" load="L&lt;wheat&gt;" ship="E&lt;mpty&gt;" comment="" hits="0" />
+      <item id="3c1" sequenceId="1" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="HopGrain" road="" load="L&lt;wheat&gt;" ship="E&lt;mpty&gt;" comment="" hits="1" />
       <item id="3c2" sequenceId="2" random="" trainScheduleId="" pickupTrainScheduleId="" count="1" wait="0" type="Boxcar" road="" load="" ship="" comment="" hits="0" />
     </schedule>
   </schedules>
