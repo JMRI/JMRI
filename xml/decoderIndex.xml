@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150427-2223-heap on Tue Apr 28 08:24:03 EST 2015 $Id$-->
-  <decoderIndex version="616">
+  <!--Written by JMRI version 20150428-2039-Alain Le Marchand on Tue Apr 28 22:39:18 CEST 2015 $Id$-->
+  <decoderIndex version="618">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4802,8 +4802,15 @@
       <family name="Digital" mfg="Hornby" file="HornbyDigitalFnOnly.xml">
         <model model="DCC-Fitted Function Only (Unmotored trailers)" options="unmotored" numOuts="2" numFns="1" nmraWarrant="no" formFactor="DCC Fitted" comment="Pendolino trailer" />
       </family>
-      <family name="Hornby TTS Sound Decoder" mfg="Hornby" highVersionID="99" lowVersionID="1" comment="" file="HornbyTTS_version1.xml">
-        <model model="Hornby TTS Duke of Gloucester" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A">
+      <family name="Hornby TTS Sound Decoder" mfg="Hornby" comment="" file="HornbyTTS.xml">
+        <model model="Hornby TTS Duke of Gloucester" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="DoG">
+          <versionCV lowVersionID="90" highVersionID="99" />
+          <output name="Headlight" label="Wh" maxcurrent="0.1A" />
+          <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
+          <output name="Aux" label="Gr" maxcurrent="0.1A" />
+        </model>
+        <model model="Hornby TTS Class 37 and Class 40" numOuts="3" numFns="30" maxMotorCurrent="1.0A" formFactor="HO" maxTotalCurrent="1.0A" productID="Cl37">
+          <versionCV lowVersionID="120" highVersionID="120" />
           <output name="Headlight" label="Wh" maxcurrent="0.1A" />
           <output name="Rear Light" label="Ye" maxcurrent="0.1A" />
           <output name="Aux" label="Gr" maxcurrent="0.1A" />
@@ -17568,8 +17575,24 @@
           <functionlabel num="8" lockable="true">Front lights off</functionlabel>
         </functionlabels>
       </family>
-      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" type="locomotive" file="Trix_BB12000_Snd.xml">
-        <model model="Trix_Sound_BB12000" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" file="Trix_Modelleisenbahn_version_1.xml">
+        <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" />
+      </family>
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd.xml">
+        <model show="no" model="Trix_Sound_HO" replacementModel="Trix Sound HO" replacementFamily="Trix_Sound_HO" />
+        <model model="Trix Sound HO" formFactor="HO" comment="Generic Trix HO with Sound" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true" />
+          <functionlabel num="2" lockable="true" />
+          <functionlabel num="3" lockable="true" />
+          <functionlabel num="4" lockable="true" />
+          <functionlabel num="5" lockable="true" />
+        </functionlabels>
+      </family>
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd_BB12000.xml">
+        <model show="no" model="Trix_Sound_BB12000" replacementModel="Trix Sound HO BB12000" replacementFamily="Trix_Sound_HO" />
+        <model model="Trix Sound HO BB12000" numFns="8" lowVersionID="9" highVersionID="9" formFactor="HO" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Sound</functionlabel>
@@ -17580,22 +17603,36 @@
           <functionlabel num="8" lockable="true">Red Cab1</functionlabel>
         </functionlabels>
       </family>
-      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" type="locomotive" file="Trix_Glasscar_Snd.xml">
-        <model model="Glasscar" nmraWarrant="no" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no" />
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd_BR.xml">
+        <model model="Trix Sound HO BR V160" numFns="8" lowVersionID="7" highVersionID="7" productID="V160" formFactor="HO" comment="Trix 22715">
+          <functionlabels>
+            <functionlabel num="3" lockable="true">Horn 1</functionlabel>
+            <functionlabel num="6" lockable="true">Cab 2 Lights</functionlabel>
+            <functionlabel num="7" lockable="true">Horn 2</functionlabel>
+            <functionlabel num="8" lockable="true">Cab 1 Lights</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="Trix Sound HO BR V41" numFns="10" lowVersionID="7" highVersionID="7" productID="V41" formFactor="HO" comment="Trix 22928">
+          <functionlabels>
+            <functionlabel num="1" lockable="true">Smoke Generator</functionlabel>
+            <functionlabel num="3" lockable="true">Whistle</functionlabel>
+            <functionlabel num="6" lockable="true">Air Pump</functionlabel>
+            <functionlabel num="7" lockable="true">Switching Whistle</functionlabel>
+            <functionlabel num="8" lockable="true">Blowing steam</functionlabel>
+            <functionlabel num="9" lockable="true">Coal shoveling</functionlabel>
+            <functionlabel num="10" lockable="true">Rocker grate</functionlabel>
+          </functionlabels>
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
-          <functionlabel num="1" lockable="true">Passengers Lights</functionlabel>
-          <functionlabel num="2" lockable="false">Announcement</functionlabel>
-          <functionlabel num="3" lockable="true">Horn</functionlabel>
-          <functionlabel num="4" lockable="false">ABV</functionlabel>
-          <functionlabel num="5" lockable="true">Dimming lights</functionlabel>
+          <functionlabel num="2" lockable="true">Operating sounds</functionlabel>
+          <functionlabel num="4" lockable="true">Accel/Decel delay (ABV)</functionlabel>
+          <functionlabel num="5" lockable="true">Squealing brakes</functionlabel>
         </functionlabels>
       </family>
-      <family name="Version 1" mfg="Trix Modelleisenbahn" highVersionID="65" lowVersionID="65" comment="Trx Selectrix &amp; DCC decoder" file="Trix_Modelleisenbahn_version_1.xml">
-        <model model="Version 1" numOuts="0" numFns="0" lowVersionID="65" />
-      </family>
-      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd.xml">
-        <model model="Trix_Sound_HO" />
+      <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd_Glasscar.xml">
+        <model show="no" model="Glasscar" replacementModel="Trix Sound HO Glasscar" replacementFamily="Trix_Sound_HO" />
+        <model model="Trix Sound HO Glasscar" numFns="5" formFactor="HO" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Passengers Lights</functionlabel>
