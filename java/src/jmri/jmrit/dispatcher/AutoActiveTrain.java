@@ -319,7 +319,7 @@ public class AutoActiveTrain implements ThrottleListener {
     private PropertyChangeListener _stopSensorListener = null;
     private boolean _stoppingForStopSignal = false;		  // if true, stopping because of signal appearance
     private boolean _stoppingByBlockOccupancy = false;    // if true, stop when _stoppingBlock goes UNOCCUPIED
-    private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
+        private boolean _stoppingUsingSpeedProfile = false;     // if true, using the speed profile against the roster entry to bring the loco to a stop in a specific distance
     private volatile Block _stoppingBlock = null;
     private boolean _resumingAutomatic = false;  // if true, resuming automatic mode after WORKING session
     private boolean _needSetSpeed = false;  // if true, train will set speed according to signal instead of stopping
@@ -380,7 +380,7 @@ public class AutoActiveTrain implements ThrottleListener {
             justification = "OK to not sync here, no conflict expected")
     protected void handleBlockStateChange(AllocatedSection as, Block b) {
         if (b.getState() == Block.OCCUPIED) {
-            // Block changed to OCCUPIED - train has entered this block
+             // Block changed to OCCUPIED - train has entered this block
             if (b == _nextBlock) {
                 _previousBlock = _currentBlock;
                 _currentBlock = _nextBlock;
@@ -427,8 +427,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (log.isDebugEnabled()) {
                     log.debug("setStopNow from Block unoccupied, Block = " + b.getSystemName());
                 }
-                _stoppingByBlockOccupancy = false;
-                _stoppingBlock = null;
+     //           _stoppingByBlockOccupancy = false;
+     //           _stoppingBlock = null;
 // djd may need more code here
                 if (_needSetSpeed) {
                     _needSetSpeed = false;
@@ -563,7 +563,6 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_conSignalMastListener != null) {
             _controllingSignalMast.removePropertyChangeListener(_conSignalMastListener);
             _conSignalMastListener = null;
-
         }
         _controllingSignalMast = null;
     }
@@ -954,8 +953,9 @@ public class AutoActiveTrain implements ThrottleListener {
         }
         switch (task) {
             case END_REVERSAL:
-                /*Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  to stop the loco in the correct block
-                 if the first block we come to has a stopped or held signal*/
+                /* Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  
+                to stop the loco in the correct block
+                 if the first block we come to has a stopped or held signal */
                 _previousBlock = _currentBlock;
                 _activeTrain.setTransitReversed(true);
                 _activeTrain.reverseAllAllocatedSections();
@@ -970,8 +970,9 @@ public class AutoActiveTrain implements ThrottleListener {
             case BEGINNING_RESET:
                 if (_activeTrain.getResetWhenDone()) {
                     if (_activeTrain.getReverseAtEnd()) {
-                        /*Reset _previousBlock to be the _currentBlock if we do a continious reverse otherwise the stop in block method fails  to stop the loco in the correct block
-                         if the first block we come to has a stopped or held signal*/
+                        /* Reset _previousBlock to be the _currentBlock if we do a continious 
+                        reverse otherwise the stop in block method fails  to stop the loco in the correct block
+                         if the first block we come to has a stopped or held signal */
                         _previousBlock = _currentBlock;
                     }
                     if (_activeTrain.getDelayedRestart() == ActiveTrain.NODELAY) {
@@ -1016,6 +1017,8 @@ public class AutoActiveTrain implements ThrottleListener {
         if (_currentAllocatedSection == null) {  // this may occur if the train is not in the selected block when initially created and the signal is held.
             _activeTrain.setStatus(ActiveTrain.WAITING);
         } else if (_currentAllocatedSection.getNextSection() == null) {
+            // wait for train to stop - this lets action items complete in a timely fashion
+            waitUntilStopped();
             _activeTrain.setStatus(ActiveTrain.DONE);
         } else {
             _activeTrain.setStatus(ActiveTrain.WAITING);
