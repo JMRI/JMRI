@@ -257,9 +257,11 @@ public class TrainInfoFile extends jmri.jmrit.XmlFile {
         if (tf.getDelayedRestart() == ActiveTrain.SENSORDELAY) {
             traininfo.setAttribute("delayedrestart", "sensor");
             traininfo.setAttribute("delayedrestartsensor", tf.getRestartDelaySensor());
-        } else if (tf.getDelayedStart() == ActiveTrain.TIMEDDELAY) {
+        } else if (tf.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
             traininfo.setAttribute("delayedrestart", "timed");
             traininfo.setAttribute("delayedrestarttime", tf.getRestartDelayTime());
+        } else {
+            traininfo.setAttribute("delayedrestart", "no");
         }
 
         traininfo.setAttribute("reverseatend", "" + (tf.getReverseAtEnd() ? "yes" : "no"));
