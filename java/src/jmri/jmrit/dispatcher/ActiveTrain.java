@@ -26,28 +26,31 @@ import org.slf4j.LoggerFactory;
  * using a CTC panel or computer logic, and arbitrate any conflicts between
  * ActiveTrains. (Human Dispatcher).
  * <P>
- * An ActiveTrain will have one of the following statuses: RUNNING - Actively
- * running on the layout, according to its mode of operation. PAUSED - Paused
- * waiting for a user-specified number of fast clock minutes. The Active Train
- * is expected to move to either RUNNING or WAITING once the specified number of
- * minutes has elapsed. This is intended for automatic station stops. (automatic
- * trains only) WAITING - Stopped waiting for a Section allocation. This is the
- * state the Active Train is in when it is created in Dispatcher. WORKING -
- * Peforming work under control of a human engineer. This is the state an Active
- * Train assumes when an engineer is picking up or setting out cars at
- * industries. (automatic trains only) READY - Train has completed WORKING, and
- * is awaiting a restart - dispatcher clearance to resume running. (automatic
- * trains only) STOPPED - Train was stopped by the dispatcher. Dispatcher must
- * resume. (automatic trains only) DONE - Train has completed its transit of the
- * layout and is ready to be terminated by the dispatcher. Status is a bound
- * property.
+ * An ActiveTrain will have one of the following statuses:
+ *       RUNNING - Actively running on the layout, according to its mode of operation.
+ *       PAUSED - Paused waiting for a user-specified number of fast clock minutes.  The
+ *                  Active Train is expected to move to either RUNNING or WAITING once the
+ *                  specified number of minutes has elapsed. This is intended for automatic
+ *                  station stops. (automatic trains only)
+ *       WAITING - Stopped waiting for a Section allocation. This is the state the Active
+ *                  Train is in when it is created in Dispatcher.
+ *       WORKING - Performing work under control of a human engineer. This is the state an
+ *                  Active Train assumes when an engineer is picking up or setting out cars
+ *                  at industries. (automatic trains only)
+ *       READY - Train has completed WORKING, and is awaiting a restart - dispatcher clearance
+ *                  to resume running. (automatic trains only)
+ *       STOPPED - Train was stopped by the dispatcher. Dispatcher must resume. (automatic trains only)
+ *       DONE -  Train has completed its transit of the layout and is ready to be terminated 
+ *                  by the dispatcher. 
+ * Status is a bound property.
  * <P>
- * The ActiveTrain status should maintained (setStatus) by the running class, or
- * if running in DISPATCHED mode, by Dispatcher. When an ActiveTrain is WAITING,
- * and the dispatcher allocates a section to it, the status of the ActiveTrain
- * is automatically set to RUNNING. So an autoRun class can listen to the status
- * of the ActiveTrain to trigger start up if the train has been waiting for the
- * dispatcher. Npte: There is still more to be programmed here.
+ * The ActiveTrain status should maintained (setStatus) by the running class, or if running 
+ *       in DISPATCHED mode, by Dispatcher.
+ * When an ActiveTrain is WAITING, and the dispatcher allocates a section to it, the status 
+ *       of the ActiveTrain is automatically set to RUNNING. So an autoRun class can listen 
+ *       to the status of the ActiveTrain to trigger start up if the train has been waiting
+ *       for the dispatcher.
+ * Note: There is still more to be programmed here.
  * <P>
  * Train information supplied when the ActiveTrain is created can come from any
  * of the following: ROSTER - The train was selected from the JMRI roster menu
@@ -145,7 +148,7 @@ public class ActiveTrain {
     private jmri.Transit mTransit = null;
     private String mTrainName = "";
     private int mTrainSource = ROSTER;
-    private jmri.jmrit.roster.RosterEntry mRoster = null;
+        private jmri.jmrit.roster.RosterEntry mRoster = null;
     private int mStatus = WAITING;
     private int mMode = DISPATCHED;
     private boolean mTransitReversed = false;  // true if Transit is running in reverse
@@ -168,18 +171,18 @@ public class ActiveTrain {
     private String mDccAddress = "";
     private boolean mResetWhenDone = true;
     private boolean mReverseAtEnd = false;
-    public final static int NODELAY = 0x00;
-    public final static int TIMEDDELAY = 0x01;
-    public final static int SENSORDELAY = 0x02;
-    private int mDelayedRestart = NODELAY;
-    private int mDelayedStart = NODELAY;
+        public final static int NODELAY = 0x00;
+        public final static int TIMEDDELAY = 0x01;
+        public final static int SENSORDELAY = 0x02;
+        private int mDelayedRestart = NODELAY;
+        private int mDelayedStart = NODELAY;
     private int mDepartureTimeHr = 8;
     private int mDepartureTimeMin = 0;
-    private int mRestartDelay = 0;
+        private int mRestartDelay = 0;
     private NamedBeanHandle<jmri.Sensor> mStartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
     private NamedBeanHandle<jmri.Sensor> mRestartSensor = null; // A Sensor that when changes state to active will trigger the trains start.
     private int mTrainType = LOCAL_FREIGHT;
-    private boolean terminateWhenFinished = false;
+        private boolean terminateWhenFinished = false;
 
     // start up instance variables
     private boolean mStarted = false;
