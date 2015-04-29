@@ -66,6 +66,145 @@ public class CarsTest extends TestCase {
         Assert.assertEquals("Car Moves", 5, c1.getMoves());
     }
 
+    // test setting the location
+    public void testSetLocation(){
+        CarManager manager = CarManager.instance();
+
+        Car c1 = manager.newCar("CP", "1");
+        Car c2 = manager.newCar("ACL", "3");
+        Car c3 = manager.newCar("CP", "3");
+        Car c4 = manager.newCar("CP", "3-1");
+        Car c5 = manager.newCar("PC", "2");
+        Car c6 = manager.newCar("AA", "1");
+
+        //setup the cars
+        c1.setTypeName("Boxcar");
+        c2.setTypeName("Boxcar");
+        c3.setTypeName("Boxcar");
+        c4.setTypeName("Boxcar");
+        c5.setTypeName("Boxcar");
+        c6.setTypeName("Boxcar");
+
+        c1.setLength("13");
+        c2.setLength("9");
+        c3.setLength("12");
+        c4.setLength("10");
+        c5.setLength("11");
+        c6.setLength("14");
+        Location l1 = new Location("id1", "B");
+        Track l1t1 = l1.addTrack("A", Track.SPUR);
+        Track l1t2 = l1.addTrack("B", Track.SPUR);
+        Location l2 = new Location("id2", "C");
+        Track l2t1 = l2.addTrack("B", Track.SPUR);
+        Track l2t2 = l2.addTrack("A", Track.SPUR);
+        Location l3 = new Location("id3", "A");
+        Track l3t1 = l3.addTrack("B", Track.SPUR);
+        Track l3t2 = l3.addTrack("A", Track.SPUR);
+
+        // add track lengths
+        l1t1.setLength(100);
+        l1t2.setLength(100);
+        l2t1.setLength(100);
+        l2t2.setLength(100);
+        l3t1.setLength(100);
+        l3t2.setLength(100);
+
+        l1.addTypeName("Boxcar");
+        l2.addTypeName("Boxcar");
+        l3.addTypeName("Boxcar");
+        l1t1.addTypeName("Boxcar");
+        l1t2.addTypeName("Boxcar");
+        l2t1.addTypeName("Boxcar");
+        l2t2.addTypeName("Boxcar");
+        l3t1.addTypeName("Boxcar");
+        l3t2.addTypeName("Boxcar");
+
+        CarTypes ct = CarTypes.instance();
+        ct.addName("Boxcar");
+
+        // place cars on tracks
+        Assert.assertEquals("place c1", Track.OKAY, c1.setLocation(l1, l1t1));
+        Assert.assertEquals("place c2", Track.OKAY, c2.setLocation(l1, l1t2));
+        Assert.assertEquals("place c3", Track.OKAY, c3.setLocation(l2, l2t1));
+        Assert.assertEquals("place c4", Track.OKAY, c4.setLocation(l2, l2t2));
+        Assert.assertEquals("place c5", Track.OKAY, c5.setLocation(l3, l3t1));
+        Assert.assertEquals("place c6", Track.OKAY, c6.setLocation(l3, l3t2));
+
+    }
+
+    // test setting the destination
+    public void testSetDestination(){
+        CarManager manager = CarManager.instance();
+
+        Car c1 = manager.newCar("CP", "1");
+        Car c2 = manager.newCar("ACL", "3");
+        Car c3 = manager.newCar("CP", "3");
+        Car c4 = manager.newCar("CP", "3-1");
+        Car c5 = manager.newCar("PC", "2");
+        Car c6 = manager.newCar("AA", "1");
+
+        //setup the cars
+        c1.setTypeName("Boxcar");
+        c2.setTypeName("Boxcar");
+        c3.setTypeName("Boxcar");
+        c4.setTypeName("Boxcar");
+        c5.setTypeName("Boxcar");
+        c6.setTypeName("Boxcar");
+
+        c1.setLength("13");
+        c2.setLength("9");
+        c3.setLength("12");
+        c4.setLength("10");
+        c5.setLength("11");
+        c6.setLength("14");
+        Location l1 = new Location("id1", "B");
+        Track l1t1 = l1.addTrack("A", Track.SPUR);
+        Track l1t2 = l1.addTrack("B", Track.SPUR);
+        Location l2 = new Location("id2", "C");
+        Track l2t1 = l2.addTrack("B", Track.SPUR);
+        Track l2t2 = l2.addTrack("A", Track.SPUR);
+        Location l3 = new Location("id3", "A");
+        Track l3t1 = l3.addTrack("B", Track.SPUR);
+        Track l3t2 = l3.addTrack("A", Track.SPUR);
+
+        // add track lengths
+        l1t1.setLength(100);
+        l1t2.setLength(100);
+        l2t1.setLength(100);
+        l2t2.setLength(100);
+        l3t1.setLength(100);
+        l3t2.setLength(100);
+
+        l1.addTypeName("Boxcar");
+        l2.addTypeName("Boxcar");
+        l3.addTypeName("Boxcar");
+        l1t1.addTypeName("Boxcar");
+        l1t2.addTypeName("Boxcar");
+        l2t1.addTypeName("Boxcar");
+        l2t2.addTypeName("Boxcar");
+        l3t1.addTypeName("Boxcar");
+        l3t2.addTypeName("Boxcar");
+
+        CarTypes ct = CarTypes.instance();
+        ct.addName("Boxcar");
+
+        // place cars on tracks
+        c1.setLocation(l1, l1t1);
+        c2.setLocation(l1, l1t2);
+        c3.setLocation(l2, l2t1);
+        c4.setLocation(l2, l2t2);
+        c5.setLocation(l3, l3t1);
+        c6.setLocation(l3, l3t2);
+
+        // set car destinations
+        Assert.assertEquals("destination c1", Track.OKAY, c1.setDestination(l3, l3t1));
+        Assert.assertEquals("destination c2", Track.OKAY, c2.setDestination(l3, l3t2));
+        Assert.assertEquals("destination c3", Track.OKAY, c3.setDestination(l2, l2t2));
+        Assert.assertEquals("destination c4", Track.OKAY, c4.setDestination(l2, l2t1));
+        Assert.assertEquals("destination c5", Track.OKAY, c5.setDestination(l1, l1t1));
+        Assert.assertEquals("destination c6", Track.OKAY, c6.setDestination(l1, l1t2));
+    }
+
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
