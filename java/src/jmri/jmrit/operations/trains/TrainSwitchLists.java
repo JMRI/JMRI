@@ -14,9 +14,13 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarLoads;
+import jmri.jmrit.operations.rollingstock.cars.CarRoads;
+import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -334,8 +338,12 @@ public class TrainSwitchLists extends TrainCommon {
                                 // TODO count utility cars and report, but for now don't report holds for utility cars
                             } else if (!car.isUtility()) {
                                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
-                                        new Object[]{car.getRoadName(), car.getNumber(), car.getTypeName().split("-")[0], car.getLength() +
-                                                LENGTHABV, car.getLoadName(), trackName}));
+                                        new Object[]{padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
+                                                padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
+                                                padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
+                                                padAndTruncateString(car.getLength() + LENGTHABV, Control.max_len_string_length_name),
+                                                padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
+                                                padAndTruncateString(trackName, locationManager.getMaxTrackNameLength())}));
                             }
                         }
                     }
