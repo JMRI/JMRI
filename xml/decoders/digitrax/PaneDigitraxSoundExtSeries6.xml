@@ -11,15 +11,15 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- 									    -->
+<!--                                                                        -->
 <!-- version 1 - Created as a separate file from
                                  John McMasters' Digitrax_2SFX.xml file     -->
 <!--                             for Digitrax Series 6 Sound Decoders       -->
-<!-- 					Alain Le Marchand (2014-04-27)	    -->
+<!--                                    Alain Le Marchand (2014-04-27)      -->
 <!-- version 2 - Add new attribute "include"
-                 only to show with SDXH166D Extended Series 6               -->
- 					Alain Le Marchand (2015-04-29)	    -->
-<!-- 									    -->
+                 only to show with SDXH166D Extended Series 6
+                                    Alain Le Marchand (2015-04-29)          -->
+<!--                                                                        -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" include="SDXH166DExt">
   <row>
     <column>
