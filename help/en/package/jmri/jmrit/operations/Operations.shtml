@@ -661,7 +661,7 @@
    When building trains in aggressive mode, you can control the number of passes the program
    performs. Two passes is the default, and for most users is the correct value. The program works
    best when less than 50% of your tracks are full, and two passes should provide good car movement.
-   If your layout to more towards the full side of the equation, increasing the number of passes
+   If your layout is more towards the full side of the equation, increasing the number of passes
    could increase car movement. In most cases, three passes is more than adequate, and if your
    layout is jammed with cars, four passes might provide you with good car movement. The
    one major drawback to increasing the number of passes, is that your train build reports will be
@@ -783,7 +783,7 @@
    If you want the OperationsPro&trade; to log your locomotive, car, or train movements to a file,
    select the appropriate checkboxes. The program will create a new directory called "logger" in the
    operations directory. For each day's session the program will create a new file (.csv) using the
-   day's date. Use a program like MS Excel to view the file. 
+   day's date. Use a program like Microsoft Excel to view the file. 
    
    <A NAME="ManifestOptions"></A>
    <H3>Options</H3>
@@ -1144,16 +1144,19 @@
 
    <H3>Switch List Options</H3>
 
-   You can include in your switch lists the train's
-   <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox. 
+   The first option "By Track Summary" lists all car pick ups, set outs, and holds at a location by
+   track and train at the end of the switch list. Deselect this option if you don't want this
+   summary. 
+   
+   <P>You can include in your switch lists the train's
+   <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox.</P>
    
    <A NAME="ManifestComments"></A>
    <H3>Manifests and Switch List Options</H3>
 
-   OperationsPro&trade; allows you to customize your train manifest to your liking. You can change the
-   manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text" windows
-   found under the
-   <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. The "Manifest Print Option" window contains
+   OperationsPro&trade; allows you to customize your train manifest to your liking. You can change
+   the manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text"
+   windows found under the <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. The "Manifest Print Option" window contains
    ten optional checkboxes and their functions are described next.
    <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
     which isn't the same as when the manifest was printed. The print time is always shown at the top
@@ -1237,7 +1240,7 @@
 
    <p>You can adjust the amount of information that the build report will show. Select one of
     the four levels using the radio buttons in the Build Report Options window. The program when
-    generating the build reports stores the "Very Detailed" information to disk. The radio buttons
+    generating the build reports stores the "Very Detailed" information to a file. The radio buttons
     control how much of that data is actually printed. The "Minimal" radio button provides the least
     amount of information and "Very Detailed" provides the most. If you're only interested why a
     train won't build, the "Minimal" setting might provide you with this information. The "Normal"
@@ -1527,13 +1530,13 @@
     Enter a name for your schedule and press the "Add Schedule" button at the bottom of the window.
     Now add your first delivery for this spur by selecting a car type in the menu box found in the
     lower left corner of the window and pressing the "Add car type" button. A new item should appear
-    in your schedule containing the type of car, pull down menus for random, delivery, roads, loads,
+    in your schedule containing the type of car, pull down menus for random, delivery, road, loads,
     destinations, and pickup. The schedule item also includes count of 1 and a wait of 0. Leave the
     pull down menu item blank for any field you don't care about.
     </p>
     <P>You can if
-    you wish specify a particular road for the type of car you entered, or leave it blank if you
-    don't care about the road name. You can also specify the car load received and shipped. You can
+    you wish specify a particular "Road" for the type of car you entered, or leave it blank if you
+    don't care about the road name. You can also specify the car load "Received" and "Shipped". You can
     also control if the car will be delivered during the session and when the car is to be picked
     up. Select from the "Delivery" pull down menu the train timetable when you want the car
     delivered. Select under "Pickup" when you want the car pulled from the spur. You can also
@@ -1542,14 +1545,14 @@
     car will only be serviced when that train timetable is active. See Trains-&gt;Tools-&gt;<A
      HREF="#Timetable">Timetable</A> to select the train timetable for your session.
    </P>
-   <P>You can also select a random value for any schedule item. If you select a value of 15, it
+   <P>You can also select a "Random" value for any schedule item. If you select a value of 15, it
     means that the item has a 15 percent chance of being selected if all of the other criteria for
     the schedule item was met, and there was track space available for the car. This feature is
     useful for a RIP track where you would want cars to be randomly sent to the repair facility. For
     example, a random value of 2 would mean that roughly 1 in 50 cars could be sent the to RIP
     track.</P>
 
-   <P>If you wanted more than one car type to be delivered consecutively, increase the count to
+   <P>If you wanted more than one car type to be delivered consecutively, increase the "Count" to
     the number that you wish. The maximum count is 100 and the minimum is 1. In the schedule shown
     above, the schedule is requesting two SP Boxcars in a row, then a Tank Oil car with with a load
     of "L(Oil)". After the Tank Oil car is delivered the schedule starts from the beginning, again
@@ -1561,6 +1564,7 @@
     schedule you like. Press "Save Schedule" and close the schedule window when you are done. Note
     only car types and roads that are accepted by this spur are available. If a car type or road
     isn't available, check the car types and roads for this spur and location.</P>
+    
    <P>The schedule controls when and what cars will be delivered and the car order. It makes the
     spur more restrictive, only cars demanded by the schedule will be delivered to the spur. Looking
     at the schedule you will see a pointer in the table under the heading "Current", the pointer
@@ -2213,7 +2217,7 @@
    <H3>Add, Find, Save Buttons</H3>
 
    There are three buttons located at the bottom of the Cars window. The "Add" button allows you to
-   add a car to your roster. The "Save" button stores the cars roster to disk. It also saves the
+   add a car to your roster. The "Save" button stores the cars roster to a file. It also saves the
    Cars window position and size, and any changes you made to the table widths. The "Find" button
    and the adjacent text window can be used to find a car by its road number. You can use the wild
    card "*" when entering a car number. For example if you want to find all cars with numbers that
@@ -3679,7 +3683,7 @@
    <A NAME="ReadingBuildReport"></A>
    <H3>Reading the Build Report</H3>
 
-   OperationsPro&trade; when building a train creates a build report and saves it to disk. Normally you would
+   OperationsPro&trade; when building a train creates a build report and saves it to a file. Normally you would
    access the build report from the <A HREF="#BuildingTrains">Trains</A> window or from the edit
    train "Tools" menu. The text files can be found in the JMRI-&gt;operations-&gt;buildstatus
    directory. The build report shows the steps the operations program goes through while building a
