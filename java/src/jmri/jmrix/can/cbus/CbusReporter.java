@@ -32,7 +32,6 @@ import org.slf4j.LoggerFactory;
 public class CbusReporter extends AbstractReporter implements CanListener {
 
     private final int _number;
-    private final TrafficController tc;
 
     @SuppressWarnings("LeakingThisInConstructor")
     public CbusReporter(int number, TrafficController tc, String prefix) {  // a human-readable Reporter number must be specified!
@@ -40,7 +39,6 @@ public class CbusReporter extends AbstractReporter implements CanListener {
         _number = number;
         // At construction, register for messages
         tc.addCanListener(this);
-        this.tc = tc;
         log.debug("Added new reporter " + prefix + "R" + number);
     }
 

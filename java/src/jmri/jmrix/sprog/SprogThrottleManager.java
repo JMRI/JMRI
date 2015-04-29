@@ -48,7 +48,7 @@ public class SprogThrottleManager extends AbstractThrottleManager {
         if (!throttleInUse) {
             throttleInUse = true;
             log.debug("new SprogThrottle for " + address);
-            String addr = "" + ((DccLocoAddress) address).getNumber() + (((DccLocoAddress) address).isLongAddress() ? " 0" : "");
+            String addr = "" + address.getNumber() + ( address.isLongAddress() ? " 0" : "");
             SprogMessage m = new SprogMessage(2 + addr.length());
             int i = 0;
             m.setElement(i++, 'A');
