@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150428-2039-Alain Le Marchand on Tue Apr 28 22:39:18 CEST 2015 $Id$-->
-  <decoderIndex version="618">
+  <!--Written by JMRI version 20150429-1643-Alain Le Marchand on Wed Apr 29 18:43:38 CEST 2015 $Id$-->
+  <decoderIndex version="620">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -878,17 +878,25 @@
           <size length="15" width="7" height="2.7" units="mm" />
         </model>
       </family>
-      <family name="Locomotive lighting" mfg="Digirails" file="Digirails_DR80010.xml">
-        <model model="DR80010" lowVersionID="10" highVersionID="10" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" formFactor="HO" numOuts="8" numFns="18">
-          <output name="1" label="FO 0 Headlight" connection="solder" maxcurrent="500 mA" />
-          <output name="2" label="FO 0 Taillight" connection="solder" maxcurrent="500 mA" />
-          <output name="3" label="FO 1 AUX 1" connection="solder" maxcurrent="500 mA" />
-          <output name="4" label="FO 2 AUX 2" connection="solder" maxcurrent="500 mA" />
-          <output name="5" label="FO 5 LED group 1" connection="other" />
-          <output name="6" label="FO 6 LED group 2" connection="other" />
-          <output name="7" label="FO 7 LED group 3" connection="other" />
-          <output name="8" label="FO 8 LED group 4" connection="other" />
+      <family name="Locomotive lighting" mfg="Digirails" file="Digirails_DR80010-15.xml">
+        <model model="DR80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" productID="80010" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
+          <versionCV lowVersionID="10" highVersionID="10" />
+          <output name="1" label="Head|Light" connection="solder" maxcurrent="500 mA" />
+          <output name="2" label="Tail|Light" connection="solder" maxcurrent="500 mA" />
+          <output name="3" label="AUX|  1  " connection="solder" maxcurrent="500 mA" />
+          <output name="4" label="AUX|  2  " connection="solder" maxcurrent="500 mA" />
+          <output name="5" label="LED|Grp 1" connection="other" />
+          <output name="6" label="LED|Grp 2" connection="other" />
+          <output name="7" label="LED|Grp 3" connection="other" />
+          <output name="8" label="LED|Grp 4" connection="other" />
           <size length="280" width="6" height="1.5" units="mm" />
+        </model>
+        <model model="DR80015" numOuts="3" numFns="18" maxTotalCurrent="900A" productID="80015" formFactor="N" comment="Locomotive function NANO V2.0 - 3 functions">
+          <versionCV lowVersionID="10" highVersionID="10" />
+          <output name="1" label="Head|Light" connection="wire" maxcurrent="500 mA" />
+          <output name="2" label="Tail|Light" connection="wire" maxcurrent="500 mA" />
+          <output name="3" label="AUX|  1  " connection="wire" maxcurrent="500 mA" />
+          <size length="10" width="6" height="3" units="mm" />
         </model>
       </family>
       <family name="Series 3 with FX3, silent, readback" mfg="Digitrax" lowVersionID="49" highVersionID="51" file="Digitrax_01x3.xml">
@@ -1726,81 +1734,6 @@
           <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
           <functionlabel num="11" lockable="false">Greaser</functionlabel>
           <functionlabel num="12" lockable="false">Safety Blowoff</functionlabel>
-        </functionlabels>
-      </family>
-      <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16" file="Digitrax_0SFX_Series6.xml">
-        <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
-          <output name="1" label="White" connection="wire" />
-          <output name="2" label="Yellow" connection="wire" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="F3-Brown" connection="wire" />
-          <output name="6" label="F4-Yellow" connection="wire" />
-          <size length="1.28" width="0.67" height="0.25" units="inches" />
-        </model>
-        <model model="SDXH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166D" comment="H0-Scale 16-bit Sound Decoder, wired">
-          <output name="1" label="White" connection="wire" />
-          <output name="2" label="Yellow" connection="wire" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="F3-Brown" connection="wire" />
-          <output name="6" label="F4-Yellow" connection="wire" />
-          <size length="1.28" width="0.67" height="0.25" units="inches" />
-        </model>
-        <model model="SDN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDN136PS" comment="N/H0-Scale 8-bit Sound Decoder, with medium plug">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <size length="1.0" width="0.41" height="0.19" units="inches" />
-        </model>
-        <model model="SDXN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDXN136PS" comment="N/H0-Scale 16-bit Sound Decoder, with medium plug">
-          <output name="1" label="White" connection="plug" />
-          <output name="2" label="Yellow" connection="plug" />
-          <output name="3" label="Green" connection="wire" />
-          <size length="1.0" width="0.41" height="0.19" units="inches" />
-        </model>
-        <model model="Extended Series 6" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects by John McMasters">
-          <output name="1" label="White" connection="wire" />
-          <output name="2" label="Yellow" connection="wire" />
-          <output name="3" label="Green" connection="wire" />
-          <output name="4" label="Violet" connection="wire" />
-          <output name="5" label="F3-Brown" connection="wire" />
-          <output name="6" label="F4-Yellow" connection="wire" />
-          <size length="1.28" width="0.67" height="0.25" units="inches" />
-          <functionlabels>
-            <functionlabel num="11" lockable="false">Uncoupling</functionlabel>
-            <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>
-            <functionlabel num="14" lockable="true">Emerg. Stop Shutdown</functionlabel>
-            <functionlabel num="15" lockable="false">Sander</functionlabel>
-            <functionlabel num="16" lockable="false">Misc. User Chatter</functionlabel>
-            <functionlabel num="17" lockable="false">Boxcar Boom</functionlabel>
-            <functionlabel num="18" lockable="false">Misc. User Sound</functionlabel>
-            <functionlabel num="19" lockable="true">Enables HEP mode</functionlabel>
-            <functionlabel num="20" lockable="false">Misc. User Sound</functionlabel>
-            <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
-            <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
-            <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
-            <functionlabel num="24" lockable="false">Select Notch 4</functionlabel>
-            <functionlabel num="25" lockable="false">Select Notch 5</functionlabel>
-            <functionlabel num="26" lockable="false">Select Notch 6</functionlabel>
-            <functionlabel num="27" lockable="false">Select Notch 7</functionlabel>
-            <functionlabel num="28" lockable="false">Select Notch 8</functionlabel>
-          </functionlabels>
-        </model>
-        <functionlabels>
-          <functionlabel num="0" lockable="true">Lights</functionlabel>
-          <functionlabel num="1" lockable="true">Bell</functionlabel>
-          <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
-          <functionlabel num="3" lockable="false">Coupler</functionlabel>
-          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
-          <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
-          <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
-          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
-          <functionlabel num="8" lockable="true">Mute</functionlabel>
-          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
-          <functionlabel num="10" lockable="false">Xing Gate Airhorn/Wheel Slip</functionlabel>
-          <functionlabel num="11" lockable="false">Handbrake/Greaser</functionlabel>
-          <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
       </family>
       <family name="Digitrax/Con-cor Sound" mfg="Digitrax" file="Digitrax_1SFX.xml">
@@ -17592,7 +17525,7 @@
       </family>
       <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd_BB12000.xml">
         <model show="no" model="Trix_Sound_BB12000" replacementModel="Trix Sound HO BB12000" replacementFamily="Trix_Sound_HO" />
-        <model model="Trix Sound HO BB12000" numFns="8" lowVersionID="9" highVersionID="9" formFactor="HO" />
+        <model model="Trix Sound HO BB12000" numFns="8" lowVersionID="9" highVersionID="9" formFactor="HO" comment="Trix 22336" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Sound</functionlabel>
@@ -17632,7 +17565,7 @@
       </family>
       <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" file="Trix_Snd_Glasscar.xml">
         <model show="no" model="Glasscar" replacementModel="Trix Sound HO Glasscar" replacementFamily="Trix_Sound_HO" />
-        <model model="Trix Sound HO Glasscar" numFns="5" formFactor="HO" />
+        <model model="Trix Sound HO Glasscar" numFns="5" lowVersionID="7" highVersionID="7" formFactor="HO" comment="Trix 22191 -  Baureihe ET 91 / 491 Gläserner Zug" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Lights</functionlabel>
           <functionlabel num="1" lockable="true">Passengers Lights</functionlabel>

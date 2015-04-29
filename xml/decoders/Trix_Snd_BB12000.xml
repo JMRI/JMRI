@@ -20,7 +20,7 @@
 <decoder>
     <family name="Trix_Sound_HO" mfg="Trix Modelleisenbahn" >
         <model show="no" model="Trix_Sound_BB12000" replacementModel="Trix Sound HO BB12000" replacementFamily="Trix_Sound_HO"></model>
-        <model model="Trix Sound HO BB12000" numFns="8" lowVersionID="9" highVersionID="9" formFactor="HO"></model>
+        <model model="Trix Sound HO BB12000" numFns="8" lowVersionID="9" highVersionID="9" formFactor="HO" comment="Trix 22336" ></model>
         <functionlabels>
             <functionlabel num="0" lockable="true">Lights</functionlabel>
             <functionlabel num="1" lockable="true">Sound</functionlabel>
