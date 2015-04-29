@@ -293,8 +293,12 @@ public class TrainSwitchLists extends TrainCommon {
             // now report car movement by tracks at location
             if (Setup.isTrackSummaryEnabled() && !newTrainsOnly) {
                 clearUtilityCarTypes(); // list utility cars by quantity
-                newLine(fileOut);
-                newLine(fileOut);
+                if (Setup.getSwitchListPageFormat().equals(Setup.PAGE_NORMAL)) {
+                    newLine(fileOut);
+                    newLine(fileOut);
+                } else {
+                    fileOut.write(FORM_FEED);
+                }
                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                         .getStringSwitchListByTrack(), new Object[]{splitString(location.getName())}));
                 // we only need the cars at this location
@@ -315,26 +319,30 @@ public class TrainSwitchLists extends TrainCommon {
                     for (Car car : carList) {
                         if (splitString(car.getTrackName()).equals(trackName)) {
                             if (car.getRouteLocation() != null) {
-                                if (trainName != car.getTrainName()) {
-                                    trainName = car.getTrainName();
-                                    newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
-                                            .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
+                                if (splitString(car.getRouteLocation().getLocation().getName()).equals(splitString(location.getName()))) {
+                                    if (trainName != car.getTrainName()) {
+                                        trainName = car.getTrainName();
+                                        newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+                                                .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
+                                    }
+                                    if (car.isUtility()) {
+                                        pickupUtilityCars(fileOut, carList, car, car.getRouteLocation(), car.getRouteDestination(), !IS_MANIFEST);
+                                    } else {
+                                        pickUpCar(fileOut, car, !IS_MANIFEST);
+                                    }
                                 }
-                                if (car.isUtility()) {
-                                    pickupUtilityCars(fileOut, carList, car, car.getRouteLocation(), car.getRouteDestination(), !IS_MANIFEST);
-                                } else {
-                                    pickUpCar(fileOut, car, !IS_MANIFEST);
-                                }
-                            } else {
+                                // TODO count utility cars and report, but for now don't report holds for utility cars
+                            } else if (!car.isUtility()) {
                                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
-                                        new Object[]{car.getRoadName(), car.getNumber(), car.getTypeName(), car.getLength() +
+                                        new Object[]{car.getRoadName(), car.getNumber(), car.getTypeName().split("-")[0], car.getLength() +
                                                 LENGTHABV, car.getLoadName(), trackName}));
                             }
                         }
                     }
                     for (Car car : carList) {
                         if (splitString(car.getDestinationTrackName()).equals(trackName)) {
-                            if (car.getRouteDestination() != null) {
+                            if (car.getRouteDestination() != null &&
+                                    splitString(car.getRouteDestination().getLocation().getName()).equals(splitString(location.getName()))) {
                                 if (trainName != car.getTrainName()) {
                                     trainName = car.getTrainName();
                                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
