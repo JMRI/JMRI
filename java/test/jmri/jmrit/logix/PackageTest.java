@@ -33,6 +33,7 @@ public class PackageTest extends TestCase {
         suite.addTest(OBlockTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(LogixActionTest.suite());
+        suite.addTest(WarrantTest.suite());
 
         return suite;
     }

@@ -1,8 +1,10 @@
 package jmri.util;
 
 import java.beans.PropertyChangeListener;
+import jmri.ConditionalManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.LogixManager;
 import jmri.MemoryManager;
 import jmri.PowerManager;
 import jmri.SignalHeadManager;
@@ -12,7 +14,9 @@ import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
 import jmri.jmrix.debugthrottle.DebugThrottleManager;
 import jmri.managers.AbstractSignalHeadManager;
+import jmri.managers.DefaultConditionalManager;
 import jmri.managers.DefaultIdTagManager;
+import jmri.managers.DefaultLogixManager;
 import jmri.managers.DefaultMemoryManager;
 import jmri.managers.DefaultSignalMastLogicManager;
 import jmri.managers.InternalLightManager;
@@ -211,6 +215,20 @@ public class JUnitUtil {
     public static void initIdTagManager() {
         InstanceManager.reset(jmri.IdTagManager.class);
         InstanceManager.store(new DefaultIdTagManager(), jmri.IdTagManager.class);
+    }
+
+    public static void initLogixManager() {
+        LogixManager m = new DefaultLogixManager();
+        if (InstanceManager.configureManagerInstance() != null) {
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.LOGIXS);
+        }
+    }
+
+    public static void initConditionalManager() {
+        ConditionalManager m = new DefaultConditionalManager();
+        if (InstanceManager.configureManagerInstance() != null) {
+            InstanceManager.configureManagerInstance().registerConfig(m, jmri.Manager.CONDITIONALS);
+        }
     }
 
     static Logger log = LoggerFactory.getLogger(JUnitUtil.class.getName());
