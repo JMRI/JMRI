@@ -335,8 +335,13 @@ public class TrainSwitchLists extends TrainCommon {
                                         pickUpCar(fileOut, car, !IS_MANIFEST);
                                     }
                                 }
-                                // TODO count utility cars and report, but for now don't report holds for utility cars
-                            } else if (!car.isUtility()) {
+                            } else if (car.isUtility()) {
+                                String s = pickupUtilityCars(carList, car, car.getRouteLocation(), car.getRouteDestination(), !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
+                                if (s != null) {
+                                    newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
+                                            new Object[]{s.trim(), "", "", "", "", ""}));
+                                }
+                            } else {
                                 newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
                                         new Object[]{padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
                                                 padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),

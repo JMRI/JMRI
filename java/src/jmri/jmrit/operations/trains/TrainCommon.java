@@ -1390,6 +1390,8 @@ public class TrainCommon {
                             + splitString(rs.getLocationName()), locationManager.getMaxLocationNameLength()
                             + TrainManifestText.getStringFrom().length() + 1);
         } else if (attribute.equals(Setup.DESTINATION) && isPickup) {
+            if (rs.getDestination() == null)
+                return "";
             if (Setup.isPrintHeadersEnabled()) {
                 return " "
                         + padAndTruncateString(splitString(rs.getDestinationName()), locationManager
