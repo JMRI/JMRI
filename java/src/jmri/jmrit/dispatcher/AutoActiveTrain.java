@@ -427,8 +427,8 @@ public class AutoActiveTrain implements ThrottleListener {
                 if (log.isDebugEnabled()) {
                     log.debug("setStopNow from Block unoccupied, Block = " + b.getSystemName());
                 }
-     //           _stoppingByBlockOccupancy = false;
-     //           _stoppingBlock = null;
+                _stoppingByBlockOccupancy = false;
+                _stoppingBlock = null;
 // djd may need more code here
                 if (_needSetSpeed) {
                     _needSetSpeed = false;
@@ -678,8 +678,10 @@ public class AutoActiveTrain implements ThrottleListener {
     // called by above or when resuming after stopped action
     protected synchronized void setSpeedBySignal() {
         if (_pausingActive || ((_activeTrain.getStatus() != ActiveTrain.RUNNING)
-                && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null) && DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD)
-                || (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
+                && (_activeTrain.getStatus() != ActiveTrain.WAITING)) || ((_controllingSignal == null) 
+                && DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALHEAD)
+                || (DispatcherFrame.instance().getSignalType() == DispatcherFrame.SIGNALMAST && (_controllingSignalMast == null 
+                || (_activeTrain.getStatus() == ActiveTrain.WAITING && !_activeTrain.getStarted())))
                 || (_activeTrain.getMode() != ActiveTrain.AUTOMATIC)) {
             // train is pausing or not RUNNING or WAITING in AUTOMATIC mode, or no controlling signal, 
             //			don't set speed based on controlling signal
@@ -853,10 +855,12 @@ public class AutoActiveTrain implements ThrottleListener {
             // train will not fit comfortably in the Section, stop it immediately
             setStopNow();
         } else if (_resistanceWheels) {
+            // train will fit in current allocated Section and has resistance wheels
             // try to stop by watching Section Block occupancy
             if (_currentAllocatedSection.getSection().getNumBlocks() == 1) {
-                if ((_previousBlock != null) && (_previousBlock.getState() == Block.OCCUPIED)) {
-                    _stoppingBlock = _previousBlock;
+                Block tBlock = _previousAllocatedSection.getSection().getLastBlock();
+                if ((tBlock != null) && (tBlock.getState() == Block.OCCUPIED)) {
+                    _stoppingBlock = tBlock;
                     setStopByBlockOccupancy();
                 } else {
                     setStopNow();
