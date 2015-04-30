@@ -165,7 +165,11 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainId(warrant.getTrainId());
         _runBlind.setSelected(warrant.getRunBlind());
         _warrant.setRunBlind(warrant.getRunBlind());
-        _throttleFactorBox.setText(Float.toString(warrant.getThrottleFactor()));
+        float f = warrant.getThrottleFactor();
+        if (f>=8 || f<=0.1) {
+            f = SignalSpeedMap.getMap().getDefaultThrottleFactor();                                    
+        }
+        _throttleFactorBox.setText(Float.toString(f));
         _warrant.setThrottleFactor(warrant.getThrottleFactor());
         WarrantTableAction.newWarrantFrame(this);
     }

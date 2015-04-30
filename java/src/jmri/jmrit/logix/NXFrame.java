@@ -221,8 +221,8 @@ public class NXFrame extends WarrantRoute {
         String text = _factorbox.getText();
         try {
             _factor = Float.parseFloat(text);
-            if (_factor>8 || _factor<=0.1) {
-                msg = Bundle.getMessage("InvalidNumber", text);                                    
+            if (_factor>=8 || _factor<=0.1) {
+                msg = Bundle.getMessage("InvalidFactor", text);                                    
             }
         } catch (NumberFormatException nfe) {
             msg = Bundle.getMessage("MustBeFloat", text);                                    
@@ -525,7 +525,7 @@ public class NXFrame extends WarrantRoute {
             text = _factorbox.getText();
             _factor = Float.parseFloat(text);
             if (_factor>10 || _factor<=0.1) {
-                return Bundle.getMessage("InvalidNumber", text);                                    
+                return Bundle.getMessage("InvalidFactor", text);                                    
             }
         } catch (NumberFormatException nfe) {
             return Bundle.getMessage("MustBeFloat", text);                                    

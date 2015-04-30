@@ -403,7 +403,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return Bundle.getMessage("MustBeFloat");
         }
         if (fac > 10 || fac <0.05) {
-            return Bundle.getMessage("InvalidNumber", sFactor);                                             
+            return Bundle.getMessage("InvalidFactor", sFactor);                                             
         }
         _throttleFactor = fac;          
         return null;
@@ -724,7 +724,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return _message;
     }   // end setRunMode
     
-    private String acquireThrottle(DccLocoAddress address) {
+    protected String acquireThrottle(DccLocoAddress address) {
         String msg = null;
         if (address == null)  {
             msg = Bundle.getMessage("NoAddress", getDisplayName());
