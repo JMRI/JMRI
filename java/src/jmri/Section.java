@@ -342,6 +342,10 @@ public class Section extends AbstractNamedBean
         }
         return null;
     }
+    
+    public Block getLastBlock() {
+        return mLastBlock;
+    }
 
     String tempSensorName = "";
 
