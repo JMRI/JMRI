@@ -2148,7 +2148,12 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
             // a new active train was created, check for delayed start
             if (at.getDelayedStart() != ActiveTrain.NODELAY && (!at.getStarted())) {
                 delayedTrains.add(at);
-                fastClockWarn();
+                fastClockWarn(true);
+            }    
+// djd needs work here    
+            // check for delayed restart      
+            else if (at.getDelayedRestart() == ActiveTrain.TIMEDDELAY) {
+                fastClockWarn(false);
             }
         }
         newTrainActive = false;
@@ -2158,13 +2163,20 @@ public class DispatcherFrame extends jmri.util.JmriJFrame {
         delayedTrains.remove(at);
     }
 
-    private void fastClockWarn() {
+    private void fastClockWarn(boolean wMess) {
         if (fastClockSensor.getState() == Sensor.ACTIVE) {
             return;
         }
         // warn that the fast clock is not running
+        String mess = "";
+        if (wMess) {
+            mess = rb.getString("FastClockWarn");
+        }
+        else {
+            mess = rb.getString("FastClockWarn2");
+        }
         int selectedValue = JOptionPane.showOptionDialog(dispatcherFrame,
-                rb.getString("FastClockWarn"), rb.getString("WarningTitle"),
+                mess, rb.getString("WarningTitle"),
                 JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null,
                 new Object[]{rb.getString("ButtonYesStart"), rb.getString("ButtonNo")},
                 rb.getString("ButtonNo"));
