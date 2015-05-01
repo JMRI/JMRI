@@ -13,10 +13,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20131102"/>
-  <!-- version 1 made from the MRC_1922 and 1906 -->
-  <!-- version 2 Renaming decoder models -->
+  <!-- version 1 made from the MRC_1922 and 1906        -->
+  <!-- version 2 Renaming decoder models                -->
+  <!-- version 2.1: Refactoring                         -->
+  <!--              Bell Ring Rate (CV54) on Sound pane -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="2" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model show="no" model="Platinum Series Genset Diesel Sound 1916" replacementModel="1916 - HO Scale - Atlas Genset" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
@@ -96,7 +99,7 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <comment>Range 0-63</comment>
       </variable>
-      <variable CV="6" item="Adaptive Back EMF control enable" default="0">
+      <variable CV="6" item="Motor Option 1" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Adaptive Back EMF control enable</label>
       </variable>
@@ -237,7 +240,7 @@
         <label>Bell Volume</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable CV="54" item="Sound Group 3 Option 3" default="3" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>
@@ -292,25 +295,11 @@
         <label>Speed Table</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable CV="113" item="Back EMF Load Control proportional gain Kp" default="20" comment="Range 0-31">
-        <decVal max="31"/>
-        <label>Back EMF Load Control proportional gain Kp</label>
-        <comment>Range 0-31</comment>
-      </variable>
-      <variable CV="114" item="Back EMF Load Control integral gain Ki" default="10" comment="Range 0-31">
-        <decVal max="31"/>
-        <label>Back EMF Load Control integral gain Ki</label>
-        <comment>Range 0-31</comment>
-      </variable>
-      <variable item="Sound Option 4" CV="115" default="1">
-        <enumVal>
-          <enumChoice choice="Off">
-            <choice>Off</choice>
-          </enumChoice>
-          <enumChoice choice="On">
-            <choice>On</choice>
-          </enumChoice>
-        </enumVal>
+      <!-- Motor Control Back EMF -->
+      <xi:include href="http://jmri.org/xml/decoders/mrc/motorBEMF_cv113_114_124.xml"/>
+      <!-- MRC CVs continue -->
+      <variable CV="115" item="Sound Option 4" default="1">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
       <variable CV="116" item="Global lighting option 2" default="255" comment="Range 0-255">
@@ -359,11 +348,6 @@
         </enumVal>
         <label>Prime Mover Type</label>
       </variable>
-      <variable CV="124" item="Back EMF load control intensity (0=off)" default="160" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Back EMF load control intensity (0=off)</label>
-        <comment>Range 0-255</comment>
-      </variable>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="125" default="1">
@@ -371,13 +355,4 @@
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <column>
-      <display item="Adaptive Back EMF control enable"/>
-      <display item="Back EMF load control proportional gain Kp"/>
-      <display item="Back EMF load control integral gain Ki"/>
-      <display item="Back EMF load control intensity (0=off)"/>
-    </column>
-    <name>MRC</name>
-  </pane>
 </decoder-config>

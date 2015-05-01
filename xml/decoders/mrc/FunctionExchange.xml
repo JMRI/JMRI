@@ -28,25 +28,22 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2015-04-27</date>
+      <date>2015-04-30</date>
       <authorinitials>ALM</authorinitials>
-      <revremark>Created from MRC sound1617-1618 file</revremark>
+      <revremark>Created from MRC sound1619to1624 file</revremark>
     </revision>
   </revhistory>
   <!-- Add Your the "includes" here -->
-    <variable CV="113" item="EMF Static Config" default="20">
-      <decVal max="31"/>
-      <label>Back EMF Load Control proportional gain Kp</label>
-      <tooltip>[range 0-31]</tooltip>
+    <variable CV="37" item="Function Map Option 1" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>F3 and F4 Exchange</label>
     </variable>
-    <variable CV="114" item="EMF Dynamic Config" default="10">
-      <decVal max="31"/>
-      <label>Back EMF Load Control integral gain Ki</label>
-      <tooltip>[range 0-31]</tooltip>
+    <variable CV="39" item="Function Map Option 2" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>F5 and F6 Exchange</label>
     </variable>
-    <variable CV="124" item="Load Control" default="160">
-      <decVal max="255"/>
-      <label>Back EMF load control intensity</label>
-      <tooltip>(0=off) [range 0-255]</tooltip>
+    <variable CV="42" item="Function Map Option 3" default="0">
+      <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+      <label>F8 and F12 Exchange</label>
     </variable>
 </variables>

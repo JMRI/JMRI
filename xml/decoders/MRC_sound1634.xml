@@ -13,10 +13,12 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
   <version author="Bill Chown" version="1" lastUpdated="20080503"/>
   <!-- made from the MRC_1636 file by Rick Beaber -->
   <!-- version 2.0: Renaming decoder models       -->
+  <!-- version 2.1: Regular CV21 on Consist pane - removed MRC pane       -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model show="no" model="Synch Diesel Sound 1634" replacementModel="1634 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="2" numFns="12" maxTotalCurrent="0.75A" extFnsMRC="yes">
@@ -77,7 +79,7 @@
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -97,7 +99,7 @@
         <label>Bell Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="54" item="Sound Group 3 Option 4" default="3" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>
@@ -263,25 +265,4 @@
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <column>
-      <label>
-        <text>MRC sound decoders for EMD Modern large diesel locos, item 1634</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Functions Respond To Address"/>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text>Controls whether this loco's functions respond in the consist,</text>
-      </label>
-      <label>
-        <text>or just to this loco's unique address</text>
-      </label>
-    </column>
-    <name>MRC</name>
-  </pane>
 </decoder-config>

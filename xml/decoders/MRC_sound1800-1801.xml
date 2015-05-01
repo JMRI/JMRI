@@ -16,10 +16,12 @@
   <version author="Peter Ulvestad" version="1" lastUpdated="20091228"/>
   <version author="John Crellin" version="2" lastUpdated="20091229"/>
   <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
+  <version author="Alain Le Marchand" version="3.1" lastUpdated="20150501"/>
   <!--   version 1 created from MRC 1806 ver. 1.6 definition    Still requires CVs 118 and 119 added-->
   <!--   version 2 Modified by John Crellin to update the prime mover definitions                   -->
   <!--   version 3 New family for all MRC HO scale: "Sound Decoders"          -->
   <!--             File MRC_soundbrilliance1800.xml renamed MRC_sound1800.xml -->
+  <!--   version 3.1 Bell Ring Rate (CV54) on Sound pane                      -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1800 - HO Scale - ALCO/SD60/SD70/F" numOuts="2" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" comment="Universal, with NMRA 8 pin and 9 pin jst connector">
@@ -116,7 +118,7 @@
         <decVal max="3"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Setting 3" tooltip="selects the Bell Ring Rate [range 0-50]" default="1">
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

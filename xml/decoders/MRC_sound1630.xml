@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="6.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="6" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="5" lastUpdated="20080502"/>
   <version author="Bill Chown" version="4" lastUpdated="20080502"/>
@@ -20,12 +21,13 @@
   <version author="Walter Thompson" version="2" lastUpdated="20060916"/>
   <version author="Bob Jacobsen" version="1" lastUpdated="20060326"/>
   <!-- made from the MRC_1627 file by Rick Beaber -->
-  <!--Updated by Walter Thompson 20060916, Many changes lables and CV  to match Geneis BigBoy -->
+  <!-- Updated by Walter Thompson 20060916, Many changes lables and CV  to match Geneis BigBoy -->
   <!-- version 3 has updated connector, new 1656 model -->
   <!-- version 4 1656 now in separate file -->
   <!-- version 5 Moved consist functions to Consist Pane, added some tooltips -->
   <!-- version 6  New family for all MRC HO scale: "Sound Decoders"          -->
   <!--            File MRC_soundbrilliance1630.xml renamed MRC_sound1630.xml -->
+  <!-- version 6.1: Bell Ring Rate (CV54) on Sound pane                      -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1630 - HO Scale - Steam" numOuts="2" numFns="12" connector="9pin" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -110,12 +112,12 @@
         <label>Bell Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="54" item="Sound Setting 3" default="3" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>
       </variable>
-      <variable item="Sound Option 3" CV="55" default="3" comment="Range 0-3">
+      <variable CV="55" item="Sound Option 3" default="3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Chuff type</label>
         <comment>Range 0-3</comment>

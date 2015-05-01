@@ -14,8 +14,10 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="1.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="1" lastUpdated="20150427"/>
-  <!--   version 1  Created from MRC_sound1957to1959 version 4-->
+  <!-- version 1   Created from MRC_sound1957to1959 version 4   -->
+  <!-- version 1.1 Bell Ring Rate (CV54) on Sound pane          -->
   <decoder>
     <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1960 - N Scale - Kato SD45/SD70MAC/AC4400" numOuts="2" numFns="28" maxTotalCurrent="1.00A" productID="1960" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In, 16-bit">
@@ -215,7 +217,7 @@
         <decVal max="15"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Option 3" tooltip="selects the Bell Ring Rate [range 0-50]" default="20">
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="20">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

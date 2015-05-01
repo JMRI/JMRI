@@ -14,13 +14,15 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="3.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20131013"/>
-  <!--   version 1 - Created from Synch Diesel Sound (16-bit) 1957 - N Scale KATO F Series ver. 1 by John Sebastian-->
-  <!--   version 2 - Switch to includes for common vars-->
-  <!--   version 3 - New family for all MRC N scale: "Sound Decoders - N scale"     -->
-  <!--               File MRC_soundbrilliance1952.xml renamed MRC_sound1952.xml     -->
+  <!-- version 1 - Created from Synch Diesel Sound (16-bit) 1957 - N Scale KATO F Series ver. 1 by John Sebastian-->
+  <!-- version 2 - Switch to includes for common vars-->
+  <!-- version 3 - New family for all MRC N scale: "Sound Decoders - N scale"     -->
+  <!--             File MRC_soundbrilliance1952.xml renamed MRC_sound1952.xml     -->
+  <!-- version 3.1 Bell Ring Rate (CV54) on Sound pane                            -->
   <decoder>
     <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1952 - N Scale - Kato GG1" numOuts="2" numFns="28" maxTotalCurrent="0.75A"  extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In, 16-bit">
@@ -111,7 +113,7 @@
         <decVal max="15"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Setting 4" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

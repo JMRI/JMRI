@@ -13,8 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150501"/>
   <version author="Bill Chown" version="1" lastUpdated="20080226"/>
   <!-- made from the MRC_1656 (Pete Cesaro) file by Bill Chown orrrbrit2004@yahoo.com -->
+  <!-- version 2: Regular CV21 on Consist pane - removed MRC pane                     -->
   <decoder>
     <family name="MRC Light Effect Decoders" mfg="MRC" lowVersionID="32" highVersionID="32">
       <model model="5 Function decoder 1650" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -73,7 +75,7 @@
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -158,19 +160,4 @@
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <column>
-      <display item="Functions Respond To Address"/>
-      <label>
-        <text> </text>
-      </label>
-      <label>
-        <text>Controls whether this loco's functions (lights) respond in the consist,</text>
-      </label>
-      <label>
-        <text>or just to this loco's unique address</text>
-      </label>
-    </column>
-    <name>MRC</name>
-  </pane>
 </decoder-config>

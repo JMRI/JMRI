@@ -28,12 +28,17 @@
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
       <revnumber>1</revnumber>
-      <date>2015-04-27</date>
+      <date>2015-04-30</date>
       <authorinitials>ALM</authorinitials>
-      <revremark>Created from MRC sound1617-1618 file</revremark>
+      <revremark>Created from MRC sound1619to1624 file</revremark>
     </revision>
   </revhistory>
   <!-- Add Your the "includes" here -->
+    <variable CV="112" item="EMF Option 1" default="0">
+      <decVal max="7"/>
+      <label>Back EMF start speed adjustment</label>
+      <tooltip>Range 0-7</tooltip>
+    </variable>
     <variable CV="113" item="EMF Static Config" default="20">
       <decVal max="31"/>
       <label>Back EMF Load Control proportional gain Kp</label>

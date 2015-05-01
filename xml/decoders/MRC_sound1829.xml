@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Paul Fraker" version="1.2" lastUpdated="20090921"/>
   <version author="Peter Ulvestad" version="1.1" lastUpdated="200900904"/>
@@ -22,6 +23,8 @@
   <!-- Version 1.2 Added CV118 & CV119 parameters -->
   <!-- version 2  File MRC_dieselsound1829.xml renamed MRC_sound1829.xml -->
   <!--            Decoder renaming                                       -->
+  <!-- version 2.1 Regular CV21 on Consist pane - removed MRC pane       -->
+  <!--             Bell Ring Rate (CV54) on Sound pane                   -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="29" highVersionID="29" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model show="no" model="Synch Diesel Sound 1829" replacementModel="1829 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="4" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -102,7 +105,7 @@
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -169,7 +172,8 @@
         <label>Notch Mode</label>
       </variable>
       <!-- Version 1.2 Changed "Sound Group 3 Option 3" to "Sound Setting 15" -->
-      <variable CV="54" item="Sound Setting 15" default="3" tooltip="Bell Ring Rate, Range 0-50, lower is faster" comment="Range 0-50">
+      <!-- Version 2.1 Revert to "Sound Group 3 Option 2"                     -->
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" tooltip="Bell Ring Rate, Range 0-50, lower is faster" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>

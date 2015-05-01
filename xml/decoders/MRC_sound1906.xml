@@ -16,9 +16,13 @@
   <version author="Michael Mosher" version="1" lastUpdated="20110128"/>
   <version author="John Crellin  " version="2" lastUpdated="20120801"/>
   <version author="Alain Le Marchand" version="3" lastUpdated="20150427"/>
+  <version author="Alain Le Marchand" version="3.1" lastUpdated="20150501"/>
   <!-- version 1 made from the MRC_1634 file by Bill Chown -->
   <!-- version 2 Modified to add BEMF and fix 2 sound variables -->
- <!--  Version 3 Renaming decoder models -->
+  <!--  Version 3 Renaming decoder models                       -->
+  <!-- version 3.1  Regular CV21 on Consist pane                -->
+  <!--              Refactoring - removed MRC pane              -->
+  <!--              Removed BEMF (CV113/114 are sound options   -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model show="no" model="Genset Diesel Sound 1906" replacementModel="1906 - HO Scale - Atlas Genset" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
@@ -124,11 +128,11 @@
       <!-- CV=19 -->
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <variable CV="49" mask="XXXXXXXV" tooltip="F12 also sets sound on/off" default="1" item="Sound Option 1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
@@ -246,7 +250,7 @@
         <label>Bell Volume</label>
         <comment>Range 0-15</comment>
       </variable>
-      <variable CV="54" item="Sound Group 3 Option 4" default="3" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>
@@ -290,37 +294,35 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Auto ditch lights flash with horn</label>
       </variable>
-      <variable CV="64" item="Sound Setting 13" default="12" comment="Range 0-15">
+      <variable CV="64" item="Sound Setting 12" default="12" comment="Range 0-15">
         <decVal max="15"/>
         <label>Rail wheel clack</label>
         <comment>Range 0-15</comment>
       </variable>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/kickStart_63.xml"/>
       <variable item="Speed Table" CV="67">
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable CV="113" item="Back EMF Load Control proportional gain Kp" default="20" comment="Range 0-31">
-        <decVal max="31"/>
-        <label>Back EMF Load Control proportional gain Kp</label>
-        <comment>Range 0-31</comment>
+      <!-- Motor Control Back EMF -->
+      <!-- NOi BEMF for this model according to documentation of 2010
+      <xi:include href="http://jmri.org/xml/decoders/mrc/motorBEMF_cv113_114_124.xml"/>
+      -->
+      <!-- MRC CVs continue -->
+      <variable CV="113" item="Sound Setting 15" tooltip="sets the Coupling Fire Volume [range 0-3]" default="3">
+        <decVal max="3"/>
+        <label>Coupling fire volume</label>
       </variable>
-      <variable CV="114" item="Back EMF Load Control integral gain Ki" default="10" comment="Range 0-31">
-        <decVal max="31"/>
-        <label>Back EMF Load Control integral gain Ki</label>
-        <comment>Range 0-31</comment>
+      <variable CV="114" item="Sound Setting 16" tooltip="sets the Brake Release Volume [range 0-3]" default="3">
+        <decVal max="3"/>
+        <label>Brake Release volume</label>
       </variable>
-      <variable CV="124" item="Back EMF load control intensity (0=off)" default="160" comment="Range 0-255">
-        <decVal max="255"/>
-        <label>Back EMF load control intensity (0=off)</label>
-        <comment>Range 0-255</comment>
-      </variable>
-      <variable item="Sound Option 5" CV="115" default="1">
+      <variable CV="115" item="Sound Option 5" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Auto Brake squeal</label>
       </variable>
-      <variable item="Sound Option 6" CV="122" default="3">
+      <variable CV="122" item="Sound Option 6" default="3">
         <enumVal>
           <enumChoice choice="Auto">
             <choice>Auto</choice>
@@ -329,9 +331,9 @@
             <choice>Manual</choice>
           </enumChoice>
         </enumVal>
-        <label>Prime Mover Type</label>
+        <label>Diesel Notch Mode</label>
       </variable>
-      <variable item="Sound Option 7" CV="123" default="0">
+      <variable CV="123" item="Sound Option 7" default="0">
         <enumVal>
           <enumChoice choice="Type 0">
             <choice>Type 0</choice>
@@ -352,12 +354,4 @@
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <column>
-      <display item="Back EMF load control proportional gain Kp"/>
-      <display item="Back EMF load control integral gain Ki"/>
-      <display item="Back EMF load control intensity (0=off)"/>
-    </column>
-    <name>MRC</name>
-  </pane>
 </decoder-config>

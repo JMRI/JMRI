@@ -14,20 +14,12 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Peter Ulvestad" version="1.0" lastUpdated="20091003"/>
-  <!--   version 1.0 Based on MRC_soundbrilliance1806-->
-  <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
-  <!--   version 2.0  New family for all MRC N scale: "Sound Decoders - N Scale" -->
-  <!--                File MRC_soundbrilliance1827.xml renamed MRC_sound1827.xml -->
-  <!--                Added function labels. Motor related CVs on Motor pane     -->
-  <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
-  <!--   version 2.1  Refactoring - Function exchange on Function map pane  -->
-  <!--                Regular CV21 on Consist pane - removed MRC pane       -->
-  <!--                Bell Ring Rate (CV54) on Sound pane                   -->
+  <version author="Alain Le Marchand" version="1" lastUpdated="20150501"/>
+  <!--   version 1 made from MRC_sound1827.xml  -->
   <decoder>
-    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="27" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders">
-      <model model="1827 - N Scale - Kato ALCO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1827" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaced by 0001958">
-        <size length="74.5" width="14" height="3.8" units="mm"/>
+    <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders">
+      <model model="1828 - N Scale - Atlas SD50/60/60M" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1828" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+        <size length="" width="" height="" units="mm"/>
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -44,7 +36,7 @@
         <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
         <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
         <functionlabel num="13" lockable="true">Air Release</functionlabel>
-        <functionlabel num="14" lockable="true">Coupler Lift Bar</functionlabel>
+        <functionlabel num="14" lockable="true">Coupling</functionlabel>
         <functionlabel num="15" lockable="true">Air Pump</functionlabel>
         <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
         <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
@@ -56,7 +48,7 @@
         <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
         <functionlabel num="24" lockable="true">Air Release</functionlabel>
         <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
-        <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
+        <functionlabel num="26" lockable="true">Loco Sound</functionlabel>
         <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
         <functionlabel num="28" lockable="true">Air Release</functionlabel>
       </functionlabels>
@@ -64,7 +56,7 @@
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-      <variable CV="2" item="Vstart" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" default="12">
+      <variable CV="2" item="Vstart" tooltip="sets the motor voltage at Speed Step 1 [range 0-32]" default="0">
         <decVal max="32"/>
         <label>Start Voltage</label>
         <label xml:lang="it">Volt Partenza</label>
@@ -126,12 +118,11 @@
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/cv29table1-28.xml"/>
       <!-- MRC CVs -->
-      <xi:include href="http://jmri.org/xml/decoders/mrc/FunctionExchange.xml"/>
       <variable CV="49" mask="XXXXXXXV" item="Sound Option 1" tooltip="can turn off all sound except the Horn" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Sound on/off</label>
       </variable>
-      <variable CV="50" item="Sound Option 2" tooltip="selects the Horn Type [range 0-33] or turns off the Horn [33]" default="17">
+      <variable CV="50" item="Sound Option 2" tooltip="selects the Horn Type [range 0-33] or turns off the Horn [33]" default="4">
         <decVal max="33"/>
         <label>Horn Type</label>
       </variable>
@@ -139,7 +130,7 @@
         <decVal max="3"/>
         <label>Horn Volume</label>
       </variable>
-      <variable CV="52" item="Sound Option 3" tooltip="selects the Bell Type [range 0-7]" default="2">
+      <variable CV="52" item="Sound Option 3" tooltip="selects the Bell Type [range 0-7]" default="3">
         <decVal max="7"/>
         <label>Bell Type</label>
       </variable>
@@ -192,6 +183,9 @@
         <speedTableVal/>
         <label>Speed Table</label>
       </variable>
+      <!-- CV 105-106 -->
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <!-- MRC CVs continue -->
       <variable CV="113" item="Sound Setting 16" tooltip="sets the Coupling Fire Volume [range 0-3]" default="3">
         <decVal max="3"/>
         <label>Coupling fire volume</label>
@@ -218,11 +212,6 @@
         </enumVal>
         <label>Light Mode</label>
       </variable>
-      <variable CV="120" item="Motor Option 1" default="1">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
-        <label>Ultra Slow Speed Control</label>
-        <tooltip>&lt;html&gt;For precise slow speed control in the lower throttle settings&lt;br&gt;can only have values of 0 or 1&lt;/html&gt;</tooltip>
-      </variable>
       <variable CV="122" item="Sound Option 5" tooltip="can only have values of 0 or 3" default="0">
         <enumVal>
           <enumChoice choice="Auto notch - RPM and notch synchro to speed" value="0">
@@ -234,29 +223,10 @@
         </enumVal>
         <label>Diesel notch mode</label>
       </variable>
-      <variable CV="123" item="Sound Option 6" tooltip="&lt;html&gt;selects the Prime Mover Type [SD60, F, Alco, SD70]&lt;br&gt;with traction air compressor cycling randomly&lt;/html&gt;" default="3">
-        <enumVal>
-          <enumChoice choice="SD60" value="0">
-            <choice>SD60</choice>
-          </enumChoice>
-          <enumChoice choice="EMD F" value="1">
-            <choice>EMD F</choice>
-          </enumChoice>
-          <enumChoice choice="Alco" value="2">
-            <choice>Alco</choice>
-          </enumChoice>
-          <enumChoice choice="SD70" value="3">
-            <choice>SD70</choice>
-          </enumChoice>
-          <enumChoice choice="Off" value="4">
-            <choice>Off</choice>
-          </enumChoice>
-        </enumVal>
-        <label>Prime Mover</label>
-      </variable>
-      <variable item="EMF Enable" CV="124" default="0">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-        <label>Back EMF load control on/off</label>
+      <variable CV="123" item="Sound Option 6" default="2">
+        <xi:include href="http://jmri.org/xml/decoders/mrc/enum-PrimeMover4off.xml"/>
+        <label>Prime Mover Type</label>
+        <tooltip>Selects the Prime Mover Type</tooltip>
       </variable>
     </variables>
     <resets>

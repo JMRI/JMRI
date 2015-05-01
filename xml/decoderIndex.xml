@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150429-1643-Alain Le Marchand on Wed Apr 29 18:43:38 CEST 2015 $Id$-->
-  <decoderIndex version="620">
+  <!--Written by JMRI version 20150501-2111-Alain Le Marchand on Fri May 01 23:12:02 CEST 2015 $Id$-->
+  <decoderIndex version="622">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1734,6 +1734,81 @@
           <functionlabel num="10" lockable="false">Xing Gate Airhorn</functionlabel>
           <functionlabel num="11" lockable="false">Greaser</functionlabel>
           <functionlabel num="12" lockable="false">Safety Blowoff</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16" file="Digitrax_0SFX_Series6.xml">
+        <model model="SDH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDH166D" comment="H0-Scale 8-bit Sound Decoder, wired">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="F3-Brown" connection="wire" />
+          <output name="6" label="F4-Yellow" connection="wire" />
+          <size length="1.28" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDXH166D" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166D" comment="H0-Scale 16-bit Sound Decoder, wired">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="F3-Brown" connection="wire" />
+          <output name="6" label="F4-Yellow" connection="wire" />
+          <size length="1.28" width="0.67" height="0.25" units="inches" />
+        </model>
+        <model model="SDN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDN136PS" comment="N/H0-Scale 8-bit Sound Decoder, with medium plug">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <size length="1.0" width="0.41" height="0.19" units="inches" />
+        </model>
+        <model model="SDXN136PS" numOuts="3" numFns="5" maxMotorCurrent="1.0A (peak=2A)" formFactor="N" connector="NMRAmedium" productID="SDXN136PS" comment="N/H0-Scale 16-bit Sound Decoder, with medium plug">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <size length="1.0" width="0.41" height="0.19" units="inches" />
+        </model>
+        <model model="Extended Series 6" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects by John McMasters">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Violet" connection="wire" />
+          <output name="5" label="F3-Brown" connection="wire" />
+          <output name="6" label="F4-Yellow" connection="wire" />
+          <size length="1.28" width="0.67" height="0.25" units="inches" />
+          <functionlabels>
+            <functionlabel num="11" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>
+            <functionlabel num="14" lockable="true">Emerg. Stop Shutdown</functionlabel>
+            <functionlabel num="15" lockable="false">Sander</functionlabel>
+            <functionlabel num="16" lockable="false">Misc. User Chatter</functionlabel>
+            <functionlabel num="17" lockable="false">Boxcar Boom</functionlabel>
+            <functionlabel num="18" lockable="false">Misc. User Sound</functionlabel>
+            <functionlabel num="19" lockable="true">Enables HEP mode</functionlabel>
+            <functionlabel num="20" lockable="false">Misc. User Sound</functionlabel>
+            <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
+            <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
+            <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
+            <functionlabel num="24" lockable="false">Select Notch 4</functionlabel>
+            <functionlabel num="25" lockable="false">Select Notch 5</functionlabel>
+            <functionlabel num="26" lockable="false">Select Notch 6</functionlabel>
+            <functionlabel num="27" lockable="false">Select Notch 7</functionlabel>
+            <functionlabel num="28" lockable="false">Select Notch 8</functionlabel>
+          </functionlabels>
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Lights</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn/Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans/Water Pump</functionlabel>
+          <functionlabel num="6" lockable="false">Notch UP/Blowdown</functionlabel>
+          <functionlabel num="7" lockable="false">Xing Gate Airhorn/Notch DOWN</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="false">Brake squeal</functionlabel>
+          <functionlabel num="10" lockable="false">Xing Gate Airhorn/Wheel Slip</functionlabel>
+          <functionlabel num="11" lockable="false">Handbrake/Greaser</functionlabel>
+          <functionlabel num="12" lockable="false">Safety Blow off</functionlabel>
         </functionlabels>
       </family>
       <family name="Digitrax/Con-cor Sound" mfg="Digitrax" file="Digitrax_1SFX.xml">
@@ -5569,6 +5644,42 @@
           <size length="33" width="10.5" height="5.0" units="mm" />
         </model>
       </family>
+      <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="44" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1644-02.xml">
+        <model model="1644 - N Scale - Kato SD70MAC/AC4400 (version 2)" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1644v2" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+          <size length="77" width="9.7" height="3.5" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="false">Air Release/Acc1 on or off</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="false">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="false">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="false">loco Sound</functionlabel>
+          <functionlabel num="12" lockable="false">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="false">Air release/ Acc2 on or off</functionlabel>
+          <functionlabel num="14" lockable="false">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="false">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="false">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="false">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="false">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="false">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="false">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="false">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="false">Air Release</functionlabel>
+          <functionlabel num="25" lockable="false">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="false">Lococ Sound</functionlabel>
+          <functionlabel num="27" lockable="false">Short Drop</functionlabel>
+          <functionlabel num="28" lockable="false">Air Release</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="44" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1644-1645.xml">
         <model model="1644 - N Scale - Kato SD70MAC/AC4400" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1644" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaced by 0001960">
           <size length="77" width="9.7" height="3.5" units="mm" />
@@ -5614,10 +5725,23 @@
           <size length="45" width="18" height="6.2" units="mm" />
         </model>
       </family>
-      <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sound1658.xml">
+      <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" file="MRC_sound1658-1660.xml">
         <model model="1658 - N Scale - Kato EMD F3" numOuts="2" numFns="12" maxTotalCurrent="1.5A" productID="1658" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaced by 0001957">
           <!-- note only F0 to F12 are NMRA compatible -->
           <size length="90" width="14" height="4.2" units="mm" />
+        </model>
+        <model model="1660 - N Scale - Life-Like C Liner" numOuts="2" numFns="12" maxTotalCurrent="0.75A" productID="1660" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+          <size length="50.5" width="14.8" height="6.5" units="mm" />
+          <functionlabels>
+            <functionlabel num="4" lockable="true">Uncoupling lever</functionlabel>
+            <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+            <functionlabel num="13" lockable="true">Air Release</functionlabel>
+            <functionlabel num="14" lockable="true">Coupling</functionlabel>
+            <functionlabel num="24" lockable="true">Air Release</functionlabel>
+            <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
+            <functionlabel num="26" lockable="true">Loco Sound</functionlabel>
+            <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          </functionlabels>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -5698,18 +5822,18 @@
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="false">Horn</functionlabel>
-          <functionlabel num="3" lockable="true">Ditch Lights</functionlabel>
-          <functionlabel num="4" lockable="true">Coupling1</functionlabel>
-          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="3" lockable="true">Acc light/Air release</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
           <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
           <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
           <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
           <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
           <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
           <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
-          <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
-          <functionlabel num="13" lockable="true">Master Volume Decrease</functionlabel>
-          <functionlabel num="14" lockable="true">Master Volume Increase</functionlabel>
+          <functionlabel num="12" lockable="true">Volume On/Off</functionlabel>
+          <functionlabel num="13" lockable="true">Decrease Volume </functionlabel>
+          <functionlabel num="14" lockable="true">Increase Volume </functionlabel>
           <functionlabel num="15" lockable="true">Air Compressor</functionlabel>
           <functionlabel num="16" lockable="true">Flange Squeal</functionlabel>
           <functionlabel num="17" lockable="true">Air Release</functionlabel>
@@ -5723,7 +5847,7 @@
           <functionlabel num="25" lockable="true">Air Release</functionlabel>
           <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
           <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
-          <functionlabel num="28" lockable="true">Air Release</functionlabel>
+          <functionlabel num="28" lockable="true">Air Compressor Speed</functionlabel>
         </functionlabels>
       </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1800-1801.xml">
@@ -5866,6 +5990,45 @@
           <functionlabel num="28" lockable="true">Air Release</functionlabel>
         </functionlabels>
       </family>
+      <family name="Sound Decoders - G Scale" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1817-1818.xml">
+        <model model="1817 - G Scale - ALCO/SD60/SD70/F" numOuts="4" numFns="28" maxTotalCurrent="5A" productID="1817" extFnsMRC="yes" formFactor="G" comment="G Scale, with 4 Prime Mover sound">
+          <size length="70.5" width="34.0" height="11.4" units="mm" />
+        </model>
+        <model model="1818 - G Scale - SD45/MP15" numOuts="4" numFns="28" maxTotalCurrent="5A" productID="1818" extFnsMRC="yes" formFactor="G" comment="G Scale, with 2 Prime Mover sound">
+          <size length="70.5" width="34.0" height="11.4" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Ditch lights/Acc 1</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling 1</functionlabel>
+          <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+          <functionlabel num="13" lockable="true">Acc 2/Short Air Release</functionlabel>
+          <functionlabel num="14" lockable="true">Coupling 2</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Coupling 3</functionlabel>
+          <functionlabel num="25" lockable="true">Air Release</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders - G Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1819.xml">
         <model model="1819 - G Scale - Steam" maxTotalCurrent="5A" extFnsMRC="yes">
           <!-- note All 28 functions are NMRA compatible -->
@@ -5939,6 +6102,42 @@
           <functionlabel num="28" lockable="true">Air Release</functionlabel>
         </functionlabels>
       </family>
+      <family name="Sound Decoders - S Scale" mfg="MRC" lowVersionID="22" highVersionID="22" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1822.xml">
+        <model model="1822 - S Scale - ALCO/SD60/SD70/F" numOuts="4" numFns="28" maxTotalCurrent="5A" productID="1822" extFnsMRC="yes" formFactor="S" comment="S Scale, with 4 Prime Mover sound">
+          <size length="60.0" width="17.8" height="5.0" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Ditch lights/Acc 1</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling 1</functionlabel>
+          <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+          <functionlabel num="13" lockable="true">Acc 2/Short Air Release</functionlabel>
+          <functionlabel num="14" lockable="true">Coupler Lift Bar</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Air Release</functionlabel>
+          <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="27" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1827.xml">
         <model model="1827 - N Scale - Kato ALCO PA1" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1827" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaced by 0001958">
           <size length="74.5" width="14" height="3.8" units="mm" />
@@ -5971,6 +6170,42 @@
           <functionlabel num="24" lockable="true">Air Release</functionlabel>
           <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
           <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Air Release</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="45" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1828.xml">
+        <model model="1828 - N Scale - Atlas SD50/60/60M" numOuts="2" numFns="28" maxTotalCurrent="0.75A" productID="1828" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In">
+          <size length="" width="" height="" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Air Release</functionlabel>
+          <functionlabel num="4" lockable="true">Uncoupling Lever</functionlabel>
+          <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime Mover Type</functionlabel>
+          <functionlabel num="13" lockable="true">Air Release</functionlabel>
+          <functionlabel num="14" lockable="true">Coupling</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise 1</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Air Release</functionlabel>
+          <functionlabel num="25" lockable="true">Flange Noise 2</functionlabel>
+          <functionlabel num="26" lockable="true">Loco Sound</functionlabel>
           <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
           <functionlabel num="28" lockable="true">Air Release</functionlabel>
         </functionlabels>
@@ -6102,6 +6337,42 @@
           <functionlabel num="28" lockable="true">Ditch Lights Flash</functionlabel>
         </functionlabels>
       </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1907.xml">
+        <model model="1907 - HO Scale - Atlas S2/S4" numOuts="2" numFns="28" maxTotalCurrent="1.5A" productID="1907" extFnsMRC="yes" comment="Dual mode DC/DCC, 16 bit">
+          <size length="" width="" height="" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Air Release</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Cooling Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Prime MoverType</functionlabel>
+          <functionlabel num="13" lockable="true">Air release</functionlabel>
+          <functionlabel num="14" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="15" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="16" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="17" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Prime Mover Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Coupling</functionlabel>
+          <functionlabel num="25" lockable="true">Air Releease</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise</functionlabel>
+          <functionlabel num="27" lockable="true">Air Hose Firing</functionlabel>
+          <functionlabel num="28" lockable="true">Air Release</functionlabel>
+        </functionlabels>
+      </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="1" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1910.xml">
         <model show="no" model="HO Gauge Diesel - 16 Bit 1910" replacementModel="1910 - HO Scale - Diesel" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.0A">
           <size length="73" width="17.6" height="8.4" units="mm" />
@@ -6188,6 +6459,46 @@
           <functionlabel num="26" lockable="false">Sand dropping</functionlabel>
           <functionlabel num="27" lockable="false">Associated loco sound</functionlabel>
           <functionlabel num="28" lockable="false">Associated loco sound</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Sound Decoders" mfg="MRC" lowVersionID="0" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1913.xml">
+        <model model="1913 - HO Scale - ALCO/SD60/SD70/F" numOuts="4" numFns="28" maxTotalCurrent="0.75A" extFnsMRC="yes" comment="&lt;html&gt;HO-Scale Universal, with NMRA 8 pin and 9 pin jst connector&lt;br&gt;Documented as 0001800 Version 3&lt;/html&gt;">
+          <output name="1" label="White" connection="plug" />
+          <output name="2" label="Yellow" connection="plug" />
+          <output name="3" label="Green" connection="wire" />
+          <output name="4" label="Brown" connection="wire" />
+          <size length="52.0" width="17.3" height="3.6" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Air Release</functionlabel>
+          <functionlabel num="4" lockable="true">Coupling</functionlabel>
+          <functionlabel num="5" lockable="true">Brake Release/Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="7" lockable="true">Air Hose/Uncoupling Lever</functionlabel>
+          <functionlabel num="8" lockable="true">Shut Down/Notch Down</functionlabel>
+          <functionlabel num="9" lockable="true">Fan/Notch Up</functionlabel>
+          <functionlabel num="10" lockable="true">Rail Clack</functionlabel>
+          <functionlabel num="11" lockable="true">Traction Air Compressor</functionlabel>
+          <functionlabel num="12" lockable="true">Volume On/Off</functionlabel>
+          <functionlabel num="13" lockable="true">Reduce Volume</functionlabel>
+          <functionlabel num="14" lockable="true">Increase Volume</functionlabel>
+          <functionlabel num="15" lockable="true">Air Compressor</functionlabel>
+          <functionlabel num="16" lockable="true">Flange Squeal</functionlabel>
+          <functionlabel num="17" lockable="true">Air Release</functionlabel>
+          <functionlabel num="18" lockable="true">Bell Type</functionlabel>
+          <functionlabel num="19" lockable="true">Horn Type</functionlabel>
+          <functionlabel num="20" lockable="true">Loco Sound</functionlabel>
+          <functionlabel num="21" lockable="true">Bell Volume</functionlabel>
+          <functionlabel num="22" lockable="true">Horn Volume</functionlabel>
+          <functionlabel num="23" lockable="true">Diesel Rumble Volume</functionlabel>
+          <functionlabel num="24" lockable="true">Safety Valve</functionlabel>
+          <functionlabel num="25" lockable="true">Air Release</functionlabel>
+          <functionlabel num="26" lockable="true">Flange Noise 3</functionlabel>
+          <functionlabel num="27" lockable="true">Sand Drop</functionlabel>
+          <functionlabel num="28" lockable="true">Air Compressor Speed</functionlabel>
         </functionlabels>
       </family>
       <family name="Sound Decoders" mfg="MRC" lowVersionID="2" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1916.xml">
@@ -6307,6 +6618,49 @@
           <functionlabel num="26" lockable="true">Flange noise</functionlabel>
           <functionlabel num="27" lockable="true">Sand release</functionlabel>
           <functionlabel num="28" lockable="true">Air release</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="19" highVersionID="20" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1956.xml">
+        <!-- note All 28 functions are NMRA compatible -->
+        <model model="1956 - N Scale - Steam Universal" numOuts="2" numFns="28" maxTotalCurrent="1.0A" extFnsMRC="yes" formFactor="N" connector="NMRAmedium" comment="&lt;html&gt;N-Scale, 16 Bit,&lt;br&gt; with multi-chuffs, multi-whistles&lt;/html&gt;">
+          <output name="1" label="White" connection="wire" />
+          <output name="2" label="Yellow" connection="wire" />
+          <size length="29.5" width="10.6" height="5" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="false">Long Air Release</functionlabel>
+          <functionlabel num="4" lockable="false">Coupling</functionlabel>
+          <functionlabel num="5" lockable="false">Brake squeal/release</functionlabel>
+          <!-- Brake squeal (moving) and brake release (idle)-->
+          <functionlabel num="6" lockable="true">Chuff sound on/off</functionlabel>
+          <!-- Chuff sound on/off (Drifting) -all other sounds on -->
+          <functionlabel num="7" lockable="false">Fire box</functionlabel>
+          <functionlabel num="8" lockable="false">Water injector</functionlabel>
+          <functionlabel num="9" lockable="false">Metal crank/Steam</functionlabel>
+          <!-- Metal crank sound on/off (moving), steam associated sound (idle) -->
+          <functionlabel num="10" lockable="false">Water filling</functionlabel>
+          <functionlabel num="11" lockable="false">Blower hiss</functionlabel>
+          <functionlabel num="12" lockable="true">All sounds on/off</functionlabel>
+          <functionlabel num="13" lockable="false">Master vol. reduce by 2</functionlabel>
+          <functionlabel num="14" lockable="false">Master vol. increase by 2</functionlabel>
+          <functionlabel num="15" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="16" lockable="false">Shoveling</functionlabel>
+          <functionlabel num="17" lockable="false">Coal auger</functionlabel>
+          <functionlabel num="18" lockable="false">Bell type select</functionlabel>
+          <functionlabel num="19" lockable="false">Whistle type select</functionlabel>
+          <functionlabel num="20" lockable="false">Air hose firing/uncoupling lever</functionlabel>
+          <!-- Air hose firing/uncoupling lever -->
+          <functionlabel num="21" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="22" lockable="false">Associated loco sound</functionlabel>
+          <functionlabel num="23" lockable="false">Flange noise</functionlabel>
+          <functionlabel num="24" lockable="false">Chuff type select</functionlabel>
+          <functionlabel num="25" lockable="false">Long air release</functionlabel>
+          <functionlabel num="26" lockable="false">Sand dropping</functionlabel>
+          <functionlabel num="27" lockable="false">Associated loco sound</functionlabel>
+          <functionlabel num="28" lockable="false">Associated loco sound</functionlabel>
         </functionlabels>
       </family>
       <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders" file="MRC_sound1957to1959.xml">

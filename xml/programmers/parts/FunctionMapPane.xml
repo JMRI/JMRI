@@ -24,7 +24,13 @@
       </label>
     </row>
     <row>
-      <display item="Function Map Option 1"/>
+        <column>
+          <display item="Function Map Option 1"/>
+          <display item="Function Map Option 2"/>
+          <display item="Function Map Option 3"/>
+          <display item="Function Map Option 4"/>
+          <display item="Function Map Option 5"/>
+        </column>
     </row>
   </column>
 </pane>

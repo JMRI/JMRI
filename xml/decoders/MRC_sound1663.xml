@@ -4,6 +4,7 @@
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="4.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091205"/>
   <version author="Pete Cesaro" version="2" lastUpdated="20090215"/>
@@ -13,6 +14,7 @@
   <!-- Version 3 - Corrected consist tab and some default values, modified how CV6 shows -->
   <!-- version 4  New family for all MRC HO scale: "Sound Decoders"          -->
   <!--            File MRC_soundbrilliance1663.xml renamed MRC_sound1663.xml -->
+  <!-- version 4.1: Bell Ring Rate (CV54) on Sound pane                      -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1663 - HO Scale - Atlas S2/S4" numOuts="2" numFns="12" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -106,7 +108,7 @@
         <decVal max="7"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Setting 3" default="3" tooltip="range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" tooltip="range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

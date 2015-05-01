@@ -19,6 +19,7 @@
 <!--                     LDEHAYES@COMCAST.NET                                -->
 <!--                                                                                                                                           -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="2.0" lastUpdated="20150427"/>
   <version author="John Crellin" version="1.9" lastUpdated="20120706"/>
   <version author="John Crellin" version="1.8" lastUpdated="20110512"/>
@@ -27,6 +28,7 @@
   <version author="Peter Ulvestad" version="1.5" lastUpdated="20090826"/>
   <version author="Peter Ulvestad" version="1.4" lastUpdated="20090624"/>
   <version author="Lou DeHayes" version="1.3" lastUpdated="20090308"/>
+  <!--   version 621: Bell Ring Rate (CV54) on Sound pane                      -->
   <!--   version 2.0 File MRC_soundbrilliance1804.xml renamed MRC_sound1802to1805.xml -->
   <!--               Removed definitions for 1806 and 1811, now in a dedicated file for N Scale -->
   <!--               Merged 1803 into this file     -->
@@ -211,7 +213,7 @@
         <decVal max="3"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Setting 3" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

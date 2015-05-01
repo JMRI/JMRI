@@ -14,6 +14,7 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="4.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20150427"/>
   <version author="John Crellin" version="3.1" lastUpdated="20110512"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
@@ -25,6 +26,8 @@
   <!--   version 3.1 Modified function lables so they are automatically inserted and corrected CV123-->
   <!--   version 4 New family for all MRC HO scale: "Sound Decoders"          -->
   <!--             File MRC_soundbrilliance1820.xml renamed MRC_sound1820.xml -->
+  <!--   version 4.1 Regular CV21 on Consist pane                             -->
+  <!--               Bell Ring Rate (CV54) on Sound pane                      -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="32" highVersionID="60" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1820 - HO Scale - Athearn RS3" numOuts="2" numFns="28" maxTotalCurrent="1.5A" extFnsMRC="yes">
@@ -120,7 +123,7 @@
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
        <!-- CV=21 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
      <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -147,7 +150,7 @@
         <decVal max="7"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Setting 3" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

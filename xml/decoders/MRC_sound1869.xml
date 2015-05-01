@@ -19,6 +19,9 @@
   <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <!-- version 2  New family for all MRC HO scale: "Sound Decoders"          -->
   <!--            File MRC_soundbrilliance1869.xml renamed MRC_sound1869.xml -->
+  <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
+  <!-- version 2.1: Regular CV21 on Consist pane                             -->
+  <!--              Bell Ring Rate (CV54) on Sound pane                      -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="19" highVersionID="19" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1869 - HO Scale - Steam mini" maxTotalCurrent="1.5A" extFnsMRC="yes" comment="with 12 different chuff sounds">
@@ -71,7 +74,7 @@
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -102,7 +105,7 @@
         <label>Bell Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="54" item="Sound Setting 3" default="10" tooltip="range 0-50, lower is faster" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="10" tooltip="range 0-50, lower is faster" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>

@@ -14,16 +14,18 @@
 <!-- See the GNU General Public License for more details.                    -->
 <!--                                                                         -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="4.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="4" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20131102"/>
   <version author="Peter Ulvestad" version="2" lastUpdated="20131030"/>
   <version author="John Sebastian, JohnSeb@pacbell.net" version="1" lastUpdated="20120217"/>
-  <!--   version 1  Created from MRC 1810 ver. 1.6 by Peter Ulvestad-->
-  <!--   version 2  Corrected Long address not showing and Switch to includes for common vars-->
-  <!--   version 3  Corrected BEMF not showing and light pane-->
-  <!--   version 4  New family for all MRC N scale: "Sound Decoders - N scale"     -->
-  <!--              File MRC_soundbrilliance1957.xml renamed MRC_sound1957.xml     -->
-  <!--              BEMF displayed on std. motor pane - specific MRC pane removed  -->
+  <!-- version 1   Created from MRC 1810 ver. 1.6 by Peter Ulvestad-->
+  <!-- version 2   Corrected Long address not showing and Switch to includes for common vars-->
+  <!-- version 3   Corrected BEMF not showing and light pane-->
+  <!-- version 4   New family for all MRC N scale: "Sound Decoders - N scale"     -->
+  <!--             File MRC_soundbrilliance1957.xml renamed MRC_sound1957.xml     -->
+  <!--             BEMF displayed on std. motor pane - specific MRC pane removed  -->
+  <!-- version 4.1 Bell Ring Rate (CV54) on Sound pane                            -->
   <decoder>
     <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1957 - N Scale - Kato EMD F Series" numOuts="2" numFns="28" maxTotalCurrent="1.00A" productID="1957" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In, 16-bit">
@@ -223,7 +225,7 @@
         <decVal max="15"/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="54" item="Sound Option 3" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
+      <variable CV="54" item="Sound Group 3 Option 2" tooltip="selects the Bell Ring Rate [range 0-50]" default="3">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
       </variable>

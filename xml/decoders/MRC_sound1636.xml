@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="5.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="5" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="4" lastUpdated="20111107"/>
   <version author="Peter Ulvestad" version="3" lastUpdated="20091003"/>
@@ -25,6 +26,7 @@
   <!-- version 5  New family for all MRC N scale: "Sound Decoders - N Scale" -->
   <!--            File MRC_soundbrilliance1827.xml renamed MRC_sound1827.xml -->
   <!--            Added function labels.                                     -->
+  <!-- version 5.1: Bell Ring Rate (CV54) on Sound pane                      -->
   <decoder>
     <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="32" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1636 - N Scale - Atlas Diesels" numOuts="2" numFns="19" maxTotalCurrent="0.75A" productID="1636" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaces most Atlas N scale loco’s PC boards">
@@ -131,7 +133,7 @@
         <label>Bell Volume</label>
         <comment>Range 0-3</comment>
       </variable>
-      <variable CV="54" item="Sound Setting 3" default="3" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell Ring Rate</label>
         <comment>Range 0-50</comment>

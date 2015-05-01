@@ -28,6 +28,9 @@
   <!--   version 5  New family for all MRC N scale: "Sound Decoders - N Scale"          -->
   <!--              File MRC_soundbrilliance1944.xml renamed MRC_sound1944-1945.xml     -->
   <!--              Merged 1944 and 1945 in a single file (very few differences)        -->
+  <version author="Alain Le Marchand" version="6" lastUpdated="20150501"/>
+  <!-- version 2.1: Regular CV21 on Consist pane - removed MRC pane                     -->
+  <!-- version 6.1: Bell Ring Rate (CV54) on Sound pane                                 -->
   <decoder>
     <family name="Sound Decoders - N Scale" mfg="MRC" lowVersionID="32" highVersionID="44"  comment="Synchronized Sound Brilliance(TM) Decoders">
       <model model="1644 - N Scale - Kato SD70MAC/AC4400" numOuts="2" numFns="28" maxTotalCurrent="1.0A" productID="1644" extFnsMRC="yes" formFactor="N" connector="DropIn" comment="N-Scale, Drop-In - replaced by 0001960">
@@ -102,7 +105,7 @@
         <label xml:lang="de">Höchstgeschwindigkeit</label>
         <tooltip>Range 0-32</tooltip>
       </variable>
-      <variable CV="6" item="Vmid" default="0" tooltip="sets the motor voltage increase with Speed Steps, range 0(default)-2">
+      <variable CV="6" item="Speed Table/Mid Range Cab Speed Step" default="0" tooltip="sets the motor voltage increase with Speed Steps, range 0(default)-2">
         <enumVal>
           <enumChoice choice="Linear" value="0">
             <choice>Linear</choice>
@@ -133,7 +136,7 @@
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>
       <!-- CV=21 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb_MRC.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/cv21_lsb.xml"/>
       <!-- CV=29 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29direction.xml"/>
      <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
@@ -158,7 +161,7 @@
         <label>Bell volume</label>
         <tooltip>Range 0-3</tooltip>
       </variable>
-      <variable CV="54" item="Sound Setting 3" default="3" tooltip="range 0-50" comment="Range 0-50">
+      <variable CV="54" item="Sound Group 3 Option 2" default="3" tooltip="range 0-50" comment="Range 0-50">
         <decVal max="50"/>
         <label>Bell ring rate</label>
         <tooltip>Range 0-50</tooltip>
@@ -214,7 +217,7 @@
         <tooltip>Range 0-3</tooltip>
       </variable>
       <!-- CV 105-106 -->
-<xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
       <variable CV="113" item="Sound Setting 16" default="3" tooltip="range 0-3" comment="Range 0-3">
         <decVal max="3"/>
         <label>Coupling Fire volume</label>
@@ -281,23 +284,4 @@
       </factReset>
     </resets>
   </decoder>
-  <pane>
-    <column>
-      <label>
-        <text>MRC 1644 fits Kato SD70MAC and AC4400 narrow body style locos</text>
-      </label>
-      <label>
-        <text>MRC notes the recorded sounds differ fom these models</text>
-      </label>
-      <label>
-        <text> </text>
-      </label>
-      <separator/>
-      <label>
-        <text> </text>
-      </label>
-      <display item="Functions Respond to Address"/>
-    </column>
-    <name>MRC</name>
-  </pane>
 </decoder-config>
