@@ -57,7 +57,7 @@ public class HtmlTrainCommon extends TrainCommon {
         }
     }
 
-    public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld, boolean isManifest) {
+    public String pickupUtilityCars(List<Car> carList, Car car, boolean isManifest) {
         // list utility cars by type, track, length, and load
         String[] messageFormat;
         if (isManifest) {
@@ -65,14 +65,14 @@ public class HtmlTrainCommon extends TrainCommon {
         } else {
             messageFormat = Setup.getPickupUtilitySwitchListMessageFormat();
         }
-        int count = countUtilityCars(messageFormat, carList, car, rl, rld, PICKUP);
+        int count = countUtilityCars(messageFormat, carList, car, PICKUP);
         if (count == 0) {
             return ""; // already printed out this car type
         }
         return pickUpCar(car, count, messageFormat);
     }
 
-    protected String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
+    protected String setoutUtilityCars(List<Car> carList, Car car, boolean isManifest) {
         boolean isLocal = isLocalMove(car);
         if (Setup.isSwitchListFormatSameAsManifest()) {
             isManifest = true;
@@ -85,7 +85,7 @@ public class HtmlTrainCommon extends TrainCommon {
         } else if (!isLocal && !isManifest) {
             messageFormat = Setup.getDropUtilitySwitchListMessageFormat();
         }
-        int count = countUtilityCars(messageFormat, carList, car, rl, null, !PICKUP);
+        int count = countUtilityCars(messageFormat, carList, car, !PICKUP);
         if (count == 0) {
             return ""; // already printed out this car type
         }

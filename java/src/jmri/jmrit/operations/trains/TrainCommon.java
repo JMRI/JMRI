@@ -243,7 +243,7 @@ public class TrainCommon {
                             }
                         }
                         if (car.isUtility()) {
-                            pickupUtilityCars(file, carList, car, rl, rld, isManifest);
+                            pickupUtilityCars(file, carList, car, isManifest);
                         } // use truncated format if there's a switch list
                         else if (isManifest && Setup.isTruncateManifestEnabled()
                                 && rl.getLocation().isSwitchListEnabled()) {
@@ -295,7 +295,7 @@ public class TrainCommon {
                     }
 
                     if (car.isUtility()) {
-                        setoutUtilityCars(file, carList, car, rl, isManifest);
+                        setoutUtilityCars(file, carList, car, isManifest);
                     } // use truncated format if there's a switch list
                     else if (isManifest && Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled()) {
                         truncatedDropCar(file, car, isManifest);
@@ -357,7 +357,7 @@ public class TrainCommon {
                         }
                         String s;
                         if (car.isUtility()) {
-                            s = pickupUtilityCars(carList, car, rl, rld, isManifest, !IS_TWO_COLUMN_TRACK);
+                            s = pickupUtilityCars(carList, car, isManifest, !IS_TWO_COLUMN_TRACK);
                             if (s == null) {
                                 continue;
                             }
@@ -443,7 +443,7 @@ public class TrainCommon {
                         }
                         String s;
                         if (car.isUtility()) {
-                            s = pickupUtilityCars(carList, car, rl, rld, isManifest, IS_TWO_COLUMN_TRACK);
+                            s = pickupUtilityCars(carList, car, isManifest, IS_TWO_COLUMN_TRACK);
                             if (s == null) {
                                 continue;
                             }
@@ -572,7 +572,7 @@ public class TrainCommon {
         newString = s + VERTICAL_LINE_CHAR;
 
         if (car.isUtility()) {
-            String so = setoutUtilityCars(carList, car, rl, !LOCAL, isManifest, isTwoColumnTrack);
+            String so = setoutUtilityCars(carList, car, !LOCAL, isManifest, isTwoColumnTrack);
             if (so == null) {
                 return s; // no changes to the input string
             }
@@ -798,8 +798,7 @@ public class TrainCommon {
      * @param rld
      * @param isManifest
      */
-    protected void pickupUtilityCars(PrintWriter file, List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
-            boolean isManifest) {
+    protected void pickupUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
         // list utility cars by type, track, length, and load
         String[] format;
         if (isManifest) {
@@ -807,7 +806,7 @@ public class TrainCommon {
         } else {
             format = Setup.getPickupUtilitySwitchListMessageFormat();
         }
-        int count = countUtilityCars(format, carList, car, rl, rld, PICKUP);
+        int count = countUtilityCars(format, carList, car, PICKUP);
         if (count == 0) {
             return; // already printed out this car type
         }
@@ -826,7 +825,7 @@ public class TrainCommon {
      * @param rl
      * @param isManifest
      */
-    protected void setoutUtilityCars(PrintWriter file, List<Car> carList, Car car, RouteLocation rl, boolean isManifest) {
+    protected void setoutUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
         boolean isLocal = isLocalMove(car);
         StringBuffer buf;
         String[] format;
@@ -845,7 +844,7 @@ public class TrainCommon {
                     .getSwitchListPrefixLength()));
             format = Setup.getDropUtilitySwitchListMessageFormat();
         }
-        int count = countUtilityCars(format, carList, car, rl, null, !PICKUP);
+        int count = countUtilityCars(format, carList, car, !PICKUP);
         if (count == 0) {
             return; // already printed out this car type
         }
@@ -853,9 +852,8 @@ public class TrainCommon {
         dropCar(file, car, buf, format, isLocal, isManifest);
     }
 
-    public String pickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
-            boolean isManifest, boolean isTwoColumnTrack) {
-        int count = countPickupUtilityCars(carList, car, rl, rld, isManifest);
+    public String pickupUtilityCars(List<Car> carList, Car car, boolean isManifest, boolean isTwoColumnTrack) {
+        int count = countPickupUtilityCars(carList, car, isManifest);
         if (count == 0) {
             return null;
         }
@@ -877,8 +875,7 @@ public class TrainCommon {
         return buf.toString();
     }
 
-    public int countPickupUtilityCars(List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
-            boolean isManifest) {
+    public int countPickupUtilityCars(List<Car> carList, Car car, boolean isManifest) {
         // list utility cars by type, track, length, and load
         String[] format;
         if (isManifest) {
@@ -886,19 +883,19 @@ public class TrainCommon {
         } else {
             format = Setup.getPickupUtilitySwitchListMessageFormat();
         }
-        return countUtilityCars(format, carList, car, rl, rld, PICKUP);
+        return countUtilityCars(format, carList, car, PICKUP);
     }
 
     /**
      * For the Conductor and Yardmaster windows.
      */
-    public String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
-        return setoutUtilityCars(carList, car, rl, isLocal, isManifest, !IS_TWO_COLUMN_TRACK);
+    public String setoutUtilityCars(List<Car> carList, Car car, boolean isLocal, boolean isManifest) {
+        return setoutUtilityCars(carList, car, isLocal, isManifest, !IS_TWO_COLUMN_TRACK);
     }
 
-    protected String setoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest,
+    protected String setoutUtilityCars(List<Car> carList, Car car, boolean isLocal, boolean isManifest,
             boolean isTwoColumnTrack) {
-        int count = countSetoutUtilityCars(carList, car, rl, isLocal, isManifest);
+        int count = countSetoutUtilityCars(carList, car, isLocal, isManifest);
         if (count == 0) {
             return null;
         }
@@ -932,7 +929,7 @@ public class TrainCommon {
         return buf.toString();
     }
 
-    public int countSetoutUtilityCars(List<Car> carList, Car car, RouteLocation rl, boolean isLocal, boolean isManifest) {
+    public int countSetoutUtilityCars(List<Car> carList, Car car, boolean isLocal, boolean isManifest) {
         // list utility cars by type, track, length, and load
         String[] format;
         if (isLocal && isManifest) {
@@ -944,7 +941,7 @@ public class TrainCommon {
         } else {
             format = Setup.getDropUtilityManifestMessageFormat();
         }
-        return countUtilityCars(format, carList, car, rl, null, !PICKUP);
+        return countUtilityCars(format, carList, car, !PICKUP);
     }
 
     /**
@@ -960,8 +957,7 @@ public class TrainCommon {
      * @param isPickup
      * @return 0 if the car type has already been processed
      */
-    protected int countUtilityCars(String[] format, List<Car> carList, Car car, RouteLocation rl, RouteLocation rld,
-            boolean isPickup) {
+    protected int countUtilityCars(String[] format, List<Car> carList, Car car, boolean isPickup) {
         int count = 0;
         // figure out if the user wants to show the car's length
         boolean showLength = showUtilityCarLength(format);
@@ -1022,14 +1018,13 @@ public class TrainCommon {
                 if (isLocalMove(car) ^ isLocalMove(c)) {
                     continue;
                 }
-                if (isPickup && c.getRouteLocation() == rl
+                if (isPickup && c.getRouteLocation() == car.getRouteLocation()
                         && splitString(c.getTrackName()).equals(splitString(car.getTrackName()))) {
                     count++;
                 }
-                if (!isPickup && c.getRouteDestination() == rl
+                if (!isPickup && c.getRouteDestination() == car.getRouteDestination()
                         && splitString(c.getDestinationTrackName()).equals(splitString(car.getDestinationTrackName()))
-                        && (splitString(c.getTrackName()).equals(splitString(car.getTrackName())) || !isLocalMove(c))
-                        && c.getRouteDestination().equals(car.getRouteDestination())) {
+                        && (splitString(c.getTrackName()).equals(splitString(car.getTrackName())) || !isLocalMove(c))) {
                     count++;
                 }
             }

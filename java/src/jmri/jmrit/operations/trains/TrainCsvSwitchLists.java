@@ -181,7 +181,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                             pickupCars++;
                             int count = 0;
                             if (car.isUtility()) {
-                                count = countPickupUtilityCars(carList, car, rl, rld, false);
+                                count = countPickupUtilityCars(carList, car, !IS_MANIFEST);
                                 if (count == 0) {
                                     continue; // already done this set of utility cars
                                 }
@@ -202,7 +202,7 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
                         dropCars++;
                         int count = 0;
                         if (car.isUtility()) {
-                            count = countSetoutUtilityCars(carList, car, rl, false, false);
+                            count = countSetoutUtilityCars(carList, car, !LOCAL, !IS_MANIFEST);
                             if (count == 0) {
                                 continue; // already done this set of utility cars
                             }

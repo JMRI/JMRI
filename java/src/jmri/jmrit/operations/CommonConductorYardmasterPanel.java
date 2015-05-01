@@ -414,8 +414,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                         } else {
                             String text;
                             if (car.isUtility()) {
-                                text = trainCommon.pickupUtilityCars(carList, car, rl, rld, isManifest,
-                                        !TrainCommon.IS_TWO_COLUMN_TRACK);
+                                text = trainCommon.pickupUtilityCars(carList, car, isManifest, !TrainCommon.IS_TWO_COLUMN_TRACK);
                                 if (text == null) {
                                     continue; // this car type has already been processed
                                 }
@@ -458,7 +457,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                     } else {
                         String text;
                         if (car.isUtility()) {
-                            text = trainCommon.setoutUtilityCars(carList, car, rl, !TrainCommon.LOCAL, isManifest);
+                            text = trainCommon.setoutUtilityCars(carList, car, !TrainCommon.LOCAL, isManifest);
                             if (text == null) {
                                 continue; // this car type has already been processed
                             }
@@ -489,7 +488,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                     } else {
                         String text;
                         if (car.isUtility()) {
-                            text = trainCommon.setoutUtilityCars(carList, car, rl, TrainCommon.LOCAL, isManifest);
+                            text = trainCommon.setoutUtilityCars(carList, car, TrainCommon.LOCAL, isManifest);
                             if (text == null) {
                                 continue; // this car type has already been processed
                             }

@@ -257,7 +257,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                             && car.getRouteDestination() == rld) {
                         pickedUp.add(car.getId());
                         if (car.isUtility()) {
-                            builder.append(pickupUtilityCars(carList, car, location, rld, TrainCommon.IS_MANIFEST));
+                            builder.append(pickupUtilityCars(carList, car, TrainCommon.IS_MANIFEST));
                          // use truncated format if there's a switch list
                         } else if (Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
                             builder.append(pickUpCar(car, Setup.getPickupTruncatedManifestMessageFormat()));
@@ -293,7 +293,7 @@ public class HtmlConductor extends HtmlTrainCommon {
                         && (car.getRouteDestination() == location && car.getDestinationTrack() != null)) {
                     dropped.add(car.getId());
                     if (car.isUtility()) {
-                        builder.append(setoutUtilityCars(carList, car, location, local));
+                        builder.append(setoutUtilityCars(carList, car, local));
                     } else {
                         String[] format = (!local) ? Setup.getDropManifestMessageFormat() : Setup
                                 .getLocalManifestMessageFormat();

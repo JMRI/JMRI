@@ -330,13 +330,13 @@ public class TrainSwitchLists extends TrainCommon {
                                                 .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
                                     }
                                     if (car.isUtility()) {
-                                        pickupUtilityCars(fileOut, carList, car, car.getRouteLocation(), car.getRouteDestination(), !IS_MANIFEST);
+                                        pickupUtilityCars(fileOut, carList, car, !IS_MANIFEST);
                                     } else {
                                         pickUpCar(fileOut, car, !IS_MANIFEST);
                                     }
                                 }
                             } else if (car.isUtility()) {
-                                String s = pickupUtilityCars(carList, car, car.getRouteLocation(), car.getRouteDestination(), !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
+                                String s = pickupUtilityCars(carList, car, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
                                 if (s != null) {
                                     newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
                                             new Object[]{s.trim(), "", "", "", "", ""}));
@@ -362,7 +362,7 @@ public class TrainSwitchLists extends TrainCommon {
                                             .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
                                 }
                                 if (car.isUtility()) {
-                                    setoutUtilityCars(fileOut, carList, car, car.getRouteDestination(), !IS_MANIFEST);
+                                    setoutUtilityCars(fileOut, carList, car, !IS_MANIFEST);
                                 } else {
                                     dropCar(fileOut, car, !IS_MANIFEST);
                                 }
