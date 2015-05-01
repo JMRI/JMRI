@@ -24,10 +24,10 @@ public class LogixActionTest extends TestCase {
         jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager() {
         };
 
-        // uses warrants, which require screen, so end if headless now
+        /* headless OK
         if (System.getProperty("jmri.headlesstest", "false").equals("true")) {
             return;
-        }   // Warrants do not require a screen.  Actual problem was no activateAllLogixs() previously 
+        }*/ 
 
         // load and display sample file. Panel file does not display screen
         java.io.File f = new java.io.File("java/test/jmri/jmrit/logix/valid/LogixActionTest.xml");

@@ -1,5 +1,6 @@
 package jmri.jmrit.logix.configurexml;
 
+import java.awt.GraphicsEnvironment;
 import java.util.Iterator;
 import java.util.List;
 import jmri.DccLocoAddress;
@@ -41,7 +42,9 @@ public class WarrantManagerXml //extends XmlFile
     public Element store(Object o) {
         Element warrants = new Element("warrants");
         warrants.setAttribute("class","jmri.jmrit.logix.configurexml.WarrantManagerXml");
-        storeNXParams(warrants);
+        if (!GraphicsEnvironment.isHeadless()) {
+            storeNXParams(warrants);
+        }
         WarrantManager manager = (WarrantManager) o;
         Iterator<String> iter = manager.getSystemNameList().iterator();
         while (iter.hasNext()) {
@@ -199,10 +202,11 @@ public class WarrantManagerXml //extends XmlFile
         // don't continue on to build NXFrame if no content
         if (warrants.getChildren().size() == 0) return true;
         
-        NXFrame nxFrame = NXFrame.getInstance();
-        loadNXParams(nxFrame, warrants.getChild("nxparams"));
-        nxFrame.init();
-
+        if (!GraphicsEnvironment.isHeadless()) {
+            NXFrame nxFrame = NXFrame.getInstance();
+            loadNXParams(nxFrame, warrants.getChild("nxparams"));
+            nxFrame.init();
+        }
         List<Element> warrantList = warrants.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
         for (int i=0; i<warrantList.size(); i++) {

@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -1247,9 +1248,11 @@ public class DefaultConditional extends AbstractNamedBean
             for (int i = 0; i < errorList.size(); i++) {
                 log.error(getDisplayName() + " - " + errorList.get(i));
             }
-            java.awt.Toolkit.getDefaultToolkit().beep();
-            if (!_skipErrorDialog) {
-                new ErrorDialog(errorList, this);
+            if (!GraphicsEnvironment.isHeadless()) {
+                java.awt.Toolkit.getDefaultToolkit().beep();
+                if (!_skipErrorDialog) {
+                    new ErrorDialog(errorList, this);
+                }                
             }
         }
         if (log.isDebugEnabled()) {
