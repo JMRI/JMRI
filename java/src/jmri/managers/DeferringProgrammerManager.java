@@ -48,14 +48,14 @@ public class DeferringProgrammerManager implements ProgrammerManager {
     }
 
     public Programmer getGlobalProgrammer() {
-        if (log.isDebugEnabled()) {
-            log.debug("return default service-mode programmer");
-        }
         GlobalProgrammerManager gp = InstanceManager.getDefault(GlobalProgrammerManager.class);
         if (gp == null) {
+            log.debug("no defaultGlobal ProgrammerManager, getGlobalProgrammer returns null" );
             return null;
         }
-        return gp.getGlobalProgrammer();
+        Programmer p = gp.getGlobalProgrammer();
+        log.debug("getGlobalProgrammer returns default service-mode programmer of type {} from {}", p.getClass(), gp.getClass());
+        return p;
     }
 
     public Programmer reserveGlobalProgrammer() {
