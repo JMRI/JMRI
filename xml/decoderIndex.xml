@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150501-2111-Alain Le Marchand on Fri May 01 23:12:02 CEST 2015 $Id$-->
-  <decoderIndex version="622">
+  <!--Written by JMRI version 20150502-0455-Alain Le Marchand on Sat May 02 06:56:05 CEST 2015 $Id$-->
+  <decoderIndex version="624">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -17899,7 +17899,8 @@
             <functionlabel num="8" lockable="true">Cab 1 Lights</functionlabel>
           </functionlabels>
         </model>
-        <model model="Trix Sound HO BR V41" numFns="10" lowVersionID="7" highVersionID="7" productID="V41" formFactor="HO" comment="Trix 22928">
+        <model show="no" model="Trix Sound HO BR V41" replacementModel="Trix Sound HO BR 41" replacementFamily="Trix_Sound_HO" numFns="10" lowVersionID="7" highVersionID="7" productID="V41" formFactor="HO" comment="Trix 22928" />
+        <model model="Trix Sound HO BR 41" numFns="10" lowVersionID="7" highVersionID="7" productID="V41" formFactor="HO" comment="Trix 22928">
           <functionlabels>
             <functionlabel num="1" lockable="true">Smoke Generator</functionlabel>
             <functionlabel num="3" lockable="true">Whistle</functionlabel>
