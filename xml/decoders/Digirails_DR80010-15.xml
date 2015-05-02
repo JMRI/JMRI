@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+    <version author="Alain Le Marchand" version="2.1" lastUpdated="20150502"/>
     <version author="Alain Le Marchand" version="2" lastUpdated="20150429"/>
     <version author="Ron30" version="1" lastUpdated="20140923"/>
     <!-- version 1 - made from Arnold.xml example                                   -->
@@ -21,6 +22,7 @@
     <!--             Used new format for output display on function map             -->
     <!--             and removed "Alt Function Map" pane                            -->
     <!--             Added tooltips and localised in NL, DE and FR (as per manual)  -->
+    <!-- version 2.1 Default values adjusted for Fade in/out effect                 -->
     <decoder>
         <family name="Locomotive lighting" mfg="Digirails">
             <model model="DR80010" numOuts="8" numFns="18" maxInputVolts="6.5-18V" maxMotorCurrent="0.0A, peak=0A for 5 sec." maxTotalCurrent="1.0A" productID="80010" formFactor="HO" comment="Warm white LED strip with integrated function decoder">
@@ -270,7 +272,7 @@
                 <label>Light intensity (f)</label>
                 <tooltip>Controls how much headlights dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect(f)" CV="113" mask="XXXVXXXX" default="0">
+            <variable item="Fade in fade out effect(f)" CV="113" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 1-4</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 1-4</label>
@@ -307,7 +309,7 @@
                 <label>Light intensity (r)</label>
                 <tooltip>Controls how much headlights dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect(r)" CV="114" mask="XXXVXXXX" default="0">
+            <variable item="Fade in fade out effect(r)" CV="114" mask="XXXVXXXX" default="1">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. (r)</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt (r)</label>
@@ -344,7 +346,7 @@
                 <label>Light intensity AUX1</label>
                 <tooltip>Controls how much AUX1 dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect AUX1" CV="115" mask="XXXVXXXX" default="0" minOut="3">
+            <variable item="Fade in fade out effect AUX1" CV="115" mask="XXXVXXXX" default="1" minOut="3">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. AUX1</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt AUX1</label>
@@ -381,7 +383,7 @@
                 <label>Light intensity AUX2</label>
                 <tooltip>Controls how much AUX2 dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect AUX2" CV="116" mask="XXXVXXXX" default="0" minOut="4">
+            <variable item="Fade in fade out effect AUX2" CV="116" mask="XXXVXXXX" default="1" minOut="4">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. AUX2</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt AUX2</label>
@@ -418,7 +420,7 @@
                 <label>Light intensity LEDgroup 1</label>
                 <tooltip>Controls how much LEDgroup 1 dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect LEDgroup 1" CV="117" mask="XXXVXXXX" default="0" minOut="5">
+            <variable item="Fade in fade out effect LEDgroup 1" CV="117" mask="XXXVXXXX" default="1" minOut="5">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 1</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 1</label>
@@ -455,7 +457,7 @@
                 <label>Light intensity LEDgroup 2</label>
                 <tooltip>Controls how much LEDgroup 2 dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect LEDgroup 2" CV="118" mask="XXXVXXXX" default="0" minOut="6">
+            <variable item="Fade in fade out effect LEDgroup 2" CV="118" mask="XXXVXXXX" default="1" minOut="6">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 2</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 2</label>
@@ -492,7 +494,7 @@
                 <label>Light intensity LEDgroup 3</label>
                 <tooltip>Controls how much LEDgroup 3 dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect LEDgroup 3" CV="119" mask="XXXVXXXX" default="0" minOut="7">
+            <variable item="Fade in fade out effect LEDgroup 3" CV="119" mask="XXXVXXXX" default="1" minOut="7">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 3</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 3</label>
@@ -529,7 +531,7 @@
                 <label>Light intensity LEDgroup 4</label>
                 <tooltip>Controls how much LEDgroup 4 dim (0-dark to 15-max bright)</tooltip>
             </variable>
-            <variable item="Fade in fade out effect LEDgroup 4" CV="120" mask="XXXVXXXX"  default="0" minOut="8">
+            <variable item="Fade in fade out effect LEDgroup 4" CV="120" mask="XXXVXXXX"  default="1" minOut="8">
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
                 <label xml:lang="fr">Effet fondu ouv./ferm. LEDgroup 4</label>
                 <label xml:lang="de">Fade–in und Fade-out Effekt LEDgroup 4</label>
