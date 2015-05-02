@@ -12,7 +12,7 @@ import jmri.managers.DefaultProgrammerManager;
 
 /**
  * Implements the jmri.Programmer interface via commands for the Sprog
- * programmer.
+ * programmer. This provides a service mode programmer.
  *
  * @author Bob Jacobsen Copyright (C) 2001
  * @version	$Revision$
@@ -20,29 +20,7 @@ import jmri.managers.DefaultProgrammerManager;
 public class SprogProgrammer extends AbstractProgrammer implements SprogListener {
 
     public SprogProgrammer() {
-//        // error if more than one constructed?
-//        if (self != null)
-//            log.error("Creating too many SprogProgrammer objects");
-
-//        // register this as the default, register as the Programmer
-//        self = this;
-//        jmri.InstanceManager.setProgrammerManager(new jmri.DefaultProgrammerManager(this));
     }
-
-    /*
-     * method to find the existing SprogProgrammer object, if need be creating one
-     */
-    static public final SprogProgrammer instance() {
-        if (self == null) {
-            self = new SprogProgrammer();
-        }
-        // change default
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
-            self.setMode(DefaultProgrammerManager.OPSBYTEMODE);
-        }
-        return self;
-    }
-    static volatile private SprogProgrammer self = null;
 
     /**
      * Types implemented here.
@@ -57,9 +35,10 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
 
     @Override
     public boolean getCanRead() {
-        if (jmri.InstanceManager.programmerManagerInstance().isAddressedModePossible()) {
-            return false;
-        } else {
+        if (getMode().equals(DefaultProgrammerManager.PAGEMODE)) return true;
+        else if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE)) return true;
+        else {
+            log.error("Unknown internal mode {} returned true from getCanRead()",getMode());
             return true;
         }
     }
