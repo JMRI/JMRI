@@ -27,7 +27,7 @@ public class IdentifyDecoderTest extends TestCase {
         jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
 
         // create our test object
-        IdentifyDecoder i = new IdentifyDecoder() {
+        IdentifyDecoder i = new IdentifyDecoder(p) {
             public void done(int mfgID, int modelID, int productID) {
             }
 
@@ -65,7 +65,7 @@ public class IdentifyDecoderTest extends TestCase {
         jmri.InstanceManager.setProgrammerManager(new jmri.managers.DefaultProgrammerManager(p));
 
         // create our test object
-        IdentifyDecoder i = new IdentifyDecoder() {
+        IdentifyDecoder i = new IdentifyDecoder(p) {
             public void done(int mfgID, int modelID, int productID) {
             }
 

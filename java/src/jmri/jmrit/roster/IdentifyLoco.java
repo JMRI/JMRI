@@ -21,6 +21,10 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class IdentifyLoco extends jmri.jmrit.AbstractIdentify {
 
+    public IdentifyLoco(jmri.Programmer programmer) {
+        super(programmer);
+    }
+
     protected boolean shortAddr;
     private int cv17val;
     private int cv18val;

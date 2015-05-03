@@ -7,6 +7,8 @@ import javax.swing.JToggleButton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.jmrit.progsupport.ProgModeSelector;
+
 /**
  * Provide GUI controls to select a new decoder.
  * <P>
@@ -19,7 +21,7 @@ import org.slf4j.LoggerFactory;
  * was no selection in that box. Here, the lack of a selection indicates there's
  * no selection.
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008
+ * @author	Bob Jacobsen Copyright (C) 2001, 2002, 2008, 2015
  * @version	$Revision$
  */
 public class LocoSelTreePane extends CombinedLocoSelTreePane {
@@ -29,12 +31,8 @@ public class LocoSelTreePane extends CombinedLocoSelTreePane {
      */
     private static final long serialVersionUID = -4048446656319711656L;
 
-    public LocoSelTreePane(JLabel s) {
-        super(s);
-    }
-
-    public LocoSelTreePane() {
-        super();
+    public LocoSelTreePane(JLabel s, ProgModeSelector selector) {
+        super(s, selector);
     }
 
     // don't show the select-roster-entry box

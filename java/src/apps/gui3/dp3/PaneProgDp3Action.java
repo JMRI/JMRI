@@ -137,7 +137,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
             f.setJMenuBar(menuBar);
             final JPanel bottomPanel = new JPanel(new BorderLayout());
             // new Loco on programming track
-            combinedLocoSelTree = new CombinedLocoSelTreePane(statusLabel) {
+            combinedLocoSelTree = new CombinedLocoSelTreePane(statusLabel, modePane) {
                 /**
                  *
                  */

@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
 import javax.swing.border.EmptyBorder;
+import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.decoderdefn.IdentifyDecoder;
@@ -21,6 +22,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.swing.GlobalRosterEntryComboBox;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -61,15 +63,14 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
      */
     private static final long serialVersionUID = -8136064467797917479L;
 
-    public CombinedLocoSelPane(JLabel s) {
+    public CombinedLocoSelPane(JLabel s, ProgModeSelector selector) {
         _statusLabel = s;
+        this.selector = selector;
         init();
     }
 
-    public CombinedLocoSelPane() {
-        init();
-    }
-
+    ProgModeSelector selector;
+    
     /**
      * Create the panel used to select the decoder
      *
@@ -270,7 +271,13 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     protected void startIdentifyLoco() {
         // start identifying a loco
         final CombinedLocoSelPane me = this;
-        IdentifyLoco id = new IdentifyLoco() {
+        Programmer p = null;
+        if (selector != null && selector.isSelected()) p = selector.getProgrammer();
+        if (p == null) {
+            log.warn("Selector did not provide a programmer, use default");
+            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        }
+        IdentifyLoco id = new IdentifyLoco(p) {
             private CombinedLocoSelPane who = me;
 
             protected void done(int dccAddress) {
@@ -299,7 +306,13 @@ public class CombinedLocoSelPane extends LocoSelPane implements PropertyChangeLi
     protected void startIdentifyDecoder() {
         // start identifying a decoder
         final CombinedLocoSelPane me = this;
-        IdentifyDecoder id = new IdentifyDecoder() {
+        Programmer p = null;
+        if (selector != null && selector.isSelected()) p = selector.getProgrammer();
+        if (p == null) {
+            log.warn("Selector did not provide a programmer, use default");
+            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        }
+        IdentifyDecoder id = new IdentifyDecoder(p) {
             private CombinedLocoSelPane who = me;
 
             protected void done(int mfg, int model, int productID) {

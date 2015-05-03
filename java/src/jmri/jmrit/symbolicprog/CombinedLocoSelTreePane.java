@@ -28,6 +28,8 @@ import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgPane;
+import jmri.jmrit.progsupport.ProgModeSelector;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,13 +61,10 @@ public class CombinedLocoSelTreePane extends CombinedLocoSelPane {
      */
     private static final long serialVersionUID = 8012548215648047175L;
 
-    public CombinedLocoSelTreePane(JLabel s) {
-        super(s);
+    public CombinedLocoSelTreePane(JLabel s, ProgModeSelector selector) {
+        super(s, selector);
     }
 
-    public CombinedLocoSelTreePane() {
-        super();
-    }
     protected JTree dTree;
     InvisibleTreeModel dModel;
     DecoderTreeNode dRoot;

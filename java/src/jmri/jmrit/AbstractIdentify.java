@@ -4,6 +4,8 @@ package jmri.jmrit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import jmri.Programmer;
+
 /**
  * Abstract base for common code of {@link jmri.jmrit.roster.IdentifyLoco} and
  * {@link jmri.jmrit.decoderdefn.IdentifyDecoder}, the two classes that use a
@@ -40,6 +42,11 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
 
     abstract public boolean test9(int value);
 
+    protected AbstractIdentify(Programmer p) {
+        this.programmer = p;
+    }
+    Programmer programmer;
+    
     /**
      * Update the status field (if any). Invoked with "Done" when the results
      * are in.
@@ -193,12 +200,11 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
      * Access a single CV for the next step
      */
     protected void readCV(int cv) {
-        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-        if (p == null) {
+        if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
             try {
-                p.readCV(cv, this);
+                programmer.readCV(cv, this);
             } catch (jmri.ProgrammerException ex) {
                 statusUpdate("" + ex);
             }
@@ -206,12 +212,11 @@ public abstract class AbstractIdentify implements jmri.ProgListener {
     }
 
     protected void writeCV(int cv, int value) {
-        jmri.Programmer p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
-        if (p == null) {
+        if (programmer == null) {
             statusUpdate("No programmer connected");
         } else {
             try {
-                p.writeCV(cv, value, this);
+                programmer.writeCV(cv, value, this);
             } catch (jmri.ProgrammerException ex) {
                 statusUpdate("" + ex);
             }

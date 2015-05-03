@@ -94,7 +94,7 @@ public class PaneProgAction extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
-        JPanel pane1 = new CombinedLocoSelTreePane(statusLabel) {
+        JPanel pane1 = new CombinedLocoSelTreePane(statusLabel, modePane) {
             /**
              *
              */

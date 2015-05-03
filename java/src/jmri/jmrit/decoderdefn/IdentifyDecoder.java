@@ -30,6 +30,10 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class IdentifyDecoder extends jmri.jmrit.AbstractIdentify {
 
+    public IdentifyDecoder(jmri.Programmer programmer) {
+        super(programmer);
+    }
+
     int mfgID = -1; 	// cv8
     int modelID = -1;	// cv7
     int productIDhigh = -1;

@@ -10,11 +10,13 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import jmri.Programmer;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.IdentifyLoco;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.swing.RosterEntrySelectorPanel;
+import jmri.jmrit.progsupport.ProgModeSelector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,19 +38,21 @@ public class KnownLocoSelPane extends LocoSelPane {
      */
     private static final long serialVersionUID = 9052342102384471212L;
 
-    public KnownLocoSelPane(JLabel s, boolean ident) {
+    public KnownLocoSelPane(JLabel s, boolean ident, ProgModeSelector selector) {
         mCanIdent = ident;
         mStatusLabel = s;
+        this.selector = selector;
         init();
     }
 
     public KnownLocoSelPane(boolean ident) {
-        this(null, ident);
+        this(null, ident, null);
     }
 
     boolean mCanIdent;
 
     JComboBox<String> programmerBox;
+    ProgModeSelector selector;
 
     protected void init() {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -114,7 +118,13 @@ public class KnownLocoSelPane extends LocoSelPane {
     private void startIdentify() {
         // start identifying a loco
         final KnownLocoSelPane me = this;
-        IdentifyLoco id = new IdentifyLoco() {
+        Programmer p = null;
+        if (selector != null && selector.isSelected()) p = selector.getProgrammer();
+        if (p == null) {
+            log.warn("Selector did not provide a programmer, use default");
+            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        }
+        IdentifyLoco id = new IdentifyLoco(p) {
             private KnownLocoSelPane who = me;
 
             protected void done(int dccAddress) {

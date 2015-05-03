@@ -1374,7 +1374,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         }
         // start identifying a loco
         final RosterFrame me = this;
-        IdentifyLoco ident = new IdentifyLoco() {
+        Programmer p = null;
+        if (modePanel.isSelected()) p = modePanel.getProgrammer();
+        if (p == null) {
+            log.warn("Selector did not provide a programmer, use default");
+            p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
+        }
+        IdentifyLoco ident = new IdentifyLoco(p) {
             private RosterFrame who = me;
 
             @Override

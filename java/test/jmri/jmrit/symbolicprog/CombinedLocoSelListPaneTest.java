@@ -2,6 +2,8 @@ package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.jmrit.progsupport.ProgModeSelector;
+import jmri.Programmer;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -15,23 +17,35 @@ public class CombinedLocoSelListPaneTest extends TestCase {
     }
 
     public void testIsDecoderSelected() {
-        jmri.InstanceManager.setProgrammerManager(new DefaultProgrammerManager(new jmri.progdebugger.ProgDebugger()));
+        ProgModeSelector sel = new ProgModeSelector() {
+            Programmer programmer = new jmri.progdebugger.ProgDebugger();
+            public Programmer getProgrammer() { return programmer; }
+            public boolean isSelected() { return true; }
+            public void dispose() {}
+        };
+        
         JLabel val1 = new JLabel();
         // ensure a valid DecoderIndexFile
         jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
-        CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1);
+        CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1,sel);
         Assert.assertEquals("initial state", false, combinedlocosellistpane.isDecoderSelected());
         combinedlocosellistpane.mDecoderList.setSelectedIndex(1);
         Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
     }
 
     public void testSelectedDecoderType() {
+        ProgModeSelector sel = new ProgModeSelector() {
+            Programmer programmer = new jmri.progdebugger.ProgDebugger();
+            public Programmer getProgrammer() { return programmer; }
+            public boolean isSelected() { return true; }
+            public void dispose() {}
+        };
+
         JLabel val1 = new JLabel();
-        jmri.InstanceManager.setProgrammerManager(new DefaultProgrammerManager(new jmri.progdebugger.ProgDebugger()));
         // ensure a valid DecoderIndexFile
         jmri.jmrit.decoderdefn.DecoderIndexFile.resetInstance();
 
-        CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1);
+        CombinedLocoSelListPane combinedlocosellistpane = new CombinedLocoSelListPane(val1, sel);
         combinedlocosellistpane.mDecoderList.setSelectedIndex(4);
         Assert.assertEquals("after update", true, combinedlocosellistpane.isDecoderSelected());
         String stringRet = combinedlocosellistpane.selectedDecoderType();

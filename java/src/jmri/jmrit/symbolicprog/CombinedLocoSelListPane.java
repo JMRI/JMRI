@@ -18,6 +18,8 @@ import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.jmrit.progsupport.ProgModeSelector;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,13 +46,8 @@ public class CombinedLocoSelListPane extends CombinedLocoSelPane {
      */
     private static final long serialVersionUID = -8124040231760463058L;
 
-    public CombinedLocoSelListPane(JLabel s) {
-        super(s);
-    }
-
-    public CombinedLocoSelListPane() {
-
-        super();
+    public CombinedLocoSelListPane(JLabel s, ProgModeSelector selector) {
+        super(s, selector);
     }
 
     /**

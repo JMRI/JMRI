@@ -24,10 +24,13 @@ import org.slf4j.LoggerFactory;
  * <P>
  * The resulting JFrame is constructed on the fly here, and has no specific
  * type.
+ * <p>
+ * Note that this just works with the roster, no programming track or
+ * layout operations are present.
  *
  * @see jmri.jmrit.symbolicprog.tabbedframe.PaneProgAction
  *
- * @author	Bob Jacobsen Copyright (C) 2001, 2008
+ * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2015
  * @version	$Revision$
  */
 public class PaneNewProgAction extends AbstractAction {
@@ -67,7 +70,7 @@ public class PaneNewProgAction extends AbstractAction {
         f.setJMenuBar(menuBar);
 
         // new Loco on programming track
-        JPanel pane1 = new LocoSelTreePane(null) {
+        JPanel pane1 = new LocoSelTreePane(null, null) {
             /**
              *
              */
