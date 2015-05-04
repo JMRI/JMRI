@@ -33,9 +33,6 @@ import org.slf4j.LoggerFactory;
 
 public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -4467086483594717590L;
     public static final int FROM_BLOCK_COLUMN = 0;
     public static final int NAME_COLUMN = 1;
@@ -75,21 +72,26 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return _manager.getBySystemName(name);
     }
 
+    @Override
     public NamedBean getByUserName(String name) {
         return _manager.getByUserName(name);
     }
 
+    @Override
     protected String getBeanType() {
         return "Portal";
     }
 
+    @Override
     public String getValue(String name) {
         return name;
     }
 
+    @Override
     public void clickOn(NamedBean t) {
     }
 
+    @Override
     protected String getMasterClassName() {
         return PortalTableModel.class.getName();
     }
@@ -104,6 +106,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return super.getRowCount() + 1;
     }
 
+    @Override
     public String getColumnName(int col) {
         switch (col) {
             case FROM_BLOCK_COLUMN:
@@ -116,6 +119,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return "";
     }
 
+    @Override
     public Object getValueAt(int row, int col) {
         if (getRowCount() == row) {
             return tempRow[col];
@@ -148,6 +152,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return "";
     }
 
+    @Override
     public void setValueAt(Object value, int row, int col) {
         String msg = null;
         if (super.getRowCount() == row) {
@@ -156,34 +161,45 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 fireTableRowsUpdated(row, row);
                 return;
             } else {
-                tempRow[col] = (String) value;
-            }
-            String name = tempRow[NAME_COLUMN];
-            if (name == null || name.trim().length() == 0) {
-                return;
+                String str = (String) value;
+                if (str == null || str.trim().length() == 0) {
+                    tempRow[col] = null;
+                    return;
+              } else {
+                    tempRow[col] = str.trim();
+                }
             }
             OBlockManager OBlockMgr = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class);
-            OBlock fromBlock = OBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
-            OBlock toBlock = OBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
-            if (fromBlock == null || toBlock == null) {
-                if (fromBlock == null && tempRow[FROM_BLOCK_COLUMN] != null) {
+            OBlock fromBlock = null;
+            OBlock toBlock = null;
+            if (tempRow[FROM_BLOCK_COLUMN] != null) {
+                fromBlock = OBlockMgr.getOBlock(tempRow[FROM_BLOCK_COLUMN]);
+                if (fromBlock == null) {
                     msg = Bundle.getMessage("NoSuchBlock", tempRow[FROM_BLOCK_COLUMN]);
-                } else if (toBlock == null && tempRow[TO_BLOCK_COLUMN] != null) {
-                    msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);
-                } else {
-                    //                    msg = Bundle.getMessage("PortalNeedsBlock", name);            		 
                 }
-            } else if (fromBlock.equals(toBlock)) {
-                msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
-            } else {
-                Portal portal = _manager.createNewPortal(null, name);
-                if (portal != null) {
-                    portal.setToBlock(toBlock, false);
-                    portal.setFromBlock(fromBlock, false);
-                    initTempRow();
-                    fireTableDataChanged();
-                } else {
-                    msg = Bundle.getMessage("DuplPortalName", (String) value);
+            }
+            if (msg==null && tempRow[TO_BLOCK_COLUMN] != null) {
+                toBlock = OBlockMgr.getOBlock(tempRow[TO_BLOCK_COLUMN]);
+                if (toBlock==null) {
+                    msg = Bundle.getMessage("NoSuchBlock", tempRow[TO_BLOCK_COLUMN]);
+                }
+            }
+            if (msg==null && tempRow[NAME_COLUMN] != null) {
+                if (fromBlock == null || toBlock==null ) {
+                    msg = Bundle.getMessage("PortalNeedsBlock", tempRow[NAME_COLUMN]);                   
+                } else if (fromBlock.equals(toBlock)){
+                    msg = Bundle.getMessage("SametoFromBlock", fromBlock.getDisplayName());
+                }
+                if (msg==null) {
+                    Portal portal = _manager.createNewPortal(null, tempRow[NAME_COLUMN]);
+                    if (portal != null) {
+                        portal.setToBlock(toBlock, false);
+                        portal.setFromBlock(fromBlock, false);
+                        initTempRow();
+                        fireTableDataChanged();
+                    } else {
+                        msg = Bundle.getMessage("DuplPortalName", (String) value);
+                    }
                 }
             }
             if (msg != null) {
@@ -271,7 +287,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
     }
 
-    private boolean deletePortal(Portal portal) {
+    private static boolean deletePortal(Portal portal) {
         if (JOptionPane.showConfirmDialog(null,
                 Bundle.getMessage("DeletePortalConfirm",
                         portal.getName()), Bundle.getMessage("WarningTitle"),
@@ -288,10 +304,12 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return false;
     }
 
+    @Override
     public boolean isCellEditable(int row, int col) {
         return true;
     }
 
+    @Override
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL) {
             return JButton.class;
@@ -299,6 +317,7 @@ public class PortalTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return String.class;
     }
 
+    @Override
     public int getPreferredWidth(int col) {
         switch (col) {
             case FROM_BLOCK_COLUMN:
