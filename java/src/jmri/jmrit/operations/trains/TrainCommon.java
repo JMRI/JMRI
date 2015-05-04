@@ -12,6 +12,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JLabel;
+import jmri.Timebase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
@@ -1730,6 +1731,8 @@ public class TrainCommon {
 
     public static String getISO8601Date(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
+        // use the JMRI timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
         if (isModelYear && !Setup.getYearModeled().isEmpty()) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1784,6 +1787,8 @@ public class TrainCommon {
 
     public static String getDate(boolean isModelYear) {
         Calendar calendar = Calendar.getInstance();
+        // use the JMRI timebase (which may be a fast clock).
+        calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
         if (isModelYear && !Setup.getYearModeled().equals("")) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
@@ -1800,7 +1805,9 @@ public class TrainCommon {
      *
      * @param date
      * @return double in minutes
+     * @deprecated.  Use date object comparisons instead.
      */
+    @Deprecated
     public double convertStringDateToDouble(String date) {
         double dateToDouble = 0;
         try {

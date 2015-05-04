@@ -234,7 +234,7 @@ public class CarManager extends RollingStockManager {
      * @return list of cars ordered by car kernel
      */
     public List<RollingStock> getByKernelList() {
-        List<RollingStock> byBlocking = getByIntList(getByNumberList(), BY_BLOCKING);
+        List<RollingStock> byBlocking = getByList(getByNumberList(), BY_BLOCKING);
         return getByList(byBlocking, BY_KERNEL);
     }
 
@@ -266,7 +266,7 @@ public class CarManager extends RollingStockManager {
      * @return list of cars ordered by wait count
      */
     public List<RollingStock> getByWaitList() {
-        return getByIntList(getByIdList(), BY_WAIT);
+        return getByList(getByIdList(), BY_WAIT);
     }
 
     public List<RollingStock> getByPickupList() {
@@ -281,24 +281,24 @@ public class CarManager extends RollingStockManager {
     private static final int BY_WAIT = 16;
     private static final int BY_PICKUP = 19;
 
-    // add car options to sort list
-    protected Object getRsAttribute(RollingStock rs, int attribute) {
-        Car car = (Car) rs;
+    // add car options to sort comparator
+    @Override
+    protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {
             case BY_LOAD:
-                return car.getLoadName();
+                return (c1,c2)->(((Car)c1).getLoadName().compareToIgnoreCase(((Car) c2).getLoadName()));
             case BY_KERNEL:
-                return car.getKernelName();
+                return (c1,c2)->(((Car)c1).getKernelName().compareToIgnoreCase(((Car)c2).getKernelName()));
             case BY_RWE:
-                return car.getReturnWhenEmptyDestName();
+                return (c1,c2)->(((Car)c1).getReturnWhenEmptyDestName().compareToIgnoreCase(((Car)c2).getReturnWhenEmptyDestName()));
             case BY_FINAL_DEST:
-                return car.getFinalDestinationName() + car.getFinalDestinationTrackName();
+                return (c1,c2)->(((Car)c1).getFinalDestinationName().compareToIgnoreCase(((Car)c2).getFinalDestinationName()));
             case BY_WAIT:
-                return car.getWait(); // returns an integer
+                return (c1,c2)->(((Car)c1).getWait() - ((Car)c2).getWait());
             case BY_PICKUP:
-                return car.getPickupScheduleName();
+                return (c1,c2)->(((Car)c1).getPickupScheduleName().compareToIgnoreCase(((Car)c2).getPickupScheduleName()));
             default:
-                return super.getRsAttribute(car, attribute);
+                return super.getComparator(attribute);
         }
     }
 
@@ -461,7 +461,8 @@ public class CarManager extends RollingStockManager {
                 names.add(car.getRoadName());
             }
         }
-        return sortList(names);
+        java.util.Collections.sort(names);
+        return names;
     }
 
     /**
@@ -478,7 +479,8 @@ public class CarManager extends RollingStockManager {
                 names.add(car.getRoadName());
             }
         }
-        return sortList(names);
+        java.util.Collections.sort(names);
+        return names;
     }
 
     /**

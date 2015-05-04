@@ -2,6 +2,8 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -46,6 +48,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     protected String _rfid = NONE;
     protected String _value = NONE;
     protected String _last = NONE;
+    protected Date _lastDate = null;
     protected boolean _locationUnknown = false;
     protected boolean _outOfService = false;
     protected boolean _selected = false;
@@ -93,6 +96,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         _road = road;
         _number = number;
         _id = createId(road, number);
+        _lastDate = new Date(0); // set to the start of the epoch.
         addPropertyChangeListeners();
     }
 
@@ -798,6 +802,13 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                   }
                   if (e.getPropertyName().equals("whenLastSeen")) {
                       log.debug("Tag Reader Time at Location update received for {}", toString());
+                       // update the time when this car was last moved
+                       // stock when it's IdTag is seen, but only if 
+                       // the actual location changes.
+                       if (e.getNewValue() != null) {
+                           Date newDate = ((Date) e.getNewValue());
+                           setLastDate(newDate);
+                       }
                   }
               }
           };
@@ -828,12 +839,53 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     /**
      * Provides the last date when this rolling stock was moved, or was reset
-     * from a built train.
+     * from a built train, as a string.
      *
      * @return date
      */
     public String getLastDate() {
-        return _last;
+        java.text.SimpleDateFormat format=
+                    new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+        return format.format(_lastDate);  
+    }
+
+    /**
+     * Provides the last date when this rolling stock was moved, or was reset
+     * from a built train.
+     *
+     * @return date
+     */
+    public Date getLastMoveDate() {
+        return _lastDate;  
+    }
+
+    /**
+     * Sets the last date when this rolling stock was moved, or was reset from a
+     * built train.
+     *
+     * @param date
+     * @deprecated use setLastDate(Date) instead. 
+     */
+    @Deprecated
+    public void setLastDate(String date) {
+        String old = _last;
+        _last = date;
+        if (!old.equals(date)) {
+            setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
+        }
+        // create a date object from the value.
+        try {
+            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
+            _lastDate = formatter.parse(_last);
+        } catch (java.text.ParseException pe1) {
+            try {
+                // try 24hour clock.
+                SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+                _lastDate = formatter.parse(_last);
+            } catch (java.text.ParseException pe2) {
+                log.error("Not able to parse date: " + _last);
+            }
+        }
     }
 
     /**
@@ -842,10 +894,10 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      *
      * @param date
      */
-    public void setLastDate(String date) {
-        String old = _last;
-        _last = date;
-        if (!old.equals(date)) {
+    public void setLastDate(Date date) {
+        Date old = _lastDate;
+        _lastDate = date;
+        if (!old.equals(_lastDate)) {
             setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
         }
     }
@@ -1126,7 +1178,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
             _selected = a.getValue().equals(Xml.TRUE);
         }
         if ((a = e.getAttribute(Xml.DATE)) != null) {
-            _last = a.getValue();
+            setLastDate(a.getValue());
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
             _blocking = Integer.parseInt(a.getValue());

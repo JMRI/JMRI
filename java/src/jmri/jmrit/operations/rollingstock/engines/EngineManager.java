@@ -192,7 +192,7 @@ public class EngineManager extends RollingStockManager {
     }
     
     public List<RollingStock> getByHpList() {
-        return getByIntList(getByModelList(), BY_HP);
+        return getByList(getByModelList(), BY_HP);
     }
 
     // The special sort options for engines
@@ -200,21 +200,21 @@ public class EngineManager extends RollingStockManager {
     private static final int BY_CONSIST = 5;
     private static final int BY_HP = 13;
     
-
-    // provide model and consist sorts
-    protected Object getRsAttribute(RollingStock rs, int attribute) {
-        Engine eng = (Engine) rs;
+    // add engine options to sort comparator
+    @Override
+    protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {
             case BY_MODEL:
-                return eng.getModel();
+                return (e1,e2) -> (((Engine) e1).getModel().compareToIgnoreCase(((Engine) e2).getModel()));
             case BY_CONSIST:
-                return eng.getConsistName();
+                return (e1,e2) -> (((Engine) e1).getConsistName().compareToIgnoreCase(((Engine) e2).getConsistName()));
             case BY_HP:
-                return eng.getHpInteger();
+                return (e1,e2) -> (((Engine) e1).getHpInteger() - ((Engine) e2).getHpInteger());
             default:
-                return super.getRsAttribute(rs, attribute);
+                return super.getComparator(attribute);
         }
     }
+
 
     /**
      * return a list available engines (no assigned train) engines are ordered
@@ -241,7 +241,7 @@ public class EngineManager extends RollingStockManager {
      * returns a list of consisted locos in the order that they were entered in.
      */
     public List<Engine> getByTrainBlockingList(Train train) {
-        return castListToEngine(getByIntList(super.getByTrainList(train), BY_BLOCKING));
+        return castListToEngine(getByList(super.getByTrainList(train), BY_BLOCKING));
     }
 
     private List<Engine> castListToEngine(List<RollingStock> list) {
@@ -267,7 +267,8 @@ public class EngineManager extends RollingStockManager {
                 names.add(engine.getRoadName());
             }
         }
-        return sortList(names);
+        java.util.Collections.sort(names);
+        return names;
     }
 
     public void load(Element root) {

@@ -2,6 +2,7 @@
 package jmri.jmrit.operations.rollingstock;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
@@ -360,7 +361,7 @@ public class RollingStockManager {
      * @return list of RollingStock ordered by RollingStock moves
      */
     public List<RollingStock> getByMovesList() {
-        return getByIntList(getList(), BY_MOVES);
+        return getByList(getList(), BY_MOVES);
     }
 
     /**
@@ -405,67 +406,15 @@ public class RollingStockManager {
      * @return list of RollingStock ordered by last date
      */
     public List<RollingStock> getByLastDateList() {
-        return getByList(getByIdList(), BY_LAST);
+        return getByList(getByIdList(),BY_LAST);
     }
 
     private static final int pageSize = 64;
 
     protected List<RollingStock> getByList(List<RollingStock> sortIn, int attribute) {
         List<RollingStock> out = new ArrayList<RollingStock>();
-        String rsIn;
-        for (RollingStock rs : sortIn) {
-            rsIn = (String) getRsAttribute(rs, attribute);
-            int start = 0;
-            // page to improve performance
-            int divisor = out.size() / pageSize;
-            for (int k = divisor; k > 0; k--) {
-                String rsOut = (String) getRsAttribute(out.get((out.size() - 1) * k / divisor), attribute);
-                if (rsIn.compareToIgnoreCase(rsOut) >= 0) {
-                    start = (out.size() - 1) * k / divisor;
-                    break;
-                }
-            }
-            int j;
-            for (j = start; j < out.size(); j++) {
-                if (rsIn.compareToIgnoreCase((String) getRsAttribute(out.get(j), attribute)) < 0) {
-                    break;
-                }
-            }
-            out.add(j, rs);
-        }
-        return out;
-    }
-
-    /**
-     * Sorts by integer.
-     *
-     * @param sortIn
-     * @param attribute
-     * @return list of rolling stock sorted by an integer
-     */
-    protected List<RollingStock> getByIntList(List<RollingStock> sortIn, int attribute) {
-        List<RollingStock> out = new ArrayList<RollingStock>();
-        int rsIn;
-        for (RollingStock rs : sortIn) {
-            rsIn = (Integer) getRsAttribute(rs, attribute);
-            int start = 0;
-            // page to improve performance
-            int divisor = out.size() / pageSize;
-            for (int k = divisor; k > 0; k--) {
-                int rsOut = (Integer) getRsAttribute(out.get((out.size() - 1) * k / divisor), attribute);
-                if (rsIn >= rsOut) {
-                    start = (out.size() - 1) * k / divisor;
-                    break;
-                }
-            }
-            int j;
-            for (j = start; j < out.size(); j++) {
-                if (rsIn < (Integer) getRsAttribute(out.get(j), attribute)) {
-                    break;
-                }
-            }
-            out.add(j, rs);
-        }
+        sortIn.forEach(n -> out.add(n));
+        Collections.sort(out,getComparator(attribute)); 
         return out;
     }
 
@@ -495,38 +444,39 @@ public class RollingStockManager {
     protected static final int BY_BLOCKING = 18;
 
     // BY_PICKUP = 19
-    protected Object getRsAttribute(RollingStock rs, int attribute) {
+
+    protected java.util.Comparator<RollingStock> getComparator(int attribute) {
         switch (attribute) {
             case BY_NUMBER:
-                return rs.getNumber();
+                return (r1,r2) -> (r1.getNumber().compareToIgnoreCase(r2.getNumber()));
             case BY_ROAD:
-                return rs.getRoadName();
+                return (r1,r2) -> (r1.getRoadName().compareToIgnoreCase(r2.getRoadName()));
             case BY_TYPE:
-                return rs.getTypeName();
+                return (r1,r2) -> (r1.getTypeName().compareToIgnoreCase(r2.getTypeName()));
             case BY_COLOR:
-                return rs.getColor();
+                return (r1,r2) -> (r1.getColor().compareToIgnoreCase(r2.getColor()));
             case BY_LOCATION:
-                return rs.getStatus() + rs.getLocationName() + rs.getTrackName();
+                return (r1,r2) -> (r1.getStatus() + r1.getLocationName() + r1.getTrackName()).compareToIgnoreCase(r2.getStatus() + r2.getLocationName() + r2.getTrackName());
             case BY_DESTINATION:
-                return rs.getDestinationName() + rs.getDestinationTrackName();
+                return (r1,r2) -> (r1.getDestinationName() + r1.getDestinationTrackName()).compareToIgnoreCase(r2.getDestinationName() + r2.getDestinationTrackName());
             case BY_TRAIN:
-                return rs.getTrainName();
+                return (r1,r2) -> (r1.getTrainName().compareToIgnoreCase(r2.getTrainName()));
             case BY_MOVES:
-                return rs.getMoves(); // returns an integer
+                return (r1,r2) -> (r1.getMoves() - r2.getMoves());
             case BY_BUILT:
-                return convertBuildDate(rs.getBuilt());
+                return (r1,r2) ->  (convertBuildDate(r1.getBuilt()).compareToIgnoreCase(convertBuildDate(r2.getBuilt())));
             case BY_OWNER:
-                return rs.getOwner();
+                return (r1,r2) -> (r1.getOwner().compareToIgnoreCase(r2.getOwner())); 
             case BY_RFID:
-                return rs.getRfid();
+                return (r1,r2) -> (r1.getRfid().compareToIgnoreCase(r2.getRfid()));
             case BY_VALUE:
-                return rs.getValue();
+                return (r1,r2) -> (r1.getValue().compareToIgnoreCase(r2.getValue()));
             case BY_LAST:
-                return convertLastDate(rs.getLastDate());
+                return (r1,r2) -> (r1.getLastMoveDate().compareTo(r2.getLastMoveDate())); 
             case BY_BLOCKING:
-                return rs.getBlocking();
+                return (r1,r2) -> ( r1.getBlocking() - r2.getBlocking());
             default:
-                return "unknown"; // NOI18N
+                return (r1,r2) -> ((r1.getRoadName()+r1.getNumber()).compareToIgnoreCase(r2.getRoadName()+r2.getNumber()));
         }
     }
 
@@ -544,33 +494,6 @@ public class RollingStockManager {
             }
         }
         return date;
-    }
-
-    /**
-     * The input format is month/day/year time. The problem is month and day can
-     * be a single character, and the order is all wrong so sorting doesn't work
-     * well. This converts the format to yyyy/mm/dd time for proper sorting.
-     *
-     * @param date
-     * @return
-     */
-    private String convertLastDate(String date) {
-        String[] newDate = date.split("/");
-        if (newDate.length < 3) {
-            return date;
-        }
-        String month = newDate[0];
-        String day = newDate[1];
-        if (newDate[0].length() == 1) {
-            month = "0" + month;
-        }
-        if (newDate[1].length() == 1) {
-            day = "0" + day;
-        }
-        String[] yearTime = newDate[2].split(" ");
-        String year = yearTime[0];
-        String time = yearTime[1];
-        return month = year + "/" + month + "/" + day + " " + time;
     }
 
     /**
@@ -598,21 +521,6 @@ public class RollingStockManager {
             if (rs.getTrain() == train) {
                 out.add(rs);
             }
-        }
-        return out;
-    }
-
-    // Common sort routine
-    protected List<String> sortList(List<String> list) {
-        List<String> out = new ArrayList<String>();
-        for (String s : list) {
-            int j;
-            for (j = 0; j < out.size(); j++) {
-                if (s.compareToIgnoreCase(out.get(j)) < 0) {
-                    break;
-                }
-            }
-            out.add(j, s);
         }
         return out;
     }

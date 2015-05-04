@@ -3419,14 +3419,14 @@ public class TrainBuilder extends TrainCommon {
                 log.debug("{} car ({}) last moved date: {}", car.getTrack().getTrackType(), testCar.toString(), testCar
                         .getLastDate()); // NOI18N
                 if (car.getTrack().getServiceOrder().equals(Track.FIFO)) {
-                   if(convertStringDateToDouble(bestCar.getLastDate()) > convertStringDateToDouble(testCar
-                          .getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                   if(bestCar.getLastMoveDate().after(testCar.getLastMoveDate()) && 
+                      bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
                        bestCar = testCar;
                        log.debug("New best car ({})", bestCar.toString());
                    }
                 } else if (car.getTrack().getServiceOrder().equals(Track.LIFO)) {
-                   if(convertStringDateToDouble(bestCar.getLastDate()) < convertStringDateToDouble(testCar
-                                .getLastDate()) && bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
+                   if(bestCar.getLastMoveDate().before(testCar.getLastMoveDate()) && 
+                      bestCar.getLoadPriority().equals(testCar.getLoadPriority())) {
                        bestCar = testCar;
                        log.debug("New best car ({})", bestCar.toString());
                    }

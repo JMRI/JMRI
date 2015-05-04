@@ -520,6 +520,55 @@ public class CarManagerTest extends TestCase {
         Assert.assertEquals("6th car in list by type", c1, carList.get(5));
     }
 
+    public void testListCarsByLastMovedDate() {
+        resetCarManager();
+
+        CarManager manager = CarManager.instance();
+        List<RollingStock> carList;
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.util.Date start = cal.getTime(); // save to rest time, to avoid
+                                              // test probelms if run near 
+                                              // midnight.
+        java.util.Date time = cal.getTime();
+        c1.setLastDate(time); // right now
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY,-1);
+        time = cal.getTime();
+        c2.setLastDate(time); // one hour ago
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY,1);
+        time = cal.getTime();
+        c3.setLastDate(time); // one hour from now
+
+        cal.setTime(start);
+        cal.set(java.util.Calendar.DAY_OF_MONTH,-1);
+        time = cal.getTime();
+        c4.setLastDate(time); // one day ago.
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.DAY_OF_MONTH,1);
+        time = cal.getTime();
+        c5.setLastDate(time); // one day in the future now.
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.YEAR,-1);
+        time = cal.getTime();
+        c6.setLastDate(time); // one year ago.
+
+        // now get cars by last move date.
+        carList = manager.getByLastDateList();
+        Assert.assertEquals("Number of Cars by last move date", 6, carList.size());
+        Assert.assertEquals("1st car in list by move date", c6, carList.get(0));
+        Assert.assertEquals("2nd car in list by move date", c4, carList.get(1));
+        Assert.assertEquals("3rd car in list by move date", c2, carList.get(2));
+        Assert.assertEquals("4th car in list by move date", c1, carList.get(3));
+        Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
+        Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
+    }
+
     public void testListCabooseRoads() {
         resetCarManager();
 
