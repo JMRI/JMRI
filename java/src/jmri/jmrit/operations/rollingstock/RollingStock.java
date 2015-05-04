@@ -2,8 +2,8 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import jmri.IdTag;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
@@ -883,7 +883,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 _lastDate = formatter.parse(_last);
             } catch (java.text.ParseException pe2) {
-                log.error("Not able to parse date: " + _last);
+                log.warn("Not able to parse date: {} for rolling stock ({})", _last, toString());
+                _lastDate = new Date(0); // set to the start of the epoch.
             }
         }
     }
