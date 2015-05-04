@@ -65,12 +65,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         updateList();
     }
 
-    public final int SORTBYNAME = 1;
     public final int SORTBYTIME = 2;
-    public final int SORTBYDEPARTS = 3;
-    public final int SORTBYTERMINATES = 4;
-    public final int SORTBYROUTE = 5;
-    public final int SORTBYSTATUS = 6;
     public final int SORTBYID = 7;
 
     private int _sort = SORTBYTIME;
@@ -106,13 +101,6 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         } else {
             sysList = trainManager.getTrainsByTimeList();
         }
-        /*
-         * else if (_sort == SORTBYNAME) sysList = manager.getTrainsByNameList(); else if (_sort == SORTBYTIME) sysList
-         * = manager.getTrainsByTimeList(); else if (_sort == SORTBYDEPARTS) sysList =
-         * manager.getTrainsByDepartureList(); else if (_sort == SORTBYTERMINATES) sysList =
-         * manager.getTrainsByTerminatesList(); else if (_sort == SORTBYROUTE) sysList = manager.getTrainsByRouteList();
-         * else if (_sort == SORTBYSTATUS) sysList = manager.getTrainsByStatusList();
-         */
 
         if (!_showAll) {
             // filter out trains not checked
@@ -516,8 +504,8 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
 
     public void propertyChange(PropertyChangeEvent e) {
         if (Control.showProperty && log.isDebugEnabled()) {
-            log.debug("Property change " + e.getPropertyName() + " old: " + e.getOldValue() + " new: "
-                    + e.getNewValue()); // NOI18N
+            log.debug("Property change {} old: {} new: {}",
+                    e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
         if (e.getPropertyName().equals(Train.STATUS_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Train.TRAIN_LOCATION_CHANGED_PROPERTY)) {
@@ -538,7 +526,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
                 Train train = ((Train) e.getSource());
                 int row = sysList.indexOf(train);
                 if (Control.showProperty && log.isDebugEnabled()) {
-                    log.debug("Update train table row: " + row + " name: " + train.getName());
+                    log.debug("Update train table row: {} name: {}",  row, train.getName());
                 }
                 if (row >= 0) {
                     fireTableRowsUpdated(row, row);
