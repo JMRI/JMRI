@@ -56,11 +56,13 @@ public class Car extends RollingStock {
     public static final String KERNEL_NAME_CHANGED_PROPERTY = "kernel name changed"; // NOI18N
 
     public Car() {
-
+        super();
+        loading = false;
     }
 
     public Car(String road, String number) {
         super(road, number);
+        loading = false;
         log.debug("New car ({} {})", road, number);
         addPropertyChangeListeners();
     }
@@ -714,7 +716,7 @@ public class Car extends RollingStock {
     }
 
     // used to stop a track's schedule from bumping when loading car database
-    private boolean loading = false;
+    private boolean loading = true;
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
@@ -723,8 +725,7 @@ public class Car extends RollingStock {
      * @param e Car XML element
      */
     public Car(org.jdom2.Element e) {
-        loading = true; // stop track schedule from bumping
-        super.rollingStock(e);
+        super(e);
         loading = false;
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.PASSENGER)) != null) {

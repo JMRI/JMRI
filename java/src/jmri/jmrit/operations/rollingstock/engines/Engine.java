@@ -137,22 +137,32 @@ public class Engine extends RollingStock {
      * @param weight locomotive weight
      */
     public void setWeightTons(String weight) {
-        if (getModel().equals("")) {
-            return;
-        }
-        String old = getWeightTons();
-        engineModels.setModelWeight(getModel(), weight);
-        if (!old.equals(weight)) {
-            setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
+        try {
+           if (getModel().equals("")) {
+               return;
+           }
+           String old = getWeightTons();
+           super.setWeightTons(weight);
+           engineModels.setModelWeight(getModel(), weight);
+           if (!old.equals(weight)) {
+              setDirtyAndFirePropertyChange("Engine Weight Tons", old, weight); // NOI18N
+           }
+        } catch(java.lang.NullPointerException npe) {
+           // this failed, was the model set?
         }
     }
 
     public String getWeightTons() {
-        String weight = engineModels.getModelWeight(getModel());
-        if (weight == null) {
-            weight = "";
-        }
-        return weight;
+        String weight = null;
+        try{
+           weight = engineModels.getModelWeight(getModel());
+           if (weight == null) {
+               weight = "";
+           }
+       } catch(java.lang.NullPointerException npe){
+          weight = "";
+       }
+       return weight;
     }
 
     /**
@@ -234,6 +244,7 @@ public class Engine extends RollingStock {
      * @param e Engine XML element
      */
     public Engine(org.jdom2.Element e) {
+        super(e); // MUST create the rolling stock first!
         org.jdom2.Attribute a;
         // must set _model first so locomotive hp, length, type and weight is set properly
         if ((a = e.getAttribute(Xml.MODEL)) != null) {
@@ -265,7 +276,6 @@ public class Engine extends RollingStock {
                 log.error("Consist " + a.getValue() + " does not exist");
             }
         }
-        super.rollingStock(e);
         addPropertyChangeListeners();
     }
 

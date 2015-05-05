@@ -88,15 +88,15 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     LocationManager locationManager = LocationManager.instance();
 
     public RollingStock() {
-
+        _lastDate = new Date(0); // set to the start of the epoch. 
     }
 
     public RollingStock(String road, String number) {
+        this();
         log.debug("New rolling stock ({} {})", road, number);
         _road = road;
         _number = number;
         _id = createId(road, number);
-        _lastDate = new Date(0); // set to the start of the epoch.
         addPropertyChangeListeners();
     }
 
@@ -1096,7 +1096,8 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      *
      * @param e RollingStock XML element
      */
-    public void rollingStock(org.jdom2.Element e) {
+    public RollingStock(org.jdom2.Element e) {
+        this();
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.ID)) != null) {
             _id = a.getValue();
