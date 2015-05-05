@@ -1,8 +1,6 @@
 // TrainsScheduleTableFrame.java
 package jmri.jmrit.operations.trains;
 
-import jmri.jmrit.operations.setup.Control;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.beans.PropertyChangeEvent;
@@ -25,6 +23,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -346,10 +345,12 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     private void setSwitchListButtonText() {
-        if (Setup.isSwitchListRealTime()) {
-            switchListsButton.setText(Bundle.getMessage("PrintSwitchLists"));
-        } else {
+        if (!Setup.isSwitchListRealTime()) {
             switchListsButton.setText(Bundle.getMessage("Update"));
+        } else if (trainManager.isPrintPreviewEnabled()) {
+            switchListsButton.setText(Bundle.getMessage("PreviewSwitchLists"));
+        } else {
+            switchListsButton.setText(Bundle.getMessage("PrintSwitchLists"));
         }
     }
 
@@ -442,6 +443,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         }
         if (e.getPropertyName().equals(TrainManager.PRINTPREVIEW_CHANGED_PROPERTY)) {
             setPrintButtonText();
+            setSwitchListButtonText();
         }
         if (e.getPropertyName().equals(TrainManager.TRAINS_BUILT_CHANGED_PROPERTY)) {
             switchListsButton.setEnabled(true);
