@@ -844,7 +844,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * @return date
      */
     public String getLastDate() {
-        java.text.SimpleDateFormat format=
+        SimpleDateFormat format=
                     new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return format.format(_lastDate);  
     }
@@ -864,7 +864,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * built train.
      *
      * @param date
-     * @deprecated use setLastDate(Date) instead. 
+     * @deprecated This method will become a private method, used only 
+     * for loading data from a file, in the future.  Use setLastDate(Date) 
+     * instead. 
      */
     @Deprecated
     public void setLastDate(String date) {
@@ -876,18 +878,26 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         // create a date object from the value.
         try {
-            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
-            _lastDate = formatter.parse(_last);
-        } catch (java.text.ParseException pe1) {
-            try {
+           // try the new format (with seconds).
+           SimpleDateFormat formatter=
+              new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+           _lastDate = formatter.parse(_last);
+        } catch (java.text.ParseException pe0) {
+           // try the old 12 hour format (no seconds).
+           try {
+              SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy hh:mmaa");
+              _lastDate = formatter.parse(_last);
+           } catch (java.text.ParseException pe1) {
+              try {
                 // try 24hour clock.
                 SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy HH:mm");
                 _lastDate = formatter.parse(_last);
-            } catch (java.text.ParseException pe2) {
-                log.warn("Not able to parse date: {} for rolling stock ({})", _last, toString());
-                _lastDate = oldDate; // set the date back to what it was before
-            }
-        }
+              } catch (java.text.ParseException pe2) {
+                   log.warn("Not able to parse date: {} for rolling stock ({})", _last, toString());
+                   _lastDate = oldDate; // set the date back to what it was before
+              }
+           }
+       }
     }
 
     /**
@@ -1180,7 +1190,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
             _selected = a.getValue().equals(Xml.TRUE);
         }
         if ((a = e.getAttribute(Xml.DATE)) != null) {
-            setLastDate(a.getValue());
+            setLastDate(a.getValue());  // uses the setLastDate(String) method.
         }
         if ((a = e.getAttribute(Xml.BLOCKING)) != null) {
             _blocking = Integer.parseInt(a.getValue());
