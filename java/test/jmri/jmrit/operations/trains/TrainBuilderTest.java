@@ -5971,29 +5971,32 @@ public class TrainBuilderTest extends TestCase {
         interchangeTrack.setLength(1000);
         interchangeTrack.setServiceOrder(Track.NORMAL);
 
-        java.util.Date date = java.util.Calendar.getInstance().getTime();
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.util.Date date = cal.getTime();
 
         // place 3 cars on the track.
         Car a = cmanager.newCar("ABC", "123");
         a.setTypeName("Boxcar");
         a.setLength("50");
-        a.setLastDate(tb.getDate(date));
+        a.setLastDate(date);
         a.setLocation(A, interchangeTrack);
 
-        date.setMinutes(date.getMinutes()+2);
+        cal.add(java.util.Calendar.MINUTE,2);
+        date=cal.getTime();
 
         Car b = cmanager.newCar("ABC", "321");
         b.setTypeName("Boxcar");
         b.setLength("50");
-        b.setLastDate(tb.getDate(date));
+        b.setLastDate(date);
         b.setLocation(A, interchangeTrack);
 
-        date.setMinutes(date.getMinutes()+2);
+        cal.add(java.util.Calendar.MINUTE,2);
+        date=cal.getTime();
 
         Car c = cmanager.newCar("ABC", "111");
         c.setTypeName("Boxcar");
         c.setLength("50");
-        c.setLastDate(tb.getDate(date));
+        c.setLastDate(date);
         c.setLocation(A, interchangeTrack);
         
         // NOTE: this test uses reflection to test a private method.
@@ -6040,29 +6043,32 @@ public class TrainBuilderTest extends TestCase {
         interchangeTrack.setLength(1000);
         interchangeTrack.setServiceOrder(Track.FIFO);
 
-        java.util.Date date = java.util.Calendar.getInstance().getTime();
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.util.Date date = cal.getTime();
 
         // and placing 3 cars on the track.
         Car a = cmanager.newCar("ABC", "123");
         a.setTypeName("Boxcar");
         a.setLength("50");
-        a.setLastDate(tb.getDate(date));
+        a.setLastDate(date);
         a.setLocation(A, interchangeTrack);
 
-        date.setMinutes(date.getMinutes()+2);
+        cal.add(java.util.Calendar.MINUTE,2);
+        date=cal.getTime();
 
         Car b = cmanager.newCar("ABC", "321");
         b.setTypeName("Boxcar");
         b.setLength("50");
-        b.setLastDate(tb.getDate(date));
+        b.setLastDate(date);
         b.setLocation(A, interchangeTrack);
 
-        date.setMinutes(date.getMinutes()+2);
+        cal.add(java.util.Calendar.MINUTE,2);
+        date=cal.getTime();
 
         Car c = cmanager.newCar("ABC", "111");
         c.setTypeName("Boxcar");
         c.setLength("50");
-        c.setLastDate(tb.getDate(date));
+        c.setLastDate(date);
         c.setLocation(A, interchangeTrack);
         
         // NOTE: this test uses reflection to test a private method.
@@ -6108,29 +6114,32 @@ public class TrainBuilderTest extends TestCase {
         interchangeTrack.setLength(1000);
         interchangeTrack.setServiceOrder(Track.LIFO);
 
-        java.util.Date date = java.util.Calendar.getInstance().getTime();
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.util.Date date = cal.getTime();
 
         // and placing 3 cars on the track.
         Car a = cmanager.newCar("ABC", "123");
         a.setTypeName("Boxcar");
         a.setLength("50");
-        a.setLastDate(tb.getDate(date));
+        a.setLastDate(date);
         a.setLocation(A, interchangeTrack);
 
-        date.setMinutes(date.getMinutes()+2);
+        cal.add(java.util.Calendar.MINUTE,2);
+        date=cal.getTime();
 
         Car b = cmanager.newCar("ABC", "321");
         b.setTypeName("Boxcar");
         b.setLength("50");
-        b.setLastDate(tb.getDate(date));
+        b.setLastDate(date);
         b.setLocation(A, interchangeTrack);
 
-        date.setMinutes(date.getMinutes()+2);
+        cal.add(java.util.Calendar.MINUTE,2);
+        date=cal.getTime();
 
         Car c = cmanager.newCar("ABC", "111");
         c.setTypeName("Boxcar");
         c.setLength("50");
-        c.setLastDate(tb.getDate(date));
+        c.setLastDate(date);
         c.setLocation(A, interchangeTrack);
         
         // NOTE: this test uses reflection to test a private method.
