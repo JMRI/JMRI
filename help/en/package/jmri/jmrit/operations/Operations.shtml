@@ -310,19 +310,22 @@
    </P>
 
    <P>
-    Now you're ready to create your first <A HREF="#Trains">train</A>. Be sure to select the route
-    you created for your first train. Leave all of the train checkboxes alone which means the train
-    will service all car and locomotive types. Leave the "Option train requirements" for locomotives
-    and caboose area alone for now. Save the train, close the window, and return to the Trains
-    window. Press the <A HREF="#BuildingTrains">Build</A> button for the train. It should build. Now
-    pressing the "Print" or "Preview" button will produce a manifest for your train. Review the
-    manifest and you should see that the train serviced all car types. If you examine the <A
-     HREF="#Cars">Cars</A> window you can see that cars are now assigned to your train.
+    Now you're ready to create your first train by pressing the <A
+     HREF="#TrainEdit">Add</A> button at the bottom left of the <A
+     HREF="#Trains">Trains</A> window. Be sure to select the route you created for your first train. Leave
+    all of the train checkboxes alone which means the train will service all car and locomotive
+    types. Leave the
+    <A HREF="#TrainRequires">Optional Train Requirements</A> for locomotives and caboose area alone
+    for now. Save the train, close the window, and return to the Trains window. Press the
+    <A HREF="#BuildingTrains">Build</A> button for the train. It should build. Now pressing the
+    "Print" or "Preview" button will produce a manifest for your train. Review the manifest and you
+    should see that the train serviced all car types. If you examine the
+    <A HREF="#Cars">Cars</A> window you can see that cars are now assigned to your train.
    </P>
 
    <P>
     Now try limiting the car types that the train will service by modifying some of the car types
-    checkboxes in the <A HREF="#Trains">Edit Train </A> window. Use the train <A HREF="#TrainReset">reset</A>
+    checkboxes in the <A HREF="#TrainEdit">Edit Train </A> window. Use the train <A HREF="#TrainReset">reset</A>
     to release the cars that were assigned to the train so you can build it again without moving the
     train. With the new car types restriction in place, you should see that the train will only pick
     up and set out car types that are selected in the Edit Train window.
@@ -3050,7 +3053,8 @@
     <A HREF="#PanelOptionsTrainIcons">train icon</A>, so short names work best. If you want the
     train's lead locomotive number and departure direction as part of the train's description when
     printing, enter {0} and {1} respectively for the number and direction. This allows you to
-    create a train description like "Extra 1234 East" for your manifests and switch lists.
+    create a train description like "Extra 1234 East" for your manifests and switch lists. You can
+    also include the locomotive's reporting mark (road) by entering {2} in the description.
    </p>
 
    <P>Next select the route that this train will travel. There's an "Edit" button to the right
@@ -3509,7 +3513,7 @@
    real or fast clock. 
    
    <A NAME="TrainsTableColors"></A>
-   <H4>Trains Table Colors</H4>
+   <H4>Train Row Color</H4>
 
    OperationsPro&trade; gives you two options for color coding the rows in the "Trains" window. You can
    manually color code your trains, or you can have the program automatically set a train's row
@@ -3520,11 +3524,33 @@
    <A NAME="Timetable"></A>
    <H4>Timetable</H4>
 
-   The Timetable tool allows you to define which trains will run on any given day, and can be found
-   under the Trains-&gt;Tools. For each day of the week, select which trains you want to build. Then
-   select which day you want by selecting the appropriate radio button. Then press the "Apply"
-   button to update the Trains build checkboxes. Use the "Save" button to store any changes you made
-   to the timetable.
+   The Timetable window allows you to define which trains will run on any given day, and can be
+   found under the Trains-&gt;Tools. For each day of the week, select which trains you want to
+   build. Then select which day you want by selecting the appropriate radio button. Then press the
+   "Apply" button to update the Trains build checkboxes. Use the "Save" button to store any changes
+   you made to the timetable.
+
+   <P>To change which day of the week is active, select the appropriate radio button and then
+    press the "Activate" button. The day selected is then used by your schedules (Delivery and
+    Pickup) when building trains. You can also add or change the days of the week by using the "Edit
+    Timetable" window found under "Tools". You can change the order by dragging the column with your
+    mouse pointer. Press the "Save" button to complete your changes.</P>
+
+   <P>
+    There are four buttons labeled "Build", "Print/Preview", "Print Switch Lists/Update Switch
+    Lists", and "Terminate". These buttons facilitate the building of trains, printing the manifests
+    and switch lists, and terminating the selected trains. Very useful if you're running the program
+    in <A HREF="#ConsolidationMode">Consolation mode</A>.
+   </P>
+
+   <P>
+    If you've selected the "Preview" checkbox in the <A HREF="#Trains">Trains</A> window, the
+    "Print/Preview" button becomes "Preview" which allows to you review your train manifest and
+    switch lists before printing them. The "Print Switch Lists/Update Switch Lists" button becomes
+    "Update Switch Lists" when you deselect the "Real Time" checkbox in the <A HREF="#SwitchList">Switch
+     Lists by Location</A> window.
+   </P>
+
    <A NAME="SetupExcelProgram"></A>
    <H4>Setup Excel Program (Manifest Creator)</H4>
 
@@ -3970,6 +3996,7 @@
    <P>If you select or deselect any of the switch list options, you will need to press the
     "Save" button to activate them.</P>
     
+    <A NAME="ConsolidationMode"></A>
     <h4>Consolidation Mode Buttons (Not Real Time)</h4>
     When you deselect the "Real Time" checkbox, two new buttons will appear, "Update Switch Lists" and "Reset Switch Lists".
     The "Update Switch Lists" is used to append new train builds to the existing switch lists for each of the locations
