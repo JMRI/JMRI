@@ -90,6 +90,12 @@ For more on JMRI networking, see the
 <a href="../../../../html/doc/Technical/Networking.shtml">networking technical page</a>.
 
 <p>
+You can also 
+<a href="../webThrottle/webThrottle.shtml">use a web browser</a>
+in your device to 
+<a href="../webThrottle/webThrottle.shtml">run trains</a>
+if for some reason you can't install an app on the device.
+
 <h3>
 Function Labels
 </h3>
