@@ -869,6 +869,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     @Deprecated
     public void setLastDate(String date) {
         String old = _last;
+        Date oldDate = _lastDate;
         _last = date;
         if (!old.equals(date)) {
             setDirtyAndFirePropertyChange("rolling stock date", old, date); // NOI18N
@@ -884,7 +885,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                 _lastDate = formatter.parse(_last);
             } catch (java.text.ParseException pe2) {
                 log.warn("Not able to parse date: {} for rolling stock ({})", _last, toString());
-                _lastDate = new Date(0); // set to the start of the epoch.
+                _lastDate = oldDate; // set the date back to what it was before
             }
         }
     }
