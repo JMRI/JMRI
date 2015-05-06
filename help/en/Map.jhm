@@ -296,6 +296,8 @@
 
 <mapID target="manual.DecoderPro3.Main_Zimo" url="manual/DecoderPro3/Main_Zimo.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ConsolidationMode" url="package/jmri/jmrit/operations/Operations.shtml#ConsolidationMode"/>
+
 <mapID target="package.jmri.jmrit.operations.Operations_CopyTrack" url="package/jmri/jmrit/operations/Operations.shtml#CopyTrack"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_toolbar" url="manual/DecoderPro/Main_Throttle_toolbar.shtml"/>
@@ -1510,8 +1512,6 @@
 
 <mapID target="package.jmri.jmrit.inControl.inControl" url="package/jmri/jmrit/inControl/inControl.shtml"/>
 
-<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_zimobis" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#zimobis"/>
-
 <mapID target="html.apps.DecoderPro.FileUpdate" url="html/apps/DecoderPro/FileUpdate.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_StartUp" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#StartUp"/>
@@ -1856,8 +1856,6 @@
 
 <mapID target="package.jmri.jmrit.beantable.AddEditAction" url="package/jmri/jmrit/beantable/AddEditAction.shtml"/>
 
-<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_tcsaccess" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#tcsaccess"/>
-
 <mapID target="manual.DecoderPro.Main_Debug_vsdecoder" url="manual/DecoderPro/Main_Debug.shtml#vsdecoder"/>
 
 <mapID target="manual.DecoderPro.Programmer_Start_Top" url="manual/DecoderPro/Programmer_Start.shtml#Top"/>
@@ -1947,8 +1945,6 @@
 <mapID target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel_ScanningLimitations" url="package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml#ScanningLimitations"/>
 
 <mapID target="manual.DecoderPro3.Start_DecoderPro_Top" url="manual/DecoderPro3/Start_DecoderPro.shtml#Top"/>
-
-<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_zimocapability" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#zimocapability"/>
 
 <mapID target="html.doc.Technical.webupdate.UpdatingDocs" url="html/doc/Technical/webupdate/UpdatingDocs.shtml"/>
 
@@ -2553,8 +2549,6 @@
 <mapID target="package.jmri.jmrit.operations.Operations_RouteTools" url="package/jmri/jmrit/operations/Operations.shtml#RouteTools"/>
 
 <mapID target="manual.DecoderPro3.dp3_menubar_Top" url="manual/DecoderPro3/dp3_menubar.shtml#Top"/>
-
-<mapID target="html.apps.DecoderPro.CreateDecoderAdvanced_accessoryops" url="html/apps/DecoderPro/CreateDecoderAdvanced.shtml#accessoryops"/>
 
 <mapID target="manual.DecoderPro.Basic_Mode_Top" url="manual/DecoderPro/Basic_Mode.shtml#Top"/>
 

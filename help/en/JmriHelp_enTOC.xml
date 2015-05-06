@@ -63,14 +63,8 @@
    <tocitem text="Tour " target="html.apps.DecoderPro.Tour"/>
 
   </tocitem>
-  <tocitem text="DecoderPro Manual " target="manual.index">
-   <tocitem text="Getting Started " target="manual.Getting_Started">
-    <tocitem text="What is DCC? " target="manual.Getting_Started_What is DCC"/>
-
-    <tocitem text="DCC Systems " target="manual.Getting_Started_DCC systems"/>
-
-    <tocitem text="DCC Hardware " target="manual.Getting_Started_DCC Hardware"/>
-
+  <tocitem text="DecoderPro Manual " target="manual.DecoderPro.index">
+   <tocitem text="Getting Started " target="manual.DecoderPro.Getting_Started">
     <tocitem text="Setting Preferences " target="manual.Getting_Started_Start"/>
 
    </tocitem>
