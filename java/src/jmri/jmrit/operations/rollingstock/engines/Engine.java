@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Engine extends RollingStock {
 
     private Consist _consist = null;
-    private String _model = null;
+    private String _model = "";
 
     EngineModels engineModels = EngineModels.instance();
 
@@ -124,7 +124,7 @@ public class Engine extends RollingStock {
     public String getLength() {
         try {
             String length = super.getLength();
-            if (getModel() != null) {
+            if (getModel() != null && !getModel().equals("")) {
                 length = engineModels.getModelLength(getModel());
             }
             if (length == null) {
