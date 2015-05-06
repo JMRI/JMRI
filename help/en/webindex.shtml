@@ -1320,13 +1320,13 @@
 <ul>
   
 <li>
-<a href="html/tools/throttle/AdvancedThrottleControl.shtml#iphone">iPhone/iPod as Throttle </a>
+<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">iPhone/iPod as Throttle </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="">Android Phone as Throttle </a>
+<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">Android Phone as Throttle </a>
 <ul></ul>
 </li>
 

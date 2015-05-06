@@ -433,9 +433,9 @@
 
  </indexitem>
  <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain">
-  <indexitem text="iPhone/iPod as Throttle " target="html.tools.throttle.AdvancedThrottleControl_iphone"/>
+  <indexitem text="iPhone/iPod as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
-  <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.EngineDriverAndroidThrottle"/>
+  <indexitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
   <indexitem text="webThrottle - Web Throttles and Panels " target="package.jmri.jmrit.webThrottle.webThrottle"/>
 
