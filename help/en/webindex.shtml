@@ -787,23 +787,48 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
 <ul></ul>
 </li>
 
   
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spurs </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars </a>
 <ul></ul>
 </li>
 
@@ -821,37 +846,13 @@
 
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spurs </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
 <ul></ul>
 </li>
 
@@ -1332,6 +1333,12 @@
   
 <li>
 <a href="package/jmri/jmrit/webThrottle/webThrottle.shtml">webThrottle - Web Throttles and Panels </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/inControl/inControl.shtml">inControl - Web Throttles and Panels (older version) </a>
 <ul></ul>
 </li>
 
