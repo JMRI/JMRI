@@ -75,7 +75,7 @@ public class SliderSnap extends BasicSliderUI {
     private static Class<? extends ComponentUI> sliderClass;
     private static Method xForVal;
     private static Method yForVal;
-    private static ReinitListener reinitListener = new ReinitListener();
+    private static final ReinitListener reinitListener = new ReinitListener();
 
     public SliderSnap() {
         super(null);
@@ -105,7 +105,7 @@ public class SliderSnap extends BasicSliderUI {
                 c.addHierarchyListener(new MouseAttacher());
             }
             return uiObject;
-        } catch (Exception e) {
+        } catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             throw new RuntimeException(e);
         }
     }
@@ -122,7 +122,7 @@ public class SliderSnap extends BasicSliderUI {
             // Needs to run on the Event Despatch Thread for data visibility
             try {
                 EventQueue.invokeAndWait(init);
-            } catch (Exception e) {
+            } catch (InterruptedException | InvocationTargetException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -135,8 +135,7 @@ public class SliderSnap extends BasicSliderUI {
      */
     private static void attachTo(JSlider c) {
         MouseMotionListener[] listeners = c.getMouseMotionListeners();
-        for (int i = 0; i < listeners.length; i++) {
-            MouseMotionListener m = listeners[i];
+        for (MouseMotionListener m : listeners) {
             if (m instanceof TrackListener) {
                 // Remove the original listener
                 c.removeMouseMotionListener(m);
@@ -155,17 +154,17 @@ public class SliderSnap extends BasicSliderUI {
         /**
          * Parent MouseMotionListener
          */
-        private MouseMotionListener delegate;
+        private final MouseMotionListener delegate;
 
         /**
          * Original Look and Feel implementation
          */
-        private BasicSliderUI ui;
+        private final BasicSliderUI ui;
 
         /**
          * Our slider
          */
-        private JSlider slider;
+        private final JSlider slider;
 
         /**
          * Offset of mouse click from centre of slider thumb
@@ -346,11 +345,9 @@ public class SliderSnap extends BasicSliderUI {
                 Method m = slider.getOrientation()
                         == JSlider.HORIZONTAL
                                 ? xForVal : yForVal;
-                Integer result = (Integer) m.invoke(ui, new Object[]{Integer.valueOf(value)});
-                return result.intValue();
-            } catch (InvocationTargetException e) {
-                return -1;
-            } catch (IllegalAccessException e) {
+                Integer result = (Integer) m.invoke(ui, new Object[]{value});
+                return result;
+            } catch (InvocationTargetException | IllegalAccessException e) {
                 return -1;
             }
         }

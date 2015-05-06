@@ -1,7 +1,6 @@
 // FontComboUtil.java
 package jmri.util.swing;
 
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
@@ -13,7 +12,6 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.ListCellRenderer;
 import javax.swing.UIManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,11 +102,11 @@ public class FontComboUtil {
         log.debug("Prepare font lists...");
 
         // Initialise the font lists
-        monospaced = new ArrayList<String>();
-        proportional = new ArrayList<String>();
-        character = new ArrayList<String>();
-        symbol = new ArrayList<String>();
-        all = new ArrayList<String>();
+        monospaced = new ArrayList<>();
+        proportional = new ArrayList<>();
+        character = new ArrayList<>();
+        symbol = new ArrayList<>();
+        all = new ArrayList<>();
 
         // Create a font render context to use for the comparison
         FontRenderContext frc = new FontRenderContext(null, false, false);
@@ -258,80 +256,74 @@ public class FontComboUtil {
      */
     public static JComboBox<String> getFontCombo(int which, final int size, final boolean previewOnly) {
         // Create a JComboBox containing the specified list of font families
-        JComboBox<String> fontList = new JComboBox<String>(getFonts(which).toArray(new String[0]));
+        JComboBox<String> fontList = new JComboBox<>(getFonts(which).toArray(new String[0]));
 
         // Assign a custom renderer
-        fontList.setRenderer(new ListCellRenderer<String>() {
-            public Component getListCellRendererComponent(JList<? extends String> list,
-                    String family, // name of the current font family
-                    int index,
-                    boolean isSelected,
-                    boolean hasFocus) {
-
-                JPanel p = new JPanel();
-                p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-
-                // Opaque only when rendering the actual list items
-                p.setOpaque(index > -1);
-
-                // Invert colours when item selected in the list
-                if (isSelected && index > -1) {
-                    p.setBackground(list.getSelectionBackground());
-                    p.setForeground(list.getSelectionForeground());
-                } else {
-                    p.setBackground(list.getBackground());
-                    p.setForeground(list.getForeground());
-                }
-
-                // Setup two labels:
-                // - one for the font name in regular dialog font
-                // - one for the font name in the font itself
-                JLabel name = new JLabel(family + (previewOnly || index == -1 ? "" : ": "));
-                JLabel preview = new JLabel(family);
-
-                // Set the font of the labels
-                // Regular dialog font for the name
-                // Actual font for the preview (unless a symbol font)
-                name.setFont(list.getFont());
-                if (isSymbolFont(family)) {
-                    preview.setFont(list.getFont());
-                    preview.setText(family + " " + Bundle.getMessage("FontSymbol"));
-                } else {
-                    preview.setFont(new Font(family, Font.PLAIN, size == 0 ? list.getFont().getSize() : size));
-                }
-
-                // Set the size of the labels
-                name.setPreferredSize(new Dimension((index == -1 && !previewOnly ? name.getMaximumSize().width * 2 : name.getMaximumSize().width), name.getMaximumSize().height + 4));
-                preview.setPreferredSize(new Dimension(name.getMaximumSize().width, preview.getMaximumSize().height));
-
-                // Centre align both labels vertically
-                name.setAlignmentY(JLabel.CENTER_ALIGNMENT);
-                preview.setAlignmentY(JLabel.CENTER_ALIGNMENT);
-
-                // Ensure text colours align with that of the underlying panel
-                name.setForeground(p.getForeground());
-                preview.setForeground(p.getForeground());
-
-                // Determine which label(s) to show
-                // Always display the dialog font version as the list header
-                if (!previewOnly && index > -1) {
-                    p.add(name);
-                    p.add(preview);
-                } else if (index == -1) {
-                    name.setPreferredSize(new Dimension(name.getPreferredSize().width + 20, name.getPreferredSize().height - 2));
-                    p.add(name);
-                } else {
-                    p.add(preview);
-                }
-
-                // 'Oribble hack as CDE/Motif JComboBox doesn't seem to like
-                // displaying JPanels in the JComboBox header
-                if (UIManager.getLookAndFeel().getName().equals("CDE/Motif") && index == -1) {
-                    return name;
-                }
-                return p;
-
+        fontList.setRenderer((JList<? extends String> list, String family, // name of the current font family
+                int index, boolean isSelected, boolean hasFocus) -> {
+            JPanel p = new JPanel();
+            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
+            
+            // Opaque only when rendering the actual list items
+            p.setOpaque(index > -1);
+            
+            // Invert colours when item selected in the list
+            if (isSelected && index > -1) {
+                p.setBackground(list.getSelectionBackground());
+                p.setForeground(list.getSelectionForeground());
+            } else {
+                p.setBackground(list.getBackground());
+                p.setForeground(list.getForeground());
             }
+
+            // Setup two labels:
+            // - one for the font name in regular dialog font
+            // - one for the font name in the font itself
+            JLabel name = new JLabel(family + (previewOnly || index == -1 ? "" : ": "));
+            JLabel preview = new JLabel(family);
+
+            // Set the font of the labels
+            // Regular dialog font for the name
+            // Actual font for the preview (unless a symbol font)
+            name.setFont(list.getFont());
+            if (isSymbolFont(family)) {
+                preview.setFont(list.getFont());
+                preview.setText(family + " " + Bundle.getMessage("FontSymbol"));
+            } else {
+                preview.setFont(new Font(family, Font.PLAIN, size == 0 ? list.getFont().getSize() : size));
+            }
+
+            // Set the size of the labels
+            name.setPreferredSize(new Dimension((index == -1 && !previewOnly ? name.getMaximumSize().width * 2 : name.getMaximumSize().width), name.getMaximumSize().height + 4));
+            preview.setPreferredSize(new Dimension(name.getMaximumSize().width, preview.getMaximumSize().height));
+
+            // Centre align both labels vertically
+            name.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+            preview.setAlignmentY(JLabel.CENTER_ALIGNMENT);
+
+            // Ensure text colours align with that of the underlying panel
+            name.setForeground(p.getForeground());
+            preview.setForeground(p.getForeground());
+
+            // Determine which label(s) to show
+            // Always display the dialog font version as the list header
+            if (!previewOnly && index > -1) {
+                p.add(name);
+                p.add(preview);
+            } else if (index == -1) {
+                name.setPreferredSize(new Dimension(name.getPreferredSize().width + 20, name.getPreferredSize().height - 2));
+                p.add(name);
+            } else {
+                p.add(preview);
+            }
+
+            // 'Oribble hack as CDE/Motif JComboBox doesn't seem to like
+            // displaying JPanels in the JComboBox header
+            if (UIManager.getLookAndFeel().getName().equals("CDE/Motif") && index == -1) {
+                return name;
+            }
+            return p;
+
         });
         return fontList;
     }
