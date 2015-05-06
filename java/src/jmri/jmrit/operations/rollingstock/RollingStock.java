@@ -88,7 +88,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
     LocationManager locationManager = LocationManager.instance();
 
     public RollingStock() {
-        _lastDate = new Date(0); // set to the start of the epoch. 
+        _lastDate = (new java.util.GregorianCalendar()).getGregorianChange(); // set to change date of the Gregorian Calendar. 
     }
 
     public RollingStock(String road, String number) {
