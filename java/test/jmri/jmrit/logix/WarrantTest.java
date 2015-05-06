@@ -4,6 +4,7 @@ package jmri.jmrit.logix;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.List;
 import jmri.BeanSetting;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -157,10 +158,25 @@ public class WarrantTest extends TestCase {
         Assert.assertEquals("BlockOrder", warrant.getLastOrder().toString(), lastOrder.toString());
         Assert.assertEquals("BlockOrder", warrant.getViaOrder().toString(), viaOrder.toString());
         
+        String msg = warrant.allocateRoute(orders);
+        Assert.assertNull("allocateRoute - "+msg, msg);
+        warrant.deAllocate();
+        
+        warrant.setThrottleCommands(new ArrayList<ThrottleSetting>());
+        warrant.addThrottleCommand(new ThrottleSetting(0, "Speed", "0.0", "North"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.4", "North"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "West"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.5", "West"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "NoOp", "Enter Block", "South"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.3", "South"));
+        warrant.addThrottleCommand(new ThrottleSetting(100, "Speed", "0.0", "South"));
+        List<ThrottleSetting> list = warrant.getThrottleCommands();
+        Assert.assertEquals("ThrottleCommands", 7, list.size());
+        
         DccLocoAddress dccAddress = new DccLocoAddress(999, true);
         Assert.assertNotNull("dccAddress", dccAddress);
-//        warrant.setDccAddress(dccAddress);
-        String msg = warrant.setRoute(0, orders);
+        warrant.setDccAddress(dccAddress);
+        msg = warrant.setRoute(0, orders);
         Assert.assertNull("setRoute - "+msg, msg);
         msg =  warrant.checkStartBlock();
         Assert.assertNull("checkStartBlock - "+msg, msg);
@@ -168,23 +184,45 @@ public class WarrantTest extends TestCase {
         Assert.assertNull("checkRoute - "+msg, msg);
         
         warrant.setTrainName("TestTrain");
-        long startTime = System.currentTimeMillis();
-        WarrantListener listener = new WarrantListener(); 
+        PropertyChangeListener listener = new WarrantListener(warrant);
+        Assert.assertNotNull("PropertyChangeListener", listener);
         warrant.addPropertyChangeListener(listener);
         
-        msg = warrant.setRunMode(Warrant.MODE_LEARN, dccAddress, null, null, false);
-        Assert.assertEquals("setRunMode", msg, Bundle.getMessage("noLearnThrottle", warrant.getDisplayName()));
-        
-        msg = warrant.acquireThrottle(dccAddress);
-//        Assert.assertNull("acquireThrottle - "+msg, msg);
+        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
+        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
+        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
+        nceSimulator.openPort("(None Selected)", "JMRI test");
+        nceSimulator.configure();
+        Assert.assertNotNull("NceSystemConnectionMemo", memo);
+
+        msg = warrant.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+        Assert.assertNull("setRunMode - "+msg, msg);
+        try {
+            Thread.sleep(300);            
+            sWest.setState(Sensor.ACTIVE);
+            Thread.sleep(300);            
+            sSouth.setState(Sensor.ACTIVE);
+            Thread.sleep(300);            
+        } catch (Exception e) {
+            System.out.println(e);            
+        }
+        msg = warrant.getRunningMessage();
+        Assert.assertEquals("getRunningMessage", "Idle", msg);
     }
     
+    
     class WarrantListener implements PropertyChangeListener {
+        
+        Warrant warrant;
+        WarrantListener( Warrant w) {
+            warrant = w;
+        }
         public void propertyChange(PropertyChangeEvent e) {
             String property = e.getPropertyName();
             System.out.println("propertyChange \""+property+
-                                            "\" old= "+e.getOldValue()+" new= "+e.getNewValue()+
-                                            " source= "+e.getSource().getClass().getName());
+                    "\" old= "+e.getOldValue()+" new= "+e.getNewValue());
+            Assert.assertEquals("propertyChange", warrant, e.getSource());           
+            System.out.println(warrant.getRunningMessage());
         }
     }
 

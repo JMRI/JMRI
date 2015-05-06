@@ -36,9 +36,6 @@ import org.slf4j.LoggerFactory;
 
 public class SignalTableModel extends AbstractTableModel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1150140866074591437L;
     public static final int NAME_COLUMN = 0;
     public static final int FROM_BLOCK_COLUMN = 1;
@@ -415,12 +412,10 @@ public class SignalTableModel extends AbstractTableModel {
             }
             if (msg == null && tempRow[NAME_COLUMN] != null) {
                 signal = Portal.getSignal(tempRow[NAME_COLUMN]);
-                if (msg == null) {
-                    if (signal == null) {
-                        msg = Bundle.getMessage("NoSuchSignal", tempRow[NAME_COLUMN]);
-                    } else {
-                        msg = checkDuplicateSignal(signal);
-                    }
+                if (signal == null) {
+                    msg = Bundle.getMessage("NoSuchSignal", tempRow[NAME_COLUMN]);
+                } else {
+                    msg = checkDuplicateSignal(signal);
                 }
                 if (msg==null) {
                     if (fromBlock != null && toBlock != null) {
@@ -609,14 +604,6 @@ public class SignalTableModel extends AbstractTableModel {
         if (msg != null) {
             JOptionPane.showMessageDialog(null, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-        }
-    }
-
-    private Portal getPortal(Portal p, OBlock fromBlock, OBlock toBlock) {
-        if (p != null) {
-            return p;
-        } else {
-            return getPortalwithBlocks(fromBlock, toBlock);
         }
     }
 

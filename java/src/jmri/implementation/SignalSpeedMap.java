@@ -31,7 +31,7 @@ public class SignalSpeedMap {
     static private int _interpretation;
     static private int _sStepDelay;     // ramp step time interval
     static private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
-    private float _stepIncrement;       // ramp step throttle increment
+    private float _stepIncrement = 0.01f;       // ramp step throttle increment
     private float _throttleFactor = 0.75f;
     private float _scale;
     
