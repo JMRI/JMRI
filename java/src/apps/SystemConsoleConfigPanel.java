@@ -70,11 +70,11 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
     private static final JToggleButton fontStyleItalic = new JToggleButton("I");
 
-    private static final JComboBox<Scheme> scheme = new JComboBox<Scheme>(SystemConsole.getInstance().getSchemes());
+    private static final JComboBox<Scheme> schemes = new JComboBox<>(SystemConsole.getInstance().getSchemes());
 
     private static final JComboBox<String> fontFamily = FontComboUtil.getFontCombo(FontComboUtil.MONOSPACED, 14);
 
-    private static final JComboBox<Integer> fontSize = new JComboBox<Integer>(fontSizes);
+    private static final JComboBox<Integer> fontSize = new JComboBox<>(fontSizes);
 
     public SystemConsoleConfigPanel() {
 
@@ -83,12 +83,12 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         JPanel p = new JPanel(new FlowLayout());
         p.add(new JLabel(rbc.getString("ConsoleScheme")));
 
-        scheme.setSelectedIndex(SystemConsole.getInstance().getScheme());
-        scheme.addActionListener((ActionEvent e) -> {
+        schemes.setSelectedIndex(SystemConsole.getInstance().getScheme());
+        schemes.addActionListener((ActionEvent e) -> {
             SystemConsole.getInstance().setScheme(((JComboBox) e.getSource()).getSelectedIndex());
         });
 
-        scheme.setRenderer((JList<? extends Scheme> list, Scheme scheme, int index, boolean isSelected, boolean hasFocus) -> {
+        schemes.setRenderer((JList<? extends Scheme> list, Scheme scheme, int index, boolean isSelected, boolean hasFocus) -> {
             JPanel p1 = new JPanel();
             p1.setOpaque(index > -1);
             if (isSelected && index > -1) {
@@ -112,13 +112,13 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
             return p1;
         });
 
-        p.add(scheme);
+        p.add(schemes);
         add(p);
 
         p = new JPanel(new FlowLayout());
         fontFamily.addActionListener((ActionEvent e) -> {
             SystemConsole.getInstance().setFontFamily((String) ((JComboBox) e.getSource()).getSelectedItem());
-            scheme.repaint();
+            schemes.repaint();
         });
         fontFamily.setSelectedItem(SystemConsole.getInstance().getFontFamily());
 
@@ -157,7 +157,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         add(p);
 
         p = new JPanel(new FlowLayout());
-        final JComboBox<String> wrapStyle = new JComboBox<String>(wrapStyleNames);
+        final JComboBox<String> wrapStyle = new JComboBox<>(wrapStyleNames);
         wrapStyle.addActionListener((ActionEvent e) -> {
             SystemConsole.getInstance().setWrapStyle(wrapStyles[((JComboBox) e.getSource()).getSelectedIndex()]);
         });
@@ -177,7 +177,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         SystemConsole.getInstance().setFontStyle(
                 (fontStyleBold.isSelected() ? Font.BOLD : Font.PLAIN)
                 | (fontStyleItalic.isSelected() ? Font.ITALIC : Font.PLAIN));
-        scheme.repaint();
+        schemes.repaint();
     }
 
     @Override

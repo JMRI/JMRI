@@ -7,13 +7,13 @@ import java.awt.Font;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -70,15 +70,15 @@ public final class SystemConsole extends JTextArea {
 
     private final JTextArea console;
 
-    private PrintStream originalOut;
-    private PrintStream originalErr;
+    private final PrintStream originalOut;
+    private final PrintStream originalErr;
 
     private final PrintStream outputStream;
     private final PrintStream errorStream;
 
     private JmriJFrame frame = null;
 
-    private JPopupMenu popup = new JPopupMenu();
+    private final JPopupMenu popup = new JPopupMenu();
 
     private JMenuItem copySelection = null;
 
@@ -111,8 +111,8 @@ public final class SystemConsole extends JTextArea {
     private JCheckBox autoScroll;
     private JCheckBox alwaysOnTop;
 
-    private String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll"; //NOI18N
-    private String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";   //NOI18N
+    private final String alwaysScrollCheck = this.getClass().getName() + ".alwaysScroll"; //NOI18N
+    private final String alwaysOnTopCheck = this.getClass().getName() + ".alwaysOnTop";   //NOI18N
 
     /**
      * Initialise the system console ensuring both System.out and System.err
@@ -149,6 +149,11 @@ public final class SystemConsole extends JTextArea {
         redirectSystemStreams();
     }
 
+    /**
+     * Get current SystemConsole instance.
+     * If one doesn't yet exist, create it.
+     * @return current SystemConsole instance
+     */
     public static SystemConsole getInstance() {
         if (instance == null) {
             SystemConsole.create();
@@ -178,13 +183,8 @@ public final class SystemConsole extends JTextArea {
                 try {
                     // Use invokeAndWait method as we don't want to
                     // return until the frame layout is completed
-                    SwingUtilities.invokeAndWait(new Runnable() {
-                        @Override
-                        public void run() {
-                            createFrame();
-                        }
-                    });
-                } catch (Exception ex) {
+                    SwingUtilities.invokeAndWait(this::createFrame);
+                } catch (InterruptedException | InvocationTargetException ex) {
                     log.error("Exception creating system console frame: " + ex);
                 }
             }
@@ -213,32 +213,23 @@ public final class SystemConsole extends JTextArea {
         // Add button to allow copy to clipboard
         JPanel p = new JPanel();
         JButton copy = new JButton(Bundle.getMessage("ButtonCopyClip"));
-        copy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                StringSelection text = new StringSelection(console.getText());
-                clipboard.setContents(text, text);
-            }
+        copy.addActionListener((ActionEvent event) -> {
+            StringSelection text = new StringSelection(console.getText());
+            clipboard.setContents(text, text);
         });
         p.add(copy);
 
         // Add button to allow console window to be closed
         JButton close = new JButton(Bundle.getMessage("ButtonClose"));
-        close.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                frame.setVisible(false);
-                frame.dispose();
-            }
+        close.addActionListener((ActionEvent event) -> {
+            frame.setVisible(false);
+            frame.dispose();
         });
         p.add(close);
 
         JButton stackTrace = new JButton(Bundle.getMessage("ButtonStackTrace"));
-        stackTrace.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                performStackTrace();
-            }
+        stackTrace.addActionListener((ActionEvent event) -> {
+            performStackTrace();
         });
         p.add(stackTrace);
 
@@ -246,12 +237,9 @@ public final class SystemConsole extends JTextArea {
         // Use the inverted SimplePreferenceState to default as enabled
         p.add(autoScroll = new JCheckBox(Bundle.getMessage("CheckBoxAutoScroll"),
                 !pref.getSimplePreferenceState(alwaysScrollCheck)));
-        autoScroll.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                doAutoScroll(console, autoScroll.isSelected());
-                pref.setSimplePreferenceState(alwaysScrollCheck, !autoScroll.isSelected());
-            }
+        autoScroll.addActionListener((ActionEvent event) -> {
+            doAutoScroll(console, autoScroll.isSelected());
+            pref.setSimplePreferenceState(alwaysScrollCheck, !autoScroll.isSelected());
         });
 
         // Add checkbox to enable/disable always on top
@@ -259,34 +247,25 @@ public final class SystemConsole extends JTextArea {
                 pref.getSimplePreferenceState(alwaysOnTopCheck)));
         alwaysOnTop.setVisible(true);
         alwaysOnTop.setToolTipText(Bundle.getMessage("ToolTipOnTop"));
-        alwaysOnTop.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setAlwaysOnTop(alwaysOnTop.isSelected());
-                pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTop.isSelected());
-            }
+        alwaysOnTop.addActionListener((ActionEvent event) -> {
+            frame.setAlwaysOnTop(alwaysOnTop.isSelected());
+            pref.setSimplePreferenceState(alwaysOnTopCheck, alwaysOnTop.isSelected());
         });
 
         frame.setAlwaysOnTop(alwaysOnTop.isSelected());
 
         // Define the pop-up menu
         copySelection = new JMenuItem(Bundle.getMessage("MenuItemCopy"));
-        copySelection.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                StringSelection text = new StringSelection(console.getSelectedText());
-                clipboard.setContents(text, text);
-            }
+        copySelection.addActionListener((ActionEvent event) -> {
+            StringSelection text = new StringSelection(console.getSelectedText());
+            clipboard.setContents(text, text);
         });
         popup.add(copySelection);
 
         JMenuItem menuItem = new JMenuItem(Bundle.getMessage("ButtonCopyClip"));
-        menuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                StringSelection text = new StringSelection(console.getText());
-                clipboard.setContents(text, text);
-            }
+        menuItem.addActionListener((ActionEvent event) -> {
+            StringSelection text = new StringSelection(console.getText());
+            clipboard.setContents(text, text);
         });
         popup.add(menuItem);
 
@@ -299,11 +278,8 @@ public final class SystemConsole extends JTextArea {
         schemeGroup = new ButtonGroup();
         for (final Scheme s : schemes) {
             rbMenuItem = new JRadioButtonMenuItem(s.description);
-            rbMenuItem.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent event) {
-                    setScheme(schemes.indexOf(s));
-                }
+            rbMenuItem.addActionListener((ActionEvent event) -> {
+                setScheme(schemes.indexOf(s));
             });
             rbMenuItem.setSelected(getScheme() == schemes.indexOf(s));
             schemeMenu.add(rbMenuItem);
@@ -315,33 +291,24 @@ public final class SystemConsole extends JTextArea {
         wrapMenu = new JMenu(rbc.getString("ConsoleWrapStyleMenu"));
         wrapGroup = new ButtonGroup();
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleNone"));
-        rbMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setWrapStyle(WRAP_STYLE_NONE);
-            }
+        rbMenuItem.addActionListener((ActionEvent event) -> {
+            setWrapStyle(WRAP_STYLE_NONE);
         });
         rbMenuItem.setSelected(getWrapStyle() == WRAP_STYLE_NONE);
         wrapMenu.add(rbMenuItem);
         wrapGroup.add(rbMenuItem);
 
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleLine"));
-        rbMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setWrapStyle(WRAP_STYLE_LINE);
-            }
+        rbMenuItem.addActionListener((ActionEvent event) -> {
+            setWrapStyle(WRAP_STYLE_LINE);
         });
         rbMenuItem.setSelected(getWrapStyle() == WRAP_STYLE_LINE);
         wrapMenu.add(rbMenuItem);
         wrapGroup.add(rbMenuItem);
 
         rbMenuItem = new JRadioButtonMenuItem(rbc.getString("ConsoleWrapStyleWord"));
-        rbMenuItem.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent event) {
-                setWrapStyle(WRAP_STYLE_WORD);
-            }
+        rbMenuItem.addActionListener((ActionEvent event) -> {
+            setWrapStyle(WRAP_STYLE_WORD);
         });
         rbMenuItem.setSelected(getWrapStyle() == WRAP_STYLE_WORD);
         wrapMenu.add(rbMenuItem);
@@ -411,15 +378,12 @@ public final class SystemConsole extends JTextArea {
      * @param scroll True to move to end
      */
     private void doAutoScroll(final JTextArea ta, final boolean scroll) {
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                int len = ta.getText().length();
-                if (scroll) {
-                    ta.setCaretPosition(len);
-                } else if (ta.getCaretPosition() == len && len > 0) {
-                    ta.setCaretPosition(len - 1);
-                }
+        SwingUtilities.invokeLater(() -> {
+            int len = ta.getText().length();
+            if (scroll) {
+                ta.setCaretPosition(len);
+            } else if (ta.getCaretPosition() == len && len > 0) {
+                ta.setCaretPosition(len - 1);
             }
         });
     }
@@ -563,7 +527,7 @@ public final class SystemConsole extends JTextArea {
      * Method to define console colour schemes
      */
     private void defineSchemes() {
-        schemes = new ArrayList<Scheme>();
+        schemes = new ArrayList<>();
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeGreenOnBlack"), Color.GREEN, Color.BLACK));
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeOrangeOnBlack"), Color.ORANGE, Color.BLACK));
         schemes.add(new Scheme(rbc.getString("ConsoleSchemeWhiteOnBlack"), Color.WHITE, Color.BLACK));
@@ -582,7 +546,7 @@ public final class SystemConsole extends JTextArea {
     private void performStackTrace() {
         System.out.println("----------- Begin Stack Trace -----------"); //NO18N
         System.out.println("-----------------------------------------"); //NO18N
-        traces = new HashMap<Thread, StackTraceElement[]>(Thread.getAllStackTraces());
+        traces = new HashMap<>(Thread.getAllStackTraces());
         for (Thread thread : traces.keySet()) {
             System.out.println("[" + thread.getId() + "] " + thread.getName());
             for (StackTraceElement el : thread.getStackTrace()) {
