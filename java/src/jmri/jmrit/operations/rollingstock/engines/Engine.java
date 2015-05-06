@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Engine extends RollingStock {
 
     private Consist _consist = null;
-    private String _model = "";
+    private String _model = null;
 
     EngineModels engineModels = EngineModels.instance();
 
@@ -51,7 +51,7 @@ public class Engine extends RollingStock {
      * @param type Locomotive type: Steam, Diesel, Gas Turbine, etc.
      */
     public void setTypeName(String type) {
-        if (getModel().equals("")) {
+        if (getModel() == null) {
             return;
         }
         String old = getTypeName();
@@ -123,21 +123,24 @@ public class Engine extends RollingStock {
 
     public String getLength() {
         try {
-           String length = engineModels.getModelLength(getModel());
-           if (length == null) {
-               length = "";
-           }
-           if (!length.equals(_length)) {
-               if (_lengthChange) // return "old" length, used for track reserve changes
-               {
-                   return _length;
-               }
-               log.debug("Loco ({}) length has been modified", toString());
-               super.setLength(length); // adjust track lengths
-           }
-           return length;
-        } catch(java.lang.NullPointerException npe) {
-               log.debug("NPE setting length for Engine ({})", toString());
+            String length = super.getLength();
+            if (getModel() != null) {
+                length = engineModels.getModelLength(getModel());
+            }
+            if (length == null) {
+                length = "";
+            }
+            if (!length.equals(_length)) {
+                if (_lengthChange) // return "old" length, used for track reserve changes
+                {
+                    return _length;
+                }
+                log.debug("Loco ({}) length has been modified", toString());
+                super.setLength(length); // adjust track lengths
+            }
+            return length;
+        } catch (java.lang.NullPointerException npe) {
+            log.debug("NPE setting length for Engine ({})", toString());
         }
         return "";
     }
