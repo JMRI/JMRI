@@ -135,7 +135,7 @@
 
  </tocitem>
  <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
-  <tocitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.EngineDriverAndroidThrottle"/>
+  <tocitem text="Android Phone as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
   <tocitem text="iPhone/iPod Touch as Throttle " target="package.jmri.jmrit.withrottle.UserInterface"/>
 
