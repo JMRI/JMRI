@@ -258,30 +258,33 @@
   <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
  </indexitem>
- <indexitem text="Operations " target="package.jmri.jmrit.operations.Operations">
+ <indexitem text="OperationsPro&trade; " target="package.jmri.jmrit.operations.Operations">
+ 
+ <indexitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
+  
+<indexitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations"></indexitem>
+	<indexitem text="Interchange "
+		target="package.jmri.jmrit.operations.Operations_Interchange" />
+	<indexitem text="Spurs "
+		target="package.jmri.jmrit.operations.Operations_Sidings" />
+	<indexitem text="Staging "
+		target="package.jmri.jmrit.operations.Operations_Staging" />
+	<indexitem text="Yards "
+		target="package.jmri.jmrit.operations.Operations_Yards" />
+  </indexitem>
+
   <indexitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
-
-  <indexitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
-
-  <indexitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations"/>
 
   <indexitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
 
   <indexitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
-
-  <indexitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
-
-  <indexitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
-
-  <indexitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
+  
+  <indexitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
 
   <indexitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
 
-  <indexitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
-
-  <indexitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
-
  </indexitem>
+ 
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
