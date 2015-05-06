@@ -109,26 +109,37 @@ public class Engine extends RollingStock {
      */
     public void setLength(String length) {
         super.setLength(length);
-        if (getModel().equals("")) {
-            return;
+        try {
+           if (getModel().equals("")) {
+               return;
+           }
+           engineModels.setModelLength(getModel(), length);
+        } catch(java.lang.NullPointerException npe){
+          // failed, but the model may not have been set.
+          log.debug("NPE getting lenght for Engine ({})", toString());
         }
-        engineModels.setModelLength(getModel(), length);
+        return;
     }
 
     public String getLength() {
-        String length = engineModels.getModelLength(getModel());
-        if (length == null) {
-            length = "";
+        try {
+           String length = engineModels.getModelLength(getModel());
+           if (length == null) {
+               length = "";
+           }
+           if (!length.equals(_length)) {
+               if (_lengthChange) // return "old" length, used for track reserve changes
+               {
+                   return _length;
+               }
+               log.debug("Loco ({}) length has been modified", toString());
+               super.setLength(length); // adjust track lengths
+           }
+           return length;
+        } catch(java.lang.NullPointerException npe) {
+               log.debug("NPE setting length for Engine ({})", toString());
         }
-        if (!length.equals(_length)) {
-            if (_lengthChange) // return "old" length, used for track reserve changes
-            {
-                return _length;
-            }
-            log.debug("Loco ({}) length has been modified", toString());
-            super.setLength(length); // adjust track lengths
-        }
-        return length;
+        return "";
     }
 
     /**
@@ -149,6 +160,7 @@ public class Engine extends RollingStock {
            }
         } catch(java.lang.NullPointerException npe) {
            // this failed, was the model set?
+           log.debug("NPE setting Weight Tons for Engine ({})", toString());
         }
     }
 
@@ -160,6 +172,7 @@ public class Engine extends RollingStock {
                weight = "";
            }
        } catch(java.lang.NullPointerException npe){
+          log.debug("NPE getting Weight Tons for Engine ({})", toString());
           weight = "";
        }
        return weight;

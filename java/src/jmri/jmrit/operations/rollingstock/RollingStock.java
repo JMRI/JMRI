@@ -170,7 +170,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
 
     protected boolean _lengthChange = false; // used for loco length change
 
-    /**
+    /*
      * Sets the length of the rolling stock.
      *
      * @param length
@@ -870,6 +870,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      */
     @Deprecated
     public void setLastDate(String date) {
+        if(date=="") return; // there was no date specified.
         String old = _last;
         Date oldDate = _lastDate;
         _last = date;
