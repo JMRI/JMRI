@@ -5,8 +5,7 @@ package jmri;
  * A lightweight class that provides a methods to retrieve the current JMRI
  * application name and icon.
  * <P>
- * The current name is set via reflection when a given JMRI application is
- * launched.
+ * The current name is set when a given JMRI application is launched.
  * <hr>
  * This file is part of JMRI.
  * <P>
