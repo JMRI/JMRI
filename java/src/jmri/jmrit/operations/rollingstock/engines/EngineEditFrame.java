@@ -1,4 +1,4 @@
-//EngineEditFrame.java
+// EngineEditFrame.java
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.awt.Dimension;
@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import jmri.IdTag;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
@@ -23,7 +24,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.IdTag;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,7 +98,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
     public void initComponents() {
         // set tips
         builtTextField.setToolTipText(Bundle.getMessage("buildDateTip"));
-	rfidComboBox.setToolTipText(Bundle.getMessage("TipRfid"));
+        rfidComboBox.setToolTipText(Bundle.getMessage("TipRfid"));
         editRoadButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
                 new Object[]{Bundle.getMessage("Road").toLowerCase()}));
         editTypeButton.setToolTipText(MessageFormat.format(Bundle.getMessage("TipAddDeleteReplace"),
@@ -223,7 +223,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             pRfid.setLayout(new GridBagLayout());
             pRfid.setBorder(BorderFactory.createTitledBorder(Setup.getRfidLabel()));
             addItem(pRfid, rfidComboBox, 1, 0);
-            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach( (tag)->rfidComboBox.addItem((jmri.IdTag)tag));
+            jmri.InstanceManager.getDefault(jmri.IdTagManager.class).getNamedBeanList().forEach((tag) -> rfidComboBox.addItem((jmri.IdTag) tag));
             pOptional.add(pRfid);
         }
 
@@ -292,7 +292,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
         if (!CarRoads.instance().containsName(engine.getRoadName())) {
             String msg = MessageFormat.format(Bundle.getMessage("roadNameNotExist"), new Object[]{engine
-                .getRoadName()});
+                    .getRoadName()});
             if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddRoad"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 CarRoads.instance().addName(engine.getRoadName());
             }
@@ -313,7 +313,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
         if (!engineTypes.containsName(engine.getTypeName())) {
             String msg = MessageFormat.format(Bundle.getMessage("typeNameNotExist"), new Object[]{engine
-                .getTypeName()});
+                    .getTypeName()});
             if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddType"), JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 engineTypes.addName(engine.getTypeName());
             }
@@ -322,7 +322,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
         if (!engineLengths.containsName(engine.getLength())) {
             String msg = MessageFormat.format(Bundle.getMessage("lengthNameNotExist"), new Object[]{engine
-                .getLength()});
+                    .getLength()});
             if (JOptionPane.showConfirmDialog(this, msg, Bundle.getMessage("engineAddLength"),
                     JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                 engineLengths.addName(engine.getLength());
@@ -354,7 +354,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
 
         ownerComboBox.setSelectedItem(engine.getOwner());
         valueTextField.setText(engine.getValue());
-	rfidComboBox.setSelectedItem(engine.getIdTag());
+        rfidComboBox.setSelectedItem(engine.getIdTag());
         commentTextField.setText(engine.getComment());
 
         setTitle(Bundle.getMessage("TitleEngineEdit"));
@@ -377,14 +377,12 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
         }
         if (ae.getSource() == locationBox) {
-            if (locationBox.getSelectedItem() != null) {
-                if (locationBox.getSelectedItem().equals("")) {
-                    trackLocationBox.removeAllItems();
-                } else {
-                    log.debug("EnginesSetFrame sees location: " + locationBox.getSelectedItem());
-                    Location l = ((Location) locationBox.getSelectedItem());
-                    l.updateComboBox(trackLocationBox);
-                }
+            if (locationBox.getSelectedItem() == null) {
+                trackLocationBox.removeAllItems();
+            } else {
+                log.debug("EnginesSetFrame sees location: " + locationBox.getSelectedItem());
+                Location l = ((Location) locationBox.getSelectedItem());
+                l.updateComboBox(trackLocationBox);
             }
         }
     }
@@ -405,7 +403,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                 return;
             }
             // check to see if engine with road and number already exists
-            Engine engine = manager.getByRoadAndNumber((String)roadComboBox.getSelectedItem(), roadNumberTextField
+            Engine engine = manager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
                     .getText());
             if (engine != null) {
                 if (_engine == null || !engine.getId().equals(_engine.getId())) {
@@ -420,8 +418,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                     && _engine.getRoadName() != null
                     && !_engine.getRoadName().equals("")
                     && (!_engine.getRoadName().equals(roadComboBox.getSelectedItem()) || !_engine
-                    .getNumber().equals(roadNumberTextField.getText()))) {
-                String road = (String)roadComboBox.getSelectedItem();
+                            .getNumber().equals(roadNumberTextField.getText()))) {
+                String road = (String) roadComboBox.getSelectedItem();
                 String number = roadNumberTextField.getText();
                 manager.changeId(_engine, road, number);
                 _engine.setRoadName(road);
@@ -429,8 +427,8 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             }
             addEngine();
             /*
-             * all JMRI window position and size are now saved // save frame size and position
-             * manager.setEditFrame(this);
+             * all JMRI window position and size are now saved // save frame
+             * size and position manager.setEditFrame(this);
              */
             writeFiles();
             if (Setup.isCloseWindowOnSaveEnabled()) {
@@ -446,7 +444,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                 // save engine file
                 writeFiles();
             } else {
-                Engine e = manager.getByRoadAndNumber((String)roadComboBox.getSelectedItem(), roadNumberTextField
+                Engine e = manager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
                         .getText());
                 if (e != null) {
                     manager.deregister(e);
@@ -462,7 +460,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                         .getMessage("engineRoadLong"), JOptionPane.ERROR_MESSAGE);
                 return;
             }
-            Engine e = manager.getByRoadAndNumber((String)roadComboBox.getSelectedItem(), roadNumberTextField
+            Engine e = manager.getByRoadAndNumber((String) roadComboBox.getSelectedItem(), roadNumberTextField
                     .getText());
             if (e != null) {
                 log.info("Can not add, engine already exists");
@@ -484,20 +482,20 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
         if (roadComboBox.getSelectedItem() != null && !roadComboBox.getSelectedItem().equals("")) {
             if (_engine == null || !_engine.getRoadName().equals(roadComboBox.getSelectedItem())
                     || !_engine.getNumber().equals(roadNumberTextField.getText())) {
-                _engine = manager.newEngine((String)roadComboBox.getSelectedItem(), roadNumberTextField.getText());
+                _engine = manager.newEngine((String) roadComboBox.getSelectedItem(), roadNumberTextField.getText());
             }
             if (modelComboBox.getSelectedItem() != null) {
-                _engine.setModel((String)modelComboBox.getSelectedItem());
+                _engine.setModel((String) modelComboBox.getSelectedItem());
             }
             if (typeComboBox.getSelectedItem() != null) {
-                _engine.setTypeName((String)typeComboBox.getSelectedItem());
+                _engine.setTypeName((String) typeComboBox.getSelectedItem());
             }
             if (lengthComboBox.getSelectedItem() != null) {
-                _engine.setLength((String)lengthComboBox.getSelectedItem());
+                _engine.setLength((String) lengthComboBox.getSelectedItem());
             }
             _engine.setBuilt(builtTextField.getText());
             if (ownerComboBox.getSelectedItem() != null) {
-                _engine.setOwner((String)ownerComboBox.getSelectedItem());
+                _engine.setOwner((String) ownerComboBox.getSelectedItem());
             }
             if (consistComboBox.getSelectedItem() != null) {
                 if (consistComboBox.getSelectedItem().equals("")) {
@@ -530,40 +528,38 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                             .getMessage("engineCanNotHp"), JOptionPane.ERROR_MESSAGE);
                 }
             }
-            if (locationBox.getSelectedItem() != null) {
-                if (locationBox.getSelectedItem().equals("")) {
-                    _engine.setLocation(null, null);
-                } else {
-                    if (trackLocationBox.getSelectedItem() == null || trackLocationBox.getSelectedItem().equals("")) {
-                        JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"), Bundle
-                                .getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
+            if (locationBox.getSelectedItem() == null) {
+                _engine.setLocation(null, null);
+            } else {
+                if (trackLocationBox.getSelectedItem() == null) {
+                    JOptionPane.showMessageDialog(this, Bundle.getMessage("rsFullySelect"), Bundle
+                            .getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
 
-                    } else {
-                        String status = _engine.setLocation((Location) locationBox.getSelectedItem(),
-                                (Track) trackLocationBox.getSelectedItem());
-                        if (!status.equals(Track.OKAY)) {
-                            log.debug("Can't set engine's location because of {}", status);
-                            JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
-                                    .getMessage("rsCanNotLocMsg"), new Object[]{_engine.toString(), status}), Bundle
-                                    .getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
-                            // does the user want to force the rolling stock to this track?
-                            int results = JOptionPane.showOptionDialog(this, MessageFormat.format(Bundle
-                                    .getMessage("rsForce"), new Object[]{_engine.toString(),
-                                        (Track) trackLocationBox.getSelectedItem()}), MessageFormat.format(Bundle
-                                            .getMessage("rsOverride"), new Object[]{status}), JOptionPane.YES_NO_OPTION,
-                                    JOptionPane.QUESTION_MESSAGE, null, null, null);
-                            if (results == JOptionPane.YES_OPTION) {
-                                log.debug("Force rolling stock to track");
-                                _engine.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
-                                        .getSelectedItem(), true);
-                            }
+                } else {
+                    String status = _engine.setLocation((Location) locationBox.getSelectedItem(),
+                            (Track) trackLocationBox.getSelectedItem());
+                    if (!status.equals(Track.OKAY)) {
+                        log.debug("Can't set engine's location because of {}", status);
+                        JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle
+                                .getMessage("rsCanNotLocMsg"), new Object[]{_engine.toString(), status}), Bundle
+                                .getMessage("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
+                        // does the user want to force the rolling stock to this track?
+                        int results = JOptionPane.showOptionDialog(this, MessageFormat.format(Bundle
+                                .getMessage("rsForce"), new Object[]{_engine.toString(),
+                                (Track) trackLocationBox.getSelectedItem()}), MessageFormat.format(Bundle
+                                .getMessage("rsOverride"), new Object[]{status}), JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE, null, null, null);
+                        if (results == JOptionPane.YES_OPTION) {
+                            log.debug("Force rolling stock to track");
+                            _engine.setLocation((Location) locationBox.getSelectedItem(), (Track) trackLocationBox
+                                    .getSelectedItem(), true);
                         }
                     }
                 }
             }
             _engine.setComment(commentTextField.getText());
             _engine.setValue(valueTextField.getText());
-            _engine.setIdTag((IdTag)rfidComboBox.getSelectedItem());
+            _engine.setIdTag((IdTag) rfidComboBox.getSelectedItem());
         }
     }
 
