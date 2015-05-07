@@ -62,7 +62,7 @@ public class CarManagerTest extends TestCase {
         c5 = manager.newCar("PC", "2");
         c6 = manager.newCar("AA", "1");
         carList = manager.getByIdList();
-        Assert.assertEquals("Starting Number of Cars", 6, carList.size());
+        Assert.assertEquals("Finishing Number of Cars", 6, carList.size());
         manager.dispose();
         carList = manager.getByIdList();
         Assert.assertEquals("After dispose Number of Cars", 0, carList.size());
@@ -239,9 +239,8 @@ public class CarManagerTest extends TestCase {
         resetCarManager();
 
         CarManager manager = CarManager.instance();
-        List<RollingStock> carList = manager.getByIdList();
         // now get cars by location
-        carList = manager.getByLocationList();
+        List<RollingStock> carList = manager.getByLocationList();
         Assert.assertEquals("Number of Cars by location", 6, carList.size());
         Assert.assertEquals("1st car in list by location", c6, carList.get(0));
         Assert.assertEquals("2nd car in list by location", c5, carList.get(1));
@@ -569,6 +568,55 @@ public class CarManagerTest extends TestCase {
         Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
     }
 
+    public void testSortListedCarsByLastMovedDate() {
+        resetCarManager();
+
+        CarManager manager = CarManager.instance();
+        List<RollingStock> carList;
+
+        java.util.Calendar cal = java.util.Calendar.getInstance();
+        java.util.Date start = cal.getTime(); // save to rest time, to avoid
+                                              // test probelms if run near 
+                                              // midnight.
+        java.util.Date time = cal.getTime();
+        c1.setLastDate(time); // right now
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY,-1);
+        time = cal.getTime();
+        c2.setLastDate(time); // one hour ago
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.HOUR_OF_DAY,1);
+        time = cal.getTime();
+        c3.setLastDate(time); // one hour from now
+
+        cal.setTime(start);
+        cal.set(java.util.Calendar.DAY_OF_MONTH,-1);
+        time = cal.getTime();
+        c4.setLastDate(time); // one day ago.
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.DAY_OF_MONTH,1);
+        time = cal.getTime();
+        c5.setLastDate(time); // one day in the future now.
+
+        cal.setTime(start);
+        cal.add(java.util.Calendar.YEAR,-1);
+        time = cal.getTime();
+        c6.setLastDate(time); // one year ago.
+
+        // now get cars by last move date.
+        carList = manager.getByLastDateList(manager.getByIdList());
+        Assert.assertEquals("Number of Cars by last move date", 6, carList.size());
+        Assert.assertEquals("1st car in list by move date", c6, carList.get(0));
+        Assert.assertEquals("2nd car in list by move date", c4, carList.get(1));
+        Assert.assertEquals("3rd car in list by move date", c2, carList.get(2));
+        Assert.assertEquals("4th car in list by move date", c1, carList.get(3));
+        Assert.assertEquals("5th car in list by move date", c3, carList.get(4));
+        Assert.assertEquals("6th car in list by move date", c5, carList.get(5));
+    }
+
     public void testListCabooseRoads() {
         resetCarManager();
 
@@ -590,6 +638,29 @@ public class CarManagerTest extends TestCase {
         List<String> fredRoads = manager.getFredRoadNames();
         Assert.assertEquals("Number of FRED", 1, fredRoads.size());
         Assert.assertEquals("1st road", "PC", fredRoads.get(0));
+    }
+ 
+    public void testListCarsAtLocation() {
+        resetCarManager();
+
+        CarManager manager = CarManager.instance();
+        List<RollingStock> carList = manager.getList(l1);
+        Assert.assertEquals("Number of Cars at location", 2, carList.size());
+        Assert.assertTrue("c1 in car list at location", carList.contains(c1));
+        Assert.assertTrue("c2 in car list at location", carList.contains(c2));
+        Assert.assertFalse("c3 not in car list at location", carList.contains(c3));
+    }
+
+    public void testListCarsOnTrack() {
+        resetCarManager();
+
+        CarManager manager = CarManager.instance();
+        Track l1t1 = l1.getTrackByName("A", Track.SPUR);
+        List<RollingStock> carList = manager.getList(l1t1);
+        Assert.assertEquals("Number of Cars on track", 1, carList.size());
+        Assert.assertTrue("c1 in car list on track", carList.contains(c1));
+        Assert.assertFalse("c2 not in car list on track", carList.contains(c2));
+        Assert.assertFalse("c3 not in car list on track", carList.contains(c3));
     }
 
     private void resetCarManager(){

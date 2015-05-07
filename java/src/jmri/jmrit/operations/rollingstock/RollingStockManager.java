@@ -7,6 +7,8 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.List;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.locations.Track;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -401,12 +403,21 @@ public class RollingStockManager {
     }
 
     /**
-     * Sort by rolling stock last date used
+     * Get a list of all rolling stock sorted last date used
      *
      * @return list of RollingStock ordered by last date
      */
     public List<RollingStock> getByLastDateList() {
         return getByList(getByIdList(),BY_LAST);
+    }
+
+    /**
+     * Sort a specific list of rolling stock last date used
+     * @param inList list of rolling stock to sort.
+     * @return list of RollingStock ordered by last date
+     */
+    public List<RollingStock> getByLastDateList(List<RollingStock> inList) {
+        return getByList(inList,BY_LAST);
     }
 
     private static final int pageSize = 64;
@@ -522,6 +533,28 @@ public class RollingStockManager {
                 out.add(rs);
             }
         }
+        return out;
+    }
+
+    /**
+     * Returns a list (no order) of RollingStock at a location.
+     * @param location location to search for.
+     * @return list of RollingStock
+     */
+    public List<RollingStock> getList(Location location) {
+        List<RollingStock> out = new ArrayList<RollingStock>();
+        _hashTable.forEach((key,rs)-> { if(((RollingStock)rs).getLocation()==location) out.add((RollingStock)rs); });
+        return out;
+    }
+
+    /**
+     * Returns a list (no order) of RollingStock at a location.
+     * @param track Track to search for.
+     * @return list of RollingStock
+     */
+    public List<RollingStock> getList(Track track) {
+        List<RollingStock> out = new ArrayList<RollingStock>();
+        _hashTable.forEach((key,rs)-> { if(((RollingStock)rs).getTrack()==track) out.add((RollingStock)rs); });
         return out;
     }
 
