@@ -1124,7 +1124,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
             _weight = a.getValue();
         }
         if ((a = e.getAttribute(Xml.WEIGHT_TONS)) != null) {
-            setWeightTons(a.getValue()); // so engine model will get proper weight
+            _weightTons = a.getValue();
         }
         if ((a = e.getAttribute(Xml.BUILT)) != null) {
             _built = a.getValue();

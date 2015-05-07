@@ -116,7 +116,7 @@ public class Engine extends RollingStock {
            engineModels.setModelLength(getModel(), length);
         } catch(java.lang.NullPointerException npe){
           // failed, but the model may not have been set.
-          log.debug("NPE getting lenght for Engine ({})", toString());
+          log.debug("NPE setting length for Engine ({})", toString());
         }
         return;
     }
