@@ -6201,7 +6201,12 @@ public class TrainTest extends TestCase {
         // Need to clear out TrainManager global variables
         TrainManager.instance().dispose();
         CarManager.instance().dispose();
-        EngineManager.instance().dispose();
+        try {
+           EngineManager.instance().dispose();
+        } catch(java.lang.NumberFormatException nfe){
+            // disposing of the EngineManager triggers an
+            // NFE if the EngineModel can't be found.
+        }
         LocationManager.instance().dispose();
         RouteManager.instance().dispose();
         CarRoads.instance().dispose();

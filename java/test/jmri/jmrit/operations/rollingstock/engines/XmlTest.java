@@ -420,9 +420,10 @@ public class XmlTest extends TestCase {
             String consistId = tempconsistList.get(i);
             manager.deleteConsist(consistId);
         }
+        manager.dispose(); // dispose of the manager first, because otherwise
+                           // the models go away.
         EngineModels.instance().dispose();
         EngineLengths.instance().dispose();
-        manager.dispose();
     }
 
     public XmlTest(String s) {
