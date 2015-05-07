@@ -49,7 +49,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
             f = new SetPhysicalLocationFrame(_location);
         }
         f.setExtendedState(Frame.NORMAL);
-        f.setVisible(true);	// this also brings the frame into focus
+        f.setVisible(true); // this also brings the frame into focus
     }
 
     public class SetPhysicalLocationFrame extends OperationsFrame {
@@ -147,7 +147,7 @@ public class SetPhysicalLocationAction extends AbstractAction {
          */
         public void saveButtonActionPerformed(java.awt.event.ActionEvent ae) {
             // check to see if a location has been selected
-            if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
+            if (locationBox.getSelectedItem() == null) {
                 JOptionPane.showMessageDialog(null, Bundle.getMessage("SelectLocationToEdit"),
                         Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
                 return;
@@ -171,13 +171,11 @@ public class SetPhysicalLocationAction extends AbstractAction {
         }
 
         public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-            if (locationBox.getSelectedItem() != null) {
-                if (locationBox.getSelectedItem().equals(LocationManager.NONE)) {
-                    resetSpinners();
-                } else {
-                    Location l = (Location) locationBox.getSelectedItem();
-                    loadSpinners(l);
-                }
+            if (locationBox.getSelectedItem() == null) {
+                resetSpinners();
+            } else {
+                Location l = (Location) locationBox.getSelectedItem();
+                loadSpinners(l);
             }
         }
 
@@ -202,11 +200,12 @@ public class SetPhysicalLocationAction extends AbstractAction {
 
         // Unused. Carried over from SetTrainIconPosition or whatever it was
         // called...
-		/*
-         * private void spinnersEnable(boolean enable){ physicalLocation.setEnabled(enable); }
+        /*
+         * private void spinnersEnable(boolean enable){
+         * physicalLocation.setEnabled(enable); }
          */
         private void saveSpinnerValues(Location l) {
-            log.debug("Save train icons coordinates for location {}", l.getName());
+            log.debug("Save physical coordinates for location {}", l.getName());
             l.setPhysicalLocation(physicalLocation.getValue());
         }
 

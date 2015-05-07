@@ -144,7 +144,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     protected void updateTrackComboBox() {
         log.debug("update track combobox");
-        if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
+        if (locationBox.getSelectedItem() == null) {
             trackBox.removeAllItems();
         } else {
             log.debug("Copy Track Frame sees location: {}", locationBox.getSelectedItem());

@@ -181,6 +181,7 @@ public class Location implements java.beans.PropertyChangeListener {
 
     public void setPhysicalLocation(PhysicalLocation l) {
         _physicalLocation = l;
+        LocationManagerXml.instance().setDirty(true);
     }
 
     /**

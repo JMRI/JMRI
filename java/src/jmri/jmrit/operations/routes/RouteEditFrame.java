@@ -224,9 +224,6 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         if (ae.getSource() == addLocationButton) {
             log.debug("route add location button activated");
             if (locationBox.getSelectedItem() != null) {
-                if (locationBox.getSelectedItem().equals("")) {
-                    return;
-                }
                 addNewRouteLocation();
             }
         }

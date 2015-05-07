@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for setting train icon coordinates for a location.
  *
- * @author	Bob Jacobsen Copyright (C) 2001
+ * @author Bob Jacobsen Copyright (C) 2001
  * @author Daniel Boudreau Copyright (C) 2010
  * @version $Revision$
  */
@@ -176,7 +176,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected 
-        if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+        if (locationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"), Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -206,7 +206,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
             if (value == JOptionPane.YES_OPTION) {
                 saveSpinnerValues(l);
             }
-            OperationsXml.save();	// save location and route files
+            OperationsXml.save(); // save location and route files
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
             }
@@ -214,14 +214,12 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     }
 
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-        if (locationBox.getSelectedItem() != null) {
-            if (locationBox.getSelectedItem().equals("")) {
-                resetSpinners();
-                removeIcons();
-            } else {
-                Location l = (Location) locationBox.getSelectedItem();
-                loadSpinners(l);
-            }
+        if (locationBox.getSelectedItem() == null) {
+            resetSpinners();
+            removeIcons();
+        } else {
+            Location l = (Location) locationBox.getSelectedItem();
+            loadSpinners(l);
         }
     }
 
