@@ -43,6 +43,13 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
         return _number;
     }
 
+    /**
+     * MRC turnouts can be inverted
+     */
+    public boolean canInvert() {
+        return true;
+    }
+
     // Handle a request to change state by sending a formatted DCC packet
     protected void forwardCommandChangeToLayout(int s) {
         // sort out states
@@ -54,11 +61,11 @@ public class MrcTurnout extends AbstractTurnout implements MrcTrafficListener {
                 return;
             } else {
                 // send a CLOSED command
-                forwardToCommandStation(true);
+                forwardToCommandStation(true ^ getInverted());
             }
         } else {
             // send a THROWN command
-            forwardToCommandStation(false);
+            forwardToCommandStation(false ^ getInverted());
         }
     }
 
