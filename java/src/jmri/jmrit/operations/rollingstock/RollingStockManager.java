@@ -543,7 +543,7 @@ public class RollingStockManager {
      */
     public List<RollingStock> getList(Location location) {
         List<RollingStock> out = new ArrayList<RollingStock>();
-        _hashTable.forEach((key,rs)-> { if(((RollingStock)rs).getLocation()==location) out.add((RollingStock)rs); });
+        _hashTable.forEach((key,rs)-> { if(rs.getLocation()==location) out.add(rs); });
         return out;
     }
 
@@ -554,7 +554,7 @@ public class RollingStockManager {
      */
     public List<RollingStock> getList(Track track) {
         List<RollingStock> out = new ArrayList<RollingStock>();
-        _hashTable.forEach((key,rs)-> { if(((RollingStock)rs).getTrack()==track) out.add((RollingStock)rs); });
+        _hashTable.forEach((key,rs)-> { if((rs).getTrack()==track) out.add(rs); });
         return out;
     }
 

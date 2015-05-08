@@ -50,6 +50,82 @@ public class EngineTest extends TestCase {
         Assert.assertEquals("Engine Length", "TESTLENGTH", e1.getLength());
     }
 
+    public void testSetLocation() {
+        Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
+        e1.setModel("TESTMODEL");
+        e1.setLength("50");
+
+        Location l1 = new Location("id1", "B");
+        Track l1t1 = l1.addTrack("A", Track.SPUR);
+        Location l2 = new Location("id2", "C");
+        Track l2t1 = l2.addTrack("B", Track.SPUR);
+        Location l3 = new Location("id3", "A");
+        Track l3t1 = l3.addTrack("B", Track.SPUR);
+ 
+       // add track lengths
+        l1t1.setLength(100);
+        l1t1.setLength(100);
+        l3t1.setLength(100);
+
+        l1.addTypeName("Diesel");
+        l2.addTypeName("Diesel");
+        l3.addTypeName("Diesel");
+        l1t1.addTypeName("Diesel");
+        l2t1.addTypeName("Diesel");
+        l3t1.addTypeName("Diesel");
+
+        EngineTypes et = EngineTypes.instance();
+        et.addName("Diesel");
+
+        e1.setTypeName("Diesel");
+
+        // place engines on tracks
+        Assert.assertEquals("place e1", Track.OKAY, e1.setLocation(l1, l1t1));
+        // check for failure too.
+        Assert.assertFalse("fail place e1", Track.OKAY==e1.setLocation(l3, l2t1));
+
+
+    }
+
+    public void testSetDestination() {
+        Engine e1 = new Engine("TESTROAD", "TESTNUMBER1");
+        e1.setModel("TESTMODEL");
+        e1.setLength("50");
+
+        Location l1 = new Location("id1", "B");
+        Track l1t1 = l1.addTrack("A", Track.SPUR);
+        Location l2 = new Location("id2", "C");
+        Track l2t1 = l2.addTrack("B", Track.SPUR);
+        Location l3 = new Location("id3", "A");
+        Track l3t1 = l3.addTrack("B", Track.SPUR);
+
+        // add track lengths
+        l1t1.setLength(100);
+        l1t1.setLength(100);
+        l3t1.setLength(100);
+
+        l1.addTypeName("Diesel");
+        l2.addTypeName("Diesel");
+        l3.addTypeName("Diesel");
+        l1t1.addTypeName("Diesel");
+        l2t1.addTypeName("Diesel");
+        l3t1.addTypeName("Diesel");
+
+        EngineTypes et = EngineTypes.instance();
+        et.addName("Diesel");
+
+        e1.setTypeName("Diesel");
+
+        e1.setLocation(l2,l2t1);
+
+        // set destination.
+        Assert.assertEquals("destination set e1", Track.OKAY, e1.setDestination(l1, l1t1));
+        // check for failure too.
+        Assert.assertFalse("fail to set destination e1", Track.OKAY==e1.setDestination(l3, l1t1));
+    }
+
+
+
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override

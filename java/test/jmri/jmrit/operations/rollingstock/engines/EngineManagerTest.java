@@ -58,12 +58,12 @@ public class EngineManagerTest extends TestCase {
         List<RollingStock> engineList = manager.getByIdList();
 
         Assert.assertEquals("Starting Number of Engines", 0, engineList.size());
-        Engine e1 = manager.newEngine("CP", "1");
-        Engine e2 = manager.newEngine("ACL", "3");
-        Engine e3 = manager.newEngine("CP", "3");
-        Engine e4 = manager.newEngine("CP", "3-1");
-        Engine e5 = manager.newEngine("PC", "2");
-        Engine e6 = manager.newEngine("AA", "1");
+        e1 = manager.newEngine("CP", "1");
+        e2 = manager.newEngine("ACL", "3");
+        e3 = manager.newEngine("CP", "3");
+        e4 = manager.newEngine("CP", "3-1");
+        e5 = manager.newEngine("PC", "2");
+        e6 = manager.newEngine("AA", "1");
         engineList=manager.getByIdList();
         Assert.assertEquals("Finishing Number of Engines",6,engineList.size());
         manager.dispose();
@@ -197,52 +197,6 @@ public class EngineManagerTest extends TestCase {
         Assert.assertEquals("4th engine in list by consist", e2, engineList.get(3));
         Assert.assertEquals("5th engine in list by consist", e6, engineList.get(4));
         Assert.assertEquals("6th engine in list by consist", e1, engineList.get(5));
-    }
-
-    public void testSetLocation() {
-        resetEngineManager();
- 
-        EngineManager manager=EngineManager.instance();
-        Track l1t1 = l1.getTrackByName("A", Track.SPUR);
-        Track l1t2 = l1.getTrackByName("B", Track.SPUR);
-        Track l2t1 = l2.getTrackByName("B", Track.SPUR);
-        Track l2t2 = l2.getTrackByName("A", Track.SPUR);
-        Track l3t1 = l3.getTrackByName("B", Track.SPUR);
-        Track l3t2 = l3.getTrackByName("A", Track.SPUR);
-        // place engines on tracks
-        Assert.assertEquals("place e1", Track.OKAY, e1.setLocation(l1, l1t1));
-        Assert.assertEquals("place e2", Track.OKAY, e2.setLocation(l1, l1t2));
-        Assert.assertEquals("place e3", Track.OKAY, e3.setLocation(l2, l2t1));
-        Assert.assertEquals("place e4", Track.OKAY, e4.setLocation(l2, l2t2));
-        Assert.assertEquals("place e5", Track.OKAY, e5.setLocation(l3, l3t1));
-        Assert.assertEquals("place e6", Track.OKAY, e6.setLocation(l3, l3t2));
-        // check for failure to.
-        Assert.assertFalse("fail place e5", Track.OKAY==e5.setLocation(l3, l1t1));
-        Assert.assertFalse("fail place e6", Track.OKAY==e6.setLocation(l3, l2t2));
-
-
-    }
-
-    public void testSetDestination() {
-        resetEngineManager();
-        EngineManager manager=EngineManager.instance();
-        Track l1t1 = l1.getTrackByName("A", Track.SPUR);
-        Track l1t2 = l1.getTrackByName("B", Track.SPUR);
-        Track l2t1 = l2.getTrackByName("B", Track.SPUR);
-        Track l2t2 = l2.getTrackByName("A", Track.SPUR);
-        Track l3t1 = l3.getTrackByName("B", Track.SPUR);
-        Track l3t2 = l3.getTrackByName("A", Track.SPUR);
- 
-        // set engine destinations
-        Assert.assertEquals("destination e1", Track.OKAY, e1.setDestination(l3, l3t1));
-        Assert.assertEquals("destination e2", Track.OKAY, e2.setDestination(l3, l3t2));
-        Assert.assertEquals("destination e3", Track.OKAY, e3.setDestination(l2, l2t2));
-        Assert.assertEquals("destination e4", Track.OKAY, e4.setDestination(l2, l2t1));
-        Assert.assertEquals("destination e5", Track.OKAY, e5.setDestination(l1, l1t1));
-        Assert.assertEquals("destination e6", Track.OKAY, e6.setDestination(l1, l1t2));
-        // check for failure to.
-        Assert.assertFalse("destination set fail e5", Track.OKAY==e5.setDestination(l1, l3t1));
-        Assert.assertFalse("destination set fail e6", Track.OKAY==e6.setDestination(l1, l2t2));
     }
 
     public void testListEnginesByLocation() {
