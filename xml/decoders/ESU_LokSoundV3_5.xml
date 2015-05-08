@@ -34,7 +34,7 @@
   <!-- ver9 renamed where necessary to match ESU practice and added decoder-matchable Product IDs -->
   <version author="Dave Heap" version="9" lastUpdated="20150427"/>
   <decoder>
-    <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="59">
+    <family name="ESU LokSound V3.5 Silent BEMF/Sound decoders" mfg="Electronic Solutions Ulm GmbH" lowVersionID="59" highVersionID="81">
       <model model="LokSound V3.5" numOuts="4" numFns="12" maxMotorCurrent="1.1A" extFnsNmraF13="yes" productID="16777229,16777234,16777239,16777248">
         <output name="1" label="Front lights" maxcurrent="250mA"/>
         <output name="2" label="Rear lights" maxcurrent="250mA"/>

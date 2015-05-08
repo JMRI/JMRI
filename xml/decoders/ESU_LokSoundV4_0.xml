@@ -60,6 +60,9 @@
       <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497">
         <size length="25.3" width="10.6" height="3.8" units="mm"/>
       </model>
+      <model model="LokSound L V4.0" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554544">
+        <size length="51" width="26" height="14" units="mm"/>
+      </model>
       <model model="LokSound XL V4.0" numOuts="92" numFns="40" maxMotorCurrent="4A (peak=5A)" extFnsESU="yes" productID="33554507,33554541">
         <size length="51" width="41" height="14" units="mm"/>
       </model>
