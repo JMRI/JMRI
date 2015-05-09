@@ -14,6 +14,8 @@
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20150214"/>
 	<!-- new file, based on Wow steam set 3 -->
+	<version author="Michael Mosher" version="2" lastUpdated="20150504"/>
+	<!-- remove BEMF control and dither -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 1 EMD" mfg="Train Control Systems" >
 			<model model="WOW Diesel 101 EMD" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
@@ -27,7 +29,6 @@
 				<output name="Dim"/>
 				<output name="Ditch"/>
 				<output name="Motor"/>
-				<output name="BEMF"/>
 				<output name="Brake"/>
 				<size length="1.35" width="0.66" height="0.22" units="inches"/>
 			</model>
@@ -42,7 +43,6 @@
 				<output name="Dim"/>
 				<output name="Ditch"/>
 				<output name="Motor"/>
-				<output name="BEMF"/>
 				<output name="Brake"/>
 				<size length="1.28" width="0.69" height="0.22" units="inches"/>
 			</model>

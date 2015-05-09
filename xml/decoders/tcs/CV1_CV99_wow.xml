@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <!-- version 1 - for Wow sound, based on CV1_CV99_FW86 -->
+<!-- version 2 - remove dither vars -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
   <variable CV="2" item="Vstart" default="0" tooltip="sets the motor voltage at Speed Step 1, range 0(default)-255" comment="Range 0-255, 0 in CV 2, 6, 5 produces straight line acceleration">
@@ -986,18 +987,6 @@
 	<label>Pink/Purple Wire Timing</label>
 	<label xml:lang="it">Temporizzazioni filo Rosa/Porpora</label>
   </variable>
-  <variable CV="56" default="3" item="Dither frequency" tooltip="Range 1 (high) to 10 (low)">
-	<decVal/>
-	<label>Dither Frequency</label>
-	<label xml:lang="it">Frequenza oscillazione</label>
-	<tooltip xml:lang="it">Valori da 1 (alto) a 10 (basso)</tooltip>
-  </variable>
-  <variable CV="57" default="10" item="Dither option" tooltip="Practical range is 5 (low) to 50 (high)">
-	<decVal/>
-	<label>Dither Amplitude</label>
-	<label xml:lang="it">Ampiezza Oscillazione</label>
-	<tooltip xml:lang="it">Valori pratici da 5 (basso) a 50 (alto)</tooltip>
-  </variable>
   <variable CV="58" mask="XVXXXXXX" minOut="8" item="Output 8 options" default="0">
 	<enumVal>
 	  <enumChoice choice="Group 0">
@@ -1042,12 +1031,6 @@
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
 	<label>Green/Brown Wire Timing</label>
 	<label xml:lang="it">Temporizzazioni filo Verde/Marrone</label>
-  </variable>
-  <variable CV="61" mask="XXXXXXVX" default="0" item="EMF Option 1" tooltip="Disable(default)/Enable button control of BEMF">
-	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
-	<label>Enable BEMF Button Control</label>
-	<label xml:lang="it">Abilita pulsante controllo BEMF</label>
-	<tooltip xml:lang="it">Disabilita(default)/Abilita controllo BEMF da pulsante</tooltip>
   </variable>
   <variable CV="61" mask="XXXXVXXX" default="1" item="Function 5 effect generated" tooltip="Disable(default)/Enable button control of Brake">
 	<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>

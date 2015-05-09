@@ -284,46 +284,6 @@
     <label xml:lang="it">Velocità Sfarfallio casuale 1</label>
     <tooltip xml:lang="it">Sfarfallio casuale per caldaia</tooltip>
   </variable>
-  <variable item="F5 controls output BEMF" CV="136" mask="XXXXXXXV" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F5 controls output BEMF</label>
-    <label xml:lang="it">F5 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F6 controls output BEMF" CV="136" mask="XXXXXXVX" minOut="1" default="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F6 controls output BEMF</label>
-    <label xml:lang="it">F6 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F7 controls output BEMF" CV="136" mask="XXXXXVXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F7 controls output BEMF</label>
-    <label xml:lang="it">F7 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F8 controls output BEMF" CV="136" mask="XXXXVXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F8 controls output BEMF</label>
-    <label xml:lang="it">F8 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F9 controls output BEMF" CV="136" mask="XXXVXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F9 controls output BEMF</label>
-    <label xml:lang="it">F9 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F10 controls output BEMF" CV="136" mask="XXVXXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F10 controls output BEMF</label>
-    <label xml:lang="it">F10 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F11 controls output BEMF" CV="136" mask="XVXXXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F11 controls output BEMF</label>
-    <label xml:lang="it">F11 controlla uscita BEMF</label>
-  </variable>
-  <variable item="F12 controls output BEMF" CV="136" mask="VXXXXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F12 controls output BEMF</label>
-    <label xml:lang="it">F12 controlla uscita BEMF</label>
-  </variable>
   <variable CV="138" default="16" item="Function 5 behavior">
     <decVal/>
     <label>Brake Light On Time</label>

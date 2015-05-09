@@ -22,6 +22,8 @@
 	<version author="Michael Mosher" version="6" lastUpdated="20141017"/>
 	<version author="Michael Mosher" version="7" lastUpdated="20150214"/>
 	<!-- CV248 to read only -->
+	<version author="Michael Mosher" version="8" lastUpdated="20150504"/>
+	<!-- remove BEMF control and dither -->
 	<decoder>
 		<family name="WOW Sound" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
 			<model show="no" model="WOWSound Steam" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="Wires"
@@ -36,7 +38,6 @@
 				<output name="Dim"/>
 				<output name="Ditch"/>
 				<output name="Motor"/>
-				<output name="BEMF"/>
 				<output name="Brake"/>
 				<size length="2.860" width="0.680" height="0.145" units="inches"/>
 			</model>
@@ -51,7 +52,6 @@
 				<output name="Dim"/>
 				<output name="Ditch"/>
 				<output name="Motor"/>
-				<output name="BEMF"/>
 				<output name="Brake"/>
 				<size length="2.860" width="0.680" height="0.145" units="inches"/>
 			</model>
