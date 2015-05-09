@@ -86,6 +86,11 @@ release process.  They can be skipped occasionally.
     
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
+( ) Run "ant alltests"; make sure they all pass; fix problems and commit back
+
+( ) Run "ant decoderpro"; check for no startup errors, right version, help index present 
+    and working OK. Fix problems and commit back.
+
 ( ) This is a good place to check that the decoder XSLT transforms work
         cd xml/XSLT
         ant
@@ -142,38 +147,26 @@ Second, we build the release branch:
     svn update 3.11.6
 
     ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.11.6")
-
-    ( to merge everything to date: svn merge ^/trunk/jmri
-      If you do this, beware, the first time you'll also merge in the new release.properties file, 
-      which you do NOT want to do.
-      You can undo that merge with 'svn revert release.properties'.
-    )
-
-    ( to merge a single later change: svn merge -c <changeset#> ^/trunk/jmri )
     
-
 ================================================================================
-Third, we do any necessary release-specific updates.
-    (we need to work through automation of version number values)
+If you're doing the build using the CI engine, configure it to build the new release:
 
-( ) Create the _next_ release note, so that people will document new (overlapping)
-    changes there.
+( ) Log in to the CI engine at 
+    http://builds.jmri.org/jenkins/job/Test%20Releases/
+
+( ) Click "New Item"
+
+( ) Click "Copy Existing Item", and enter the name of the most recent release. Fill
+    out the new release name at the top. Click "OK"
+
+( ) Update
+        Project Name
+        Description
+        Subversion Modules Repository URL
+    and click "Save"
     
-( ) run "ant alltests"; make sure they all pass
-
-( ) run "ant decoderpro"; check for no startup errors, right version, help index present and working OK.
-
-( ) Commit back; if using CI builds, this will trigger a rebuild, so wait for it.
-    If using manual builds instead of CI, skip to "For local builds" section below.
+    The build will start shortly.
     
-( ) Change the release note to point to the CI files, commit, wait (or force) update.
-
-( ) Announce the file set to jmri-developers with a download URL like:
-
-    http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/
-
-( ) WAIT FOR SOME REPLIES, then skip to "Actual release steps" below.
-
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
@@ -192,8 +185,7 @@ For local builds, these are the build instructions; CI builds will already be ru
 ( ) Put the Linux, Mac OS X and Windows files where developers can
     take a quick look, send an email to the developer list, 
     and WAIT FOR SOME REPLIES
-    
-    
+     
     The main JMRI web site gets completely overwritten by Jenkins, so one approach:
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
@@ -201,6 +193,38 @@ For local builds, these are the build instructions; CI builds will already be ru
         http://user.users.sf.net/release
     (The user has to have put the htdocs link in their SF.net account)
 
+================================================================================
+
+If anybody discovers a problem from here on in, they should fix it at the
+HEAD and have you merge it into the release branch.  CI will automatically rebuild, 
+or you'll have to redo a manual build manually.
+
+To merge everything to date: 
+    svn merge ^/trunk/jmri
+If you do this, beware, the first time you'll also merge in the new release.properties file, 
+which you do NOT want to do. You can undo that merge with 'svn revert release.properties'.
+
+To merge a single later revision: svn merge -c <changeset#> ^/trunk/jmri )
+
+================================================================================
+Third, we do the release-specific updates.
+    (we need to work through automation of version number values)
+
+( ) Create the _next_ release note, so that people will document new (overlapping)
+    changes there.
+        cd (local web copy)/releasenotes
+        svn update
+        svn cp jmri3.11.5.shtml jmri3.11.6.shtml
+        svn commit -m"for release"
+        
+( ) Change the release note to point to the just-built files (in CI or where you put them), 
+    commit, wait (or force) update. Confirm visible on web.
+
+( ) Announce the file set to jmri-developers with a download URL like:
+
+    http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/
+
+( ) WAIT FOR SOME REPLIES before going to "Actual release steps" below.
 
 ====================================================================================
 Actual release steps:
