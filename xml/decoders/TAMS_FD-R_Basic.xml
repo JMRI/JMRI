@@ -12,6 +12,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20150412"/>
+  <!-- 2 Bug fix
+  Railcom toggle now shown. 
+  -->
   <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140102"/>
   <!-- 1 2013/07/24 Creation 
 		This is the first decoder template for the FD-R basic from Tams Elektronik.
@@ -1108,6 +1112,7 @@
         <text xml:lang="fr">Pour programmer la section RailCom, activer Railcom.</text>
         <text xml:lang="de">aber mit einer abweichenden Adresse geschaltet.</text>
       </label>
+	  <display item="Enable RailCom" format="checkbox"/>
       <label>
         <text> </text>
       </label>
