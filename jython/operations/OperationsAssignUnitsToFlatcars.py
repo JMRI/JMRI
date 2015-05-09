@@ -5,7 +5,7 @@
 # Part of the JMRI distribution
 #
 # The next line is maintained by CVS, please don't change it
-# $Revision: 27263 $
+# $Revision$
 #
 # To use this script you must provide the type names for containers and trailers, and the type names for the flatcars to use. 
 # You must also enter the train name that will service them. The train doesn't have to service the flatcars, this script will

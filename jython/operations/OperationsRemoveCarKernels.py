@@ -4,7 +4,7 @@
 #
 # Author: Daniel Boudreau, copyright 2015
 # The next line is maintained by CVS, please don't change it
-# $Revision: 27263 $
+# $Revision$
 #
 
 
