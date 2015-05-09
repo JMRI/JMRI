@@ -156,7 +156,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     JFrame p = new PaneServiceProgFrame(decoderFile, re,
                             title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
                             modePane.getProgrammer());
-                    if (editModeProg.isSelected()) {
+                    if (modePane == null || !modePane.isSelected() || modePane.getProgrammer() == null) {
                         p = new PaneProgFrame(decoderFile, re,
                                 title, "programmers" + File.separator + "Comprehensive.xml", // NOI18N
                                 null, false) {
@@ -251,51 +251,12 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     findDecoderAddress();
                 }
 
-                JRadioButton serviceModeProg;
-                JRadioButton editModeProg;
-
                 @Override
                 protected JPanel createProgrammerSelection() {
                     log.debug("createProgrammerSelection");
-                    //p=jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class);
-                    serviceModeProg = new JRadioButton(Bundle.getMessage("ServiceMode")); // NOI18N
-                    editModeProg = new JRadioButton(Bundle.getMessage("EditOnly")); // NOI18N
+
                     JPanel pane3a = new JPanel();
                     pane3a.setLayout(new BoxLayout(pane3a, BoxLayout.Y_AXIS));
-                    // create the programmer box
-
-                    ButtonGroup modeGroup = new ButtonGroup();
-                    modeGroup.add(serviceModeProg);
-                    modeGroup.add(editModeProg);
-
-                    JPanel progModePane = new JPanel();
-                    progModePane.add(serviceModeProg);
-                    progModePane.add(editModeProg);
-                    serviceModeProg.setSelected(true);
-
-                    if (jmri.InstanceManager.programmerManagerInstance() == null
-                            || !jmri.InstanceManager.programmerManagerInstance().isGlobalProgrammerAvailable()) {
-                        editModeProg.setSelected(true);
-                        serviceModeProg.setEnabled(false);
-                        iddecoder.setVisible(false);
-                        modePane.setVisible(false);
-                    }
-
-                    serviceModeProg.addActionListener(new ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            if (serviceModeProg.isSelected()) {
-                                iddecoder.setVisible(true);
-                            }
-                        }
-                    });
-
-                    editModeProg.addActionListener(new ActionListener() {
-                        public void actionPerformed(java.awt.event.ActionEvent e) {
-                            if (editModeProg.isSelected()) {
-                                iddecoder.setVisible(false);
-                            }
-                        }
-                    });
 
                     go2 = new JButton(Bundle.getMessage("OpenProgrammer")); // NOI18N
                     go2.addActionListener(new ActionListener() {
@@ -318,7 +279,7 @@ public class PaneProgDp3Action extends jmri.util.swing.JmriAbstractAction implem
                     go2.setEnabled(false);
                     go2.setToolTipText(SymbolicProgBundle.getMessage("SELECT A LOCOMOTIVE OR DECODER TO ENABLE")); // NOI18N
                     bottomPanel.add(go2, BorderLayout.EAST);
-                    //pane3a.add(go2);
+
                     return pane3a;
                 }
             };
