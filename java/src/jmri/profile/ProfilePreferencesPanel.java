@@ -656,6 +656,11 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                 && !ProfileManager.defaultManager().getActiveProfile().equals(ProfileManager.defaultManager().getNextActiveProfile()
                 );
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
     /* Comment out until I get around to utilizing this, so Jenkins does not throw warnings.
      private static class ZipFileFilter extends FileFilter {
 

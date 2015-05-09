@@ -660,6 +660,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return false;
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
+
     class DataPair<K, V> {
         K key;
         V value;

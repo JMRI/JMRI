@@ -458,4 +458,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public boolean isRestartRequired() {
         return (this.ccCurrent != null) ? this.ccCurrent.isRestartRequired() : this.isDirty();
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

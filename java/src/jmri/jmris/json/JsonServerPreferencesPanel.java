@@ -189,4 +189,9 @@ public class JsonServerPreferencesPanel extends JPanel implements PreferencesPan
     public boolean isRestartRequired() {
         return JsonServerManager.getJsonServerPreferences().isRestartRequired();
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

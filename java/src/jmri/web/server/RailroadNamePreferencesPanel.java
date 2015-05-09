@@ -184,4 +184,9 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     public boolean isRestartRequired() {
         return false;
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

@@ -262,4 +262,9 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     public boolean isRestartRequired() {
         return this.isDirty(); // all changes require a restart
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

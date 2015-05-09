@@ -188,4 +188,8 @@ public class FileLocationPane extends JPanel implements PreferencesPanel {
         return this.restartRequired;
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

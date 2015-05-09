@@ -155,6 +155,11 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         return this.isDirty();
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
+
     /**
      * Captive class to track changes
      */

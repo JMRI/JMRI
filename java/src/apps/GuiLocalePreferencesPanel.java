@@ -80,4 +80,9 @@ public class GuiLocalePreferencesPanel implements PreferencesSubPanel {
     public boolean isRestartRequired() {
         return this.getParent().isRestartRequired();
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return this.getParent().isPreferencesValid();
+    }
 }

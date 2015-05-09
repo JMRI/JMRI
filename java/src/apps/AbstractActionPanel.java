@@ -131,6 +131,11 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
         return this.isDirty();
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
+
     public class Item extends JPanel implements ActionListener {
 
         private static final long serialVersionUID = -2499516926618516181L;

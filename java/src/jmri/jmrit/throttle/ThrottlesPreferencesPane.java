@@ -364,4 +364,9 @@ public class ThrottlesPreferencesPane extends JPanel implements PropertyChangeLi
     public boolean isRestartRequired() {
         return false;
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

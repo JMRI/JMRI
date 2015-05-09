@@ -350,4 +350,9 @@ public class WebServerPreferencesPanel extends JPanel implements ListDataListene
     public boolean isRestartRequired() {
         return this.restartRequired;
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

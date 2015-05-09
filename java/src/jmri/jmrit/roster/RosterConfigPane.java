@@ -198,4 +198,9 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
                 ? !Roster.getFileLocation().equals(FileUtil.getUserFilesPath())
                 : !Roster.getFileLocation().equals(this.getSelectedItem());
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

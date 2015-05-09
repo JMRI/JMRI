@@ -39,4 +39,9 @@ public abstract class OperationsPreferencesPanel extends OperationsPanel impleme
     public boolean isRestartRequired() {
         return false;
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

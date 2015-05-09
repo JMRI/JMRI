@@ -294,4 +294,8 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
                 || this.configPanes.stream().anyMatch((panel) -> (panel.isRestartRequired()));
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return this.configPanes.stream().anyMatch((panel) -> (panel.isPreferencesValid()));
+    }
 }

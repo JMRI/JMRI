@@ -131,4 +131,9 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
     public boolean isRestartRequired() {
         return this.isDirty();
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

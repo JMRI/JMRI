@@ -103,4 +103,11 @@ public interface PreferencesPanel {
      * @return true if the application needs to restart
      */
     public abstract boolean isRestartRequired();
+    
+    /**
+     * Indicate that the preferences are valid.
+     * 
+     * @return true if the preferences are valid, false otherwise
+     */
+    public abstract boolean isPreferencesValid();
 }

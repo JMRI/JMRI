@@ -568,6 +568,11 @@ public class PreferencesPane extends javax.swing.JPanel implements PropertyChang
         // updateButtonPressed() to set this true.
         return false;
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }
 
 

@@ -294,4 +294,9 @@ public class WiThrottlePrefsPanel extends JPanel implements PreferencesPanel {
     public boolean isRestartRequired() {
         return this.localPrefs.isRestartRequired();
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }

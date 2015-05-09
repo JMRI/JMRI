@@ -234,5 +234,10 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         // since changes are applied immediately, this is not required
         return false;
     }
+
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
 }
 /* @(#)SystemConsoleConfigPanel.java */

@@ -338,6 +338,11 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         return false;
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
+
     static class ListItems {
 
         String strClass;

@@ -128,6 +128,11 @@ public class PerformFilePanel extends JPanel implements PreferencesPanel {
         return this.isDirty();
     }
 
+    @Override
+    public boolean isPreferencesValid() {
+        return true; // no validity checking performed
+    }
+
     public class Item extends JPanel implements ActionListener {
 
         /**
