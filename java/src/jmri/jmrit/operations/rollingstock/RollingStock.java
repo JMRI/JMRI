@@ -844,6 +844,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
      * @return date
      */
     public String getLastDate() {
+        if( _lastDate == 
+            (new java.util.GregorianCalendar()).getGregorianChange()) 
+            return ""; // return an empty string for the default date.
         SimpleDateFormat format=
                     new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return format.format(_lastDate);  
