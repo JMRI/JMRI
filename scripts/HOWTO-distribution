@@ -40,6 +40,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
     cd help/en/
+    rm ~/.jhelpdev    (to make sure the right preferences are chosen)
     ./JHelpDev.csh   (See the doc page for setup)
     (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
     (click "Create All", takes a bit of time, wait for button to release)
@@ -55,6 +56,10 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     Run the program and make sure help works.
 
     Commit any changed files.
+
+================================================================================
+This group of items it just general code maintenance that we roll into the
+release process.  They can be skipped occasionally.
 
 ( ) Check for line ends with the scripts/checkCR.sh script.  Fix those
     that you find wrong.  
@@ -77,10 +82,9 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     find help -name \*html -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
     
     You'll get a message for each file, but will only need to commit changes.
+    svn commit -m"setting SVN keywords" java/src jython xml help
     
 ( ) Confirm that all the above changes have been committed back to SVN trunk
-
-( ) Create & commit the start of a release note for the next version
 
 ( ) This is a good place to check that the decoder XSLT transforms work
         cd xml/XSLT
@@ -135,9 +139,9 @@ Second, we build the release branch:
     and update to get the release copy:
 
     cd ../../branches/jmri/releases
-    svn update 3.9.5
+    svn update 3.11.6
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.9.5")
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.11.6")
 
     ( to merge everything to date: svn merge ^/trunk/jmri
       If you do this, beware, the first time you'll also merge in the new release.properties file, 
@@ -166,7 +170,7 @@ Third, we do any necessary release-specific updates.
 
 ( ) Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.9.5/
+    http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/
 
 ( ) WAIT FOR SOME REPLIES, then skip to "Actual release steps" below.
 
@@ -213,7 +217,7 @@ Actual release steps:
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.3/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.4/ws/jmri/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
