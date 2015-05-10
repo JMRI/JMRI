@@ -597,13 +597,13 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
     }
 
     private void setBuiltRadioButton() {
-        if (_train.getBuiltStartYear().equals("") && _train.getBuiltEndYear().equals("")) {
+        if (_train.getBuiltStartYear().equals(Train.NONE) && _train.getBuiltEndYear().equals(Train.NONE)) {
             builtDateAll.setSelected(true);
-        } else if (!_train.getBuiltStartYear().equals("") && !_train.getBuiltEndYear().equals("")) {
+        } else if (!_train.getBuiltStartYear().equals(Train.NONE) && !_train.getBuiltEndYear().equals(Train.NONE)) {
             builtDateRange.setSelected(true);
-        } else if (!_train.getBuiltStartYear().equals("")) {
+        } else if (!_train.getBuiltStartYear().equals(Train.NONE)) {
             builtDateAfter.setSelected(true);
-        } else if (!_train.getBuiltEndYear().equals("")) {
+        } else if (!_train.getBuiltEndYear().equals(Train.NONE)) {
             builtDateBefore.setSelected(true);
         }
     }
@@ -795,12 +795,12 @@ public class TrainEditBuildOptionsFrame extends OperationsFrame implements java.
             options2 = options2 | Train.HELPER_ENGINES;
         }
         _train.setThirdLegOptions(options2);
-        if (routePickup2Box.getSelectedItem() != null && !routePickup2Box.getSelectedItem().equals("")) {
+        if (routePickup2Box.getSelectedItem() != null) {
             _train.setThirdLegStartLocation((RouteLocation) routePickup2Box.getSelectedItem());
         } else {
             _train.setThirdLegStartLocation(null);
         }
-        if (routeDrop2Box.getSelectedItem() != null && !routeDrop2Box.getSelectedItem().equals("")) {
+        if (routeDrop2Box.getSelectedItem() != null) {
             _train.setThirdLegEndLocation((RouteLocation) routeDrop2Box.getSelectedItem());
         } else {
             _train.setThirdLegEndLocation(null);

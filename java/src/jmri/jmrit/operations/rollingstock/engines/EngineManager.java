@@ -133,7 +133,7 @@ public class EngineManager extends RollingStockManager {
      */
     public JComboBox<String> getConsistComboBox() {
         JComboBox<String> box = new JComboBox<>();
-        box.addItem("");
+        box.addItem(NONE);
         for (String name : getConsistNameList()) {
             box.addItem(name);
         }
@@ -142,7 +142,7 @@ public class EngineManager extends RollingStockManager {
 
     public void updateConsistComboBox(JComboBox<String> box) {
         box.removeAllItems();
-        box.addItem("");
+        box.addItem(NONE);
         for (String name : getConsistNameList()) {
             box.addItem(name);
         }
@@ -262,7 +262,7 @@ public class EngineManager extends RollingStockManager {
         Enumeration<String> en = _hashTable.keys();
         while (en.hasMoreElements()) {
             Engine engine = getById(en.nextElement());
-            if ((engine.getModel().equals(model) || model.equals(""))
+            if ((engine.getModel().equals(model) || model.equals(NONE))
                     && !names.contains(engine.getRoadName())) {
                 names.add(engine.getRoadName());
             }
@@ -288,7 +288,7 @@ public class EngineManager extends RollingStockManager {
         } // old format
         else if (root.getChild(Xml.CONSISTS) != null) {
             String names = root.getChildText(Xml.CONSISTS);
-            if (!names.equals("")) {
+            if (!names.equals(NONE)) {
                 String[] consistNames = names.split("%%"); // NOI18N
                 if (log.isDebugEnabled()) {
                     log.debug("consists: {}", names);

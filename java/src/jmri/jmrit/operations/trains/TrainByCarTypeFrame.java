@@ -136,7 +136,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
 
         pRoute.removeAll();
 
-        if (trainsComboBox.getSelectedItem() == null || trainsComboBox.getSelectedItem().equals(TrainManager.NONE)) {
+        if (trainsComboBox.getSelectedItem() == null) {
             _train = null;
         } else {
             _train = (Train) trainsComboBox.getSelectedItem();
@@ -205,12 +205,12 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                 } // TODO need to do the same tests for caboose changes in the train's route
                 else if (_car != null && _car.isCaboose() && (_train.getRequirements() & Train.CABOOSE) > 0
                         && location.equals(_car.getLocation()) && track.equals(_car.getTrack())
-                        && !_train.getCabooseRoad().equals("") && !_car.getRoadName().equals(_train.getCabooseRoad())
+                        && !_train.getCabooseRoad().equals(Train.NONE) && !_car.getRoadName().equals(_train.getCabooseRoad())
                         && location.getName().equals(_train.getTrainDepartsName())) {
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } else if (_car != null && _car.hasFred() && (_train.getRequirements() & Train.FRED) > 0
                         && location.equals(_car.getLocation()) && track.equals(_car.getTrack())
-                        && !_train.getCabooseRoad().equals("") && !_car.getRoadName().equals(_train.getCabooseRoad())
+                        && !_train.getCabooseRoad().equals(Train.NONE) && !_car.getRoadName().equals(_train.getCabooseRoad())
                         && location.getName().equals(_train.getTrainDepartsName())) {
                     op.setText(Bundle.getMessage("X(TrainRoad)"));
                 } else if (_car != null && !_car.isCaboose() && !_car.isPassenger()
@@ -308,13 +308,13 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             // check to see if schedule services car type and load
             if (attribute.equals(LOAD)
                     && si.getTypeName().equals(carType)
-                    && (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName().equals(
+                    && (si.getReceiveLoadName().equals(ScheduleItem.NONE) || car == null || si.getReceiveLoadName().equals(
                             car.getLoadName()))) {
                 return true;
             }
             // check to see if schedule services car type and road
             if (attribute.equals(ROAD) && si.getTypeName().equals(carType)
-                    && (si.getRoadName().equals("") || car == null || si.getRoadName().equals(car.getRoadName()))) {
+                    && (si.getRoadName().equals(ScheduleItem.NONE) || car == null || si.getRoadName().equals(car.getRoadName()))) {
                 return true;
             }
             // check to see if schedule timetable allows delivery
@@ -327,10 +327,10 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             // check to see if at least one schedule item can service car
             if (attribute.equals(ALL)
                     && si.getTypeName().equals(carType)
-                    && (si.getReceiveLoadName().equals("") || car == null || si.getReceiveLoadName().equals(
+                    && (si.getReceiveLoadName().equals(ScheduleItem.NONE) || car == null || si.getReceiveLoadName().equals(
                             car.getLoadName()))
-                    && (si.getRoadName().equals("") || car == null || si.getRoadName().equals(car.getRoadName()))
-                    && (si.getSetoutTrainScheduleId().equals("") || TrainManager.instance().getTrainScheduleActiveId()
+                    && (si.getRoadName().equals(ScheduleItem.NONE) || car == null || si.getRoadName().equals(car.getRoadName()))
+                    && (si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE) || TrainManager.instance().getTrainScheduleActiveId()
                     .equals(si.getSetoutTrainScheduleId()))) {
                 return true;
             }

@@ -301,11 +301,11 @@ public class ImportEngines extends ImportRollingStock {
                     engine.setModel(engineModel);
                     engine.setLength(engineLength);
                     // does this model already have a type?
-                    if (engine.getTypeName().equals("")) {
+                    if (engine.getTypeName().equals(Engine.NONE)) {
                         engine.setTypeName(defaultEngineType);
                     }
                     // does this model already have a hp?
-                    if (engine.getHp().equals("")) {
+                    if (engine.getHp().equals(Engine.NONE)) {
                         engine.setHp(defaultEngineHp);
                     }
                     engine.setOwner(engineOwner);

@@ -382,7 +382,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                                 getRb().getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);
                         return false;
                     }
-                    if (rd == null && !rs.getDestinationName().equals("")) {
+                    if (rd == null && !rs.getDestinationName().equals(RollingStock.NONE)) {
                         JOptionPane.showMessageDialog(this, MessageFormat.format(getRb().getString(
                                 "rsDestNotServ"), new Object[]{rs.getDestinationName(), train.getName()}),
                                 getRb().getString("rsNotMove"), JOptionPane.ERROR_MESSAGE);

@@ -126,7 +126,7 @@ public class PrintEngineRosterAction extends AbstractAction {
                 }
 
                 location = "";
-                if (!engine.getLocationName().equals("")) {
+                if (!engine.getLocationName().equals(Engine.NONE)) {
                     location = engine.getLocationName() + " - " + engine.getTrackName();
                 }
 

@@ -318,7 +318,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     }
 
     public String getFormatedDepartureTime() {
-        if (getDepartureTime().equals("") || !Setup.is12hrFormatEnabled()) {
+        if (getDepartureTime().equals(NONE) || !Setup.is12hrFormatEnabled()) {
             return _departureTime;
         }
         String AM_PM = " " + Bundle.getMessage("AM");

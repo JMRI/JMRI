@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainManager implements java.beans.PropertyChangeListener {
 
-    public static final String NONE = "";
+    private static final String NONE = "";
 
     // Train frame attributes
     private String _trainAction = TrainsTableFrame.MOVE; // Trains frame table button action

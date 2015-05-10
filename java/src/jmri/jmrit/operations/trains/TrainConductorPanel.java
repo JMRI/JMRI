@@ -9,8 +9,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
@@ -117,20 +119,20 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
         if (_train != null) {
             textTrainDescription.setText(_train.getDescription());
             // show train comment box only if there's a comment
-            if (_train.getComment().equals("")) {
+            if (_train.getComment().equals(Train.NONE)) {
                 textTrainComment.setVisible(false);
             } else {
                 textTrainComment.setText(_train.getComment());
             }
             // show route comment box only if there's a route comment
             if (_train.getRoute() != null) {
-                textTrainRouteComment.setVisible(!_train.getRoute().getComment().equals("")
+                textTrainRouteComment.setVisible(!_train.getRoute().getComment().equals(Route.NONE)
                         && Setup.isPrintRouteCommentsEnabled());
                 textTrainRouteComment.setText(_train.getRoute().getComment());
             }
 
             // Does this train have a unique railroad name?
-            if (!_train.getRailroadName().equals("")) {
+            if (!_train.getRailroadName().equals(Train.NONE)) {
                 textRailRoadName.setText(_train.getRailroadName());
             } else {
                 textRailRoadName.setText(Setup.getRailroadName());
@@ -173,13 +175,13 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     textTrainName.setText(_train.getIconName());
                     RouteLocation rl = _train.getCurrentLocation();
                     if (rl != null) {
-                        textTrainRouteLocationComment.setVisible(!rl.getComment().equals(""));
+                        textTrainRouteLocationComment.setVisible(!rl.getComment().equals(RouteLocation.NONE));
                         textTrainRouteLocationComment.setText(rl.getComment());
                         textLocationName.setText(rl.getLocation().getName());
                         pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled()
-                                && !rl.getDepartureTime().equals(""));
+                                && !rl.getDepartureTime().equals(RouteLocation.NONE));
                         textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
-                        textLocationComment.setVisible(!rl.getLocation().getComment().equals("")
+                        textLocationComment.setVisible(!rl.getLocation().getComment().equals(Location.NONE)
                                 && Setup.isPrintLocationCommentsEnabled());
                         textLocationComment.setText(rl.getLocation().getComment());
                         textNextLocationName.setText(_train.getNextLocationName());

@@ -221,13 +221,13 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     pButtons.setVisible(true);
                     textTrainDescription.setText(_train.getDescription());
                     // show train comment box only if there's a comment
-                    textTrainComment.setVisible(!_train.getComment().equals(""));
+                    textTrainComment.setVisible(!_train.getComment().equals(Train.NONE));
                     textTrainComment.setText(_train.getComment());
                     // show route comment box only if there's a route comment
-                    textTrainRouteComment.setVisible(!route.getComment().equals("") && Setup.isPrintRouteCommentsEnabled());
+                    textTrainRouteComment.setVisible(!route.getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
                     textTrainRouteComment.setText(route.getComment());
                     // Does this train have a unique railroad name?
-                    if (!_train.getRailroadName().equals("")) {
+                    if (!_train.getRailroadName().equals(Train.NONE)) {
                         textRailRoadName.setText(_train.getRailroadName());
                     } else {
                         textRailRoadName.setText(Setup.getRailroadName());

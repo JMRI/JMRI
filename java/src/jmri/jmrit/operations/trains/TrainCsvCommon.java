@@ -275,17 +275,17 @@ public class TrainCsvCommon extends TrainCommon {
                 }
                 // print the appropriate comment if there's one
                 // each comment can have multiple lines
-                if (pickup && setout && !track.getCommentBoth().equals("")) {
+                if (pickup && setout && !track.getCommentBoth().equals(Track.NONE)) {
                     String[] comments = track.getCommentBoth().split(NEW_LINE);
                     for (String comment : comments) {
                         addLine(fileOut, TKCB + comment);
                     }
-                } else if (pickup && !setout && !track.getCommentPickup().equals("")) {
+                } else if (pickup && !setout && !track.getCommentPickup().equals(Track.NONE)) {
                     String[] comments = track.getCommentPickup().split(NEW_LINE);
                     for (String comment : comments) {
                         addLine(fileOut, TKCP + comment);
                     }
-                } else if (!pickup && setout && !track.getCommentSetout().equals("")) {
+                } else if (!pickup && setout && !track.getCommentSetout().equals(Track.NONE)) {
                     String[] comments = track.getCommentSetout().split(NEW_LINE);
                     for (String comment : comments) {
                         addLine(fileOut, TKCS + comment);

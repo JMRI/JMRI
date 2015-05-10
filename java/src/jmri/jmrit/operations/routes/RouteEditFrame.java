@@ -383,7 +383,7 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         showWait.setSelected(true);
         if (_route != null) {
             RouteLocation rl = _route.getDepartsRouteLocation();
-            if (rl != null && !rl.getDepartureTime().equals("")) {
+            if (rl != null && !rl.getDepartureTime().equals(RouteLocation.NONE)) {
                 showDepartTime.setSelected(true);
             }
             routeModel.setWait(showWait.isSelected());

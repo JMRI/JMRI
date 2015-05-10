@@ -318,7 +318,7 @@ public class RouteEditTableModel extends javax.swing.table.AbstractTableModel im
             case TRAINICONY:
                 return Integer.toString(rl.getTrainIconY());
             case COMMENT_COLUMN: {
-                if (rl.getComment().equals("")) {
+                if (rl.getComment().equals(RouteLocation.NONE)) {
                     return Bundle.getMessage("Add");
                 } else {
                     return Bundle.getMessage("Edit");

@@ -140,7 +140,7 @@ public class TrainIcon extends LocoIcon {
             }
             for (RollingStock rs : carList) {
                 Car car = (Car) rs;
-                if (car.getRouteLocation() == rl && !car.getTrackName().equals("")) {
+                if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)) {
                     pickupCars++;
                 }
                 if (car.getRouteDestination() == rl) {

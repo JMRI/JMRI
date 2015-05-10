@@ -14,13 +14,15 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  */
 public class TrainSchedule {
+    
+    public String NONE = "";
 
     public static final String NAME_CHANGED_PROPERTY = "trainScheduleName"; // NOI18N
     public static final String SCHEDULE_CHANGED_PROPERTY = "trainScheduleChanged"; // NOI18N
 
-    protected String _id = "";
-    protected String _name = "";
-    protected String _comment = "";
+    protected String _id = NONE;
+    protected String _name = NONE;
+    protected String _comment = NONE;
     protected List<String> _trainIds = new ArrayList<String>();
 
     public TrainSchedule(String id, String name) {
@@ -119,7 +121,7 @@ public class TrainSchedule {
         Element e = new org.jdom2.Element(Xml.SCHEDULE);
         e.setAttribute(Xml.ID, getId());
         e.setAttribute(Xml.NAME, getName());
-        if (!getComment().equals("")) {
+        if (!getComment().equals(NONE)) {
             e.setAttribute(Xml.COMMENT, getComment());
         }
         // store train ids

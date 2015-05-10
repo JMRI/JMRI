@@ -247,7 +247,7 @@ public class Router extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("RouterTrainCanNotStaging"),
                     new Object[]{_train.getName(), car.toString(), car.getLocationName(), clone.getDestinationName(),
                             clone.getDestinationTrackName()}));
-            if (!_train.getServiceStatus().equals("")) {
+            if (!_train.getServiceStatus().equals(Train.NONE)) {
                 addLine(_buildReport, SEVEN, _train.getServiceStatus());
             }
         } else if (!trainServicesCar) {
@@ -292,7 +292,7 @@ public class Router extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("TrainDoesNotServiceCar"),
                     new Object[]{_train.getName(), car.toString(), clone.getDestinationName(),
                             clone.getDestinationTrackName()}));
-            if (!_train.getServiceStatus().equals("")) {
+            if (!_train.getServiceStatus().equals(Train.NONE)) {
                 addLine(_buildReport, SEVEN, _train.getServiceStatus());
             }
             _status = STATUS_NOT_THIS_TRAIN;
@@ -960,7 +960,7 @@ public class Router extends TrainCommon {
         if (_train.services(car)) {
             return YES;
         } // is the reason this train can't service route moves or train length?
-        else if (!_train.getServiceStatus().equals("")) {
+        else if (!_train.getServiceStatus().equals(Train.NONE)) {
             return NOT_NOW; // the issue is route moves or train length
         }
         return NO;

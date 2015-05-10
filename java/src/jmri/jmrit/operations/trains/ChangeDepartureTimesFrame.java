@@ -83,7 +83,7 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
                     hour = hour - 24;
                 }
                 RouteLocation rl = train.getTrainDepartsRouteLocation();
-                if (rl != null && !rl.getDepartureTime().equals("")) {
+                if (rl != null && !rl.getDepartureTime().equals(RouteLocation.NONE)) {
                     rl.setDepartureTime(Integer.toString(hour), train.getDepartureTimeMinute());
                 } else {
                     train.setDepartureTime(Integer.toString(hour), train.getDepartureTimeMinute());

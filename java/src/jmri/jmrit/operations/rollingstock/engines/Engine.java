@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 public class Engine extends RollingStock {
 
     private Consist _consist = null;
-    private String _model = "";
+    private String _model = NONE;
 
     EngineModels engineModels = EngineModels.instance();
 
@@ -75,7 +75,7 @@ public class Engine extends RollingStock {
      * @param hp locomotive horsepower
      */
     public void setHp(String hp) {
-        if (getModel().equals("")) {
+        if (getModel().equals(NONE)) {
             return;
         }
         String old = getHp();
@@ -88,7 +88,7 @@ public class Engine extends RollingStock {
     public String getHp() {
         String hp = engineModels.getModelHorsepower(getModel());
         if (hp == null) {
-            hp = "";
+            hp = NONE;
         }
         return hp;
     }
@@ -110,7 +110,7 @@ public class Engine extends RollingStock {
     public void setLength(String length) {
         super.setLength(length);
         try {
-           if (getModel().equals("")) {
+           if (getModel().equals(NONE)) {
                return;
            }
            engineModels.setModelLength(getModel(), length);
@@ -124,11 +124,11 @@ public class Engine extends RollingStock {
     public String getLength() {
         try {
             String length = super.getLength();
-            if (getModel() != null && !getModel().equals("")) {
+            if (getModel() != null && !getModel().equals(NONE)) {
                 length = engineModels.getModelLength(getModel());
             }
             if (length == null) {
-                length = "";
+                length = NONE;
             }
             if (!length.equals(_length)) {
                 if (_lengthChange) // return "old" length, used for track reserve changes
@@ -142,7 +142,7 @@ public class Engine extends RollingStock {
         } catch (java.lang.NullPointerException npe) {
             log.debug("NPE setting length for Engine ({})", toString());
         }
-        return "";
+        return NONE;
     }
 
     /**
@@ -152,7 +152,7 @@ public class Engine extends RollingStock {
      */
     public void setWeightTons(String weight) {
         try {
-           if (getModel().equals("")) {
+           if (getModel().equals(NONE)) {
                return;
            }
            String old = getWeightTons();
@@ -172,11 +172,11 @@ public class Engine extends RollingStock {
         try{
            weight = engineModels.getModelWeight(getModel());
            if (weight == null) {
-               weight = "";
+               weight = NONE;
            }
        } catch(java.lang.NullPointerException npe){
           log.debug("NPE getting Weight Tons for Engine ({})", toString());
-          weight = "";
+          weight = NONE;
        }
        return weight;
     }
@@ -220,7 +220,7 @@ public class Engine extends RollingStock {
         if (_consist != null) {
             return _consist.getName();
         }
-        return "";
+        return NONE;
     }
 
     /**

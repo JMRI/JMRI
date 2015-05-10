@@ -95,7 +95,7 @@ public class RouteCopyFrame extends OperationsFrame {
                 reportRouteExists(Bundle.getMessage("add"));
                 return;
             }
-            if (routeBox.getSelectedItem() == null || routeBox.getSelectedItem().equals("")) {
+            if (routeBox.getSelectedItem() == null) {
                 reportRouteDoesNotExist();
                 return;
             }

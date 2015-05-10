@@ -416,7 +416,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
             // if the road or number changes, the loco needs a new id
             if (_engine != null
                     && _engine.getRoadName() != null
-                    && !_engine.getRoadName().equals("")
+                    && !_engine.getRoadName().equals(Engine.NONE)
                     && (!_engine.getRoadName().equals(roadComboBox.getSelectedItem()) || !_engine
                             .getNumber().equals(roadNumberTextField.getText()))) {
                 String road = (String) roadComboBox.getSelectedItem();
@@ -498,7 +498,7 @@ public class EngineEditFrame extends OperationsFrame implements java.beans.Prope
                 _engine.setOwner((String) ownerComboBox.getSelectedItem());
             }
             if (consistComboBox.getSelectedItem() != null) {
-                if (consistComboBox.getSelectedItem().equals("")) {
+                if (consistComboBox.getSelectedItem().equals(EngineManager.NONE)) {
                     _engine.setConsist(null);
                     _engine.setBlocking(0);
                 } else {

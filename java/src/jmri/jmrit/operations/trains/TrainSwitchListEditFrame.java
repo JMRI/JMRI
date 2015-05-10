@@ -382,7 +382,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             addItem(locationPanelCheckBoxes, status, 2, y);
 
             JButton button = new JButton(Bundle.getMessage("Add"));
-            if (!location.getSwitchListComment().equals("")) {
+            if (!location.getSwitchListComment().equals(Location.NONE)) {
                 button.setText(Bundle.getMessage("Edit"));
             }
             button.setName(location.getName());

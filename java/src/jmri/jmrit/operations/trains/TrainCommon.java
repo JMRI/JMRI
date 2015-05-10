@@ -75,7 +75,7 @@ public class TrainCommon {
         }
         int lineLength = getLineLength(isManifest);
         for (Engine engine : engineList) {
-            if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
+            if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(Engine.NONE)) {
                 String s = padAndTruncateString(pickupEngine(engine).trim(), lineLength / 2, true);
                 s = padAndTruncateString(s + VERTICAL_LINE_CHAR, lineLength, true);
                 addLine(file, s);
@@ -100,7 +100,7 @@ public class TrainCommon {
     protected void pickupEngines(PrintWriter file, List<Engine> engineList, RouteLocation rl, boolean isManifest) {
         boolean printHeader = Setup.isPrintHeadersEnabled();
         for (Engine engine : engineList) {
-            if (engine.getRouteLocation() == rl && !engine.getTrackName().equals("")) {
+            if (engine.getRouteLocation() == rl && !engine.getTrackName().equals(Engine.NONE)) {
                 if (printHeader) {
                     printPickupEngineHeader(file, isManifest);
                     printHeader = false;
@@ -344,7 +344,7 @@ public class TrainCommon {
                 found = true;
                 for (int k = 0; k < carList.size(); k++) {
                     Car car = carList.get(k);
-                    if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
+                    if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)
                             && car.getRouteDestination() == rld) {
                         if (Setup.isSortByTrackEnabled()
                                 && !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
@@ -430,7 +430,7 @@ public class TrainCommon {
                 }
                 found = true;
                 for (Car car : carList) {
-                    if (car.getRouteLocation() == rl && !car.getTrackName().equals("")
+                    if (car.getRouteLocation() == rl && !car.getTrackName().equals(Car.NONE)
                             && car.getRouteDestination() == rld && trackName.equals(splitString(car.getTrackName()))) {
                         if (!trackNames.contains(trackName)) {
                             printTrackNameHeader(file, trackName, isManifest);
@@ -1316,7 +1316,7 @@ public class TrainCommon {
         } else if (attribute.equals(Setup.KERNEL)) {
             return " " + padAndTruncateString(car.getKernelName(), carManager.getKernelMaxNameLength());
         } else if (attribute.equals(Setup.RWE)) {
-            if (!car.getReturnWhenEmptyDestName().equals("")) {
+            if (!car.getReturnWhenEmptyDestName().equals(Car.NONE)) {
                 return " "
                         + padAndTruncateString(TrainManifestHeaderText.getStringHeader_RWE() + " "
                                 + splitString(car.getReturnWhenEmptyDestinationName()) + " ,"
@@ -1326,7 +1326,7 @@ public class TrainCommon {
             }
             return "";
         } else if (attribute.equals(Setup.FINAL_DEST)) {
-            if (!car.getFinalDestinationName().equals("")) {
+            if (!car.getFinalDestinationName().equals(Car.NONE)) {
                 return Setup.isPrintHeadersEnabled() ? " "
                         + padAndTruncateString(splitString(car.getFinalDestinationName()), locationManager
                                 .getMaxLocationNameLength()) : " "
@@ -1337,7 +1337,7 @@ public class TrainCommon {
             }
             return "";
         } else if (attribute.equals(Setup.FINAL_DEST_TRACK)) {
-            if (!car.getFinalDestinationName().equals("")) {
+            if (!car.getFinalDestinationName().equals(Car.NONE)) {
                 return Setup.isPrintHeadersEnabled() ? " "
                         + padAndTruncateString(splitString(car.getFinalDestinationName()) + ", "
                                 + splitString(car.getFinalDestinationTrackName()), locationManager
@@ -1788,7 +1788,7 @@ public class TrainCommon {
         Calendar calendar = Calendar.getInstance();
         // use the JMRI timebase (which may be a fast clock).
         calendar.setTime(jmri.InstanceManager.timebaseInstance().getTime());
-        if (isModelYear && !Setup.getYearModeled().equals("")) {
+        if (isModelYear && !Setup.getYearModeled().equals(Setup.NONE)) {
             try {
                 calendar.set(Calendar.YEAR, Integer.parseInt(Setup.getYearModeled().trim()));
             } catch (NumberFormatException e) {

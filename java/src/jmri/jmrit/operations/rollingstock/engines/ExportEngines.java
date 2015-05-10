@@ -12,7 +12,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import org.slf4j.Logger;
@@ -126,11 +125,11 @@ public class ExportEngines extends XmlFile {
             }
             // only export value field if value has been set.
             value = "";
-            if (!engine.getValue().equals("")) {
+            if (!engine.getValue().equals(Engine.NONE)) {
                 value = ESC + engine.getValue() + ESC;
             }
             comment = "";
-            if (!engine.getComment().equals(Car.NONE)) {
+            if (!engine.getComment().equals(Engine.NONE)) {
                 comment = ESC + engine.getComment() + ESC;
             }
             line = engine.getNumber() + del + engine.getRoadName() + del + engineModel + del + engine.getLength() + del

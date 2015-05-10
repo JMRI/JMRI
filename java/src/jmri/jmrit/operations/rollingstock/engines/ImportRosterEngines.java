@@ -66,15 +66,15 @@ public class ImportRosterEngines extends Thread {
                     }
                     engine.setModel(model);
                     // does this model already have a length?
-                    if (engine.getLength().equals("")) {
+                    if (engine.getLength().equals(Engine.NONE)) {
                         engine.setLength(defaultEngineLength);
                     }
                     // does this model already have a type?
-                    if (engine.getTypeName().equals("")) {
+                    if (engine.getTypeName().equals(Engine.NONE)) {
                         engine.setTypeName(defaultEngineType);
                     }
                     // does this model already have a hp?
-                    if (engine.getHp().equals("")) {
+                    if (engine.getHp().equals(Engine.NONE)) {
                         engine.setHp(defaultEngineHp);
                     }
                     String owner = re.getOwner();

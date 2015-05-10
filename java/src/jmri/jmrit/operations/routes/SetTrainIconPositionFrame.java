@@ -297,7 +297,7 @@ public class SetTrainIconPositionFrame extends OperationsFrame {
     // place test markers on panel
     private void placeTestIcons() {
         removeIcons();
-        if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+        if (locationBox.getSelectedItem() == null) {
             return;
         }
         Editor editor = PanelMenu.instance().getEditorByName(Setup.getPanelName());

@@ -99,7 +99,7 @@ public class PrintTrainAction extends AbstractAction {
                     writer.write(s, 0, s.length());
                 }
             }
-            if (!train.getComment().equals("")) {
+            if (!train.getComment().equals(Train.NONE)) {
                 s = Bundle.getMessage("Comment") + ": " + train.getComment() + NEW_LINE;
                 writer.write(s);
             }

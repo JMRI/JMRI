@@ -93,7 +93,7 @@ public class TrainCopyFrame extends OperationsFrame {
                 reportTrainExists();
                 return;
             }
-            if (trainBox.getSelectedItem() == null || trainBox.getSelectedItem().equals("")) {
+            if (trainBox.getSelectedItem() == null) {
                 reportTrainDoesNotExist();
                 return;
             }

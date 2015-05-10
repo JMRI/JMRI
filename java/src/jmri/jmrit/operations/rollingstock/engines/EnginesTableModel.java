@@ -370,14 +370,14 @@ public class EnginesTableModel extends javax.swing.table.AbstractTableModel impl
             }
             case LOCATION_COLUMN: {
                 String s = eng.getStatus();
-                if (!eng.getLocationName().equals("")) {
+                if (!eng.getLocationName().equals(Engine.NONE)) {
                     s = eng.getStatus() + eng.getLocationName() + " (" + eng.getTrackName() + ")";
                 }
                 return s;
             }
             case DESTINATION_COLUMN: {
                 String s = "";
-                if (!eng.getDestinationName().equals("")) {
+                if (!eng.getDestinationName().equals(Engine.NONE)) {
                     s = eng.getDestinationName() + " (" + eng.getDestinationTrackName() + ")";
                 }
                 return s;
