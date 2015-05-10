@@ -25,6 +25,10 @@
 
   <property name="jmri.copyright.year" value="1997-2015"/>
 
+  <!-- allow for persistent local values, shouldn't be an error if this doesn't exists -->
+  <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
+  <property file="../../local.properties"/>
+
   <!-- set global properties for this build -->
   <property name="xml" value=".."/>
   <property name="toDTD" value="DTD"/>
@@ -269,13 +273,13 @@
       <arg value="-avz"/>
       <arg value="--delete"/>
       <arg value="pages"/>
-      <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
+      <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
     </exec>
     <exec executable="rsync">
       <arg value="-avz"/>
       <arg value="--delete"/>
       <arg value="properties"/>
-      <arg value="jacobsen,jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
+      <arg value="${sourceforge.userid},jmri@web.sourceforge.net:htdocs/xml/XSLT/"/>
     </exec>
   </target>
 
