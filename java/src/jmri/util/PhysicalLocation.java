@@ -232,6 +232,9 @@ public class PhysicalLocation extends Vector3f {
      * Constructor from X, Y, Z (float)
      */
     public PhysicalLocation(float x, float y, float z) {
+        setX(x);
+        setY(y);
+        setZ(z);
         _isTunnel = false;
 
     }

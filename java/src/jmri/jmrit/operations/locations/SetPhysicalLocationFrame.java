@@ -100,7 +100,7 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // check to see if a location has been selected
-        if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals(LocationManager.NONE)) {
+        if (locationBox.getSelectedItem() == null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SelectLocationToEdit"),
                     Bundle.getMessage("NoLocationSelected"), JOptionPane.ERROR_MESSAGE);
             return;
@@ -124,13 +124,11 @@ public class SetPhysicalLocationFrame extends OperationsFrame {
     }
 
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
-        if (locationBox.getSelectedItem() != null) {
-            if (locationBox.getSelectedItem().equals(LocationManager.NONE)) {
-                resetSpinners();
-            } else {
-                Location l = (Location) locationBox.getSelectedItem();
-                loadSpinners(l);
-            }
+        if (locationBox.getSelectedItem() == null) {
+            resetSpinners();
+        } else {
+            Location l = (Location) locationBox.getSelectedItem();
+            loadSpinners(l);
         }
     }
 
