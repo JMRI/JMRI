@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18568 $
+ * @version			$Revision$
  */
 /**
  * PhysicalLocationPanel

@@ -16,7 +16,7 @@ package jmri.util;
  * <P>
  *
  * @author			Mark Underwood Copyright (C) 2011
- * @version			$Revision: 18568 $
+ * @version			$Revision$
  */
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
