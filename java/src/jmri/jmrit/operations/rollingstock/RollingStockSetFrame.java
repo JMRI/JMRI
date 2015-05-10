@@ -326,7 +326,6 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
             JOptionPane.showMessageDialog(this, getRb().getString("rsNeedToRemoveStaging"), getRb()
                     .getString("rsInStaging"), JOptionPane.WARNING_MESSAGE);
             // clear the rolling stock's location
-            locationBox.setSelectedItem("");
             rs.setLocation(null, null);
         }
 
@@ -425,11 +424,10 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
     private boolean changeLocation(RollingStock rs) {
         if (!ignoreLocationCheckBox.isSelected()) {
-            if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+            if (locationBox.getSelectedItem() == null) {
                 rs.setLocation(null, null);
             } else {
-                if (trackLocationBox.getSelectedItem() == null
-                        || trackLocationBox.getSelectedItem().equals("")) {
+                if (trackLocationBox.getSelectedItem() == null) {
                     JOptionPane.showMessageDialog(this, getRb().getString("rsFullySelect"), getRb()
                             .getString("rsCanNotLoc"), JOptionPane.ERROR_MESSAGE);
                     return false;
@@ -458,6 +456,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                         } else {
                             return false;
                         }
+                    } else {
+                        updateTrainComboBox();
                     }
                 }
             }
@@ -486,12 +486,11 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
     private boolean changeDestination(RollingStock rs) {
         if (!ignoreDestinationCheckBox.isSelected()) {
-            if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+            if (destinationBox.getSelectedItem() == null) {
                 rs.setDestination(null, null);
             } else {
                 Track destTrack = null;
-                if (trackDestinationBox.getSelectedItem() != null
-                        && !trackDestinationBox.getSelectedItem().equals("")) {
+                if (trackDestinationBox.getSelectedItem() != null) {
                     destTrack = (Track) trackDestinationBox.getSelectedItem();
                 }
                 if (destTrack != null && rs.getDestinationTrack() != destTrack
@@ -509,6 +508,8 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
                             "rsCanNotDestMsg"), new Object[]{rs.toString(), status}), getRb().getString(
                                     "rsCanNotDest"), JOptionPane.ERROR_MESSAGE);
                     return false;
+                } else {
+                    updateTrainComboBox();
                 }
             }
         }
@@ -689,7 +690,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
     protected void updateLocationTrackComboBox() {
         log.debug("update location track combobox");
-        if (locationBox.getSelectedItem() == null || locationBox.getSelectedItem().equals("")) {
+        if (locationBox.getSelectedItem() == null) {
             trackLocationBox.removeAllItems();
         } else {
             log.debug("RollingStockFrame sees location: {}", locationBox.getSelectedItem());
@@ -713,13 +714,13 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
 
     protected void updateDestinationTrackComboBox() {
         log.debug("update destination track combobox");
-        if (destinationBox.getSelectedItem() == null || destinationBox.getSelectedItem().equals("")) {
+        if (destinationBox.getSelectedItem() == null) {
             trackDestinationBox.removeAllItems();
         } else {
             log.debug("RollingStockFrame sees destination: {}", destinationBox.getSelectedItem());
             Location loc = (Location) destinationBox.getSelectedItem();
             Track track = null;
-            if (trackDestinationBox.getSelectedItem() != null && !trackDestinationBox.getSelectedItem().equals("")) {
+            if (trackDestinationBox.getSelectedItem() != null) {
                 track = (Track) trackDestinationBox.getSelectedItem();
             }
             loc.updateComboBox(trackDestinationBox, _rs, autoDestinationTrackCheckBox.isSelected(), true);
