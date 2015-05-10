@@ -12,21 +12,21 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Importing Locomotives from Roster </h1>
 <div align="right">
 <p><a href="Ops_Engines_menu.shtml">Back </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 <hr>
-<h4>Import locomotives from roster &nbsp;</h4><h4 style="margin-left: 40px; font-weight: normal;">Opens the import dialog box&nbsp;</h4><div style="margin-left: 40px;"><img style="width: 313px; height: 122px;" alt="import dialog" src="images/Ops_Successful_Import.png"></div>If you already have a <span style="font-weight: bold;">DecoderPro®
+<h4>Import locomotives from roster &nbsp;</h4><h4 style="margin-left: 40px; font-weight: normal;">Opens the import dialog box&nbsp;</h4><div style="margin-left: 40px;"><img style="width: 313px; height: 122px;" alt="import dialog" src="images/Ops_Successful_Import.png"></div>If you already have a <span style="font-weight: bold;">DecoderPro&reg;
 roster</span>
 created when programming decoders, you may import them into the
 Operations program. All locomotives that are not already in your
 Operations roster will be imported and a message will be displayed
 informing you of how many locomotives were imported. This way you can
-use this tool any time you add locomotives to your DecoderPro®
-locomotive roster. The DecoderPro® locomotive roster doesn't have the
+use this tool any time you add locomotives to your DecoderPro&reg;
+locomotive roster. The DecoderPro&reg; locomotive roster doesn't have the
 locomotives length, so a default length is entered for you. You should
 correct the locomotive length if you want the program to correctly
 calculate your train lengths.

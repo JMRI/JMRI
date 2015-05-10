@@ -32,11 +32,11 @@
 <p>The Basic Programmer &nbsp;uses only the required sceens to set up
 the decoder for DCC operation and creating a Roster entry and uses only
 the first two TABs. &nbsp;The first action in programming a locomotive
-with DecoderPro3® is to fill out the roster entry screen.</p>
+with DecoderPro&reg; 3 is to fill out the roster entry screen.</p>
 
 <p>A <b>roster</b> is a database of all locomotives that your
-installation of DecoderPro3® has programmed. All of this information
-will be contained in the list on the DecoderPro3 main page. It includes
+installation of DecoderPro 3 has programmed. All of this information
+will be contained in the list on the DecoderPro 3 main page. It includes
 the information seen in the screen
 below:</p>
 <div align="center"><img style="width: 642px; height: 602px;" alt="Basic roster" src="images/Basic_Roster.png"><br></div>
@@ -48,16 +48,16 @@ Spaces in the ID field will be changed to underscores (_) when the file
 is written.&nbsp; In a club environment, often the ID begins with the
 owner&#8217;s name, or member number. This way the Roster (which is sorted
 alphabetically) will keep all of an owner's locomotives listed
-together. This is not as necessary with DecoderPro3 as it is in the
-classic DecoderPro®, because it is now possible to sort the information
+together. This is not as necessary with DecoderPro 3 as it is in the
+classic DecoderPro, because it is now possible to sort the information
 on the opening screen using any of the columns by clicking on the
-column heading.&nbsp; DecoderPro3 also allows you to categorize roster
+column heading.&nbsp; DecoderPro 3 also allows you to categorize roster
 entries into Groups, so you could have a separate group for each
 member.&nbsp; </p>
 <p>We&#8217;ll get to Groups and all the other neat stuff that can be done
-with DecoderPro3 in a while.&nbsp; I just thought I&#8217;d give you peek
+with DecoderPro 3 in a while.&nbsp; I just thought I&#8217;d give you peek
 behind the curtain, and give you a chance to mentally thank the JMRI
-developers for all their work on DecoderPro3.&nbsp; Of course a message
+developers for all their work on DecoderPro 3.&nbsp; Of course a message
 to that effect posted to the JMRI Yahoo group would also be warmly
 received.<br>
   <br>

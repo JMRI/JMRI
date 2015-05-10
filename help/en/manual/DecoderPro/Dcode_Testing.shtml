@@ -44,7 +44,7 @@ Files\JMRI\xml\decoders).</p>
 computer will run for a minute or two with the selection highlighted.
 As soon as that goes away, the new decoder index should be created and
 your new definition should be available to use.</li>
-</ul>After including in your decoder definitions for DecoderPro®
+</ul>After including in your decoder definitions for DecoderPro&reg;
 &nbsp;you will want to test the definition on an actual decoder
 installation using the Programmers available to you. &nbsp;When
 satisfied that it works as expected, then follow the next step.

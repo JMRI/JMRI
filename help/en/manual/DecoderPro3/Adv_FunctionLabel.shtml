@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro3 Advanced Feature</h1>
+<h1>DecoderPro 3 Advanced Feature</h1>
 <h1>Function Labels Pane</h1>
 
 <div align="right">
@@ -26,7 +26,7 @@
 </div>
 
 <hr>
-<p>This pane is opened from the <strong>Labels &amp; Media</strong> button the DecoderPro3 main window or from the <strong>Actions</strong> menu.</p>
+<p>This pane is opened from the <strong>Labels &amp; Media</strong> button the DecoderPro 3 main window or from the <strong>Actions</strong> menu.</p>
 <p><img src="images/Adv_03_FunctionLabels.png" alt="function labels" height="682" width="900"></p>
 <p>This pane is more than a scratch pad to keep track of what happens
 when function buttons are pushed.&nbsp; It also interacts with the <a href="Throttle.shtml">JMRI throttle</a>. 

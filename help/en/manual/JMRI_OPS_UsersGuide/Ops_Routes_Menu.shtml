@@ -12,7 +12,7 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Routes Menu Bar</h1>
 <div align="right">
 <p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
@@ -93,9 +93,9 @@ Routes files<br>
 <p><strong>Operations</strong> (Same as Main
 Operations menu)<br>
 </p>
-<p><strong>Window </strong>-- Standard JMRI® window
+<p><strong>Window </strong>-- Standard JMRI&reg; window
 menu.</p>
-<p><strong>Help</strong> -- Standard JMRI® Help menu.</p><hr>
+<p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p><hr>
 <div align="right">
 <p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>

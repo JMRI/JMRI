@@ -17,7 +17,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro® Main Window</h1>
+<h1>DecoderPro&reg; 3 Main Window</h1>
 <h1>Main Window Overview</h1>
 
 <div align="right">
@@ -25,9 +25,9 @@
 </div>
 
 <hr>
-<p align="left">When you start Decoder Pro3, the DecoderPro window is
+<p align="left">When you start DecoderPro 3, the DecoderPro window is
 displayed. All of the JMRI functions can be accessed via the menu bar
-on the DecoderPro3® windowis.</p>
+on the DecoderPro 3 window.</p>
 <p align="center"><img src="images/start_dp_main01.png" alt="main" height="493" width="1107"></p>
 <ol>
   <li>
@@ -47,7 +47,7 @@ on the DecoderPro3® windowis.</p>
   </li>
 </ol>
 <h3><img style="width: 1317px; height: 59px;" alt="status bar" src="images/status_bar.png"><br></h3>
-<p>Displays message, so that you can determine the state of DecoderPro3 during operation.</p>
+<p>Displays message, so that you can determine the state of DecoderPro 3 during operation.</p>
 <p align="left">&nbsp;</p>
 <div align="right">
   <p><a href="index.shtml#Main">Back to Index</a></p>

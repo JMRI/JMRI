@@ -28,10 +28,10 @@
 <hr>
 
 <h2>&nbsp;</h2>
-<p>The first action in programming a locomotive with DecoderPro® is to fill out the roster entry screen.</p>
+<p>The first action in programming a locomotive with DecoderPro&reg; is to fill out the roster entry screen.</p>
 
 A <b>roster</b> is a  database of all locomotives that your installation
-of DecoderPro® has programmed. It includes the information seen in the screen
+of DecoderPro has programmed. It includes the information seen in the screen
 below:
 <div align="center"><img style="width: 636px; height: 556px;" src="images/Basic_Roster.png" alt="basic roster"></div>
 <p>Most of these fields are self-explanatory.  However, note that the first field (<strong>ID</strong>)
@@ -108,16 +108,16 @@ grayed out. </p><p>When you make your selection, the programming mode should now
 <p>Now that we have the Roster  information all in order, we can continue with programming the decoder. </p>
 
 <p>But, first a let&#8217;s talk a bit about Roster management.&nbsp; The
-Main DecoderPro® window (the one where we selected the programmer) and
-the initial DecoderPro ®&#8220;Splash&#8221; screen have a menu called <strong>Roster.</strong>&nbsp;
+Main DecoderPro window (the one where we selected the programmer) and
+the initial DecoderPro &#8220;Splash&#8221; screen have a menu called <strong>Roster.</strong>&nbsp;
 When you click on it you get opportunities to modify, print and move
 your roster files.&nbsp; Particularly interesting are<strong> Export/Import </strong>and <strong>Copy</strong>.&nbsp;
 Let&#8217;s say you and a friend have two identical Berkshires, and you
 desire to have yours to be set up just like your friends.&nbsp; Now,
 you could put his loco on your track and read all the CVs out and then
 put them in yours, but if he lives on the other coast that&#8217;s not
-practical.&nbsp; So, have him use DecoderPro® to export his loco file
-and e-mail it to you.&nbsp; You import it into DecoderPro®, change the
+practical.&nbsp; So, have him use DecoderPro to export his loco file
+and e-mail it to you.&nbsp; You import it into DecoderPro, change the
 address if you wish and then use that roster entry to program your
 loco.&nbsp;Similarly you can Copy a roster entry to duplicate one of
 your own locomotives into a second roster entry with it&#8217;s own address.

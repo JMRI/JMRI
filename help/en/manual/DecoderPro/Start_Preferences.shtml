@@ -17,7 +17,7 @@
 
 
 <div id="mainContent">
-<h1>Getting Started with DecoderPro®</h1>
+<h1>Getting Started with DecoderPro&reg;</h1>
 <h1>How do I set up my preferences?</h1>
 
 <div align="right">
@@ -91,7 +91,7 @@ have been made
   </tr>
   <tr>
     <td align="left" valign="top"><strong><a href="#MiniServer">WebServer</a></strong></td>
-    <td align="left" valign="top">Sets up the Decoder Pro® WebServer</td>
+    <td align="left" valign="top">Sets up the Decoder Pro&reg; WebServer</td>
   </tr>
 </tbody></table>
 <p>Now we will set up preferences for the JMRI environment with your command station.</p>

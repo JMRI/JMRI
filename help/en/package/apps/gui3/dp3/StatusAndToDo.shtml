@@ -3,7 +3,7 @@
 <head>
 <!-- Copyright ($Author$) 2009 -->
 <!-- $Id$ -->
-<title>JMRI: DecoderPro3 Status and To Do List</title>
+<title>JMRI: DecoderPro 3 Status and To Do List</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -22,10 +22,10 @@
     <div id="mainContent">
 
 <h1> 
-JMRI: DecoderPro3 Status and To Do List
+JMRI: DecoderPro 3 Status and To Do List
 </h1>
 
-DecoderPro3 is a work in progress.
+DecoderPro 3 is a work in progress.
 This page records things that are working, not 
 working, still to be done, etc.
 

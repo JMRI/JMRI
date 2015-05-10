@@ -15,14 +15,14 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
-<h1>DecoderPro® Main Window</h1>
+<h1>DecoderPro&reg; Main Window</h1>
 <h1>Menu Overview</h1>
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 <hr>
 <p wrap="">All of the JMRI functions can be accessed via
-the menu bar on the DecoderPro® window.</p>
+the menu bar on the DecoderPro&reg; window.</p>
 <p><img src="images/Main_05_MenuBar.png" alt="menu bar" height="100" width="505"></p>
 <h4><a href="Main_File.shtml">File</a></h4>
 <ul>
@@ -122,7 +122,7 @@ Operations Program User's Guide)
 
 <h4><a href="Main_Roster.shtml">Roster</a></h4>
 <ul>
-<li><strong>Roster</strong> (opens DecoderPro3)</li>
+<li><strong>Roster</strong></li>
 <li><strong>Create Entry...</strong></li>
 <li><strong>Edit Entry...</strong></li>
 <li><strong>Copy Entry...</strong></li>

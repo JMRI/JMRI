@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro® Main Window</h1>
+<h1>DecoderPro&reg; Main Window</h1>
 <h1>Main Window Overview</h1>
 
 <div align="right">
@@ -28,7 +28,7 @@
 <hr>
 <p align="left">When you start Decoder Pro, the DecoderPro window is
 displayed. All of the JMRI functions including the Operations Program
-can be accessed via the menu bar on the DecoderPro® window, additional
+can be accessed via the menu bar on the DecoderPro&reg; window, additional
 menus are added when functions are selected, example below with added
 operations menu(selected on operations setup window), which is also in
 the tools menu.</p>
@@ -40,7 +40,7 @@ setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> 
 <p align="center"><img style="width: 496px; height: 308px;" alt="splash screen" src="images/Splash_Screen01.png"><br></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
-<p align="left">DecoderPro® icon and DecoderPro® version information is displayed. The version of Java installed and in use is also shown</p>
+<p align="left">DecoderPro&reg; icon and DecoderPro&reg; version information is displayed. The version of Java installed and in use is also shown</p>
 <p align="left">&nbsp;</p>
 <div align="right">
   <p><a href="index.shtml#Main">Back to Index</a></p>

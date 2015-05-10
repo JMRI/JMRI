@@ -14,7 +14,7 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Locomotive Window Menu Bar</h1>
 <div align="right">
 <p><a href="Ops_Engines.shtml">Back</a><a href="Ops_Routes.shtml"></a></p>
@@ -67,11 +67,11 @@ shows the preview of your locomotive roster.</li>
 <blockquote>
 <p><img src="images/Ops_Engine_preview.png" alt="engine preview" height="301" width="670"></p></blockquote></li><li>Synchronize with NCE Consists &nbsp;(greyed out for LocoNet)</li>
 </ul>
-<p><strong>Operations</strong> -- same as DecoderPro®
+<p><strong>Operations</strong> -- same as DecoderPro&reg;
 Operations menu</p>
-<p><strong>Window</strong> -- same as other JMRI®
+<p><strong>Window</strong> -- same as other JMRI&reg;
 menus.</p>
-<p><strong>Help</strong> -- same as other JMRI® menus.</p><div align="right">
+<p><strong>Help</strong> -- same as other JMRI&reg; menus.</p><div align="right">
 <p><a href="Ops_Engines.shtml"><span style="text-decoration: underline;">Back</span></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>

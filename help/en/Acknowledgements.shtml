@@ -154,7 +154,7 @@
 	    provided new Zimo MX620 and ZTC 471 definitions,
 	    provided MERG decoder definitions,
 	    created a script tool for setting Zimo function options,
-	    designed the DecoderPro3 GUI,
+	    designed the DecoderPro 3 GUI,
 	    and created a DCC Concepts decoder definition.
     <li>John Clutterbuck helped with Fleischman decoder definitions
 	<LI>Normal Clymer, who contribed a TCS definition file

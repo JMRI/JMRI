@@ -14,7 +14,7 @@
 <!--#include virtual="/Header" -->BackB
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Set Locomotive Location </h1>
 <div align="right">
 <p><a href="Ops_Engines_menu.shtml">Back </a></p>
@@ -31,7 +31,7 @@ base. Dialog preceeds the Set Locomotive window
 <td valign="top" width="47%"><img src="images/set_Engine_location.png" alt="set locations" height="400" width="500"></td>
 <td align="left" valign="top" width="53%">
 <p><strong>Menu</strong> is standard for
-DecoderPro®.</p>
+DecoderPro&reg;.</p>
 <p><strong>Locomotive </strong>displays the
 selected engine.</p>
 <p><strong>Type</strong> is displayed</p>

@@ -14,7 +14,7 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Trains Window Menu Bar</h1>
 <div align="right">
 <p><a href="Ops_Trains.shtml">Back</a><a href="Ops_TripThruOperations.shtml"></a></p>
@@ -87,10 +87,10 @@ default printer preview window.<br>
 </ul>
 </li>
 <li><strong>Operations</strong> -- (Same as
-Main DecoderPro® menu)</li>
+Main DecoderPro&reg; menu)</li>
 <li><strong>Windows</strong> -- standard
-JMRI® format.</li>
-<li><strong>Help</strong> -- standard JMRI®
+JMRI&reg; format.</li>
+<li><strong>Help</strong> -- standard JMRI&reg;
 format.</li>
 </ul>
 </td>

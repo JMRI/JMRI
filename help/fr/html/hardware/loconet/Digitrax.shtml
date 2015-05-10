@@ -203,7 +203,7 @@ JMRI fournit un certain nombre de fonctionnalit&#233;s qui lui permettent d'inte
      &#224; la <a href="LocoNetTools.shtml"> page outils LocoNet&reg;</a>.</li>
 </ul>
 
-<h2> <a name="Network"> Ordinateurs en r&#233;seau et LocoNet ®</a></h2>
+<h2> <a name="Network"> Ordinateurs en r&#233;seau et LocoNet &reg;</a></h2>
 Il existe plusieurs m&#233;canismes disponibles pour permettre &#224; plusieurs ordinateurs de
 communiquer avec LocoNet. Ceux-ci communiquent via des protocoles TCP/IP standard,
 et peuvent m&#234;me travailler &#224; distance. Au moins l'un des ordinateurs en r&#233;seau doit avoir une

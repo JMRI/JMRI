@@ -133,7 +133,7 @@ windows.&nbsp; Don&#8217;t panic&#8230;.Most are of no use to the average user.
 <p>First of all eliminate the Manufacturer  specific programmers (unless of course you have a <strong>Zimo</strong> or <strong>ESU</strong> system).&nbsp; </p>
 <p>We can also eliminate the <strong>Tutorial</strong> and <strong>Custom</strong> programmers. They were put in to show folks that want to <strong>write their own</strong>&nbsp; programmer (not you right?) 
 all the possible ways to gather input and to have a common  starting point in the roster pane. 
-Now if you wish to pursue writing a custom programmer go to jmri® website.</p>
+Now if you wish to pursue writing a custom programmer go to the JMRI&reg; website.</p>
 <p>If you have need for a special situation programmer  you might want to look at <strong>Sample Club</strong> or <strong>TrainShowBasic</strong>
 to see what panes can be taken out of Comprehensive to make an
 intermediate complexity, special purpose programmer.&nbsp; Again, how

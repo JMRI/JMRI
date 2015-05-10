@@ -17,7 +17,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro® Main Window</h1>
+<h1>DecoderPro&reg; Main Window</h1>
 <h1>Main Window Overview</h1>
 
 <div align="right">
@@ -27,7 +27,7 @@
 <hr>
 <p align="left">When you start Decoder Pro, the DecoderPro window is
 displayed. All of the JMRI functions can be accessed via the menu bar
-on the DecoderPro® window, additional menus are added when functions
+on the DecoderPro&reg; window, additional menus are added when functions
 are selected, example below with added operations menu(selected on
 operations setup window), which is also in the tools menu.</p>
 <p align="center"><img src="images/Splash_Screen.png" alt="splash" height="282" width="496"></p>
@@ -38,7 +38,7 @@ setup buttons for <strong>New Throttle</strong>, <strong>Power Control</strong> 
 <p align="center"><img style="width: 456px; height: 308px;" alt="splash" src="images/Splash_Screen01.png"><br></p>
 <p align="left"><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></p>
 <p align="left">Contains  the menus that allows you to access all the features and tools in JMRI</p>
-<p align="left">DecoderPro® icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
+<p align="left">DecoderPro&reg; icon and DecoderPro version information is displayed. The version of Java installed and in use is also shown</p>
 <p align="left"><strong>
   <input name="button" id="button" value="Service Mode (Programming Track) Programmer" type="button"> 
 </strong>Provides access to the decoder programming capability in <a href="Programmer_ServiceMode.shtml"><strong>Service Mode Programmer<br>
@@ -51,7 +51,7 @@ Provides access to the<a href="Programmer_OpsMode.shtml"> </a><a href="Basic_Pro
 <input name="button4" id="button4" value="Quit" type="button">
 Exits the program, with confirmation dialog.</p>
 <p>The buttons shown at the bottom of the window are not JMRI defaults, but instead are setup in your <strong>preference </strong>to
-open each time you start DecoderPro®. The following are samples that
+open each time you start DecoderPro&reg;. The following are samples that
 could be set in your preferences. (Shown are for a Digitrax LocoNet
 system)
 </p><p><strong>

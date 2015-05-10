@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Build Options for Trains</h1>
 
 <div align="right">
@@ -31,7 +31,7 @@
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>
     <td valign="top" width="57%"><img style="width: 477px; height: 691px;" alt="trains build options" src="images/Ops_Trains_BuildOptions.png"><br></td>
-    <td valign="top" width="43%"><p>Standard JMRI® <strong>Window</strong> and <strong>Help</strong> menus</p>
+    <td valign="top" width="43%"><p>Standard JMRI&reg; <strong>Window</strong> and <strong>Help</strong> menus</p>
     <p><strong>Build Options</strong><br>
       <input name="radio" id="radio" value="radio" checked="checked" type="radio">
       <strong>Normal 

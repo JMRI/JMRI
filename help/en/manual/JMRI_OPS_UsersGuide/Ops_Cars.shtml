@@ -25,7 +25,7 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
-<h1>Using JMRI® to Operate Trains</h1>
+<h1>Using JMRI&reg; to Operate Trains</h1>
 <h1>Operations Cars Window</h1>
 <div align="right">
 <div align="right">
@@ -35,7 +35,7 @@
 
 </div>
 <hr>
-<p>This window is opened from the DecoderPro® Tools Menu, or Operations
+<p>This window is opened from the DecoderPro&reg; Tools Menu, or Operations
 Menu; and alternatively from <strong>Location</strong> Window <strong>Tools</strong>
 menu, <strong>Show Cars: and various Windows Opertions Menus.</strong></p>
 <p>The cars window allows you to view,&nbsp; edit your car roster. or add a car by
