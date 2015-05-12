@@ -670,8 +670,8 @@
                They all use the same back-end target run-jmri-application to do the work,
                with the only differences among them being the value of the initial classname
                to run and the startup configfile as specified in the antargline -->
-    <target name="decoderpro"
-            description="build and run DecoderPro app"
+    <target name="decoderpro-old"
+            description="build and run the old DecoderPro app"
             depends="debug, copyfiles">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.DecoderPro.DecoderPro"/>
@@ -679,8 +679,8 @@
         </antcall>
     </target>
 
-    <target name="dp3"
-            description="build and run DecoderPro3 app"
+    <target name="decoderpro"
+            description="build and run DecoderPro (formerly DecoderPro 3) app"
             depends="debug, copyfiles">
         <antcall target="-run-jmri-application">
             <param name="application.classname" value="apps.gui3.dp3.DecoderPro3"/>
@@ -1314,7 +1314,7 @@
                      excludes="help/en/manual/**" />
             <!-- use question marks for spaces in filename; Ant will split the list on commas and spaces -->
             <fileset dir="${dist.apps}"
-                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/,DecoderPro?3.app/"/>
+                     includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/"/>
             <fileset dir="scripts"
                      includes="default.lcf,COPYING"/>
         </copy>
@@ -1332,7 +1332,6 @@
         <chmod perm="ugo+rx">
             <fileset dir="${dist.macosx}/JMRI">
                 <include name="DecoderPro.app/Contents/MacOS/StartJMRI"/>
-                <include name="DecoderPro 3.app/Contents/MacOS/StartJMRI"/>
                 <include name="JMRI Demo.app/Contents/MacOS/StartJMRI"/>
                 <include name="Loco Tools.app/Contents/MacOS/StartJMRI"/>
                 <include name="PanelPro.app/Contents/MacOS/StartJMRI"/>
@@ -1394,7 +1393,6 @@
                 <exclude name="JMRI/LocoTools"/>
                 <exclude name="JMRI/JmriDemo"/>
                 <exclude name="JMRI/InstallTest"/>
-                <exclude name="JMRI/DecoderPro3"/>
                 <exclude name="JMRI/RXTXuninstall.sh"/>
                 <exclude name="JMRI/JmriFaceless"/>
             </tarfileset>
@@ -1407,7 +1405,6 @@
                 <include name="JMRI/LocoTools"/>
                 <include name="JMRI/JmriDemo"/>
                 <include name="JMRI/InstallTest"/>
-                <include name="JMRI/DecoderPro3"/>
                 <include name="JMRI/RXTXuninstall.sh"/>
                 <include name="JMRI/JmriFaceless"/>
             </tarfileset>
@@ -1476,8 +1473,7 @@
 
     <target name="startup-scripts-linux"
             description="Create all of the app specific startup scripts for Linux">
-        <make-startup-script script.name="DecoderPro"    script.class="apps.DecoderPro.DecoderPro"/>
-        <make-startup-script script.name="DecoderPro3"   script.class="apps.gui3.dp3.DecoderPro3"/>
+        <make-startup-script script.name="DecoderPro"   script.class="apps.gui3.dp3.DecoderPro3"/>
         <make-startup-script script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <make-startup-script script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>
         <make-startup-script script.name="JMRIdemo"      script.class="apps.JmriDemo.JMRIdemo"/>
@@ -1490,8 +1486,7 @@
 
     <target name="startup-scripts-macosx"
             description="Create all of the app specific startup scripts for Mac OS X">
-        <create-macosx-application-directory script.name="DecoderPro"    script.class="apps.DecoderPro.DecoderPro"/>
-        <create-macosx-application-directory script.name="DecoderPro 3"  script.class="apps.gui3.dp3.DecoderPro3"
+        <create-macosx-application-directory script.name="DecoderPro"  script.class="apps.gui3.dp3.DecoderPro3"
                                              script.icon="DecoderPro"/>
         <create-macosx-application-directory script.name="PanelPro"      script.class="apps.PanelPro.PanelPro"/>
         <create-macosx-application-directory script.name="DispatcherPro" script.class="apps.DispatcherPro.DispatcherPro"/>

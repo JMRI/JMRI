@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.0
+; - Remove support for installing the old DecoderPro
+; -------------------------------------------------------------------------
 ; - Version 0.1.21.5
 ; - Updated "-CleanUp" so that another set of old files are removed, 
 ;    including:
@@ -727,26 +730,26 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\LocoTools.lnk"
     Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\DecoderPro3.lnk"
     ; -- Create shortcuts for standard JMRI components
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.DecoderPro.DecoderPro" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start Decoder Pro"
+    ;CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
+    ;               "$INSTDIR\LaunchJMRI.exe" \
+    ;               "apps.DecoderPro.DecoderPro" \
+    ;               "$INSTDIR\decpro5.ico" 0 "" "" \
+    ;               "Start DecoderPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro3.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
                    "$INSTDIR\dp3.ico" 0 "" "" \
-                   "Start Decoder Pro 3"
+                   "Start DecoderPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\PanelPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.PanelPro.PanelPro" \
                    "$INSTDIR\PanelPro80x80.ico" 0 "" "" \
-                   "Start Panel Pro"
+                   "Start PanelPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\SoundPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
-                   "Start Sound Pro"
+                   "Start SoundPro"
     CreateDirectory "$SMPROGRAMS\$SMFOLDER\Tools and Demos"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\Tools and Demos\InstallTest.lnk" \
                    "$INSTDIR\InstallTest.bat" \
@@ -783,14 +786,14 @@ SectionGroupEnd ; SEC_SMSC
 
 SectionGroup "Desktop Shortcuts" SEC_DTSC
   ; -- Create Desktop shortcuts
-  Section /o "DecoderPro" SEC_DPDTSC
-    SectionIn 2
-    CreateShortcut "$DESKTOP\DecoderPro.lnk" \
-                   "$INSTDIR\LaunchJMRI.exe" \
-                   "apps.DecoderPro.DecoderPro" \
-                   "$INSTDIR\decpro5.ico" 0 "" "" \
-                   "Start Decoder Pro"
-  SectionEnd ; SEC_DPDTSC
+  ;Section /o "DecoderPro" SEC_DPDTSC
+  ;  SectionIn 2
+  ;  CreateShortcut "$DESKTOP\DecoderPro.lnk" \
+  ;                 "$INSTDIR\LaunchJMRI.exe" \
+  ;                 "apps.DecoderPro.DecoderPro" \
+  ;                 "$INSTDIR\decpro5.ico" 0 "" "" \
+  ;                 "Start DecoderPro"
+  ;SectionEnd ; SEC_DPDTSC
 
   Section "DecoderPro3" SEC_DP3DTSC
     SectionIn 1 2
@@ -798,7 +801,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
                    "$INSTDIR\dp3.ico" 0 "" "" \
-                   "Start Decoder Pro 3"
+                   "Start DecoderPro"
   SectionEnd ; SEC_DP3DTSC
 
   Section "PanelPro" SEC_PPDTSC
@@ -807,7 +810,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.PanelPro.PanelPro" \
                    "$INSTDIR\PanelPro80x80.ico" 0 "" "" \
-                   "Start Panel Pro"
+                   "Start PanelPro"
   SectionEnd ; SEC_PPDTSC
 
   Section /o "SoundPro" SEC_SPDTSC
@@ -816,7 +819,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.SoundPro.SoundPro" \
                    "$INSTDIR\SoundPro80x80.ico" 0 "" "" \
-                   "Start Sound Pro"
+                   "Start SoundPro"
   SectionEnd ; SEC_SPDTSC
 
 SectionGroupEnd ; SEC_DTSC
@@ -943,7 +946,7 @@ LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for Dec
 LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcut for JMRI Demo"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
-LangString DESC_SEC_DP3DTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro3"
+LangString DESC_SEC_DP3DTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
 LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
