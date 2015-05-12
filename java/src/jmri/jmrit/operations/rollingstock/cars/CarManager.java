@@ -373,7 +373,9 @@ public class CarManager extends RollingStockManager {
     }
 
     /**
-     * Get a list of Cars assigned to a train sorted by destination track names.
+     * Get a list of Cars assigned to a train sorted by destination track blocking order
+     * or by track names. If a train is to be blocked by track blocking order, all of
+     * the tracks at that location need a blocking number greater than 0.
      * Passenger cars will be placed at the end of the list. Caboose or car with
      * FRED will be the last car(s) in the list. Kernels are placed together by
      * blocking number.
@@ -393,11 +395,21 @@ public class CarManager extends RollingStockManager {
                 continue; // not the lead car, skip for now.
             }
             if (!car.isCaboose() && !car.hasFred() && !car.isPassenger()) {
-                String carDestination = car.getDestinationTrackName();
-                for (int j = 0; j < out.size(); j++) {
-                    if (carDestination.compareToIgnoreCase(out.get(j).getDestinationTrackName()) < 0) {
-                        out.add(j, car);
-                        break;
+                if (car.getDestinationTrack() != null && car.getDestinationTrack().getBlockingOrder() > 0) {
+                    for (int j = 0; j < out.size(); j++) {
+                        if (car.getDestination() != out.get(j).getDestination())
+                            continue;
+                        if (car.getDestinationTrack().getBlockingOrder() <= out.get(j).getDestinationTrack().getBlockingOrder()) {
+                            out.add(j, car);
+                            break;
+                        }
+                    }
+                } else {
+                    for (int j = 0; j < out.size(); j++) {
+                        if (car.getDestinationTrackName().compareToIgnoreCase(out.get(j).getDestinationTrackName()) < 0) {
+                            out.add(j, car);
+                            break;
+                        }
                     }
                 }
                 if (!out.contains(car)) {

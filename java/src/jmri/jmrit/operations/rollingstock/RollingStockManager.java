@@ -192,7 +192,9 @@ public class RollingStockManager {
     }
 
     /**
-     * Sort by rolling stock number, number can alpha numeric
+     * Sort by rolling stock number, number can be alphanumeric.
+     * RollingStock number can also be in the format of nnnn-N, where
+     * the "-N" allows the user to enter RollingStock with similar numbers.
      *
      * @return list of RollingStock ordered by number
      */
@@ -214,7 +216,7 @@ public class RollingStockManager {
                 rsNumber = Integer.parseInt(rs.getNumber());
                 rs.number = rsNumber;
             } catch (NumberFormatException e) {
-                // maybe rolling stock number in the format xxx-y
+                // maybe rolling stock number in the format nnnn-N
                 try {
                     number = rs.getNumber().split("-");
                     rsNumber = Integer.parseInt(number[0]);
@@ -223,16 +225,15 @@ public class RollingStockManager {
                     // parseInt
                 } catch (Exception e2) {
                     rs.number = notInteger;
-                    // sort alpha numeric numbers at the end of the out list
+                    // sort alphanumeric numbers at the end of the out list
                     String numberIn = rs.getNumber();
                     // log.debug("rolling stock in road number ("+numberIn+") isn't a number");
                     for (int k = (out.size() - 1); k >= 0; k--) {
                         String numberOut = out.get(k).getNumber();
                         try {
                             Integer.parseInt(numberOut);
-                            // done, place rolling stock with alpha numeric
-                            // number after
-                            // rolling stocks with real numbers.
+                            // done, place rolling stock with alphanumeric
+                            // number after rolling stocks with real numbers.
                             out.add(k + 1, rs);
                             rsAdded = true;
                             break;

@@ -71,6 +71,7 @@ public class Xml {
     static final String LOC_TYPE = "locType"; // NOI18N
     static final String LENGTH = "length"; // NOI18N
     static final String MOVES = "moves"; // NOI18N
+    static final String BLOCKING_ORDER = "blockingOrder"; // NOI18N
     static final String CAR_ROAD_OPERATION = "carRoadOperation"; // NOI18N misspelled should have been carRoadOption
     static final String CAR_ROAD_OPTION = "carRoadOption"; // NOI18N
     static final String CAR_ROADS = "carRoads"; // NOI18N

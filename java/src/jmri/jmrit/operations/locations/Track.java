@@ -55,6 +55,7 @@ public class Track {
     protected int _usedLength = 0; // length of track filled by cars and engines
     protected int _ignoreUsedLengthPercentage = 0; // value between 0 and 100, 100 = ignore 100%
     protected int _moves = 0; // count of the drops since creation
+    protected int _blockingOrder = 0; // defines the order tracks are serviced by trains
     protected String _comment = NONE;
 
     protected String _commentPickup = NONE;
@@ -1415,6 +1416,16 @@ public class Track {
         _moves = moves;
         setDirtyAndFirePropertyChange("trackMoves", old, moves); // NOI18N
     }
+    
+    public int getBlockingOrder() {
+        return _blockingOrder;
+    }
+
+    public void setBlockingOrder(int order) {
+        int old = _blockingOrder;
+        _blockingOrder = order;
+        setDirtyAndFirePropertyChange("trackBlockingOrder", old, order); // NOI18N
+    }
 
     /**
      * Get the service order for this track. Only yards and interchange have
@@ -2205,6 +2216,9 @@ public class Track {
         if ((a = e.getAttribute(Xml.MOVES)) != null) {
             _moves = Integer.parseInt(a.getValue());
         }
+        if ((a = e.getAttribute(Xml.BLOCKING_ORDER)) != null) {
+            _blockingOrder = Integer.parseInt(a.getValue());
+        }
         if ((a = e.getAttribute(Xml.DIR)) != null) {
             _trainDir = Integer.parseInt(a.getValue());
         }
@@ -2448,6 +2462,7 @@ public class Track {
         e.setAttribute(Xml.DIR, Integer.toString(getTrainDirections()));
         e.setAttribute(Xml.LENGTH, Integer.toString(getLength()));
         e.setAttribute(Xml.MOVES, Integer.toString(getMoves() - getDropRS()));
+        e.setAttribute(Xml.BLOCKING_ORDER, Integer.toString(getBlockingOrder()));
         // build list of car types for this track
         String[] types = getTypeNames();
         // Old way of saving car types
