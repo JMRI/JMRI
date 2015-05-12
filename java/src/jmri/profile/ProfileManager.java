@@ -811,7 +811,7 @@ public class ProfileManager extends Bean {
     public void setAutoStartActiveProfileTimeout(int autoStartActiveProfileTimeout) throws IOException {
         int old = this.autoStartActiveProfileTimeout;
         if (autoStartActiveProfileTimeout < 0 || autoStartActiveProfileTimeout > 500) {
-            autoStartActiveProfileTimeout = 500;
+            autoStartActiveProfileTimeout = 0;
         }
         if (old != autoStartActiveProfileTimeout) {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
