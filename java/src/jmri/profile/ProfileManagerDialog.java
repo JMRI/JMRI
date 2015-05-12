@@ -256,6 +256,7 @@ public class ProfileManagerDialog extends JDialog {
 
     private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         countDown = ProfileManager.defaultManager().getAutoStartActiveProfileTimeout();
+        countDownLbl.setText(Integer.toString(countDown));
         timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -805,20 +805,19 @@ public class ProfileManager extends Bean {
      * If negative or greater than 300 (5 minutes), set to 0 to prevent
      * automatically starting with any profile.
      *
+     * Call {@link #saveActiveProfile() } after setting this to persist the
+     * value across application restarts.
+     *
      * @param autoStartActiveProfileTimeout Seconds to display profile selector
-     * @throws java.io.IOException
      */
-    public void setAutoStartActiveProfileTimeout(int autoStartActiveProfileTimeout) throws IOException {
+    public void setAutoStartActiveProfileTimeout(int autoStartActiveProfileTimeout) {
         int old = this.autoStartActiveProfileTimeout;
         if (autoStartActiveProfileTimeout < 0 || autoStartActiveProfileTimeout > 500) {
             autoStartActiveProfileTimeout = 0;
         }
         if (old != autoStartActiveProfileTimeout) {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
-            if (!this.readingProfiles) {
-                this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
-                this.saveActiveProfile();
-            }
+            this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
         }
     }
 }
