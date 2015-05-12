@@ -47,10 +47,12 @@ public class ProfileManager extends Bean {
     private boolean readingProfiles = false;
     private boolean autoStartActiveProfile = false;
     private File defaultSearchPath = new File(FileUtil.getPreferencesPath());
+    private int autoStartActiveProfileTimeout = 10;
     private static ProfileManager instance = null;
     public static final String ACTIVE_PROFILE = "activeProfile"; // NOI18N
     public static final String NEXT_PROFILE = "nextProfile"; // NOI18N
     private static final String AUTO_START = "autoStart"; // NOI18N
+    private static final String AUTO_START_TIMEOUT = "autoStartTimeout"; // NOI18N
     private static final String CATALOG = "profiles.xml"; // NOI18N
     private static final String PROFILE = "profile"; // NOI18N
     public static final String PROFILES = "profiles"; // NOI18N
@@ -180,6 +182,7 @@ public class ProfileManager extends Bean {
         if (profile != null) {
             p.setProperty(ACTIVE_PROFILE, profile.getId());
             p.setProperty(AUTO_START, Boolean.toString(autoStart));
+            p.setProperty(AUTO_START_TIMEOUT, Integer.toString(this.getAutoStartActiveProfileTimeout()));
         }
         if (!this.configFile.exists() && !this.configFile.createNewFile()) {
             throw new IOException("Unable to create file at " + this.getConfigFile().getAbsolutePath()); // NOI18N
@@ -222,6 +225,9 @@ public class ProfileManager extends Bean {
             this.setActiveProfile(p.getProperty(ACTIVE_PROFILE));
             if (p.containsKey(AUTO_START)) {
                 this.setAutoStartActiveProfile(Boolean.parseBoolean(p.getProperty(AUTO_START)));
+            }
+            if (p.containsKey(AUTO_START_TIMEOUT)) {
+                this.setAutoStartActiveProfileTimeout(Integer.parseInt(p.getProperty(AUTO_START_TIMEOUT)));
             }
         }
     }
@@ -779,5 +785,40 @@ public class ProfileManager extends Bean {
 
     void profileNameChange(Profile profile, String oldName) {
         this.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
+    }
+
+    /**
+     * Seconds to display profile selector before automatically starting.
+     *
+     * If 0, selector will not automatically dismiss.
+     *
+     * @return Seconds to display selector.
+     */
+    public int getAutoStartActiveProfileTimeout() {
+        return this.autoStartActiveProfileTimeout;
+    }
+
+    /**
+     * Set the number of seconds to display the profile selector before
+     * automatically starting.
+     *
+     * If negative or greater than 300 (5 minutes), set to 0 to prevent
+     * automatically starting with any profile.
+     *
+     * @param autoStartActiveProfileTimeout Seconds to display profile selector
+     * @throws java.io.IOException
+     */
+    public void setAutoStartActiveProfileTimeout(int autoStartActiveProfileTimeout) throws IOException {
+        int old = this.autoStartActiveProfileTimeout;
+        if (autoStartActiveProfileTimeout < 0 || autoStartActiveProfileTimeout > 500) {
+            autoStartActiveProfileTimeout = 500;
+        }
+        if (old != autoStartActiveProfileTimeout) {
+            this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
+            if (!this.readingProfiles) {
+                this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
+                this.saveActiveProfile();
+            }
+        }
     }
 }
