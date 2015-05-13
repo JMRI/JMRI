@@ -57,12 +57,12 @@ public class Car extends RollingStock {
 
     public Car() {
         super();
-        loading = false;
+        loaded = true;
     }
 
     public Car(String road, String number) {
         super(road, number);
-        loading = false;
+        loaded = true;
         log.debug("New car ({} {})", road, number);
         addPropertyChangeListeners();
     }
@@ -78,6 +78,7 @@ public class Car extends RollingStock {
         car.setOwner(_owner);
         car.setRoadName(_road);
         car.setTypeName(_type);
+        car.loaded=true;
         return car;
     }
 
@@ -595,7 +596,8 @@ public class Car extends RollingStock {
             return status;
         }
         // now check to see if the track has a schedule
-        if (track != null && destinationTrack != track && !loading) {
+        log.error("setDestination with loaded = " +loaded);
+        if (track != null && destinationTrack != track && loaded) {
             status = track.scheduleNext(this);
             if (!status.equals(Track.OKAY)) {
                 return status;
@@ -716,7 +718,7 @@ public class Car extends RollingStock {
     }
 
     // used to stop a track's schedule from bumping when loading car database
-    private boolean loading = true;
+    private boolean loaded = false;
 
     /**
      * Construct this Entry from XML. This member has to remain synchronized
@@ -726,7 +728,7 @@ public class Car extends RollingStock {
      */
     public Car(org.jdom2.Element e) {
         super(e);
-        loading = false;
+        loaded = true ;
         org.jdom2.Attribute a;
         if ((a = e.getAttribute(Xml.PASSENGER)) != null) {
             _passenger = a.getValue().equals(Xml.TRUE);
