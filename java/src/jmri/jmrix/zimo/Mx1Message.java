@@ -339,7 +339,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
                         }
                         int cv = (((getElement(5 + offset) & 0xff) << 8) + (getElement(6 + offset) & 0xff));
                         txt.append(" CV: " + Integer.toString(cv));
-                        if (getNumDataElements() == (8 + offset)) {
+                        if (getNumDataElements() >= (8 + offset)) {  //Version 61.26 and later includes an extra error bit at the end of the packet
                             txt.append(" Set To: " + (getElement(7 + offset) & 0xff));
                         }
                         break;
@@ -405,7 +405,7 @@ public class Mx1Message extends jmri.jmrix.NetMessage implements Serializable {
         } else if (getMessageType() == ACKREP1) {
             offset = +2;
         }
-        if (getNumDataElements() == (8 + offset)) {
+        if (getNumDataElements() >= (8 + offset)) { //Version 61.26 and later includes an extra error bit at the end of the packet
             return (getElement(7 + offset) & 0xff);
         }
         return -1;

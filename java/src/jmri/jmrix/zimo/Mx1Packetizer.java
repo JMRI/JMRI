@@ -308,7 +308,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                                 xmtPackets.remove(message.get(3));
                             }
                         }
-
+                        isAckReplyRequired(msg);
                         final Mx1Message thisMsg = msg;
                         final Mx1Packetizer thisTC = trafficController;
                         // return a notification via the queue to ensure end
@@ -322,7 +322,7 @@ public class Mx1Packetizer extends Mx1TrafficController {
                         };
                         log.debug("schedule notify of incoming packet");
                         javax.swing.SwingUtilities.invokeLater(r);
-                        isAckReplyRequired(msg);
+                        
                     } // done with this one
                     /*catch (java.io.EOFException e) {
                      // posted from idle port when enableReceiveTimeout used

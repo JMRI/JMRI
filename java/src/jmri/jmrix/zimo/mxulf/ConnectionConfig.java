@@ -56,7 +56,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     protected String[] getPortFriendlyNames() {
         if (SystemType.isWindows()) {
-            return new String[]{"MX31ZL"};
+            return new String[]{"MX31ZL", "ZIMO"};
         }
         return new String[]{};
     }
