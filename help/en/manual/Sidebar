@@ -40,58 +40,57 @@
 
 <dl>
 
-<div style="text-align: center;"><strong>JMRI® User's Guides</strong></div>
+<div style="text-align: center;"><strong>JMRI&reg; User's Guides</strong></div>
 
-<dt>JMRI® Development Version</dt>
+<dt>JMRI&reg; Development Version</dt>
   <dd>
-    <ul><li style="font-weight: bold;"><a target="_blank" href="DecoderPro3/index.shtml">DecoderPro3®</a></li>
-    <li style="font-weight: bold;"><a target="_blank" href="DecoderPro/index.shtml">DecoderPro®</a></li>
+    <ul><li style="font-weight: bold;"><a target="_blank" href="DecoderPro3/index.shtml">DecoderPro&reg;</a></li>
     <li style="font-weight: bold;"><a target="_blank" href="JMRI_OPS_UsersGuide/index.shtml">JMRI Operations Users Guide</a></li></ul><br>
   </dd>
 
-<dt>JMRI® Version 3.6 </dt>
+<dt>JMRI&reg; Version 3.6 </dt>
   <dd>
-    <ul><li style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro3®  3.6</a></li>
-    <li style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro®  3.6</a></li>
+    <ul><li style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro&reg; 3 3.6</a></li>
+    <li style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; 3.6</a></li>
     <li style="font-weight: bold;">JMRI Operations Users Guide 3.6</li></ul><br>
   </dd>
 
-<dt>JMRI® Version 3.4 </dt><dd>
+<dt>JMRI&reg; Version 3.4 </dt><dd>
     <ul>
-    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3®  3.4</a></li>
-    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro®  3.4</a></li>
+    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro&reg; 3 3 3.4</a></li>
+    <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg; 3.4</a></li>
     <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">JMRI Operations Users Guide 3.4</a></li>
     </ul>
     </dd>
 
-<dt>JMRI® Version 3.2 </dt>
+<dt>JMRI&reg; Version 3.2 </dt>
 	<dd style="font-weight: bold;">
     <ul>
-    	<li><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro3®  3.2</a></li>
-        <li><a href="http://jmri.org/manual/3-2_DecoderPro/index.shtml">DecoderPro®  3.2</a></li><li><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI Operations Users Guide 3.2</a></li>
+    	<li><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro&reg; 3 3.2</a></li>
+        <li><a href="http://jmri.org/manual/3-2_DecoderPro/index.shtml">DecoderPro&reg; 3.2</a></li><li><a href="3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI Operations Users Guide 3.2</a></li>
      </ul></dd>
 
-<dt>JMRI® Version 3.0</dt>
+<dt>JMRI&reg; Version 3.0</dt>
     <dd style="font-weight: bold;">
       <ul>
-        <li><a href="http://jmri.org/manual/3-0_DecoderPro/index.shtml">DecoderPro® 3.0</a></li>
-        <li><a href="http://jmri.org/manual/3-0_DecoderPro3/index.shtml">DecoderPro3® 3.0</a></li>
-        <li><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI® Operations 3.0</a></li>
+        <li><a href="http://jmri.org/manual/3-0_DecoderPro/index.shtml">DecoderPro&reg; 3.0</a></li>
+        <li><a href="http://jmri.org/manual/3-0_DecoderPro3/index.shtml">DecoderPro&reg; 3 3.0</a></li>
+        <li><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations 3.0</a></li>
       </ul>
     </dd>
 
-<dt>JMRI® Version 2.14</dt>
+<dt>JMRI&reg; Version 2.14</dt>
     <dd style="font-weight: bold;">
     <ul>
-    <li><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI® Guide 2.14.1</a></li>
-    <li><a href="http://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro3® 2.14</a></li>
+    <li><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; Guide 2.14.1</a></li>
+    <li><a href="http://jmri.org/manual/DP3_2-14_manual/index.shtml">DecoderPro&reg; 3 2.14</a></li>
     </ul>
     </dd>
 
-<dt>JMRI® Version 2.12</dt>
+<dt>JMRI&reg; Version 2.12</dt>
     <dd style="font-weight: bold;">
     <ul>
-    <li><a href="http://jmri.org/manual/JMRI_2-12_Manual/index.shtml">JMRI® Guide 2.12</a></li>
+    <li><a href="http://jmri.org/manual/JMRI_2-12_Manual/index.shtml">JMRI&reg; Guide 2.12</a></li>
     </ul>
     </dd>
 
