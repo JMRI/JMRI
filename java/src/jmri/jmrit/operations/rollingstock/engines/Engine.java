@@ -51,7 +51,7 @@ public class Engine extends RollingStock {
      * @param type Locomotive type: Steam, Diesel, Gas Turbine, etc.
      */
     public void setTypeName(String type) {
-        if (getModel() == null) {
+        if (getModel() == null || getModel().equals(NONE)) {
             return;
         }
         String old = getTypeName();
