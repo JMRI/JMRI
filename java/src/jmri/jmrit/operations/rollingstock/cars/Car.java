@@ -596,7 +596,6 @@ public class Car extends RollingStock {
             return status;
         }
         // now check to see if the track has a schedule
-        log.error("setDestination with loaded = " +loaded);
         if (track != null && destinationTrack != track && loaded) {
             status = track.scheduleNext(this);
             if (!status.equals(Track.OKAY)) {
