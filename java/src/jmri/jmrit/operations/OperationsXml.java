@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author Daniel Boudreau Copyright (C) 2008
  * @version $Revision$
  */
-public class OperationsXml extends XmlFile {
+public abstract class OperationsXml extends XmlFile {
 
     /**
      * Store the all of the operation train objects in the default place,
@@ -83,9 +83,7 @@ public class OperationsXml extends XmlFile {
      * @throws org.jdom2.JDOMException
      * @throws java.io.IOException
      */
-    protected void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException {
-        log.error("readFile not overridden");
-    }
+    abstract public void readFile(String filename) throws org.jdom2.JDOMException, java.io.IOException;
 
     private boolean dirty = false;
 

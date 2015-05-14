@@ -28,6 +28,65 @@ import jmri.util.JUnitUtil;
  */
 public class OperationsRollingStockTest extends TestCase {
 
+     // test constroctors.
+     public void testCtor(){
+       // test the default constructor.
+       RollingStock rs1 = new RollingStock();
+       Assert.assertNotNull("Default Constructor",rs1);
+    }
+    
+    public void test2ParmCtor() {
+      // test the constructor with roadname and roadnumer as parameters.
+      RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");
+      Assert.assertNotNull("Two parameter Constructor",rs1);
+
+      Assert.assertEquals("Car Road", "TESTROAD", rs1.getRoadName());
+      Assert.assertEquals("Car Number", "TESTNUMBER1", rs1.getNumber());
+      Assert.assertEquals("Car ID", "TESTROAD" + "TESTNUMBER1", rs1.getId());
+    }
+
+    public void testXmlConstructor(){
+       // test the constructor loading this car from an XML element.
+       
+       // first, we need to build the XML element.
+       org.jdom2.Element e = new org.jdom2.Element("cars");
+        e.setAttribute(Xml.ID, "TESTID");
+        e.setAttribute(Xml.ROAD_NAME, "TESTROAD1");
+        e.setAttribute(Xml.ROAD_NUMBER, "TESTNUMBER1");
+        e.setAttribute(Xml.TYPE, "TESTTYPE");
+        e.setAttribute(Xml.LENGTH, "TESTLENGTH");
+        e.setAttribute(Xml.COLOR, "TESTCOLOR");
+        e.setAttribute(Xml.WEIGHT, "TESTWEIGHT");
+        e.setAttribute(Xml.WEIGHT_TONS, "TESTWEIGHTTONS");
+        e.setAttribute(Xml.BUILT, "TESTBUILT");
+        e.setAttribute(Xml.LOCATION_ID,"TESTLOCATION");
+        e.setAttribute(Xml.ROUTE_LOCATION_ID, "TESTROUTELOCATION");
+        e.setAttribute(Xml.SEC_LOCATION_ID, "TESTTRACK");
+        e.setAttribute(Xml.DESTINATION_ID, "TESTDESTINATION");
+        e.setAttribute(Xml.ROUTE_DESTINATION_ID, "TESTROUTEDESTINATION");
+        e.setAttribute(Xml.SEC_DESTINATION_ID, "TESTDESTINATION");
+        e.setAttribute(Xml.LAST_ROUTE_ID, "SAVEDROUTE");
+        e.setAttribute(Xml.MOVES,"5");
+        e.setAttribute(Xml.DATE, "2015/05/15 15:15:15");
+        e.setAttribute(Xml.SELECTED,Xml.FALSE);
+        e.setAttribute(Xml.LAST_LOCATION_ID, "TESTLASTLOCATION");
+        e.setAttribute(Xml.TRAIN, "TESTTRAIN");
+        e.setAttribute(Xml.OWNER, "TESTOWNER");
+        e.setAttribute(Xml.VALUE, "TESTVALUE");
+        e.setAttribute(Xml.RFID,"12345");
+        e.setAttribute(Xml.LOC_UNKNOWN,Xml.FALSE);
+        e.setAttribute(Xml.OUT_OF_SERVICE, Xml.FALSE);
+        e.setAttribute(Xml.BLOCKING, "5");
+        e.setAttribute(Xml.COMMENT,"Test Comment");
+        try {
+           RollingStock rs1 = new RollingStock(e);
+           Assert.assertNotNull("Xml Element Constructor",rs1);
+        } catch(java.lang.NullPointerException npe) {
+           Assert.fail("Null Pointer Exception while executing Xml Element Constructor");
+        }
+    }
+
+
     // test creation
     public void testCreate() {
         RollingStock rs1 = new RollingStock("TESTROAD", "TESTNUMBER1");

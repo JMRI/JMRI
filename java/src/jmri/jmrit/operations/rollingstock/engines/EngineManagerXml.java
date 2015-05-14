@@ -80,7 +80,8 @@ public class EngineManagerXml extends OperationsXml {
      * Read the contents of a roster XML file into this object. Note that this
      * does not clear any existing entries.
      */
-    protected void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
+    @Override
+    public void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // suppress rootFromName(name) warning message by checking to see if file exists
         if (findFile(name) == null) {
             log.debug("{} file could not be found", name);
@@ -115,6 +116,11 @@ public class EngineManagerXml extends OperationsXml {
     }
 
     private String operationsFileName = "OperationsEngineRoster.xml"; // NOI18N
+
+    public void dispose(){
+        _instance = null;
+    }
+
 
     static Logger log = LoggerFactory.getLogger(EngineManagerXml.class.getName());
 

@@ -255,6 +255,10 @@ public class TrainManagerXml extends OperationsXml {
         return operationsFileName;
     }
 
+    public void dispose(){
+        _instance = null;
+    }
+
     static Logger log = LoggerFactory.getLogger(TrainManagerXml.class.getName());
 
 }

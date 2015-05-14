@@ -79,6 +79,7 @@ public class OperationsSetupXml extends OperationsXml {
         setDirty(false);
     }
 
+    @Override
     public void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // suppress rootFromName(name) warning message by checking to see if file exists
         if (findFile(name) == null) {
@@ -113,5 +114,9 @@ public class OperationsSetupXml extends OperationsXml {
     private String operationsFileName = "Operations.xml"; // NOI18N
 
     static Logger log = LoggerFactory.getLogger(OperationsSetupXml.class.getName());
+
+    public void dispose(){
+        _instance = null;
+    }
 
 }

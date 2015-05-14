@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet href="/xml/XSLT/operations-routes.xsl" type="text/xsl"?>
+<!DOCTYPE operations-config SYSTEM "/xml/DTD/operations-routes.dtd">
+<operations-config>
+  <!--Written by JMRI version 20150330-1700-Daniel Boudreau on Mon Apr 27 16:35:56 EDT 2015 $Id: OperationsRouteRoster.xml 29139 2015-04-27 20:38:59Z dan_boudreau $-->
+  <routes>
+    <route id="1" name="Bksfld-Frmnt" comment="">
+      <location id="1r1" name="Bakersfield" locationId="78" sequenceId="1" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="12" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r3" name="Port Arthur" locationId="84" sequenceId="3" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r4" name="Danville" locationId="80" sequenceId="4" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r5" name="Hillsboro" locationId="83" sequenceId="5" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r6" name="Farmington" locationId="6" sequenceId="8" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="1r12" name="Fremont" locationId="89" sequenceId="12" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+    </route>
+    <route id="4" name="Bksfld-Loop" comment="">
+      <location id="4r1" name="Bakersfield" locationId="78" sequenceId="1" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="no" drops="no" wait="0" departTime="" trainIconX="221" trainIconY="38" comment="" />
+      <location id="4r3" name="Port Arthur" locationId="84" sequenceId="3" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="2" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="334" trainIconY="39" comment="" />
+      <location id="4r4" name="Danville" locationId="80" sequenceId="4" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="482" trainIconY="39" comment="" />
+      <location id="4r5" name="Hillsboro" locationId="83" sequenceId="5" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="2" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="592" trainIconY="39" comment="" />
+      <location id="4r6" name="Farmington" locationId="6" sequenceId="6" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="2" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="704" trainIconY="39" comment="" />
+      <location id="4r14" name="Hillsboro" locationId="83" sequenceId="14" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="593" trainIconY="65" comment="" />
+      <location id="4r15" name="Danville" locationId="80" sequenceId="15" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="482" trainIconY="64" comment="" />
+      <location id="4r16" name="Port Arthur" locationId="84" sequenceId="16" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="2" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="334" trainIconY="64" comment="" />
+      <location id="4r18" name="Bakersfield" locationId="78" sequenceId="18" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="7" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="221" trainIconY="72" comment="" />
+    </route>
+    <route id="5" name="Frmnt-Bksfld" comment="">
+      <location id="5r1" name="Fremont" locationId="89" sequenceId="1" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r5" name="Farmington" locationId="6" sequenceId="5" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r6" name="Hillsboro" locationId="83" sequenceId="6" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="7" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r7" name="Danville" locationId="80" sequenceId="7" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="7" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r8" name="Port Arthur" locationId="84" sequenceId="8" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="8" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="5r10" name="Bakersfield" locationId="78" sequenceId="10" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+    </route>
+    <route id="11" name="Lakeview-Bksfld" comment="">
+      <location id="11r10" name="Lakeview" locationId="92" sequenceId="1" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="20" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="845" trainIconY="38" comment="" />
+      <location id="11r2" name="Farmington" locationId="6" sequenceId="3" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="705" trainIconY="64" comment="" />
+      <location id="11r5" name="Hillsboro" locationId="83" sequenceId="6" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="592" trainIconY="64" comment="" />
+      <location id="11r6" name="Danville" locationId="80" sequenceId="7" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="481" trainIconY="63" comment="" />
+      <location id="11r7" name="Port Arthur" locationId="84" sequenceId="8" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="332" trainIconY="65" comment="" />
+      <location id="11r9" name="Bakersfield" locationId="78" sequenceId="10" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="221" trainIconY="64" comment="" />
+    </route>
+    <route id="12" name="Blsfld-Lakeview" comment="">
+      <location id="12r1" name="Bakersfield" locationId="78" sequenceId="1" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="221" trainIconY="38" comment="" />
+      <location id="12r3" name="Port Arthur" locationId="84" sequenceId="3" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="334" trainIconY="39" comment="" />
+      <location id="12r4" name="Danville" locationId="80" sequenceId="4" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="482" trainIconY="39" comment="" />
+      <location id="12r5" name="Hillsboro" locationId="83" sequenceId="5" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="593" trainIconY="38" comment="" />
+      <location id="12r8" name="Farmington" locationId="6" sequenceId="8" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="704" trainIconY="37" comment="" />
+      <location id="12r9" name="Lakeview" locationId="92" sequenceId="9" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="855" trainIconY="39" comment="" />
+    </route>
+    <route id="13" name="Bksfld-Susnville" comment="">
+      <location id="13r1" name="Bakersfield" locationId="78" sequenceId="1" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="13r3" name="Port Arthur" locationId="84" sequenceId="3" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="224" trainIconY="96" comment="" />
+      <location id="13r4" name="Danville" locationId="80" sequenceId="4" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="429" trainIconY="74" comment="" />
+      <location id="13r5" name="Hillsboro" locationId="83" sequenceId="5" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="837" trainIconY="109" comment="" />
+      <location id="13r6" name="Farmington" locationId="6" sequenceId="6" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="1009" trainIconY="74" comment="" />
+      <location id="13r10" name="Fremont" locationId="89" sequenceId="10" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="2" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="1769" trainIconY="203" comment="" />
+      <location id="13r11" name="Susanville" locationId="91" sequenceId="11" trainDirection="1" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="1839" trainIconY="158" comment="" />
+    </route>
+    <route id="14" name="Lakeview-Susanville" comment="">
+      <location id="14r1" name="Lakeview" locationId="92" sequenceId="1" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="856" trainIconY="40" comment="" />
+      <location id="14r2" name="Farmington" locationId="6" sequenceId="2" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="704" trainIconY="64" comment="" />
+      <location id="14r5" name="Hillsboro" locationId="83" sequenceId="5" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="593" trainIconY="63" comment="" />
+      <location id="14r6" name="Danville" locationId="80" sequenceId="6" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="482" trainIconY="63" comment="" />
+      <location id="14r7" name="Port Arthur" locationId="84" sequenceId="7" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="333" trainIconY="63" comment="" />
+      <location id="14r9" name="Bakersfield" locationId="78" sequenceId="9" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="8" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="221" trainIconY="68" comment="" />
+      <location id="14r13" name="Fremont" locationId="89" sequenceId="13" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="112" trainIconY="65" comment="" />
+      <location id="14r14" name="Susanville" locationId="91" sequenceId="14" trainDirection="2" maxTrainLength="1300" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="66" comment="" />
+    </route>
+    <route id="15" name="Susanville-Lakeview" comment="">
+      <location id="15r1" name="Susanville" locationId="91" sequenceId="1" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="20" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="38" comment="" />
+      <location id="15r2" name="Fremont" locationId="89" sequenceId="2" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="111" trainIconY="38" comment="" />
+      <location id="15r6" name="Bakersfield" locationId="78" sequenceId="6" trainDirection="1" maxTrainLength="900" grade="0.0" maxCarMoves="8" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="222" trainIconY="39" comment="" />
+      <location id="15r8" name="Port Arthur" locationId="84" sequenceId="8" trainDirection="1" maxTrainLength="900" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="334" trainIconY="39" comment="" />
+      <location id="15r9" name="Danville" locationId="80" sequenceId="9" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="481" trainIconY="38" comment="" />
+      <location id="15r10" name="Hillsboro" locationId="83" sequenceId="10" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="593" trainIconY="38" comment="" />
+      <location id="15r11" name="Farmington" locationId="6" sequenceId="11" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="704" trainIconY="38" comment="" />
+      <location id="15r14" name="Lakeview" locationId="92" sequenceId="14" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="845" trainIconY="38" comment="" />
+    </route>
+    <route id="17" name="Port Arthur" comment="">
+      <location id="17r1" name="Port Arthur" locationId="84" sequenceId="1" trainDirection="1" maxTrainLength="1300" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="333" trainIconY="86" comment="" />
+    </route>
+    <route id="18" name="Lakeview-Bksfld Coal" comment="">
+      <location id="18r1" name="Lakeview" locationId="92" sequenceId="1" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="20" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="845" trainIconY="38" comment="" />
+      <location id="18r2" name="Farmington" locationId="6" sequenceId="2" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="705" trainIconY="64" comment="" />
+      <location id="18r3" name="Hillsboro" locationId="83" sequenceId="3" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="592" trainIconY="64" comment="" />
+      <location id="18r4" name="Danville" locationId="80" sequenceId="4" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="3" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="481" trainIconY="63" comment="" />
+      <location id="18r5" name="Port Arthur" locationId="84" sequenceId="5" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="332" trainIconY="65" comment="" />
+      <location id="18r6" name="Bakersfield" locationId="78" sequenceId="6" trainDirection="2" maxTrainLength="1200" grade="0.0" maxCarMoves="15" randomControl="Off" pickups="yes" drops="yes" wait="0" departTime="" trainIconX="221" trainIconY="64" comment="" />
+    </route>
+    <route id="19" name="To Storage" comment="Five finger route">
+      <location id="19r1" name="Lakeview" locationId="92" sequenceId="1" trainDirection="1" maxTrainLength="900" grade="0.0" maxCarMoves="20" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="19r2" name="Storage Box 1" locationId="93" sequenceId="2" trainDirection="1" maxTrainLength="900" grade="0.0" maxCarMoves="10" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="19r3" name="Storage Box 2" locationId="94" sequenceId="3" trainDirection="1" maxTrainLength="900" grade="0.0" maxCarMoves="10" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="19r7" name="Storage box 4" locationId="96" sequenceId="4" trainDirection="1" maxTrainLength="900" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+    </route>
+    <route id="20" name="From Storage" comment="Five finger route">
+      <location id="20r1" name="Storage box 4" locationId="96" sequenceId="1" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="5" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="20r2" name="Storage Box 2" locationId="94" sequenceId="2" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="10" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="20r3" name="Storage Box 1" locationId="93" sequenceId="3" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="10" randomControl="Off" pickups="yes" drops="no" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+      <location id="20r4" name="Lakeview" locationId="92" sequenceId="4" trainDirection="2" maxTrainLength="900" grade="0.0" maxCarMoves="20" randomControl="Off" pickups="no" drops="yes" wait="0" departTime="" trainIconX="0" trainIconY="0" comment="" />
+    </route>
+  </routes>
+</operations-config>
