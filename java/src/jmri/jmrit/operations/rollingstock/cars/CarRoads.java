@@ -63,6 +63,30 @@ public class CarRoads extends RollingStockAttribute {
             setDirtyAndFirePropertyChange(CARROADS_CHANGED_PROPERTY, list.size() + 1, list.size());
         }
     }
+    
+    /**
+     * Get the maximum character length of a road name when printing on a
+     * manifest or switch list. Characters after the "-" are ignored.
+     *
+     * @return the maximum character length of a car type
+     */
+    public int getMaxNameLength() {
+        if (maxNameLengthSubType == 0) {
+            String maxName = "";
+            maxNameLengthSubType = MIN_NAME_LENGTH;
+            for (String name : getNames()) {
+                String[] subString = name.split("-");
+                if (subString[0].length() > maxNameLengthSubType) {
+                    maxName = name;
+                    maxNameLengthSubType = subString[0].length();
+                }
+            }
+            log.info("Max road name ({}) length {}", maxName, maxNameLengthSubType);
+        }
+        return maxNameLengthSubType;
+    }
+
+    private int maxNameLengthSubType = 0;
 
     /**
      * Create an XML element to represent this Entry. This member has to remain

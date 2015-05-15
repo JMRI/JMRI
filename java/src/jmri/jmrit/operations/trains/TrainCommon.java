@@ -1357,7 +1357,8 @@ public class TrainCommon {
         if (attribute.equals(Setup.NUMBER)) {
             return " " + padAndTruncateString(splitString(rs.getNumber()), Control.max_len_string_print_road_number);
         } else if (attribute.equals(Setup.ROAD)) {
-            return " " + padAndTruncateString(rs.getRoadName(), CarRoads.instance().getMaxNameLength());
+            String[] road = rs.getRoadName().split("-"); // second half of string can be anything
+            return " " + padAndTruncateString(road[0], CarRoads.instance().getMaxNameLength());
         } else if (attribute.equals(Setup.TYPE)) {
             String[] type = rs.getTypeName().split("-"); // second half of string can be anything
             return " " + padAndTruncateString(type[0], CarTypes.instance().getMaxNameLength());
