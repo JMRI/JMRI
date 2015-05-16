@@ -14,6 +14,7 @@ import jmri.Application;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
 import jmri.jmrix.JmrixConfigPane;
+import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.JmriPanel;
 import org.slf4j.Logger;
@@ -30,10 +31,6 @@ import org.slf4j.LoggerFactory;
  */
 public class AppConfigBase extends JmriPanel {
 
-    /**
-     * Remember items to persist
-     */
-    protected List<PreferencesPanel> items = new ArrayList<>();
     /**
      * All preferences panels handled, whether persisted or not
      */
@@ -139,20 +136,32 @@ public class AppConfigBase extends JmriPanel {
 
     @Override
     public void dispose() {
-        items.clear();
         this.preferencesPanels.clear();
     }
 
     public void saveContents() {
         // remove old prefs that are registered in ConfigManager
         InstanceManager.configureManagerInstance().removePrefItems();
-        // put the new GUI items on the persistance list
-        for (PreferencesPanel item : items) {
-            InstanceManager.configureManagerInstance().registerPref(item);
-        }
+        // put the new GUI managedPreferences on the persistance list
+        this.getPreferencesPanels().values().stream().forEach((panel) -> {
+            this.registerWithConfigureManager(panel);
+        });
         InstanceManager.configureManagerInstance().storePrefs();
     }
 
+    private void registerWithConfigureManager(PreferencesPanel panel) {
+        if (panel.isPersistant()) {
+            InstanceManager.configureManagerInstance().registerPref(panel);
+        }
+        if (panel instanceof ManagingPreferencesPanel) {
+            log.debug("Iterating over managed panels within {}/{}", panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle());
+            ((ManagingPreferencesPanel)panel).getPreferencesPanels().stream().forEach((managed) -> {
+                log.debug("Registering {} with the ConfigureManager", managed.getClass().getName());
+                this.registerWithConfigureManager(managed);
+            });
+        }
+    }
+    
     /**
      * Handle the Save button: Backup the file, write a new one, prompt for what
      * to do next. To do that, the last step is to present a dialog box
@@ -209,10 +218,6 @@ public class AppConfigBase extends JmriPanel {
 
     public String getClassName() {
         return AppConfigBase.class.getName();
-    }
-
-    public List<PreferencesPanel> getItems() {
-        return this.items;
     }
 
     /**

@@ -430,7 +430,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public boolean isPersistant() {
-        return false;
+        return true;
     }
 
     @Override

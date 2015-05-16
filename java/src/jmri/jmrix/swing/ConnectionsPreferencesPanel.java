@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.text.MessageFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -25,6 +26,7 @@ import jmri.InstanceManager;
 import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
+import jmri.swing.ManagingPreferencesPanel;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -34,7 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
  */
-public class ConnectionsPreferencesPanel extends JTabbedPane implements PreferencesPanel {
+public class ConnectionsPreferencesPanel extends JTabbedPane implements ManagingPreferencesPanel {
 
     private static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle"); // NOI18N
     private static final Logger log = LoggerFactory.getLogger(ConnectionsPreferencesPanel.class);
@@ -189,7 +191,6 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
             tabLabel.setForeground(Color.ORANGE);
         }
 
-        preferences.getItems().add(configPane);
     }
 
     void addConnectionTab() {
@@ -222,7 +223,6 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
 
             this.removeChangeListener(addTabListener);
             this.remove(i); // was x
-            preferences.getItems().remove(configPane);
             try {
                 JmrixConfigPane.dispose(configPane);
             } catch (NullPointerException ex) {
@@ -296,6 +296,11 @@ public class ConnectionsPreferencesPanel extends JTabbedPane implements Preferen
 
     @Override
     public boolean isPreferencesValid() {
-        return this.configPanes.stream().anyMatch((panel) -> (panel.isPreferencesValid()));
+        return this.configPanes.stream().allMatch((panel) -> (panel.isPreferencesValid()));
+    }
+
+    @Override
+    public List<PreferencesPanel> getPreferencesPanels() {
+        return new ArrayList<>(this.configPanes);
     }
 }

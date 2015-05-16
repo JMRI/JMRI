@@ -84,7 +84,7 @@ public class TabbedPreferences extends AppConfigBase {
     public TabbedPreferences() {
 
         /*
-         * Adds the place holders for the menu items so that any items add by
+         * Adds the place holders for the menu managedPreferences so that any managedPreferences add by
          * third party code is added to the end
          */
         preferencesArray.add(new PreferencesCatItems("CONNECTIONS", rb
@@ -156,7 +156,7 @@ public class TabbedPreferences extends AppConfigBase {
                     PreferencesPanel panel = (PreferencesPanel) Class.forName(className).newInstance();
                     if (panel instanceof PreferencesSubPanel) {
                         className = ((PreferencesSubPanel) panel).getParentClassName();
-                        if (!this.preferencesPanels.containsKey(className)) {
+                        if (!this.getPreferencesPanels().containsKey(className)) {
                             this.addPreferencesPanel((PreferencesPanel) Class.forName(className).newInstance());
                         }
                         ((PreferencesSubPanel) panel).setParent(this.getPreferencesPanels().get(className));
@@ -250,13 +250,12 @@ public class TabbedPreferences extends AppConfigBase {
                 panel.getTabbedPreferencesTitle(),
                 panel.getLabelKey(),
                 panel,
-                panel.isPersistant(),
                 panel.getPreferencesTooltip()
         );
     }
 
     private void addItem(String prefItem, String itemText, String tabtitle,
-            String labelKey, PreferencesPanel item, boolean store, String tooltip) {
+            String labelKey, PreferencesPanel item, String tooltip) {
         PreferencesCatItems itemBeingAdded = null;
         for (PreferencesCatItems preferences : preferencesArray) {
             if (preferences.getPrefItem().equals(prefItem)) {
@@ -277,9 +276,6 @@ public class TabbedPreferences extends AppConfigBase {
             tabtitle = itemText;
         }
         itemBeingAdded.addPreferenceItem(tabtitle, labelKey, item.getPreferencesComponent(), tooltip);
-        if (store) {
-            items.add(item);
-        }
     }
 
     /* Method allows for the preference to goto a specific list item */
@@ -365,7 +361,7 @@ public class TabbedPreferences extends AppConfigBase {
          */
         private static final long serialVersionUID = 5928584215129175250L;
         /*
-         * This contains details of all list items to be displayed in the
+         * This contains details of all list managedPreferences to be displayed in the
          * preferences
          */
         String itemText;
@@ -420,7 +416,7 @@ public class TabbedPreferences extends AppConfigBase {
 
         /*
          * This returns a JPanel if only one item is configured for a menu item
-         * or it returns a JTabbedFrame if there are multiple items for the menu
+         * or it returns a JTabbedFrame if there are multiple managedPreferences for the menu
          */
         JComponent getPanel() {
             if (TabDetailsArray.size() == 1) {
