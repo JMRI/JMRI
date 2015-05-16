@@ -7,11 +7,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Vector;
@@ -27,9 +25,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
-import javax.swing.UIManager;
 import javax.swing.event.ListSelectionEvent;
-import javax.swing.plaf.FontUIResource;
 import jmri.swing.PreferencesPanel;
 import jmri.swing.PreferencesSubPanel;
 import jmri.util.FileUtil;
@@ -240,31 +236,6 @@ public class TabbedPreferences extends AppConfigBase {
             }
         }
         return restartRequired;
-    }
-
-    public void setUIFontSize(float size) {
-        Enumeration<Object> keys = UIManager.getDefaults().keys();
-        Font f;
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-
-            if (value instanceof FontUIResource) {
-                f = UIManager.getFont(key).deriveFont(((Font) value).getStyle(), size);
-                UIManager.put(key, f);
-            }
-        }
-    }
-
-    public void setUIFont(FontUIResource f) {
-        Enumeration<Object> keys = UIManager.getDefaults().keys();
-        while (keys.hasMoreElements()) {
-            Object key = keys.nextElement();
-            Object value = UIManager.get(key);
-            if (value instanceof FontUIResource) {
-                UIManager.put(key, f);
-            }
-        }
     }
 
     void selection(String View) {

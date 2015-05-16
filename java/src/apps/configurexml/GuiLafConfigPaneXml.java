@@ -1,9 +1,12 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
+import java.awt.Font;
+import java.util.Enumeration;
 import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.plaf.FontUIResource;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -103,7 +106,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (fontsize != null) {
             int size = Integer.parseInt(fontsize.getValue());
             GuiLafConfigPane.setFontSize(size);
-            jmri.InstanceManager.tabbedPreferencesInstance().setUIFontSize(size);
+            this.setUIFontSize(size);
         }
         return result;
     }
@@ -145,5 +148,30 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(GuiLafConfigPaneXml.class.getName());
+
+    public void setUIFontSize(float size) {
+        Enumeration<Object> keys = UIManager.getDefaults().keys();
+        Font f;
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+
+            if (value instanceof FontUIResource) {
+                f = UIManager.getFont(key).deriveFont(((Font) value).getStyle(), size);
+                UIManager.put(key, f);
+            }
+        }
+    }
+
+    public void setUIFont(FontUIResource f) {
+        Enumeration<Object> keys = UIManager.getDefaults().keys();
+        while (keys.hasMoreElements()) {
+            Object key = keys.nextElement();
+            Object value = UIManager.get(key);
+            if (value instanceof FontUIResource) {
+                UIManager.put(key, f);
+            }
+        }
+    }
 
 }
