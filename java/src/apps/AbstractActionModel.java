@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
  * Provide services for invoking actions during configuration and startup.
  * <P>
  * The action classes and corresponding human-readable names are kept in the
- * apps.ActionListCoreBundle properties file (which can be translated). They are
+ * apps.ActionListBundle properties file (which can be translated). They are
  * displayed in lexical order by human-readable name.
  * <P>
  * @author	Bob Jacobsen Copyright 2003, 2007, 2014
@@ -76,7 +76,7 @@ public abstract class AbstractActionModel {
     }
 
     static private void loadArrays() {
-        ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListCoreBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("apps.ActionListBundle");
         // count entries (not entirely efficiently!)
         classList = new HashMap<Class<?>, String>();
         Enumeration<String> e = rb.getKeys();
