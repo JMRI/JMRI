@@ -84,14 +84,12 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
         p.setClassDescription(TransitTableAction.class.getName());
         p.setClassDescription(TurnoutTableAction.class.getName());
 
-        p.setClassDescription(apps.AppConfigBase.class.getName());
-
         newMessageTab();
     }
 
     JTabbedPane tab = new JTabbedPane();
 
-    private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<JComboBox<Object>, ListItems>();
+    private HashMap<JComboBox<Object>, ListItems> _comboBoxes = new HashMap<>();
     private HashMap<JCheckBox, ListItems> _checkBoxes = new HashMap<>();
 
     private void newMessageTab() {
@@ -120,7 +118,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 String itemName = p.getChoiceName(strClass, j);
                 options = p.getChoiceOptions(strClass, itemName);
                 if (options != null) {
-                    JComboBox<Object> optionBox = new JComboBox<Object>();
+                    JComboBox<Object> optionBox = new JComboBox<>();
                     ListItems li = new ListItems(strClass, itemName);
                     _comboBoxes.put(optionBox, li);
                     li.isIncluded(addtoindependant);
@@ -149,7 +147,7 @@ public class UserMessagePreferencesPane extends JmriPanel implements Preferences
                 for (int i = 0; i < singleList.size(); i++) {
                     String itemName = p.getPreferenceItemName(strClass, i);
                     String description = p.getPreferenceItemDescription(strClass, itemName);
-                    if ((description != null) && (!description.equals(""))) {
+                    if ((description != null) && (!description.isEmpty())) {
                         JCheckBox check = new JCheckBox(description);
                         check.setSelected(p.getPreferenceState(strClass, itemName));
                         ListItems li = new ListItems(strClass, itemName);
