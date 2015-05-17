@@ -48,22 +48,52 @@ public class AppConfigBase extends JmriPanel {
     public AppConfigBase() {
     }
 
+    /**
+     * @deprecated as of 2.13.3, directly access the connection configuration
+     * from the instance list
+     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+     */
+    @Deprecated
     public static String getManufacturerName(int index) {
         return JmrixConfigPane.instance(index).getCurrentManufacturerName();
     }
 
+    /**
+     * @deprecated as of 2.13.3, directly access the connection configuration
+     * from the instance list
+     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+     */
+    @Deprecated
     public static String getConnection(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolName();
     }
 
+    /**
+     * @deprecated as of 2.13.3, directly access the connection configuration
+     * from the instance list
+     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+     */
+    @Deprecated
     public static String getPort(int index) {
         return JmrixConfigPane.instance(index).getCurrentProtocolInfo();
     }
 
+    /**
+     * @deprecated as of 2.13.3, directly access the connection configuration
+     * from the instance list
+     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+     */
+    @Deprecated
     public static String getConnectionName(int index) {
         return JmrixConfigPane.instance(index).getConnectionName();
     }
 
+    /**
+     * @deprecated as of 2.13.3, directly access the connection configuration
+     * from the instance list
+     * jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class)
+     */
+    @Deprecated
     public static boolean getDisabled(int index) {
         return JmrixConfigPane.instance(index).getDisabled();
     }
