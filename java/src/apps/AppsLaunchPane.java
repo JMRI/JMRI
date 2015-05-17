@@ -296,11 +296,6 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
-    static AppConfigBase prefs;
-
-    static public AppConfigBase getPrefs() {
-        return prefs;
-    }
 
     /**
      * @deprecated as of 2.13.3, directly access the connection configuration
