@@ -123,23 +123,27 @@ table.
 Each occupancy block on your layout should be entered as a row of this table.
 <ul>
         <li><b>System Name</b>: The system name of the OBlock. The system letter 'O', and 
-        type leter 'B' is used for for 'OBlock' although the implementation is not system-specific.
+        type letter 'B' is used for for 'OBlock' although the implementation is not system-specific.
         If these letters are not entered they are automatically prepended.</li> 
         <li><b>User Name</b>: The user name of the OBlock. </li>
         <li><b>Comment</b>: You may enter any text in this field you wish.</li>
         <li><b>Sensor</b>:The sensor that detects occupancy of the block.</li>
         <li><b>Length</b>: The length of the Block.  This is an important parameter if you use NXWarrants.</li>
         <li><b>Units</b>: The unit used to determine the length. (inches or centimeters)
-        <li><b>Curvature</b>: The curvature selected for the track  This is included for 
-        compatibility with JMRI Blocks.</li>
+        <li><b>Speed Notch</b>: An optional speed limit for the block.  A drop-down box lists the signal
+        aspects controlling speed.  A blank entry indicates any speed restriction will
+         continue to be enforced.  "Normal" indicates speed can return to the previous normal speed.</li>
         <li><b>Paths</b>: A button that opens the <b>Block-Path</b> table where the paths of 
         this block are entered.  This table is described below.
         <li><<b>Delete</b>: A button to delete the Block.  To make the deletion permanent, 
         save your configuration file to disk</li> 
 </ul>
 This table is sorted by the system name of the OBlock.  This means that when a new row is added
-the entry will jump to its postion in the sort.  After entering a new OBlock you may find it
+the entry will jump to its position in the sort.  After entering a new OBlock you may find it
 at the top of the window should you need to do further editing.
+<p>
+Several columns are hidden in the OBlock table.  To hide/unhide a column, right click in the 
+Header portion of the table.
 
 <H3>Columns in the Portal Table:</H3>
 The Portal table has columns for the blocks it separates.  You do not need to be concerned
@@ -154,7 +158,7 @@ entrance and exit points.</p>
         save your configuration file to disk</li> 
 </ul>
 This table is sorted by the name of the Portal.  This means that when a new row is added
-the entry will jump to its postion in the sort.  After entering a new Portal you may find it at 
+the entry will jump to its position in the sort.  After entering a new Portal you may find it at 
 the top of the window for further editing.</p>
 <p>
 <H3>Columns in Signal Table:</H3>
@@ -172,15 +176,18 @@ the portal. The signal may be either a <b>SignalMast</b> or a <b>SignalHead</b>.
         <li><b>(Through) Portal</b>: Enter the name of the portal where the signal is placed.</li>
         <li><b>To (Protected) Block</b>: Enter the name, either system name or user name,
         of the block whose entrance is protected by the signal.</li>
-        <li><b>Delay(ms)</b>: (Optional) Enter the time in milliseconds to delay any speed change
-        that may be required by the signal's aspect.  (See note below)</li>
+        <li><b>Offset(seconds)</b>: (Optional) Enter the time in seconds to delay or advance the 
+        time when any speed change required by the signal's aspect should begin.  (See note below)</li>
 </ul>
 <p>        
 <H3>How Signal Aspects Or Occupancy Change Speed:</H3>
 The warrant detects the signal aspect when it enters the <i>approach</i> block and, if needed,
 prepares to change the speed before it reaches the <i>protected</i> block.  Any speed change is
-ramped down to the speed required by the signal.  The above <b>delay</b> time is the time the
-warranted train will wait before beginning the speed change.</p>
+ramped down to the speed required by the signal.  The warrant calculates when the speed ramp-down
+should begin using the parameters involved with the throttle factor. 
+(see <A HREF="Warrant.shtml#SpeedMap"> Warrants</A>)  This time is the delay from when the need
+for a speed change is first detected (upon entering an OBlock) and when the speed change should begin.
+The above <b>offset</b> time adjusts this calculation (+/-) should that be desirable.</p>
 <p>
 Likewise, when the signal indicates a clear or improved speed from a stopped or reduced speed
 condition, the speed will be ramped up to the allowed or recorded speed. 

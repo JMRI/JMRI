@@ -219,9 +219,12 @@ increment per step and the time interval of each step.
 <p>
 When a warrant makes a speed change due to a signal, block or rouge occupancy
 condition, That speed change remains in effect until the condition is removed.
+For a warrant to detect a signaled speed change the signal must be configured
+in the Occupancy Block Tables.  Likewise, block speeds must be configured there
+also.
 <p>
-Several parameters are required do look ahead and speed changing:
-<p>
+Several parameters are required to make an automatic speed change.  
+</P>
 <H2>Throttle Setting Speed Factor</H2>
 To compute how far to look ahead and the time when to modify speed the
 following must be known:
@@ -229,12 +232,13 @@ following must be known:
 	<li><b>Layout Scale</b> - Obviously needed for distances.  Set in a 
 		drop down box at <i>Edit->Preferences->Warrants</i>.</li>
 	<li><b>Block Lengths</b> - Obviously needed for distances.  Set in the
-		OBlock Table at <i>Add Items->Occupancy Blocks</i></li>
+		OBlock Table at <i>Add Items->Occupancy Blocks</i> or on an Circuit Builder
+		Edit OBlock window <i>Circuit Builder->Edit OBlock->window</i></li>
 	<li><b>Ramp Step throttle Increment</b> - Needed for smooth speed change. 
 		Set in <i>>Edit->Preferences->Warrants</i>.  This value is a ratio of full throttle.
 		Seven or eight speed steps of a 128 step throttle is an appropriate
-		increment for a locomotive with modest momentum.  That is, a value of 
-		0.06, the default.</li>
+		increment for a locomotive with modest momentum.  A value of 
+		0.06, is the default.</li>
 	<li><b>Ramp Step time</b> - Needed for smooth speed change. 
 		Set in <i>>Edit->Preferences->Warrants</i>.  Depending how the user has configured
 		momentum on the locomotives, this value may be lengthened and a 
@@ -251,10 +255,10 @@ rpm response under load with that voltage.
 A further assumption made in the speed change calculations is that
 the speed curve of the engine/decoder is linear - or approximately so.
 If the entire locomotive fleet is speed matched to a linear curve then a 
-global value is sufficient.  It might seem getting a throttle factor
-for each engine is a problem.
+global value is sufficient.  However if that is not the case, 
+it is easy to get a throttle factor for each engine.
 <p>
-Not so.  NXWarrants have a feature whereby running the train over a block of known length
+NXWarrants have a feature whereby running the train over a block of known length
 will compute a Throttle Factor for the train.  Use the <b>Calibrate</b> button
 on the NXWarrant window.  See <A HREF="NXWarrant.shtml#Calibrate"> About NXWarrants</A>.
 <p>

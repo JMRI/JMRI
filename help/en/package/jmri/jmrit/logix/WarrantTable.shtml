@@ -52,8 +52,8 @@ discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
 		of the train with a blue color.</li>
         <li><b>ManRun</b>: - A button that allocates the warrant and sets the route for
         a manual operator to run the train.  The script is not run, but the route is displayed.
-        Default setting hides this column. to display click in the table Header.
-		of the train with a blue color.</li>
+		of the train with a blue color.
+        (The default setting hides this column. To display, right click in the table Header.)</li>
         <li><b>Control/Status</b>: - The status of the warrant is shown.  It also has a 
 		drop down combo box that can send commands to a running train. 
 		<b><i>Note</b>: This column has two functions - 
@@ -72,7 +72,7 @@ discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
 			an occupied block ahead has cleared.  If the train has overrun a block where it is expected
 			to be and now appears to be the obstacle preventing movement, this resets its location.
 			(Occasionally a sensor change can be
-			missed due to a short or other hardware malfunction.  This retest may allow 
+			missed due to a short or other hardware malfunction.  This reset may allow 
 			a stopped train to continue.)
 		<li><b>Abort</b> - Abort the script and deallocate the warrant.</li>
 	  </ul>
@@ -87,7 +87,8 @@ discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
 The following item are under the <b>Warrants</b> menu.
 <ul>
         <li><b>Concatenate Warrants</b>: - Join two warrants together to become
-        	a single warrant.</li>  
+        	a single warrant.  The last block and path of the first warrant must be
+        	equal to the first block and path of the second warrant.</li>  
         <li><b>Create New Warrant</b>: - After providing system and user names this
 		opens a blank Warrant Editing Window to create a new warrant. The
         	operations of this frame are discussed in <A HREF="CreateEditWarrant.shtml">
@@ -156,31 +157,38 @@ Without a Throttle Factor a fast
 running engine may overrun the point where a speed change expects to be completed, or 
 a slow running train may stop too far short of where it is expected.
 <p>
-Once a speed change is noted by reading a signal aspect or detecting an occupancy ahead, 
-the Warrant must calculate when to begin the speed change (ramp down or ramp up).
-The look ahead distance and the time when to begin the speed change require knowing the 
+The Throttle Factor reconciles the throttle setting to the scale track speed.  The
+most important element in this adjustment is the <b>scale of the layout</b>.  <b><i>The throttle
+factor times the scale factor converts layout dimensions to scale dimensions.</b></i>
+<ul>
+	<b>Note:</b> If signals have not been configured in the Occupancy Block Tables nor
+	have block speeds been configured there, the throttle factor will only be used when
+	generating the ramp-up and ramp-down throttle commands in NXWarrants or when rouge
+	occupancy is detected ahead.  They <b>do not</b> refer to the recorded speed changes.
+</ul>
+A default throttle factor and the layout scale is configured in <b>Preferences</b>
+under the warrants tab.
+<p>
+Once a speed change is noted by reading a signal aspect or specified block speed ahead, 
+the Warrant must calculate when to begin the speed change (ramp down or ramp up).  Both
+the look ahead distance and the time when to begin the speed change require knowing the 
 track speed.  Thus to get train to begin and end its speed changes at the proper points,
 a factor that relates the throttle setting to the actual track speed is needed.  This 
 is the value in the <b>Factor column</b>.
 <p>
 The factor obviously depends upon the particular engine's power curve.  This is a combination
-of decoder's throttle speed curve and the locomotive motor's response to the voltage
+of decoder's throttle speed curve and the response of the locomotive motor to the voltage
 set by the speed curve.  For most decoder/motor combinations a relatively constant 
-<b>throttle factor</b> can be found for the mid and high ranges.  If the entire
+<b>throttle factor</b> can be found for the entire mid and high ranges.  If the entire
 locomotive fleet is speed matched, then the same factor will do for all.  
 Lacking that, individual 
 factors for the motive power used in a warrant can be determined by using the NXWarrant
 <b>Calibration</b> feature.  See <A HREF="NXWarrant.shtml"> NXWarrants</A> for
 instructions on how to do this.
 <ul>
-        <b>NOTE 1:</b> The speed changes mentioned above refer only to signaled speed
-        changes, Block speeds and unexpected occupancy by "rouge" trains.  They <b>do not</b> 
-        refer to the recorded speed changes.
-</ul>
-<ul>
-        <b>NOTE 2:</b> The calculations
+        <b>Note:</b> The calculations
 		done by the warrant assume a linear change in throttle settings.  If an 
-		extreme shape is defined for a decoder, the factor will not function well
+		extreme speed curve shape is defined for a decoder, the factor will not function well
 		over the entire throttle range.
 </ul>
 <p>
