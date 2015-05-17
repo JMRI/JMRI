@@ -281,11 +281,6 @@ public class AppsLaunchFrame extends jmri.util.JmriJFrame {
         return _buttonSpace;
     }
     static JComponent _buttonSpace = null;
-    static AppConfigBase prefs;
-
-    static public AppConfigBase getPrefs() {
-        return prefs;
-    }
 
     // GUI members
     private JMenuBar menuBar;
