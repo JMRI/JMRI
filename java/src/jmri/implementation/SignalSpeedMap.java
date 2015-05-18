@@ -31,7 +31,7 @@ public class SignalSpeedMap {
     static private int _interpretation;
     static private int _sStepDelay;     // ramp step time interval
     static private int _numSteps = 4;   // num throttle steps per ramp step - deprecated
-    private float _stepIncrement = 0.01f;       // ramp step throttle increment
+    private float _stepIncrement = 0.05f;       // ramp step throttle increment
     private float _throttleFactor = 0.75f;
     private float _scale;
     
@@ -82,7 +82,7 @@ public class SignalSpeedMap {
             if (log.isDebugEnabled()) log.debug("_interpretation= "+_interpretation);
 
             e = root.getChild("msPerIncrement");
-            _sStepDelay = 250;
+            _sStepDelay = 750;
             try {
                 _sStepDelay = Integer.parseInt(e.getText());
             } catch (NumberFormatException nfe) {
