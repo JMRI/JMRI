@@ -184,7 +184,7 @@ public class Version {
      */
     static public String getCopyright() {
         // TODO Internatonalize with Bundle.getMessage()
-        return "Copyright © " + versionBundle.getString("jmri.copyright.year") + " JMRI Community";
+        return "Copyright (C) " + versionBundle.getString("jmri.copyright.year") + " JMRI Community";
     }
 
     /**
