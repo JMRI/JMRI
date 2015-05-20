@@ -27,9 +27,9 @@ public class AudioCommand {
     /**
      * Private variables containing command parameters
      */
-    private Audio audio;
+    private final Audio audio;
 
-    private int command;
+    private final int command;
 
     /**
      * Constructor to process a command on an Audio object

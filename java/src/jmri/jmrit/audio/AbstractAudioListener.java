@@ -35,16 +35,16 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
      *
      */
     private static final long serialVersionUID = 7653942390344476939L;
-    private Vector3f _position = new Vector3f(0.0f, 0.0f, 0.0f);
-    private Vector3f _currentPosition = new Vector3f(0.0f, 0.0f, 0.0f);
-    private Vector3f _velocity = new Vector3f(0.0f, 0.0f, 0.0f);
-    private Vector3f _orientationAt = new Vector3f(0.0f, 1.0f, 0.0f);
-    private Vector3f _orientationUp = new Vector3f(0.0f, 0.0f, 1.0f);
-    private Vector3f _currentOriAt = new Vector3f(0.0f, 1.0f, 0.0f);
-    private Vector3f _currentOriUp = new Vector3f(0.0f, 0.0f, 1.0f);
-    private float _gain = 1.0f;
-    private float _metersPerUnit = 1.0f;
-    private long _timeOfLastPositionCheck = 0;
+    private Vector3f position = new Vector3f(0.0f, 0.0f, 0.0f);
+    private Vector3f currentPosition = new Vector3f(0.0f, 0.0f, 0.0f);
+    private Vector3f velocity = new Vector3f(0.0f, 0.0f, 0.0f);
+    private Vector3f orientationAt = new Vector3f(0.0f, 1.0f, 0.0f);
+    private Vector3f orientationUp = new Vector3f(0.0f, 0.0f, 1.0f);
+    private Vector3f currentOriAt = new Vector3f(0.0f, 1.0f, 0.0f);
+    private Vector3f currentOriUp = new Vector3f(0.0f, 0.0f, 1.0f);
+    private float gain = 1.0f;
+    private float metersPerUnit = 1.0f;
+    private long timeOfLastPositionCheck = 0;
 
     private static final AudioFactory activeAudioFactory = InstanceManager.audioManagerInstance().getActiveAudioFactory();
 
@@ -76,7 +76,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public void setPosition(Vector3f pos) {
-        this._position = pos;
+        this.position = pos;
         changePosition(pos);
         if (log.isDebugEnabled()) {
             log.debug("Set position of Listener " + this.getSystemName() + " to " + pos);
@@ -95,17 +95,17 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public Vector3f getPosition() {
-        return this._position;
+        return this.position;
     }
 
     @Override
     public Vector3f getCurrentPosition() {
-        return this._currentPosition;
+        return this.currentPosition;
     }
 
     @Override
     public void setVelocity(Vector3f vel) {
-        this._velocity = vel;
+        this.velocity = vel;
         this.setState(vel.length() != 0 ? STATE_MOVING : STATE_POSITIONED);
         if (log.isDebugEnabled()) {
             log.debug("Set velocity of Listener " + this.getSystemName() + " to " + vel);
@@ -114,7 +114,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public Vector3f getVelocity() {
-        return this._velocity;
+        return this.velocity;
     }
 
     /**
@@ -124,22 +124,19 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
         // Calculate how long it's been since we lasted checked position
         long currentTime = System.currentTimeMillis();
-        long timePassed = (currentTime - this._timeOfLastPositionCheck) / 1000;
-        this._timeOfLastPositionCheck = currentTime;
+        long timePassed = (currentTime - this.timeOfLastPositionCheck) / 1000;
+        this.timeOfLastPositionCheck = currentTime;
 
-        if (this._velocity.length() != 0) {
-            this._currentPosition.scaleAdd(
-                    timePassed * this._metersPerUnit,
-                    this._velocity,
-                    this._currentPosition);
-            this._currentOriAt.scaleAdd(
-                    timePassed * this._metersPerUnit,
-                    this._velocity,
-                    this._currentOriAt);
-            this._currentOriUp.scaleAdd(
-                    timePassed * this._metersPerUnit,
-                    this._velocity,
-                    this._currentOriUp);
+        if (this.velocity.length() != 0) {
+            this.currentPosition.scaleAdd(timePassed * this.metersPerUnit,
+                    this.velocity,
+                    this.currentPosition);
+            this.currentOriAt.scaleAdd(timePassed * this.metersPerUnit,
+                    this.velocity,
+                    this.currentOriAt);
+            this.currentOriUp.scaleAdd(timePassed * this.metersPerUnit,
+                    this.velocity,
+                    this.currentOriUp);
         }
     }
 
@@ -153,7 +150,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
      * Method to reset the current position
      */
     protected void doResetCurrentPosition() {
-        this._currentPosition = this._position;
+        this.currentPosition = this.position;
     }
 
     /**
@@ -165,8 +162,8 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public void setOrientation(Vector3f at, Vector3f up) {
-        this._orientationAt = at;
-        this._orientationUp = up;
+        this.orientationAt = at;
+        this.orientationUp = up;
         if (log.isDebugEnabled()) {
             log.debug("Set orientation of Listener " + this.getSystemName() + " to (at) " + at + " (up) " + up);
         }
@@ -174,43 +171,43 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public Vector3f getOrientation(int which) {
-        Vector3f _orientation = null;
+        Vector3f orientation = null;
         switch (which) {
             case AT: {
-                _orientation = this._orientationAt;
+                orientation = this.orientationAt;
                 break;
             }
             case UP: {
-                _orientation = this._orientationUp;
+                orientation = this.orientationUp;
                 break;
             }
             default:
                 throw new IllegalArgumentException();
         }
-        return _orientation;
+        return orientation;
     }
 
     @Override
     public Vector3f getCurrentOrientation(int which) {
-        Vector3f _orientation = null;
+        Vector3f orientation = null;
         switch (which) {
             case AT: {
-                _orientation = this._currentOriAt;
+                orientation = this.currentOriAt;
                 break;
             }
             case UP: {
-                _orientation = this._currentOriUp;
+                orientation = this.currentOriUp;
                 break;
             }
             default:
                 throw new IllegalArgumentException();
         }
-        return _orientation;
+        return orientation;
     }
 
     @Override
     public void setGain(float gain) {
-        this._gain = gain;
+        this.gain = gain;
         if (log.isDebugEnabled()) {
             log.debug("Set gain of Listener " + this.getSystemName() + " to " + gain);
         }
@@ -218,12 +215,12 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public float getGain() {
-        return this._gain;
+        return this.gain;
     }
 
     @Override
     public void setMetersPerUnit(float metersPerUnit) {
-        this._metersPerUnit = metersPerUnit;
+        this.metersPerUnit = metersPerUnit;
         if (log.isDebugEnabled()) {
             log.debug("Set Meters per unit of Listener " + this.getSystemName() + " to " + metersPerUnit);
         }
@@ -231,7 +228,7 @@ public abstract class AbstractAudioListener extends AbstractAudio implements Aud
 
     @Override
     public float getMetersPerUnit() {
-        return this._metersPerUnit;
+        return this.metersPerUnit;
     }
 
     @Override

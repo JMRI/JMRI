@@ -32,20 +32,20 @@ import org.slf4j.LoggerFactory;
  */
 public class NullAudioFactory extends AbstractAudioFactory {
 
-    private static boolean _initialised = false;
+    private static boolean initialised = false;
 
     private NullAudioListener activeAudioListener;
 
     @Override
     public boolean init() {
-        if (_initialised) {
+        if (initialised) {
             return true;
         }
 
         log.warn("Initialised Null audio system - no sounds will be available.");
 
         super.init();
-        _initialised = true;
+        initialised = true;
         return true;
     }
 

@@ -25,12 +25,12 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
     /**
      * True while the thread is running
      */
-    private boolean _alive = true;
+    private boolean alive = true;
 
     /**
      * True when thread should die
      */
-    private boolean _die = false;
+    private boolean die = false;
 
     /**
      * Simple counter to ensure that each created thread has a unique name
@@ -85,9 +85,9 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
      */
     private synchronized boolean alive(boolean action, boolean value) {
         if (action == SET) {
-            _alive = value;
+            alive = value;
         }
-        return _alive;
+        return alive;
     }
 
     /**
@@ -99,9 +99,9 @@ public abstract class AbstractAudioThread extends Thread implements AudioThread 
      */
     private synchronized boolean die(boolean action, boolean value) {
         if (action == SET) {
-            _die = value;
+            die = value;
         }
-        return _die;
+        return die;
     }
 
     /**

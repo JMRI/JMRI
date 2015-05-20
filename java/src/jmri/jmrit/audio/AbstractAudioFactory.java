@@ -36,13 +36,13 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     /**
      * Boolean used to determine if this AudioFactory has been initialised
      */
-    private static boolean _initialised = false;
+    private static boolean initialised = false;
 
     /**
      * Boolean used to determine if this AudioFactory should attenuate sources
      * based on their distance from the Listener
      */
-    private static boolean _distanceAttenuated = true;
+    private static boolean distanceAttenuated = true;
 
     /**
      * Reference to the separate thread used to process all AudioCommands
@@ -52,19 +52,19 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     @Override
     public boolean init() {
-        if (_initialised) {
+        if (initialised) {
             log.debug("Already initialised");
             return true;
         }
 
         // Create the command queue
-        commandQueue = new LinkedList<AudioCommand>();
+        commandQueue = new LinkedList<>();
 
         // Create and start the command thread
         audioCommandThread = new AudioCommandThread(this);
         audioCommandThread.start();
 
-        _initialised = true;
+        initialised = true;
         return true;
     }
 
@@ -201,12 +201,12 @@ public abstract class AbstractAudioFactory implements AudioFactory {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     @Override
     public void setDistanceAttenuated(boolean attenuated) {
-        _distanceAttenuated = attenuated;
+        distanceAttenuated = attenuated;
     }
 
     @Override
     public boolean isDistanceAttenuated() {
-        return _distanceAttenuated;
+        return distanceAttenuated;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AbstractAudioFactory.class.getName());

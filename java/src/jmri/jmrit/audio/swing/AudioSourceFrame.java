@@ -3,7 +3,6 @@ package jmri.jmrit.audio.swing;
 
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -16,7 +15,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.AudioException;
@@ -52,42 +50,42 @@ public class AudioSourceFrame extends AbstractAudioFrame {
 
     private static int counter = 1;
 
-    private boolean _newSource;
+    private boolean newSource;
 
     private final Object lock = new Object();
 
     // UI components for Add/Edit Source
-    JLabel assignedBufferLabel = new JLabel(rba.getString("LabelAssignedBuffer"));
-    JComboBox<String> assignedBuffer = new JComboBox<String>();
-    JLabel loopMinLabel = new JLabel(rba.getString("LabelLoopMin"));
+    JLabel assignedBufferLabel = new JLabel(Bundle.getMessage("LabelAssignedBuffer"));
+    JComboBox<String> assignedBuffer = new JComboBox<>();
+    JLabel loopMinLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
     JSpinner loopMin = new JSpinner();
-    JLabel loopMaxLabel = new JLabel(rba.getString("LabelLoopMax"));
+    JLabel loopMaxLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
     JSpinner loopMax = new JSpinner();
-//    JLabel loopMinDelayLabel = new JLabel(rba.getString("LabelLoopMin"));
+//    JLabel loopMinDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMin"));
 //    JSpinner loopMinDelay = new JSpinner();
-//    JLabel loopMaxDelayLabel = new JLabel(rba.getString("LabelLoopMax"));
+//    JLabel loopMaxDelayLabel = new JLabel(Bundle.getMessage("LabelLoopMax"));
 //    JSpinner loopMaxDelay = new JSpinner();
-//    JLabel loopDelayUnitsLabel = new JLabel(rba.getString("UnitMS"));
-    JCheckBox loopInfinite = new JCheckBox(rba.getString("LabelLoopInfinite"));
+//    JLabel loopDelayUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
+    JCheckBox loopInfinite = new JCheckBox(Bundle.getMessage("LabelLoopInfinite"));
     JPanelVector3f position = new JPanelVector3f("",
-            rba.getString("UnitUnits"));
-    JCheckBox positionRelative = new JCheckBox(rba.getString("LabelPositionRelative"));
-    JPanelVector3f velocity = new JPanelVector3f(rba.getString("LabelVelocity"),
-            rba.getString("UnitU/S"));
-    JPanelSliderf gain = new JPanelSliderf(rba.getString("LabelGain"), 0.0f, 1.0f, 5, 4);
-    JPanelSliderf pitch = new JPanelSliderf(rba.getString("LabelPitch"), 0.5f, 2.0f, 6, 5);
-    JLabel refDistanceLabel = new JLabel(rba.getString("LabelReferenceDistance"));
+            Bundle.getMessage("UnitUnits"));
+    JCheckBox positionRelative = new JCheckBox(Bundle.getMessage("LabelPositionRelative"));
+    JPanelVector3f velocity = new JPanelVector3f(Bundle.getMessage("LabelVelocity"),
+            Bundle.getMessage("UnitU/S"));
+    JPanelSliderf gain = new JPanelSliderf(Bundle.getMessage("LabelGain"), 0.0f, 1.0f, 5, 4);
+    JPanelSliderf pitch = new JPanelSliderf(Bundle.getMessage("LabelPitch"), 0.5f, 2.0f, 6, 5);
+    JLabel refDistanceLabel = new JLabel(Bundle.getMessage("LabelReferenceDistance"));
     JSpinner refDistance = new JSpinner();
-    JLabel maxDistanceLabel = new JLabel(rba.getString("LabelMaximumDistance"));
+    JLabel maxDistanceLabel = new JLabel(Bundle.getMessage("LabelMaximumDistance"));
     JSpinner maxDistance = new JSpinner();
-    JLabel distancesLabel = new JLabel(rba.getString("UnitUnits"));
-    JLabel rollOffFactorLabel = new JLabel(rba.getString("LabelRollOffFactor"));
+    JLabel distancesLabel = new JLabel(Bundle.getMessage("UnitUnits"));
+    JLabel rollOffFactorLabel = new JLabel(Bundle.getMessage("LabelRollOffFactor"));
     JSpinner rollOffFactor = new JSpinner();
-    JLabel fadeInTimeLabel = new JLabel(rba.getString("LabelFadeIn"));
+    JLabel fadeInTimeLabel = new JLabel(Bundle.getMessage("LabelFadeIn"));
     JSpinner fadeInTime = new JSpinner();
-    JLabel fadeOutTimeLabel = new JLabel(rba.getString("LabelFadeOut"));
+    JLabel fadeOutTimeLabel = new JLabel(Bundle.getMessage("LabelFadeOut"));
     JSpinner fadeOutTime = new JSpinner();
-    JLabel fadeTimeUnitsLabel = new JLabel(rba.getString("UnitMS"));
+    JLabel fadeTimeUnitsLabel = new JLabel(Bundle.getMessage("UnitMS"));
 
     @SuppressWarnings("OverridableMethodCallInConstructor")
     public AudioSourceFrame(String title, AudioTableDataModel model) {
@@ -96,6 +94,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
     }
 
     @Override
+    @SuppressWarnings("UnnecessaryBoxing")
     public void layoutFrame() {
         super.layoutFrame();
         JPanel p;
@@ -109,49 +108,40 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(rba.getString("LabelLoop")),
+                BorderFactory.createTitledBorder(Bundle.getMessage("LabelLoop")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p.add(loopMinLabel);
         loopMin.setPreferredSize(new JTextField(8).getPreferredSize());
         loopMin.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        loopMin.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                loopMax.setValue(
-                        ((Integer) loopMin.getValue()
-                        < (Integer) loopMax.getValue())
-                                ? loopMax.getValue()
-                                : loopMin.getValue());
-            }
+        loopMin.addChangeListener((ChangeEvent e) -> {
+            loopMax.setValue(
+                    ((Integer) loopMin.getValue()
+                            < (Integer) loopMax.getValue())
+                            ? loopMax.getValue()
+                            : loopMin.getValue());
         });
         p.add(loopMin);
         p.add(loopMaxLabel);
         loopMax.setPreferredSize(new JTextField(8).getPreferredSize());
         loopMax.setModel(new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1));
-        loopMax.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                loopMin.setValue(
-                        ((Integer) loopMax.getValue()
-                        < (Integer) loopMin.getValue())
-                                ? loopMax.getValue()
-                                : loopMin.getValue());
-            }
+        loopMax.addChangeListener((ChangeEvent e) -> {
+            loopMin.setValue(
+                    ((Integer) loopMax.getValue()
+                            < (Integer) loopMin.getValue())
+                            ? loopMax.getValue()
+                            : loopMin.getValue());
         });
         p.add(loopMax);
-        loopInfinite.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                loopMin.setEnabled(!loopInfinite.isSelected());
-                loopMax.setEnabled(!loopInfinite.isSelected());
-            }
+        loopInfinite.addChangeListener((ChangeEvent e) -> {
+            loopMin.setEnabled(!loopInfinite.isSelected());
+            loopMax.setEnabled(!loopInfinite.isSelected());
         });
         p.add(loopInfinite);
         main.add(p);
 
 //        p = new JPanel(); p.setLayout(new FlowLayout());
 //        p.setBorder(BorderFactory.createCompoundBorder(
-//                        BorderFactory.createTitledBorder(rba.getString("LabelLoopDelay")),
+//                        BorderFactory.createTitledBorder(Bundle.getMessage("LabelLoopDelay")),
 //                        BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 //        p.add(loopMinDelayLabel);
 //        loopMinDelay.setPreferredSize(new JTextField(8).getPreferredSize());
@@ -185,7 +175,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(rba.getString("LabelPosition")),
+                BorderFactory.createTitledBorder(Bundle.getMessage("LabelPosition")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p.add(position);
         p.add(positionRelative);
@@ -198,7 +188,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(rba.getString("LabelDistances")),
+                BorderFactory.createTitledBorder(Bundle.getMessage("LabelDistances")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         JPanel p2;
@@ -209,15 +199,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         refDistance.setModel(
                 new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
         refDistance.setEditor(new JSpinner.NumberEditor(refDistance, "0.00"));
-        refDistance.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                maxDistance.setValue(
-                        ((Float) refDistance.getValue()
-                        < (Float) maxDistance.getValue())
-                                ? maxDistance.getValue()
-                                : refDistance.getValue());
-            }
+        refDistance.addChangeListener((ChangeEvent e) -> {
+            maxDistance.setValue(
+                    ((Float) refDistance.getValue()
+                            < (Float) maxDistance.getValue())
+                            ? maxDistance.getValue()
+                            : refDistance.getValue());
         });
         p2.add(refDistance);
 
@@ -226,15 +213,12 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         maxDistance.setModel(
                 new SpinnerNumberModel(new Float(0f), new Float(0f), new Float(Audio.MAX_DISTANCE), new Float(FLT_PRECISION)));
         maxDistance.setEditor(new JSpinner.NumberEditor(maxDistance, "0.00"));
-        maxDistance.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                refDistance.setValue(
-                        ((Float) maxDistance.getValue()
-                        < (Float) refDistance.getValue())
-                                ? maxDistance.getValue()
-                                : refDistance.getValue());
-            }
+        maxDistance.addChangeListener((ChangeEvent e) -> {
+            refDistance.setValue(
+                    ((Float) maxDistance.getValue()
+                            < (Float) refDistance.getValue())
+                            ? maxDistance.getValue()
+                            : refDistance.getValue());
         });
         p2.add(maxDistance);
         p2.add(distancesLabel);
@@ -254,7 +238,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(rba.getString("LabelFadeTimes")),
+                BorderFactory.createTitledBorder(Bundle.getMessage("LabelFadeTimes")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
 
         p.add(fadeInTimeLabel);
@@ -270,14 +254,24 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         p.add(fadeTimeUnitsLabel);
         main.add(p);
 
-        JButton ok;
-        frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                okPressed(e);
-            }
+        p = new JPanel();
+        JButton apply;
+        p.add(apply = new JButton(rb.getString("ButtonApply")));
+        apply.addActionListener((ActionEvent e) -> {
+            applyPressed(e);
         });
+        JButton ok;
+        p.add(ok = new JButton(rb.getString("ButtonOK")));
+        ok.addActionListener((ActionEvent e) -> {
+            applyPressed(e);
+            frame.dispose();
+        });
+        JButton cancel;
+        p.add(cancel = new JButton(rb.getString("ButtonCancel")));
+        cancel.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+        });
+        frame.getContentPane().add(p);
     }
 
     /**
@@ -306,7 +300,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         fadeInTime.setValue(1000);
         fadeOutTime.setValue(1000);
 
-        this._newSource = true;
+        this.newSource = true;
     }
 
     /**
@@ -338,7 +332,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         fadeInTime.setValue(s.getFadeIn());
         fadeOutTime.setValue(s.getFadeOut());
 
-        this._newSource = false;
+        this.newSource = false;
     }
 
     public void updateBufferList() {
@@ -355,7 +349,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
         }
     }
 
-    void okPressed(ActionEvent e) {
+    void applyPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
@@ -368,7 +362,7 @@ public class AudioSourceFrame extends AbstractAudioFrame {
             if (s == null) {
                 throw new AudioException("Problem creating source");
             }
-            if (_newSource && am.getByUserName(user) != null) {
+            if (newSource && am.getByUserName(user) != null) {
                 am.deregister(s);
                 counter--;
                 throw new AudioException("Duplicate user name - please modify");

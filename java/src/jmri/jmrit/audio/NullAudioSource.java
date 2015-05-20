@@ -35,7 +35,7 @@ public class NullAudioSource extends AbstractAudioSource {
     /**
      * True if we've been initialised
      */
-    private boolean _initialised = false;
+    private boolean initialised = false;
 
     /**
      * Constructor for new NullAudioSource with system name
@@ -47,7 +47,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("New NullAudioSource: " + systemName);
         }
-        _initialised = init();
+        initialised = init();
     }
 
     /**
@@ -61,7 +61,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("New NullAudioSource: " + userName + " (" + systemName + ")");
         }
-        _initialised = init();
+        initialised = init();
     }
 
     @Override
@@ -93,7 +93,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Play NullAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             doRewind();
             doResume();
         }
@@ -104,7 +104,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Stop NullAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             // do nothing
             doRewind();
         }
@@ -115,7 +115,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Pause NullAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             // do nothing
         }
         this.setState(STATE_STOPPED);
@@ -126,7 +126,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Resume NullAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             // do nothing
         }
         this.setState(STATE_PLAYING);
@@ -137,7 +137,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Rewind NullAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             // do nothing
         }
         this.setState(STATE_STOPPED);
@@ -148,7 +148,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Fade-in JoalAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             doPlay();
         }
     }
@@ -158,7 +158,7 @@ public class NullAudioSource extends AbstractAudioSource {
         if (log.isDebugEnabled()) {
             log.debug("Fade-out JoalAudioSource (" + this.getSystemName() + ")");
         }
-        if (_initialised && isBound()) {
+        if (initialised && isBound()) {
             doStop();
         }
     }

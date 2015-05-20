@@ -17,6 +17,9 @@ package jmri.jmrit.vsdecoder;
  * @author Mark Underwood copyright (c) 2009, 2013
  * @version $Revision$
  */
+import com.jogamp.openal.AL;
+import com.jogamp.openal.ALException;
+import com.jogamp.openal.util.ALut;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
@@ -26,9 +29,6 @@ import java.util.List;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.jmrit.audio.AudioBuffer;
-import net.java.games.joal.AL;
-import net.java.games.joal.ALException;
-import net.java.games.joal.util.ALut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,7 +63,7 @@ public class AudioUtil {
      *         (split-up) data from stream
      */
     static private List<AudioByteBuffer> splitInputStream(InputStream stream, int max_time, int min_time) {
-        List<AudioByteBuffer> rlist = new ArrayList<AudioByteBuffer>();
+        List<AudioByteBuffer> rlist = new ArrayList<>();
         int[] format = new int[1];
         ByteBuffer[] data = new ByteBuffer[1];
         int[] size = new int[1];
@@ -82,7 +82,7 @@ public class AudioUtil {
         // I'll have to figure out later how to extend this to multiple data formats.
         if ((format[0] != AL.AL_FORMAT_MONO8) && (format[0] != AL.AL_FORMAT_MONO16)) {
             log.warn("Invalid Format for splitting! Failing out." + parseFormat(format[0]));
-            return (null);
+            return null;
         }
 
         while (data[0].remaining() > 0) {
@@ -96,7 +96,7 @@ public class AudioUtil {
                 rlist.add(ab);
             }
         }
-        return (rlist);
+        return rlist;
     }
 
     /**
@@ -112,10 +112,10 @@ public class AudioUtil {
         // Sanity check the prefix, since if it's wrong we'll get a casting error below.
         if (prefix.charAt(2) != Audio.BUFFER) {
             log.warn("Not a Buffer request! " + prefix);
-            return (null);
+            return null;
         }
 
-        List<AudioBuffer> rlist = new ArrayList<AudioBuffer>();
+        List<AudioBuffer> rlist = new ArrayList<>();
 
         int i = 0; // Index used for the sub-buffer system names
         for (AudioByteBuffer b : blist) {
@@ -124,7 +124,7 @@ public class AudioUtil {
                 i++;
                 if (buf == null) {
                     log.debug("provideAudio returned null!");
-                    return (null);
+                    return null;
                 } // might be redundant with the try/catch.
                 if (buf.getLength() > 0) {
                     log.debug("provideAudio found already-built buffer:" + buf.getSystemName() + " ... skipping load.");
@@ -142,15 +142,15 @@ public class AudioUtil {
             } catch (AudioException e) {
                 log.warn("Error on provideAudio! " + e.toString());
                 if (log.isDebugEnabled()) {
-                    for (String s : jmri.InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER)) {
+                    jmri.InstanceManager.audioManagerInstance().getSystemNameList(Audio.BUFFER).stream().forEach((s) -> {
                         log.debug("\tBuffer: " + s);
-                    }
+                    });
                 }
-                return (null);
+                return null;
             }
 
         }
-        return (rlist);
+        return rlist;
     }
 
     public static List<AudioBuffer> getAudioBufferList(String prefix, InputStream stream, int max_time, int min_time) {
@@ -159,13 +159,13 @@ public class AudioUtil {
         if (blist != null) {
             rlist = getAudioBufferList(prefix, blist);
         }
-        return (rlist);
+        return rlist;
     }
 
     // This is here only because the AbstractAudioBuffer.getFrameSize() doesn't look
     // at the AL versions of the format strings.  And because it must be static.
     private static int frameSize(int format) {
-        int frameSize = 1;
+        int frameSize;
         switch (format) {
             case AudioBuffer.FORMAT_16BIT_7DOT1:
                 frameSize = 16;
@@ -201,7 +201,7 @@ public class AudioUtil {
                 // Note this will be wrong for all the modes we don't support.
                 frameSize = 1;
         }
-        return (frameSize);
+        return frameSize;
     }
 
     private static String parseFormat(int fmt) {
@@ -215,7 +215,7 @@ public class AudioUtil {
             case AL.AL_FORMAT_STEREO16:
                 return "16-bit stereo";
             default:
-                return ("Something Multichannel: val=" + fmt);
+                return "Something Multichannel: val=" + fmt;
         }
     }
 
@@ -237,7 +237,7 @@ public class AudioUtil {
         // This will be approximate due to integer rounding.
         int rv = frameSize(fmt) * ((time_ms * freq) / 1000);
         log.debug("calcTimeIndex: freq = " + freq + " time_us = " + time_ms + " rv = " + rv);
-        return (rv);
+        return rv;
     }
 
     /**
@@ -260,13 +260,13 @@ public class AudioUtil {
     private static Boolean isZeroCross(byte[] buf, int len, int format, ByteOrder order) {
         if (format == AL.AL_FORMAT_MONO8) {
             if (len < 3) {
-                return (false);
+                return false;
             } else {
                 return (((0xFF & buf[len - 3]) < 128) && ((0xFF & buf[len - 2]) < 128) && ((0xFF & buf[len - 1]) >= 128));
             }
         } else if (format == AL.AL_FORMAT_MONO16) {
             if (len < 6) {
-                return (false);
+                return false;
             }
             short[] sbuf = new short[len / 2];
             // Below assumes little-endian
@@ -278,7 +278,7 @@ public class AudioUtil {
             sbuf[2] = bb.getShort();
             return ((sbuf[0] < 0) && (sbuf[1] < 0) && (sbuf[2] >= 0));
         } else {
-            return (false);
+            return false;
         }
     }
 
@@ -301,9 +301,9 @@ public class AudioUtil {
      */
     private static ByteBuffer getSubBuffer(ByteBuffer source, int max_time, int min_time, int format, int freq) {
         int time_size = calcTimeIndex(format, freq, max_time);
-        int bufcount = 0;
+        int bufcount;
         int frameSize = frameSize(format);
-        ByteBuffer retbuf = null;
+        ByteBuffer retbuf;
         byte[] retbytes = new byte[source.remaining() + 1];
 
         log.debug("Creating sub buffer.  interval = " + max_time + " freq = " + freq + " time_size = " + time_size + " sample size= " + frameSize(format));
@@ -336,9 +336,9 @@ public class AudioUtil {
             log.debug("\tAfter: source= " + source + "bufcount=" + bufcount + " retbuf= " + retbuf);
         } else {
             log.warn("Remaining bytes less than minimum time interval.  Discarding.");
-            return (null);
+            return null;
         }
-        return (retbuf);
+        return retbuf;
     }
 
     private static final Logger log = LoggerFactory.getLogger(AudioUtil.class.getName());

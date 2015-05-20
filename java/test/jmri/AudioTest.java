@@ -67,6 +67,8 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Init Factory and Fade-In differ", (Audio.CMD_INIT_FACTORY != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Init Factory and Fade-Out differ", (Audio.CMD_INIT_FACTORY != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Init Factory and Reset Position differ", (Audio.CMD_INIT_FACTORY != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Init Factory and Queue Buffers differ", (Audio.CMD_INIT_FACTORY != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Init Factory and Unqueue Buffers differ", (Audio.CMD_INIT_FACTORY != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Load Sound and Bind Buffer differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_BIND_BUFFER));
         Assert.assertTrue("Command Load Sound and Play differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_PLAY));
@@ -79,6 +81,8 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Load Sound and Fade-In differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Load Sound and Fade-Out differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Load Sound and Reset Position differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Load Sound and Queue Buffers differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Load Sound and Unqueue Buffers differ", (Audio.CMD_LOAD_SOUND != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Bind Buffer and Play differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_PLAY));
         Assert.assertTrue("Command Bind Buffer and Stop differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_STOP));
@@ -90,6 +94,8 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Bind Buffer and Fade-In differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Bind Buffer and Fade-Out differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Bind Buffer and Reset Position differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Bind Buffer and Queue Buffers differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Bind Buffer and Unqueue Buffers differ", (Audio.CMD_BIND_BUFFER != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Play and Stop differ", (Audio.CMD_PLAY != Audio.CMD_STOP));
         Assert.assertTrue("Command Play and Play Toggle differ", (Audio.CMD_PLAY != Audio.CMD_PLAY_TOGGLE));
@@ -100,6 +106,8 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Play and Fade-In differ", (Audio.CMD_PLAY != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Play and Fade-Out differ", (Audio.CMD_PLAY != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Play and Reset Position differ", (Audio.CMD_PLAY != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Play and Queue Buffers differ", (Audio.CMD_PLAY != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Play and Unqueue Buffers differ", (Audio.CMD_PLAY != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Stop and Play Toggle differ", (Audio.CMD_STOP != Audio.CMD_PLAY_TOGGLE));
         Assert.assertTrue("Command Stop and Pause differ", (Audio.CMD_STOP != Audio.CMD_PAUSE));
@@ -109,6 +117,8 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Stop and Fade-In differ", (Audio.CMD_STOP != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Stop and Fade-Out differ", (Audio.CMD_STOP != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Stop and Reset Position differ", (Audio.CMD_STOP != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Stop and Queue Buffers differ", (Audio.CMD_STOP != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Stop and Unqueue Buffers differ", (Audio.CMD_STOP != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Play Toggle and Pause differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_PAUSE));
         Assert.assertTrue("Command Play Toggle and Resume differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_RESUME));
@@ -117,6 +127,8 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Play Toggle and Fade-In differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Play Toggle and Fade-Out differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Play Toggle and Reset Position differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Play Toggle and Queue Buffers differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Play Toggle and Unqueue Buffers differ", (Audio.CMD_PLAY_TOGGLE != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Pause and Resume differ", (Audio.CMD_PAUSE != Audio.CMD_RESUME));
         Assert.assertTrue("Command Pause and Pause Toggle differ", (Audio.CMD_PAUSE != Audio.CMD_PAUSE_TOGGLE));
@@ -124,26 +136,43 @@ public class AudioTest extends TestCase {
         Assert.assertTrue("Command Pause and Fade-In differ", (Audio.CMD_PAUSE != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Pause and Fade-Out differ", (Audio.CMD_PAUSE != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Pause and Reset Position differ", (Audio.CMD_PAUSE != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Pause and Queue Buffers differ", (Audio.CMD_PAUSE != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Pause and Unqueue Buffers differ", (Audio.CMD_PAUSE != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Resume and Pause Toggle differ", (Audio.CMD_RESUME != Audio.CMD_PAUSE_TOGGLE));
         Assert.assertTrue("Command Resume and Rewind differ", (Audio.CMD_RESUME != Audio.CMD_REWIND));
         Assert.assertTrue("Command Resume and Fade-In differ", (Audio.CMD_RESUME != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Resume and Fade-Out differ", (Audio.CMD_RESUME != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Resume and Reset Position differ", (Audio.CMD_RESUME != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Resume and Queue Buffers differ", (Audio.CMD_RESUME != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Resume and Unqueue Buffers differ", (Audio.CMD_RESUME != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Pause Toggle and Rewind differ", (Audio.CMD_PAUSE_TOGGLE != Audio.CMD_REWIND));
         Assert.assertTrue("Command Pause Toggle and Fade-In differ", (Audio.CMD_PAUSE_TOGGLE != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Pause Toggle and Fade-Out differ", (Audio.CMD_PAUSE_TOGGLE != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Pause Toggle and Reset Position differ", (Audio.CMD_PAUSE_TOGGLE != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Pause Toggle and Queue Buffers differ", (Audio.CMD_PAUSE_TOGGLE != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Pause Toggle and Unqueue Buffers differ", (Audio.CMD_PAUSE_TOGGLE != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Rewind and Fade-In differ", (Audio.CMD_REWIND != Audio.CMD_FADE_IN));
         Assert.assertTrue("Command Rewind and Fade-Out differ", (Audio.CMD_REWIND != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Rewind and Reset Position differ", (Audio.CMD_REWIND != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Rewind and Queue Buffers differ", (Audio.CMD_REWIND != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Rewind and Unqueue Buffers differ", (Audio.CMD_REWIND != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Fade-In and Fade-Out differ", (Audio.CMD_FADE_IN != Audio.CMD_FADE_OUT));
         Assert.assertTrue("Command Fade-In and Reset Position differ", (Audio.CMD_FADE_IN != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Fade-In and Queue Buffers differ", (Audio.CMD_FADE_IN != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Fade-In and Unqueue Buffers differ", (Audio.CMD_FADE_IN != Audio.CMD_UNQUEUE_BUFFERS) );
 
         Assert.assertTrue("Command Fade-Out and Reset Position differ", (Audio.CMD_FADE_OUT != Audio.CMD_RESET_POSITION));
+        Assert.assertTrue("Command Fade-Out and Queue Buffers differ", (Audio.CMD_FADE_OUT != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Fade-Out and Unqueue Buffers differ", (Audio.CMD_FADE_OUT != Audio.CMD_UNQUEUE_BUFFERS) );
+
+        Assert.assertTrue("Command Reset Position and Queue Buffers differ", (Audio.CMD_RESET_POSITION != Audio.CMD_QUEUE_BUFFERS) );
+        Assert.assertTrue("Command Reset Position and Unqueue Buffers differ", (Audio.CMD_RESET_POSITION != Audio.CMD_UNQUEUE_BUFFERS) );
+
+        Assert.assertTrue("Command Queue Buffers and Unqueue Buffers differ", (Audio.CMD_QUEUE_BUFFERS != Audio.CMD_UNQUEUE_BUFFERS) );
 
     }
 

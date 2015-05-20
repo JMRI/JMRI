@@ -39,32 +39,32 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
     /**
      * Holds the location of the sound sample used in this buffer
      */
-    private String _url;
+    private String url;
 
     /**
      * Start loop point for this buffer represented as a number of samples
      */
-    private long _startLoopPoint;
+    private long startLoopPoint;
 
     /**
      * End loop point for this buffer represented as a number of samples
      */
-    private long _endLoopPoint;
+    private long endLoopPoint;
 
     /**
      * Flag to determine if this buffer is to be streamed from file
      */
-    private boolean _streamed = false;
+    private boolean streamed = false;
 
     /**
      * Flag to determine if streaming has been forced
      */
-    private boolean _streamedForced = false;
+    private boolean streamedForced = false;
 
 //    /**
 //     *
 //     */
-//    private WaveFileReader _waveFile;
+//    private WaveFileReader waveFile;
     /**
      * Identifier of start loop point
      */
@@ -108,12 +108,12 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     @Override
     public String getURL() {
-        return this._url;
+        return this.url;
     }
 
     @Override
     public void setURL(String url) {
-        this._url = FileUtil.getPortableFilename(url);
+        this.url = FileUtil.getPortableFilename(url);
 
         // Run the loadBuffer method on the main AWT thread to avoid any
         // potential issues with interrupted exceptions if run on the audio
@@ -126,7 +126,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     @Override
     public void setInputStream(InputStream stream) {
-        this._url = "stream";
+        this.url = "stream";
 
         loadBuffer(stream);
         if (log.isDebugEnabled()) {
@@ -188,8 +188,9 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
     }
 
     // Can be made abstract later.
+    @Override
     public boolean loadBuffer(ByteBuffer b, int format, int frequency) {
-        return (false);
+        return false;
     }
 
     /**
@@ -200,7 +201,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      * @param generateLoopBuffers True if loop buffers to be generated
      */
     protected void setStartLoopPoint(long startLoopPoint, boolean generateLoopBuffers) {
-        this._startLoopPoint = startLoopPoint;
+        this.startLoopPoint = startLoopPoint;
         if (generateLoopBuffers) {
             generateLoopBuffers(LOOP_POINT_START);
         }
@@ -211,7 +212,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     @Override
     public long getStartLoopPoint() {
-        return this._startLoopPoint;
+        return this.startLoopPoint;
     }
 
     @Override
@@ -227,7 +228,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      * @param generateLoopBuffers True if loop buffers to be generated
      */
     protected void setEndLoopPoint(long endLoopPoint, boolean generateLoopBuffers) {
-        this._endLoopPoint = endLoopPoint;
+        this.endLoopPoint = endLoopPoint;
         if (generateLoopBuffers) {
             generateLoopBuffers(LOOP_POINT_END);
         }
@@ -238,7 +239,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     @Override
     public long getEndLoopPoint() {
-        return this._endLoopPoint;
+        return this.endLoopPoint;
     }
 
     @Override
@@ -247,8 +248,8 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
             log.warn("Streaming not yet supported!!");
             streamed = !streamed;
         }
-        boolean changed = this._streamed != streamed;
-        this._streamed = this._streamedForced == true ? true : streamed;
+        boolean changed = this.streamed != streamed;
+        this.streamed = this.streamedForced == true ? true : streamed;
         if (log.isDebugEnabled()) {
             log.debug("Set streamed property of Buffer " + this.getSystemName() + " to " + streamed + "; changed = " + changed);
         }
@@ -261,7 +262,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     @Override
     public boolean isStreamed() {
-        return this._streamed;
+        return this.streamed;
     }
 
     /**
@@ -270,12 +271,12 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
      * @param streamedForced True if required; False if not
      */
     protected void setStreamedForced(boolean streamedForced) {
-        boolean changed = this._streamedForced == false && streamedForced == true;
-        this._streamedForced = streamedForced;
+        boolean changed = this.streamedForced == false && streamedForced == true;
+        this.streamedForced = streamedForced;
         if (log.isDebugEnabled()) {
             log.debug("Set streamedForced property of Buffer " + this.getSystemName() + " to " + streamedForced + "; changed = " + changed);
         }
-        this.setStreamed(streamedForced == true ? true : this._streamed);
+        this.setStreamed(streamedForced == true ? true : this.streamed);
         if (changed) {
             this.generateLoopBuffers(LOOP_POINT_BOTH);
         }
@@ -283,7 +284,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
 
     @Override
     public boolean isStreamedForced() {
-        return this._streamedForced;
+        return this.streamedForced;
     }
 
     /**

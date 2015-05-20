@@ -15,7 +15,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import javax.vecmath.Vector3f;
 import jmri.Audio;
 import jmri.implementation.AbstractAudio;
@@ -47,7 +46,6 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
      */
     private static final long serialVersionUID = 8799988277074614855L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.beantable.BeanTableBundle");
-    static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     AbstractAudioFrame frame = this;
 
@@ -116,6 +114,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
     /**
      * Method to populate the Audio frame with current values
+     * @param a Audio object to use
      */
     public void populateFrame(Audio a) {
         sysName.setText(a.getSystemName());
@@ -125,7 +124,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
     //private static final Logger log = LoggerFactory.getLogger(AbstractAudioFrame.class.getName());
     /**
      * A convenience class to create a JPanel to edit a Vector3f object using 3
-     * seperate JSpinner Swing objects
+     * separate JSpinner Swing objects
      */
     protected static class JPanelVector3f extends JPanel {
 
@@ -133,11 +132,11 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
          *
          */
         private static final long serialVersionUID = -2102431744610108951L;
-        JLabel xLabel = new JLabel(rba.getString("LabelX"));
+        JLabel xLabel = new JLabel(Bundle.getMessage("LabelX"));
         JSpinner xValue = new JSpinner();
-        JLabel yLabel = new JLabel(rba.getString("LabelY"));
+        JLabel yLabel = new JLabel(Bundle.getMessage("LabelY"));
         JSpinner yValue = new JSpinner();
-        JLabel zLabel = new JLabel(rba.getString("LabelZ"));
+        JLabel zLabel = new JLabel(Bundle.getMessage("LabelZ"));
         JSpinner zValue = new JSpinner();
         JLabel unitsLabel = new JLabel();
 
@@ -156,6 +155,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             layoutPanel(title, units);
         }
 
+        @SuppressWarnings("UnnecessaryBoxing")
         private void layoutPanel(String title, String units) {
             this.setLayout(new FlowLayout());
             if (title.length() != 0) {
@@ -230,6 +230,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
 
         JSpinner spinner = new JSpinner();
 
+        @SuppressWarnings("UnnecessaryBoxing")
         JPanelSliderf(String title, Float min, Float max, int majorTicks, int minorTicks) {
             super();
             int iMin = Math.round(min * INT_PRECISION);
@@ -246,7 +247,7 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             slider.setMinorTickSpacing(iInterval / minorTicks);
             @SuppressWarnings("UseOfObsoleteCollectionType")
             // Need to use Hashtable for JSlider labels
-            Hashtable<Integer, JLabel> labelTable = new Hashtable<Integer, JLabel>();
+            Hashtable<Integer, JLabel> labelTable = new Hashtable<>();
             for (int i = iMin; i <= iMax; i += iInterval) {
                 float f = i;
                 f /= INT_PRECISION;
@@ -255,24 +256,18 @@ abstract public class AbstractAudioFrame extends JmriJFrame {
             slider.setLabelTable(labelTable);
             slider.setPaintTicks(true);
             slider.setPaintLabels(true);
-            slider.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    float f = slider.getValue();
-                    f /= INT_PRECISION;
-                    spinner.setValue(f);
-                }
+            slider.addChangeListener((ChangeEvent e) -> {
+                float f = slider.getValue();
+                f /= INT_PRECISION;
+                spinner.setValue(f);
             });
             spinner.setPreferredSize(new JTextField(5).getPreferredSize());
             spinner.setModel(
                     new SpinnerNumberModel(min, min, max, new Float(FLT_PRECISION)));
             spinner.setEditor(new JSpinner.NumberEditor(spinner, "0.00"));
-            spinner.addChangeListener(new ChangeListener() {
-                @Override
-                public void stateChanged(ChangeEvent e) {
-                    slider.setValue(
-                            Math.round((Float) spinner.getValue() * INT_PRECISION));
-                }
+            spinner.addChangeListener((ChangeEvent e) -> {
+                slider.setValue(
+                        Math.round((Float) spinner.getValue() * INT_PRECISION));
             });
             this.add(slider);
             this.add(spinner);

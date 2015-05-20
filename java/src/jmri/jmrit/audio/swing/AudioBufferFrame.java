@@ -4,7 +4,6 @@ package jmri.jmrit.audio.swing;
 //import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -18,7 +17,6 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import jmri.Audio;
 import jmri.AudioException;
 import jmri.AudioManager;
@@ -57,20 +55,20 @@ public class AudioBufferFrame extends AbstractAudioFrame {
 
     private static int counter = 1;
 
-    private boolean _newBuffer;
+    private boolean newBuffer;
 
     private final Object lock = new Object();
 
     // UI components for Add/Edit Buffer
-    JLabel urlLabel = new JLabel(rba.getString("LabelURL"));
+    JLabel urlLabel = new JLabel(Bundle.getMessage("LabelURL"));
     JTextField url = new JTextField(40);
-    JButton buttonBrowse = new JButton(rba.getString("ButtonBrowse"));
-    JCheckBox stream = new JCheckBox(rba.getString("LabelStream"));
-//    JLabel formatLabel = new JLabel(rba.getString("LabelFormat"));
+    JButton buttonBrowse = new JButton(Bundle.getMessage("ButtonBrowse"));
+    JCheckBox stream = new JCheckBox(Bundle.getMessage("LabelStream"));
+//    JLabel formatLabel = new JLabel(Bundle.getMessage("LabelFormat"));
 //    JTextField format = new JTextField(20);
-    JLabel loopStartLabel = new JLabel(rba.getString("LabelLoopStart"));
+    JLabel loopStartLabel = new JLabel(Bundle.getMessage("LabelLoopStart"));
     JSpinner loopStart = new JSpinner();
-    JLabel loopEndLabel = new JLabel(rba.getString("LabelLoopEnd"));
+    JLabel loopEndLabel = new JLabel(Bundle.getMessage("LabelLoopEnd"));
     JSpinner loopEnd = new JSpinner();
     JFileChooser fileChooser;
 //    AudioWaveFormPanel waveForm = new AudioWaveFormPanel();
@@ -89,6 +87,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
     }
 
     @Override
+    @SuppressWarnings("UnnecessaryBoxing")
     public void layoutFrame() {
         super.layoutFrame();
         JPanel p;
@@ -97,18 +96,13 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
         p.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(rba.getString("LabelSample")),
+                BorderFactory.createTitledBorder(Bundle.getMessage("LabelSample")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p2 = new JPanel();
         p2.setLayout(new FlowLayout());
         p2.add(urlLabel);
         p2.add(url);
-        buttonBrowse.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                browsePressed(e);
-            }
-        });
+        buttonBrowse.addActionListener(this::browsePressed);
         p2.add(buttonBrowse);
         p.add(p2);
         p2 = new JPanel();
@@ -146,54 +140,59 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         p = new JPanel();
         p.setLayout(new FlowLayout());
         p.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createTitledBorder(rba.getString("LabelLoopPoints")),
+                BorderFactory.createTitledBorder(Bundle.getMessage("LabelLoopPoints")),
                 BorderFactory.createEmptyBorder(5, 5, 5, 5)));
         p.add(loopStartLabel);
         loopStart.setPreferredSize(new JTextField(8).getPreferredSize());
         loopStart.setModel(
                 new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
-        loopStart.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                loopEnd.setValue(
-                        ((Long) loopStart.getValue()
-                        < (Long) loopEnd.getValue())
-                                ? loopEnd.getValue()
-                                : loopStart.getValue());
-            }
+        loopStart.addChangeListener((ChangeEvent e) -> {
+            loopEnd.setValue(
+                    ((Long) loopStart.getValue()
+                            < (Long) loopEnd.getValue())
+                            ? loopEnd.getValue()
+                            : loopStart.getValue());
         });
         p.add(loopStart);
         p.add(loopEndLabel);
         loopEnd.setPreferredSize(new JTextField(8).getPreferredSize());
         loopEnd.setModel(
                 new SpinnerNumberModel(Long.valueOf(0), Long.valueOf(0), Long.valueOf(Long.MAX_VALUE), Long.valueOf(1)));
-        loopEnd.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                loopStart.setValue(
-                        ((Long) loopEnd.getValue()
-                        < (Long) loopStart.getValue())
-                                ? loopEnd.getValue()
-                                : loopStart.getValue());
-            }
+        loopEnd.addChangeListener((ChangeEvent e) -> {
+            loopStart.setValue(
+                    ((Long) loopEnd.getValue()
+                            < (Long) loopStart.getValue())
+                            ? loopEnd.getValue()
+                            : loopStart.getValue());
         });
         p.add(loopEnd);
         main.add(p);
 
-        JButton ok;
-        frame.getContentPane().add(ok = new JButton(rb.getString("ButtonOK")));
-        ok.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                okPressed(e);
-            }
+        p = new JPanel();
+        JButton apply;
+        p.add(apply = new JButton(rb.getString("ButtonApply")));
+        apply.addActionListener((ActionEvent e) -> {
+            applyPressed(e);
         });
+        JButton ok;
+        p.add(ok = new JButton(rb.getString("ButtonOK")));
+        ok.addActionListener((ActionEvent e) -> {
+            applyPressed(e);
+            frame.dispose();
+        });
+        JButton cancel;
+        p.add(cancel = new JButton(rb.getString("ButtonCancel")));
+        cancel.addActionListener((ActionEvent e) -> {
+            frame.dispose();
+        });
+        frame.getContentPane().add(p);
     }
 
     /**
      * Method to populate the Edit Buffer frame with default values
      */
     @Override
+    @SuppressWarnings("UnnecessaryBoxing")
     public void resetFrame() {
         synchronized (lock) {
             sysName.setText("IAB" + counter++);
@@ -206,7 +205,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         loopStart.setValue(Long.valueOf(0));
         loopEnd.setValue(Long.valueOf(0));
 
-        this._newBuffer = true;
+        this.newBuffer = true;
     }
 
     /**
@@ -227,7 +226,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         loopEnd.setEnabled(true);
         loopEndLabel.setEnabled(true);
 
-        this._newBuffer = false;
+        this.newBuffer = false;
     }
 
     void browsePressed(ActionEvent e) {
@@ -258,7 +257,7 @@ public class AudioBufferFrame extends AbstractAudioFrame {
         }
     }
 
-    void okPressed(ActionEvent e) {
+    void applyPressed(ActionEvent e) {
         String user = userName.getText();
         if (user.equals("")) {
             user = null;
@@ -271,14 +270,14 @@ public class AudioBufferFrame extends AbstractAudioFrame {
             if (b == null) {
                 throw new AudioException("Problem creating buffer");
             }
-            if (_newBuffer && am.getByUserName(user) != null) {
+            if (newBuffer && am.getByUserName(user) != null) {
                 am.deregister(b);
                 counter--;
                 throw new AudioException("Duplicate user name - please modify");
             }
             b.setUserName(user);
             b.setStreamed(stream.isSelected());
-            if (_newBuffer || !b.getURL().equals(url.getText())) {
+            if (newBuffer || !b.getURL().equals(url.getText())) {
                 b.setURL(url.getText());
                 log.debug("After load, end loop point = " + b.getEndLoopPoint());
                 //b.setStartLoopPoint((Long)loopStart.getValue());

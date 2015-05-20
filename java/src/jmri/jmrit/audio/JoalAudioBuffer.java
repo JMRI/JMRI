@@ -1,12 +1,12 @@
 // JoalAudioBuffer.java
 package jmri.jmrit.audio;
 
+import com.jogamp.openal.AL;
+import com.jogamp.openal.ALException;
+import com.jogamp.openal.util.ALut;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import jmri.util.FileUtil;
-import net.java.games.joal.AL;
-import net.java.games.joal.ALException;
-import net.java.games.joal.util.ALut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,40 +17,43 @@ import org.slf4j.LoggerFactory;
  * internal-only
  * <br><br><hr><br><b>
  * This software is based on or using the JOAL Library available from
- * <a href="http://joal.dev.java.net/">http://joal.dev.java.net/</a>
+ * <a href="http://jogamp.org/joal/www/">http://jogamp.org/joal/www/</a>
  * </b><br><br>
- * JOAL License:
+ * JOAL is released under the BSD license. The full license terms follow:
  * <br><i>
- * Copyright (c) 2003 Sun Microsystems, Inc. All Rights Reserved.
+ * Copyright (c) 2003-2006 Sun Microsystems, Inc. All Rights Reserved.
  * <br>
  * Redistribution and use in source and binary forms, with or without
- * modification, are permitted provided that the following conditions are met:
+ * modification, are permitted provided that the following conditions are
+ * met:
  * <br>
- * -Redistribution of source code must retain the above copyright notice, this
- * list of conditions and the following disclaimer.
+ * - Redistribution of source code must retain the above copyright
+ *   notice, this list of conditions and the following disclaimer.
  * <br>
- * -Redistribution in binary form must reproduce the above copyright notice,
- * this list of conditions and the following disclaimer in the documentation
- * and/or other materials provided with the distribution.
+ * - Redistribution in binary form must reproduce the above copyright
+ *   notice, this list of conditions and the following disclaimer in the
+ *   documentation and/or other materials provided with the distribution.
  * <br>
- * Neither the name of Sun Microsystems, Inc. or the names of contributors may
- * be used to endorse or promote products derived from this software without
- * specific prior written permission.
+ * Neither the name of Sun Microsystems, Inc. or the names of
+ * contributors may be used to endorse or promote products derived from
+ * this software without specific prior written permission.
  * <br>
  * This software is provided "AS IS," without a warranty of any kind. ALL
- * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES, INCLUDING ANY
- * IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE OR
- * NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN MIDROSYSTEMS, INC. ("SUN") AND ITS
- * LICENSORS SHALL NOT BE LIABLE FOR ANY DAMAGES SUFFERED BY LICENSEE AS A
- * RESULT OF USING, MODIFYING OR DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES.
- * IN NO EVENT WILL SUN OR ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT
- * OR DATA, OR FOR DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR
- * PUNITIVE DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY,
- * ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF SUN HAS
- * BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
+ * EXPRESS OR IMPLIED CONDITIONS, REPRESENTATIONS AND WARRANTIES,
+ * INCLUDING ANY IMPLIED WARRANTY OF MERCHANTABILITY, FITNESS FOR A
+ * PARTICULAR PURPOSE OR NON-INFRINGEMENT, ARE HEREBY EXCLUDED. SUN
+ * MICROSYSTEMS, INC. ("SUN") AND ITS LICENSORS SHALL NOT BE LIABLE FOR
+ * ANY DAMAGES SUFFERED BY LICENSEE AS A RESULT OF USING, MODIFYING OR
+ * DISTRIBUTING THIS SOFTWARE OR ITS DERIVATIVES. IN NO EVENT WILL SUN OR
+ * ITS LICENSORS BE LIABLE FOR ANY LOST REVENUE, PROFIT OR DATA, OR FOR
+ * DIRECT, INDIRECT, SPECIAL, CONSEQUENTIAL, INCIDENTAL OR PUNITIVE
+ * DAMAGES, HOWEVER CAUSED AND REGARDLESS OF THE THEORY OF LIABILITY,
+ * ARISING OUT OF THE USE OF OR INABILITY TO USE THIS SOFTWARE, EVEN IF
+ * SUN HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGES.
  * <br>
- * You acknowledge that this software is not designed or intended for use in the
- * design, construction, operation or maintenance of any nuclear facility.
+ * You acknowledge that this software is not designed or intended for use
+ * in the design, construction, operation or maintenance of any nuclear
+ * facility.
  * <br><br><br></i>
  * <hr>
  * This file is part of JMRI.
@@ -77,14 +80,14 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
     private static AL al = JoalAudioFactory.getAL();
 
     // Arrays to hold various .wav file information
-    private int[] _format = new int[1];
-    private int[] _dataStorageBuffer = new int[1];
-    private ByteBuffer[] _data = new ByteBuffer[1];
-    private int[] _size = new int[1];
-    private int[] _freq = new int[1];
-    private int[] _loop = new int[1];
+    private int[] format = new int[1];
+    private int[] dataStorageBuffer = new int[1];
+    private ByteBuffer[] data = new ByteBuffer[1];
+    private int[] size = new int[1];
+    private int[] freq = new int[1];
+    private int[] loop = new int[1];
 
-    private boolean _initialised = false;
+    private boolean initialised = false;
 
     /**
      * Constructor for new JoalAudioBuffer with system name
@@ -96,7 +99,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("New JoalAudioBuffer: " + systemName);
         }
-        _initialised = init();
+        initialised = init();
     }
 
     /**
@@ -110,7 +113,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("New JoalAudioBuffer: " + userName + " (" + systemName + ")");
         }
-        _initialised = init();
+        initialised = init();
     }
 
     /**
@@ -120,7 +123,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      */
     private boolean init() {
         // Try to create an empty buffer that will hold the actual sound data
-        al.alGenBuffers(1, _dataStorageBuffer, 0);
+        al.alGenBuffers(1, dataStorageBuffer, 0);
         if (JoalAudioFactory.checkALError()) {
             log.warn("Error creating JoalAudioBuffer (" + this.getSystemName() + ")");
             return false;
@@ -142,7 +145,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * @return buffer[] reference to DataStorageBuffer
      */
     protected int[] getDataStorageBuffer() {
-        return _dataStorageBuffer;
+        return dataStorageBuffer;
     }
 
     @Override
@@ -150,7 +153,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (this.getState() != STATE_LOADED) {
             return "Empty buffer";
         } else {
-            return this.getURL() + " (" + parseFormat() + ", " + this._freq[0] + " Hz)";
+            return this.getURL() + " (" + parseFormat() + ", " + this.freq[0] + " Hz)";
         }
     }
 
@@ -160,7 +163,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
      * @return string representation
      */
     private String parseFormat() {
-        switch (this._format[0]) {
+        switch (this.format[0]) {
             case AL.AL_FORMAT_MONO8:
                 return "8-bit mono";
             case AL.AL_FORMAT_MONO16:
@@ -170,28 +173,28 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             case AL.AL_FORMAT_STEREO16:
                 return "16-bit stereo";
         }
-        if (this._format[0] == JoalAudioFactory.AL_FORMAT_QUAD8
+        if (this.format[0] == JoalAudioFactory.AL_FORMAT_QUAD8
                 && JoalAudioFactory.AL_FORMAT_QUAD8 != FORMAT_UNKNOWN) {
             return "8-bit quadrophonic";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_QUAD16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_QUAD16
                 && JoalAudioFactory.AL_FORMAT_QUAD16 != FORMAT_UNKNOWN) {
             return "16-bit quadrophonic";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_51CHN8
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_51CHN8
                 && JoalAudioFactory.AL_FORMAT_51CHN8 != FORMAT_UNKNOWN) {
             return "8-bit 5.1 surround";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_51CHN16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_51CHN16
                 && JoalAudioFactory.AL_FORMAT_51CHN16 != FORMAT_UNKNOWN) {
             return "16-bit 5.1 surround";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_61CHN8
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_61CHN8
                 && JoalAudioFactory.AL_FORMAT_61CHN8 != FORMAT_UNKNOWN) {
             return "8-bit 6.1 surround";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_61CHN16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_61CHN16
                 && JoalAudioFactory.AL_FORMAT_61CHN16 != FORMAT_UNKNOWN) {
             return "16-bit 6.1 surround";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_71CHN8
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_71CHN8
                 && JoalAudioFactory.AL_FORMAT_71CHN8 != FORMAT_UNKNOWN) {
             return "8 bit 7.1 surround";
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_71CHN16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_71CHN16
                 && JoalAudioFactory.AL_FORMAT_71CHN16 != FORMAT_UNKNOWN) {
             return "16 bit 7.1 surround";
         } else {
@@ -201,7 +204,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     protected boolean loadBuffer(InputStream stream) {
-        if (!_initialised) {
+        if (!initialised) {
             return false;
         }
         // Reset buffer state
@@ -212,7 +215,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
         // Load the specified .wav file into data arrays
         try {
-            ALut.alutLoadWAVFile(stream, _format, _data, _size, _freq, _loop);
+            ALut.alutLoadWAVFile(stream, format, data, size, freq, loop);
         } catch (ALException e) {
             log.warn("Error loading JoalAudioBuffer: " + e.getMessage());
             return false;
@@ -223,7 +226,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     protected boolean loadBuffer() {
-        if (!_initialised) {
+        if (!initialised) {
             return false;
         }
         // Reset buffer state
@@ -234,7 +237,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
         // Load the specified .wav file into data arrays
         try {
-            ALut.alutLoadWAVFile(FileUtil.getExternalFilename(this.getURL()), _format, _data, _size, _freq, _loop);
+            ALut.alutLoadWAVFile(FileUtil.getExternalFilename(this.getURL()), format, data, size, freq, loop);
         } catch (ALException e) {
             log.warn("Error loading JoalAudioBuffer: " + e.getMessage());
             return false;
@@ -245,7 +248,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     public boolean loadBuffer(ByteBuffer b, int format, int freq) {
-        if (!_initialised) {
+        if (!initialised) {
             return false;
         }
 
@@ -256,10 +259,10 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         this.setState(STATE_EMPTY);
 
         // Load the buffer data.
-        _data[0] = b;
-        _format[0] = format;
-        _freq[0] = freq;
-        _size[0] = b.limit();
+        this.data[0] = b;
+        this.format[0] = format;
+        this.freq[0] = freq;
+        this.size[0] = b.limit();
 
         return (this.processBuffer());
 
@@ -269,12 +272,12 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         // Processing steps common to both loadBuffer(InputStream) and loadBuffer()
 
         // Store the actual data in the buffer
-        al.alBufferData(_dataStorageBuffer[0], _format[0], _data[0], _size[0], _freq[0]);
+        al.alBufferData(dataStorageBuffer[0], format[0], data[0], size[0], freq[0]);
 
         // Set initial loop points
         // Use internal methods to postpone loop buffer generation
         setStartLoopPoint(0, false);
-        setEndLoopPoint(_size[0], false);
+        setEndLoopPoint(size[0], false);
         generateLoopBuffers(LOOP_POINT_BOTH);
 
         // All done
@@ -282,8 +285,8 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("Loaded buffer: " + this.getSystemName());
             log.debug(" from file: " + this.getURL());
-            log.debug(" format: " + parseFormat() + ", " + _freq[0] + " Hz");
-            log.debug(" length: " + _size[0]);
+            log.debug(" format: " + parseFormat() + ", " + freq[0] + " Hz");
+            log.debug(" length: " + size[0]);
         }
         return true;
     }
@@ -322,7 +325,7 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     public int getFormat() {
-        switch (this._format[0]) {
+        switch (this.format[0]) {
             case AL.AL_FORMAT_MONO8:
                 return FORMAT_8BIT_MONO;
             case AL.AL_FORMAT_MONO16:
@@ -332,28 +335,28 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
             case AL.AL_FORMAT_STEREO16:
                 return FORMAT_16BIT_STEREO;
         }
-        if (this._format[0] == JoalAudioFactory.AL_FORMAT_QUAD8
+        if (this.format[0] == JoalAudioFactory.AL_FORMAT_QUAD8
                 && JoalAudioFactory.AL_FORMAT_QUAD8 != FORMAT_UNKNOWN) {
             return FORMAT_8BIT_QUAD;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_QUAD16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_QUAD16
                 && JoalAudioFactory.AL_FORMAT_QUAD16 != FORMAT_UNKNOWN) {
             return FORMAT_16BIT_QUAD;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_51CHN8
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_51CHN8
                 && JoalAudioFactory.AL_FORMAT_51CHN8 != FORMAT_UNKNOWN) {
             return FORMAT_8BIT_5DOT1;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_51CHN16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_51CHN16
                 && JoalAudioFactory.AL_FORMAT_51CHN16 != FORMAT_UNKNOWN) {
             return FORMAT_16BIT_5DOT1;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_61CHN8
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_61CHN8
                 && JoalAudioFactory.AL_FORMAT_61CHN8 != FORMAT_UNKNOWN) {
             return FORMAT_8BIT_6DOT1;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_61CHN16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_61CHN16
                 && JoalAudioFactory.AL_FORMAT_61CHN16 != FORMAT_UNKNOWN) {
             return FORMAT_16BIT_6DOT1;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_71CHN8
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_71CHN8
                 && JoalAudioFactory.AL_FORMAT_71CHN8 != FORMAT_UNKNOWN) {
             return FORMAT_8BIT_7DOT1;
-        } else if (this._format[0] == JoalAudioFactory.AL_FORMAT_71CHN16
+        } else if (this.format[0] == JoalAudioFactory.AL_FORMAT_71CHN16
                 && JoalAudioFactory.AL_FORMAT_71CHN16 != FORMAT_UNKNOWN) {
             return FORMAT_16BIT_7DOT1;
         } else {
@@ -366,19 +369,19 @@ public class JoalAudioBuffer extends AbstractAudioBuffer {
         if (this.getFrameSize() == 0) {
             return (0);
         } else {
-            return (long) this._size[0] / this.getFrameSize();
+            return (long) this.size[0] / this.getFrameSize();
         }
     }
 
     @Override
     public int getFrequency() {
-        return this._freq[0];
+        return this.freq[0];
     }
 
     @Override
     protected void cleanUp() {
-        if (_initialised) {
-            al.alDeleteBuffers(1, _dataStorageBuffer, 0);
+        if (initialised) {
+            al.alDeleteBuffers(1, dataStorageBuffer, 0);
         }
         if (log.isDebugEnabled()) {
             log.debug("Cleanup JoalAudioBuffer (" + this.getSystemName() + ")");

@@ -44,29 +44,29 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
     /**
      * Holds the AudioFormat of this buffer
      */
-    private transient AudioFormat _audioFormat;
+    private transient AudioFormat audioFormat;
 
     /**
      * Byte array used to store the actual data read from the file
      */
-    private byte[] _dataStorageBuffer;
+    private byte[] dataStorageBuffer;
 
     /**
      * Frequency of this AudioBuffer. Used to calculate pitch changes
      */
-    private int _freq;
+    private int freq;
 
-    private long _size;
+    private long size;
 
     /**
      * Reference to the AudioInputStream used to read sound data from the file
      */
-    private transient AudioInputStream _audioInputStream;
+    private transient AudioInputStream audioInputStream;
 
     /**
      * Holds the initialised status of this AudioBuffer
      */
-    private boolean _initialised = false;
+    private boolean initialised = false;
 
     /**
      * Constructor for new JavaSoundAudioBuffer with system name
@@ -78,7 +78,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("New JavaSoundAudioBuffer: " + systemName);
         }
-        _initialised = init();
+        initialised = init();
     }
 
     /**
@@ -92,7 +92,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         if (log.isDebugEnabled()) {
             log.debug("New JavaSoundAudioBuffer: " + userName + " (" + systemName + ")");
         }
-        _initialised = init();
+        initialised = init();
     }
 
     /**
@@ -101,10 +101,10 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
      * @return True if successful
      */
     private boolean init() {
-        this._audioFormat = null;
-        _dataStorageBuffer = null;
-        this._freq = 0;
-        this._size = 0;
+        this.audioFormat = null;
+        dataStorageBuffer = null;
+        this.freq = 0;
+        this.size = 0;
         this.setStartLoopPoint(0, false);
         this.setEndLoopPoint(0, false);
         this.setState(STATE_EMPTY);
@@ -117,12 +117,12 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
      * Applies only to sub-types:
      * <ul>
      * <li>Buffer
-     * </u>
+     * </ul>
      *
      * @return buffer[] reference to DataStorageBuffer
      */
     protected byte[] getDataStorageBuffer() {
-        return _dataStorageBuffer;
+        return dataStorageBuffer;
     }
 
     /**
@@ -132,7 +132,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
      * @return audio format as an AudioFormat object
      */
     protected AudioFormat getAudioFormat() {
-        return _audioFormat;
+        return audioFormat;
     }
 
     @Override
@@ -140,13 +140,13 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         if (this.getState() != STATE_LOADED) {
             return "Empty buffer";
         } else {
-            return this.getURL() + " (" + parseFormat() + ", " + this._freq + " Hz)";
+            return this.getURL() + " (" + parseFormat() + ", " + this.freq + " Hz)";
         }
     }
 
     @Override
     protected boolean loadBuffer(InputStream stream) {
-        if (!_initialised) {
+        if (!initialised) {
             return false;
         }
 
@@ -155,7 +155,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
         // Create the input stream for the audio file
         try {
-            _audioInputStream = AudioSystem.getAudioInputStream(stream);
+            audioInputStream = AudioSystem.getAudioInputStream(stream);
         } catch (UnsupportedAudioFileException ex) {
             log.error("Unsupported audio file format when loading buffer:" + ex);
             return false;
@@ -169,7 +169,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     protected boolean loadBuffer() {
-        if (!_initialised) {
+        if (!initialised) {
             return false;
         }
 
@@ -181,7 +181,7 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
         // Create the input stream for the audio file
         try {
-            _audioInputStream = AudioSystem.getAudioInputStream(file);
+            audioInputStream = AudioSystem.getAudioInputStream(file);
         } catch (UnsupportedAudioFileException ex) {
             log.error("Unsupported audio file format when loading buffer:" + ex);
             return false;
@@ -199,14 +199,14 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         byte[] buffer;
 
         // Get the AudioFormat
-        _audioFormat = _audioInputStream.getFormat();
-        this._freq = (int) _audioFormat.getSampleRate();
+        audioFormat = audioInputStream.getFormat();
+        this.freq = (int) audioFormat.getSampleRate();
 
         // Determine the required buffer size in bytes
         // number of channels * length in frames * sample size in bits / 8 bits in a byte
-        int dataSize = _audioFormat.getChannels()
-                * (int) _audioInputStream.getFrameLength()
-                * _audioFormat.getSampleSizeInBits() / 8;
+        int dataSize = audioFormat.getChannels()
+                * (int) audioInputStream.getFrameLength()
+                * audioFormat.getSampleSizeInBits() / 8;
         if (log.isDebugEnabled()) {
             log.debug("Size of JavaSoundAudioBuffer (" + this.getSystemName() + ") = " + dataSize);
         }
@@ -215,12 +215,13 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
             buffer = new byte[dataSize];
 
             // Load into data buffer
-            int bytesRead = 0, totalBytesRead = 0;
+            int bytesRead;
+            int totalBytesRead = 0;
             try {
                 // Read until end of audioInputStream reached
                 log.debug("Start to load JavaSoundBuffer...");
                 while ((bytesRead
-                        = _audioInputStream.read(buffer,
+                        = audioInputStream.read(buffer,
                                 totalBytesRead,
                                 buffer.length - totalBytesRead))
                         != -1 && totalBytesRead < buffer.length) {
@@ -242,22 +243,22 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
         }
 
         // Done loading - need to convert byte endian order
-        this._dataStorageBuffer = convertAudioEndianness(buffer, _audioFormat.getSampleSizeInBits() == 16);
+        this.dataStorageBuffer = convertAudioEndianness(buffer, audioFormat.getSampleSizeInBits() == 16);
 
         // Set initial loop points
         this.setStartLoopPoint(0, false);
-        this.setEndLoopPoint(_audioInputStream.getFrameLength(), false);
+        this.setEndLoopPoint(audioInputStream.getFrameLength(), false);
         this.generateLoopBuffers(LOOP_POINT_BOTH);
 
         // Store length of sample
-        this._size = _audioInputStream.getFrameLength();
+        this.size = audioInputStream.getFrameLength();
 
         this.setState(STATE_LOADED);
         if (log.isDebugEnabled()) {
             log.debug("Loaded buffer: " + this.getSystemName());
             log.debug(" from file: " + this.getURL());
-            log.debug(" format: " + parseFormat() + ", " + _freq + " Hz");
-            log.debug(" length: " + _audioInputStream.getFrameLength());
+            log.debug(" format: " + parseFormat() + ", " + freq + " Hz");
+            log.debug(" length: " + audioInputStream.getFrameLength());
         }
         return true;
 
@@ -294,14 +295,14 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     public int getFormat() {
-        if (_audioFormat != null) {
-            if (_audioFormat.getChannels() == 1 && _audioFormat.getSampleSizeInBits() == 8) {
+        if (audioFormat != null) {
+            if (audioFormat.getChannels() == 1 && audioFormat.getSampleSizeInBits() == 8) {
                 return FORMAT_8BIT_MONO;
-            } else if (_audioFormat.getChannels() == 1 && _audioFormat.getSampleSizeInBits() == 16) {
+            } else if (audioFormat.getChannels() == 1 && audioFormat.getSampleSizeInBits() == 16) {
                 return FORMAT_16BIT_MONO;
-            } else if (_audioFormat.getChannels() == 2 && _audioFormat.getSampleSizeInBits() == 8) {
+            } else if (audioFormat.getChannels() == 2 && audioFormat.getSampleSizeInBits() == 8) {
                 return FORMAT_8BIT_STEREO;
-            } else if (_audioFormat.getChannels() == 2 && _audioFormat.getSampleSizeInBits() == 16) {
+            } else if (audioFormat.getChannels() == 2 && audioFormat.getSampleSizeInBits() == 16) {
                 return FORMAT_16BIT_STEREO;
             } else {
                 return FORMAT_UNKNOWN;
@@ -312,12 +313,12 @@ public class JavaSoundAudioBuffer extends AbstractAudioBuffer {
 
     @Override
     public long getLength() {
-        return this._size;
+        return this.size;
     }
 
     @Override
     public int getFrequency() {
-        return this._freq;
+        return this.freq;
     }
 
     /**

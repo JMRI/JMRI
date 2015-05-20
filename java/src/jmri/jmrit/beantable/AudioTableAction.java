@@ -2,7 +2,7 @@
 package jmri.jmrit.beantable;
 
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ResourceBundle;
 import javax.swing.JButton;
@@ -48,7 +48,7 @@ public class AudioTableAction extends AbstractTableAction {
      *
      */
     private static final long serialVersionUID = 997606126554992440L;
-    AudioTableDataModel listener;
+    AudioTableDataModel listeners;
     AudioTableDataModel buffers;
     AudioTableDataModel sources;
 
@@ -58,8 +58,6 @@ public class AudioTableAction extends AbstractTableAction {
 
     AudioTableFrame atf;
     AudioTablePanel atp;
-
-    static final ResourceBundle rba = ResourceBundle.getBundle("jmri.jmrit.audio.swing.AudioTableBundle");
 
     /**
      * Create an action with a specific title.
@@ -83,27 +81,17 @@ public class AudioTableAction extends AbstractTableAction {
      * Default constructor
      */
     public AudioTableAction() {
-        this(rb.getString("TitleAudioTable"));
+        this(Bundle.getMessage("TitleAudioTable"));
     }
 
     @Override
     public void addToFrame(BeanTableFrame f) {
-        JButton addSourceButton = new JButton(rba.getString("ButtonAddSource"));
-        atp.addToBottomBox(addSourceButton);
-        addSourceButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addSourcePressed(e);
-            }
-        });
-        JButton addBufferButton = new JButton(rba.getString("ButtonAddBuffer"));
+        JButton addBufferButton = new JButton(Bundle.getMessage("ButtonAddAudioBuffer"));
         atp.addToBottomBox(addBufferButton);
-        addBufferButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                addBufferPressed(e);
-            }
-        });
+        addBufferButton.addActionListener(this::addBufferPressed);
+        JButton addSourceButton = new JButton(Bundle.getMessage("ButtonAddAudioSource"));
+        atp.addToBottomBox(addSourceButton);
+        addSourceButton.addActionListener(this::addSourcePressed);
     }
 
     @Override
@@ -141,11 +129,15 @@ public class AudioTableAction extends AbstractTableAction {
         // ensure that the AudioFactory has been initialised
         if (InstanceManager.audioManagerInstance().getActiveAudioFactory() == null) {
             InstanceManager.audioManagerInstance().init();
+            if(InstanceManager.audioManagerInstance().getActiveAudioFactory() instanceof jmri.jmrit.audio.NullAudioFactory) {
+                InstanceManager.getDefault(jmri.UserPreferencesManager.class).
+                        showWarningMessage("Error", "NullAudioFactory initialised - no sounds will be available", getClassName(), "nullAudio", false, true);
+            }
         }
-        listener = new AudioListenerTableDataModel();
+        listeners = new AudioListenerTableDataModel();
         buffers = new AudioBufferTableDataModel();
         sources = new AudioSourceTableDataModel();
-        atp = new AudioTablePanel(listener, buffers, sources, helpTarget());
+        atp = new AudioTablePanel(listeners, buffers, sources, helpTarget());
     }
 
     @Override
@@ -156,7 +148,7 @@ public class AudioTableAction extends AbstractTableAction {
 
     @Override
     protected void setTitle() {
-        atf.setTitle(rb.getString("TitleAudioTable"));
+        atf.setTitle(Bundle.getMessage("TitleAudioTable"));
     }
 
     @Override
@@ -171,7 +163,7 @@ public class AudioTableAction extends AbstractTableAction {
 
     void addSourcePressed(ActionEvent e) {
         if (sourceFrame == null) {
-            sourceFrame = new AudioSourceFrame(rb.getString("TitleAddAudioSource"), sources);
+            sourceFrame = new AudioSourceFrame(Bundle.getMessage("TitleAddAudioSource"), sources);
         }
         sourceFrame.updateBufferList();
         sourceFrame.resetFrame();
@@ -181,7 +173,7 @@ public class AudioTableAction extends AbstractTableAction {
 
     void addBufferPressed(ActionEvent e) {
         if (bufferFrame == null) {
-            bufferFrame = new AudioBufferFrame(rb.getString("TitleAddAudioBuffer"), buffers);
+            bufferFrame = new AudioBufferFrame(Bundle.getMessage("TitleAddAudioBuffer"), buffers);
         }
         bufferFrame.resetFrame();
         bufferFrame.pack();
@@ -192,7 +184,7 @@ public class AudioTableAction extends AbstractTableAction {
     public void setMenuBar(BeanTableFrame f) {
         JMenuBar menuBar = f.getJMenuBar();
         ResourceBundle rbapps = ResourceBundle.getBundle("apps.AppsBundle");
-        MenuElement[] subElements = menuBar.getSubElements();
+        MenuElement[] subElements;
         JMenu fileMenu = null;
         for (int i = 0; i < menuBar.getMenuCount(); i++) {
             if (menuBar.getComponent(i) instanceof JMenu) {
@@ -205,12 +197,12 @@ public class AudioTableAction extends AbstractTableAction {
             return;
         }
         subElements = fileMenu.getSubElements();
-        for (int i = 0; i < subElements.length; i++) {
-            MenuElement[] popsubElements = subElements[i].getSubElements();
-            for (int x = 0; x < popsubElements.length; x++) {
-                if (popsubElements[x] instanceof JMenuItem) {
-                    if (((JMenuItem) popsubElements[x]).getText().equals(rbapps.getString("PrintTable"))) {
-                        JMenuItem printMenu = ((JMenuItem) popsubElements[x]);
+        for (MenuElement subElement : subElements) {
+            MenuElement[] popsubElements = subElement.getSubElements();
+            for (MenuElement popsubElement : popsubElements) {
+                if (popsubElement instanceof JMenuItem) {
+                    if (((JMenuItem) popsubElement).getText().equals(rbapps.getString("PrintTable"))) {
+                        JMenuItem printMenu = (JMenuItem) popsubElement;
                         fileMenu.remove(printMenu);
                         break;
                     }
@@ -225,7 +217,7 @@ public class AudioTableAction extends AbstractTableAction {
         switch (a.getSubType()) {
             case Audio.LISTENER:
                 if (listenerFrame == null) {
-                    listenerFrame = new AudioListenerFrame(rb.getString("TitleAddAudioListener"), listener);
+                    listenerFrame = new AudioListenerFrame(Bundle.getMessage("TitleAddAudioListener"), listeners);
                 }
                 listenerFrame.populateFrame(a);
                 t = new Thread() {
@@ -239,7 +231,7 @@ public class AudioTableAction extends AbstractTableAction {
                 break;
             case Audio.BUFFER:
                 if (bufferFrame == null) {
-                    bufferFrame = new AudioBufferFrame(rb.getString("TitleAddAudioBuffer"), buffers);
+                    bufferFrame = new AudioBufferFrame(Bundle.getMessage("TitleAddAudioBuffer"), buffers);
                 }
                 bufferFrame.populateFrame(a);
                 t = new Thread() {
@@ -253,7 +245,7 @@ public class AudioTableAction extends AbstractTableAction {
                 break;
             case Audio.SOURCE:
                 if (sourceFrame == null) {
-                    sourceFrame = new AudioSourceFrame(rb.getString("TitleAddAudioBuffer"), sources);
+                    sourceFrame = new AudioSourceFrame(Bundle.getMessage("TitleAddAudioBuffer"), sources);
                 }
                 sourceFrame.updateBufferList();
                 sourceFrame.populateFrame(a);
@@ -325,9 +317,9 @@ public class AudioTableAction extends AbstractTableAction {
         protected synchronized void updateSpecificNameList(char subType) {
             // first, remove listeners from the individual objects
             if (sysNameList != null) {
-                for (int i = 0; i < sysNameList.size(); i++) {
+                for (String sysName : sysNameList) {
                     // if object has been deleted, it's not here; ignore it
-                    NamedBean b = getBySystemName(sysNameList.get(i));
+                    NamedBean b = getBySystemName(sysName);
                     if (b != null) {
                         b.removePropertyChangeListener(this);
                     }
@@ -335,9 +327,9 @@ public class AudioTableAction extends AbstractTableAction {
             }
             sysNameList = getManager().getSystemNameList(subType);
             // and add them back in
-            for (int i = 0; i < sysNameList.size(); i++) {
-                getBySystemName(sysNameList.get(i)).addPropertyChangeListener(this);
-            }
+            sysNameList.stream().forEach((sysName) -> {
+                getBySystemName(sysName).addPropertyChangeListener(this);
+            });
         }
 
         @Override
@@ -394,9 +386,9 @@ public class AudioTableAction extends AbstractTableAction {
                     a = getBySystemName(sysNameList.get(row));
                     return (a != null) ? a.getComment() : null;
                 case DELETECOL:
-                    return (subType != Audio.LISTENER) ? AbstractTableAction.rb.getString("ButtonDelete") : "";
+                    return (subType != Audio.LISTENER) ? Bundle.getMessage("ButtonDelete") : "";
                 case EDITCOL:
-                    return AbstractTableAction.rb.getString("ButtonEdit");
+                    return Bundle.getMessage("ButtonEdit");
                 default:
                     log.error("internal state inconsistent with table requst for " + row + " " + col);
                     return null;
@@ -422,7 +414,7 @@ public class AudioTableAction extends AbstractTableAction {
                 case VALUECOL:
                     return new JTextField(50).getPreferredSize().width;
                 case EDITCOL:
-                    return new JButton(AbstractTableAction.rb.getString("ButtonEdit")).getPreferredSize().width;
+                    return new JButton(Bundle.getMessage("ButtonEdit")).getPreferredSize().width;
                 default:
                     return super.getPreferredWidth(col);
             }
@@ -432,7 +424,7 @@ public class AudioTableAction extends AbstractTableAction {
         public boolean isCellEditable(int row, int col) {
             switch (col) {
                 case DELETECOL:
-                    return (subType != Audio.LISTENER) ? true : false;
+                    return (subType != Audio.LISTENER);
                 case VALUECOL:
                     return false;
                 case EDITCOL:
@@ -455,7 +447,7 @@ public class AudioTableAction extends AbstractTableAction {
         protected void configEditColumn(JTable table) {
             // have the edit column hold a button
             setColumnToHoldButton(table, EDITCOL,
-                    new JButton(AbstractTableAction.rb.getString("ButtonEdit")));
+                    new JButton(Bundle.getMessage("ButtonEdit")));
         }
 
         @Override
@@ -481,6 +473,11 @@ public class AudioTableAction extends AbstractTableAction {
         @Override
         protected synchronized void updateNameList() {
             updateSpecificNameList(Audio.LISTENER);
+        }
+
+        @Override
+        protected void showPopup(MouseEvent e) {
+            // Do nothing - disable pop-up menu for AudioListener
         }
     }
 
@@ -525,8 +522,14 @@ public class AudioTableAction extends AbstractTableAction {
     }
 
     @Override
+    public void setMessagePreferencesDetails(){
+        jmri.InstanceManager.getDefault(jmri.UserPreferencesManager.class).preferenceItemDetails(getClassName(), "nullAudio", "Hide Null Audio Warning Message");
+        super.setMessagePreferencesDetails();
+    }
+
+    @Override
     public String getClassDescription() {
-        return rb.getString("TitleAudioTable");
+        return Bundle.getMessage("TitleAudioTable");
     }
 
     @Override

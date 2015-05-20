@@ -42,7 +42,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
      */
     private static AudioFactory activeAudioFactory = null;
 
-    private static boolean _initialised = false;
+    private static boolean initialised = false;
 
     ShutDownTask audioShutDownTask;
 
@@ -107,22 +107,16 @@ public class DefaultAudioManager extends AbstractAudioManager {
         return a;
     }
 
-    @Deprecated
-    @Override
-    public List<String> getSystemNameList(int subType) {
-        return this.getSystemNameList((char) subType);
-    }
-
     @Override
     public List<String> getSystemNameList(char subType) {
         List<String> tempList = getSystemNameList();
-        List<String> out = new ArrayList<String>();
-        for (int i = 0; i < tempList.size(); i++) {
-            Audio audio = this.getBySystemName(tempList.get(i));
+        List<String> out = new ArrayList<>();
+        tempList.stream().forEach((tempList1) -> {
+            Audio audio = this.getBySystemName(tempList1);
             if (audio.getSubType() == subType) {
-                out.add(tempList.get(i));
+                out.add(tempList1);
             }
-        }
+        });
         return out;
     }
 
@@ -133,7 +127,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
     // OK to write to static variables as we only do so if not initialised
     @Override
     public synchronized void init() {
-        if (!_initialised) {
+        if (!initialised) {
 //            // First try to initialise LWJGL
 //            activeAudioFactory = new LWJGLAudioFactory();
 //            log.debug("Try to initialise LWJGLAudioFactory");
@@ -179,7 +173,7 @@ public class DefaultAudioManager extends AbstractAudioManager {
                 InstanceManager.shutDownManagerInstance().register(audioShutDownTask);
             }
 
-            _initialised = true;
+            initialised = true;
             if (log.isDebugEnabled()) {
                 log.debug("Initialised AudioFactory type: " + activeAudioFactory.getClass().getSimpleName());
             }

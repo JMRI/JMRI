@@ -50,6 +50,10 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.1
+; - Remove old JOAL libraries
+; - Change minimum JRE version to 1.8
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.0
 ; - Remove support for installing the old DecoderPro
 ; -------------------------------------------------------------------------
@@ -247,9 +251,9 @@
 !endif
 !ifndef JRE_VER
   ; -- usually, this will be determined by the build.xml ant script
-  !define JRE_VER   "1.6"                       ; Required JRE version
+  !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.21.5"                    ; Installer version
+!define INST_VER  "0.1.22.1"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -555,6 +559,9 @@ SectionGroup "JMRI Core Files" SEC_CORE
     Delete "$OUTDIR\lib\jinput-raw.dll"
     Delete "$OUTDIR\lib\jinput-wintab.dll"
     Delete "$OUTDIR\lib\joal_native.dll"
+
+    ; -- Delete old JOAL .dll files
+    Delete "$OUTDIR\lib\x86\joal_native.dll"
 
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
