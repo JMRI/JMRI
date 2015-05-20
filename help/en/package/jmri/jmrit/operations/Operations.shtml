@@ -64,7 +64,13 @@
       <LI><A HREF="#Backup">Backup</A></LI>
       <LI><A HREF="#Restore">Restore</A></LI>
       <LI><A HREF="#ResetDatabase">Reset Database</A></LI>
-      <LI><A HREF="#SettingsOptions">Options</A></LI>
+      <LI><A HREF="#SettingsOptions">Options</A>
+       <UL>
+        <LI><A HREF="#BuildOptions">Build Options</A></LI>
+        <LI><A HREF="#CarRouting">Car Routing</A></LI>
+        <LI><A HREF="#LoggingOptions">Logging Options</A></LI>
+        <LI><A HREF="#ManifestOptions">Custom Manifests and Switch lists</A></LI>
+       </UL>
      </UL></LI>
     <LI><A HREF="#PrintOptions">Manifest Print Options</A></LI>
     <LI><A HREF="#BuildReportDetails">Build Report Options</A></LI>
@@ -85,7 +91,7 @@
        <UL>
         <LI><A HREF="#PickUpCarOrder">Pick Up Car Order</A></LI>
        </UL></LI>
-       <LI><A HREF="#Sidings">Spurs</A>
+      <LI><A HREF="#Sidings">Spurs</A>
        <UL>
         <LI><A HREF="#Schedules">Schedules</A></LI>
         <LI><A HREF="#SchedulesAndLoads">Schedules and Loads</A></LI>
@@ -106,7 +112,7 @@
        </UL></LI>
       <LI><A HREF="#TrackTools">Track Tools</A>
        <UL>
-       <LI><A HREF="#LoadOptions">Load Options</A></LI>
+        <LI><A HREF="#LoadOptions">Load Options</A></LI>
         <LI><A HREF="#RoadOptions">Road Options</A></LI>
         <LI><A HREF="#Pools">Track Pools</A></LI>
         <LI><A HREF="#AlternateTrack">Alternate Track</A></LI>
@@ -120,16 +126,14 @@
         <LI><A HREF="#LocationSchedules">Schedules</A>
         <LI><A HREF="#ModifyLocationsByCarType">Modify Locations and Tracks by Car Type</A>
        </UL></LI>
-     </UL>
-   </LI>
+     </UL></LI>
     <LI><A HREF="#Cars">Cars</A>
      <UL>
       <LI><A HREF="#ImportingCars">Importing Cars from a File</A></LI>
       <LI><A HREF="#CarsEdit">Adding Cars to your Roster</A></LI>
       <LI><A HREF=#CabooseFredHazardous>Passenger, Caboose, Car with FRED, Utility, and
         Hazardous Options</A>
-      
-     <LI><A HREF="#CarLoad">Car Loads</A></LI>
+      <LI><A HREF="#CarLoad">Car Loads</A></LI>
       <LI><A HREF="#Kernel">Kernel (Group of Cars)</A></LI>
       <LI><A HREF="#EditCarAttributes">Edit Car Attributes (Road, Type, Length, Color,
         Kernel, Owner)</A></LI>
@@ -182,8 +186,7 @@
         <LI><A HREF="#Timetable">Timetable</A></LI>
         <LI><A HREF="#SetupExcelProgram">Setup Excel Program (Manifest Creator)</A></LI>
        </UL>
-      
-     <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
+      <LI><A HREF="#SwitcherService">Switcher Service</A></LI>
       <LI><A HREF="#BuildingTrains">Building Trains</A></LI>
       <LI><A HREF="#TrainStatus">Train Status</A></LI>
       <LI><A HREF="#TroubleShootingBuildingTrains">Problems Building Trains How to Fix</A></LI>
