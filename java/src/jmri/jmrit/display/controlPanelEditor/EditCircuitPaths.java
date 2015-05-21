@@ -198,7 +198,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
         JPanel pp = new JPanel();
 //      pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        _length.setText("");
+        _length.setText("0.0");
         pp.add(CircuitBuilder.makeTextBoxPanel(
                 false, _length, "length", true, "TooltipPathLength"));
         _length.setPreferredSize(new Dimension(100, _length.getPreferredSize().height));
@@ -721,7 +721,11 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     private boolean setPathLength(OPath path) {
         float f = 0.0f;
         try {
-            f = Float.parseFloat(_length.getText());
+            String num = _length.getText();
+            if (num==null || num.length()==0) {
+                num = "0.0";
+            }
+            f = Float.parseFloat(num);
             if (_units.isSelected()) {
                 path.setLength(f*25.4f);
             } else {
@@ -731,7 +735,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             f = -1.0f;
         }
         if (f<0.0f) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("InvalidNumber", _length.getText()),
+            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat", _length.getText()),
                     Bundle.getMessage("makePath"), JOptionPane.INFORMATION_MESSAGE);
             return false;
         }

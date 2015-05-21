@@ -591,13 +591,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         return "ERROR mode= " + _runMode;
     }
 
-    public int getCurrentCommandIndex() {
-        if (_engineer != null) {
-            return _engineer.getCurrentCommandIndex();
-        }
-        return 0;
-    }
-    
     protected void startTracker() {
         TrackerTableAction.markNewTracker(getCurrentBlockOrder().getBlock(), _trainName);
     }
@@ -1026,7 +1019,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     /**
      * Check start block for occupied for start of run
      */
-    public String checkStartBlock() {
+    public String checkStartBlock(int mode) {
         if(_debug) log.debug("checkStartBlock for warrant \""+getDisplayName()+"\".");
         BlockOrder bo = _orders.get(0);
         OBlock block = bo.getBlock();
@@ -1042,7 +1035,12 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if ((state & OBlock.DARK) != 0) {
             msg = Bundle.getMessage("BlockDark", block.getDisplayName());
         } else if ((state & OBlock.OCCUPIED) == 0) {
-            msg = Bundle.getMessage("warnStart", getTrainName(), block.getDisplayName());
+            if (mode==MODE_LEARN) {
+                msg = "learnStart";                                
+            } else{
+                msg = "warnStart";                
+            }
+            msg = Bundle.getMessage(msg, getTrainName(), block.getDisplayName());                
         } else {
             // check if tracker is on this train
             TrackerTableAction.stopTrackerIn(block);

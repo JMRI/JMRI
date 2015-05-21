@@ -626,13 +626,13 @@ public class WarrantTableAction extends AbstractAction {
                     for (int i=1; i<orders.size(); i++) {
                         w.addBlockOrder(new BlockOrder(orders.get(i)));
                     }
-                    BlockOrder boo = _endW.getViaOrder();
-                    if (boo!=null) {
-                        w.setViaOrder(boo);                     
+                    BlockOrder boo = w.getViaOrder();
+                    if (boo==null) {
+                        w.setViaOrder(_endW.getViaOrder());                     
                     }
-                    boo = _endW.getAvoidOrder();
-                    if (boo!=null) {
-                        w.setAvoidOrder(boo); 
+                    boo = w.getAvoidOrder();
+                    if (boo==null) {
+                        w.setAvoidOrder(_endW.getAvoidOrder()); 
                     }                       
                 } else {
                     w.addBlockOrder(bo);        // copy only                

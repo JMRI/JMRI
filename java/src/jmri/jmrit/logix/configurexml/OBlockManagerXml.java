@@ -58,10 +58,10 @@ public class OBlockManagerXml // extends XmlFile
             }
             Element elem = new Element("oblock");
             elem.setAttribute("systemName", sname);
-            if (uname == null) {
-                uname = "";
+            if (uname != null && uname.length() > 0) {
+                elem.setAttribute("userName", uname); // doing this for compatibility during 2.9.* series
+                elem.addContent(new Element("userName").addContent(uname));
             }
-            elem.setAttribute("userName", uname);
             String comment = block.getComment();
             if (comment != null) {
                 Element c = new Element("comment");

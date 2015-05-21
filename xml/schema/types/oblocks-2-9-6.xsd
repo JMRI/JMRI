@@ -96,6 +96,7 @@
                   <xs:attribute name="toDirection" type="xs:string" />
                   <xs:attribute name="fromPortal" type="xs:string" />
                   <xs:attribute name="toPortal" type="xs:string" />
+                  <xs:attribute name="length" type="xs:float" />
                 </xs:complexType>
               </xs:element>
             </xs:sequence>
@@ -133,6 +134,7 @@
       <xs:attribute name="toDirection" type="xs:string" />
       <xs:attribute name="fromPortal" type="xs:string" />
       <xs:attribute name="toPortal" type="xs:string" />
+      <xs:attribute name="length" type="xs:float" />
     </xs:complexType>
         
     <xs:complexType name="OBlockSettingType">

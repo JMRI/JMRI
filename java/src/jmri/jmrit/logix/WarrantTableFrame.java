@@ -391,7 +391,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);                               
             return msg;
         } else {
-            msg = w.checkStartBlock();  // notify first block occupied by this train
+            msg = w.checkStartBlock(Warrant.MODE_RUN);  // notify first block occupied by this train
             setStatusText(msg, WarrantTableModel.myGold, false);                                
         }
         // From here on messages are status information, not abort info

@@ -178,7 +178,7 @@ public class WarrantTest extends TestCase {
         warrant.setDccAddress(dccAddress);
         msg = warrant.setRoute(0, orders);
         Assert.assertNull("setRoute - "+msg, msg);
-        msg =  warrant.checkStartBlock();
+        msg =  warrant.checkStartBlock(Warrant.MODE_RUN);
         Assert.assertNull("checkStartBlock - "+msg, msg);
         msg = warrant.checkRoute();
         Assert.assertNull("checkRoute - "+msg, msg);

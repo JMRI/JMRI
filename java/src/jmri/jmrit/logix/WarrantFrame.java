@@ -76,6 +76,9 @@ public class WarrantFrame extends WarrantRoute {
 
     JTextField _sysNameBox;
     JTextField _userNameBox;
+    JButton _calculateButton;
+    JButton _stopButton;
+    JButton _startButton;
 
     JTabbedPane _tabbedPane;
     JPanel _routePanel;
@@ -252,9 +255,9 @@ public class WarrantFrame extends WarrantRoute {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
-        JButton button = new JButton(Bundle.getMessage("Calculate"));
-        button.setMaximumSize(button.getPreferredSize());
-        button.addActionListener(new ActionListener() {
+        _calculateButton = new JButton(Bundle.getMessage("Calculate"));
+        _calculateButton.setMaximumSize(_calculateButton.getPreferredSize());
+        _calculateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 calculate();
             }
@@ -267,14 +270,14 @@ public class WarrantFrame extends WarrantRoute {
         p.add(pp);
         pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(button);
+        pp.add(_calculateButton);
         p.add(pp);
         panel.add(p);
         panel.add(Box.createVerticalStrut(2 * STRUT_SIZE));
 
-        button = new JButton(Bundle.getMessage("Stop"));
-        button.setMaximumSize(button.getPreferredSize());
-        button.addActionListener(new ActionListener() {
+        _stopButton = new JButton(Bundle.getMessage("Stop"));
+        _stopButton.setMaximumSize(_stopButton.getPreferredSize());
+        _stopButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 stopRouteFinder();
             }
@@ -297,7 +300,7 @@ public class WarrantFrame extends WarrantRoute {
         p = new JPanel();
         pp = new JPanel();
         pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(button);
+        pp.add(_stopButton);
         p.add(pp, BorderLayout.SOUTH);
         panel.add(p);
         panel.add(Box.createRigidArea(new Dimension(10,
@@ -925,7 +928,7 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.red);
             return;
         }
-        msg = _warrant.checkStartBlock();
+        msg = _warrant.checkStartBlock(Warrant.MODE_LEARN);
         if (msg != null) {
             OBlock block = _warrant.getBlockAt(0);
             if (msg.equals(Bundle.getMessage("BlockDark", block.getDisplayName()))) {
@@ -1020,7 +1023,7 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.red);
             return;
         }
-        msg = _warrant.checkStartBlock();
+        msg = _warrant.checkStartBlock(Warrant.MODE_RUN);
         if (msg != null) {
             if (JOptionPane.NO_OPTION == JOptionPane.showConfirmDialog(this,
                     Bundle.getMessage("OkToRun", msg), Bundle.getMessage("WarningTitle"),

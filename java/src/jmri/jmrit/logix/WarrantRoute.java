@@ -197,7 +197,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
         Location location;
         private BlockOrder order;
-        private JTextField blockBox = new JTextField();
+        JTextField blockBox = new JTextField();
         private JComboBox<String> pathBox = new JComboBox<String>();
         private JComboBox<String> portalBox;
  

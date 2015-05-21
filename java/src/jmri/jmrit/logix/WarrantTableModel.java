@@ -535,7 +535,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 if (msg != null) {
                     w.deAllocate();
                 } else {
-                    msg = w.checkStartBlock(); // notify first block occupied by
+                    msg = w.checkStartBlock(Warrant.MODE_RUN); // notify first block occupied by
                                                 // this train
                     if (msg != null) {
                         _frame.setStatusText(msg, WarrantTableModel.myGold,
