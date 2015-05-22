@@ -163,6 +163,19 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
     }
 
+    /**
+     * Removes the default instance while retaining PropertyChangeListeners
+     * listening to the default instance so that a new default instance can be
+     * created and the PropertyChangeListeners can be attached to the new
+     * object.
+     *
+     * The reasons for calling this should be internally handled by the default
+     * Roster itself. This will allow the Roster to listen to other changes
+     * within the application without destroying the default instance.
+     * 
+     * @deprecated To be removed when obsoleted.
+     */
+    @Deprecated
     public synchronized static void resetInstance() {
         if (_instance != null) {
             listeners = _instance.pcs.getPropertyChangeListeners();
@@ -173,23 +186,35 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Locate the single instance of Roster, loading it if need be.
      *
+     * Calls {@link #getDefault() } to provide the single instance.
+     *
      * @return The valid Roster object
      */
     public static synchronized Roster instance() {
+        return Roster.getDefault();
+    }
+
+    /**
+     * Get the default Roster instance, creating it as required.
+     *
+     * @return The default Roster object
+     */
+    public static synchronized Roster getDefault() {
         if (_instance == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Roster creating instance");
-            }
-            // create and load
+            log.debug("Creating Roster default instance.");
             _instance = new Roster(defaultRosterFilename());
         }
         return _instance;
     }
 
     /**
-     * Provide a null (empty) roster instance
+     * Provide a null (empty) roster instance.
      *
+     * Required for test support because the default instance is not stable.
+     *
+     * @deprecated to be removed with {@link #resetInstance() }
      */
+    @Deprecated
     public static synchronized void installNullInstance() {
         _instance = new Roster();
     }
@@ -884,6 +909,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @param f Absolute pathname to use. A null or "" argument flags a return
      *          to the original default in the user's files directory.
      */
+    // TODO: replace with a method internal to the Roster that can react appropriately
+    // to changing the Roster file location without removing the Roster.
+    @Deprecated
     public static void setFileLocation(String f) {
         if (f != null && !f.isEmpty()) {
             fileLocation = f;
