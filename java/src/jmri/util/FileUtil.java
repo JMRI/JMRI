@@ -16,7 +16,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.channels.FileChannel;
-import java.security.CodeSource;
 import java.util.Arrays;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
@@ -42,7 +41,7 @@ public final class FileUtil {
      */
     static public final String PROGRAM = "program:"; // NOI18N
     /**
-     * Portable reference to the JMRI user's preferences directory.
+     * Portable reference to the JMRI user's files and preferences directory.
      */
     static public final String PREFERENCES = "preference:"; // NOI18N
     /**
@@ -81,23 +80,6 @@ public final class FileUtil {
      * The portable file path component separator.
      */
     static public final char SEPARATOR = '/'; // NOI18N
-    /*
-     * User's home directory
-     */
-    private static final String homePath = System.getProperty("user.home") + File.separator; // NOI18N
-    /*
-     * Settable directories
-     */
-    /* JMRI program path, defaults to directory JMRI is executed from */
-    static private String programPath = null;
-    /* path to jmri.jar */
-    static private String jarPath = null;
-    /* path to the jython scripts directory */
-    static private String scriptsPath = null;
-    /* path to the user's files directory */
-    static private String userFilesPath = null;
-    /* path to the current profile */
-    static private String profilePath = null;
     // initialize logging
     private static final Logger log = LoggerFactory.getLogger(FileUtil.class.getName());
 
@@ -494,7 +476,7 @@ public final class FileUtil {
      * @return User's home directory as a String
      */
     static public String getHomePath() {
-        return homePath;
+        return FileUtilSupport.getDefault().getHomePath();
     }
 
     /**
@@ -505,7 +487,7 @@ public final class FileUtil {
      * @return User's files directory as a String
      */
     static public String getUserFilesPath() {
-        return (FileUtil.userFilesPath != null) ? FileUtil.userFilesPath : FileUtil.getProfilePath();
+        return FileUtilSupport.getDefault().getUserFilesPath();
     }
 
     /**
@@ -515,10 +497,7 @@ public final class FileUtil {
      * @param path The path to the user's files directory
      */
     static public void setUserFilesPath(String path) {
-        if (!path.endsWith(File.separator)) {
-            path = path + File.separator;
-        }
-        FileUtil.userFilesPath = path;
+        FileUtilSupport.getDefault().setUserFilesPath(path);
     }
 
     /**
@@ -529,7 +508,7 @@ public final class FileUtil {
      * @return Profile directory as a String
      */
     static public String getProfilePath() {
-        return (FileUtil.profilePath != null) ? FileUtil.profilePath : FileUtil.getPreferencesPath();
+        return FileUtilSupport.getDefault().getProfilePath();
     }
 
     /**
@@ -539,10 +518,7 @@ public final class FileUtil {
      * @param path The path to the profile directory
      */
     static public void setProfilePath(String path) {
-        if (path != null && !path.endsWith(File.separator)) {
-            path = path + File.separator;
-        }
-        FileUtil.profilePath = path;
+        FileUtilSupport.getDefault().setProfilePath(path);
     }
 
     /**
@@ -559,32 +535,7 @@ public final class FileUtil {
      * @return Path to the preferences directory.
      */
     static public String getPreferencesPath() {
-        // return jmri.prefsdir property if present
-        String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
-        if (!jmriPrefsDir.isEmpty()) {
-            return jmriPrefsDir + File.separator;
-        }
-        String result;
-        switch (SystemType.getType()) {
-            case SystemType.MACOSX:
-                // Mac OS X
-                result = FileUtil.getHomePath() + "Library" + File.separator + "Preferences" + File.separator + "JMRI" + File.separator; // NOI18N
-                break;
-            case SystemType.LINUX:
-            case SystemType.UNIX:
-                // Linux, so use an invisible file
-                result = FileUtil.getHomePath() + ".jmri" + File.separator; // NOI18N
-                break;
-            case SystemType.WINDOWS:
-            default:
-                // Could be Windows, other
-                result = FileUtil.getHomePath() + "JMRI" + File.separator; // NOI18N
-                break;
-        }
-        // logging here merely throws warnings since we call this method to setup logging
-        // uncomment below to print OS default to console
-        // System.out.println("preferencesPath defined as \"" + result + "\" based on os.name=\"" + SystemType.getOSName() + "\"");
-        return result;
+        return FileUtilSupport.getDefault().getPreferencesPath();
     }
 
     /**
@@ -593,10 +544,7 @@ public final class FileUtil {
      * @return JMRI program directory as a String.
      */
     static public String getProgramPath() {
-        if (programPath == null) {
-            FileUtil.setProgramPath("."); // NOI18N
-        }
-        return programPath;
+        return FileUtilSupport.getDefault().getProgramPath();
     }
 
     /**
@@ -608,7 +556,7 @@ public final class FileUtil {
      * @param path
      */
     static public void setProgramPath(String path) {
-        FileUtil.setProgramPath(new File(path));
+        FileUtilSupport.getDefault().setProgramPath(new File(path));
     }
 
     /**
@@ -622,11 +570,7 @@ public final class FileUtil {
      * @param path
      */
     static public void setProgramPath(File path) {
-        try {
-            programPath = (path).getCanonicalPath() + File.separator;
-        } catch (IOException ex) {
-            log.error("Unable to get JMRI program directory.", ex);
-        }
+        FileUtilSupport.getDefault().setProgramPath(path);
     }
 
     /**
@@ -637,11 +581,10 @@ public final class FileUtil {
      * @return URL of portable or absolute path
      */
     static public URI findExternalFilename(String path) {
-        String location = "";
         log.debug("Finding external path {}", path);
         if (FileUtil.isPortableFilename(path)) {
             int index = path.indexOf(":") + 1;
-            location = path.substring(0, index);
+            String location = path.substring(0, index);
             path = path.substring(index);
             log.debug("Finding {} and {}", location, path);
             switch (location) {
@@ -988,7 +931,7 @@ public final class FileUtil {
         if (file != null) {
             try {
                 return file.toURL();
-            } catch (IOException ex) {
+            } catch (MalformedURLException ex) {
                 log.error(ex.getLocalizedMessage(), ex);
             }
         }
@@ -1037,37 +980,14 @@ public final class FileUtil {
      * @return a {@link java.util.jar.JarFile} pointing to jmri.jar or null
      */
     static public JarFile jmriJarFile() {
-        if (jarPath == null) {
-            CodeSource sc = FileUtil.class.getProtectionDomain().getCodeSource();
-            if (sc != null) {
-                jarPath = sc.getLocation().toString();
-                // 9 = length of jar:file:
-                jarPath = jarPath.substring(9, jarPath.lastIndexOf("!"));
-                log.debug("jmri.jar path is {}", jarPath);
-            }
-            if (jarPath == null) {
-                log.error("Unable to locate jmri.jar");
-                return null;
-            }
-        }
-        try {
-            return new JarFile(jarPath);
-        } catch (IOException ex) {
-            log.error("Unable to open jmri.jar", ex);
-            return null;
-        }
+        return FileUtilSupport.getDefault().getJmriJarFile();
     }
 
     /**
      * Log all paths at the INFO level.
      */
     static public void logFilePaths() {
-        log.info("File path {} is {}", FileUtil.PROGRAM, FileUtil.getProgramPath());
-        log.info("File path {} is {}", FileUtil.PREFERENCES, FileUtil.getUserFilesPath());
-        log.info("File path {} is {}", FileUtil.PROFILE, FileUtil.getProfilePath());
-        log.info("File path {} is {}", FileUtil.SETTINGS, FileUtil.getPreferencesPath());
-        log.info("File path {} is {}", FileUtil.HOME, FileUtil.getHomePath());
-        log.info("File path {} is {}", FileUtil.SCRIPTS, FileUtil.getScriptsPath());
+        FileUtilSupport.getDefault().logFilePaths();
     }
 
     /**
@@ -1076,16 +996,7 @@ public final class FileUtil {
      * @return the scriptsPath
      */
     public static String getScriptsPath() {
-        if (scriptsPath != null) {
-            return scriptsPath;
-        }
-        // scriptsPath not set by user, return default if it exists
-        File file = new File(FileUtil.getProgramPath() + File.separator + "jython" + File.separator); // NOI18N
-        if (file.exists()) {
-            return file.getPath();
-        }
-        // if default does not exist, return user's files directory
-        return FileUtil.getUserFilesPath();
+        return FileUtilSupport.getDefault().getScriptsPath();
     }
 
     /**
@@ -1094,10 +1005,7 @@ public final class FileUtil {
      * @param path the scriptsPath to set
      */
     public static void setScriptsPath(String path) {
-        if (!path.endsWith(File.separator)) {
-            path = path + File.separator;
-        }
-        scriptsPath = path;
+        FileUtilSupport.getDefault().setScriptsPath(path);
     }
 
     /**
