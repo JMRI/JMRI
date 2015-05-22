@@ -63,10 +63,22 @@ import org.slf4j.LoggerFactory;
  */
 public class Roster extends XmlFile implements RosterGroupSelector {
 
+    /**
+     * List of contained {@link RosterEntry} elements.
+     */
+    protected List<RosterEntry> _list = new ArrayList<>();
+    private boolean dirty = false;
+    private static String fileLocation = null;
+    private static String rosterFileName = "roster.xml"; // NOI18N
+    // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
+    // reflect to it.
+    // Note that dispose() doesn't act on these.  Its not clear whether it should...
+    private PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    static final public String schemaVersion = ""; // NOI18N
     /*
      * record the single instance of Roster
      */
-    static transient Roster _instance = null;
+    private static transient Roster _instance = null;
     /*
      * retain any property change listeners when reseting the roster, so listeners get roster changes across the reset
      */
@@ -74,6 +86,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     private UserPreferencesManager preferences;
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
+    // initialize logging
+    private final static Logger log = LoggerFactory.getLogger(Roster.class);
 
     /**
      * Name for the property change fired when adding a roster entry
@@ -107,6 +121,11 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * String prefixed to roster group names in the roster entry XML
      */
     public static final String ROSTER_GROUP_PREFIX = "RosterGroup:"; // NOI18N
+    /**
+     * Title of the "All Entries" roster group. As this varies by locale, do not
+     * rely on being able to store this value.
+     */
+    public static final String ALLENTRIES = Bundle.getMessage("ALLENTRIES"); // NOI18N
 
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
@@ -414,10 +433,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         return l;
     }
-    /**
-     * List of contained {@link RosterEntry} elements.
-     */
-    protected List<RosterEntry> _list = new ArrayList<>();
 
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
@@ -541,7 +556,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
         writeFile(file);
     }
-    static final public String schemaVersion = ""; // NOI18N
 
     /**
      * Write the entire roster to a file object. This does not do backup; that
@@ -796,7 +810,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             });
         }
     }
-    private boolean dirty = false;
 
     void setDirty(boolean b) {
         dirty = b;
@@ -905,16 +918,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         return fileLocation;
     }
 
-    private static String fileLocation = null;
-
     public static void setRosterFileName(String name) {
         rosterFileName = name;
     }
-    private static String rosterFileName = "roster.xml"; // NOI18N
-    // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
-    // reflect to it.
-    // Note that dispose() doesn't act on these.  Its not clear whether it should...
-    PropertyChangeSupport pcs = new PropertyChangeSupport(this);
 
     @Override
     public synchronized void addPropertyChangeListener(PropertyChangeListener l) {
@@ -1122,9 +1128,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         Collections.sort(list);
         return list;
     }
-    public final static String ALLENTRIES = Bundle.getMessage("ALLENTRIES");
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(Roster.class.getName());
 
     /**
      * Get the identifier for all entries in the roster.
