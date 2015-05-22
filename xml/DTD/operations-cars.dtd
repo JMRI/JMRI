@@ -72,6 +72,7 @@
 <!ATTLIST car outOfService			(true | false ) "false">
 <!ATTLIST car loadFromStaging		(true | false ) "false">
 <!ATTLIST car train					CDATA #IMPLIED>  
+<!ATTLIST car trainId				CDATA #IMPLIED>
 <!ATTLIST car owner					CDATA #IMPLIED>  
 <!ATTLIST car moves					CDATA #IMPLIED>                    
 <!ATTLIST car comment				CDATA #IMPLIED>

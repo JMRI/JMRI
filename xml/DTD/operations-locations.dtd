@@ -82,6 +82,7 @@
 <!ATTLIST track blockOptions	CDATA #IMPLIED>
 <!ATTLIST track ignoreUsedPercentage	CDATA #IMPLIED>
 <!ATTLIST track trackDestinationOption	CDATA #IMPLIED>
+<!ATTLIST track blockingOrder	CDATA #IMPLIED>
 
 <!ATTLIST destination id			CDATA #REQUIRED>          
 <!ATTLIST destination name			CDATA #IMPLIED>

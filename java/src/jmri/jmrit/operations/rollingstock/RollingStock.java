@@ -1159,15 +1159,16 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         if ((a = e.getAttribute(Xml.LAST_LOCATION_ID)) != null) {
             _lastLocationId = a.getValue();
         }
-        if ((a = e.getAttribute(Xml.TRAIN)) != null) {
+        if ((a = e.getAttribute(Xml.TRAIN_ID)) != null) {
+            setTrain(TrainManager.instance().getTrainById(a.getValue()));
+        } else if ((a = e.getAttribute(Xml.TRAIN)) != null) {
             setTrain(TrainManager.instance().getTrainByName(a.getValue()));
-            if (getTrain() != null &&
-                    getTrain().getRoute() != null &&
-                    (a = e.getAttribute(Xml.ROUTE_LOCATION_ID)) != null) {
-                _routeLocation = getTrain().getRoute().getLocationById(a.getValue());
-                if ((a = e.getAttribute(Xml.ROUTE_DESTINATION_ID)) != null) {
-                    _routeDestination = getTrain().getRoute().getLocationById(a.getValue());
-                }
+        }
+       if (getTrain() != null && getTrain().getRoute() != null &&
+                (a = e.getAttribute(Xml.ROUTE_LOCATION_ID)) != null) {
+            _routeLocation = getTrain().getRoute().getLocationById(a.getValue());
+            if ((a = e.getAttribute(Xml.ROUTE_DESTINATION_ID)) != null) {
+                _routeDestination = getTrain().getRoute().getLocationById(a.getValue());
             }
         }
         if ((a = e.getAttribute(Xml.LAST_ROUTE_ID)) != null) {
@@ -1267,6 +1268,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         }
         if (!getTrainName().equals(NONE)) {
             e.setAttribute(Xml.TRAIN, getTrainName());
+            e.setAttribute(Xml.TRAIN_ID, getTrain().getId());
         }
         if (!getOwner().equals(NONE)) {
             e.setAttribute(Xml.OWNER, getOwner());
@@ -1356,6 +1358,9 @@ public class RollingStock implements java.beans.PropertyChangeListener {
                 log.debug("Rolling stock ({}) is removed from train ({}) by reset", toString(), getTrainName()); // NOI18N
             }
             reset();
+        }
+        if (e.getPropertyName().equals(Train.NAME_CHANGED_PROPERTY)) {
+            setDirtyAndFirePropertyChange(e.getPropertyName(), e.getOldValue(), e.getNewValue());
         }
         if (e.getPropertyName().equals(CarRoads.CARROADS_NAME_CHANGED_PROPERTY)) {
             if (e.getOldValue().equals(getRoadName())) {
