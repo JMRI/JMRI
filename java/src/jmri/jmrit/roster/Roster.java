@@ -24,6 +24,7 @@ import jmri.util.FileUtil;
 import jmri.util.StringUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.jdom2.ProcessingInstruction;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -72,7 +73,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     private static PropertyChangeListener[] listeners = null;
     private UserPreferencesManager preferences;
     private String defaultRosterGroup = null;
-    private final HashMap<String, RosterGroup> rosterGroups = new HashMap<String, RosterGroup>();
+    private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
 
     /**
      * Name for the property change fired when adding a roster entry
@@ -130,7 +131,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         this();
         try {
             this.readFile(rosterFilename);
-        } catch (Exception e) {
+        } catch (IOException | JDOMException e) {
             log.error("Exception during roster reading: " + e);
             try {
                 JOptionPane.showMessageDialog(null,
@@ -224,6 +225,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
+     * @param group
      * @return The Number of roster entries that are in the specified group.
      */
     public int numGroupEntries(String group) {
@@ -239,17 +241,25 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Return RosterEntry from a "title" string, ala selection in
      * matchingComboBox.
+     *
+     * @param title
+     * @return The matching RosterEntry or null
      */
     public RosterEntry entryFromTitle(String title) {
-        for (int i = 0; i < numEntries(); i++) {
-            RosterEntry r = _list.get(i);
-            if (r.titleString().equals(title)) {
-                return r;
+        for (RosterEntry re : _list) {
+            if (re.titleString().equals(title)) {
+                return re;
             }
         }
         return null;
     }
 
+    /**
+     * Return RosterEntry from a "id" string.
+     *
+     * @param id
+     * @return The matching RosterEntry or null
+     */
     public RosterEntry getEntryForId(String id) {
         for (RosterEntry re : _list) {
             if (re.getId().equals(id)) {
@@ -261,6 +271,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     /**
      * Return a specific entry by index
+     *
+     * @param i
+     * @return The matching RosterEntry
      */
     public RosterEntry getEntry(int i) {
         return _list.get(i);
@@ -320,6 +333,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Return filename from a "title" string, ala selection in matchingComboBox.
      *
+     * @param title
      * @return The filename matching this "title", or null if none exists
      */
     public String fileFromTitle(String title) {
@@ -332,7 +346,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     public List<RosterEntry> getEntriesWithAttributeKey(String key) {
         // slow but effective algorithm
-        ArrayList<RosterEntry> result = new ArrayList<RosterEntry>();
+        ArrayList<RosterEntry> result = new ArrayList<>();
         java.util.Iterator<RosterEntry> i = _list.iterator();
         while (i.hasNext()) {
             RosterEntry r = i.next();
@@ -345,7 +359,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     public List<RosterEntry> getEntriesWithAttributeKeyValue(String key, String value) {
         // slow but effective algorithm
-        ArrayList<RosterEntry> result = new ArrayList<RosterEntry>();
+        ArrayList<RosterEntry> result = new ArrayList<>();
         java.util.Iterator<RosterEntry> i = _list.iterator();
         while (i.hasNext()) {
             RosterEntry r = i.next();
@@ -359,7 +373,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
     public Set<String> getAllAttributeKeys() {
         // slow but effective algorithm
-        Set<String> result = new TreeSet<String>();
+        Set<String> result = new TreeSet<>();
         java.util.Iterator<RosterEntry> i = _list.iterator();
         while (i.hasNext()) {
             RosterEntry r = i.next();
@@ -379,10 +393,20 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
      * information. The list may have null contents if there are no matches.
+     *
+     * @param roadName
+     * @param roadNumber
+     * @param dccAddress
+     * @param mfg
+     * @param decoderMfgID
+     * @param decoderVersionID
+     * @param group
+     * @param id
+     * @return List or matching RosterEntries or an empty List
      */
     public List<RosterEntry> getEntriesMatchingCriteria(String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderMfgID, String decoderVersionID, String id, String group) {
-        List<RosterEntry> l = new ArrayList<RosterEntry>();
+        List<RosterEntry> l = new ArrayList<>();
         for (int i = 0; i < this.numEntries(); i++) {
             if (this.checkEntry(i, roadName, roadNumber, dccAddress, mfg, decoderMfgID, decoderMfgID, id, group)) {
                 l.add(this.getEntry(i));
@@ -393,7 +417,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * List of contained {@link RosterEntry} elements.
      */
-    protected List<RosterEntry> _list = new ArrayList<RosterEntry>();
+    protected List<RosterEntry> _list = new ArrayList<>();
 
     /**
      * Get a List of {@link RosterEntry} objects in Roster matching some
@@ -403,6 +427,14 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * }
      * with a null group.
      *
+     * @param roadName
+     * @param roadNumber
+     * @param dccAddress
+     * @param mfg
+     * @param decoderMfgID
+     * @param decoderVersionID
+     * @param id
+     * @return List of matching RosterEntries or an empty List
      * @see #getEntriesMatchingCriteria(java.lang.String, java.lang.String,
      * java.lang.String, java.lang.String, java.lang.String, java.lang.String,
      * java.lang.String, java.lang.String)
@@ -418,6 +450,16 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * A null String entry always matches. Strings are used for convenience in
      * GUI building.
      *
+     * @param i
+     * @param roadName
+     * @param roadNumber
+     * @param dccAddress
+     * @param mfg
+     * @param decoderModel
+     * @param decoderFamily
+     * @param id
+     * @param group
+     * @return true if the entry matches
      */
     public boolean checkEntry(int i, String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderModel, String decoderFamily,
@@ -431,6 +473,17 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * A null String entry always matches. Strings are used for convenience in
      * GUI building.
      *
+     * @param list
+     * @param i
+     * @param roadName
+     * @param roadNumber
+     * @param dccAddress
+     * @param mfg
+     * @param decoderModel
+     * @param decoderFamily
+     * @param id
+     * @param group
+     * @return True if the entry matches
      */
     public boolean checkEntry(List<RosterEntry> list, int i, String roadName, String roadNumber, String dccAddress,
             String mfg, String decoderModel, String decoderFamily,
@@ -498,9 +551,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @param file an op
      * @throws IOException
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     void writeFile(File file) throws java.io.IOException {
         // create root element
         Element root = new Element("roster-config"); // NOI18N
@@ -512,7 +562,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
         // add XSLT processing instruction
         // <?xml-stylesheet type="text/xsl" href="XSLT/roster.xsl"?>
-        java.util.Map<String, String> m = new java.util.HashMap<String, String>();
+        java.util.Map<String, String> m = new java.util.HashMap<>();
         m.put("type", "text/xsl"); // NOI18N
         m.put("href", xsltLocation + "roster2array.xsl"); // NOI18N
         ProcessingInstruction p = new ProcessingInstruction("xml-stylesheet", m); // NOI18N
@@ -582,13 +632,13 @@ public class Roster extends XmlFile implements RosterGroupSelector {
 
         if (!this.rosterGroups.isEmpty()) {
             Element rosterGroup = new Element("rosterGroup"); // NOI18N
-            for (String name : getRosterGroups().keySet()) {
+            getRosterGroups().keySet().stream().forEach((name) -> {
                 Element group = new Element("group"); // NOI18N
                 if (!name.equals(Roster.ALLENTRIES)) {
                     group.addContent(name);
                     rosterGroup.addContent(group);
                 }
-            }
+            });
             root.addContent(rosterGroup);
         }
 
@@ -644,6 +694,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * <li>Replaces all problematic characters with "_". <li>Append .xml suffix
      * </ul> Does not check for duplicates.
      *
+     * @return Filename for RosterEntry
      * @throws IllegalArgumentException if called with null or empty entry name
      * @param entry the getId() entry name from the RosterEntry
      * @see RosterEntry#ensureFilenameExists()
@@ -653,7 +704,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         if (entry == null) {
             throw new IllegalArgumentException("makeValidFilename requires non-null argument");
         }
-        if (entry.equals("")) {
+        if (entry.isEmpty()) {
             throw new IllegalArgumentException("makeValidFilename requires non-empty argument");
         }
 
@@ -671,9 +722,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      *
      * @param name filename of roster file
      */
-    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
-    // Only used occasionally, so inefficient String processing not really a problem
-    // though it would be good to fix it if you're working in this area
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?  
         if (!(new File(name)).exists()) {
@@ -695,9 +743,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             if (log.isDebugEnabled()) {
                 log.debug("readFile sees " + l.size() + " children");
             }
-            for (int i = 0; i < l.size(); i++) {
-                addEntry(new RosterEntry(l.get(i)));
-            }
+            l.stream().forEach((e) -> {
+                addEntry(new RosterEntry(e));
+            });
 
             //Scan the object to check the Comment and Decoder Comment fields for
             //any <?p?> processor directives and change them to back \n characters
@@ -743,9 +791,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         if (root.getChild("rosterGroup") != null) { // NOI18N
             List<Element> groups = root.getChild("rosterGroup").getChildren("group"); // NOI18N
-            for (Element group : groups) {
+            groups.stream().forEach((group) -> {
                 addRosterGroup(group.getText());
-            }
+            });
         }
     }
     private boolean dirty = false;
@@ -778,7 +826,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         Roster.instance().makeBackupFile(defaultRosterFilename());
         try {
             Roster.instance().writeFile(defaultRosterFilename());
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("Exception while writing the new roster file, may not be complete: " + e);
             try {
                 JOptionPane.showMessageDialog(null,
@@ -801,7 +849,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         // and read new
         try {
             _instance.readFile(defaultRosterFilename());
-        } catch (Exception e) {
+        } catch (IOException | JDOMException e) {
             log.error("Exception during roster reading: " + e);
         }
     }
@@ -809,6 +857,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Return the filename String for the default roster file, including
      * location. This is here to allow easy override in tests.
+     *
+     * @return The roster default location.
      */
     public static String defaultRosterFilename() {
         return getFileLocation() + rosterFileName;
@@ -822,7 +872,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      *          to the original default in the user's files directory.
      */
     public static void setFileLocation(String f) {
-        if (f != null && !f.equals("")) {
+        if (f != null && !f.isEmpty()) {
             fileLocation = f;
             if (f.endsWith(File.separator)) {
                 LocoFile.setFileLocation(f + "roster"); // NOI18N
@@ -845,12 +895,17 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * <P>
      * Default is in the user's files directory, but can be set to anything.
      *
+     * @return location of the Roster file
      * @see jmri.util.FileUtil#getUserFilesPath()
      */
     public static String getFileLocation() {
+        if (fileLocation == null) {
+            setFileLocation(null);
+        }
         return fileLocation;
     }
-    private static String fileLocation = FileUtil.getUserFilesPath();
+
+    private static String fileLocation = null;
 
     public static void setRosterFileName(String name) {
         rosterFileName = name;
@@ -888,6 +943,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     /**
      * Notify that the ID of an entry has changed. This doesn't actually change
      * the Roster per se, but triggers recreation.
+     *
+     * @param r
      */
     public void entryIdChanged(RosterEntry r) {
         log.debug("EntryIdChanged");
@@ -990,9 +1047,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     public void delRosterGroupList(String rg) {
         RosterGroup group = this.getRosterGroups().remove(rg);
         String str = Roster.getRosterGroupProperty(rg);
-        for (RosterEntry re : group.getEntries()) {
+        group.getEntries().stream().forEach((re) -> {
             re.deleteAttribute(str);
-        }
+        });
         firePropertyChange(ROSTER_GROUP_REMOVED, rg, null);
     }
 
@@ -1016,9 +1073,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         }
         this.getRosterGroups().put(newName, new RosterGroup(newName));
         String newGroup = Roster.getRosterGroupProperty(newName);
-        for (RosterEntry re : this.getRosterGroups().get(oldName).getEntries()) {
+        this.getRosterGroups().get(oldName).getEntries().stream().forEach((re) -> {
             re.putAttribute(newGroup, "yes"); // NOI18N
-        }
+        });
         this.addRosterGroup(new RosterGroup(newName));
     }
 
@@ -1061,7 +1118,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @return A list of the roster group names.
      */
     public ArrayList<String> getRosterGroupList() {
-        ArrayList<String> list = new ArrayList<String>(this.getRosterGroups().keySet());
+        ArrayList<String> list = new ArrayList<>(this.getRosterGroups().keySet());
         Collections.sort(list);
         return list;
     }
