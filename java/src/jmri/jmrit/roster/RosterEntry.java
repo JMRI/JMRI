@@ -217,7 +217,6 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         String oldID = _id;
         _id = s;
         if (oldID == null || !oldID.equals(s)) {
-            Roster.instance().entryIdChanged(this);
             firePropertyChange(RosterEntry.ID, oldID, s);
         }
     }
@@ -250,7 +249,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
      */
     public void ensureFilenameExists() {
         // if there isn't a filename, store using the id
-        if (getFileName() == null || getFileName().equals("")) {
+        if (getFileName() == null || getFileName().isEmpty()) {
 
             String newFilename = Roster.makeValidFilename(getId());
 
@@ -938,21 +937,35 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
     }
 
     /**
-     * List the roster groups this entry is a member of.
+     * List the roster groups this entry is a member of, returning existing
+     * {@link jmri.jmrit.roster.rostergroup.RosterGroup}s from the default
+     * {@link jmri.jmrit.roster.Roster} if they exist.
      *
      * @return list of roster groups
      */
     public List<RosterGroup> getGroups() {
+        return this.getGroups(Roster.getDefault());
+    }
+
+    /**
+     * List the roster groups this entry is a member of, returning existing
+     * {@link jmri.jmrit.roster.rostergroup.RosterGroup}s from the specified
+     * {@link jmri.jmrit.roster.Roster} if they exist.
+     *
+     * @param roster
+     * @return list of roster groups
+     */
+    public List<RosterGroup> getGroups(Roster roster) {
         List<RosterGroup> groups = new ArrayList<>();
         if (!this.getAttributes().isEmpty()) {
-            Roster roster = Roster.instance();
             for (String attribute : this.getAttributes()) {
-                if (attribute.startsWith(roster.getRosterGroupPrefix())) {
-                    String name = attribute.substring(roster.getRosterGroupPrefix().length());
-                    if (!roster.getRosterGroups().containsKey(name)) {
-                        roster.addRosterGroup(new RosterGroup(name));
+                if (attribute.startsWith(Roster.ROSTER_GROUP_PREFIX)) {
+                    String name = attribute.substring(Roster.ROSTER_GROUP_PREFIX.length());
+                    if (roster.getRosterGroups().containsKey(name)) {
+                        groups.add(roster.getRosterGroups().get(name));
+                    } else {
+                        groups.add(new RosterGroup(name));
                     }
-                    groups.add(roster.getRosterGroups().get(name));
                 }
             }
         }
@@ -1005,7 +1018,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         e.setAttribute("URL", getURL());
         e.setAttribute(RosterEntry.SHUNTING_FUNCTION, getShuntingFunction());
 
-        if (!_dateUpdated.equals("")) {
+        if (!_dateUpdated.isEmpty()) {
             e.addContent(new Element("dateUpdated").addContent(getDateUpdated()));
         }
         Element d = new Element("decoder");
@@ -1014,7 +1027,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
         d.setAttribute("comment", getDecoderComment());
 
         e.addContent(d);
-        if (_dccAddress.equals("")) {
+        if (_dccAddress.isEmpty()) {
             e.addContent((new jmri.configurexml.LocoAddressXml()).store(null));  // store a null address
         } else {
             e.addContent((new jmri.configurexml.LocoAddressXml()).store(new DccLocoAddress(Integer.parseInt(_dccAddress), _protocol)));
@@ -1025,7 +1038,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
             // loop to copy non-null elements
             for (int i = 0; i <= MAXFNNUM; i++) {
-                if (functionLabels[i] != null && !functionLabels[i].equals("")) {
+                if (functionLabels[i] != null && !functionLabels[i].isEmpty()) {
                     Element fne = new Element(RosterEntry.FUNCTION_LABEL);
                     fne.setAttribute("num", "" + i);
                     boolean lockable = false;
@@ -1051,7 +1064,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
             // loop to copy non-null elements
             for (int i = 0; i < MAXSOUNDNUM; i++) {
-                if (soundLabels[i] != null && !soundLabels[i].equals("")) {
+                if (soundLabels[i] != null && !soundLabels[i].isEmpty()) {
                     Element fne = new Element(RosterEntry.SOUND_LABEL);
                     fne.setAttribute("num", "" + i);
                     fne.addContent(soundLabels[i]);
@@ -1293,7 +1306,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                 linesadded = writeWrappedComment(w, _fileName != null ? _fileName : "<null>", title, textSpace) + linesadded;
             }
 
-            if (!(_roadName.equals(""))) {
+            if (!(_roadName.isEmpty())) {
                 title = "   Road name:         ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _roadName, title, textSpaceWithIcon) + linesadded;
@@ -1301,7 +1314,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                     linesadded = writeWrappedComment(w, _roadName, title, textSpace) + linesadded;
                 }
             }
-            if (!(_roadNumber.equals(""))) {
+            if (!(_roadNumber.isEmpty())) {
                 title = "   Road number:       ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _roadNumber, title, textSpaceWithIcon) + linesadded;
@@ -1309,7 +1322,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                     linesadded = writeWrappedComment(w, _roadNumber, title, textSpace) + linesadded;
                 }
             }
-            if (!(_mfg.equals(""))) {
+            if (!(_mfg.isEmpty())) {
                 title = "   Manufacturer:      ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _mfg, title, textSpaceWithIcon) + linesadded;
@@ -1317,7 +1330,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                     linesadded = writeWrappedComment(w, _mfg, title, textSpace) + linesadded;
                 }
             }
-            if (!(_owner.equals(""))) {
+            if (!(_owner.isEmpty())) {
                 title = "   Owner:             ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _owner, title, textSpaceWithIcon) + linesadded;
@@ -1325,7 +1338,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                     linesadded = writeWrappedComment(w, _owner, title, textSpace) + linesadded;
                 }
             }
-            if (!(_model.equals(""))) {
+            if (!(_model.isEmpty())) {
                 title = "   Model:             ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _model, title, textSpaceWithIcon) + linesadded;
@@ -1333,7 +1346,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                     linesadded = writeWrappedComment(w, _model, title, textSpace) + linesadded;
                 }
             }
-            if (!(_dccAddress.equals(""))) {
+            if (!(_dccAddress.isEmpty())) {
                 w.write(newLine, 0, 1);
                 String s = "   DCC Address:       " + _dccAddress;
                 w.write(s, 0, s.length());
@@ -1342,7 +1355,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
             //If there is a comment field, then wrap it using the new wrapCommment
             //method and print it
-            if (!(_comment.equals(""))) {
+            if (!(_comment.isEmpty())) {
                 //Because the text will fill the width if the roster entry has an icon
                 //then we need to add some blank lines to prevent the comment text going
                 //through the picture.
@@ -1357,7 +1370,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                 title = "   Comment:           ";
                 linesadded = writeWrappedComment(w, _comment, title, textSpace) + linesadded;
             }
-            if (!(_decoderModel.equals(""))) {
+            if (!(_decoderModel.isEmpty())) {
                 title = "   Decoder Model:     ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _decoderModel, title, textSpaceWithIcon) + linesadded;
@@ -1365,7 +1378,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
                     linesadded = writeWrappedComment(w, _decoderModel, title, textSpace) + linesadded;
                 }
             }
-            if (!(_decoderFamily.equals(""))) {
+            if (!(_decoderFamily.isEmpty())) {
                 title = "   Decoder Family:    ";
                 if ((textSpaceWithIcon != 0) && (linesadded < blanks)) {
                     linesadded = writeWrappedComment(w, _decoderFamily, title, textSpaceWithIcon) + linesadded;
@@ -1375,7 +1388,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
             }
 
             //If there is a decoderComment field, need to wrap it
-            if (!(_decoderComment.equals(""))) {
+            if (!(_decoderComment.isEmpty())) {
                 //Because the text will fill the width if the roster entry has an icon
                 //then we need to add some blank lines to prevent the comment text going
                 //through the picture.
@@ -1521,7 +1534,7 @@ public class RosterEntry extends RosterObject implements BasicRosterEntry {
 
     @Override
     public String getDisplayName() {
-        if (this.getRoadName() != null && !this.getRoadName().equals("")) { // NOI18N
+        if (this.getRoadName() != null && !this.getRoadName().isEmpty()) { // NOI18N
             return Bundle.getMessage("RosterEntryDisplayName", this.getId(), this.getRoadName(), this.getRoadNumber()); // NOI18N
         } else {
             return this.getId();

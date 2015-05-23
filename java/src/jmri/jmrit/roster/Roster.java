@@ -2,6 +2,7 @@
 package jmri.jmrit.roster;
 
 import java.awt.HeadlessException;
+import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
@@ -21,6 +22,7 @@ import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
 import jmri.jmrit.symbolicprog.SymbolicProgBundle;
 import jmri.util.FileUtil;
+import jmri.util.FileUtilSupport;
 import jmri.util.StringUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -61,15 +63,18 @@ import org.slf4j.LoggerFactory;
  * @version	$Revision$
  * @see jmri.jmrit.roster.RosterEntry
  */
-public class Roster extends XmlFile implements RosterGroupSelector {
+public class Roster extends XmlFile implements RosterGroupSelector, PropertyChangeListener {
 
     /**
      * List of contained {@link RosterEntry} elements.
      */
     protected List<RosterEntry> _list = new ArrayList<>();
     private boolean dirty = false;
-    private static String fileLocation = null;
-    private static String rosterFileName = "roster.xml"; // NOI18N
+    /*
+     * This should only be non-null if 
+     */
+    private String rosterLocation = null;
+    private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
     // Note that dispose() doesn't act on these.  Its not clear whether it should...
@@ -79,10 +84,6 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * record the single instance of Roster
      */
     private static transient Roster _instance = null;
-    /*
-     * retain any property change listeners when reseting the roster, so listeners get roster changes across the reset
-     */
-    private static PropertyChangeListener[] listeners = null;
     private UserPreferencesManager preferences;
     private String defaultRosterGroup = null;
     private final HashMap<String, RosterGroup> rosterGroups = new HashMap<>();
@@ -90,35 +91,48 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     private final static Logger log = LoggerFactory.getLogger(Roster.class);
 
     /**
-     * Name for the property change fired when adding a roster entry
+     * Name of the default roster index file.
+     * {@value #DEFAULT_ROSTER_INDEX}
+     */
+    public static final String DEFAULT_ROSTER_INDEX = "roster.xml"; // NOI18N
+    /**
+     * Name for the property change fired when adding a roster entry.
+     * {@value #ADD}
      */
     public static final String ADD = "add"; // NOI18N
     /**
-     * Name for the property change fired when removing a roster entry
+     * Name for the property change fired when removing a roster entry.
+     * {@value #REMOVE}
      */
     public static final String REMOVE = "remove"; // NOI18N
     /**
-     * Name for the property change fired when changing the ID of a roster entry
+     * Name for the property change fired when changing the ID of a roster entry.
+     * {@value #CHANGE}
      */
     public static final String CHANGE = "change"; // NOI18N
     /**
-     * Property change event fired when saving the roster
+     * Property change event fired when saving the roster.
+     * {@value #SAVED}
      */
     public static final String SAVED = "saved"; // NOI18N
     /**
-     * Property change fired when adding a roster group
+     * Property change fired when adding a roster group.
+     * {@value #ROSTER_GROUP_ADDED}
      */
     public static final String ROSTER_GROUP_ADDED = "RosterGroupAdded"; // NOI18N
     /**
-     * Property change fired when removing a roster group
+     * Property change fired when removing a roster group.
+     * {@value #ROSTER_GROUP_REMOVED}
      */
     public static final String ROSTER_GROUP_REMOVED = "RosterGroupRemoved"; // NOI18N
     /**
-     * Property change fired when renaming a roster group
+     * Property change fired when renaming a roster group.
+     * {@value  #ROSTER_GROUP_RENAMED}
      */
     public static final String ROSTER_GROUP_RENAMED = "RosterGroupRenamed"; // NOI18N
     /**
-     * String prefixed to roster group names in the roster entry XML
+     * String prefixed to roster group names in the roster entry XML.
+     * {@value #ROSTER_GROUP_PREFIX}
      */
     public static final String ROSTER_GROUP_PREFIX = "RosterGroup:"; // NOI18N
     /**
@@ -130,14 +144,13 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
         super();
-        synchronized (this) {
-            if (listeners != null) {
-                for (PropertyChangeListener l : listeners) {
-                    this.addPropertyChangeListener(l);
-                }
-                listeners = null;
+        FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            // rosterLocation == null if location is default location
+            if (Roster.this.rosterLocation == null) {
+                Roster.this.setRosterLocation(null); // trigger LocoFile location change
+                Roster.this.reloadRosterFile();
             }
-        }
+        });
         this.preferences = InstanceManager.getDefault(UserPreferencesManager.class);
         if (this.preferences != null) {
             // for some reason, during JUnit testing, preferences is often null
@@ -164,22 +177,16 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
-     * Removes the default instance while retaining PropertyChangeListeners
-     * listening to the default instance so that a new default instance can be
-     * created and the PropertyChangeListeners can be attached to the new
-     * object.
+     * Removes the default instance. Used only to support unit testing.
      *
      * The reasons for calling this should be internally handled by the default
      * Roster itself. This will allow the Roster to listen to other changes
      * within the application without destroying the default instance.
-     * 
+     *
      * @deprecated To be removed when obsoleted.
      */
     @Deprecated
     public synchronized static void resetInstance() {
-        if (_instance != null) {
-            listeners = _instance.pcs.getPropertyChangeListeners();
-        }
         _instance = null;
     }
 
@@ -202,7 +209,7 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     public static synchronized Roster getDefault() {
         if (_instance == null) {
             log.debug("Creating Roster default instance.");
-            _instance = new Roster(defaultRosterFilename());
+            _instance = new Roster(Roster.DEFAULT_ROSTER_INDEX);
         }
         return _instance;
     }
@@ -236,12 +243,8 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             i--;
         }
         _list.add(i + 1, e);
-        e.getAttributes().stream().filter((attribute)
-                -> (attribute.startsWith(Roster.ROSTER_GROUP_PREFIX)
-                && "yes".equals(e.getAttribute(attribute))))
-                .forEach((attribute) -> {
-                    this.addRosterGroup(attribute.substring(Roster.ROSTER_GROUP_PREFIX.length()));
-                });
+        e.addPropertyChangeListener(this);
+        this.addRosterGroups(e.getGroups(this));
         setDirty(true);
         firePropertyChange(ADD, null, e);
     }
@@ -253,10 +256,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @param e Entry to remove
      */
     public void removeEntry(RosterEntry e) {
-        if (log.isDebugEnabled()) {
-            log.debug("Remove entry " + e);
-        }
-        _list.remove(_list.indexOf(e));
+        log.debug("Remove entry {}", e);
+        _list.remove(e);
+        e.removePropertyChangeListener(this);
         setDirty(true);
         firePropertyChange(REMOVE, e, null);
     }
@@ -860,12 +862,17 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * Uses writeFile(String), a protected method that can write to a specific
      * location.
      */
+    @Deprecated
     public static void writeRosterFile() {
-        Roster.instance().makeBackupFile(defaultRosterFilename());
+        Roster.getDefault().writeRoster();
+    }
+
+    public void writeRoster() {
+        this.makeBackupFile(this.getRosterIndexPath());
         try {
-            Roster.instance().writeFile(defaultRosterFilename());
+            this.writeFile(this.getRosterIndexPath());
         } catch (IOException e) {
-            log.error("Exception while writing the new roster file, may not be complete: " + e);
+            log.error("Exception while writing the new roster file, may not be complete: {}", e);
             try {
                 JOptionPane.showMessageDialog(null,
                         Bundle.getMessage("ErrorSavingText") + "\n" + e.getMessage(),
@@ -878,18 +885,60 @@ public class Roster extends XmlFile implements RosterGroupSelector {
     }
 
     /**
+     * Rebuild the Roster index and store it.
+     */
+    public void reindex() {
+        Roster roster = new Roster();
+        for (String fileName : Roster.getAllFileNames()) {
+            // Read file
+            try {
+                Element loco = (new LocoFile()).rootFromName(LocoFile.getFileLocation() + fileName).getChild("locomotive");
+                if (loco != null) {
+                    RosterEntry re = new RosterEntry(loco);
+                    re.setFileName(fileName);
+                    roster.addEntry(re);
+                }
+            } catch (JDOMException | IOException ex) {
+                log.error("Exception while loading loco XML file: {} execption: {}", fileName, ex);
+            }
+        }
+
+        this.makeBackupFile(this.getRosterIndexPath());
+        try {
+            roster.writeFile(this.getRosterIndexPath());
+        } catch (IOException ex) {
+            log.error("Exception while writing the new roster file, may not be complete: {}", ex);
+        }
+        this.reloadRosterFile();
+        log.info("Roster rebuilt, stored in {}", this.getRosterIndexPath());
+    }
+
+    /**
      * Update the in-memory Roster to be consistent with the current roster
      * file. This removes any existing roster entries!
      */
     public void reloadRosterFile() {
         // clear existing
         _list.clear();
+        this.rosterGroups.clear();
         // and read new
         try {
-            _instance.readFile(defaultRosterFilename());
+            _instance.readFile(this.getRosterIndexPath());
         } catch (IOException | JDOMException e) {
             log.error("Exception during roster reading: " + e);
         }
+    }
+
+    public void setRosterIndexFileName(String fileName) {
+        this.rosterIndexFileName = fileName;
+    }
+
+    public String getRosterIndexFileName() {
+        return this.rosterIndexFileName;
+    }
+
+    public String getRosterIndexPath() {
+        return this.getRosterLocation() + this.getRosterIndexFileName();
     }
 
     /**
@@ -898,8 +947,9 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      *
      * @return The roster default location.
      */
+    @Deprecated
     public static String defaultRosterFilename() {
-        return getFileLocation() + rosterFileName;
+        return Roster.getDefault().getRosterIndexPath();
     }
 
     /**
@@ -909,26 +959,20 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @param f Absolute pathname to use. A null or "" argument flags a return
      *          to the original default in the user's files directory.
      */
-    // TODO: replace with a method internal to the Roster that can react appropriately
-    // to changing the Roster file location without removing the Roster.
-    @Deprecated
-    public static void setFileLocation(String f) {
-        if (f != null && !f.isEmpty()) {
-            fileLocation = f;
-            if (f.endsWith(File.separator)) {
-                LocoFile.setFileLocation(f + "roster"); // NOI18N
-            } else {
-                LocoFile.setFileLocation(f + File.separator + "roster"); // NOI18N
-            }
+    public void setRosterLocation(String f) {
+        if (f == null || f.isEmpty()) {
+            this.rosterLocation = null;
+        } else if (!f.endsWith(File.separator)) {
+            f = f + File.separator;
+        }
+        this.rosterLocation = f;
+        if (this.rosterLocation != null) {
+            LocoFile.setFileLocation(f + "roster"); // NOI18N
         } else {
-            if (log.isDebugEnabled()) {
-                log.debug("Roster location reset to default");
-            }
-            fileLocation = FileUtil.getUserFilesPath();
+            log.debug("Roster location reset to default");
             LocoFile.setFileLocation(FileUtil.getUserFilesPath() + "roster" + File.separator); // NOI18N
         }
-        // and make sure next request gets the new one
-        resetInstance();
+        this.reloadRosterFile();
     }
 
     /**
@@ -939,15 +983,45 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      * @return location of the Roster file
      * @see jmri.util.FileUtil#getUserFilesPath()
      */
-    public static String getFileLocation() {
-        if (fileLocation == null) {
-            setFileLocation(null);
+    public String getRosterLocation() {
+        if (this.rosterLocation == null) {
+            return FileUtil.getUserFilesPath();
         }
-        return fileLocation;
+        return this.rosterLocation;
     }
 
+    /**
+     * Set the default location for the Roster file, and all individual
+     * locomotive files.
+     *
+     * @param f Absolute pathname to use. A null or "" argument flags a return
+     *          to the original default in the user's files directory.
+     * @deprecated use {@link #setRosterLocation(java.lang.String) } against the
+     * default Roster instance instead.
+     */
+    @Deprecated
+    public static void setFileLocation(String f) {
+        Roster.getDefault().setRosterLocation(f);
+    }
+
+    /**
+     * Absolute path to roster file location.
+     * <P>
+     * Default is in the user's files directory, but can be set to anything.
+     *
+     * @return location of the Roster file
+     * @see jmri.util.FileUtil#getUserFilesPath()
+     * @deprecated use {@link #getRosterLocation() } from the default Roster
+     * instance instead.
+     */
+    @Deprecated
+    public static String getFileLocation() {
+        return Roster.getDefault().getRosterLocation();
+    }
+
+    @Deprecated
     public static void setRosterFileName(String name) {
-        rosterFileName = name;
+        Roster.getDefault().setRosterIndexFileName(name);
     }
 
     @Override
@@ -1013,6 +1087,14 @@ public class Roster extends XmlFile implements RosterGroupSelector {
         return ROSTER_GROUP_PREFIX + name;
     }
 
+    /**
+     * Returns the constant used to denote a roster group as a
+     * {@link jmri.jmrit.roster.RosterEntry} attribute.
+     *
+     * @return the value of {@link #ROSTER_GROUP_PREFIX}
+     * @deprecated since 3.11.7 use {@link #ROSTER_GROUP_PREFIX} instead.
+     */
+    @Deprecated
     public String getRosterGroupPrefix() {
         return ROSTER_GROUP_PREFIX;
     }
@@ -1050,6 +1132,18 @@ public class Roster extends XmlFile implements RosterGroupSelector {
             return;
         }
         this.addRosterGroup(new RosterGroup(rg));
+    }
+
+    /**
+     * Add a list of {@link jmri.jmrit.roster.rostergroup.RosterGroup}.
+     * RosterGroups that are already known to the Roster are ignored.
+     *
+     * @param groups
+     */
+    public void addRosterGroups(List<RosterGroup> groups) {
+        groups.stream().forEach((rg) -> {
+            this.addRosterGroup(rg);
+        });
     }
 
     /**
@@ -1251,6 +1345,15 @@ public class Roster extends XmlFile implements RosterGroupSelector {
      */
     public HashMap<String, RosterGroup> getRosterGroups() {
         return rosterGroups;
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getSource() instanceof RosterEntry) {
+            if (evt.getPropertyName().equals(RosterEntry.ID)) {
+                this.entryIdChanged((RosterEntry) evt.getSource());
+            }
+        }
     }
 
 }

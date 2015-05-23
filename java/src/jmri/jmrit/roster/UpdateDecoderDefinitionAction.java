@@ -2,6 +2,7 @@
 package jmri.jmrit.roster;
 
 import java.awt.event.ActionEvent;
+import java.io.IOException;
 import java.util.List;
 import javax.swing.Icon;
 import jmri.jmrit.decoderdefn.DecoderFile;
@@ -37,9 +38,9 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         super(s);
     }
 
+    @Override
     public void actionPerformed(ActionEvent e) {
-        Roster roster = Roster.instance();
-        List<RosterEntry> list = roster.matchingList(null, null, null, null, null, null, null);
+        List<RosterEntry> list = Roster.getDefault().matchingList(null, null, null, null, null, null, null);
 
         for (RosterEntry entry : list) {
             String family = entry.getDecoderFamily();
@@ -74,16 +75,14 @@ public class UpdateDecoderDefinitionAction extends JmriAbstractAction {
         }
 
         // write updated roster
-        Roster.instance().makeBackupFile(Roster.defaultRosterFilename());
+        Roster.getDefault().makeBackupFile(Roster.defaultRosterFilename());
         try {
-            roster.writeFile(Roster.defaultRosterFilename());
-        } catch (Exception ex) {
+            Roster.getDefault().writeFile(Roster.defaultRosterFilename());
+        } catch (IOException ex) {
             log.error("Exception while writing the new roster file, may not be complete: " + ex);
         }
         // use the new one
-        Roster.resetInstance();
-        Roster.instance();
-
+        Roster.getDefault().reloadRosterFile();
     }
 
     // never invoked, because we overrode actionPerformed above
