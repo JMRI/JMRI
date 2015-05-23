@@ -13,12 +13,17 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2" lastUpdated="20150523"/>
   <version author="jsalemi@speakeasy.net" version="1.1" lastUpdated="20041213"/>
   <!-- Version 1 - made from TCS A1 file. - joe -->
   <!-- Version 1.1 - Completed new F-key re-mapping pane to work with the new non-standard
 			 way TCS does it. - joe -->
   <!-- Version 1.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 1.2- 2013_06_09 Added Translation lines and use of xi:include (Enzo Fortuna) -->
+  <!-- Version 2 - DEPRECATED FILE !                    -->
+  <!--             DO NOT MODIFY ANY LONGER             -->
+  <!--             Use TCS_A1X-Jan2000.xml instead      -->
+  <!--             File kept for compatibility purpose  -->
   <decoder>
     <family name="TCS A1X decoder" mfg="Train Control Systems">
       <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000"/>

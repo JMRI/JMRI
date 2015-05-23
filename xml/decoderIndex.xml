@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150509-1635-jake on Sat May 09 09:35:08 PDT 2015 $Id$-->
-  <decoderIndex version="630">
+  <!--Written by JMRI version 20150523-2044-Alain Le Marchand on Sat May 23 22:45:03 CEST 2015 $Id$-->
+  <decoderIndex version="632">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -14553,8 +14553,14 @@
           </protocols>
         </model>
       </family>
+      <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_A1-Jan2000.xml">
+        <model model="A1" numOuts="4" numFns="2" lowVersionID="161" highVersionID="161" />
+      </family>
       <family name="TCS A1 decoder" mfg="Train Control Systems" file="TCS_A1.xml">
         <model show="no" model="A1" numOuts="4" numFns="2" lowVersionID="161" highVersionID="161" replacementModel="A1" replacementFamily="Jan 2000" />
+      </family>
+      <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_A1X-Jan2000.xml">
+        <model model="A1X" numOuts="4" numFns="2" lowVersionID="32" />
       </family>
       <family name="TCS A1X decoder" mfg="Train Control Systems" file="TCS_A1X.xml">
         <model show="no" model="A1X" numOuts="4" numFns="2" lowVersionID="32" replacementModel="A1X" replacementFamily="Jan 2000" />
@@ -16364,6 +16370,12 @@
           <size length="0.500" width="0.375" height="0.125" units="inches" />
         </model>
       </family>
+      <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_Mfamily-Jan2000.xml">
+        <model model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37" />
+        <model model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29">
+          <size length="0.500" width="0.375" height="0.125" units="inches" />
+        </model>
+      </family>
       <family name="TCS Mx series decoders" mfg="Train Control Systems" file="TCS_Mfamily.xml">
         <model show="no" model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24" replacementModel="M1" replacementFamily="Jan 2000">
           <size length="0.500" width="0.375" height="0.125" units="inches" />
@@ -16374,10 +16386,10 @@
         <model show="no" model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37" replacementModel="M1P-UK" replacementFamily="Jan 2000" />
       </family>
       <family name="TCS 150 series decoders" mfg="Train Control Systems" file="TCS_TH150DP.xml">
-        <model show="no" model="TH150DP" numOuts="5" numFns="6">
+        <model show="no" model="TH150DP" numOuts="5" numFns="6" replacementModel="DP5X" replacementFamily="Jan 2000">
           <output name="4" label="Violet" />
         </model>
-        <model show="no" model="TH150W" numOuts="5" numFns="6">
+        <model show="no" model="TH150W" numOuts="5" numFns="6" replacementModel="W5X" replacementFamily="Jan 2000">
           <output name="4" label="Violet" />
         </model>
       </family>
@@ -16385,7 +16397,7 @@
         <model show="no" model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="22" replacementModel="T1" replacementFamily="Jan 2000">
           <output name="4" label="Violet" />
         </model>
-        <model show="no" model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9" replacementModel="TH141" replacementFamily="Jan 2000">
+        <model show="maybe" model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9" replacementModel="T4X" replacementFamily="Jan 2000">
           <output name="4" label="Violet" />
         </model>
       </family>
@@ -16396,6 +16408,32 @@
       </family>
       <family name="TCS Tx series decoders" mfg="Train Control Systems" file="TCS_Tx_v28.xml">
         <model show="no" model="T1_v28+" numOuts="2" numFns="8" lowVersionID="28" highVersionID="35" replacementModel="T1" replacementFamily="Jan 2000" />
+      </family>
+      <family name="June 2007" mfg="Train Control Systems" lowVersionID="41" highVersionID="52" comment="TCS FW Starting June 2007. Only shows models not upgraded to higher FW versions." file="TCS_V51-Jun2007.xml">
+        <model model="M1P-MH" numOuts="2" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.57" width="0.355" height="0.132" units="inches" />
+        </model>
+        <model model="MC6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+        </model>
       </family>
       <family name="TCS V51+" mfg="Train Control Systems" comment="TCS Ver 51 on" lowVersionID="51" highVersionID="52" file="TCS_V51.xml">
         <model show="no" model="A4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="June 2007">
@@ -17112,6 +17150,60 @@
           <functionlabel num="20" lockable="true">Water fill</functionlabel>
         </functionlabels>
       </family>
+      <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions." file="TCS_X-Jan2000.xml">
+        <model model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B">
+          <output name="1" label="Front LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
+          <output name="2" label="Rear LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Motor" />
+          <size length="3.03" width="0.355" height="0.135" units="inches" />
+        </model>
+        <model model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
+          <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <size length="0845" width="0.680" height="0.165" units="inches" />
+        </model>
+        <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC6" replacementFamily="Jun 2007">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <size length="0.71" width="0.41" height="0.19" units="inches" />
+        </model>
+        <model model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <size length="1.000" width="0.680" height="0.250" units="inches" />
+        </model>
+        <model model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <size length="0.850" width="0.690" height="0.190" units="inches" />
+        </model>
+      </family>
       <family name="TCS X Series Decoders" mfg="Train Control Systems" file="TCS_X.xml">
         <model show="no" model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="Jan 2000">
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
@@ -17169,7 +17261,7 @@
           <output name="Motor" />
           <size length="0.57" width="0.355" height="0.132" units="inches" />
         </model>
-        <model show="no" model="M1P-UK" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-15" replacementFamily="Jan 2000">
+        <model show="no" model="M1P-UK" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-UK" replacementFamily="Jan 2000">
           <output name="1" label="White" connection="plug" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA" />
           <output name="Dim" />
@@ -17214,7 +17306,7 @@
           <output name="Motor" />
           <size length="0.71" width="0.41" height="0.19" units="inches" />
         </model>
-        <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC4" replacementFamily="Jan 2000">
+        <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC6" replacementFamily="Jan 2000">
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
@@ -17253,7 +17345,7 @@
           <output name="Motor" />
           <size length="1.010" width="0.665" height="0.250" units="inches" />
         </model>
-        <model show="no" model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T4X" replacementFamily="Jan 2000">
+        <model show="no" model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T5X" replacementFamily="Jan 2000">
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
@@ -17285,7 +17377,7 @@
           <output name="Ditch" />
           <output name="Motor" />
         </model>
-        <model show="no" model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T6X" replacementFamily="Jan 2000">
+        <model show="no" model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="W5X" replacementFamily="Jan 2000">
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />

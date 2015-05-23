@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="6" lastUpdated="20150523"/>    
   <version author="jake@physics.berkeley.edu" version="5.1" lastUpdated="20031008"/>
   <!-- Version 1 - made from NMRA & Digitrax examples -->
   <!-- Version 2 - moved TH141 here, add function map -->
@@ -21,12 +22,16 @@
   <!-- Version 5 - fix "rule 17" typos -->
   <!-- Version 5.1 - changed spelling of "behavior" (Jack Shall) -->
   <!-- Version 5.2- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
+  <!-- Version 6 - DEPRECATED FILE !                           -->
+  <!--             DO NOT MODIFY ANY LONGER                    -->
+  <!--             Use TCS_FW01.xml instead               -->
+  <!--             File kept for compatibility purpose         -->  
   <decoder>
     <family name="TCS Tx series decoders" mfg="Train Control Systems">
       <model show="no" model="T1" numOuts="2" numFns="2" lowVersionID="16" highVersionID="22" replacementModel="T1" replacementFamily="Jan 2000">
         <output name="4" label="Violet"/>
       </model>
-      <model show="no" model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9" replacementModel="TH141" replacementFamily="Jan 2000">
+      <model show="maybe" model="TH141" numOuts="4" numFns="2" lowVersionID="8" highVersionID="9" replacementModel="T4X" replacementFamily="Jan 2000">
         <output name="4" label="Violet"/>
       </model>
     </family>

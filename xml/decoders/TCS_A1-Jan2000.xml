@@ -21,13 +21,10 @@
   <!-- Version 3.1 - changed spelling of "behavior" (Jack Shall) -->
   <!-- Version 3.2 - 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 3.2.1 - 2014-06-14 Common CV include 2_CVxx. Enzo Fortuna -->
-  <!-- Version 4 - DEPRECATED FILE !                    -->
-  <!--             DO NOT MODIFY ANY LONGER             -->
-  <!--             Use TCS_A1-Jan2000.xml instead       -->
-  <!--             File kept for compatibility purpose  -->
+  <!-- Version 4 - Copy of file TCS_A1.xml - replacement family "Jan 2000" -->
   <decoder>
-    <family name="TCS A1 decoder" mfg="Train Control Systems">
-      <model show="no" model="A1" numOuts="4" numFns="2" lowVersionID="161" highVersionID="161" replacementModel="A1" replacementFamily="Jan 2000"/>
+    <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions.">
+      <model model="A1" numOuts="4" numFns="2" lowVersionID="161" highVersionID="161"/>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>

@@ -32,43 +32,18 @@
   <!-- Version 9 - Added CV 23&24, & auto mars to light fx & re-itemize for better layout -->
   <!-- Version 9.1 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
   <!-- Version 9.2 20130211 Added Forward and Reverse trim to a new pane called TCS Other(jcrellin0661@gmail.com) -->
-  <!-- Version 10- DEPRECATED FILE !                                                -->
-  <!--             DO NOT MODIFY ANY LONGER                                         -->
-  <!--             Use TCS_X-Jan2000.xml instead for AMD1, DP5X, MC6, TX5 and W5X   -->
-  <!--             Use TCS_FW01.xml instead for others                              -->
-  <!--             File kept for compatibility purpose                              -->
+  <!-- Version 10 - Copy of file TCS_X.xml - replacement family "Jan 2000" only for AMD1, DP5X, MC6, TX5 and W5X -->
+  <!--              All others are covered in TCS_FW01.xml -->
   <decoder>
-    <family name="TCS X Series Decoders" mfg="Train Control Systems">
-      <model show="no" model="A4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A4X" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="2.860" width="0.680" height="0.145" units="inches"/>
-      </model>
-      <model show="no" model="A6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="A6X" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="solder" maxcurrent="200 mA"/>
-        <output name="2" label="Yellow" connection="solder" maxcurrent="200 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="200 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="200 mA"/>
-        <output name="5" label="Brown" connection="solder" maxcurrent="200 mA"/>
-        <output name="6" label="Pink" connection="solder" maxcurrent="200 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="2.860" width="0.680" height="0.145" units="inches"/>
-      </model>
-      <model show="no" model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B" replacementModel="AMD1" replacementFamily="Jan 2000">
+    <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions.">
+      <model model="AMD1" numOuts="2" numFns="8" lowVersionID="37" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: B23-7, B30-7, B36-7, C628, C630, Dash8-32BW, Dash8-40B, Dash8-40BW and GP-38. Fits Atlas DCC Ready:  GP-40, GP-40-2, SD-7, SD-9, SD-35, Trainmaster and U25B">
         <output name="1" label="Front LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA"/>
         <output name="2" label="Rear LED" connection="other" comment="Prewired with Golden White LED" maxcurrent="100 mA"/>
         <output name="Dim"/>
         <output name="Motor"/>
         <size length="3.03" width="0.355" height="0.135" units="inches"/>
       </model>
-      <model show="no" model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP" replacementModel="DP5X" replacementFamily="Jan 2000">
+      <model model="DP5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="PnP">
         <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
@@ -79,68 +54,7 @@
         <output name="Motor"/>
         <size length="0845" width="0.680" height="0.165" units="inches"/>
       </model>
-      <model show="no" model="M1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M1" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.57" width="0.355" height="0.132" units="inches"/>
-      </model>
-      <model show="no" model="M1P-15" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-15" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.57" width="0.355" height="0.132" units="inches"/>
-      </model>
-      <model show="no" model="M1P-UK" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="HO" replacementModel="M1P-UK" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="plug" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="plug" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.57" width="0.355" height="0.132" units="inches"/>
-      </model>
-      <model show="no" model="M3" numOuts="3" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M3" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.570" width="0.355" height="0.132" units="inches"/>
-      </model>
-      <model show="no" model="M4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="M4" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.570" width="0.355" height="0.132" units="inches"/>
-      </model>
-      <model show="no" model="MC2" numOuts="2" numFns="8" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC2" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.71" width="0.41" height="0.19" units="inches"/>
-      </model>
-      <model show="no" model="MC4" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC4" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="0.71" width="0.41" height="0.19" units="inches"/>
-      </model>
-      <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" replacementModel="MC6" replacementFamily="Jan 2000">
+      <model show="no" model="MC6" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N"  replacementModel="MC6" replacementFamily="Jun 2007">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -152,34 +66,7 @@
         <output name="Motor"/>
         <size length="0.71" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model show="no" model="MP-15N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" replacementModel="MP-15N" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-      </model>
-      <model show="no" model="T1" numOuts="2" numFns="8" lowVersionID="36" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T1" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="1.010" width="0.665" height="0.250" units="inches"/>
-      </model>
-      <model show="no" model="T4X" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T4X" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="1.010" width="0.665" height="0.250" units="inches"/>
-      </model>
-      <model show="no" model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T5X" replacementFamily="Jan 2000">
+      <model model="T5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
@@ -190,28 +77,7 @@
         <output name="Motor"/>
         <size length="1.000" width="0.680" height="0.250" units="inches"/>
       </model>
-      <model show="no" model="T6X" numOuts="6" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="T6X" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="wire" maxcurrent="100 mA"/>
-        <output name="5" label="Brown" connection="wire" maxcurrent="100 mA"/>
-        <output name="6" label="Pink" connection="wire" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-        <size length="1.00" width="0.680" height="0.250" units="inches"/>
-      </model>
-      <model show="no" model="VO-1000N" numOuts="4" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: VO-1000" replacementModel="VO-1000N" replacementFamily="Jan 2000">
-        <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-        <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA"/>
-        <output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
-        <output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
-        <output name="Dim"/>
-        <output name="Ditch"/>
-        <output name="Motor"/>
-      </model>
-      <model show="no" model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" replacementModel="W5X" replacementFamily="Jan 2000">
+      <model model="W5X" numOuts="5" numFns="14" lowVersionID="30" highVersionID="40" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO">
         <output name="1" label="White" connection="wire" maxcurrent="100 mA"/>
         <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA"/>
         <output name="3" label="Green" connection="wire" maxcurrent="100 mA"/>

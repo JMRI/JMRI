@@ -22,21 +22,15 @@
   <!-- made from M1 file with corrections and added M2 norman@erwbant.freeserve.co.ukJanuary 2005 -->
   <!-- Version 4 added M1P-UK from David Cuthbert -->
   <!-- Version 4.1- 20110214 Added Rest to Factory defaults CV8>2(wsthompson@earthlink.net) -->
-  <!-- Version 5 - DEPRECATED FILE !                                        -->
-  <!--             DO NOT MODIFY ANY LONGER                                 -->
-  <!--             Use TCS_Mfamily-Jan2000.xml instead for M2 and M1P-UK    -->
-  <!--             Use TCS_FW01.xml instead for M1                          -->
-  <!--             File kept for compatibility purpose                      -->
+  <!-- Version 5 - Copy of file TCS_Mfamily.xml - replacement family "Jan 2000" only for M2 and M1P-UK -->
+  <!--             Replacement for M1 is covered in TCS_FW01.xml -->
   <decoder>
-    <family name="TCS Mx series decoders" mfg="Train Control Systems">
-      <model show="no" model="M1" numOuts="2" numFns="6" lowVersionID="24" highVersionID="24" replacementModel="M1" replacementFamily="Jan 2000">
+    <family name="Jan 2000" mfg="Train Control Systems" comment="TCS FW Starting January 2000. Only shows models not upgraded to higher FW versions.">
+      <model model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37">
+      </model>
+      <model model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29">
         <size length="0.500" width="0.375" height="0.125" units="inches"/>
       </model>
-      <model show="no" model="M2" numOuts="3" numFns="6" lowVersionID="29" highVersionID="29" replacementModel="M2" replacementFamily="Jan 2000">
-        <size length="0.500" width="0.375" height="0.125" units="inches"/>
-      </model>
-      <model show="no" model="M1P-UK" numOuts="2" numFns="6" lowVersionID="35" highVersionID="37" replacementModel="M1P-UK" replacementFamily="Jan 2000">
-    		</model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
