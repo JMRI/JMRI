@@ -5,8 +5,6 @@ import java.awt.event.ActionEvent;
 import javax.swing.Icon;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Recreate the roster index file if it's been damaged or lost.
@@ -49,7 +47,4 @@ public class RecreateRosterAction extends JmriAbstractAction {
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }
-
-    // initialize logging
-    static private Logger log = LoggerFactory.getLogger(RecreateRosterAction.class.getName());
 }
