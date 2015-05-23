@@ -95,7 +95,6 @@ public class ImportRosterItemAction extends AbstractRosterItemAction {
         File fout = new File(LocoFile.getFileLocation() + mToEntry.getFileName());
         newLocoFile.writeFile(fout, lroot, mToEntry);
 
-        mToEntry.getGroups();
         return true;
     }
 
