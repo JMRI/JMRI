@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150523-2044-Alain Le Marchand on Sat May 23 22:45:03 CEST 2015 $Id$-->
-  <decoderIndex version="632">
+  <!--Written by JMRI version 20150524-0936-Alain Le Marchand on Sun May 24 11:36:20 CEST 2015 $Id$-->
+  <decoderIndex version="634">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -9164,7 +9164,7 @@
       <family name="Servo Accessory Decoders" mfg="SPROG DCC" comment="Servo6 is an accessory decoder for servo motors, it can be programmed via CV1... and/or CV513..." file="SPROG_DCC_Servo6.xml">
         <model model="Servo6" lowVersionID="10" highVersionID="10" />
       </family>
-      <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
+      <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; N locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Dsl.xml">
         <model model="Alco FA2" numOuts="2" numFns="14" connector="other" productID="Alco_FA2" comment="Diesel Prime Mover Alco 244">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
@@ -9554,8 +9554,8 @@
           <functionlabel num="8" lockable="true">Mute</functionlabel>
         </functionlabels>
       </family>
-      <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Stm.xml">
-        <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco 2-6-0" comment="Alco 2-6-0">
+      <family name="Bachmann Sound Value" mfg="SoundTraxx (Throttle-Up)" comment="Bachmann Standard line HO &amp; N locomotives with SoundTraxx DSD that Bachmann refers to as Sound Value" file="SoundTraxx_Bachmann_SndVal_Stm.xml">
+        <model model="Alco 2-6-0" numOuts="2" numFns="14" connector="other" productID="Alco260" formFactor="HO" comment="Alco 2-6-0">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -9586,7 +9586,8 @@
             <label xml:lang="it">Silenzio| </label>
           </output>
         </model>
-        <model model="2-8-4 Berkshire" numOuts="2" numFns="14" connector="other" productID="Lima 2-8-4" comment="Lima Locomotive Works 2-8-4">
+        <!-- keep the initial model entry for compatibility purpose as it has already been released -->
+        <model show="no" model="2-8-4 Berkshire" numOuts="2" numFns="14" connector="other" productID="Lima284_PM" formFactor="HO" comment="Lima Locomotive Works 2-8-4 (HO scale)" replacementFamily="Bachmann Sound Value" replacementModel="2-8-4 Berkshire - Pere Marquette [HO]">
           <versionCV lowVersionID="82" />
           <output name="3" label="FX5| Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>
@@ -9616,6 +9617,213 @@
           <output name="12" label="Mute| ">
             <label xml:lang="it">Silenzio| </label>
           </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="2-8-4 Berkshire - Pere Marquette [HO]" numOuts="2" numFns="14" connector="other" productID="Lima284_PM" formFactor="HO" comment="Lima Locomotive Works 2-8-4, whistles for Pere Marquette version (HO scale)">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="2-8-4 Berkshire - Pere Marquette [N]" numOuts="2" numFns="14" connector="other" productID="Lima284_PM_N" formFactor="N" comment="Lima Locomotive Works 2-8-4, whistles for Pere Marquette version (N scale)">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="2-8-4 Berkshire - Nickel Plate [HO]" numOuts="2" numFns="14" connector="other" productID="Lima284_NKP" formFactor="HO" comment="Lima Locomotive Works 2-8-4, whistles for Nickel Plate Road version (HO scale)">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="2-8-4 Berkshire - Nickel Plate [N]" numOuts="2" numFns="14" connector="other" productID="Lima284_NKP_N" formFactor="N" comment="Lima Locomotive Works 2-8-4, whistles for Nickel Plate Road version (N scale)">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [HO]" numOuts="2" numFns="14" connector="other" productID="Lima284_CO" formFactor="HO" comment="Lima Locomotive Works 2-8-4, whistles for Chesapeake &amp; Ohio Kanawha version (HO scale)">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
+        </model>
+        <model model="2-8-4 Berkshire - Chesapeake &amp; Ohio Kanawha [N]" numOuts="2" numFns="14" connector="other" productID="Lima284_CO_N" formFactor="N" comment="Lima Locomotive Works 2-8-4, whistles for Chesapeake &amp; Ohio Kanawha version (N scale)">
+          <versionCV lowVersionID="82" />
+          <output name="3" label="FX5| Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
+          </output>
+          <output name="4" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
+          </output>
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="8" label="Short|Whistle">
+            <label xml:lang="it">Breve|Fischio</label>
+          </output>
+          <output name="9" label="Steam|Release">
+            <label xml:lang="it">Rilascio|Vapore</label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <functionlabels>
+            <functionlabel num="6" lockable="true">FX6 function</functionlabel>
+          </functionlabels>
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -11522,7 +11730,7 @@
         </functionlabels>
       </family>
       <family name="Tsunami Diesel Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" comment="DCC Sound On-Board" file="SoundTraxx_Tsu_Diesel_Bachmann.xml">
-        <model model="On30 Whitcomb 50-Ton Center-Cab" numOuts="2" numFns="14" connector="other" productID="Whitcomb" comment="DCC Sound On-Board, Plug-and-Play Sound Module">
+        <model model="On30 Whitcomb 50-Ton Center-Cab" numOuts="4" numFns="14" connector="other" productID="Whitcomb" comment="DCC Sound On-Board, Plug-and-Play Sound Module, Prime mover: Dual Whitcomb">
           <versionCV lowVersionID="83" />
           <output name="3" label="FX5|Rule 17">
             <label xml:lang="it">FX5|Regola 17</label>

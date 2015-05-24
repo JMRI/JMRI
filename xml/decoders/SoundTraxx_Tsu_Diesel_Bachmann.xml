@@ -13,9 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="9.1" lastUpdated="20150524"/>
   <version author="Alain Le Marchand" version="9" lastUpdated="20150125"/>
   <!-- This file contains the OEM Bachmann Tsunami definitions for Bachmann Diesel locomotives	    -->
-  <!-- Version 9  Created from SoundTraxx_Tsu_Steam_Bachmann.xml version 8 file											-->
+  <!-- Version 9  Created from SoundTraxx_Tsu_Steam_Bachmann.xml version 8 file                     -->
+  <!-- Version 9.1  Update following publication of datasheet 20150429: horn names, CV216           -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Air Horn=output 5, etc.
@@ -23,7 +25,7 @@
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Bachmann OEM" mfg="SoundTraxx (Throttle-Up)" comment="DCC Sound On-Board">
-      <model model="On30 Whitcomb 50-Ton Center-Cab" numOuts="2" numFns="14" connector="other" productID="Whitcomb" comment="DCC Sound On-Board, Plug-and-Play Sound Module">
+      <model model="On30 Whitcomb 50-Ton Center-Cab" numOuts="4" numFns="14" connector="other" productID="Whitcomb" comment="DCC Sound On-Board, Plug-and-Play Sound Module, Prime mover: Dual Whitcomb">
         <versionCV lowVersionID="83"/>
         <output name="3" label="FX5|Rule 17">
           <label xml:lang="it">FX5|Regola 17</label>
@@ -79,14 +81,14 @@
         <label xml:lang="de">Startspannung</label>
         <comment>A value of 255 corresponds to full voltage available</comment>
       </variable>
-      <variable CV="3" item="Accel" default="0" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
+      <variable CV="3" item="Accel" default="6" tooltip="Sets the acceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Acceleration Rate (0-255)</label>
         <label xml:lang="it">Accellerazione (0-255)</label>
         <label xml:lang="fr">Accelération (0-255)</label>
         <label xml:lang="de">Anfahrverzögerung (0-255)</label>
       </variable>
-      <variable CV="4" item="Decel" default="0" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
+      <variable CV="4" item="Decel" default="5" tooltip="Sets the deceleration rate (delay).  Higher number = slower rate">
         <decVal/>
         <label>Braking Rate (0-255)</label>
         <label xml:lang="it">Decellerazione (1-255)</label>
@@ -1142,42 +1144,42 @@
         <label>Bell Ring Rate</label>
       </variable>
       <!-- Air Horn Selection follows -->
-      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="4" tooltip="Selects which airhorn to use">
+      <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="Whitcomb" tooltip="Selects which airhorn to use">
         <enumVal>
-          <enumChoice choice="Airhorn #1">
-            <choice>Airhorn #1</choice>
+          <enumChoice choice="Wabco E2">
+            <choice>Wabco E2</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #2">
-            <choice>Airhorn #2</choice>
+          <enumChoice choice="Wabco A2">
+            <choice>Wabco A2</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #3">
-            <choice>Airhorn #3</choice>
+          <enumChoice choice="Leslie A125">
+            <choice>Leslie A125</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #4">
-            <choice>Airhorn #4</choice>
+          <enumChoice choice="RGS Goose No.5">
+            <choice>RGS Goose No.5</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #5">
-            <choice>Airhorn #5</choice>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
           </enumChoice>
         </enumVal>
         <label>Air Horn Select</label>
       </variable>
-      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
+      <variable CV="115" mask="VVVVXXXX" item="Sound Option 10" default="0" include="Whitcomb" tooltip="Choose an alternate airhorn or a short blast of the primary airhorn">
         <enumVal>
           <enumChoice choice="Short Horn">
             <choice>Short Horn</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #2">
-            <choice>Airhorn #2</choice>
+          <enumChoice choice="Wabco A2">
+            <choice>Wabco A2</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #3">
-            <choice>Airhorn #3</choice>
+          <enumChoice choice="Leslie A125">
+            <choice>Leslie A125</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #4">
-            <choice>Airhorn #4</choice>
+          <enumChoice choice="RGS Goose No.5">
+            <choice>RGS Goose No.5</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn #5">
-            <choice>Airhorn #5</choice>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
           </enumChoice>
         </enumVal>
         <label>Alternate Air Horn Enable</label>
@@ -1198,7 +1200,7 @@
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumDynamic.xml"/>
         <label>Dynamic Brake Override</label>
       </variable>
-      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not available in early decoders&lt;/html&gt;">
+      <variable CV="118" item="Advanced Group 2 Option 6" default="204" tooltip="&lt;html&gt;Adjust the motor response following a momentary power glitch&lt;br&gt;      0 or 128 = Disabled&lt;br&gt;      1-127 = Absolute Limiting (will return to this speed step)&lt;br&gt;      129-255 = Proportional Limiting (a percentage of set speed)&lt;br&gt;      Note: This feature is not documented for this decoder&lt;/html&gt;">
         <decVal/>
         <label>Motor Recovery Speed (0-255)</label>
       </variable>
@@ -1224,6 +1226,10 @@
         <label>Air Compressor Volume</label>
       </variable>
       <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="0" exclude ="Whitcomb" tooltip="Sets the volume of the dynamic brakes">
+        <decVal/>
+        <label>Dynamic Brake Volume</label>
+      </variable>
+      <variable CV="133" mask="VVVVVVVV" item="Sound Setting 16" default="0" include ="Whitcomb" tooltip="Sets the volume of the dynamic brakes. Not used for Whitcomb.">
         <decVal/>
         <label>Dynamic Brake Volume</label>
       </variable>
@@ -1385,6 +1391,10 @@
       <variable CV="214" mask="VVVVVVVV" item="Advanced Group 2 Option 5" default="15" tooltip="Specifies a gain factor for the derivative part of the PID motor control equation">
         <decVal/>
         <label>Motor Control Sample Aperture Time (0-255)</label>
+      </variable>
+      <variable CV="216" item="EMF Option 1" default="140" tooltip="Specifies the reference voltage for BEMF">
+        <decVal max="255"/>
+        <label>BEMF Reference Voltage</label>
       </variable>
     </variables>
     <resets>
