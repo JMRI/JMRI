@@ -86,8 +86,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         return _instance;
     }
+    // for JUnit test
+    protected WarrantTableFrame reset() {
+        _instance = new WarrantTableFrame();
+        return _instance;
+    }
 
-    WarrantTableModel getModel() {
+    protected WarrantTableModel getModel() {
         return _model;
     }
 

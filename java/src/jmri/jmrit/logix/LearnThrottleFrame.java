@@ -318,6 +318,13 @@ public class LearnThrottleFrame extends JmriJFrame implements java.beans.Propert
         _warrantFrame.setThrottleCommand("Speed", "-1.0");
         _warrantFrame.stopRunTrain();
     }
+    
+    /**
+     * for JUnint testing
+     */
+    protected DccThrottle getThrottle() {
+        return _throttle;
+    }
 
     /**
      * change the power LED displayed as appropriate and set corresponding

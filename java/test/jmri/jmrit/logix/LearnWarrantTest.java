@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import jmri.ConfigureManager;
+import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.SensorManager;
@@ -57,7 +58,9 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         sensor.setState(Sensor.ACTIVE);
         connectThrottle();
         pressButton(frame, Bundle.getMessage("Start"));
-        sensor = runtimes(sensor);
+
+        Assert.assertNotNull("Throttle not found", frame._learnThrottle.getThrottle());
+        sensor = runtimes(sensor, frame._learnThrottle.getThrottle());
         pressButton(frame, Bundle.getMessage("Stop"));
         
         frame._dccNumBox.setText("111");
@@ -65,13 +68,16 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         sensor = _sensorMgr.getBySystemName("IS1");
         sensor.setState(Sensor.ACTIVE);
         pressButton(frame, Bundle.getMessage("ARun"));
-        sensor = runtimes(sensor);
+        sensor = runtimes(sensor, null);
+        Thread.sleep(500);
         String msg = w.getRunModeMessage();
         Assert.assertEquals("run finished", Bundle.getMessage("NotRunning", w.getDisplayName()), msg);
 //        sensor.setState(Sensor.INACTIVE);
         pressButton(frame, Bundle.getMessage("ButtonSave"));
         List<ThrottleSetting> commands = w.getThrottleCommands();
-        Assert.assertEquals("5 ThrottleCommands", 5, commands.size());
+        Assert.assertEquals("9 ThrottleCommands", 9, commands.size());
+//        WarrantTableFrame table = WarrantTableFrame.reset();
+//        table.setVisible(true);
         
     }
     
@@ -82,14 +88,14 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
 //        Assert.assertNotNull("getHelper() not found", getHelper());
         getHelper().enterClickAndLeave(new MouseEventData(this, button));        
     }
-    
+/*    
     private void pressRadioButton(java.awt.Container frame, String text) {
         AbstractButtonFinder buttonFinder = new AbstractButtonFinder(text);
         javax.swing.JRadioButton button = (javax.swing.JRadioButton) buttonFinder.find(frame, 0);
         Assert.assertNotNull("Button not found", button);
         getHelper().enterClickAndLeave(new MouseEventData(this, button));        
     }
-    
+*/    
     private void confirmJOptionPane(java.awt.Container frame, String title, String text) {
         DialogFinder finder = new DialogFinder(title);
         java.awt.Container pane = (java.awt.Container)finder.find();
@@ -114,14 +120,22 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
      * @return - active end sensor
      * @throws Exception
      */
-    private Sensor runtimes(Sensor sensor) throws Exception {
+    private Sensor runtimes(Sensor sensor, DccThrottle throttle) throws Exception {
+        Thread.sleep(100);
+        if (throttle!=null) {
+            throttle.setSpeedSetting(0.5f);
+        }
         for (int i=2; i<=5; i++) {
-            Thread.sleep(200);            
+            Thread.sleep(200);
             Sensor sensorNext = _sensorMgr.getBySystemName("IS"+i);
             sensorNext.setState(Sensor.ACTIVE);
             Thread.sleep(200);            
             sensor.setState(Sensor.INACTIVE);
             sensor = sensorNext;
+        }
+        if (throttle!=null) {
+            // leaving script with non-zero speed adds 2 more speed commands (-0.5f & 0.0f)
+            throttle.setSpeedSetting(0.2f);
         }
         return sensor;
     }
@@ -143,6 +157,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     }
 
     // The minimal setup for log4J
+    @Override
     protected void setUp() throws Exception {
         super.setUp();
         apps.tests.Log4JFixture.setUp();
@@ -161,7 +176,10 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         JUnitUtil.initWarrantManager();
     }
 
-    protected void tearDown() {
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.setUp();
         apps.tests.Log4JFixture.tearDown();
     }
 

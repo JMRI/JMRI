@@ -70,7 +70,7 @@ public class WarrantFrame extends WarrantRoute {
 
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
     private long _startTime;
-    private LearnThrottleFrame _learnThrottle = null;
+    LearnThrottleFrame _learnThrottle = null;       // need access for JUnit test
     private DccLocoAddress _locoAddress = null;
     static Color myGreen = new Color(0, 100, 0);
 

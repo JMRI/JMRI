@@ -5,6 +5,7 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import jmri.BeanSetting;
 import jmri.DccLocoAddress;
 import jmri.InstanceManager;
@@ -13,6 +14,7 @@ import jmri.Sensor;
 import jmri.SensorManager;
 import jmri.Turnout;
 import jmri.TurnoutManager;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -252,11 +254,29 @@ public class WarrantTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
         apps.tests.Log4JFixture.setUp();
+        // set the locale to US English
+        Locale.setDefault(Locale.ENGLISH);
+        JUnitUtil.resetInstanceManager();
+        JUnitUtil.initConfigureManager();
+        JUnitUtil.initInternalTurnoutManager();
+        JUnitUtil.initInternalLightManager();
+        JUnitUtil.initInternalSensorManager();
+        JUnitUtil.initInternalSignalHeadManager();
+        JUnitUtil.initMemoryManager();
+        JUnitUtil.initOBlockManager();
+        JUnitUtil.initLogixManager();
+        JUnitUtil.initConditionalManager();
+        JUnitUtil.initWarrantManager();
     }
 
-    protected void tearDown() {
+    @Override
+    protected void tearDown() throws Exception {
+        JUnitUtil.resetInstanceManager();
+        super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 
