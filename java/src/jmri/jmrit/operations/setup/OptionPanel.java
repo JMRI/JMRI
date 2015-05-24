@@ -183,12 +183,18 @@ public class OptionPanel extends OperationsPreferencesPanel {
         addItemLeft(pLogger, engineLoggerCheckBox, 1, 0);
         addItemLeft(pLogger, carLoggerCheckBox, 1, 1);
         addItemLeft(pLogger, trainLoggerCheckBox, 1, 2);
-
+        
+        // Custom Manifests and Switch Lists
+        JPanel pCustom = new JPanel();
+        pCustom.setLayout(new GridBagLayout());
+        pCustom.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutCustomManifests")));
+        addItemLeft(pCustom, generateCvsManifestCheckBox, 1, 0);
+        addItemLeft(pCustom, generateCvsSwitchListCheckBox, 1, 1);
+        
+        // Options
         JPanel pOption = new JPanel();
         pOption.setLayout(new GridBagLayout());
         pOption.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("BorderLayoutOptions")));
-        addItemLeft(pOption, generateCvsManifestCheckBox, 1, 0);
-        addItemLeft(pOption, generateCvsSwitchListCheckBox, 1, 1);
         addItemLeft(pOption, valueCheckBox, 1, 2);
         addItemLeft(pOption, valueTextField, 2, 2);
         addItemLeft(pOption, rfidCheckBox, 1, 3);
@@ -203,6 +209,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
         panel.add(pBuild);
         panel.add(pRouter);
         panel.add(pLogger);
+        panel.add(pCustom);
         panel.add(pOption);
         panel.add(pControl);
 

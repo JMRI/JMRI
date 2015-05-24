@@ -70,6 +70,7 @@
         <LI><A HREF="#CarRouting">Car Routing</A></LI>
         <LI><A HREF="#LoggingOptions">Logging Options</A></LI>
         <LI><A HREF="#ManifestOptions">Custom Manifests and Switch lists</A></LI>
+        <LI><A HREF="#Options">Options</A></LI>
        </UL>
      </UL></LI>
     <LI><A HREF="#PrintOptions">Manifest Print Options</A></LI>
@@ -792,7 +793,7 @@
    day's date. Use a program like Microsoft Excel to view the file. 
    
    <A NAME="ManifestOptions"></A>
-   <H3>Options</H3>
+   <H3>Custom Manifests and Switch Lists</H3>
    
    <H4>Generate CSV Manifests</H4>
 
@@ -1062,12 +1063,19 @@
      <td>End Switch List</td>
     </tr>
    </table>
-   
-   <H4>Enable Value Fields</H4>
 
-   <P>There are two other options, "Enable Value Fields" and "Identification Fields". You can use these fields to enter the value or cost of your
-    rolling stock and the IDTag of your rolling stock.  You can rename
-    the value fields if you wish and use them for other purposes.</P>
+   <A NAME="#Options"></A>
+   <H3>Options</H3>
+   <H4>Enable Value Fields and Identification Tag Fields</H4>
+
+   <P>There are two other options, "Enable Value Fields" and "Identification Fields". You can
+    use these fields to enter the value or cost of your rolling stock and the IDTag of your rolling
+    stock. You can rename the value fields if you wish and use them for other purposes.</P>
+    
+    <H4>Enable physical locations for Virtual Sound Decoder</H4>
+
+   <P>If you're using Virtual Sound Decoder, you can enter the physical coordinates of your
+    locations by enabling this option.</P>
 
 
    <A NAME="PrintOptions"></A>
