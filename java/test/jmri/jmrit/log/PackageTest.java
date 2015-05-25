@@ -4,7 +4,6 @@ package jmri.jmrit.log;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**

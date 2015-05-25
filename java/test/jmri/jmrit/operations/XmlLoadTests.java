@@ -18,7 +18,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
-import org.jdom2.JDOMException;
 
 
 /**

@@ -1,16 +1,10 @@
 // SignalSpeedMapTest.java
 package jmri.implementation;
 
-import java.util.Calendar;
-import java.util.Date;
-import jmri.IdTag;
-import jmri.Reporter;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import org.jdom2.*;
 
 /**
  * Tests for the SignalSpeedMap class

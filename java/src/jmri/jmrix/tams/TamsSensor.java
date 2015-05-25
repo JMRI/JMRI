@@ -2,8 +2,6 @@
 package jmri.jmrix.tams;
 
 import jmri.implementation.AbstractSensor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Implement a Sensor via Tams communications.

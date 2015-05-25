@@ -14,7 +14,6 @@ import com.pi4j.io.gpio.RaspiPin;
 
 import jmri.implementation.AbstractTurnout;
 import jmri.*;
-import jmri.NamedBeanHandle;
 
 /**
  * Turnout interface to RaspberryPi GPIO pins.

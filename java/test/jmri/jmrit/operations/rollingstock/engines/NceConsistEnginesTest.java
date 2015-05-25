@@ -2,26 +2,19 @@
 package jmri.jmrit.operations.rollingstock.engines;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import org.jdom2.JDOMException;
 
 /**
  * Tests for the Operations RollingStock Engine class Last manually

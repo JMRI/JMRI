@@ -2,10 +2,8 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JComboBox;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
@@ -22,7 +20,6 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
-import org.jdom2.JDOMException;
 
 /**
  * Tests for the Operations RollingStock Cars CarManager class Last manually cross-checked

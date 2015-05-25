@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.List;
 import java.util.Locale;
 import javax.swing.JComboBox;
-import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;

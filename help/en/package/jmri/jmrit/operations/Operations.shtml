@@ -655,7 +655,7 @@
     built after the train that you want to reset, or live with possible track overloading. And never
     reset a train built before a train that you've already terminated. Normal mode will never
     overload a track, so you might consider using this mode if you find yourself having to reset
-    trains or you want to build and run your train in any order. The recommendation is not to use
+    trains or you want to build and run your trains in any order. The recommendation is not to use
     train reset in aggressive mode once you've built or terminated additional trains. And if you do
     reset a train, there isn't a guarantee that building the train again will pull the same cars,
     each train build can be different depending on the car movements created by the other trains.</P>

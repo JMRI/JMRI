@@ -2,27 +2,18 @@
 package jmri.jmrit.operations.rollingstock.cars;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
-import javax.swing.JComboBox;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import jmri.util.JUnitUtil;
-import org.jdom2.JDOMException;
 
 /**
  * Tests for the Operations RollingStock Cars Loads class Last manually cross-checked

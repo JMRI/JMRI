@@ -2,10 +2,8 @@ package jmri.jmrix.lenz.configurexml;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.lenz.AbstractXNetSerialConnectionConfig;
-import jmri.jmrix.ConnectionConfig;
 
 /**
  * Abstract base class to Handle XML persistance of layout connections 

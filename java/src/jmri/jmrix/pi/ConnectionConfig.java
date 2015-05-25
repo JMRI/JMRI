@@ -2,8 +2,6 @@
 
 package jmri.jmrix.pi;
 
-import jmri.util.SystemType;
-
 /**
  * Handle configuring a Raspberry Pi layout connection.
  * <P>

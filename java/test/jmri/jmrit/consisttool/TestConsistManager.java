@@ -1,12 +1,7 @@
 // TestConsistManager.java
 package jmri.jmrit.consisttool;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import jmri.Consist;
-import jmri.ConsistListListener;
-import jmri.ConsistListener;
-import jmri.ConsistManager;
 import jmri.DccLocoAddress;
 
 /**

@@ -1,14 +1,6 @@
 package jmri.jmrix.roco.z21;
 
-import java.util.concurrent.LinkedBlockingQueue;
-import jmri.DccLocoAddress;
-import jmri.DccThrottle;
 import jmri.LocoAddress;
-import jmri.Throttle;
-import jmri.jmrix.AbstractThrottle;
-
-import jmri.jmrix.lenz.XNetConstants;
-import jmri.jmrix.lenz.XNetMessage;
 import jmri.jmrix.lenz.XNetReply;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import jmri.jmrix.lenz.XNetTrafficController;

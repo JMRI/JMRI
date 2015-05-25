@@ -1,7 +1,6 @@
 package jmri.jmrit.symbolicprog;
 
 import javax.swing.JLabel;
-import jmri.managers.DefaultProgrammerManager;
 import jmri.jmrit.progsupport.ProgModeSelector;
 import jmri.Programmer;
 import junit.framework.Assert;

@@ -1,13 +1,6 @@
 package jmri.jmrix.roco.z21;
 
-import java.util.HashMap;
 import jmri.LocoAddress;
-import jmri.ThrottleManager;
-import jmri.jmrix.AbstractThrottleManager;
-
-import jmri.jmrix.lenz.XNetReply;
-import jmri.jmrix.lenz.XNetMessage;
-import jmri.jmrix.lenz.XNetConstants;
 import jmri.jmrix.lenz.XNetSystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

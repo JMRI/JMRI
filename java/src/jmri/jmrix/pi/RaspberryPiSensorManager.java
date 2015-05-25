@@ -5,7 +5,6 @@ package jmri.jmrix.pi;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import jmri.Sensor;
-import jmri.JmriException;
 
 /**
  * Manage the RaspberryPi specific Sensor implementation.
