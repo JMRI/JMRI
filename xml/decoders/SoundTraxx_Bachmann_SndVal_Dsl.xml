@@ -21,6 +21,7 @@
   <version author="Alain Le Marchand" version="6" lastUpdated="20140831"/>
   <version author="Alain Le Marchand" version="7" lastUpdated="20150406"/>
   <version author="Alain Le Marchand" version="7.1" lastUpdated="20150524"/>
+  <version author="Alain Le Marchand" version="7.2" lastUpdated="20150525"/>
   <!-- This file contains the definitions for the Bachmann spec'd Sound Value series of decoders        -->
   <!-- version 1	Based on the "Soundtraxx_Tsu_Diesel files.                                          -->
   <!--              Includes the Alco S4, FA2, and FB2                                                  -->
@@ -39,6 +40,8 @@
   <!-- version 7    No CV5(VMax)/CV6(VMid) for GG1, SD70ACe and GE_ES44AC as per Soundtraxx doc.        -->
   <!--              Updated Outputs definition to new format                                            -->
   <!-- version 7.1  Updated comment attribute in family description                                     -->
+  <!-- version 7.2  CV113 only available for SD70ACe, GEVO and GG1                                      -->
+  <!--              Update following publication of datasheet 20150425 for GP7                          -->
   <!-- Note:    Output number for "named" outputs (i.e. when name is not an integer) starts at numOuts+1.
                 Numbering is then incremental in the order of declaration of the named outputs.
                 For these decoders, convention is taken that FX5=output 3, FX6=output 4, Whistle=output 5, etc.
@@ -1530,23 +1533,27 @@
         <label>Reverse Trim (0-255)</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/userId.xml"/>
-      <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
+      <variable CV="112" mask="XXXXXXXV" item="Sound Option 6" default="0" exclude="EMD_GP7" tooltip="If using manual engine notching, set to Automatic as [RPM-] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Air Compressor Enable</label>
       </variable>
-      <variable CV="112" mask="XXXXXXVX" item="Sound Option 5" default="0" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
+      <variable CV="112" mask="XXXXXXVX" item="Sound Option 5" default="0" exclude="EMD_GP7" tooltip="If using manual engine notching, set to Automatic as [RPM+] will be using this function">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumManAuto.xml"/>
         <label>Auto Radiator Fan Enable</label>
       </variable>
-      <variable CV="113" item="Sound Group 3 Option 3" default="0" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;/html&gt;">
+      <variable CV="113" item="Sound Group 3 Option 3" default="0" include="EMD_SD70ACe,GE_ES44AC,GG1" tooltip="&lt;html&gt;When loco has stopped and all functions are turned off, sound effects will turn&lt;br&gt;      off automatically after timeout period has elapsed.  Set to zero to disable.&lt;br&gt; Timeout in seconds = CV value /4&lt;/html&gt;">
         <decVal/>
         <label>Quiet Mode Timeout Period</label>
       </variable>
-      <variable CV="114" item="Sound Group 3 Option 2" default="4" exclude="GG1" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+      <variable CV="114" item="Sound Group 3 Option 2" default="4" exclude="GG1,EMD_GP7" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
       <variable CV="114" item="Sound Group 3 Option 2" default="5" include="GG1" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
+        <decVal max="15"/>
+        <label>Bell Ring Rate</label>
+      </variable>
+      <variable CV="114" item="Sound Group 3 Option 2" default="6" include="EMD_GP7" tooltip="Controls the speed at which the bell rings (higher no. = slower rate">
         <decVal max="15"/>
         <label>Bell Ring Rate</label>
       </variable>
@@ -1673,14 +1680,14 @@
       </variable>
       <variable CV="115" mask="XXXXVVVV" item="Sound Option 9" default="0" include="EMD_GP7" comment="Show these horns for the models (productID) listed below" tooltip="Selects which airhorn to use">
         <enumVal>
-          <enumChoice choice="Airhorn 1">
-            <choice>Airhorn 1</choice>
+          <enumChoice choice="Leslie A125/A200 Combo">
+            <choice>Leslie A125/A200 Combo</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn 2">
-            <choice>Airhorn 2</choice>
+          <enumChoice choice="Nathan M3">
+            <choice>Nathan M3</choice>
           </enumChoice>
-          <enumChoice choice="Airhorn 3">
-            <choice>Airhorn 3</choice>
+          <enumChoice choice="Nathan M5">
+            <choice>Nathan M5</choice>
           </enumChoice>
         </enumVal>
         <label>Airhorn Select</label>
@@ -1756,7 +1763,7 @@
         <decVal/>
         <label>Bell Volume</label>
       </variable>
-      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="120" tooltip="Sets the volume of the diesel engine exhaust" exclude="Alco_RS3,EMD_F7A,EMD_F7B,EMD_DD40AX,GG1">
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="120" tooltip="Sets the volume of the diesel engine exhaust" exclude="Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_DD40AX,GG1">
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
@@ -1765,6 +1772,10 @@
         <label>Engine Exhaust Volume</label>
       </variable>
       <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="148" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_F7A,EMD_F7B,EMD_DD40AX">
+        <decVal/>
+        <label>Engine Exhaust Volume</label>
+      </variable>
+      <variable CV="131" mask="VVVVVVVV" item="Sound Setting 15" default="196" tooltip="Sets the volume of the diesel engine exhaust" include="EMD_GP7">
         <decVal/>
         <label>Engine Exhaust Volume</label>
       </variable>
@@ -1839,7 +1850,7 @@
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
-      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="80" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
+      <variable CV="209" mask="VVVVVVVV" item="Advanced Group 2 Option 1" default="80" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the proportional part of the PID motor control equation">
         <decVal/>
         <label>Motor Kp Coefficient (0-255)</label>
       </variable>
@@ -1851,7 +1862,7 @@
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
-      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
+      <variable CV="210" mask="VVVVVVVV" item="Advanced Group 2 Option 2" default="8" include="Alco_FA2,Alco_FB2,Alco_RS3,EMD_F7A,EMD_F7B,EMD_GP7,EMD_SD70ACe,GE_ES44AC,GG1" tooltip="Specifies a gain factor for the integral part of the PID motor control equation">
         <decVal/>
         <label>Motor Ki Coefficient (0-255)</label>
       </variable>
