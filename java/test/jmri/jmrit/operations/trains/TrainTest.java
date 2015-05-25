@@ -367,7 +367,7 @@ public class TrainTest extends TestCase {
     public void noRouteLocationBuildTest() {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
-        LocationManager lmanager = LocationManager.instance();
+//        LocationManager lmanager = LocationManager.instance();
 
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);
@@ -496,13 +496,13 @@ public class TrainTest extends TestCase {
 
         // now add locations to the route
         Location depart = lmanager.newLocation("depart");
-        RouteLocation rl = route.addLocation(depart);
+        route.addLocation(depart);
 
         Location terminate = lmanager.newLocation("terminate");
-        rl = route.addLocation(terminate);
+        route.addLocation(terminate);
 
         Location middle = lmanager.newLocation("middle");
-        rl = route.addLocation(middle, 2); // put location in middle of route
+        route.addLocation(middle, 2); // put location in middle of route
 
         // Build option require cars
         Control.fullTrainOnly = true;
@@ -520,7 +520,7 @@ public class TrainTest extends TestCase {
         TrainManager tmanager = TrainManager.instance();
         RouteManager rmanager = RouteManager.instance();
         LocationManager lmanager = LocationManager.instance();
-        EngineManager emanager = EngineManager.instance();
+//        EngineManager emanager = EngineManager.instance();
 
         // disable build messages
         tmanager.setBuildMessagesEnabled(false);

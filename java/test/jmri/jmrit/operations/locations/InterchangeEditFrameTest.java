@@ -2,17 +2,13 @@
 package jmri.jmrit.operations.locations;
 
 import java.io.File;
-import java.util.List;
 import java.util.Locale;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -98,20 +94,6 @@ public class InterchangeEditFrameTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("number of staging tracks", 0, fl.stagingModel.getRowCount());
 
         fl.dispose();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void pressDialogButton(JmriJFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)			                                            
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
-        // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
     }
 
     private void loadLocations() {

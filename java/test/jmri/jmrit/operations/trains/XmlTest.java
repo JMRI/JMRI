@@ -36,7 +36,6 @@ import org.jdom2.JDOMException;
  */
 public class XmlTest extends TestCase {
 
-    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     /**
      * Test train XML create, read, and backup support. Originally written as
@@ -482,8 +481,4 @@ public class XmlTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private String getTrainStatus(Train train) {
-        String[] status = train.getStatus().split(" ");
-        return status[0];
-    }
 }

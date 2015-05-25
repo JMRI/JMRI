@@ -17,8 +17,6 @@ import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -219,20 +217,6 @@ public class EnginesTableFrameTest extends jmri.util.SwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, etf.addButton));
 
         etf.dispose();
-    }
-
-    @SuppressWarnings("unchecked")
-    private void pressDialogButton(EngineAttributeEditFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)			                                            
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
-        // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
     }
 
     // Ensure minimal setup for log4J

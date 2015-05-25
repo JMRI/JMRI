@@ -15,11 +15,11 @@ import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Operations RollingStock Cars CarManager class Last manually cross-checked
@@ -272,7 +272,7 @@ public class CarManagerTest extends TestCase {
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
-        RouteLocation last = r.addLocation(l3);
+        r.addLocation(l3);
      
         Train t1;
         Train t3;
@@ -307,7 +307,7 @@ public class CarManagerTest extends TestCase {
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
-        RouteLocation last = r.addLocation(l3);
+        r.addLocation(l3);
 
         Train t1;
         Train t3;
@@ -341,7 +341,7 @@ public class CarManagerTest extends TestCase {
         Route r = new Route("id", "Test");
         r.addLocation(l1);
         r.addLocation(l2);
-        RouteLocation last = r.addLocation(l3);
+        r.addLocation(l3);
  
         Train t1;
         Train t3;
@@ -452,7 +452,7 @@ public class CarManagerTest extends TestCase {
         resetCarManager();
 
         CarManager manager = CarManager.instance();
-        List<RollingStock> carList = manager.getByIdList();
+
         // find car by road and number
         Assert.assertEquals("find c1 by road and number", c1, manager.getByRoadAndNumber("CP", "1"));
         Assert.assertEquals("find c2 by road and number", c2, manager.getByRoadAndNumber("ACL", "3"));
@@ -482,7 +482,7 @@ public class CarManagerTest extends TestCase {
         resetCarManager();
 
         CarManager manager = CarManager.instance();
-        List<RollingStock> carList = manager.getByIdList();
+
         // find car by RFID
         Assert.assertEquals("find c1 by rfid", c1, manager.getByRfid("SQ1"));
         Assert.assertEquals("find c2 by rfid", c2, manager.getByRfid("1Ab"));
@@ -618,7 +618,7 @@ public class CarManagerTest extends TestCase {
         resetCarManager();
 
         CarManager manager = CarManager.instance();
-        List<RollingStock> carList = manager.getByIdList();
+
         // check caboose roads
         List<String> cabooseRoads = manager.getCabooseRoadNames();
         Assert.assertEquals("Number of cabooses", 2, cabooseRoads.size());
@@ -630,7 +630,7 @@ public class CarManagerTest extends TestCase {
         resetCarManager();
 
         CarManager manager = CarManager.instance();
-        List<RollingStock> carList = manager.getByIdList();
+
         // check FRED roads
         List<String> fredRoads = manager.getFredRoadNames();
         Assert.assertEquals("Number of FRED", 1, fredRoads.size());

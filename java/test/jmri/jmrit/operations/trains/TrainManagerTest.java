@@ -3,7 +3,6 @@ package jmri.jmrit.operations.trains;
 
 import java.io.File;
 import java.util.Locale;
-import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
@@ -26,8 +25,6 @@ import junit.framework.TestSuite;
  * @version $Revision$
  */
 public class TrainManagerTest extends TestCase {
-
-    private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
     // test train manager
     public void testTrainManager() {
@@ -103,8 +100,4 @@ public class TrainManagerTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    private String getTrainStatus(Train train) {
-        String[] status = train.getStatus().split(" ");
-        return status[0];
-    }
 }
