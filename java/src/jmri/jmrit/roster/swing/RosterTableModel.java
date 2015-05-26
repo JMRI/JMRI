@@ -77,6 +77,8 @@ public class RosterTableModel extends DefaultTableModel implements PropertyChang
         } else if (e.getPropertyName().startsWith("attribute") && e.getSource() instanceof RosterEntry) { // NOI18N
             int row = Roster.instance().getGroupIndex(rosterGroup, (RosterEntry) e.getSource());
             fireTableRowsUpdated(row, row);
+        } else if (e.getPropertyName().equals(Roster.ROSTER_GROUP_ADDED) && e.getNewValue().equals(rosterGroup)) {
+            fireTableDataChanged();
         }
     }
 
