@@ -34,10 +34,26 @@ public class DefaultShutDownManager implements ShutDownManager {
     static boolean shuttingDown = false;
 
     public DefaultShutDownManager() {
+        // This shutdown hook allows us to perform a clean shutdown when
+        // running in headless mode and SIGINT (Ctrl-C) or SIGTERM. It
+        // executes the shutdown tasks without calling System.exit() since
+        // calling System.exit() within a shutdown hook will cause the
+        // application to hang.
+        // This shutdown hook also allows OS X Application->Quit to trigger our
+        // shutdown tasks, since that simply calls System.exit(); 
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+
+            @Override
+            public void run() {
+                DefaultShutDownManager.this.shutdown(0, false);
+            }
+        });
     }
 
     /**
      * Register a task object for later execution.
+     *
+     * @param s
      */
     @Override
     public void register(ShutDownTask s) {
@@ -51,6 +67,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     /**
      * Deregister a task object.
      *
+     * @param s
      * @throws IllegalArgumentException if task object not currently registered
      */
     @Override
@@ -71,7 +88,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     @Override
     public Boolean shutdown() {
-        return shutdown(0);
+        return shutdown(0, true);
     }
 
     /**
@@ -87,7 +104,7 @@ public class DefaultShutDownManager implements ShutDownManager {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_EXIT") // OK to directly exit standalone main
     @Override
     public Boolean restart() {
-        return shutdown(100);
+        return shutdown(100, true);
     }
 
     /**
@@ -97,9 +114,11 @@ public class DefaultShutDownManager implements ShutDownManager {
      * operate.
      *
      * @param status Integer status returned on program exit
+     * @param exit   True if System.exit() should be called if all tasks are executed correctly.
+     * @return false if shutdown or restart failed.
      */
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "DM_EXIT") // OK to directly exit standalone main
-    protected Boolean shutdown(int status) {
+    protected Boolean shutdown(int status, boolean exit) {
         if (!shuttingDown) {
             shuttingDown = true;
             for (int i = tasks.size() - 1; i >= 0; i--) {
@@ -118,14 +137,16 @@ public class DefaultShutDownManager implements ShutDownManager {
             // success
             log.info("Normal termination complete");
             // and now terminate forcefully
-            System.exit(status);
+            if (exit) {
+                System.exit(status);
+            }
         }
         return false;
     }
 
-    ArrayList<ShutDownTask> tasks = new ArrayList<ShutDownTask>();
+    ArrayList<ShutDownTask> tasks = new ArrayList<>();
 
-    static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class.getName());
+    private final static Logger log = LoggerFactory.getLogger(DefaultShutDownManager.class);
 }
 
 /* @(#)DefaultShutDownManager.java */
