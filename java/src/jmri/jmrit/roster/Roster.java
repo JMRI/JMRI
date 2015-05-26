@@ -278,7 +278,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         if (group != null
                 && !group.equals(Roster.ALLENTRIES)
                 && !group.equals(Roster.AllEntries(Locale.getDefault()))) {
-            return this.rosterGroups.get(group).getEntries().size();
+            return (this.rosterGroups.get(group) != null) ? this.rosterGroups.get(group).getEntries().size() : 0;
         } else {
             return this.numEntries();
         }
