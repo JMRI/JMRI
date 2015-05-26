@@ -398,9 +398,9 @@ public class TrainManager implements java.beans.PropertyChangeListener {
 
     /**
      *
-     * @return true if there are any trains built
+     * @return true if there's a built train
      */
-    public boolean getAnyTrainBuilt() {
+    public boolean isAnyTrainBuilt() {
         for (Train train : getTrainsByIdList()) {
             if (train.isBuilt()) {
                 return true;
@@ -408,6 +408,19 @@ public class TrainManager implements java.beans.PropertyChangeListener {
         }
         return false;
     }
+    
+    /**
+    *
+    * @return true if there's a train being built
+    */
+   public boolean isAnyTrainBuilding() {
+       for (Train train : getTrainsByIdList()) {
+           if (train.getStatusCode() == Train.CODE_BUILDING) {
+               return true;
+           }
+       }
+       return false;
+   }
 
     /**
      *

@@ -2,6 +2,7 @@
 package jmri.jmrit.operations.setup;
 
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +45,10 @@ public class AutoSave {
                 try {
                     wait(60000);	// wait another minute before saving
                 } catch (InterruptedException e) {
+                }
+                if (TrainManager.instance().isAnyTrainBuilding()) {
+                    log.debug("Detected trains being built");
+                    continue;
                 }
                 if (OperationsXml.areFilesDirty()) {
                     OperationsXml.save();

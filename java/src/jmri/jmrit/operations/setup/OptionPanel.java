@@ -247,7 +247,7 @@ public class OptionPanel extends OperationsPreferencesPanel {
     public void radioButtonActionPerformed(java.awt.event.ActionEvent ae) {
         log.debug("radio button selected");
         // can't change the build option if there are trains built
-        if (TrainManager.instance().getAnyTrainBuilt()) {
+        if (TrainManager.instance().isAnyTrainBuilt()) {
             setBuildOption(); // restore the correct setting
             JOptionPane.showMessageDialog(this, Bundle.getMessage("CanNotChangeBuild"), Bundle
                     .getMessage("MustTerminateOrReset"), JOptionPane.ERROR_MESSAGE);
