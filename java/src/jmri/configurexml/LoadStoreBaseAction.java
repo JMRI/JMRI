@@ -4,9 +4,8 @@ package jmri.configurexml;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import jmri.InstanceManager;
+import jmri.util.FileChooserFilter;
 import jmri.util.FileUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Base implementation for the load and store actions.
@@ -24,9 +23,6 @@ import org.slf4j.LoggerFactory;
  */
 abstract public class LoadStoreBaseAction extends AbstractAction {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -5757646065294988765L;
 
     public LoadStoreBaseAction(String s) {
@@ -37,19 +33,42 @@ abstract public class LoadStoreBaseAction extends AbstractAction {
         }
     }
 
-    static JFileChooser allFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    static JFileChooser configFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
-    static JFileChooser userFileChooser = new JFileChooser(FileUtil.getUserFilesPath());
+    /*
+     * These JFileChoosers are retained so that multiple actions can all open
+     * the JFileChoosers at the last used location for the context that the
+     * action supports.
+     */
+    private static JFileChooser allFileChooser = null;
+    private static JFileChooser configFileChooser = null;
+    private static JFileChooser userFileChooser = null;
 
-    static {  // static class initialization
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("XML files");
-        filt.addExtension("xml");
-        allFileChooser.setFileFilter(filt);
-        configFileChooser.setFileFilter(filt);
-        userFileChooser.setFileFilter(filt);
+    private JFileChooser getXmlFileChooser(String path) {
+        FileChooserFilter xmlFilter = new FileChooserFilter("XML files");
+        xmlFilter.addExtension("xml"); // NOI18N
+        JFileChooser chooser = new JFileChooser(path);
+        chooser.setFileFilter(xmlFilter);
+        return chooser;
     }
 
-    // initialize logging
-    static Logger log = LoggerFactory.getLogger(LoadStoreBaseAction.class.getName());
+    protected JFileChooser getAllFileChooser() {
+        if (allFileChooser == null) {
+            allFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
+        }
+        return allFileChooser;
+    }
+
+    protected JFileChooser getConfigFileChooser() {
+        if (configFileChooser == null) {
+            configFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
+        }
+        return configFileChooser;
+    }
+
+    protected JFileChooser getUserFileChooser() {
+        if (userFileChooser == null) {
+            userFileChooser = getXmlFileChooser(FileUtil.getUserFilesPath());
+        }
+        return userFileChooser;
+    }
 
 }

@@ -35,11 +35,11 @@ public class StoreXmlAllAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        java.io.File file = getFileName(allFileChooser);
+        java.io.File file = getFileName(this.getAllFileChooser());
         if (file == null) {
             return;
         }
-
+        
         // and finally store
         boolean results = InstanceManager.configureManagerInstance().storeAll(file);
         log.debug(results ? "store was successful" : "store failed");

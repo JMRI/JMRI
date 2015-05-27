@@ -3,6 +3,7 @@ package jmri.configurexml;
 
 import java.awt.event.ActionEvent;
 import java.util.ResourceBundle;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import org.slf4j.Logger;
@@ -29,9 +30,7 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
 
     public StoreXmlUserAction() {
-        this(
-                java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle")
-                .getString("MenuItemStore"));
+        this(rb.getString("MenuItemStore"));
     }
 
     public StoreXmlUserAction(String s) {
@@ -39,12 +38,10 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        String oldButtonText = userFileChooser.getApproveButtonText();
-        String oldDialogTitle = userFileChooser.getDialogTitle();
-        int oldDialogType = userFileChooser.getDialogType();
+        JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        userFileChooser.setApproveButtonText(java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MenuItemStore"));
-        userFileChooser.setDialogTitle(java.util.ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle").getString("MenuItemStore"));
+        userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));
+        userFileChooser.setDialogTitle(rb.getString("MenuItemStore"));
         java.io.File file = getFileCustom(userFileChooser);
 
         if (file == null) {
@@ -63,11 +60,6 @@ public class StoreXmlUserAction extends StoreXmlConfigAction {
                     + rb.getString("ConsoleWindowHasInfo"),
                     rb.getString("StoreError"), JOptionPane.ERROR_MESSAGE);
         }
-
-        // The last thing we do is restore the Approve button text.
-        userFileChooser.setDialogType(oldDialogType);
-        userFileChooser.setApproveButtonText(oldButtonText);
-        userFileChooser.setDialogTitle(oldDialogTitle);
     }
 
     // initialize logging

@@ -37,7 +37,7 @@ public class LoadXmlConfigAction extends LoadStoreBaseAction {
     }
 
     public void actionPerformed(ActionEvent e) {
-        loadFile(configFileChooser);
+        loadFile(this.getConfigFileChooser());
     }
 
     /**

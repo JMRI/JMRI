@@ -4,6 +4,7 @@ package jmri.configurexml;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.util.ResourceBundle;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,6 +29,7 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
      */
     private static final long serialVersionUID = 5470543428367047464L;
     static final ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrit.display.DisplayBundle");
+    static File currentFile = null;
 
     public LoadXmlUserAction() {
         this(rb.getString("MenuItemLoad"));
@@ -39,31 +41,28 @@ public class LoadXmlUserAction extends LoadXmlConfigAction {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String oldButtonText = userFileChooser.getApproveButtonText();
-        String oldDialogTitle = userFileChooser.getDialogTitle();
-        int oldDialogType = userFileChooser.getDialogType();
+        JFileChooser userFileChooser = getUserFileChooser();
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
         userFileChooser.setDialogTitle(rb.getString("MenuItemLoad"));
 
         boolean results = loadFile(userFileChooser);
-        log.debug(results ? "load was successful" : "load failed");
-        if (!results) {
+        if (results) {
+            log.debug("load was successful");
+            currentFile = userFileChooser.getSelectedFile();
+        } else {
+            log.debug("load failed");
             JOptionPane.showMessageDialog(null,
                     rb.getString("PanelHasErrors") + "\n"
                     + rb.getString("CheckPreferences") + "\n"
                     + rb.getString("ConsoleWindowHasInfo"),
                     rb.getString("PanelLoadError"), JOptionPane.ERROR_MESSAGE);
+            currentFile = null;
         }
-
-        // The last thing we do is restore the Approve button text.
-        userFileChooser.setDialogType(oldDialogType);
-        userFileChooser.setApproveButtonText(oldButtonText);
-        userFileChooser.setDialogTitle(oldDialogTitle);
     }
 
     public static File getCurrentFile() {
-        return userFileChooser.getSelectedFile();
+        return currentFile;
     }
 
     // initialize logging
