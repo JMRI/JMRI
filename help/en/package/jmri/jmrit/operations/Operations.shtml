@@ -1879,6 +1879,11 @@
     that staging track. See <A HREF="#TrainRequires">Optional Train Requirements</A> for more info.
    </P>
 
+   <P>
+    You can also control the number of cars and the train's length when departing staging. See <A
+     HREF="#DepartingStagingRoute">Departing Staging Route</A> for more info.
+   </P>
+
    <P>You can if you wish, optionally control which staging tracks a train will arrive on and
     depart. Note that the default "Any" allows any train to arrive or depart on the staging track,
     so if you want to restrict a train to a specific track or tracks, you must configure all of the
