@@ -4,6 +4,7 @@ package apps;
 import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -32,9 +33,12 @@ import org.slf4j.LoggerFactory;
 public class AppConfigBase extends JmriPanel {
 
     /**
-     * All preferences panels handled, whether persisted or not
+     * All preferences panels handled, whether persisted or not. This is a
+     * LinkedHashMap and not just a HashMap because parts of JMRI are dependent
+     * upon the order in which preferences are read. The order is determined by
+     * the 
      */
-    protected HashMap<String, PreferencesPanel> preferencesPanels = new HashMap<>();
+    protected LinkedHashMap<String, PreferencesPanel> preferencesPanels = new LinkedHashMap<>();
 
     protected static final ResourceBundle rb = ResourceBundle.getBundle("apps.AppsConfigBundle");
 
@@ -185,13 +189,13 @@ public class AppConfigBase extends JmriPanel {
         }
         if (panel instanceof ManagingPreferencesPanel) {
             log.debug("Iterating over managed panels within {}/{}", panel.getPreferencesItemText(), panel.getTabbedPreferencesTitle());
-            ((ManagingPreferencesPanel)panel).getPreferencesPanels().stream().forEach((managed) -> {
+            ((ManagingPreferencesPanel) panel).getPreferencesPanels().stream().forEach((managed) -> {
                 log.debug("Registering {} with the ConfigureManager", managed.getClass().getName());
                 this.registerWithConfigureManager(managed);
             });
         }
     }
-    
+
     /**
      * Handle the Save button: Backup the file, write a new one, prompt for what
      * to do next. To do that, the last step is to present a dialog box
