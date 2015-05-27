@@ -40,6 +40,7 @@ public class OrderedHashtable<K, V> extends Hashtable<K, V> {
             return false;
         }
         if (o instanceof OrderedHashtable<?, ?>) {
+            // check order of keys; contents (without order) known to be equal from above
             return this.keys.equals(((OrderedHashtable<?, ?>) o).keys);
         } else {
             return false;
