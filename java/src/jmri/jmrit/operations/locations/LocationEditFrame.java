@@ -58,8 +58,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     JTable stagingTable = new JTable(stagingModel);
     JScrollPane stagingPane;
 
-    LocationManager manager;
-    LocationManagerXml managerXml;
+    LocationManager locationManager = LocationManager.instance();
 
     Location _location = null;
     ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
@@ -112,10 +111,6 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     public void initComponents(Location location) {
         _location = location;
-
-        // load managers
-        manager = LocationManager.instance();
-        managerXml = LocationManagerXml.instance();
 
         // Set up the jtable in a Scroll Pane..
         typePane = new JScrollPane(panelCheckBoxes);
@@ -361,7 +356,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
         if (ae.getSource() == saveLocationButton) {
             log.debug("location save button activated");
-            Location l = manager.getLocationByName(locationNameTextField.getText());
+            Location l = locationManager.getLocationByName(locationNameTextField.getText());
             if (_location == null && l == null) {
                 saveNewLocation();
             } else {
@@ -377,7 +372,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         }
         if (ae.getSource() == deleteLocationButton) {
             log.debug("location delete button activated");
-            Location l = manager.getLocationByName(locationNameTextField.getText());
+            Location l = locationManager.getLocationByName(locationNameTextField.getText());
             if (l == null) {
                 return;
             }
@@ -414,7 +409,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                 stef.dispose();
             }
 
-            manager.deregister(l);
+            locationManager.deregister(l);
             _location = null;
             selectCheckboxes(false);
             enableCheckboxes(false);
@@ -423,7 +418,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
             OperationsXml.save();
         }
         if (ae.getSource() == addLocationButton) {
-            Location l = manager.getLocationByName(locationNameTextField.getText());
+            Location l = locationManager.getLocationByName(locationNameTextField.getText());
             if (l != null) {
                 reportLocationExists(Bundle.getMessage("add"));
                 return;
@@ -450,7 +445,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
         if (!checkName(Bundle.getMessage("add"))) {
             return;
         }
-        Location location = manager.newLocation(locationNameTextField.getText());
+        Location location = locationManager.newLocation(locationNameTextField.getText());
         yardModel.initTable(yardTable, location);
         spurModel.initTable(spurTable, location);
         interchangeModel.initTable(interchangeTable, location);
