@@ -681,7 +681,7 @@ public class Location implements java.beans.PropertyChangeListener {
      *
      * @param name of track
      * @param type of track, Track.INTERCHANGE, Track.SPUR, Track.STAGING,
-     *             Track.YARD
+     *            Track.YARD
      * @return Track
      */
     public Track addTrack(String name, String type) {
@@ -806,51 +806,12 @@ public class Location implements java.beans.PropertyChangeListener {
         return out;
     }
 
-//	/**
-//	 * Sort ids by track location name. Returns a list of ids of a given track type. If type is null returns all track
-//	 * ids for the location.
-//	 * 
-//	 * @param type
-//	 *            track type: Track.YARD, Track.SPUR, Track.INTERCHANGE, Track.STAGING
-//	 * @return list of track ids ordered by name
-//	 */
-//	@Deprecated
-//	public List<String> getTrackIdsByNameList(String type) {
-//		// first get id list
-//		List<String> sortList = getTrackIdsByIdList();
-//		// now re-sort
-//		List<String> out = new ArrayList<String>();
-//		String locName = "";
-//		boolean locAdded = false;
-//		Track track;
-//		Track trackOut;
-//
-//		for (int i = 0; i < sortList.size(); i++) {
-//			locAdded = false;
-//			track = getTrackById(sortList.get(i));
-//			locName = track.getName();
-//			for (int j = 0; j < out.size(); j++) {
-//				trackOut = getTrackById(out.get(j));
-//				String outLocName = trackOut.getName();
-//				if (locName.compareToIgnoreCase(outLocName) < 0
-//						&& (type != null && track.getTrackType().equals(type) || type == null)) {
-//					out.add(j, sortList.get(i));
-//					locAdded = true;
-//					break;
-//				}
-//			}
-//			if (!locAdded && (type != null && track.getTrackType().equals(type) || type == null)) {
-//				out.add(sortList.get(i));
-//			}
-//		}
-//		return out;
-//	}
     /**
      * Sorted list by track name. Returns a list of tracks of a given track
      * type. If type is null returns all tracks for the location.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
-     *             Track.STAGING
+     *            Track.STAGING
      * @return list of tracks ordered by name for this location
      */
     public List<Track> getTrackByNameList(String type) {
@@ -881,7 +842,7 @@ public class Location implements java.beans.PropertyChangeListener {
      * removed.
      *
      * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
-     *             Track.STAGING
+     *            Track.STAGING
      * @return list of tracks at this location ordered by moves
      */
     public List<Track> getTrackByMovesList(String type) {
@@ -954,9 +915,9 @@ public class Location implements java.beans.PropertyChangeListener {
     /**
      * Updates a JComboBox with tracks that can service the rolling stock.
      *
-     * @param box         JComboBox to be updated.
-     * @param rs          Rolling Stock to be serviced
-     * @param filter      When true, remove tracks not able to service rs.
+     * @param box JComboBox to be updated.
+     * @param rs Rolling Stock to be serviced
+     * @param filter When true, remove tracks not able to service rs.
      * @param destination When true, the tracks are destinations for the rs.
      */
     public void updateComboBox(JComboBox<Track> box, RollingStock rs, boolean filter, boolean destination) {
@@ -1126,7 +1087,7 @@ public class Location implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Used to determine if there are any road restrictions at this location.
+     * Used to determine if there are any track destination restrictions at this location.
      *
      * @return True if there are road restrictions
      */
@@ -1274,14 +1235,14 @@ public class Location implements java.beans.PropertyChangeListener {
                 register(new Track(eTrack, this));
             }
         }
-        if (e.getAttribute(Xml.READER) != null){
+        if (e.getAttribute(Xml.READER) != null) {
             @SuppressWarnings("unchecked")
             Reporter r = jmri.InstanceManager
-                             .reporterManagerInstance()
-                             .provideReporter(
-                                e.getAttribute(Xml.READER).getValue());
+                    .reporterManagerInstance()
+                    .provideReporter(
+                            e.getAttribute(Xml.READER).getValue());
             setReporter(r);
-        } 
+        }
         addPropertyChangeListeners();
     }
 
@@ -1320,8 +1281,9 @@ public class Location implements java.beans.PropertyChangeListener {
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_X, Integer.toString(getTrainIconSouth().x));
             e.setAttribute(Xml.SOUTH_TRAIN_ICON_Y, Integer.toString(getTrainIconSouth().y));
         }
-        if(reader!=null)
-            e.setAttribute(Xml.READER,reader.getDisplayName());
+        if (reader != null) {
+            e.setAttribute(Xml.READER, reader.getDisplayName());
+        }
         // build list of rolling stock types for this location
         String[] types = getTypeNames();
         // Old way of saving car types
@@ -1414,15 +1376,21 @@ public class Location implements java.beans.PropertyChangeListener {
 
     /*
      * set the jmri.Reporter object associated with this location.
+     * 
      * @param reader jmri.Reporter object.
      */
-    protected void setReporter(Reporter r){ reader = r; }
+    protected void setReporter(Reporter r) {
+        reader = r;
+    }
 
     /*
      * get the jmri.Reporter object associated with this location.
+     * 
      * @return jmri.Reporter object.
      */
-    public Reporter getReporter(){ return reader; }
+    public Reporter getReporter() {
+        return reader;
+    }
 
     private void replaceRoad(String oldRoad, String newRoad) {
         // now adjust any track locations
