@@ -39,7 +39,10 @@ import org.slf4j.LoggerFactory;
  * Preferences panels listed in the PreferencesPanel property of the
  * apps.AppsStructureBundle ResourceBundle will be automatically loaded if they
  * implement the {@link jmri.swing.PreferencesPanel} interface.
- *
+ *<p>
+ * At start-up time, the order for setting the preferences matters.
+ * The order in the apps.AppsStructureBundle ResourceBundle must be preserved.
+ *<p>
  * Other Preferences Panels will need to be manually added to this file in a
  * manner similar to the WiThrottlePrefsPanel.
  *
