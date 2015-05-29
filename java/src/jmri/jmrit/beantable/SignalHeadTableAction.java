@@ -1322,8 +1322,12 @@ public class SignalHeadTableAction extends AbstractTableAction {
             InstanceManager.signalHeadManagerInstance().register(s);
         } else {
             // couldn't create turnouts, error
-            String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                    .getString("se8c4SkippingCreation"), new Object[]{to1.getDisplayName()});
+            String msg;
+            if (t1 == null) {
+                msg = AbstractTableAction.rb.getString("se8c4SkippingDueToErrorInFirst");
+            } else {
+                msg = AbstractTableAction.rb.getString("se8c4SkippingDueToErrorInSecond");
+            }
             JOptionPane.showMessageDialog(addFrame, msg,
                     AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
             return;
