@@ -446,6 +446,8 @@
 
 <mapID target="html.apps.LocoTools.index_locoio" url="html/apps/LocoTools/index.shtml#locoio"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_TrackBlockingOrder" url="package/jmri/jmrit/operations/Operations.shtml#TrackBlockingOrder"/>
+
 <mapID target="html.apps.DecoderPro.Install" url="html/apps/DecoderPro/Install.shtml"/>
 
 <mapID target="html.tools.throttle.ToolsMenuThrottleEntry" url="html/tools/throttle/ToolsMenuThrottleEntry.shtml"/>
@@ -2379,6 +2381,8 @@
 <mapID target="manual.DecoderPro3.Main_PRICOM" url="manual/DecoderPro3/Main_PRICOM.shtml"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_TurnoutControl_Top" url="manual/DecoderPro3/dp3_Main_TurnoutControl.shtml#Top"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_#Options" url="package/jmri/jmrit/operations/Operations.shtml##Options"/>
 
 <mapID target="html.apps.DecoderPro.FAQ_update" url="html/apps/DecoderPro/FAQ.shtml#update"/>
 
