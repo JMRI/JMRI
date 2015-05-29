@@ -61,6 +61,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
 
         jmri.InstanceManager.setReporterManager(getReporterManager());
 
+        jmri.InstanceManager.setLightManager(getLightManager());
+
         jmri.jmrix.can.cbus.ActiveFlag.setActive();
     }
 
@@ -86,6 +88,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return true;
         } else if (type.equals(jmri.ReporterManager.class)) {
             return true;
+        } else if (type.equals(jmri.LightManager.class)) {
+            return true;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         }
@@ -109,6 +113,8 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) getTurnoutManager();
         } else if (T.equals(jmri.ReporterManager.class)) {
             return (T) getReporterManager();
+        } else if (T.equals(jmri.LightManager.class)) {
+            return (T) getLightManager();
         } else if (T.equals(jmri.CommandStation.class)) {
             return (T) getCommandStation();
         }
@@ -194,6 +200,18 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         return reporterManager;
     }
 
+    protected CbusLightManager lightManager = null;
+
+    public CbusLightManager getLightManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (lightManager == null) {
+            lightManager = new CbusLightManager(adapterMemo);
+        }
+        return lightManager;
+    }
+
     protected CbusCommandStation commandStation;
 
     public CbusCommandStation getCommandStation() {
@@ -222,6 +240,9 @@ public class CbusConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         }
         if (reporterManager != null) {
             InstanceManager.deregister(reporterManager, jmri.jmrix.can.cbus.CbusReporterManager.class);
+        }
+        if (lightManager != null) {
+            InstanceManager.deregister(lightManager, jmri.jmrix.can.cbus.CbusLightManager.class);
         }
         if (throttleManager != null) {
             InstanceManager.deregister((CbusThrottleManager) throttleManager, jmri.jmrix.can.cbus.CbusThrottleManager.class);
