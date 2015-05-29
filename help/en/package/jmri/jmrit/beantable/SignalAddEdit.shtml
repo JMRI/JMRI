@@ -231,24 +231,29 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
 		<p>This type controls signal heads attached to a 
   <a href="http://www.digitrax.com">Digitrax</a>
   <a href="http://www.digitrax.com/prd_statdec_se8c.php">SE8c signal driver card</a>.
-	  <br/>
+  <p>
   Because each SE8c 4 Aspect Signal Head works with a specific DCC
   address, its System Name is determined automatically from that address; you
   don't have to enter it. For example, the SE8c 4 Aspect Signal Head for 
   hardware address 257 will be given a system name based on that.
+  See page 5 through 7 of the 
+  <a href="http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">Digitrax SE8c Manual</a>.
+  <p>
+  <a href="Add_New_SE8C_Signal.png"><img src="Add_New_SE8C_Signal.png" align="right" height="147" width="126"/></a>
   You can optionally enter a more readable User Name if you'd like.
   <p>
-  In the "Turnout number" field, enter the appropriate DCC address 
+  In the "Turnout number" box, enter the appropriate DCC address 
   of the SE8c output as a number.  For example,
   the 1st signal head on the 1st SE8c, as configured from the Digitrax factory, 
-  is "257" by selecting "Create new", then selecting "LocoNet" in the drop down box,
-  enter "257" in the field next to it.
-  See page 5 and 7 of the <a href="http://www.digitrax.com/static/apps/products/detection-signaling/se8c/documents/SE8C.pdf">Digitrax SE8c Manual</a>.
+  is "257".
+  Select "Create new", then select your layout connection (usually "LocoNet") in the drop down box,
+  and enter "257" in the field next to it.
   Do the same in the second Turnout field, entering "258" as the second Signal Head address.
-  Alternately, if you're using more than one hardware type, you can 
+  <p>
+  For more advanced usages, 
+  for example if you're using more than one type of layout hardware, you can 
   either select a Turnout from the drop down list of already-defined Turnouts
   or by creating a new turnout for a particular connection.
-  They need not be consecutive or in any particular order.
   </dd>
 
 <dt>LDT LS-DEC</dt>
