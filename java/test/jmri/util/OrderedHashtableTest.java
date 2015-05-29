@@ -144,13 +144,12 @@ public class OrderedHashtableTest extends TestCase {
 
         Turnout t1 = new TestTurnout("t1");
         Turnout t2 = new TestTurnout("t2");
-        Turnout t3 = new TestTurnout("t3");
         Turnout t4 = new TestTurnout("t4");
-        Turnout t5 = new TestTurnout("t5");
 
         oht1.put("1", t1);
         oht1.put("2", t2);
         
+        @SuppressWarnings("unchecked")
         OrderedHashtable<String, Turnout> oht2 = (OrderedHashtable<String, Turnout>)oht1.clone();
         
         Assert.assertTrue("content equals", oht1.equals(oht2));
