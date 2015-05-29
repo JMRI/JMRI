@@ -880,6 +880,32 @@ public class Location implements java.beans.PropertyChangeListener {
         }
         return out;
     }
+    
+    /**
+     * Sorted list by track blocking order. Returns a list of a given track type. If type
+     * is null, all tracks for the location are returned.
+     *
+     * @param type track type: Track.YARD, Track.SPUR, Track.INTERCHANGE,
+     *            Track.STAGING
+     * @return list of tracks at this location ordered by blocking order
+     */
+    public List<Track> getTracksByBlockingOrderList(String type) {
+        List<Track> orderList = new ArrayList<Track>();
+        for (Track track : getTrackByNameList(type)) {
+            boolean trackAdded = false;
+            for (int j = 0; j < orderList.size(); j++) {
+                if (track.getBlockingOrder() < orderList.get(j).getBlockingOrder()) {
+                    orderList.add(j, track);
+                    trackAdded = true;
+                    break;
+                }
+            }
+            if (!trackAdded) {
+                orderList.add(track);
+            }
+        }
+        return orderList;
+    }
 
     public boolean isTrackAtLocation(Track track) {
         if (track == null) {

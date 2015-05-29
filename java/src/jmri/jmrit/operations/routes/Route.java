@@ -289,7 +289,7 @@ public class Route implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Places a RouteLocation later in the route.
+     * Places a RouteLocation earlier in the route.
      *
      * @param rl
      */

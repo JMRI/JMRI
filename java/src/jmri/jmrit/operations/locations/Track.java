@@ -175,6 +175,7 @@ public class Track {
     public static final String SCHEDULE_ID_CHANGED_PROPERTY = "trackScheduleId"; // NOI18N
     public static final String SERVICE_ORDER_CHANGED_PROPERTY = "trackServiceOrder"; // NOI18N
     public static final String ALTERNATE_TRACK_CHANGED_PROPERTY = "trackAlternate"; // NOI18N
+    public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "trackBlockingOrder"; // NOI18N
 
     public Track(String id, String name, String type, Location location) {
         log.debug("New ({}) track ({}) id: {}", type, name, id);
@@ -1424,7 +1425,7 @@ public class Track {
     public void setBlockingOrder(int order) {
         int old = _blockingOrder;
         _blockingOrder = order;
-        setDirtyAndFirePropertyChange("trackBlockingOrder", old, order); // NOI18N
+        setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, old, order); // NOI18N
     }
 
     /**

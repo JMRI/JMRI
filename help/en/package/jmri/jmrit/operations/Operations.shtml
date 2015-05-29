@@ -84,6 +84,7 @@
         <LI><A HREF="#ChangeTrackTypeLocation">Change Track Type</A></LI>
         <LI><A HREF="#ModifyLocationByCarType">Modify Location by Car Type</A></LI>
         <LI><A HREF="#ModifyLocationByCarLoad">Modify Location by Car Load</A></LI>
+        <LI><A HREF="#TrackBlockingOrder">Track Blocking Order</A></LI>
         <LI><A HREF="#ShowTrainsServicingThisLocation">Show Trains Servicing this Location</A></LI>
         <LI><A HREF="#EditCarType">Edit Car Type</A></LI>
         <LI><A HREF="#ShowCars">Show Cars</A></LI>
@@ -1413,6 +1414,22 @@
    The tool "Modify Location by Car Load" allows you to quickly select a car type and decide which
    tracks will service the car's load. Only tracks that can service the car's type are enabled.
    
+   <A NAME="TrackBlockingOrder"></A>
+   <H4>Track Blocking Order</H4>
+
+   The program when creating manifests and switch lists will block the cars in the train by
+   destination and then alphabetically by the track names at the destination. If you want to change
+   the order tracks are serviced at a location, use the location tool "Track Blocking Order" to
+   adjust the order tracks are presented on manifests and switch lists. The "Order" number controls
+   how tracks are presented, lower numbered tracks are printed first for Westbound and Northbound
+   trains, and higher numbered tracks are printed first for Eastbound and Southbound trains. Use any
+   blocking order number greater than zero when using this feature.
+
+   <P>The "Reset" button returns the blocking order to the original defaults which is an
+    alphabetical listing of tracks at a location. The "Save" button in addition to making your
+    changes permanent, updates the track blocking order table to reflect the order that tracks will
+    be printed in your manifests and switch lists.</P>
+
    <A NAME="ShowTrainsServicingThisLocation"></A>
    <H4>Show Trains Servicing this Location</H4>
 
