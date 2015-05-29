@@ -766,8 +766,13 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?  
         if (!(new File(name)).exists()) {
-            log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");
-            return;
+            // First time round, it seems as though the Roster Location 
+            // isn't always known so try again...
+            name = getRosterLocation() + name;
+            if (!(new File(name)).exists()) {
+                log.debug("no roster file found: {}; this is normal if you haven't put decoders in your roster yet", name);
+                return;
+            }
         }
 
         // find root
