@@ -71,7 +71,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     protected List<RosterEntry> _list = new ArrayList<>();
     private boolean dirty = false;
     /*
-     * This should only be non-null if 
+     * This should only be non-null if explictly set to a non-default location.
      */
     private String rosterLocation = null;
     private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
@@ -162,6 +162,11 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public Roster(String rosterFilename) {
         this();
         try {
+            // if the rosterFilename passed in is null, create a complete path
+            // to the default roster index before attempting to read
+            if (rosterFilename.equals(Roster.DEFAULT_ROSTER_INDEX)) {
+                rosterFilename = this.getRosterIndexPath();
+            }
             this.readFile(rosterFilename);
         } catch (IOException | JDOMException e) {
             log.error("Exception during roster reading: " + e);
@@ -209,7 +214,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public static synchronized Roster getDefault() {
         if (_instance == null) {
             log.debug("Creating Roster default instance.");
-            _instance = new Roster(Roster.DEFAULT_ROSTER_INDEX);
+            // Pass null to use defaults.
+            _instance = new Roster(null);
         }
         return _instance;
     }
@@ -766,13 +772,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     void readFile(String name) throws org.jdom2.JDOMException, java.io.IOException {
         // roster exists?  
         if (!(new File(name)).exists()) {
-            // First time round, it seems as though the Roster Location 
-            // isn't always known so try again...
-            name = getRosterLocation() + name;
-            if (!(new File(name)).exists()) {
-                log.debug("no roster file found: {}; this is normal if you haven't put decoders in your roster yet", name);
-                return;
-            }
+            log.debug("no roster file found; this is normal if you haven't put decoders in your roster yet");
+            return;
         }
 
         // find root
@@ -965,14 +966,16 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      *          to the original default in the user's files directory.
      */
     public void setRosterLocation(String f) {
-        if (f == null || f.isEmpty()) {
-            this.rosterLocation = null;
-        } else if (!f.endsWith(File.separator)) {
-            f = f + File.separator;
+        if (f != null) {
+            if (f.isEmpty()) {
+                f = null;
+            } else if (!f.endsWith(File.separator)) {
+                f = f + File.separator;
+            }
         }
         this.rosterLocation = f;
         if (this.rosterLocation != null) {
-            LocoFile.setFileLocation(f + "roster"); // NOI18N
+            LocoFile.setFileLocation(this.rosterLocation + "roster"); // NOI18N
         } else {
             log.debug("Roster location reset to default");
             LocoFile.setFileLocation(FileUtil.getUserFilesPath() + "roster" + File.separator); // NOI18N
