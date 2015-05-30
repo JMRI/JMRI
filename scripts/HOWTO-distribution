@@ -43,14 +43,10 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
     cd help/en/
     rm ~/.jhelpdev    (to make sure the right preferences are chosen)
-    ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, see below
+    ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, use JHelpDev.bat
     (navigate to JHelpDev.xml in release html/en/ & open it; might take a while)
     (click "Create All", takes a bit of time, wait for button to release)
     (quit)
-
-    Note: For Windows, this step should be performed directly via the Windows
-    command line not via Cygwin (or by launching the JHelpDev.bat file from
-    Windows Explorer). Remaining steps can be performed via Cygwin.
 
     In that same directory, also remake the index and toc web
     pages by doing invoking ant (no argument needed).
@@ -61,6 +57,8 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
     Run the program and make sure help works.
 
+    (for Windows, run updated files through dos2unix to convert line endings)
+
     Commit any changed files.
 
 ================================================================================
@@ -68,7 +66,7 @@ This group of items it just general code maintenance that we roll into the
 release process.  They can be skipped occasionally.
 
 ( ) Check for line ends with the scripts/checkCR.sh script.  Fix those
-    that you find wrong.  
+    that you find wrong.  (So far, not found a way to do this on Windows...)
     (To scan, e.g the xml tree, do:
         find xml -type f -exec ./scripts/checkCR.sh {} \; -print
     )
@@ -89,10 +87,20 @@ release process.  They can be skipped occasionally.
 
     You'll get a message for each file, but will only need to commit changes.
     svn commit -m"setting SVN keywords" java/src jython xml help
-    
+
+( ) Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't 
+    usually happen but when it does can be a bit tricky to find.
+    Scan from the root of the repository and fix any files found:
+
+        grep -rlI --exclude-dir=.svn $'\xEF\xBB\xBF\xEF\xBB\xBF'
+
+    It might be necessary to use a Hex editor to remove the erroneous extra
+    Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM
+    (EF BB BF) or no BOM at all.
+
 ( ) Confirm that all the above changes have been committed back to SVN trunk
 
-( ) Run "ant alltests"; make sure they all pass; fix problems and commit back
+( ) Run "ant alltest"; make sure they all pass; fix problems and commit back
 
 ( ) Run "ant decoderpro"; check for no startup errors, right version, help index present 
     and working OK. Fix problems and commit back.
@@ -111,6 +119,10 @@ release process.  They can be skipped occasionally.
 Second, we build the release branch:
 
 ( ) Start the release by copying the current HEAD onto a new SVN "release branch"
+    (This step doesn't seem to work under Cygwin, so needs to be done from the
+    Windows command line)
+    (If needing to make a "branch from a branch", such as nearing the end of the
+    development cycle, this will need to be done manually rather than via ant.)
 
     ant make-test-release-branch
 
@@ -152,8 +164,9 @@ Second, we build the release branch:
     cd ../../branches/jmri/releases
     svn update 3.11.6
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.11.6")
-    
+    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.11.6". Also, don't forget to copy
+    your 'local.properties' file from HEAD)
+
 ================================================================================
 If you're doing the build using the CI engine, configure it to build the new release:
 
@@ -172,7 +185,7 @@ If you're doing the build using the CI engine, configure it to build the new rel
     and click "Save"
 
     The build will start shortly.
-    
+
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
@@ -223,7 +236,7 @@ Third, we do the release-specific updates.
         svn cp jmri3.11.5.shtml jmri3.11.6.shtml
         (edit the new release note accordingly)
         svn commit -m"for release"
-        
+
 ( ) Change the release note to point to the just-built files (in CI or where you put them), 
     commit, wait (or force) update. Confirm visible on web.
 
@@ -266,7 +279,7 @@ Actual release steps:
 ( ) Create and upload the XSLT'd decoder pages
 
     (cd xml/XSLT; ant xslt upload)
-    
+
     Note: the very first time doing this on a new machine, it will be required
     to run the rsync command manually as the ssh fingerprint for the server will
     need to be added to the local machine. Without this, it will fail via ant.
@@ -346,8 +359,10 @@ Download the setup file for your platform (x86 or x86_64) and then run the
 installer, mainly using the defaults, but also add the following packages:
 
     curl
+    dos2unix
     openssh
     rsync
+    subversion
     tcsh
     unzip
 
@@ -362,11 +377,9 @@ Other useful packages could be:
 It will also be necessary to set-up/verify various environment variables:
 
     JAVA_HOME   <-- Location of JDK (i.e. C:\Program Files\Java\jdk1.8.0_25)
-    PATH        <-- Needs to contain path towards svn and ant
+    PATH        <-- Needs to contain path towards ant
 
-        PATH examples (assuming TortoiseSVN with command-line tools installed 
-        and Ant from NetBeans 8.0.1):
-            for svn, add ";C:\Program Files\TortoiseSVN\bin"
+        PATH example (assuming Ant from NetBeans 8.0.1):
             for ant, add ";C:\Program Files\NetBeans 8.0.1\extide\ant\bin"
 
 Once launched, it will be necessary to navigate to your local Windows drive:
@@ -382,3 +395,11 @@ This will allow you to navigate straight from the Cygwin home to the JMRIDev
 directory via:
 
     cd JMRIDevelopment
+
+Also, it will be necessary to work in a Cygwin-specific SVN repository as one
+checked-out under MS Windows will have CRLF line-endings whereas one checked-out
+within Cygwin (and using the Cygwin svn tools) will have LF line-endings.
+
+Some of the operations that are performed will still generate files with CRLF
+line-ends (even within the Cygwin environment) - for these, run the changed files
+through 'dos2unix'. To get a list of changed files, use 'svn st' at top of repo.
