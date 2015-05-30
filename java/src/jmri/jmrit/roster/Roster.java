@@ -164,7 +164,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         try {
             // if the rosterFilename passed in is null, create a complete path
             // to the default roster index before attempting to read
-            if (rosterFilename.equals(Roster.DEFAULT_ROSTER_INDEX)) {
+            if (rosterFilename == null) {
                 rosterFilename = this.getRosterIndexPath();
             }
             this.readFile(rosterFilename);
