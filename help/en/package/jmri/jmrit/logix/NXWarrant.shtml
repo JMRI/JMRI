@@ -62,8 +62,9 @@ route you want.  Note, the Via and Avoid location fields may be used to restrict
 Another parameter to use in specifying a warrant route is the <b>Max Number of Blocks in Route</b> field at the 
 bottom of the window.  This number puts an upper limit on the length of the route the algorithm computes.  If
 your layout contains loops, then an infinite number of routes can be be counted.  To minimize computation time,
-use a number that is no 
-larger than the number of blocks in the longest route.
+you need not use a number that is much 
+larger than the number of blocks in the longest route. <i>However, using too small a number can terminate the
+search prematurely before the route is found.</i> 
 <p>
 <H3>The Script Algorithm</H3>
 The NX warrant script sets the direction, turns the light on, blows two horn/whistle blasts and starts to 
@@ -142,10 +143,9 @@ Create/Edit Warrant Window for the NXWarrant will open.  Use the <b>Copy</b> but
 can be edited later.
 <p>
 <H3>Some Tips for Smooth Start Up and Slow Down</H3>
+It is good practice to have a length specified for each block.  A rough estimate is better than letting it be 0.
 If the second block has length 0 any remaining speed steps not done in the starting block will be put in that block.  
-It would be a good idea to specify the lengths of both the first and second blocks, in case a third block is needed 
-to complete the ramp up.  You can check the script to see if 
-that is necessary.
+Lengths can be set for individual paths within a block in the CircuitBuilder should that be desirable.
 <p>
 If the next to last block has length 0 you should input 
 its length, so the algorithm can start the ramp down in the previous block (block before the next-to-last).  Although a 

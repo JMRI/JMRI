@@ -48,8 +48,8 @@ public class WarrantPreferences  {
     private OrderedHashtable<String, String> _headAppearances;
     private int _interpretation = SignalSpeedMap.PERCENT_NORMAL;    // Interpretation of values in speed name table
     
-    private int _msIncrTime = 750;          // time in milliseconds between speed changes ramping up or down
-    private float _throttleIncr = 0.05f;    // throttle increment for each ramp speed change
+    private int _msIncrTime = 1000;         // time in milliseconds between speed changes ramping up or down
+    private float _throttleIncr = 0.04f;    // throttle increment for each ramp speed change
     
     WarrantPreferences(String fileName) {
         openFile(fileName);

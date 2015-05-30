@@ -134,6 +134,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             timeRatio = 1.0f;                            
                         }
                         setSpeed(speedMod);
+                        _warrant.fireRunStatus("SpeedChange", null, _speedType);
                     } finally {
                       _lock.unlock();
                     }
@@ -322,7 +323,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         else if (_currentSpeed == 0.0f) {
             return "At Stop";
         } else {
-            return _speedType;
+            String units;
+//            float scale =  SignalSpeedMap.getMap().getLayoutScale();
+            float speed;
+            if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+                units= "Kmph";
+                speed = _currentSpeed*3600*25.4f/(_warrant.getThrottleFactor()*1000);
+            } else {
+                units = "Mph";
+                speed = _currentSpeed*3600*1000/(_warrant.getThrottleFactor()*12*5280);
+            }
+            return Bundle.getMessage("atSpeed", _speedType, Math.round(speed), units);
         }
     }
     protected String getSpeedType() {
@@ -366,8 +377,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_throttle != null) {
             _throttle.setSpeedSetting(-1.0f);
             setSpeed(0.0f);     // prevent creep after EStop - according to Jim Betz
-            setFunction(2, false);
-            setFunction(0, false);
+            for (int i=0; i<10; i++) {
+                setFunction(i, false);               
+            }
            try {
                 InstanceManager.throttleManagerInstance().releaseThrottle(_throttle, _warrant);
             } catch (Exception e) {
@@ -761,6 +773,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
             } finally {
                 _speedOverride = false;
+                _warrant.fireRunStatus("SpeedChange", old, _speedType);
                 _lock.unlock();
             }
             if (log.isDebugEnabled()) log.debug("rampSpeed complete to \""+endSpeedType+

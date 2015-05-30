@@ -177,7 +177,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     public Warrant getWarrantAt(int index) {
-        if (index >= _warList.size()) {
+        if (index > _warList.size()) {
             return null;
         }
         return _warList.get(index);
@@ -203,6 +203,18 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     @Override
     public int getRowCount() {
         return _warList.size();
+    }
+    
+    private int getRow(Warrant w) {
+        int row = -1;
+        Iterator<Warrant> iter = _warList.iterator();
+        while (iter.hasNext()) {
+            row++;
+            if (iter.next().equals(w)) {
+                return row;
+            }
+        }
+        return -1;
     }
 
     @Override
@@ -686,6 +698,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         bean.getTrainName(), bean.getCurrentBlockOrder()
                                 .getBlock().getDisplayName(), e.getNewValue()),
                         myGold, true);
+            } else if (e.getPropertyName().equals("SpeedChange")) {
+                int row = getRow(bean);
+                fireTableRowsUpdated(row, row);
+//                _frame.setStatusText(bean.getRunningMessage(), myGreen, true);
             } else if (e.getPropertyName().equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
