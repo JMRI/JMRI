@@ -742,7 +742,7 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     ;               "apps.DecoderPro.DecoderPro" \
     ;               "$INSTDIR\decpro5.ico" 0 "" "" \
     ;               "Start DecoderPro"
-    CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro3.lnk" \
+    CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
                    "$INSTDIR\dp3.ico" 0 "" "" \
@@ -804,7 +804,7 @@ SectionGroup "Desktop Shortcuts" SEC_DTSC
 
   Section "DecoderPro3" SEC_DP3DTSC
     SectionIn 1 2
-    CreateShortcut "$DESKTOP\DecoderPro3.lnk" \
+    CreateShortcut "$DESKTOP\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
                    "$INSTDIR\dp3.ico" 0 "" "" \
