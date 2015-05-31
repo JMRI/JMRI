@@ -1,7 +1,6 @@
 // CbusTurnout.java
 package jmri.jmrix.can.cbus;
 
-import jmri.Turnout;
 import jmri.implementation.AbstractLight;
 import jmri.jmrix.can.CanListener;
 import jmri.jmrix.can.CanMessage;
