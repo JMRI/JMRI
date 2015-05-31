@@ -37,16 +37,27 @@ public class LocoNetSlot {
         return slot;
     }  // cannot modify the slot number once created
 
-    // status accessors
-    // decoder mode
-    // possible values are  DEC_MODE_128A, DEC_MODE_28A, DEC_MODE_128,
-    //						DEC_MODE_14, DEC_MODE_28TRI, DEC_MODE_28
+
+    /** Get decoder mode.
+     * Possible values are  
+     * {@link LnConstants#DEC_MODE_128A},
+     * {@link LnConstants#DEC_MODE_28A},
+     * {@link LnConstants#DEC_MODE_128},
+     * {@link LnConstants#DEC_MODE_14},
+     * {@link LnConstants#DEC_MODE_28TRI},
+     * {@link LnConstants#DEC_MODE_28}
+     */
     public int decoderType() {
         return stat & LnConstants.DEC_MODE_MASK;
     }
 
-    // slot status
-    // possible values are LOCO_IN_USE, LOCO_IDLE, LOCO_COMMON, LOCO_FREE
+    /** Get slot status.
+     * Possible values are 
+     * {@link LnConstants#LOCO_IN_USE},
+     * {@link LnConstants#LOCO_IDLE},
+     * {@link LnConstants#LOCO_COMMON},
+     * {@link LnConstants#LOCO_FREE}
+     */
     public int slotStatus() {
         return stat & LnConstants.LOCOSTAT_MASK;
     }
@@ -55,8 +66,13 @@ public class LocoNetSlot {
         return ss2;
     }
 
-    // consist status
-    // possible values are CONSIST_MID, CONSIST_TOP, CONSIST_SUB, CONSIST_NO
+    /** Get consist status.
+     * Possible values are 
+     * {@link LnConstants#CONSIST_NO},
+     * {@link LnConstants#CONSIST_TOP},
+     * {@link LnConstants#CONSIST_MID},
+     * {@link LnConstants#CONSIST_SUB}
+     */
     public int consistStatus() {
         return stat & LnConstants.CONSIST_MASK;
     }
