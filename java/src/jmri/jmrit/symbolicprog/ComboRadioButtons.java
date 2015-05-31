@@ -25,7 +25,7 @@ public class ComboRadioButtons extends JPanel {
     private static final long serialVersionUID = 45307396535595216L;
     ButtonGroup g = new ButtonGroup();
 
-    ComboRadioButtons(JComboBox box, EnumVariableValue var) {
+    ComboRadioButtons(JComboBox<String> box, EnumVariableValue var) {
         super();
         _var = var;
         _value = var._value;
@@ -34,7 +34,7 @@ public class ComboRadioButtons extends JPanel {
         init();
     }
 
-    ComboRadioButtons(JComboBox box, IndexedEnumVariableValue var) {
+    ComboRadioButtons(JComboBox<String> box, IndexedEnumVariableValue var) {
         super();
         _var = var;
         _value = var._value;
@@ -49,7 +49,7 @@ public class ComboRadioButtons extends JPanel {
 
         // create the buttons, include in group, listen for changes by name
         for (int i = 0; i < _box.getItemCount(); i++) {
-            String name = ((String) (_box.getItemAt(i)));
+            String name = _box.getItemAt(i);
             JRadioButton b = new JRadioButton(name);
             b1[i] = b;
             b.setActionCommand(name);
@@ -140,8 +140,8 @@ public class ComboRadioButtons extends JPanel {
     transient PropertyChangeListener p1;
 
     transient VariableValue _var = null;
-    transient JComboBox _box = null;
-    transient JComboBox _value = null;
+    transient JComboBox<String> _box = null;
+    transient JComboBox<?> _value = null;
     Vector<JRadioButton> v = new Vector<JRadioButton>();
 
     public void dispose() {

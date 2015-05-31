@@ -20,7 +20,7 @@ public class ComboCheckBox extends JCheckBox {
      */
     private static final long serialVersionUID = 2689282114387973266L;
 
-    ComboCheckBox(JComboBox box, EnumVariableValue var) {
+    ComboCheckBox(JComboBox<String> box, EnumVariableValue var) {
         super();
         _var = var;
         _box = box;
@@ -85,7 +85,7 @@ public class ComboCheckBox extends JCheckBox {
     transient PropertyChangeListener p1;
 
     EnumVariableValue _var = null;
-    JComboBox _box = null;
+    JComboBox<String> _box = null;
 
     public void dispose() {
         removeActionListener(l1);

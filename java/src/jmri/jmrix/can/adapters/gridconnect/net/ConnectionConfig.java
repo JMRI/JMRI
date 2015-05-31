@@ -39,6 +39,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         return NAME;
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
@@ -51,7 +52,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
 
         updateUserNameField();
 
-        ((JComboBox) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
+        ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateUserNameField();
             }

@@ -157,8 +157,8 @@ public class LZ100InternalFrame extends javax.swing.JInternalFrame implements XN
 
     boolean read = false;
 
-    JComboBox voltBox = new javax.swing.JComboBox();
-    JComboBox eLineBox = new javax.swing.JComboBox();
+    JComboBox<String> voltBox = new javax.swing.JComboBox<String>();
+    JComboBox<String> eLineBox = new javax.swing.JComboBox<String>();
 
     JLabel status = new JLabel(" ");
 

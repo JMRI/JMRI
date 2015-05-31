@@ -345,6 +345,7 @@ public abstract class VariableValueTest extends TestCase {
     }
 
     // check the state <-> color connection for var when rep changes
+    @SuppressWarnings("unchecked")
     public void testVariableVarChangeColorRep() {
 
         HashMap<String, CvValue> v = createCvMap();
@@ -364,7 +365,7 @@ public abstract class VariableValueTest extends TestCase {
         Assert.assertEquals("UNKNOWN color", VariableValue.COLOR_UNKNOWN, rep.getBackground());
 
         try {   // might be either of two reps?
-            ((JComboBox) rep).setSelectedItem("9");
+            ((JComboBox<String>) rep).setSelectedItem("9");
         } catch (java.lang.ClassCastException e) {
             ((JTextField) rep).setText("9");
             ((JTextField) rep).postActionEvent();

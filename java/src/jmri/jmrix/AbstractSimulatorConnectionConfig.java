@@ -52,6 +52,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
 
     protected boolean init = false;
 
+    @SuppressWarnings("unchecked")
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
             log.debug("init called for " + name());
@@ -102,7 +103,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
             for (String i : options.keySet()) {
                 final String item = i;
                 if (options.get(i).getComponent() instanceof JComboBox) {
-                    ((JComboBox) options.get(i).getComponent()).addActionListener(new ActionListener() {
+                    ((JComboBox<?>) options.get(i).getComponent()).addActionListener(new ActionListener() {
                         public void actionPerformed(ActionEvent e) {
                             adapter.setOptionState(item, options.get(item).getItem());
                         }

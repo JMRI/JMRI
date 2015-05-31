@@ -64,7 +64,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
-        JComboBox b = sel.getSelector();
+        JComboBox<String> b = sel.getSelector();
         f.setText("323");
         b.setSelectedIndex(2);
         Assert.assertEquals("check number ", 323, sel.getAddress().getNumber());
@@ -76,7 +76,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
-        JComboBox b = sel.getSelector();
+        JComboBox<String> b = sel.getSelector();
         f.setText("23");
         b.setSelectedIndex(1);
         Assert.assertEquals("check number ", 23, sel.getAddress().getNumber());
@@ -88,7 +88,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
-        JComboBox b = sel.getSelector();
+        JComboBox<String> b = sel.getSelector();
         Assert.assertNotNull("exists", b);
         f.setText("2023");
         Assert.assertEquals("check number ", 2023, sel.getAddress().getNumber());
@@ -99,7 +99,7 @@ public class DccLocoAddressSelectorTest extends TestCase {
         setThrottleManager();
         DccLocoAddressSelector sel = new DccLocoAddressSelector();
         JTextField f = sel.getTextField();
-        JComboBox b = sel.getSelector();
+        JComboBox<String> b = sel.getSelector();
         Assert.assertNotNull("exists", b);
         f.setText("23");
         Assert.assertEquals("check number ", 23, sel.getAddress().getNumber());

@@ -27,7 +27,8 @@ public class ComboRadioButtonsTest extends TestCase {
         v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox) (var.getCommonRep());
+        @SuppressWarnings("unchecked")
+        JComboBox<String> combo = (JComboBox<String>) (var.getCommonRep());
 
         // create object under test
         ComboRadioButtons b = new ComboRadioButtons(combo, var);
@@ -43,7 +44,8 @@ public class ComboRadioButtonsTest extends TestCase {
         v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox) (var.getCommonRep());
+        @SuppressWarnings("unchecked")
+        JComboBox<String> combo = (JComboBox<String>) (var.getCommonRep());
 
         // create object under test
         ComboRadioButtons b = new ComboRadioButtons(combo, var);
@@ -79,7 +81,8 @@ public class ComboRadioButtonsTest extends TestCase {
         v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox) (var.getCommonRep());
+        @SuppressWarnings("unchecked")
+        JComboBox<String> combo = (JComboBox<String>) (var.getCommonRep());
 
         // create object under test
         ComboRadioButtons b = new ComboRadioButtons(combo, var);

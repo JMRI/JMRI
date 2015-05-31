@@ -134,18 +134,18 @@ public class DecoderIndexFileTest extends TestCase {
         di.readMfgSection(decoderIndexElement);
         di.readFamilySection(decoderIndexElement);
         // search for the two Digitrax decoders
-        JComboBox l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
+        JComboBox<String> l1 = di.matchingComboBox("Digitrax", null, null, null, null, null);
         Assert.assertEquals("Found with name Digitrax ", 3, l1.getItemCount());
-        Assert.assertEquals("Found with name Digitrax ", "DH142 (FX2 family)", (String) l1.getItemAt(1));
-        Assert.assertEquals("Found with name Digitrax ", "DN142 (FX2 family)", (String) l1.getItemAt(2));
+        Assert.assertEquals("Found with name Digitrax ", "DH142 (FX2 family)", l1.getItemAt(1));
+        Assert.assertEquals("Found with name Digitrax ", "DN142 (FX2 family)", l1.getItemAt(2));
         // search for the two decoders from mfgID 129
-        JComboBox l2 = di.matchingComboBox(null, null, "129", null, null, null);
+        JComboBox<String> l2 = di.matchingComboBox(null, null, "129", null, null, null);
         Assert.assertEquals("Found with id 129 ", 3, l2.getItemCount());
         // search for the two from the NMRA family
-        JComboBox l4 = di.matchingComboBox(null, "NMRA S&RP definitions", null, null, null, null);
+        JComboBox<String> l4 = di.matchingComboBox(null, "NMRA S&RP definitions", null, null, null, null);
         Assert.assertEquals("Found from NMRA family ", 3, l4.getItemCount());
         // search for the one with version ID 21
-        JComboBox l3 = di.matchingComboBox(null, null, null, "21", null, null);
+        JComboBox<String> l3 = di.matchingComboBox(null, null, null, "21", null, null);
         Assert.assertEquals("Found with version 21 ", 1, l3.getItemCount());
     }
 

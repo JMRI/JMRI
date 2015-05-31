@@ -33,12 +33,13 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
         super();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
 
         //Add a listener to the combo box
-        ((JComboBox) options.get(adapter.getOption1Name()).getComponent()).addActionListener(new ActionListener() {
+        ((JComboBox<Option>) options.get(adapter.getOption1Name()).getComponent()).addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 enableOpt2(options.get(adapter.getOption1Name()).getItem());
@@ -60,6 +61,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
                 : "Range setting not applicable for selected RFID reader type");
     }
 
+    @SuppressWarnings("unchecked")
     private void enableOpt3(Object o) {
         boolean enable = !o.equals("MERG Concentrator");
         options.get(adapter.getOption3Name()).getLabel().setEnabled(enable);
@@ -69,7 +71,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
                 ? "Choose RFID protocol"
                 : "Protocol setting not applicable for selected RFID reader type");
         if (!enable) {
-            ((JComboBox) options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
+            ((JComboBox<Option>) options.get(adapter.getOption3Name()).getComponent()).setSelectedIndex(0);
         }
     }
 

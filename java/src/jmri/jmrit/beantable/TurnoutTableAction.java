@@ -409,7 +409,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     boolean b = ((Boolean) value).booleanValue();
                     t.setLocked(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, b);
                 } else if (col == MODECOL) {
-                    String modeName = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String modeName = (String) ((JComboBox<String>) value).getSelectedItem();
                     t.setFeedbackMode(modeName);
                 } else if (col == SENSOR1COL) {
                     try {
@@ -448,7 +449,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     WindowMaker w = new WindowMaker(t);
                     javax.swing.SwingUtilities.invokeLater(w);
                 } else if (col == LOCKOPRCOL) {
-                    String lockOpName = (String) ((JComboBox) value)
+                    @SuppressWarnings("unchecked")
+                    String lockOpName = (String) ((JComboBox<String>) value)
                             .getSelectedItem();
                     if (lockOpName.equals(bothText)) {
                         t.enableLockOperation(Turnout.CABLOCKOUT + Turnout.PUSHBUTTONLOCKOUT, true);
@@ -462,10 +464,12 @@ public class TurnoutTableAction extends AbstractTableAction {
                         t.enableLockOperation(Turnout.PUSHBUTTONLOCKOUT, true);
                     }
                 } else if (col == LOCKDECCOL) {
-                    String decoderName = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String decoderName = (String) ((JComboBox<String>) value).getSelectedItem();
                     t.setDecoderName(decoderName);
                 } else if (col == STRAIGHTCOL) {
-                    String speed = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String speed = (String) ((JComboBox<String>) value).getSelectedItem();
                     try {
                         t.setStraightSpeed(speed);
                     } catch (jmri.JmriException ex) {
@@ -478,7 +482,8 @@ public class TurnoutTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                 } else if (col == DIVERGCOL) {
 
-                    String speed = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String speed = (String) ((JComboBox<String>) value).getSelectedItem();
                     try {
                         t.setDivergingSpeed(speed);
                     } catch (jmri.JmriException ex) {

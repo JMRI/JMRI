@@ -142,7 +142,7 @@ public class DeleteRosterItemAction extends JmriAbstractAction {
 
     protected RosterEntry[] selectRosterEntry(String rosterGroup) {
         // create a dialog to select the roster entry
-        JComboBox selections = new RosterEntryComboBox(rosterGroup);
+        JComboBox<?> selections = new RosterEntryComboBox(rosterGroup);
         int retval = JOptionPane.showOptionDialog(_who,
                 "Select one roster entry", "Delete roster entry",
                 0, JOptionPane.INFORMATION_MESSAGE, null,

@@ -200,7 +200,7 @@ public class AlignTablePane extends javax.swing.JPanel {
     JTextField num = new JTextField(4);
     JTextField vsound = new JTextField(8);
     JTextField offset = new JTextField(4);
-    JComboBox algorithmBox = Algorithms.algorithmBox();
+    JComboBox<String> algorithmBox = Algorithms.algorithmBox();
 
     /**
      * Set up table for showing individual recievers

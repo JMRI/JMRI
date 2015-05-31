@@ -26,7 +26,7 @@ public class DefaultListCellEditor<E> extends DefaultCellEditor implements ListC
         super(checkBox);
     }
 
-    public DefaultListCellEditor(final JComboBox comboBox) {
+    public DefaultListCellEditor(final JComboBox<?> comboBox) {
         super(comboBox);
     }
 

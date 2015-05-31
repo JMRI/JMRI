@@ -536,6 +536,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
      * column. Data is word wrapped within a column. Can handle data as strings,
      * comboboxes or booleans
      */
+    @SuppressWarnings("unchecked")
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "SBSC_USE_STRINGBUFFER_CONCATENATION")
     // Only used occasionally, so inefficient String processing not really a problem
     // though it would be good to fix it if you're working in this area
@@ -571,7 +572,7 @@ abstract public class BeanTableDataModel extends javax.swing.table.AbstractTable
                 if (this.getValueAt(i, j) == null) {
                     columnStrings[j] = spaces;
                 } else if (this.getValueAt(i, j) instanceof JComboBox) {
-                    columnStrings[j] = (String) ((JComboBox) this.getValueAt(i, j)).getSelectedItem();
+                    columnStrings[j] = (String) ((JComboBox<String>) this.getValueAt(i, j)).getSelectedItem();
                 } else if (this.getValueAt(i, j) instanceof Boolean) {
                     columnStrings[j] = (this.getValueAt(i, j)).toString();
                 } else {

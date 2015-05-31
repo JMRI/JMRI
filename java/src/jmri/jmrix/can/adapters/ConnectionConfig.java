@@ -32,6 +32,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
         super();
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
@@ -44,7 +45,7 @@ abstract public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnecti
 
         updateUserNameField();
 
-        ((JComboBox) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
+        ((JComboBox<Option>) options.get("Protocol").getComponent()).addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 updateUserNameField();
             }

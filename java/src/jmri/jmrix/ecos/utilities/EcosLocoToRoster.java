@@ -72,7 +72,7 @@ public class EcosLocoToRoster implements EcosListener {
     Programmer mProgrammer;
     JLabel progStatus;
 //    Programmer pProg;
-    protected JComboBox locoBox = null;
+    protected JComboBox<?> locoBox = null;
     protected JToggleButton iddecoder;
     JFrame frame;
     EcosSystemConnectionMemo adaptermemo;
@@ -449,7 +449,7 @@ public class EcosLocoToRoster implements EcosListener {
         ecosManager.clearLocoToRoster();
     }
 
-    JComboBox combo;
+//    JComboBox combo;
 
     public void comboPanel() {
         frame.setTitle("Decoder Selection For Loco " + ecosLoco.getEcosDescription());

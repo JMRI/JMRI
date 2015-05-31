@@ -94,12 +94,13 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
         }
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void loadDetails(final JPanel d) {
         super.loadDetails(d);
 
         if (options.get("XnTcpInterface").getComponent() instanceof JComboBox) {
-            ((JComboBox) options.get("XnTcpInterface").getComponent()).addActionListener(new ActionListener() {
+            ((JComboBox<Option>) options.get("XnTcpInterface").getComponent()).addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
                     enableInput();
                 }

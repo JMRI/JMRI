@@ -54,7 +54,7 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
 
         // Find system combobox
         ncfinder = new NamedComponentFinder(JComponent.class, "prefixBox");
-        JComboBox prefixBox = (JComboBox) ncfinder.find(fa, 0);
+        JComboBox<?> prefixBox = (JComboBox<?>) ncfinder.find(fa, 0);
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");

@@ -253,7 +253,8 @@ public class BlockTableAction extends AbstractTableAction {
                     fireTableRowsUpdated(row, row);
                 } else if (col == CURVECOL) {
 
-                    String cName = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String cName = (String) ((JComboBox<String>) value).getSelectedItem();
                     if (cName.equals(noneText)) {
                         b.setCurvature(Block.NONE);
                     } else if (cName.equals(gradualText)) {
@@ -269,7 +270,8 @@ public class BlockTableAction extends AbstractTableAction {
                     b.setPermissiveWorking(boo);
                     fireTableRowsUpdated(row, row);
                 } else if (col == SPEEDCOL) {
-                    String speed = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String speed = (String) ((JComboBox<String>) value).getSelectedItem();
                     try {
                         b.setBlockSpeed(speed);
                     } catch (jmri.JmriException ex) {
@@ -288,7 +290,8 @@ public class BlockTableAction extends AbstractTableAction {
                     b.setReporter(r);
                     fireTableRowsUpdated(row, row);
                 } else if (col == SENSORCOL) {
-                    String strSensor = (String) ((JComboBox) value).getSelectedItem();
+                    @SuppressWarnings("unchecked")
+                    String strSensor = (String) ((JComboBox<String>) value).getSelectedItem();
                     b.setSensor(strSensor);
                     return;
                 } else if (col == CURRENTREPCOL) {

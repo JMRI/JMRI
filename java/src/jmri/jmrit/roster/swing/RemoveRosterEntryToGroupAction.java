@@ -8,7 +8,6 @@ import java.awt.event.ActionListener;
 import javax.swing.AbstractAction;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -56,7 +55,7 @@ public class RemoveRosterEntryToGroupAction extends AbstractAction {
     Component _who;
     String curRosterGroup;
     JmriJFrame frame = null;
-    JComboBox typeBox;
+//    JComboBox typeBox;
     JLabel jLabel = new JLabel("Select the Group");
     RosterEntrySelectorPanel rosterBox;
     JButton okButton = new JButton("Remove");

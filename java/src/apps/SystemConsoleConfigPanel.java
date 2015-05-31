@@ -76,6 +76,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
     private static final JComboBox<Integer> fontSize = new JComboBox<>(fontSizes);
 
+    @SuppressWarnings("unchecked")
     public SystemConsoleConfigPanel() {
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
@@ -85,7 +86,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
         schemes.setSelectedIndex(SystemConsole.getInstance().getScheme());
         schemes.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setScheme(((JComboBox) e.getSource()).getSelectedIndex());
+            SystemConsole.getInstance().setScheme(((JComboBox<?>) e.getSource()).getSelectedIndex());
         });
 
         schemes.setRenderer((JList<? extends Scheme> list, Scheme scheme, int index, boolean isSelected, boolean hasFocus) -> {
@@ -117,7 +118,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
 
         p = new JPanel(new FlowLayout());
         fontFamily.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setFontFamily((String) ((JComboBox) e.getSource()).getSelectedItem());
+            SystemConsole.getInstance().setFontFamily((String) ((JComboBox<String>) e.getSource()).getSelectedItem());
             schemes.repaint();
         });
         fontFamily.setSelectedItem(SystemConsole.getInstance().getFontFamily());
@@ -129,7 +130,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         p.add(fontFamily);
 
         fontSize.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setFontSize((Integer) ((JComboBox) e.getSource()).getSelectedItem());
+            SystemConsole.getInstance().setFontSize((Integer) ((JComboBox<Integer>) e.getSource()).getSelectedItem());
         });
         fontSize.setToolTipText(rbc.getString("ConsoleFontSize"));
         fontSize.setSelectedItem(SystemConsole.getInstance().getFontSize());
@@ -159,7 +160,7 @@ public class SystemConsoleConfigPanel extends JPanel implements PreferencesPanel
         p = new JPanel(new FlowLayout());
         final JComboBox<String> wrapStyle = new JComboBox<>(wrapStyleNames);
         wrapStyle.addActionListener((ActionEvent e) -> {
-            SystemConsole.getInstance().setWrapStyle(wrapStyles[((JComboBox) e.getSource()).getSelectedIndex()]);
+            SystemConsole.getInstance().setWrapStyle(wrapStyles[((JComboBox<String>) e.getSource()).getSelectedIndex()]);
         });
         wrapStyle.setSelectedIndex(SystemConsole.getInstance().getWrapStyle());
 

@@ -400,6 +400,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
      * word wrapped within a column. Can handle data as strings, integers,
      * comboboxes or booleans
      */
+    @SuppressWarnings("unchecked")
     public void printTable(HardcopyWriter w) {
         // [AC] variable column sizes
         int columnTotal = 0;
@@ -446,7 +447,7 @@ public class CbusEventTableDataModel extends javax.swing.table.AbstractTableMode
                 if (this.getValueAt(i, j) == null) {
                     columnStrings[j] = spaces;
                 } else if (this.getValueAt(i, j) instanceof JComboBox) {
-                    columnStrings[j] = (String) ((JComboBox) this.getValueAt(i, j)).getSelectedItem();
+                    columnStrings[j] = (String) ((JComboBox<String>) this.getValueAt(i, j)).getSelectedItem();
                 } else if (this.getValueAt(i, j) instanceof Boolean) {
                     columnStrings[j] = (this.getValueAt(i, j)).toString();
                 } else if (this.getValueAt(i, j) instanceof Integer) {

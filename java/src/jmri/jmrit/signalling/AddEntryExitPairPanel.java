@@ -200,7 +200,7 @@ public class AddEntryExitPairPanel extends jmri.util.swing.JmriPanel {
         }
     }
 
-    ValidPoints getValidPointFromCombo(JComboBox box) {
+    ValidPoints getValidPointFromCombo(JComboBox<String> box) {
         String item = (String) box.getSelectedItem();
         for (int i = 0; i < validPoints.size(); i++) {
             if (validPoints.get(i).getDescription().equals(item)) {

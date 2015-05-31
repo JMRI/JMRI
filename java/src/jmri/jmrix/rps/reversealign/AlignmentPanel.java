@@ -485,7 +485,7 @@ public class AlignmentPanel extends javax.swing.JPanel
     JTextField vs = new JTextField(5);
     java.text.NumberFormat nf;
 
-    JComboBox algorithm;
+    JComboBox<String> algorithm;
 
     Line[] lines;
 

@@ -178,7 +178,7 @@ public class PollDataModel extends AbstractTableModel
                 modifiedFlag.setModifiedFlag(true);
                 return;
             case TYPECOL:
-                log.error("Got " + ((JComboBox) value).getSelectedItem() + " but did not act");
+                log.error("Got " + ((JComboBox<?>) value).getSelectedItem() + " but did not act");
         }
     }
 

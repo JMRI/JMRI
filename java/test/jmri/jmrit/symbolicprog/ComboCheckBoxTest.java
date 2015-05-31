@@ -35,7 +35,8 @@ public class ComboCheckBoxTest extends TestCase {
             log.debug("Enum variable created");
         }
 
-        JComboBox combo = (JComboBox) (var.getCommonRep());
+        @SuppressWarnings("unchecked")
+        JComboBox<String> combo = (JComboBox<String>) (var.getCommonRep());
 
         // create object under test
         ComboCheckBox b = new ComboCheckBox(combo, var);
@@ -68,7 +69,8 @@ public class ComboCheckBoxTest extends TestCase {
         v.put("81", cv);
         EnumVariableValue var = new EnumVariableValue("name", "comment", "", false, false, false, false, "81", "XXVVVVXX", 0, 255, v, null, null);
         addTestItems(var);
-        JComboBox combo = (JComboBox) (var.getCommonRep());
+        @SuppressWarnings("unchecked")
+        JComboBox<String> combo = (JComboBox<String>) (var.getCommonRep());
 
         // create object under test
         ComboCheckBox b = new ComboCheckBox(combo, var);

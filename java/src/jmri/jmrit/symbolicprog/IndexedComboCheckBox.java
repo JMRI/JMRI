@@ -22,7 +22,7 @@ public class IndexedComboCheckBox extends JCheckBox {
      */
     private static final long serialVersionUID = -2948204731039652274L;
 
-    IndexedComboCheckBox(JComboBox box, IndexedEnumVariableValue var) {
+    IndexedComboCheckBox(JComboBox<?> box, IndexedEnumVariableValue var) {
         super();
         _var = var;
         _box = box;
@@ -86,7 +86,7 @@ public class IndexedComboCheckBox extends JCheckBox {
     transient PropertyChangeListener p1;
 
     IndexedEnumVariableValue _var = null;
-    JComboBox _box = null;
+    JComboBox<?> _box = null;
 
     public void dispose() {
         removeActionListener(l1);

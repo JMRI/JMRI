@@ -100,7 +100,7 @@ abstract public class AbstractRosterItemAction extends jmri.util.swing.JmriAbstr
         if (Beans.hasProperty(wi, "selectedRosterGroup")) {
             group = (String) Beans.getProperty(wi, "selectedRosterGroup");
         }
-        JComboBox selections = new RosterEntryComboBox(group);
+        JComboBox<?> selections = new RosterEntryComboBox(group);
         int retval = JOptionPane.showOptionDialog(mParent,
                 "Select one roster entry", "Select roster entry",
                 0, JOptionPane.INFORMATION_MESSAGE, null,

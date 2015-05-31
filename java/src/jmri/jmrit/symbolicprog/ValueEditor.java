@@ -32,7 +32,7 @@ import org.slf4j.LoggerFactory;
  * @author	Bob Jacobsen Copyright (C) 2001
  * @version $Revision$
  */
-public class ValueEditor extends JComboBox implements TableCellEditor, FocusListener {
+public class ValueEditor extends JComboBox<Object> implements TableCellEditor, FocusListener {
 
     /**
      *

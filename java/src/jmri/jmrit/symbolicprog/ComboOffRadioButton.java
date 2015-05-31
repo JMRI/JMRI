@@ -18,11 +18,11 @@ public class ComboOffRadioButton extends ComboRadioButtons {
      */
     private static final long serialVersionUID = 8850743261536717555L;
 
-    ComboOffRadioButton(JComboBox box, EnumVariableValue var) {
+    ComboOffRadioButton(JComboBox<String> box, EnumVariableValue var) {
         super(box, var);
     }
 
-    ComboOffRadioButton(JComboBox box, IndexedEnumVariableValue var) {
+    ComboOffRadioButton(JComboBox<String> box, IndexedEnumVariableValue var) {
         super(box, var);
     }
 

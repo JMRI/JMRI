@@ -200,9 +200,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
 
         rosterGroupSelector.addActionListener(new ActionListener() {
 
+            @SuppressWarnings("unchecked")
             @Override
             public void actionPerformed(ActionEvent e) {
-                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox) e.getSource()).getSelectedItem());
+                userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox<String>) e.getSource()).getSelectedItem());
             }
         });
     }

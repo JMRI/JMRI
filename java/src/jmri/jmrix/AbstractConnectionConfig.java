@@ -115,9 +115,10 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
             advanced = boo;
         }
 
+        @SuppressWarnings("unchecked")
         public String getItem() {
             if (optionSelection instanceof JComboBox) {
-                return (String) ((JComboBox) optionSelection).getSelectedItem();
+                return (String) ((JComboBox<String>) optionSelection).getSelectedItem();
             } else if (optionSelection instanceof JTextField) {
                 return ((JTextField) optionSelection).getText();
             }

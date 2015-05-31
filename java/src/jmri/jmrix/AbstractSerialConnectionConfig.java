@@ -69,6 +69,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     protected boolean init = false;
 
+    @SuppressWarnings("unchecked")
     @Override
     protected void checkInitDone() {
         if (log.isDebugEnabled()) {
@@ -147,7 +148,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
         for (String i : options.keySet()) {
             final String item = i;
             if (options.get(i).getComponent() instanceof JComboBox) {
-                ((JComboBox) options.get(i).getComponent()).addActionListener(new ActionListener() {
+                ((JComboBox<?>) options.get(i).getComponent()).addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         adapter.setOptionState(item, options.get(item).getItem());

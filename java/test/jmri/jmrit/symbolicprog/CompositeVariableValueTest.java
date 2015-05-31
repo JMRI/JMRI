@@ -112,7 +112,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         CompositeVariableValue testVar = createTestVar();
 
         // set value
-        ((JComboBox) testVar.getCommonRep()).setSelectedIndex(1);
+        ((JComboBox<?>) testVar.getCommonRep()).setSelectedIndex(1);
 
         // see if the variables were updated
         Assert.assertEquals("var17 value when set to second", 21, var17.getIntValue());
@@ -131,7 +131,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         CompositeVariableValue testVar = createTestVar();
 
         // set value
-        ((JComboBox) testVar.getCommonRep()).setSelectedIndex(1);
+        ((JComboBox<?>) testVar.getCommonRep()).setSelectedIndex(1);
 
         // set the CVs
         cv17.setValue(11);
@@ -139,7 +139,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         cv19.setValue(13);
 
         // check for change
-        Assert.assertEquals("composite index when set to first via CV", 0, ((JComboBox) testVar.getCommonRep()).getSelectedIndex());
+        Assert.assertEquals("composite index when set to first via CV", 0, ((JComboBox<?>) testVar.getCommonRep()).getSelectedIndex());
     }
 
     List<java.beans.PropertyChangeEvent> evtList = null;  // holds a list of ParameterChange events
@@ -149,7 +149,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         CompositeVariableValue testVar = createTestVar();
 
         // set initial value
-        ((JComboBox) testVar.getCommonRep()).setSelectedIndex(1);
+        ((JComboBox<?>) testVar.getCommonRep()).setSelectedIndex(1);
 
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
@@ -194,7 +194,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         Assert.assertEquals("CV 17 value ", 123, cv17.getValue());
         Assert.assertEquals("CV 18 value ", 123, cv18.getValue());
         Assert.assertEquals("CV 19 value ", 123, cv19.getValue());
-        Assert.assertEquals("var value after read", 2, ((JComboBox) testVar.getCommonRep()).getSelectedIndex());
+        Assert.assertEquals("var value after read", 2, ((JComboBox<?>) testVar.getCommonRep()).getSelectedIndex());
         Assert.assertEquals("Var state", AbstractValue.READ, testVar.getState());
         log.debug("end testRead");
     }
@@ -204,7 +204,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         CompositeVariableValue testVar = createTestVar();
 
         // set initial value
-        ((JComboBox) testVar.getCommonRep()).setSelectedIndex(1);
+        ((JComboBox<?>) testVar.getCommonRep()).setSelectedIndex(1);
 
         // register a listener for parameter changes
         java.beans.PropertyChangeListener listen = new java.beans.PropertyChangeListener() {
@@ -239,7 +239,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         }
         Assert.assertEquals("only one Busy -> false transition ", 1, nBusyFalse);
 
-        Assert.assertEquals("value after write", 1, ((JComboBox) testVar.getCommonRep()).getSelectedIndex());
+        Assert.assertEquals("value after write", 1, ((JComboBox<?>) testVar.getCommonRep()).getSelectedIndex());
         Assert.assertEquals("Var state", AbstractValue.STORED, testVar.getState());
 
         Assert.assertEquals("CV 17 value ", 21, cv17.getValue());
@@ -257,7 +257,7 @@ public class CompositeVariableValueTest extends VariableValueTest {
         Assert.assertEquals("Var 17 not changed initially ", false, var17.isChanged());
 
         // set value value
-        ((JComboBox) testVar.getCommonRep()).setSelectedIndex(1);
+        ((JComboBox<?>) testVar.getCommonRep()).setSelectedIndex(1);
 
         // now changed, check
         Assert.assertEquals("Var 17 changed ", true, var17.isChanged());
