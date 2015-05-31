@@ -292,7 +292,11 @@ public class RouteEditFrame extends OperationsFrame implements java.beans.Proper
         }
         rl.setTrainDirection(routeModel.getLastTrainDirection());
         rl.setMaxTrainLength(routeModel.getLastMaxTrainLength());
-        rl.setMaxCarMoves(routeModel.getLastMaxTrainMoves());
+        if (rl.getLocation().isStaging()) {
+            rl.setMaxCarMoves(50);
+        } else {
+            rl.setMaxCarMoves(routeModel.getLastMaxTrainMoves());
+        }
         // set train icon location
         rl.setTrainIconCoordinates();
     }
