@@ -50,6 +50,7 @@ public class OperationsLoggerTest extends TestCase {
         // now delete directory
         dir.delete();
         //Assert.assertTrue("delete directory", dir.delete()); TODO fails on some machines?
+        Setup.setCarLoggerEnabled(false);
 
     }
 

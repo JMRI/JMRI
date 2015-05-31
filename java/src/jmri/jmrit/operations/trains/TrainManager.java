@@ -289,7 +289,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void dispose() {
         _trainHashTable.clear();
         _id = 0;
-        _instance = null;	// we need to reset the instance for testing purposes
+//        _instance = null;	// we need to reset the instance for testing purposes
     }
 
     // stores known Train instances by id
