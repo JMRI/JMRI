@@ -33,6 +33,7 @@ package jmri;
  * @author	Bob Jacobsen Copyright (C) 2001, 2008, 2014
  * @deprecated 3.9.6
  */
+@Deprecated
 public interface ProgrammerManager extends AddressedProgrammerManager, GlobalProgrammerManager {
 
 }

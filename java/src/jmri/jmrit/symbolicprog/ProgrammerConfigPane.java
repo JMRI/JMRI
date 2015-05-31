@@ -52,6 +52,7 @@ public class ProgrammerConfigPane extends JPanel implements PreferencesPanel {
      * @param include ignored
      * @deprecated since 3.9.5
      */
+    @Deprecated
     public ProgrammerConfigPane(boolean include) {
         this();
     }
