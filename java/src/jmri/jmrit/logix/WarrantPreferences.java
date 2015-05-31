@@ -63,13 +63,14 @@ public class WarrantPreferences  {
         try {
             root = prefsXml.rootFromFile(file);
         }catch (java.io.FileNotFoundException ea) {
-            log.info("Could not find Warrant preferences file.  Normal if preferences have not been saved before.");
+            log.debug("Could not find Warrant preferences file.  Normal if preferences have not been saved before.");
             root = null;
         }catch (Exception eb) {
             log.error("Exception while loading warrant preferences: " + eb);
             root = null;
         }
         if (root != null){
+            log.info("Found Warrant preferences file: {}", _fileName);
             loadLayoutParams(root.getChild(layoutParams));
             if (!loadSpeedMap(root.getChild(SpeedMapParams))) {
                 loadSpeedMapFromOldXml();
