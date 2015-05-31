@@ -4,7 +4,7 @@
 # Author: Bob Jacobsen, copyright 2007
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
+# The next line is maintained by SVN, please don't change it
 # $Revision$
 
 import javax.swing.JButton
