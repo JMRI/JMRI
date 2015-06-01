@@ -1926,10 +1926,9 @@ public class DefaultSignalMastLogic implements jmri.SignalMastLogic, java.beans.
                     }
                 }
             }
-
             for (NamedBeanSetting nbh : userSetMasts) {
                 SignalMast key = (SignalMast) nbh.getBean();
-                if ((key.getAspect() == null) || (key.getAspect().equals(nbh.getStringSetting()))) {
+                if ((key.getAspect() == null) || (!key.getAspect().equals(nbh.getStringSetting()))) {
                     state = false;
                 }
             }
