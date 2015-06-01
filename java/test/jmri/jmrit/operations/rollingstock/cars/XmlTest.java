@@ -11,11 +11,11 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
 import org.jdom2.JDOMException;
 
 /**
@@ -38,6 +38,10 @@ public class XmlTest extends TestCase {
 
         // confirm that file name has been modified for testing
         Assert.assertEquals("OperationsJUnitTestCarRoster.xml", CarManagerXml.instance().getOperationsFileName());
+        
+        // confirm proper defaults
+        Assert.assertEquals("Default car empty", "E", CarLoads.instance().getDefaultEmptyName());
+        Assert.assertEquals("Default car load", "L", CarLoads.instance().getDefaultLoadName());
 
         CarManager manager = CarManager.instance();
         List<RollingStock> tempcarList = manager.getByIdList();

@@ -9,11 +9,11 @@ import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Operations RollingStock Cars Loads class Last manually cross-checked
@@ -28,6 +28,11 @@ public class CarLoadsTest extends TestCase {
 
     public void testCarLoads() {
         CarLoads cl = CarLoads.instance();
+        
+        // confirm proper defaults
+        Assert.assertEquals("Default car empty", "E", cl.getDefaultEmptyName());
+        Assert.assertEquals("Default car load", "L", cl.getDefaultLoadName());
+        
         List<String> names = cl.getNames("BoXcaR");
 
         Assert.assertEquals("Two default names", 2, names.size());
