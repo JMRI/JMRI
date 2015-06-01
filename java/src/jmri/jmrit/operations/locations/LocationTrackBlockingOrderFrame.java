@@ -94,7 +94,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
 //        JMenu toolMenu = new JMenu(Bundle.getMessage("Tools"));
 //        menuBar.add(toolMenu);
 //        setJMenuBar(menuBar);
-        addHelpMenu("package.jmri.jmrit.operations.Operations_LocationTools", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_TrackBlockingOrder", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
 
