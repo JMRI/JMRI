@@ -70,11 +70,15 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
             }
             return true;
         }
-        if (type.equals(jmri.GlobalProgrammerManager.class) && provides(jmri.ProgrammerManager.class)) {
-            return getProgrammerManager().isGlobalProgrammerAvailable();
+        if (type.equals(jmri.GlobalProgrammerManager.class) && provides(jmri.ProgrammerManager.class)){
+            if(getProgrammerManager()!=null){
+                return getProgrammerManager().isGlobalProgrammerAvailable();
+            }
         }
         if (type.equals(jmri.AddressedProgrammerManager.class) && provides(jmri.ProgrammerManager.class)) {
-            return getProgrammerManager().isAddressedModePossible();
+            if(getProgrammerManager()!=null){
+                return getProgrammerManager().isAddressedModePossible();
+            }
         }
         return false; // nothing, by default
     }
@@ -177,7 +181,7 @@ public class Dcc4PcSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo 
                 }
             }
         }
-        if (programManager == null) {
+        if (programManager == null && defaultProgrammer!=null) {
             programManager = new jmri.jmrix.dcc4pc.Dcc4PcProgrammerManager(defaultProgrammer/*, new Dcc4PcProgrammer(defaultProgrammer)*/);
         }
         return programManager;
