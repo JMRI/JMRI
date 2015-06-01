@@ -100,7 +100,7 @@ public class JmriConnection {
         if (this.dataOutputStream != null) {
             this.dataOutputStream.writeBytes(message);
         } else if (this.session != null) {
-            this.session.getRemote().sendString(message);
+            this.session.getRemote().sendStringByFuture(message);
         }
     }
 
