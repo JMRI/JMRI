@@ -56,6 +56,9 @@ public class XmlLoadTests extends TestCase {
       */
      private void runTest(String directory,int locs,int routes,int trains,
                      int cars, int engines) {
+         // clear the operations directory name.
+         OperationsSetupXml.setOperationsDirectoryName("");
+
          //dispose of any existing managers
          EngineManager.instance().dispose();
          CarManager.instance().dispose();
@@ -113,6 +116,9 @@ public class XmlLoadTests extends TestCase {
          TrainManagerXml.instance().dispose();
          RouteManagerXml.instance().dispose();
          LocationManagerXml.instance().dispose();
+
+         // clear the operations directory name.
+         OperationsSetupXml.setOperationsDirectoryName("");
      }
    
     
