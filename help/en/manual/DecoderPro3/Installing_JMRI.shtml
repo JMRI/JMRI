@@ -34,12 +34,11 @@
 <p>The JMRI software package includes:</p>
 <ul>
   <li>DecoderPro&reg;</li>
-  <li>DecoderPro 3</li>
   <li>PanelPro&trade;</li>
   <li>SoundPro&trade;</li>
-  <li>Operations is embedded in DecoderPro 3 and PanelPro</li>
+  <li>Operations is embedded in DecoderPro and PanelPro</li>
 </ul>
-<p>There are always two versions of the software availabe:</p>
+<p>There are always two versions of the software available:</p>
 <ul>
   <li>Production Version: The current stable version that is fixed in design and for general use. If just starting, this is the version for you.</li>
   <li>Development Version: The version that is under development for testing and is used to validate new features and changes to existing features. If you are familiar with JMRI and want to help in the validation and testing process, then use this version.</li>

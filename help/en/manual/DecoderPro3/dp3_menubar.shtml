@@ -17,7 +17,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro&reg; 3 Main Window</h1>
+<h1>DecoderPro&reg; Main Window</h1>
 <h1>Menu bar</h1>
 
 <div align="right">
@@ -25,7 +25,7 @@
 </div>
 
 <hr>
-<p wrap="">Most of the DecoderPro 3 functions can be accessed via the menu bar.</p>
+<p wrap="">Most of the DecoderPro functions can be accessed via the menu bar.</p>
 <p><img src="images/Main_05_MenuBar.png" alt="menu bar" height="87" width="425"></p>
 <ul>
   <li>
@@ -33,9 +33,9 @@
   </li>
   <ul>
     <li><strong>New Roster Window    </strong><br>
-    Opens another instance of Main DecoderPro 3 <strong>Roster</strong> window. </li>
+    Opens another instance of Main DecoderPro <strong>Roster</strong> window. </li>
     <li><strong>Import Roster</strong><br>
-    Imports Roster into DecoderPro 3</li>
+    Imports Roster into DecoderPro</li>
     <li><strong>Import Roster Entry</strong><br>
       Open the <strong>Open</strong> dialog to allow you to select a Roster Entry to import. <br>
       <br>
@@ -98,7 +98,7 @@
       </ul>
     </li>
     <li><strong>Quit</strong><br>
-      Shuts down DecoderPro 3.
+      Shuts down DecoderPro.
     </li>
   </ul>
 </ul>
@@ -257,7 +257,7 @@ the selected roster entry in your roster. Select the <strong><a href="Adv_Functi
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Used to update Decoder Index when new decoder files are added.<br>
       <img src="images/separator.png" alt="s" height="4" width="340"></li>
     <li><strong>Run Script</strong><br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens a dialog to allow you to select a script that will run within DecoderPro 3. </li>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Opens a dialog to allow you to select a script that will run within DecoderPro. </li>
   </ul>
 </ul>
 <ul>
@@ -319,7 +319,7 @@ the selected roster entry in your roster. Select the <strong><a href="Adv_Functi
     <p><img src="images/separator.png" alt="s" height="4" width="340"></p>
   </blockquote>
   <ul>
-    <li>About DecoderPro 3<br>
+    <li>About DecoderPro<br>
       <br>
     <img style="width: 255px; height: 333px;" alt="about screen" src="images/dp3_About.png"><br></li>
   </ul>

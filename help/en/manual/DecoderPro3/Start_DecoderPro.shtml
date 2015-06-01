@@ -17,8 +17,8 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>Getting Started with DecoderPro&reg; 3</h1>
-<h1>How do I start the DecoderPro 3 program?</h1>
+<h1>Getting Started with DecoderPro&reg;</h1>
+<h1>How do I start the DecoderPro program?</h1>
 
 <div align="right">
 <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
@@ -29,13 +29,13 @@
 <h3>If you are a first time user with no entries in the roster or preferences set <a href="Start_DecoderPro_New.shtml">Click Here</a>.</h3>
 <p>
   Once you have downloaded the JMRI software and installed it, simply
-open the program in the usual manner for your operating system. An icon for DecoderPro 3 should be installed on your Desktop.<br>
+open the program in the usual manner for your operating system. An icon for DecoderPro should be installed on your Desktop.<br>
 <img src="images/decoderpro3_icon.png" alt="icon" height="64" width="88">
-</p><p>DecoderPro 3 may be opened by double click on the Desktop icon
-and the DecoderPro 3 initial screen as shown below will be displayed on
+</p><p>DecoderPro may be opened by double click on the Desktop icon
+and the DecoderPro initial screen as shown below will be displayed on
 completion of startup with no roster entries.
 </p><p><img src="images/start_dp3_main.png" alt="DP3 start" height="232" width="900">
-</p><p>DecoderPro 3 will open showing your roster entries if you already have established a roster of locomotives.</p><h1><img src="images/Splash_Screen_dp3.png" alt="DP3 splash" height="387" width="800"></h1>
+</p><p>DecoderPro will open showing your roster entries if you already have established a roster of locomotives.</p><h1><img src="images/Splash_Screen_dp3.png" alt="DP3 splash" height="387" width="800"></h1>
 
 <p>It may take a while for this screen to come up, especially on older
 and slower computers. Remember that you are essentially running the

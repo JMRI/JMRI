@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro&reg; 3 Advanced Feature</h1>
+<h1>DecoderPro&reg; Advanced Feature</h1>
 <h1>Roster Media Pane</h1>
 
 <div align="right">
@@ -26,14 +26,14 @@
 </div>
 
 <hr>
-<p>The Roster Media Pane is opened from the DecoderPro 3 button in main
+<p>The Roster Media Pane is opened from the DecoderPro button in main
 window or from the Action menu, then select the Roster Media TAB.</p>
 <p>The Roster Media Pane allows you to add a main image and an icon to
 the engines roster. The main image may be used for Throttle background
 image if selected in the Throttle preferences. The icon image is used
 in the Throttle list and various roster combo boxes.</p>
 <p>The icon is the image that will appear in the Decoder Information
-part of the DecoderPro 3 initial screen, once you have selected a
+part of the DecoderPro initial screen, once you have selected a
 locomotive from the list. The icon will also display in the icon column
 of the Locomotive Roster List.</p>
 <p align="center"><img src="images/Adv_04_RosterMedia.png" alt="roster media" height="768" width="916"></p>
@@ -121,7 +121,7 @@ remove the image from the Resources folder.</p>
   <input name="button" id="button" value="Save to Roster" type="submit">
 After adding images to the image boxes for main image and icon, click
 on this button to store images in your Roster. Now the image will
-appear in your roster list in DecoderPro 3.
+appear in your roster list in DecoderPro.
 </p><p><img src="images/Adv_04b_RosterMedia.png" alt="roster media" height="358" width="899">
 </p><p><strong>Links for icons in GIF and images of  most Locomotives</strong><strong> are listed below:</strong>
 </p><p><a href="http://www.railserve.com/TrainGIFs/" target="_blank">Rail Serve</a>

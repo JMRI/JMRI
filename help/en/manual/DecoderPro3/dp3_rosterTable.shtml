@@ -22,7 +22,7 @@ DecoderPro&reg; Main Window
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>DecoderPro&reg; 3 Main Window</h1>
+<h1>DecoderPro&reg; Main Window</h1>
 <h1>The Roster Table</h1>
 
 <div align=right>
@@ -31,7 +31,7 @@ DecoderPro&reg; Main Window
 </div>
 
 <hr>
-<p>The Roster Table in the main body of DecoderPro 3 displays all of the locomotives in your roster or selected roster groups.<br>
+<p>The Roster Table in the main body of DecoderPro displays all of the locomotives in your roster or selected roster groups.<br>
 <strong>SORT </strong>by any column by clicking on the column header. Roster above is sorted by DCC addresses.</p>
 <p><img src="images/dp3_rosterTable.png" width="900" height="141" alt="table"></p>
 <p>Hide/show any column by right clicking anywhere in the Roster header and checking columns to be displayed and unchecking columns to hide.</p>

@@ -117,13 +117,13 @@ message which usually meand the write was not completed. All the
 entries are now in white color as they match the decoder.</p>
 <p align="center"><img src="images/Basic_Address.png" alt="basic address" height="556" width="636"><br>
 </p>
-<p> Now that we have entered the Roster data and set thedesired
-address, lets return to DecoderPro 3 Main window by closing the
+<p> Now that we have entered the Roster data and set the desired
+address, lets return to DecoderPro Main window by closing the
 Programming window.</p>
 <p>Notice that we now have a list of all the locomotives programmed so far that are in our roster.</p>
 <p><img style="width: 900px; height: 425px;" alt="main" src="images/Main_01b_main.png"><br></p>
 <p><a name="DoMore"></a>What we&#8217;ve done so far is what is available in
-the Basic mode of programming in DecoderPro 3. Which is basicallly put
+the Basic mode of programming in DecoderPro. Which is basically put
 Locomotive in the roster and assign an address.&nbsp; A good place to
 start for new folks or at a club.&nbsp; It&#8217;s hard to go wrong, but you
 can change the loco address and add it the roster, which are the two
@@ -134,9 +134,9 @@ redundant and confusing showing how the user could edit the underlying
 file to make special application programming modes. The Comprehensive
 Programmer was the most popular for a long time until Advanced came
 along with added features.&nbsp; So now they&#8217;ve been combined in
-DecoderPro 3. Thus the Comprehensive Programmer with added Advanced
-features is the only other programmer that DecoderPro 3 offers. <br>
-  Since we&#8217;ve already covered <strong>Basic</strong>,  let's explore the DecoderPro 3 <a href="Comp_Setup_Roster.shtml">Comprehensive  Programmer</a>! </p>
+DecoderPro. Thus the Comprehensive Programmer with added Advanced
+features is the only other programmer that DecoderPro offers. <br>
+  Since we&#8217;ve already covered <strong>Basic</strong>,  let's explore the DecoderPro <a href="Comp_Setup_Roster.shtml">Comprehensive  Programmer</a>! </p>
 <p>Select locomotive that you want to program in Comprehensive Programmer, then double click on selection to open Programmer.</p>
 <p>At the bottom of the window is the  <a href="RosterMedia.shtml">Labels &amp; Media</a> and<a href="dp3_Main_Throttle.shtml">Throttle</a>
 buttons. Use these buttons to set up the Icon photos for your roster

@@ -16,7 +16,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<h1>Using DecoderPro&reg; 3</h1>
+<h1>Using DecoderPro&reg;</h1>
 <h1><a name="Setting Up"></a>How do I set up to program
 a decoder?</h1>
 
@@ -31,22 +31,22 @@ a decoder?</h1>
 have your computer connected to your command station/booster with the
 required interface device for your DCC system, you are now ready to
 actually program a decoder that has been installed in your locomotive.</p>
-<p><br> On your initial opening DecoderPro 3, the main page will be
+<p><br> On your initial opening DecoderPro, the main page will be
 displayed: (After preferences are set) The list of locomotives
-programmed by DecoderPro 3 will be blank until you add a locomotive.
+programmed by DecoderPro will be blank until you add a locomotive.
 From then on when it is opened a list of all the locomotives whose
 decoders you have previously programmed in DecoderPro3 or classic
 DecoderPro will be listed.</p>
-<p>DecoderPro 3 provides access to the JMRI tools required to program
+<p>DecoderPro provides access to the JMRI tools required to program
 DCC decoders. If you are an advanced user, using PanelPro to run your
 layout, then you may start PanelPro and then from the File menu start
-DecoderPro 3.</p>
+DecoderPro.</p>
 <p>If you already have roster entries and you want to start programming in <strong><a href="Comp_Setup_Roster.shtml">Comprehensive Programmer</a></strong>, double-click on the roster entry.</p>
-<p>DecoderPro 3 by its self may program DCC decoders and also use the
+<p>DecoderPro by its self may program DCC decoders and also use the
 other JMRI tools to manually operte your trains from the computer
 interface. These include throttle control and power control of your
 layout if your DCC system allows them..</p>
-<p>The DecoderPro 3 window is divided into five main section from top to bottom.</p>
+<p>The DecoderPro window is divided into five main section from top to bottom.</p>
 <div align="center"><img style="width: 900px; height: 425px;" alt="Main window" src="images/start_dp_main01.png"><br></div>
 <p>1<a href="dp3_menubar.shtml">. <strong>The Menu Bar</strong>.</a><br>
 2. <strong><a href="dp3_toobar.shtml">The Tool Bar</a></strong><br>
@@ -55,7 +55,7 @@ a list of all the decoders in your roster that are part of the active
 roster group. To set-up a roster group in addition to the default group
 of <strong>All Entries</strong> see <strong><a href="dp3_settings_rosterGroups.shtml">Settings for Roster groups.</a></strong>.<br>
 4.<strong><a href="dp3_decoderInfo.shtml"> The Decoder Information Area</a></strong>.  Show information about any selected locomotive in the roster list.<br>
-5. A status bar that reports information about DecoderPro 3 operation including errors.</p>
+5. A status bar that reports information about DecoderPro operation including errors.</p>
 <p>Anywhere in the roster table  you may right-click and a context menu will be displayed.</p><p style="text-align: center;"><img style="width: 619px; height: 255px;" alt="context menu" src="images/dp3_main_contextMenu.png"></p>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>

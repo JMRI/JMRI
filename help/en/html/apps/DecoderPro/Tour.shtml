@@ -84,14 +84,7 @@ programmer format that shows just their set of required variables
 this contains examples of how various special effects can
 be obtained when you're constructing your own programmer.
 </ul>
-<p>The latest feature added is the DecoderPro 3 , which streamlines DecoderPro for simply programming decoders and running trains with JMRI throttles. The main programmers available are:</p>
-<ul>
-  <LI>Basic - A simple one, with just the most popular information
-  <LI>Comprehensive - The most complete display, with multiple panes
-    of detailed information 
-  <LI>Advanced Panes are accessed separately using buttons on the DecoderPro 3 interface.
-</ul>
-You can even define your own programmer if you'd prefer to just see the variables you use.
+<p>You can even define your own programmer if you'd prefer to just see the variables you use.
 For this example, we select the "Comprehensive" decoder
 programmer in the lowest selection box, and then click "Open
 Programmer" to start working with the decoder.  </p>

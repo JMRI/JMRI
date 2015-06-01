@@ -17,7 +17,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro&reg; 3</h1>
+<h1>DecoderPro&reg;</h1>
 <h1>WiThrottle</h1>
 
 <div align="right">
@@ -48,7 +48,7 @@
         </ul>
         <blockquote>
           <p><img src="images/ThrottleWi_ControlsFilter.png" alt="filter" height="209" width="669"></p>
-          <p>Set up Turnouts and Routes that can be controlled by DecoderPro 3 for control by WiThrottle.</p>
+          <p>Set up Turnouts and Routes that can be controlled by DecoderPro for control by WiThrottle.</p>
         </blockquote>
         <ul>
           <li><span style="font-weight: bold;">Preferences</span>...</li>

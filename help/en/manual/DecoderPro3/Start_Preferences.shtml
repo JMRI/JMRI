@@ -20,7 +20,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<h1>Getting Started with DecoderPro&reg; 3</h1>
+<h1>Getting Started with DecoderPro&reg;</h1>
 <h1>How do I set up my preferences?</h1>
 
 <div align="right">
@@ -28,7 +28,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 </p><p><a href="index.shtml#Getting%20Started">Back to Index</a> </p></div>
 
 <hr>
-<p>From the Edit menu in DecoderPro 3 select <strong>Preferences</strong> option:</p>
+<p>From the Edit menu in DecoderPro select <strong>Preferences</strong> option:</p>
 <p><img src="images/preferences_menu.png" alt="prefernces menu" height="252" width="275"></p>
 <p>
   (This window may open automatically the first time you
@@ -219,7 +219,7 @@ possibility</td>
   <tr>
     <td width="17%"><strong>Buttons TAB</strong></td>
     <td><input name="button4" id="button4" value="Add Button " type="submit">
-    to the toolbar of DecoderPro 3</td>
+    to the toolbar of DecoderPro</td>
     <td><p><img src="images/Preferences8.png" alt="buttons" height="188" width="333"></p>
     <p><img src="images/preferences_button.png" alt="button" height="137" width="444"></p></td>
   </tr>

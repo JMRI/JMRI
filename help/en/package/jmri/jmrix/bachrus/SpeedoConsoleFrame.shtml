@@ -37,7 +37,7 @@ Connect the track on which the running stand is installed to your DCC system.
 <p>
 Add both the DCC system and the reader interface as layout connections in the
 JMRI preferences. Open the Speedo console from the Speedo menu on the main screen
-of DecoderPro, DecoderPro 3 or PanelPro. 
+of DecoderPro or PanelPro. 
 </p>
 <p>
     The left side of the window is used for setup and to display the current

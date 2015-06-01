@@ -80,13 +80,7 @@ formats programmateurs qui montre leur ensemble de variables n&#233;cessaires
 il contient des exemples de comment obtenir les diff&#233;rents effets sp&#233;ciaux
 lorsque vous construisez votre propre programmateur.
 </ul>
-<p> La derni&#232;re fonctionnalit&#233; ajout&#233;e est la DecoderPro 3, qui rationalise simplement DecoderPro pour programmer les d&#233;codeurs et la circulation des trains avec les R&#233;gulateurs JMRI. Les principaux programmateurs disponibles sont:</p>
-<ul>
-   <li>Basic (Basique) -  Une simple, avec seulement les informations les plus populaires
-   <LI>Comprehensive (Complet) - L'affichage le plus complet, avec plusieurs volets d'informations d&#233;taill&#233;es
-   <LI>Advanced (Avanc&#233;) - Ajoute des volets avanc&#233;s au "Programmer Conmprehensive"
-</ul>
-Vous pouvez m&#234;me d&#233;finir votre propre programmateur si vous pr&#233;f&#233;rez simplement voir
+<p>Vous pouvez m&#234;me d&#233;finir votre propre programmateur si vous pr&#233;f&#233;rez simplement voir
  les variables que vous utilisez.
 Pour cet exemple, nous s&#233;lectionnons le programmateur Comprehensive (Complet) de d&#233;codeur dans la bo&#238;te
  de s&#233;lection la plus basse, puis cliquez sur "Open Programmer" pour commencer &#224; travailler avec le d&#233;codeur.  </p>

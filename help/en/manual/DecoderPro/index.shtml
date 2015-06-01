@@ -41,11 +41,7 @@
 
 <p><strong>JMRI&reg; is a Java-based cross-platform application for model railroaders. JMRI contains applications for:</strong></p>
 
-<p><strong>The programming of Digital
-
-  Command Control (DCC) decoders, (DecoderPro).<br>
-
-  Programming decoders and using throttle run trains, DecoderPro 3</strong><strong><br>
+<p><strong>Programming decoders and using throttle to run trains, DecoderPro</strong><strong><br>
 
     Drawing computer based panels for depicting a  model railroad layout, and automated operation (PanelPro&trade;).<br>
 

@@ -18,7 +18,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>DecoderPro 3 Advanced Feature</h1>
+<h1>DecoderPro&reg; Advanced Feature</h1>
 <h1>Function Labels Pane</h1>
 
 <div align="right">
@@ -26,7 +26,7 @@
 </div>
 
 <hr>
-<p>This pane is opened from the <strong>Labels &amp; Media</strong> button the DecoderPro 3 main window or from the <strong>Actions</strong> menu.</p>
+<p>This pane is opened from the <strong>Labels &amp; Media</strong> button the DecoderPro main window or from the <strong>Actions</strong> menu.</p>
 <p><img src="images/Adv_03_FunctionLabels.png" alt="function labels" height="682" width="900"></p>
 <p>This pane is more than a scratch pad to keep track of what happens
 when function buttons are pushed.&nbsp; It also interacts with the <a href="Throttle.shtml">JMRI throttle</a>. 
@@ -41,7 +41,7 @@ descriptions you have entered for those functions in this pane. </p>
 for the FP-45 with Tsunami OEM Sound decoder with sounds and lighting
 functions.</p>
 <p><img src="images/Adv_03_FunctionOnThrottle.png" alt="throttle functions" height="523" width="531">
-</p><p>Using the checkboxes,	space holders and the radio button to the right of each function may be set to:
+</p><p>Using the checkboxes, space holders and the radio button to the right of each function may be set to:
 </p><table border="1" cellpadding="2" cellspacing="1" width="80%">
   <tbody><tr>
     <td width="13%"><strong>lock</strong></td>
@@ -49,7 +49,7 @@ functions.</p>
     <p><strong>Latched Function </strong>when
 pressed will stay on(down position) until pressed again i.e. Function
 button labeled "Bell" would ring until pressed again.</p>
-    <p><strong>Unlatched Function </strong>when pressed toggles on and then off. i.e. Function Button labled "short horn", when pressed provides one blast of horn.</p></td>
+    <p><strong>Unlatched Function </strong>when pressed toggles on and then off. i.e. Function Button labeled "short horn", when pressed provides one blast of horn.</p></td>
   </tr>
   <tr>
     <td><strong>off</strong></td>
@@ -62,7 +62,7 @@ button labeled "Bell" would ring until pressed again.</p>
   <tr>
     <td><strong>shunt</strong></td>
     <td>Sets
-"virtual" funtion key for software throttle. The "lock" option also
+"virtual" function key for software throttle. The "lock" option also
 needs to be set simultaneously with the "shunt" virtual function key
 activation. When this Function key is pressed the throttle speed slider
 on the software throttle changes to "center off" style for shunting,
