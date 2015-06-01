@@ -156,6 +156,7 @@ public class EngineEditFrameTest  extends jmri.util.SwingTestCase {
         e1.setBuilt("2009");
         e1.setMoves(55);
         e1.setOwner("Owner2");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         e1.setRfid("RFID 3");
         e1.setWeightTons("Tons of Weight");
         e1.setComment("Test Engine NH 1 Comment");
@@ -167,6 +168,7 @@ public class EngineEditFrameTest  extends jmri.util.SwingTestCase {
         e2.setBuilt("2004");
         e2.setMoves(50);
         e2.setOwner("AT");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         e2.setRfid("RFID 2");
 
         Engine e3 = cManager.newEngine("AA", "3");
@@ -174,6 +176,7 @@ public class EngineEditFrameTest  extends jmri.util.SwingTestCase {
         e3.setBuilt("2006");
         e3.setMoves(40);
         e3.setOwner("AB");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
         e3.setRfid("RFID 5");
         Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
         Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
@@ -183,6 +186,7 @@ public class EngineEditFrameTest  extends jmri.util.SwingTestCase {
         e4.setBuilt("1990");
         e4.setMoves(30);
         e4.setOwner("AAA");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
         e4.setRfid("RFID 4");
         Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
@@ -192,6 +196,7 @@ public class EngineEditFrameTest  extends jmri.util.SwingTestCase {
         e5.setBuilt("1956");
         e5.setMoves(25);
         e5.setOwner("DAB");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
         e5.setRfid("RFID 1");
         Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));

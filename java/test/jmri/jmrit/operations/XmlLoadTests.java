@@ -98,9 +98,6 @@ public class XmlLoadTests extends TestCase {
          Assert.assertEquals("Number of Cars",cars,CarManager.instance().getList().size());
          Assert.assertEquals("Number of Engines",engines,EngineManager.instance().getList().size());
      }
-   
-    
-
 
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
@@ -192,6 +189,32 @@ public class XmlLoadTests extends TestCase {
     protected void tearDown() throws Exception {
        JUnitUtil.resetInstanceManager();
        apps.tests.Log4JFixture.tearDown();
+       
+       // delete files
+       File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());
+       if (file.exists()) {
+           file.delete();
+       }
+       file = new File(EngineManagerXml.instance().getDefaultOperationsFilename());
+       if (file.exists()) {
+           file.delete();
+       }
+       file = new File(CarManagerXml.instance().getDefaultOperationsFilename());
+       if (file.exists()) {
+           file.delete();
+       }
+       file = new File(LocationManagerXml.instance().getDefaultOperationsFilename());
+       if (file.exists()) {
+           file.delete();
+       }
+       file = new File(TrainManagerXml.instance().getDefaultOperationsFilename());
+       if (file.exists()) {
+           file.delete();
+       }
+       file = new File(OperationsSetupXml.instance().getDefaultOperationsFilename());
+       if (file.exists()) {
+           file.delete();
+       }
          
        //dispose of any existing managers
        EngineManager.instance().dispose();
