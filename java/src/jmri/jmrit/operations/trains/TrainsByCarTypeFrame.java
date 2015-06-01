@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -159,7 +160,12 @@ public class TrainsByCarTypeFrame extends OperationsFrame implements java.beans.
      * checkbox name is the id of the train or track.
      */
     private void save() {
-        log.debug("save " + trainList.size());
+        if (copyCheckBox.isSelected() && JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
+                new Object[]{typeComboBox.getSelectedItem(), textCarType.getText()}), Bundle.getMessage("CopyCarTypeTitle"),
+                JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            return;
+        }
+        log.debug("Save {} trains", trainList.size());
         removePropertyChangeTrains();
         for (int i = 0; i < trainList.size(); i++) {
             JCheckBox cb = trainList.get(i);

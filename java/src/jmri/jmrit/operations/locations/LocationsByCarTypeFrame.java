@@ -15,6 +15,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -57,11 +58,9 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
     // check boxes
     JCheckBox copyCheckBox = new JCheckBox(Bundle.getMessage("Copy"));
 
-    // radio buttons
     // text field
     JLabel textCarType = new JLabel(Empty);
 
-    // for padding out panel
     // combo boxes
     JComboBox<String> typeComboBox = CarTypes.instance().getComboBox();
 
@@ -184,7 +183,12 @@ public class LocationsByCarTypeFrame extends OperationsFrame implements java.bea
      * checkbox name is the id of the location or track.
      */
     private void save() {
-        log.debug("save {}", locationCheckBoxList.size());
+        if (copyCheckBox.isSelected() && JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle.getMessage("CopyCarType"),
+                new Object[]{typeComboBox.getSelectedItem(), textCarType.getText()}), Bundle.getMessage("CopyCarTypeTitle"),
+                JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) {
+            return;
+        }
+        log.debug("save {} locations", locationCheckBoxList.size());
         removePropertyChangeLocations();
         for (JCheckBox cb : locationCheckBoxList) {
             Location loc = manager.getLocationById(cb.getName());
