@@ -71,13 +71,12 @@ public class NXFrame extends WarrantRoute {
     private boolean _haltStart = false;
     private float _maxSpeed = 0.5f;
     private float _minSpeed = 0.05f;
-    private float _intervalTime = 0.0f;
+    private float _intervalTime = 0.0f;     // milliseconds
     private float _throttleIncr = 0.0f;
     
     private String _addr;
     private int _dccNum;
     private boolean  _isLong;
-    private int _numSteps;
 
     private boolean _calibrate;
     
@@ -230,17 +229,21 @@ public class NXFrame extends WarrantRoute {
         if (msg==null) {
             switch ( SignalSpeedMap.getMap().getInterpretation()) {
                 case SignalSpeedMap.SPEED_MPH:
-                    _maxSpeedBox.setText(Float.toString(_maxSpeed*3600*1000/(_factor*12*5280)));
-                    _minSpeedBox.setText(Float.toString(_throttleIncr*3600*1000/(_factor*24*5280)));
+                    _maxSpeedBox.setText(round(_maxSpeed*3600*1000/(_factor*12*5280), 2));
+                    _minSpeedBox.setText(round(_throttleIncr*3600*1000/(_factor*12*5280), 2));
                     break;
                 case SignalSpeedMap.SPEED_KMPH:
-                    _maxSpeedBox.setText(Float.toString(_maxSpeed*3600*25.4f/(_factor*1000)));
-                    _minSpeedBox.setText(Float.toString(_throttleIncr*3600*25.4f/(_factor*2000)));
+                    _maxSpeedBox.setText(round(_maxSpeed*3600*25.4f/(_factor*1000), 2));
+                    _minSpeedBox.setText(round(_throttleIncr*3600*25.4f/(_factor*1000), 2));
             }
         } else {
             JOptionPane.showMessageDialog(this, msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);            
         }
+    }
+    static private  String round(float f, int place) {
+        double e = Math.pow(10,place); 
+        return Double.toString(Math.round(f*e)/e);
     }
     
     private JPanel makeAutoRunPanel(int interpretation) {
@@ -259,13 +262,13 @@ public class NXFrame extends WarrantRoute {
                 throttleIncrLabel = "MinSpeed";
                 break;
             case SignalSpeedMap.SPEED_MPH:
-                maxSpeed = _maxSpeed*3600*1000/(_factor*12*5280);
+                maxSpeed = Math.round(_maxSpeed*3600*1000/(_factor*12*5280)*100)/100;
                 maxSpeedLabel = "MaxMph";
                 throttleIncr = _throttleIncr*3600*1000/(_factor*12*5280);
                 throttleIncrLabel = "MinMph";
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                maxSpeed = _maxSpeed*3600*25.4f/(_factor*1000);
+                maxSpeed = Math.round(_maxSpeed*3600*25.4f/(_factor*1000)*100)/100;
                 maxSpeedLabel = "MaxKMph";
                 throttleIncr = _throttleIncr*3600*25.4f/(_factor*1000);
                 throttleIncrLabel = "MinKMph";
@@ -280,7 +283,6 @@ public class NXFrame extends WarrantRoute {
         p1.add(WarrantFrame.makeTextBoxPanel(false, _minSpeedBox, throttleIncrLabel, true));
         _maxSpeedBox.setText(Float.toString(maxSpeed));
         _minSpeedBox.setText(Float.toString(throttleIncr));
-        _minSpeedBox.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
         
         JPanel p2 = new JPanel();
         p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
@@ -321,9 +323,7 @@ public class NXFrame extends WarrantRoute {
         ppp = new JPanel();
         ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
         ppp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
-        _rampInterval.setToolTipText(Bundle.getMessage("rampInterval"));
         ppp.add(WarrantFrame.makeTextBoxPanel(false, _factorbox, "throttleFactor", true));
-        _factorbox.setToolTipText(Bundle.getMessage("throttleFactor"));
 //        ppp.add(WarrantFrame.makeBoxPanel(false, _addTracker, "AddTracker"));
         pp.add(ppp);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -544,12 +544,6 @@ public class NXFrame extends WarrantRoute {
         }
         String speedErr;
         switch ( SignalSpeedMap.getMap().getInterpretation()) {
-            case SignalSpeedMap.PERCENT_NORMAL:
-            case SignalSpeedMap.PERCENT_THROTTLE:
-                _maxSpeed = maxSpeed;
-                _minSpeed = minSpeed;
-                speedErr = Bundle.getMessage("throttlesetting");
-                break;
             case SignalSpeedMap.SPEED_MPH:
                 _maxSpeed = maxSpeed*_factor*12*5280/(3600*1000);
                 _minSpeed = minSpeed*_factor*12*5280/(3600*1000);
@@ -563,12 +557,12 @@ public class NXFrame extends WarrantRoute {
             default:
                 _maxSpeed = maxSpeed;
                 _minSpeed = minSpeed;
-                speedErr = Bundle.getMessage("throttlesetting");
+                speedErr = "";      // Bundle.getMessage("throttlesetting");
         }
         if (_maxSpeed>1.0 || _maxSpeed<0.008) {
             return Bundle.getMessage("badSpeed", maxSpeed, speedErr);                                 
         }
-        if (_minSpeed>=1.0 || _minSpeed<0.01575 || _minSpeed>=_maxSpeed) {
+        if (_minSpeed>=1.0 || _minSpeed<0.007|| _minSpeed>=_maxSpeed) {
             return Bundle.getMessage("badSpeed", minSpeed, speedErr);                                 
         }
         try {
@@ -582,158 +576,167 @@ public class NXFrame extends WarrantRoute {
         }
         return null;
     }
-    
-    private String makeCommands(Warrant w) {
+
+    /*
+     * Return length of warrant route in inches.  Assume start and end is in the middle of first
+     * and last blocks.  Use a default length for blocks with unspecified length.
+     */
+    private float getTotalLength(float defaultBlockLen) {
         
         List<BlockOrder> orders = getOrders();
         BlockOrder bo = orders.get(0); 
-//        OPath path = bo.getPath();
-        String blockName = bo.getBlock().getDisplayName();
-        w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
-        w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-        w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
-        w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
-        w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
-        w.addThrottleCommand(new ThrottleSetting(1000, "Forward",
-                (_forward.isSelected() ? "true" : "false"), blockName));
-        
-        float delta = _minSpeed;          // _throttleIncr;
-        
-        float defaultBlockLen = 5*_maxSpeed*_intervalTime/(_factor*_scale);
-        float blockLen = bo.getPath().getLengthIn();  // save for first time through ramp up loop
-        if (blockLen<=0) {
-            blockLen = defaultBlockLen;            
+        float len = bo.getPath().getLengthIn();
+        if (len<=0) {
+            len = defaultBlockLen;
         }
-        blockLen /= 2;
-        float totalLen = blockLen;     // estimated distance of the route
-        int orderSize = orders.size();
-        for (int i=1; i<orderSize-1; i++) {
-            float len = orders.get(i).getPath().getLengthIn();
+        float totalLen = len/2;      // estimated distance of the route
+        for (int i=1; i<orders.size()-1; i++) {
+            len =  orders.get(i).getPath().getLengthIn();
             if (len<=0) {
                 // intermediate blocks should not be zero
-                log.warn(w.getDisplayName()+" route through block \""+orders.get(i).getBlock().getDisplayName()+"\" has length zero. Using "+
+                log.warn("Route through block \""+orders.get(i).getBlock().getDisplayName()+"\" has length zero. Using "+
                         defaultBlockLen+ " for actual length.");
                 len = defaultBlockLen;
             }
             totalLen += len;
         }
-        bo = orders.get(orderSize-1);
-        OBlock block = bo.getBlock();
-        if ((block.getState() & OBlock.DARK) == 0) {        // reduce length for dark blocks
-            totalLen += bo.getPath().getLengthIn()/2;       // OK if user has set to 0            
-        } else {
-            totalLen += Math.max(bo.getPath().getLengthIn()/2-12, 0);
+        bo = orders.get(orders.size()-1);
+        len = bo.getPath().getLengthIn();
+        if (len<=0) {
+            len = defaultBlockLen;
         }
-        float curSpeed = delta;
-        float rampLength = (_minSpeed*_intervalTime)/(_factor*_scale);      // actual ramp distance to use.
-        rampLength += (delta*_intervalTime)/(_factor*_scale);
-        _numSteps = 1;
-        while (curSpeed<_maxSpeed) {
-            float dist = (curSpeed + delta)*_intervalTime/(_factor*_scale);
+        totalLen += len/2;
+        return totalLen;
+    }
+    private float getRampLength(float totalLen) {
+        float speed = 0.0f;
+        float rampLength = 0.0f;
+        int numSteps = 0;
+        while (speed<_maxSpeed) {
+            float dist = (speed + _minSpeed/2)*_intervalTime/(_factor*_scale);
             if (rampLength + dist <= totalLen/2) {
                 rampLength += dist;
-                curSpeed += delta;
-                _numSteps++;                             
+                speed += _minSpeed;
+                numSteps++;
             } else {
+                // cannot get to _maxSpeed and have length to decelerate
+                _maxSpeed = speed;      // modify
                 break;
             }
         }
-
-        if (log.isDebugEnabled()) log.debug("Route length= "+totalLen+" uses "+_numSteps+" speed steps of delta= "+
-                delta+" and Factor= "+_factor+" for rampLength = "+rampLength);
-/*        if (log.isDebugEnabled()) {
-            float rampDownLen = 0;
-            log.debug("curSpeed= "+curSpeed);
-            int downStep = 0;
-            for (int step=_numSteps; step>0; step--) {
-                rampDownLen += (curSpeed - delta/2)*_intervalTime/(_factor*_scale);
-                curSpeed -= delta;
-                downStep++;
-            }
-            rampDownLen += (curSpeed/2)*_intervalTime/(_factor*_scale);
-            log.debug("rampDownLen= "+rampDownLen+" uses "+downStep+" speed steps of delta= "+
-                    delta+" for rampLength = "+rampLength+" to last curSpeed= "+curSpeed);
-        }*/
-                
-        int idx = 0;        // block index
-
-        float noopTime = 0;         // ms time for entry into next block
-        float curDistance = 0;      // distance traveled in current block
-        float remRamp = rampLength;
-        // start train
-        float speedTime = _intervalTime;        // ms time to complete speed step in next block
-        curSpeed = delta;
-        w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed/2), blockName));
-        w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
-        int curSteps = 1;
-        curDistance = (_minSpeed*_intervalTime)/(_factor*_scale);
-        remRamp -= curDistance;
+        // add the smidge of distance needed to reach _maxSpeed
+//        rampLength += (_maxSpeed - speed)*_intervalTime/(_factor*_scale);
+        if (log.isDebugEnabled()) log.debug("Route length= "+totalLen+" uses "+numSteps+" speed steps of delta= "+
+                _minSpeed+" and Factor= "+_factor+" for rampLength = "+rampLength);
+        return rampLength;
+    }
+    
+    private String makeCommands(Warrant w) {
         
-        while (curSteps < _numSteps) {       // ramp up loop
-            int steps = 0;
-            float speed = curSpeed;
-            // Assume linear speed change
-            while (curSteps+steps < _numSteps) {             
-                float dist = (speed + delta)*_intervalTime/(_factor*_scale);
-                if (curDistance + dist <= blockLen) {
+        int nextIdx = 0;        // block index - increment after getting a block order
+        List<BlockOrder> orders = getOrders();
+        BlockOrder bo = orders.get(nextIdx++); 
+        String blockName = bo.getBlock().getDisplayName();
+        
+        w.addThrottleCommand(new ThrottleSetting(0, "F0", "true", blockName));
+        if (_forward.isSelected()) {
+            w.addThrottleCommand(new ThrottleSetting(1000, "Forward", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));
+            w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(2500, "F2", "false", blockName));            
+        } else {
+            w.addThrottleCommand(new ThrottleSetting(1000, "Forward", "false", blockName));
+            w.addThrottleCommand(new ThrottleSetting(2000, "F3", "true", blockName));            
+            w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
+        }
+        
+        // estimate for blocks of zero length - an estimate of ramp length 
+        float defaultBlockLen = 6*_maxSpeed*_intervalTime/(_factor*_scale);
+        float totalLen = getTotalLength(defaultBlockLen);
+        float rampLength = getRampLength(totalLen);
+
+        float blockLen = bo.getPath().getLengthIn();    // length of path in current block
+        if (blockLen<=0) {
+            blockLen = defaultBlockLen;
+        }
+        blockLen /=2;
+        
+        // start train
+        float speedTime = 500;      // ms time to complete speed step from last block
+        float noopTime = 0;         // ms time for entry into next block
+        float curSpeed = _minSpeed;
+        // each speed step will last for _intervalTime ms
+        float curDistance = curSpeed*_intervalTime/(_factor*_scale);    // distance traveled in current block
+        float remRamp = rampLength - curDistance;
+        w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
+        if (log.isDebugEnabled()) log.debug("Start Ramp Up in block \""+blockName+ "\" to speed "+curSpeed+" in "
+                +(int)speedTime+"ms to reach curDistance= "+curDistance+", remRamp= "+remRamp+", blockLen= "+blockLen);
+         
+        while (remRamp > 0.0f) {       // ramp up loop
+            
+            while (curDistance < blockLen && remRamp > 0.0f) {             
+                float dist = (curSpeed + _minSpeed/2)*_intervalTime/(_factor*_scale);
+                if (curDistance + dist <= blockLen && remRamp > 0.0f) {
                     curDistance += dist;
-                    speed += delta;
-                    steps++;
+                    float remSpeed = _maxSpeed - curSpeed;
+                    if (0<remSpeed && remSpeed < _minSpeed) {                        
+                        curSpeed += remSpeed;
+                        remRamp = -1;   // insure we break out of loop
+                    } else {
+                        curSpeed += _minSpeed;                        
+                    }
                     remRamp -= dist;
+                    w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
+                    if (log.isDebugEnabled()) log.debug("Ramp Up in block \""+blockName+ "\" to speed "+curSpeed+" in "
+                           +(int)speedTime+"ms to reach curDistance= "+curDistance+", remRamp= "+remRamp);
+                    speedTime = _intervalTime;
                 } else {
                     break;
                 }
             }
-            if (steps>0) {
-                curSpeed += delta;
-                w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
-                if (steps>1) {
-                    curSpeed = rampSpeed(w, (int)_intervalTime, curSpeed, delta, blockName, steps-1);   //steps<=0 OK, no speed change
-                }
-                if (log.isDebugEnabled()) log.debug("Continue Ramp Up at "+(int)speedTime+"ms in block \""+blockName+
-                        "\" to speed "+curSpeed+" after "+steps+" steps to reach curDistance= "+curDistance+", remRamp= "+remRamp);
-                curSteps += steps;
+            
+            // Possible case where curDistance can exceed the length of a very short block that was just entered.
+            // Move to next block and adjust the distance times into that block
+            if (curDistance>=blockLen) {
+                noopTime = (blockLen)*(_factor*_scale)/curSpeed;  // time to next block
+                speedTime = (curDistance-blockLen)*(_factor*_scale)/curSpeed;                
+            } else {
+                noopTime = (blockLen-curDistance)*(_factor*_scale)/curSpeed;  // time to next block
+                speedTime = _intervalTime - noopTime;   // time to next speed change                
             }
             
-            // check if deceleration should start in this block
+            // break out here if deceleration is to be started in this block
             if (totalLen - blockLen <= rampLength) {
                 break;
             }
-
-            totalLen -= blockLen;
-            if (curSteps==_numSteps) {               
-                noopTime = (blockLen-curDistance)*(_factor*_scale)/(curSpeed);  // constant
-                speedTime = 0;
-                curDistance = 0;
-            } else {
-                noopTime = (blockLen-curDistance)*(_factor*_scale)/(curSpeed-delta); // accelerating
-                speedTime = _intervalTime - noopTime;
-                curDistance = (curSpeed-delta)*speedTime/(_factor*_scale);
-            }
-            if (log.isDebugEnabled()) log.debug("Leave Ramp Up block \""+blockName+"\" noopTime= "+noopTime+
-                    ", in distance="+curSpeed*noopTime/(_factor*_scale)+", blockLen= "+blockLen+
-                    ", remRamp= "+remRamp);
-            if (idx<orderSize-1) {
-                bo = orders.get(++idx);
+            if (nextIdx < orders.size()) {    // not the last block
+                curDistance = curSpeed*speedTime/(_factor*_scale);
+                totalLen -= blockLen;
+                if (log.isDebugEnabled()) log.debug("Leave RampUp block \""+blockName+"\" noopTime= "+noopTime+
+                        ", in distance="+curSpeed*noopTime/(_factor*_scale)+", blockLen= "+blockLen+
+                        ", remRamp= "+remRamp);
+                bo = orders.get(nextIdx++);
                 blockName = bo.getBlock().getDisplayName();
                 blockLen = bo.getPath().getLengthIn();
                 if (blockLen<=0)  {
                     blockLen = defaultBlockLen;
-                }
+                }                
                 w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
-                if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
-            } else {
-                break;
+                if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+
+                        noopTime+", blockLen= "+blockLen);
             }
         }
-        if (log.isDebugEnabled()) log.debug("Ramp Up done at block \""+blockName+"\" curSteps= "+curSteps+
-                ", curSpeed="+curSpeed+", blockLen= "+blockLen+" totalLen= "+totalLen+", rampLength= "+
+        if (log.isDebugEnabled()) log.debug("Ramp Up done at block \""+blockName+"\" curSpeed=" +
+                ""+curSpeed+", blockLen= "+blockLen+" totalLen= "+totalLen+", rampLength= "+
                 rampLength+", remRamp= "+remRamp);
             
         // run through mid route at max speed
-        while (idx<orderSize-1) {
+        while (nextIdx < orders.size()) {
             if (totalLen-blockLen <= rampLength) {
-                // Start ramp down in this block
+                // Start ramp down in current block
                 break;
             }
             totalLen -= blockLen;
@@ -741,10 +744,10 @@ public class NXFrame extends WarrantRoute {
             noopTime = (blockLen-curDistance)*(_factor*_scale)/curSpeed;                
             if (log.isDebugEnabled()) log.debug("Leave MidRoute block \""+blockName+"\" noopTime= "+noopTime+
                     ", curDistance="+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen);
-            bo = orders.get(++idx);
+            bo = orders.get(nextIdx++);
             blockName = bo.getBlock().getDisplayName();
             blockLen = bo.getPath().getLengthIn();
-            if (idx==orderSize-1) {
+            if (nextIdx == orders.size()) {
                 blockLen /= 2;
             } else if (blockLen<=0) {
                 blockLen = defaultBlockLen;
@@ -753,18 +756,17 @@ public class NXFrame extends WarrantRoute {
             if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
             curDistance = 0;
         }
-        if (log.isDebugEnabled()) log.debug("Begin Ramp Down at block \""+blockName+"\", curSteps= "+curSteps+
-                ", curDistance= "+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen+
-                ", rampLength= "+rampLength+" curSpeed= "+curSpeed);
         
         // Ramp down.  use negative delta
         remRamp = rampLength;
-        // constant speed
-        speedTime = (totalLen-curDistance-rampLength)*(_factor*_scale)/curSpeed;
-        curDistance = totalLen-rampLength;
-        while (curSteps>1) {
-            if (idx==orderSize-1) {
-                // at last block
+        speedTime = (totalLen-rampLength)*(_factor*_scale)/curSpeed;
+        curDistance = totalLen - rampLength;
+        if (log.isDebugEnabled()) log.debug("Begin Ramp Down at block \""+blockName+"\" curDistance= "
+                +curDistance+" SpeedTime= "+(int)speedTime+"ms, blockLen= "+blockLen+", totalLen= "+totalLen+
+                ", rampLength= "+rampLength+" curSpeed= "+curSpeed);
+        
+        while (curSpeed >= _minSpeed) {
+            if (nextIdx == orders.size()) { // at last block
                 if (_stageEStop.isSelected()) {
                     _eStop = true;
                     w.addThrottleCommand(new ThrottleSetting(0, "Speed", "-0.5", blockName));
@@ -774,52 +776,48 @@ public class NXFrame extends WarrantRoute {
                     _eStop = false;                 
                 }
             }
-            curSpeed -= delta;
-            curSteps--;
-            w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
-            int steps = 0;      // at least one speed change.  Maybe more.
-            float speed = curSpeed;
-            while (curSteps-steps > 1) {                
-                float dist = speed*_intervalTime/(_factor*_scale);
+            
+            while (curDistance < blockLen && curSpeed >= _minSpeed) {             
+                float dist = (curSpeed-_minSpeed/2)*_intervalTime/(_factor*_scale);
                 if (curDistance + dist <= blockLen) {
                     curDistance += dist;
-                    speed -= delta;
-                    steps++;
+                    curSpeed -= _minSpeed;
                     remRamp -= dist;
+                    w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
+                    if (log.isDebugEnabled()) log.debug("Ramp Down in block \""+blockName+"\" to speed "+
+                            curSpeed+" in "+(int)speedTime+"ms to reach curDistance= "+curDistance+" where blockLen= "+blockLen+", remRamp= "+remRamp);                        
+                    speedTime = _intervalTime;
                 } else {
                     break;
                 }
             }
-            curSteps -= steps;
-            curSpeed = rampSpeed(w, (int)_intervalTime, curSpeed, -delta, blockName, steps);    //steps==0 OK, no speed change                  
-            if (log.isDebugEnabled()) log.debug("Ramp Down after "+(int)speedTime+"ms in block \""+blockName+
-                    "\" to speed "+curSpeed+" and do "+steps+" steps to reach curDistance= "+curDistance+", remRamp= "+remRamp);
-            totalLen -= blockLen;
             
-            if (idx < orderSize-1) {
-                noopTime = (blockLen-curDistance)*(_factor*_scale)/(curSpeed+delta);
+            if (nextIdx < orders.size()) {
+                noopTime = (blockLen-curDistance)*(_factor*_scale)/curSpeed;
+                if (noopTime<0 || _intervalTime<noopTime) {
+                    log.error("Ramp Down NoOp time invalid! noopTime= "+noopTime);
+                    noopTime = _intervalTime/2;
+                }
                 speedTime = _intervalTime - noopTime;
+                totalLen -= blockLen;
                 if (log.isDebugEnabled()) log.debug("Leave RampDown block \""+blockName+"\" noopTime= "+noopTime+
                         ", in distance="+curSpeed*noopTime/(_factor*_scale)+", blockLen= "+blockLen+
                         ", totalLen= "+totalLen+", remRamp= "+remRamp);
-                bo = orders.get(++idx);
+                bo = orders.get(nextIdx++);
                 blockName = bo.getBlock().getDisplayName();
                 blockLen = bo.getPath().getLengthIn();
-                if (blockLen<=0 && idx<orderSize-1)  {
+                if (blockLen<=0)  {
                     blockLen = defaultBlockLen;
                 }
                 w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
                 if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
-                curDistance = (curSpeed)*speedTime/(_factor*_scale);
+                curDistance = curSpeed*speedTime/(_factor*_scale);
             } else {
                 if (blockLen==0) {
                     speedTime = 0;
-                } else {
-                    speedTime = _intervalTime;
                 }
                 break;                
             }
-            if (log.isDebugEnabled()) log.debug("In block \""+blockName+"\" curSteps= "+curSteps+", curDistance= "+curDistance);
         }
         if (log.isDebugEnabled()) {
             curDistance += curSpeed*speedTime/(_factor*_scale);
@@ -828,6 +826,7 @@ public class NXFrame extends WarrantRoute {
                     " after "+(int)_intervalTime+"ms. at curDistance= "+curDistance+", remRamp= "+remRamp);         
         }
         w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", "0.0", blockName));               
+        w.addThrottleCommand(new ThrottleSetting(500, "F1", "false", blockName));
         w.addThrottleCommand(new ThrottleSetting(1000, "F2", "true", blockName));
         w.addThrottleCommand(new ThrottleSetting(3000, "F2", "false", blockName));
         w.addThrottleCommand(new ThrottleSetting(1000, "F0", "false", blockName));
@@ -838,27 +837,6 @@ public class NXFrame extends WarrantRoute {
             WarrantTableFrame._defaultAddTracker = false;
         }*/
         return null;
-    }
-
-    /**
-     * 
-     * @param w - warrant
-     * @param time - time to wait to start ramp
-     * @param speed - throttle setting
-     * @param delta - throttle increment
-     * @param blockName - block  where command is issued
-     * @param incr - number of speed change increments
-     * @return - resulting throttle setting
-     */
-    private float rampSpeed(Warrant w, int time, float speed, float delta, String blockName, int incr) {
-        for (int i = 0; i < incr; i++) {
-            speed += delta;
-            if (speed >= 0) {
-                w.addThrottleCommand(new ThrottleSetting(time, "Speed", Float.toString(speed), blockName));                
-            }
-            time = (int)_intervalTime;  // after 1st wait time, use ramp increment time.
-        }
-        return speed;
     }
 
     private boolean makeAndRunWarrant() {

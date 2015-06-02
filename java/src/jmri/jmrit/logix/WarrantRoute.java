@@ -628,7 +628,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         for (int i=0; i<destNodes.size(); i++) {
             JRadioButton button = new JRadioButton(Bundle.getMessage("RouteSize", Integer.valueOf(i+1), 
-                    Integer.valueOf(destNodes.get(i).getLevel())) );
+                    Integer.valueOf(destNodes.get(i).getLevel())+1) );
             button.setActionCommand(""+i);
             button.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {

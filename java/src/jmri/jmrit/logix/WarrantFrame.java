@@ -1576,10 +1576,10 @@ public class WarrantFrame extends WarrantRoute {
                         try {
                             float speed = Float.parseFloat((String) value);
                             if (speed < 0.0f || 1.0f < speed) {
-                                msg = Bundle.getMessage("badSpeed");
+                                msg = Bundle.getMessage("throttlesetting", speed);
                             }
                         } catch (Exception e) {
-                            msg = Bundle.getMessage("badSpeed");
+                            msg = Bundle.getMessage("throttlesetting", value);
                         }
                         ts.setValue((String) value);
                     } else if ("SPEEDSTEP".equals(cmd)) {

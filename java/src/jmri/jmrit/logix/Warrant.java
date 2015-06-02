@@ -614,6 +614,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             _student.dispose();     // releases throttle
             _student = null;
         }
+        _calibrater = null;                
         if (_engineer != null) {
             if (abort) {
                 _engineer.abort();

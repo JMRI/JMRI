@@ -671,7 +671,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         float maxRampLength = 0.0f;
         speed = _maxSpeed;
         while (speed>=0.0f) {
-            maxRampLength += (speed)*time/scale;
+            maxRampLength += (speed-delta/2)*time/scale;
             speed -= delta;
         }
         if (log.isDebugEnabled()) log.debug("_lookAheadLen(): max throttle= "+_maxSpeed+" maxRampLength= "+maxRampLength);
