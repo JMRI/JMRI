@@ -3598,7 +3598,11 @@ public class Train implements java.beans.PropertyChangeListener {
             _leg3Model = a.getValue();
         }
         if ((a = e.getAttribute(Xml.REQUIRES)) != null) {
-            _requires = Integer.parseInt(a.getValue());
+            try {
+                _requires = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Requires ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
         }
         if ((a = e.getAttribute(Xml.CABOOSE_ROAD)) != null) {
             _cabooseRoad = a.getValue();
@@ -3610,10 +3614,18 @@ public class Train implements java.beans.PropertyChangeListener {
             _leg3CabooseRoad = a.getValue();
         }
         if ((a = e.getAttribute(Xml.LEG2_OPTIONS)) != null) {
-            _leg2Options = Integer.parseInt(a.getValue());
+            try {
+                _leg2Options = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Leg 2 options ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
         }
         if ((a = e.getAttribute(Xml.LEG3_OPTIONS)) != null) {
-            _leg3Options = Integer.parseInt(a.getValue());
+            try {
+                _leg3Options = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Leg 3 options ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
         }
         if ((a = e.getAttribute(Xml.BUILD_NORMAL)) != null) {
             _buildNormal = a.getValue().equals(Xml.TRUE);
@@ -3667,7 +3679,11 @@ public class Train implements java.beans.PropertyChangeListener {
             _statusTerminatedDate = a.getValue();
         }
         if ((a = e.getAttribute(Xml.REQUESTED_CARS)) != null) {
-            _statusCarsRequested = Integer.parseInt(a.getValue());
+            try {
+                _statusCarsRequested = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Status cars requested ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
         }
         if ((a = e.getAttribute(Xml.STATUS)) != null && e.getAttribute(Xml.STATUS_CODE) == null) {
             String status = a.getValue();
@@ -3692,7 +3708,11 @@ public class Train implements java.beans.PropertyChangeListener {
             }
         }
         if ((a = e.getAttribute(Xml.STATUS_CODE)) != null) {
-            _statusCode = Integer.parseInt(a.getValue());
+            try {
+                _statusCode = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Status code ({}) isn't a valid number for train ({})", a.getValue(), getName());
+            }
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());
