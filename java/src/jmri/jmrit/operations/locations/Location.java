@@ -1171,16 +1171,28 @@ public class Location implements java.beans.PropertyChangeListener {
             _name = a.getValue();
         }
         if ((a = e.getAttribute(Xml.OPS)) != null) {
-            _locationOps = Integer.parseInt(a.getValue());
+            try {
+                _locationOps = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Location ops isn't a vaild number for location {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.DIR)) != null) {
-            _trainDir = Integer.parseInt(a.getValue());
+            try {
+                _trainDir = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Train directions isn't a vaild number for location {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.SWITCH_LIST)) != null) {
             _switchList = (a.getValue().equals(Xml.TRUE));
         }
         if ((a = e.getAttribute(Xml.SWITCH_LIST_STATE)) != null) {
-            _switchListState = Integer.parseInt(a.getValue());
+            try {
+                _switchListState = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Switch list state isn't a vaild number for location {}", getName());
+            }
             if (getSwitchListState() == SW_PRINTED) {
                 setStatus(PRINTED);
             }
@@ -1191,21 +1203,25 @@ public class Location implements java.beans.PropertyChangeListener {
         // load train icon coordinates
         Attribute x;
         Attribute y;
-        if ((x = e.getAttribute(Xml.EAST_TRAIN_ICON_X)) != null
-                && (y = e.getAttribute(Xml.EAST_TRAIN_ICON_Y)) != null) {
-            setTrainIconEast(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
-        }
-        if ((x = e.getAttribute(Xml.WEST_TRAIN_ICON_X)) != null
-                && (y = e.getAttribute(Xml.WEST_TRAIN_ICON_Y)) != null) {
-            setTrainIconWest(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
-        }
-        if ((x = e.getAttribute(Xml.NORTH_TRAIN_ICON_X)) != null
-                && (y = e.getAttribute(Xml.NORTH_TRAIN_ICON_Y)) != null) {
-            setTrainIconNorth(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
-        }
-        if ((x = e.getAttribute(Xml.SOUTH_TRAIN_ICON_X)) != null
-                && (y = e.getAttribute(Xml.SOUTH_TRAIN_ICON_Y)) != null) {
-            setTrainIconSouth(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
+        try {
+            if ((x = e.getAttribute(Xml.EAST_TRAIN_ICON_X)) != null
+                    && (y = e.getAttribute(Xml.EAST_TRAIN_ICON_Y)) != null) {
+                setTrainIconEast(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
+            }
+            if ((x = e.getAttribute(Xml.WEST_TRAIN_ICON_X)) != null
+                    && (y = e.getAttribute(Xml.WEST_TRAIN_ICON_Y)) != null) {
+                setTrainIconWest(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
+            }
+            if ((x = e.getAttribute(Xml.NORTH_TRAIN_ICON_X)) != null
+                    && (y = e.getAttribute(Xml.NORTH_TRAIN_ICON_Y)) != null) {
+                setTrainIconNorth(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
+            }
+            if ((x = e.getAttribute(Xml.SOUTH_TRAIN_ICON_X)) != null
+                    && (y = e.getAttribute(Xml.SOUTH_TRAIN_ICON_Y)) != null) {
+                setTrainIconSouth(new Point(Integer.parseInt(x.getValue()), Integer.parseInt(y.getValue())));
+            }
+        } catch (NumberFormatException nfe) {
+            log.error("Train icon coordinates aren't vaild for location {}", getName());
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());

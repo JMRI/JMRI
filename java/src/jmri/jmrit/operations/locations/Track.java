@@ -2212,16 +2212,33 @@ public class Track {
             _trackType = a.getValue();
         }
         if ((a = e.getAttribute(Xml.LENGTH)) != null) {
-            _length = Integer.parseInt(a.getValue());
+            try {
+                _length = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Track length isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.MOVES)) != null) {
-            _moves = Integer.parseInt(a.getValue());
+            try {
+                _moves = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Track moves isn't a vaild number for track {}", getName());
+            }
+
         }
         if ((a = e.getAttribute(Xml.BLOCKING_ORDER)) != null) {
-            _blockingOrder = Integer.parseInt(a.getValue());
+            try {
+                _blockingOrder = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Track blocking order isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.DIR)) != null) {
-            _trainDir = Integer.parseInt(a.getValue());
+            try {
+                _trainDir = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Track service direction isn't a vaild number for track {}", getName());
+            }
         }
         // old way of reading track comment, see comments below for new format
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
@@ -2385,23 +2402,43 @@ public class Track {
             _scheduleItemId = a.getValue();
         }
         if ((a = e.getAttribute(Xml.ITEM_COUNT)) != null) {
-            _scheduleCount = Integer.parseInt(a.getValue());
+            try {
+                _scheduleCount = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Schedule count isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.FACTOR)) != null) {
-            _reservationFactor = Integer.parseInt(a.getValue());
+            try {
+                _reservationFactor = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Reservation factor isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.SCHEDULE_MODE)) != null) {
-            _mode = Integer.parseInt(a.getValue());
+            try {
+                _mode = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Schedule mode isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.ALTERNATIVE)) != null) {
             _alternateTrackId = a.getValue();
         }
 
         if ((a = e.getAttribute(Xml.LOAD_OPTIONS)) != null) {
-            _loadOptions = Integer.parseInt(a.getValue());
+            try {
+                _loadOptions = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Load options isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.BLOCK_OPTIONS)) != null) {
-            _blockOptions = Integer.parseInt(a.getValue());
+            try {
+                _blockOptions = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Block options isn't a vaild number for track {}", getName());
+            }
         }
         if ((a = e.getAttribute(Xml.ORDER)) != null) {
             _order = a.getValue();
@@ -2409,13 +2446,20 @@ public class Track {
         if ((a = e.getAttribute(Xml.POOL)) != null) {
             setPool(getLocation().addPool(a.getValue()));
             if ((a = e.getAttribute(Xml.MIN_LENGTH)) != null) {
-                _minimumLength = Integer.parseInt(a.getValue());
+                try {
+                    _minimumLength = Integer.parseInt(a.getValue());
+                } catch (NumberFormatException nfe) {
+                    log.error("Minimum pool length isn't a vaild number for track {}", getName());
+                }
             }
         }
         if ((a = e.getAttribute(Xml.IGNORE_USED_PERCENTAGE)) != null) {
-            _ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
+            try {
+                _ignoreUsedLengthPercentage = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Ignore used percentage isn't a vaild number for track {}", getName());
+            }
         }
-
         if ((a = e.getAttribute(Xml.TRACK_DESTINATION_OPTION)) != null) {
             _destinationOption = a.getValue();
         }
