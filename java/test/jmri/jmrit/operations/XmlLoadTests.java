@@ -56,22 +56,6 @@ public class XmlLoadTests extends TestCase {
       */
      private void runTest(String directory,int locs,int routes,int trains,
                      int cars, int engines) {
-         // clear the operations directory name.
-         OperationsSetupXml.setOperationsDirectoryName("");
-
-         //dispose of any existing managers
-         EngineManager.instance().dispose();
-         CarManager.instance().dispose();
-         TrainManager.instance().dispose();
-         RouteManager.instance().dispose();
-         LocationManager.instance().dispose();
-         OperationsSetupXml.instance().dispose();
-         EngineManagerXml.instance().dispose();
-         CarManagerXml.instance().dispose();
-         TrainManagerXml.instance().dispose();
-         RouteManagerXml.instance().dispose();
-         LocationManagerXml.instance().dispose();
-
          Assert.assertEquals("Before read Number of Locations",0,LocationManager.instance().getList().size());
          Assert.assertEquals("Before read Number of Routes",0,RouteManager.instance().getRoutesByNameList().size());
          Assert.assertEquals("Before read Number of Trains",0,TrainManager.instance().getTrainsByNameList().size());
@@ -79,20 +63,20 @@ public class XmlLoadTests extends TestCase {
          Assert.assertEquals("Before read Number of Engines",0,EngineManager.instance().getList().size());
 
          OperationsSetupXml.instance();
-          OperationsSetupXml.setOperationsDirectoryName(directory);
+          OperationsSetupXml.setOperationsDirectoryName(directory.substring(0,directory.length()-1));
          try {
             // use readFile, because load wraps readFile with a try catch.
-            OperationsSetupXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + 
+            OperationsSetupXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + "/" + 
                   OperationsSetupXml.instance().getOperationsFileName());
-            LocationManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + 
+            LocationManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() +  "/" +
                   LocationManagerXml.instance().getOperationsFileName());
-            RouteManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + 
+            RouteManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() +  "/" +
                   RouteManagerXml.instance().getOperationsFileName());
-            TrainManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + 
+            TrainManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() +  "/" +
                   TrainManagerXml.instance().getOperationsFileName());
-            CarManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + 
+            CarManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() +  "/" +
                   CarManagerXml.instance().getOperationsFileName());
-            EngineManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() + 
+            EngineManagerXml.instance().readFile(OperationsSetupXml.getOperationsDirectoryName() +  "/" +
                   EngineManagerXml.instance().getOperationsFileName());
          } catch(Exception e){
            Assert.fail("Exception reading operations files");
@@ -105,25 +89,8 @@ public class XmlLoadTests extends TestCase {
          Assert.assertEquals("Number of Cars",cars,CarManager.instance().getList().size());
          Assert.assertEquals("Number of Engines",engines,EngineManager.instance().getList().size());
 
-         EngineManager.instance().dispose();
-         CarManager.instance().dispose();
-         TrainManager.instance().dispose();
-         RouteManager.instance().dispose();
-         LocationManager.instance().dispose();
-         OperationsSetupXml.instance().dispose();
-         EngineManagerXml.instance().dispose();
-         CarManagerXml.instance().dispose();
-         TrainManagerXml.instance().dispose();
-         RouteManagerXml.instance().dispose();
-         LocationManagerXml.instance().dispose();
-
-         // clear the operations directory name.
-         OperationsSetupXml.setOperationsDirectoryName("");
      }
    
-    
-
-
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
@@ -143,6 +110,24 @@ public class XmlLoadTests extends TestCase {
                        // do nothing with registered shutdown tasks for testing.
                     }
                  });
+    
+     // clear the operations directory name.
+         OperationsSetupXml.setOperationsDirectoryName("operations");
+         OperationsSetupXml.setFileLocation("temp"+ java.io.File.separator);
+
+         //dispose of any existing managers
+         EngineManager.instance().dispose();
+         CarManager.instance().dispose();
+         TrainManager.instance().dispose();
+         RouteManager.instance().dispose();
+         LocationManager.instance().dispose();
+         OperationsSetupXml.instance().dispose();
+         EngineManagerXml.instance().dispose();
+         CarManagerXml.instance().dispose();
+         TrainManagerXml.instance().dispose();
+         RouteManagerXml.instance().dispose();
+         LocationManagerXml.instance().dispose();
+
 
     }
 
@@ -174,6 +159,16 @@ public class XmlLoadTests extends TestCase {
        TrainManager.instance().dispose();
        RouteManager.instance().dispose();
        LocationManager.instance().dispose();
+       OperationsSetupXml.instance().dispose();
+       EngineManagerXml.instance().dispose();
+       CarManagerXml.instance().dispose();
+       TrainManagerXml.instance().dispose();
+       RouteManagerXml.instance().dispose();
+       LocationManagerXml.instance().dispose();
+
+       // clear the operations directory name.
+       OperationsSetupXml.setOperationsDirectoryName("operations");
+         OperationsSetupXml.setFileLocation("temp"+ java.io.File.separator);
 
        super.tearDown();
     }
