@@ -449,13 +449,25 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
             }
         }
         if ((a = e.getAttribute(Xml.MAX_TRAIN_LENGTH)) != null) {
-            _maxTrainLength = Integer.parseInt(a.getValue());
+            try {
+                _maxTrainLength = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) maximum train length ({}) isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.GRADE)) != null) {
-            _grade = Double.parseDouble(a.getValue());
+            try {
+                _grade = Double.parseDouble(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) grade ({}) isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.MAX_CAR_MOVES)) != null) {
-            _maxCarMoves = Integer.parseInt(a.getValue());
+            try {
+                _maxCarMoves = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) maximum car moves ({}) isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.RANDOM_CONTROL)) != null) {
             _randomControl = a.getValue();
@@ -467,19 +479,35 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
             _drops = a.getValue().equals(Xml.YES);
         }
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
-            _wait = Integer.parseInt(a.getValue());
+            try {
+                _wait = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) wait ({}) isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.DEPART_TIME)) != null) {
             _departureTime = a.getValue();
         }
         if ((a = e.getAttribute(Xml.TRAIN_ICON_X)) != null) {
-            _trainIconX = Integer.parseInt(a.getValue());
+            try {
+                _trainIconX = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) icon x ({}) isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.TRAIN_ICON_Y)) != null) {
-            _trainIconY = Integer.parseInt(a.getValue());
+            try {
+                _trainIconY = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) icon y ({}) isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.SEQUENCE_ID)) != null) {
-            _sequenceId = Integer.parseInt(a.getValue());
+            try {
+                _sequenceId = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException ee) {
+                log.error("Route location ({}) sequence id isn't a valid number", getName(), a.getValue());
+            }
         }
         if ((a = e.getAttribute(Xml.COMMENT)) != null) {
             _comment = OperationsXml.convertFromXmlComment(a.getValue());

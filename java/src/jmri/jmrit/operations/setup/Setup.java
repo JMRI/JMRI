@@ -2008,35 +2008,55 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("direction: {}", dir);
                 }
-                setTrainDirection(Integer.parseInt(dir));
+                try {
+                    setTrainDirection(Integer.parseInt(dir));
+                } catch (NumberFormatException ee) {
+                    log.error("Train direction ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAIN_LENGTH)) != null) {
                 String length = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("Max train length: {}", length);
                 }
-                setMaxTrainLength(Integer.parseInt(length));
+                try {
+                    setMaxTrainLength(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Train maximum length ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.MAX_ENGINES)) != null) {
                 String size = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("Max number of engines: {}", size);
                 }
-                setMaxNumberEngines(Integer.parseInt(size));
+                try {
+                    setMaxNumberEngines(Integer.parseInt(size));
+                } catch (NumberFormatException ee) {
+                    log.error("Maximum number of engines ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.HPT)) != null) {
                 String value = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("HPT: {}", value);
                 }
-                setHorsePowerPerTon(Integer.parseInt(value));
+                try {
+                    setHorsePowerPerTon(Integer.parseInt(value));
+                } catch (NumberFormatException ee) {
+                    log.error("Train HPT ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SCALE)) != null) {
                 String scale = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("scale: " + scale);
                 }
-                setScale(Integer.parseInt(scale));
+                try {
+                    setScale(Integer.parseInt(scale));
+                } catch (NumberFormatException ee) {
+                    log.error("Scale ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.CAR_TYPES)) != null) {
                 String types = a.getValue();
@@ -2050,14 +2070,22 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("switchTime: {}", minutes);
                 }
-                setSwitchTime(Integer.parseInt(minutes));
+                try {
+                    setSwitchTime(Integer.parseInt(minutes));
+                } catch (NumberFormatException ee) {
+                    log.error("Switch time ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.TRAVEL_TIME)) != null) {
                 String minutes = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("travelTime: {}", minutes);
                 }
-                setTravelTime(Integer.parseInt(minutes));
+                try {
+                    setTravelTime(Integer.parseInt(minutes));
+                } catch (NumberFormatException ee) {
+                    log.error("Travel time ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.SETTINGS).getAttribute(Xml.SHOW_VALUE)) != null) {
                 String enable = a.getValue();
@@ -2386,9 +2414,12 @@ public class Setup {
             if (log.isDebugEnabled()) {
                 log.debug("fontsize: " + size);
             }
-            setManifestFontSize(Integer.parseInt(size));
+            try {
+                setManifestFontSize(Integer.parseInt(size));
+            } catch (NumberFormatException ee) {
+                log.error("Manifest font size ({}) isn't a valid number", a.getValue());
+            }
         }
-
         if ((operations.getChild(Xml.PAGE_ORIENTATION) != null)) {
             if ((a = operations.getChild(Xml.PAGE_ORIENTATION).getAttribute(Xml.MANIFEST)) != null) {
                 String orientation = a.getValue();
@@ -2441,21 +2472,33 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("tab 1 length: " + length);
                 }
-                setTab1length(Integer.parseInt(length));
+                try {
+                    setTab1length(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Tab 1 length ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.TAB2_LENGTH)) != null) {
                 String length = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("tab 2 length: " + length);
                 }
-                setTab2length(Integer.parseInt(length));
+                try {
+                    setTab2length(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Tab 2 length ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.TAB).getAttribute(Xml.TAB3_LENGTH)) != null) {
                 String length = a.getValue();
                 if (log.isDebugEnabled()) {
                     log.debug("tab 3 length: " + length);
                 }
-                setTab3length(Integer.parseInt(length));
+                try {
+                    setTab3length(Integer.parseInt(length));
+                } catch (NumberFormatException ee) {
+                    log.error("Tab 3 length ({}) isn't a valid number", a.getValue());
+                }
             }
         }
         if ((operations.getChild(Xml.MANIFEST) != null)) {
@@ -2694,7 +2737,11 @@ public class Setup {
                 if (log.isDebugEnabled()) {
                     log.debug("build font size: " + size);
                 }
-                setBuildReportFontSize(Integer.parseInt(size));
+                try {
+                    setBuildReportFontSize(Integer.parseInt(size));
+                } catch (NumberFormatException ee) {
+                    log.error("Build report font size ({}) isn't a valid number", a.getValue());
+                }
             }
             if ((a = operations.getChild(Xml.BUILD_REPORT).getAttribute(Xml.ALWAYS_PREVIEW)) != null) {
                 String enable = a.getValue();
