@@ -136,6 +136,17 @@ public abstract class OperationsXml extends XmlFile {
         return fileLocation;
     }
 
+    /**
+     * Set path to location of Operations files.
+     * <P>
+     * Default is in the user's files path, but can be set to anything.
+     *
+     * @param location path to file, including trailing file separator.
+     */
+    public static void setFileLocation(String location) {
+        fileLocation = location;
+    }
+
     private static String fileLocation = FileUtil.getUserFilesPath();
 
     /**
