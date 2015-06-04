@@ -763,7 +763,11 @@ public class Car extends RollingStock {
         }
 
         if ((a = e.getAttribute(Xml.WAIT)) != null) {
-            _wait = Integer.parseInt(a.getValue());
+            try {
+                _wait = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Wait count ({}) for car ({}) isn't a valid number!", a.getValue(), toString());
+            }
         }
         if ((a = e.getAttribute(Xml.PICKUP_SCHEDULE_ID)) != null) {
             _pickupScheduleId = a.getValue();
@@ -775,7 +779,11 @@ public class Car extends RollingStock {
             _nextLoadName = a.getValue();
         }
         if ((a = e.getAttribute(Xml.NEXT_WAIT)) != null) {
-            _nextWait = Integer.parseInt(a.getValue());
+            try {
+                _nextWait = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Next wait count ({}) for car ({}) isn't a valid number!", a.getValue(), toString());
+            }
         }
         if ((a = e.getAttribute(Xml.NEXT_PICKUP_SCHEDULE_ID)) != null) {
             _nextPickupScheduleId = a.getValue();

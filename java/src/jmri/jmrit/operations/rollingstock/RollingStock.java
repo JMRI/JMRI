@@ -1154,7 +1154,11 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         setDestination(destination, track, true); // force destination
 
         if ((a = e.getAttribute(Xml.MOVES)) != null) {
-            _moves = Integer.parseInt(a.getValue());
+            try {
+                _moves = Integer.parseInt(a.getValue());
+            } catch (NumberFormatException nfe) {
+                log.error("Move count ({}) for rollingstock ({}) isn't a valid number!", a.getValue(), toString());
+            }
         }
         if ((a = e.getAttribute(Xml.LAST_LOCATION_ID)) != null) {
             _lastLocationId = a.getValue();
