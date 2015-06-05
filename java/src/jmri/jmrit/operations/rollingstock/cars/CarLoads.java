@@ -228,6 +228,10 @@ public class CarLoads extends RollingStockAttribute {
                 box.addItem(name);
             }
         }
+        // must return with at least one load name
+        if (box.getItemCount() == 0) {
+            box.addItem(getDefaultEmptyName());
+        }
     }
 
     public void replaceName(String type, String oldName, String newName) {
@@ -464,9 +468,14 @@ public class CarLoads extends RollingStockAttribute {
             List<CarLoad> loads = getSortedList(carType);
             Element xmlLoad = new Element(Xml.LOAD);
             xmlLoad.setAttribute(Xml.TYPE, carType);
-            // only store loads that aren't the defaults
-            boolean mustStore = false;
+            boolean mustStore = false;  // only store loads that aren't the defaults
             for (CarLoad load : loads) {
+                // don't store the defaults / low priority / no comment
+                if ((load.getName().equals(getDefaultEmptyName()) || load.getName().equals(getDefaultLoadName()))
+                        && load.getPriority().equals(CarLoad.PRIORITY_LOW)
+                        && load.getPickupComment().equals(CarLoad.NONE) 
+                        && load.getDropComment().equals(CarLoad.NONE))
+                    continue;
                 Element xmlCarLoad = new Element(Xml.CAR_LOAD);
                 xmlCarLoad.setAttribute(Xml.NAME, load.getName());
                 if (!load.getPriority().equals(CarLoad.PRIORITY_LOW)) {
@@ -480,11 +489,6 @@ public class CarLoads extends RollingStockAttribute {
                 if (!load.getDropComment().equals(CarLoad.NONE)) {
                     xmlCarLoad.setAttribute(Xml.DROP_COMMENT, load.getDropComment());
                     mustStore = true; // must store
-                }
-                // don't store the defaults / low priority / no comment
-                if (!mustStore
-                        && (load.getName().equals(getDefaultEmptyName()) || load.getName().equals(getDefaultLoadName()))) {
-                    continue;
                 }
                 xmlCarLoad.setAttribute(Xml.LOAD_TYPE, load.getLoadType());
                 xmlLoad.addContent(xmlCarLoad);
