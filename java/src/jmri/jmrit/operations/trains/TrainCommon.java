@@ -794,8 +794,6 @@ public class TrainCommon {
      * @param file
      * @param carList
      * @param car
-     * @param rl
-     * @param rld
      * @param isManifest
      */
     protected void pickupUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
@@ -822,7 +820,6 @@ public class TrainCommon {
      * @param file
      * @param carList
      * @param car
-     * @param rl
      * @param isManifest
      */
     protected void setoutUtilityCars(PrintWriter file, List<Car> carList, Car car, boolean isManifest) {
@@ -952,8 +949,6 @@ public class TrainCommon {
      * @param format
      * @param carList
      * @param car
-     * @param rl
-     * @param rld
      * @param isPickup
      * @return 0 if the car type has already been processed
      */

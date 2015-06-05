@@ -87,7 +87,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
     /**
      * Request a location associated with a given reporter.
      *
-     * @param Reporter object associated with desired location.
+     * @param r Reporter object associated with desired location.
      * @return requested Location object or null if none exists 
      */
     public Location getLocationByReporter(Reporter r) {

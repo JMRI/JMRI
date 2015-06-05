@@ -619,8 +619,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     /**
      * Note if speedType specifies a speed greater than the commanded speed, negative time is returned.
      * In this case caller must not ramp speed up but just continue at the commanded speed.
-     * @param hiSpeed commanded speed at start of ramp
-     * @param speedType speed name to end ramp
+     * @param fromSpeedType commanded speed at start of ramp
+     * @param toSpeedType speed name to end ramp
      * @return time required for speed change
      */
     protected int rampTimeForSpeedChange(String fromSpeedType, String toSpeedType) {
@@ -639,8 +639,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     /**
      * Compute ramp length. Units depend on units of warrant's throttle factor
-     * @param hiSpeed throttle setting
-     * @param loSpeed throttle setting
      * @return length required for speed change
      */
     protected float lookAheadLen() {
