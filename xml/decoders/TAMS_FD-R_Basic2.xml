@@ -1132,7 +1132,7 @@
         <label xml:lang="fr">AUX 3 phase avant ON</label>
         <label xml:lang="de">AUX 3 Dauer bis zum Einschalten</label>
       </variable>
-	  <variable item="AUX 2 ON phase" CV="63" tooltip="CV63" default="0">
+	  <variable item="AUX 3 ON phase" CV="63" tooltip="CV63" default="0">
         <decVal min="0" max="255"/>
         <label>AUX 3 ON phase</label>
         <label xml:lang="fr">AUX 3 phase ON</label>
