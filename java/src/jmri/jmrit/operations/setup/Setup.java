@@ -136,7 +136,7 @@ public class Setup {
     public static final String LOCATION = Bundle.getMessage("Location");
     public static final String CONSIST = Bundle.getMessage("Consist");
     public static final String KERNEL = Bundle.getMessage("Kernel");
-    public static final String KERNEL_LENGTH = Bundle.getMessage("Kernel_Length");
+    public static final String KERNEL_SIZE = Bundle.getMessage("Kernel_Size");
     public static final String OWNER = Bundle.getMessage("Owner");
     public static final String RWE = Bundle.getMessage("RWE");
     public static final String COMMENT = Bundle.getMessage("Comment");
@@ -176,7 +176,7 @@ public class Setup {
     public static final String FEET = Bundle.getMessage("Feet");
     public static final String METER = Bundle.getMessage("Meter");
 
-    private static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_LENGTH, OWNER,
+    private static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
         TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
         PICKUP_COMMENT, RWE};
     private static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
@@ -3013,7 +3013,7 @@ public class Setup {
     }
 
     private static final String[] attributtes = {"Road", "Number", "Type", "Model", "Length", "Load", "Color",
-            "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Kernel_Length", "Owner",
+            "Track", "Destination", "Dest&Track", "Final_Dest", "FD&Track", "Location", "Consist", "Kernel", "Kernel_Size", "Owner",
             "RWE", "Comment", "SetOut_Msg", "PickUp_Msg", "Hazardous", "Tab"};
 
     /**
