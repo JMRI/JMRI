@@ -18,8 +18,7 @@
 </HEAD>
 
 <BODY>
-<!--#includommunication est active.
-e virtual="/Header" -->
+<!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
