@@ -1314,7 +1314,7 @@ public class TrainCommon {
             if (car.getKernel() != null && car.getKernel().isLead(car)) {
                 return " " + padAndTruncateString(Integer.toString(car.getKernel().getSize()), 2);
             } else {
-                return "   "; // assumes that kernel length is 99 or less
+                return "   "; // assumes that kernel size is 99 or less
             }
        } else if (attribute.equals(Setup.RWE)) {
             if (!car.getReturnWhenEmptyDestName().equals(Car.NONE)) {
@@ -1630,7 +1630,7 @@ public class TrainCommon {
                         .getKernelMaxNameLength())
                         + " ");
             } else if (attribute.equals(Setup.KERNEL_SIZE)) {
-                buf.append("   "); // assume kernel length is 99 or less
+                buf.append("   "); // assume kernel size is 99 or less
             } else if (attribute.equals(Setup.LOAD)) {
                 buf.append(padAndTruncateString(TrainManifestHeaderText.getStringHeader_Load(), CarLoads.instance()
                         .getMaxNameLength())

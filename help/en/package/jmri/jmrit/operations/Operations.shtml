@@ -551,7 +551,7 @@
    <p>Copies of the operations files can be made to provide backups for both error recovery and
     for archiving. The data files used for operations is a set of six files and they are referred to
     as a "Backup Set". OperationsPro&trade; has two places that it uses to store these backup sets, referred
-    to as the "Automatic Backup Store" and the "Regular Backup Store". These are stored under the
+    to as the "Automatic Backup Store" and the "Manual Backup Store". These are stored under the
     JMRI "operations" directory in your home directory as "autobackups" and "backups". The purpose
     of the automatic backups is to make a copy of the files for "safe keeping" before changes are
     made to the main operations files. This way, if anything gets messed up, there is a copy of the
@@ -560,15 +560,15 @@
     on the Settings page), and right before a Restore, Reset Database, or Load Demo Files operation
     is done.</p>
 
-   <p>Regular backups are done only when the user requests it by either clicking the "Backup"
+   <p>Manual backups are done only when the user requests it by either clicking the "Backup"
     button on the Settings page, or by selecting the "Backup" option from the "Tools" menu of the
-    Operations Settings window. The Backup button will copy the files to the Regular Backup Store
+    Operations Settings window. The Backup button will copy the files to the Manual Backup Store
     under the user's JMRI home directory as described above, while the Backup menu option will allow
     the user to specify any directory. This can be useful when making an archive copy that you want
     to move somewhere else for safekeeping.</p>
 
    <p>All backup sets have a default name based on the date the backup was done, plus a sequence
-    number, but this name can be changed to anything the user wants for Regular Backups. It is
+    number, but this name can be changed to anything the user wants for Manual Backups. It is
     recommended that the names of backup sets made for archive purposes be given a meaningful name,
     especially if you are managing data for more than one railroad. For example, if today is August
     29, 2012, the program will create a backup directory named "2012_08_29_00".</p>
@@ -580,7 +580,7 @@
    <p>Note that restoring a Backup Set will overwrite the current operations files, therefore an
     Automatic Backup is done just before the restore copies the files, "just in case".</p>
 
-   <p>Backup Sets can be restored from either the Automatic Store or the Regular Store using the
+   <p>Backup Sets can be restored from either the Automatic Store or the Manual Store using the
     "Restore" button on the Settings page. Alternatively, the "Restore" menu option in the "Tools"
     menu of the Operations Settings page allows you to navigate to any directory, and would be used
     to restore an archived Backup Set.</p>
