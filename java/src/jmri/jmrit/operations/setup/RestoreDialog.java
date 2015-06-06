@@ -78,16 +78,11 @@ public class RestoreDialog extends JDialog {
             mainPanel.add(contentPanel, BorderLayout.NORTH);
 
             {
-                JLabel captionLabel = new JLabel(Bundle.getMessage("RestoreDialog.label.text"));
-                captionLabel.setBorder(new EmptyBorder(5, 0, 5, 0));
-                contentPanel.add(captionLabel);
-            }
-            {
                 JPanel panel = new JPanel();
                 panel.setAlignmentX(Component.LEFT_ALIGNMENT);
                 panel.setLayout(new FlowLayout(FlowLayout.LEFT));
                 panel.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), // NOI18N
-                        "From:", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))); // NOI18N
+                Bundle.getMessage("RestoreDialog.label.text"), TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0))); // NOI18N
 
                 contentPanel.add(panel);
                 ButtonGroup fromGroup = new ButtonGroup();
@@ -154,16 +149,6 @@ public class RestoreDialog extends JDialog {
                 });
                 buttonPane.add(cancelButton);
             }
-//			{
-//				helpButton = new JButton(Bundle.getString"BackupDialog.helpButton.text"));
-//				helpButton.setEnabled(false);
-//				helpButton.addActionListener(new ActionListener() {
-//					public void actionPerformed(ActionEvent arg0) {
-//						do_helpButton_actionPerformed(arg0);
-//					}
-//				});
-//				buttonPane.add(helpButton);
-//			}
         }
 
         // Start out with Default backups
@@ -244,10 +229,10 @@ public class RestoreDialog extends JDialog {
 
             Apps.handleRestart();
         } // These may need to be enhanced to show the backup store being used,
-        // auto or default.
+          // auto or default.
         catch (IOException ex) {
             ExceptionContext context = new ExceptionContext(ex, Bundle.getMessage("RestoreDialog.restoring")
-                    + " " + setName, "Hint about checking valid names, etc.");	// NOI18N
+                    + " " + setName, "Hint about checking valid names, etc."); // NOI18N
             new ExceptionDisplayFrame(context);
 
         } catch (Exception ex) {
@@ -265,7 +250,7 @@ public class RestoreDialog extends JDialog {
      * Automatic or the Default backup store.
      */
     private void loadComboBox() {
-		// Get the Backup Sets from the currently selected backup store.
+        // Get the Backup Sets from the currently selected backup store.
         // Called after the radio button selection has changed
 
         // Disable the Restore button in case there is nothing loaded into the ComboBox
