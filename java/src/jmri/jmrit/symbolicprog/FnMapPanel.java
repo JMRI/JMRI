@@ -169,7 +169,6 @@ public class FnMapPanel extends JPanel {
             for (String fnVar : fnVarList) {
                 String fnNameString = "F" + ((iFn == -1) ? "L" : String.valueOf(iFn)) + fnVar;
                 boolean rowIsUsed = false;
-                String customName = null;
                 for (int iOut = 0; iOut < numOut; iOut++) {
                     // if column is not suppressed by blank headers
                     if (!outName[iOut].equals("") || !outLabel[iOut].equals("")) {
@@ -196,14 +195,6 @@ public class FnMapPanel extends JPanel {
                                 j.setToolTipText(PaneProgPane.addCvDescription((fnNameString + " "
                                         + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapControlsOutput") + " "
                                         + outName[iOut] + " " + outLabel[iOut]), var.getCvDescription(), var.getMask()));
-                                String temp = _varModel.getLabel(iVar);
-//                                 log.info("label='" + temp + "'");
-//                                 log.info("nameBase='" + nameBase + "'");
-//                                 log.info("match='" + temp.startsWith(fnNameString + " controls ") + "'");
-//                                 if ( !temp.startsWith(fnNameString + " controls ") ) {
-//                                     customName = temp;
-//                                 }
-//                                 log.info("customName='" + customName + "'");
                                 int column = firstOut + iOut;
                                 saveAt(row, column, j);
                                 rowIsUsed = true;
@@ -217,9 +208,7 @@ public class FnMapPanel extends JPanel {
                     }
                 }
                 if (rowIsUsed) {
-                    if (customName != null) {
-                        fnNameString = customName;
-                    } else if (fnNameString.equals("FL(f)")) {
+                    if (fnNameString.equals("FL(f)")) {
                         fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapLightFwd");
                     } else if (fnNameString.equals("FL(r)")) {
                         fnNameString = ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FnMapLightRev");
