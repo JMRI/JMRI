@@ -65,7 +65,7 @@ public class FileUtilSupport extends Bean {
      */
     public void setUserFilesPath(String path) {
         String old = this.userFilesPath;
-        if (!path.endsWith(File.separator)) {
+        if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
         }
         this.userFilesPath = path;
@@ -237,7 +237,7 @@ public class FileUtilSupport extends Bean {
      */
     public void setScriptsPath(String path) {
         String old = this.scriptsPath;
-        if (!path.endsWith(File.separator)) {
+        if (path != null && !path.endsWith(File.separator)) {
             path = path + File.separator;
         }
         this.scriptsPath = path;
