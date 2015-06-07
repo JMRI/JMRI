@@ -6,8 +6,10 @@ import java.io.File;
 import javax.swing.table.AbstractTableModel;
 
 /**
+ * A tabular data model of {@link jmri.profile.Profile}s, suitable for use in a
+ * {@link javax.swing.JTable}.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class ProfileTableModel extends AbstractTableModel implements PropertyChangeListener {
 

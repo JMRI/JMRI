@@ -1,38 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package jmri.profile;
 
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import javax.swing.AbstractListModel;
 
 /**
+ * A list of {@link jmri.profile.Profile}s, suitable for use in Swing components
+ * that display a list of items.
  *
- * @author rhwood
+ * @author Randall Wood
  */
-public class ProfileListModel extends AbstractListModel {
+public class ProfileListModel extends AbstractListModel<Profile> {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2962313838094980115L;
 
     public ProfileListModel() {
-        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.PROFILES, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt instanceof IndexedPropertyChangeEvent
-                        && evt.getSource().equals(ProfileManager.defaultManager())) {
-                    if (evt.getOldValue() == null) {
-                        fireIntervalAdded(((IndexedPropertyChangeEvent) evt).getIndex(), ((IndexedPropertyChangeEvent) evt).getIndex());
-                    } else if (evt.getNewValue() == null) {
-                        fireIntervalRemoved(((IndexedPropertyChangeEvent) evt).getIndex(), ((IndexedPropertyChangeEvent) evt).getIndex());
-                    }
-                    fireContentsChanged(((IndexedPropertyChangeEvent) evt).getIndex(), ((IndexedPropertyChangeEvent) evt).getIndex());
+        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.PROFILES, (PropertyChangeEvent evt) -> {
+            if (evt instanceof IndexedPropertyChangeEvent
+                    && evt.getSource().equals(ProfileManager.defaultManager())) {
+                if (evt.getOldValue() == null) {
+                    fireIntervalAdded(((IndexedPropertyChangeEvent) evt).getIndex(), ((IndexedPropertyChangeEvent) evt).getIndex());
+                } else if (evt.getNewValue() == null) {
+                    fireIntervalRemoved(((IndexedPropertyChangeEvent) evt).getIndex(), ((IndexedPropertyChangeEvent) evt).getIndex());
                 }
+                fireContentsChanged(((IndexedPropertyChangeEvent) evt).getIndex(), ((IndexedPropertyChangeEvent) evt).getIndex());
             }
         });
     }
@@ -43,7 +34,7 @@ public class ProfileListModel extends AbstractListModel {
     }
 
     @Override
-    public Object getElementAt(int index) {
+    public Profile getElementAt(int index) {
         return ProfileManager.defaultManager().getProfiles(index);
     }
 

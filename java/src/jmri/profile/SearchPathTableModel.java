@@ -9,8 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * A tabular data model for the search paths used to find
+ * {@link jmri.profile.Profile}s.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 class SearchPathTableModel extends AbstractTableModel implements PropertyChangeListener {
 

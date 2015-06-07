@@ -52,14 +52,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * A JPanel suitable for managing {@link jmri.profile.Profile}s within a
+ * preferences window.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public final class ProfilePreferencesPanel extends JPanel implements PreferencesPanel {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -1375670900469426701L;
     private static final Logger log = LoggerFactory.getLogger(ProfilePreferencesPanel.class);
 
@@ -440,8 +439,8 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                         exportExternalUserFiles = true;
                     }
                 }
-                if (!(new File(Roster.getFileLocation())).getCanonicalPath().startsWith(p.getPath().getCanonicalPath())
-                        && !Roster.getFileLocation().startsWith(FileUtil.getUserFilesPath())) {
+                if (!(new File(Roster.getDefault().getRosterLocation())).getCanonicalPath().startsWith(p.getPath().getCanonicalPath())
+                        && !Roster.getDefault().getRosterLocation().startsWith(FileUtil.getUserFilesPath())) {
                     int result = JOptionPane.showConfirmDialog(this,
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalRosterMessage"),
                             Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.externalRosterTitle"),
@@ -461,16 +460,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
                                 p.getName(), chooser.getSelectedFile().getName()),
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.successTitle"),
                         JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException ex) {
-                log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
-                JOptionPane.showMessageDialog(this,
-                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",
-                                p.getName(),
-                                chooser.getSelectedFile().getPath(),
-                                ex.getLocalizedMessage()),
-                        Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorTitle"),
-                        JOptionPane.ERROR_MESSAGE);
-            } catch (JDOMException ex) {
+            } catch (IOException | JDOMException ex) {
                 log.warn("Unable to export profile \"{}\" to {}", p.getName(), chooser.getSelectedFile().getPath(), ex);
                 JOptionPane.showMessageDialog(this,
                         Bundle.getMessage("ProfilePreferencesPanel.btnExportProfile.errorMessage",
@@ -501,7 +491,7 @@ public final class ProfilePreferencesPanel extends JPanel implements Preferences
     }//GEN-LAST:event_btnCreateNewProfileActionPerformed
 
     private void btnDeleteProfileActionPerformed(ActionEvent evt) {//GEN-FIRST:event_btnDeleteProfileActionPerformed
-        ArrayList<Profile> profiles = new ArrayList<Profile>(this.profilesTbl.getSelectedRowCount());
+        ArrayList<Profile> profiles = new ArrayList<>(this.profilesTbl.getSelectedRowCount());
         for (int row : this.profilesTbl.getSelectedRows()) {
             profiles.add(ProfileManager.defaultManager().getAllProfiles().get(row));
         }
