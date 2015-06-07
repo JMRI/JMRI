@@ -749,14 +749,6 @@
         </antcall>
     </target>
 
-    <target name="wizard"
-            depends="debug"
-            description="build and run build and run Wizard app">
-        <antcall target="-run-jmri-application">
-            <param name="application.classname" value="apps.wizard.Wizard"/>
-        </antcall>
-    </target>
-
     <target name="SampleMinimalProgram"
             depends="debug"
             description="build and run build and run SampleMinimalProgram class">
