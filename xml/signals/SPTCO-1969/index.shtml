@@ -44,7 +44,7 @@ There are three icon sets defined for most masts.
 Not all masts have a dwarf form and those affected masts do not have the dwarf icon set. If using the animated icons be sure to set the rotation of the mast to 0.
 
 <p>
-Default DCC aspect numbers have been chosen to match tha BNSF and UP definitions so that hardware that is compatible with those definitions can be used with this one too.
+Default DCC aspect numbers have been chosen to match the BNSF and UP definitions so that hardware that is compatible with those definitions can be used with this one too.
 
 <p>
 To backdate this definition to be compatible with the 1960 rulebook it is just a simple matter of disabling the flashing red restricting aspect in the edit dialogue on any searchlight masts which have it.
