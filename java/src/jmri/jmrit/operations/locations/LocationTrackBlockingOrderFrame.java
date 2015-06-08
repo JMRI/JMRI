@@ -96,23 +96,21 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
 //        setJMenuBar(menuBar);
         addHelpMenu("package.jmri.jmrit.operations.Operations_TrackBlockingOrder", true); // NOI18N
 
-        initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
+        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight500));
 
     }
 
     // Reset and Save
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == resetButton && _location != null) {
-            for (Track track : _location.getTrackList()) {
-                track.setBlockingOrder(0);
-            }
+            _location.resetTracksByBlockingOrder();
         }
         if (ae.getSource() == saveButton) {
             if (trackTable.isEditing()) {
                 log.debug("track table edit true");
                 trackTable.getCellEditor().stopCellEditing();
             }
-            trackModel.updateList();
+            _location.resequnceTracksByBlockingOrder();
             // recreate all train manifests
             TrainManager.instance().setTrainsModified();
             // save location file

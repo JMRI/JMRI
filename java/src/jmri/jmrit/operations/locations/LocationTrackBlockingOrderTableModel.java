@@ -5,9 +5,14 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableCellEditor;
+import jmri.jmrit.operations.setup.Control;
 import jmri.util.swing.XTableColumnModel;
+import jmri.util.table.ButtonEditor;
+import jmri.util.table.ButtonRenderer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,8 +38,10 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     protected static final int NAME_COLUMN = 1;
     protected static final int TYPE_COLUMN = 2;
     protected static final int ORDER_COLUMN = 3;
+    protected static final int UP_COLUMN = 4;
+    protected static final int DOWN_COLUMN = 5;
 
-    protected static final int HIGHESTCOLUMN = ORDER_COLUMN + 1;
+    protected static final int HIGHESTCOLUMN = DOWN_COLUMN + 1;
 
     public LocationTrackBlockingOrderTableModel() {
         super();
@@ -72,12 +79,21 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
         XTableColumnModel tcm = new XTableColumnModel();
         _table.setColumnModel(tcm);
         _table.createDefaultColumnsFromModel();
+        
+        ButtonRenderer buttonRenderer = new ButtonRenderer();
+        TableCellEditor buttonEditor = new ButtonEditor(new javax.swing.JButton());
+        tcm.getColumn(UP_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(UP_COLUMN).setCellEditor(buttonEditor);
+        tcm.getColumn(DOWN_COLUMN).setCellRenderer(buttonRenderer);
+        tcm.getColumn(DOWN_COLUMN).setCellEditor(buttonEditor);
 
         // set column preferred widths
         tcm.getColumn(ID_COLUMN).setPreferredWidth(40);
         tcm.getColumn(NAME_COLUMN).setPreferredWidth(200);
         tcm.getColumn(TYPE_COLUMN).setPreferredWidth(80);
         tcm.getColumn(ORDER_COLUMN).setPreferredWidth(60);
+        tcm.getColumn(UP_COLUMN).setPreferredWidth(60);
+        tcm.getColumn(DOWN_COLUMN).setPreferredWidth(70);
     }
 
     public int getRowCount() {
@@ -98,6 +114,10 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
                 return Bundle.getMessage("Type");
             case ORDER_COLUMN:
                 return Bundle.getMessage("ServiceOrder");
+            case UP_COLUMN:
+                return Bundle.getMessage("Up");
+            case DOWN_COLUMN:
+                return Bundle.getMessage("Down");
             default:
                 return "unknown"; // NOI18N
         }
@@ -113,6 +133,10 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
                 return String.class;
             case ORDER_COLUMN:
                 return Integer.class;
+            case UP_COLUMN:
+                return JButton.class;
+            case DOWN_COLUMN:
+                return JButton.class;
             default:
                 return null;
         }
@@ -121,6 +145,8 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
     public boolean isCellEditable(int row, int col) {
         switch (col) {
             case ORDER_COLUMN:
+            case UP_COLUMN:
+            case DOWN_COLUMN:
                 return true;
             default:
                 return false;
@@ -144,6 +170,10 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
                 return track.getTrackTypeName();
             case ORDER_COLUMN:
                 return track.getBlockingOrder();
+            case UP_COLUMN:
+                return Bundle.getMessage("Up");
+            case DOWN_COLUMN:
+                return Bundle.getMessage("Down");
             default:
                 return "unknown " + col; // NOI18N
         }
@@ -162,6 +192,12 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
                 if ((int) value >= 0)
                     track.setBlockingOrder((int) value);
                 break;
+            case UP_COLUMN:
+                _location.changeTrackBlockingOrderEarlier(track);
+                break;
+            case DOWN_COLUMN:
+                _location.changeTrackBlockingOrderLater(track);
+                break;
             default:
                 break;
         }
@@ -169,10 +205,11 @@ public class LocationTrackBlockingOrderTableModel extends AbstractTableModel imp
 
     // this table listens for changes to a location and it's tracks
     public void propertyChange(PropertyChangeEvent e) {
-//        if (Control.showProperty && log.isDebugEnabled())
+        if (Control.showProperty && log.isDebugEnabled())
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
-        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)
+                || e.getPropertyName().equals(Location.TRACK_BLOCKING_ORDER_CHANGED_PROPERTY)) {
             updateList();
         }
         if (e.getPropertyName().equals(Track.TRACK_BLOCKING_ORDER_CHANGED_PROPERTY)

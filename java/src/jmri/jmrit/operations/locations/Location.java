@@ -98,6 +98,7 @@ public class Location implements java.beans.PropertyChangeListener {
     public static final String STATUS_CHANGED_PROPERTY = "locationStatus"; // NOI18N
     public static final String POOL_LENGTH_CHANGED_PROPERTY = "poolLengthChanged"; // NOI18N
     public static final String SWITCHLIST_COMMENT_CHANGED_PROPERTY = "switchListComment";// NOI18N
+    public static final String TRACK_BLOCKING_ORDER_CHANGED_PROPERTY = "locationTrackBlockingOrder";// NOI18N
 
     public Location(String id, String name) {
         log.debug("New location ({}) id: {}", name, id);
@@ -905,6 +906,55 @@ public class Location implements java.beans.PropertyChangeListener {
             }
         }
         return orderList;
+    }
+    
+    public void resetTracksByBlockingOrder() {
+        for (Track track : getTrackList()) {
+            track.setBlockingOrder(0);
+        }
+        resequnceTracksByBlockingOrder();
+    }
+    
+    public void resequnceTracksByBlockingOrder() {
+        int order = 1;
+        for (Track track : getTracksByBlockingOrderList(null)) {
+            track.setBlockingOrder(order++);
+        }
+        setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, true, false);
+    }
+    
+    public void changeTrackBlockingOrderEarlier(Track track) {
+        //first adjust the track being replaced
+        Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() - 1);
+        if (repalceTrack != null) {
+            repalceTrack.setBlockingOrder(track.getBlockingOrder());
+        }
+        track.setBlockingOrder(track.getBlockingOrder() - 1);
+        // move the end of order
+        if (track.getBlockingOrder() <= 0)
+            track.setBlockingOrder(_trackHashTable.size() + 1);
+        resequnceTracksByBlockingOrder();
+    }
+    
+    public void changeTrackBlockingOrderLater(Track track) {
+        //first adjust the track being replaced
+        Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() + 1);
+        if (repalceTrack != null) {
+            repalceTrack.setBlockingOrder(track.getBlockingOrder());
+        }
+        track.setBlockingOrder(track.getBlockingOrder() + 1);
+        // move the start of order
+        if (track.getBlockingOrder() > _trackHashTable.size())
+            track.setBlockingOrder(0);
+        resequnceTracksByBlockingOrder();
+    }
+    
+    private Track getTrackByBlockingOrder(int order) {
+        for (Track track : getTrackList()) {
+            if (track.getBlockingOrder() == order)
+                return track;
+        }
+        return null; // not found!
     }
 
     public boolean isTrackAtLocation(Track track) {
