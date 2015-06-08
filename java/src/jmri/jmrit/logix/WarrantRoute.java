@@ -1,8 +1,8 @@
 package jmri.jmrit.logix;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -29,8 +29,11 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
+import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Path;
+import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,9 +51,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class WarrantRoute extends jmri.util.JmriJFrame implements ActionListener, PropertyChangeListener {
 
-    /**
-     * 
-     */
     private static final long serialVersionUID = 6066050907933847146L;
 
     enum Location {ORIGIN, DEST, VIA, AVOID}
@@ -69,10 +69,17 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private RouteFinder _routeFinder;
     private int         _depth =20;
     private JTextField  _searchDepth =  new JTextField(5);
-    
+
+    private RosterEntry _train;
+    private DccLocoAddress _locoAddress = null;
+    private JComboBox<String> _rosterBox = new JComboBox<String>();
+    private JTextField _dccNumBox = new JTextField();
+    private JTextField _trainNameBox = new JTextField();
+
     WarrantRoute() {        
         super(false, false);
         _routeModel = new RouteTableModel();
+        getRoster();
     }
     
     public abstract void selectedRoute(ArrayList <BlockOrder> orders);
@@ -95,14 +102,180 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _searchDepth.setText(Integer.toString(_depth));
         JPanel p = new JPanel();
         p.add(Box.createHorizontalGlue());
-        p.add(WarrantFrame.makeBoxPanel(vertical, _searchDepth, "SearchDepth"));
+        p.add(makeTextBoxPanel(vertical, _searchDepth, "SearchDepth", "ToolTipSearchDepth"));
         _searchDepth.setColumns(5);
-        _searchDepth.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
         p.add(Box.createHorizontalGlue());
         return p;
     }
     
+/************************** Loco Address **********************/
 
+    protected JPanel makeTrainPanel() {
+        JPanel trainPanel = new JPanel();
+        trainPanel.setLayout(new BoxLayout(trainPanel, BoxLayout.LINE_AXIS));
+        trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", "noTrainName"));
+//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeTextBoxPanel(false, _rosterBox, "Roster", null));
+//        panel.add(Box.createVerticalStrut(STRUT_SIZE));
+        panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", null));
+        trainPanel.add(panel);
+        trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
+
+        _dccNumBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setTrainInfo(_dccNumBox.getText(), true);
+            }
+        });
+        JPanel x = new JPanel();
+        x.setLayout(new BoxLayout(x, BoxLayout.PAGE_AXIS));
+        x.add(trainPanel);
+//        x.add(Box.createRigidArea(new Dimension(600, 2)));
+        return x;
+    }
+    
+    private void getRoster() {
+        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
+        _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
+        _rosterBox.addItem(" ");
+        for (int i = 0; i < list.size(); i++) {
+            RosterEntry r = list.get(i);
+            _rosterBox.addItem(r.titleString());
+        }
+        _rosterBox.addItem(Bundle.getMessage("noSuchAddress"));
+        //_rosterBox = Roster.instance().fullRosterComboBox();
+        _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
+        _rosterBox.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                setTrainInfo((String) _rosterBox.getSelectedItem(), false);
+            }
+        });
+    }
+
+    protected boolean setTrainInfo(String name, boolean isAddress) {
+        if (log.isDebugEnabled()) {
+            log.debug("setTrainInfo for: " + name + " isAddress= " + isAddress);
+        }
+        if (isAddress) {
+            _dccNumBox.setText(name);
+        }
+        if (name != null && name.length() > 0) {
+            _train = null;
+            if (isAddress) {
+                int index = name.indexOf('(');
+                if (index >= 0) {
+                    name = name.substring(0, index);
+                }
+                List<RosterEntry> l = Roster.instance().matchingList(null, null, name, null, null, null, null);
+                if (l.size() > 0) {
+                    _train = l.get(0);
+                }
+            } else {
+                _train = Roster.instance().entryFromTitle(name);
+            }
+            if (_train != null) {
+                _trainNameBox.setText(_train.getRoadNumber());
+                _dccNumBox.setText(_train.getDccLocoAddress().toString());
+                _rosterBox.setSelectedItem(_train.getId());
+            } else {
+                _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+                return false;
+            }
+        }
+        String n = _trainNameBox.getText();
+        if (n == null || n.length() == 0 || _train == null) {
+            _trainNameBox.setText(_dccNumBox.getText());
+        }
+/*        if (_tabbedPane != null) {
+            _tabbedPane.invalidate();
+        }*/
+        return true;
+    }
+
+    protected RosterEntry getTrain() {
+        return _train;
+    }
+
+    protected void setTrainName(String name) {
+        _trainNameBox.setText(name);        
+    }
+    
+    protected String getTrainName() {
+        String trainName = _trainNameBox.getText();
+        if (trainName == null || trainName.length() == 0) {
+            trainName = _dccNumBox.getText();
+        }
+        return trainName;
+    }
+    
+    protected void setAddress(String address) {
+        _dccNumBox.setText(address);
+        if (address==null) {
+            _rosterBox.setSelectedIndex(0);
+        }
+    }
+    
+    protected String getAddress() {
+        return _dccNumBox.getText();        
+    }
+    
+    protected DccLocoAddress getLocoAddress() {
+        return _locoAddress;
+    }
+    
+    protected String checkLocoAddress() {
+        if (_train != null) {
+            _locoAddress = _train.getDccLocoAddress();
+            if (_locoAddress != null) {
+                return null;
+            }
+        }
+        String addr = _dccNumBox.getText();
+        String msg = null;
+        if (addr != null && addr.length() != 0) {
+            boolean isLong = false;
+            int dccNum = 0;
+            addr = addr.toUpperCase().trim();
+            Character ch = addr.charAt(addr.length() - 1);
+            try {
+                if (!Character.isDigit(ch)) {
+                    if (ch != 'S' && ch != 'L' && ch != ')') {
+                        msg = Bundle.getMessage("BadDccAddress", addr);
+                    }
+                    if (ch == ')') {
+                        dccNum = Integer.parseInt(addr.substring(0, addr.length() - 3));
+                        ch = addr.charAt(addr.length() - 2);
+                        isLong = (ch == 'L');
+                    } else {
+                        dccNum = Integer.parseInt(addr.substring(0, addr.length() - 1));
+                        isLong = (ch == 'L');
+                    }
+                } else {
+                    dccNum = Integer.parseInt(addr);
+                    ch = addr.charAt(0);
+                    isLong = (ch == '0' || dccNum > 255);  // leading zero means long
+                    addr = addr + (isLong ? "L" : "S");
+                }
+                if (msg == null) {
+                    _locoAddress = new DccLocoAddress(dccNum, isLong);
+                }
+            } catch (NumberFormatException nfe) {
+                msg = Bundle.getMessage("BadDccAddress", addr);
+            }
+        } else {
+            msg = Bundle.getMessage("NoLoco");
+        }
+        return msg;
+    }
+
+/******************************* route info *******************/
+    /**
+     * Does the action on each of the 4 RouteLocation panels
+     */
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
 //        if (log.isDebugEnabled()) log.debug("actionPerformed: source "+((Component)obj).getName()+
@@ -163,13 +336,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
         JPanel p = new JPanel();
         p.setLayout(new BorderLayout());
-        JPanel pp = new JPanel();
-        pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-        pp.add(new JLabel(PAD+Bundle.getMessage(title)+PAD));
         p.setToolTipText(Bundle.getMessage(tooltip));
         box.setToolTipText(Bundle.getMessage(tooltip));
-        p.add(pp, BorderLayout.NORTH);
+        p.add(new JLabel(PAD+Bundle.getMessage(title)+PAD), BorderLayout.NORTH);
         p.add(box, BorderLayout.CENTER);
+        box.setBackground(Color.white);           
         box.addActionListener(this);
         box.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         return p;
@@ -245,16 +416,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             blockBox.setTransferHandler(new jmri.util.DnDStringImportHandler());
             blockBox.setColumns(20);
             blockBox.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            //blockBox.setMaximumSize(new Dimension(100, blockBox.getPreferredSize().height));
-            //blockBox.setDropMode(DropMode.USE_SELECTION);
             JPanel p = new JPanel();
             p.setLayout(new BorderLayout());
-            JPanel pp = new JPanel();
-            pp.setLayout(new FlowLayout(FlowLayout.CENTER));
-            pp.add(new JLabel(Bundle.getMessage("BlockName")));
             p.setToolTipText(Bundle.getMessage(tooltip));
             blockBox.setToolTipText(Bundle.getMessage(tooltip));
-            p.add(pp, BorderLayout.NORTH);
+            p.add(new JLabel(Bundle.getMessage("BlockName")), BorderLayout.NORTH);
             p.add(blockBox, BorderLayout.CENTER);
             return p;
         }
@@ -950,6 +1116,50 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             fireTableRowsUpdated(row, row);
         }
     }
+    
+    /**
+    *
+    * @param vertical  Label orientation true = above, false = left
+    * @param textField
+    * @param label String label message
+    * @return
+    */
+   static protected JPanel makeTextBoxPanel(boolean vertical, JComponent textField, String label, String tooltip) {
+       JPanel panel = new JPanel();
+       JLabel l = new JLabel(Bundle.getMessage(label));
+       if (vertical) {
+           panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
+           l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+           textField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+           panel.add(Box.createVerticalStrut(STRUT_SIZE));
+       } else {
+           panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
+           l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
+           textField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
+           panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+       }
+       panel.add(l);
+       if (!vertical) {
+           panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+       }
+       textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
+       textField.setMinimumSize(new Dimension(30, textField.getPreferredSize().height));
+       panel.add(textField);
+       if (vertical) {
+           panel.add(Box.createVerticalStrut(STRUT_SIZE));
+       } else {
+           panel.add(Box.createHorizontalStrut(STRUT_SIZE));
+       }
+       if (textField instanceof JTextField || textField instanceof JComboBox) {
+           textField.setBackground(Color.white);           
+       }
+       if (tooltip!=null) {
+           panel.setToolTipText(tooltip);
+           textField.setToolTipText(Bundle.getMessage(tooltip));
+           l.setToolTipText(Bundle.getMessage(tooltip));           
+       }
+       return panel;
+   }
     
     static Logger log = LoggerFactory.getLogger(WarrantRoute.class.getName());
 }

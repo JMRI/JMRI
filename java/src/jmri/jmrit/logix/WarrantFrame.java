@@ -27,13 +27,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
-import jmri.DccLocoAddress;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.picker.PickListModel;
-import jmri.jmrit.roster.Roster;
-import jmri.jmrit.roster.RosterEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -71,7 +68,6 @@ public class WarrantFrame extends WarrantRoute {
     private ArrayList<ThrottleSetting> _throttleCommands = new ArrayList<ThrottleSetting>();
     private long _startTime;
     LearnThrottleFrame _learnThrottle = null;       // need access for JUnit test
-    private DccLocoAddress _locoAddress = null;
     static Color myGreen = new Color(0, 100, 0);
 
     JTextField _sysNameBox;
@@ -83,10 +79,6 @@ public class WarrantFrame extends WarrantRoute {
     JTabbedPane _tabbedPane;
     JPanel _routePanel;
     JPanel _commandPanel;
-    RosterEntry _train;
-    JComboBox<String> _rosterBox = new JComboBox<String>();
-    JTextField _dccNumBox = new JTextField();
-    JTextField _trainNameBox = new JTextField();
     JTextField _throttleFactorBox = new JTextField();
     JRadioButton _runProtect = new JRadioButton(Bundle.getMessage("RunProtected"), true);
     JRadioButton _runBlind = new JRadioButton(Bundle.getMessage("RunBlind"), false);
@@ -124,13 +116,12 @@ public class WarrantFrame extends WarrantRoute {
         if (!create) {
             // this is a concatenation of warrants
             setup(_warrant);
-            create = true;  // allows warrant to be registered
+            _create = true;  // allows warrant to be registered
         } else {
             _throttleFactorBox.setText(Float.toString(SignalSpeedMap.getMap().getDefaultThrottleFactor()));
-            getRoster();    // also done in setup()
             WarrantTableAction.newWarrantFrame(this);
+            _create = create;
         }
-        _create = create;
         init();
     }
 
@@ -154,16 +145,15 @@ public class WarrantFrame extends WarrantRoute {
             ThrottleSetting ts = new ThrottleSetting(tList.get(i));
             _throttleCommands.add(ts);
         }
-        getRoster();
         String id = warrant.getTrainId();
         if (id == null || id.length() == 0 || !setTrainInfo(id, false)) {
             jmri.DccLocoAddress address = warrant.getDccAddress();
             if (address != null) {
-                _dccNumBox.setText(address.toString());
+                setAddress(address.toString());
             }
             _warrant.setDccAddress(address);
         }
-        _trainNameBox.setText(warrant.getTrainName());
+        setTrainName(warrant.getTrainName());
         _warrant.setTrainName(warrant.getTrainName());
         _warrant.setTrainId(warrant.getTrainId());
         _runBlind.setSelected(warrant.getRunBlind());
@@ -291,7 +281,8 @@ public class WarrantFrame extends WarrantRoute {
 
         p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-        p.add(makeBoxPanel(true, _searchStatus, "SearchRoute"));
+        p.add(makeTextBoxPanel(true, _searchStatus, "SearchRoute", null));
+        _searchStatus.setEditable(false);
         p.add(Box.createVerticalGlue());
         panel.add(p);
 
@@ -337,7 +328,7 @@ public class WarrantFrame extends WarrantRoute {
         panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
 
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        panel.add(makeTrainPanel());
+        panel.add(makeBorderedTrainPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
         panel.add(makeRecordPanel());
         panel.add(Box.createHorizontalStrut(STRUT_SIZE));
@@ -348,7 +339,8 @@ public class WarrantFrame extends WarrantRoute {
         panel = new JPanel();
         String status = getIdleMessage();
 
-        panel.add(makeTextBoxPanel(false, _statusBox, "Status", false));
+        panel.add(makeTextBoxPanel(false, _statusBox, "Status", null));
+        _statusBox.setEditable(false);
         _statusBox.setMinimumSize(new Dimension(300, _statusBox.getPreferredSize().height));
         _statusBox.setMaximumSize(new Dimension(900, _statusBox.getPreferredSize().height));
         panel.add(_statusBox);
@@ -362,7 +354,7 @@ public class WarrantFrame extends WarrantRoute {
             case Warrant.MODE_NONE:
                 if (getOrders().size() == 0) {
                     return Bundle.getMessage("BlankWarrant");
-                } else if (_dccNumBox.getText() == null || _dccNumBox.getText().length() == 0) {
+                } else if (getAddress() == null || getAddress().length() == 0) {
                     return Bundle.getMessage("NoLoco");
                 }
                 break;
@@ -376,56 +368,15 @@ public class WarrantFrame extends WarrantRoute {
         return Bundle.getMessage("Idle");
     }
 
-    private void getRoster() {
-        List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
-        _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
-        _rosterBox.addItem(" ");
-        for (int i = 0; i < list.size(); i++) {
-            RosterEntry r = list.get(i);
-            _rosterBox.addItem(r.titleString());
-        }
-        _rosterBox.addItem(Bundle.getMessage("noSuchAddress"));
-        //_rosterBox = Roster.instance().fullRosterComboBox();
-        _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
-        _rosterBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setTrainInfo((String) _rosterBox.getSelectedItem(), false);
-            }
-        });
-    }
-
-    private JPanel makeTrainPanel() {
-        JPanel trainPanel = new JPanel();
-        trainPanel.setLayout(new BoxLayout(trainPanel, BoxLayout.LINE_AXIS));
-        trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeBoxPanel(false, _rosterBox, "Roster"));
-        panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
-        trainPanel.add(panel);
-        trainPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
-        _dccNumBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                setTrainInfo(_dccNumBox.getText(), true);
-            }
-        });
-        JPanel x = new JPanel();
-        x.setLayout(new BoxLayout(x, BoxLayout.PAGE_AXIS));
-        x.add(trainPanel);
-//        x.add(Box.createRigidArea(new Dimension(600, 2)));
+    private JPanel makeBorderedTrainPanel() {
+        JPanel trainPanel = makeTrainPanel();
 
         JPanel edge = new JPanel();
         edge.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                 Bundle.getMessage("SetPower"),
                 javax.swing.border.TitledBorder.CENTER,
                 javax.swing.border.TitledBorder.TOP));
-        edge.add(x);
+        edge.add(trainPanel);
         return edge;
     }
 
@@ -497,13 +448,13 @@ public class WarrantFrame extends WarrantRoute {
         JButton runButton = new JButton(Bundle.getMessage("ARun"));
         runButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                runTrain(Warrant.MODE_RUN);
+                runTrain();
             }
         });
         bPanel.add(runButton);
         panel.add(bPanel);
         //panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(true, _throttleFactorBox, "ThrottleFactor", true));
+        panel.add(makeTextBoxPanel(true, _throttleFactorBox, "ThrottleFactor", "throttleFactor"));
         _throttleFactorBox.setMaximumSize(new Dimension(100, _throttleFactorBox.getPreferredSize().height));
         _throttleFactorBox.setMinimumSize(new Dimension(30, _throttleFactorBox.getPreferredSize().height));
         runPanel.add(panel);
@@ -648,8 +599,9 @@ public class WarrantFrame extends WarrantRoute {
             showWarning(Bundle.getMessage("selectRow"));
             return;
         }
-        _throttleCommands.add(row, new ThrottleSetting(0, null, null, null));
+        _throttleCommands.add(row+1, new ThrottleSetting(0, null, null, null));
         _commandModel.fireTableDataChanged();
+        _commandTable.setRowSelectionInterval(row, row);
     }
 
     private void deleteRow() {
@@ -742,53 +694,6 @@ public class WarrantFrame extends WarrantRoute {
         return buttonPanel;
     }
 
-    static protected JPanel makeTextBoxPanel(boolean vertical, JTextField textField, String label, boolean editable) {
-        JPanel panel = makeBoxPanel(vertical, textField, label);
-        textField.setEditable(editable);
-        textField.setBackground(Color.white);
-        return panel;
-    }
-
-    /**
-     *
-     * @param vertical  Label orientation true = above, false = left
-     * @param textField
-     * @param label String label message
-     * @return
-     */
-    static protected JPanel makeBoxPanel(boolean vertical, JComponent textField, String label) {
-        JPanel panel = new JPanel();
-//        panel.add(Box.createVerticalGlue());
-//        panel.add(Box.createHorizontalGlue());
-        JLabel l = new JLabel(Bundle.getMessage(label));
-        if (vertical) {
-            panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-            l.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            textField.setAlignmentX(JComponent.CENTER_ALIGNMENT);
-            panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        } else {
-            panel.setLayout(new BoxLayout(panel, BoxLayout.LINE_AXIS));
-            l.setAlignmentX(JComponent.LEFT_ALIGNMENT);
-            textField.setAlignmentX(JComponent.RIGHT_ALIGNMENT);
-            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        }
-        panel.add(l);
-        if (!vertical) {
-            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        }
-        textField.setMaximumSize(new Dimension(300, textField.getPreferredSize().height));
-        textField.setMinimumSize(new Dimension(30, textField.getPreferredSize().height));
-        panel.add(textField);
-        if (vertical) {
-            panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        } else {
-            panel.add(Box.createHorizontalStrut(STRUT_SIZE));
-        }
-//        panel.add(Box.createVerticalGlue());
-//        panel.add(Box.createHorizontalGlue());
-        return panel;
-    }
-
     private void doControlCommand(int cmd) {
         if (log.isDebugEnabled()) {
             log.debug("actionPerformed on doControlCommand  cmd= " + cmd);
@@ -818,46 +723,6 @@ public class WarrantFrame extends WarrantRoute {
         addHelpMenu("package.jmri.jmrit.logix.CreateEditWarrant", true);
     }
 
-    private boolean setTrainInfo(String name, boolean isAddress) {
-        if (log.isDebugEnabled()) {
-            log.debug("setTrainInfo for: " + name + " isAddress= " + isAddress);
-        }
-        if (isAddress) {
-            _dccNumBox.setText(name);
-        }
-        if (name != null && name.length() > 0) {
-            _train = null;
-            if (isAddress) {
-                int index = name.indexOf('(');
-                if (index >= 0) {
-                    name = name.substring(0, index);
-                }
-                List<RosterEntry> l = Roster.instance().matchingList(null, null, name, null, null, null, null);
-                if (l.size() > 0) {
-                    _train = l.get(0);
-                }
-            } else {
-                _train = Roster.instance().entryFromTitle(name);
-            }
-            if (_train != null) {
-                _trainNameBox.setText(_train.getRoadNumber());
-                _dccNumBox.setText(_train.getDccLocoAddress().toString());
-                _rosterBox.setSelectedItem(_train.getId());
-            } else {
-                _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-                return false;
-            }
-        }
-        String n = _trainNameBox.getText();
-        if (n == null || n.length() == 0 || _train == null) {
-            _trainNameBox.setText(_dccNumBox.getText());
-        }
-        if (_tabbedPane != null) {
-            _tabbedPane.invalidate();
-        }
-        return true;
-    }
-
     private void clearCommands() {
         _throttleCommands = new ArrayList<ThrottleSetting>();
         _commandModel.fireTableDataChanged();
@@ -867,21 +732,6 @@ public class WarrantFrame extends WarrantRoute {
     @Override
     public void selectedRoute(ArrayList<BlockOrder> orders) {
         _tabbedPane.setSelectedIndex(1);
-    }
-
-    protected RosterEntry getTrain() {
-        return _train;
-    }
-
-    /**
-     * ***************** Learn or Run a train ******************
-     */
-    private String getTrainName() {
-        String trainName = _trainNameBox.getText();
-        if (trainName == null || trainName.length() == 0) {
-            trainName = _dccNumBox.getText();
-        }
-        return trainName;
     }
 
     /**
@@ -904,18 +754,7 @@ public class WarrantFrame extends WarrantRoute {
         if (msg != null) {
             return msg;
         }
-        if (_train != null) {
-            _locoAddress = _train.getDccLocoAddress();
-            if (_locoAddress == null) {
-                msg = getLocoAddress();
-            }
-
-        } else {
-            msg = getLocoAddress();
-        }
-        if (msg == null && _locoAddress == null) {
-            msg = Bundle.getMessage("NoRosterEntry");
-        }
+        msg = checkLocoAddress();
         return msg;
     }
 
@@ -974,7 +813,7 @@ public class WarrantFrame extends WarrantRoute {
         _startTime = System.currentTimeMillis();
         _warrant.addPropertyChangeListener(this);
         
-        msg = _warrant.setRunMode(Warrant.MODE_LEARN, _locoAddress, _learnThrottle,
+        msg = _warrant.setRunMode(Warrant.MODE_LEARN, getLocoAddress(), _learnThrottle,
                 _throttleCommands, _runBlind.isSelected());
         if (msg != null) {
             stopRunTrain();
@@ -984,7 +823,7 @@ public class WarrantFrame extends WarrantRoute {
         }
     }
 
-    private void runTrain(int mode) {
+    private void runTrain() {
         String msg = checkTrainId();
         if (msg == null) {
             if (_throttleCommands == null || _throttleCommands.size() == 0) {
@@ -1014,7 +853,7 @@ public class WarrantFrame extends WarrantRoute {
             return;
         }
         _warrant.addPropertyChangeListener(this);
-        msg = _warrant.setRunMode(Warrant.MODE_RUN, _locoAddress, null,
+        msg = _warrant.setRunMode(Warrant.MODE_RUN, getLocoAddress(), null,
                 _throttleCommands, _runBlind.isSelected());
         if (msg != null) {
             stopRunTrain();
@@ -1030,9 +869,8 @@ public class WarrantFrame extends WarrantRoute {
                     JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE)) {
                 stopRunTrain();
                 setStatusText(msg, Color.red);
-                return;
             } else {
-                setStatusText(_warrant.getRunningMessage(), Color.red);
+                setStatusText(_warrant.getRunningMessage(), myGreen);
             }
         }
     }
@@ -1269,57 +1107,19 @@ public class WarrantFrame extends WarrantRoute {
 //        bar.setValue(bar.getMaximum());
     }
 
-    private String getLocoAddress() {
-        String addr = _dccNumBox.getText();
-        String msg = null;
-        if (addr != null && addr.length() != 0) {
-            boolean isLong = false;
-            int dccNum = 0;
-            addr = addr.toUpperCase().trim();
-            Character ch = addr.charAt(addr.length() - 1);
-            try {
-                if (!Character.isDigit(ch)) {
-                    if (ch != 'S' && ch != 'L' && ch != ')') {
-                        msg = Bundle.getMessage("BadDccAddress", addr);
-                    }
-                    if (ch == ')') {
-                        dccNum = Integer.parseInt(addr.substring(0, addr.length() - 3));
-                        ch = addr.charAt(addr.length() - 2);
-                        isLong = (ch == 'L');
-                    } else {
-                        dccNum = Integer.parseInt(addr.substring(0, addr.length() - 1));
-                        isLong = (ch == 'L');
-                    }
-                } else {
-                    dccNum = Integer.parseInt(addr);
-                    ch = addr.charAt(0);
-                    isLong = (ch == '0' || dccNum > 255);  // leading zero means long
-                    addr = addr + (isLong ? "L" : "S");
-                }
-                if (msg == null) {
-                    _locoAddress = new DccLocoAddress(dccNum, isLong);
-                }
-            } catch (NumberFormatException nfe) {
-                msg = Bundle.getMessage("BadDccAddress", addr);
-            }
-        } else {
-            msg = Bundle.getMessage("NoAddress", _warrant.getDisplayName());
-        }
-        return msg;
-    }
 
     private void save() {
         String msg = routeIsValid();
         if (msg==null) {
             msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());         
         }
+        if (msg==null) {
+            msg = checkLocoAddress();            
+        }
         if (msg!=null) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("SaveError")+" - "+msg,
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
             return;
-        }
-        if (_train == null) {
-            msg = getLocoAddress();
         }
         if (_throttleCommands.size()==0) {
             msg = Bundle.getMessage("NoCommands", _warrant.getDisplayName());
@@ -1334,12 +1134,7 @@ public class WarrantFrame extends WarrantRoute {
         if (_saveWarrant != null) {
             _warrant = _saveWarrant;        // _warrant now registered.         
         }
-        if (_train != null) {
-            _warrant.setTrainId(_train.getId());
-            _warrant.setDccAddress(_train.getDccLocoAddress());
-        } else {
-            _warrant.setDccAddress(_locoAddress);
-        }
+        _warrant.setDccAddress(getLocoAddress());
         _warrant.setTrainName(getTrainName());
         _warrant.setRunBlind(_runBlind.isSelected());
         _warrant.setUserName(_userNameBox.getText());
@@ -1350,7 +1145,7 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setThrottleCommands(_throttleCommands);
         _warrant.setThrottleFactor(_throttleFactorBox.getText());
         
-        if (log.isDebugEnabled()) log.debug("warrant saved _train "+_train+", name= "+_trainNameBox.getText());
+        if (log.isDebugEnabled()) log.debug("warrant saved _train "+getAddress()+", name= "+getTrainName());
 
         if (_create) {
             InstanceManager.getDefault(WarrantManager.class).register(_warrant);
@@ -1517,7 +1312,7 @@ public class WarrantFrame extends WarrantRoute {
                 case COMMAND_COLUMN:
                     String cmd = ((String) value);
                     if (cmd == null || cmd.length() == 0) {
-                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
+//                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
                         break;
                     }
                     cmd = cmd.trim().toUpperCase();
@@ -1567,10 +1362,14 @@ public class WarrantFrame extends WarrantRoute {
                     break;
                 case VALUE_COLUMN:
                     if (value == null || ((String) value).length() == 0) {
-                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("ValueCol"));
+//                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("ValueCol"));
                         break;
                     }
                     boolean resetBlockColumn = true;
+                    if (ts==null || ts.getCommand()==null ) {
+                        msg = Bundle.getMessage("nullValue", Bundle.getMessage("CommandCol"));
+                        break;
+                    }
                     cmd = ts.getCommand().toUpperCase();
                     if ("SPEED".equals(cmd)) {
                         try {

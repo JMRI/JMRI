@@ -197,18 +197,16 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public String toString() {
             if (scale < 1.0f) {
                 return Bundle.getMessage("custom");
-            } else {
-                return super.toString();
             }
+            return super.toString();
         }
     }
     private JPanel searchDepthPanel(boolean vertical) {
         _searchDepth =  new JTextField(5);
         _searchDepth.setText(Integer.toString(_preferences.getSearchDepth()));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeBoxPanel(vertical, _searchDepth, "SearchDepth"));
+        p.add(WarrantRoute.makeTextBoxPanel(vertical, _searchDepth, "SearchDepth", "ToolTipSearchDepth"));
         _searchDepth.setColumns(5);
-        _searchDepth.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
         p.setToolTipText(Bundle.getMessage("ToolTipSearchDepth"));
         return p;
     }
@@ -216,9 +214,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _throttleScale =  new JTextField(5);
         _throttleScale.setText(Float.toString(_preferences.getThrottleScale()));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeBoxPanel(vertical, _throttleScale, "ThrottleScale"));
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, _throttleScale, "ThrottleScale", "ToolTipThrottleScale"));
         _throttleScale.setColumns(8);
-        _throttleScale.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         p.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         return p;
     }
@@ -379,8 +376,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _timeIncre =  new JTextField(5);
         _timeIncre.setText(Integer.toString(_preferences.getTimeIncre()));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeBoxPanel(vertical, _timeIncre, "TimeIncrement"));
-        _timeIncre.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, _timeIncre, "TimeIncrement", "ToolTipTimeIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipTimeIncrement"));
         return p;
     }
@@ -388,8 +384,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         _rampIncre =  new JTextField(5);
         _rampIncre.setText(Float.toString(_preferences.getThrottleIncre()));
         JPanel p = new JPanel();
-        p.add(WarrantFrame.makeBoxPanel(vertical, _rampIncre, "RampIncrement"));
-        _rampIncre.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
+        p.add(WarrantFrame.makeTextBoxPanel(vertical, _rampIncre, "RampIncrement","ToolTipRampIncrement"));
         p.setToolTipText(Bundle.getMessage("ToolTipRampIncrement"));
         _rampIncre.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -680,6 +675,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* SpeedName Table ******************************/
     class SpeedNameTableModel extends AbstractTableModel {
+        
+        private static final long serialVersionUID = 7088050123933847145L;
 
         public SpeedNameTableModel() {
             super();
@@ -694,9 +691,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public String getColumnName(int col) {
             if (col==0) {
                 return Bundle.getMessage("speedName");
-            } else {
-                return Bundle.getMessage("speedValue");
             }
+            return Bundle.getMessage("speedValue");
         }
         @Override
         public boolean isCellEditable(int row, int col) {
@@ -710,10 +706,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public int getPreferredWidth(int col) {
             if (col==0) {
                 return new JTextField(15).getPreferredSize().width;             
-            } else {
-                return new JTextField(8).getPreferredSize().width;
-                
             }
+            return new JTextField(8).getPreferredSize().width;
         }
         public Object getValueAt(int row, int col) {
             // some error checking
@@ -728,9 +722,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             }
             if (col==0) {
                 return data.getKey();            
-            } else {
-                return data.getValue();
             }
+            return data.getValue();
         }
         @Override
         public void setValueAt(Object value, int row, int col) {
@@ -766,6 +759,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* appearance Table ******************************/
     class AppearanceTableModel extends AbstractTableModel {
+        private static final long serialVersionUID = 7088050123933847144L;
 
         public AppearanceTableModel() {
             super();
@@ -780,14 +774,12 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public String getColumnName(int col) {
             if (col==0) {
                 return Bundle.getMessage("appearance");
-            } else {
-                return Bundle.getMessage("speedName");
             }
+            return Bundle.getMessage("speedName");
         }
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col==0) { return false; }              
-            else { return true; }
+            return (col!=0);
         }
         @Override
         public Class<?> getColumnClass(int col) {
@@ -796,10 +788,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public int getPreferredWidth(int col) {
             if (col==0) {
                 return new JTextField(15).getPreferredSize().width;             
-            } else {
-                return new JTextField(15).getPreferredSize().width;
-                
             }
+            return new JTextField(15).getPreferredSize().width;
         }
 
         public Object getValueAt(int row, int col) {
@@ -815,9 +805,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             }
             if (col==0) {
                 return data.getKey();            
-            } else {
-                return data.getValue();
             }
+            return data.getValue();
         }
         @Override
         public void setValueAt(Object value, int row, int col) {
@@ -844,6 +833,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
     }
     /************************* Throttle Step Increment Table ******************************/
     class StepIncrementTableModel extends AbstractTableModel {
+        private static final long serialVersionUID = 7088050123933847143L;
 
         public StepIncrementTableModel() {
             super();
@@ -858,14 +848,12 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public String getColumnName(int col) {
             if (col==0) {
                 return Bundle.getMessage("throttleStepMode");
-            } else {
-                return Bundle.getMessage("rampIncrement");
             }
+            return Bundle.getMessage("rampIncrement");
         }
         @Override
         public boolean isCellEditable(int row, int col) {
-            if (col==0) { return false; }              
-            else { return true; }
+            return (col!=0);
         }
         @Override
         public Class<?> getColumnClass(int col) {
@@ -875,10 +863,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public int getPreferredWidth(int col) {
             if (col==0) {
                 return new JTextField(15).getPreferredSize().width;             
-            } else {
-                return new JTextField(5).getPreferredSize().width;
-                
             }
+            return new JTextField(5).getPreferredSize().width;
         }
         public Object getValueAt(int row, int col) {
             // some error checking
@@ -893,9 +879,8 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             }
             if (col==0) {
                 return data.getKey();            
-            } else {
-                return data.getValue();
             }
+            return data.getValue();
         }
         @Override
         public void setValueAt(Object value, int row, int col) {

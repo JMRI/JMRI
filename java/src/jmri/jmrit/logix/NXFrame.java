@@ -15,7 +15,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
-import jmri.DccLocoAddress;
 import jmri.implementation.SignalSpeedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,15 +48,14 @@ public class NXFrame extends WarrantRoute {
     private float _scale = 87.1f;
     private float _factor = 0.81f;  // ratio of throttle setting to scale speed
 
-    JTextField _dccNumBox = new JTextField(6);
     JTextField _trainNameBox = new JTextField(6);
-    JTextField _nameBox = new JTextField(6);
     JTextField _maxSpeedBox = new JTextField(6);
     JTextField _minSpeedBox = new JTextField(6);
-    JRadioButton _forward = new JRadioButton(Bundle.getMessage("forward"));
-    JRadioButton _reverse = new JRadioButton(Bundle.getMessage("reverse"));
+    JRadioButton _forward = new JRadioButton();
+    JRadioButton _reverse = new JRadioButton();
     JCheckBox _stageEStop = new JCheckBox();
     JCheckBox _haltStartBox = new JCheckBox();
+    JCheckBox _calibrateBox = new JCheckBox();
 //    JCheckBox _addTracker = new JCheckBox();
     JTextField _rampInterval = new JTextField(6);
     JTextField _factorbox = new JTextField(6);
@@ -67,18 +65,11 @@ public class NXFrame extends WarrantRoute {
     JPanel      _autoRunPanel;
     JPanel      _manualPanel;
 //  static boolean _addTracker = false;
-    private boolean _eStop = false;
     private boolean _haltStart = false;
     private float _maxSpeed = 0.5f;
     private float _minSpeed = 0.05f;
     private float _intervalTime = 0.0f;     // milliseconds
     private float _throttleIncr = 0.0f;
-    
-    private String _addr;
-    private int _dccNum;
-    private boolean  _isLong;
-
-    private boolean _calibrate;
     
     private static NXFrame _instance;
 
@@ -86,9 +77,9 @@ public class NXFrame extends WarrantRoute {
         if (_instance == null) {
             _instance = new NXFrame();
         }
-        _instance._dccNumBox.setText(null);
+        _instance.setAddress(null);
+        _instance.setTrainName(null);
         _instance._trainNameBox.setText(null);
-        _instance._nameBox.setText(null);
         _instance.clearRoute();
         return _instance;
     }
@@ -107,29 +98,6 @@ public class NXFrame extends WarrantRoute {
         _controlPanel.add(Box.createVerticalGlue());
         _controlPanel.add(makeBlockPanels());
         _controlPanel.add(searchDepthPanel(false));
-        ButtonGroup bg = new ButtonGroup();
-        bg.add(_runAuto);
-        bg.add(_runManual);
-        _runAuto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                enableAuto(true);
-            }
-        });
-        _runManual.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent event) {
-                enableAuto(false);
-            }
-        });
-        _runAuto.setSelected(true);
-        JPanel pp = new JPanel();
-        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(_runAuto);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        pp.add(_runManual);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        _controlPanel.add(pp);
-        _controlPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         _autoRunPanel = makeAutoRunPanel(SignalSpeedMap.getMap().getInterpretation());
         _factorbox.addActionListener(new ActionListener() {
@@ -145,7 +113,7 @@ public class NXFrame extends WarrantRoute {
         _manualPanel = new JPanel();
         _manualPanel.setLayout(new BoxLayout(_manualPanel, BoxLayout.X_AXIS));
         _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        _manualPanel.add(WarrantFrame.makeTextBoxPanel(false, _nameBox, "TrainName", true));
+        _manualPanel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", "noTrainName"));
         _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
 
         _controlPanel.add(_autoRunPanel);
@@ -154,8 +122,9 @@ public class NXFrame extends WarrantRoute {
         _controlPanel.add(Box.createVerticalStrut(STRUT_SIZE));
 
         _forward.setSelected(true);
-        _stageEStop.setSelected(_eStop);
+        _stageEStop.setSelected(false);
         _haltStartBox.setSelected(_haltStart);
+        _calibrateBox.setSelected(false);
         _rampInterval.setText(Float.toString(_intervalTime / 1000));
         _factorbox.setText(Float.toString(_factor));
         _factorbox.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
@@ -169,14 +138,6 @@ public class NXFrame extends WarrantRoute {
         });
         p.add(button);
         p.add(Box.createHorizontalStrut(2*STRUT_SIZE));
-        button = new JButton(Bundle.getMessage("ButtonCalibrate"));
-        button.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        calibrationDialog();
-                    }
-                });
-        p.add(button);       
-        p.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         button = new JButton(Bundle.getMessage("ButtonCancel"));
         button.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -186,6 +147,10 @@ public class NXFrame extends WarrantRoute {
         p.add(button);
         p.add(Box.createGlue());
         _controlPanel.add(p);
+        
+        _controlPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        _controlPanel.add(makeSwitchPanel());
+        
         mainPanel.add(_controlPanel);
         getContentPane().add(mainPanel);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -246,6 +211,31 @@ public class NXFrame extends WarrantRoute {
         return Double.toString(Math.round(f*e)/e);
     }
     
+    private JPanel makeSwitchPanel() {
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(_runAuto);
+        bg.add(_runManual);
+        _runAuto.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                enableAuto(true);
+            }
+        });
+        _runManual.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent event) {
+                enableAuto(false);
+            }
+        });
+        _runAuto.setSelected(true);
+        JPanel pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(_runAuto);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(_runManual);
+        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        return pp;
+    }
+    
     private JPanel makeAutoRunPanel(int interpretation) {
         JPanel p1 = new JPanel();
         p1.setLayout(new BoxLayout(p1, BoxLayout.Y_AXIS));
@@ -259,35 +249,34 @@ public class NXFrame extends WarrantRoute {
                 maxSpeed = _maxSpeed;
                 maxSpeedLabel = "MaxSpeed";
                 throttleIncr = _throttleIncr;
-                throttleIncrLabel = "MinSpeed";
+                throttleIncrLabel = "RampIncrement";
                 break;
             case SignalSpeedMap.SPEED_MPH:
                 maxSpeed = Math.round(_maxSpeed*3600*1000/(_factor*12*5280)*100)/100;
                 maxSpeedLabel = "MaxMph";
-                throttleIncr = _throttleIncr*3600*1000/(_factor*12*5280);
+                throttleIncr = Math.round(_throttleIncr*3600*1000/(_factor*12*5280)*100)/100;
                 throttleIncrLabel = "MinMph";
                 break;
             case SignalSpeedMap.SPEED_KMPH:
                 maxSpeed = Math.round(_maxSpeed*3600*25.4f/(_factor*1000)*100)/100;
                 maxSpeedLabel = "MaxKMph";
-                throttleIncr = _throttleIncr*3600*25.4f/(_factor*1000);
+                throttleIncr = Math.round(_throttleIncr*3600*25.4f/(_factor*1000)*100)/100;
                 throttleIncrLabel = "MinKMph";
                 break;
             default:
                 maxSpeed = _maxSpeed;                    
                 maxSpeedLabel = "MaxSpeed";
                 throttleIncr = _throttleIncr;
-                throttleIncrLabel = "MinSpeed";
+                throttleIncrLabel = "RampIncrement";
         }
-        p1.add(WarrantFrame.makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, true));
-        p1.add(WarrantFrame.makeTextBoxPanel(false, _minSpeedBox, throttleIncrLabel, true));
-        _maxSpeedBox.setText(Float.toString(maxSpeed));
+//        p1.add(WarrantFrame.makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, ""));      //???
+        p1.add(makeTextBoxPanel(false, _rampInterval, "rampInterval", null));
+        p1.add(makeTextBoxPanel(false, _minSpeedBox, throttleIncrLabel, "ToolTipRampIncrement"));
+        p1.add(makeTextBoxPanel(false, _factorbox, "ThrottleFactor", "throttleFactor"));
+       _maxSpeedBox.setText(Float.toString(maxSpeed));
         _minSpeedBox.setText(Float.toString(throttleIncr));
         
-        JPanel p2 = new JPanel();
-        p2.setLayout(new BoxLayout(p2, BoxLayout.Y_AXIS));
-        p2.add(WarrantFrame.makeTextBoxPanel(false, _dccNumBox, "DccAddress", true));
-        p2.add(WarrantFrame.makeTextBoxPanel(false, _trainNameBox, "TrainName", true));
+        JPanel p2 = makeTrainPanel();
 
         JPanel autoRunPanel = new JPanel();
         autoRunPanel.setLayout(new BoxLayout(autoRunPanel, BoxLayout.Y_AXIS));
@@ -299,35 +288,37 @@ public class NXFrame extends WarrantRoute {
         pp.add(p2);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
         autoRunPanel.add(pp);
+        
         ButtonGroup bg = new ButtonGroup();
         bg.add(_forward);
         bg.add(_reverse);
-        JPanel ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.X_AXIS));
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(_forward);
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp.add(_reverse);
-        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        autoRunPanel.add(ppp);
-        autoRunPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        p1 = new JPanel();
+        p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
+        p1.add(Box.createHorizontalStrut(STRUT_SIZE));
+        p1.add(makeTextBoxPanel(false, _forward, "forward", null));
+//        p1.add(Box.createHorizontalStrut(STRUT_SIZE));
+        p1.add(makeTextBoxPanel(false, _reverse, "reverse", null));
         pp = new JPanel();
         pp.setLayout(new BoxLayout(pp, BoxLayout.X_AXIS));
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
-        ppp.add(WarrantFrame.makeBoxPanel(false, _stageEStop, "StageEStop"));
-        ppp.add(WarrantFrame.makeBoxPanel(false, _haltStartBox, "HaltAtStart"));
-        pp.add(ppp);
+        pp.add(p1);
         pp.add(Box.createHorizontalStrut(STRUT_SIZE));
-        ppp = new JPanel();
-        ppp.setLayout(new BoxLayout(ppp, BoxLayout.Y_AXIS));
-        ppp.add(WarrantFrame.makeTextBoxPanel(false, _rampInterval, "rampInterval", true));
-        ppp.add(WarrantFrame.makeTextBoxPanel(false, _factorbox, "throttleFactor", true));
-//        ppp.add(WarrantFrame.makeBoxPanel(false, _addTracker, "AddTracker"));
-        pp.add(ppp);
-        pp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        pp.add(makeTextBoxPanel(false, _maxSpeedBox, maxSpeedLabel, null));
+        pp.add(Box.createHorizontalStrut(2*STRUT_SIZE));
         autoRunPanel.add(pp);
+
+//        autoRunPanel.add(Box.createVerticalStrut(STRUT_SIZE));
+        JPanel ppp = new JPanel();
+        ppp.setLayout(new BoxLayout(ppp, BoxLayout.X_AXIS));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(makeTextBoxPanel(false, _stageEStop, "StageEStop", null));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(makeTextBoxPanel(false, _haltStartBox, "HaltAtStart", null));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        ppp.add(makeTextBoxPanel(false, _calibrateBox, "Calibrate", "calibBlockMessage"));
+        ppp.add(Box.createHorizontalStrut(STRUT_SIZE));
+        autoRunPanel.add(ppp);
+//        autoRunPanel.add(Box.createVerticalStrut(STRUT_SIZE));
         return autoRunPanel;
     }
 
@@ -370,17 +361,16 @@ public class NXFrame extends WarrantRoute {
         if (_runManual.isSelected()) {
             runManual();
             return;
-        } else if (_dccNumBox.getText()==null || _dccNumBox.getText().length()==0){
-            msg = Bundle.getMessage("NoLoco");
         }
+        msg = checkLocoAddress();
         if (msg==null) {
-            String name =_trainNameBox.getText();
+            String name = getTrainName();
             if (name==null || name.trim().length()==0) {
-                name = _addr;
+                name = getAddress();
             }
             String s = (""+Math.random()).substring(2);
-            warrant = new Warrant("IW"+s, "NX("+_addr+")");
-            warrant.setDccAddress( new DccLocoAddress(_dccNum, _isLong));
+            warrant = new Warrant("IW"+s, "NX("+getAddress()+")");
+            warrant.setDccAddress(getLocoAddress());
             warrant.setTrainName(name);
 
             msg = getBoxData();
@@ -395,9 +385,9 @@ public class NXFrame extends WarrantRoute {
         }
         if (msg==null && warrant!=null) {
             Calibrater calib = null;
-            if (_calibrate) {
+            if (_calibrateBox.isSelected()) {
                 warrant.setViaOrder(getViaBlockOrder());
-                calib = new Calibrater(warrant);
+                calib = new Calibrater(warrant, getLocation());
                 msg = calib.verifyCalibrate();
                 if (msg!=null) {
                     calib = null;
@@ -412,7 +402,6 @@ public class NXFrame extends WarrantRoute {
             if (msg!=null) {
                 if (log.isDebugEnabled()) log.debug("WarrantTableFrame run warrant. msg= "+msg+" Remove warrant "+warrant.getDisplayName());
                 _parent.getModel().removeNXWarrant(warrant);
-                _calibrate = false;
             }
         }
         if (msg==null) {
@@ -453,14 +442,8 @@ public class NXFrame extends WarrantRoute {
         }
     }
 
-    private void calibrationDialog() {
-        _calibrate = (JOptionPane.showConfirmDialog(this, Bundle.getMessage("calibBlockMessage",
-                _dccNumBox.getText()), Bundle.getMessage("calibBlockTitle"), 
-                JOptionPane. YES_NO_OPTION) == JOptionPane.YES_OPTION);
-    }
-    
     private void runManual() {
-        String name = _nameBox.getText();
+        String name = _trainNameBox.getText();
         if (name == null || name.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("noTrainName"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
@@ -562,7 +545,7 @@ public class NXFrame extends WarrantRoute {
         if (_maxSpeed>1.0 || _maxSpeed<0.008) {
             return Bundle.getMessage("badSpeed", maxSpeed, speedErr);                                 
         }
-        if (_minSpeed>=1.0 || _minSpeed<0.007|| _minSpeed>=_maxSpeed) {
+        if (_minSpeed>0.8 || _minSpeed<0.002|| _minSpeed>=_maxSpeed) {
             return Bundle.getMessage("badSpeed", minSpeed, speedErr);                                 
         }
         try {
@@ -648,7 +631,7 @@ public class NXFrame extends WarrantRoute {
         } else {
             w.addThrottleCommand(new ThrottleSetting(1000, "Forward", "false", blockName));
             w.addThrottleCommand(new ThrottleSetting(2000, "F3", "true", blockName));            
-            w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
+            w.addThrottleCommand(new ThrottleSetting(500, "F3", "false", blockName));
             w.addThrottleCommand(new ThrottleSetting(500, "F3", "true", blockName));
             w.addThrottleCommand(new ThrottleSetting(500, "F1", "true", blockName));
         }
@@ -768,12 +751,9 @@ public class NXFrame extends WarrantRoute {
         while (curSpeed >= _minSpeed) {
             if (nextIdx == orders.size()) { // at last block
                 if (_stageEStop.isSelected()) {
-                    _eStop = true;
                     w.addThrottleCommand(new ThrottleSetting(0, "Speed", "-0.5", blockName));
                     _intervalTime = 0;
                     break;
-                } else {
-                    _eStop = false;                 
                 }
             }
             
@@ -840,37 +820,7 @@ public class NXFrame extends WarrantRoute {
     }
 
     private boolean makeAndRunWarrant() {
-        String msg = null;
-        _addr = _dccNumBox.getText();
-        if (_addr != null && _addr.length() != 0) {
-            _addr = _addr.toUpperCase().trim();
-            _isLong = false;
-            Character ch = _addr.charAt(_addr.length() - 1);
-            try {
-                if (!Character.isDigit(ch)) {
-                    if (ch != 'S' && ch != 'L' && ch != ')') {
-                        msg = Bundle.getMessage("BadDccAddress", _addr);
-                    }
-                    if (ch == ')') {
-                        _dccNum = Integer.parseInt(_addr.substring(0, _addr.length() - 3));
-                        ch = _addr.charAt(_addr.length() - 2);
-                        _isLong = (ch == 'L');
-                    } else {
-                        _dccNum = Integer.parseInt(_addr.substring(0, _addr.length() - 1));
-                        _isLong = (ch == 'L');
-                    }
-                } else {
-                    _dccNum = Integer.parseInt(_addr);
-                    ch = _addr.charAt(0);
-                    _isLong = (ch == '0' || _dccNum > 127);  // leading zero means long
-                    _addr = _addr + (_isLong ? "L" : "S");
-                }
-            } catch (NumberFormatException nfe) {
-                msg = Bundle.getMessage("BadDccAddress", _addr);
-            }
-        } else {
-            msg = Bundle.getMessage("BadDccAddress", _addr);
-        }
+        String msg = checkLocoAddress();
         if (msg == null) {
             if (log.isDebugEnabled()) log.debug("NXWarrant makeAndRunWarrant calls findRoute()");
             msg = findRoute();

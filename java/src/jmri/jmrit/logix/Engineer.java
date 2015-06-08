@@ -246,8 +246,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         new Thread(_ramp).start();
     }
 
-    private float modifySpeed(float throttleSpeed, String sType) {
+    private float modifySpeed(float tSpeed, String sType) {
         float mapSpeed = -1.0f;
+        float throttleSpeed = tSpeed;
         if (sType.equals(Warrant.EStop)) {
             return mapSpeed;
         }
@@ -282,7 +283,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return throttleSpeed;
     }
 
-    private void setSpeed(float speed) {
+    private void setSpeed(float s) {
+        float speed = s;
         float minIncre = _throttle.getSpeedIncrement();
         if (0.0f < speed && speed < minIncre) {    // don't let speed be less than 1 speed step
             speed = 0.0f;
@@ -469,8 +471,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param sensorName
      * @param action
      */
-    static private void setSensor(String sensorName, String action) {
-        action = action.toUpperCase();    
+    static private void setSensor(String sensorName, String act) {
+        String action = act.toUpperCase();    
         jmri.Sensor s = InstanceManager.sensorManagerInstance().getSensor(sensorName);
         if (s != null) {
             try {
@@ -493,8 +495,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param action
      */
 //    @edu.umd.cs.findbugs.annotations.SuppressWarnings(value="UW_UNCOND_WAIT", justification="Test for wait condition already done in line 470") 
-    private void getSensor(String sensorName, String action) {
-        action = action.toUpperCase();    
+    private void getSensor(String sensorName, String act) {
+        String action = act.toUpperCase();    
         if (_waitSensor!=null) {
             _waitSensor.removePropertyChangeListener(this);
         }
@@ -585,34 +587,24 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             ts.setValue(Integer.toString(num));         
         }
         String msg = null;
+        WarrantTableFrame f = WarrantTableFrame.getInstance();
         if (_warrant.equals(w)) {
             _idxCurrentCommand = 0;
             w.startupWarrant();
             msg = "Launching warrant \""+_warrant.getDisplayName()+"\" again.";
         } else {
             if (w.getDccAddress().equals(_warrant.getDccAddress())) {
-                OBlock block = _warrant.getLastOrder().getBlock();
-                OBlock b = w.getfirstOrder().getBlock();
-                if (block.equals(b)) {
-                    block.deAllocate(_warrant);
-                } else {
-                    msg =  Bundle.getMessage("BadContinuingLocation", w.getDisplayName(), 
-                                w.getDccAddress().getNumber(), block.getDisplayName()); 
-                }               
+                OBlock block = w.getfirstOrder().getBlock();
+                block.deAllocate(_warrant);     // insure w can start
             }
-            WarrantTableFrame f = WarrantTableFrame.getInstance();
-            if (msg!=null) {
-                f.setStatusText(msg, java.awt.Color.red, true);             
+            msg = f.runTrain(w);
+            if (msg !=null) {
+                w.stopWarrant(true);                
             } else {
-                msg = f.runTrain(w);
-                if (msg !=null) {
-                    f.setStatusText(msg, java.awt.Color.red, true);
-                    w.stopWarrant(true);                
-                } else {
-                    msg = "Launching warrant \""+w.getDisplayName()+"\" from warrant \""+_warrant.getDisplayName()+"\".";               
-                }               
-            }
+                msg = "Launching warrant \""+w.getDisplayName()+"\" from warrant \""+_warrant.getDisplayName()+"\".";               
+            }               
         }
+        f.setStatusText(msg, java.awt.Color.red, true);             
         if (log.isDebugEnabled())log.debug(msg);            
     }
 
@@ -679,9 +671,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     protected String minSpeed(String speed1, String speed2) {
         if (secondGreaterThanFirst(speed1, speed2)) {
             return speed1;
-        } else {
-            return speed2;
         }
+        return speed2;
     }
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
         float s1 = modifySpeed(1.0f, speed1);

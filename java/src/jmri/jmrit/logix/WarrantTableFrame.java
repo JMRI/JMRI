@@ -87,7 +87,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         return _instance;
     }
     // for JUnit test
-    protected WarrantTableFrame reset() {
+    protected static WarrantTableFrame reset() {
         _instance = new WarrantTableFrame();
         return _instance;
     }
@@ -205,6 +205,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         menuBar.add(fileMenu);
         JMenu warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
         warrantMenu.add(new AbstractAction(Bundle.getMessage("ConcatWarrants")){
+            private static final long serialVersionUID = 8994208663637773635L;
             public void actionPerformed(ActionEvent e) {
                 concatMenuAction();
             }
@@ -395,10 +396,9 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         if (msg!=null) {
             setStatusText(msg, Color.red, false);                               
             return msg;
-        } else {
-            msg = w.checkStartBlock(Warrant.MODE_RUN);  // notify first block occupied by this train
-            setStatusText(msg, WarrantTableModel.myGold, false);                                
         }
+        msg = w.checkStartBlock(Warrant.MODE_RUN);  // notify first block occupied by this train
+        setStatusText(msg, WarrantTableModel.myGold, false);                                
         // From here on messages are status information, not abort info
         msg = w.checkRoute();   // notify about occupation ahead
         if (msg!=null) {
