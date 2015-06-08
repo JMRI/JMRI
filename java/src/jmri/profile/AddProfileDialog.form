@@ -170,7 +170,7 @@
     <Component class="javax.swing.JTextField" name="profileFolder">
       <Properties>
         <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
-          <Connection code="FileUtil.getPreferencesPath()" type="code"/>
+          <Connection code="ProfileManager.defaultManager().getDefaultSearchPath().getPath()" type="code"/>
         </Property>
       </Properties>
       <Events>

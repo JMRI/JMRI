@@ -145,7 +145,7 @@ public class AddProfileDialog extends javax.swing.JDialog {
             }
         });
 
-        profileFolder.setText(FileUtil.getPreferencesPath());
+        profileFolder.setText(ProfileManager.defaultManager().getDefaultSearchPath().getPath());
         profileFolder.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 profileFolderActionPerformed(evt);
