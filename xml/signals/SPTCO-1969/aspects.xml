@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet href="../../XSLT/aspecttable.xsl" type="text/xsl"?>
+<aspecttable xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/aspecttable.xsd">
+  <name>SPTCO-1969</name>
+  <date>1969</date>
+  <reference>Signaling definitions corresponding to the 1969 Southern Pacific Transportation Company rules.</reference>
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2009</year>
+    <year>2010</year>
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Dick</firstname>
+        <surname>Bronson</surname>
+      </personname>
+      <email>dick@rr-cirkits.com</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Bob</firstname>
+        <surname>Jacobsen</surname>
+      </personname>
+      <email>jake@physics.berkeley.edu</email>
+    </author>
+    <author>
+      <personname>
+        <firstname>Suzie</firstname>
+        <surname>Tall</surname>
+      </personname>
+      <email>suzie_tall@yahoo.co.uk</email>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>1</revnumber>
+      <date>2015-05-20</date>
+      <authorinitials>ST</authorinitials>
+      <revremark>Initial version</revremark>
+    </revision>
+  </revhistory>
+  <aspects>
+    <aspect>
+      <name>Block Signal Green</name>
+      <rule>Rules 281 and 282</rule>
+      <indication>Proceed</indication>
+      <reference>Page 79-80</reference>
+      <speed>Normal</speed>
+      <speed2>Normal</speed2>
+      <route>Normal</route>
+      <dccAspect>23</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Block Signal Green for Diverging Route</name>
+      <rule>Rule 283</rule>
+      <indication>Proceed on diverging route</indication>
+      <reference>Page 81</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Diverging</route>
+      <dccAspect>14</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Block Signal Yellow over Green</name>
+      <rule>Rule 284</rule>
+      <indication>Reduce to medium speed and proceed. Next signal indicates "Proceed on diverging route"</indication>
+      <reference>Page 81</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>21</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Signal Yellow</name>
+      <rule>Rule 285 and 286</rule>
+      <indication>Proceed not exceeding medium speed, prepared to stop short of next home signal.</indication>
+      <reference>Page 82 and 84</reference>
+      <speed>Medium</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>17</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Approach Medium - Flashing Yellow</name>
+      <rule>Rule 285-A</rule>
+      <indication>Proceed prepared to pass next signal at not exceeding medium speed.</indication>
+      <reference>Page 83</reference>
+      <speed>Normal</speed>
+      <speed2>Medium</speed2>
+      <route>Normal</route>
+      <dccAspect>20</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Restricting</name>
+      <rule>Rule 287 and 290-A</rule>
+      <indication>Reduce to restricted speed and proceed.</indication>
+      <reference>Page 84 and 88</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Normal</route>
+      <dccAspect>1</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Home Signal Yellow for Diverging Route</name>
+      <rule>Rule 288</rule>
+      <indication>Proceed on diverging route at restricted speed.</indication>
+      <reference>Page 85</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>8</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Home Signal Red over Lunar</name>
+      <rule>Rule 289</rule>
+      <indication>Proceed without stopping at restricted speed on other than main track.</indication>
+      <reference>Page 86</reference>
+      <speed>Restricted</speed>
+      <speed2>Restricted</speed2>
+      <route>Diverging</route>
+      <dccAspect>3</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Home Signal Red</name>
+      <rule>Rule 290</rule>
+      <indication>Stop.</indication>
+      <reference>Page 87</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Stop and Proceed</name>
+      <rule>Rule 291, 292 and 293</rule>
+      <indication>Stop. Then proceed at restricted speed without calling dispatcher or signal operator. When flashing white displayed be governed by special instructions.</indication>
+      <reference>Page 89-90</reference>
+      <speed>Stop</speed>
+      <speed2>Restricted</speed2>
+      <route>Either</route>
+      <dccAspect>0</dccAspect>
+    </aspect>
+    <aspect>
+      <name>Unlit</name>
+      <rule>-</rule>
+      <indication>Mast is unlit</indication>
+      <reference>-</reference>
+      <speed>Stop</speed>
+      <speed2>Stop</speed2>
+      <route>Either</route>
+      <dccAspect>31</dccAspect>
+    </aspect>
+  </aspects>
+  <imagetypes>
+    <imagetype type="noflash" />
+    <imagetype type="shaped" />
+    <imagetype type="dwarf" />
+  </imagetypes>
+  <appearancefiles>
+    <appearancefile href="appearance-SE-1-A.xml"></appearancefile>
+    <appearancefile href="appearance-SE-1-G.xml"></appearancefile>
+    <appearancefile href="appearance-SE-1-PP.xml"></appearancefile>
+    <appearancefile href="appearance-SE-2-A.xml"></appearancefile>
+    <appearancefile href="appearance-SE-2-P.xml"></appearancefile>
+    <appearancefile href="appearance-SE-3-A.xml"></appearancefile>
+    <appearancefile href="appearance-SH-1-A.xml"></appearancefile>
+    <appearancefile href="appearance-SH-2-A.xml"></appearancefile>
+    <appearancefile href="appearance-SL-1-A.xml"></appearancefile>
+    <appearancefile href="appearance-SL-1-P.xml" />
+    <appearancefile href="appearance-SL-1-D.xml" />
+    <appearancefile href="appearance-SL-1-G.xml" />
+    <appearancefile href="appearance-SL-1-PP.xml" />
+    <appearancefile href="appearance-SL-1-W.xml" />
+    <appearancefile href="appearance-SL-2-A.xml" />
+    <appearancefile href="appearance-SL-2-L.xml" />
+    <appearancefile href="appearance-SL-2-Y.xml" />
+    <appearancefile href="appearance-SL-3-L.xml" />
+  </appearancefiles>
+</aspecttable>
