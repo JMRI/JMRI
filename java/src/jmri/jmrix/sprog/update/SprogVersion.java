@@ -36,7 +36,7 @@ public class SprogVersion {
      */
     public SprogVersion(SprogType t, String s) {
         if (log.isDebugEnabled()) {
-            log.debug("SprogVersion(SprogType, String) ctor: " + t.toString() + s);
+            log.debug("SprogVersion(SprogType, String) ctor: " + t.toString() + "v" + s);
         }
         if (log.isDebugEnabled()) {
             log.debug("sprogType: " + t.sprogType);
@@ -157,7 +157,7 @@ public class SprogVersion {
         if (log.isDebugEnabled()) {
             log.debug("sprogType: " + s.sprogType.sprogType);
         }
-        return (s.sprogType.toString() + sprogVersion);
+        return (s.sprogType.toString() +" v"+ sprogVersion);
     }
 
     static Logger log = LoggerFactory.getLogger(SprogVersion.class.getName());
