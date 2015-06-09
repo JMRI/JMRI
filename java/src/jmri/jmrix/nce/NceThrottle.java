@@ -31,7 +31,7 @@ public class NceThrottle extends AbstractThrottle {
     public NceThrottle(NceSystemConnectionMemo memo, DccLocoAddress address) {
         super(memo);
         this.tc = memo.getNceTrafficController();
-        super.speedStepMode = SpeedStepMode128;
+        setSpeedStepMode(SpeedStepMode128);
 
         // cache settings. It would be better to read the
         // actual state, but I don't know how to do this
