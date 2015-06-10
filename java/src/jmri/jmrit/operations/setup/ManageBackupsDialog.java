@@ -199,19 +199,16 @@ public class ManageBackupsDialog extends JDialog {
 
     protected void do_deleteButton_actionPerformed(ActionEvent e) {
         // Here we get the selected items from the list
-        List<BackupSet> objs = setList.getSelectedValuesList();
+        List<BackupSet> selectedSets = setList.getSelectedValuesList();
 
-        int count = objs.size();
-        if (count > 0) {
+        if (selectedSets.size() > 0) {
             // Make sure OK to delete backups
-            String msg = String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), count);
-            int result = JOptionPane.showConfirmDialog(this, msg, Bundle
-                    .getMessage("ManageBackupsDialog.deletingBackupSets"), JOptionPane.OK_CANCEL_OPTION);
+            int result = JOptionPane.showConfirmDialog(this, String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), selectedSets.size()), 
+                    Bundle.getMessage("ManageBackupsDialog.deletingBackupSets"), JOptionPane.OK_CANCEL_OPTION);
 
             if (result == JOptionPane.OK_OPTION) {
-                for (Object obj : objs) {
-                    BackupSet set = (BackupSet) obj;
-                    model.removeElement(obj);
+                for (BackupSet set : selectedSets) {
+                    model.removeElement(set);
 
                     // For now, the BackupSet deletes the associated files, but
                     // we might want to move this into the BackupBase class just
