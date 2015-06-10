@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author rhwood
  */
-public class ConstrainedBean extends Bean {
+public abstract class ConstrainedBean extends Bean {
 
     protected VetoableChangeSupport vetoableChangeSupport = null;
 
