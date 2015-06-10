@@ -46,6 +46,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.IdTagTest.suite());
         suite.addTest(jmri.ProgrammingModeTest.suite());
         suite.addTest(jmri.VersionTest.suite());
+        suite.addTest(jmri.beans.PackageTest.suite());
         suite.addTest(jmri.progdebugger.PackageTest.suite());
         suite.addTest(jmri.configurexml.PackageTest.suite());
         suite.addTest(jmri.implementation.PackageTest.suite());
