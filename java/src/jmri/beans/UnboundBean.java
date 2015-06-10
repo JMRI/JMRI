@@ -1,6 +1,7 @@
 // UnboundBean.java
 package jmri.beans;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,7 +24,7 @@ public abstract class UnboundBean implements BeanInterface {
      * variable, you will need to instantiate it, or test that it is not null
      * prior to use.
      */
-    protected final HashMap<String, Object> properties = new HashMap<String, Object>();
+    protected final HashMap<String, Object> properties = new HashMap<>();
 
     /**
      * Get value of element at <i>index</i> of property array <i>key</i>.
@@ -77,7 +78,7 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public Set<String> getPropertyNames() {
-        HashSet<String> names = new HashSet<String>();
+        HashSet<String> names = new HashSet<>();
         names.addAll(properties.keySet());
         names.addAll(Beans.getIntrospectedPropertyNames(this));
         return names;
@@ -121,9 +122,16 @@ public abstract class UnboundBean implements BeanInterface {
             Beans.setIntrospectedIndexedProperty(this, key, index, value);
         } else {
             if (!properties.containsKey(key)) {
-                properties.put(key, new Object[0]);
+                properties.put(key, new Object[1]);
             }
-            ((Object[]) properties.get(key))[index] = value;
+            Object[] array = (Object[]) properties.get(key);
+            if (index < array.length) {
+                array[index] = value;
+            } else {
+                Object[] grown = Arrays.copyOf(array, index + 1);
+                grown[index] = value;
+                properties.put(key, grown);
+            }
         }
     }
 
