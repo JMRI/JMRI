@@ -7,6 +7,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.DefaultListModel;
@@ -198,9 +199,9 @@ public class ManageBackupsDialog extends JDialog {
 
     protected void do_deleteButton_actionPerformed(ActionEvent e) {
         // Here we get the selected items from the list
-        Object[] objs = setList.getSelectedValues();
+        List<BackupSet> objs = setList.getSelectedValuesList();
 
-        int count = objs.length;
+        int count = objs.size();
         if (count > 0) {
             // Make sure OK to delete backups
             String msg = String.format(Bundle.getMessage("ManageBackupsDialog.aboutToDelete"), count);
