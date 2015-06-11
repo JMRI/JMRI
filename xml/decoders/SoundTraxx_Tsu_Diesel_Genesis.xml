@@ -24,7 +24,8 @@
   <version author="Michael Mosher" version="9" lastUpdated="20130731"/>
   <version author="Ken Mazer" version="10" lastUpdated="20140105"/>
   <version author="Dave Heap" version="11" lastUpdated="20140401"/>
-  <version author="Alain Le Marchand" version="12" lastUpdated="20140530"/>    
+  <version author="Alain Le Marchand" version="12" lastUpdated="20140530"/>
+  <version author="Alain Le Marchand" version="13" lastUpdated="20150607"/>        
   <!-- This file contains the Tsunami definitions for Genesis OEM diesel locomotives	-->
   <!-- version 1	Based on the "SoundTraxx_Tsu_Diesel.xml" Ver 7 file.						-->
   <!-- version 2	Add Rule 17 bit to CV51 & 52 and add CV 53, 54, 57, 58 and add N scale models -->
@@ -37,7 +38,8 @@
   <!-- version 9	Add GP50 -->
   <!-- version 10	Added GP40-2 & fix include statement for CV153 to 160 -->
   <!-- version 11	Implement live function group exchange -->
-  <!-- version 6        Function labels according to Genesis mapping, Output names normalized with other TSU Diesel -->  
+  <!-- version 12       Function labels according to Genesis mapping, Output names normalized with other TSU Diesel -->
+  <!-- version 13       Function labels updated for N-scale models -->   
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Tsunami Diesel Genesis OEM" mfg="SoundTraxx (Throttle-Up)" comment="These are OEM for Athearn Genesis Tsunami diesel decoders">
@@ -500,6 +502,12 @@
         <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Coupler</functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>       
+        </functionlabels>      
       </model>
       <model model="N FP45" numOuts="4" numFns="14" connector="other" productID="N_F45">
         <versionCV lowVersionID="64"/>
@@ -520,6 +528,12 @@
         <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Coupler</functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>       
+        </functionlabels>          
       </model>
       <model model="N F59PHI" numOuts="4" numFns="14" connector="other" productID="N_F45">
         <versionCV lowVersionID="64"/>
@@ -540,6 +554,12 @@
         <output name="Compressor" label="RPM -"/>
         <output name="Brakes"/>
         <output name="Coupler"/>
+        <functionlabels>
+          <functionlabel num="5" lockable="true">Brake Squeal</functionlabel>
+          <functionlabel num="6" lockable="true">Coupler</functionlabel>
+          <functionlabel num="9" lockable="true"></functionlabel>
+          <functionlabel num="10" lockable="true"></functionlabel>       
+        </functionlabels>          
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Headlight</functionlabel>

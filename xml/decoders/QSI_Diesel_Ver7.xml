@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="20" lastUpdated="20150531"/>    
   <version author="Michael Mosher" version="19" lastUpdated="20130813"/>
   <version author="Michael Mosher" version="18" lastUpdated="2011003"/>
   <version author="Michael Mosher" version="17" lastUpdated="20110922"/>
@@ -52,6 +53,7 @@
   <!-- version 17 - add models 175,186,1048,1049 -->
   <!-- version 18 - removed factor="256" from paired vars -->
   <!-- version 19 - update from latest QSI info & more use of x:includes -->
+  <!-- version 20 - update for Atlas B27-3 (ProductID=127), based on real model testing - no ditch lights (55.84.x) nor separate board light(55.100.X)  -->  
   <decoder>
     <family name="QSI Diesel Ver. 7" mfg="QSIndustries" lowVersionID="7">
       <model model="QSI Revolution Diesel" numFns="14" numOuts="0" productID="1050">
@@ -1836,52 +1838,52 @@
       <ivariable label="Rear Mars Light Ramp Down Rate" CVname="55.80.16" CV="55" PI="80" SI="16" default="25" item="CV55.80.16" include="1031,1040,1042,1050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Ditch Lights Initial State" CVname="55.84.0" CV="55" PI="84" SI="0" default="1" item="CV55.84.0" mask="XXXXVVVV" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Ditch Lights Initial State" CVname="55.84.0" CV="55" PI="84" SI="0" default="1" item="CV55.84.0" mask="XXXXVVVV" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffAutoOnDimStrobe.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.0" CV="55" PI="84" SI="0" default="0" item="CV55.84.0 Horn" mask="XXXVXXXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Horn" CVname="55.84.0" CV="55" PI="84" SI="0" default="0" item="CV55.84.0 Horn" mask="XXXVXXXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.0" CV="55" PI="84" SI="0" default="0" item="CV55.84.0 Bell" mask="XXVXXXXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Bell" CVname="55.84.0" CV="55" PI="84" SI="0" default="0" item="CV55.84.0 Bell" mask="XXVXXXXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights FWD" CVname="55.84.1" CV="55" PI="84" SI="1" default="2" item="CV55.84.1" mask="XXXXXXVV" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Ditch Lights FWD" CVname="55.84.1" CV="55" PI="84" SI="1" default="2" item="CV55.84.1" mask="XXXXXXVV" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.1" CV="55" PI="84" SI="1" default="1" item="CV55.84.1 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Horn" CVname="55.84.1" CV="55" PI="84" SI="1" default="1" item="CV55.84.1 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.1" CV="55" PI="84" SI="1" default="0" item="CV55.84.1 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Bell" CVname="55.84.1" CV="55" PI="84" SI="1" default="0" item="CV55.84.1 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights NFF" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2" mask="XXXXXXVV" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Ditch Lights NFF" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2" mask="XXXXXXVV" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Horn" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Bell" CVname="55.84.2" CV="55" PI="84" SI="2" default="0" item="CV55.84.2 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights REV" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3" mask="XXXXXXVV" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Ditch Lights REV" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3" mask="XXXXXXVV" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Horn" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Bell" CVname="55.84.3" CV="55" PI="84" SI="3" default="0" item="CV55.84.3 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Ditch Lights NFR" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4" mask="XXXXXXVV" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Ditch Lights NFR" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4" mask="XXXXXXVV" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offDimBrightStrobe.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Horn" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Horn" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Horn" mask="XXXXXVXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Strobe with Bell" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Strobe with Bell" CVname="55.84.4" CV="55" PI="84" SI="4" default="0" item="CV55.84.4 Bell" mask="XXXXVXXX" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Ditch Lights Strobe Hold Time" CVname="55.84.5" CV="55" PI="84" SI="5" default="5" item="CV55.84.5" include="102,103,113,123,125,126,127,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Ditch Lights Strobe Hold Time" CVname="55.84.5" CV="55" PI="84" SI="5" default="5" item="CV55.84.5" include="102,103,113,123,125,126,131,132,134,149,150,154,174,1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <indexedVal max="31"/>
       </ivariable>
       <ivariable label="Ditch Lights Strobe Period" CVname="55.84.6" CV="55" PI="84" SI="6" default="100" item="CV55.84.6" include="1031,1040,1042,1048,1049,1050">
@@ -2190,19 +2192,19 @@
       <ivariable label="Rear Overhead Beacon Pulse 2 Max Intensity" CVname="55.96.19" CV="55" PI="96" SI="19" default="209" item="CV55.96.19" include="1008,1014,1015,1018,1019,1020,1021,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1050">
         <indexedVal/>
       </ivariable>
-      <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0" default="1" item="CV55.100.0" mask="XXXXXXVV" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,127,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Front Number Board Lights Initial State" CVname="55.100.0" CV="55" PI="100" SI="0" default="1" item="CV55.100.0" mask="XXXXXXVV" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-offAutoOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 FWD" mask="XXXXXXXV" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,127,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Front Number Board Lights FWD" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 FWD" mask="XXXXXXXV" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights NFF" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFF" mask="XXXXXVXX" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,127,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Front Number Board Lights NFF" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFF" mask="XXXXXVXX" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights REV" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 REV" mask="XXXVXXXX" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,127,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Front Number Board Lights REV" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 REV" mask="XXXVXXXX" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
-      <ivariable label="Auto Front Number Board Lights NFR" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFR" mask="XVXXXXXX" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,127,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
+      <ivariable label="Auto Front Number Board Lights NFR" CVname="55.100.1" CV="55" PI="100" SI="1" default="1" item="CV55.100.1 NFR" mask="XVXXXXXX" include="100,104,107,108,110,115,116,117,118,119,120,121,122,126,12610,12710,131,135,136,143,144,151,152,158,159,160,161,176,177,178,179,180,181,1008,1014,1015,1018,1019,1022,1024,1031,1032,1033,1034,1036,1037,1038,1040,1041,1042,1048,1049,1050">
         <xi:include href="http://jmri.org/xml/decoders/parts/ienum-OffOn.xml"/>
       </ivariable>
       <ivariable label="Front Number Board Max Intensity" CVname="55.100.12" CV="55" PI="100" SI="12" default="255" item="CV55.100.12" include="1031,1040,1042,1050">

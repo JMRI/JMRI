@@ -13,6 +13,7 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version author="Alain Le Marchand" version="2.2" lastUpdated="20150611"/>
   <version author="Alain Le Marchand" version="2.1" lastUpdated="20150501"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20150427"/>
   <version author="Peter Ulvestad" version="1" lastUpdated="20131102"/>
@@ -20,6 +21,7 @@
   <!-- version 2 Renaming decoder models                -->
   <!-- version 2.1: Refactoring                         -->
   <!--              Bell Ring Rate (CV54) on Sound pane -->
+  <!--              CV6 = BEMF enabled                  -->
   <decoder>
     <family name="Sound Decoders" mfg="MRC" lowVersionID="2" highVersionID="2" comment="Synchronized Sound Brilliance(TM) Decoders">
       <model show="no" model="Platinum Series Genset Diesel Sound 1916" replacementModel="1916 - HO Scale - Atlas Genset" replacementFamily="Sound Decoders" numOuts="7" numFns="30" maxTotalCurrent="1.5A">
@@ -74,32 +76,32 @@
         <label xml:lang="it">Volt Partenza</label>
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Anfahrspannung</label>
-        <comment>Range 0-63</comment>
+        <tooltip>Range 0-63</tooltip>
       </variable>
       <variable CV="3" item="Accel" default="0" comment="Range 0-63">
         <decVal max="63"/>
         <label>Acceleration</label>
-        <label xml:lang="it">Accellerazione (0-63)</label>
-        <label xml:lang="fr">Accelération (0-63)</label>
-        <label xml:lang="de">Anfahrverzögerung (0-63)</label>
-        <comment>Range 0-63</comment>
+        <label xml:lang="it">Accellerazione</label>
+        <label xml:lang="fr">Accelération</label>
+        <label xml:lang="de">Anfahrverzögerung</label>
+        <tooltip>Range 0-63</tooltip>
       </variable>
       <variable CV="4" item="Decel" default="0" comment="Range 0-63">
         <decVal max="63"/>
         <label>Deceleration</label>
-        <label xml:lang="it">Decellerazione (1-63)</label>
-        <label xml:lang="fr">Décélération (1-63)</label>
-        <label xml:lang="de">Bremszeit (1-63)</label>
-        <comment>Range 0-63</comment>
+        <label xml:lang="it">Decellerazione</label>
+        <label xml:lang="fr">Décélération</label>
+        <label xml:lang="de">Bremszeit</label>
+        <tooltip>Range 0-63</tooltip>
       </variable>
       <variable CV="5" item="Vhigh" default="63" comment="Range 0-63">
         <decVal max="63"/>
         <label>Max Voltage</label>
-        <label xml:lang="it">Volt Massimi (0-63):</label>
+        <label xml:lang="it">Volt Massimi:</label>
         <label xml:lang="de">Höchstgeschwindigkeit</label>
-        <comment>Range 0-63</comment>
+        <tooltip>Range 0-63</tooltip>
       </variable>
-      <variable CV="6" item="Motor Option 1" default="0">
+      <variable CV="6" item="Motor Option 1" default="1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <label>Adaptive Back EMF control enable</label>
       </variable>
