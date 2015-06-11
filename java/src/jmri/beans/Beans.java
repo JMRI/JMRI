@@ -87,6 +87,20 @@ public class Beans extends java.beans.Beans {
         }
     }
 
+    /**
+     * Get the item at index <i>index</i> of property <i>key</i> of
+     * <i>bean</i>.
+     *
+     * If the index <i>index</i> of property <i>key</i> does not exist, this
+     * method returns null instead of throwing
+     * {@link java.lang.ArrayIndexOutOfBoundsException} do to the inability to
+     * get the size of the indexed property using introspection.
+     *
+     * @param bean
+     * @param key
+     * @param index
+     * @return the value at <i>index</i> or null
+     */
     public static Object getIndexedProperty(Object bean, String key, int index) {
         if (implementsBeanInterface(bean)) {
             return ((BeanInterface) bean).getIndexedProperty(key, index);
@@ -100,7 +114,9 @@ public class Beans extends java.beans.Beans {
      * <i>bean</i>.
      *
      * If the index <i>index</i> of property <i>key</i> does not exist, this
-     * method returns null.
+     * method returns null instead of throwing
+     * {@link java.lang.ArrayIndexOutOfBoundsException} do to the inability to
+     * get the size of the indexed property using introspection.
      *
      * This should only be called from outside this class in an implementation
      * of
@@ -111,7 +127,7 @@ public class Beans extends java.beans.Beans {
      * @param bean
      * @param key
      * @param index
-     * @return
+     * @return the value at <i>index</i> or null
      */
     public static Object getIntrospectedIndexedProperty(Object bean, String key, int index) {
         if (bean != null && key != null) {

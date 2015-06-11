@@ -33,6 +33,11 @@ public abstract class UnboundBean implements BeanInterface {
      * JavaBeans introspection, and assumes, based on JavaBeans coding patterns,
      * that the read method has the following parameter: <code>index</code>.
      *
+     * Note that this method returns null instead of throwing
+     * {@link java.lang.ArrayIndexOutOfBoundsException} if the index is invalid
+     * since the Java introspection methods provide no reliable way to get the
+     * size of the indexed property.
+     *
      * @param key
      * @param index
      * @return value of element or null
@@ -40,7 +45,11 @@ public abstract class UnboundBean implements BeanInterface {
     @Override
     public Object getIndexedProperty(String key, int index) {
         if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
-            return ((Object[]) properties.get(key))[index];
+            try {
+                return ((Object[]) properties.get(key))[index];
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return null;
+            }
         }
         return Beans.getIntrospectedIndexedProperty(this, key, index);
     }
