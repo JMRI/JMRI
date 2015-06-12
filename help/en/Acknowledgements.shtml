@@ -495,7 +495,8 @@
     <LI>Jack Walton, who created the Lenz LE080 decoder definition
 	<LI>Mark Waters, who provided numerous Zimo decoder definitions
 	    and new Zimo MX620 definitions.
-    <LI>Howard Watkins, who helped test the CBUS support
+    <LI>Howard Watkins, who helped test the CBUS support and provide a sample script
+        for Layout Editor
 	<LI>Jim Wells, who created our logos and the great program icons
     <LI>Donn Welton, who provided info on configuring a PowerBook for DecoderPro
     <LI>Ken Weygandt, who provided the default values for the SoundTraxx Tsunami decoder definition and 45-degree icons for panels,
