@@ -85,6 +85,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private OBlock _shareTOBlock;       // Block in another warrant that controls a turnout in this block
     private String _message;            // last message returned from an action
     private Calibrater _calibrater;     // Calibrates throttle speed factor
+    RosterEntry     _train;
 
     // Throttle modes
     public static final int MODE_NONE = 0;
@@ -334,9 +335,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (id == null || id.trim().length() == 0) {
             return false;
         }
-        RosterEntry train = Roster.instance().entryFromTitle(id);
-        if (train != null) {
-            _dccAddress = train.getDccLocoAddress();
+        _train = Roster.instance().entryFromTitle(id);
+        if (_train != null) {
+            _dccAddress = _train.getDccLocoAddress();
         } else {
             int index = id.indexOf('(');
             String numId;
@@ -347,6 +348,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
             if (l.size() > 0) {
+                _train = l.get(0);
                 try {
                     _dccAddress = l.get(0).getDccLocoAddress();
                 } catch (NumberFormatException e) {
@@ -367,6 +369,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
         }
         return true;
+    }
+    
+    protected RosterEntry getRosterEntry() {
+        if (_train==null) {
+            setTrainId(_trainId);
+        }           
+        return _train;
     }
 
     public DccLocoAddress getDccAddress() {
@@ -391,6 +400,10 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     public void setThrottleFactor(float f) {
         _throttleFactor = f;
     }
+    /**
+     * return is inches per millisecond ratio to throttle setting
+     * @return
+     */
     public float getThrottleFactor() {
         return _throttleFactor;
     }
@@ -407,7 +420,13 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _throttleFactor = fac;          
         return null;
     }
-    
+    protected DccThrottle getThrottle() {
+        if (_engineer!=null) {
+            return _engineer.getThrottle();
+        }
+        return null;
+    }
+   
     protected void setCalibrater(Calibrater c) {
         _calibrater = c;
     }
@@ -1478,7 +1497,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     
     private float getLength(OPath path) {
-        float len = path.getLengthIn();
+        float len = path.getLengthMm();
         if (len <= 0) {
             len = _lookAheadLen;      //rampLen;
         }

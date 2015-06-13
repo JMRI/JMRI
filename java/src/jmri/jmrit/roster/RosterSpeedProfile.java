@@ -1,7 +1,9 @@
 package jmri.jmrit.roster;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.TreeMap;
 import jmri.Block;
 import jmri.DccThrottle;
@@ -656,6 +658,54 @@ public class RosterSpeedProfile {
         float getReverseSpeed() {
             return reverse;
         }
+    }
+
+    /* If there are too few SpeedSteps to get reasonable distances and speeds
+     * over a good range of throttle settings, compute a factor that averages
+     * a ratio for what whatever SpeedSteps exist.
+     */
+    public int getProfilesize() {
+        return speeds.size();
+    }
+    /**
+     * @return an average ratio of forward speed to throttle setting
+     */
+    public float getForwardFactor() {
+        float factor = 0.0f;
+        int count = 0;
+        Iterator<Map.Entry<Integer, SpeedStep>> it = speeds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, SpeedStep> entry = it.next();
+            float fac = entry.getValue().getForwardSpeed()/entry.getKey();
+            if (fac > 0.0f) {
+                factor += fac;
+                count++;
+            }
+        }
+        if (count>0) {
+            return factor/count;
+        }
+        return factor;
+    }
+    /**
+     * @return an average ratio of reverse speed to throttle setting
+     */
+    public float getReverseFactor() {
+        float factor = 0.0f;
+        int count = 0;
+        Iterator<Map.Entry<Integer, SpeedStep>> it = speeds.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry<Integer, SpeedStep> entry = it.next();
+            float fac = entry.getValue().getReverseSpeed()/entry.getKey();
+            if (fac > 0.0f) {
+                factor += fac;
+                count++;
+            }
+        }
+        if (count>0) {
+            return factor/count;
+        }
+        return factor;
     }
 
     static Logger log = LoggerFactory.getLogger(RosterSpeedProfile.class);

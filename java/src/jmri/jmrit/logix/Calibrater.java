@@ -1,6 +1,7 @@
 package jmri.jmrit.logix;
 
 
+import java.awt.BorderLayout;
 import java.awt.Point;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +12,11 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import jmri.DccThrottle;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +51,10 @@ public class Calibrater extends jmri.util.JmriJFrame {
     private float _maxSpeed;
     private long _entryTime;
     private float _factor;
+    private float _rawSpeed;
+    private BlockOrder _calibBlockOrder;
+    RosterSpeedProfile  _speedProfile;
+    boolean _isForward;
     
     private JPanel _mainPanel;
     private JCheckBox _addBox = new JCheckBox(Bundle.getMessage("addFactor"));
@@ -61,11 +69,15 @@ public class Calibrater extends jmri.util.JmriJFrame {
         bg.add(_ignoreBox);
         _mainPanel = new JPanel();
         _mainPanel.setLayout(new BoxLayout(_mainPanel, BoxLayout.PAGE_AXIS));
-        _mainPanel.add(Box.createVerticalStrut(10));
-        _mainPanel.add(makeEntryPanel(0));
-        _mainPanel.add(makeExitPanel(50, "kmph"));
+        _mainPanel.add(Box.createRigidArea(new java.awt.Dimension(350,10)));
+        _mainPanel.add(makeEntryPanel("Calibrate a Train"));
+        _mainPanel.add(Box.createRigidArea(new java.awt.Dimension(50,10)));
+        _mainPanel.add(makeExitPanel(true));
+//        _mainPanel.add(Box.createRigidArea(new java.awt.Dimension(450,0)));
         _mainPanel.add(makeButtonPanel());
         _mainPanel.add(Box.createVerticalStrut(10));
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout(10, 10));
         getContentPane().add(_mainPanel);
         setLocation(pt.x, pt.y);
         setAlwaysOnTop(true);
@@ -74,11 +86,11 @@ public class Calibrater extends jmri.util.JmriJFrame {
     }
     
     protected String verifyCalibrate() {
-        BlockOrder bo = _warrant.getViaOrder();
-        if (bo==null) {
+        _calibBlockOrder = _warrant.getViaOrder();
+        if (_calibBlockOrder==null) {
             return  Bundle.getMessage("noCalibBlock");                                          
         }
-        OBlock calibBlock = bo.getBlock();
+        OBlock calibBlock = _calibBlockOrder.getBlock();
         if (calibBlock==null) {
             return  Bundle.getMessage("noCalibBlock");                              
         }
@@ -86,7 +98,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         if (_calibrateIndex<=0 || _calibrateIndex>=_warrant.getThrottleCommands().size()-1) {
             return  Bundle.getMessage("badCalibBlock", calibBlock.getDisplayName());                    
         }
-        if (bo.getPath().getLengthIn() <= 3.0) {
+        if (_calibBlockOrder.getPath().getLengthMm() <= 10.0) {
             return  Bundle.getMessage("CalibBlockTooSmall", calibBlock.getDisplayName());   
         }
         List <ThrottleSetting> cmds = _warrant.getThrottleCommands();
@@ -119,17 +131,42 @@ public class Calibrater extends jmri.util.JmriJFrame {
             msg = Bundle.getMessage("speedChangeBlock", afterBlock);            
         } else {
             _maxSpeed = speed;          
+            jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
+            if (ent!=null) {
+                _speedProfile = ent.getSpeedProfile();
+            }
         }
         return msg;
     }
     
     private void dofactor() {
         NXFrame.getInstance().setThrottleScale(_factor);
-        if (_addBox.isSelected()) {
-            
-        }
         if (_clearBox.isSelected()) {
-            
+            if (_speedProfile != null) {
+                _speedProfile.clearCurrentProfile(); 
+            }
+        }
+       if (_addBox.isSelected()) {
+            jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
+            if (ent==null) {
+                JOptionPane.showMessageDialog(this, Bundle.getMessage("trainInfo6", _warrant.getTrainId()),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
+                return;
+            }
+            _warrant.getRosterEntry();
+            if (_speedProfile == null) {
+                _speedProfile = new RosterSpeedProfile(ent);
+                ent.setSpeedProfile(_speedProfile);
+            }
+          // _maxSpeed is now actual speedSetting
+            if (_isForward) {
+                _speedProfile.setForwardSpeed(_maxSpeed, _rawSpeed*1000);                
+            } else {
+                _speedProfile.setReverseSpeed(_maxSpeed, _rawSpeed*1000);                                
+            }
+            if (log.isDebugEnabled()) log.debug("Made speed profile setting for "+ _warrant.getTrainId()+
+                    ": "+(_isForward ? "Forward":"Reverse")+" step= "+Math.round(_maxSpeed*1000)+", speed= "+_rawSpeed*1000);
+            _warrant.getRosterEntry().updateFile();
         }
         dispose();
     }
@@ -158,30 +195,90 @@ public class Calibrater extends jmri.util.JmriJFrame {
 
     }
     
-    private JPanel makeEntryPanel(int boIdx) {
-        OBlock calibBlock =  _warrant.getBlockOrderAt(boIdx).getBlock();
-        _entryTime = calibBlock._entryTime;
+    private JPanel makeEntryPanel(String name) {
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-//        panel.add(Box.createVerticalGlue());
-        // Train {0} with address {1} has entered block {2} at throttle setting {3}.
-        panel.add(new JLabel(Bundle.getMessage("trainInfo1", _warrant.getTrainName(), 
-                _warrant.getDccAddress().toString())));
-        panel.add(new JLabel(Bundle.getMessage("trainInfo2", calibBlock.getDisplayName(), _maxSpeed)));
-//        panel.add(Box.createVerticalGlue());
-//        _mainPanel.remove(0);
+        panel.setLayout(new BorderLayout(10, 10));
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+        p.add(new JLabel(Bundle.getMessage("trainInfo1", _warrant.getTrainName(), _warrant.getDccAddress().toString())));
+        p.add(new JLabel(Bundle.getMessage("trainInfo2", name, _maxSpeed)));
+        panel.add(p, BorderLayout.CENTER);
+        panel.add(Box.createRigidArea(new java.awt.Dimension(10,10)), BorderLayout.WEST);
         return panel;
     }
 
-    private JPanel makeExitPanel(float speed, String speedUnits) {
+    private JPanel makeExitPanel(boolean init) {
+        float spFactor = 0.0f;
+        float spSpeed = 0.0f;
+        DccThrottle throttle = _warrant.getThrottle();
+        float scale = SignalSpeedMap.getMap().getLayoutScale();
+        float scaleSpeed = _rawSpeed*scale;          // prototype m/s
+        if (!init) {
+            float speedSetting = throttle.getSpeedSetting();
+            int speedStep = 0;
+            switch (throttle.getSpeedStepMode()) {
+                case DccThrottle.SpeedStepMode14:
+                    speedStep = java.lang.Math.round(speedSetting * 14);
+                    break;
+                case DccThrottle.SpeedStepMode27:
+                    speedStep = java.lang.Math.round(speedSetting * 27);
+                    break;
+                case DccThrottle.SpeedStepMode28:
+                    speedStep = java.lang.Math.round(speedSetting * 28);
+                    break;
+                case DccThrottle.SpeedStepMode128:
+                    speedStep = java.lang.Math.round(speedSetting * 126);
+                    break;
+            }
+            speedSetting = throttle.getSpeedIncrement()*speedStep;      // actual speedSetting
+            _factor = _rawSpeed/speedSetting;
+//            _factor = speedSetting*25.4f/(_rawSpeed*100);
+            _isForward = throttle.getIsForward();
+            if (_speedProfile!=null) {
+                if (_isForward) {
+                    spSpeed = _speedProfile.getForwardSpeed(speedSetting); 
+                }else {
+                    spSpeed = _speedProfile.getReverseSpeed(speedSetting);                 
+                }
+                spFactor = spSpeed/(speedSetting*1000);
+            }           
+            if (log.isDebugEnabled()) log.debug("Throttle speedSetting= "+speedSetting+", Set from _maxSpeed= "+_maxSpeed+
+                    ", expected profile speed ="+spSpeed+", actual _rawSpeed= "+(_rawSpeed*1000)+"mm/sec, scale= "+scale);
+            _maxSpeed = speedSetting;     // now is the actual setting
+        }
+        String speedUnits;
+        if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
+            speedUnits = "kmph";
+            scaleSpeed = 3.6f*scaleSpeed;
+            spSpeed = spSpeed*scale*3.6f/1000;
+        } else {
+            speedUnits = "mph";
+            scaleSpeed = scaleSpeed*3.6f*0.621371f;
+            spSpeed = spSpeed*scale*3.6f*0.621371f/1000;
+        }
         JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.PAGE_AXIS));
-//        panel.add(Box.createVerticalGlue());
-        panel.add(new JLabel(Bundle.getMessage("trainInfo3", speed, speedUnits)));
-        panel.add(new JLabel(Bundle.getMessage("trainInfo4", _factor)));
-//        panel.add(_addBox);
-//        panel.add(_ignoreBox);
-//        panel.add(_clearBox);
+        panel.setLayout(new BorderLayout(10, 10));
+        JPanel p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+        p.add(new JLabel(Bundle.getMessage("trainInfo3", _maxSpeed, scaleSpeed, speedUnits)));
+        p.add(new JLabel(Bundle.getMessage("trainInfo4", _factor)));
+        if (_speedProfile!=null) {
+            p.add(new JLabel(Bundle.getMessage("trainInfo5", spSpeed, speedUnits, spFactor)));          
+        } else {
+            p.add(new JLabel(Bundle.getMessage("trainInfo6", _warrant.getTrainId())));                     
+        }
+        panel.add(p, BorderLayout.CENTER);
+        panel.add(Box.createRigidArea(new java.awt.Dimension(10,100)), BorderLayout.WEST);
+        p = new JPanel();
+        p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
+        p.add(_addBox);
+        p.add(_ignoreBox);
+        p.add(_clearBox);
+        JPanel pp = new JPanel();
+        pp.setLayout(new BoxLayout(pp, BoxLayout.LINE_AXIS));
+        pp.add(Box.createRigidArea(new java.awt.Dimension(10,100)));
+        pp.add(p);
+        panel.add(pp, BorderLayout.SOUTH);
         return panel;
     }
 
@@ -192,26 +289,27 @@ public class Calibrater extends jmri.util.JmriJFrame {
      */
     protected void calibrateAt(int index) {
         if (_calibrateIndex == index) {
-            _mainPanel.remove(2);
+            _mainPanel.remove(3);
             _mainPanel.remove(1);
-            _mainPanel.add(makeEntryPanel(index), 0);
+            _mainPanel.add(makeEntryPanel(_calibBlockOrder.getBlock().getDisplayName()), 1);
+            _entryTime = _calibBlockOrder.getBlock()._entryTime;
             setVisible(true);
         } else if (_calibrateIndex == index-1) {
             setVisible(false);
             BlockOrder bo = _warrant.getBlockOrderAt(index);
-            OBlock nextBlock = bo.getBlock();
-            long eTime = nextBlock._entryTime - _entryTime;
-            float speed = bo.getPath().getLengthIn()*SignalSpeedMap.getMap().getLayoutScale()/eTime;        // scale ins/ms
-            _factor = _maxSpeed/speed;
+            long eTime = bo.getBlock()._entryTime - _entryTime;
+            _rawSpeed = _calibBlockOrder.getPath().getLengthMm()/eTime;    // layout mm/ms
+/*            float speed = _calibBlockOrder.getPath().getLengthMm()*SignalSpeedMap.getMap().getLayoutScale()/eTime;
+            _factor = _maxSpeed*25.4f/speed;
             String speedUnits;
             if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
                 speedUnits = "kmph";
-                speed = speed*3600*25.4f/1000;
+                speed = 3.6f*speed;
             } else {
                 speedUnits = "mph";
-                speed = speed*3600*1000/(12*5280);
-            }
-            _mainPanel.add(makeExitPanel(speed, speedUnits), 1);
+                speed = speed*3.6f*0.621371f;
+            }*/
+            _mainPanel.add(makeExitPanel(false), 3);
             setVisible(true);
         }
     }

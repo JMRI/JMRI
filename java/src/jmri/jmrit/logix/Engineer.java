@@ -5,6 +5,7 @@ import jmri.DccThrottle;
 import jmri.InstanceManager;
 import jmri.Sensor;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -41,7 +42,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     private int     _sensorWaitState;
     private ThrottleRamp _ramp;
     final ReentrantLock _lock = new ReentrantLock();
-    SignalSpeedMap  _speedMap;
+    SignalSpeedMap      _speedMap;
+    RosterSpeedProfile  _speedProfile;
 
     Engineer(Warrant warrant, DccThrottle throttle) {
         _warrant = warrant;
@@ -50,6 +52,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         _syncIdx = -1;
         _waitForSensor = false;
         _speedMap = SignalSpeedMap.getMap();
+        jmri.jmrit.roster.RosterEntry ent = _warrant.getRosterEntry();
+        if (ent!=null) {
+            _speedProfile = ent.getSpeedProfile();
+        }
     }
 
     @Override
@@ -178,9 +184,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     
     protected int getCurrentCommandIndex() {
         return _idxCurrentCommand;
-    }
-    protected float getCurrentSpeed() {
-        return _throttle.getSpeedSetting();
     }
 
     private void setSpeedStepMode(int stepMode) {
@@ -609,8 +612,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     /**
-     * Note if speedType specifies a speed greater than the commanded speed, negative time is returned.
-     * In this case caller must not ramp speed up but just continue at the commanded speed.
      * @param fromSpeedType commanded speed at start of ramp
      * @param toSpeedType speed name to end ramp
      * @return time required for speed change
@@ -620,6 +621,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         float toSpeed = modifySpeed(_maxSpeed, toSpeedType);
         float delta = _speedMap.getStepIncrement();
         int time = _speedMap.getStepDelay();
+        
         int num = (int)Math.abs((fromSpeed-toSpeed)/delta);
         if (log.isDebugEnabled())log.debug("rampTimeForSpeedChange from "+
                 fromSpeedType+ "("+fromSpeed+") to "+toSpeedType+"("+toSpeed+") is "+time*num);          
@@ -627,7 +629,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     protected long getTimeForDistance(float distance, String speedtype) {
         float fromSpeed =  modifySpeed(_maxSpeed, speedtype);
-        return (long)(_speedMap.getLayoutScale()*_warrant.getThrottleFactor()*distance/fromSpeed);
+        if (_speedProfile != null) {
+            return Math.round(1000*_speedProfile.getDurationOfTravelInSeconds(_throttle.getIsForward(), fromSpeed, Math.round(distance)));
+        }
+        float scaleFactor = _warrant.getThrottleFactor()*_speedMap.getLayoutScale()/25.4f;
+        return (long)(distance*scaleFactor/fromSpeed);
     }
     /**
      * Compute ramp length. Units depend on units of warrant's throttle factor
@@ -651,17 +657,22 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
 
         float delta = _speedMap.getStepIncrement();
-        if (delta<=0.005f) {
+        if (delta<=0.007f) {
             log.error("SignalSpeedMap StepIncrement is not set correctly.  Check Preferences->Warrants.");
             return 1.0f;
         }
-        int time = _speedMap.getStepDelay();
-        float scale = _speedMap.getLayoutScale()*_warrant.getThrottleFactor();
+        float time = (float)(_speedMap.getStepDelay())/1000;
+        boolean isForward = _throttle.getIsForward();
+        float scaleFactor = _speedMap.getLayoutScale()*_warrant.getThrottleFactor()/25.4f;
         // assume linear speed change to ramp down to stop
         float maxRampLength = 0.0f;
         speed = _maxSpeed;
         while (speed>=0.0f) {
-            maxRampLength += (speed-delta/2)*time/scale;
+            if (_speedProfile != null) {
+                maxRampLength += _speedProfile.getDistanceTravelled(isForward, (speed-delta/2), time);                
+            } else {
+                maxRampLength += (speed-delta/2)*time/scaleFactor;                
+            }
             speed -= delta;
         }
         if (log.isDebugEnabled()) log.debug("_lookAheadLen(): max throttle= "+_maxSpeed+" maxRampLength= "+maxRampLength);
@@ -678,6 +689,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         float s1 = modifySpeed(1.0f, speed1);
         float s2 = modifySpeed(1.0f, speed2);
         return (s1<s2);
+    }
+    protected DccThrottle getThrottle() {
+        return _throttle;
     }
     
     private class ThrottleRamp implements Runnable {

@@ -220,11 +220,11 @@ public class WarrantTest extends TestCase {
             warrant = w;
         }
         public void propertyChange(PropertyChangeEvent e) {
-            String property = e.getPropertyName();
-            System.out.println("propertyChange \""+property+
-                    "\" old= "+e.getOldValue()+" new= "+e.getNewValue());
+//            String property = e.getPropertyName();
+//            System.out.println("propertyChange \""+property+
+//                    "\" old= "+e.getOldValue()+" new= "+e.getNewValue());
             Assert.assertEquals("propertyChange", warrant, e.getSource());           
-            System.out.println(warrant.getRunningMessage());
+//            System.out.println(warrant.getRunningMessage());
         }
     }
 
