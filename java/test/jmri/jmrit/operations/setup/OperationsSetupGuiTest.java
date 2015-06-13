@@ -32,6 +32,9 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
         OperationsSetupPanel p = (OperationsSetupPanel) f.getContentPane();
+        
+        // first confirm that setup has all directions selected
+        Assert.assertEquals("All directions selected", Setup.EAST + Setup.WEST + Setup.NORTH + Setup.SOUTH, Setup.getTrainDirection());
 
         // both east/west and north/south checkboxes should be set
         Assert.assertTrue("North selected", p.northCheckBox.isSelected());
@@ -228,6 +231,8 @@ public class OperationsSetupGuiTest extends jmri.util.SwingTestCase {
         CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
         LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
         TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        
+        new Setup();
 
         new jmri.InstanceManager(); // for WebServer and the railroad name
 
