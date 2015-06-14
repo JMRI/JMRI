@@ -50,6 +50,11 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.2
+; - Remove references to DecoderPro3
+; - Remove download of Java as this hasn't worked properly for a while
+; - instead halt with a message to download if not found
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.1
 ; - Remove old JOAL libraries
 ; - Change minimum JRE version to 1.8
@@ -253,7 +258,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.1"                    ; Installer version
+!define INST_VER  "0.1.22.2"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -737,15 +742,10 @@ SectionGroup "Start menu shortcuts" SEC_SMSC
     Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\LocoTools.lnk"
     Delete "$SMPROGRAMS\$SMFOLDER\Tools and Demos\DecoderPro3.lnk"
     ; -- Create shortcuts for standard JMRI components
-    ;CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
-    ;               "$INSTDIR\LaunchJMRI.exe" \
-    ;               "apps.DecoderPro.DecoderPro" \
-    ;               "$INSTDIR\decpro5.ico" 0 "" "" \
-    ;               "Start DecoderPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
-                   "$INSTDIR\dp3.ico" 0 "" "" \
+                   "$INSTDIR\decpro5.ico" 0 "" "" \
                    "Start DecoderPro"
     CreateShortcut "$SMPROGRAMS\$SMFOLDER\PanelPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
@@ -793,23 +793,14 @@ SectionGroupEnd ; SEC_SMSC
 
 SectionGroup "Desktop Shortcuts" SEC_DTSC
   ; -- Create Desktop shortcuts
-  ;Section /o "DecoderPro" SEC_DPDTSC
-  ;  SectionIn 2
-  ;  CreateShortcut "$DESKTOP\DecoderPro.lnk" \
-  ;                 "$INSTDIR\LaunchJMRI.exe" \
-  ;                 "apps.DecoderPro.DecoderPro" \
-  ;                 "$INSTDIR\decpro5.ico" 0 "" "" \
-  ;                 "Start DecoderPro"
-  ;SectionEnd ; SEC_DPDTSC
-
-  Section "DecoderPro3" SEC_DP3DTSC
+  Section "DecoderPro" SEC_DPDTSC
     SectionIn 1 2
     CreateShortcut "$DESKTOP\DecoderPro.lnk" \
                    "$INSTDIR\LaunchJMRI.exe" \
                    "apps.gui3.dp3.DecoderPro3" \
-                   "$INSTDIR\dp3.ico" 0 "" "" \
+                   "$INSTDIR\decpro5" 0 "" "" \
                    "Start DecoderPro"
-  SectionEnd ; SEC_DP3DTSC
+  SectionEnd ; SEC_DPDTSC
 
   Section "PanelPro" SEC_PPDTSC
     SectionIn 1 2
@@ -953,7 +944,6 @@ LangString DESC_SEC_SCSMSC ${LANG_ENGLISH} "Creates Start menu shortcuts for Dec
 LangString DESC_SEC_OCSMSC ${LANG_ENGLISH} "Creates Start menu shortcut for JMRI Demo"
 LangString DESC_SEC_DTSC ${LANG_ENGLISH} "Select Desktop Shortcuts to create."
 LangString DESC_SEC_DPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
-LangString DESC_SEC_DP3DTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for DecoderPro"
 LangString DESC_SEC_PPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for PanelPro"
 LangString DESC_SEC_SPDTSC ${LANG_ENGLISH} "Creates a Desktop shortcut for SoundPro"
 LangString DESC_SEC_CRUNINST ${LANG_ENGLISH} "Creates an Uninstaller for ${APP}"
@@ -975,7 +965,6 @@ LangString MESSAGE_WIN2K_OR_LATER ${LANG_ENGLISH} "${APP} version ${JMRI_VER} is
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_OCSMSC} $(DESC_SEC_OCSMSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DTSC} $(DESC_SEC_DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DPDTSC} $(DESC_SEC_DPDTSC)
-  !insertmacro MUI_DESCRIPTION_TEXT ${SEC_DP3DTSC} $(DESC_SEC_DP3DTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_PPDTSC} $(DESC_SEC_PPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_SPDTSC} $(DESC_SEC_SPDTSC)
   !insertmacro MUI_DESCRIPTION_TEXT ${SEC_CRUNINST} $(DESC_SEC_CRUNINST)
@@ -1132,22 +1121,22 @@ Function CheckJRE
     Call CheckInternetConnection
     Pop $0 ; Get the return value
     StrCmp $0 "offline" NoJRE
-    MessageBox MB_YESNO|MB_ICONQUESTION "$3$\nWould you like to download JAVA from the internet?" IDYES DownloadJRE IDNO NoJRE
+;    MessageBox MB_YESNO|MB_ICONQUESTION "$3$\nWould you like to download JAVA from the internet?" IDYES DownloadJRE IDNO NoJRE
 
   NoJRE:
     MessageBox MB_ICONSTOP "$3$\nYou need to install JAVA ${JRE_VER} or later$\nThis can be downloaded from ${JRE_URL}$\nInstallation of ${APP} ${JMRI_VER} cannot continue"
     Quit
 
-  DownloadJRE:
-    StrCpy $JREINSTALLER "$TEMP\JRE.exe"
-    nsisDL::Download /TIMEOUT=30000 ${JRE_URL} $JREINSTALLER
-    Pop $0 ; Get the return value
-    StrCmp $0 "success" DownloadOK
-      MessageBox MB_ICONSTOP "Failure downloading JAVA$\nPlease try manually from ${JRE_URL}$\nInstallation of ${APP} ${JMRI_VER} cannot continue"
-      Quit
-
-  DownloadOK:
-    StrCpy $OFFLINEINSTALL "0"
+;  DownloadJRE:
+;    StrCpy $JREINSTALLER "$TEMP\JRE.exe"
+;    nsisDL::Download /TIMEOUT=30000 ${JRE_URL} $JREINSTALLER
+;    Pop $0 ; Get the return value
+;    StrCmp $0 "success" DownloadOK
+;      MessageBox MB_ICONSTOP "Failure downloading JAVA$\nPlease try manually from ${JRE_URL}$\nInstallation of ${APP} ${JMRI_VER} cannot continue"
+;      Quit
+;
+;  DownloadOK:
+;    StrCpy $OFFLINEINSTALL "0"
 
   StartJREInstall:
     ExecWait $JREINSTALLER ; Run the JRE installer
