@@ -141,7 +141,7 @@ attributes that can be added to the old (not the new) definition to facilitate t
 &lt;model show="no" model="A4X" replacementModel="A4X" replacementFamily="Jan 2012"&gt;
 </pre></code>
 
-When the user selects "Update Decoder Definitions" from the Actions Menu on any Roster window,  
+When the user selects "Update Decoder Definitions" from the Debug Menu on PanelPro window (or on the legacy DecoderPro until 3.10),  
 all their existing roster entries that use a decoder definition with replacementModel and/or
 replacementFamily defined will be updated to the specified replacement decoder definition
 instead.  This lets people keep using their old, comfortable decoder definition (the old
