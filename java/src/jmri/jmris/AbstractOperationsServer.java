@@ -228,7 +228,7 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
     /**
      * sends the full status for a train to a client
      *
-     * @param trainName is the name of the desired train. If not found, an error
+     * @param train is the name of the desired train. If not found, an error
      *                  is sent to the client
      * @throws IOException on failure to send an error message
      */
