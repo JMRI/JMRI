@@ -270,6 +270,9 @@
          <name xml:lang="it">Ricostruisci Indice Decoder</name>
         <adapter>jmri.jmrit.decoderdefn.DecoderIndexCreateAction</adapter>
     </node>
+    <node name="Update Decoder Definitions">
+        <adapter>jmri.jmrit.roster.UpdateDecoderDefinitionAction</adapter>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Run Script">
          <name xml:lang="it">Esegui Script</name>
