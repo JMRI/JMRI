@@ -30,11 +30,34 @@
       <revnumber>1</revnumber>
       <date>2014-04-27</date>
       <authorinitials>ALM</authorinitials>
-      <revremark>Separate file for John McMasters extended CVs in Digitrax_2SFX.xml file</revremark>
+    <revremark>Separate file for John McMasters extended CVs in Digitrax_2SFX.xml file</revremark>
     </revision>
-    <!-- CVs for Sound Projects created by John McMasters for Digitrax Series 6 Sound Decoders -->
+    <revision>
+    <revnumber>2</revnumber>
+      <date>2015-06-13</date>
+      <authorinitials>JWW</authorinitials>
+    </revision>
+    <!-- CVs for fir v2.x Sound Projects created by John McMasters for Digitrax Series 6 Sound Decoders -->
+    <!-- Revision 2: CVs for v3.0 Sound Projects created by John McMasters for Digitrax Series 6 Sound Decoders -->
   </revhistory>
-  <!-- Sound Settings -->
+  <!-- Modified Sound Settings -->
+  <variable CV="144" item="Sound Setting 8" default="55" include="SDXH166DExt">
+    <decVal max="64"/>
+    <label>Engine, Train Brake Volume</label>
+    <label xml:lang="it">Volume motore, frenata treno</label>
+  </variable>
+  <variable CV="152" item="Sound Project Author ID" default="251" readOnly="yes" tooltip="0xFB(251) = John McMasters" include="SDXH166DExt">
+    <decVal/>
+    <label>Sound Project Author ID</label>
+    <label xml:lang="it">ID autore progetto Suono</label>
+  </variable>
+      <variable item="Sound Project ID" CV="153" default="34" readOnly="yes" include="SDXH166DExt">
+        <decVal/>
+        <label>Sound Project ID</label>
+        <label xml:lang="it">ID progetto Suono</label>
+        <tooltip>32= version 2.2, 33= version 2.3, 34= version 2.4</tooltip>
+      </variable>
+  <!-- New Sound Settings -->
   <variable CV="161" item="Sound Setting 21" default="54" include="SDXH166DExt">
     <decVal/>
     <label>Power Reverser Volume</label>
@@ -65,9 +88,15 @@
     <label>Coupler Slack Volume</label>
     <label xml:lang="it">Volume Sgancio</label>
   </variable>
+  <variable CV="167" item="Sound Setting 30" default="6" include="SDXH166DExt">
+    <decVal max="64"/>
+    <label>Motor Scale</label>
+    <label xml:lang="it">Scale Motor</label>
+    <tooltip>Min 5-9, Max 64</tooltip>
+  </variable>
   <variable CV="168" item="Sound Setting 29" default="52" include="SDXH166DExt">
     <decVal max="64"/>
-    <label>AUX Gen/Stoker/OilPump Volume</label>
+    <label>AUX Gen/Stoker/Oil Pump Volume</label>
     <label xml:lang="it">Volume Gener.Ausil./Stoker/Pompa Olio</label>
   </variable>
   <variable CV="170" item="Sound Setting 24" default="22" include="SDXH166DExt">
@@ -110,83 +139,116 @@
     <label>Cutoff Speed for wheel slip</label>
     <label xml:lang="it">Velocità di intervento Slittamento Ruote</label>
   </variable>
+  <variable CV="178" item="Sound Setting 38" default="40" include="SDXH166DExt">
+    <decVal/>
+    <label>DYNAMO Generator volume</label>
+    <label xml:lang="it">Volume DYNAMO</label>
+  </variable>
+  <variable CV="180" item="Sound Setting 39" default="20" include="SDXH166DExt">
+    <decVal/>
+    <label>Vary Notch/Chuff Threshold</label>
+  </variable>
+  <variable CV="181" item="Sound Setting 40" default="14" include="SDXH166DExt">
+    <decVal/>
+    <label>Brake Rate</label>
+  </variable>
   <!-- Disable Sound Settings -->
-  <variable item="Feature Disable Group 1" CV="169" comment="Set sum of bits0-7 on to disable features" include="SDXH166DExt">
+  <variable item="Feature Disable Group 1" CV="169" include="SDXH166DExt">
     <decVal/>
     <label>Feature Disable Group 1</label>
     <label xml:lang="it">Funzione Disabilitaz. Gr.1</label>
-    <comment xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</comment>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-1" CV="169" mask="XXXXXXXV" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <label>Disable HEP diesel/ARTICULATED steam</label>
+    <label>HEP diesel / Aux Gen.</label>
+    <tooltip>HEP diesel=0, Aux Gen=1</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-2" CV="169" mask="XXXXXXVX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable hard automatic braking</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-3" CV="169" mask="XXXXXVXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable start-up sounds</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-4" CV="169" mask="XXXXVXXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable Fans</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-5" CV="169" mask="XXXVXXXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable toots on direction change</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-6" CV="169" mask="XXVXXXXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable grade crossing random play</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 1-7" CV="169" mask="XVXXXXXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable bell</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
-  <variable item="Feature Disable Group 1-8" CV="169" mask="VXXXXXXX" tooltip="Fuel prime once for Gen1 diesels OR multiple start warning bells Gen2" include="SDXH166DExt">
+  <variable item="Feature Disable Group 1-8" CV="169" mask="VXXXXXXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Fuel prime once/mult.start warning bells</label>
+    <tooltip>Fuel prime once for Gen1 diesels OR multiple start warning bells Gen2</tooltip>
   </variable>
-  <variable item="Feature Disable Group 2" CV="179" comment="Set sum of bits0-7 on to disable features" include="SDXH166DExt">
+  <variable item="Feature Disable Group 2" CV="179" include="SDXH166DExt">
     <decVal/>
     <label>Feature Disable Group 2</label>
     <label xml:lang="it">Funzione Disabilitaz. Gr.2</label>
+    <tooltip>Set sum of bits 0-7 ON to disable features</tooltip>
+    <tooltip xml:lang="it">Somma bit 0-7 in ON per disabilitare Funzione</tooltip>
   </variable>
-  <!--	  
-      <variable item="Feature Disable Group 2-1" CV="179" mask="XXXXXXXV" label="Disable - unused bit 0" include="SDXH166DExt">
-	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      -->
+  <variable item="Feature Disable Group 2-1" CV="179" mask="XXXXXXXV" include="SDXH166DExt">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Diesel Low Idle</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
   <variable item="Feature Disable Group 2-2" CV="179" mask="XXXXXXVX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable Chain Bells 1-4</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
   <variable item="Feature Disable Group 2-3" CV="179" mask="XXXXXVXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
     <label>Disable STOKER change to SHOVEL</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
   </variable>
-  <!--	  
-      <variable item="Feature Disable Group 2-4" CV="179" mask="XXXXVXXX" label="Disable - unused bit 3" include="SDXH166DExt">
-	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>	 
-      <variable item="Feature Disable Group 2-5" CV="179" mask="XXXVXXXX" label="Disable - unused bit 4" include="SDXH166DExt">
-	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>	  
-      <variable item="Feature Disable Group 2-6" CV="179" mask="XXVXXXXX" label="Disable - unused bit 5" include="SDXH166DExt">
-	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>	  
-      <variable item="Feature Disable Group 2-7" CV="179" mask="XVXXXXXX" label="Disable - unused bit 6" include="SDXH166DExt">
-	    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-      </variable>
-      -->
-  <variable item="Feature Disable Group 2-8" CV="179" mask="VXXXXXXX" tooltip="Fuel prime once for Gen1 diesels OR multiple start warning bells Gen2" include="SDXH166DExt">
+  <variable item="Feature Disable Group 2-4" CV="179" mask="XXXXVXXX" include="SDXH166DExt">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
-    <tooltip xml:lang="it">Suono Campana in partenza singolo per Gen1 diesels - ripetuto per Gen2</tooltip>
-    <label>Fuel prime once/mult.start warning bells</label>
-    <label xml:lang="it">Campana in partenza</label>
+    <label>Disable Auto Vary Notch</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-5" CV="179" mask="XXXVXXXX" include="SDXH166DExt">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Shaft Driven Compressor</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-6" CV="179" mask="XXVXXXXX" include="SDXH166DExt">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable ALCO Idle Stumble</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+    </variable>
+  <variable item="Feature Disable Group 2-7" CV="179" mask="XVXXXXXX" include="SDXH166DExt">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <label>Disable Auto REAR horn signals</label>
+    <tooltip>Disabled =1, Enabled=0</tooltip>
+  </variable>
+  <variable item="Feature Disable Group 2-8" CV="179" mask="VXXXXXXX" include="SDXH166DExt">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <tooltip>Reserved - do not use</tooltip>
+    <tooltip xml:lang="it">Riservato - non utilizzare</tooltip>
+    <label>RESERVED</label>
+    <label xml:lang="it">Riservato</label>
   </variable>
   <!-- Used so far: -->
-  <!-- "Sound Settings 21 to 37"   -->
+  <!-- "Sound Settings 21 to 40"   -->
 </variables>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150611-2051-Alain Le Marchand on Thu Jun 11 22:51:27 CEST 2015 $Id$-->
-  <decoderIndex version="636">
+  <!--Written by JMRI version 20150614-1923-Alain Le Marchand on Sun Jun 14 21:23:15 CEST 2015 $Id$-->
+  <decoderIndex version="638">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -1776,15 +1776,27 @@
           <output name="6" label="F4-Yellow" connection="wire" />
           <size length="1.28" width="0.67" height="0.25" units="inches" />
           <functionlabels>
-            <functionlabel num="11" lockable="false">Uncoupling</functionlabel>
+            <functionlabel num="3" lockable="true">Coupler on F3 release</functionlabel>
+            <functionlabel num="4" lockable="true">Reserved for light func.</functionlabel>
+            <functionlabel num="5" lockable="true">Dyn. Brakes Fans lev.1-3/Steam Waterpump turbine</functionlabel>
+            <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+            <functionlabel num="6" lockable="true">Notch UP accel./Steam Safety Blowoff, drier, vol at coast</functionlabel>
+            <functionlabel num="7" lockable="true">Notch DOWN decel./Steam Blowdown, vol at load</functionlabel>
+            <functionlabel num="8" lockable="true">Mute (full-half-silent)</functionlabel>
+            <functionlabel num="9" lockable="true">Brake squeal (eStop wF8)</functionlabel>
+            <functionlabel num="10" lockable="true">Xing Gate Airhorn/Whistle</functionlabel>
+            <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
+            <functionlabel num="11" lockable="false">UNcoupling</functionlabel>
             <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>
+            <functionlabel num="13" lockable="true">Air feat. disabled/Steam Coal Fill</functionlabel>
             <functionlabel num="14" lockable="true">Emerg. Stop Shutdown</functionlabel>
-            <functionlabel num="15" lockable="false">Sander</functionlabel>
-            <functionlabel num="16" lockable="false">Misc. User Chatter</functionlabel>
-            <functionlabel num="17" lockable="false">Boxcar Boom</functionlabel>
-            <functionlabel num="18" lockable="false">Misc. User Sound</functionlabel>
-            <functionlabel num="19" lockable="true">Enables HEP mode</functionlabel>
-            <functionlabel num="20" lockable="false">Misc. User Sound</functionlabel>
+            <functionlabel num="15" lockable="true">Sander/Steam Water Tank</functionlabel>
+            <functionlabel num="16" lockable="true">Steam Coal Stoker/Coal Shovel</functionlabel>
+            <functionlabel num="17" lockable="true">Boxcar Boom</functionlabel>
+            <functionlabel num="18" lockable="true">High Fan/Steam Greaser</functionlabel>
+            <functionlabel num="19" lockable="true">AUX gen./Steam Coal Grate Shaker</functionlabel>
+            <functionlabel num="20" lockable="false">Misc. User Sound/Steam SANDER, Manual Chuff</functionlabel>
+            <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
             <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
             <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
             <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
