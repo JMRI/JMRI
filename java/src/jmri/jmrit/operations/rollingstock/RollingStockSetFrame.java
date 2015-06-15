@@ -19,6 +19,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.cars.CarsSetFrame;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
@@ -268,13 +269,18 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
         // has the program generated a pick up and set out for this rolling stock?
         if (_rs.getRouteLocation() != null || _rs.getRouteDestination() != null) {
             if (_rs.getRouteLocation() != null) {
-                log.debug("rs has a pick up location {}", _rs.getRouteLocation().getName());
+                log.debug("rs ({}) has a pick up location ({})", _rs.toString(), _rs.getRouteLocation().getName());
             }
             if (_rs.getRouteDestination() != null) {
-                log.debug("rs has a destination {}", _rs.getRouteDestination().getName());
+                log.debug("rs ({}) has a destination ({})", _rs.toString(), _rs.getRouteDestination().getName());
             }
-            JOptionPane.showMessageDialog(this, getRb().getString("rsPressSaveWill"), getRb().getString(
-                    "rsInRoute"), JOptionPane.WARNING_MESSAGE);
+            if (getClass() == CarsSetFrame.class) {
+                JOptionPane.showMessageDialog(this, getRb().getString("rsPressChangeWill"), getRb().getString(
+                        "rsInRoute"), JOptionPane.WARNING_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(this, getRb().getString("rsPressSaveWill"), getRb().getString(
+                        "rsInRoute"), JOptionPane.WARNING_MESSAGE);
+            }
         }
         _rs.addPropertyChangeListener(this);
     }
@@ -304,7 +310,7 @@ public class RollingStockSetFrame extends OperationsFrame implements java.beans.
     RouteLocation rd;
 
     protected boolean change(RollingStock rs) {
-        log.debug("Change button action");
+        log.debug("Change button action for rs ({})", rs.toString());
         // save the auto buttons
         autoTrackCheckBoxSelected = autoTrackCheckBox.isSelected();
         autoDestinationTrackCheckBoxSelected = autoDestinationTrackCheckBox.isSelected();
