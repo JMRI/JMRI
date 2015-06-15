@@ -1,13 +1,7 @@
 //LocationEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
-import java.io.File;
-import java.util.Locale;
 import jmri.jmrit.operations.OperationsSwingTestCase;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -24,6 +18,8 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
     public void testLocationEditFrame() {
+        loadLocations();
+        
         LocationEditFrame f = new LocationEditFrame();
         f.setTitle("Test Add Location Frame");
         f.initComponents(null);
@@ -82,32 +78,9 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
 
     }
 
-    // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // set the file location to temp (in the root of the build directory).
-        OperationsSetupXml.setFileLocation("temp" + File.separator);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // clear out previous locations
-        LocationManager.instance().dispose();
-
-        loadLocations();
     }
 
     public LocationEditFrameTest(String s) {
@@ -126,10 +99,8 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }
