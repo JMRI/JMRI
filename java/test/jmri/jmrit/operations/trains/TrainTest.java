@@ -1,12 +1,10 @@
 //TrainTest.java
 package jmri.jmrit.operations.trains;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.ScheduleManager;
@@ -17,7 +15,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarLengths;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -25,19 +22,15 @@ import jmri.jmrit.operations.rollingstock.cars.Kernel;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.setup.Control;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -78,7 +71,7 @@ import junit.framework.TestSuite;
  * @author Bob Coleman Copyright (C) 2008, 2009
  * @version $Revision$
  */
-public class TrainTest extends TestCase {
+public class TrainTest extends OperationsTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -3651,6 +3644,7 @@ public class TrainTest extends TestCase {
         ScheduleManager smanager = ScheduleManager.instance();
         CarTypes ct = CarTypes.instance();
 
+        ct.addName("Boxcar");
         ct.addName("Gon");
         ct.addName("Coil Car");
         ct.addName("Flat Car");
@@ -4085,6 +4079,7 @@ public class TrainTest extends TestCase {
         CarTypes ct = CarTypes.instance();
 
         Setup.setMaxTrainLength(500);
+        ct.addName("Boxcar");
         ct.addName("Gon");
         ct.addName("Coil Car");
         ct.addName("Flat Car");
@@ -6183,33 +6178,7 @@ public class TrainTest extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // Need to clear out TrainManager global variables
-        TrainManager.instance().dispose();
-        CarManager.instance().dispose();
-        try {
-           EngineManager.instance().dispose();
-        } catch(java.lang.NumberFormatException nfe){
-            // disposing of the EngineManager triggers an
-            // NFE if the EngineModel can't be found.
-        }
-        LocationManager.instance().dispose();
-        RouteManager.instance().dispose();
-        CarRoads.instance().dispose();
+        super.setUp();
 
         Setup.setBuildAggressive(false);
         Setup.setTrainIntoStagingCheckEnabled(true);
@@ -6236,7 +6205,6 @@ public class TrainTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() {
         apps.tests.Log4JFixture.tearDown();

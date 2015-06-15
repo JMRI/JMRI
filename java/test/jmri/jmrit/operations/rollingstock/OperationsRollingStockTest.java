@@ -1,17 +1,14 @@
 // OperationsRollingStockTest.java
 package jmri.jmrit.operations.rollingstock;
 
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.Setup;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Operations RollingStock class Last manually cross-checked on
@@ -26,7 +23,7 @@ import jmri.util.JUnitUtil;
  * @author	Bob Coleman Copyright (C) 2009
  *
  */
-public class OperationsRollingStockTest extends TestCase {
+public class OperationsRollingStockTest extends OperationsTestCase {
 
      // test constroctors.
      public void testCtor(){
@@ -196,13 +193,11 @@ public class OperationsRollingStockTest extends TestCase {
         rs1.setLength("41");
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertTrue("status message starts with capacity", testresult.startsWith(Track.CAPACITY));
-//		Assert.assertEquals("RollingStock null Set Length null", "track capacity 0 " + Setup.getLengthUnit().toLowerCase(), testresult);
 
         /* track needs to be long enough */
         testtrack1.setLength(40);
         testresult = rs1.setLocation(testlocation1, testtrack1);
         Assert.assertTrue("status message starts with capacity", testresult.startsWith(Track.CAPACITY));
-//		Assert.assertEquals("RollingStock null Set Length short", "track capacity 40 " + Setup.getLengthUnit().toLowerCase(), testresult);
 
         /* track needs to be long enough */
         testtrack1.setLength(44);  // rs length + Coupler == 4
@@ -240,24 +235,8 @@ public class OperationsRollingStockTest extends TestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception {
+    protected void setUp() {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initIdTagManager();
-        jmri.InstanceManager.setShutDownManager( new
-                 jmri.managers.DefaultShutDownManager() {
-                    @Override
-                    public void register(jmri.ShutDownTask s){
-                       // do nothing with registered shutdown tasks for testing.
-                    }
-                 });       
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
     }
 
     public OperationsRollingStockTest(String s) {
@@ -278,9 +257,7 @@ public class OperationsRollingStockTest extends TestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+    protected void tearDown() {
        super.tearDown();
     }
 }

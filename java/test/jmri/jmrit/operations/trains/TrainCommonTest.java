@@ -1,9 +1,9 @@
 //TrainCommonTest.java
 package jmri.jmrit.operations.trains;
 
+import jmri.jmrit.operations.OperationsTestCase;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -12,7 +12,7 @@ import junit.framework.TestSuite;
  * @author Paul Bender Copyright (C) 2015
  * @version $Revision$
  */
-public class TrainCommonTest extends TestCase {
+public class TrainCommonTest extends OperationsTestCase {
 
     public void testGetDate_DateArgument(){
        java.util.Calendar calendar = java.util.Calendar.getInstance();
@@ -62,7 +62,7 @@ public class TrainCommonTest extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
+        super.setUp();
     }
 
     public TrainCommonTest(String s) {
@@ -84,7 +84,7 @@ public class TrainCommonTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 
 }

@@ -3,15 +3,14 @@ package jmri.jmrit.operations.rollingstock;
 
 import java.io.File;
 import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -20,7 +19,7 @@ import junit.framework.TestSuite;
  * @author	Dan Boudreau Copyright (C) 2010
  *
  */
-public class OperationsLoggerTest extends TestCase {
+public class OperationsLoggerTest extends OperationsTestCase {
 
     // test creation
     public void testCreate() {
@@ -57,23 +56,7 @@ public class OperationsLoggerTest extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        String tempstring = OperationsSetupXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator + "JUnitTest")) {
-            OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        }
-        // delete file and log directory before testing
-        File file = new File(RollingStockLogger.instance().getFullLoggerFileName());
-        file.delete();
-        File dir = new File(RollingStockLogger.instance().getDirectoryName());
-        dir.delete();
-
-        RollingStockLogger.instance().dispose();
+        super.setUp();
     }
 
     public OperationsLoggerTest(String s) {
@@ -97,8 +80,6 @@ public class OperationsLoggerTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        // restore locale
-        Locale.setDefault(defaultLocale);
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 }

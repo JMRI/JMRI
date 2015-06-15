@@ -1,23 +1,15 @@
 // EngineManagerTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.routes.Route;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -32,7 +24,7 @@ import junit.framework.TestSuite;
  * @author	Bob Coleman Copyright (C) 2008, 2009
  * @version $Revision$
  */
-public class EngineManagerTest extends TestCase {
+public class EngineManagerTest extends OperationsTestCase {
 
      private Engine e1;
      private Engine e2;
@@ -699,45 +691,8 @@ public class EngineManagerTest extends TestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception{
+    protected void setUp() {
         super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initIdTagManager();
-        jmri.InstanceManager.setShutDownManager( new
-                 jmri.managers.DefaultShutDownManager() {
-                    @Override
-                    public void register(jmri.ShutDownTask s){
-                       // do nothing with registered shutdown tasks for testing.
-                    }
-                 });
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // Need to clear out EngineManager global variables
-        EngineManager manager = EngineManager.instance();
-        List<String> tempconsistList = manager.getConsistNameList();
-        for (int i = 0; i < tempconsistList.size(); i++) {
-            String consistId = tempconsistList.get(i);
-            manager.deleteConsist(consistId);
-        }
-        manager.dispose();
-        EngineModels.instance().dispose();
-        EngineLengths.instance().dispose();
     }
 
     public EngineManagerTest(String s) {
@@ -756,11 +711,8 @@ public class EngineManagerTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+    protected void tearDown() {
        super.tearDown();
     }
 

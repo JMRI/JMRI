@@ -4,6 +4,7 @@ package jmri.jmrit.operations.routes;
 import java.io.File;
 import java.util.List;
 import java.util.Locale;
+import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
@@ -83,6 +84,7 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("route comment", "New Text Route Comment", newRoute.getComment());
 
         // Add some locations to the route
+        loadLocations();
         LocationManager lManager = LocationManager.instance();
         f.locationBox.setSelectedItem(lManager.getLocationByName("Test Loc B"));
         //f.addLocationButton.doClick();
@@ -141,6 +143,22 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("route comment", "Comment test route C", f.commentTextField.getText());
 
         f.dispose();
+    }
+    
+    private void loadLocations() {
+        // create 5 locations
+        LocationManager lManager = LocationManager.instance();
+        Location l1 = lManager.newLocation("Test Loc E");
+        l1.setLength(1001);
+        Location l2 = lManager.newLocation("Test Loc D");
+        l2.setLength(1002);
+        Location l3 = lManager.newLocation("Test Loc C");
+        l3.setLength(1003);
+        Location l4 = lManager.newLocation("Test Loc B");
+        l4.setLength(1004);
+        Location l5 = lManager.newLocation("Test Loc A");
+        l5.setLength(1005);
+
     }
 
     // Ensure minimal setup for log4J

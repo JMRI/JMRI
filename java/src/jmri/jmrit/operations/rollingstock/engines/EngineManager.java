@@ -270,6 +270,14 @@ public class EngineManager extends RollingStockManager {
         java.util.Collections.sort(names);
         return names;
     }
+    
+    @Override
+    public void dispose() {
+        for (String consistName : getConsistNameList()) {
+            deleteConsist(consistName);
+        }
+        super.dispose();
+    }
 
     public void load(Element root) {
         // new format using elements starting version 3.3.1

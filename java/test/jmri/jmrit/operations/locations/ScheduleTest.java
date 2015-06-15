@@ -1,17 +1,9 @@
 //ScheduleTest.java
 package jmri.jmrit.operations.locations;
 
-import java.io.File;
-import java.util.Locale;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.OperationsTestCase;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -26,7 +18,7 @@ import junit.framework.TestSuite;
  * @author Bob Coleman Copyright (C) 2008, 2009
  * @version $Revision$
  */
-public class ScheduleTest extends TestCase {
+public class ScheduleTest extends OperationsTestCase {
 
     // test Schedule class
     // test schedule public constants
@@ -89,33 +81,9 @@ public class ScheduleTest extends TestCase {
         Assert.assertEquals("Location Schedule ScheduleItem Check Seq 9", 1, ltsi4.getSequenceId());
     }
 
-    // from here down is testing infrastructure
-    // Ensure minimal setup for log4J
-    /**
-     * Test-by test initialization. Does log4j for standalone use, and then
-     * creates a set of turnouts, sensors and signals as common background for
-     * testing
-     */
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        LocationManager.instance().dispose();
-        ScheduleManager.instance().dispose();
-        CarTypes.instance().dispose();
+        super.setUp();
     }
 
     public ScheduleTest(String s) {
@@ -137,6 +105,6 @@ public class ScheduleTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 }

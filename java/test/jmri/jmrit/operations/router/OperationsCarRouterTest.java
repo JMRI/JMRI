@@ -1,12 +1,10 @@
 //OperationsCarRouterTest.java
 package jmri.jmrit.operations.router;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Schedule;
 import jmri.jmrit.operations.locations.ScheduleItem;
 import jmri.jmrit.operations.locations.ScheduleManager;
@@ -14,22 +12,15 @@ import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -38,7 +29,7 @@ import junit.framework.TestSuite;
  * @author	Daniel Boudreau Copyright (C) 2010, 2011, 2013
  * @version $Revision$
  */
-public class OperationsCarRouterTest extends TestCase {
+public class OperationsCarRouterTest extends OperationsTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -2864,31 +2855,7 @@ public class OperationsCarRouterTest extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        String tempstring = OperationsSetupXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator + "JUnitTest")) {
-            OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        }
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + OperationsSetupXml.getOperationsDirectoryName());
-
-        // Need to clear out TrainManager global variables
-        TrainManager.instance().dispose();
-        LocationManager.instance().dispose();
-        RouteManager.instance().dispose();
-        CarManager.instance().dispose();
+        super.setUp();
 
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
         Setup.setCarRoutingEnabled(true);
@@ -2913,6 +2880,6 @@ public class OperationsCarRouterTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 }

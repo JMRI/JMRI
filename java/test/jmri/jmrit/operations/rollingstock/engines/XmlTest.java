@@ -1,20 +1,12 @@
 // XmlTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
-import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.JUnitUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
 
@@ -30,7 +22,7 @@ import org.jdom2.JDOMException;
  * @author	Bob Coleman Copyright (C) 2008, 2009
  * @version $Revision$
  */
-public class XmlTest extends TestCase {
+public class XmlTest extends OperationsTestCase {
 
     // test Xml create support
     public void testXMLCreate() throws JDOMException, IOException {
@@ -379,46 +371,8 @@ public class XmlTest extends TestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() throws Exception{
+    protected void setUp() {
         super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initIdTagManager();
-        jmri.InstanceManager.setShutDownManager( new
-                 jmri.managers.DefaultShutDownManager() {
-                    @Override
-                    public void register(jmri.ShutDownTask s){
-                       // do nothing with registered shutdown tasks for testing.
-                    }
-                 });
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // Need to clear out EngineManager global variables
-        EngineManager manager = EngineManager.instance();
-        List<String> tempconsistList = manager.getConsistNameList();
-        for (int i = 0; i < tempconsistList.size(); i++) {
-            String consistId = tempconsistList.get(i);
-            manager.deleteConsist(consistId);
-        }
-        manager.dispose(); // dispose of the manager first, because otherwise
-                           // the models go away.
-        EngineModels.instance().dispose();
-        EngineLengths.instance().dispose();
     }
 
     public XmlTest(String s) {
@@ -437,11 +391,8 @@ public class XmlTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
-    protected void tearDown() throws Exception {
-       JUnitUtil.resetInstanceManager();
-       apps.tests.Log4JFixture.tearDown();
+    protected void tearDown() {
        super.tearDown();
     }
 

@@ -1,19 +1,12 @@
 //OperationsPoolTest.java
 package jmri.jmrit.operations.locations;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.OpsPropertyChangeListener;
 import jmri.jmrit.operations.rollingstock.cars.Car;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -29,7 +22,7 @@ import junit.framework.TestSuite;
  * class
  * @version $Revision$
  */
-public class OperationsPoolTest extends TestCase {
+public class OperationsPoolTest extends OperationsTestCase {
 
     Pool p = null;
     Track t1 = null;
@@ -365,27 +358,9 @@ public class OperationsPoolTest extends TestCase {
         Assert.assertEquals("track length", (250 - 150) - (40 + Car.COUPLER + 25 + Car.COUPLER), t6.getLength());
     }
 
-    /**
-     * Test-by test initialization. Does log4j for standalone use, and then
-     * creates a set of turnouts, sensors and signals as common background for
-     * testing
-     */
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+        super.setUp();
     }
 
     public OperationsPoolTest(String s) {
@@ -407,6 +382,6 @@ public class OperationsPoolTest extends TestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 }

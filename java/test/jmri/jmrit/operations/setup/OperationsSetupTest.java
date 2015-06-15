@@ -2,7 +2,7 @@
 package jmri.jmrit.operations.setup;
 
 import java.io.File;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
@@ -11,7 +11,6 @@ import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
@@ -22,7 +21,7 @@ import junit.framework.TestSuite;
  * @author	Bob Coleman Copyright (C) 2008, 2009
  * @version $Revision$
  */
-public class OperationsSetupTest extends TestCase {
+public class OperationsSetupTest extends OperationsTestCase {
 
     // test creation
     @SuppressWarnings("static-access")
@@ -491,51 +490,7 @@ public class OperationsSetupTest extends TestCase {
      */
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        String tempstring = OperationsSetupXml.getOperationsDirectoryName();
-        if (!tempstring.contains(File.separator + "JUnitTest")) {
-            OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        }
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + OperationsSetupXml.getOperationsDirectoryName());
-
-        // delete files
-        File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File(EngineManagerXml.instance().getDefaultOperationsFilename());
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File(CarManagerXml.instance().getDefaultOperationsFilename());
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File(LocationManagerXml.instance().getDefaultOperationsFilename());
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File(TrainManagerXml.instance().getDefaultOperationsFilename());
-        if (file.exists()) {
-            file.delete();
-        }
-        file = new File(OperationsSetupXml.instance().getDefaultOperationsFilename());
-        if (file.exists()) {
-            file.delete();
-        }
+        super.setUp();
     }
 
     public OperationsSetupTest(String s) {
@@ -556,13 +511,8 @@ public class OperationsSetupTest extends TestCase {
         return suite;
     }
 
-    Locale defaultLocale = Locale.getDefault();
-
-    // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        // restore locale
-        Locale.setDefault(defaultLocale);
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 }

@@ -1,23 +1,16 @@
 // OperationsRoutesTest.java
 package jmri.jmrit.operations.routes;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.JComboBox;
+import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.trains.Train;
 import jmri.jmrit.operations.trains.TrainManager;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.framework.Assert;
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import org.jdom2.JDOMException;
 
@@ -31,7 +24,7 @@ import org.jdom2.JDOMException;
  * @author Bob Coleman Copyright (C) 2008, 2009
  * @version $Revision$
  */
-public class OperationsRoutesTest extends TestCase {
+public class OperationsRoutesTest extends OperationsTestCase {
 
     // test Route creation
     public void testCreate() {
@@ -724,24 +717,7 @@ public class OperationsRoutesTest extends TestCase {
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() {
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // Need to clear out RouteManager global variables
-        RouteManager.instance().dispose();
-
+        super.setUp();
     }
 
     public OperationsRoutesTest(String s) {
@@ -760,9 +736,8 @@ public class OperationsRoutesTest extends TestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+        super.tearDown();
     }
 }
