@@ -2,33 +2,24 @@
 package jmri.jmrit.operations.trains;
 
 import java.awt.Component;
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import jmri.jmrit.display.PanelMenu;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.Consist;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineModels;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.routes.Route;
 import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.routes.RouteManager;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -39,7 +30,7 @@ import junit.framework.TestSuite;
  * @author Dan Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
+public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
 
     private final int DIRECTION_ALL = Location.EAST + Location.WEST + Location.NORTH + Location.SOUTH;
 
@@ -1053,23 +1044,6 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
     //		Assert.assertNotNull(f);
     //
     //	}
-    @SuppressWarnings("unchecked")
-    private void pressDialogButton(JmriJFrame f, String buttonName) {
-        // (with JfcUnit, not pushing this off to another thread)
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        if (dialogList.size() == 0) {
-            Assert.fail("No diaglog windows found");
-        }
-        javax.swing.JDialog d = dialogList.get(0);
-        Assert.assertNotNull("dialog not found", d);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
-        // Click button
-        enterClickAndLeave(button);
-    }
 
     private void enterClickAndLeave(Component comp) {
         getHelper().enterClickAndLeave(new MouseEventData(this, comp));
@@ -1080,30 +1054,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        Setup.setAutoSaveEnabled(false);
-
-        TrainManager.instance().dispose();
-        RouteManager.instance().dispose();
-        LocationManager.instance().dispose();
-        EngineModels.instance().dispose();
 
         loadTrains();
-
     }
 
     private void loadTrains() {
@@ -1166,10 +1118,8 @@ public class OperationsTrainsGuiTest extends jmri.util.SwingTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }

@@ -1,7 +1,7 @@
 //OperationsBackupGuiTest.java
 package jmri.jmrit.operations.setup;
 
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.framework.Test;
 import junit.framework.TestSuite;
 
@@ -21,7 +21,7 @@ import junit.framework.TestSuite;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
-public class OperationsBackupGuiTest extends jmri.util.SwingTestCase {
+public class OperationsBackupGuiTest extends OperationsSwingTestCase {
 
 	// private File operationsRoot;
     // private File defaultBackupRoot;
@@ -50,27 +50,10 @@ public class OperationsBackupGuiTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // // Repoint OperationsXml to JUnitTest subdirectory
-        // OperationsXml.setOperationsDirectoryName("operations" +
-        // File.separator
-        // + "JUnitTest");
-        //
-        // // Create some test files to backup
-        // tester.setUp();
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
-
-        // tester.tearDown();
         super.tearDown();
     }
 

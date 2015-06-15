@@ -1,18 +1,12 @@
 //EngineSetFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.io.File;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,7 +17,7 @@ import junit.framework.TestSuite;
  * @author	Dan Boudreau Copyright (C) 2010
  * @version $Revision: 28746 $
  */
-public class EngineSetFrameTest extends jmri.util.SwingTestCase {
+public class EngineSetFrameTest extends OperationsSwingTestCase {
 
     public void testEngineSetFrame() {
         EngineSetFrame f = new EngineSetFrame();
@@ -39,28 +33,8 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // remove previous Engines
-        EngineManager.instance().dispose();
-        CarRoads.instance().dispose();
-        EngineModels.instance().dispose();
 
         loadEngines();
-
     }
 
     private void loadEngines() {
@@ -99,6 +73,7 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
         e1.setBuilt("2009");
         e1.setMoves(55);
         e1.setOwner("Owner2");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 3");
         e1.setRfid("RFID 3");
         e1.setWeightTons("Tons of Weight");
         e1.setComment("Test Engine NH 1 Comment");
@@ -110,6 +85,7 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
         e2.setBuilt("2004");
         e2.setMoves(50);
         e2.setOwner("AT");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 2");
         e2.setRfid("RFID 2");
 
         Engine e3 = cManager.newEngine("AA", "3");
@@ -117,6 +93,7 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
         e3.setBuilt("2006");
         e3.setMoves(40);
         e3.setOwner("AB");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 5");
         e3.setRfid("RFID 5");
         Assert.assertEquals("e3 location", Track.OKAY, e3.setLocation(boxford, boxfordHood));
         Assert.assertEquals("e3 destination", Track.OKAY, e3.setDestination(boxford, boxfordYard));
@@ -126,6 +103,7 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
         e4.setBuilt("1990");
         e4.setMoves(30);
         e4.setOwner("AAA");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 4");
         e4.setRfid("RFID 4");
         Assert.assertEquals("e4 location", Track.OKAY, e4.setLocation(westford, westfordSiding));
         Assert.assertEquals("e4 destination", Track.OKAY, e4.setDestination(boxford, boxfordHood));
@@ -135,6 +113,7 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
         e5.setBuilt("1956");
         e5.setMoves(25);
         e5.setOwner("DAB");
+        jmri.InstanceManager.getDefault(jmri.IdTagManager.class).provideIdTag("RFID 1");
         e5.setRfid("RFID 1");
         Assert.assertEquals("e5 location", Track.OKAY, e5.setLocation(westford, westfordAble));
         Assert.assertEquals("e5 destination", Track.OKAY, e5.setDestination(westford, westfordAble));
@@ -156,10 +135,8 @@ public class EngineSetFrameTest extends jmri.util.SwingTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }

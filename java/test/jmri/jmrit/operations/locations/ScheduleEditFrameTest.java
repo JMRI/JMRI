@@ -1,18 +1,10 @@
 //ScheduleEditFrameTest.java
 package jmri.jmrit.operations.locations;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
 import javax.swing.JComboBox;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.JmriJFrame;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -23,7 +15,7 @@ import junit.framework.TestSuite;
  * @author	Dan Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class ScheduleEditFrameTest extends jmri.util.SwingTestCase {
+public class ScheduleEditFrameTest extends OperationsSwingTestCase {
 
     final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
 
@@ -141,20 +133,6 @@ public class ScheduleEditFrameTest extends jmri.util.SwingTestCase {
 
     }
 
-    @SuppressWarnings("unchecked")
-    private void pressDialogButton(JmriJFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)			                                            
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
-        // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-    }
-
     private void loadLocations() {
         // create 5 locations
         LocationManager lManager = LocationManager.instance();
@@ -175,23 +153,6 @@ public class ScheduleEditFrameTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // clear out previous locations
-        LocationManager.instance().dispose();
 
         loadLocations();
     }
@@ -215,7 +176,6 @@ public class ScheduleEditFrameTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }

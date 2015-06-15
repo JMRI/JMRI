@@ -1,22 +1,12 @@
 //CarEditFrameTest.java
 package jmri.jmrit.operations.rollingstock.cars;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
-import jmri.jmrit.operations.OperationsFrame;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
-import jmri.util.JUnitUtil;
 
 /**
  * Tests for the Operations Cars GUI class
@@ -24,7 +14,7 @@ import jmri.util.JUnitUtil;
  * @author	Dan Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class CarEditFrameTest extends jmri.util.SwingTestCase {
+public class CarEditFrameTest extends OperationsSwingTestCase {
 
     List<String> tempCars;
 
@@ -223,48 +213,10 @@ public class CarEditFrameTest extends jmri.util.SwingTestCase {
 
     }
 
-    @SuppressWarnings("unchecked")
-    private void pressDialogButton(OperationsFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)			                                            
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
-        // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-    }
-
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        JUnitUtil.resetInstanceManager();
-        JUnitUtil.initInternalTurnoutManager();
-        JUnitUtil.initInternalLightManager();
-        JUnitUtil.initInternalSensorManager();
-        JUnitUtil.initDebugThrottleManager();
-        JUnitUtil.initIdTagManager();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        CarColors.instance().dispose();	// reset colors
-        CarTypes.instance().dispose();
-
     }
 
     public CarEditFrameTest(String s) {
@@ -283,10 +235,8 @@ public class CarEditFrameTest extends jmri.util.SwingTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }

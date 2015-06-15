@@ -1,20 +1,12 @@
 //OperationsRoutesGuiTest.java
 package jmri.jmrit.operations.routes;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.JmriJFrame;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
-import junit.extensions.jfcunit.finder.AbstractButtonFinder;
-import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -25,23 +17,11 @@ import junit.framework.TestSuite;
  * @author	Dan Boudreau Copyright (C) 2009
  * @version $Revision$
  */
-public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
+public class OperationsRoutesGuiTest extends OperationsSwingTestCase {
 
     public void testRoutesTableFrame() {
-        // remove previous routes
-        RouteManager.instance().dispose();
-        // create 5 routes
-        RouteManager rManager = RouteManager.instance();
-        Route r1 = rManager.newRoute("Test Route E");
-        r1.setComment("Comment test route E");
-        Route r2 = rManager.newRoute("Test Route D");
-        r2.setComment("Comment test route D");
-        Route r3 = rManager.newRoute("Test Route C");
-        r3.setComment("Comment test route C");
-        Route r4 = rManager.newRoute("Test Route B");
-        r4.setComment("Comment test route B");
-        Route r5 = rManager.newRoute("Test Route A");
-        r5.setComment("Comment test route A");
+        loadRoutes();
+
         RoutesTableFrame f = new RoutesTableFrame();
 
         // should be 5 rows
@@ -76,6 +56,8 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
         f.commentTextField.setText("New Text Route Comment");
         //f.addRouteButton.doClick();
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addRouteButton));
+        
+        loadRoutes();
 
         RouteManager rManager = RouteManager.instance();
         Assert.assertEquals("should be 6 routes", 6, rManager.getRoutesByNameList().size());
@@ -132,6 +114,7 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
     }
 
     public void testRouteEditFrameRead() {
+        loadRoutes();
         RouteManager lManager = RouteManager.instance();
         Route l2 = lManager.getRouteByName("Test Route C");
 
@@ -160,26 +143,24 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
         l5.setLength(1005);
 
     }
+    
+    private void loadRoutes() {
+        RouteManager rManager = RouteManager.instance();
+        Route r1 = rManager.newRoute("Test Route E");
+        r1.setComment("Comment test route E");
+        Route r2 = rManager.newRoute("Test Route D");
+        r2.setComment("Comment test route D");
+        Route r3 = rManager.newRoute("Test Route C");
+        r3.setComment("Comment test route C");
+        Route r4 = rManager.newRoute("Test Route B");
+        r4.setComment("Comment test route B");
+        Route r5 = rManager.newRoute("Test Route A");
+        r5.setComment("Comment test route A");
+    }
 
-    // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
     }
 
     public OperationsRoutesGuiTest(String s) {
@@ -198,24 +179,8 @@ public class OperationsRoutesGuiTest extends jmri.util.SwingTestCase {
         return suite;
     }
 
-    @SuppressWarnings("unchecked")
-    private void pressDialogButton(JmriJFrame f, String buttonName) {
-        //  (with JfcUnit, not pushing this off to another thread)			                                            
-        // Locate resulting dialog box
-        List<javax.swing.JDialog> dialogList = new DialogFinder(null).findAll(f);
-        javax.swing.JDialog d = dialogList.get(0);
-        // Find the button
-        AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-        javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-        Assert.assertNotNull("button not found", button);
-        // Click button
-        getHelper().enterClickAndLeave(new MouseEventData(this, button));
-    }
-
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }

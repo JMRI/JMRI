@@ -1,21 +1,15 @@
 //EnginesTableFrameTest.java
 package jmri.jmrit.operations.rollingstock.engines;
 
-import java.io.File;
 import java.util.List;
-import java.util.Locale;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
-import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
-import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarOwners;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.jmrit.operations.trains.TrainManagerXml;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -27,7 +21,7 @@ import junit.framework.TestSuite;
  * @author	Dan Boudreau Copyright (C) 2010
  * @version $Revision: 28746 $
  */
-public class EnginesTableFrameTest extends jmri.util.SwingTestCase {
+public class EnginesTableFrameTest extends OperationsSwingTestCase {
 
     public void testenginesTableFrame() throws Exception {
 
@@ -157,28 +151,8 @@ public class EnginesTableFrameTest extends jmri.util.SwingTestCase {
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
-        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
-
-        // remove previous Engines
-        EngineManager.instance().dispose();
-        CarRoads.instance().dispose();
-        EngineModels.instance().dispose();
 
         loadEngines();
-
     }
 
     private void loadEngines() {
@@ -279,10 +253,8 @@ public class EnginesTableFrameTest extends jmri.util.SwingTestCase {
         return suite;
     }
 
-    // The minimal setup for log4J
     @Override
     protected void tearDown() throws Exception {
-        apps.tests.Log4JFixture.tearDown();
         super.tearDown();
     }
 }

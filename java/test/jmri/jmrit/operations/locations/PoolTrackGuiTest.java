@@ -1,11 +1,6 @@
 package jmri.jmrit.operations.locations;
 
-import java.io.File;
-import java.util.Locale;
-import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
-import jmri.jmrit.operations.routes.RouteManagerXml;
-import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.jmrit.operations.trains.TrainManagerXml;
+import jmri.jmrit.operations.OperationsSwingTestCase;
 import junit.extensions.jfcunit.eventdata.MouseEventData;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -16,7 +11,7 @@ import junit.framework.TestSuite;
  *
  * @author Gregory Madsen Copyright (C) 2012
  */
-public class PoolTrackGuiTest extends jmri.util.SwingTestCase {
+public class PoolTrackGuiTest extends OperationsSwingTestCase {
 
     //final static int ALL = Track.EAST + Track.WEST + Track.NORTH + Track.SOUTH;
     private void CreateTestLocations() {
@@ -968,45 +963,11 @@ public class PoolTrackGuiTest extends jmri.util.SwingTestCase {
     // f.setVisible(true);
     // f.dispose();
     // }
-//	@SuppressWarnings("unchecked")
-//	private void pressDialogButton(JmriJFrame f, String buttonName) {
-//		// (with JfcUnit, not pushing this off to another thread)
-//		// Locate resulting dialog box
-//		List<javax.swing.JDialog> dialogList = new DialogFinder(null)
-//				.findAll(f);
-//		javax.swing.JDialog d = dialogList.get(0);
-//		// Find the button
-//		AbstractButtonFinder finder = new AbstractButtonFinder(buttonName);
-//		javax.swing.JButton button = (javax.swing.JButton) finder.find(d, 0);
-//		Assert.assertNotNull("button not found", button);
-//		// Click button
-//		getHelper().enterClickAndLeave(new MouseEventData(this, button));
-//	}
+
     // Ensure minimal setup for log4J
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        apps.tests.Log4JFixture.setUp();
-
-        // set the locale to US English
-        Locale.setDefault(Locale.ENGLISH);
-
-        // Repoint OperationsSetupXml to JUnitTest subdirectory
-        OperationsSetupXml.setOperationsDirectoryName("operations"
-                + File.separator + "JUnitTest");
-        // Change file names to ...Test.xml
-        OperationsSetupXml.instance().setOperationsFileName(
-                "OperationsJUnitTest.xml");
-        RouteManagerXml.instance().setOperationsFileName(
-                "OperationsJUnitTestRouteRoster.xml");
-        EngineManagerXml.instance().setOperationsFileName(
-                "OperationsJUnitTestEngineRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName(
-                "OperationsJUnitTestLocationRoster.xml");
-        LocationManagerXml.instance().setOperationsFileName(
-                "OperationsJUnitTestLocationRoster.xml");
-        TrainManagerXml.instance().setOperationsFileName(
-                "OperationsJUnitTestTrainRoster.xml");
     }
 
     public PoolTrackGuiTest(String s) {
