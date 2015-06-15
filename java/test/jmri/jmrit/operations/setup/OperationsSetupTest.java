@@ -487,9 +487,10 @@ public class OperationsSetupTest extends OperationsTestCase {
     // Ensure minimal setup for log4J
     /**
      * Test-by test initialization.
+     * @throws Exception 
      */
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -512,7 +513,7 @@ public class OperationsSetupTest extends OperationsTestCase {
     }
 
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 }

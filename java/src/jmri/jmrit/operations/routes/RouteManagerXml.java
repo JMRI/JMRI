@@ -36,7 +36,7 @@ public class RouteManagerXml extends OperationsXml {
             _instance.load();
             log.debug("Routes have been loaded!");
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("RouteManagerXml returns instance {}", _instance);
         }
         return _instance;

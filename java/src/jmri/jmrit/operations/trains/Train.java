@@ -4072,7 +4072,7 @@ public class Train implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("train (" + getName() + ") sees property change: " + e.getPropertyName() + " old: "
                     + e.getOldValue() + " new: " // NOI18N
                     + e.getNewValue());

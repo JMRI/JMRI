@@ -35,7 +35,7 @@ public class LocationManagerXml extends OperationsXml {
             _instance = new LocationManagerXml();
             _instance.load();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("LocationManagerXml returns instance {}", _instance);
         }
         return _instance;

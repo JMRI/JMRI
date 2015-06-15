@@ -39,7 +39,7 @@ public class EngineManagerXml extends OperationsXml {
             _instance = new EngineManagerXml();
             _instance.load();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("EngineManagerXml returns instance {}", _instance);
         }
         return _instance;

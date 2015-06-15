@@ -700,7 +700,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -711,7 +711,7 @@ public class CarsTableModel extends javax.swing.table.AbstractTableModel impleme
         else if (e.getSource().getClass().equals(Car.class)) {
             Car car = (Car) e.getSource();
             int row = sysList.indexOf(car);
-            if (Control.showProperty && log.isDebugEnabled()) {
+            if (Control.showProperty) {
                 log.debug("Update car table row: {}", row);
             }
             if (row >= 0) {

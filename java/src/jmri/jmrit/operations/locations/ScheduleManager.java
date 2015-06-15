@@ -44,7 +44,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
             // create and load
             _instance = new ScheduleManager();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("ScheduleManager returns instance {}", _instance);
         }
         return _instance;
@@ -329,7 +329,7 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
      *
      */
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

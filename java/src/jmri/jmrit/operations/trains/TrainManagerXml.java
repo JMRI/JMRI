@@ -55,7 +55,7 @@ public class TrainManagerXml extends OperationsXml {
             _instance = new TrainManagerXml();
             _instance.load();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("TrainManagerXml returns instance " + _instance);
         }
         return _instance;

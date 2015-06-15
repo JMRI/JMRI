@@ -82,7 +82,7 @@ public class ScheduleTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -104,7 +104,7 @@ public class ScheduleTest extends OperationsTestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 }

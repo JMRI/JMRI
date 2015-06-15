@@ -44,7 +44,7 @@ public class RouteManager {
             OperationsSetupXml.instance(); // load setup
             RouteManagerXml.instance(); // load routes
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("RouteManager returns instance {}", _instance);
         }
         return _instance;

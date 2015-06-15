@@ -356,7 +356,7 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
 
     // this table listens for changes to a location and it's tracks
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

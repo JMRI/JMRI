@@ -277,7 +277,7 @@ public class CarsTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -298,7 +298,7 @@ public class CarsTest extends OperationsTestCase {
     }
 
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
        super.tearDown();
     }
 }

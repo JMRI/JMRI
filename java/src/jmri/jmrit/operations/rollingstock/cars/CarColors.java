@@ -35,7 +35,7 @@ public class CarColors extends RollingStockAttribute {
             // create and load
             _instance = new CarColors();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("CarColors returns instance {}", _instance);
         }
         return _instance;

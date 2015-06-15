@@ -45,7 +45,7 @@ public class LocationManager implements java.beans.PropertyChangeListener {
             OperationsSetupXml.instance(); // load setup
             LocationManagerXml.instance(); // load locations
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("LocationManager returns instance {}", _instance);
         }
         return _instance;

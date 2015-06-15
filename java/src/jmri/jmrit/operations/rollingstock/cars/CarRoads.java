@@ -35,7 +35,7 @@ public class CarRoads extends RollingStockAttribute {
             // create and load
             _instance = new CarRoads();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("CarRoads returns instance {}", _instance);
         }
         return _instance;

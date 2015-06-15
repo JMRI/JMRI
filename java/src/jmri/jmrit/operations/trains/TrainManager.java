@@ -88,7 +88,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
             OperationsSetupXml.instance(); // load setup
             TrainManagerXml.instance(); // load trains
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("TrainManager returns instance " + _instance);
         }
         return _instance;

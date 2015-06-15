@@ -50,7 +50,7 @@ public class CarManager extends RollingStockManager {
             // create manager to load cars and their attributes
             CarManagerXml.instance();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("CarManager returns instance {}", _instance);
         }
         return _instance;

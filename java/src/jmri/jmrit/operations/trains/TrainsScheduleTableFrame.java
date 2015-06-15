@@ -435,7 +435,7 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled())
+        if (Control.showProperty)
             log.debug("Property change {} old: {} new: {}", e.getPropertyName(), e.getOldValue(), e.getNewValue());
         if (e.getPropertyName().equals(TrainScheduleManager.LISTLENGTH_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(TrainSchedule.NAME_CHANGED_PROPERTY)) {

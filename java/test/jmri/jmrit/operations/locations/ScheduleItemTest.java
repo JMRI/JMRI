@@ -68,9 +68,10 @@ public class ScheduleItemTest extends OperationsTestCase {
      * Test-by test initialization. Does log4j for standalone use, and then
      * creates a set of turnouts, sensors and signals as common background for
      * testing
+     * @throws Exception 
      */
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -92,7 +93,7 @@ public class ScheduleItemTest extends OperationsTestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 }

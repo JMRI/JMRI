@@ -41,7 +41,7 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
             _instance = new TrainScheduleManager();
             TrainManagerXml.instance(); // load trains
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("TrainScheduleManager returns instance " + _instance);
         }
         return _instance;

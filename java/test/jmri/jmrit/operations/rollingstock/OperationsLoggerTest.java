@@ -55,7 +55,7 @@ public class OperationsLoggerTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -79,7 +79,7 @@ public class OperationsLoggerTest extends OperationsTestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 }

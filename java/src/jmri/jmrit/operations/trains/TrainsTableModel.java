@@ -503,7 +503,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
     }
 
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change {} old: {} new: {}",
                     e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
         }
@@ -525,7 +525,7 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
             synchronized (this) {
                 Train train = ((Train) e.getSource());
                 int row = sysList.indexOf(train);
-                if (Control.showProperty && log.isDebugEnabled()) {
+                if (Control.showProperty) {
                     log.debug("Update train table row: {} name: {}",  row, train.getName());
                 }
                 if (row >= 0) {

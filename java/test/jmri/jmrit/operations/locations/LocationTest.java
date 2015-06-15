@@ -663,7 +663,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 
@@ -684,7 +684,7 @@ public class LocationTest extends OperationsTestCase {
     }
 
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 }

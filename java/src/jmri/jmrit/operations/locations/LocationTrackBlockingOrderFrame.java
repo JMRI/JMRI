@@ -136,7 +136,7 @@ public class LocationTrackBlockingOrderFrame extends OperationsFrame implements 
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }

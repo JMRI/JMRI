@@ -6177,7 +6177,7 @@ public class TrainTest extends OperationsTestCase {
     // from here down is testing infrastructure
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
 
         Setup.setBuildAggressive(false);
@@ -6206,8 +6206,8 @@ public class TrainTest extends OperationsTestCase {
     }
 
     @Override
-    protected void tearDown() {
-        apps.tests.Log4JFixture.tearDown();
+    protected void tearDown() throws Exception {
+        super.tearDown();
     }
 
     private String getTrainStatus(Train train) {

@@ -39,7 +39,7 @@ public class CarManagerXml extends OperationsXml {
             _instance = new CarManagerXml();
             _instance.load();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("CarManagerXml returns instance {}", _instance);
         }
         return _instance;

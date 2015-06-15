@@ -214,7 +214,7 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change ({}) for: ({}) old: {} new: {}",
                     e.getPropertyName(), e.getSource().toString(),
                     e.getOldValue(), e.getNewValue());

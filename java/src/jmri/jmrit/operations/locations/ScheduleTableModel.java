@@ -701,7 +701,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
 
     // this table listens for changes to a schedule and it's car types
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -721,7 +721,7 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         if (e.getSource().getClass().equals(ScheduleItem.class)) {
             ScheduleItem item = (ScheduleItem) e.getSource();
             int row = _list.indexOf(item);
-            if (Control.showProperty && log.isDebugEnabled()) {
+            if (Control.showProperty) {
                 log.debug("Update schedule item table row: {}", row);
             }
             if (row >= 0) {

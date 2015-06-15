@@ -36,7 +36,7 @@ public class OperationsSetupXml extends OperationsXml {
             _instance = new OperationsSetupXml();
             _instance.load();
         }
-        if (Control.showInstance && log.isDebugEnabled()) {
+        if (Control.showInstance) {
             log.debug("OperationsSetupXml returns instance {}", _instance);
         }
         return _instance;

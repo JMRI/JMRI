@@ -461,7 +461,7 @@ public class TrackTest extends OperationsTestCase {
     }        
 
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
     }
 

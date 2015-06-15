@@ -2854,7 +2854,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
     // Ensure minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         super.setUp();
 
         Setup.setRouterBuildReportLevel(Setup.BUILD_REPORT_VERY_DETAILED);
@@ -2879,7 +2879,7 @@ public class OperationsCarRouterTest extends OperationsTestCase {
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
         super.tearDown();
     }
 }

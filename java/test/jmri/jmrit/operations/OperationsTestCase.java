@@ -1,4 +1,4 @@
-//OperationsTestCase.java
+// OperationsTestCase.java
 package jmri.jmrit.operations;
 
 import java.io.File;
@@ -30,7 +30,7 @@ import junit.framework.TestCase;
 /**
  * Common setup and tear down for operation tests.
  *
- * @author	Dan Boudreau Copyright (C) 2015
+ * @author Dan Boudreau Copyright (C) 2015
  * @version $Revision: 28746 $
  */
 public class OperationsTestCase extends TestCase {
@@ -39,13 +39,15 @@ public class OperationsTestCase extends TestCase {
         super(s);
     }
 
+    // Ensure minimal setup for log4J
     @Override
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp();
 
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
-        
+
         // Set things up outside of operations
         JUnitUtil.resetInstanceManager();
         JUnitUtil.initInternalTurnoutManager();
@@ -53,13 +55,13 @@ public class OperationsTestCase extends TestCase {
         JUnitUtil.initInternalSensorManager();
         JUnitUtil.initDebugThrottleManager();
         JUnitUtil.initIdTagManager();
-        jmri.InstanceManager.setShutDownManager( new
-                 jmri.managers.DefaultShutDownManager() {
+        jmri.InstanceManager.setShutDownManager(new
+                jmri.managers.DefaultShutDownManager() {
                     @Override
-                    public void register(jmri.ShutDownTask s){
-                       // do nothing with registered shutdown tasks for testing.
+                    public void register(jmri.ShutDownTask s) {
+                        // do nothing with registered shutdown tasks for testing.
                     }
-                 });       
+                });
 
         // Repoint OperationsSetupXml to JUnitTest subdirectory
         String tempstring = OperationsSetupXml.getOperationsDirectoryName();
@@ -89,7 +91,7 @@ public class OperationsTestCase extends TestCase {
         file.delete();
         file = new File(OperationsSetupXml.instance().getDefaultOperationsFilename());
         file.delete();
-      
+
         TrainManager.instance().dispose();
         LocationManager.instance().dispose();
         RouteManager.instance().dispose();
@@ -100,7 +102,7 @@ public class OperationsTestCase extends TestCase {
         CarLoads.instance().dispose();
         CarRoads.instance().dispose();
         CarManager.instance().dispose();
-        
+
         // delete file and log directory before testing
         file = new File(RollingStockLogger.instance().getFullLoggerFileName());
         file.delete();
@@ -108,18 +110,18 @@ public class OperationsTestCase extends TestCase {
         dir.delete();
 
         RollingStockLogger.instance().dispose();
- 
+
         // dispose of the manager first, because otherwise
         // the models go away.
         EngineManager.instance().dispose();
         EngineModels.instance().dispose();
         EngineLengths.instance().dispose();
     }
-    
 
     // The minimal setup for log4J
     @Override
-    protected void tearDown() {
+    protected void tearDown() throws Exception {
+        super.tearDown();
         // restore locale
         Locale.setDefault(Locale.getDefault());
         JUnitUtil.resetInstanceManager();

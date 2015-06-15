@@ -397,7 +397,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
 
     // check for change in number of schedules, or a change in a schedule
     public void propertyChange(PropertyChangeEvent e) {
-        if (Control.showProperty && log.isDebugEnabled()) {
+        if (Control.showProperty) {
             log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
                     .getNewValue());
         }
@@ -407,7 +407,7 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         } else if (e.getSource().getClass().equals(Schedule.class)) {
             Schedule schedule = (Schedule) e.getSource();
             int row = sysList.indexOf(schedule);
-            if (Control.showProperty && log.isDebugEnabled()) {
+            if (Control.showProperty) {
                 log.debug("Update schedule table row: {} name: {}", row, schedule.getName());
             }
             if (row >= 0) {
