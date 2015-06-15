@@ -85,13 +85,12 @@ public final class OperationsManager {
      *
      * @return A path
      * @see #getOperationsFolderName()
-     * @see jmri.util.FileUtil#getUserFilesPath()
      */
     public String getPath() {
         if (this.getOperationsFolderName().endsWith(File.separator)) {
-            return FileUtil.getUserFilesPath() + this.getOperationsFolderName();
+            return OperationsXml.getFileLocation() + this.getOperationsFolderName();
         }
-        return FileUtil.getUserFilesPath() + this.getOperationsFolderName() + File.separator;
+        return OperationsXml.getFileLocation() + this.getOperationsFolderName() + File.separator;
     }
 
     /**

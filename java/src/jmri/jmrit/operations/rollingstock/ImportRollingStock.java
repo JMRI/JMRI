@@ -33,7 +33,7 @@ public class ImportRollingStock extends Thread {
 
     // Get file to read from
     protected File getFile() {
-        JFileChooser fc = new JFileChooser(FileUtil.getUserFilesPath());
+        JFileChooser fc = new JFileChooser(jmri.jmrit.operations.OperationsXml.getFileLocation());
         fc.addChoosableFileFilter(new ImportFilter());
         int retVal = fc.showOpenDialog(null);
         if (retVal != JFileChooser.APPROVE_OPTION) {

@@ -144,7 +144,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String defaultBuildReportFilename(String name) {
-        return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() 
                 + BUILD_STATUS + File.separator + buildReportFileName + name + fileType; // NOI18N
     }
 
@@ -165,7 +165,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     private String getDefaultManifestFilename(String name) {
-        return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator + MANIFESTS
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator + MANIFESTS
                 + File.separator + manifestFileName + name + fileType;// NOI18N
     }
 
@@ -182,7 +182,7 @@ public class TrainManagerXml extends OperationsXml {
         return defaultCsvManifestDirectory + manifestFileName + name + fileTypeCsv; // NOI18N
     }
 
-    private String defaultCsvManifestDirectory = FileUtil.getUserFilesPath()
+    private String defaultCsvManifestDirectory = OperationsXml.getFileLocation()
             + OperationsXml.getOperationsDirectoryName() + File.separator + CSV_MANIFESTS + File.separator;
 
     public void createDefaultCsvManifestDirectory() {
@@ -214,7 +214,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     private String getDefaultSwitchListName(String name) {
-        return FileUtil.getUserFilesPath() + OperationsXml.getOperationsDirectoryName() + File.separator
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator
                 + SWITCH_LISTS + File.separator + switchListFileName + name + fileType; // NOI18N
     }
 
@@ -234,7 +234,7 @@ public class TrainManagerXml extends OperationsXml {
         return defaultCsvSwitchListDirectory + switchListFileName + name + fileTypeCsv;// NOI18N
     }
 
-    private String defaultCsvSwitchListDirectory = FileUtil.getUserFilesPath()
+    private String defaultCsvSwitchListDirectory = OperationsXml.getFileLocation()
             + OperationsXml.getOperationsDirectoryName() + File.separator + CSV_SWITCH_LISTS + File.separator;
 
     public void createDefaultCsvSwitchListDirectory() {
