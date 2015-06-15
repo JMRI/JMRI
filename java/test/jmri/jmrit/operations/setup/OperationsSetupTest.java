@@ -8,7 +8,6 @@ import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
 import jmri.jmrit.operations.routes.RouteManagerXml;
 import jmri.jmrit.operations.trains.TrainManagerXml;
-import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
@@ -419,15 +418,6 @@ public class OperationsSetupTest extends OperationsTestCase {
 
         OperationsSetupXml ox = new OperationsSetupXml();
 
-		// store files in "temp"
-//		XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath());
-//		XmlFile.ensurePrefsPresent(FileUtil.getUserFilesPath()+"temp");
-        // change file name to OperationsTest
-        //ox.setOperationsFileName(OperationsSetupXml.getOperationsFileName());
-        // remove existing Operations file if its there
-        File f = new File(FileUtil.getUserFilesPath() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
-        f.delete();
-
         // create a Operations file with known contents
         Setup s = new Setup();
         s.setRailroadName("File Test Railroad Name");
@@ -455,8 +445,9 @@ public class OperationsSetupTest extends OperationsTestCase {
         s.setTrainIconColorLocal("Black");
         s.setTrainIconColorTerminate("White");
 
+        // store files in "temp"
         // write it
-        ox.writeFile(FileUtil.getUserFilesPath() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
+        ox.writeFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
 
         // Set filename back to Operations
         ox.setOperationsFileName("Operations.xml");
@@ -480,7 +471,7 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertNotNull("exists", s);
 
         // read it
-        ox.readFile(FileUtil.getUserFilesPath() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
+        ox.readFile(OperationsSetupXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName() + File.separator + OperationsSetupXml.instance().getOperationsFileName());
     }
 
 	// from here down is testing infrastructure

@@ -6,7 +6,6 @@ import jmri.jmrit.operations.OperationsManager;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
-import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.ProcessingInstruction;

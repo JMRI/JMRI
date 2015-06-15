@@ -82,6 +82,9 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
 //                    }
 //                 });       
 
+        // set the file location to temp (in the root of the build directory).
+        OperationsSetupXml.setFileLocation("temp" + File.separator);
+        
         // Repoint OperationsSetupXml to JUnitTest subdirectory
         String tempstring = OperationsSetupXml.getOperationsDirectoryName();
         if (!tempstring.contains(File.separator + "JUnitTest")) {
@@ -95,7 +98,7 @@ public class OperationsSwingTestCase extends jmri.util.SwingTestCase {
         LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
         TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
-        FileUtil.createDirectory(FileUtil.getUserFilesPath() + OperationsSetupXml.getOperationsDirectoryName());
+        FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
         // delete files
         File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());

@@ -10,7 +10,6 @@ import java.io.OutputStream;
 import java.util.Calendar;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
-import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

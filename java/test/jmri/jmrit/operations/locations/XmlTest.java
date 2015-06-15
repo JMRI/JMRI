@@ -6,7 +6,6 @@ import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
-import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
