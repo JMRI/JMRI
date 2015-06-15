@@ -110,11 +110,21 @@ public class XNetPacketizerTest extends TestCase {
         // a threading/synchronization issue in AbstractMRTrafficController.
         for (int i = 0; i < 5; i++) {
 
+            l.rcvdRply = null;
+            l1.rcvdRply = null;
+            l2.rcvdRply = null;
+
             // first, we send an unsolicited message
             p.tistream.write(0x42);
             p.tistream.write(0x12);
             p.tistream.write(0x12);
             p.tistream.write(0x42);
+
+
+            // check that the message was picked up by the read thread.
+            Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l));
+            Assert.assertEquals("itteration " + i + " first char of broadcast reply to l", 0x42, l.rcvdRply.getElement(0));
+
 
             // now we need to send a message with both the second and third listeners 
             // as reply receiver.
@@ -142,6 +152,10 @@ public class XNetPacketizerTest extends TestCase {
             Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l1));
             Assert.assertEquals("itteration " + i + " first char of reply to l1", 0x01, l1.rcvdRply.getElement(0));
 
+            Assert.assertNotNull("itteration " + i + " broadcast reply after l1 message",l.rcvdRply);
+            Assert.assertNotNull("itteration " + i + " l1 reply after l1 message",l1.rcvdRply);
+            Assert.assertNull("itteration " + i + " l2 reply after l1 message",l2.rcvdRply);
+
             jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
 
             // and now we verify l2 is the last sender.
@@ -156,8 +170,13 @@ public class XNetPacketizerTest extends TestCase {
 
             // check that the message was picked up by the read thread.
             Assert.assertTrue("itteration " + i + " reply received ", waitForReply(l2));
+
             Assert.assertEquals("itteration " + i + " first char of reply to l2", 0x01, l2.rcvdRply.getElement(0));
-            jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
+ 
+            Assert.assertNotNull("itteration " + i + " broadcast reply after l2 message",l.rcvdRply);
+            Assert.assertNull("itteration " + i + " l1 reply after l2 message",l1.rcvdRply);
+            Assert.assertNotNull("itteration " + i + " l2 reply after l2 message",l2.rcvdRply);
+
             l.rcvdRply = null;
             l1.rcvdRply = null;
             l2.rcvdRply = null;
