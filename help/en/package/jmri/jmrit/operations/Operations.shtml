@@ -209,7 +209,7 @@
    <A NAME="newUserAdvice"></A>
    <H3>New User Advice</H3>
    
-   OperationsPro&trade; has been designed to create car movements that make sense to you and your operators.
+   OperationsPro&trade; has been designed to create car movements that make sense to you and your crew.
    If you've never used a computer program to generate manifests and switch lists, we recommend that
    you load and use the
    <A HREF="#demo">demo files</A> provided. Please read the <A
@@ -249,7 +249,7 @@
     the car to its destination, is the best method when using the program. Same goes when building a
     train using the "departure" track, car pulls directly into the train rather than to a specific
     departure track makes the operations run more smoothly.  By not specifying the A/D tracks, you're
-    letting your operators, and not the program, decide which tracks to use when servicing a train.</P>
+    letting your crew, and not the program, decide which tracks to use when servicing a train.</P>
     
     <A NAME="Display"></A>
     <H3>Display</H3>
@@ -683,7 +683,7 @@
    location. Normally it is better not to allow a car to move from one spur directly to another spur
    at the same location when using a switcher. This type of move can be very unrealistic, picture
    moving a boxcar from a shoe manufacture directly to an auto manufacture. Also moving a car from
-   one yard track to another can have your operators wondering what kind of busy work is being
+   one yard track to another can have your crew wondering what kind of busy work is being
    generated! We recommend that you leave all of the checkboxes deselected, but if you need these
    types of moves, select the appropriate checkbox.
    <P>
@@ -1191,7 +1191,7 @@
    </P>
    <P>The next option is "Truncate" and when selected will cause the program to reduce the
     amount of information printed when setting out or picking up a car at a location that also has a
-    switch list. The idea here is that you have a location that is staffed by an operator with a
+    switch list. The idea here is that you have a location that is staffed by a crew member with a
     switch list and he or she will be doing the actual car pick up and set out for the train. Since
     the switch list contains all of the needed information with regards to where the cars are and
     eventually where they need to be, the train manifest only shows which cars are being removed and
@@ -1224,7 +1224,7 @@
    <A NAME="MisplacedCarsComment"></A>
    <H3>Misplaced Cars Comment</H3>
 
-   OperationsPro&trade; provides a comment for your operators to search for <A HREF="#CarsSet">misplaced</A>
+   OperationsPro&trade; provides a comment for your crew to search for <A HREF="#CarsSet">misplaced</A>
    cars. You can modify the comment to your liking. 
    
    <A NAME="HazardousComment"></A>
@@ -1988,7 +1988,7 @@
    doing that, the program does the same with the next block of cars, it finds the second location
    in the route and sends the cars there. This is a very simplistic approach to blocking cars, it
    assumes that cars previously picked up at a location were placed into the train as a group. This
-   blocking feature doesn't consider where in the train the cars are, as some operators when picking
+   blocking feature doesn't consider where in the train the cars are, as some crew members when picking
    up cars, will add the cars to any part of the train. So the first stop in the departure train's
    route may not have the cars at the head of the train, but they should be in a group, somewhere in
    the train. The first time you depart staging with this feature on, the cars will not be blocked
@@ -2537,9 +2537,9 @@
     
     <H4>Optional Load Messages</H4>
 
-   <P>You can also provide optional messages for your operators based on the type of car and
+   <P>You can also provide optional messages for your crew based on the type of car and
     load. The messages can be useful if you have visible car loads that need to be added or removed
-    by your operators.</P>
+    by your crew.</P>
 
    <A NAME="CarsSet"></A>
    <H3>Set Car</H3>
@@ -2562,7 +2562,7 @@
    In the upper right hand corner of the set car window is a checkbox labeled "Location Unknown".
    Selecting the location unknown checkbox does several things. First the program will ignore the
    car when building new trains. Second, on manifests and switch lists, the program will list all of
-   the misplaced cars. Now your operators can help you find cars that have been
+   the misplaced cars. Now your crew can help you find cars that have been
    <A HREF="#MisplacedCarsComment">misplaced</A>. And finally, when this checkbox is selected, the
    other fields in the set car window are disabled.
 
@@ -3234,7 +3234,7 @@
    where the train pulls the car, and it will in fact be physically farther from the car's final
    destination. This option does two things, it will add cars to the train being built that wouldn't
    normally travel on the train, thus freeing up track space. And second creates more work for your
-   operators as this option can and will increase the number of trains needed to move the car to its
+   crew as this option can and will increase the number of trains needed to move the car to its
    final destination.
    
    <A NAME="SendCustomToStaging"></A>
@@ -3616,7 +3616,7 @@
    Many operators assign a locomotive to a location to do the local switching. Using the location's
    switch list allows the person assigned to the location to service all trains that stop at that
    location. However, there can be locations that don't get enough work servicing through or local
-   trains and it would be nice to create some additional work for the operator assigned to that
+   trains and it would be nice to create some additional work for the crew member assigned to that
    location. To create a "switcher" job, create a route with just one location, the location that
    the switcher will service, and assign that route to a train. The "train" now becomes a switcher
    that will only service that location. Adjust the "Move" count in the route to control how many
@@ -3919,7 +3919,7 @@
     list for locations Lakeview and Bakersfield using <A
      HREF=http://groups.yahoo.com/group/jmriusers/files/Operations>Dan Foltz's Switch List
      Creator version 1.2 (SLC4JMRI.xlsm)</A>. This particular custom format allows you to use a half sheet of
-    paper for your operators. Note that the <A HREF="#CarTypes">Car Types</A> was changed in the <A
+    paper for your crew. Note that the <A HREF="#CarTypes">Car Types</A> was changed in the <A
      HREF="#Settings">Settings</A> window from "Descriptive" to "AAR Codes" before using Dan's Excel
     program.
    </P>
@@ -3982,9 +3982,9 @@
    <P>The next option controls how much paper is used when printing out switch lists. The
     "Normal" mode uses the least amount of paper, and will list the trains servicing the location
     one after another. The "Page per Train" option when selected causes the program to print a train's
-    switch list on a new page for each train. This way your operators when completing the work for a
+    switch list on a new page for each train. This way your crew when completing the work for a
     train, can simply discard the paperwork for that train. This mode is also useful if you have
-    more than one operator working a location, this way they can easily hand out the work by train. The final
+    more than one crew member working a location, this way they can easily hand out the work by train. The final
     option is "Page per Visit", this option prints a new page each time a train visits the location. Useful
     if you don't want multiple visits by a train to be on the same set of pages.</P>
 
@@ -4000,7 +4000,7 @@
     scheduled. So please understand that preview and print work differently in consolidation mode.</P>
    <P>Another use for consolidation mode is to create large switch lists for a location by
     building and terminating several trains. For example, if you have a small layout, you might have
-    to build and terminate quite a few trains in order to generate enough work for your operators.
+    to build and terminate quite a few trains in order to generate enough work for your crew.
     If you use switch lists in real time you have to print them out before you terminate your
     trains. Now if there isn't much work your switch list is going to be pretty short. By
     deselecting the "Real Time" checkbox you can consolidate several small switch lists in to one
@@ -4059,7 +4059,7 @@
    <A NAME="TrainMove"></A>
    <H3>Moving Trains</H3>
 
-   After providing your operators with a printed manifest or location switch list, you must keep the
+   After providing your crew with a printed manifest or location switch list, you must keep the
    program database synchronized with the actual movement of trains on your layout. This is done by
    the train "Move" buttons located on the right side of the <A HREF="#Trains">Trains</A> window.
    Pressing the "Move" button will cause the train to depart its current location move to the next
@@ -4094,7 +4094,7 @@
    <A NAME="BuildingMultipleTrainsSession"></A>
    <H2>Building Multiple Trains for a Session</H2>
 
-   Most operating sessions require more than one train to keep your operators busy. The correct way
+   Most operating sessions require more than one train to keep your crew busy. The correct way
    to do this is to build and print all of the trains needed before terminating them. So if you need
    a dozen trains for a session, you must build twelve trains before you terminate any one train.
    Terminating a train tells the program that the locomotives and cars in that particular train have
