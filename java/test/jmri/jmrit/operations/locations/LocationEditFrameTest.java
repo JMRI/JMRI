@@ -91,6 +91,9 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
 
+        // set the file location to temp (in the root of the build directory).
+        OperationsSetupXml.setFileLocation("temp" + File.separator);
+
         // Repoint OperationsSetupXml to JUnitTest subdirectory
         OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
         // Change file names to ...Test.xml

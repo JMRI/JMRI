@@ -8,6 +8,11 @@ import java.util.Calendar;
 import java.util.Locale;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.operations.OperationsXml;
+import jmri.jmrit.operations.routes.RouteManagerXml;
+import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
+import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
+import jmri.jmrit.operations.locations.LocationManagerXml;
+import jmri.jmrit.operations.trains.TrainManagerXml;
 import jmri.util.FileUtil;
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -74,6 +79,9 @@ public class OperationsBackupTest extends TestCase {
     public OperationsBackupTest(String s) {
         super(s);
 
+        // set the file location to temp (in the root of the build directory).
+        OperationsSetupXml.setFileLocation("temp" + File.separator);
+
         // Set the static Operations root directory used for tests
         OperationsXml.setOperationsDirectoryName("operations" + File.separator
                 + "JUnitTest");
@@ -84,7 +92,9 @@ public class OperationsBackupTest extends TestCase {
         // Correct structure is:
         // <user>/JMRI/Operations / JUnitTest / backups
         // <user>/JMRI/Operations / JUnitTest / autoBackups
-        operationsRoot = new File(FileUtil.getUserFilesPath(),
+        //operationsRoot = new File(FileUtil.getUserFilesPath(),
+        //        OperationsXml.getOperationsDirectoryName());
+        operationsRoot = new File(OperationsXml.getFileLocation(),
                 OperationsXml.getOperationsDirectoryName());
 
         autoBackupRoot = new File(operationsRoot, "autoBackups");
@@ -124,6 +134,24 @@ public class OperationsBackupTest extends TestCase {
     @Override
     protected void setUp() throws IOException {
         apps.tests.Log4JFixture.setUp();
+
+                // set the file location to temp (in the root of the build directory).
+        OperationsSetupXml.setFileLocation("temp" + File.separator);
+
+        // Repoint OperationsSetupXml to JUnitTest subdirectory
+        String tempstring = OperationsSetupXml.getOperationsDirectoryName();
+        if (!tempstring.contains(File.separator + "JUnitTest")) {
+            OperationsSetupXml.setOperationsDirectoryName("operations" + File.separator + "JUnitTest");
+        }
+        // Change file names to ...Test.xml
+        OperationsSetupXml.instance().setOperationsFileName("OperationsJUnitTest.xml");
+        RouteManagerXml.instance().setOperationsFileName("OperationsJUnitTestRouteRoster.xml");
+        EngineManagerXml.instance().setOperationsFileName("OperationsJUnitTestEngineRoster.xml");
+        CarManagerXml.instance().setOperationsFileName("OperationsJUnitTestCarRoster.xml");
+        LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
+        TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
+
+        FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
 
         // set the locale to US English
         Locale.setDefault(Locale.ENGLISH);
@@ -529,7 +557,9 @@ public class OperationsBackupTest extends TestCase {
         Assert.assertNotNull("DEfault root must be set", root);
         Assert.assertTrue("Default root dir must exist", root.exists());
 
-        String usersDir = FileUtil.getUserFilesPath();
+        //String usersDir = FileUtil.getUserFilesPath();
+        // we're resetting the root directory used to temp
+        String usersDir = "temp" + File.separator;
         String opsDirName = OperationsXml.getOperationsDirectoryName();
         File opsRoot = new File(usersDir, opsDirName);
 
@@ -701,7 +731,9 @@ public class OperationsBackupTest extends TestCase {
         Assert.assertNotNull("Auto root must be set", root);
         Assert.assertTrue("Auto root dir must exist", root.exists());
 
-        String usersDir = FileUtil.getUserFilesPath();
+        // String usersDir = FileUtil.getUserFilesPath();
+        // we're resetting the root directory used to temp
+        String usersDir = "temp" + File.separator;
         String opsDirName = OperationsXml.getOperationsDirectoryName();
         File opsRoot = new File(usersDir, opsDirName);
 

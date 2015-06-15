@@ -63,6 +63,9 @@ public class OperationsTestCase extends TestCase {
                     }
                 });
 
+        // set the file location to temp (in the root of the build directory).
+        OperationsSetupXml.setFileLocation("temp" + File.separator);
+
         // Repoint OperationsSetupXml to JUnitTest subdirectory
         String tempstring = OperationsSetupXml.getOperationsDirectoryName();
         if (!tempstring.contains(File.separator + "JUnitTest")) {
