@@ -66,7 +66,7 @@ public abstract class BackupBase {
         if (rootName == null) {
             throw new IllegalArgumentException("Backup root name can't be null"); // NOI18N
         }
-        _operationsRoot = new File(FileUtil.getUserFilesPath(),
+        _operationsRoot = new File(OperationsXml.getFileLocation(),
                 OperationsXml.getOperationsDirectoryName());
 
         _backupRoot = new File(_operationsRoot, rootName);
