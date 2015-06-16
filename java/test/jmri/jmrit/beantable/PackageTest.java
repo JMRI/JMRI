@@ -22,9 +22,9 @@ public class PackageTest extends TestCase {
     public void testExecute() {
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         new MemoryTableAction().actionPerformed(null);
-    }
-
-    public void testXCreation() {
+//    }
+//  test order isn't guaranteed!
+//    public void testXCreation() {
         JFrame f = jmri.util.JmriJFrame.getFrame("Memory Table");
         Assert.assertTrue("found frame", f != null);
         f.dispose();

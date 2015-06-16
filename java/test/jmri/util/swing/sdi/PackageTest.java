@@ -25,12 +25,12 @@ public class PackageTest extends TestCase {
         f.add(b);
         f.pack();
         f.setVisible(true);
-    }
-
-    public void testFrameCreation() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("SDI test");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
+//    }
+//  test order isn't guaranteed!
+//    public void testFrameCreation() {
+        JFrame f2 = jmri.util.JmriJFrame.getFrame("SDI test");
+        Assert.assertTrue("found frame", f2 != null);
+        f2.dispose();
     }
 
     // from here down is testing infrastructure

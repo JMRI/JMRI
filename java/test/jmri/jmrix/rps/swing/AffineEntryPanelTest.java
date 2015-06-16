@@ -37,6 +37,10 @@ public class AffineEntryPanelTest extends TestCase {
             }
         };
         p.addPropertyChangeListener(l);
+        
+        JFrame f2 = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
+        Assert.assertTrue("found frame", f2 != null);
+        f2.dispose();
     }
 
     public void testRoundTrip() {
@@ -46,11 +50,12 @@ public class AffineEntryPanelTest extends TestCase {
         Assert.assertTrue(p.getTransform().equals(t));
     }
 
-    public void testFrameCreation() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
-    }
+//    test order isn't guaranteed!
+//    public void testFrameCreation() {
+//        JFrame f = jmri.util.JmriJFrame.getFrame("Test RPS Listener");
+//        Assert.assertTrue("found frame", f != null);
+//        f.dispose();
+//    }
 
     // from here down is testing infrastructure
     public AffineEntryPanelTest(String s) {

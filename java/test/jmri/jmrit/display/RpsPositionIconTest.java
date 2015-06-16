@@ -83,6 +83,9 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         jf.setSize(300, 300);
         jf.setVisible(true);
 
+        JFrame f = jmri.util.JmriJFrame.getFrame("RpsPositionIcon Test");
+        Assert.assertTrue("found frame", f != null);
+        f.dispose();
     }
 
     String id = "20";
@@ -98,11 +101,12 @@ public class RpsPositionIconTest extends jmri.util.SwingTestCase {
         id = newID;
     }
 
-    public void testXFrameCreation() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("RpsPositionIcon Test");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
-    }
+//    test order isn't guaranteed!
+//    public void testXFrameCreation() {
+//        JFrame f = jmri.util.JmriJFrame.getFrame("RpsPositionIcon Test");
+//        Assert.assertTrue("found frame", f != null);
+//        f.dispose();
+//    }
 
     // from here down is testing infrastructure
     public RpsPositionIconTest(String s) {

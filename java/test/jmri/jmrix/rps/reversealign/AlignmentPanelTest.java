@@ -25,12 +25,12 @@ public class AlignmentPanelTest extends TestCase {
         f.getContentPane().add(panel);
         f.pack();
         f.setVisible(true);
-    }
-
-    public void testXFrameCreation() {
-        JFrame f = jmri.util.JmriJFrame.getFrame("RPS Alignment");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
+//    }
+//  test order isn't guaranteed!
+//    public void testXFrameCreation() {
+        JFrame f2 = jmri.util.JmriJFrame.getFrame("RPS Alignment");
+        Assert.assertTrue("found frame", f2 != null);
+        f2.dispose();
     }
 
     // from here down is testing infrastructure

@@ -30,9 +30,9 @@ public class RpsPositionIconTest extends TestCase {
         Measurement m = new Measurement(loco, 0.0, 0.0, 0.0, 0.133, 5, "source");
         Distributor.instance().submitMeasurement(m);
 
-    }
-
-    public void testXPanelCreation() {
+//    }
+//  test order isn't guaranteed!
+//    public void testXPanelCreation() {
         JFrame f = jmri.util.JmriJFrame.getFrame("RPS Location Test");
         Assert.assertTrue("found frame", f != null);
         f.dispose();

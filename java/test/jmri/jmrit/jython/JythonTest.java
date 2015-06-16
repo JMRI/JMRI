@@ -46,9 +46,9 @@ public class JythonTest extends TestCase {
 
     public void testInput() {
         new InputWindowAction().actionPerformed(null);
-    }
-
-    public void testXXFrameCreation() {
+//    }
+//  test order isn't guaranteed!
+//    public void testXXFrameCreation() {
         JFrame f = jmri.util.JmriJFrame.getFrame("Script Entry");
         Assert.assertTrue("found frame", f != null);
         f.dispose();

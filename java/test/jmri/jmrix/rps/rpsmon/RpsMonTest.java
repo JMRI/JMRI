@@ -18,9 +18,9 @@ public class RpsMonTest extends TestCase {
     // show the window
     public void testDisplay() {
         new RpsMonAction().actionPerformed(null);
-    }
-
-    public void testFrameCreation() {
+//    }
+//  test order isn't guaranteed!
+//    public void testFrameCreation() {
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         JFrame f = jmri.util.JmriJFrame.getFrame("RPS Monitor");
         Assert.assertTrue("found frame", f != null);

@@ -56,9 +56,9 @@ public class SignalHeadTableActionTest extends TestCase {
 
         new SignalHeadTableAction().actionPerformed(null);
 
-    }
-
-    public void testX() {
+//    }
+//  test order isn't guaranteed!
+//    public void testX() {
         JFrame f = jmri.util.JmriJFrame.getFrame("Signal Head Table");
         Assert.assertTrue("found frame", f != null);
         f.dispose();
