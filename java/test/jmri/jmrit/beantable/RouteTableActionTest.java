@@ -20,9 +20,9 @@ public class RouteTableActionTest extends TestCase {
     public void testCreate() {
         new RouteTableAction();
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-    }
-
-    public void testInvoke() {
+//    }
+//  test order isn't guaranteed!
+//    public void testInvoke() {
         new RouteTableAction().actionPerformed(null);
 //    }
 //  test order isn't guaranteed!
