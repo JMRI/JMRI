@@ -79,7 +79,7 @@ public class OperationsTestCase extends TestCase {
         LocationManagerXml.instance().setOperationsFileName("OperationsJUnitTestLocationRoster.xml");
         TrainManagerXml.instance().setOperationsFileName("OperationsJUnitTestTrainRoster.xml");
 
-        FileUtil.createDirectory("temp" + File.separator + OperationsSetupXml.getOperationsDirectoryName());
+        FileUtil.createDirectory(OperationsXml.getFileLocation() + OperationsSetupXml.getOperationsDirectoryName());
 
         // delete files
         File file = new File(RouteManagerXml.instance().getDefaultOperationsFilename());

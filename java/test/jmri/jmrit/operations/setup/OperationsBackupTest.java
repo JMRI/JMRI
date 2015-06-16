@@ -92,8 +92,6 @@ public class OperationsBackupTest extends TestCase {
         // Correct structure is:
         // <user>/JMRI/Operations / JUnitTest / backups
         // <user>/JMRI/Operations / JUnitTest / autoBackups
-        //operationsRoot = new File(FileUtil.getUserFilesPath(),
-        //        OperationsXml.getOperationsDirectoryName());
         operationsRoot = new File(OperationsXml.getFileLocation(),
                 OperationsXml.getOperationsDirectoryName());
 
