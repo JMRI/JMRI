@@ -40,7 +40,7 @@ public class MergTrafficController extends GcTrafficController {
      * Make a CanReply from a MergReply reply
      */
     public CanReply decodeFromHardware(AbstractMRReply m) {
-        log.warn("Decoding from hardware");
+        log.debug("Decoding from hardware");
         MergReply gc = (MergReply) m;
         CanReply ret = gc.createReply();
         return ret;
