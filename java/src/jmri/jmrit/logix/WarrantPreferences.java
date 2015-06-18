@@ -42,7 +42,7 @@ public class WarrantPreferences  {
     private String  _fileName;
     private float   _scale = 87.1f;
     private int     _searchDepth = 20;
-    private float   _throttleScale = 0.80f;
+    private float   _throttleScale = 0.5f;
     
     private OrderedHashtable<String, Float> _speedNames;
     private OrderedHashtable<String, String> _headAppearances;
@@ -315,7 +315,6 @@ public class WarrantPreferences  {
         NXFrame frame = NXFrame.getInstance();
         frame.setScale(_scale);
         frame.setDepth(_searchDepth);
-        frame.setThrottleScale(_throttleScale);
         frame.setTimeInterval(_msIncrTime);
         frame.setRampIncrement(_throttleIncr);
         frame.updatePanel(_interpretation);
@@ -325,6 +324,7 @@ public class WarrantPreferences  {
         map.setAspectTable(getSpeedNameEntryIterator(), _interpretation);       
         map.setAppearanceTable(getAppearanceEntryIterator());
         map.setRampParams(_throttleIncr, _msIncrTime);
+        map.setDefaultThrottleFactor(_throttleScale);
         map.setLayoutScale(_scale);
         map.setMap(map);        
     }

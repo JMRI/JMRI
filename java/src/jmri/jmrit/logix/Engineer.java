@@ -56,6 +56,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (ent!=null) {
             _speedProfile = ent.getSpeedProfile();
         }
+        if (_speedProfile==null) {
+            log.warn("RosterSpeedProfile not found. Using default ThrottleFactor "+_speedMap.getDefaultThrottleFactor());
+        }
     }
 
     @Override
@@ -258,7 +261,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (sType.equals(Warrant.Normal)) {
             return throttleSpeed;
         }
-        mapSpeed = _speedMap.getSpeed(sType);          
+        mapSpeed = _speedMap.getSpeed(sType);
+        
 
         switch (_speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
@@ -271,13 +275,17 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
                 break;
             case SignalSpeedMap.SPEED_MPH:          // miles per hour
-                mapSpeed = mapSpeed*_warrant.getThrottleFactor()*12*5280/(3600*1000);
+                mapSpeed =  mapSpeed/SignalSpeedMap.getMap().getLayoutScale();
+                mapSpeed =  mapSpeed/2.2369363f;  // layout track speed mm/ms
+                mapSpeed = mapSpeed/getThrottleFactor(throttleSpeed);
                 if (mapSpeed<throttleSpeed) {
                     throttleSpeed = mapSpeed;                  
                 }
                 break;
             case SignalSpeedMap.SPEED_KMPH:
-                mapSpeed = mapSpeed*_warrant.getThrottleFactor()*1000/(3600*25.4f);
+                mapSpeed =  mapSpeed/SignalSpeedMap.getMap().getLayoutScale();
+                mapSpeed =  mapSpeed/3.6f;  // layout track speed mm/ms
+                mapSpeed = mapSpeed/getThrottleFactor(throttleSpeed);
                 if (mapSpeed<throttleSpeed) {
                     throttleSpeed = mapSpeed;                  
                 }
@@ -329,14 +337,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             return "At Stop";
         } else {
             String units;
-//            float scale =  SignalSpeedMap.getMap().getLayoutScale();
             float speed;
+            if (_speedProfile!=null) {
+                speed = _speedProfile.getSpeed(_currentSpeed, _throttle.getIsForward())/1000;
+            } else {
+                speed = _currentSpeed*_speedMap.getDefaultThrottleFactor();                    
+            }
+            speed = speed*SignalSpeedMap.getMap().getLayoutScale();
             if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
                 units= "Kmph";
-                speed = _currentSpeed*3600*25.4f/(_warrant.getThrottleFactor()*1000);
+                speed = speed*3.6f;
             } else {
                 units = "Mph";
-                speed = _currentSpeed*3600*1000/(_warrant.getThrottleFactor()*12*5280);
+                speed = speed*2.2369363f;
             }
             return Bundle.getMessage("atSpeed", _speedType, Math.round(speed), units);
         }
@@ -629,15 +642,11 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
     protected long getTimeForDistance(float distance, String speedtype) {
         float fromSpeed =  modifySpeed(_maxSpeed, speedtype);
-        if (_speedProfile != null) {
-            return Math.round(1000*_speedProfile.getDurationOfTravelInSeconds(_throttle.getIsForward(), fromSpeed, Math.round(distance)));
-        }
-        float scaleFactor = _warrant.getThrottleFactor()*_speedMap.getLayoutScale()/25.4f;
-        return (long)(distance*scaleFactor/fromSpeed);
+        return (long)(distance/fromSpeed);
     }
     /**
-     * Compute ramp length. Units depend on units of warrant's throttle factor
-     * @return length required for speed change
+     * Length needed by engineer to bring train to a stop from maximum speed
+     * @return max length required for speed change
      */
     protected float lookAheadLen() {
         _maxSpeed = 0.0f;
@@ -661,22 +670,32 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             log.error("SignalSpeedMap StepIncrement is not set correctly.  Check Preferences->Warrants.");
             return 1.0f;
         }
-        float time = (float)(_speedMap.getStepDelay())/1000;
+        float time = _speedMap.getStepDelay();
         boolean isForward = _throttle.getIsForward();
-        float scaleFactor = _speedMap.getLayoutScale()*_warrant.getThrottleFactor()/25.4f;
-        // assume linear speed change to ramp down to stop
+        
+        float factor = getThrottleFactor(_maxSpeed);
         float maxRampLength = 0.0f;
         speed = _maxSpeed;
         while (speed>=0.0f) {
             if (_speedProfile != null) {
-                maxRampLength += _speedProfile.getDistanceTravelled(isForward, (speed-delta/2), time);                
+                maxRampLength += _speedProfile.getSpeed((speed-delta/2), isForward)*time/1000;               
             } else {
-                maxRampLength += (speed-delta/2)*time/scaleFactor;                
+                maxRampLength += (speed-delta/2)*time/factor;                
             }
             speed -= delta;
         }
-        if (log.isDebugEnabled()) log.debug("_lookAheadLen(): max throttle= "+_maxSpeed+" maxRampLength= "+maxRampLength);
+        if (log.isDebugEnabled()) log.debug("_lookAheadLen(): max throttle= "+_maxSpeed+" maxRampLength= "+maxRampLength+
+                ", from "+(_speedProfile!=null?"SpeedProfile":"Factor="+factor));
         return maxRampLength;
+    }
+    private float getThrottleFactor(float speedStep) {
+        float factor = _speedMap.getDefaultThrottleFactor();
+        if (_speedProfile != null) {
+            factor = _speedProfile.getSpeed(speedStep, _throttle.getIsForward())/(speedStep*1000);              
+        }
+        if (log.isDebugEnabled()) log.debug("getThrottleFactor() from "+
+                (_speedProfile!=null?"SpeedProfile":"Default")+", Factor="+factor);
+        return factor;
     }
     
     protected String minSpeed(String speed1, String speed2) {

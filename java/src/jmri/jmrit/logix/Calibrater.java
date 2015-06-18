@@ -16,6 +16,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import jmri.DccThrottle;
 import jmri.implementation.SignalSpeedMap;
+import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterSpeedProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -140,10 +141,14 @@ public class Calibrater extends jmri.util.JmriJFrame {
     }
     
     private void dofactor() {
-        NXFrame.getInstance().setThrottleScale(_factor);
         if (_clearBox.isSelected()) {
             if (_speedProfile != null) {
-                _speedProfile.clearCurrentProfile(); 
+                if (JOptionPane.YES_OPTION == JOptionPane.showConfirmDialog(this, Bundle.getMessage(
+                        "ClearSpeedProfile", _warrant.getTrainId(), _speedProfile.getProfileSize()),
+                        Bundle.getMessage("WarningTitle"), JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) ) {
+                    _speedProfile.clearCurrentProfile();                     
+                }
+                    
             }
         }
        if (_addBox.isSelected()) {
@@ -167,7 +172,8 @@ public class Calibrater extends jmri.util.JmriJFrame {
             if (log.isDebugEnabled()) log.debug("Made speed profile setting for "+ _warrant.getTrainId()+
                     ": "+(_isForward ? "Forward":"Reverse")+" step= "+Math.round(_maxSpeed*1000)+", speed= "+_rawSpeed*1000);
             _warrant.getRosterEntry().updateFile();
-        }
+            Roster.writeRosterFile();
+         }
         dispose();
     }
     

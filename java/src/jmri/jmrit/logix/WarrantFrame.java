@@ -29,7 +29,6 @@ import javax.swing.JTextField;
 import javax.swing.table.AbstractTableModel;
 import jmri.DccThrottle;
 import jmri.InstanceManager;
-import jmri.implementation.SignalSpeedMap;
 import jmri.jmrit.picker.PickListModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,7 +78,6 @@ public class WarrantFrame extends WarrantRoute {
     JTabbedPane _tabbedPane;
     JPanel _routePanel;
     JPanel _commandPanel;
-    JTextField _throttleFactorBox = new JTextField();
     JRadioButton _runProtect = new JRadioButton(Bundle.getMessage("RunProtected"), true);
     JRadioButton _runBlind = new JRadioButton(Bundle.getMessage("RunBlind"), false);
     JRadioButton _halt = new JRadioButton(Bundle.getMessage("Halt"), false);
@@ -118,7 +116,6 @@ public class WarrantFrame extends WarrantRoute {
             setup(_warrant);
             _create = true;  // allows warrant to be registered
         } else {
-            _throttleFactorBox.setText(Float.toString(SignalSpeedMap.getMap().getDefaultThrottleFactor()));
             WarrantTableAction.newWarrantFrame(this);
             _create = create;
         }
@@ -158,12 +155,6 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setTrainId(warrant.getTrainId());
         _runBlind.setSelected(warrant.getRunBlind());
         _warrant.setRunBlind(warrant.getRunBlind());
-        float f = warrant.getThrottleFactor();
-        if (f>=8 || f<=0.1) {
-            f = SignalSpeedMap.getMap().getDefaultThrottleFactor();                                    
-        }
-        _throttleFactorBox.setText(Float.toString(f));
-        _warrant.setThrottleFactor(warrant.getThrottleFactor());
         WarrantTableAction.newWarrantFrame(this);
     }
 
@@ -428,16 +419,6 @@ public class WarrantFrame extends WarrantRoute {
         panel.add(_runBlind);
         runPanel.add(panel);
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
-
-        _throttleFactorBox.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
-               if (msg!=null) {
-                    showWarning(msg);
-                }
-            }
-        });
-        _throttleFactorBox.setToolTipText(Bundle.getMessage("ToolTipThrottleScale"));
         _runBlind.setSelected(_warrant.getRunBlind());
 
         panel = new JPanel();
@@ -453,10 +434,6 @@ public class WarrantFrame extends WarrantRoute {
         });
         bPanel.add(runButton);
         panel.add(bPanel);
-        //panel.add(Box.createVerticalStrut(STRUT_SIZE));
-        panel.add(makeTextBoxPanel(true, _throttleFactorBox, "ThrottleFactor", "throttleFactor"));
-        _throttleFactorBox.setMaximumSize(new Dimension(100, _throttleFactorBox.getPreferredSize().height));
-        _throttleFactorBox.setMinimumSize(new Dimension(30, _throttleFactorBox.getPreferredSize().height));
         runPanel.add(panel);
         runPanel.add(Box.createHorizontalStrut(STRUT_SIZE));
 
@@ -836,15 +813,7 @@ public class WarrantFrame extends WarrantRoute {
             setStatusText(msg, Color.black);
             return;
         }
-        msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());
-        if (msg!=null) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("MustBeFloat"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
-            setStatusText(msg, Color.black);
-            return;
-        }
-       
-        _warrant.setTrainName(getTrainName());
+               _warrant.setTrainName(getTrainName());
         if (!_warrant.hasRouteSet() && _runBlind.isSelected()) {
             msg = Bundle.getMessage("BlindRouteNotSet", _warrant.getDisplayName());
             JOptionPane.showMessageDialog(this, msg,
@@ -1111,9 +1080,6 @@ public class WarrantFrame extends WarrantRoute {
     private void save() {
         String msg = routeIsValid();
         if (msg==null) {
-            msg = _warrant.setThrottleFactor(_throttleFactorBox.getText());         
-        }
-        if (msg==null) {
             msg = checkLocoAddress();            
         }
         if (msg!=null) {
@@ -1143,7 +1109,6 @@ public class WarrantFrame extends WarrantRoute {
         _warrant.setAvoidOrder(getAvoidBlockOrder());
         _warrant.setBlockOrders(getOrders());
         _warrant.setThrottleCommands(_throttleCommands);
-        _warrant.setThrottleFactor(_throttleFactorBox.getText());
         
         if (log.isDebugEnabled()) log.debug("warrant saved _train "+getAddress()+", name= "+getTrainName());
 

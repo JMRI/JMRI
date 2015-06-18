@@ -66,7 +66,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     private LearnThrottleFrame _student;    // need to callback learning throttle in learn mode
     private boolean _tempRunBlind;          // run mode flag
     private boolean _delayStart;            // allows start block unoccupied and wait for train
-    private float   _throttleFactor = 0.75f;
     protected List <ThrottleSetting> _commands;   // temp commands used in run mode
     private int     _idxCurrentOrder;       // Index of block at head of train (if running)
     private int     _idxLastOrder;          // Index of block at tail of train just left
@@ -327,8 +326,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
 
     /**
+     * Fetches RosterEntry
      * @param id may be either Roster entry or DCC address
-     * @return id is valid
+     * @return true if RosterEntry found
      */
     public boolean setTrainId(String id) {
         _trainId = id;
@@ -339,41 +339,18 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         if (_train != null) {
             _dccAddress = _train.getDccLocoAddress();
         } else {
-            int index = id.indexOf('(');
-            String numId;
-            if (index >= 0) {
-                numId = id.substring(0, index);
-            } else {
-                numId = id;
-            }
-            List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
-            if (l.size() > 0) {
-                _train = l.get(0);
-                try {
-                    _dccAddress = l.get(0).getDccLocoAddress();
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            } else {
-                boolean isLong = true;
-                if ((index + 1) < id.length()
-                        && (id.charAt(index + 1) == 'S' || id.charAt(index + 1) == 's')) {
-                    isLong = false;
-                }
-                try {
-                    int num = Integer.parseInt(numId);
-                    _dccAddress = new DccLocoAddress(num, isLong);
-                } catch (NumberFormatException e) {
-                    return false;
-                }
-            }
+            return setDccAddress(id);
         }
         return true;
     }
     
     protected RosterEntry getRosterEntry() {
         if (_train==null) {
-            setTrainId(_trainId);
+            if (_trainId != null) {
+                setTrainId(_trainId);
+            } else if (_dccAddress!=null) {
+                setDccAddress(_dccAddress.toString());
+            }
         }           
         return _train;
     }
@@ -389,6 +366,47 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         }
     }
 
+    /**
+     * Sets dccAddress and fetches RosterEntry
+     * @param address as a String
+     * @return
+     */
+    public boolean setDccAddress(String id) {
+        int index = id.indexOf('(');
+        String numId;
+        if (index >= 0) {
+            numId = id.substring(0, index);
+        } else {
+            numId = id;
+        }
+        List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+        if (l.size() > 0) {
+            _train = l.get(0);
+            try {
+                _dccAddress = l.get(0).getDccLocoAddress();
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        } else {
+            _train = null;
+            boolean isLong = true;
+            if ((index + 1) < id.length()
+                    && (id.charAt(index + 1) == 'S' || id.charAt(index + 1) == 's')) {
+                isLong = false;
+            }
+            try {
+                int num = Integer.parseInt(numId);
+                _dccAddress = new DccLocoAddress(num, isLong);
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+        if (_trainId == null) {
+            _trainId = _dccAddress.toString();
+        }
+        return (_train!=null);
+    }
+
     public boolean getRunBlind() {
         return _runBlind;
     }
@@ -397,29 +415,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         _runBlind = runBlind;
     }
 
-    public void setThrottleFactor(float f) {
-        _throttleFactor = f;
-    }
-    /**
-     * return is inches per millisecond ratio to throttle setting
-     * @return
-     */
-    public float getThrottleFactor() {
-        return _throttleFactor;
-    }
-    public String setThrottleFactor(String sFactor) {
-        float fac = 0.75f;
-        try {
-            fac = Float.parseFloat(sFactor);
-        } catch (NumberFormatException nfe) {
-            return Bundle.getMessage("MustBeFloat");
-        }
-        if (fac > 10 || fac <0.05) {
-            return Bundle.getMessage("InvalidFactor", sFactor);                                             
-        }
-        _throttleFactor = fac;          
-        return null;
-    }
     protected DccThrottle getThrottle() {
         if (_engineer!=null) {
             return _engineer.getThrottle();
@@ -711,6 +706,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             if (_dccAddress == null) {  // if brand new warrant being tested. needed for a delayed start
                 _dccAddress = address;
             }
+            setTrainId(_dccAddress.toString());     // get RosterEntry
         } else {
             stopWarrant(true);
         }

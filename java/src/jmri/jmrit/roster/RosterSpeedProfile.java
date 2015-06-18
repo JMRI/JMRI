@@ -1,9 +1,7 @@
 package jmri.jmrit.roster;
 
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.TreeMap;
 import jmri.Block;
 import jmri.DccThrottle;
@@ -99,17 +97,27 @@ public class RosterSpeedProfile {
         log.debug("no exact match forward for " + iSpeedStep);
         float lower = 0;
         float higher = 0;
-        int highStep = 0;
-        int lowStep = 0;
-        if (speeds.higherKey(iSpeedStep) != null) {
-            highStep = speeds.higherKey(iSpeedStep);
+        int highStep = iSpeedStep;
+        int lowStep = iSpeedStep;
+        
+        while (speeds.higherKey(highStep) != null && higher<=0.0f) {
+            highStep = speeds.higherKey(highStep);
             higher = speeds.get(highStep).getForwardSpeed();
-        } else {
-            return -1.0f;
         }
-        if (speeds.lowerKey(iSpeedStep) != null) {
-            lowStep = speeds.lowerKey(iSpeedStep);
+        boolean nothingHigher = (higher<=0.0f);
+        
+        while (speeds.lowerKey(lowStep) != null && lower<=0.0f) {
+            lowStep = speeds.lowerKey(lowStep);
             lower = speeds.get(lowStep).getForwardSpeed();
+        }
+        if (lower<=0.0f) {      // nothing lower
+            if (nothingHigher) {
+                return -1.0f;       // no forward speeds at all                
+            }
+            return higher*iSpeedStep/highStep;
+        }
+        if (nothingHigher) {
+            return lower*(1.0f + (iSpeedStep-lowStep)/(1000.0f-lowStep));
         }
 
         float valperstep = (higher - lower) / (highStep - lowStep);
@@ -130,17 +138,27 @@ public class RosterSpeedProfile {
         log.debug("no exact match reverse for " + iSpeedStep);
         float lower = 0;
         float higher = 0;
-        int highStep = 0;
-        int lowStep = 0;
-        if (speeds.higherKey(iSpeedStep) != null) {
-            highStep = speeds.higherKey(iSpeedStep);
-            higher = speeds.get(highStep).getForwardSpeed();
-        } else {
-            return -1.0f;
+        int highStep = iSpeedStep;
+        int lowStep = iSpeedStep;
+        
+        while (speeds.higherKey(highStep) != null && higher<=0.0f) {
+            highStep = speeds.higherKey(highStep);
+            higher = speeds.get(highStep).getReverseSpeed();
         }
-        if (speeds.lowerKey(iSpeedStep) != null) {
-            lowStep = speeds.lowerKey(iSpeedStep);
-            lower = speeds.get(lowStep).getForwardSpeed();
+        boolean nothingHigher = (higher<=0.0f);
+        
+        while (speeds.lowerKey(lowStep) != null && lower<=0.0f) {
+            lowStep = speeds.lowerKey(lowStep);
+            lower = speeds.get(lowStep).getReverseSpeed();
+        }
+        if (lower<=0.0f) {      // nothing lower
+            if (nothingHigher) {
+                return -1.0f;       // no reverse speeds at all                
+            }
+            return higher*iSpeedStep/highStep;
+        }
+        if (nothingHigher) {
+            return lower*(1.0f + (iSpeedStep-lowStep)/(1000.0f-lowStep));
         }
 
         float valperstep = (higher - lower) / (highStep - lowStep);
@@ -661,51 +679,26 @@ public class RosterSpeedProfile {
     }
 
     /* If there are too few SpeedSteps to get reasonable distances and speeds
-     * over a good range of throttle settings, compute a factor that averages
-     * a ratio for what whatever SpeedSteps exist.
+     * over a good range of throttle settings get whatever SpeedSteps exist.
      */
-    public int getProfilesize() {
+    public int getProfileSize() {
         return speeds.size();
     }
-    /**
-     * @return an average ratio of forward speed to throttle setting
-     */
-    public float getForwardFactor() {
-        float factor = 0.0f;
-        int count = 0;
-        Iterator<Map.Entry<Integer, SpeedStep>> it = speeds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, SpeedStep> entry = it.next();
-            float fac = entry.getValue().getForwardSpeed()/entry.getKey();
-            if (fac > 0.0f) {
-                factor += fac;
-                count++;
+    public float getSpeed(float speedStep, boolean isForward) {
+        float speed;
+        if (isForward) {
+            speed = getForwardSpeed(speedStep);
+        } else {
+            speed = getReverseSpeed(speedStep);            
+        }
+        if (speed<=0) {
+            if (isForward) {
+                speed = getReverseSpeed(speedStep);
+            } else {
+                speed = getForwardSpeed(speedStep);            
             }
         }
-        if (count>0) {
-            return factor/count;
-        }
-        return factor;
-    }
-    /**
-     * @return an average ratio of reverse speed to throttle setting
-     */
-    public float getReverseFactor() {
-        float factor = 0.0f;
-        int count = 0;
-        Iterator<Map.Entry<Integer, SpeedStep>> it = speeds.entrySet().iterator();
-        while (it.hasNext()) {
-            Map.Entry<Integer, SpeedStep> entry = it.next();
-            float fac = entry.getValue().getReverseSpeed()/entry.getKey();
-            if (fac > 0.0f) {
-                factor += fac;
-                count++;
-            }
-        }
-        if (count>0) {
-            return factor/count;
-        }
-        return factor;
+        return speed;
     }
 
     static Logger log = LoggerFactory.getLogger(RosterSpeedProfile.class);

@@ -45,16 +45,15 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     public static final int ROUTE_COLUMN = 1;
     public static final int TRAIN_NAME_COLUMN = 2;
     public static final int ADDRESS_COLUMN = 3;
-    public static final int FACTOR_COLUMN = 4;
-    public static final int ALLOCATE_COLUMN = 5;
-    public static final int DEALLOC_COLUMN = 6;
-    public static final int SET_COLUMN = 7;
-    public static final int AUTO_RUN_COLUMN = 8;
-    public static final int MANUAL_RUN_COLUMN = 9;
-    public static final int CONTROL_COLUMN = 10;
-    public static final int EDIT_COLUMN = 11;
-    public static final int DELETE_COLUMN = 12;
-    public static final int NUMCOLS = 13;
+    public static final int ALLOCATE_COLUMN = 4;
+    public static final int DEALLOC_COLUMN = 5;
+    public static final int SET_COLUMN = 6;
+    public static final int AUTO_RUN_COLUMN = 7;
+    public static final int MANUAL_RUN_COLUMN = 8;
+    public static final int CONTROL_COLUMN = 9;
+    public static final int EDIT_COLUMN = 10;
+    public static final int DELETE_COLUMN = 11;
+    public static final int NUMCOLS = 12;
 
     WarrantManager _manager;
     WarrantTableFrame _frame;
@@ -233,8 +232,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return Bundle.getMessage("TrainName");
         case ADDRESS_COLUMN:
             return Bundle.getMessage("DccAddress");
-        case FACTOR_COLUMN:
-            return Bundle.getMessage("Factor");
         case ALLOCATE_COLUMN:
             return Bundle.getMessage("Allocate");
         case DEALLOC_COLUMN:
@@ -258,7 +255,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return false;
         case TRAIN_NAME_COLUMN:
         case ADDRESS_COLUMN:
-        case FACTOR_COLUMN:
         case ROUTE_COLUMN:
         case ALLOCATE_COLUMN:
         case DEALLOC_COLUMN:
@@ -283,8 +279,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         case TRAIN_NAME_COLUMN:
             return String.class;
         case ADDRESS_COLUMN:
-            return String.class;
-        case FACTOR_COLUMN:
             return String.class;
         case ALLOCATE_COLUMN:
             return JButton.class;
@@ -316,8 +310,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             return new JTextField(25).getPreferredSize().width;
         case ADDRESS_COLUMN:
             return new JTextField(7).getPreferredSize().width;
-        case FACTOR_COLUMN:
-            return new JTextField(6).getPreferredSize().width;
         case ALLOCATE_COLUMN:
         case DEALLOC_COLUMN:
         case SET_COLUMN:
@@ -365,8 +357,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 return w.getDccAddress().toString();
             }
             break;
-        case FACTOR_COLUMN:
-            return Float.toString(w.getThrottleFactor());
         case ALLOCATE_COLUMN:
             if (w.isTotalAllocated()) {
                 return new NamedIcon(
@@ -495,9 +485,6 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     msg = Bundle.getMessage("BadDccAddress", addr);
                 }
             }
-            break;
-        case FACTOR_COLUMN:
-            msg = w.setThrottleFactor((String) value);
             break;
         case ALLOCATE_COLUMN:
             msg = w.allocateRoute(null);
