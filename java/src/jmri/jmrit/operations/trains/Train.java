@@ -419,6 +419,9 @@ public class Train implements java.beans.PropertyChangeListener {
 
     private int calculateWorkTimeAtLocation(RouteLocation routeLocation) {
         int minutes = 0;
+        // departure?
+        if (routeLocation == getTrainDepartsRouteLocation())
+            return minutes;
         // add any work at this location
         for (RollingStock rs : CarManager.instance().getList(this)) {
             if (rs.getRouteLocation() == routeLocation && !rs.getTrackName().equals(RollingStock.NONE)) {
