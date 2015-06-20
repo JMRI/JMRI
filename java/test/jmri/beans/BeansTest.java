@@ -253,7 +253,7 @@ public class BeansTest extends TestCase {
                 this.indexedProperty.add(index, string);
             }
         }
-    };
+    }
 
     /*
      * The properties "stringProperty" and "indexedProperty" are not visible
