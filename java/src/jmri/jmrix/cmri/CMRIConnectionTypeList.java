@@ -14,6 +14,7 @@ public class CMRIConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig",
+            "jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig",
             "jmri.jmrix.cmri.serial.sim.ConnectionConfig"
         };
     }

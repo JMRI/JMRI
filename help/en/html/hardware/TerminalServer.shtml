@@ -35,8 +35,8 @@
 A terminal server is a box that connects one or more serial
 ports to a network so they can be accessed from a remote computer.
 JMRI running on a computer with a network connection can 
-connect to a EasyDCC or NCE command station via one of these. This allows
-you to put the computer and command station as far apart as you'd like.
+connect to a EasyDCC or NCE command station or C/MRI nodes via one of these. This allows
+you to put the computer and layout as far apart as you'd like.
 <P>
 To make this work,
 you have to configure both JMRI and the terminal server, and make 
@@ -47,7 +47,7 @@ has a
 <A href="http://stpaulterminal.org/software/jmri/lantronix.html">web page</a>
 describing in detail how he set it up for EasyDCC.  
 The following is just an overview
-of this. The NCE process is similar.
+of this. The NCE and C/MRI processes are similar.
 
 <UL>
 <LI>

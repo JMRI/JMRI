@@ -71,7 +71,11 @@
 	    <dt class="im"><a href="http://www.jlcenterprises.net/">C/MRI</a></dt>
 	    <dt>C/MRI</dt>
 	    <dd>
-	        <p class="dl">Configure: <a href="cmri/CMRI.shtml">Bruce Chubb's C/MRI control system</a></p>
+	        <p class="dl">Configure: <a href="cmri/CMRI.shtml">Bruce Chubb's C/MRI control system</a>
+	        for a connection via 
+	        direct serial, 
+	        <a href="cmri/CMRI.shtml#usb">USB-serial adapter</a>,
+	        or <a href="cmri/CMRI.shtml#net">network connection</a>.</p>
 	    </dd>
 
 	    <dt class="im">
