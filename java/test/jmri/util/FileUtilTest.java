@@ -273,12 +273,7 @@ public class FileUtilTest extends TestCase {
 
     public void testCopyDirectoryToExistingDirectory() throws FileNotFoundException, IOException {
         File src = FileUtil.getFile(FileUtil.getAbsoluteFilename("program:web/fonts"));
-        // create a temporary directory by creating a temp file, deleting it, and creating a directory with a similar name
-        // see http://stackoverflow.com/a/617438
-        File file = File.createTempFile("FileUtilTest", null);
-        file.delete();
-        File dest = new File(file.getPath() + ".d");
-        dest.mkdir();
+        File dest = Files.createTempDirectory("FileUtilTest").toFile();
         FileUtil.copy(src, dest);
         String[] destFiles = dest.list();
         FileUtil.delete(dest);

@@ -3,7 +3,6 @@ package jmri.util;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -15,7 +14,12 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.channels.FileChannel;
+import java.nio.file.FileVisitResult;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.SimpleFileVisitor;
+import java.nio.file.StandardCopyOption;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Arrays;
 import java.util.jar.JarFile;
 import java.util.regex.Matcher;
@@ -1080,7 +1084,9 @@ public final class FileUtil {
     }
 
     /**
-     * Recursively delete a path. Not needed in Java 1.7.
+     * Recursively delete a path. It is recommended to use
+     * {@link java.nio.file.Files#delete(java.nio.file.Path)} or
+     * {@link java.nio.file.Files#deleteIfExists(java.nio.file.Path)} for files.
      *
      * @param path
      * @return true if path was deleted, false otherwise
@@ -1095,7 +1101,9 @@ public final class FileUtil {
     }
 
     /**
-     * Copy a file. Not needed in Java 1.7.
+     * Copy a file or directory. It is recommended to use
+     * {@link java.nio.file.Files#copy(java.nio.file.Path, java.io.OutputStream)}
+     * for files.
      *
      * @param source
      * @param dest   must be the file, not the destination directory.
@@ -1103,6 +1111,7 @@ public final class FileUtil {
      */
     public static void copy(File source, File dest) throws IOException {
         if (!source.exists()) {
+            log.error("Attempting to copy non-existant file: {}", source);
             return;
         }
         if (!dest.exists()) {
@@ -1118,43 +1127,26 @@ public final class FileUtil {
                 }
             }
         }
+        Path srcPath = source.toPath();
+        Path dstPath = dest.toPath();
         if (source.isDirectory()) {
-            for (File file : source.listFiles()) {
-                FileUtil.copy(file, new File(dest, file.getName()));
-            }
+            Files.walkFileTree(srcPath, new SimpleFileVisitor<Path>() {
+                @Override
+                public FileVisitResult preVisitDirectory(final Path dir,
+                        final BasicFileAttributes attrs) throws IOException {
+                    Files.createDirectories(dstPath.resolve(srcPath.relativize(dir)));
+                    return FileVisitResult.CONTINUE;
+                }
+
+                @Override
+                public FileVisitResult visitFile(final Path file,
+                        final BasicFileAttributes attrs) throws IOException {
+                    Files.copy(file, dstPath.resolve(srcPath.relativize(file)));
+                    return FileVisitResult.CONTINUE;
+                }
+            });
         } else {
-            FileInputStream sourceIS = null;
-            FileChannel sourceChannel = null;
-            FileOutputStream destIS = null;
-            FileChannel destChannel = null;
-            try {
-                sourceIS = new FileInputStream(source);
-                sourceChannel = sourceIS.getChannel();
-                destIS = new FileOutputStream(dest);
-                destChannel = destIS.getChannel();
-                if (destChannel != null && sourceChannel != null) {
-                    destChannel.transferFrom(sourceChannel, 0, sourceChannel.size());
-                }
-            } catch (IOException ex) {
-                throw ex;
-            } finally {
-                try {
-                    if (sourceChannel != null) {
-                        sourceChannel.close();
-                    }
-                    if (destChannel != null) {
-                        destChannel.close();
-                    }
-                    if (sourceIS != null) {
-                        sourceIS.close();
-                    }
-                    if (destIS != null) {
-                        destIS.close();
-                    }
-                } catch (IOException ex) {
-                    throw ex;
-                }
-            }
+            Files.copy(source.toPath(), dest.toPath(), StandardCopyOption.REPLACE_EXISTING);
         }
     }
 
