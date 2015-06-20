@@ -401,11 +401,15 @@ public class FnMapPanelESU extends JPanel {
                             if (cvObject == null) {
                                 cvObject = cvModel.allCvMap().get(thisCV); // case of new loco
                             }
-                            cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-                                public void propertyChange(java.beans.PropertyChangeEvent e) {
-                                    updateAllSummaryLines();
-                                }
-                            });
+                            if (cvObject != null) {
+                                cvObject.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                                    public void propertyChange(java.beans.PropertyChangeEvent e) {
+                                        updateAllSummaryLines();
+                                    }
+                                });
+                            } else {
+                                log.error("cvObject still null after attempt to allocate");
+                            }
 
                             // add line to scroll pane
                             String label = itemName[item][0];
