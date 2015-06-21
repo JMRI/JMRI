@@ -1,11 +1,14 @@
 // UnboundBean.java
 package jmri.beans;
 
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Generic implementation of {@link jmri.beans.BeanInterface} without support
- * for arbitrary properties defined at runtime.
+ * Generic implementation of {@link jmri.beans.BeanInterface} that supports
+ * arbitrary properties defined at runtime.
  * <p>
  * <b>NOTE</b> This class does not implement
  * {@link java.beans.PropertyChangeSupport}. Subclass {@link jmri.beans.Bean} if
@@ -13,7 +16,16 @@ import java.util.Set;
  *
  * @author rhwood
  */
-public abstract class UnboundBean implements BeanInterface {
+public abstract class UnboundArbitraryBean implements BeanInterface {
+
+    /**
+     * Store properties in a hashMap for easy access.
+     * <p>
+     * Note that unless you use the methods in this class to manipulate this
+     * variable, you will need to instantiate it, or test that it is not null
+     * prior to use.
+     */
+    protected final HashMap<String, Object> properties = new HashMap<>();
 
     /**
      * Get value of element at <i>index</i> of property array <i>key</i>.
@@ -33,6 +45,13 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public Object getIndexedProperty(String key, int index) {
+        if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
+            try {
+                return ((Object[]) properties.get(key))[index];
+            } catch (ArrayIndexOutOfBoundsException ex) {
+                return null;
+            }
+        }
         return Beans.getIntrospectedIndexedProperty(this, key, index);
     }
 
@@ -43,6 +62,8 @@ public abstract class UnboundBean implements BeanInterface {
      * want to use {@link Bean#hasProperty(java.lang.String)} to test that the
      * property exists.
      * <p>
+     * This implementation searches {@link Bean#properties} and uses
+     * introspection to get the property.
      *
      * @param key
      * @return value of key or null.
@@ -50,22 +71,34 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public Object getProperty(String key) {
+        if (properties.containsKey(key)) {
+            return properties.get(key);
+        }
         return Beans.getIntrospectedProperty(this, key);
     }
 
     /**
      * Return a list of property names.
+     * <p>
+     * This implementation combines the keys in {@link Bean#properties} with the
+     * results of {@link Beans#getIntrospectedPropertyNames(java.lang.Object)}.
      *
      * @return a Set of names
      * @see BeanInterface#getPropertyNames()
      */
     @Override
     public Set<String> getPropertyNames() {
-        return Beans.getIntrospectedPropertyNames(this);
+        HashSet<String> names = new HashSet<>();
+        names.addAll(properties.keySet());
+        names.addAll(Beans.getIntrospectedPropertyNames(this));
+        return names;
     }
 
     /**
      * Test if a property exists.
+     * <p>
+     * This implementation searches {@link Bean#properties} and uses
+     * introspection to get the property.
      *
      * @param key
      * @return true if property exists
@@ -73,6 +106,9 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public boolean hasProperty(String key) {
+        if (properties.containsKey(key)) {
+            return true;
+        }
         return Beans.hasIntrospectedProperty(this, key);
     }
 
@@ -92,14 +128,30 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
-        Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        if (Beans.hasIntrospectedProperty(this, key)) {
+            Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        } else {
+            if (!properties.containsKey(key)) {
+                properties.put(key, new Object[1]);
+            }
+            Object[] array = (Object[]) properties.get(key);
+            if (index < array.length) {
+                array[index] = value;
+            } else {
+                Object[] grown = Arrays.copyOf(array, index + 1);
+                grown[index] = value;
+                properties.put(key, grown);
+            }
+        }
     }
 
     /**
      * Set property <i>key</i> to <i>value</i>.
      * <p>
-     * This implementation calls a write method for the indexed property using
-     * JavaBeans introspection.
+     * This implementation checks that a write method is not available for the
+     * property using JavaBeans introspection, and stores the property in
+     * {@link Bean#properties} only if a write method does not exist. This
+     * implementation also fires a PropertyChangeEvent for the property.
      *
      * @param key
      * @param value
@@ -107,6 +159,11 @@ public abstract class UnboundBean implements BeanInterface {
      */
     @Override
     public void setProperty(String key, Object value) {
-        Beans.setIntrospectedProperty(this, key, value);
+        // use write method for property if it exists
+        if (Beans.hasIntrospectedProperty(this, key)) {
+            Beans.setIntrospectedProperty(this, key, value);
+        } else {
+            properties.put(key, value);
+        }
     }
 }

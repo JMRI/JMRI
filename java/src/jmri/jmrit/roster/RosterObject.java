@@ -1,6 +1,6 @@
 package jmri.jmrit.roster;
 
-import jmri.beans.Bean;
+import jmri.beans.ArbitraryBean;
 
 /**
  * Provide a common class for Roster entries and groups to inherit from. This
@@ -8,7 +8,7 @@ import jmri.beans.Bean;
  *
  * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
  */
-public abstract class RosterObject extends Bean {
+public abstract class RosterObject extends ArbitraryBean {
 
     /**
      * Get the formatted single-line String for displaying the object.

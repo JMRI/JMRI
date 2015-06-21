@@ -7,7 +7,8 @@ import java.beans.PropertyChangeSupport;
 
 /**
  * Generic implementation of {@link jmri.beans.BeanInterface} with a complete
- * implementation of {@link java.beans.PropertyChangeSupport}.
+ * implementation of {@link java.beans.PropertyChangeSupport} and support for
+ * arbitrary properties defined at runtime.
  * <p>
  * See the PropertyChangeSupport documentation for complete documentation of
  * those methods.
@@ -15,7 +16,7 @@ import java.beans.PropertyChangeSupport;
  * @author rhwood
  * @see java.beans.PropertyChangeSupport
  */
-public abstract class Bean extends UnboundBean implements PropertyChangeProvider {
+public abstract class ArbitraryBean extends UnboundArbitraryBean {
 
     /**
      * Provide a {@link java.beans.PropertyChangeSupport} helper.
@@ -27,7 +28,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      *
      * @param listener The PropertyChangeListener to be added
      */
-    @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
@@ -38,7 +38,6 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      * @param propertyName The name of the property to listen on.
      * @param listener     The PropertyChangeListener to be added
      */
-    @Override
     public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
     }
@@ -71,22 +70,22 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
-    @Override
     public PropertyChangeListener[] getPropertyChangeListeners() {
         return propertyChangeSupport.getPropertyChangeListeners();
     }
 
-    @Override
     public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
         return propertyChangeSupport.getPropertyChangeListeners(propertyName);
     }
 
-    @Override
+    public boolean hasListeners(String propertyName) {
+        return propertyChangeSupport.hasListeners(propertyName);
+    }
+
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
 
-    @Override
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
     }
@@ -105,6 +104,12 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
      */
     @Override
     public void setProperty(String key, Object value) {
-        Beans.setIntrospectedProperty(this, key, value);
+        // use write method for property if it exists
+        if (Beans.hasIntrospectedProperty(this, key)) {
+            Beans.setIntrospectedProperty(this, key, value);
+        } else {
+            // HashMap.put returns the old value, so this works
+            firePropertyChange(key, properties.put(key, value), value);
+        }
     }
 }

@@ -13,8 +13,9 @@ import java.util.Set;
  * Beans class will be able to manipulate that do not conform to JavaBeans
  * coding standards.
  *
- * {@link Bean} provides generic implementations of these methods if your class
- * can extend or extends a subclass of Bean.
+ * {@link ArbitraryBean} provides generic implementations of these methods that
+ * allow the manipulation of properties defined at runtime if your class can
+ * extend or extends a subclass of Bean.
  *
  * @author rhwood
  * @see Beans

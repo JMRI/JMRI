@@ -38,8 +38,8 @@ public class BeansTest extends TestCase {
      * Test of setIndexedProperty method, of class Beans.
      */
     public void testSetIndexedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         Beans.setIndexedProperty(introspectedTarget, INDEXED_PROPERTY, 1, NEW_VALUE);
         Beans.setIndexedProperty(hashedTarget, INDEXED_PROPERTY, 1, NEW_VALUE);
         assertEquals(OLD_VALUE, Beans.getIndexedProperty(introspectedTarget, INDEXED_PROPERTY, 0));
@@ -52,8 +52,8 @@ public class BeansTest extends TestCase {
      * Test of setIntrospectedIndexedProperty method, of class Beans.
      */
     public void testSetIntrospectedIndexedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         Beans.setIntrospectedIndexedProperty(introspectedTarget, INDEXED_PROPERTY, 1, NEW_VALUE);
         Beans.setIntrospectedIndexedProperty(hashedTarget, INDEXED_PROPERTY, 1, NEW_VALUE);
         assertEquals(OLD_VALUE, Beans.getIntrospectedIndexedProperty(introspectedTarget, INDEXED_PROPERTY, 0));
@@ -66,8 +66,8 @@ public class BeansTest extends TestCase {
      * Test of getIndexedProperty method, of class Beans.
      */
     public void testGetIndexedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         assertEquals(OLD_VALUE, Beans.getIndexedProperty(introspectedTarget, INDEXED_PROPERTY, 0));
         assertNull(Beans.getIndexedProperty(introspectedTarget, STRING_PROPERTY, 0));
         assertNull(Beans.getIndexedProperty(introspectedTarget, NOT_A_PROPERTY, 0));
@@ -80,8 +80,8 @@ public class BeansTest extends TestCase {
      * Test of getIntrospectedIndexedProperty method, of class Beans.
      */
     public void testGetIntrospectedIndexedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         assertEquals(OLD_VALUE, Beans.getIntrospectedIndexedProperty(introspectedTarget, INDEXED_PROPERTY, 0));
         assertNull(Beans.getIntrospectedIndexedProperty(introspectedTarget, STRING_PROPERTY, 0));
         assertNull(Beans.getIntrospectedIndexedProperty(introspectedTarget, NOT_A_PROPERTY, 0));
@@ -94,8 +94,8 @@ public class BeansTest extends TestCase {
      * Test of setProperty method, of class Beans.
      */
     public void testSetProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         Beans.setProperty(introspectedTarget, STRING_PROPERTY, NEW_VALUE);
         Beans.setProperty(hashedTarget, STRING_PROPERTY, NEW_VALUE);
         assertEquals(NEW_VALUE, Beans.getProperty(introspectedTarget, STRING_PROPERTY));
@@ -106,8 +106,8 @@ public class BeansTest extends TestCase {
      * Test of setIntrospectedProperty method, of class Beans.
      */
     public void testSetIntrospectedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         Beans.setIntrospectedProperty(introspectedTarget, STRING_PROPERTY, NEW_VALUE);
         Beans.setIntrospectedProperty(hashedTarget, STRING_PROPERTY, NEW_VALUE);
         assertEquals(NEW_VALUE, Beans.getProperty(introspectedTarget, STRING_PROPERTY));
@@ -118,8 +118,8 @@ public class BeansTest extends TestCase {
      * Test of getProperty method, of class Beans.
      */
     public void testGetProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         assertEquals(OLD_VALUE, Beans.getProperty(introspectedTarget, STRING_PROPERTY));
         assertNull(Beans.getProperty(introspectedTarget, NOT_A_PROPERTY));
         assertEquals(OLD_VALUE, Beans.getProperty(hashedTarget, STRING_PROPERTY));
@@ -130,8 +130,8 @@ public class BeansTest extends TestCase {
      * Test of getIntrospectedProperty method, of class Beans.
      */
     public void testGetIntrospectedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         assertEquals(OLD_VALUE, Beans.getIntrospectedProperty(introspectedTarget, STRING_PROPERTY));
         assertNull(Beans.getIntrospectedProperty(introspectedTarget, NOT_A_PROPERTY));
         assertNull(Beans.getIntrospectedProperty(hashedTarget, STRING_PROPERTY));
@@ -142,8 +142,8 @@ public class BeansTest extends TestCase {
      * Test of hasProperty method, of class Beans.
      */
     public void testHasProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         assertTrue(Beans.hasProperty(new Object(), CLASS));
         // Object should not have this property
         assertFalse(Beans.hasProperty(new Object(), STRING_PROPERTY));
@@ -157,8 +157,8 @@ public class BeansTest extends TestCase {
      * Test of hasIntrospectedProperty method, of class Beans.
      */
     public void testHasIntrospectedProperty() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         assertTrue(Beans.hasIntrospectedProperty(new Object(), CLASS));
         // Object should not have this property
         assertFalse(Beans.hasIntrospectedProperty(new Object(), STRING_PROPERTY));
@@ -172,8 +172,8 @@ public class BeansTest extends TestCase {
      * Test getting properties via getPropertyNames.
      */
     public void testGetPropertyNames() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         Set<String> expResult = new HashSet<>(2);
         Set<String> itResult = Beans.getPropertyNames(introspectedTarget);
         Set<String> htResult = Beans.getPropertyNames(hashedTarget);
@@ -192,8 +192,8 @@ public class BeansTest extends TestCase {
      * Test getting introspected properties via getIntrospectedPropertyNames.
      */
     public void testGetIntrospectedPropertyNames() {
-        Object introspectedTarget = new IntrospectionTarget();
-        Object hashedTarget = new HashedTarget();
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
         Set<String> expResult = new HashSet<>(2);
         Set<String> itResult = Beans.getIntrospectedPropertyNames(introspectedTarget);
         Set<String> htResult = Beans.getIntrospectedPropertyNames(hashedTarget);
@@ -218,16 +218,16 @@ public class BeansTest extends TestCase {
 
     /*
      * The following two classes define the properties "stringProperty" and
-     * "indexedProperty", however HashedTarget uses a HashMap to define those
-     * properties, while IntrospectionTarget uses standard JavaBeans APIs and
+     * "indexedProperty", however ArbitraryTarget uses a HashMap to define those
+     * properties, while Target uses standard JavaBeans APIs and
      * conventions.
      */
-    public class IntrospectionTarget extends UnboundBean {
+    public class Target extends UnboundBean {
 
         private String stringProperty = OLD_VALUE;
         private final ArrayList<String> indexedProperty = new ArrayList<>();
 
-        public IntrospectionTarget() {
+        public Target() {
             this.indexedProperty.add(0, OLD_VALUE);
         }
 
@@ -260,9 +260,9 @@ public class BeansTest extends TestCase {
      * in the "*Introspected*" tests, but are exposed using jmri.beans.Beans
      * methods in other tests.
      */
-    public class HashedTarget extends UnboundBean {
+    public class ArbitraryTarget extends UnboundArbitraryBean {
 
-        public HashedTarget() {
+        public ArbitraryTarget() {
             this.setProperty(STRING_PROPERTY, OLD_VALUE);
             this.setIndexedProperty(INDEXED_PROPERTY, 0, OLD_VALUE);
         }
