@@ -276,8 +276,11 @@ public class FileUtilTest extends TestCase {
         File dest = Files.createTempDirectory("FileUtilTest").toFile();
         FileUtil.copy(src, dest);
         String[] destFiles = dest.list();
+        String[] srcFiles = src.list();
+        Arrays.sort(destFiles);
+        Arrays.sort(srcFiles);
         FileUtil.delete(dest);
-        Assert.assertTrue(Arrays.equals(src.list(), destFiles));
+        Assert.assertTrue(Arrays.equals(srcFiles, destFiles));
     }
 
     public void testDeleteFile() throws IOException {
