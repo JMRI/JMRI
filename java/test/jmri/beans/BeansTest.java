@@ -153,6 +153,20 @@ public class BeansTest extends TestCase {
         assertFalse(Beans.hasProperty(introspectedTarget, NOT_A_PROPERTY));
     }
 
+    public void testHasIndexedProperty() {
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
+        // class is not indexed
+        assertFalse(Beans.hasIndexedProperty(new Object(), CLASS));
+        // Object should not have this property
+        assertFalse(Beans.hasIndexedProperty(new Object(), STRING_PROPERTY));
+        assertFalse(Beans.hasIndexedProperty(introspectedTarget, STRING_PROPERTY));
+        assertFalse(Beans.hasIndexedProperty(hashedTarget, STRING_PROPERTY));
+        assertFalse(Beans.hasIndexedProperty(hashedTarget, NOT_A_PROPERTY));
+        assertFalse(Beans.hasIndexedProperty(introspectedTarget, NOT_A_PROPERTY));
+        assertTrue(Beans.hasIndexedProperty(hashedTarget, INDEXED_PROPERTY));
+        assertTrue(Beans.hasIndexedProperty(introspectedTarget, INDEXED_PROPERTY));
+    }
     /**
      * Test of hasIntrospectedProperty method, of class Beans.
      */
@@ -166,6 +180,21 @@ public class BeansTest extends TestCase {
         // "stringProperty" is not discoverable bia introspection in hashedTarget
         assertFalse(Beans.hasIntrospectedProperty(hashedTarget, STRING_PROPERTY));
         assertFalse(Beans.hasIntrospectedProperty(introspectedTarget, NOT_A_PROPERTY));
+    }
+
+    public void testHasIntrospectedIndexedProperty() {
+        Object introspectedTarget = new Target();
+        Object hashedTarget = new ArbitraryTarget();
+        // class is not indexed
+        assertFalse(Beans.hasIntrospectedIndexedProperty(new Object(), CLASS));
+        // Object should not have this property
+        assertFalse(Beans.hasIntrospectedIndexedProperty(new Object(), STRING_PROPERTY));
+        assertFalse(Beans.hasIntrospectedIndexedProperty(introspectedTarget, STRING_PROPERTY));
+        assertFalse(Beans.hasIntrospectedIndexedProperty(hashedTarget, STRING_PROPERTY));
+        assertFalse(Beans.hasIntrospectedIndexedProperty(hashedTarget, NOT_A_PROPERTY));
+        assertFalse(Beans.hasIntrospectedIndexedProperty(introspectedTarget, NOT_A_PROPERTY));
+        assertFalse(Beans.hasIntrospectedIndexedProperty(hashedTarget, INDEXED_PROPERTY));
+        assertTrue(Beans.hasIntrospectedIndexedProperty(introspectedTarget, INDEXED_PROPERTY));
     }
 
     /**

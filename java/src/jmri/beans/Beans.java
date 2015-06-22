@@ -285,6 +285,26 @@ public class Beans extends java.beans.Beans {
     }
 
     /**
+     * Test if <i>bean</i> has the indexed property <i>key</i>.
+     * <p>
+     * If <i>bean</i> implements {@link BeanInterface}, this method calls
+     * {@link jmri.beans.BeanInterface#hasIndexedProperty(java.lang.String)},
+     * otherwise it calls
+     * {@link jmri.beans.Beans#hasIntrospectedIndexedProperty(java.lang.Object, java.lang.String)}.
+     *
+     * @param bean
+     * @param key
+     * @return true if <i>bean</i> has indexed property <i>key</i>
+     */
+    public static boolean hasIndexedProperty(Object bean, String key) {
+        if (Beans.implementsBeanInterface(bean)) {
+            return ((BeanInterface) bean).hasIndexedProperty(key);
+        } else {
+            return Beans.hasIntrospectedIndexedProperty(bean, key);
+        }
+    }
+
+    /**
      * Test that <i>bean</i> has the property <i>key</i>.
      * <p>
      * This method relies on the standard JavaBeans coding patterns to find the
@@ -308,6 +328,41 @@ public class Beans extends java.beans.Beans {
                 PropertyDescriptor[] pds = Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
                 for (PropertyDescriptor pd : pds) {
                     if (pd.getName().equalsIgnoreCase(key)) {
+                        return true;
+                    }
+                }
+                // catch only introspection-related exceptions, and allow all other to pass through
+            } catch (IntrospectionException ex) {
+                log.warn(ex.toString(), ex);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Test that <i>bean</i> has the indexed property <i>key</i>.
+     * <p>
+     * This method relies on the standard JavaBeans coding patterns to find the
+     * property. Note that if <i>key</i> is not a {@link String}, this method
+     * will not attempt to find the property (JavaBeans introspection rules
+     * require that <i>key</i> be a String, while other JMRI coding patterns
+     * accept that <i>key</i> can be an Object).
+     *
+     * This should only be called from outside this class in an implementation
+     * of {@link jmri.beans.BeanInterface#hasIndexedProperty(java.lang.String)},
+     * but is public so it can be accessed by any potential implementation of
+     * that method.
+     *
+     * @param bean
+     * @param key
+     * @return true if <i>bean</i> has indexed property <i>key</i>
+     */
+    public static boolean hasIntrospectedIndexedProperty(Object bean, String key) {
+        if (bean != null && key != null) {
+            try {
+                PropertyDescriptor[] pds = Introspector.getBeanInfo(bean.getClass()).getPropertyDescriptors();
+                for (PropertyDescriptor pd : pds) {
+                    if (pd instanceof IndexedPropertyDescriptor && pd.getName().equalsIgnoreCase(key)) {
                         return true;
                     }
                 }
