@@ -39,7 +39,7 @@ public class Pool extends Bean {
     public void setName(String name) {
         String old = _name;
         _name = name;
-        firePropertyChange("Name", old, name);
+        this.propertyChangeSupport.firePropertyChange("Name", old, name);
     }
 
     /**
@@ -63,7 +63,7 @@ public class Pool extends Bean {
     }
 
     public void dispose() {
-        firePropertyChange(DISPOSE, null, DISPOSE);
+        this.propertyChangeSupport.firePropertyChange(DISPOSE, null, DISPOSE);
     }
 
     /**
@@ -77,7 +77,7 @@ public class Pool extends Bean {
             int oldSize = _tracks.size();
             _tracks.add(track);
 
-            firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
+            this.propertyChangeSupport.firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
         }
     }
 
@@ -92,7 +92,7 @@ public class Pool extends Bean {
             int oldSize = _tracks.size();
             _tracks.remove(track);
 
-            firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
+            this.propertyChangeSupport.firePropertyChange(LISTCHANGE_CHANGED_PROPERTY, Integer.valueOf(oldSize), Integer.valueOf(_tracks.size()));
         }
     }
 

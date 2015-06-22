@@ -70,7 +70,7 @@ public class FileUtilSupport extends Bean {
         }
         this.userFilesPath = path;
         if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
-            this.firePropertyChange(FileUtil.PREFERENCES, old, path);
+            this.propertyChangeSupport.firePropertyChange(FileUtil.PREFERENCES, old, path);
         }
     }
 
@@ -98,7 +98,7 @@ public class FileUtilSupport extends Bean {
         }
         this.profilePath = path;
         if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
-            this.firePropertyChange(FileUtil.PROFILE, old, path);
+            this.propertyChangeSupport.firePropertyChange(FileUtil.PROFILE, old, path);
         }
     }
 
@@ -187,7 +187,7 @@ public class FileUtilSupport extends Bean {
         }
         if ((old != null && !old.equals(this.programPath))
                 || (this.programPath != null && !this.programPath.equals(old))) {
-            this.firePropertyChange(FileUtil.PROGRAM, old, this.programPath);
+            this.propertyChangeSupport.firePropertyChange(FileUtil.PROGRAM, old, this.programPath);
         }
     }
 
@@ -242,7 +242,7 @@ public class FileUtilSupport extends Bean {
         }
         this.scriptsPath = path;
         if ((old != null && !old.equals(path)) || (path != null && !path.equals(old))) {
-            this.firePropertyChange(FileUtil.SCRIPTS, old, path);
+            this.propertyChangeSupport.firePropertyChange(FileUtil.SCRIPTS, old, path);
         }
     }
 

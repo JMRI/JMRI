@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * {@link jmri.ConfigureManager} since the ConfigureManager's configuration is
  * influenced by this manager.
  *
- * @author rhwood
+ * @author Randall Wood
  */
 public class ProfileManager extends Bean {
 
@@ -64,11 +64,22 @@ public class ProfileManager extends Bean {
     private static final Logger log = LoggerFactory.getLogger(ProfileManager.class);
 
     /**
-     * Create a new ProfileManager. In almost all cases, the use of
-     * {@link #defaultManager()} is preferred.
+     * Create a new ProfileManager using the default catalog. In almost all
+     * cases, the use of {@link #getDefault()} is preferred.
      */
     public ProfileManager() {
-        this.catalog = new File(FileUtil.getPreferencesPath() + CATALOG);
+        this(new File(FileUtil.getPreferencesPath() + CATALOG));
+    }
+
+    /**
+     * Create a new ProfileManager. In almost all cases, the use of
+     * {@link #getDefault()} is preferred.
+     *
+     * @param catalog
+     */
+    // TODO: write Test cases using this.
+    public ProfileManager(File catalog) {
+        this.catalog = catalog;
         try {
             this.readProfiles();
             this.findProfiles();
@@ -85,8 +96,24 @@ public class ProfileManager extends Bean {
      * InstanceManager is configured.
      *
      * @return the default ProfileManager.
+     * @deprecated Use {@link #getDefault() }.
      */
+    @Deprecated
     public static ProfileManager defaultManager() {
+        return ProfileManager.getDefault();
+    }
+
+    /**
+     * Get the default {@link ProfileManager}.
+     *
+     * The default ProfileManager needs to be loaded before the InstanceManager
+     * since user interaction with the ProfileManager may change how the
+     * InstanceManager is configured.
+     *
+     * @return the default ProfileManager.
+     * @since 3.11.8
+     */
+    public static ProfileManager getDefault() {
         if (instance == null) {
             instance = new ProfileManager();
         }
@@ -113,7 +140,7 @@ public class ProfileManager extends Bean {
             Profile old = activeProfile;
             activeProfile = null;
             FileUtil.setProfilePath(null);
-            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
             log.debug("Setting active profile to null");
             return;
         }
@@ -139,13 +166,13 @@ public class ProfileManager extends Bean {
         if (profile == null) {
             activeProfile = null;
             FileUtil.setProfilePath(null);
-            this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
+            this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, null);
             log.debug("Setting active profile to null");
             return;
         }
         activeProfile = profile;
         FileUtil.setProfilePath(profile.getPath().toString());
-        this.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
+        this.propertyChangeSupport.firePropertyChange(ProfileManager.ACTIVE_PROFILE, old, profile);
         log.debug("Setting active profile to {}", profile.getId());
     }
 
@@ -157,12 +184,12 @@ public class ProfileManager extends Bean {
         Profile old = this.nextActiveProfile;
         if (profile == null) {
             this.nextActiveProfile = null;
-            this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
+            this.propertyChangeSupport.firePropertyChange(ProfileManager.NEXT_PROFILE, old, null);
             log.debug("Setting next active profile to null");
             return;
         }
         this.nextActiveProfile = profile;
-        this.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
+        this.propertyChangeSupport.firePropertyChange(ProfileManager.NEXT_PROFILE, old, profile);
         log.debug("Setting next active profile to {}", profile.getId());
     }
 
@@ -343,7 +370,7 @@ public class ProfileManager extends Bean {
             searchPaths.add(path);
             if (!this.readingProfiles) {
                 int index = searchPaths.indexOf(path);
-                this.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
+                this.propertyChangeSupport.fireIndexedPropertyChange(SEARCH_PATHS, index, null, path);
                 this.writeProfiles();
             }
             this.findProfiles(path);
@@ -354,7 +381,7 @@ public class ProfileManager extends Bean {
         if (searchPaths.contains(path)) {
             int index = searchPaths.indexOf(path);
             searchPaths.remove(path);
-            this.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
+            this.propertyChangeSupport.fireIndexedPropertyChange(SEARCH_PATHS, index, path, null);
             this.writeProfiles();
             if (this.getDefaultSearchPath().equals(path)) {
                 this.setDefaultSearchPath(new File(FileUtil.getPreferencesPath()));
@@ -374,7 +401,7 @@ public class ProfileManager extends Bean {
         if (!defaultSearchPath.equals(this.defaultSearchPath)) {
             File oldDefault = this.defaultSearchPath;
             this.defaultSearchPath = defaultSearchPath;
-            this.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
+            this.propertyChangeSupport.firePropertyChange(DEFAULT_SEARCH_PATH, oldDefault, this.defaultSearchPath);
             this.writeProfiles();
         }
     }
@@ -465,9 +492,9 @@ public class ProfileManager extends Bean {
     }
 
     private void findProfiles() {
-        for (File searchPath : this.searchPaths) {
+        this.searchPaths.stream().forEach((searchPath) -> {
             this.findProfiles(searchPath);
-        }
+        });
     }
 
     private void findProfiles(File searchPath) {
@@ -756,17 +783,17 @@ public class ProfileManager extends Bean {
      * @see ProfileManagerDialog#getStartingProfile(java.awt.Frame)
      */
     public static Profile getStartingProfile() throws IOException {
-        if (ProfileManager.defaultManager().getActiveProfile() == null) {
-            ProfileManager.defaultManager().readActiveProfile();
+        if (ProfileManager.getDefault().getActiveProfile() == null) {
+            ProfileManager.getDefault().readActiveProfile();
             // Automatically start with only profile if only one profile
-            if (ProfileManager.defaultManager().getProfiles().length == 1) {
-                ProfileManager.defaultManager().setActiveProfile(ProfileManager.defaultManager().getProfiles(0));
+            if (ProfileManager.getDefault().getProfiles().length == 1) {
+                ProfileManager.getDefault().setActiveProfile(ProfileManager.getDefault().getProfiles(0));
                 // Display profile selector if user did not choose to auto start with last used profile
-            } else if (!ProfileManager.defaultManager().isAutoStartActiveProfile()) {
+            } else if (!ProfileManager.getDefault().isAutoStartActiveProfile()) {
                 return null;
             }
         }
-        return ProfileManager.defaultManager().getActiveProfile();
+        return ProfileManager.getDefault().getActiveProfile();
     }
 
     /**
@@ -784,7 +811,7 @@ public class ProfileManager extends Bean {
     }
 
     void profileNameChange(Profile profile, String oldName) {
-        this.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
+        this.propertyChangeSupport.firePropertyChange(new PropertyChangeEvent(profile, Profile.NAME, oldName, profile.getName()));
     }
 
     /**
@@ -817,7 +844,7 @@ public class ProfileManager extends Bean {
         }
         if (old != autoStartActiveProfileTimeout) {
             this.autoStartActiveProfileTimeout = autoStartActiveProfileTimeout;
-            this.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
+            this.propertyChangeSupport.firePropertyChange(AUTO_START_TIMEOUT, old, this.autoStartActiveProfileTimeout);
         }
     }
 }
