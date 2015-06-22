@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
  */
 public abstract class ConstrainedBean extends Bean implements VetoableChangeProvider {
 
-    protected VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+    protected final VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
 
     @Override
     public void setProperty(String key, Object value) {
@@ -26,7 +26,7 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
             // fire a property change that does not have the new value to indicate
             // to any other listeners that the property was "reset" back to its
             // orginal value as a result of the veto
-            super.firePropertyChange(key, getProperty(key), getProperty(key));
+            super.propertyChangeSupport.firePropertyChange(key, getProperty(key), getProperty(key));
         }
     }
 
