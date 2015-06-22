@@ -43,30 +43,101 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
         propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
     }
 
+    /**
+     *
+     * @param propertyName
+     * @param index
+     * @param oldValue
+     * @param newValue
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, boolean, boolean)}
+     * directly
+     */
+    @Deprecated
     protected void fireIndexedPropertyChange(String propertyName, int index, boolean oldValue, boolean newValue) {
         propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
+    /**
+     *
+     * @param propertyName
+     * @param index
+     * @param oldValue
+     * @param newValue
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, int, int)}
+     * directly
+     */
+    @Deprecated
     protected void fireIndexedPropertyChange(String propertyName, int index, int oldValue, int newValue) {
         propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
+    /**
+     *
+     * @param propertyName
+     * @param index
+     * @param oldValue
+     * @param newValue
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#fireIndexedPropertyChange(java.lang.String, int, java.lang.Object, java.lang.Object)}
+     * directly
+     */
+    @Deprecated
     protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
         propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
     }
 
+    /**
+     *
+     * @param key
+     * @param oldValue
+     * @param value
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, boolean, boolean)}
+     * directly
+     */
+    @Deprecated
     protected void firePropertyChange(String key, boolean oldValue, boolean value) {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
+    /**
+     *
+     * @param evt
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.beans.PropertyChangeEvent)}
+     * directly
+     */
+    @Deprecated
     protected void firePropertyChange(PropertyChangeEvent evt) {
         propertyChangeSupport.firePropertyChange(evt);
     }
 
+    /**
+     *
+     * @param key
+     * @param value
+     * @param oldValue
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, int, int)}
+     * directly
+     */
+    @Deprecated
     protected void firePropertyChange(String key, int oldValue, int value) {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
 
+    /**
+     *
+     * @param key
+     * @param oldValue
+     * @param value
+     * @deprecated Use the
+     * {@link #propertyChangeSupport} {@link java.beans.PropertyChangeSupport#firePropertyChange(java.lang.String, java.lang.Object, java.lang.Object)}
+     * directly
+     */
+    @Deprecated
     protected void firePropertyChange(String key, Object oldValue, Object value) {
         propertyChangeSupport.firePropertyChange(key, oldValue, value);
     }
