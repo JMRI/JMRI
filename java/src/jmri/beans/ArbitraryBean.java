@@ -1,9 +1,7 @@
 // Bean.java
 package jmri.beans;
 
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import java.util.Set;
 
 /**
  * Generic implementation of {@link jmri.beans.BeanInterface} with a complete
@@ -16,100 +14,55 @@ import java.beans.PropertyChangeSupport;
  * @author rhwood
  * @see java.beans.PropertyChangeSupport
  */
-public abstract class ArbitraryBean extends UnboundArbitraryBean {
+public abstract class ArbitraryBean extends Bean {
 
-    /**
-     * Provide a {@link java.beans.PropertyChangeSupport} helper.
-     */
-    protected final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
+    protected final ArbitraryPropertySupport arbitraryPropertySupport = new ArbitraryPropertySupport(this);
 
-    /**
-     * Add a PropertyChangeListener to the listener list.
-     *
-     * @param listener The PropertyChangeListener to be added
-     */
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    /**
-     * Add a PropertyChangeListener for a specific property.
-     *
-     * @param propertyName The name of the property to listen on.
-     * @param listener     The PropertyChangeListener to be added
-     */
-    public void addPropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(propertyName, listener);
-    }
-
-    protected void fireIndexedPropertyChange(String propertyName, int index, boolean oldValue, boolean newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-    }
-
-    protected void fireIndexedPropertyChange(String propertyName, int index, int oldValue, int newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-    }
-
-    protected void fireIndexedPropertyChange(String propertyName, int index, Object oldValue, Object newValue) {
-        propertyChangeSupport.fireIndexedPropertyChange(propertyName, index, oldValue, newValue);
-    }
-
-    protected void firePropertyChange(String key, boolean oldValue, boolean value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
-    }
-
-    protected void firePropertyChange(PropertyChangeEvent evt) {
-        propertyChangeSupport.firePropertyChange(evt);
-    }
-
-    protected void firePropertyChange(String key, int oldValue, int value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
-    }
-
-    protected void firePropertyChange(String key, Object oldValue, Object value) {
-        propertyChangeSupport.firePropertyChange(key, oldValue, value);
-    }
-
-    public PropertyChangeListener[] getPropertyChangeListeners() {
-        return propertyChangeSupport.getPropertyChangeListeners();
-    }
-
-    public PropertyChangeListener[] getPropertyChangeListeners(String propertyName) {
-        return propertyChangeSupport.getPropertyChangeListeners(propertyName);
-    }
-
-    public boolean hasListeners(String propertyName) {
-        return propertyChangeSupport.hasListeners(propertyName);
-    }
-
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
-    }
-
-    public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
-    }
-
-    /**
-     * Set property <i>key</i> to <i>value</i>.
-     * <p>
-     * This implementation checks that a write method is not available for the
-     * property using JavaBeans introspection, and stores the property in
-     * {@link Bean#properties} only if a write method does not exist. This
-     * implementation also fires a PropertyChangeEvent for the property.
-     *
-     * @param key
-     * @param value
-     * @see BeanInterface#setProperty(java.lang.String, java.lang.Object)
-     */
     @Override
     public void setProperty(String key, Object value) {
-        // use write method for property if it exists
         if (Beans.hasIntrospectedProperty(this, key)) {
             Beans.setIntrospectedProperty(this, key, value);
         } else {
-            // HashMap.put returns the old value, so this works
-            firePropertyChange(key, properties.put(key, value), value);
+            Object oldValue = this.arbitraryPropertySupport.getProperty(key);
+            this.arbitraryPropertySupport.setProperty(key, value);
+            this.propertyChangeSupport.firePropertyChange(key, oldValue, value);
         }
     }
+
+    @Override
+    public void setIndexedProperty(String key, int index, Object value) {
+        if (Beans.hasIntrospectedIndexedProperty(this, key)) {
+            Beans.setIntrospectedIndexedProperty(this, key, index, value);
+        } else {
+            Object oldValue = this.arbitraryPropertySupport.getIndexedProperty(key, index);
+            this.arbitraryPropertySupport.setIndexedProperty(key, index, value);
+            this.propertyChangeSupport.fireIndexedPropertyChange(key, index, oldValue, value);
+        }
+    }
+
+    @Override
+    public Object getIndexedProperty(String key, int index) {
+        return this.arbitraryPropertySupport.getIndexedProperty(key, index);
+    }
+
+    @Override
+    public Object getProperty(String key) {
+        return this.arbitraryPropertySupport.getProperty(key);
+    }
+
+    @Override
+    public boolean hasProperty(String key) {
+        return this.arbitraryPropertySupport.hasProperty(key);
+    }
+
+    @Override
+    public boolean hasIndexedProperty(String key) {
+        return this.arbitraryPropertySupport.hasIndexedProperty(key);
+    }
+
+    @Override
+    public Set<String> getPropertyNames() {
+        return this.arbitraryPropertySupport.getPropertyNames();
+    }
+
 }

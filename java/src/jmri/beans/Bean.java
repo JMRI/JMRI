@@ -161,21 +161,4 @@ public abstract class Bean extends UnboundBean implements PropertyChangeProvider
     public void removePropertyChangeListener(String propertyName, PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(propertyName, listener);
     }
-
-    /**
-     * Set property <i>key</i> to <i>value</i>.
-     * <p>
-     * This implementation checks that a write method is not available for the
-     * property using JavaBeans introspection, and stores the property in
-     * {@link Bean#properties} only if a write method does not exist. This
-     * implementation also fires a PropertyChangeEvent for the property.
-     *
-     * @param key
-     * @param value
-     * @see BeanInterface#setProperty(java.lang.String, java.lang.Object)
-     */
-    @Override
-    public void setProperty(String key, Object value) {
-        Beans.setIntrospectedProperty(this, key, value);
-    }
 }

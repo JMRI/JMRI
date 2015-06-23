@@ -91,6 +91,19 @@ public interface BeanInterface {
     public boolean hasProperty(String key);
 
     /**
+     * Test that a property exists and is indexed.
+     * <p>
+     * <b>NOTE</b> Implementing method <i>must not call</i>
+     * <code>Bean.hasIndexedProperty()</code>, as doing so will cause a stack
+     * overflow. Implementing methods may call
+     * <code>Beans.hasIntrospectedIndexedProperty()</code> instead.
+     *
+     * @param key name of the property
+     * @return true is property <i>key</i> exists and is indexed
+     */
+    public boolean hasIndexedProperty(String key);
+
+    /**
      * List all property names or keys.
      * <p>
      * <b>NOTE</b> Implementing method <i>must not call</i>

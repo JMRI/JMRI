@@ -10,7 +10,7 @@ import junit.framework.TestCase;
  *
  * @author rhwood
  */
-public class UnboundArbitraryBeanTest extends TestCase {
+public class ArbitraryPropertySupportTest extends TestCase {
 
     private static final String CLASS = "class";
     private static final String PROPERTY_NAMES = "propertyNames";
@@ -23,7 +23,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
     private static final String OLD_VALUE = "old";
     private static final String NEW_VALUE = "new";
 
-    public UnboundArbitraryBeanTest(String testName) {
+    public ArbitraryPropertySupportTest(String testName) {
         super(testName);
     }
 
@@ -41,7 +41,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
      * Test of getIndexedProperty method, of class UnboundBean.
      */
     public void testGetIndexedProperty() {
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertEquals(null, instance.getIndexedProperty(NOT_A_PROPERTY, 0));
         assertEquals(OLD_VALUE, instance.getIndexedProperty(INDEXED_PROPERTY, 0));
         // getIndexedProperty returns null for introspected properties when an
@@ -55,7 +55,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
      * Test of getProperty method, of class UnboundBean.
      */
     public void testGetProperty() {
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertEquals(null, instance.getProperty(NOT_A_PROPERTY));
         assertEquals(OLD_VALUE, instance.getProperty(STRING_PROPERTY));
         assertEquals(OLD_VALUE, instance.getProperty(MAPPED_STRING));
@@ -66,7 +66,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
      */
     public void testGetPropertyNames() {
         System.out.println("getPropertyNames");
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         Set<String> expResult = new HashSet<>(6);
         expResult.add(CLASS); // defined in Object
         expResult.add(PROPERTY_NAMES); // defined in UnboundBean
@@ -82,7 +82,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
      * Test of hasProperty method, of class UnboundBean.
      */
     public void testHasProperty() {
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertTrue(instance.hasProperty(STRING_PROPERTY));
         assertTrue(instance.hasProperty(INDEXED_PROPERTY));
         assertTrue(instance.hasProperty(MAPPED_STRING));
@@ -91,7 +91,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
     }
 
     public void testHasIndexedProperty() {
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertFalse(instance.hasIndexedProperty(STRING_PROPERTY));
         assertTrue(instance.hasIndexedProperty(INDEXED_PROPERTY));
         assertFalse(instance.hasIndexedProperty(MAPPED_STRING));
@@ -103,7 +103,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
      * Test of setIndexedProperty method, of class UnboundBean.
      */
     public void testSetIndexedProperty() {
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         instance.setIndexedProperty(INDEXED_PROPERTY, 1, NEW_VALUE);
         instance.setIndexedProperty(MAPPED_INDEXED, 1, NEW_VALUE);
         assertEquals(OLD_VALUE, instance.getIndexedProperty(INDEXED_PROPERTY, 0));
@@ -123,7 +123,7 @@ public class UnboundArbitraryBeanTest extends TestCase {
      * Test of setProperty method, of class UnboundBean.
      */
     public void testSetProperty() {
-        UnboundArbitraryBean instance = new UnboundBeanImpl();
+        ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         instance.setProperty(STRING_PROPERTY, NEW_VALUE);
         instance.setProperty(MAPPED_STRING, NEW_VALUE);
         assertEquals(NEW_VALUE, instance.getProperty(STRING_PROPERTY));
@@ -167,6 +167,11 @@ public class UnboundArbitraryBeanTest extends TestCase {
             } else {
                 this.indexedProperty.add(index, string);
             }
+        }
+        
+        // do not use get* pattern so this is not considered a property
+        public ArbitraryPropertySupport aps() {
+            return this.arbitraryPropertySupport;
         }
     }
 

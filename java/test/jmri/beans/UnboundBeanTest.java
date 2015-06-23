@@ -88,6 +88,15 @@ public class UnboundBeanTest extends TestCase {
         assertFalse(instance.hasProperty(NOT_A_PROPERTY));
     }
 
+    public void testHasIndexedProperty() {
+        UnboundBean instance = new UnboundBeanImpl();
+        assertFalse(instance.hasIndexedProperty(STRING_PROPERTY));
+        assertTrue(instance.hasIndexedProperty(INDEXED_PROPERTY));
+        assertFalse(instance.hasIndexedProperty(MAPPED_STRING));
+        assertFalse(instance.hasIndexedProperty(MAPPED_INDEXED));
+        assertFalse(instance.hasIndexedProperty(NOT_A_PROPERTY));
+    }
+
     /**
      * Test of setIndexedProperty method, of class UnboundBean.
      */

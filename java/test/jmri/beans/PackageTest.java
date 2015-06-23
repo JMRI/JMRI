@@ -29,6 +29,7 @@ public class PackageTest extends TestCase {
         TestSuite suite = new TestSuite("jmri.beans.PackageTest");  // no tests in this class itself
         suite.addTest(new TestSuite(BeansTest.class));
         suite.addTest(new TestSuite(UnboundBeanTest.class));
+        suite.addTest(new TestSuite(ArbitraryPropertySupportTest.class));
         suite.addTest(new TestSuite(UnboundArbitraryBeanTest.class));
         return suite;
     }

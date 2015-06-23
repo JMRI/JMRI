@@ -1,9 +1,6 @@
 // UnboundBean.java
 package jmri.beans;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Set;
 
 /**
@@ -16,16 +13,9 @@ import java.util.Set;
  *
  * @author rhwood
  */
-public abstract class UnboundArbitraryBean implements BeanInterface {
+public abstract class UnboundArbitraryBean extends UnboundBean {
 
-    /**
-     * Store properties in a hashMap for easy access.
-     * <p>
-     * Note that unless you use the methods in this class to manipulate this
-     * variable, you will need to instantiate it, or test that it is not null
-     * prior to use.
-     */
-    protected final HashMap<String, Object> properties = new HashMap<>();
+    protected final ArbitraryPropertySupport arbitraryPropertySupport = new ArbitraryPropertySupport(this);
 
     /**
      * Get value of element at <i>index</i> of property array <i>key</i>.
@@ -45,14 +35,7 @@ public abstract class UnboundArbitraryBean implements BeanInterface {
      */
     @Override
     public Object getIndexedProperty(String key, int index) {
-        if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
-            try {
-                return ((Object[]) properties.get(key))[index];
-            } catch (ArrayIndexOutOfBoundsException ex) {
-                return null;
-            }
-        }
-        return Beans.getIntrospectedIndexedProperty(this, key, index);
+        return this.arbitraryPropertySupport.getIndexedProperty(key, index);
     }
 
     /**
@@ -71,10 +54,7 @@ public abstract class UnboundArbitraryBean implements BeanInterface {
      */
     @Override
     public Object getProperty(String key) {
-        if (properties.containsKey(key)) {
-            return properties.get(key);
-        }
-        return Beans.getIntrospectedProperty(this, key);
+        return this.arbitraryPropertySupport.getProperty(key);
     }
 
     /**
@@ -88,10 +68,7 @@ public abstract class UnboundArbitraryBean implements BeanInterface {
      */
     @Override
     public Set<String> getPropertyNames() {
-        HashSet<String> names = new HashSet<>();
-        names.addAll(properties.keySet());
-        names.addAll(Beans.getIntrospectedPropertyNames(this));
-        return names;
+        return this.arbitraryPropertySupport.getPropertyNames();
     }
 
     /**
@@ -106,12 +83,14 @@ public abstract class UnboundArbitraryBean implements BeanInterface {
      */
     @Override
     public boolean hasProperty(String key) {
-        if (properties.containsKey(key)) {
-            return true;
-        }
-        return Beans.hasIntrospectedProperty(this, key);
+        return this.arbitraryPropertySupport.hasProperty(key);
     }
 
+    @Override
+    public boolean hasIndexedProperty(String key) {
+        return this.arbitraryPropertySupport.hasIndexedProperty(key);
+    }
+    
     /**
      * Set element at <i>index</i> of property array <i>key</i> to <i>value</i>.
      * <p>
@@ -128,21 +107,7 @@ public abstract class UnboundArbitraryBean implements BeanInterface {
      */
     @Override
     public void setIndexedProperty(String key, int index, Object value) {
-        if (Beans.hasIntrospectedProperty(this, key)) {
-            Beans.setIntrospectedIndexedProperty(this, key, index, value);
-        } else {
-            if (!properties.containsKey(key)) {
-                properties.put(key, new Object[1]);
-            }
-            Object[] array = (Object[]) properties.get(key);
-            if (index < array.length) {
-                array[index] = value;
-            } else {
-                Object[] grown = Arrays.copyOf(array, index + 1);
-                grown[index] = value;
-                properties.put(key, grown);
-            }
-        }
+        this.arbitraryPropertySupport.setIndexedProperty(key, index, value);
     }
 
     /**
@@ -159,11 +124,6 @@ public abstract class UnboundArbitraryBean implements BeanInterface {
      */
     @Override
     public void setProperty(String key, Object value) {
-        // use write method for property if it exists
-        if (Beans.hasIntrospectedProperty(this, key)) {
-            Beans.setIntrospectedProperty(this, key, value);
-        } else {
-            properties.put(key, value);
-        }
+        this.arbitraryPropertySupport.setProperty(key, value);
     }
 }

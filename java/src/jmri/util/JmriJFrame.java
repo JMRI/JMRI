@@ -863,8 +863,9 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
      * BeanInstance.hasProperty checks this hashmap before using introspection to find properties corresponding to the
      * JavaBean properties coding pattern.
      */
-    protected HashMap<String, Object> properties = new HashMap<String, Object>();
+    protected HashMap<String, Object> properties = new HashMap<>();
 
+    @Override
     public void setIndexedProperty(String key, int index, Object value) {
         if (Beans.hasIntrospectedProperty(this, key)) {
             Beans.setIntrospectedIndexedProperty(this, key, index, value);
@@ -876,6 +877,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         }
     }
 
+    @Override
     public Object getIndexedProperty(String key, int index) {
         if (properties.containsKey(key) && properties.get(key).getClass().isArray()) {
             return ((Object[]) properties.get(key))[index];
@@ -884,6 +886,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     // subclasses should override this method with something more direct and faster
+    @Override
     public void setProperty(String key, Object value) {
         if (Beans.hasIntrospectedProperty(this, key)) {
             Beans.setIntrospectedProperty(this, key, value);
@@ -893,6 +896,7 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
     }
 
     // subclasses should override this method with something more direct and faster
+    @Override
     public Object getProperty(String key) {
         if (properties.containsKey(key)) {
             return properties.get(key);
@@ -900,14 +904,17 @@ public class JmriJFrame extends JFrame implements java.awt.event.WindowListener,
         return Beans.getIntrospectedProperty(this, key);
     }
 
+    @Override
     public boolean hasProperty(String key) {
-        if (properties.containsKey(key)) {
-            return true;
-        } else {
-            return Beans.hasIntrospectedProperty(this, key);
-        }
+        return (properties.containsKey(key) || Beans.hasIntrospectedProperty(this, key));
     }
 
+    @Override
+    public boolean hasIndexedProperty(String key) {
+        return ((this.properties.containsKey(key) && this.properties.get(key).getClass().isArray())
+                || Beans.hasIntrospectedIndexedProperty(this, key));
+    }
+    
     protected transient WindowInterface windowInterface = null;
 
     public void show(JmriPanel child, JmriAbstractAction action) {

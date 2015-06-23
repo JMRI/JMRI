@@ -3,8 +3,7 @@ package jmri.beans;
 
 import java.beans.IndexedPropertyChangeEvent;
 import java.beans.PropertyVetoException;
-import java.beans.VetoableChangeListener;
-import java.beans.VetoableChangeSupport;
+import java.util.Set;
 import org.slf4j.LoggerFactory;
 
 /**
@@ -12,15 +11,21 @@ import org.slf4j.LoggerFactory;
  *
  * @author Randall Wood
  */
-public abstract class ConstrainedBean extends Bean implements VetoableChangeProvider {
+public class ConstrainedArbitraryBean extends ConstrainedBean {
 
-    protected final VetoableChangeSupport vetoableChangeSupport = new VetoableChangeSupport(this);
+    protected final ArbitraryPropertySupport arbitraryPropertySupport = new ArbitraryPropertySupport(this);
 
     @Override
     public void setProperty(String key, Object value) {
         try {
             this.vetoableChangeSupport.fireVetoableChange(key, getProperty(key), value);
-            super.setProperty(key, value);
+            if (Beans.hasIntrospectedProperty(this, key)) {
+                Beans.setIntrospectedProperty(this, key, value);
+            } else {
+                Object oldValue = this.arbitraryPropertySupport.getProperty(key);
+                this.arbitraryPropertySupport.setProperty(key, value);
+                this.propertyChangeSupport.firePropertyChange(key, oldValue, value);
+            }
         } catch (PropertyVetoException ex) {
             // use the logger for the implementing class instead of a logger for ConstrainedBean
             LoggerFactory.getLogger(this.getClass().getName()).warn("Property {} change vetoed.", key, ex);
@@ -35,7 +40,13 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
     public void setIndexedProperty(String key, int index, Object value) {
         try {
             this.vetoableChangeSupport.fireVetoableChange(new IndexedPropertyChangeEvent(this, key, this.getIndexedProperty(key, index), value, index));
-            super.setIndexedProperty(key, index, value);
+            if (Beans.hasIntrospectedIndexedProperty(this, key)) {
+                Beans.setIntrospectedIndexedProperty(this, key, index, value);
+            } else {
+                Object oldValue = this.arbitraryPropertySupport.getIndexedProperty(key, index);
+                this.arbitraryPropertySupport.setIndexedProperty(key, index, value);
+                this.propertyChangeSupport.fireIndexedPropertyChange(key, index, oldValue, value);
+            }
         } catch (PropertyVetoException ex) {
             // use the logger for the implementing class instead of a logger for ConstrainedBean
             LoggerFactory.getLogger(this.getClass().getName()).warn("Property {} change vetoed.", key, ex);
@@ -45,34 +56,30 @@ public abstract class ConstrainedBean extends Bean implements VetoableChangeProv
             super.propertyChangeSupport.fireIndexedPropertyChange(key, index, getProperty(key), getProperty(key));
         }
     }
-    
+
     @Override
-    public void addVetoableChangeListener(VetoableChangeListener listener) {
-        this.vetoableChangeSupport.addVetoableChangeListener(listener);
+    public Object getIndexedProperty(String key, int index) {
+        return this.arbitraryPropertySupport.getIndexedProperty(key, index);
     }
 
     @Override
-    public void addVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        this.vetoableChangeSupport.addVetoableChangeListener(propertyName, listener);
+    public Object getProperty(String key) {
+        return this.arbitraryPropertySupport.getProperty(key);
     }
 
     @Override
-    public VetoableChangeListener[] getVetoableChangeListeners() {
-        return this.vetoableChangeSupport.getVetoableChangeListeners();
+    public boolean hasProperty(String key) {
+        return this.arbitraryPropertySupport.hasProperty(key);
     }
 
     @Override
-    public VetoableChangeListener[] getVetoableChangeListeners(String propertyName) {
-        return this.vetoableChangeSupport.getVetoableChangeListeners(propertyName);
+    public boolean hasIndexedProperty(String key) {
+        return this.arbitraryPropertySupport.hasIndexedProperty(key);
     }
 
     @Override
-    public void removeVetoableChangeListener(VetoableChangeListener listener) {
-        this.vetoableChangeSupport.removeVetoableChangeListener(listener);
+    public Set<String> getPropertyNames() {
+        return this.arbitraryPropertySupport.getPropertyNames();
     }
 
-    @Override
-    public void removeVetoableChangeListener(String propertyName, VetoableChangeListener listener) {
-        this.vetoableChangeSupport.removeVetoableChangeListener(propertyName, listener);
-    }
 }

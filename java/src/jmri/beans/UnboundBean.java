@@ -76,6 +76,11 @@ public abstract class UnboundBean implements BeanInterface {
         return Beans.hasIntrospectedProperty(this, key);
     }
 
+    @Override
+    public boolean hasIndexedProperty(String key) {
+        return Beans.hasIntrospectedIndexedProperty(this, key);
+    }
+
     /**
      * Set element at <i>index</i> of property array <i>key</i> to <i>value</i>.
      * <p>
