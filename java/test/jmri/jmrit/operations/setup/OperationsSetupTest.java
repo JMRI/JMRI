@@ -3,7 +3,6 @@ package jmri.jmrit.operations.setup;
 
 import java.io.File;
 import jmri.jmrit.operations.OperationsTestCase;
-import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.LocationManagerXml;
 import jmri.jmrit.operations.rollingstock.cars.CarManagerXml;
 import jmri.jmrit.operations.rollingstock.engines.EngineManagerXml;
