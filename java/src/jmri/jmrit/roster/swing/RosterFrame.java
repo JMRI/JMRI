@@ -763,9 +763,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
 
     @Override
     public Object getProperty(String key) {
-        if (key.toString().equalsIgnoreCase("selectedRosterGroup")) {
+        if (key.equalsIgnoreCase("selectedRosterGroup")) {
             return getSelectedRosterGroup();
-        } else if (key.toString().equalsIgnoreCase("hideSummary")) {
+        } else if (key.equalsIgnoreCase("hideSummary")) {
             return hideBottomPane;
         }
         // call parent getProperty method to return any properties defined
