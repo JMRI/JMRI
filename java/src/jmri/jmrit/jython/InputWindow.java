@@ -44,8 +44,14 @@ public class InputWindow extends JPanel {
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
-    JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-
+    JFileChooser userFileChooser;
+    {
+        userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
+        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
+        filt.addExtension("py");
+        userFileChooser.setFileFilter(filt);
+    }
+    
     public InputWindow() {
 
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
@@ -230,9 +236,6 @@ public class InputWindow extends JPanel {
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
         userFileChooser.setDialogTitle(rb.getString("MenuItemLoad"));
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
-        filt.addExtension("py");
-        userFileChooser.setFileFilter(filt);
 
         boolean results = loadFile(userFileChooser);
         log.debug(results ? "load was successful" : "load failed");
@@ -245,9 +248,6 @@ public class InputWindow extends JPanel {
         userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));
         userFileChooser.setDialogTitle(rb.getString("MenuItemStore"));
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
-        filt.addExtension("py");
-        userFileChooser.setFileFilter(filt);
 
         boolean results = storeFile(userFileChooser);
         log.debug(results ? "store was successful" : "store failed");
