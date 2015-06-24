@@ -23,7 +23,8 @@ public class RocoConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.lenz.xnetsimulator.ConnectionConfig",
             "jmri.jmrix.lenz.liusbserver.ConnectionConfig",
             "jmri.jmrix.lenz.liusbethernet.ConnectionConfig", // experimental
-            "jmri.jmrix.roco.z21.ConnectionConfig" // experimental
+            "jmri.jmrix.roco.z21.ConnectionConfig", // experimental
+            "jmri.jmrix.roco.z21.simulator.ConnectionConfig" // experimental
         };
     }
 

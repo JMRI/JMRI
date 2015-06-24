@@ -19,6 +19,8 @@ public final class z21Constants {
 
     /* XPressNet Tunnel Constants */
 
+    public final static int LAN_X_MESSAGE_TUNNEL = 0x0040;
+
     /* XPressNet Programming Constants */
     public final static int LAN_X_CV_READ_XHEADER = 0x23;
     public final static int LAN_X_CV_READ_DB0 = 0x11;

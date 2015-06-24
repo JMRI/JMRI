@@ -18,9 +18,9 @@ import org.slf4j.LoggerFactory;
  */
 public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
-    static ResourceBundle rb;
-    static int COMMUNICATION_UDP_PORT;
-    static String DEFAULT_IP_ADDRESS;
+    protected static ResourceBundle rb;
+    protected static int COMMUNICATION_UDP_PORT;
+    protected static String DEFAULT_IP_ADDRESS;
 
     private javax.swing.Timer keepAliveTimer; // Timer used to periodically
     // send a message to both
@@ -58,6 +58,7 @@ public class z21Adapter extends jmri.jmrix.AbstractNetworkPortController {
 
         // start operation
         this.getSystemConnectionMemo().setTrafficController(packets);
+        this.getSystemConnectionMemo().configureManagers();
 
         jmri.jmrix.roco.z21.ActiveFlag.setActive();
     }

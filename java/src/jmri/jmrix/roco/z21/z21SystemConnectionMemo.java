@@ -4,6 +4,8 @@ package jmri.jmrix.roco.z21;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Lightweight class to denote that a system is active, and provide general
@@ -103,7 +105,7 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      * manager config in one place.
      */
     public void configureManagers() {
-
+        log.debug("Called Configure Managers");
         // add an XPressNet Tunnel.
         _xnettunnel = new z21XPressNetTunnel(this);
  
@@ -117,6 +119,8 @@ public class z21SystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         InstanceManager.deregister(this, z21SystemConnectionMemo.class);
         super.dispose();
     }
+
+    static Logger log = LoggerFactory.getLogger(z21SystemConnectionMemo.class.getName());
 
 }
 
