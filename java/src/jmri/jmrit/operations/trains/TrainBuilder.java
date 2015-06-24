@@ -4605,6 +4605,12 @@ public class TrainBuilder extends TrainCommon {
                         JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
                     _train.reset();
                 }
+            } else if ((size = engineManager.getList(_train).size()) > 0) {
+                if (JOptionPane.showConfirmDialog(null, MessageFormat.format(Bundle.getMessage("buildEnginesResetTrain"),
+                        new Object[]{size, _train.getName()}), Bundle.getMessage("buildResetTrain"),
+                        JOptionPane.YES_NO_OPTION) == JOptionPane.YES_OPTION) {
+                    _train.reset();
+                }
             }
         }
         if (_buildReport != null) {
