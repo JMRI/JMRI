@@ -1,6 +1,7 @@
 package jmri.jmrit.roster.rostergroup;
 
 import java.util.List;
+import jmri.beans.Bean;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterObject;
@@ -13,7 +14,7 @@ import jmri.jmrit.roster.RosterObject;
  *
  * @author Randall Wood <randall.h.wood@alexandriasoftware.com>
  */
-public class RosterGroup extends RosterObject {
+public class RosterGroup extends Bean implements RosterObject {
 
     private String name;
 

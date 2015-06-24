@@ -19,6 +19,7 @@ import javax.swing.JOptionPane;
 import jmri.BasicRosterEntry;
 import jmri.DccLocoAddress;
 import jmri.LocoAddress;
+import jmri.beans.ArbitraryBean;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
@@ -60,7 +61,7 @@ import org.slf4j.LoggerFactory;
  * @see jmri.jmrit.roster.LocoFile
  *
  */
-public class RosterEntry extends RosterObject implements BasicRosterEntry {
+public class RosterEntry extends ArbitraryBean implements RosterObject, BasicRosterEntry {
 
     // identifiers for property change events and some XML elements
     public static final String ID = "id"; // NOI18N
