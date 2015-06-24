@@ -44,6 +44,8 @@ public class InputWindow extends JPanel {
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
+    JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
+
     public InputWindow() {
 
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
@@ -207,17 +209,12 @@ public class InputWindow extends JPanel {
                 log.error("Unhandled problem in storeFile: " + e);
             }
         } else {
-            results = true;   // We assume that as the file is null then the user has clicked cancel.
+            results = true;   // If the file is null then the user has clicked cancel.
         }
         return results;
     }
 
     static public java.io.File getFile(JFileChooser fileChooser) {
-        fileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
-        return getFileCustom(fileChooser);
-    }
-
-    static public java.io.File getFileCustom(JFileChooser fileChooser) {
         fileChooser.rescanCurrentDirectory();
         int retVal = fileChooser.showDialog(null, null);
         if (retVal != JFileChooser.APPROVE_OPTION) {
@@ -230,8 +227,6 @@ public class InputWindow extends JPanel {
     }
 
     void loadButtonPressed() {
-        JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-
         userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemLoad"));
         userFileChooser.setDialogTitle(rb.getString("MenuItemLoad"));
@@ -242,14 +237,12 @@ public class InputWindow extends JPanel {
         boolean results = loadFile(userFileChooser);
         log.debug(results ? "load was successful" : "load failed");
         if (!results) {
-            log.debug("Not loading file: " + userFileChooser.getSelectedFile().getPath());
+            log.warn("Not loading file: " + userFileChooser.getSelectedFile().getPath());
         }
     }
 
     void storeButtonPressed() {
-        JFileChooser userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-
-        userFileChooser.setDialogType(javax.swing.JFileChooser.OPEN_DIALOG);
+        userFileChooser.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
         userFileChooser.setApproveButtonText(rb.getString("MenuItemStore"));
         userFileChooser.setDialogTitle(rb.getString("MenuItemStore"));
         jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
@@ -259,7 +252,7 @@ public class InputWindow extends JPanel {
         boolean results = storeFile(userFileChooser);
         log.debug(results ? "store was successful" : "store failed");
         if (!results) {
-            log.debug("Not storing file: " + userFileChooser.getSelectedFile().getPath());
+            log.warn("Not storing file: " + userFileChooser.getSelectedFile().getPath());
         }
     }
 
