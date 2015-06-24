@@ -339,9 +339,14 @@ public class JoalAudioFactory extends AbstractAudioFactory {
 
     @Override
     public String toString() {
-        return "JoalAudioFactory, using OpenAL:"
-                + " vendor - " + al.alGetString(AL.AL_VENDOR)
-                + " version - " + al.alGetString(AL.AL_VERSION);
+        try {
+            return "JoalAudioFactory, using OpenAL:"
+                    + " vendor - " + al.alGetString(AL.AL_VENDOR)
+                    + " version - " + al.alGetString(AL.AL_VERSION);
+        } catch (NullPointerException e) {
+            log.error("NPE from JoalAudioFactory: {}",e);
+            return "JoalAudioFactory, using Null";
+        }
     }
 
     @Override
