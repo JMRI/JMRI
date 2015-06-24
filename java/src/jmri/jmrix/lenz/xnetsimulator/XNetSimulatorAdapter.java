@@ -38,6 +38,20 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
 
+    private int csStatus;
+    // status flags from the XPressNet Documentation.
+    private final static int csEmergencyStop = 0x01; // bit 0
+    private final static int csTrackVoltageOff = 0x02; // bit 1
+    private final static int csAutomaticMode = 0x04; // bit 2 
+    private final static int csServiceMode = 0x08; // bit 3
+    // bit 4 is reserved
+    // bit 5 is reserved
+    private final static int csPowerUpMode = 0x40; // bit 6
+    private final static int csRamCheckError = 0x80; // bit 7
+    
+    // 0x00 means normal mode.
+    private final static int csNormalMode = 0x00;
+
     public XNetSimulatorAdapter() {
         setPort("None");
         try {
@@ -51,6 +65,7 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
             log.error("init (pipe): Exception: " + e.toString());
             return;
         }
+        csStatus = csNormalMode;
     }
 
     public String openPort(String portName, String appName) {
@@ -192,21 +207,20 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
             case XNetConstants.CS_REQUEST:
                 switch (m.getElement(1)) {
                     case XNetConstants.CS_VERSION:
-                        reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
-                        reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
-                        reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
-                        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100;
-                        reply.setElement(4, 0x00); // set the parity byte to 0
-                        reply.setParity();
+                        reply = xNetVersionReply();
                         break;
                     case XNetConstants.RESUME_OPS:
+                        csStatus=csNormalMode;
                         reply = normalOpsReply();
                         break;
                     case XNetConstants.EMERGENCY_OFF:
+                        csStatus=csEmergencyStop;
                         reply = everythingOffReply();
                         break;
-                    case XNetConstants.SERVICE_MODE_CSRESULT:
                     case XNetConstants.CS_STATUS:
+                        reply=csStatusReply();
+                        break;
+                    case XNetConstants.SERVICE_MODE_CSRESULT:
                     default:
                         reply = notSupportedReply();
                 }
@@ -336,6 +350,29 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
         r.setElement(2, 0x00); // set the parity byte to 0
         r.setParity();
         return r;
+    }
+
+    // Create a reply to a request for the XPressNet Version
+    private XNetReply xNetVersionReply(){
+        XNetReply reply=new XNetReply();
+        reply.setOpCode(XNetConstants.CS_SERVICE_MODE_RESPONSE);
+        reply.setElement(1, XNetConstants.CS_SOFTWARE_VERSION);
+        reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
+        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100;
+        reply.setElement(4, 0x00); // set the parity byte to 0
+        reply.setParity();
+        return reply;
+    }
+
+    // Create a reply to a request for the Command Station Status
+    private XNetReply csStatusReply(){
+        XNetReply reply=new XNetReply();
+        reply.setOpCode(XNetConstants.CS_REQUEST_RESPONSE);
+        reply.setElement(1, XNetConstants.CS_STATUS_RESPONSE);
+        reply.setElement(2, csStatus);
+        reply.setElement(3, 0x00); // set the parity byte to 0
+        reply.setParity();
+        return reply;
     }
 
     private void writeReply(XNetReply r) {
