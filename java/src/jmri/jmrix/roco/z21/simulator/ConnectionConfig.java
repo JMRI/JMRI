@@ -1,6 +1,8 @@
 // ConnectionConfig.java
 package jmri.jmrix.roco.z21.simulator;
 
+import javax.swing.JPanel;
+
 /**
  * Handle configuring an z21 layout connection via a z21Simulator
  * adapter.
@@ -49,4 +51,16 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
             adapter = new z21SimulatorAdapter();
         }
     }
+
+    @Override
+    public void loadDetails(JPanel details) {
+        super.loadDetails(details);
+        hostNameField.setText("localhost");
+        portField.setEnabled(false); // we don't change this on the simulator.
+        portFieldLabel.setText("Communication Port");
+        portField.setText(String.valueOf(adapter.getPort()));
+        portField.setEnabled(false); // we can't change this now.
+    }
+
+
 }
