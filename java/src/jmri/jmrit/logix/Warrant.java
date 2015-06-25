@@ -370,7 +370,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 
     /**
      * Sets dccAddress and fetches RosterEntry
-     * @param address as a String
+     * @param id address as a String
      * @return
      */
     public boolean setDccAddress(String id) {
