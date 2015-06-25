@@ -394,6 +394,7 @@ public class NXFrame extends WarrantRoute {
                     public void run() {
                         int limit = 0;  
                         try {
+                            // wait until _engineer is assigned so HALT can take effect
                             while (!war.controlRunTrain(Warrant.HALT) && limit<3000) {
                                 Thread.sleep(200);
                                 limit += 200;

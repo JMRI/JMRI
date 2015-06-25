@@ -23,7 +23,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
 //    private static final long serialVersionUID = 7088050907933847146L;
 
     private int     _idxCurrentCommand;     // current throttle command
-    private float   _currentSpeed = 0;      // Actual current throttle setting
     private float   _normalSpeed = 0;       // current commanded throttle setting (unmodified)
     private float   _maxSpeed;              // maximum throttle setting of commands
     private String  _speedType = Warrant.Normal;    // current speed name
@@ -188,6 +187,9 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     protected int getCurrentCommandIndex() {
         return _idxCurrentCommand;
     }
+    protected void setCurrentCommandIndex(int idx) {
+        _idxCurrentCommand = idx;
+    }
 
     private void setSpeedStepMode(int stepMode) {
         _throttle.setSpeedStepMode(stepMode);
@@ -237,7 +239,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedType.equals(endSpeedType)) {
             return;
         }
-        if (_currentSpeed<=0 && (endSpeedType.equals(Warrant.Stop) || endSpeedType.equals(Warrant.EStop))) {
+        if (_throttle.getSpeedSetting()<=0 && (endSpeedType.equals(Warrant.Stop) || endSpeedType.equals(Warrant.EStop))) {
             _waitForClear = true;
             _speedType = endSpeedType;
             return;
@@ -247,23 +249,24 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             _ramp = null;
         }
         if (log.isDebugEnabled()) log.debug("rampSpeedTo: \""+endSpeedType+"\" from \""+
-                _speedType+"\" for warrant "+_warrant.getDisplayName());
+                _speedType+"\" setting= "+_throttle.getSpeedSetting()+" for warrant "+_warrant.getDisplayName());
         _ramp = new ThrottleRamp(endSpeedType);
         new Thread(_ramp).start();
     }
 
-    private float modifySpeed(float tSpeed, String sType) {
-        float mapSpeed = -1.0f;
-        float throttleSpeed = tSpeed;
-        if (sType.equals(Warrant.EStop)) {
-            return mapSpeed;
+    protected float modifySpeed(float tSpeed, String sType) {
+        if (sType.equals(Warrant.Stop)) {
+            return 0.0f;
         }
+        if (sType.equals(Warrant.EStop)) {
+            return -1.0f;
+        }
+        float throttleSpeed = tSpeed;
         if (sType.equals(Warrant.Normal)) {
             return throttleSpeed;
         }
-        mapSpeed = _speedMap.getSpeed(sType);
+        float mapSpeed = _speedMap.getSpeed(sType);
         
-
         switch (_speedMap.getInterpretation()) {
             case SignalSpeedMap.PERCENT_NORMAL:
                 throttleSpeed *= mapSpeed/100;      // ratio of normal
@@ -301,13 +304,12 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             speed = 0.0f;
         }
         _throttle.setSpeedSetting(speed);
-        _currentSpeed = speed;
         if (log.isDebugEnabled()) log.debug("_speedType="+_speedType+", Speed set to "+
                 speed+" _waitForClear= "+_waitForClear+", warrant "+_warrant.getDisplayName());
     }
     
     protected float getSpeed() {
-        return _currentSpeed;
+        return _throttle.getSpeedSetting();
     }
     
     synchronized public int getRunState() {
@@ -330,18 +332,19 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     }
 
     public String getSpeedRestriction() {
+        float curSpeed = _throttle.getSpeedSetting();
         if (_speedOverride) {
             return "Changing to "+_speedType;
         }
-        else if (_currentSpeed == 0.0f) {
+        else if (curSpeed <= 0.0f) {
             return "At Stop";
         } else {
             String units;
             float speed;
             if (_speedProfile!=null) {
-                speed = _speedProfile.getSpeed(_currentSpeed, _throttle.getIsForward())/1000;
+                speed = _speedProfile.getSpeed(curSpeed, _throttle.getIsForward())/1000;
             } else {
-                speed = _currentSpeed*_speedMap.getDefaultThrottleFactor();                    
+                speed = curSpeed*_speedMap.getDefaultThrottleFactor();                    
             }
             speed = speed*SignalSpeedMap.getMap().getLayoutScale();
             if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
@@ -353,9 +356,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             }
             return Bundle.getMessage("atSpeed", _speedType, Math.round(speed), units);
         }
-    }
-    protected String getSpeedType() {
-        return _speedType;
     }
 
     /**
@@ -629,9 +629,10 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
      * @param toSpeedType speed name to end ramp
      * @return time required for speed change
      */
-    protected int rampTimeForSpeedChange(String fromSpeedType, String toSpeedType) {
-        float fromSpeed =  modifySpeed(_maxSpeed, fromSpeedType);
-        float toSpeed = modifySpeed(_maxSpeed, toSpeedType);
+    protected int rampTimeForSpeedChange(float curSpeed, String fromSpeedType, String toSpeedType) {
+//        float fromSpeed =  modifySpeed(curSpeed, fromSpeedType);
+        float fromSpeed =  curSpeed;
+        float toSpeed = modifySpeed(curSpeed, toSpeedType);
         float delta = _speedMap.getStepIncrement();
         int time = _speedMap.getStepDelay();
         
@@ -640,31 +641,29 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 fromSpeedType+ "("+fromSpeed+") to "+toSpeedType+"("+toSpeed+") is "+time*num);          
         return time*num;
     }
+    protected long getTimeForDistance(float distance) {
+        float speed  = _throttle.getSpeedSetting();
+        float time;
+        if (_speedProfile!=null) {
+            time = distance/(_speedProfile.getSpeed(speed, _throttle.getIsForward())*1000);               
+        } else {
+            time = distance/(speed*_speedMap.getDefaultThrottleFactor());                
+        }
+        return (long)time;
+    }
     protected long getTimeForDistance(float distance, String speedtype) {
         float fromSpeed =  modifySpeed(_maxSpeed, speedtype);
         return (long)(distance/fromSpeed);
     }
-    /**
-     * Length needed by engineer to bring train to a stop from maximum speed
-     * @return max length required for speed change
-     */
-    protected float lookAheadLen() {
-        _maxSpeed = 0.0f;
-        float speed = 0.0f;
-        for (ThrottleSetting ts : _warrant._commands) {
-            String command = ts.getCommand().toUpperCase();
-            try {
-                if (command.equals("SPEED")) {
-                    speed = Float.parseFloat(ts.getValue());
-                    if (speed>_maxSpeed) {
-                        _maxSpeed = speed;
-                    }
-                }
-            } catch (NumberFormatException nfe) {
-                  log.error("Bad Speed command "+ ts.toString()+" in warrant "+_warrant.getDisplayName()+" - "+nfe);
-            }           
+    protected float rampLengthForSpeedChange(float curSpeed, String curSpeedType, String toSpeedType) {
+        float fromSpeed = modifySpeed(curSpeed, curSpeedType);
+        float speed = modifySpeed(curSpeed, toSpeedType);
+        if (speed>fromSpeed) {
+            float tmp = fromSpeed;
+            fromSpeed = speed;
+            speed = tmp;
         }
-
+        float rampLength = 0.0f;
         float delta = _speedMap.getStepIncrement();
         if (delta<=0.007f) {
             log.error("SignalSpeedMap StepIncrement is not set correctly.  Check Preferences->Warrants.");
@@ -672,22 +671,47 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         float time = _speedMap.getStepDelay();
         boolean isForward = _throttle.getIsForward();
-        
-        float factor = getThrottleFactor(_maxSpeed);
+        while (fromSpeed >= speed) {
+            float dist;
+            if (_speedProfile != null) {
+                dist = _speedProfile.getSpeed((fromSpeed-delta/2), isForward)*time/1000;               
+            } else {
+                dist = (fromSpeed-delta/2)*time/_speedMap.getDefaultThrottleFactor();                
+            }
+            fromSpeed -= delta;
+            if (fromSpeed>=speed) {
+                rampLength += dist;                
+            } else {
+                rampLength += (delta-(speed-fromSpeed))*dist/delta;
+            }
+        }
+        if (log.isDebugEnabled()) log.debug("rampLengthForSpeedChange()= "+rampLength+" for speed= "+curSpeed+
+                " to "+toSpeedType+", from "+(_speedProfile!=null?"SpeedProfile":"Factor="+getThrottleFactor(curSpeed)));
+        return rampLength;
+    }
+/*    protected float lookAheadLen(float maxSpeed) {
         float maxRampLength = 0.0f;
-        speed = _maxSpeed;
-        while (speed>=0.0f) {
+        float speed = maxSpeed;
+        float delta = _speedMap.getStepIncrement();
+        if (delta<=0.007f) {
+            log.error("SignalSpeedMap StepIncrement is not set correctly.  Check Preferences->Warrants.");
+            return 1.0f;
+        }
+        float time = _speedMap.getStepDelay();
+        boolean isForward = _throttle.getIsForward();
+                while (speed>=0.0f) {
             if (_speedProfile != null) {
                 maxRampLength += _speedProfile.getSpeed((speed-delta/2), isForward)*time/1000;               
             } else {
-                maxRampLength += (speed-delta/2)*time/factor;                
+                maxRampLength += (speed-delta/2)*time/_speedMap.getDefaultThrottleFactor();                
             }
             speed -= delta;
         }
-        if (log.isDebugEnabled()) log.debug("_lookAheadLen(): max throttle= "+_maxSpeed+" maxRampLength= "+maxRampLength+
-                ", from "+(_speedProfile!=null?"SpeedProfile":"Factor="+factor));
+        if (log.isDebugEnabled()) log.debug("lookAheadLen()= "+maxRampLength+" for speed= "+maxSpeed+
+                ", from "+(_speedProfile!=null?"SpeedProfile":"Factor="+getThrottleFactor(maxSpeed)));
         return maxRampLength;
-    }
+    }*/
+        
     private float getThrottleFactor(float speedStep) {
         float factor = _speedMap.getDefaultThrottleFactor();
         if (_speedProfile != null) {
@@ -698,13 +722,20 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         return factor;
     }
     
-    protected String minSpeed(String speed1, String speed2) {
+    protected String minSpeedType(String speed1, String speed2) {
         if (secondGreaterThanFirst(speed1, speed2)) {
             return speed1;
         }
         return speed2;
     }
+    // return a boolean so minSpeedType() can return a non-null String if possible
     protected boolean secondGreaterThanFirst(String speed1, String speed2) {
+        if (speed1==null) {
+            return false;
+        }
+        if (speed2==null) {
+            return true;
+        }
         float s1 = modifySpeed(1.0f, speed1);
         float s2 = modifySpeed(1.0f, speed2);
         return (s1<s2);
@@ -712,6 +743,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     protected DccThrottle getThrottle() {
         return _throttle;
     }
+    
+    /****************************************************************************************/
     
     private class ThrottleRamp implements Runnable {
         String endSpeedType;
@@ -796,6 +829,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
             } finally {
                 _speedOverride = false;
                 _warrant.fireRunStatus("SpeedChange", old, _speedType);
+                _warrant.setSpeedType(_speedType);
                 _lock.unlock();
             }
             if (log.isDebugEnabled()) log.debug("rampSpeed complete to \""+endSpeedType+

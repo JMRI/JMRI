@@ -176,7 +176,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
     }
 
     public Warrant getWarrantAt(int index) {
-        if (index > _warList.size()) {
+        if (index >= _warList.size()) {
             return null;
         }
         return _warList.get(index);
@@ -332,7 +332,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
         Warrant w = getWarrantAt(row);
         // some error checking
         if (w == null) {
-            log.error("getValueAt row= " + row + " Warrant is null!");
+            log.warn("getValueAt row= " + row + " Warrant is null!");
             return "";
         }
         JRadioButton allocButton = new JRadioButton();
@@ -438,7 +438,7 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                     + ", value= " + value.getClass().getName());
         Warrant w = getWarrantAt(row);
         if (w == null) {
-            log.error("setValueAt row= " + row + " Warrant is null!");
+            log.warn("setValueAt row= " + row + " Warrant is null!");
             return;
         }
         String msg = null;
@@ -646,13 +646,12 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                                     .valueOf(Warrant.MODE_NONE)) || (property
                                     .equals("controlChange") && e.getNewValue() == Integer
                                     .valueOf(Warrant.ABORT)))) {
-                        try { // TableSorter needs time to get its row count
-                                // updated
-                            fireTableRowsDeleted(i, i);
+                        fireTableRowsDeleted(i, i);
+/*                        try { // TableSorter needs time to get its row count updated
                             Thread.sleep(50);
-                            removeNXWarrant(bean);
                         } catch (InterruptedException ie) {
-                        }
+                        }*/
+                        removeNXWarrant(bean);
                     } else {
                         fireTableRowsUpdated(i, i);
                     }
@@ -687,8 +686,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                         myGold, true);
             } else if (e.getPropertyName().equals("SpeedChange")) {
                 int row = getRow(bean);
-                fireTableRowsUpdated(row, row);
-//                _frame.setStatusText(bean.getRunningMessage(), myGreen, true);
+                if (row>=0) {
+                    fireTableRowsUpdated(row, row);                    
+//                    _frame.setStatusText(bean.getRunningMessage(), myGreen, true);
+                }
             } else if (e.getPropertyName().equals("runMode")) {
                 int oldMode = ((Integer) e.getOldValue()).intValue();
                 int newMode = ((Integer) e.getNewValue()).intValue();
