@@ -397,7 +397,7 @@
       <xi:include href="http://jmri.org/xml/decoders/esu/v4soundCVs.xml"/>
     </variables>
     <resets>
-      <factReset label="Reset All CVs. WARNING: May render sounds inoperable! Not recommended." CV="8" default="8"/>
+      <factReset label="Reset All CVs." CV="8" default="8"/>
     </resets>
   </decoder>
 <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->

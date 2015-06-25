@@ -22,38 +22,62 @@
     <separator/>
     <separator/>
     <label>
-      <text>&lt;html&gt;&lt;h2&gt;Factory Reset Warning&lt;/h2&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;Avvertenza per RESET a valori di Fabbrica&lt;/h2&gt;&lt;/html&gt;"</text>
+      <text>&lt;html&gt;&lt;h2&gt;Factory Reset&lt;/h2&gt;&lt;/html&gt;</text>
+      <text xml:lang="it">="&lt;html&gt;&lt;h2&gt;RESET a valori di Fabbrica&lt;/h2&gt;&lt;/html&gt;"</text>
     </label>
     <label>
       <text> </text>
     </label>
     <label>
-      <text>&lt;html&gt;&lt;em&gt;Performing a Factory Reset on any ESU sound decoder may render the sound project inoperable!&lt;/em&gt;&lt;/html&gt;</text>
-      <text xml:lang="it">="&lt;html&gt;&lt;em&gt;L'esecuzione di un reset ai valori  di fabbrica sui decoder sonori ESU può rendere il progetto sonoro inutilizzabile!&lt;/em&gt;&lt;/html&gt;"</text>
+      <text>&lt;html&gt;&lt;em&gt;Occasionally Factory Reset has rendered the sound project apparently inoperable.&lt;/em&gt;&lt;/html&gt;</text>
+<!--       <text xml:lang="it">="&lt;html&gt;&lt;em&gt;L'esecuzione di un reset ai valori  di fabbrica sui decoder sonori ESU può rendere il progetto sonoro inutilizzabile!&lt;/em&gt;&lt;/html&gt;"</text> -->
     </label>
     <label>
       <text> </text>
     </label>
     <label>
-      <text>ESU sound decoders are manufactured blank and the sound project is loaded, often</text>
-      <text xml:lang="it">="I decoder sonori ESU sono prodotti senza progetto sonoro e il progetto sonoro è caricato, spesso"</text>
+      <text>ESU sound decoders are manufactured blank and the sound project is loaded</text>
+<!--       <text xml:lang="it">="I decoder sonori ESU sono prodotti senza progetto sonoro e il progetto sonoro è caricato, spesso"</text> -->
     </label>
     <label>
-      <text>by a dealer or other party. If the project installer forgets to select the</text>
-      <text xml:lang="it">="da un distributore. Se nell'installazione viene dimenticato di selezionare"</text>
+      <text>by an OEM, dealer or other party. Part of the procedure involves writing new</text>
+<!--       <text xml:lang="it">="da un distributore. Se nell'installazione viene dimenticato di selezionare"</text> -->
     </label>
     <label>
-      <text>optional step to write new 'factory' defaults suited to the project, a</text>
-      <text xml:lang="it">="alcuni parametri optional per i "nuovi settagi di fabbrica" appropriati al progetto"</text>
+      <text>'factory' defaults suited to the project. If this has not been done correctly, a</text>
+<!--       <text xml:lang="it">="alcuni parametri optional per i "nuovi settagi di fabbrica" appropriati al progetto"</text> -->
     </label>
     <label>
-      <text>subsequent reset will most likely render the sounds inoperable due to incorrect</text>
-      <text xml:lang="it">="un successivo reset potrebbe rendere non utilizzabili i suoni a causa dei valori"</text>
+      <text>subsequent reset will most likely render the sounds apparently inoperable due to</text>
+<!--       <text xml:lang="it">="un successivo reset potrebbe rendere non utilizzabili i suoni a causa dei valori"</text> -->
     </label>
     <label>
-      <text>CV defaults. If in doubt, consult your dealer before resetting.</text>
-      <text xml:lang="it">="di alcune CV. Se avete dubbi, consultate prima il vostro rivenditore."</text>
+      <text>incorrect CV defaults.</text>
+<!--       <text xml:lang="it">="di alcune CV."</text> -->
+    </label>
+    <label>
+      <text> </text>
+    </label>
+    <label>
+      <text>If this happens, all is not lost. The correct CV settings can be restored.</text>
+    </label>
+    <label>
+      <text>Contact your dealer, the LokSound Yahoo® group or ESU LLC USA and request an</text>
+    </label>
+    <label>
+      <text>"Export CV List" file (from the LokProgrammer® software "Tools" menu) for your</text>
+    </label>
+    <label>
+      <text>sound project. (If you know the project number, that will be very helpful). Then</text>
+    </label>
+    <label>
+      <text>use the "File->Import->LokProgrammer CV list file" menu item to import this file</text>
+    </label>
+    <label>
+      <text>into your Roster Entry. Then "Write full sheet" from the "CVs" pane to restore</text>
+    </label>
+    <label>
+      <text>your decoder settings.</text>
     </label>
     <label>
       <text> </text>
