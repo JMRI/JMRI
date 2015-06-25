@@ -1058,16 +1058,7 @@ public class DefaultConditional extends AbstractNamedBean
                         }
                         break;
                     case Conditional.ACTION_THROTTLE_FACTOR:
-                        w = (Warrant) nb;
-                        if (w == null) {
-                            errorList.add("invalid Warrant name in action - " + action.getDeviceName());
-                        } else {
-                            String msg = w.setThrottleFactor(getActionString(action));
-                            if (msg != null) {
-                                log.info("Warrant " + getActionString(action) + " unable to Set Throttle Factor - " + msg);
-                            }
-                            actionCount++;
-                        }
+                        log.info("Set warrant Throttle Factor deprecated - Use Warrrant Preferences");
                         break;
                     case Conditional.ACTION_SET_TRAIN_ID:
                         w = (Warrant) nb;

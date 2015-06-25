@@ -108,9 +108,6 @@ public class WarrantManagerXml //extends XmlFile
         if (str==null) str = "";
         elem.setAttribute("trainName", str);
         
-        float fac = warrant.getThrottleFactor();
-        elem.setAttribute("factor", Float.toString(fac));
-
         return elem;
     }
 
@@ -288,15 +285,6 @@ public class WarrantManagerXml //extends XmlFile
         }
         if (elem.getAttribute("trainName") != null) {
             warrant.setTrainName(elem.getAttribute("trainName").getValue());
-        }
-        if (elem.getAttribute("factor") != null) {
-            float fac = 0.75f;
-            try {
-               fac = elem.getAttribute("factor").getFloatValue();
-            } catch (org.jdom2.DataConversionException dce) {
-                log.error(dce.toString()+ " for factor in Warrant "+warrant.getDisplayName());
-            }
-            warrant.setThrottleFactor(fac);
         }
     }
 

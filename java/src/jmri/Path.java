@@ -230,27 +230,24 @@ public class Path {
     }  // l must be in millimeters
 
     public float getLengthMm() {
-        if (_length == 0.0f) {
+        if (_length <= 0.0f) {
             return _block.getLengthMm();
-        } else {
-            return _length;
         }
+        return _length;
     } // return length in millimeters
 
     public float getLengthCm() {
-        if (_length == 0.0f) {
+        if (_length <= 0.0f) {
             return _block.getLengthCm();
-        } else {
-            return (_length / 10.0f);
         }
+        return (_length / 10.0f);
     }  // return length in centimeters
 
     public float getLengthIn() {
-        if (_length == 0.0f) {
+        if (_length <= 0.0f) {
             return _block.getLengthIn();
-        } else {
-            return (_length / 25.4f);
         }
+        return (_length / 25.4f);
     }  // return length in inches
 
     static private void appendOne(StringBuffer b, String t) {

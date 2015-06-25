@@ -364,6 +364,10 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             Warrant warrant = model.getWarrantAt(row);
             @SuppressWarnings("unchecked")
             JComboBox<String> comboBox = (JComboBox<String>)getComponent();
+            if (warrant == null) {
+                log.warn("getWarrantAt row= " + row + " Warrant is null!");
+                return comboBox;
+            }
             comboBox.removeAllItems();
             List <BlockOrder> orders = warrant.getBlockOrders();
             for (int i=0; i<orders.size(); i++) {

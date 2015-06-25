@@ -142,11 +142,11 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         List<RosterEntry> list = Roster.instance().matchingList(null, null, null, null, null, null, null);
         _rosterBox.setRenderer(new jmri.jmrit.roster.swing.RosterEntryListCellRenderer());
         _rosterBox.addItem(" ");
+        _rosterBox.addItem(Bundle.getMessage("noSuchAddress"));
         for (int i = 0; i < list.size(); i++) {
             RosterEntry r = list.get(i);
             _rosterBox.addItem(r.titleString());
         }
-        _rosterBox.addItem(Bundle.getMessage("noSuchAddress"));
         //_rosterBox = Roster.instance().fullRosterComboBox();
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener(new ActionListener() {
@@ -379,7 +379,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             }
         }
         
-        protected JPanel makePanel(String title, String tooltip, String box1Name, String box2Name, WarrantRoute parent) {
+        private JPanel makePanel(String title, String tooltip, String box1Name, String box2Name, WarrantRoute parent) {
             JPanel oPanel = new JPanel();
             oPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(java.awt.Color.BLACK),
                     Bundle.getMessage(title),
@@ -425,18 +425,18 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             return p;
         }
         
-        protected void clearFields() {
+        private void clearFields() {
             setBlock(null);
         }
 
-        protected boolean checkBlockBox(JTextField box) {
+        private boolean checkBlockBox(JTextField box) {
             if (box == blockBox) {
                 setBlock(getEndPointBlock());
                 return true;
             }
             return false;
         }
-        protected boolean checkPathBox(JComboBox<String> box) {
+        private boolean checkPathBox(JComboBox<String> box) {
             if (box == pathBox) {
                 if (portalBox!=null) {
                     setPortalBox(order);                    
@@ -445,15 +445,15 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
             }
             return false;
         }
-        protected boolean checkPortalBox(JComboBox<String> box) {
+        private boolean checkPortalBox(JComboBox<String> box) {
             return (box == portalBox);
         }
-        protected void setOrderEntryPortal()  {
+        private void setOrderEntryPortal()  {
             if (order!=null) {
                 order.setEntryName((String)portalBox.getSelectedItem());
             }
         }
-        protected void setOrderExitPortal()  {
+        private void setOrderExitPortal()  {
             if (order!=null) {
                 order.setExitName((String)portalBox.getSelectedItem());         
             }
@@ -475,7 +475,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
                 }
             }
          }
-        protected BlockOrder getOrder() {
+        private BlockOrder getOrder() {
             return order;
         }
         private void setPortalName(String name) {

@@ -367,15 +367,13 @@ public class SignalTableModel extends AbstractTableModel {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
                 return;
-            } else {
-                String str = (String) value;
-                if (str == null || str.trim().length() == 0) {
-                    tempRow[col] = null;
-                    return;
-              } else {
-                    tempRow[col] = str.trim();
-                }
             }
+            String str = (String) value;
+            if (str == null || str.trim().length() == 0) {
+                tempRow[col] = null;
+                return;
+            }
+            tempRow[col] = str.trim();
             OBlock fromBlock = null;
             OBlock toBlock = null;
             Portal portal = null;
@@ -441,7 +439,11 @@ public class SignalTableModel extends AbstractTableModel {
                         msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);                
                     }
                     if (msg == null) {
-                        _signalList.add(new SignalRow(signal, fromBlock, portal, toBlock, time));
+                        SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, time);
+                        msg = setSignal(signalRow, false);
+                        if (msg==null) {
+                            _signalList.add(signalRow);                            
+                        }
                         initTempRow();
                         fireTableDataChanged();                        
                     }
@@ -656,7 +658,7 @@ public class SignalTableModel extends AbstractTableModel {
         return String.class;
     }
 
-    public int getPreferredWidth(int col) {
+    static public int getPreferredWidth(int col) {
         switch (col) {
             case NAME_COLUMN:
                 return new JTextField(18).getPreferredSize().width;
