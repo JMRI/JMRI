@@ -283,7 +283,7 @@ Voir
 <p>
 Nous avons nos propres sous-ensemble DocBook que nous utilisons, parce que le sch&#233;ma DocBook complet 5.0 prend un temps tr&#232;s long &#224; analyser, et n'est pas totalement compatible avec les versions d'autres logiciels que nous utilisons.
 Nous utilisons l'espace de noms 5.0 DocBook normal, donc on peut facilement convertir plus tard, &#224; un sch&#233;ma plus complet de mani&#232;re transparente. Notre petit sch&#233;ma est situ&#233; &#224;:
-<a href="http://jmri.org/xml/schema/docbook/DocBook.xsd">http://jmri.org/xml/schema/docbook/DocBook e.xsd</a>
+<a href="http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
 (notre emplacement du sch&#233;ma habituel). Il est <em> seulement</em>
 r&#233;f&#233;renc&#233; &#224; partir de fichiers de sch&#233;ma JMRI, non par des exemples de fichiers,
 de sorte que nous pouvons le transformer plus tard, avec les travaux finis.

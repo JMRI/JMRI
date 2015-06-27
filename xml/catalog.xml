@@ -13,11 +13,15 @@
             uri="schema/decoder.xsd"/>
     <system systemId="http://jmri.org/xml/schema/defaultPanelIcons.xsd"
             uri="schema/defaultPanelIcons.xsd"/>
-    <system systemId="http://jmri.org/xml/schema/docbook/DocBook.xsd"
-            uri="schema/docbook/DocBook.xsd"/>
+    <system systemId="http://jmri.org/xml/schema/docbook/docbook.xsd"
+            uri="schema/docbook/docbook.xsd"/>
     <system systemId="http://jmri.org/xml/schema/docbook/xlink.xsd"
             uri="schema/docbook/xlink.xsd"/>
+    <system systemId="xlink.xsd"
+            uri="schema/docbook/xlink.xsd"/>
     <system systemId="http://jmri.org/xml/schema/docbook/xml.xsd"
+            uri="schema/docbook/xml.xsd"/>
+    <system systemId="xml.xsd"
             uri="schema/docbook/xml.xsd"/>
     <system systemId="http://jmri.org/xml/schema/guinode.xsd"
             uri="schema/guinode.xsd"/>

@@ -435,7 +435,7 @@ and isn't fully consistent with versions of other software that we use.
 We use the normal DocBook 5.0 namespace, so we can later easily convert to 
 a more complete schema transparently.
 Our smaller schema is located at
-<a href="http://jmri.org/xml/schema/docbook/DocBook.xsd">http://jmri.org/xml/schema/docbook/DocBook.xsd</a>
+<a href="http://jmri.org/xml/schema/docbook/docbook.xsd">http://jmri.org/xml/schema/docbook/docbook.xsd</a>
 (our usual schema location). It is <em>only</em>
 referenced from JMRI schema files, not instance files,
 so that we can later convert with finite work.
