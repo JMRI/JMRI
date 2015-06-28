@@ -44,9 +44,15 @@ public class ArbitraryPropertySupportTest extends TestCase {
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         assertEquals(null, instance.getIndexedProperty(NOT_A_PROPERTY, 0));
         assertEquals(OLD_VALUE, instance.getIndexedProperty(INDEXED_PROPERTY, 0));
-        // getIndexedProperty returns null for introspected properties when an
-        // ArrayIndexOutOfBoundsException would otherwise be thrown
-        assertEquals(null, instance.getIndexedProperty(INDEXED_PROPERTY, 1));
+        // Really wish we were using JUnit 4 with its ability to assert that an
+        // expected Exception was thrown
+        boolean outOfBounds = false;
+        try {
+            instance.getIndexedProperty(INDEXED_PROPERTY, 1);
+        } catch (IndexOutOfBoundsException ex) {
+            outOfBounds = true;
+        }
+        assertTrue(outOfBounds);
         assertEquals(OLD_VALUE, instance.getIndexedProperty(MAPPED_INDEXED, 0));
         assertEquals(null, instance.getIndexedProperty(MAPPED_INDEXED, 1));
     }

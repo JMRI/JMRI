@@ -113,11 +113,6 @@ public class Beans extends java.beans.Beans {
      * Get the item at index <i>index</i> of property <i>key</i> of
      * <i>bean</i>.
      *
-     * If the index <i>index</i> of property <i>key</i> does not exist, this
-     * method returns null instead of throwing
-     * {@link java.lang.ArrayIndexOutOfBoundsException} do to the inability to
-     * get the size of the indexed property using introspection.
-     *
      * This should only be called from outside this class in an implementation
      * of
      * {@link jmri.beans.BeanInterface#setProperty(java.lang.String, java.lang.Object)},
@@ -139,7 +134,13 @@ public class Beans extends java.beans.Beans {
                     }
                 }
                 // catch only introspection-related exceptions, and allow all other to pass through
-            } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | IntrospectionException ex) {
+            } catch (InvocationTargetException ex) {
+                if (ex.getCause() instanceof IndexOutOfBoundsException) {
+                    throw (IndexOutOfBoundsException) ex.getCause();
+                } else {
+                    log.warn(ex.toString(), ex);
+                }
+            } catch (IllegalAccessException | IllegalArgumentException | IntrospectionException ex) {
                 log.warn(ex.toString(), ex);
             }
         }
