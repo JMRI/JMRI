@@ -1290,6 +1290,8 @@
                      includes="default.lcf,COPYING"/>
             <fileset dir="${scriptdir}/WinInstallFiles"
                      includes="*"/>
+            <fileset dir="."
+                     includes="python.properties"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib"/>
         <copy todir="${dist.windows}/JMRI/lib" flatten="true">
@@ -1327,6 +1329,8 @@
                      includes="DecoderPro.app/,PanelPro.app/,SoundPro.app/,JMRI?Demo.app/,Loco?Tools.app/"/>
             <fileset dir="scripts"
                      includes="default.lcf,COPYING"/>
+            <fileset dir="."
+                     includes="python.properties"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib"/>
         <copy todir="${dist.macosx}/JMRI/lib" flatten="true">
@@ -1380,6 +1384,8 @@
                      excludes="help/en/manual/**" />
             <fileset dir="${scriptdir}"
                      includes="default.lcf,COPYING"/>
+            <fileset dir="."
+                     includes="python.properties"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib"/>
         <copy todir="${dist.linux}/JMRI/lib" flatten="true">

@@ -638,6 +638,7 @@ SectionGroup "JMRI Core Files" SEC_CORE
     File /a "${SRCDIR}\default.lcf"
     File /a "${SRCDIR}\*.ico"
     File /a "${SRCDIR}\lib\security.policy"
+    File /a "${SRCDIR}\python.properties"
 
   SectionEnd ; SEC_MAIN
 
