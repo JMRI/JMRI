@@ -1,7 +1,5 @@
-<?xml version="1.0"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-
-<!-- Made from the QSI_Diesel_Ver7.xml file for testing purposes           -->
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Made from the QSI_Diesel_Ver7.xml file for testing purposes           -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,25 +11,19 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-
-<decoder-config
-    xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
->
+<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
     <version author="Bob Jacobsen" version="1" lastUpdated="20100119"/>
 
     <decoder>
 
         <family name="Test QSI Decoder" mfg="QSIndustries" lowVersionID="7">
-            <model model="Test QSI Decoder"
-                   numFns="14" numOuts="0" productID="1050" >
+            <model model="Test QSI Decoder" numFns="14" numOuts="0" productID="1050">
             </model>
-            <model model="P2k U28B/30B"
-                   numFns="14" numOuts="14" productID="124" >
-                <output name="1" label="" connection="other" />
-                <output name="2" label="" connection="other" />
-                <output name="3" label="" connection="other" />
-                <output name="4" label="" connection="other" />
+            <model model="P2k U28B/30B" numFns="14" numOuts="14" productID="124">
+                <output name="1" label="" connection="other"/>
+                <output name="2" label="" connection="other"/>
+                <output name="3" label="" connection="other"/>
+                <output name="4" label="" connection="other"/>
             </model>
             <functionlabels>
                 <functionlabel num="0" lockable="true">Light</functionlabel>
@@ -51,70 +43,61 @@
 
         </family>
 
-        <programming direct="yes" paged="yes"
-                     register="yes" ops="yes">
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
         </programming>
 
         <variables>
-            <ivariable label="Minor Version Number" CVname="56.254.6" CV="56" PI="254" SI="6"
-                       readOnly="no" item="CV56.254.6" default="0"> 
-                <indexedVal/> 
-            </ivariable>
+            <variable label="Minor Version Number" CV="56.254.6" readOnly="no" default="0" item="CV56.254.6"> 
+                <decVal/> 
+            </variable>
 
-            <ivariable label="Major Version Number" CVname="56.254.7" CV="56" PI="254" SI="7"
-                       readOnly="no" item="CV56.254.7" default="0"> 
-                <indexedVal/> 
-            </ivariable>
+            <variable label="Major Version Number" CV="56.254.7" readOnly="no" default="0" item="CV56.254.7"> 
+                <decVal/> 
+            </variable>
 
-            <variable label="Primary Address" CV="1" comment="Short address"
-                      item="Short Address"  default="03">
+            <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
                 <shortAddressVal/>
             </variable>
 
-            <variable label="CV2" CV="2" default="2"
-                      tooltip="QSI uses this only if speed tables are used"
-                      comment="A value of 255 corresponds to 100%">
+            <variable label="CV2" CV="2" default="2" tooltip="QSI uses this only if speed tables are used" comment="A value of 255 corresponds to 100%">
                 <decVal/>
             </variable>
 
-            <variable label="CV3" CV="3" item="CV3" >
+            <variable label="CV3" CV="3" item="CV3">
                 <decVal/>
             </variable>
 
 
-            <ivariable label="iCV53.5.0 qual cv3 gt 100" CVname="53.5.0" CV="53" PI="5" SI="0"
-                       default="0" item="iCV53.5.0">
-                <ienumVal>
-                    <ienumChoice choice="Off"/>
-                    <ienumChoice choice="On"/>
-                </ienumVal>
+            <variable label="iCV53.5.0 qual cv3 gt 100" CV="53.5.0" default="0" item="iCV53.5.0">
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
                 <qualifier>
                     <variableref>CV3</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
-            </ivariable>
+            </variable>
 
 
-            <ivariable item="iCV55.92.0" CVname="55.92.0" CV="55" PI="92" SI="0"
-                       default="1" label="CV55.92.0 qual minor gt 100" mask="XXXXXXXV">
-                <ienumVal>
-                    <ienumChoice choice="Off"/>
-                    <ienumChoice choice="On"/>
-                </ienumVal>
+            <variable label="CV55.92.0 qual minor gt 100" CV="55.92.0" mask="XXXXXXXV" default="1" item="iCV55.92.0">
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
                 <qualifier>
                     <variableref>Minor Version Number</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
-            </ivariable>
+            </variable>
 
-            <ivariable item="iCV55.92.1" CVname="55.92.1" CV="55" PI="92" SI="1"
-                       default="1" label="CV55.92.1 qual minor, major gt 100" mask="XXXXXXXV">
-                <ienumVal>
-                    <ienumChoice choice="Off"/>
-                    <ienumChoice choice="On"/>
-                </ienumVal>
+            <variable label="CV55.92.1 qual minor, major gt 100" CV="55.92.1" mask="XXXXXXXV" default="1" item="iCV55.92.1">
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
                 <qualifier>
                     <variableref>Minor Version Number</variableref>
                     <relation>ge</relation>
@@ -125,9 +108,9 @@
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
-            </ivariable>
+            </variable>
 
-            <variable label="CV4 qual cv3 ge 100" CV="4" item="CV4" >
+            <variable label="CV4 qual cv3 ge 100" CV="4" item="CV4">
                 <decVal max="31"/>
                 <qualifier>
                     <variableref>CV3</variableref>
@@ -136,7 +119,7 @@
                 </qualifier>
             </variable>
 
-            <variable label="CV5 qual cv3 le 100" CV="5" item="CV5" >
+            <variable label="CV5 qual cv3 le 100" CV="5" item="CV5">
                 <decVal max="31"/>
                 <qualifier>
                     <variableref>CV3</variableref>
@@ -151,7 +134,7 @@
                     <relation>le</relation>
                     <value>100</value>
                 </qualifier>
-                <variable label="CV6 qual cv3 le 100 w variables" CV="6" item="CV6" >
+                <variable label="CV6 qual cv3 le 100 w variables" CV="6" item="CV6">
                     <decVal max="31"/>
                 </variable>
             </variables>
@@ -159,20 +142,19 @@
         </variables>
 
         <resets>
-            <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56"
-                        PI="128" SI="51" default="113" item="CV56.128.51"/>
+            <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
         </resets>
     </decoder>
 
     <pane>
         <name>Testing</name>
         <column>
-            <display item="Minor Version Number" />
-            <display item="Primary Address" />
-            <display item="CV2" />
-            <display item="CV3" />
-            <display item="iCV53.5.0" />
-            <display item="iCV55.92.0" />
+            <display item="Minor Version Number"/>
+            <display item="Primary Address"/>
+            <display item="CV2"/>
+            <display item="CV3"/>
+            <display item="iCV53.5.0"/>
+            <display item="iCV55.92.0"/>
         </column>
     </pane>
 

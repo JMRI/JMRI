@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2005 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005 All rights reserved -->
 <!-- See the COPYING file for more information on licensing and appropriate use -->
 <!-- $Id$ -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
@@ -11,6 +10,8 @@
 				  asking users to use two panels  (because the indexed variables break if 
 				  used on a single panel due to the index CV controlling too many other features!)
 			-->
+  <version author="jacobsen@mac.com" version="5" lastUpdated="20150628"/>
+  <!-- Version 5  Using regular variable elements intead of ivariables -->
   <decoder>
     <!--  lowVersionID="4" highVersionID="52"   -->
     <family name="ACC Decoders" mfg="MERG" comment="DCCACC5 is steady state MERG decoder.">
@@ -21,7 +22,14 @@
         <versionCV lowVersionID="52" highVersionID="52"/>
       </model>
     </family>
-    <programming direct="yes" paged="yes" register="no" ops="no"/>
+    <programming direct="yes" paged="yes" register="no" ops="no">
+      <capability>
+        <name>Indexed CV access</name>
+        <parameter name="PI">33</parameter>
+        <parameter name="SI">00</parameter> <!-- not used, but needs to be specified -->
+        <parameter name="cvFirst">true</parameter> <!-- 257.1 is write 1 to PICV, then access CV 257 -->
+      </capability>
+    </programming>
     <variables>
       <variable item="Low 7 bytes of Address CV1" CV="1" mask="XVVVVVVV" comment="Decoder address" default="01">
         <decVal min="1" max="63"/>
@@ -285,36 +293,36 @@
         <label>Lenz Toggle Mode_</label>
       </variable>
       <constant item="PICV" default="33" comment="CV used for Primary Index"/>
-      <ivariable label="Address Range 1" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.0" upperMask="XXXXXVVV"/>
-      </ivariable>
-      <ivariable label="Address Range 2" CVname="513.128" CV="513" PI="128" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.128" upperMask="XXXXXVVV"/>
-      </ivariable>
-      <ivariable label="Turnout Address 1st output (1-2041)" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-3"/>
-      </ivariable>
-      <ivariable label="Turnout Address 2nd output" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-2"/>
-      </ivariable>
-      <ivariable label="Turnout Address 3rd output" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-1"/>
-      </ivariable>
-      <ivariable label="Turnout Address 4th output" CVname="513.0" CV="513" PI="0" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.0" upperMask="XXXXXVVV" factor="4" offset="-0"/>
-      </ivariable>
-      <ivariable label="Turnout Address 5th output (1-2041)" CVname="513.128" CV="513" PI="128" default="1" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-3"/>
-      </ivariable>
-      <ivariable label="Turnout Address 6th output" CVname="513.128" CV="513" PI="128" default="2" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-2"/>
-      </ivariable>
-      <ivariable label="Turnout Address 7th output" CVname="513.128" CV="513" PI="128" default="2" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-1"/>
-      </ivariable>
-      <ivariable label="Turnout Address 8th output" CVname="513.128" CV="513" PI="128" default="2" mask="XXVVVVVV">
-        <indexedPairVal highCVname="521.128" upperMask="XXXXXVVV" factor="4" offset="-0"/>
-      </ivariable>
+      <variable label="Address Range 1" CV="513.0" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.0" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Address Range 2" CV="513.128" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.128" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 1st output (1-2041)" CV="513.0" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.0" factor="4" offset="-3" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 2nd output" CV="513.0" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.0" factor="4" offset="-2" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 3rd output" CV="513.0" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.0" factor="4" offset="-1" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 4th output" CV="513.0" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.0" factor="4" offset="-0" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 5th output (1-2041)" CV="513.128" mask="XXVVVVVV" default="1">
+        <splitVal highCV="521.128" factor="4" offset="-3" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 6th output" CV="513.128" mask="XXVVVVVV" default="2">
+        <splitVal highCV="521.128" factor="4" offset="-2" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 7th output" CV="513.128" mask="XXVVVVVV" default="2">
+        <splitVal highCV="521.128" factor="4" offset="-1" upperMask="XXXXXVVV"/>
+      </variable>
+      <variable label="Turnout Address 8th output" CV="513.128" mask="XXVVVVVV" default="2">
+        <splitVal highCV="521.128" factor="4" offset="-0" upperMask="XXXXXVVV"/>
+      </variable>
     </variables>
   </decoder>
   <!--
@@ -726,26 +734,6 @@
           <label>
             <text> </text>
           </label>
-        </column>
-      </row>
-    </column>
-  </pane>
-  <pane>
-    <name>Indexed CVs</name>
-    <column>
-      <row>
-        <column>
-          <label>
-            <text>JMRI 2.8 or later is required to use this definition</text>
-          </label>
-          <label>
-            <text> </text>
-          </label>
-        </column>
-      </row>
-      <row>
-        <column>
-          <indxcvtable/>
         </column>
       </row>
     </column>

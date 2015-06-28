@@ -24,16 +24,16 @@
   <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV35-54_Fn.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/tcs/2_CV59-60_Fn.xml"/>
-  <ivariable CV="61" mask="XXXVXXXX" item="Directional Headlights">
-    <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NotusedEnabled.xml"/>
+  <variable CV="61" mask="XXXVXXXX" item="Directional Headlights">
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-NotusedEnabled.xml"/>
     <label>Headlight Dim When Stopped</label>
     <label xml:lang="it">Luci frontali smorzate quando fermo</label>
-  </ivariable>
-  <ivariable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/ienum-NotusedEnabled.xml"/>
+  </variable>
+  <variable CV="61" mask="XXVXXXXX" item="Global lighting option 1">
+   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NotusedEnabled.xml"/>
     <label>Opposite Headlight Dim</label>
     <label xml:lang="it">Smorzamento Luci Opposte</label>
-  </ivariable>
+  </variable>
   <variable CV="62" default="60" item="Function 2 effect generated" tooltip="1 second = 60 to 4 seconds = 255">
     <decVal/>
     <label>Momentary Pulse</label>

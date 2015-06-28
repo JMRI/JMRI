@@ -5,7 +5,7 @@
 
 <!-- $Id$ -->
 
-<!-- This schema is part of JMRI. Copyright 2009, 2010.                     -->
+<!-- This schema is part of JMRI. Copyright 2009, 2010, 2015                -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -44,6 +44,12 @@
     <xs:annotation>
       <xs:documentation>
       Defines the JMRI decoder definition files.
+      
+      This version is for use with JMRI 4.1.1 and later, in which
+      support for the "ivariable" element and contained elements
+      have been deprecated.  Those will not validate with this
+      schema.
+      
       </xs:documentation>
       <xs:appinfo>
         <jmri:usingclass configurexml="false">jmri.jmrit.decoderdefn.DecoderFile</jmri:usingclass>
@@ -255,15 +261,6 @@
     <xs:annotation>
       <xs:documentation>
       Provides a base element that can be used in "enumVal" fragment files, those
-      little files that are XIncluded into primary decoder files.
-      </xs:documentation>
-    </xs:annotation>
-  </xs:element>
-
-  <xs:element name="ienumVal" type="IEnumValType" >
-    <xs:annotation>
-      <xs:documentation>
-      Provides a base element that can be used in "ienumVal" fragment files, those
       little files that are XIncluded into primary decoder files.
       </xs:documentation>
     </xs:annotation>
@@ -705,78 +702,6 @@
             </xs:complexType>
           </xs:element>
       
-          <xs:element name="ivariable" minOccurs="0" maxOccurs="unbounded" >
-            <xs:complexType>
-              <xs:sequence minOccurs="0" maxOccurs="1">
-                  <xs:choice>
-                    <xs:element name="ienumVal" type="IEnumValType" >
-                    </xs:element>
-                    <xs:element name="indexedVal" >
-                      <xs:complexType>
-                        <xs:attribute name="min" type="xs:string"/>
-                        <xs:attribute name="max" type="xs:string"/>
-                        <xs:attribute name="comment" type="xs:string"/>
-                      </xs:complexType>
-                    </xs:element>
-                    <xs:element name="indexedPairVal" >
-                      <xs:complexType>
-                        <xs:attribute name="highCVname" type="xs:string"/>
-                        <xs:attribute name="min" type="xs:string"/>
-                        <xs:attribute name="max" type="xs:string"/>
-                        <xs:attribute name="default" type="xs:string"/>
-                        <xs:attribute name="factor" type="xs:string"/>
-                        <xs:attribute name="offset" type="xs:string"/>
-                        <xs:attribute name="comment" type="xs:string"/>
-                        <xs:attribute name="upperMask" type="maskType" default="VVVVVVVV" />
-                        <xs:attribute name="order" default="lowFirst">
-                          <xs:annotation><xs:documentation>Controls whether high CV or low CV written first</xs:documentation></xs:annotation>
-                          <xs:simpleType>
-                            <xs:restriction base="xs:string">
-                              <xs:enumeration value="lowFirst"/>
-                              <xs:enumeration value="highFirst"/>
-                            </xs:restriction>
-                          </xs:simpleType>
-                        </xs:attribute>    
-                      </xs:complexType>
-                    </xs:element>
-                  </xs:choice>
-                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                  </xs:element>
-                  <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
-                  </xs:element>
-                  <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
-                    <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
-                  </xs:element>
-                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
-                    <xs:annotation><xs:documentation>
-                    Qualifies whether this variable will appear in the interface, depending
-                    on the value in other variables.
-                    </xs:documentation></xs:annotation>
-                  </xs:element>
-              </xs:sequence>
-              <xs:attribute name="label" type="xs:string"/>
-              <xs:attribute name="CVname" type="cvNameType"/>
-              <xs:attribute name="CV" type="xs:int"/>
-              <xs:attribute name="PI" type="xs:int"/>
-              <xs:attribute name="SI" type="xs:int"/>
-              <xs:attribute name="mask" type="maskType" default="VVVVVVVV" />
-              <xs:attribute name="readOnly" type="yesNoType"/>
-              <xs:attribute name="infoOnly" type="yesNoType"/>
-              <xs:attribute name="opsOnly" type="yesNoType"/>
-              <xs:attribute name="writeOnly" type="yesNoType"/>
-              <xs:attribute name="default" type="xs:int"/>
-              <xs:attribute name="comment" type="xs:string"/>
-              <xs:attribute name="item" type="xs:string"/>
-              <xs:attribute name="minFn" type="xs:int"/>
-              <xs:attribute name="minOut" type="xs:int"/>
-              <xs:attribute name="inOptions" type="xs:string"/>
-              <xs:attribute name="tooltip" type="xs:string"/>
-              <xs:attribute name="include" type="xs:string"/>
-              <xs:attribute name="exclude" type="xs:string"/>
-            </xs:complexType>
-          </xs:element>
           <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:sequence>

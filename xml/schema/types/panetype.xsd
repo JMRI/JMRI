@@ -164,7 +164,6 @@
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   
@@ -187,7 +186,6 @@
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
   </xs:complexType>
   
@@ -210,7 +208,6 @@
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="include" type="xs:string" default=""/>
     <xs:attribute name="exclude" type="xs:string" default=""/>
@@ -241,7 +238,6 @@
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="include" type="xs:string" default=""/>
     <xs:attribute name="exclude" type="xs:string" default=""/>
@@ -305,7 +301,6 @@
       <xs:element name="dccaddress" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="fnmapping" minOccurs="0" maxOccurs="unbounded" />
       <xs:element name="cvtable" minOccurs="0" maxOccurs="unbounded" />
-      <xs:element name="indxcvtable" minOccurs="0" maxOccurs="unbounded" />
     </xs:sequence>
     <xs:attribute name="gridx" type="xs:string" />
     <xs:attribute name="gridy" type="xs:string" />
