@@ -851,6 +851,7 @@
             <xs:annotation><xs:documentation>Deprecated in favor of the choice sub-element</xs:documentation></xs:annotation>
           </xs:attribute>
           <xs:attribute name="value" type="xs:int" />
+          <xs:attribute name="include" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
   </xs:complexType>
 
