@@ -103,10 +103,10 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
 
         add(pRow2);
         add(pLocation);
-        add(textTrainComment);
-        add(textTrainRouteComment); // train route comment
-        add(textTrainRouteLocationComment); // train route location comment
-        add(textLocationComment);
+        add(textTrainCommentPane);
+        add(textTrainRouteCommentPane); // train route comment
+        add(textTrainRouteLocationCommentPane); // train route location comment
+        add(textLocationCommentPane);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -120,15 +120,15 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
             textTrainDescription.setText(_train.getDescription());
             // show train comment box only if there's a comment
             if (_train.getComment().equals(Train.NONE)) {
-                textTrainComment.setVisible(false);
+                textTrainCommentPane.setVisible(false);
             } else {
-                textTrainComment.setText(_train.getComment());
+                textTrainCommentPane.setText(_train.getComment());
             }
             // show route comment box only if there's a route comment
             if (_train.getRoute() != null) {
-                textTrainRouteComment.setVisible(!_train.getRoute().getComment().equals(Route.NONE)
+                textTrainRouteCommentPane.setVisible(!_train.getRoute().getComment().equals(Route.NONE)
                         && Setup.isPrintRouteCommentsEnabled());
-                textTrainRouteComment.setText(_train.getRoute().getComment());
+                textTrainRouteCommentPane.setText(_train.getRoute().getComment());
             }
 
             // Does this train have a unique railroad name?
@@ -175,15 +175,15 @@ public class TrainConductorPanel extends CommonConductorYardmasterPanel {
                     textTrainName.setText(_train.getIconName());
                     RouteLocation rl = _train.getCurrentLocation();
                     if (rl != null) {
-                        textTrainRouteLocationComment.setVisible(!rl.getComment().equals(RouteLocation.NONE));
-                        textTrainRouteLocationComment.setText(rl.getComment());
+                        textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE));
+                        textTrainRouteLocationCommentPane.setText(rl.getComment());
                         textLocationName.setText(rl.getLocation().getName());
                         pTrainDepartureTime.setVisible(_train.isShowArrivalAndDepartureTimesEnabled()
                                 && !rl.getDepartureTime().equals(RouteLocation.NONE));
                         textTrainDepartureTime.setText(rl.getFormatedDepartureTime());
-                        textLocationComment.setVisible(!rl.getLocation().getComment().equals(Location.NONE)
+                        textLocationCommentPane.setVisible(!rl.getLocation().getComment().equals(Location.NONE)
                                 && Setup.isPrintLocationCommentsEnabled());
-                        textLocationComment.setText(rl.getLocation().getComment());
+                        textLocationCommentPane.setText(rl.getLocation().getComment());
                         textNextLocationName.setText(_train.getNextLocationName());
 
                         // check for locos

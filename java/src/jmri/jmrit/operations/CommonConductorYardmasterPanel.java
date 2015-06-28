@@ -81,10 +81,10 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
     protected JButton moveButton = new JButton(Bundle.getMessage("Move"));
 
     // text panes
-    protected JTextPane textLocationComment = new JTextPane();
-    protected JTextPane textTrainComment = new JTextPane();
-    protected JTextPane textTrainRouteComment = new JTextPane();
-    protected JTextPane textTrainRouteLocationComment = new JTextPane();
+    protected JTextPane textLocationCommentPane = new JTextPane();
+    protected JTextPane textTrainCommentPane = new JTextPane();
+    protected JTextPane textTrainRouteCommentPane = new JTextPane();
+    protected JTextPane textTrainRouteLocationCommentPane = new JTextPane();
 
     // panels
     protected JPanel pRailRoadName = new JPanel();
@@ -148,33 +148,33 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         pLocationName.add(textLocationName);
 
         // location comment
-        textLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
-        textLocationComment.setBackground(null);
-        textLocationComment.setEditable(false);
-        textLocationComment.setMaximumSize(new Dimension(2000, 200));
+        textLocationCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("LocationComment")));
+        textLocationCommentPane.setBackground(null);
+        textLocationCommentPane.setEditable(false);
+        textLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // train description
         pTrainDescription.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Description")));
         pTrainDescription.add(textTrainDescription);
 
         // train comment
-        textTrainComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
-        textTrainComment.setBackground(null);
-        textTrainComment.setEditable(false);
-        textTrainComment.setMaximumSize(new Dimension(2000, 200));
+        textTrainCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TrainComment")));
+        textTrainCommentPane.setBackground(null);
+        textTrainCommentPane.setEditable(false);
+        textTrainCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // train route comment
-        textTrainRouteComment.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
-        textTrainRouteComment.setBackground(null);
-        textTrainRouteComment.setEditable(false);
-        textTrainRouteComment.setMaximumSize(new Dimension(2000, 200));
+        textTrainRouteCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("RouteComment")));
+        textTrainRouteCommentPane.setBackground(null);
+        textTrainRouteCommentPane.setEditable(false);
+        textTrainRouteCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // train route location comment
-        textTrainRouteLocationComment.setBorder(BorderFactory.createTitledBorder(Bundle
+        textTrainRouteLocationCommentPane.setBorder(BorderFactory.createTitledBorder(Bundle
                 .getMessage("RouteLocationComment")));
-        textTrainRouteLocationComment.setBackground(null);
-        textTrainRouteLocationComment.setEditable(false);
-        textTrainRouteLocationComment.setMaximumSize(new Dimension(2000, 200));
+        textTrainRouteLocationCommentPane.setBackground(null);
+        textTrainRouteLocationCommentPane.setEditable(false);
+        textTrainRouteLocationCommentPane.setMaximumSize(new Dimension(2000, 200));
 
         // row 12
         if ((getPreferredSize().width > Control.panelWidth1025 && Setup.isTabEnabled())
@@ -243,7 +243,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
         pSetoutLocos.setVisible(false);
         movePane.setVisible(false);
 
-        textTrainRouteLocationComment.setVisible(false);
+        textTrainRouteLocationCommentPane.setVisible(false);
 
         setButtonText();
     }

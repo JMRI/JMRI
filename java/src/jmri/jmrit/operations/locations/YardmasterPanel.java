@@ -100,11 +100,11 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         add(pRow2);
         add(pRow6);
-        add(textLocationComment);
+        add(textLocationCommentPane);
         add(textSwitchListComment);
-        add(textTrainComment);
-        add(textTrainRouteComment);
-        add(textTrainRouteLocationComment);
+        add(textTrainCommentPane);
+        add(textTrainRouteCommentPane);
+        add(textTrainRouteLocationCommentPane);
         add(locoPane);
         add(pWorkPanes);
         add(movePane);
@@ -113,8 +113,8 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
 
         if (_location != null) {
             textLocationName.setText(_location.getName());
-            textLocationComment.setText(_location.getComment());
-            textLocationComment.setVisible(!_location.getComment().equals(Location.NONE)
+            textLocationCommentPane.setText(_location.getComment());
+            textLocationCommentPane.setVisible(!_location.getComment().equals(Location.NONE)
                     && Setup.isPrintLocationCommentsEnabled());
             textSwitchListComment.setText(_location.getSwitchListComment());
             textSwitchListComment.setVisible(!_location.getSwitchListComment().equals(Location.NONE));
@@ -209,9 +209,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                 pButtons.setVisible(false);
                 pTrainVisit.setVisible(false);
                 trainVisitComboBox.setVisible(false); // Use visible as a flag to ignore updates
-                textTrainComment.setVisible(false);
-                textTrainRouteComment.setVisible(false);
-                textTrainRouteLocationComment.setVisible(false);
+                textTrainCommentPane.setVisible(false);
+                textTrainRouteCommentPane.setVisible(false);
+                textTrainRouteLocationCommentPane.setVisible(false);
 
                 textTrainDescription.setText("");
                 textStatus.setText("");
@@ -221,11 +221,11 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                     pButtons.setVisible(true);
                     textTrainDescription.setText(_train.getDescription());
                     // show train comment box only if there's a comment
-                    textTrainComment.setVisible(!_train.getComment().equals(Train.NONE));
-                    textTrainComment.setText(_train.getComment());
+                    textTrainCommentPane.setVisible(!_train.getComment().equals(Train.NONE));
+                    textTrainCommentPane.setText(_train.getComment());
                     // show route comment box only if there's a route comment
-                    textTrainRouteComment.setVisible(!route.getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
-                    textTrainRouteComment.setText(route.getComment());
+                    textTrainRouteCommentPane.setVisible(!route.getComment().equals(Route.NONE) && Setup.isPrintRouteCommentsEnabled());
+                    textTrainRouteCommentPane.setText(route.getComment());
                     // Does this train have a unique railroad name?
                     if (!_train.getRailroadName().equals(Train.NONE)) {
                         textRailRoadName.setText(_train.getRailroadName());
@@ -260,9 +260,9 @@ public class YardmasterPanel extends CommonConductorYardmasterPanel {
                         }
 
                         // update comment and location name
-                        textTrainRouteLocationComment.setVisible(!rl.getComment().equals(RouteLocation.NONE)
+                        textTrainRouteLocationCommentPane.setVisible(!rl.getComment().equals(RouteLocation.NONE)
                                 && Setup.isSwitchListRouteLocationCommentEnabled());
-                        textTrainRouteLocationComment.setText(rl.getComment());
+                        textTrainRouteLocationCommentPane.setText(rl.getComment());
                         textLocationName.setText(rl.getLocation().getName()); // show name including hyphen and number
 
                         // check for locos
