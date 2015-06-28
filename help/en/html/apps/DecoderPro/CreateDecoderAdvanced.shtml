@@ -312,7 +312,7 @@ in the service mode (programming track).
 
 <h4>Indexed CV Access</h4>
 
-To access indexed CVs via regular variables (not iVariables), include this capability element:
+To access indexed CVs, include this capability element:
 <code><pre>
         &lt;capability&gt;
             &lt;name&gt;Indexed CV access&lt;/name&gt;
