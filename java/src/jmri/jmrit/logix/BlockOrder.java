@@ -152,7 +152,7 @@ public class BlockOrder {
         return null;
     }
 
-    protected long getEntranceSpace() {
+    protected float getEntranceSpace() {
         Portal portal = _block.getPortalByName(getEntryName());
         if (portal != null) {
             return portal.getEntranceSpaceForBlock(_block);

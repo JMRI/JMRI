@@ -89,35 +89,43 @@ At the bottom of the NXWarrant window are the following items.
 <ul>
 	<li><b>Max number of blocks in route</b> Maximum number of blocks the route algorithm should go 
 		before stopping.</li>
-	<li>Radio buttons <b>Run Auto</b> for an automated warrant. and <b>Run Manual</b> to dispatch a 
-		route for a manual operator</li>
 	<li><b>Max Throttle Setting</b> - Throttle setting for the top speed the warrant will reach.</li>
-	<li><b>Min Throttle Setting</b> - Throttle setting for the first speed step when starting.
+	<li><b>Ramp Step Interval Time</b> - Throttle setting for the first speed step when starting.
 		(Default from Preferences Warrant panel, but can be modified for this NXWarrant only.)
-	<ul>
-		The above labels depend upon the Speed Name interpretation at <i>Edit->Preferences->Warrants<i>
-		and could be, for example, Max Mph and Min Mph.
-	</ul></li> 
-	<li><b>Address</b> - The decoder address of the locomotive of the train.  This is a required field.</li>
+	<li><b>Ramp Step Throttle Increment</b> - Throttle setting for the first speed step when starting
+		and each speed step until the Max Throttle Setting is reached.
+		(Default from Preferences Warrant panel, but can be modified for this NXWarrant only.)</li>
+	</ul><ul>
+		The above labels for the throttle settings depend upon the Speed Name interpretation at 
+		<i>Edit->Preferences->Warrants<i> and could be, for example, <b>Max Scale speed Mph</b> and 
+		<b>Ramp Speed Increment Mph</b>.
+	</ul><ul> 
 	<li><b>Train Name</b> - Indicator Track icons set to display train names will show this name when the train
-	occupies the OBlock the icon represents.  If left blank, the locomotive address is displayed.
-	<ul>
+		occupies the OBlock the icon represents.  If left blank, the locomotive address is displayed.
+	<li><b>Engine Roster</b> - Pick a train from the Roster from this drop down combo box.  The locomotive 
+		address and train id will be displayed.
+	<li><b>Address</b> - The decoder address of the locomotive of the train.  This is a required field.</li>
+	</ul><ul>
 		Note, when editing a Indicator Track Icon (<i>Edit Indicator Track</i> popup.)there is a 
 		<b>Display Train Name when occupied</b> check box in the edit dialog.
-	</ul></li>
-	<li>Radio buttons <b>Forward/b> and <b>Reverse</b> Sets the direction of the locomotive.  <i><b>Important to set
-		this correctly.</i></b></li> 
+	</ul><ul>
+	<li>Radio buttons <b>Forward</b> and <b>Reverse</b> Set the direction of the locomotive.
+	</ul><ul>  
+		<i><b>It is important to set this correctly.</i></b></li>
+	</ul><ul>	 
 	<li>Checkbox <b>EStop at Destination Block</b> Emergency stop the train upon entering the last block. 
 		<i>Rarely Needed.</i></li>
 	<li>Checkbox <b>Halt Start at Origin Block</b> Allocate and set the warrant, but don't start the train 
 		until the user issues a <b>Resume</b> command to the warrant from the Warrant List Table or via a 
 		Logix Warrant Control action.</li>
-	<li><b>Time between ramp speed changes</b> Elapsed time in seconds between each incremental throttle 
-		speed command when ramping up to max speed at the start or down to stop at the end of the warrant.
-		(Default from Preferences Warrant panel, but can be modified for this NXWarrant only.)</li>
-	<li><b>Factor Calibrating Throttle to track Speed</b> The factor that modifies the throttle settings for 
-		the Engine addressed above to be scale track speed.
-		Default from Preferences Warrant panel, but <b>should be modified</b> for this NXWarrant.</li>
+	<li>Checkbox <b>Compute Throttle Factor</b> Calculate a Speed Profile throttle factor during this
+		NXWarrant run.</li>
+	</ul><ul>
+		A Via Location must be specified before running the warrant.   See the section below for details. 
+	</ul><ul>
+	<li>Buttons <b>Run NX Warrant</b> and <b>Cancel</b> 		
+	<li>Radio buttons <b>Run Auto</b> for an automated warrant. and <b>Run Manual</b> to dispatch a 
+		route for a manual operator</li>
 </ul>
 <p>
 <H3>Running the Warrant</H3>
@@ -127,15 +135,18 @@ speeds and direction. If more
 than one route meets the criterion, you are presented with a list to review and select the 
 route you want.  The Via and Avoid location fields may be used to restrict the list.
 </p><p>
-The window also has a <b>Calibrate</b> button.  When this button is pressed before the "Run NX Warrant"
-button, running the warrant will compute the throttle/Speed <b>Factor</b>.  The "Via" block 
+<H3>Calculate a Speed Profile Throttle Factor</H3>
+When the <b>Compute Throttle Factor</b> checkbox is selected
+running the warrant will compute  Speed Profile throttle factor.  The "Via" block 
 is used as a speed trap to determine the track speed and compare it to the throttle setting. When the
 Via block is crossed the warrant will report the speed and Throttle Factor.
-The Factor should then be used in any warrant where this engine address is used.
+The Factor can then be saved into the Speed Profile to be used in any warrant where this engine address is used.
 <p>
 Choose a Via block of accurate length, reasonably long, where the train can fully reach the maximum speed set
-and exit the block before ramping down.  The factors calculated for the mid and high ranges of speed ought to
-be relatively constant.  If not, perhaps modifying the decoder's speed curve will give a constant factor.
+and exit the block before ramping down.  Generally the factors calculated for the mid and high ranges of speed
+are relatively constant.  Typically, the factors diverge at slow speeds.  For a given throttle setting, Speed Profile
+factors can vary due to temperature changes, consist load and other conditions.  Getting reproducible factors 
+from day to day within 10 to 15 percent is satisfactory.
 <p>
 <H3>Saving NXWarrants to make them Permanently Saved</H3>
 If you press the <b>Edit</b> button on the Warrant List Table of the NXwarrant while it is still executing, the

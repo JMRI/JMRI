@@ -28,19 +28,15 @@ import org.slf4j.LoggerFactory;
  */
 public class Portal extends jmri.implementation.AbstractNamedBean {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2045960605389125651L;
     private ArrayList<OPath> _fromPaths = new ArrayList<OPath>();
     private OBlock _fromBlock;
     private NamedBean _fromSignal;          // may be either SignalHead or SignalMast
-    private long _fromSignalDelay;
+    private float _fromSignalOffset;           // adjustment distance for speed change
     private ArrayList<OPath> _toPaths = new ArrayList<OPath>();
     private OBlock _toBlock;
-    private NamedBean _toSignal;          // may be either SignalHead or SignalMast
-    private long _toSignalDelay;
-    //private String      _portalName;
+    private NamedBean _toSignal;            // may be either SignalHead or SignalMast
+    private float _toSignalOffset;             // adjustment distance for speed change
     private int _state = UNKNOWN;
 
     //public static final int UNKNOWN      = 0x01;
@@ -52,16 +48,6 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         super(sName, uName);
     }
 
-    /*    public Portal(OBlock fromBlock, String portalName, OBlock toBlock) {
-     super(portalName, portalName);
-     _fromBlock = fromBlock;
-     //       _portalName = portalName;
-     _toBlock = toBlock;
-     if (_fromBlock!=null) _fromBlock.addPortal(this);
-     if (_toBlock!=null) _toBlock.addPortal(this);
-     //if (log.isDebugEnabled()) log.debug("Ctor: name= "+_portalName+", fromBlock= "+
-     //           getFromBlockName()+", toBlock= "+getToBlockName()); 
-     }*/
     /**
      * Determine which list the Path belongs to and add it to the list
      *
@@ -255,19 +241,19 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return _fromPaths;
     }
 
-    public boolean setProtectSignal(NamedBean signal, long time, OBlock protectedBlock) {
+    public boolean setProtectSignal(NamedBean signal, float length, OBlock protectedBlock) {
         if (protectedBlock == null) {
             return false;
         }
         if (_fromBlock.equals(protectedBlock)) {
             _toSignal = signal;
-            _toSignalDelay = time;
+            _toSignalOffset = length;
             return true;
             //log.debug("setSignal: _toSignal= \""+name+", protectedBlock= "+protectedBlock);
         }
         if (_toBlock.equals(protectedBlock)) {
             _fromSignal = signal;
-            _fromSignalDelay = time;
+            _fromSignalOffset = length;
             return true;
             //log.debug("setSignal: _fromSignal= \""+name+", protectedBlock= "+protectedBlock);
         }
@@ -282,8 +268,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return (_fromSignal != null ? _fromSignal.getDisplayName() : null);
     }
 
-    public long getFromSignalDelay() {
-        return _fromSignalDelay;
+    public float getFromSignalOffset() {
+        return _fromSignalOffset;
     }
 
     public NamedBean getToSignal() {
@@ -294,8 +280,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return (_toSignal != null ? _toSignal.getDisplayName() : null);
     }
 
-    public long getToSignalDelay() {
-        return _toSignalDelay;
+    public float getToSignalOffset() {
+        return _toSignalOffset;
     }
 
     public void deleteSignal(NamedBean signal) {
@@ -441,14 +427,17 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         return speed;
     }
 
-    public long getEntranceSpaceForBlock(OBlock block) {
+    /*
+     * +/- distance in millimeters for speed change point of signal
+     */
+    public float getEntranceSpaceForBlock(OBlock block) {
         if (block.equals(_toBlock)) {
             if (_fromSignal != null) {
-                return _fromSignalDelay;
+                return _fromSignalOffset;
             }
         } else if (block.equals(_fromBlock)) {
             if (_toSignal != null) {
-                return _toSignalDelay;
+                return _toSignalOffset;
             }
         }
         return 0;
@@ -556,9 +545,8 @@ public class Portal extends jmri.implementation.AbstractNamedBean {
         if (block == null) {
             if (paths.size() == 0) {
                 return true;
-            } else {
-                return false;
             }
+            return false;
         }
         String name = block.getSystemName();
         for (int i = 0; i < paths.size(); i++) {

@@ -419,8 +419,8 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleBlockTable"), true, false, false, true);
         _oBlockModel = new OBlockTableModel(this);
         _oBlockTable = new DnDJTable(_oBlockModel, new int[]{OBlockTableModel.EDIT_COL,
-            OBlockTableModel.DELETE_COL,
-            OBlockTableModel.UNITSCOL});
+            OBlockTableModel.DELETE_COL, OBlockTableModel.REPORT_CURRENTCOL,
+            OBlockTableModel.PERMISSIONCOL, OBlockTableModel.UNITSCOL});
 
         try {   // following might fail due to a missing method on Mac Classic
             TableSorter sorter = new TableSorter(_oBlockTable.getModel());
@@ -503,7 +503,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
             int row = _oBlockTable.rowAtPoint(p);
             String stateStr = (String) _oBlockModel.getValueAt(row, col);
             int state = Integer.parseInt(stateStr, 2);
-            stateStr = _oBlockModel.getValue(state);
+            stateStr = OBlockTableModel.getValue(state);
             JPopupMenu popupMenu = new JPopupMenu();
             popupMenu.add(new JMenuItem(stateStr));
             popupMenu.show(_oBlockTable, me.getX(), me.getY());
@@ -594,7 +594,7 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         JInternalFrame frame = new JInternalFrame(Bundle.getMessage("TitleSignalTable"), true, false, false, true);
         _signalModel = new SignalTableModel(this);
         _signalModel.init();
-        _signalTable = new DnDJTable(_signalModel, new int[]{SignalTableModel.DELETE_COL});
+        _signalTable = new DnDJTable(_signalModel, new int[]{SignalTableModel.UNITSCOL, SignalTableModel.DELETE_COL});
         try {   // following might fail due to a missing method on Mac Classic
             TableSorter sorter = new TableSorter(_signalTable.getModel());
             sorter.setTableHeader(_signalTable.getTableHeader());
@@ -603,10 +603,12 @@ public class TableFrames extends jmri.util.JmriJFrame implements InternalFrameLi
         } catch (Throwable e) { // NoSuchMethodError, NoClassDefFoundError and others on early JVMs
             log.error("makeSignalFrame: Unexpected error: " + e);
         }
+        _signalTable.getColumnModel().getColumn(SignalTableModel.UNITSCOL).setCellRenderer(
+                new MyBooleanRenderer(Bundle.getMessage("cm"), Bundle.getMessage("in")));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellEditor(new ButtonEditor(new JButton()));
         _signalTable.getColumnModel().getColumn(SignalTableModel.DELETE_COL).setCellRenderer(new ButtonRenderer());
         for (int i = 0; i < _signalModel.getColumnCount(); i++) {
-            int width = _signalModel.getPreferredWidth(i);
+            int width = SignalTableModel.getPreferredWidth(i);
             _signalTable.getColumnModel().getColumn(i).setPreferredWidth(width);
         }
         _signalTable.sizeColumnsToFit(-1);
