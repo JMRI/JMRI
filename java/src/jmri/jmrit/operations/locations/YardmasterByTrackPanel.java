@@ -174,223 +174,235 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
     }
 
     private void update() {
-        log.debug("queue update");
         // use invokeLater to prevent deadlock
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                log.debug("update, setMode: {}", isSetMode);
-                trainCommon.clearUtilityCarTypes(); // reset the utility car counts
-                carCheckBoxes.clear();
-                pTrack.removeAll();
-                boolean pickup = false;
-                boolean setout = false;
-                if (_track != null) {
-                    pTrackPane.setBorder(BorderFactory.createTitledBorder(_track.getName()));
-                    textTrackCommentPane.setText(_track.getComment());
-                    textTrackCommentPane.setVisible(!_track.getComment().equals(Track.NONE));
-                    textTrackCommentWorkPane.setText("");
-                    for (Train train : trainManager.getTrainsByNameList()) {
-                        if (!train.isBuilt() || train.getRoute() == null)
-                            continue;
-                        JPanel pTrain = new JPanel();
-                        pTrain.setLayout(new BoxLayout(pTrain, BoxLayout.Y_AXIS));
-                        pTrain.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(TrainSwitchListText
-                                .getStringScheduledWork(), new Object[]{train.getName(), train.getDescription()})));
-                        // List locos first
-                        List<Engine> engList = engManager.getByTrainBlockingList(train);
-                        if (Setup.isPrintHeadersEnabled()) {
-                            for (Engine engine : engList) {
-                                if (engine.getTrack() == _track) {
-                                    JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
-                                    setLabelFont(header);
-                                    pTrain.add(header);
-                                    break;
-                                }
-                            }
-                        }
-                        for (Engine engine : engList) {
-                            if (engine.getTrack() == _track) {
-                                JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
-                                setCheckBoxFont(checkBox);
-                                pTrain.add(checkBox);
-                                carCheckBoxes.put(engine.getId(), checkBox);
-                                pTrack.add(pTrain);
-                            }
-                        }
-                        if (Setup.isPrintHeadersEnabled()) {
-                            for (Engine engine : engList) {
-                                if (engine.getDestinationTrack() == _track) {
-                                    JLabel header = new JLabel(Tab + trainCommon.getDropEngineHeader());
-                                    setLabelFont(header);
-                                    pTrain.add(header);
-                                    break;
-                                }
-                            }
-                        }
-                        for (Engine engine : engList) {
-                            if (engine.getDestinationTrack() == _track) {
-                                JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
-                                setCheckBoxFont(checkBox);
-                                pTrain.add(checkBox);
-                                carCheckBoxes.put(engine.getId(), checkBox);
-                                pTrack.add(pTrain);
-                            }
-                        }
-                        List<Car> carList = carManager.getByTrainDestinationList(train);
-                        if (Setup.isPrintHeadersEnabled()) {
-                            for (Car car : carList) {
-                                if (car.getTrack() == _track && car.getRouteDestination() != car.getRouteLocation()) {
-                                    JLabel header = new JLabel(Tab +
-                                            trainCommon.getPickupCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
-                                    setLabelFont(header);
-                                    pTrain.add(header);
-                                    break;
-                                }
-                            }
-                        }
-                        // sort car pick ups by their destination
-                        List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
-                        for (RouteLocation rl : routeList) {
-                            for (Car car : carList) {
-                                if (car.getTrack() == _track &&
-                                        car.getRouteDestination() != car.getRouteLocation() &&
-                                        car.getRouteDestination() == rl) {
-                                    String text;
-                                    if (car.isUtility()) {
-                                        text = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
-                                        if (text == null) {
-                                            continue; // this car type has already been processed
-                                        }
-                                    } else {
-                                        text = trainCommon.pickupCar(car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
-                                    }
-                                    pickup = true;
-                                    JCheckBox checkBox = new JCheckBox(text);
-                                    setCheckBoxFont(checkBox);
-                                    pTrain.add(checkBox);
-                                    carCheckBoxes.put(car.getId(), checkBox);
-                                    pTrack.add(pTrain);
-                                }
-                            }
-                        }
-                        // now do car set outs
-                        if (Setup.isPrintHeadersEnabled()) {
-                            for (Car car : carList) {
-                                if (car.getDestinationTrack() == _track &&
-                                        car.getRouteDestination() != car.getRouteLocation()) {
-                                    JLabel header = new JLabel(Tab +
-                                            trainCommon.getDropCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
-                                    setLabelFont(header);
-                                    pTrain.add(header);
-                                    break;
-                                }
-                            }
-                        }
-                        for (Car car : carList) {
-                            if (car.getDestinationTrack() == _track &&
-                                    car.getRouteLocation() != car.getRouteDestination()) {
-                                String text;
-                                if (car.isUtility()) {
-                                    text = trainCommon.setoutUtilityCars(carList, car, !TrainCommon.LOCAL, !IS_MANIFEST);
-                                    if (text == null) {
-                                        continue; // this car type has already been processed
-                                    }
-                                } else {
-                                    text = trainCommon.dropCar(car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
-                                }
-                                setout = true;
-                                JCheckBox checkBox = new JCheckBox(text);
-                                setCheckBoxFont(checkBox);
-                                pTrain.add(checkBox);
-                                carCheckBoxes.put(car.getId(), checkBox);
-                                pTrack.add(pTrain);
-                            }
-                        }
-                        // now do local car moves
-                        if (Setup.isPrintHeadersEnabled()) {
-                            for (Car car : carList) {
-                                if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
-                                        car.getRouteDestination() == car.getRouteLocation()) {
-                                    JLabel header = new JLabel(Tab + trainCommon.getLocalMoveHeader(!IS_MANIFEST));
-                                    setLabelFont(header);
-                                    pTrain.add(header);
-                                    break;
-                                }
-                            }
-                        }
-                        for (Car car : carList) {
-                            if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
-                                    car.getRouteLocation() == car.getRouteDestination()) {
-                                String text;
-                                if (car.isUtility()) {
-                                    text = trainCommon.setoutUtilityCars(carList, car, TrainCommon.LOCAL, !IS_MANIFEST);
-                                    if (text == null) {
-                                        continue; // this car type has already been processed
-                                    }
-                                } else {
-                                    text = trainCommon.localMoveCar(car, !IS_MANIFEST);
-                                }
-                                setout = true;
-                                JCheckBox checkBox = new JCheckBox(text);
-                                setCheckBoxFont(checkBox);
-                                pTrain.add(checkBox);
-                                carCheckBoxes.put(car.getId(), checkBox);
-                                pTrack.add(pTrain);
-                            }
-                        }
-                    }
-                    // now do car holds
-                    // we only need the cars on this track
-                    List<RollingStock> rsList = carManager.getByTrainList();
-                    List<Car> carList = new ArrayList<Car>();
-                    for (RollingStock rs : rsList) {
-                        if (rs.getTrack() != _track || rs.getRouteLocation() != null)
-                            continue;
-                        carList.add((Car) rs);
-                    }
-                    JPanel pHoldCars = new JPanel();
-                    pHoldCars.setLayout(new BoxLayout(pHoldCars, BoxLayout.Y_AXIS));
-                    pHoldCars.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("HoldCars")));
-                    for (Car car : carList) {
-                        String text;
-                        if (car.isUtility()) {
-                            String s = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
-                            if (s == null)
-                                continue;
-                            text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                                    new Object[]{s.trim(), "", "", "", "", ""});
-                        } else {
-                            text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                                    new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
-                                            TrainCommon.padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
-                                            TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
-                                            TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
-                                            TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
-                                            TrainCommon.padAndTruncateString(_track.getName(), LocationManager.instance().getMaxTrackNameLength())});
-
-                        }
-                        JCheckBox checkBox = new JCheckBox(text);
-                        setCheckBoxFont(checkBox);
-                        pHoldCars.add(checkBox);
-                        carCheckBoxes.put(car.getId(), checkBox);
-                        pTrack.add(pHoldCars);
-                    }
-                    pTrackPane.validate();
-                    if (pickup && !setout) {
-                        textTrackCommentWorkPane.setText(_track.getCommentPickup());
-                    } else if (!pickup && setout) {
-                        textTrackCommentWorkPane.setText(_track.getCommentSetout());
-                    } else if (pickup && setout) {
-                        textTrackCommentWorkPane.setText(_track.getCommentBoth());
-                    }
-                    textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().equals(""));
-                } else {
-                    pTrackPane.setBorder(BorderFactory.createTitledBorder(""));
-                    textTrackCommentPane.setVisible(false);
-                    textTrackCommentWorkPane.setVisible(false);
-                }
+                runUpdate();
             }
         });
+    }
+
+    private void runUpdate() {
+        log.debug("run update");
+        removePropertyChangeListerners();
+        trainCommon.clearUtilityCarTypes(); // reset the utility car counts
+        carCheckBoxes.clear();
+        pTrack.removeAll();
+        boolean pickup = false;
+        boolean setout = false;
+        if (_track != null) {
+            pTrackPane.setBorder(BorderFactory.createTitledBorder(_track.getName()));
+            textTrackCommentPane.setText(_track.getComment());
+            textTrackCommentPane.setVisible(!_track.getComment().equals(Track.NONE));
+            textTrackCommentWorkPane.setText("");
+            for (Train train : trainManager.getTrainsArrivingThisLocationList(_track.getLocation())) {
+                JPanel pTrain = new JPanel();
+                pTrain.setLayout(new BoxLayout(pTrain, BoxLayout.Y_AXIS));
+                pTrain.setBorder(BorderFactory.createTitledBorder(MessageFormat.format(TrainSwitchListText
+                        .getStringScheduledWork(), new Object[]{train.getName(), train.getDescription()})));
+                // List locos first
+                List<Engine> engList = engManager.getByTrainBlockingList(train);
+                if (Setup.isPrintHeadersEnabled()) {
+                    for (Engine engine : engList) {
+                        if (engine.getTrack() == _track) {
+                            JLabel header = new JLabel(Tab + trainCommon.getPickupEngineHeader());
+                            setLabelFont(header);
+                            pTrain.add(header);
+                            break;
+                        }
+                    }
+                }
+                for (Engine engine : engList) {
+                    if (engine.getTrack() == _track) {
+                        engine.addPropertyChangeListener(this);
+                        rollingStock.add(engine);
+                        JCheckBox checkBox = new JCheckBox(trainCommon.pickupEngine(engine));
+                        setCheckBoxFont(checkBox);
+                        pTrain.add(checkBox);
+                        carCheckBoxes.put(engine.getId(), checkBox);
+                        pTrack.add(pTrain);
+                    }
+                }
+                if (Setup.isPrintHeadersEnabled()) {
+                    for (Engine engine : engList) {
+                        if (engine.getDestinationTrack() == _track) {
+                            JLabel header = new JLabel(Tab + trainCommon.getDropEngineHeader());
+                            setLabelFont(header);
+                            pTrain.add(header);
+                            break;
+                        }
+                    }
+                }
+                for (Engine engine : engList) {
+                    if (engine.getDestinationTrack() == _track) {
+                        engine.addPropertyChangeListener(this);
+                        rollingStock.add(engine);
+                        JCheckBox checkBox = new JCheckBox(trainCommon.dropEngine(engine));
+                        setCheckBoxFont(checkBox);
+                        pTrain.add(checkBox);
+                        carCheckBoxes.put(engine.getId(), checkBox);
+                        pTrack.add(pTrain);
+                    }
+                }
+                List<Car> carList = carManager.getByTrainDestinationList(train);
+                if (Setup.isPrintHeadersEnabled()) {
+                    for (Car car : carList) {
+                        if (car.getTrack() == _track && car.getRouteDestination() != car.getRouteLocation()) {
+                            JLabel header = new JLabel(Tab +
+                                    trainCommon.getPickupCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
+                            setLabelFont(header);
+                            pTrain.add(header);
+                            break;
+                        }
+                    }
+                }
+                // sort car pick ups by their destination
+                List<RouteLocation> routeList = train.getRoute().getLocationsBySequenceList();
+                for (RouteLocation rl : routeList) {
+                    for (Car car : carList) {
+                        if (car.getTrack() == _track &&
+                                car.getRouteDestination() != car.getRouteLocation() &&
+                                car.getRouteDestination() == rl) {
+                            car.addPropertyChangeListener(this);
+                            rollingStock.add(car);
+                            String text;
+                            if (car.isUtility()) {
+                                text = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                                if (text == null) {
+                                    continue; // this car type has already been processed
+                                }
+                            } else {
+                                text = trainCommon.pickupCar(car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                            }
+                            pickup = true;
+                            JCheckBox checkBox = new JCheckBox(text);
+                            setCheckBoxFont(checkBox);
+                            pTrain.add(checkBox);
+                            carCheckBoxes.put(car.getId(), checkBox);
+                            pTrack.add(pTrain);
+                        }
+                    }
+                }
+                // now do car set outs
+                if (Setup.isPrintHeadersEnabled()) {
+                    for (Car car : carList) {
+                        if (car.getDestinationTrack() == _track &&
+                                car.getRouteDestination() != car.getRouteLocation()) {
+                            JLabel header = new JLabel(Tab +
+                                    trainCommon.getDropCarHeader(!IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK));
+                            setLabelFont(header);
+                            pTrain.add(header);
+                            break;
+                        }
+                    }
+                }
+                for (Car car : carList) {
+                    if (car.getDestinationTrack() == _track &&
+                            car.getRouteLocation() != car.getRouteDestination()) {
+                        car.addPropertyChangeListener(this);
+                        rollingStock.add(car);
+                        String text;
+                        if (car.isUtility()) {
+                            text = trainCommon.setoutUtilityCars(carList, car, !TrainCommon.LOCAL, !IS_MANIFEST);
+                            if (text == null) {
+                                continue; // this car type has already been processed
+                            }
+                        } else {
+                            text = trainCommon.dropCar(car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                        }
+                        setout = true;
+                        JCheckBox checkBox = new JCheckBox(text);
+                        setCheckBoxFont(checkBox);
+                        pTrain.add(checkBox);
+                        carCheckBoxes.put(car.getId(), checkBox);
+                        pTrack.add(pTrain);
+                    }
+                }
+                // now do local car moves
+                if (Setup.isPrintHeadersEnabled()) {
+                    for (Car car : carList) {
+                        if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
+                                car.getRouteDestination() == car.getRouteLocation()) {
+                            JLabel header = new JLabel(Tab + trainCommon.getLocalMoveHeader(!IS_MANIFEST));
+                            setLabelFont(header);
+                            pTrain.add(header);
+                            break;
+                        }
+                    }
+                }
+                for (Car car : carList) {
+                    if ((car.getTrack() == _track || car.getDestinationTrack() == _track) &&
+                            car.getRouteLocation() != null && car.getRouteLocation() == car.getRouteDestination()) {
+                        car.addPropertyChangeListener(this);
+                        rollingStock.add(car);
+                        String text;
+                        if (car.isUtility()) {
+                            text = trainCommon.setoutUtilityCars(carList, car, TrainCommon.LOCAL, !IS_MANIFEST);
+                            if (text == null) {
+                                continue; // this car type has already been processed
+                            }
+                        } else {
+                            text = trainCommon.localMoveCar(car, !IS_MANIFEST);
+                        }
+                        setout = true;
+                        JCheckBox checkBox = new JCheckBox(text);
+                        setCheckBoxFont(checkBox);
+                        pTrain.add(checkBox);
+                        carCheckBoxes.put(car.getId(), checkBox);
+                        pTrack.add(pTrain);
+                    }
+                }
+            }
+            // now do car holds
+            // we only need the cars on this track
+            List<RollingStock> rsList = carManager.getByTrainList();
+            List<Car> carList = new ArrayList<Car>();
+            for (RollingStock rs : rsList) {
+                if (rs.getTrack() != _track || rs.getRouteLocation() != null)
+                    continue;
+                carList.add((Car) rs);
+            }
+            JPanel pHoldCars = new JPanel();
+            pHoldCars.setLayout(new BoxLayout(pHoldCars, BoxLayout.Y_AXIS));
+            pHoldCars.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("HoldCars")));
+            for (Car car : carList) {
+                String text;
+                if (car.isUtility()) {
+                    String s = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
+                    if (s == null)
+                        continue;
+                    text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
+                            new Object[]{s.trim(), "", "", "", "", ""});
+                } else {
+                    text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
+                            new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
+                                    TrainCommon.padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
+                                    TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
+                                    TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
+                                    TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
+                                    TrainCommon.padAndTruncateString(_track.getName(), LocationManager.instance().getMaxTrackNameLength())});
+
+                }
+                JCheckBox checkBox = new JCheckBox(text);
+                setCheckBoxFont(checkBox);
+                pHoldCars.add(checkBox);
+                carCheckBoxes.put(car.getId(), checkBox);
+                pTrack.add(pHoldCars);
+            }
+            pTrackPane.validate();
+            if (pickup && !setout) {
+                textTrackCommentWorkPane.setText(_track.getCommentPickup());
+            } else if (!pickup && setout) {
+                textTrackCommentWorkPane.setText(_track.getCommentSetout());
+            } else if (pickup && setout) {
+                textTrackCommentWorkPane.setText(_track.getCommentBoth());
+            }
+            textTrackCommentWorkPane.setVisible(!textTrackCommentWorkPane.getText().equals(""));
+        } else {
+            pTrackPane.setBorder(BorderFactory.createTitledBorder(""));
+            textTrackCommentPane.setVisible(false);
+            textTrackCommentWorkPane.setVisible(false);
+        }
     }
 
     private void updateTrackComboBox() {
@@ -413,9 +425,12 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
 
     @Override
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        if (Control.showProperty) {
-            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
-                    .getNewValue());
+        //        if (Control.showProperty) {
+        log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                .getNewValue());
+        //        }
+        if (e.getPropertyName().equals(RollingStock.ROUTE_LOCATION_CHANGED_PROPERTY)) {
+            update();
         }
         if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
             updateTrackComboBox();
