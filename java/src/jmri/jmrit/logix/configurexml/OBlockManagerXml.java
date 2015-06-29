@@ -105,7 +105,7 @@ public class OBlockManagerXml // extends XmlFile
         return blocks;
     }
 
-    Element storePortal(Portal portal) {
+    static private Element storePortal(Portal portal) {
         Element elem = new Element("portal");
         elem.setAttribute("systemName", portal.getSystemName());
         elem.setAttribute("portalName", portal.getName());
@@ -128,7 +128,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal != null) {
             Element fromElem = new Element("fromSignal");
             fromElem.setAttribute("signalName", signal.getSystemName());
-            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalDelay());
+            fromElem.setAttribute("signalDelay", "" + portal.getFromSignalOffset());
             elem.addContent(fromElem);
         }
         block = portal.getToBlock();
@@ -150,7 +150,7 @@ public class OBlockManagerXml // extends XmlFile
         if (signal != null) {
             Element toElem = new Element("toSignal");
             toElem.setAttribute("signalName", signal.getSystemName());
-            toElem.setAttribute("signalDelay", "" + portal.getToSignalDelay());
+            toElem.setAttribute("signalDelay", "" + portal.getToSignalOffset());
             elem.addContent(toElem);
         }
         return elem;
@@ -160,14 +160,14 @@ public class OBlockManagerXml // extends XmlFile
      * Key is sufficient to mark the Portal's knowledge of the path. Full path
      * info will get loaded from the HashMap
      */
-    Element storePathKey(OPath path) {
+    static private Element storePathKey(OPath path) {
         Element elem = new Element("path");
         elem.setAttribute("pathName", path.getName());
         elem.setAttribute("blockName", "" + path.getBlock().getSystemName());
         return elem;
     }
 
-    Element storePath(OPath path) {
+    static private Element storePath(OPath path) {
         Element elem = new Element("path");
         elem.setAttribute("pathName", path.getName());
         elem.setAttribute("blockName", "" + path.getBlock().getSystemName());
@@ -396,10 +396,9 @@ public class OBlockManagerXml // extends XmlFile
         if (portal == null) {
             log.error("unable to create Portal (" + sysName + ", " + userName + ") " + elem + " " + elem.getAttributes());
             return null;
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("create Portal: (" + sysName + ", " + userName + ")");
-            }
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("create Portal: (" + sysName + ", " + userName + ")");
         }
 
         OBlock fromBlock = null;
@@ -470,30 +469,30 @@ public class OBlockManagerXml // extends XmlFile
         Element eSignal = elem.getChild("fromSignal");
         if (eSignal != null) {
             String name = eSignal.getAttribute("signalName").getValue();
-            long time = 0;
+            float length = 0.0f;
             try {
                 Attribute attr = eSignal.getAttribute("signalDelay");
                 if (attr != null) {
-                    time = attr.getLongValue();
+                    length = attr.getFloatValue();
                 }
             } catch (org.jdom2.DataConversionException e) {
                 log.error("Could not parse signalDelay for signal (" + name + ") in portal (" + userName + ")");
             }
-            portal.setProtectSignal(Portal.getSignal(name), time, toBlock);
+            portal.setProtectSignal(Portal.getSignal(name), length, toBlock);
         }
         eSignal = elem.getChild("toSignal");
         if (eSignal != null) {
             String name = eSignal.getAttribute("signalName").getValue();
-            long time = 0;
+            float length = 0.0f;
             try {
                 Attribute attr = eSignal.getAttribute("signalDelay");
                 if (attr != null) {
-                    time = attr.getLongValue();
+                    length = attr.getFloatValue();
                 }
             } catch (org.jdom2.DataConversionException e) {
                 log.error("Could not parse signalDelay for signal (" + name + ") in portal (" + userName + ")");
             }
-            portal.setProtectSignal(Portal.getSignal(name), time, fromBlock);
+            portal.setProtectSignal(Portal.getSignal(name), length, fromBlock);
         }
 
         if (log.isDebugEnabled()) {

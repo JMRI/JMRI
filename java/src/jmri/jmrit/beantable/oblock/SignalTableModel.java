@@ -41,12 +41,14 @@ public class SignalTableModel extends AbstractTableModel {
     public static final int FROM_BLOCK_COLUMN = 1;
     public static final int PORTAL_COLUMN = 2;
     public static final int TO_BLOCK_COLUMN = 3;
-    public static final int TIME_OFFSET = 4;
-    static public final int DELETE_COL = 5;
-    public static final int NUMCOLS = 6;
+    public static final int LENGTHCOL = 4;
+    public static final int UNITSCOL = 5;
+    public static final int DELETE_COL = 6;
+    public static final int NUMCOLS = 7;
 
     private ArrayList<SignalRow> _signalList = new ArrayList<SignalRow>();
     PortalManager _portalMgr;
+    private float _tempLen = 0.0f;      // mm for length col of tempRow
 
     static class SignalRow {
 
@@ -54,65 +56,57 @@ public class SignalTableModel extends AbstractTableModel {
         OBlock _fromBlock;
         Portal _portal;
         OBlock _toBlock;
-        long _delayTime;
+        float _length;  // adjustment to speed change point
+        boolean _isMetric;
 
-        SignalRow(NamedBean signal, OBlock fromBlock, Portal portal, OBlock toBlock, long delayTime) {
+        SignalRow(NamedBean signal, OBlock fromBlock, Portal portal, OBlock toBlock, float length, boolean isMetric) {
             _signal = signal;
             _fromBlock = fromBlock;
             _portal = portal;
             _toBlock = toBlock;
-            _delayTime = delayTime;
+            _length = length;
+            _isMetric = isMetric;
         }
-/*        SignalRow(String[] tempRow) {
-            _signal = tempRow[NAME_COLUMN];
-            _fromBlock = tempRow[FROM_BLOCK_COLUMN];
-            _portal = tempRow[PORTAL_COLUMN];
-            _toBlock = tempRow[TO_BLOCK_COLUMN];
-            _delayTime = tempRow[TIME_OFFSET];
-        }*/
-
         void setSignal(NamedBean signal) {
             _signal = signal;
         }
-
         NamedBean getSignal() {
             return _signal;
         }
-
         void setFromBlock(OBlock fromBlock) {
             _fromBlock = fromBlock;
         }
-
         OBlock getFromBlock() {
             return _fromBlock;
         }
-
         void setPortal(Portal portal) {
             _portal = portal;
         }
-
         Portal getPortal() {
             return _portal;
         }
-
         void setToBlock(OBlock toBlock) {
             _toBlock = toBlock;
         }
-
         OBlock getToBlock() {
             return _toBlock;
         }
-
-        void setDelayTime(long time) {
-            _delayTime = time;
+        void setLength(float length) {
+            _length = length;
         }
-
-        long getDelayTime() {
-            return _delayTime;
+        float getLength() {
+            return _length;
+        }
+        void setMetric(boolean isMetric) {
+            _isMetric = isMetric;
+        }
+        boolean isMetric() {
+            return _isMetric;
         }
     }
 
     private String[] tempRow = new String[NUMCOLS];
+    java.text.DecimalFormat twoDigit = new java.text.DecimalFormat("0.00");
 
     TableFrames _parent;
 
@@ -131,7 +125,8 @@ public class SignalTableModel extends AbstractTableModel {
         for (int i = 0; i < NUMCOLS; i++) {
             tempRow[i] = null;
         }
-        tempRow[TIME_OFFSET] = "0.0";
+        tempRow[LENGTHCOL] = twoDigit.format(0.0);
+        tempRow[UNITSCOL] = Bundle.getMessage("in");
         tempRow[DELETE_COL] = Bundle.getMessage("ButtonClear");
     }
 
@@ -144,14 +139,14 @@ public class SignalTableModel extends AbstractTableModel {
             NamedBean signal = portal.getFromSignal();
             SignalRow sr = null;
             if (signal != null) {
-                sr = new SignalRow(signal, portal.getFromBlock(), portal,
-                        portal.getToBlock(), portal.getFromSignalDelay());
+                sr = new SignalRow(signal, portal.getFromBlock(), portal, portal.getToBlock(),
+                         portal.getFromSignalOffset(), portal.getToBlock().isMetric());
                 addToList(tempList, sr);
             }
             signal = portal.getToSignal();
             if (signal != null) {
-                sr = new SignalRow(signal, portal.getToBlock(), portal,
-                        portal.getFromBlock(), portal.getToSignalDelay());
+                sr = new SignalRow(signal, portal.getToBlock(), portal, portal.getFromBlock(), 
+                        portal.getToSignalOffset(), portal.getFromBlock().isMetric());
                 addToList(tempList, sr);
             }
         }
@@ -319,8 +314,10 @@ public class SignalTableModel extends AbstractTableModel {
                 return Bundle.getMessage("ThroughPortal");
             case TO_BLOCK_COLUMN:
                 return Bundle.getMessage("ToBlockName");
-            case TIME_OFFSET:
-                return Bundle.getMessage("TimeOffset");
+            case LENGTHCOL:
+                return Bundle.getMessage("Offset");
+            case UNITSCOL:
+                return "  ";
         }
         return "";
     }
@@ -328,31 +325,46 @@ public class SignalTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         //if (log.isDebugEnabled()) log.debug("getValueAt rowIndex= "+rowIndex+" _lastIdx= "+_lastIdx);
         if (_signalList.size() == rowIndex) {
+            if (columnIndex==LENGTHCOL) {
+                if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
+                    return (twoDigit.format(_tempLen/10));
+                }
+                return (twoDigit.format(_tempLen/25.4f));
+            }
+            if (columnIndex==UNITSCOL) {
+                return Boolean.valueOf(tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
+            }
             return tempRow[columnIndex];
         }
+        SignalRow signalRow = _signalList.get(rowIndex);
         switch (columnIndex) {
             case NAME_COLUMN:
-                if (_signalList.get(rowIndex).getSignal() != null) {
-                    return _signalList.get(rowIndex).getSignal().getDisplayName();
+                if (signalRow.getSignal() != null) {
+                    return signalRow.getSignal().getDisplayName();
                 }
                 break;
             case FROM_BLOCK_COLUMN:
-                if (_signalList.get(rowIndex).getFromBlock() != null) {
-                    return _signalList.get(rowIndex).getFromBlock().getDisplayName();
+                if (signalRow.getFromBlock() != null) {
+                    return signalRow.getFromBlock().getDisplayName();
                 }
                 break;
             case PORTAL_COLUMN:
-                if (_signalList.get(rowIndex).getPortal() != null) {
-                    return _signalList.get(rowIndex).getPortal().getName();
+                if (signalRow.getPortal() != null) {
+                    return signalRow.getPortal().getName();
                 }
                 break;
             case TO_BLOCK_COLUMN:
-                if (_signalList.get(rowIndex).getToBlock() != null) {
-                    return _signalList.get(rowIndex).getToBlock().getDisplayName();
+                if (signalRow.getToBlock() != null) {
+                    return signalRow.getToBlock().getDisplayName();
                 }
                 break;
-            case TIME_OFFSET:
-                return Float.toString(_signalList.get(rowIndex).getDelayTime()/1000);
+            case LENGTHCOL:
+                if (signalRow.isMetric()) {
+                    return (twoDigit.format(signalRow.getLength()/10));
+                }
+                return (twoDigit.format(signalRow.getLength()/25.4f));
+            case UNITSCOL:
+                return signalRow.isMetric();
             case DELETE_COL:
                 return Bundle.getMessage("ButtonDelete");
         }
@@ -366,6 +378,27 @@ public class SignalTableModel extends AbstractTableModel {
             if (col == DELETE_COL) {
                 initTempRow();
                 fireTableRowsUpdated(row, row);
+                return;
+            } else if (col == UNITSCOL) {
+                if (((Boolean)value).booleanValue()) {
+                    tempRow[UNITSCOL] = Bundle.getMessage("cm");
+                } else {
+                    tempRow[UNITSCOL] = Bundle.getMessage("in");
+                }
+                fireTableRowsUpdated(row, row);
+                return;               
+            } else if (col == LENGTHCOL) {
+                try {
+                    _tempLen = Float.valueOf((String)value).floatValue();
+                    if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
+                        _tempLen *= 10f;
+                    } else {
+                        _tempLen *= 25.4f;                            
+                    }
+                } catch (java.lang.NumberFormatException nfe) {
+                    JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
+                            Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
+                }
                 return;
             }
             String str = (String) value;
@@ -428,18 +461,25 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                 }
                 if (msg == null) {
-                    long time = 0;
+                    float length = 0.0f;
+                    boolean isMetric = tempRow[UNITSCOL].equals(Bundle.getMessage("cm"));
                     try {
-                        float f = Float.parseFloat(tempRow[TIME_OFFSET]);
-                        time = (long)f*1000;
-                    } catch (NumberFormatException nfe) {
-                        msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);
+                        length = Float.valueOf(tempRow[LENGTHCOL]);
+                        if (isMetric) {
+                            length *= 10f;
+                        } else {
+                            length *= 25.4f;                            
+                        }
+                    } catch (java.lang.NumberFormatException nfe) {
+                        msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);                    
                     }
-                    if (time<-30000 || time>30000) {
-                        msg = Bundle.getMessage("DelayTriggerTime", tempRow[TIME_OFFSET]);                
+                    if (isMetric) {
+                        tempRow[UNITSCOL] = Bundle.getMessage("cm");
+                    } else {
+                        tempRow[UNITSCOL] = Bundle.getMessage("in");
                     }
                     if (msg == null) {
-                        SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, time);
+                        SignalRow signalRow = new SignalRow(signal, fromBlock, portal, toBlock, length, isMetric);
                         msg = setSignal(signalRow, false);
                         if (msg==null) {
                             _signalList.add(signalRow);                            
@@ -479,14 +519,12 @@ public class SignalTableModel extends AbstractTableModel {
                     OBlock block = OBlockMgr.getOBlock((String) value);
                     if (block == null) {
                         msg = Bundle.getMessage("NoSuchBlock", (String) value);
-//                        signalRow.setFromBlock(null);                    	
                         break;
                     }
                     if (block.equals(signalRow.getFromBlock())) {
                         break;      // no change
                     }
                     deleteSignal(signalRow);    // delete old
-//                    OBlock oldBlock = signalRow.getFromBlock();
                     signalRow.setFromBlock(block);
                     portal = signalRow.getPortal();
                     if (checkPortalBlock(portal, block)) {
@@ -514,7 +552,6 @@ public class SignalTableModel extends AbstractTableModel {
                     portal = _portalMgr.getPortal((String) value);
                     if (portal == null) {
                         msg = Bundle.getMessage("NoSuchPortalName", (String) value);
-//                        signalRow.setPortal(null);
                         break;
                     }
                     deleteSignal(signalRow);    // delete old
@@ -545,7 +582,6 @@ public class SignalTableModel extends AbstractTableModel {
                     block = OBlockMgr.getOBlock((String) value);
                     if (block == null) {
                         msg = Bundle.getMessage("NoSuchBlock", (String) value);
-//                        signalRow.setToBlock(null);
                         break;
                     }
                     if (block.equals(signalRow.getToBlock())) {
@@ -575,24 +611,27 @@ public class SignalTableModel extends AbstractTableModel {
                     }
                     fireTableRowsUpdated(row, row);
                     break;
-                case TIME_OFFSET:
-                    long time = 0;
+                case LENGTHCOL:
                     try {
-                        float f = Float.parseFloat((String) value);
-                        time = (long)f*1000;
-                    } catch (NumberFormatException nfe) {
-                        msg = Bundle.getMessage("DelayTriggerTime", (String) value);
-                        signalRow.setDelayTime(0);
-                        break;
+                        float len = Float.valueOf((String)value).floatValue();
+                        if (signalRow.isMetric()) {
+                            signalRow.setLength(len * 10.0f);
+                        } else {
+                            signalRow.setLength(len * 25.4f);
+                        }
+                        fireTableRowsUpdated(row, row);                    
+                    } catch (java.lang.NumberFormatException nfe) {
+                        msg = Bundle.getMessage("BadNumber", value);                    
                     }
-                    if (time<-20000 || time>20000) {
-                        msg = Bundle.getMessage("DelayTriggerTime", (String) value);                
+                    if (msg == null && signalRow.getPortal() != null) {
+                        msg = setSignal(signalRow, false);
+                    } else {
+                        signalRow.setPortal(null);
                     }
-                    signalRow.setDelayTime(time);
-                    String m = setSignal(signalRow, false);
-                    if (m!=null) {
-                        msg = m;
-                    }
+                    fireTableRowsUpdated(row, row);
+                    break;
+                case UNITSCOL:
+                    signalRow.setMetric((Boolean)value);
                     fireTableRowsUpdated(row, row);
                     break;
                 case DELETE_COL:
@@ -622,7 +661,8 @@ public class SignalTableModel extends AbstractTableModel {
 
     static private String setSignal(SignalRow signalRow, boolean deletePortal) {
         Portal portal = signalRow.getPortal();
-        if (portal.setProtectSignal(signalRow.getSignal(), signalRow.getDelayTime(), signalRow.getToBlock())) {
+        float length = signalRow.getLength();
+        if (portal.setProtectSignal(signalRow.getSignal(), length, signalRow.getToBlock())) {
             if (signalRow.getFromBlock() == null) {
                 signalRow.setFromBlock(portal.getOpposingBlock(signalRow.getToBlock()));
             }
@@ -654,6 +694,8 @@ public class SignalTableModel extends AbstractTableModel {
     public Class<?> getColumnClass(int col) {
         if (col == DELETE_COL) {
             return JButton.class;
+        } else if (col == UNITSCOL ) {
+            return Boolean.class;
         }
         return String.class;
     }
@@ -668,8 +710,10 @@ public class SignalTableModel extends AbstractTableModel {
                 return new JTextField(18).getPreferredSize().width;
             case TO_BLOCK_COLUMN:
                 return new JTextField(18).getPreferredSize().width;
-            case TIME_OFFSET:
-                return new JTextField(6).getPreferredSize().width;
+            case LENGTHCOL:
+                return new JTextField(5).getPreferredSize().width;
+            case UNITSCOL:
+                return new JTextField(2).getPreferredSize().width;
             case DELETE_COL:
                 return new JButton("DELETE").getPreferredSize().width;
         }

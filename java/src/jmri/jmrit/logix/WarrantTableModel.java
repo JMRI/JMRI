@@ -376,11 +376,10 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
                         "off");
-            } else {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
-                        "occupied");
             }
+            return new NamedIcon(
+                    "resources/icons/smallschematics/tracksegments/circuit-occupied.gif",
+                    "occupied");
         case SET_COLUMN:
             if (w.hasRouteSet() && w.isTotalAllocated()) {
                 return new NamedIcon(
@@ -400,28 +399,21 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-error.gif",
                         "red");
-            } else {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                        "off");
             }
+            return new NamedIcon(
+                    "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
+                    "off");
         case MANUAL_RUN_COLUMN:
             if (w.getRunMode() == Warrant.MODE_MANUAL) {
                 return new NamedIcon(
                         "resources/icons/smallschematics/tracksegments/circuit-error.gif",
                         "red");
-            } else {
-                return new NamedIcon(
-                        "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
-                        "off");
             }
+            return new NamedIcon(
+                    "resources/icons/smallschematics/tracksegments/circuit-empty.gif",
+                    "off");
         case CONTROL_COLUMN:
             String msg = w.getRunningMessage();
-            /*
-             * WarrantFrame frame =
-             * WarrantTableAction.getWarrantFrame(w.getDisplayName()); if (frame
-             * !=null) { frame._statusBox.setText(msg); }
-             */
             return msg;
         case EDIT_COLUMN:
             return Bundle.getMessage("ButtonEdit");

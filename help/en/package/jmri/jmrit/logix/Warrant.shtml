@@ -223,48 +223,66 @@ For a warrant to detect a signaled speed change the signal must be configured
 in the Occupancy Block Tables.  Likewise, block speeds must be configured there
 also.
 <p>
-Several parameters are required to make an automatic speed change.  
+Several parameters are required to make an automatic speed change.  The default settings
+will probably be satisfactory and the following can be deferred until later.  
 </P>
-<H2>Throttle Setting Speed Factor</H2>
+<H2>Throttle Setting Speed Factors</H2>
 To compute how far to look ahead and the time when to modify speed the
 following must be known:
 <ul>
-	<li><b>Layout Scale</b> - Obviously needed for distances.  Set in a 
-		drop down box at <i>Edit->Preferences->Warrants</i>.</li>
 	<li><b>Block Lengths</b> - Obviously needed for distances.  Set in the
 		OBlock Table at <i>Add Items->Occupancy Blocks</i> or on an Circuit Builder
-		Edit OBlock window <i>Circuit Builder->Edit OBlock->window</i></li>
+		Edit OBlock window <i>Circuit Builder->Edit OBlock->window</i>
+		<p>If the paths within a block vary widely, path length can be set per
+		path from the Block/Path table or the Circuit Builder
+		Edit Path window <i>Circuit Builder->Edit Path->window</i>.
+		Otherwise, path lengths are inherited from the block length.</li>
 	<li><b>Ramp Step throttle Increment</b> - Needed for smooth speed change. 
 		Set in <i>>Edit->Preferences->Warrants</i>.  This value is a ratio of full throttle.
 		Seven or eight speed steps of a 128 step throttle is an appropriate
-		increment for a locomotive with modest momentum.  A value of 
-		0.06, is the default.</li>
+		increment for a locomotive with modest momentum.  A value of 0.04 or 
+		0.06 is recommended.</li>
 	<li><b>Ramp Step time</b> - Needed for smooth speed change. 
 		Set in <i>>Edit->Preferences->Warrants</i>.  Depending how the user has configured
 		momentum on the locomotives, this value may be lengthened and a 
 		larger throttle increment used.  Conversely with no momentum,
 		a shorter time and smaller throttle increment may be appropriate.
-		Default is 750 milliseconds.</li>
+		750 or 1000 milliseconds is recommended.</li>
+	<li><b>Layout Scale</b> - Obviously needed for scale distances.  Set in a 
+		drop down box at <i>Edit->Preferences->Warrants</i>.</li>
 </ul>
-Given all the above, the throttle setting still must be related to actual track speed.
-This is the <b>Throttle Setting Speed Factor</b>.  A global value for this is
-also found at  <i>>Edit->Preferences->Warrants</i>, but its value is engine/decoder dependent.
-That is the decoder's speed curve to deliver voltage to the motor, and the motor's
-rpm response under load with that voltage.
+Given all the above, throttle settings still must be related to actual track speed
+regardless of scale.
+A global value for this is
+found at <i>>Edit->Preferences->Warrants</i>. The value of <b>Throttle Setting / Speed Factor</b>
+can be satisfactory for all engines if they do not need to respond to Signal aspect speeds
+or block speeds and you do not use scale speeds for the <b>Speed Name Values</b>.
+<i>If this is the case for your layout you do not need to read the following sections</i>.
 <p>
-A further assumption made in the speed change calculations is that
-the speed curve of the engine/decoder is linear - or approximately so.
-If the entire locomotive fleet is speed matched to a linear curve then a 
-global value is sufficient.  However if that is not the case, 
-it is easy to get a throttle factor for each engine.
+<H3>Getting Speed Profiles for Your Trains</H3>
+Converting a throttle setting to achieve a given track speed is  dependent on the engine
+and its decoder.
+That is, the decoder's speed curve to deliver voltage to the motor, and the motor's
+rpm response under load with that voltage. Likewise, whether the motor is driving the train
+forward or reverse often has different track speeds..
+<p>
+A Speed Profile can be made for an engine that will provide the necessary factors to
+set throttle settings that will result in accurate track speeds.  These profiles are
+ maintained in the Roster and there is a tool that will create them, <b>Roster->Speed Profiling</b>.
+ Alternatively, Speed Profile factors for a selected set of throttle settings for the motive power 
+used in a warrant can be determined by using the NXWarrant
+<b>Compute Throttle Factor</b> checkbox. 
 <p>
 NXWarrants have a feature whereby running the train over a block of known length
-will compute a Throttle Factor for the train.  Use the <b>Calibrate</b> button
-on the NXWarrant window.  See <A HREF="NXWarrant.shtml#Calibrate"> About NXWarrants</A>.
+will compute a speed profile throttle factor for the train. Frequently, calibrating 
+a slow, medium and fast throttle setting for both
+forward and reverse will be sufficient. 
+See <A HREF="NXWarrant.shtml#Calibrate"> About NXWarrants</A>.
 <p>
 <H2>Aspect Speed Map and its Interpretation</H2>
 Speeds are named in the aspects.xml files that signal masts use in the Signal 
-Mast System.  These speed names are also used in the block tables.
+Mast System.  These speed names are also used in the block tables.  To control 
+train speed, values must be assigned to these speed names.
 The Aspect Speed Map found at <i>>Edit->Preferences->Warrants</i> provides a value
 for each named speed.  It is up to the user to assign a value to the name and 
 a meaning to the value.  On the preferences warrant panel there are four radio
@@ -353,7 +371,7 @@ best guess we can make to duplicate prototypical speed at layout scale.
 		Engine A most likely will pass the signal at 27 mph and
 		Engine B at 22.5 mph.
 		<br>
-		Given that good linear throttle factors can be found,
+		Given that a sufficient Speed Profile has been made,
 		<i>Prototypical signal speeds can be done without speed
 		matching.</i></li>
 	<li><b>Kilometers per Hour</b> - The value is the scale kilometers
@@ -366,13 +384,10 @@ best guess we can make to duplicate prototypical speed at layout scale.
 </ul>
 To sum up; if you are not fussy about being prototypical and always want to
 see speed change when signals are passed, use "Percent of Normal".
-If you have speed matched your fleet and and you have calibrated
-the global throttle factor to match the fleet, you can use
-"Percent of Full Throttle" to get prototypical scale speeds.  
-You can also use either of the
-next two interpretations.  If you calibrate a throttle factor
+If you have calibrated a sufficient Speed Profile
 for each of your engines you can use either of the last two
-speed interpretations.
+speed interpretations which express throttle setting in terms of scale 
+track speed.
 <p>
 <H3>The Signal Head Appearance Table</H3>
 If signal heads are used on the layout, their appearances can be mapped
@@ -479,9 +494,6 @@ in a Logix conditional.
          indicating the current position of the train when running.</li> 
         <li><b>Control Train</b>: - Send a control command (<b>Halt</b>, <b>Resume</b> or 
         <b>Abort)</b> to a running train under warrant.</li>
-        <li><b>Set Throttle Factor</b>: - Set a factor to adjust the throttle setting for speed
-        changes to occur at expected points.
-         When the engine or consist of the train is changed, more or less power may be required.</li>
 </ul>        
 <br>
 

@@ -161,7 +161,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         return getValue(state);
     }
 
-    String getValue(int state) {
+    static protected String getValue(int state) {
         StringBuilder sb = new StringBuilder();
         if ((state & OBlock.DARK) != 0) {
             sb.append(Bundle.getMessage("Dark"));
@@ -238,29 +238,25 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
             case SYSNAMECOL:
                 if (b != null) {
                     return b.getSystemName();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case USERNAMECOL:
                 if (b != null) {
                     return b.getUserName();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case COMMENTCOL:
                 if (b != null) {
                     return b.getComment();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case STATECOL:
                 if (b != null) {
                     int state = b.getState();
                     int num = Integer.numberOfLeadingZeros(state) - 24;
                     return ZEROS.substring(0, num) + Integer.toBinaryString(state);
-                } else {
-                    return ZEROS;
                 }
+                return ZEROS;
             case SENSORCOL:
                 if (b != null) {
                     Sensor s = b.getSensor();
@@ -268,35 +264,30 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         return "";
                     }
                     return s.getDisplayName();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case LENGTHCOL:
                 if (b != null) {
                     if (b.isMetric()) {
                         return (twoDigit.format(b.getLengthCm()));
-                    } else {
-                        return (twoDigit.format(b.getLengthIn()));
                     }
-                } else {
-                    if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
-                        return (twoDigit.format(_tempLen/10));
-                    } else {
-                        return (twoDigit.format(_tempLen/25.4f));
-                    }
+                    return (twoDigit.format(b.getLengthIn()));
                 }
+                if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
+                    return (twoDigit.format(_tempLen/10));
+                }
+                return (twoDigit.format(_tempLen/25.4f));
             case UNITSCOL:
                 if (b != null) {
                     if (log.isDebugEnabled()) {
                         log.debug("getValueAt: row= "+row+", col= "+col+", "+b.getDisplayName()+" isMetric= "+b.isMetric());
                     }
                     return b.isMetric();
-                } else {
-                    if (log.isDebugEnabled()) {
-                        log.debug("getValueAt: row= "+row+", col= "+col+", is cm= "+tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
-                    }
-                    return Boolean.valueOf(tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
                 }
+                if (log.isDebugEnabled()) {
+                    log.debug("getValueAt: row= "+row+", col= "+col+", is cm= "+tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
+                }
+                return Boolean.valueOf(tempRow[UNITSCOL].equals(Bundle.getMessage("cm")));
             case CURVECOL:
                 if (b != null) {
                     String c = "";
@@ -310,9 +301,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         c = severeText;
                     }
                     return c;
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case ERR_SENSORCOL:
                 if (b != null) {
                     Sensor s = b.getErrorSensor();
@@ -320,9 +310,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         return "";
                     }
                     return s.getDisplayName();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case REPORTERCOL:
                 if (b != null) {
                     Reporter r = b.getReporter();
@@ -330,43 +319,36 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                         return "";
                     }
                     return r.getDisplayName();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case REPORT_CURRENTCOL:
                 if (b != null) {
                     if (b.getReporter() != null) {
                         return b.isReportingCurrent();
-                    } else {
-                        return "";
                     }
-                } else {
-                    return Boolean.valueOf(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
+                    return "";
                 }
+                return Boolean.valueOf(tempRow[REPORT_CURRENTCOL].equals(Bundle.getMessage("Current")));
             case PERMISSIONCOL:
                 if (b != null) {
                     return b.getPermissiveWorking();
-                } else {
-                    return Boolean.valueOf(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
                 }
+                return Boolean.valueOf(tempRow[PERMISSIONCOL].equals(Bundle.getMessage("Permissive")));
             case SPEEDCOL:
                 if (b != null) {
                     return b.getBlockSpeed();
-                } else {
-                    return tempRow[col];
                 }
+                return tempRow[col];
             case EDIT_COL:
                 if (b != null) {
                     return Bundle.getMessage("ButtonEditPath");
-                } else {
-                    return "";
                 }
+                return "";
             case DELETE_COL:
                 if (b != null) {
                     return Bundle.getMessage("ButtonDelete");
-                } else {
-                    return Bundle.getMessage("ButtonClear");
                 }
+                return Bundle.getMessage("ButtonClear");
         }
         return super.getValueAt(row, col);
     }
@@ -474,7 +456,7 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     }
                     return;
                 case UNITSCOL:
-                    if ((((Boolean) value).booleanValue())) {//toggle
+                    if ((((Boolean) value).booleanValue())) {
                         tempRow[UNITSCOL] = Bundle.getMessage("cm");
                     } else {
                         tempRow[UNITSCOL] = Bundle.getMessage("in");
@@ -775,9 +757,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
         }
         if (col == SYSNAMECOL || col == STATECOL) {
             return false;
-        } else {
-            return true;
         }
+        return true;
     }
 
     @Override

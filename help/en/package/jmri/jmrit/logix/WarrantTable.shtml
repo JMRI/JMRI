@@ -39,8 +39,6 @@ discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
 		to enable this function)</li>
         <li><b>DCC Address</b>: - The DCC Address of the locomotive or consist.  This cell can
 		be edited to correspond to the current motive power of the train.</li>
-		<li><b>Factor</b>: - The ratio to adjust the throttle settings so speed changes
-		governed by signal aspects and occupancy ahead begin and end appropriately.</li>
         <li><b>Allocate</b>: - A button that reserves the route for the warrant.  The Indicator
 		Track Icons display green to indicate the route.</li>
         <li><b>Deallocate</b>: - A button that removes the reservation for the warrant.</li>
@@ -50,7 +48,7 @@ discussion of warrants, see <A HREF="Warrant.shtml"> Warrants</A>.
 		according to the occupancy and signal aspects encountered on the route.  The 
 		Indicator Track Icons display the current position of the
 		of the train with a blue color.</li>
-        <li><b>ManRun</b>: - A button that allocates the warrant and sets the route for
+        <li><b>ManRun</b>: - (hidden column) A button that allocates the warrant and sets the route for
         a manual operator to run the train.  The script is not run, but the route is displayed.
 		of the train with a blue color.
         (The default setting hides this column. To display, right click in the table Header.)</li>
@@ -111,7 +109,7 @@ The <b>Status</b> field contains the last 20 messages from warrants.  Click in t
 field to display them.
 <p>
 <H2>Running Automated Trains</H2>
-The recorded throttle commands can be played back to run the train.  When running 
+The throttle commands recorded in a warrant can be played back to run the train.  When running 
 automated, additional control of the train can done through four choices: <b>Halt</b>,
 <b>Resume</b> and <b>Abort</b> are commands to halt a running
 automated train, restart it or stop the train and abort the remaining throttle commands.
@@ -121,7 +119,7 @@ become "Lost".  This command aligns the warrant to the next block and restarts t
 Although there are separate operations in the Warrant List table to reserve a warrant route
 (Allocate) and
 set turnouts and signals (Set Route) these operations do not have to be done to run
-an automated train.  A <b>AutoRun</b> operation can begin without them.  The train will
+an automated train.  An <b>AutoRun</b> operation can begin without them.  The train will
 seek allocation and set turnouts as it proceeds on the route.  When
 confronted with an occupied block, the train will stop and wait until the block clears.
 When the next block is clear but the block beyond the next block is occupied, the
@@ -149,48 +147,46 @@ the "Halt" and wait for the user to set the "Resume" control.
 Note it is vital that the correct train occupies the starting block. The address specified in
 the warrant, is the train that will begin moving. 
 <p>
-<H2>Why There is a Factor Column</H2>
+<H2>How Signals Aspects and Block Speeds Modify A Train's Speed</H2>
 When a warrant is running and its train enters a block, it looks ahead to see if any speed changes
 are coming up.  The look ahead distance must be adequate for the train to be able
 to stop should that be needed.  This distance is at least one block and could be several.
-Without a Throttle Factor a fast 
-running engine may overrun the point where a speed change expects to be completed, or 
-a slow running train may stop too far short of where it is expected.
-<p>
-The Throttle Factor reconciles the throttle setting to the scale track speed.  The
-most important element in this adjustment is the <b>scale of the layout</b>.  <b><i>The throttle
-factor times the scale factor converts layout dimensions to scale dimensions.</b></i>
+If a signal or block is encountered within this look ahead distance, and either the aspect of block
+indicates the speed must be regulated, then the warrant must take action.
+It needs to inform the engine of the speed changes in a smooth (and hopefully prototypical)
+fashion and calculate when these speed changes should begin.
 <ul>
 	<b>Note:</b> If signals have not been configured in the Occupancy Block Tables nor
-	have block speeds been configured there, the throttle factor will only be used when
+	have block speeds been configured there, the Speed Profile throttle factors will only be used when
 	generating the ramp-up and ramp-down throttle commands in NXWarrants or when rouge
-	occupancy is detected ahead.  They <b>do not</b> refer to the recorded speed changes.
+	occupancy is detected ahead.
 </ul>
+The significance of the above note means the default ramp parameters will probably be quite 
+satisfactory if your trains do not respond to signal aspect speeds and block speeds.  
+<p>
 A default throttle factor and the layout scale is configured in <b>Preferences</b>
-under the warrants tab.
+under the warrants tab.  The ramp up and ramp down parameters, <b>Ramp Step Time</b>
+and <b>Ramp Step Throttle Increment</b> are also configured there.
 <p>
 Once a speed change is noted by reading a signal aspect or specified block speed ahead, 
 the Warrant must calculate when to begin the speed change (ramp down or ramp up).  Both
 the look ahead distance and the time when to begin the speed change require knowing the 
 track speed.  Thus to get train to begin and end its speed changes at the proper points,
-a factor that relates the throttle setting to the actual track speed is needed.  This 
-is the value in the <b>Factor column</b>.
+a factors that relate the throttle settings to the actual track speed is needed. 
+Without such throttle factors a fast 
+running engine may overrun the point where a speed change expects to be completed, or 
+a slow running train may stop too far short of where it is expected..
 <p>
-The factor obviously depends upon the particular engine's power curve.  This is a combination
+The throttle factors obviously depend upon the particular engine's power curve.  This is a combination
 of decoder's throttle speed curve and the response of the locomotive motor to the voltage
-set by the speed curve.  For most decoder/motor combinations a relatively constant 
-<b>throttle factor</b> can be found for the entire mid and high ranges.  If the entire
-locomotive fleet is speed matched, then the same factor will do for all.  
-Lacking that, individual 
-factors for the motive power used in a warrant can be determined by using the NXWarrant
-<b>Calibration</b> feature.  See <A HREF="NXWarrant.shtml"> NXWarrants</A> for
+set by the speed curve.  It is nearly impossible to set a single throttle factor that will 
+work over the engine's entire speed range in both forward and reverse directions.  A complete
+Speed Profile for every speed step of a decoder can be made with the Roster speed Profiling tool.
+Alternatively, Speed Profile factors for a selected set of throttle settings for the motive power 
+used in a warrant can be determined by using the NXWarrant
+<b>Compute Throttle Factor</b> feature.  Frequently, calibrating a slow, medium and fast throttle setting for both
+forward and reverse will be sufficient.  See <A HREF="NXWarrant.shtml"> NXWarrants</A> for
 instructions on how to do this.
-<ul>
-        <b>Note:</b> The calculations
-		done by the warrant assume a linear change in throttle settings.  If an 
-		extreme speed curve shape is defined for a decoder, the factor will not function well
-		over the entire throttle range.
-</ul>
 <p>
 <br>
 <!--#include virtual="/Footer" -->
