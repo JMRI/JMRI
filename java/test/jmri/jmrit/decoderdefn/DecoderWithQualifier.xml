@@ -16,7 +16,7 @@
 
 <decoder-config
     xmlns:xsi = "http://www.w3.org/2001/XMLSchema-instance"
-    xsi:noNamespaceSchemaLocation = "http://localhost/xml/schema/decoder.xsd"
+    xsi:noNamespaceSchemaLocation = "http://jmri.org/xml/schema/decoder.xsd"
 >
     <version author="Bob Jacobsen" version="1" lastUpdated="20100119"/>
 
