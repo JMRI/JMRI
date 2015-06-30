@@ -453,27 +453,30 @@ public class AddSignalMastPanel extends JPanel {
             // do file IO to get all the appearances
             // gather all the appearance files
             //Look for the default system defined ones first
-            File[] apps = new File(FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED).toURI()).listFiles();
-            for (File app : apps) {
-                if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
-                    log.debug("   found file: " + app.getName());
-                    // load it and get name
-                    mastNames.add(app);
-                    jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
-                    };
-                    Element root = xf.rootFromFile(app);
-                    String name = root.getChild("name").getText();
-                    mastBox.addItem(name);
-                    map.put(name, root.getChild("appearances")
-                            .getChild("appearance")
-                            .getChildren("show")
-                            .size());
+            URL path = FileUtil.findURL("xml/signals/" + sigsysname, FileUtil.Location.INSTALLED);
+            if (path != null) {
+                File[] apps = new File(path.toURI()).listFiles();
+                for (File app : apps) {
+                    if (app.getName().startsWith("appearance") && app.getName().endsWith(".xml")) {
+                        log.debug("   found file: " + app.getName());
+                        // load it and get name
+                        mastNames.add(app);
+                        jmri.jmrit.XmlFile xf = new jmri.jmrit.XmlFile() {
+                        };
+                        Element root = xf.rootFromFile(app);
+                        String name = root.getChild("name").getText();
+                        mastBox.addItem(name);
+                        map.put(name, root.getChild("appearances")
+                                .getChild("appearance")
+                                .getChildren("show")
+                                .size());
+                    }
                 }
             }
         } catch (org.jdom2.JDOMException e) {
             mastBox.addItem("Failed to create definition, did you select a system?");
             log.warn("in loadMastDefinitions", e);
-        } catch (java.io.IOException | URISyntaxException | NullPointerException e) {
+        } catch (java.io.IOException | URISyntaxException e) {
             mastBox.addItem("Failed to read definition, did you select a system?");
             log.warn("in loadMastDefinitions", e);
         }
