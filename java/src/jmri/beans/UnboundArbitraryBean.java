@@ -45,8 +45,8 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * want to use {@link Bean#hasProperty(java.lang.String)} to test that the
      * property exists.
      * <p>
-     * This implementation searches {@link Bean#properties} and uses
-     * introspection to get the property.
+     * This implementation searches {@link ArbitraryPropertySupport#properties}
+     * and uses introspection to get the property.
      *
      * @param key
      * @return value of key or null.
@@ -60,8 +60,9 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
     /**
      * Return a list of property names.
      * <p>
-     * This implementation combines the keys in {@link Bean#properties} with the
-     * results of {@link Beans#getIntrospectedPropertyNames(java.lang.Object)}.
+     * This implementation combines the keys in
+     * {@link ArbitraryPropertySupport#properties} with the results of
+     * {@link Beans#getIntrospectedPropertyNames(java.lang.Object)}.
      *
      * @return a Set of names
      * @see BeanInterface#getPropertyNames()
@@ -74,8 +75,8 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
     /**
      * Test if a property exists.
      * <p>
-     * This implementation searches {@link Bean#properties} and uses
-     * introspection to get the property.
+     * This implementation searches {@link ArbitraryPropertySupport#properties}
+     * and uses introspection to get the property.
      *
      * @param key
      * @return true if property exists
@@ -90,7 +91,7 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
     public boolean hasIndexedProperty(String key) {
         return this.arbitraryPropertySupport.hasIndexedProperty(key);
     }
-    
+
     /**
      * Set element at <i>index</i> of property array <i>key</i> to <i>value</i>.
      * <p>
@@ -115,8 +116,9 @@ public abstract class UnboundArbitraryBean extends UnboundBean {
      * <p>
      * This implementation checks that a write method is not available for the
      * property using JavaBeans introspection, and stores the property in
-     * {@link Bean#properties} only if a write method does not exist. This
-     * implementation also fires a PropertyChangeEvent for the property.
+     * {@link ArbitraryPropertySupport#properties} only if a write method does
+     * not exist. This implementation also fires a PropertyChangeEvent for the
+     * property.
      *
      * @param key
      * @param value
