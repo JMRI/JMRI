@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.InputStream;
 import java.net.URI;
+import java.net.URISyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.EntityResolver;
@@ -29,6 +30,7 @@ import org.xml.sax.InputSource;
  */
 public class JmriLocalEntityResolver implements EntityResolver {
 
+    @Override
     public InputSource resolveEntity(String publicId, String systemId) {
         log.trace("-- got entity request {}", systemId);
 
@@ -72,7 +74,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                     log.error("did not find type 1 DTD file: {}", filename);
                     return null;
                 }
-            } else if (path != null && path.indexOf("/") == -1) {  // path doesn't contain "/", so is just name
+            } else if (path != null && !path.contains("/")) {  // path doesn't contain "/", so is just name
                 // type 2
                 String filename = "xml" + File.separator + "DTD" + File.separator + path;
                 log.trace("doesn't contain / finds filename: {}", filename);
@@ -147,7 +149,7 @@ public class JmriLocalEntityResolver implements EntityResolver {
                 log.error("could not parse systemId: " + systemId);
                 return null;
             }
-        } catch (Exception e1) { // was java.net.URISyntaxException, but that's not in Java 1.3.1
+        } catch (URISyntaxException e1) {
             log.warn(e1.getLocalizedMessage(), e1);
             return null;
         } catch (NoClassDefFoundError e2) { // working on an old version of java, go with default quietly
@@ -160,6 +162,6 @@ public class JmriLocalEntityResolver implements EntityResolver {
     }
 
     static private boolean toldYouOnce = false;
-    static private Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class.getName());
+    private static final Logger log = LoggerFactory.getLogger(JmriLocalEntityResolver.class.getName());
 
 }
