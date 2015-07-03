@@ -2,6 +2,7 @@
 package jmri.managers;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -14,6 +15,7 @@ import jmri.implementation.DefaultSignalSystem;
 import jmri.jmrit.XmlFile;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
+import org.jdom2.JDOMException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -121,7 +123,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         } catch (URISyntaxException ex) {
             log.error("Unable to get installed signals.", ex);
         }
-        if(signalDir != null){
+        if (signalDir != null) {
             File[] files = signalDir.listFiles();
             for (File file : files) {
                 if (file.isDirectory()) {
@@ -140,39 +142,32 @@ public class DefaultSignalSystemManager extends AbstractManager
     SignalSystem makeBean(String name) {
 
         //First check to see if the bean is in the default system directory
-        String filename = "xml" + File.separator + "signals"
-                + File.separator + name
-                + File.separator + "aspects.xml";
-        log.debug("load from " + filename);
+        URL path = FileUtil.findURL("xml/signals/" + name + "/aspects.xml", FileUtil.Location.INSTALLED);
+        log.debug("load from {}", path);
         XmlFile xf = new AspectFile();
-        File file = new File(filename);
-        if (file.exists()) {
+        if (path != null) {
             try {
-                Element root = xf.rootFromName(filename);
+                Element root = xf.rootFromURL(path);
                 DefaultSignalSystem s = new DefaultSignalSystem(name);
                 loadBean(s, root);
                 return s;
-            } catch (Exception e) {
-                log.error("Could not parse aspect file \"" + filename + "\" due to: " + e);
+            } catch (IOException | JDOMException e) {
+                log.error("Could not parse aspect file \"{}\" due to: {}", path, e);
             }
         }
 
         //if the file doesn't exist or fails the load from the default location then try the user directory
-        filename = FileUtil.getUserFilesPath() + "resources"
-                + File.separator + "signals"
-                + File.separator + name
-                + File.separator + "aspects.xml";
-        log.debug("load from " + filename);
-        file = new File(filename);
-        if (file.exists()) {
+        path = FileUtil.findURL("signals/" + name + "/aspects.xml", FileUtil.Location.USER, "xml", "resources");
+        log.debug("load from {}", path);
+        if (path != null) {
             xf = new AspectFile();
             try {
-                Element root = xf.rootFromName(filename);
+                Element root = xf.rootFromURL(path);
                 DefaultSignalSystem s = new DefaultSignalSystem(name);
                 loadBean(s, root);
                 return s;
-            } catch (Exception e) {
-                log.error("Could not parse aspect file \"" + filename + "\" due to: " + e);
+            } catch (IOException | JDOMException e) {
+                log.error("Could not parse aspect file \"{}\" due to: {}", path, e);
             }
         }
 
@@ -189,9 +184,7 @@ public class DefaultSignalSystemManager extends AbstractManager
         // add all other sub-elements as key/value pairs
         for (int i = 0; i < l.size(); i++) {
             String name = l.get(i).getChild("name").getText();
-            if (log.isDebugEnabled()) {
-                log.debug("aspect name " + name);
-            }
+            log.debug("aspect name {}", name);
 
             List<Element> c = l.get(i).getChildren();
 
