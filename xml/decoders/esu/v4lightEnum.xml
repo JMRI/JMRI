@@ -20,7 +20,7 @@
     <choice>Intelligent fire box</choice>
     <choice xml:lang="it">Caldaia intelligente</choice>
   </enumChoice>
-  <enumChoice choice="Single stobe">
+  <enumChoice choice="Single strobe">
     <choice>Single strobe</choice>
     <choice xml:lang="it">Singolo Strobe</choice>
   </enumChoice>
@@ -71,6 +71,9 @@
   <enumChoice choice="Energy saving light">
     <choice>Energy saving light</choice>
     <choice xml:lang="it">Luce a risparmio Energetico</choice>
+  </enumChoice>
+  <enumChoice choice="Single strobe random">
+    <choice>Single strobe random</choice>
   </enumChoice>
   <enumChoice choice="Sound controlled smoke unit" value="22">
     <choice xml:lang="it">Gener.Fumo sonoro</choice>

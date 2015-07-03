@@ -20,7 +20,7 @@
   <variable label="Brightness" CV="16.0.262" default="31" item="ESU V4 Function Output 1 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>Headlight [1] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.262" default="0" item="ESU V4 Function Output 1 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -143,7 +143,7 @@
   <variable label="Brightness" CV="16.0.270" default="31" item="ESU V4 Function Output 3 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>Rearlight [1] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.270" default="0" item="ESU V4 Function Output 3 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -266,7 +266,7 @@
   <variable label="Brightness" CV="16.0.278" default="31" item="ESU V4 Function Output 5 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>AUX1 [1] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.278" default="0" item="ESU V4 Function Output 5 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -389,7 +389,7 @@
   <variable label="Brightness" CV="16.0.286" default="31" item="ESU V4 Function Output 7 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>AUX2 [1] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.286" default="0" item="ESU V4 Function Output 7 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -512,7 +512,7 @@
   <variable label="Brightness" CV="16.0.294" default="31" item="ESU V4 Function Output 9 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>AUX3 Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.294" default="0" item="ESU V4 Function Output 9 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -635,7 +635,7 @@
   <variable label="Brightness" CV="16.0.302" default="31" item="ESU V4 Function Output 10 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>AUX4 Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.302" default="0" item="ESU V4 Function Output 10 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -759,7 +759,7 @@
     <variable label="Brightness" CV="16.0.310" default="31" item="ESU V4 Function Output 11 Slider 5" mask="XXXVVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX5 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-      <qualifier><variableref>AUX5 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+      <qualifier><variableref>AUX5 Mode</variableref><relation>le</relation><value>18</value></qualifier>
     </variable>
     <variable label="Mode" CV="16.0.310" default="0" item="ESU V4 Function Output 11 Option 1" mask="XXXXXXXV">
       <enumVal>
@@ -882,7 +882,7 @@
     <variable label="Brightness" CV="16.0.318" default="31" item="ESU V4 Function Output 12 Slider 5" mask="XXXVVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX6 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-      <qualifier><variableref>AUX6 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+      <qualifier><variableref>AUX6 Mode</variableref><relation>le</relation><value>18</value></qualifier>
     </variable>
     <variable label="Mode" CV="16.0.318" default="0" item="ESU V4 Function Output 12 Option 1" mask="XXXXXXXV">
       <enumVal>
@@ -1005,7 +1005,7 @@
     <variable label="Brightness" CV="16.0.326" default="31" item="ESU V4 Function Output 13 Slider 5" mask="XXXVVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX7 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-      <qualifier><variableref>AUX7 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+      <qualifier><variableref>AUX7 Mode</variableref><relation>le</relation><value>18</value></qualifier>
     </variable>
     <variable label="Mode" CV="16.0.326" default="0" item="ESU V4 Function Output 13 Option 1" mask="XXXXXXXV">
       <enumVal>
@@ -1128,7 +1128,7 @@
     <variable label="Brightness" CV="16.0.334" default="31" item="ESU V4 Function Output 14 Slider 5" mask="XXXVVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX8 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-      <qualifier><variableref>AUX8 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+      <qualifier><variableref>AUX8 Mode</variableref><relation>le</relation><value>18</value></qualifier>
     </variable>
     <variable label="Mode" CV="16.0.334" default="0" item="ESU V4 Function Output 14 Option 1" mask="XXXXXXXV">
       <enumVal>
@@ -1251,7 +1251,7 @@
     <variable label="Brightness" CV="16.0.342" default="31" item="ESU V4 Function Output 15 Slider 5" mask="XXXVVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX9 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-      <qualifier><variableref>AUX9 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+      <qualifier><variableref>AUX9 Mode</variableref><relation>le</relation><value>18</value></qualifier>
     </variable>
     <variable label="Mode" CV="16.0.342" default="0" item="ESU V4 Function Output 15 Option 1" mask="XXXXXXXV">
       <enumVal>
@@ -1374,7 +1374,7 @@
     <variable label="Brightness" CV="16.0.350" default="31" item="ESU V4 Function Output 16 Slider 5" mask="XXXVVVVV">
       <decVal max="31"/>
       <qualifier><variableref>AUX10 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-      <qualifier><variableref>AUX10 Mode</variableref><relation>le</relation><value>17</value></qualifier>
+      <qualifier><variableref>AUX10 Mode</variableref><relation>le</relation><value>18</value></qualifier>
     </variable>
     <variable label="Mode" CV="16.0.350" default="0" item="ESU V4 Function Output 16 Option 1" mask="XXXXXXXV">
       <enumVal>
@@ -1498,7 +1498,7 @@
   <variable label="Brightness" CV="16.0.358" default="31" item="ESU V4 Function Output 2 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>Headlight [2] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.358" default="0" item="ESU V4 Function Output 2 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -1621,7 +1621,7 @@
   <variable label="Brightness" CV="16.0.366" default="31" item="ESU V4 Function Output 4 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>Rearlight [2] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.366" default="0" item="ESU V4 Function Output 4 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -1744,7 +1744,7 @@
   <variable label="Brightness" CV="16.0.374" default="31" item="ESU V4 Function Output 6 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>AUX1 [2] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.374" default="0" item="ESU V4 Function Output 6 Option 1" mask="XXXXXXXV">
     <enumVal>
@@ -1867,7 +1867,7 @@
   <variable label="Brightness" CV="16.0.382" default="31" item="ESU V4 Function Output 8 Slider 5" mask="XXXVVVVV">
     <decVal max="31"/>
     <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-    <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>17</value></qualifier>
+    <qualifier><variableref>AUX2 [2] Mode</variableref><relation>le</relation><value>18</value></qualifier>
   </variable>
   <variable label="Mode" CV="16.0.382" default="0" item="ESU V4 Function Output 8 Option 1" mask="XXXXXXXV">
     <enumVal>
