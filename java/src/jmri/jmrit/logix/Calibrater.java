@@ -62,7 +62,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
     private JCheckBox _ignoreBox = new JCheckBox(Bundle.getMessage("ignoreFactor"));
     private JCheckBox _clearBox = new JCheckBox(Bundle.getMessage("clearFactor"));
     
-    Calibrater(Warrant w, Point pt) {
+    Calibrater(Warrant w, boolean isForward, Point pt) {
         super(false, false);
         _warrant = w;
         ButtonGroup bg = new ButtonGroup();
@@ -71,7 +71,7 @@ public class Calibrater extends jmri.util.JmriJFrame {
         _mainPanel = new JPanel();
         _mainPanel.setLayout(new BoxLayout(_mainPanel, BoxLayout.PAGE_AXIS));
         _mainPanel.add(Box.createRigidArea(new java.awt.Dimension(350,10)));
-        _mainPanel.add(makeEntryPanel("Calibrate a Train"));
+        _mainPanel.add(makeEntryPanel("Calibrate a Train", isForward));
         _mainPanel.add(Box.createRigidArea(new java.awt.Dimension(50,10)));
         _mainPanel.add(makeExitPanel(true));
 //        _mainPanel.add(Box.createRigidArea(new java.awt.Dimension(450,0)));
@@ -201,13 +201,20 @@ public class Calibrater extends jmri.util.JmriJFrame {
 
     }
     
-    private JPanel makeEntryPanel(String name) {
+    private JPanel makeEntryPanel(String name, boolean isForward) {
         JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout(10, 10));
         JPanel p = new JPanel();
         p.setLayout(new BoxLayout(p, BoxLayout.PAGE_AXIS));
-        p.add(new JLabel(Bundle.getMessage("trainInfo1", _warrant.getTrainName(), _warrant.getDccAddress().toString())));
-        p.add(new JLabel(Bundle.getMessage("trainInfo2", name, _maxSpeed)));
+        p.add(new JLabel(Bundle.getMessage("trainInfo1", _warrant.getTrainName(),
+                    _warrant.getDccAddress().toString(), name)));
+        String direction;
+        if (isForward) {
+            direction = Bundle.getMessage("forward");
+        } else {
+            direction = Bundle.getMessage("reverse");
+        }
+        p.add(new JLabel(Bundle.getMessage("trainInfo2", direction, _maxSpeed)));
         panel.add(p, BorderLayout.CENTER);
         panel.add(Box.createRigidArea(new java.awt.Dimension(10,10)), BorderLayout.WEST);
         return panel;
@@ -295,26 +302,17 @@ public class Calibrater extends jmri.util.JmriJFrame {
      */
     protected void calibrateAt(int index) {
         if (_calibrateIndex == index) {
-            _mainPanel.remove(3);
-            _mainPanel.remove(1);
-            _mainPanel.add(makeEntryPanel(_calibBlockOrder.getBlock().getDisplayName()), 1);
+           _mainPanel.remove(3);
+           _mainPanel.remove(1);
             _entryTime = _calibBlockOrder.getBlock()._entryTime;
+            _mainPanel.add(makeEntryPanel(_calibBlockOrder.getBlock().getDisplayName(),
+                    _warrant.getThrottle().getIsForward()), 1);
             setVisible(true);
         } else if (_calibrateIndex == index-1) {
             setVisible(false);
             BlockOrder bo = _warrant.getBlockOrderAt(index);
             long eTime = bo.getBlock()._entryTime - _entryTime;
             _rawSpeed = _calibBlockOrder.getPath().getLengthMm()/eTime;    // layout mm/ms
-/*            float speed = _calibBlockOrder.getPath().getLengthMm()*SignalSpeedMap.getMap().getLayoutScale()/eTime;
-            _factor = _maxSpeed*25.4f/speed;
-            String speedUnits;
-            if ( SignalSpeedMap.getMap().getInterpretation() == SignalSpeedMap.SPEED_KMPH) {
-                speedUnits = "kmph";
-                speed = 3.6f*speed;
-            } else {
-                speedUnits = "mph";
-                speed = speed*3.6f*0.621371f;
-            }*/
             _mainPanel.add(makeExitPanel(false), 3);
             setVisible(true);
         }

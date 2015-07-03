@@ -879,6 +879,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     protected void setSpeedType(String type) {
         if (!type.equals(Stop) && !type.equals(EStop)) {
             _curSpeedType = type;          
+            if (_debug) {
+                log.debug("setSpeedType to "+_curSpeedType+" for warrant \"" + getDisplayName() + "\".");
+            }
         }        
     }
 
@@ -1482,10 +1485,15 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         String nextSpeed = getPermissibleSpeedAt(bo);
         // does next block belong to us
         bo = getBlockOrderAt(_idxCurrentOrder+1);
-        if (!allocateNextBlock(bo)) {
-            nextSpeed = Stop;
+        String nextNextSpeed;
+        if (bo!=null) {
+            if (!allocateNextBlock(bo)) {
+                nextSpeed = Stop;
+            }
+            nextNextSpeed = getPermissibleSpeedAt(bo);            
+        } else {    // at last block
+            nextNextSpeed = _curSpeedType;
         }
-        String nextNextSpeed = getPermissibleSpeedAt(bo);
         nextSpeed = _engineer.minSpeedType(nextSpeed, _curSpeedType);
         nextSpeed = _engineer.minSpeedType(nextSpeed, nextNextSpeed);
         if(_debug) log.debug("restart: at speed= "+nextSpeed+" CurrentSpeed= "+_curSpeedType);
@@ -1596,7 +1604,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                 float speed = blkSpeedInfo.getEntranceSpeed();
                 float waitSpeed = _engineer.modifySpeed(speed, _curSpeedType);
                 float timeRatio;
-                if (Math.abs(speed - waitSpeed)>.0001f) {
+                if (!_curSpeedType.equals(Normal)) {
                     timeRatio = speed/waitSpeed;                            
                 } else {
                     timeRatio = 1.0f;                            
@@ -1629,8 +1637,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                 waitTime += speedTime;
                             }                                
                         }
-                        speed = _engineer.modifySpeed(speed, _curSpeedType);
-                        if (Math.abs(nextSpeed - speed)>.0001f) {
+                        speed = _engineer.modifySpeed(nextSpeed, _curSpeedType);
+                        if (!_curSpeedType.equals(Normal)) {
                             timeRatio = nextSpeed/speed;                            
                         } else {
                             timeRatio = 1.0f;                            
@@ -1640,7 +1648,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         speedTime = 0;
                     }
                 }
-                waitTime += Math.round((availDist-lookAheadLen)/waitSpeed);
+                waitTime += _engineer.getTimeForDistance(waitSpeed, availDist-lookAheadLen);
                 
                 if(_debug) log.debug("waitSpeed= "+waitSpeed+", waitTime= "+waitTime+",  available distance= "+availDist+",lookAheadLen= "+lookAheadLen);
                 if (availDist<=lookAheadLen) {
@@ -1683,7 +1691,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                     float speed = blkSpeedInfo.getEntranceSpeed();
                     float waitSpeed = _engineer.modifySpeed(speed, _curSpeedType);
                     float timeRatio;
-                    if (Math.abs(speed - waitSpeed)>.0001f) {
+                    if (!_curSpeedType.equals(Normal)) {
                         timeRatio = speed/waitSpeed;                            
                     } else {
                         timeRatio = 1.0f;                            
@@ -1716,8 +1724,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                                     waitTime += speedTime;
                                 }                                
                             }
-                            speed = _engineer.modifySpeed(speed, _curSpeedType);
-                            if (Math.abs(nextSpeed - speed)>.0001f) {
+                            speed = _engineer.modifySpeed(nextSpeed, _curSpeedType);
+                            if (!_curSpeedType.equals(Normal)) {
                                 timeRatio = nextSpeed/speed;                            
                             } else {
                                 timeRatio = 1.0f;                            
@@ -1727,7 +1735,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             speedTime = 0;
                         }
                     }
-                    waitTime += Math.round((availDist-lookAheadLen)/waitSpeed);
+                    waitTime += _engineer.getTimeForDistance(waitSpeed, availDist-lookAheadLen);
                     
                     if(_debug) log.debug("waitSpeed= "+waitSpeed+", waitTime= "+waitTime+",  available distance= "+availDist+",lookAheadLen= "+lookAheadLen);
                     if (availDist<=lookAheadLen) {
@@ -1793,7 +1801,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                             maxSpeed = lastSpeed;
                         }                        
                     } else {
-                        maxSpeed = lastSpeed;
                         hasSpeedChange = true;
                     }
                 }
