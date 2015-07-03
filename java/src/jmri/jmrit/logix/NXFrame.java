@@ -365,7 +365,7 @@ public class NXFrame extends WarrantRoute {
             Calibrater calib = null;
             if (_calibrateBox.isSelected()) {
                 warrant.setViaOrder(getViaBlockOrder());
-                calib = new Calibrater(warrant, getLocation());
+                calib = new Calibrater(warrant, _forward.isSelected(), getLocation());
                 msg = calib.verifyCalibrate();
                 if (msg!=null) {
                     calib = null;
@@ -553,6 +553,7 @@ public class NXFrame extends WarrantRoute {
             len = defaultBlockLen;
         }
         totalLen += len/2;
+        if (log.isDebugEnabled()) log.debug("Route length= "+totalLen);
         return totalLen;
     }
     private float getRampLength(float totalLen, RosterSpeedProfile speedProfile) {
@@ -568,6 +569,9 @@ public class NXFrame extends WarrantRoute {
                 dist = (speed + _minSpeed/2)*_intervalTime*factor;                    
             }
             if (rampLength + dist <= totalLen/2) {
+                if ((speed + _minSpeed)>_maxSpeed) {
+                    dist = dist*(_maxSpeed-speed)/_minSpeed;
+                }
                 rampLength += dist;
                 speed += _minSpeed;
                 numSteps++;
@@ -579,8 +583,8 @@ public class NXFrame extends WarrantRoute {
         }            
         // add the smidge of distance needed to reach _maxSpeed
 //        rampLength += (_maxSpeed - speed)*_intervalTime*scaleFactor;
-        if (log.isDebugEnabled()) log.debug("Route length= "+totalLen+" uses "+numSteps+" speed steps of delta= "+
-                _minSpeed+" for rampLength = "+rampLength);
+        if (log.isDebugEnabled()) log.debug(numSteps+" speed steps of delta= "+
+                _minSpeed+" for rampLength = "+rampLength+" to reach speed "+_maxSpeed);
         return rampLength;
     }
     
@@ -615,7 +619,7 @@ public class NXFrame extends WarrantRoute {
             speedProfile = ent.getSpeedProfile();
             if (speedProfile!=null) {
                 float s = speedProfile.getSpeed(_maxSpeed, isForward);
-                if (log.isDebugEnabled()) log.debug("SpeedProfile _maxSpeed speed= "+s);
+                if (log.isDebugEnabled()) log.debug("SpeedProfile _maxSpeed setting= "+_maxSpeed+" speed= "+s+"mps");
                 if (s<=0.0f) {
                     speedProfile = null;
                 } else {

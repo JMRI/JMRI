@@ -92,7 +92,10 @@ public class RosterSpeedProfile {
     public float getForwardSpeed(float speedStep) {
         int iSpeedStep = Math.round(speedStep * 1000);
         if (speeds.containsKey(iSpeedStep)) {
-            return speeds.get(iSpeedStep).getForwardSpeed();
+            float speed = speeds.get(iSpeedStep).getForwardSpeed();
+            if (speed>0.0f) {
+                return speed;                
+            }
         }
         log.debug("no exact match forward for " + iSpeedStep);
         float lower = 0;
@@ -133,7 +136,10 @@ public class RosterSpeedProfile {
     public float getReverseSpeed(float speedStep) {
         int iSpeedStep = Math.round(speedStep * 1000);
         if (speeds.containsKey(iSpeedStep)) {
-            return speeds.get(iSpeedStep).getReverseSpeed();
+            float speed = speeds.get(iSpeedStep).getReverseSpeed();
+            if (speed>0.0f) {
+                return speed;                
+            }
         }
         log.debug("no exact match reverse for " + iSpeedStep);
         float lower = 0;

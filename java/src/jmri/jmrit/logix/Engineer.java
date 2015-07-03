@@ -623,16 +623,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_debug)log.debug(msg);            
     }
 
-    protected long getTimeForDistance(float distance) {
-        float speed  = _throttle.getSpeedSetting();
-        float time;
-        if (_speedProfile!=null) {
-            time = distance/(_speedProfile.getSpeed(speed, _throttle.getIsForward())*1000);               
-        } else {
-            time = distance/(speed*_speedMap.getDefaultThrottleFactor());                
-        }
-        return (long)time;
-    }
     protected float getDistanceTraveled(float speedSetting, String speedtype, long time) {
         float speed =  modifySpeed(speedSetting, speedtype);
         float distance;
@@ -644,13 +634,26 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         return distance;
     }
+    protected long getTimeForDistance(float speed, float distance) {
+        boolean isForward = _throttle.getIsForward();
+        float time;
+        if (_speedProfile != null) {
+            time = distance*1000/_speedProfile.getSpeed(speed, isForward);
+        } else {
+            time = distance*_speedMap.getDefaultThrottleFactor()/speed;
+        }
+        return (long)time;
+    }
     protected float rampLengthForSpeedChange(float curSpeed, String curSpeedType, String toSpeedType) {
+        if (curSpeedType.equals(toSpeedType)) {
+            return 0.0f;
+        }
         float fromSpeed = modifySpeed(curSpeed, curSpeedType);
-        float speed = modifySpeed(curSpeed, toSpeedType);
-        if (speed>fromSpeed) {
+        float toSpeed = modifySpeed(curSpeed, toSpeedType);
+        if (toSpeed>fromSpeed) {
             float tmp = fromSpeed;
-            fromSpeed = speed;
-            speed = tmp;
+            fromSpeed = toSpeed;
+            toSpeed = tmp;
         }
         float rampLength = 0.0f;
         float delta = _speedMap.getStepIncrement();
@@ -660,22 +663,26 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         }
         float time = _speedMap.getStepDelay();
         boolean isForward = _throttle.getIsForward();
-        while (fromSpeed >= speed) {
+        float speed = fromSpeed;
+        while (speed >= toSpeed) {
             float dist;
             if (_speedProfile != null) {
-                dist = _speedProfile.getSpeed((fromSpeed-delta/2), isForward)*time/1000;               
+                dist = _speedProfile.getSpeed((speed-delta/2), isForward)*time/1000;               
             } else {
-                dist = (fromSpeed-delta/2)*time/_speedMap.getDefaultThrottleFactor();                
+                dist = (speed-delta/2)*time/_speedMap.getDefaultThrottleFactor();                
             }
-            fromSpeed -= delta;
-            if (fromSpeed>=speed) {
+            if (dist<=0.0f) {
+                break;
+            }
+            speed -= delta;
+            if (speed>=toSpeed) {
                 rampLength += dist;                
             } else {
-                rampLength += (delta-(speed-fromSpeed))*dist/delta;
+                rampLength += (delta-(speed-speed))*dist/delta;
             }
         }
         if (_debug) log.debug("rampLengthForSpeedChange()= "+rampLength+
-                " for speed= "+curSpeed+" to "+toSpeedType+", from "+
+                " for speed= "+fromSpeed+", "+curSpeedType+" to "+toSpeedType+", from "+
                 (_speedProfile!=null?"SpeedProfile":"Factor="+getThrottleFactor(curSpeed)));
         return rampLength;
     }
@@ -754,6 +761,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                             "\" step increment= "+incr+" time interval= "+delay+
                             " Ramp "+speed+" to "+endSpeed+" on warrant "+_warrant.getDisplayName());
 
+                    _warrant.setSpeedType(_speedType);
                     if (endSpeed > speed) {
                         synchronized(this) {
                             while (speed < endSpeed) {
@@ -793,8 +801,8 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                 }
             } finally {
                 _speedOverride = false;
-                _warrant.fireRunStatus("SpeedChange", old, _speedType);
                 _warrant.setSpeedType(_speedType);
+                _warrant.fireRunStatus("SpeedChange", old, _speedType);
                 _lock.unlock();
             }
             if (_debug) log.debug("rampSpeed complete to \""+endSpeedType+
