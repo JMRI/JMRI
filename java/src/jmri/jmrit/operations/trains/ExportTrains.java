@@ -17,7 +17,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Exports the car roster into a comma delimitated file (CSV).
+ * Exports the car roster into a comma delimited file (CSV).
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2011
  * @version $Revision: 29118 $

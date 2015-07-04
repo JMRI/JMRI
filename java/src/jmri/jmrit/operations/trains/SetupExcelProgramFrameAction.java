@@ -6,7 +6,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Swing action to create a RunExcelProgramFrame.
+ * Swing action to launch the SetupExcelProgramFrame.
  *
  * @author Daniel Boudreau Copyright (C) 2013
  * @version $Revision: 22219 $

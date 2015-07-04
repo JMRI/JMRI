@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Frame for user edit of the file name of an Excel program.
+ * Frame for user edit of the file name and setup of an Excel program.
  *
  * @author Dan Boudreau Copyright (C) 2013
  * @version $Revision: 22249 $

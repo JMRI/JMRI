@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Logs rolling stock movements by writing their locations to a file.
+ * Logs train movements and status to a file.
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2013
  * @version $Revision$

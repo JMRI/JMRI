@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Train print utilities
+ * Train print utilities. Used for train manifests and build reports.
  *
  * @author Daniel Boudreau (C) 2010
  * @version $Revision$
@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
  */
 public class TrainPrintUtilities {
 
-    static final String NEW_LINE = "\n";	// NOI18N
+    static final String NEW_LINE = "\n"; // NOI18N
     static final char HORIZONTAL_LINE_SEPARATOR = '-'; // NOI18N
     static final char VERTICAL_LINE_SEPARATOR = '|'; // NOI18N
     static final char SPACE = ' ';
@@ -42,15 +42,15 @@ public class TrainPrintUtilities {
     /**
      * Print or preview a train manifest, build report, or switch list.
      *
-     * @param file          File to be printed or previewed
-     * @param name          Title of document
-     * @param isPreview     true if preview
-     * @param fontName      optional font to use when printing document
+     * @param file File to be printed or previewed
+     * @param name Title of document
+     * @param isPreview true if preview
+     * @param fontName optional font to use when printing document
      * @param isBuildReport true if build report
-     * @param logoURL       optional pathname for logo
-     * @param printerName   optional default printer name
-     * @param orientation   Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
-     * @param fontSize      font size
+     * @param logoURL optional pathname for logo
+     * @param printerName optional default printer name
+     * @param orientation Setup.LANDSCAPE, Setup.PORTRAIT, or Setup.HANDHELD
+     * @param fontSize font size
      */
     public static void printReport(File file, String name, boolean isPreview, String fontName,
             boolean isBuildReport, String logoURL, String printerName, String orientation, int fontSize) {
@@ -87,7 +87,7 @@ public class TrainPrintUtilities {
         // now get the build file to print
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	// NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist");
             writer.close();
@@ -118,7 +118,7 @@ public class TrainPrintUtilities {
             if (line == null) {
                 break;
             }
-//			log.debug("Line: {}", line.toString());
+            //			log.debug("Line: {}", line.toString());
             // check for build report print level
             if (isBuildReport) {
                 line = filterBuildReport(line, false); // no indent
@@ -160,7 +160,7 @@ public class TrainPrintUtilities {
                         || (!Setup.getPickupCarPrefix().equals("") && line.startsWith(Setup
                                 .getPickupCarPrefix()))
                         || (!Setup.getSwitchListPickupCarPrefix().equals("") && line
-                        .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
+                                .startsWith(Setup.getSwitchListPickupCarPrefix()))) {
                     // log.debug("found a pickup line");
                     c = Setup.getPickupColor();
                 } else if ((!Setup.getDropEnginePrefix().equals("") && line.startsWith(Setup
@@ -217,7 +217,7 @@ public class TrainPrintUtilities {
         // make a new file with the build report levels removed
         BufferedReader in = null;
         try {
-            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8"));	// NOI18N
+            in = new BufferedReader(new InputStreamReader(new FileInputStream(file), "UTF-8")); // NOI18N
         } catch (FileNotFoundException e) {
             log.error("Build file doesn't exist");
             return;
@@ -230,7 +230,7 @@ public class TrainPrintUtilities {
                 Bundle.getMessage("Report") + " " + name);
         try {
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(buildReport), "UTF-8")), true);	// NOI18N
+                    new FileOutputStream(buildReport), "UTF-8")), true); // NOI18N
         } catch (IOException e) {
             log.error("Can not create build report file");
             try {
@@ -271,7 +271,7 @@ public class TrainPrintUtilities {
      * Removes the print levels from the build report
      */
     private static String filterBuildReport(String line, boolean indent) {
-        String[] inputLine = line.split("\\s+");	// NOI18N
+        String[] inputLine = line.split("\\s+"); // NOI18N
         if (inputLine.length == 0) {
             return "";
         }
@@ -326,7 +326,7 @@ public class TrainPrintUtilities {
             return buf.toString();
         } else {
             log.debug("ERROR first characters of build report not valid (" + line + ")");
-            return "ERROR " + line;	// NOI18N
+            return "ERROR " + line; // NOI18N
         }
     }
 
@@ -356,17 +356,6 @@ public class TrainPrintUtilities {
         }
     }
 
-    /**
-     * This method replaces the method above for compatibility with Java 1.5.
-     */
-    /*
-     * public static void openDesktopEditor(File file){
-     * log.info("Open file using editor not supported yet!  Requires Java 1.6"); String path = file.getAbsolutePath();
-     * JOptionPane.showMessageDialog(null, "Open file using editor not available, file path: "+path +
-     * "\n If you want to use this feature, download replacement jmri.jar file from:" +
-     * "\n http://home.comcast.net/~daboudreau/JMRI_JAVA1.6/jmri.jar", "Requires custom jmri.jar file and Java 1.6",
-     * JOptionPane.INFORMATION_MESSAGE); return; }
-     */
     public static JComboBox<String> getPrinterJComboBox() {
         JComboBox<String> box = new JComboBox<>();
         PrintService[] services = PrintServiceLookup.lookupPrintServices(null, null);
@@ -387,6 +376,5 @@ public class TrainPrintUtilities {
         return ""; // no default printer specified
     }
 
-    static Logger log = LoggerFactory
-            .getLogger(TrainPrintUtilities.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrainPrintUtilities.class.getName());
 }

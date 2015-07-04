@@ -1,4 +1,4 @@
-// TrainPrintUtilities
+// TrainUtilities
 package jmri.jmrit.operations.trains;
 
 import java.io.File;
@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Train print utilities
+ * Train file utilities
  *
  * @author Daniel Boudreau (C) 2010
  * @version $Revision: 20668 $
@@ -35,6 +35,5 @@ public class TrainUtilities {
         }
     }
 
-    static Logger log = LoggerFactory
-            .getLogger(TrainUtilities.class.getName());
+    static Logger log = LoggerFactory.getLogger(TrainUtilities.class.getName());
 }

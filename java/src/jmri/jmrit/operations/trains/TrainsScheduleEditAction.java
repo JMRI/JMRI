@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Action to edit timetable
+ * Action to edit timetable (Schedule)
  *
  * @author Daniel Boudreau Copyright (C) 2010
  * @version $Revision$

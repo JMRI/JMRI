@@ -1,4 +1,4 @@
-// TrainConductorFrame.java
+// TrainConductorPanel.java
 package jmri.jmrit.operations.trains;
 
 import java.awt.Dimension;
@@ -20,7 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Conductor Frame. Shows work for a train one location at a time.
+ * Conductor Panel. Shows work for a train one location at a time.
  *
  * @author Dan Boudreau Copyright (C) 2011, 2013
  * @version $Revision: 18630 $

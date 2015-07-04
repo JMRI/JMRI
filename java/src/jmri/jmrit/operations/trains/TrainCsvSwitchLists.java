@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * Builds a comma separated value (csv) switch list for a location on the
- * railroad
+ * railroad.
  *
  * @author Daniel Boudreau (C) Copyright 2011, 2013, 2014, 2015
  * @version $Revision: 1 $

@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Used to edit train timetable.
+ * Used to edit train timetable (Schedule).
  *
  * @author Daniel Boudreau Copyright (C)
  * @version $Revision: 23749 $

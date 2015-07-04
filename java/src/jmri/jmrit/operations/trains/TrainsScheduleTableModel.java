@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Table Model for edit of train schedules used by operations
+ * Table Model for edit of train schedules (Timetable) used by operations
  *
  * @author Daniel Boudreau Copyright (C) 2010, 2012
  * @version $Revision$

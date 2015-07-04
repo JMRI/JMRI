@@ -23,7 +23,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Show Cars In Train Frame.
+ * Show Cars In Train Frame. This frame lists all cars assigned to a train in
+ * the correct blocking order. Also show which cars are to be picked up and set
+ * out at each location in the train's route.
  *
  * @author Dan Boudreau Copyright (C) 2012
  * @version $Revision: 18630 $
