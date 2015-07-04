@@ -922,7 +922,7 @@ public class RollingStock implements java.beans.PropertyChangeListener {
         int old = _blocking;
         _blocking = number;
         if (old != number) {
-            setDirtyAndFirePropertyChange("car blocking changed", old, number); // NOI18N
+            setDirtyAndFirePropertyChange("rolling stock blocking changed", old, number); // NOI18N
         }
     }
 

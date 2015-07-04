@@ -3,6 +3,7 @@ package jmri.jmrit.operations.locations;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -29,7 +30,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
      */
     private static final long serialVersionUID = 8385333181895879131L;
 
-    LocationManager manager; // There is only one manager
+    LocationManager locationManager; // There is only one manager
 
     // Defines the columns
     public static final int IDCOLUMN = 0;
@@ -47,8 +48,8 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
 
     public LocationsTableModel() {
         super();
-        manager = LocationManager.instance();
-        manager.addPropertyChangeListener(this);
+        locationManager = LocationManager.instance();
+        locationManager.addPropertyChangeListener(this);
         updateList();
     }
 
@@ -70,9 +71,9 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         removePropertyChangeLocations();
 
         if (_sort == SORTBYID) {
-            locationsList = manager.getLocationsByIdList();
+            locationsList = locationManager.getLocationsByIdList();
         } else {
-            locationsList = manager.getLocationsByNameList();
+            locationsList = locationManager.getLocationsByNameList();
         }
         // and add them back in
         for (Location loc : locationsList) {
@@ -96,7 +97,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         table.getColumnModel().getColumn(NAMECOLUMN).setPreferredWidth(200);
         table.getColumnModel().getColumn(TRACKCOLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(Bundle.getMessage("Class/Interchange") + Bundle.getMessage("Spurs")
-                                + Bundle.getMessage("Yards")).getPreferredSize().width + 20));
+                        + Bundle.getMessage("Yards")).getPreferredSize().width + 20));
         table.getColumnModel().getColumn(LENGTHCOLUMN).setPreferredWidth(
                 Math.max(60, new JLabel(getColumnName(LENGTHCOLUMN)).getPreferredSize().width + 10));
         table.getColumnModel().getColumn(USEDLENGTHCOLUMN).setPreferredWidth(60);
@@ -250,29 +251,24 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         }
     }
 
-    // limit user to only two edit location windows
-    LocationEditFrame lef1 = null;
-    LocationEditFrame lef2 = null;
+    List<LocationEditFrame> frameList = new ArrayList<LocationEditFrame>();
 
     private synchronized void editLocation(int row) {
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                log.debug("Edit location");
                 Location loc = locationsList.get(row);
-                if (lef1 != null && (lef2 == null || !lef2.isVisible())) {
-                    if (lef2 != null) {
-                        lef2.dispose();
+                log.debug("Edit location ({})", loc.getName());
+                for (LocationEditFrame lef : frameList) {
+                    if (lef._location == loc) {
+                        lef.dispose();
+                        frameList.remove(lef);
+                        break;
                     }
-                    lef2 = new LocationEditFrame();
-                    lef2.initComponents(loc);
-                } else {
-                    if (lef1 != null) {
-                        lef1.dispose();
-                    }
-                    lef1 = new LocationEditFrame();
-                    lef1.initComponents(loc);
                 }
+                LocationEditFrame lef = new LocationEditFrame();
+                lef.initComponents(loc);
+                frameList.add(lef);
             }
         });
     }
@@ -320,13 +316,10 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
         if (log.isDebugEnabled()) {
             log.debug("dispose");
         }
-        if (lef1 != null) {
-            lef1.dispose();
+        for (LocationEditFrame lef : frameList) {
+            lef.dispose();
         }
-        if (lef2 != null) {
-            lef2.dispose();
-        }
-        manager.removePropertyChangeListener(this);
+        locationManager.removePropertyChangeListener(this);
         removePropertyChangeLocations();
     }
 
