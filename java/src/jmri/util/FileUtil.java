@@ -1074,15 +1074,24 @@ public final class FileUtil {
      * @param path
      */
     public static void createDirectory(String path) {
-        File dir = new File(path);
+        FileUtil.createDirectory(new File(path));
+    }
+
+    /**
+     * Create a directory if required. Any parent directories will also be
+     * created.
+     *
+     * @param dir
+     */
+    public static void createDirectory(File dir) {
         if (!dir.exists()) {
-            log.warn("Creating directory: {}", path);
+            log.info("Creating directory: {}", dir);
             if (!dir.mkdirs()) {
-                log.error("Failed to create directory: {}", path);
+                log.error("Failed to create directory: {}", dir);
             }
         }
     }
-
+    
     /**
      * Recursively delete a path. It is recommended to use
      * {@link java.nio.file.Files#delete(java.nio.file.Path)} or
