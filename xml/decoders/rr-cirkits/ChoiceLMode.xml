@@ -11,9 +11,9 @@
 <!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
-<!-- version 1 - new file includes for LNCP files -->
-<!-- LocoNet/DCC choice for Masts -->
+<!-- version 1 - new file includes for Logic files -->
+<!-- mode choices for LocoNet messages in Logic statements-->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice choice="LocoNet"/>
-  <enumChoice choice="Mast"/>
+  <enumChoice choice="Turnout"/>
+  <enumChoice choice="Sensor"/>
 </enumVal>
