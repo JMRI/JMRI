@@ -1,0 +1,13 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE preface [
+<!ENTITY % BOOK_ENTITIES SYSTEM "DecoderPro_Users_Guide.ent">
+%BOOK_ENTITIES;
+]>
+<preface version="5.0" xml:id="pref-Documentation-DecoderPro_Users_Guide-Preface" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Preface</title>
+	<xi:include href="Common_Content/Conventions.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	<xi:include href="Feedback.xml" xmlns:xi="http://www.w3.org/2001/XInclude"><xi:fallback xmlns:xi="http://www.w3.org/2001/XInclude"><xi:include href="Common_Content/Feedback.xml" xmlns:xi="http://www.w3.org/2001/XInclude" />
+	</xi:fallback>
+	</xi:include>
+</preface>
+

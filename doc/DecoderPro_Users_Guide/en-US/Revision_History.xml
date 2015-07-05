@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE appendix [
+<!ENTITY % BOOK_ENTITIES SYSTEM "DecoderPro_Users_Guide.ent">
+%BOOK_ENTITIES;
+]>
+<appendix version="5.0" xml:id="appe-Documentation-DecoderPro_Users_Guide-Revision_History" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Revision History</title>
+	<revhistory>
+		<revision>
+			<revnumber>0.0-0</revnumber>
+			<date>Sun Jul 5 2015</date>
+			<author>
+				<personname><firstname>Enter your first name here.</firstname>
+				<surname>Enter your surname here.</surname>
+				</personname><email>Enter your email address here.</email>
+			</author>
+			<revdescription>
+				<simplelist>
+					<member>Initial creation by publican</member>
+				</simplelist>
+			</revdescription>
+		</revision>
+	</revhistory>
+</appendix>
+

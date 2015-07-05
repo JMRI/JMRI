@@ -1,0 +1,33 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE chapter [
+<!ENTITY % BOOK_ENTITIES SYSTEM "DecoderPro_Users_Guide.ent">
+%BOOK_ENTITIES;
+]>
+<chapter version="5.0" xml:id="chap-Documentation-DecoderPro_Users_Guide-Test_Chapter" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<title>Test Chapter</title>
+	<para>
+		This is a test paragraph
+	</para>
+	<section xml:id="sect-Documentation-DecoderPro_Users_Guide-Test_Section_1">
+		<title>Test Section 1</title>
+		<para>
+			This is a test paragraph in a section
+		</para>
+	</section>
+	
+	<section xml:id="sect-Documentation-DecoderPro_Users_Guide-Test_Section_2">
+		<title>Test Section 2</title>
+		<para>
+			This is a test paragraph in Section 2
+			<orderedlist>
+				<listitem>
+					<para>
+						This is a test listitem.
+					</para>
+				</listitem>
+			</orderedlist>
+		</para>
+	</section>
+
+</chapter>
+

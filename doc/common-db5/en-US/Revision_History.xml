@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8' ?>
+<!DOCTYPE appendix [
+]>
+<appendix version="5.0" xml:lang="en-US" xmlns="http://docbook.org/ns/docbook" xmlns:xlink="http://www.w3.org/1999/xlink">
+	<info><title>Revision History</title>
+	</info> <para>
+		<revhistory>
+			<revision>
+				<revnumber>3.0-0</revnumber>
+				 <date>Mon Mar 12 2012</date>
+				 <author>
+					<personname> <firstname>Jeff</firstname>
+					 <surname>Fearn</surname>
+					 </personname> <email>jfearn@redhat.com</email>
+				</author>
+				 <revdescription>
+					<simplelist>
+						<member>Publican 3.0</member>
+
+					</simplelist>
+
+				</revdescription>
+
+			</revision>
+
+		</revhistory>
+
+	</para>
+</appendix>
+

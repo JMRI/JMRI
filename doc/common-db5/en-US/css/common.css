@@ -1,0 +1,242 @@
+* {
+    widows: 4 !important;
+    orphans: 4 !important;
+}
+
+body, h1, h2, h3, h4, h5, h6, pre, li, div {
+}
+
+body {
+    background-color: white;
+    margin:0 auto;
+    font-family: "liberation sans", "Myriad ", "Bitstream Vera Sans", "Lucida Grande", "Luxi Sans", "Trebuchet MS", helvetica, verdana, arial, sans-serif;
+    font-size: 14px;
+    max-width: 770px;
+    color: black;
+}
+body > header {
+    margin:0 auto;
+    background-color: white;
+    max-width: 45em;
+    margin-top: 0;
+    padding: 2em 6em 6em;
+}
+
+body > footer {
+    max-width: 45em;
+}
+
+div.warning, div.note, div.important, div.tip, div.important {
+    color: black;
+    margin: 0px;
+    padding: 0px;
+    background: none;
+    background-color: white;
+    margin-bottom: 1em;
+    border-radius: 11px 11px 11px 11px;
+    page-break-inside: avoid;
+    background-color: #F5F5F5;
+    border-style: none;
+    box-shadow: 0 2px 5px #AAAAAA inset;
+    color: #000000;
+    padding: 0.5em;
+    
+}
+
+div.warning th, div.note th, div.important th, div.tip th, div.important th {
+    font-size: 1.6em;
+    line-height: 2em;
+}
+
+.command, .filename, .keycap, .classname, .literal {
+    font-family: "liberation mono","bitstream vera mono","dejavu mono",monospace;
+    font-weight: bold;
+}
+
+.application, .guimenu, .guisubmenu, .guimenuitem, .abstract-title {
+    font-weight: bold;
+}
+
+
+.computeroutput, .option {
+    font-family: "liberation mono","bitstream vera mono","dejavu mono",monospace;
+    font-weight: bold;
+}
+
+pre {
+    border-radius: 11px 11px 11px 11px;
+    page-break-inside: avoid;
+    background-color: #F5F5F5;
+    border-style: none;
+    box-shadow: 0 2px 5px #AAAAAA inset;
+    color: #000000;
+    display: block;
+    font-family: "liberation mono","bitstream vera mono","dejavu mono",monospace;
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    padding: 0.5em 1em;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+table {
+    border: 1px solid #444444;
+    border-collapse: collapse;
+    width: 100%;
+    word-wrap: break-word;
+}
+
+th, td {
+    vertical-align: top;
+}
+
+.revhistory > table {
+    border: none;
+}
+
+div.navfooter {
+    color: #999999;
+}
+
+div.navfooter a {
+    text-decoration: none;
+}
+
+div.navfooter a:hover {
+    text-decoration: none;
+    color: #444444;
+}
+
+div.navfooter table {
+    border: none;
+}
+
+div.navfooter table tr:first-child td a {
+    background-position: 90% 90%;
+}
+
+div.navfooter table tr:first-child td:last-child a {
+    background: url("../images/stock-go-forward.png") no-repeat scroll right 120% transparent;
+    padding-bottom: 4px;
+    padding-right: 28px;
+    padding-top: 3px;
+}
+
+div.navfooter table tr:first-child td:first-child a {
+    background: url("../images/stock-go-back.png") no-repeat scroll left 120% transparent;
+    padding: 3px 0.5em 4px 28px;
+}
+
+div.navfooter table tr td {
+    font-size: 10px;
+}
+div.navfooter table tr:first-child td {
+    font-size: 1em;
+}
+
+.inlinemediaobject  {
+	display: block;
+	text-align: center;
+}
+
+img {
+    max-width: 100%;
+}
+
+.figure {
+	margin-top: 1em;
+}
+
+a {
+    outline: medium none;
+}
+
+a:link {
+    color: #3366CC;
+    text-decoration: none;
+}
+a:visited {
+    color: #003366;
+    text-decoration: none;
+}
+
+.toc a, .qandaset a {
+    border: medium none;
+    font-weight: normal;
+}
+
+.toc a:hover, .qandaset a:hover {
+    border-bottom: 1px dotted;
+}
+
+
+table.lt-4-cols.lt-7-rows td {
+	border: none;
+}
+/*to simplify layout*/
+
+
+table.lt-4-cols.gt-14-rows tr:nth-child(odd) {
+	background-color: #fafafa;
+}
+/* to keep simple but stripe rows */ 
+
+
+.gt-8-cols td {
+	border-left: 1px solid #ccc;
+}
+
+.gt-8-cols td:first-child {
+	border-left: 0;
+}
+/*Lists*/
+ul {
+    list-style-image: url("common/en-US/images/dot.png");
+    list-style-type: circle;
+    padding-left: 1.6em;
+}
+
+ul ul {
+    list-style-image: url("common/en-US/images/dot2.png");
+    list-style-type: circle;
+}
+
+ol.1 {
+	list-style-type: decimal;
+}
+
+ol.a {
+	list-style-type: lower-alpha;
+}
+
+ol.i {
+	list-style-type: lower-roman;
+}
+ol.A {
+	list-style-type: upper-alpha;
+}
+
+ol.I {
+	list-style-type: upper-roman;
+}
+
+dt {
+	font-weight:bold;
+	margin-bottom:0px;
+	padding-bottom:0px;
+}
+
+dd {
+	margin:0px;
+	margin-left:2em;
+	padding-top:0px;
+	padding-bottom: 1em;
+}
+
+li {
+	padding-top: 0px;
+	margin-top: 0px;
+	padding-bottom: 0px;
+/*	margin-bottom: 16px; */
+}
+
