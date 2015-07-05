@@ -19,7 +19,7 @@
     <row>
       <column>
         <label>
-          <text>Select either 'Output mode' (a Serial command - Closed/Thrown plus a Mast #) OR 'DCC mode' (a Mast Address plus its Signal Aspect).</text>
+          <text>Select either 'LocoNet mode' (a Serial command - Closed/Thrown plus a Mast #) OR 'Mast mode' (a Mast Address plus its Signal Aspect).</text>
         </label>
         <label>
           <text>All commands are entered as their actual Address numbers. For example to respond to LT9 Closed enter Command as 9 C.</text>
@@ -142,11 +142,15 @@
     </row>
     <row>
       <column>
+        <display item="MA1 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
+      <column>
         <display item="MA1a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
       </column>
       <column>
-        <display item="MA1b Address" tooltip="Enter the Serial command #" label="  ">
+        <display item="MA1b Address" tooltip="Enter the Serial command #" label="">
          </display>
       </column>
       <column>
@@ -248,6 +252,10 @@
       </label>
     </row>
     <row>
+      <column>
+        <display item="MA2 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
       <column>
         <display item="MA2a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
@@ -356,6 +364,10 @@
     </row>
     <row>
       <column>
+        <display item="MA3 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
+      <column>
         <display item="MA3a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
       </column>
@@ -462,6 +474,10 @@
       </label>
     </row>
     <row>
+      <column>
+        <display item="MA4 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
       <column>
         <display item="MA4a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
@@ -570,6 +586,10 @@
     </row>
     <row>
       <column>
+        <display item="MA5 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
+      <column>
         <display item="MA5a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
       </column>
@@ -676,6 +696,10 @@
       </label>
     </row>
     <row>
+      <column>
+        <display item="MA6 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
       <column>
         <display item="MA6a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
@@ -784,6 +808,10 @@
     </row>
     <row>
       <column>
+        <display item="MA7 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
+      <column>
         <display item="MA7a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
       </column>
@@ -890,6 +918,10 @@
       </label>
     </row>
     <row>
+      <column>
+        <display item="MA8 Type" tooltip="Enter the message type" label="">
+         </display>
+      </column>
       <column>
         <display item="MA8a Address" tooltip="Enter the Mast Address" label="  ">
          </display>
