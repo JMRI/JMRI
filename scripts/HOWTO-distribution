@@ -357,6 +357,9 @@ behavioural differences), it is easiest to perform these tasks via Cygwin:
 
 Cygwin is a set of tools to provide a POSIX-like experience on MS Windows.
 
+(Better still, if possible, setup a Linux Virtual Machine under Windows - 
+this will enable you to follow the 'normal' steps for non-Windows platforms)
+
 Download the setup file for your platform (x86 or x86_64) and then run the
 installer, mainly using the defaults, but also add the following packages:
 
