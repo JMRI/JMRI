@@ -26,6 +26,9 @@
     Provides build services for JMRI libraries and applications
     </description>
 
+    <!-- import docbook-specific targets -->
+    <import file="doc/build.xml"/>
+
     <property name="jmri.copyright.year" value="1997-2015"/>
 
     <property environment="env"/>
@@ -303,7 +306,8 @@
     </target>
 
     <target name="clean"
-            description="remove compilation results to force rebuild">
+            description="remove compilation results to force rebuild"
+            depends="docbook.clean">
         <delete includeEmptyDirs="true" quiet="true">
             <fileset file="log.txt"/>
             <fileset file="${jartarget}/jmri.jar"/>

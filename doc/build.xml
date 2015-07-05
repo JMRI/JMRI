@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="docbook" default="all" basedir="..">
+
+    <!--
+    basedir=".." defines all paths relative to the top level directory in the
+    project. This ensures that basedir is the same if this build.xml is invoked
+    within or without the context of the main JMRI build.xml
+    -->
+    
+    <description>
+        Transform DocBook XML to various outputs
+    </description>
+
+    <!-- Define base properties -->
+    <property name="doc.dir" value="${basedir}/doc" />
+    <property name="lib.dir" value="${basedir}/lib" />
+    <property name="input.dir" value="${doc.dir}/input" />
+    <property name="output.dir" value="${doc.dir}/output" />
+    <property name="docbook.xsl.dir" value="${doc.dir}/docbook-xsl-1.78.1" />
+    <property name="xhtml5.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
+
+    <!--
+      - Sets up the classpath for the Xalan and Xerces implementations
+      - that are to be used in this script, since the versions that ship
+      - with Ant may be out of date.
+      -->
+    <path id="xalan.classpath">
+        <fileset dir="${lib.dir}" id="xalan.fileset">
+            <include name="xalan.jar" />
+            <include name="xercesImpl.jar" />
+        </fileset>
+    </path>
+
+
+    <!-- - target: usage -->
+    <target name="usage" description="Prints help">
+        <echo message="Use -projecthelp to get a list of the available targets." />
+    </target>
+
+    <!-- - target: clean -->
+    <target name="clean" description="Cleans up generated files.">
+        <delete dir="${output.dir}" />
+    </target>
+
+    <!-- - target: depends -->
+    <target name="createtargetdir" description="Generate targetdir.">
+        <mkdir dir="${output.dir}" />
+        <mkdir dir="${output.dir}/images" />
+    </target>
+
+
+    <target name="build-html" depends="clean, createtargetdir"
+            description="Generates HTML5 files">
+        <echo message="Building HTML5 output" />
+
+        <!-- Copy the stylesheet to the same directory as the HTML files - ->
+        <copy todir="${output.dir}">
+            <fileset dir="css">
+                <include name="style.css" />
+            </fileset>
+        </copy>
+        -->
+        <!-- Copy the images to the same directory as the HTML files - ->
+        <copy todir="${output.dir}\images">
+            <fileset dir="${input.dir}\images">
+                <include name="title.png" />
+            </fileset>
+        </copy>
+        -->
+        <!-- Transfer to HTML -->
+        <xslt style="${xhtml5.stylesheet}" extension=".html" basedir="${input.dir}"
+              destdir="${output.dir}">
+            <include name="**/*book.xml" />
+            <include name="**/*article*.xml" />
+            <param name="html.stylesheet" expression="style.css" />
+            <param name="docbook.css.source" expression="" />
+            <param name="section.autolabel" expression="1" />
+            <param name="make.clean.html" expression="1" />
+            <outputproperty name="indent" value="yes" />
+            <classpath refid="xalan.classpath" />
+        </xslt>
+    </target>
+
+</project>
