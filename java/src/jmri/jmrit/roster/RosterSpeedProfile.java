@@ -659,27 +659,27 @@ public class RosterSpeedProfile {
         }
     }
 
-    static class SpeedStep {
+    static public class SpeedStep {
 
         float forward = 0.0f;
         float reverse = 0.0f;
 
-        SpeedStep() {
+        public SpeedStep() {
         }
 
-        void setForwardSpeed(float speed) {
+        public void setForwardSpeed(float speed) {
             forward = speed;
         }
 
-        void setReverseSpeed(float speed) {
+        public void setReverseSpeed(float speed) {
             reverse = speed;
         }
 
-        float getForwardSpeed() {
+        public float getForwardSpeed() {
             return forward;
         }
 
-        float getReverseSpeed() {
+        public float getReverseSpeed() {
             return reverse;
         }
     }
@@ -689,6 +689,9 @@ public class RosterSpeedProfile {
      */
     public int getProfileSize() {
         return speeds.size();
+    }
+    public TreeMap<Integer, SpeedStep> getProfileSpeeds() {
+        return speeds;
     }
     public float getSpeed(float speedStep, boolean isForward) {
         float speed;
