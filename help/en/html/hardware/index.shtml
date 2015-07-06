@@ -290,6 +290,13 @@
 	    RailDriver</a></dt>
 	    <dt>PI Engineering RailDriver</dt>
 	    <dd><p class="dl">Configure: <a href="raildriver/index.shtml">RailDriver cab simulator</a></p></dd>
+	    <dt class="im">
+		<a href="http://www.raspberrypi.org">
+		<img src="https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001-300x267.png" width="60" height="58" alt="Raspberry Pi Foundation"></a>
+	    </dt>
+            <dt>Raspberry Pi Foundation</dt>
+            <dd><p classs="dl"><a href="pi/index.shtml">General information on connecting to the Raspberry PI GPIO pins.</a></p>
+            </dd>
 
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
 	    <dt>Roco</dt>
