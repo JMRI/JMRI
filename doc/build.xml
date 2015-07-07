@@ -19,7 +19,8 @@
     <property name="common.content" value="common-db5" />
     <property name="src.common.dir" value="${doc.dir}/${common.content}" />
     <property name="output.dir" value="${doc.dir}/output" />
-    <property name="docbook.xsl.dir" value="${doc.dir}/docbook-xsl-ns-1.78.1" />
+    <property name="docbook.xsl" value="docbook-xsl-ns-1.78.1" />
+    <property name="docbook.xsl.dir" value="${doc.dir}/${docbook.xsl}" />
     <property name="html.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
 
     <!--
@@ -34,8 +35,51 @@
         </fileset>
     </path>
 
-    <!-- copies the localized directories from common into the localized directories
-    in the fileset as Common_Content -->
+    <!--
+    Docbook books and articles in the form name/language/name.xml
+    exclude XSL and build directories
+    -->
+    <fileset dir="${doc.dir}">
+        <selector id="src.books">
+            <and>
+                <filename regex="(.*?)/.*?/\1\.xml" />
+                <filename name="${docbook.xsl}/**" negate="true" />
+                <filename name="build/**" negate="true" />
+            </and>
+        </selector>
+    </fileset>
+    
+    <!--
+    Given a fileset of files, copy the directory containing each file
+    into todir
+    -->
+    <scriptdef name="copy-parent" language="javascript">
+        <attribute name="todir"/>
+        <element name="fileset" type="fileset"/>
+    <![CDATA[
+    var File = Java.type("java.io.File");
+
+    todir = new File(attributes.get("todir"));
+    files = elements.get("fileset");
+    for (i = 0; i < files.size(); ++i) {
+        fileset = files.get(i);
+        dirset = project.createDataType('fileset');
+        dirset.setDir((new File(fileset.getDir(project), fileset)).getParentFile());
+        self.log("copy-parent: parent dir is " + dirset.getDir());
+        dirset.setIncludes('**');
+        copy = project.createTask('copy');
+        copy.addFileset(dirset);
+        copy.setTodir((new File(todir, fileset)).getParentFile());
+        copy.execute();
+    }
+    ]]>
+    </scriptdef>
+    
+    <!--
+    Copies the localized directories from src.common.dir into the
+    localized directories in the fileset as Common_Content given a
+    fileset that contains files within the localized directories
+    -->
     <scriptdef name="copy-common-content" language="javascript">
         <attribute name="common"/>
         <element name="fileset" type="fileset"/>
@@ -44,29 +88,23 @@
 
     languages = {};
     common = new File(attributes.get("common"));
-    bookDirs = elements.get("fileset");
-    for (i = 0; i < bookDirs.size(); ++i) {
-        bookset = bookDirs.get(i);
-        scanner = bookset.getDirectoryScanner(project);
-        scanner.scan();
-        books = scanner.getIncludedDirectories();
-        for (j = 0; j < books.length; j++) {
-            basedir = bookset.getDir(project);
-            book = new File(basedir, books[j]);
-            lang = book.getName();
-            dest = new File(book, "Common_Content");
-            if (!(lang in languages)) {
-                dir = new File(common, lang);
-                fileset = project.createDataType('fileset');
-                fileset.setDir(dir);
-                fileset.setIncludes('**');
-                languages[lang] = fileset;
-            }
-            copy = project.createTask("copy");
-            copy.addFileset(languages[lang]);
-            copy.setTodir(dest);
-            copy.execute();
+    files = elements.get("fileset");
+    for (i = 0; i < files.size(); ++i) {
+        bookset = files.get(i);
+        bookdir = (new File(bookset.getDir(project), bookset)).getParentFile()
+        lang = bookdir.getName();
+        dest = new File(bookdir, "Common_Content");
+        if (!(lang in languages)) {
+            dir = new File(common, lang);
+            fileset = project.createDataType('fileset');
+            fileset.setDir(dir);
+            fileset.setIncludes('**');
+            languages[lang] = fileset;
         }
+        copy = project.createTask("copy");
+        copy.addFileset(languages[lang]);
+        copy.setTodir(dest);
+        copy.execute();
     }
     ]]>
     </scriptdef>
@@ -96,15 +134,11 @@
 
     <target name="-create-build-dir" description="Generate and populate build dir.">
         <mkdir dir="${build.dir}" />
-        <copy todir="${build.dir}">
+        <copy-parent todir="${build.dir}">
             <fileset dir="${doc.dir}" casesensitive="yes">
-                <patternset>
-                    <include name="**/??-??/**" />
-                    <exclude name="${common.content}/**" />
-                    <exclude name="build/**" />
-                </patternset>
+                <selector refid="src.books" />
             </fileset>
-        </copy>
+        </copy-parent>
     </target>
 
     <target name="build-html" depends="-clean-output-dir, -create-build-dir, createtargetdir"
@@ -114,10 +148,7 @@
         <!-- Copy common content into sources directories -->
         <copy-common-content common="${src.common.dir}">
             <fileset dir="${build.dir}" casesensitive="yes">
-                <patternset>
-                    <include name="**/??-??" />
-                    <exclude name="${common.content}/??-??" />
-                </patternset>
+                <selector refid="src.books" />
             </fileset>
         </copy-common-content>
             
@@ -138,9 +169,7 @@
         <!-- Transfer to HTML -->
         <xslt style="${html.stylesheet}" extension=".html" basedir="${build.dir}"
               destdir="${output.dir}">
-            <selector>
-                <filename regex="(.*?)/.*/\1\.xml" />
-            </selector>
+            <selector refid="src.books" />
             <param name="html.stylesheet" expression="style.css" />
             <param name="docbook.css.source" expression="" />
             <param name="section.autolabel" expression="1" />
