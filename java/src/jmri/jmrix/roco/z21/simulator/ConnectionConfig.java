@@ -2,6 +2,9 @@
 package jmri.jmrix.roco.z21.simulator;
 
 import javax.swing.JPanel;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 
 /**
  * Handle configuring an z21 layout connection via a z21Simulator
@@ -21,7 +24,7 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
      * Ctor for an object being created during load process; Swing init is
      * deferred.
      */
-    public ConnectionConfig(z21SimulatorAdapter p) {
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
     }
 
@@ -32,20 +35,12 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
         super();
     }
 
+    @Override
     public String name() {
         return "Z21 Simulator";
     }
 
-    String manufacturerName = "Roco";
-
-    public String getManufacturer() {
-        return manufacturerName;
-    }
-
-    public void setManufacturer(String manu) {
-        manufacturerName = manu;
-    }
-
+    @Override
     protected void setInstance() {
         if (adapter == null) {
             adapter = new z21SimulatorAdapter();
@@ -56,11 +51,23 @@ public class ConnectionConfig extends jmri.jmrix.roco.z21.ConnectionConfig {
     public void loadDetails(JPanel details) {
         super.loadDetails(details);
         hostNameField.setText("localhost");
+        hostNameField.setEnabled(false); // always localhost.
         portField.setEnabled(false); // we don't change this on the simulator.
         portFieldLabel.setText("Communication Port");
         portField.setText(String.valueOf(adapter.getPort()));
         portField.setEnabled(false); // we can't change this now.
     }
 
+    @Override
+    public boolean isHostNameAdvanced() {
+        return true;  // hostname is always localhost.
+    }
+
+    @Override
+    public boolean isAutoConfigPossible() {
+        return false;  // always fixed, no reason to search.
+    }
+
+    static Logger log = LoggerFactory.getLogger(ConnectionConfig.class.getName());
 
 }

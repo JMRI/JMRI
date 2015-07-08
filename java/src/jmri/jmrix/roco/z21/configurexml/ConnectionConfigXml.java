@@ -36,8 +36,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(adapter));
     }
 
     // initialize logging

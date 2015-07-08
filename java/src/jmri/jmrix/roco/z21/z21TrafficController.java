@@ -185,6 +185,8 @@ public class z21TrafficController extends jmri.jmrix.AbstractMRTrafficController
             try {
                 host = java.net.InetAddress.getByName(((z21Adapter) p).getHostName());
                 port = ((z21Adapter) p).getPort();
+                    ConnectionStatus.instance().setConnectionState(
+                            ((z21Adapter) p).getHostName() + ":" + ((z21Adapter) p).getPort(), ConnectionStatus.CONNECTION_UP);
             } catch (java.net.UnknownHostException uhe) {
                 log.error("Unknown Host: {} ", ((z21Adapter) p).getHostName());
                 if (((z21Adapter) p).getPort() != 0) {
