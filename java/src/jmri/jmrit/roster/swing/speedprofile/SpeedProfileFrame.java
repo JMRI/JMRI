@@ -1,8 +1,8 @@
 // StatusFrame.java
 package jmri.jmrit.roster.swing.speedprofile;
 
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
+import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 
 /**
  * Frame Entry Exit Frames
@@ -21,7 +21,6 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
         super(false, true);
     }
 
-    JButton sendButton;
     SpeedProfilePanel spPanel;
 
     public void initComponents() throws Exception {
@@ -30,13 +29,32 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
         spPanel = new SpeedProfilePanel();
 
         setTitle(Bundle.getMessage("SpeedProfile"));
-        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
+        getContentPane().setLayout(new BorderLayout(15,15));
 
         getContentPane().add(spPanel);
 
         addHelpMenu("package.jmri.jmrit.roster.swing.speedprofile.SpeedProfileFrame", true);
 
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                windowClosingEvent();
+            }
+        });
         // pack for display
         pack();
+    }
+    
+    public void windowClosingEvent() {
+        if (spPanel.save) {
+            if (JOptionPane.showConfirmDialog(this,  Bundle.getMessage("SaveProfile"), 
+                    Bundle.getMessage("SpeedProfile"), JOptionPane.YES_NO_OPTION, 
+                    JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+                spPanel.updateSpeedProfileWithResults();            
+            }
+        }
+        if (spPanel.table !=null) {
+            spPanel.table.dispose();
+        }
     }
 }

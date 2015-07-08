@@ -1,9 +1,7 @@
 package jmri.jmrix.roco.z21.simulator.configurexml;
 
 import jmri.InstanceManager;
-import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.roco.z21.simulator.ConnectionConfig;
-import jmri.jmrix.roco.z21.z21Adapter;
 import jmri.jmrix.roco.z21.simulator.z21SimulatorAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -36,9 +34,16 @@ public class ConnectionConfigXml extends jmri.jmrix.roco.z21.configurexml.Connec
         }
     }
 
-    protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(((z21SimulatorAdapter)adapter)));
+    @Override
+    protected void getInstance(Object object) {
+        adapter = ((ConnectionConfig) object).getAdapter();
     }
+
+    @Override
+    protected void register() {
+        InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(adapter));
+
+   }
 
     // initialize logging
     static Logger log = LoggerFactory.getLogger(ConnectionConfigXml.class.getName());

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+<TITLE>
+JMRI: Raspberry Pi GPIO Connectivity
+</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+<META content="Paul Bender" name=Author>
+<META name="keywords" content="Raspberry Pi GPIO Configuration Information for JMRI">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+        MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+        MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+
+<H1>
+        JMRI Hardware Guide: Raspberry Pi
+</H1>
+
+<H2>Overview</H2>
+
+<p>The <a href="http://www.raspberrypi.org">Raspberry Pi</a> is a family of inexpensive credit card size single board computers that have many applications in embeded electronics.  This page describe's the use of the Raspberry Pi's GPIO pins under JMRI.  Since the raspberry pi runs Linux natively, other connections are possible using either a USB connection or via the Raspberry Pi's built in serial ports.</p>
+
+<p>Underlying support for the Raspberry Pi's GPIO connections is provided using the <a href="http://pi4j.com/">Pi4J library for Java</a>.  <b><i>This library requires that applications using GPIO pins be run as root (or using sudo</i></b></p>
+
+<p>JMRI currently supports input (Sensors) and output (Turnouts) via the Raspberry PI's GPIO pins.</p> 
+
+<H2>Input/Output pin addressing</H2>
+<p>
+JMRI currently uses the default Pi4J pin numbering.  The Pin numbers may differ on each model Pi.  Generally speaking, Broadcom GPIO pins 0 to 7 may be referenced by those pin numbers in JMRI.  This is not garanteed to be the case.  Higher pin numbers are available, but may not correspond to the Broadcom pin numberings.  Please refer to the <a href="http://pi4j.com/">Pi4J website</a> for model specific pin numbering information.
+</p>
+
+<H2>Supported Hardware</H2>
+<p>Theoretically, any Raspberry Pi supported by <a href="http://pi4j.com/">Pi4J</a> is supported by JMRI.  JMRI support has been tested with the Models B, B+, and 2B.</p>
+
+</p>
+<h3>Setup</h3>
+          <ol>
+          <li> Make sure you have the latest version of JMRI installed, then 
+          go to the preferences panel of a JMRI-based program.  This opens 
+          automatically the first time a program is run, or you can select it
+          from the "Edit" menu
+          <li>Select "Raspberry Pi Foundation" from the System Manufacturer 
+          selection box.
+          <li>Select "Raspberry Pi GPIO" from the System Connection selection box.
+<!--
+          <li> The "Connection Prefix" is used to help JMRI communicate 
+          separately with multiple "connections" to layout hardware. Each 
+          "connection" must have a unique identifier, which is specified as
+          the "Connection Prefix". By default, the first XBee connection is 
+          given a prefix of "Pi", and additional XBee networks are given 
+          prefixes like "Pi", "Pi2", ... Most users should be able to use the 
+          default "Connection Prefix" value provided by the JMRI tools. 
+
+          <li>When a JMRI tool is configured for more than one connection, 
+          each connection gets a menu item on the main JMRI tool window. To 
+          help users differentiate between their different connections, each 
+          connection has a "Connection Name", which is used as the name of 
+          the associated menu item on the main JMRI tool window. Users may 
+          change the "Connection Name" for any connection to suit their needs.
+-->
+          <li> Click "Save".  You'll be asked if it's OK for the program to
+          quit, click "Yes".</li>
+          <li> Restart the program. You should be up and running.
+          </ol>
+
+
+<!--#include virtual="/Footer" -->
+</body>
+</html>
+

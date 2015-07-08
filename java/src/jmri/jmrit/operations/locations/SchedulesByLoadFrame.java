@@ -1,10 +1,12 @@
 // SchedulesByLoadFrame.java
 package jmri.jmrit.operations.locations;
 
+import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -16,6 +18,7 @@ import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.cars.PrintCarLoadsAction;
+import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.trains.TrainScheduleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -39,6 +42,9 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     // panels
     JPanel locationsPanel;
 
+    // checkbox
+    JCheckBox allLoadsCheckBox = new JCheckBox(Bundle.getMessage("allLoads"));
+
     // managers'
     LocationManager locationManager = LocationManager.instance();
 
@@ -50,15 +56,19 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
         // load the panel
         JPanel p1 = new JPanel();
+        p1.setMaximumSize(new Dimension(2000, 200));
         p1.setLayout(new BoxLayout(p1, BoxLayout.X_AXIS));
 
         JPanel type = new JPanel();
+        type.setLayout(new GridBagLayout());
         type.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
-        type.add(typesComboBox);
+        addItem(type, typesComboBox, 0, 0);
 
         JPanel load = new JPanel();
+        load.setLayout(new GridBagLayout());
         load.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Load")));
-        load.add(loadsComboBox);
+        addItem(load, loadsComboBox, 0, 0);
+        addItem(load, allLoadsCheckBox, 1, 0);
 
         p1.add(type);
         p1.add(load);
@@ -74,6 +84,8 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
 
         addComboBoxAction(typesComboBox);
         addComboBoxAction(loadsComboBox);
+
+        addCheckBoxAction(allLoadsCheckBox);
 
         // property changes
         locationManager.addPropertyChangeListener(this);
@@ -92,10 +104,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
         // select first item to load contents
         typesComboBox.setSelectedIndex(0);
 
-        initMinimumSize();
-        if (getWidth() < 750) {
-            setSize(750, getHeight());
-        }
+        initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight250));
     }
 
     public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
@@ -106,6 +115,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
             updateLocations();
         }
 
+    }
+
+    public void checkBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        loadsComboBox.setEnabled(!allLoadsCheckBox.isSelected());
+        updateLocations();
     }
 
     private void updateLoadComboBox() {
@@ -147,13 +161,20 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                     if (si.getTypeName().equals(type) && si.getReceiveLoadName().equals(load)
                             || si.getTypeName().equals(type) && si.getReceiveLoadName().equals(ScheduleItem.NONE)
                             || si.getTypeName().equals(type) && si.getShipLoadName().equals(load)
-                            || si.getTypeName().equals(type) && si.getShipLoadName().equals(ScheduleItem.NONE)) {
+                            || si.getTypeName().equals(type) && si.getShipLoadName().equals(ScheduleItem.NONE)
+                            || si.getTypeName().equals(type) && allLoadsCheckBox.isSelected()) {
+                        // is the schedule item valid?
+                        String status = spur.checkScheduleValid();
+                        if (!status.equals(Track.SCHEDULE_OKAY)) {
+                            addItemLeft(locationsPanel, new JLabel("  " + status), 0, x);
+                        }
                         addItemLeft(locationsPanel,
                                 new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1, x);
                         // create string (type, timetable, road, load)
                         String s = si.getTypeName();
                         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)
-                                && TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) != null) {
+                                &&
+                                TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) != null) {
                             s = s
                                     + ", "
                                     + TrainScheduleManager.instance().getScheduleById(
@@ -168,16 +189,19 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         }
                         s = s + ", " + si.getReceiveLoadName();
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
-                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") + " (" + si.getShipLoadName() + ")"), 3, x++);
+                        addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") +
+                                " (" +
+                                si.getShipLoadName() +
+                                ")"), 3, x++);
                         if (si.getDestination() != null) {
                             addItemLeft(locationsPanel, new JLabel(si.getDestinationName() + " ("
                                     + si.getDestinationTrackName() + ")"), 4, x - 1);
                         }
                         if (!spur.acceptsLoad(load, type)) {
-                            addItemLeft(locationsPanel, new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"), 
+                            addItemLeft(locationsPanel, new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
                                     new Object[]{spur.getName(), type, load})), 2, x++);
                         }
-                   }
+                    }
                 }
             }
         }
@@ -204,7 +228,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
     public void propertyChange(java.beans.PropertyChangeEvent e) {
         if (log.isDebugEnabled())
             log.debug("Property change ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e.getNewValue()); // NOI18N
-        
+
         if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
             CarTypes.instance().updateComboBox(typesComboBox);
         }

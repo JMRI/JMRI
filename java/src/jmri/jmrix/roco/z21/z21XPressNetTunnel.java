@@ -63,13 +63,16 @@ public class z21XPressNetTunnel implements z21Listener, XNetListener, Runnable {
 
         // configure the XPressNet connections properties.
         xsc.getSystemConnectionMemo().setSystemPrefix(_memo.getSystemPrefix() + "X");
+        xsc.getSystemConnectionMemo().setUserName(_memo.getUserName() + "XPressNet");
+
+        // register a connection config object for this stream port.
+        jmri.InstanceManager.getDefault(jmri.ConfigureManager.class).registerUser(new z21XNetConnectionConfig(xsc));
 
         // register as a z21Listener, so we can receive replies
         _memo.getTrafficController().addz21Listener(this);
 
         // start the XPressNet configuration.
         xsc.configure();
-
     }
 
     public void run() { // start a new thread

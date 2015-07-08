@@ -649,15 +649,26 @@ via the Ethernet connection</H2>
     <li>Once the device is connected, refer to the device documentation 
     for information on setting the IP address.  The default IP address 
     is 192.168.0.200.  Make note of the IP address for use when configuring 
-    the device.
+    the device.  If the IP Address is unknown, and your system supports 
+    autoconfiguration via the MDNS protocol (also known as Bonjour) you can open    a web browser to <a href="http://XPressNet.local./">http://XPressNet.local./</a>.  
+    In the LIUSB-Ethernet Configuration interface, The IP Address appears in 
+    the circled field in the image below:
+<img src="images/LIUSBEthernetIPAddressField.PNG" alt="LIUSB-Ethernet Configuration web interface with IP Address circled.">
 
     <li>Start one of the JMRI-based programs, Then go to the preferences 
     panel. This opens automatically the first time a program is run, or you 
     can select it from the "Edit" menu.  
 
-    <li>Select "Lenz LIUSB Ethernet" from the top selection box.  Enter
-    the IP address you saved earlier into the box labeld "IP Address".
-    
+    <li>Select "Lenz LIUSB Ethernet" from the top selection box.  There are two configuration options available for the LIUSB-Ethernet.  You may choose to use manual configuration (the default) or automatic configuration.  
+    <ol>
+        <li> To use manual configuration, enter the IP address you saved 
+        earlier into the box labeld "IP Address", as shown in the image below:
+    <img src="images/ConfigurationIPFields.PNG" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating the IP address to be copied.">
+
+        <li> Automatic configuation is optional if you set the IP Address of your LIUSB-Ethernet device to a fixed value.  If you use DHCP to configure the LIUSB-Ethernet's IP address, it is highly recommended that you use automatic configuration.  To use Automatic Configuration, check the Automatic Configuration checkbox. as shown in the image below:
+    <img src="images/LIUSBEthernetAutoConfigureCheckboxes.PNG" alt="JMRI Configuration screen and LIUSB-Ethernet Configuration screen demonstrating automatic configuration.">
+    </ol>
+
     <li>The series of radio buttons labeled "GUI style" allows you to
     select how the program will look.  "Metal" is the native Java look
     available on all types.  Other choices will vary with your computer

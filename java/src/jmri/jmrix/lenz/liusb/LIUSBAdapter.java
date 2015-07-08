@@ -292,7 +292,7 @@ public class LIUSBAdapter extends XNetSerialPortController implements jmri.jmrix
     protected int[] validSpeedValues = new int[]{57600};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended)", "no flow control"};
+    protected String[] validOption1 = new String[]{"hardware flow control (recommended for Lenz 23150)", "no flow control (required for Lenz 23151)"};
 
     private boolean opened = false;
     InputStream serialStream = null;
