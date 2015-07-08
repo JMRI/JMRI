@@ -38,6 +38,13 @@
         <revremark>fixed aspect name reference in appearence files. tweaked aspect mappings</revremark>
     </revision>
     
+    <revision>
+        <revnumber>2.2</revnumber>
+        <date>2015-06-12</date>
+        <authorinitials>JDL</authorinitials>
+        <revremark>added aspect mapping to Held Aspect</revremark>
+    </revision>
+    
   </revhistory>
 
   <aspecttable>NYC-1956</aspecttable>
@@ -84,12 +91,12 @@
 
   </appearances>
   <specificappearances>
-  	<danger>
-  		<aspect>Stop</aspect>
-  	</danger>
-  	<held>
-  		<aspect>Stop</aspect>
-  	</held>
+    <danger>
+      <aspect>Stop</aspect>
+    </danger>
+    <held>
+      <aspect>Stop</aspect>
+    </held>
   </specificappearances>
   
   <aspectMappings>
@@ -188,6 +195,11 @@
       <ourAspect>Limited-Approach</ourAspect>
     </aspectMapping>
 
+    <aspectMapping>
+      <advancedAspect>Held</advancedAspect>
+      <ourAspect>Limited-Approach</ourAspect>
+    </aspectMapping>
+    
   </aspectMappings>
 
 </appearancetable>  
