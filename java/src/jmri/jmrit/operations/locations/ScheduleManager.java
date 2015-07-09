@@ -156,9 +156,9 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     /**
-     * Sort by schedule number
+     * Sort by schedule id number
      *
-     * @return list of schedules ordered by number
+     * @return list of schedules ordered by id number
      */
     public List<Schedule> getSchedulesByIdList() {
         List<Schedule> sortList = getList();
@@ -189,6 +189,15 @@ public class ScheduleManager implements java.beans.PropertyChangeListener {
             out.add(en.nextElement());
         }
         return out;
+    }
+    
+    public Schedule copySchedule (Schedule schedule, String newScheduleName) {
+        Schedule newSchedule = newSchedule(newScheduleName);
+        for (ScheduleItem si : schedule.getItemsBySequenceList()) {
+            ScheduleItem newSi = newSchedule.addItem(si.getTypeName());
+            newSi.copyScheduleItem(si);
+        }
+        return newSchedule;
     }
 
     public void resetHitCounts() {
