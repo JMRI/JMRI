@@ -241,8 +241,9 @@ Some web references on how to do this:
 <li><A HREF="http://docs.oracle.com/javase/6/docs/technotes/guides/intl/">Java Internationalization main page</a>
 <li><A HREF="http://docs.oracle.com/javase/tutorial/i18n/index.html">Sun internationalization tutorial</a>(highly recommended)
 </UL>
-(Note: Those are Java 6 links.  There are some nice I18N features in Java 7, but JMRI doesn't 
-use Java 7 yet)
+(Note: Those are Java 6 links.  There are useful advanced features in 
+<a href="http://docs.oracle.com/javase/7/docs/technotes/guides/intl/enhancements.7.html">Java 7</a> and
+<a href="https://docs.oracle.com/javase/8/docs/technotes/guides/intl/enhancements.8.html">Java 8</a>.)
 <P>
 JMRI is moving toward a set of conventions on how to structure and
 use the large amount of I18N information required.  
