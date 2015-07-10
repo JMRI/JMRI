@@ -326,8 +326,7 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         // log.debug("train button activated");
         if (ae.getSource() == addButton) {
-            TrainEditFrame f = new TrainEditFrame();
-            f.initComponents(null);
+            new TrainEditFrame(null);
         }
         if (ae.getSource() == buildButton) {
             // uses a thread which allows table updates during build

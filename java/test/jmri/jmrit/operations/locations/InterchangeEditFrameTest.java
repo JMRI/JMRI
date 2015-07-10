@@ -78,9 +78,8 @@ public class InterchangeEditFrameTest extends OperationsSwingTestCase {
         Location l2 = lManager.getLocationByName("Test Loc C");
         Assert.assertNotNull("Location Test Loc C", l2);
 
-        LocationEditFrame fl = new LocationEditFrame();
+        LocationEditFrame fl = new LocationEditFrame(l2);
         fl.setTitle("Test Edit Location Frame");
-        fl.initComponents(l2);
 
         // check location name
         Assert.assertEquals("name", "Test Loc C", fl.locationNameTextField.getText());

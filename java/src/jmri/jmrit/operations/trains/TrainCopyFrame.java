@@ -105,9 +105,7 @@ public class TrainCopyFrame extends OperationsFrame {
 
             // now copy
             newTrain = trainManager.copyTrain(oldTrain, trainNameTextField.getText());
-
-            TrainEditFrame f = new TrainEditFrame();
-            f.initComponents(newTrain);
+            new TrainEditFrame(newTrain);
         }
     }
 

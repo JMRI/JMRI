@@ -105,11 +105,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
     public static final String DISPOSE = "dispose"; // NOI18N
 
-    public LocationEditFrame() {
+    public LocationEditFrame(Location location) {
         super(Bundle.getMessage("TitleLocationEdit"));
-    }
 
-    public void initComponents(Location location) {
         _location = location;
 
         // Set up the jtable in a Scroll Pane..
