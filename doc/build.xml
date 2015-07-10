@@ -250,9 +250,19 @@
     </target>
     
     <target name="build-pdf" depends="-create-build-dir, -create-output-dir" description="Generates PDF files from DocBook XML">
-        <xslt style="${pdf.stylesheet}" extension=".fo" 
+        <xslt style="${pdf.stylesheet}" extension=".letter.fo" 
               basedir="${build.dir}" destdir="${build.dir}">
             <selector refid="src.books" />
+            <param name="paper.type" expression="USletter" />
+            <classpath refid="xalan.classpath" />
+            <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+                         value="org.apache.xerces.parsers.XIncludeParserConfiguration" />        
+        </xslt>
+
+        <xslt style="${pdf.stylesheet}" extension=".a4.fo" 
+              basedir="${build.dir}" destdir="${build.dir}">
+            <selector refid="src.books" />
+            <param name="paper.type" expression="A4" />
             <classpath refid="xalan.classpath" />
             <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
                          value="org.apache.xerces.parsers.XIncludeParserConfiguration" />        
