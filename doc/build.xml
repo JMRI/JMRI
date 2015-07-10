@@ -21,8 +21,8 @@
     <property name="output.dir" value="${doc.dir}/output" />
     <property name="docbook.xsl" value="docbook-xsl-ns-1.78.1" />
     <property name="docbook.xsl.dir" value="${doc.dir}/${docbook.xsl}" />
-    <property name="html.single.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
-    <property name="html.chunked.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
+    <property name="html.single.stylesheet" value="${docbook.xsl.dir}/html/onechunk.xsl" />
+    <property name="html.chunked.stylesheet" value="${docbook.xsl.dir}/html/chunk.xsl" />
     <property name="pdf.stylesheet" value="${docbook.xsl.dir}/fo/docbook.xsl" />
     <property name="fop.home" value="lib/fop-2.0" />
 
@@ -131,7 +131,7 @@
         <echo message="Use -projecthelp to get a list of the available targets." />
     </target>
 
-    <target name="build" depends="build-html-single, build-pdf" description="Builds documents." />
+    <target name="build" depends="build-html-chunked, build-html-single, build-pdf" description="Builds documents." />
 
     <target name="clean" depends="-clean-output-dir, -clean-build-dir" description="Cleans up generated files.">
     </target>
@@ -167,6 +167,54 @@
         </copy-common-content>
     </target>
 
+    <!-- For some reason both build-html-* targets create empty
+    name/lang/name.html file. This removes them. -->
+    <macrodef name="remove-empty-output">
+        <sequential>
+            <delete>
+                <fileset dir="${output.dir}" casesensitive="yes">
+                    <selector>
+                        <filename regex="(.*?)/.*?/\1\.html" />
+                    </selector>
+                </fileset>
+            </delete>
+        </sequential>
+    </macrodef>
+    
+    <target name="build-html-chunked" depends="-clean-output-dir, -create-build-dir, createtargetdir"
+            description="Generates HTML5 multiple document files">
+        <echo message="Building HTML5 multiple document output" />
+            
+        <!-- Copy the stylesheet to the same directory as the HTML files - ->
+        <copy todir="${output.dir}">
+            <fileset dir="css">
+                <include name="style.css" />
+            </fileset>
+        </copy>
+        -->
+        <!-- Copy the images to the same directory as the HTML files - ->
+        <copy todir="${output.dir}\images">
+            <fileset dir="${input.dir}\images">
+                <include name="title.png" />
+            </fileset>
+        </copy>
+        -->
+        <!-- Transfer to HTML -->
+        <xslt style="${html.chunked.stylesheet}" basedir="${build.dir}"
+              destdir="${output.dir}">
+            <selector refid="src.books" />
+            <param name="html.stylesheet" expression="style.css" />
+            <param name="docbook.css.source" expression="" />
+            <param name="section.autolabel" expression="1" />
+            <param name="make.clean.html" expression="1" />
+            <outputproperty name="indent" value="yes" />
+            <classpath refid="xalan.classpath" />
+            <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+                         value="org.apache.xerces.parsers.XIncludeParserConfiguration" />
+        </xslt>
+        <remove-empty-output />
+    </target>
+    
     <target name="build-html-single" depends="-clean-output-dir, -create-build-dir, createtargetdir"
             description="Generates HTML5 single document files">
         <echo message="Building HTML5 single document output" />
@@ -190,6 +238,7 @@
               destdir="${output.dir}">
             <selector refid="src.books" />
             <param name="html.stylesheet" expression="style.css" />
+            <param name="root.filename" expression="index-single" />
             <param name="docbook.css.source" expression="" />
             <param name="section.autolabel" expression="1" />
             <param name="make.clean.html" expression="1" />
@@ -198,6 +247,7 @@
             <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
                          value="org.apache.xerces.parsers.XIncludeParserConfiguration" />
         </xslt>
+        <remove-empty-output />
     </target>
     
     <target name="build-pdf" depends="-clean-output-dir, -create-build-dir, createtargetdir" description="Generates PDF files from DocBook XML">
@@ -206,7 +256,7 @@
             <selector refid="src.books" />
             <classpath refid="xalan.classpath" />
             <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
-             value="org.apache.xerces.parsers.XIncludeParserConfiguration" />        
+                         value="org.apache.xerces.parsers.XIncludeParserConfiguration" />        
         </xslt>
 
         <taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
