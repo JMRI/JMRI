@@ -21,7 +21,10 @@
     <property name="output.dir" value="${doc.dir}/output" />
     <property name="docbook.xsl" value="docbook-xsl-ns-1.78.1" />
     <property name="docbook.xsl.dir" value="${doc.dir}/${docbook.xsl}" />
-    <property name="html.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
+    <property name="html.single.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
+    <property name="html.chunked.stylesheet" value="${docbook.xsl.dir}/html/docbook.xsl" />
+    <property name="pdf.stylesheet" value="${docbook.xsl.dir}/fo/docbook.xsl" />
+    <property name="fop.home" value="lib/fop-2.0" />
 
     <!--
     - Sets up the classpath for the Xalan and Xerces implementations
@@ -32,6 +35,21 @@
         <fileset dir="${lib.dir}" id="xalan.fileset">
             <include name="xalan.jar" />
             <include name="xercesImpl.jar" />
+        </fileset>
+    </path>
+    
+    <path id="fop.classpath">
+        <fileset refid="xalan.fileset" />
+        <fileset dir="${lib.dir}" id="fop.fileset">
+            <include name="avalon-framework-4.2.0.jar" />
+            <include name="batik-all-1.8.jar" />
+            <include name="commons-io-1.3.1.jar" />
+            <include name="commons-logging-1.0.4.jar" />
+            <include name="fontbox-1.8.5.jar" />
+            <include name="fop.jar" />
+            <include name="xml-apis-1.3.04.jar" />
+            <include name="xml-apis-ext-1.3.04.jar" />
+            <include name="xmlgraphics-commons-2.0.1.jar" />
         </fileset>
     </path>
 
@@ -109,9 +127,13 @@
     ]]>
     </scriptdef>
   
-    <!-- - target: usage -->
     <target name="usage" description="Prints help">
         <echo message="Use -projecthelp to get a list of the available targets." />
+    </target>
+
+    <target name="build" depends="build-html-single, build-pdf" description="Builds documents." />
+
+    <target name="clean" depends="-clean-output-dir, -clean-build-dir" description="Cleans up generated files.">
     </target>
 
     <target name="-clean-build-dir" description="Creates up build dir.">
@@ -122,11 +144,6 @@
         <delete dir="${output.dir}" />
     </target>
 
-    <!-- - target: clean -->
-    <target name="clean" depends="-clean-output-dir, -clean-build-dir" description="Cleans up generated files.">
-    </target>
-
-    <!-- - target: depends -->
     <target name="createtargetdir" description="Generate targetdir.">
         <mkdir dir="${output.dir}" />
         <mkdir dir="${output.dir}/images" />
@@ -134,23 +151,25 @@
 
     <target name="-create-build-dir" description="Generate and populate build dir.">
         <mkdir dir="${build.dir}" />
+        
+        <!-- copy books into build directory -->
         <copy-parent todir="${build.dir}">
             <fileset dir="${doc.dir}" casesensitive="yes">
                 <selector refid="src.books" />
             </fileset>
         </copy-parent>
-    </target>
 
-    <target name="build-html" depends="-clean-output-dir, -create-build-dir, createtargetdir"
-            description="Generates HTML5 files">
-        <echo message="Building HTML5 output" />
-
-        <!-- Copy common content into sources directories -->
+        <!-- Copy common content into books in build directory -->
         <copy-common-content common="${src.common.dir}">
             <fileset dir="${build.dir}" casesensitive="yes">
                 <selector refid="src.books" />
             </fileset>
         </copy-common-content>
+    </target>
+
+    <target name="build-html-single" depends="-clean-output-dir, -create-build-dir, createtargetdir"
+            description="Generates HTML5 single document files">
+        <echo message="Building HTML5 single document output" />
             
         <!-- Copy the stylesheet to the same directory as the HTML files - ->
         <copy todir="${output.dir}">
@@ -167,7 +186,7 @@
         </copy>
         -->
         <!-- Transfer to HTML -->
-        <xslt style="${html.stylesheet}" extension=".html" basedir="${build.dir}"
+        <xslt style="${html.single.stylesheet}" extension=".html" basedir="${build.dir}"
               destdir="${output.dir}">
             <selector refid="src.books" />
             <param name="html.stylesheet" expression="style.css" />
@@ -180,5 +199,22 @@
                          value="org.apache.xerces.parsers.XIncludeParserConfiguration" />
         </xslt>
     </target>
+    
+    <target name="build-pdf" depends="-clean-output-dir, -create-build-dir, createtargetdir" description="Generates PDF files from DocBook XML">
+        <xslt style="${pdf.stylesheet}" extension=".fo" 
+              basedir="${build.dir}" destdir="${build.dir}">
+            <selector refid="src.books" />
+            <classpath refid="xalan.classpath" />
+            <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+             value="org.apache.xerces.parsers.XIncludeParserConfiguration" />        
+        </xslt>
 
+        <taskdef name="fop" classname="org.apache.fop.tools.anttasks.Fop">
+            <classpath refid="fop.classpath" />
+        </taskdef>
+
+        <fop format="application/pdf" outdir="${output.dir}">
+            <fileset dir="${build.dir}" includes="**/*.fo" />
+        </fop>
+    </target>
 </project>
