@@ -2,7 +2,6 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -27,7 +26,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
     // labels, buttons, etc. for spurs
     JLabel textSchedule = new JLabel(Bundle.getMessage("DeliverySchedule"));
     JLabel textSchError = new JLabel();
-    JButton editScheduleButton = new JButton(Bundle.getMessage("Edit"));
+    JButton editScheduleButton = new JButton();
     JComboBox<Schedule> comboBoxSchedules = ScheduleManager.instance().getComboBox();
 
     JPanel panelSchedule = panelOpt4;
@@ -63,13 +62,15 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         addTrackButton.setText(Bundle.getMessage("AddSpur"));
         saveTrackButton.setText(Bundle.getMessage("SaveSpur"));
 
+        // setup buttons
+        addButtonAction(editScheduleButton);
+        addComboBoxAction(comboBoxSchedules);
+        
         // Select the spur's Schedule
         updateScheduleComboBox();
 
         ScheduleManager.instance().addPropertyChangeListener(this);
-
-        // setup buttons
-        addButtonAction(editScheduleButton);
+        
         // finish
         panelOrder.setVisible(false); // Car order out of spurs is not available
         pack();
@@ -82,6 +83,18 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         }
         super.buttonActionPerformed(ae);
     }
+    
+    public void comboBoxActionPerformed(java.awt.event.ActionEvent ae) {
+        updateScheduleButtonText();
+    }
+    
+    private void updateScheduleButtonText() {
+        if (comboBoxSchedules.getSelectedItem() == null) {
+            editScheduleButton.setText(Bundle.getMessage("Add"));
+        } else {
+            editScheduleButton.setText(Bundle.getMessage("Edit"));
+        }
+    }
 
     ScheduleEditFrame sef = null;
 
@@ -90,25 +103,15 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         if (sef != null) {
             sef.dispose();
         }
-        sef = new ScheduleEditFrame();
-        Object selected = comboBoxSchedules.getSelectedItem();
-        if (selected != null) {
-            Schedule schedule = (Schedule) selected;
-            sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
-                    new Object[]{_track.getName()}));
-            sef.initComponents(schedule, _location, _track);
-        } else {
-            sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleAdd"),
-                    new Object[]{_track.getName()}));
-            sef.initComponents(null, _location, _track);
-        }
+        Schedule schedule = (Schedule) comboBoxSchedules.getSelectedItem();
+        sef = new ScheduleEditFrame(schedule, _track);
     }
 
     protected void enableButtons(boolean enabled) {
         editScheduleButton.setEnabled(enabled);
         comboBoxSchedules.setEnabled(enabled);
         if (!enabled) {
-            comboBoxSchedules.setSelectedItem(ScheduleManager.NONE);
+            comboBoxSchedules.setSelectedItem(null);
         }
         super.enableButtons(enabled);
     }
@@ -116,7 +119,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
     protected void saveTrack(Track track) {
         // save the schedule
         Object selected = comboBoxSchedules.getSelectedItem();
-        if (selected == null || selected.equals(ScheduleManager.NONE)) {
+        if (selected == null) {
             track.setScheduleId(Track.NONE);
         } else {
             Schedule sch = (Schedule) selected;
@@ -135,14 +138,23 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
     private void updateScheduleComboBox() {
         ScheduleManager.instance().updateComboBox(comboBoxSchedules);
         if (_track != null) {
-            Schedule s = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
-            comboBoxSchedules.setSelectedItem(s);
+            Schedule sch = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
+            comboBoxSchedules.setSelectedItem(sch);
             textSchError.setText(_track.checkScheduleValid());
+            if (sch != null) {
+                sch.removePropertyChangeListener(this);
+                sch.addPropertyChangeListener(this);
+            }
         }
     }
 
     public void dispose() {
         ScheduleManager.instance().removePropertyChangeListener(this);
+        if (_track != null) {
+            Schedule sch = ScheduleManager.instance().getScheduleById(_track.getScheduleId());
+            if (sch != null)
+                sch.removePropertyChangeListener(this);
+        }
         super.dispose();
     }
 
@@ -155,9 +167,11 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
                 || e.getPropertyName().equals(Track.SCHEDULE_ID_CHANGED_PROPERTY)) {
             updateScheduleComboBox();
         }
+        if (e.getPropertyName().equals(Schedule.LISTCHANGE_CHANGED_PROPERTY)) {
+            textSchError.setText(_track.checkScheduleValid());
+        }
         super.propertyChange(e);
     }
 
-    static Logger log = LoggerFactory.getLogger(SpurEditFrame.class
-            .getName());
+    static Logger log = LoggerFactory.getLogger(SpurEditFrame.class.getName());
 }

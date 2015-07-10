@@ -252,22 +252,19 @@ public class SchedulesTableModel extends javax.swing.table.AbstractTableModel im
         if (sef != null) {
             sef.dispose();
         }
-        Schedule s = sysList.get(row);
+        Schedule sch = sysList.get(row);
         LocationTrackPair ltp = getLocationTrackPair(row);
         if (ltp == null) {
             log.debug("Need location track pair");
             JOptionPane.showMessageDialog(null, MessageFormat.format(Bundle.getMessage("AssignSchedule"),
-                    new Object[]{s.getName()}), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
+                    new Object[]{sch.getName()}), MessageFormat.format(Bundle.getMessage("CanNotSchedule"),
                             new Object[]{Bundle.getMessage("Edit")}), JOptionPane.ERROR_MESSAGE);
             return;
         }
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                sef = new ScheduleEditFrame();
-                sef.setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"), new Object[]{ltp.getTrack()
-                    .getName()}));
-                sef.initComponents(s, ltp.getLocation(), ltp.getTrack());
+                sef = new ScheduleEditFrame(sch, ltp.getTrack());
             }
         });
     }

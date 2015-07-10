@@ -22,7 +22,6 @@ import org.slf4j.LoggerFactory;
  */
 public class ScheduleManager implements java.beans.PropertyChangeListener {
 
-    public static final String NONE = ""; // NOI18N
     public static final String LISTLENGTH_CHANGED_PROPERTY = "scheduleListLength"; // NOI18N
 
     public ScheduleManager() {

@@ -28,9 +28,8 @@ public class ScheduleEditFrameTest extends OperationsSwingTestCase {
         Assert.assertNotNull("Location exists", l);
         Track t = l.addTrack("3rd siding track", Track.SPUR);
         Assert.assertNotNull("Track exists", t);
-        ScheduleEditFrame f = new ScheduleEditFrame();
+        ScheduleEditFrame f = new ScheduleEditFrame(null, t);
         f.setTitle("Test Schedule Frame");
-        f.initComponents(null, l, t);
         f.scheduleNameTextField.setText("Test Schedule A");
         f.commentTextField.setText("Test Comment");
         getHelper().enterClickAndLeave(new MouseEventData(this, f.addScheduleButton));
