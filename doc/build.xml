@@ -136,20 +136,19 @@
     <target name="clean" depends="-clean-output-dir, -clean-build-dir" description="Cleans up generated files.">
     </target>
 
-    <target name="-clean-build-dir" description="Creates up build dir.">
+    <target name="-clean-build-dir" description="Cleans build dir.">
         <delete dir="${build.dir}" />
     </target>
 
-    <target name="-clean-output-dir" description="Creates up output dir.">
+    <target name="-clean-output-dir" description="Cleans output dir.">
         <delete dir="${output.dir}" />
     </target>
 
-    <target name="createtargetdir" description="Generate targetdir.">
+    <target name="-create-output-dir" description="Generates output dir.">
         <mkdir dir="${output.dir}" />
-        <mkdir dir="${output.dir}/images" />
     </target>
 
-    <target name="-create-build-dir" description="Generate and populate build dir.">
+    <target name="-create-build-dir" description="Generates and populate build dir.">
         <mkdir dir="${build.dir}" />
         
         <!-- copy books into build directory -->
@@ -181,7 +180,7 @@
         </sequential>
     </macrodef>
     
-    <target name="build-html-chunked" depends="-clean-output-dir, -create-build-dir, createtargetdir"
+    <target name="build-html-chunked" depends="-clean-output-dir, -create-build-dir, -create-output-dir"
             description="Generates HTML5 multiple document files">
         <echo message="Building HTML5 multiple document output" />
             
@@ -215,7 +214,7 @@
         <remove-empty-output />
     </target>
     
-    <target name="build-html-single" depends="-clean-output-dir, -create-build-dir, createtargetdir"
+    <target name="build-html-single" depends="-clean-output-dir, -create-build-dir, -create-output-dir"
             description="Generates HTML5 single document files">
         <echo message="Building HTML5 single document output" />
             
@@ -250,7 +249,7 @@
         <remove-empty-output />
     </target>
     
-    <target name="build-pdf" depends="-clean-output-dir, -create-build-dir, createtargetdir" description="Generates PDF files from DocBook XML">
+    <target name="build-pdf" depends="-create-build-dir, -create-output-dir" description="Generates PDF files from DocBook XML">
         <xslt style="${pdf.stylesheet}" extension=".fo" 
               basedir="${build.dir}" destdir="${build.dir}">
             <selector refid="src.books" />
