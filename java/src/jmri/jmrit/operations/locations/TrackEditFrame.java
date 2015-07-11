@@ -130,8 +130,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    // combo box
-//	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
     // optional panel for spurs, staging, and interchanges
     JPanel dropPanel = new JPanel();
     JPanel pickupPanel = new JPanel();
@@ -164,7 +162,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
+        
+        // place all panels in a scroll pane.
+        JPanel panels = new JPanel();
+        panels.setLayout(new BoxLayout(panels, BoxLayout.Y_AXIS));
+        JScrollPane pane = new JScrollPane(panels);
+        
         // Set up the panels
         // Layout the panel by rows
         // row 1
@@ -269,19 +272,21 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesTrack")));
 
-        getContentPane().add(p1Pane);
-        getContentPane().add(paneCheckBoxes);
-        getContentPane().add(panelRoadAndLoadStatus);
-        getContentPane().add(panelOrder);
-        getContentPane().add(dropPanel);
-        getContentPane().add(pickupPanel);
+        panels.add(p1Pane);
+        panels.add(paneCheckBoxes);
+        panels.add(panelRoadAndLoadStatus);
+        panels.add(panelOrder);
+        panels.add(dropPanel);
+        panels.add(pickupPanel);
 
         // add optional panels
-        getContentPane().add(panelOpt3);
-        getContentPane().add(panelOpt4);
+        panels.add(panelOpt3);
+        panels.add(panelOpt4);
 
-        getContentPane().add(panelComment);
-        getContentPane().add(panelButtons);
+        panels.add(panelComment);
+        panels.add(panelButtons);
+        
+        getContentPane().add(pane);
 
         // setup buttons
         addButtonAction(setButton);
@@ -1019,8 +1024,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         panelCheckBoxes.revalidate();
         panelCheckBoxes.repaint();
-//		revalidate();
-//		pack();
     }
 
     int x = 0;
@@ -1122,16 +1125,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-//	private void updateTypeComboBoxes() {
-//		CarTypes.instance().updateComboBox(comboBoxTypes);
-//		// remove car types not serviced by this location and track
-//		for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
-//			String type = (String) comboBoxTypes.getItemAt(i);
-//			if (_track != null && !_track.acceptsTypeName(type)) {
-//				comboBoxTypes.removeItem(type);
-//			}
-//		}
-//	}
     // set the service order
     private void updateCarOrder() {
         if (_track != null) {
@@ -1183,15 +1176,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 || e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateCheckboxes();
-//			updateTypeComboBoxes();
         }
         if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY)) {
             updateTrainDir();
         }
-//		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
-//			updateTypeComboBoxes();
-//		}
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateTrainComboBox();
             updateDropOptions();
