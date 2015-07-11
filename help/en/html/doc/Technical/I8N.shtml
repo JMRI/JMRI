@@ -45,7 +45,7 @@ information.  That means that JMRI will present its user interface
 in the language Java has defined as the default for that computer.
 
 <P>
-Locals are specified by a language, and optionally a country. The
+Locales are specified by a language, and optionally a country. The
 language is a two letter lower-case code; the country is a two letter
 upper case code.  "en" is English, "fr" is French, "de" is German, 
 and "de_CH" is German as spoken in Switzerland.
@@ -178,7 +178,7 @@ On that page:
 <ul>
 <LI>Click "Create ticket" on the left side
 <LI>Fill out the title and summary on the
-new page that appears (you can lead status, owner, type and priority as they are), 
+new page that appears (you can leave status, owner, type and priority as they are), 
 <LI>Click the "I would like to add an attachment" 
 box near the bottom, 
 <LI>and then select your patch file using the "Choose File" button.
@@ -251,7 +251,7 @@ You'll still find code with older approaches, but you
 should write new code using the new conventions.
 
 <p>
-JMRI resource bundles are organized in a heirarchical tree.
+JMRI resource bundles are organized in a hierarchical tree.
 For example, code in the jmri.jmrit.display package
 may find a resource within a bundle in the jmri.jmrit.display package, jmri.jmrit package
 or finally the jmri package. As a special case in this, the apps package is 
@@ -261,7 +261,7 @@ can reference the jmri package.
 Cross-package references, e.g. between jmri.jmrit and jmri.jmrix, are discouraged
 and existing ones are being removed.
 <p>
-Access is via a Bundle class local to teach package.  A typical one is
+Access is via a Bundle class local to each package.  A typical one is
 <href="http://jmri.org/JavaDoc/doc/jmri/jmrit/Bundle.html">jmri.jmrit.Bundle</a>.
 It provides two key methods you use to access (translated) resource
 strings:
@@ -346,7 +346,7 @@ Older code typically references the bundles directly:
 
 <P>
 The getBundle argument is the complete package name (not file name)
-for the properties file this class will be using.  You can have 
+for the properties file this class will be using.  You can 
 reference more than one of these objects if you'd like to look up 
 strings in more than one properties file.
 
@@ -410,7 +410,7 @@ from one user to another without worrying about whether they are using the same 
 
 You should check that you've properly internationalized 
 your code.  We provide a tool for doing this which creates
-and automatically translated version of your properties files,
+an automatically translated version of your properties files,
 following the ideas of Harry Robinson and Arne Thormodsen.
 (Their
 <a href="http://www.oocities.org/harry_robinson_testing/klingon.htm">paper on this</a> is recommended reading!)
