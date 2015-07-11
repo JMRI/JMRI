@@ -1446,15 +1446,21 @@
    <A NAME="ShowCars"></A>
    <H4>Show Cars</H4>
 
-   If you only want to see cars for this location, select "Show Cars" from the "Tools" menu.
-    This tool is also useful when you want to print out cars for a specific location.
-
+   If you only want to see cars for this location, select "Show Cars" from the "Tools" menu. This
+   tool is also useful when you want to print out cars for a specific location.
+   
+   <A NAME="LocationReporter"></A>
+   <H3>Id Tag Reader at this Location</H3>
+   The "Id Tag Reader at this Location" dropdown allows you to add a
+   <a href="../../../../html/tools/Reporters.shtml">Reporter</a> that returns IdTags that may be
+   associated with a car or locomotive. See <A HREF="#Options">Options</A> to enable this feature.
+   
    <A NAME="Yards"></A>
    <H3>Yards</H3>
 
    A yard is used to store cars and locomotives. A car's load status does not change when delivered
    to a yard track. To add a yard, select the "Yards" radio button and then press the "Add Yard
-   Track" button.
+   Track" button in the <A HREF="#AddLocation">Edit Location</A> window.
 
    <P>
     <img src="images/AddYard.png">
@@ -1474,8 +1480,7 @@
    If the rolling stock type you want doesn't exist for a location, you will have to create the type
    using the
    <A HREF="#EditCarAttributes">Edit Car Attributes</A> window which is also available from the edit
-   location "Tools" menu <A
-    HREF="#EditCarType">Edit Car Type</A>. 
+   location "Tools" menu <A HREF="#EditCarType">Edit Car Type</A>. 
     
     <A NAME="RoadAndLoadOptions"></A>
     <H4>Road and Load Options</H4>
@@ -1507,12 +1512,14 @@
    <A NAME="Sidings"></A>
    <H3>Spurs</H3>
 
-   A spur is used to service an industry. To add a spur, press the "Add Spur" button. Spurs are very
-   similar to <A HREF="#Yards">Yards</A> , so see above for more information. When entering the
-   length of the spur, enter the length of the cars that will service the industry plus the coupler
-   lengths. For example, let's say you have an industry that can service two 50' boxcars, the track
-   length in this case is 100' plus 8' for the couplers (4' for each car), for a total of 108'. You
-   could optionally round up the length to 110' or more.
+   A spur is used to service an industry. To add a spur, select the "Spurs" radio button and
+   then press the "Add Spur Track" button in the
+   <A HREF="#AddLocation">Edit Location</A> window. Spurs are very similar to
+   <A HREF="#Yards">Yards</A> , so see above for more information. When entering the length of the
+   spur, enter the length of the cars that will service the industry plus the coupler lengths. For
+   example, let's say you have an industry that can service two 50' boxcars, the track length in
+   this case is 100' plus 8' for the couplers (4' for each car), for a total of 108'. You could
+   optionally round up the length to 110' or more.
 
    <P>
     When a car is placed at a spur the car's load status is modified. The program provides two load
@@ -1535,10 +1542,6 @@
     with certain loads. See <A HREF="#Schedules">Schedules</A> below for more information.
    </P>
    
-   <A NAME="LocationReporter"></A>
-   <H3>Id Tag Reader At Location</H3>
-   The Id Tag Reader At Location dropdown allows you to add a <a href="../../../../html/tools/Reporters.shtml">Reporter</a> that returns IdTags that may be associated with a car or locomotive.
-
    <A NAME="Schedules"></A>
    <H3>Schedules</H3>
 
@@ -1551,8 +1554,8 @@
    picked up. For example, if you wanted two SP boxcars to be delivered followed by a tank car
    loaded with "Oil", you can create a schedule that will do exactly that.
 
-   <P>To create a schedule press the "Edit" button next to "Optional Schedule" pull down menu on
-    the "Edit Spur Track" window. Pressing the "Edit" button should create the "Add Schedule"
+   <P>To create a schedule press the "Add" button next to "Optional Schedule" pull down menu in
+    the <A HREF="#Sidings">Edit Spur Track</A> window. Pressing the "Add" button should create the "Add Schedule"
     window.</P>
    <P>
     <img src="images/EditSchedule.png">
