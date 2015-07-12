@@ -586,6 +586,7 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     }
 
     void updateSpeedProfileWithResults() {
+        cancelButton();
         RosterSpeedProfile rosterSpeedProfile = re.getSpeedProfile();
         if (rosterSpeedProfile == null) {
             rosterSpeedProfile = new RosterSpeedProfile(re);
@@ -626,6 +627,8 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
     void cancelButton() {
         if (t != null) {
             t.setSpeedSetting(0.0f);
+            InstanceManager.throttleManagerInstance().releaseThrottle(t, this);
+            t = null;
         }
         if (startSensor != null) {
             startSensor.removePropertyChangeListener(startListener);

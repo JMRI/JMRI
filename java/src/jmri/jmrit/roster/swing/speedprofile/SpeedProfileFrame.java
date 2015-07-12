@@ -46,6 +46,7 @@ public class SpeedProfileFrame extends jmri.util.JmriJFrame {
     }
     
     public void windowClosingEvent() {
+        spPanel.cancelButton();
         if (spPanel.save) {
             if (JOptionPane.showConfirmDialog(this,  Bundle.getMessage("SaveProfile"), 
                     Bundle.getMessage("SpeedProfile"), JOptionPane.YES_NO_OPTION, 
