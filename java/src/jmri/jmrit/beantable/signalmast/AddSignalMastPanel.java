@@ -354,6 +354,10 @@ public class AddSignalMastPanel extends JPanel {
 
     String extractMastTypeFromMast(String name) {
         String[] parts = name.split(":");
+        if (parts.length > 3) {
+            // See if old format, new format uses () around the signal head names
+            return(parts[2]);
+        }
         return parts[2].substring(0, parts[2].indexOf("("));
     }
 
