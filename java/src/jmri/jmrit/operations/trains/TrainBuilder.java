@@ -2554,6 +2554,12 @@ public class TrainBuilder extends TrainCommon {
      * @return true is there are engines and cars available.
      */
     private boolean checkDepartureStagingTrack(Track departStageTrack) {
+        // does this staging track service this train?
+        if (!departStageTrack.acceptsPickupTrain(_train)) {
+            addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingNotTrain"),
+                    new Object[]{departStageTrack.getName()}));
+            return false;
+        }
         if (departStageTrack.getNumberRS() == 0 && _train.getTrainDepartsRouteLocation().getMaxCarMoves() > 0) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingEmpty"),
                     new Object[]{departStageTrack.getName()}));
@@ -2584,12 +2590,7 @@ public class TrainBuilder extends TrainCommon {
                     new Object[]{departStageTrack.getName()}));
             return false;
         }
-        // does this staging track service this train?
-        if (!departStageTrack.acceptsPickupTrain(_train)) {
-            addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingNotTrain"),
-                    new Object[]{departStageTrack.getName()}));
-            return false;
-        }
+
         if (departStageTrack.getNumberEngines() > 0) {
             for (RollingStock rs : engineManager.getList()) {
                 Engine eng = (Engine) rs;
