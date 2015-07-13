@@ -536,9 +536,9 @@ class SpeedProfilePanel extends jmri.util.swing.JmriPanel implements ThrottleLis
         }
 
         if (profileStep > finishSpeedStep) {
+            t.setSpeedSetting(0.0f);
             updateSpeedProfileWithResults();
             setButtonStates(true);
-            t.setSpeedSetting(0.0f);
             return;
         }
         // Loco may have been brought to half-speed in stopCurrentSpeedStep, so wait for that to take effect then stop & restart
