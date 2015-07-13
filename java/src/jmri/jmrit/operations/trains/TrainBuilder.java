@@ -2756,6 +2756,11 @@ public class TrainBuilder extends TrainCommon {
      *         engine types, roads, and loads.
      */
     private boolean checkTerminateStagingTrack(Track terminateStageTrack) {
+        if (!terminateStageTrack.acceptsDropTrain(_train)) {
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingNotTrain"),
+                    new Object[]{terminateStageTrack.getName()}));
+            return false;
+        }
         // In normal mode, find a completely empty track. In aggressive mode, a track that scheduled to depart is okay
         if (((!Setup.isBuildAggressive() || !Setup.isStagingTrackImmediatelyAvail()) && terminateStageTrack
                 .getNumberRS() != 0)
@@ -2774,12 +2779,8 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingTrackDepart"),
                     new Object[]{terminateStageTrack.getName()}));
         }
-        if (!terminateStageTrack.acceptsDropTrain(_train)) {
-            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildStagingNotTrain"),
-                    new Object[]{terminateStageTrack.getName()}));
-            return false;
-            // if track is setup to accept a specific train or route, then ignore other track restrictions
-        } else if (terminateStageTrack.getDropOption().equals(Track.TRAINS)
+        // if track is setup to accept a specific train or route, then ignore other track restrictions
+        if (terminateStageTrack.getDropOption().equals(Track.TRAINS)
                 || terminateStageTrack.getDropOption().equals(Track.ROUTES)) {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrainCanTerminateTrack"),
                     new Object[]{_train.getName(), terminateStageTrack.getName()}));
