@@ -269,6 +269,7 @@ Actual release steps:
         (add the calculated hashes for each file to the release note)
     scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
         (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
+        (for production release, use ".../production\ files/")
     (clean up and logout)
 
 ( ) Create and upload the JavaDocs
