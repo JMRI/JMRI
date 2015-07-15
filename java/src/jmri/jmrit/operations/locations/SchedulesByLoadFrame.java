@@ -197,7 +197,7 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                             addItemLeft(locationsPanel, new JLabel(si.getDestinationName() + " ("
                                     + si.getDestinationTrackName() + ")"), 4, x - 1);
                         }
-                        if (!spur.acceptsLoad(load, type)) {
+                        if (!allLoadsCheckBox.isSelected() && !spur.acceptsLoad(load, type)) {
                             addItemLeft(locationsPanel, new JLabel(MessageFormat.format(Bundle.getMessage("spurNotTypeLoad"),
                                     new Object[]{spur.getName(), type, load})), 2, x++);
                         }
