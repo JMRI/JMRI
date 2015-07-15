@@ -59,7 +59,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     Location _location = null;
     Track _track = null;
-    String trackName = null; // track name for tools menu
+    String _trackName = null; // track name for tools menu
     String _type = "";
     JMenu _toolMenu = null;
 
@@ -328,7 +328,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             commentTextArea.setText(_track.getComment());
             trackLengthTextField.setText(Integer.toString(_track.getLength()));
             enableButtons(true);
-            trackName = _track.getName();
+            _trackName = _track.getName();
         } else {
             enableButtons(false);
         }

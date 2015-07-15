@@ -32,7 +32,7 @@ public class InterchangeEditFrame extends TrackEditFrame implements java.beans.P
         _toolMenu.add(new TrackDestinationEditAction(this));
         _toolMenu.add(new ChangeTrackTypeAction(this));
         _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
-        _toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
+        _toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), _trackName));
         addHelpMenu("package.jmri.jmrit.operations.Operations_Interchange", true); // NOI18N
 
         // override text strings for tracks

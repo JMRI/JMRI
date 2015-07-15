@@ -52,7 +52,7 @@ public class SpurEditFrame extends TrackEditFrame implements java.beans.Property
         _toolMenu.add(new IgnoreUsedTrackAction(this));
         _toolMenu.add(new ChangeTrackTypeAction(this));
         _toolMenu.add(new ShowTrainsServingLocationAction(Bundle.getMessage("MenuItemShowTrainsTrack"), _location, _track));
-        _toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), trackName));
+        _toolMenu.add(new ShowCarsByLocationAction(false, location.getName(), _trackName));
         addHelpMenu("package.jmri.jmrit.operations.Operations_Sidings", true); // NOI18N
 
         // override text strings for tracks

@@ -1370,7 +1370,7 @@ public class TrainBuilder extends TrainCommon {
         for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
             Car car = _carList.get(_carIndex);
             // only show the first 100 cars removed
-            if (carListSize - _carList.size() == DISPLAY_CAR_LIMIT_100) {
+            if (showCar && carListSize - _carList.size() == DISPLAY_CAR_LIMIT_100) {
                 showCar = false;
                 addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("buildOnlyFirstXXXCars"),
                         new Object[]{DISPLAY_CAR_LIMIT_100, Bundle.getMessage("Type")}));
@@ -1558,6 +1558,7 @@ public class TrainBuilder extends TrainCommon {
                     _train.getTrainDepartsRouteLocation().getMaxCarMoves() - _departStageTrack.getNumberCars());
             int numCarsFromStaging = 0;
             _numOfBlocks = new Hashtable<String, Integer>();
+            addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
             for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
                 Car c = _carList.get(_carIndex);
                 if (c.getLocationName().equals(_departLocation.getName())) {
