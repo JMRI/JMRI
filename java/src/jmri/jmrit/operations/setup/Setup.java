@@ -177,10 +177,10 @@ public class Setup {
     public static final String METER = Bundle.getMessage("Meter");
 
     private static final String[] carAttributes = {ROAD, NUMBER, TYPE, LENGTH, LOAD, HAZARDOUS, COLOR, KERNEL, KERNEL_SIZE, OWNER,
-        TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
-        PICKUP_COMMENT, RWE};
+            TRACK, LOCATION, DESTINATION, DEST_TRACK, FINAL_DEST, FINAL_DEST_TRACK, COMMENT, DROP_COMMENT,
+            PICKUP_COMMENT, RWE};
     private static final String[] engineAttributes = {ROAD, NUMBER, TYPE, MODEL, LENGTH, CONSIST, OWNER, TRACK,
-        LOCATION, DESTINATION, COMMENT};
+            LOCATION, DESTINATION, COMMENT};
 
     private static int scale = HO_SCALE; // Default scale
     private static int ratio = HO_RATIO;
@@ -206,17 +206,17 @@ public class Setup {
     private static String[] pickupEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, LOCATION, COMMENT};
     private static String[] dropEngineMessageFormat = {ROAD, NUMBER, BLANK, MODEL, BLANK, BLANK, DESTINATION, COMMENT};
     private static String[] pickupManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-        COMMENT, PICKUP_COMMENT};
+            COMMENT, PICKUP_COMMENT};
     private static String[] dropManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, DESTINATION,
-        COMMENT, DROP_COMMENT};
+            COMMENT, DROP_COMMENT};
     private static String[] localManifestMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS, LOCATION,
-        DESTINATION, COMMENT};
+            DESTINATION, COMMENT};
     private static String[] pickupSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-        LOCATION, COMMENT, PICKUP_COMMENT};
+            LOCATION, COMMENT, PICKUP_COMMENT};
     private static String[] dropSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-        DESTINATION, COMMENT, DROP_COMMENT};
+            DESTINATION, COMMENT, DROP_COMMENT};
     private static String[] localSwitchListMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, LOAD, HAZARDOUS,
-        LOCATION, DESTINATION, COMMENT};
+            LOCATION, DESTINATION, COMMENT};
     private static String[] missingCarMessageFormat = {ROAD, NUMBER, TYPE, LENGTH, COLOR, COMMENT};
     private static String pickupEnginePrefix = BOX + Bundle.getMessage("PickUpPrefix");
     private static String dropEnginePrefix = BOX + Bundle.getMessage("SetOutPrefix");
@@ -258,7 +258,7 @@ public class Setup {
 
     private static boolean switchListRealTime = true; // when true switch list only show work for built trains
     private static boolean switchListAllTrains = true; // when true show all trains that visit the location
-    private static String switchListPageFormat = PAGE_NORMAL;	// how switch lists pages are printed
+    private static String switchListPageFormat = PAGE_NORMAL; // how switch lists pages are printed
 
     private static boolean buildReportEditorEnabled = false; // when true use text editor to view build report
     private static boolean buildReportIndentEnabled = true; // when true use text editor to view build report
@@ -289,22 +289,16 @@ public class Setup {
     private static boolean trainLogger = false; // when true train logger is enabled
 
     private static boolean aggressiveBuild = false; // when true subtract car length from track reserve length
-    private static int numberPasses = 2;		// the number of passes in train builder
-    private static boolean allowLocalInterchangeMoves = false; // when true local interchange to interchange moves are
-    // allowed
+    private static int numberPasses = 2; // the number of passes in train builder
+    private static boolean allowLocalInterchangeMoves = false; // when true local C/I to C/I moves are allowed
     private static boolean allowLocalYardMoves = false; // when true local yard to yard moves are allowed
     private static boolean allowLocalSpurMoves = false; // when true local spur to spur moves are allowed
 
-    private static boolean trainIntoStagingCheck = true; // when true staging track must accept train's rolling stock
-    // types and roads
-    private static boolean trackImmediatelyAvail = false; // when true staging track is immediately available for
-    // arrivals after a train is built
-    private static boolean allowCarsReturnStaging = false; // when true allow cars on a turn to return to staging if
-    // necessary (prevent build failure)
-    private static boolean promptFromStaging = false; // when true prompt user to specify which departure staging track
-    // to use
-    private static boolean promptToStaging = false; // when true prompt user to specify which arrival staging track to
-    // use
+    private static boolean trainIntoStagingCheck = true; // staging track must accept train's rolling stock types and roads
+    private static boolean trackImmediatelyAvail = false; // when true staging track is available for other trains
+    private static boolean allowCarsReturnStaging = false; // allow cars on a turn to return to staging if necessary (prevent build failure)
+    private static boolean promptFromStaging = false; // prompt user to specify which departure staging track to use
+    private static boolean promptToStaging = false; // prompt user to specify which arrival staging track to use
 
     private static boolean generateCsvManifest = false; // when true generate csv manifest
     private static boolean generateCsvSwitchList = false; // when true generate csv switch list
@@ -318,6 +312,9 @@ public class Setup {
     private static boolean printValid = true; // when true print out the valid time and date
     private static boolean sortByTrack = false; // when true manifest work is sorted by track names
     private static boolean printHeaders = false; // when true add headers to manifest and switch lists
+    
+    private static boolean printCabooseLoad = false; // when true print caboose load
+    private static boolean printPassengerLoad = false; // when true print passenger car load
 
     // property changes
     public static final String SWITCH_LIST_CSV_PROPERTY_CHANGE = "setupSwitchListCSVChange"; //  NOI18N
@@ -745,7 +742,7 @@ public class Setup {
     public static boolean isSwitchListFormatSameAsManifest() {
         return switchListSameManifest;
     }
-    
+
     public static void setTrackSummaryEnabled(boolean b) {
         trackSummary = b;
     }
@@ -868,6 +865,22 @@ public class Setup {
 
     public static boolean isPrintHeadersEnabled() {
         return printHeaders;
+    }
+    
+    public static void setPrintCabooseLoadEnabled(boolean enable) {
+        printCabooseLoad = enable;
+    }
+    
+    public static boolean isPrintCabooseLoadEnabled() {
+        return printCabooseLoad;
+    }
+    
+    public static void setPrintPassengerLoadEnabled(boolean enable) {
+        printPassengerLoad = enable;
+    }
+    
+    public static boolean isPrintPassengerLoadEnabled() {
+        return printPassengerLoad;
     }
 
     public static void setSwitchTime(int minutes) {
@@ -1767,19 +1780,20 @@ public class Setup {
         values.setAttribute(Xml.RFID_LABEL, getRfidLabel());
         values.setAttribute(Xml.LENGTH_UNIT, getLengthUnit());
         values.setAttribute(Xml.YEAR_MODELED, getYearModeled());
-        // next seven manifest attributes for backward compatibility TODO remove in future release 2014
-        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        // next 7 manifest attributes for backward compatibility TODO remove in future release 2014
+//        values.setAttribute(Xml.PRINT_LOC_COMMENTS, isPrintLocationCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.PRINT_ROUTE_COMMENTS, isPrintRouteCommentsEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.PRINT_LOADS_EMPTIES, isPrintLoadsAndEmptiesEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.PRINT_TIMETABLE, isPrintTimetableNameEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        // This one was left out, wait until 2016
         values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         // next three logger attributes for backward compatibility TODO remove in future release 2014
-        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
-        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.CAR_LOGGER, isCarLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.ENGINE_LOGGER, isEngineLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
+//        values.setAttribute(Xml.TRAIN_LOGGER, isTrainLoggerEnabled() ? Xml.TRUE : Xml.FALSE);
 
         e.addContent(values = new Element(Xml.PICKUP_ENG_FORMAT));
         storeXmlMessageFormat(values, getPickupEnginePrefix(), getPickupEngineMessageFormat());
@@ -1860,14 +1874,17 @@ public class Setup {
         values.setAttribute(Xml.USE12HR_FORMAT, is12hrFormatEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.PRINT_VALID, isPrintValidEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.SORT_BY_TRACK, isSortByTrackEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_HEADERS, isPrintHeadersEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.TRUNCATE, isTruncateManifestEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_DEPARTURE_TIME, isUseDepartureTimeEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.USE_EDITOR, isManifestEditorEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_CABOOSE_LOAD, isPrintCabooseLoadEnabled() ? Xml.TRUE : Xml.FALSE);
+        values.setAttribute(Xml.PRINT_PASSENGER_LOAD, isPrintPassengerLoadEnabled() ? Xml.TRUE : Xml.FALSE);
         values.setAttribute(Xml.HAZARDOUS_MSG, getHazardousMsg());
 
         // backward compatible, remove in 2015
-        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
-        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
+//        e.addContent(values = new Element(Xml.COLUMN_FORMAT));
+//        values.setAttribute(Xml.TWO_COLUMNS, getManifestFormat() == TWO_COLUMN_FORMAT ? Xml.TRUE : Xml.FALSE);
         // new format June 2014
         e.addContent(values = new Element(Xml.MANIFEST_FORMAT));
 
@@ -2551,6 +2568,13 @@ public class Setup {
                 }
                 setSortByTrackEnabled(enable.equals(Xml.TRUE));
             }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_HEADERS)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("manifest print headers: " + enable);
+                }
+                setPrintHeadersEnabled(enable.equals(Xml.TRUE));
+            }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.TRUNCATE)) != null) {
                 String enable = a.getValue();
                 if (log.isDebugEnabled()) {
@@ -2571,6 +2595,20 @@ public class Setup {
                     log.debug("manifest useEditor: " + enable);
                 }
                 setManifestEditorEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_CABOOSE_LOAD)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("manifest print caboose load: " + enable);
+                }
+                setPrintCabooseLoadEnabled(enable.equals(Xml.TRUE));
+            }
+            if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.PRINT_PASSENGER_LOAD)) != null) {
+                String enable = a.getValue();
+                if (log.isDebugEnabled()) {
+                    log.debug("manifest print passenger load: " + enable);
+                }
+                setPrintPassengerLoadEnabled(enable.equals(Xml.TRUE));
             }
             if ((a = operations.getChild(Xml.MANIFEST).getAttribute(Xml.HAZARDOUS_MSG)) != null) {
                 String message = a.getValue();

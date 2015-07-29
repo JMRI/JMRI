@@ -81,6 +81,9 @@ public class Xml {
     static final String PRINT_VALID = "printValid"; // NOI18N
     static final String SORT_BY_TRACK = "sortByTrack"; // NOI18N
     static final String PRINT_HEADERS = "printHeaders"; // NOI18N
+    static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
+    static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
+    
     static final String LENGTH_UNIT = "lengthUnit"; // NOI18N
     static final String YEAR_MODELED = "yearModeled"; // NOI18N
 
