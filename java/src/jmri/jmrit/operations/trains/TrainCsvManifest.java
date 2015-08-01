@@ -7,9 +7,12 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
+import jmri.jmrit.operations.locations.Track;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarLoad;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
@@ -44,7 +47,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
 
         try {
             fileOut = new PrintWriter(new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), "UTF-8")),// NOI18N
-                    true); // NOI18N
+            true); // NOI18N
         } catch (IOException e) {
             log.error("Can not open CSV manifest file: {}", file.getName());
             return;
@@ -182,6 +185,29 @@ public class TrainCsvManifest extends TrainCsvCommon {
                         }
                     }
                     fileOutCsvCar(fileOut, car, SC, count);
+                }
+            }
+            // car holds
+            List<RollingStock> rsByLocation = CarManager.instance().getByLocationList();
+            List<Car> cList = new ArrayList<Car>();
+            for (RollingStock rs : rsByLocation) {
+                if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null) {
+                    cList.add((Car) rs);
+                }
+            }
+            clearUtilityCarTypes(); // list utility cars by quantity
+            for (Car car : cList) {
+                // list cars on tracks that only this train can service
+                if (car.getTrack().acceptsPickupTrain(train) && car.getTrack().getPickupIds().length == 1
+                        && car.getTrack().getPickupOption().equals(Track.TRAINS)) {
+                    int count = 0;
+                    if (car.isUtility()) {
+                        count = countPickupUtilityCars(cList, car, !IS_MANIFEST);
+                        if (count == 0) {
+                            continue; // already done this set of utility cars
+                        }
+                    }
+                    fileOutCsvCar(fileOut, car, HOLD, count);
                 }
             }
             if (rl != train.getRoute().getTerminatesRouteLocation()) {

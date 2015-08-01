@@ -7,8 +7,10 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import jmri.jmrit.operations.locations.Location;
+import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -225,6 +227,29 @@ public class TrainCsvSwitchLists extends TrainCsvCommon {
             }
         }
         addLine(fileOut, END); // done with switch list
+        
+        // now list hold cars
+        List<RollingStock> rsByLocation = CarManager.instance().getByLocationList();
+        List<Car> carList = new ArrayList<Car>();
+        for (RollingStock rs : rsByLocation) {
+            if (rs.getLocation() != null && splitString(rs.getLocation().getName()).equals(splitString(location.getName())) 
+                    && rs.getRouteLocation() == null) {
+                carList.add((Car)rs);
+            }
+        }
+        clearUtilityCarTypes(); // list utility cars by quantity
+        for (Car car : carList) {
+            int count = 0;
+            if (car.isUtility()) {
+                count = countPickupUtilityCars(carList, car, !IS_MANIFEST);
+                if (count == 0) {
+                    continue; // already done this set of utility cars
+                }
+            }
+            fileOutCsvCar(fileOut, car, HOLD, count);
+        }
+        addLine(fileOut, END); // done with hold cars
+        
         // Are there any cars that need to be found?
         listCarsLocationUnknown(fileOut);
         fileOut.flush();
