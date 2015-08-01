@@ -351,7 +351,7 @@
     <label>Serial User Standard Interface</label>
   </variable>
   <variable CV="124" mask="XXXVXXXX" default="1" item="Total PWM Period" exclude="LokPilot Fx V4.0">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
+    <xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
     <label>Adaptive Regulation Frequency</label>
   </variable>
   <variable CV="124" mask="XXVXXXXX" default="0" include="ESU LokSound V4.0" item="Motor Option 2" exclude="LokSound Micro V4.0,LokSound XL V4.0">
