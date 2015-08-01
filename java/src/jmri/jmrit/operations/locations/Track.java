@@ -1674,6 +1674,12 @@ public class Track {
             }
             // check destination track
             if (si.getDestination() != null && si.getDestinationTrack() != null) {
+                if (!si.getDestination().isTrackAtLocation(si.getDestinationTrack())) {
+                    status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
+                        .getDestinationTrack()
+                        + " (" + Bundle.getMessage("Track") + ")"});
+                    break;
+                }
                 if (!si.getDestinationTrack().acceptsTypeName(si.getTypeName())) {
                     status = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
                         .getDestinationTrack()
@@ -2188,6 +2194,8 @@ public class Track {
     }
 
     public void dispose() {
+        // change the name in case object is still in use, for example ScheduleItem.java
+        setName(MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{ getName() }));
         setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
 
