@@ -170,15 +170,11 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         }
                         addItemLeft(locationsPanel,
                                 new JLabel(spur.getName() + " (" + spur.getScheduleName() + ")"), 1, x);
-                        // create string (type, timetable, road, load)
+                        // create string Receive(type, delivery, road, load)
                         String s = si.getTypeName();
                         if (!si.getSetoutTrainScheduleId().equals(ScheduleItem.NONE)
-                                &&
-                                TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) != null) {
-                            s = s
-                                    + ", "
-                                    + TrainScheduleManager.instance().getScheduleById(
-                                            si.getSetoutTrainScheduleId()).getName();
+                                && TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()) != null) {
+                            s = s  + ", " + TrainScheduleManager.instance().getScheduleById(si.getSetoutTrainScheduleId()).getName();
                         } else {
                             s = s + ",";
                         }
@@ -189,14 +185,20 @@ public class SchedulesByLoadFrame extends OperationsFrame implements java.beans.
                         }
                         s = s + ", " + si.getReceiveLoadName();
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Receive") + " (" + s + ")"), 2, x);
+                        // create string Ship(load, pickup)
+                        s = "";
+                        if (!si.getPickupTrainScheduleId().equals(ScheduleItem.NONE)
+                                && TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId()) != null) {
+                            s = ", "+ TrainScheduleManager.instance().getScheduleById(si.getPickupTrainScheduleId()).getName();
+                        }
                         addItemLeft(locationsPanel, new JLabel(Bundle.getMessage("Ship") +
-                                " (" +
-                                si.getShipLoadName() +
-                                ")"), 3, x++);
+                                " (" + si.getShipLoadName() + s + ")"), 3, x++);
+                        // now the destination and track
                         if (si.getDestination() != null) {
                             addItemLeft(locationsPanel, new JLabel(si.getDestinationName() + " ("
                                     + si.getDestinationTrackName() + ")"), 4, x - 1);
                         }
+                        // report if spur can't service the selected load
                         if (!allLoadsCheckBox.isSelected() &&
                                 si.getReceiveLoadName().equals(ScheduleItem.NONE) &&
                                 !spur.acceptsLoad(load, type)) {
