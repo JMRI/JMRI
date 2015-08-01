@@ -54,7 +54,8 @@ public class DeferringProgrammerManager implements ProgrammerManager {
             return null;
         }
         Programmer p = gp.getGlobalProgrammer();
-        log.debug("getGlobalProgrammer returns default service-mode programmer of type {} from {}", p.getClass(), gp.getClass());
+        log.debug("getGlobalProgrammer returns default service-mode programmer of type {} from {}", 
+            (p != null ? p.getClass() : "(null)"), gp.getClass() );
         return p;
     }
 
