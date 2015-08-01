@@ -420,7 +420,7 @@ To use it:
 <li>Run the "translate.sh" script in your java/ build directory.  This creates new, temporary
 properties files in the classes/ directory tree. You will have to redo this
 every time the classes/ tree is removed by e.g. "ant clean" or an clean IDE build.
-
+<li>Delete the JMRI preference file, or edit it to remove the GUI definition line.
 <li>Run DecoderPro via "ant locale", which starts the DecoderPro program
 using the new properties files.  
 </ul>
