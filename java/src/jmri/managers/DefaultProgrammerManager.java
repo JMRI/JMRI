@@ -138,7 +138,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     public Programmer getGlobalProgrammer() {
-        log.debug("return default service-mode programmer of type {}", mProgrammer.getClass());
+        log.debug("return default service-mode programmer of type {}", (mProgrammer != null ? mProgrammer.getClass() : "(null)") );
         return mProgrammer;
     }
 
