@@ -167,7 +167,6 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
 
         setJMenuBar(_menuBar);
         addHelpMenu("package.jmri.jmrit.display.ControlPanelEditor", true);
-        _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPallette"), this);
 
         super.setTargetPanel(null, null);
         super.setTargetPanelSize(300, 300);
@@ -200,11 +199,19 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
         _menuBar.add(_iconMenu, 0);
         JMenuItem mi = new JMenuItem(Bundle.getMessage("MenuItemItemPallette"));
         mi.addActionListener(new ActionListener() {
+            Editor editor;
+            ActionListener init(Editor ed) {
+                editor = ed;
+                return this;
+            }
             @Override
             public void actionPerformed(ActionEvent e) {
+                if (_itemPalette==null) {                   
+                    _itemPalette = new ItemPalette(Bundle.getMessage("MenuItemItemPallette"), editor);
+                }
                 _itemPalette.setVisible(true);
             }
-        });
+        }.init(this));
         mi.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
         _iconMenu.add(mi);
         _iconMenu.add(new jmri.jmrit.beantable.OBlockTableAction(Bundle.getMessage("MenuItemOBlockTable")));
@@ -473,7 +480,9 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
             @Override
             public void actionPerformed(ActionEvent event) {
                 changeView("jmri.jmrit.display.panelEditor.PanelEditor");
-                _itemPalette.dispose();
+                if (_itemPalette!=null) {
+                    _itemPalette.dispose();                    
+                }
             }
         });
 

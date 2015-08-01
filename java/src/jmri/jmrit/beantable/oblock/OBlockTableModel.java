@@ -254,7 +254,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 if (b != null) {
                     int state = b.getState();
                     int num = Integer.numberOfLeadingZeros(state) - 24;
-                    return ZEROS.substring(0, num) + Integer.toBinaryString(state);
+                    if (num>=0) {
+                        return ZEROS.substring(0, num) + Integer.toBinaryString(state);                        
+                    }
                 }
                 return ZEROS;
             case SENSORCOL:

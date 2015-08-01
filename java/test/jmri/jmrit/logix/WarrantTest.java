@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import jmri.BeanSetting;
-import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -175,9 +174,9 @@ public class WarrantTest extends TestCase {
         List<ThrottleSetting> list = warrant.getThrottleCommands();
         Assert.assertEquals("ThrottleCommands", 7, list.size());
         
-        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
-        Assert.assertNotNull("dccAddress", dccAddress);
-        warrant.setDccAddress(dccAddress);
+//        DccLocoAddress dccAddress = new DccLocoAddress(999, true);
+//        Assert.assertNotNull("dccAddress", dccAddress);
+        warrant.setDccAddress("999(L)");
         msg = warrant.setRoute(0, orders);
         Assert.assertNull("setRoute - "+msg, msg);
         msg =  warrant.checkStartBlock(Warrant.MODE_RUN);

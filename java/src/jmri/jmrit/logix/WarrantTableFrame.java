@@ -70,8 +70,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
     private JTextField  _startWarrant = new JTextField(30);
     private JTextField  _endWarrant = new JTextField(30);
-    private JDialog _concatDialog;
-    private NXFrame _nxFrame;
+    private JDialog     _concatDialog;
     private JTextField  _status = new JTextField(90);
     private ArrayList<String> _statusHistory = new ArrayList<String>();
     private JScrollPane _tablePane;
@@ -83,13 +82,18 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
     public static WarrantTableFrame getInstance() {
         if (_instance==null) {
             _instance = new WarrantTableFrame();
+            try {
+                _instance.initComponents();
+            } catch (Exception ex ) {/*bogus*/ }
         }
+        _instance.setVisible(true);
+        _instance.pack();
         return _instance;
     }
     // for JUnit test
     protected static WarrantTableFrame reset() {
-        _instance = new WarrantTableFrame();
-        return _instance;
+        _instance = null;
+        return getInstance();
     }
 
     protected WarrantTableModel getModel() {
@@ -216,8 +220,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             private static final long serialVersionUID = -4129760191508866189L;
 
             public void actionPerformed(ActionEvent e) {
-                _nxFrame = NXFrame.getInstance();
-                _nxFrame.setVisible(true);
+                nxAction();
             }           
         });
         warrantMenu.add(WarrantTableAction.makeLogMenu());
@@ -234,22 +237,12 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         bar.setValue(bar.getMaximum());
     }
 
-    
-    protected boolean mouseClickedOnBlock(OBlock block) {
-        if (_nxFrame!=null) {
-            _nxFrame.mouseClickedOnBlock(block);
-            return true;
+    protected static void nxAction() {
+        NXFrame nxFrame = NXFrame.getInstance();
+        if (nxFrame._controlPanel==null) {
+            nxFrame.init();
         }
-        return false;
-    }
-       
-    private void nxAction() {
-        _nxFrame = NXFrame.getInstance();
-        _nxFrame.setVisible(true);
-    }
-    
-    protected void closeNXFrame() {
-        _nxFrame = null;
+        nxFrame.setVisible(true);
     }
     
     private void haltAllAction() {
@@ -352,12 +345,13 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
         }
         @Override
         public Component getTableCellEditorComponent(JTable table, Object value, 
-                                         boolean isSelected, int row, int column) 
+                                         boolean isSelected, int r, int column) 
         {
             jmri.util.com.sun.TableSorter m = ((jmri.util.com.sun.TableSorter)table.getModel());        
             WarrantTableModel model = (WarrantTableModel)m.getTableModel();
 
             // If table has been sorted, table row no longer is the same as array index
+            int row =r;
             if (_sorter!=null) {
                 row = _sorter.modelIndex(row);              
             }

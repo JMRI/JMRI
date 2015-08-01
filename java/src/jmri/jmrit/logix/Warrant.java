@@ -346,25 +346,11 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
     }
     
     protected RosterEntry getRosterEntry() {
-        if (_train==null) {
-            if (_trainId != null) {
-                setTrainId(_trainId);
-            } else if (_dccAddress!=null) {
-                setDccAddress(_dccAddress.toString());
-            }
-        }           
         return _train;
     }
 
     public DccLocoAddress getDccAddress() {
         return _dccAddress;
-    }
-
-    public void setDccAddress(DccLocoAddress address) {
-        _dccAddress = address;
-        if (address != null && _trainId == null) {
-            _trainId = address.toString();
-        }
     }
 
     /**
@@ -373,39 +359,41 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
      * @return
      */
     public boolean setDccAddress(String id) {
-        int index = id.indexOf('(');
-        String numId;
-        if (index >= 0) {
-            numId = id.substring(0, index);
-        } else {
-            numId = id;
-        }
-        List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
-        if (l.size() > 0) {
-            _train = l.get(0);
-            try {
-                _dccAddress = l.get(0).getDccLocoAddress();
-            } catch (NumberFormatException e) {
-                return false;
-            }
-        } else {
-            _train = null;
-            boolean isLong = true;
-            if ((index + 1) < id.length()
-                    && (id.charAt(index + 1) == 'S' || id.charAt(index + 1) == 's')) {
-                isLong = false;
+        _train = Roster.instance().entryFromTitle(id);
+        if (_train == null) {
+            int index = id.indexOf('(');
+            String numId;
+            if (index >= 0) {
+                numId = id.substring(0, index);
+            } else {
+                numId = id;
             }
             try {
-                int num = Integer.parseInt(numId);
-                _dccAddress = new DccLocoAddress(num, isLong);
+                List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+                if (l.size() > 0) {
+                    _train = l.get(0);
+                    _trainId = _train.getId();
+                } else {
+                    _train = null;
+                    _trainId = null;
+                    boolean isLong = true;
+                    if ((index + 1) < id.length()
+                            && (id.charAt(index + 1) == 'S' || id.charAt(index + 1) == 's')) {
+                        isLong = false;
+                    }
+                    int num = Integer.parseInt(numId);
+                    _dccAddress = new DccLocoAddress(num, isLong);
+                    _trainId = _dccAddress.toString();
+               }
             } catch (NumberFormatException e) {
+                _dccAddress = null;
                 return false;
-            }
+            }            
+        } else {
+            _trainId = id;
+            _dccAddress = _train.getDccLocoAddress();           
         }
-        if (_trainId == null) {
-            _trainId = _dccAddress.toString();
-        }
-        return (_train!=null);
+        return true;
     }
 
     public boolean getRunBlind() {
@@ -706,8 +694,8 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             }
             if (_dccAddress == null) {  // if brand new warrant being tested. needed for a delayed start
                 _dccAddress = address;
+                setTrainId(_dccAddress.toString());     // get RosterEntry
             }
-            setTrainId(_dccAddress.toString());     // get RosterEntry
         } else {
             stopWarrant(true);
         }

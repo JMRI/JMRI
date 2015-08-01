@@ -71,13 +71,13 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private JTextField  _searchDepth =  new JTextField(5);
 
     private RosterEntry _train;
-    private DccLocoAddress _locoAddress = null;
+    private String _trainId = null;
     private JComboBox<String> _rosterBox = new JComboBox<String>();
     protected JTextField _dccNumBox = new JTextField();
     private JTextField _trainNameBox = new JTextField();
 
     WarrantRoute() {        
-        super(false, false);
+        super(false, true);
         _routeModel = new RouteTableModel();
         getRoster();
     }
@@ -128,7 +128,7 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
 
         _dccNumBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setTrainInfo(_dccNumBox.getText(), true);
+                setTrainInfo(_dccNumBox.getText());
             }
         });
         JPanel x = new JPanel();
@@ -151,49 +151,84 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         _rosterBox.setMaximumSize(_rosterBox.getPreferredSize());
         _rosterBox.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                setTrainInfo((String) _rosterBox.getSelectedItem(), false);
+                String selection = (String)_rosterBox.getSelectedItem();
+                if (Bundle.getMessage("noSuchAddress").equals(selection)) {
+                    _dccNumBox.setText(null);                                
+                } else {
+                    setTrainInfo(selection);                    
+                }
             }
         });
     }
 
-    protected boolean setTrainInfo(String name, boolean isAddress) {
+    /**
+     * Set the roster entry, if it exists, or train id string if not.
+     * i.e. set enough info to get a dccLocoAddress
+     * @param name may be roster Id or address
+     * @return
+     */
+    protected String setTrainInfo(String name) {
         if (log.isDebugEnabled()) {
-            log.debug("setTrainInfo for: " + name + " isAddress= " + isAddress);
+            log.debug("setTrainInfo for: " + name);
         }
-        if (isAddress) {
-            _dccNumBox.setText(name);
+        _train = Roster.instance().entryFromTitle(name);
+        if (_train == null) {
+            if (name==null || name.trim().length()==0) {
+                _trainId = null;
+                return Bundle.getMessage("NoLoco");
+            }
+            int index = name.indexOf('(');
+            String numId;
+            boolean isLong = true;
+            if (index >= 0) {
+                if ((index + 1) < name.length()
+                        && (name.charAt(index + 1) == 'S' || name.charAt(index + 1) == 's')) {
+                    isLong = false;
+                }                    
+                numId = name.substring(0, index);
+            } else {
+                Character ch = name.charAt(name.length()-1);
+                if (!Character.isDigit(ch)) {
+                    if (ch == 'S' || ch == 's') {
+                        isLong = false;                        
+                    }
+                    numId = name.substring(0, name.length()-1);
+                } else {
+                    numId = name;                    
+                }
+            }
+            List<RosterEntry> l = Roster.instance().matchingList(null, null, numId, null, null, null, null);
+            if (l.size() > 0) {
+                _train = l.get(0);
+            } else {
+                _train = null;
+                try {
+                    int num = Integer.parseInt(numId);
+                    isLong = (name.charAt(0) == '0' || num > 255);  // leading zero means long
+                    _trainId = num+"("+(isLong?'L':'S')+")";
+                } catch (NumberFormatException e) {
+                    _trainId = null;
+                    return Bundle.getMessage("BadDccAddress", name);
+                }            
+            }
         }
-        if (name != null && name.length() > 0) {
-            _train = null;
-            if (isAddress) {
-                int index = name.indexOf('(');
-                if (index >= 0) {
-                    name = name.substring(0, index);
-                }
-                List<RosterEntry> l = Roster.instance().matchingList(null, null, name, null, null, null, null);
-                if (l.size() > 0) {
-                    _train = l.get(0);
-                }
-            } else {
-                _train = Roster.instance().entryFromTitle(name);
-            }
-            if (_train != null) {
-                _trainNameBox.setText(_train.getRoadNumber());
-                _dccNumBox.setText(_train.getDccLocoAddress().toString());
-                _rosterBox.setSelectedItem(_train.getId());
-            } else {
-                _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
-                return false;
-            }
+        if (_train != null) {
+            _trainId =  _train.getId();
+            _rosterBox.setSelectedItem(_train.getId());
+            _dccNumBox.setText(_train.getDccLocoAddress().toString());
+        } else {
+            _rosterBox.setSelectedItem(Bundle.getMessage("noSuchAddress"));
+            _dccNumBox.setText(_trainId);            
         }
         String n = _trainNameBox.getText();
-        if (n == null || n.length() == 0 || _train == null) {
-            _trainNameBox.setText(_dccNumBox.getText());
+        if (n == null || n.length() == 0) {
+            if (_train != null) {
+                _trainNameBox.setText(_train.getRoadNumber()); 
+            } else {
+                _trainNameBox.setText(_trainId);                
+            }
         }
-/*        if (_tabbedPane != null) {
-            _tabbedPane.invalidate();
-        }*/
-        return true;
+        return null;
     }
 
     protected RosterEntry getTrain() {
@@ -223,53 +258,42 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
         return _dccNumBox.getText();        
     }
     
+    protected String getTrainId() {
+        return _trainId;
+    }
+    
     protected DccLocoAddress getLocoAddress() {
-        return _locoAddress;
+        if (_train!=null) {
+            return _train.getDccLocoAddress();
+        }
+        if (_trainId!=null) {
+            String numId;
+            int index = _trainId.indexOf('(');
+            if (index >= 0) {
+                numId = _trainId.substring(0, index);
+            } else {
+                numId = _trainId;
+            }
+            boolean isLong = true;
+            if ((index + 1) < _trainId.length()
+                    && (_trainId.charAt(index + 1) == 'S' || _trainId.charAt(index + 1) == 's')) {
+                isLong = false;
+            }
+            try {
+                int num = Integer.parseInt(numId);
+                return new DccLocoAddress(num, isLong);
+            } catch (NumberFormatException e) {
+                return null;
+            }            
+        }
+        return null;
     }
     
     protected String checkLocoAddress() {
-        if (_train != null) {
-            _locoAddress = _train.getDccLocoAddress();
-            if (_locoAddress != null) {
-                return null;
-            }
+        if (_train != null || _trainId != null) {
+            return null;
         }
-        String addr = _dccNumBox.getText();
-        String msg = null;
-        if (addr != null && addr.length() != 0) {
-            boolean isLong = false;
-            int dccNum = 0;
-            addr = addr.toUpperCase().trim();
-            Character ch = addr.charAt(addr.length() - 1);
-            try {
-                if (!Character.isDigit(ch)) {
-                    if (ch != 'S' && ch != 'L' && ch != ')') {
-                        msg = Bundle.getMessage("BadDccAddress", addr);
-                    }
-                    if (ch == ')') {
-                        dccNum = Integer.parseInt(addr.substring(0, addr.length() - 3));
-                        ch = addr.charAt(addr.length() - 2);
-                        isLong = (ch == 'L');
-                    } else {
-                        dccNum = Integer.parseInt(addr.substring(0, addr.length() - 1));
-                        isLong = (ch == 'L');
-                    }
-                } else {
-                    dccNum = Integer.parseInt(addr);
-                    ch = addr.charAt(0);
-                    isLong = (ch == '0' || dccNum > 255);  // leading zero means long
-                    addr = addr + (isLong ? "L" : "S");
-                }
-                if (msg == null) {
-                    _locoAddress = new DccLocoAddress(dccNum, isLong);
-                }
-            } catch (NumberFormatException nfe) {
-                msg = Bundle.getMessage("BadDccAddress", addr);
-            }
-        } else {
-            msg = Bundle.getMessage("NoLoco");
-        }
-        return msg;
+        return setTrainInfo(_dccNumBox.getText());
     }
 
 /******************************* route info *******************/

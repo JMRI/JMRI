@@ -50,6 +50,14 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertEquals("5 BlockOrders", 5, orders.size());
         
         frame._dccNumBox.setText("99");
+        
+        jmri.jmrix.nce.simulator.SimulatorAdapter nceSimulator = new jmri.jmrix.nce.simulator.SimulatorAdapter();
+        Assert.assertNotNull("Nce SimulatorAdapter", nceSimulator);
+        jmri.jmrix.nce.NceSystemConnectionMemo memo = nceSimulator.getSystemConnectionMemo();
+        nceSimulator.openPort("(None Selected)", "JMRI test");
+        nceSimulator.configure();
+        Assert.assertNotNull("NceSystemConnectionMemo", memo);
+
         pressButton(frame, Bundle.getMessage("Start"));
         // dismiss warning "starting block not occupied
         confirmJOptionPane(frame, Bundle.getMessage("WarningTitle"), "OK");

@@ -63,7 +63,6 @@ public class WarrantTableAction extends AbstractAction {
     static JMenu _warrantMenu;
     private static WarrantTableAction _instance;
     private static HashMap <String, Warrant> _warrantMap = new HashMap <String, Warrant> ();
-    private static WarrantTableFrame _tableFrame;
     protected static TrackerTableAction _trackerTable;
     private static JTextArea _textArea;
     private static boolean _hasErrors = false;
@@ -89,7 +88,7 @@ public class WarrantTableAction extends AbstractAction {
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
         if (Bundle.getMessage("ShowWarrants").equals(command)){
-            setupWarrantTable();
+            WarrantTableFrame.getInstance();
         } else if (Bundle.getMessage("CreateWarrant").equals(command)){
             CreateWarrantFrame f = new CreateWarrantFrame();
             try {
@@ -118,9 +117,8 @@ public class WarrantTableAction extends AbstractAction {
              _warrantMenu = new JMenu(Bundle.getMessage("MenuWarrant"));
              updateWarrantMenu();
              return _warrantMenu;
-        } else {
-            return null;
-        }
+         }
+         return null;
     }
 
     synchronized protected static void updateWarrantMenu() {
@@ -151,9 +149,7 @@ public class WarrantTableAction extends AbstractAction {
             private static final long serialVersionUID = 4129760191508866189L;
 
             public void actionPerformed(ActionEvent e) {
-                setupWarrantTable();
-                _nxFrame = NXFrame.getInstance();
-                _nxFrame.setVisible(true);
+                WarrantTableFrame.nxAction();
             }           
         });
         _warrantMenu.add(makeLogMenu());
@@ -169,7 +165,7 @@ public class WarrantTableAction extends AbstractAction {
                 {
                     public void actionPerformed(ActionEvent e) {
                         _log = OpSessionLog.getInstance();
-                        if (!_log.showFileChooser(_tableFrame)) {
+                        if (!_log.showFileChooser(WarrantTableFrame.getInstance())) {
                             _log = null;
                             return;
                         }
@@ -210,19 +206,6 @@ public class WarrantTableAction extends AbstractAction {
         }       
     }
     
-    private static void setupWarrantTable() {
-        if (_tableFrame==null) {
-            _tableFrame = WarrantTableFrame.getInstance();
-            try {
-                _tableFrame.initComponents();
-            } catch (Exception ex ) {/*bogus*/ }
-        }
-        if (_tableFrame!=null){
-            _tableFrame.setVisible(true);
-            _tableFrame.pack();
-        }       
-    }
-
     synchronized protected static void closeWarrantFrame(WarrantFrame frame) {
         if (frame!=null) {
             if  (frame.equals(_openFrame)) {
@@ -294,18 +277,19 @@ public class WarrantTableAction extends AbstractAction {
     }*/
     
     synchronized static public void mouseClickedOnBlock(OBlock block) {
-        if (_tableFrame!=null && _tableFrame.mouseClickedOnBlock(block)) {
+        
+        NXFrame nxFrame = NXFrame.getInstance();
+        if (nxFrame.isVisible()) {
+            nxFrame.mouseClickedOnBlock(block);
             return;
         }
+           
         if (_trackerTable!=null && TrackerTableAction.mouseClickedOnBlock(block)) {
             return;
         }
         if (_openFrame!=null) {
             _openFrame.mouseClickedOnBlock(block);
             return;
-        }
-        if (_nxFrame!=null) {
-            _nxFrame.mouseClickedOnBlock(block);
         }
     }
     
@@ -648,9 +632,9 @@ public class WarrantTableAction extends AbstractAction {
                     }                   
                 }
                 _warrantMap.put(w.getDisplayName(), w);
-                new WarrantFrame(w, false);
+                newWarrantFrame(new WarrantFrame(w, false)); // copy/concat warrant/s
             } else {
-                new WarrantFrame(w, true);
+                newWarrantFrame(new WarrantFrame(w, true));  // create new warrant
             }
             _startW = null;
             _endW =null;

@@ -91,7 +91,7 @@ public class WarrantManagerXml //extends XmlFile
         return warrants;
     }
 
-    Element storeTrain(Warrant warrant, String type) {
+    static Element storeTrain(Warrant warrant, String type) {
         Element elem = new Element(type);
         String str = warrant.getTrainId();
         if (str==null) str = "";
@@ -111,7 +111,7 @@ public class WarrantManagerXml //extends XmlFile
         return elem;
     }
 
-    Element storeOrder(BlockOrder order, String type) {
+    static Element storeOrder(BlockOrder order, String type) {
         Element elem = new Element(type);
         OBlock block = order.getBlock();
         if (block!=null) {
@@ -139,7 +139,7 @@ public class WarrantManagerXml //extends XmlFile
         return elem;
     }
 
-    Element storeCommand(ThrottleSetting command, String type) {
+    static Element storeCommand(ThrottleSetting command, String type) {
         Element elem = new Element(type);
 
         String time = String.valueOf(command.getTime());
@@ -161,7 +161,7 @@ public class WarrantManagerXml //extends XmlFile
         return elem;
     }
     
-    void storeNXParams (Element element) {
+    static void storeNXParams (Element element) {
         if (jmri.InstanceManager.getDefault(OBlockManager.class).getSystemNameList().size() < 1) {
             return;
         }
@@ -170,15 +170,6 @@ public class WarrantManagerXml //extends XmlFile
         Element e = new Element("maxspeed");
         e.addContent(Float.toString(nxFrame.getMaxSpeed()));
         elem.addContent(e);
-/*        e = new Element("minspeed");
-        e.addContent(Float.toString(nxFrame.getMinSpeed()));
-        elem.addContent(e);
-        e = new Element("timeinterval");
-        e.addContent(Float.toString(nxFrame.getTimeInterval()));
-        elem.addContent(e);
-        e = new Element("numsteps");
-        e.addContent(Integer.toString(nxFrame.getNumSteps()));
-        elem.addContent(e);*/
         e = new Element("haltstart");
         e.addContent(nxFrame.getStartHalt()?"yes":"no");
         elem.addContent(e);
@@ -199,11 +190,11 @@ public class WarrantManagerXml //extends XmlFile
         // don't continue on to build NXFrame if no content
         if (warrants.getChildren().size() == 0) return true;
         
-        if (!GraphicsEnvironment.isHeadless()) {
+//        if (!GraphicsEnvironment.isHeadless()) {
             NXFrame nxFrame = NXFrame.getInstance();
             loadNXParams(nxFrame, warrants.getChild("nxparams"));
-            nxFrame.init();
-        }
+//            nxFrame.init();   don't make visible
+//        }
         List<Element> warrantList = warrants.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
         for (int i=0; i<warrantList.size(); i++) {
@@ -263,7 +254,7 @@ public class WarrantManagerXml //extends XmlFile
         log.error("load called. Invalid method.");
     }
 
-    void loadTrain(Element elem, Warrant warrant) {
+    static void loadTrain(Element elem, Warrant warrant) {
         if (elem.getAttribute("trainId") != null) {
             warrant.setTrainId(elem.getAttribute("trainId").getValue());
         }
@@ -274,11 +265,8 @@ public class WarrantManagerXml //extends XmlFile
             } catch (org.jdom2.DataConversionException dce) {
                 log.error(dce.toString()+ " for dccAddress in Warrant "+warrant.getDisplayName());
             }
-            boolean isLong = true;
-            if (elem.getAttribute("dccType") != null) {
-                isLong = elem.getAttribute("dccType").getValue().equals("L");
-            }
-            warrant.setDccAddress(new DccLocoAddress(address, isLong));
+            String addr = address+"("+elem.getAttribute("dccType").getValue()+")";
+            warrant.setDccAddress(addr);
         }
         if (elem.getAttribute("runBlind") != null) {
             warrant.setRunBlind(elem.getAttribute("runBlind").getValue().equals("true"));
@@ -288,7 +276,7 @@ public class WarrantManagerXml //extends XmlFile
         }
     }
 
-    BlockOrder loadBlockOrder(Element elem) {
+    static BlockOrder loadBlockOrder(Element elem) {
 
         OBlock block = null;
         List<Element> blocks = elem.getChildren("block");
@@ -324,7 +312,7 @@ public class WarrantManagerXml //extends XmlFile
         return new BlockOrder(block, pathName, entryName, exitName);
     }
     
-    ThrottleSetting loadThrottleCommand(Element elem) {
+    static ThrottleSetting loadThrottleCommand(Element elem) {
         long time = 0;
         try {
             time = elem.getAttribute("time").getLongValue();
@@ -347,7 +335,8 @@ public class WarrantManagerXml //extends XmlFile
 
         return new ThrottleSetting(time, command, value, block);
     }
-    void loadNXParams(NXFrame nxFrame, Element elem) {
+    
+    static void loadNXParams(NXFrame nxFrame, Element elem) {
         if (elem==null) {
             return;
         }
@@ -360,30 +349,6 @@ public class WarrantManagerXml //extends XmlFile
                 log.error("NXWarrant MaxSpeed; "+nfe);          
             }           
         }
-/*        e = elem.getChild("minspeed");
-        if (e!=null) {
-            try {
-                nxFrame.setMinSpeed(Float.valueOf(e.getValue()));
-            } catch (NumberFormatException nfe) {
-                log.error("NXWarrant MinSpeed; "+nfe);          
-            }           
-        }
-      e = elem.getChild("timeinterval");
-        if (e!=null) {
-            try {
-                nxFrame.setTimeInterval(Float.valueOf(e.getValue()));
-            } catch (NumberFormatException nfe) {
-                log.error("NXWarrant timeinterval; "+nfe);          
-            }           
-        }
-        e = elem.getChild("numsteps");
-        if (e!=null) {
-            try {
-                nxFrame.setNumSteps(Integer.valueOf(e.getValue()));
-            } catch (NumberFormatException nfe) {
-                log.error("NXWarrant numSteps; "+nfe);          
-            }           
-        }*/
         e = elem.getChild("haltstart");
         if (e!=null) {
             if (e.getValue().equals("yes")) {
