@@ -223,6 +223,18 @@
           <tooltip xml:lang="de">Die Funktion reagiert auf die Adresse der Mehrfachtraktion (Consist)</tooltip>
         </display>
       </column>
+      <column>
+        <display item="Consist Automatic Effects - FWDD" tooltip="Sets the status of automatic effects when moving in forward direction">
+        </display>
+        <display item="Consist Automatic Effects - REVD" tooltip="Sets the status of automatic effects when moving in reverse direction">
+        </display>
+        <display item="Consist Automatic Effects - FWDS" tooltip="Sets the status of automatic effects when stopped in forward direction">
+        </display>
+        <display item="Consist Automatic Effects - REVS" tooltip="Sets the status of automatic effects when stopped in reverse direction">
+        </display>
+        <display item="Consist Automatic Effects - ESTP" tooltip="Sets the status of automatic effects when in emergency stop">
+        </display>
+      </column>
     </row>
   </column>
 </pane>
