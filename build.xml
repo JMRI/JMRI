@@ -778,14 +778,21 @@
             <sysproperty key="java.security.policy"
                          value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="apple.awt.graphics.UseQuartz" value="true"/>
+            <sysproperty key="apple.awt.graphics.EnableQ2DX" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="file.encoding" value="UTF-8"/>
             <sysproperty key="java.library.path"
-                         path=".:${libdir}:${arch.lib.path}"/>
+                         path=".:${arch.lib.path}:${libdir}"/>
             <sysproperty key="jinput.plugins"
                          path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <sysproperty key="user.language" value="tlh"/>
+            <jvmarg value="-Xms256m"/>
+            <jvmarg value="-Xmx640m"/>
+
             <!-- klingon -->
+            <sysproperty key="user.language" value="tlh"/>
             <sysproperty key="user.country" value="001"/>
+
             <arg line="DecoderProConfig2.xml"/>
             <!-- <jvmarg value="-verbose"/> -->
             <!-- <jvmarg value="-verbosegc"/> -->
