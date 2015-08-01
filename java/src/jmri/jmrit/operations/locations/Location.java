@@ -1,6 +1,7 @@
 package jmri.jmrit.operations.locations;
 
 import java.awt.Point;
+import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Hashtable;
@@ -1194,6 +1195,8 @@ public class Location implements java.beans.PropertyChangeListener {
         CarTypes.instance().removePropertyChangeListener(this);
         CarRoads.instance().removePropertyChangeListener(this);
         EngineTypes.instance().removePropertyChangeListener(this);
+        // Change name in case object is still in use, for example Schedules
+        setName(MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{getName()}));
         setDirtyAndFirePropertyChange(DISPOSE_CHANGED_PROPERTY, null, DISPOSE_CHANGED_PROPERTY);
     }
 

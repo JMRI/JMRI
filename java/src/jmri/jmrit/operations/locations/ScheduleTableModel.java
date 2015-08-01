@@ -476,15 +476,11 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         // log.debug("getDestComboBox for ScheduleItem "+si.getType());
         JComboBox<Location> cb = LocationManager.instance().getComboBox();
         filterDestinations(cb, si.getTypeName());
-        cb.setSelectedItem(si.getDestination());
         if (si.getDestination() != null && cb.getSelectedIndex() == -1) {
             // user deleted destination
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getDestination()});
-            Location errorLocation = si.getDestination();
-            errorLocation.setName(notValid);
-            cb.addItem(errorLocation);
-            cb.setSelectedItem(errorLocation);
+            cb.addItem(si.getDestination());
         }
+        cb.setSelectedItem(si.getDestination());
         return cb;
     }
 
@@ -495,17 +491,12 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             Location dest = si.getDestination();
             dest.updateComboBox(cb);
             filterTracks(dest, cb, si.getTypeName(), si.getRoadName(), si.getShipLoadName());
-            cb.setSelectedItem(si.getDestinationTrack());
             if (si.getDestinationTrack() != null && cb.getSelectedIndex() == -1) {
                 // user deleted track at destination, this is self correcting, when user restarts program, track
                 // assignment will be gone.
-                String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                    .getDestinationTrack()});
-                Track errorTrack = si.getDestinationTrack();
-                errorTrack.setName(notValid);
-                cb.addItem(errorTrack);
-                cb.setSelectedItem(errorTrack);
+                cb.addItem(si.getDestinationTrack());
             }
+            cb.setSelectedItem(si.getDestinationTrack());
         }
         return cb;
     }
