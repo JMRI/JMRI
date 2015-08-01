@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150705-1420-Matt H on Sun Jul 05 16:21:05 CEST 2015 $Id$-->
-  <decoderIndex version="642">
+  <!--Written by JMRI version 20150726-1610-Alain Le Marchand on Sun Jul 26 18:10:54 CEST 2015 $Id$-->
+  <decoderIndex version="648">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4039,7 +4039,7 @@
         <model model="LokSound V4.0" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554493,33554503,33554538">
           <size length="30.5" width="15.5" height="5.5" units="mm" />
         </model>
-        <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497">
+        <model model="LokSound Micro V4.0" numOuts="92" numFns="40" maxMotorCurrent="0.75A" extFnsESU="yes" productID="33554497,33554552">
           <size length="25.3" width="10.6" height="3.8" units="mm" />
         </model>
         <model model="LokSound L V4.0" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554544">
@@ -4141,6 +4141,69 @@
       </family>
       <family name="ESU LokSound Select" mfg="Electronic Solutions Ulm GmbH" lowVersionID="255" highVersionID="255" file="ESU_LokSound_Select.xml">
         <model model="LokSound Select" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554492,33554511,33554527">
+          <size length="1.41" width=".51" height=".25" units="inches" />
+          <functionlabels>
+            <functionlabel num="0" lockable="true" />
+            <functionlabel num="1" lockable="true" />
+            <functionlabel num="2" lockable="false" />
+            <functionlabel num="3" lockable="true" />
+            <functionlabel num="4" lockable="true" />
+            <functionlabel num="5" lockable="true" />
+            <functionlabel num="6" lockable="true" />
+            <functionlabel num="7" lockable="true" />
+            <functionlabel num="8" lockable="true" />
+            <functionlabel num="9" lockable="true" />
+            <functionlabel num="10" lockable="true" />
+            <functionlabel num="11" lockable="true" />
+            <functionlabel num="12" lockable="true" />
+            <functionlabel num="13" lockable="true" />
+            <functionlabel num="14" lockable="true" />
+            <functionlabel num="15" lockable="true" />
+            <functionlabel num="16" lockable="true" />
+            <functionlabel num="17" lockable="true" />
+            <functionlabel num="18" lockable="true" />
+            <functionlabel num="19" lockable="true" />
+            <functionlabel num="20" lockable="true" />
+            <functionlabel num="21" lockable="true" />
+            <functionlabel num="22" lockable="true" />
+            <functionlabel num="23" lockable="true" />
+            <functionlabel num="24" lockable="true" />
+            <functionlabel num="25" lockable="true" />
+            <functionlabel num="26" lockable="true" />
+            <functionlabel num="27" lockable="true" />
+            <functionlabel num="28" lockable="true" />
+          </functionlabels>
+          <soundlabels>
+            <soundlabel num="1" />
+            <soundlabel num="2" />
+            <soundlabel num="3" />
+            <soundlabel num="4" />
+            <soundlabel num="5" />
+            <soundlabel num="6" />
+            <soundlabel num="7" />
+            <soundlabel num="8" />
+            <soundlabel num="9" />
+            <soundlabel num="10" />
+            <soundlabel num="11" />
+            <soundlabel num="12" />
+            <soundlabel num="13" />
+            <soundlabel num="14" />
+            <soundlabel num="15" />
+            <soundlabel num="16" />
+            <soundlabel num="17" />
+            <soundlabel num="18" />
+            <soundlabel num="19" />
+            <soundlabel num="20" />
+            <soundlabel num="21" />
+            <soundlabel num="22" />
+            <soundlabel num="23" />
+            <soundlabel num="24" />
+            <soundlabel num="25">Random sounds</soundlabel>
+            <soundlabel num="26">Automatic brake sound</soundlabel>
+            <soundlabel num="27">Gear shift sound</soundlabel>
+          </soundlabels>
+        </model>
+        <model model="LokSound Select OEM" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554533">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
@@ -7920,6 +7983,89 @@
           <output name="14" label="Snd" connection="other" />
         </model>
       </family>
+      <family name="QSI Articulated Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" file="QSI_Articulated_Steam_ver7.xml">
+        <model model="QSI Revolution Articulated Steam" numFns="14" numOuts="0" productID="4050" />
+        <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4000" />
+        <model model="QSI Magnum Articulated Steam" numFns="14" numOuts="0" productID="4004" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="4048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="4049" />
+        <model model="BLI NW Class A" lowVersionID="7" numFns="14" numOuts="14" productID="400">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR Duplex T1" lowVersionID="7" numFns="14" numOuts="14" productID="401">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR Duplex T1 (Reed Switch)" lowVersionID="7" numFns="14" numOuts="14" productID="410">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SP Cab Forward AC4,AC5 (Pot)" lowVersionID="7" numFns="14" numOuts="14" productID="403">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SP Cab Forward AC4,AC5 (Reed Switch)" lowVersionID="7" numFns="14" numOuts="14" productID="406">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka NSWGR AD60 Beyer-Garatt" lowVersionID="7" numFns="14" numOuts="14" productID="407">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Lionel UP Challenger" lowVersionID="7" numFns="14" numOuts="14" productID="402">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k NW Class Y3" lowVersionID="7" numFns="14" numOuts="14" productID="408">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k USRA 2-8-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="404">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Sunset NP 4-6-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="411">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k N USRA 2-8-8-2" lowVersionID="7" numFns="14" numOuts="0" productID="4002" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
+      </family>
       <family name="QSI Diesel" mfg="QSIndustries" lowVersionID="4" highVersionID="5" file="QSI_Diesel.xml">
         <model model="BLI E7A/B" lowVersionID="4" highVersionID="5" numFns="14" numOuts="14" productID="100" />
       </family>
@@ -7963,11 +8109,615 @@
         <model model="Life Like U30B" lowVersionID="6" numFns="14" numOuts="14" productID="124" />
         <model model="Walthers GP30" lowVersionID="6" numFns="14" numOuts="14" productID="140" />
       </family>
+      <family name="QSI Diesel Ver. 7" mfg="QSIndustries" lowVersionID="7" file="QSI_Diesel_Ver7.xml">
+        <model model="QSI Revolution Diesel" numFns="14" numOuts="0" productID="1050" />
+        <model model="QSI Revolution RDC" numFns="14" numOuts="0" productID="1040" />
+        <model model="QSI Magnum Diesel" numFns="14" numOuts="0" productID="1008" />
+        <model model="QSI Magnum RDC" numFns="14" numOuts="0" productID="1041" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="1048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="1049" />
+        <model model="Atlas B23-7" numFns="14" numOuts="14" productID="127">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas B23-7 w/marker" numFns="14" numOuts="14" productID="12710">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas C-420" numFns="14" numOuts="14" productID="154">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas C-420 w/Mars" numFns="14" numOuts="14" productID="168">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40B/BW" numFns="14" numOuts="14" productID="126">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40B/BW w/beacon" numFns="14" numOuts="14" productID="12610">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40C/CW" numFns="14" numOuts="14" productID="103">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas Dash 8-40C/CW (GE pump)" numFns="14" numOuts="14" productID="132">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas GP38" numFns="14" numOuts="14" productID="170">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas GP40" numFns="14" numOuts="14" productID="171">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas GP40-2 w/Mars" numFns="14" numOuts="14" productID="173">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas GP40-2 wo/Mars" numFns="14" numOuts="14" productID="174">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas HH660" numFns="14" numOuts="0" productID="1031" />
+        <model model="Atlas MP-15DC" numFns="14" numOuts="14" productID="129">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas SD24/26" numFns="14" numOuts="14" productID="111">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas SD35 P3 horn" numFns="14" numOuts="14" productID="149">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas SD35 H4710 whistle" numFns="14" numOuts="14" productID="150">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas TM w/Mars" numFns="14" numOuts="14" productID="105">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas TM wo/Mars" numFns="14" numOuts="14" productID="106">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas U30B w/Mars" numFns="14" numOuts="14" productID="184">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas U30B" numFns="14" numOuts="14" productID="185">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Atlas U30C" numFns="14" numOuts="0" productID="1042" />
+        <model model="BLI AC6000" numFns="14" numOuts="14" productID="131">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI C30-7" numFns="14" numOuts="14" productID="128">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="115">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="116">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 w/Mars" numFns="14" numOuts="14" productID="121">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E3/E6 wo/Mars" numFns="14" numOuts="14" productID="122">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="100">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E7 w/Mars" numFns="14" numOuts="14" productID="119">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E7 wo/Mars" numFns="14" numOuts="14" productID="120">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E8/E9 w/Mars" numFns="14" numOuts="14" productID="117">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI E8/E9 wo/Mars" numFns="14" numOuts="14" productID="118">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI F7" numFns="14" numOuts="14" productID="104">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI F7 w/ Dynamics" numFns="14" numOuts="14" productID="143">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI RSD-15" numFns="14" numOuts="14" productID="125">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI RSD-15 (Beacon)" numFns="14" numOuts="14" productID="12520">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SD40-2" numFns="14" numOuts="14" productID="102">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SD40-2 (Reed Switch)" numFns="14" numOuts="14" productID="134">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SW7/NW2" numFns="14" numOuts="14" productID="101">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI SW7/NW2 (Reed Switch)" numFns="14" numOuts="14" productID="155">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC C-Liner" numFns="14" numOuts="14" productID="114">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC RS 10" numFns="14" numOuts="14" productID="113">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC RS 18" numFns="14" numOuts="14" productID="123">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka Class 40" numFns="14" numOuts="14" productID="186">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka CPH/CTH Railmotor" numFns="14" numOuts="14" productID="175">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka NSWR 620/720" numFns="14" numOuts="14" productID="139">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="InterMtn F7" numFns="14" numOuts="14" productID="110">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="InterMtn U18B w/Mars" numFns="14" numOuts="14" productID="182">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="InterMtn U18B" numFns="14" numOuts="14" productID="183">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E6 w/Mars" numFns="14" numOuts="14" productID="107">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E6 wo/Mars" numFns="14" numOuts="14" productID="108">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7 w/Mars" numFns="14" numOuts="14" productID="151">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7 wo/Mars" numFns="14" numOuts="14" productID="152">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7A w/Mars" numFns="14" numOuts="14" productID="179">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7A" numFns="14" numOuts="14" productID="180">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E7B" numFns="14" numOuts="14" productID="181">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E8/E9 w/Mars" numFns="14" numOuts="14" productID="135">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k E8/E9 wo/Mars" numFns="14" numOuts="14" productID="136">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F3A w/Mars" numFns="14" numOuts="14" productID="176">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F3A" numFns="14" numOuts="14" productID="177">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7B" numFns="14" numOuts="14" productID="178">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7A w/Mars" numFns="14" numOuts="14" productID="158">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7A" numFns="14" numOuts="14" productID="159">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7B" numFns="14" numOuts="14" productID="160">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k F7B (other)" numFns="14" numOuts="14" productID="160">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP7 w/Mars" numFns="14" numOuts="14" productID="144">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP7 wo/Mars" numFns="14" numOuts="14" productID="145">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP7/9 db" numFns="14" numOuts="14" productID="167">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP7/9 non db" numFns="14" numOuts="14" productID="169">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP9" numFns="14" numOuts="14" productID="112">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP20" numFns="14" numOuts="14" productID="130">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k GP30" numFns="14" numOuts="14" productID="140">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k H10-44" numFns="14" numOuts="14" productID="166">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k RS27" numFns="14" numOuts="14" productID="137">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k SD7/9 db" numFns="14" numOuts="14" productID="164">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k SD7/9 non db" numFns="14" numOuts="14" productID="165">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k SW8" numFns="14" numOuts="14" productID="133">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k SW9/1200" numFns="14" numOuts="14" productID="187">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2k U28B/30B" numFns="14" numOuts="14" productID="124">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo DD-51" numFns="14" numOuts="14" productID="163">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="G USA GP38" numFns="14" numOuts="0" productID="1015" />
+        <model model="O Atlas C424" numFns="14" numOuts="14" productID="1034">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Atlas C628" numFns="14" numOuts="14" productID="1032">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Atlas Dash 8-40B" numFns="14" numOuts="14" productID="1020">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Atlas Erie Built" numFns="14" numOuts="0" productID="1038" />
+        <model model="O Atlas F2" numFns="14" numOuts="0" productID="1036" />
+        <model model="O Atlas GP9" numFns="14" numOuts="0" productID="1021" />
+        <model model="O Atlas GP35" numFns="14" numOuts="0" productID="1019" />
+        <model model="O Atlas GP60" numFns="14" numOuts="14" productID="1018">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Atlas MP15" numFns="14" numOuts="0" productID="1033" />
+        <model model="O Atlas RS-1" numFns="14" numOuts="0" productID="1022" />
+        <model model="O Atlas SD35" numFns="14" numOuts="14" productID="1024">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Atlas SD40" numFns="14" numOuts="0" productID="1014" />
+        <model model="O Atlas SW7" numFns="14" numOuts="0" productID="1037" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Fans</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
+      </family>
       <family name="QSI Electric" mfg="QSIndustries" lowVersionID="3" highVersionID="6" file="QSI_Electric.xml">
         <model model="BLI GG-1" lowVersionID="3" highVersionID="6" productID="200" />
       </family>
+      <family name="QSI Electric Ver. 7" mfg="QSIndustries" lowVersionID="3" highVersionID="7" file="QSI_Electric_Ver7.xml">
+        <model model="QSI Revolution Electric" numFns="14" numOuts="0" productID="2050" />
+        <model model="QSI Magnum Electric" numFns="14" numOuts="0" productID="2001" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="2048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="2049" />
+        <model model="BLI GG-1" productID="200" numFns="14" numOuts="14">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo EF58" productID="202" numFns="14" numOuts="14">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Charles Row G GG-1" productID="2000" numFns="14" numOuts="14">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Fans</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
+      </family>
       <family name="QSI Gas Turbine" mfg="QSIndustries" lowVersionID="4" highVersionID="6" file="QSI_Gas_Turbine.xml">
         <model model="Lionel Veranda Turbine" lowVersionID="4" numFns="14" numOuts="14" productID="500" />
+      </family>
+      <family name="QSI Gas Turbine Ver. 7" mfg="QSIndustries" lowVersionID="7" highVersionID="7" file="QSI_Gas_Turbine_Ver7.xml">
+        <model model="QSI Revolution Turbine" numFns="14" numOuts="0" productID="5050" />
+        <model model="QSI Magnum Turbine" numFns="14" numOuts="0" productID="5000" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="5048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="5049" />
+        <model model="Lionel Veranda Turbine" numFns="14" numOuts="14" productID="500">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Fans</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Turbine/Diesel Transition</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
       </family>
       <family name="QSI Steam" mfg="QSIndustries" lowVersionID="1" highVersionID="5" file="QSI_Steam.xml">
         <model model="BLI ATSF 3751 4-8-4" lowVersionID="5" numFns="14" numOuts="14" productID="305" />
@@ -8012,6 +8762,262 @@
         <model model="Life Like 2-8-4 Berkshire wo/Mars" lowVersionID="6" numFns="14" numOuts="14" productID="318" />
         <model model="Walthers 0-6-0 Switcher" lowVersionID="6" numFns="14" numOuts="14" productID="319" />
       </family>
+      <family name="QSI Steam Ver. 7" mfg="QSIndustries" lowVersionID="7" file="QSI_Steam_ver7.xml">
+        <model model="QSI Revolution Steam" numFns="14" numOuts="0" productID="3050" />
+        <model model="QSI Magnum Steam" numFns="14" numOuts="0" productID="3010" />
+        <model model="Q1 Pot" numFns="14" numOuts="0" productID="3048" />
+        <model model="Q1 Reed" numFns="14" numOuts="0" productID="3049" />
+        <model model="Austrains C35 Class 4-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="326">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI ATSF 3751 Class 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="305">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI ATSF 3800 Class 2-10-2 2-10-4" lowVersionID="7" numFns="14" numOuts="14" productID="316">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI CO T1 2-10-4" lowVersionID="7" numFns="14" numOuts="14" productID="310">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI DRGW C16 2-8-0" lowVersionID="7" numFns="14" numOuts="14" productID="303">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI DRGW C16 2-8-0 Christmas" lowVersionID="7" numFns="14" numOuts="14" productID="304">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI GN S2 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="308">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NH I-5 4-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="328">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NW J 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="312">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC J1D-E 4-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="300">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC Steamlined 4-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="314">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC L4a 4-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="335">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI NYC S1b 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="313">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR J1 2-10-4" lowVersionID="7" numFns="14" numOuts="14" productID="306">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR K4 4-6-2" lowVersionID="7" numFns="14" numOuts="14" productID="309">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI PRR M1A 4-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="302">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI UP MT-73 4-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="307">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI UP TTT6/7 2-10-2 brass" lowVersionID="7" numFns="14" numOuts="14" productID="331">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI UP TTT6/7 2-10-2 hybrid" lowVersionID="7" numFns="14" numOuts="14" productID="332">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="BLI USRA Mikado 2-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="301">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="CHC U2G Northern" lowVersionID="7" numFns="14" numOuts="14" productID="336">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Eureka C38 4-6-2" lowVersionID="7" numFns="14" numOuts="14" productID="325">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K USRA 0-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="319">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K USRA 0-8-0" lowVersionID="7" numFns="14" numOuts="14" productID="315">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K USRA 2-10-2" lowVersionID="7" numFns="14" numOuts="14" productID="323">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K 2-8-4 Berkshire w/Mars" lowVersionID="7" numFns="14" numOuts="14" productID="317">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="P2K 2-8-4 Berkshire wo/Mars" lowVersionID="7" numFns="14" numOuts="14" productID="318">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="PCM PRR I1sa 2-10-0" lowVersionID="7" numFns="14" numOuts="14" productID="333">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Sunset NP 4-8-4" lowVersionID="7" numFns="14" numOuts="14" productID="320">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Sunset SP 2-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="334">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo C62 4-6-4" lowVersionID="7" numFns="14" numOuts="14" productID="338">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo C63 2-6-2" lowVersionID="7" numFns="14" numOuts="14" productID="337">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo D-51 2-8-2" lowVersionID="7" numFns="14" numOuts="14" productID="321">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Tenshodo D-51 2-8-2 (Reed Switch)" lowVersionID="7" numFns="14" numOuts="14" productID="329">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="Mikado" lowVersionID="7" numFns="14" numOuts="14" productID="324">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="G Accucraft K-28" lowVersionID="7" numFns="14" numOuts="14" productID="3001">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="G Aristocraft Steam" lowVersionID="7" numFns="14" numOuts="0" productID="3017" />
+        <model model="O Atlas 0-6-0" lowVersionID="7" numFns="14" numOuts="14" productID="3015">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Sunset 2-8-2 Mikado" lowVersionID="7" numFns="14" numOuts="14" productID="3006">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <model model="O Sunset Flying Scotsman" lowVersionID="7" numFns="14" numOuts="14" productID="3007">
+          <output name="1" label="" connection="other" />
+          <output name="2" label="" connection="other" />
+          <output name="3" label="" connection="other" />
+          <output name="4" label="" connection="other" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="true">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+        </functionlabels>
+      </family>
       <family name="QSI Rolling Stock" mfg="QSIndustries" lowVersionID="7" file="QSI_Stock.xml">
         <model model="Stock car chicken" numFns="14" numOuts="14" productID="802">
           <output name="1" label="" connection="other" />
@@ -8033,6 +9039,79 @@
         </model>
         <functionlabels>
           <functionlabel num="8" lockable="true">Mute</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="QSI Ver. 8" mfg="QSIndustries" lowVersionID="8" file="QSI_ver8.xml">
+        <model model="Titan Diesel" numFns="14" numOuts="0" productID="1100" />
+        <model model="Titan RDC" numFns="14" numOuts="0" productID="1112" />
+        <model model="Titan Electrtic" numFns="14" numOuts="0" productID="2100" />
+        <model model="Titan Steam" numFns="14" numOuts="0" productID="3100" />
+        <model model="Titan Articulated Steam" numFns="14" numOuts="0" productID="4100" />
+        <model model="Titan Gas Turbine" numFns="14" numOuts="0" productID="5100" />
+        <model model="Titan G Diesel" numFns="14" numOuts="0" productID="1101" />
+        <model model="Titan G RDC" numFns="14" numOuts="0" productID="1121" />
+        <model model="Titan G Electrtic" numFns="14" numOuts="0" productID="2101" />
+        <model model="Titan G Steam" numFns="14" numOuts="0" productID="3101" />
+        <model model="Titan G Articulated Steam" numFns="14" numOuts="0" productID="4101" />
+        <model model="Titan G Gas Turbine" numFns="14" numOuts="0" productID="5101" />
+        <model model="FX-SD GE Dash-8 40B (Atlas)" numFns="14" numOuts="0" productID="1106" />
+        <model model="FX-DO GE Dash-8 40B (Atlas)" numFns="14" numOuts="0" productID="1118" />
+        <model model="FX-DO F3A EMD567 (Atlas)" numFns="14" numOuts="0" productID="1116" />
+        <model model="FX-DO F3B EMD567 (Atlas)" numFns="14" numOuts="0" productID="1119" />
+        <model model="FX-SD GP40-2 (Atlas)" numFns="14" numOuts="0" productID="1107" />
+        <model model="FX-MT MP-15 (Atlas)" numFns="14" numOuts="0" productID="1110" />
+        <model model="FX-SD SD35 (Atlas)" numFns="14" numOuts="0" productID="1108" />
+        <model model="Titan-G Steam (Bachmann)" numFns="14" numOuts="0" productID="3107" />
+        <model model="FX-DO E7 (Sunset Models)" numFns="14" numOuts="0" productID="1111" />
+        <model model="FX-DO FL9 (Sunset Models)" numFns="14" numOuts="0" productID="1126" />
+        <model model="FX-U NP Z6 Challenger (Sunset Models)" numFns="14" numOuts="0" productID="4102" />
+        <model model="FX-JTT KiHa52 (Tenshodo)" numFns="14" numOuts="0" productID="1102" />
+        <model model="FX-JTT EF66 (Tenshodo)" numFns="14" numOuts="0" productID="2102" />
+        <model model="FX-JTT EF58 (Tenshodo)" numFns="14" numOuts="0" productID="2105" />
+        <model model="FX-JTT C62 (Tenshodo)" numFns="14" numOuts="0" productID="3106" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+          <functionlabel num="26" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="27" lockable="true">Maintenance</functionlabel>
+          <functionlabel num="28" lockable="true">Water Loading</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="QSI Ver. 9 Emulator" mfg="QSIndustries" lowVersionID="9" file="QSI_ver9.xml">
+        <model model="FX-U ALCo 244" numFns="14" numOuts="0" productID="1123" />
+        <model model="FX-U F3 EMD567" numFns="14" numOuts="0" productID="1115" />
+        <model model="Titan-G ALCo 244" numFns="14" numOuts="0" productID="1127" />
+        <model model="Titan-G F3 EMD567" numFns="14" numOuts="0" productID="1132" />
+        <model model="FX-SD U30B (Atlas)" numFns="14" numOuts="0" productID="1130" />
+        <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104" />
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Light</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Blower</functionlabel>
+          <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+          <functionlabel num="6" lockable="true">Doppler</functionlabel>
+          <functionlabel num="7" lockable="true">Squeal</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+          <functionlabel num="10" lockable="true">Status</functionlabel>
+          <functionlabel num="11" lockable="true">Number Board</functionlabel>
+          <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+          <functionlabel num="26" lockable="true">Fuel Loading</functionlabel>
+          <functionlabel num="27" lockable="true">Maintenance</functionlabel>
+          <functionlabel num="28" lockable="true">Water Loading</functionlabel>
         </functionlabels>
       </family>
       <family name="Function decoders" mfg="QElectronics GmbH" type="mobile" comment="Mobile function decoders" file="Qdecoder_FStandard.xml">
@@ -8942,6 +10021,399 @@
           <!-- There are no electrical outputs -->
           <!-- for the DSX version -->
         </model>
+      </family>
+      <family name="Econami Diesel" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Diesel decoders" file="SoundTraxx_Eco_Diesel.xml">
+        <model model="ECO-100 Diesel" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="9pin" productID="882001" comment="Model 882001">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="27" width="10.5" height="5" units="mm" />
+        </model>
+        <model model="ECO-21P Diesel" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="882003" comment="Model 882003">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="ECO-400 Diesel" numOuts="4" numFns="30" maxMotorCurrent="4A" connector="other" productID="882005" comment="Model 882005">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Airhorn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamic|Brakes">
+            <label xml:lang="it">Freni|Dinamici</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Dynamic Brake</functionlabel>
+          <functionlabel num="5" lockable="true">RPM+</functionlabel>
+          <functionlabel num="6" lockable="true">RPM-</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Xing Signal</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Function</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
+          <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
+          <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Econami Electric" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Electric decoders" file="SoundTraxx_Eco_Electric.xml">
+        <model model="ECO-100 Electric" numOuts="4" numFns="20" maxMotorCurrent="1A" connector="9pin" productID="883001" comment="Model 883001">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="27" width="10.5" height="5" units="mm" />
+        </model>
+        <model model="ECO-21P Electric" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="883003" comment="Model 883003">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="ECO-400 Electric" numOuts="4" numFns="30" maxMotorCurrent="4A" connector="other" productID="883005" comment="Model 883005">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Air Horn| ">
+            <label xml:lang="it">Tromba| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Pneum|Doors">
+            <label xml:lang="it">Porte|Pneum</label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Pantograph| ">
+            <label xml:lang="it">Pantografo| </label>
+          </output>
+          <output name="10" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="Stop|Bell">
+            <label xml:lang="it">Fermare|Campana</label>
+          </output>
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Short Horn</functionlabel>
+          <functionlabel num="4" lockable="true">Pantograph</functionlabel>
+          <functionlabel num="5" lockable="true">Stop Req. Bell</functionlabel>
+          <functionlabel num="6" lockable="true">Pneum. Doors</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Xing Signal</functionlabel>
+          <functionlabel num="10" lockable="true">Trolley Bell</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Function</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
+          <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
+          <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders" file="SoundTraxx_Eco_Steam.xml">
+        <model model="ECO-100 Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="9pin" productID="881001" comment="Model 881001">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamo| ">
+            <label xml:lang="it">Dynamo| </label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Cylinder|Cocks">
+            <label xml:lang="it">Cilindro|Cazzi</label>
+          </output>
+          <output name="10" label="Water|Stop">
+            <label xml:lang="it">Acqua|Stop</label>
+          </output>
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="27" width="10.5" height="5" units="mm" />
+        </model>
+        <model model="ECO-21P Steam" numOuts="4" numFns="30" maxMotorCurrent="1A" connector="21pin" productID="881003" comment="Model 881003">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamo| ">
+            <label xml:lang="it">Dynamo| </label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Cylinder|Cocks">
+            <label xml:lang="it">Cilindro|Cazzi</label>
+          </output>
+          <output name="10" label="Water|Stop">
+            <label xml:lang="it">Acqua|Stop</label>
+          </output>
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="30.5" width="15.5" height="6.5" units="mm" />
+        </model>
+        <model model="ECO-400 Steam" numOuts="4" numFns="30" maxMotorCurrent="4A" connector="other" productID="881005" comment="Model 881005">
+          <versionCV lowVersionID="70" />
+          <output name="3" label="  FX3  " />
+          <output name="4" label="  FX4  " />
+          <output name="5" label="Whistle| ">
+            <label xml:lang="it">Fischio| </label>
+          </output>
+          <output name="6" label="Bell| ">
+            <label xml:lang="it">Campana| </label>
+          </output>
+          <output name="7" label="Dynamo| ">
+            <label xml:lang="it">Dynamo| </label>
+          </output>
+          <output name="8" label="Short|Horn">
+            <label xml:lang="it">Breve|Tromba</label>
+          </output>
+          <output name="9" label="Cylinder|Cocks">
+            <label xml:lang="it">Cilindro|Cazzi</label>
+          </output>
+          <output name="10" label="Water|Stop">
+            <label xml:lang="it">Acqua|Stop</label>
+          </output>
+          <output name="11" label="Dimming| ">
+            <label xml:lang="it">Smorzam| </label>
+          </output>
+          <output name="12" label="Mute| ">
+            <label xml:lang="it">Silenzio| </label>
+          </output>
+          <output name="13" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="14" label="|" />
+          <!-- Not used for for this decoder -->
+          <output name="15" label="Coupler| ">
+            <label xml:lang="it">Accoppiatore| </label>
+          </output>
+          <size length="69" width="30.5" height="14" units="mm" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Short Whistle</functionlabel>
+          <functionlabel num="4" lockable="true">Cylinder Cocks</functionlabel>
+          <functionlabel num="5" lockable="true">Drift Mode On</functionlabel>
+          <functionlabel num="6" lockable="true">Drift Mode Off</functionlabel>
+          <functionlabel num="7" lockable="true">Dimmer</functionlabel>
+          <functionlabel num="8" lockable="true">Mute</functionlabel>
+          <functionlabel num="9" lockable="true">Xing Signal</functionlabel>
+          <functionlabel num="10" lockable="true">Blowdown</functionlabel>
+          <functionlabel num="11" lockable="true">Brake Function</functionlabel>
+          <functionlabel num="13" lockable="true">Coupler</functionlabel>
+          <functionlabel num="14" lockable="true">Half Speed</functionlabel>
+          <functionlabel num="16" lockable="true">Water Stop</functionlabel>
+          <functionlabel num="24" lockable="true">FX3 Output</functionlabel>
+          <functionlabel num="25" lockable="true">FX4 Output</functionlabel>
+          <functionlabel num="26" lockable="true">FX5 Output</functionlabel>
+          <functionlabel num="27" lockable="true">FX6 Output</functionlabel>
+        </functionlabels>
       </family>
       <family name="LC Diesel decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_LC_Diesel.xml">
         <model model="100LC Diesel" numOuts="4" numFns="10" nmraWarrant="yes" nmraWarrantStart="200305">
@@ -14921,6 +16393,19 @@
           <output name="Brake" />
           <size length="2.83" width="0.351" height="0.13" units="inches" />
         </model>
+        <model model="AS6" numOuts="6" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="HO Drop-in" comment="Fits Atlas HO Scale: S1, S2, S3, S4" lowVersionID="86" highVersionID="88" productID="47">
+          <output name="1" label="White" connection="other" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="80 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="200 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="200 mA" />
+          <output name="Dim" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="3.99" width="0.891" height="0.205" units="inches" />
+        </model>
         <model model="ASD4" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: GP7 (2006+), GP9 (2006+), GP15-1, GP 30 (2006+)" lowVersionID="86" highVersionID="88" productID="21">
           <output name="1" label="White" connection="other" maxcurrent="50 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="50 mA" />
@@ -14953,11 +16438,10 @@
           <output name="Brake" />
           <size length="0.834" width="0.361" height="0.101" units="inches" />
         </model>
-        <model model="CN-GP" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 4 functions" lowVersionID="86" highVersionID="88" productID="23">
+        <model model="CN-GP" numOuts="3" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="PnP" comment="Fits  GP-style N locos with split lighting board, 3 functions" lowVersionID="86" highVersionID="88" productID="23">
           <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
-          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
           <output name="Dim" />
           <output name="Ditch" />
           <output name="Motor" />
@@ -15264,7 +16748,131 @@
           <output name="Brake" />
           <size length="2.53" width="0.413" height="0.0725" units="inches" />
         </model>
+        <model model="KAM4" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="55">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.945" width="0.66" height="0.33" units="inches" />
+        </model>
+        <model model="KAM4-LED" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="57">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.945" width="0.66" height="0.33" units="inches" />
+        </model>
+        <model model="KAT12" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="48">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.31" width="0.65" height="0.29" units="inches" />
+        </model>
+        <model model="KAT14" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="49">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.31" width="0.65" height="0.29" units="inches" />
+        </model>
+        <model model="KAT16" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="50">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.31" width="0.65" height="0.29" units="inches" />
+        </model>
+        <model model="KAT22" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="51">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.31" width="0.65" height="0.29" units="inches" />
+        </model>
+        <model model="KAT24" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="52">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.31" width="0.65" height="0.29" units="inches" />
+        </model>
+        <model model="KAT26" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="53">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.31" width="0.65" height="0.29" units="inches" />
+        </model>
+        <model model="L1D4" numOuts="4" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="N drop-in" lowVersionID="86" highVersionID="88" productID="45">
+          <output name="1" label="White" connection="other" maxcurrent="80 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="80 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="80 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="80 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="2.05" width="0.35" height="0.132" units="inches" />
+        </model>
         <model model="LL8" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="43">
+          <output name="1" label="White" connection="other" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="7" label="Pnk/Pur" connection="solder" maxcurrent="100 mA" />
+          <output name="8" label="Grn/Brn" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.96" width="0.70" height="0.04" units="inches" />
+        </model>
+        <model model="LL8-LED" numOuts="8" numFns="14" maxMotorCurrent="1.0A (peak=2A)" formFactor="PnP" lowVersionID="86" highVersionID="88" productID="60">
           <output name="1" label="White" connection="other" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="other" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
@@ -15356,7 +16964,7 @@
           <output name="Brake" />
           <size length="0.71" width="0.41" height="0.19" units="inches" />
         </model>
-        <model model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N Drop-in" comment="Fits Atlas N Scale: MP-15" lowVersionID="86" highVersionID="88" productID="38">
+        <model model="MP-15N" numOuts="4" numFns="14" maxMotorCurrent="1A (peak=2A)" formFactor="N" comment="Fits Atlas N Scale: MP-15" lowVersionID="86" highVersionID="88" productID="38">
           <output name="1" label="White" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="other" comment="Golden White LED" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
@@ -15388,7 +16996,39 @@
           <output name="Brake" />
           <size length="0.956" width="0.665" height="0.207" units="inches" />
         </model>
+        <model model="T1A" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO" lowVersionID="86" highVersionID="88" productID="15">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.956" width="0.665" height="0.207" units="inches" />
+        </model>
+        <model model="T1-LED" numOuts="2" numFns="14" maxMotorCurrent="1.3A (peak=2A)" maxTotalCurrent="1.3A continuous" formFactor="HO" lowVersionID="86" highVersionID="88" productID="58">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="0.956" width="0.665" height="0.207" units="inches" />
+        </model>
         <model model="T4X" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="16">
+          <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="wire" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="BEMF" />
+          <output name="Brake" />
+          <size length="1.010" width="0.665" height="0.250" units="inches" />
+        </model>
+        <model model="T4-LED" numOuts="4" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="HO" lowVersionID="86" highVersionID="88" productID="54">
           <output name="1" label="White" connection="wire" maxcurrent="100 mA" />
           <output name="2" label="Yellow" connection="wire" maxcurrent="100 mA" />
           <output name="3" label="Green" connection="wire" maxcurrent="100 mA" />
