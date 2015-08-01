@@ -99,7 +99,7 @@ structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
 </ul>
-<p>The rest are from the <tt>trunk/jmri-website</tt>, and are checked out at 
+<p>Another group are from the <tt>trunk/jmri-website</tt>, and are checked out at 
 the root of the web server.</p>
 <ul>
 <LI>releasenotes - Specific information on each test and production release
@@ -108,31 +108,38 @@ the root of the web server.</p>
 <li>images - (Images used by web pages)
 <li>contact - 
 </ul>
+<p>Finally, some of the site is generated from the JMRI source itself, as opposed to being contained in 
+the source.  The <a href="/JavaDoc/doc">JavaDoc</a> is one such section, along with some of the 
+<a href="/xml/XSLT">human-readable information</a> about defined decoders.  
+
 <h2>Updating the jmri.org site</h2>
 
-<p>Most of the web site contents is updated every 15 minutes from a job running on one of the
+<p>Most of the web site contents is updated hourly from a job running on one of the
 project's Jenkins build servers.  The directories listed above constitute most of the site,
 and this content is updated from the SVN server without any additional work.</p>
 
-<p>Some of the site is generated from the JMRI source itself, as opposed to being contained in 
-the source.  The <a href="/JavaDoc/doc">JavaDoc</a> is one section, along with some of the 
-information about the decoders available for use.  These updates, especially the JavaDoc, involve
-significantly more work than merely updating a directory, and so they are performed nightly.</p>
+<p>The regeneration of the JavaDoc and xml content involves
+significantly more work than merely updating a directory, and so these are only done once per day, as needed.</p>
 
-<p>These steps are based upon checkins to the SVN repository -- the act of checking in modified
-files is sufficient to trigger a web site update if it is necessary.</p>
+<p>The status of the web site updates is available on the JMRI
+<a href="https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">production</a>
+and
+<a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">test</a>
+CI servers.
+</p>
 
-<p>The status of the web site updates is available <a href="https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/">on this JMRI CI server</a>.</p>
-
-<h2>Local Web Site: Mac OS X</h2>
+<h2 id="local">Local Web Site: Mac OS X</h2>
 
 <p>If you want to host a copy of the JMRI web site on your local
 Mac OS X machine, follow these instructions to first configure
 the Apache server to do server-side includes, and then make
 a copy of the web site files available to the server.</p>
 
+<p>A similar process may work for Linux (or even Windows) systems
+with Apache installed.</p>
+
 <OL>
-<LI>You need to edit the Apache web server's configuration file. 
+<LI>To make sure that your local server has the right options enabled, edit the Apache web server's configuration file. 
 <ul>
 <li>On Mac OS X 10.4 (Tiger), this is the /etc/httpd/httpd.conf file
 <li>On Mac OS X 10.5 (Leopard) and later, this is the /etc/apache2/httpd.conf file
@@ -178,7 +185,7 @@ Add the word "Includes" to the last line so it looks like
 </PRE>
     </ul>
 
-<LI>To check out a copy of the files:
+<LI>To check out a copy of the JMRI files that will be served:
     <UL>
     <LI>Change to the web server directory
 <PRE>
@@ -198,7 +205,7 @@ svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/xml
 <LI>Restart your computer to reinitialize the web server.
 <LI>Test it by trying to display the URL
 <A HREF="http://localhost/">http://localhost/</a>, 
-which should get you a JMRI index page.
+which should get you a JMRI top-level page.
 </OL>
 
 <h3 id="catalog">Installing a local XML catalog</h3>
@@ -209,23 +216,38 @@ When a JMRI program encounters those, it automatically converts those to
 a local file reference.  Other tools, like NetBeans and xmllint, don't know to do that.
 <p>
 Installing a local XML catalog, and then telling your tools to use it, can solve this.
-<p>
-For a system level solution, copy the following to a /etc/xml/catalog file (note that 
-you might have to sudo to do this, that there's no .xml suffix, and if there's already
-a file there you'll have to manually merge the contents):
-<pre>
-&lt;?xml version='1.0'?&gt;
-&lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
+<ul>
+    <li>
+    If you're not running a local webserver, you can provide a limited solution by
+    copying the xml/catalog.xml file from your JMRI directory to an /etc/xml/catalog file.
+    (Note that this is for Linux and Mac OS X and it's not clear what works for Windows;
+    you might have to sudo to do this; that there's no .xml suffix on the 
+    resulting file; if there's already
+    a file there you'll have to manually merge the contents; you'll have to update
+    this periodically as JMRI continues to evolve)</li>
+    <li>
+    Alternately, if you're running a local server as 
+    <a href="#local">described above</a>,
+    you can provide a more generic solution by copying
+    the following to a /etc/xml/catalog file 
+    (Note that this is for Linux and Mac OS X and it's not clear what works for Windows;
+    you might have to sudo to do this; that there's no .xml suffix on the 
+    created file; and if there's already
+    a file there you'll have to manually merge the contents; but at least you won't 
+    have to update this in the future!):
+    <pre>
+    &lt;?xml version='1.0'?&gt;
+    &lt;catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog"&gt;
 
-  &lt;rewriteURI uriStartString="http://jmri.org/xml/"
- rewritePrefix="http://localhost/xml/" /&gt;
+      &lt;rewriteURI uriStartString="http://jmri.org/xml/"
+     rewritePrefix="http://localhost/xml/" /&gt;
 
-&lt;/catalog&gt;
-</pre>
+    &lt;/catalog&gt;
+    </pre>
 
-This catalog redirects HTTP references to the "xml" directory at the JMRI website
-to the "xml" directory on your local web server.
-
+    This catalog redirects all HTTP references to the "xml" directory at the JMRI website
+    to the "xml" directory on your local web server.</li>
+</ul>
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->
