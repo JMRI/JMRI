@@ -17,11 +17,6 @@ import jmri.util.swing.WindowInterface;
  */
 public class SimpleProgAction extends JmriAbstractAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = 2613992237869747426L;
-
     public SimpleProgAction(String s, WindowInterface wi) {
         super(s, wi);
     }
