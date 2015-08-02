@@ -15,9 +15,11 @@ import jmri.jmrit.MemoryContents;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
-import jmri.jmrix.loconet.LnConstants;
-import jmri.jmrix.loconet.LocoNetMessage;
-import jmri.jmrix.loconet.LocoNetSystemConnectionMemo;
+import org.openlcb.implementations.MemoryConfigurationService;
+import org.openlcb.MimicNodeStore;
+import org.openlcb.swing.NodeSelector;
+import org.openlcb.NodeID;
+
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,8 +47,10 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         implements ActionListener, jmri.jmrix.can.swing.CanPanelInterface {
 
     protected CanSystemConnectionMemo memo;
-
-    protected JFormattedTextField nodeID;
+    MemoryConfigurationService mcs;
+    MimicNodeStore store;
+    NodeSelector nodeSelector;
+    JPanel selectorPane;
     
     /**
      * LnPanelInterface implementation creates standard form of title
@@ -55,6 +59,12 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
+        this.mcs = memo.get(MemoryConfigurationService.class);
+        this.store = memo.get(MimicNodeStore.class);
+        this.nodeSelector = new NodeSelector(store);
+        
+        // add to GUI now that it's functional        
+        selectorPane.add(nodeSelector);
     }
 
     public LoaderPane() {
@@ -72,14 +82,11 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     @Override
     protected void addOptionsPanel() {
-        JPanel p = new JPanel();
-        p.setLayout(new FlowLayout());
-        p.add(new JLabel("Target Node ID: "));
-        
-        nodeID = org.openlcb.swing.NodeIdTextField.getNodeIdTextField();
-        p.add(nodeID);
-        
-        add(p);
+        selectorPane = new JPanel();
+        selectorPane.setLayout(new FlowLayout());
+        selectorPane.add(new JLabel("Target Node ID: "));
+            
+        add(selectorPane);
     }
 
     @Override
@@ -92,7 +99,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
         // start the download itself
         //operation = PXCT2SENDDATA;
-        //sendSequence();
+        sendSequence();
     }
 
     @Override
@@ -106,19 +113,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
 
     private void sendSequence() {
-
-        // send start
-        //sendOne(PXCT2SETUP, mfgval, prodval & 0xff, hardval, softval,
-        //        control, 0, developerval, prodval / 256);
-
+    
         // start transmission loop
-        //new Thread(new Sender()).start();
-    }
-
-    void sendOne(int pxct2, int d1, int d2, int d3, int d4,
-            int d5, int d6, int d7, int d8) {
-        //memo.getLnTrafficController().sendLocoNetMessage(m);
-
+        new Thread(new Sender()).start();
     }
 
     private class Sender implements Runnable {
@@ -126,111 +123,124 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         int totalmsgs;
         int sentmsgs;
 
+        int startaddr;
+        int endaddr;
+        
+        int location; // current working location
+        
+        int space = 0xEF; // this is fixed for now
+        
+        final int SIZE = 64;
+        
         // send the next data, and a termination record when done
         @Override
         public void run() {
-// define range to be checked for download
-//             startaddr = 0x000000;
-//             endaddr = 0xFFFFFF;
-// 
-//             if ((startaddr & 0x7) != 0) {
-//                 log.error("Can only start on an 8-byte boundary: " + startaddr);
-//             }
-// 
-// fast scan to count bytes to send
-//             int location = inputContent.nextContent(startaddr);
-//             totalmsgs = 0;
-//             sentmsgs = 0;
-//             location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
-//             do {
-//                 location = location + 8;
-//                 totalmsgs++;
-//                 // update to the next location for data
-//                 int next = inputContent.nextContent(location);
-//                 if (next < 0) {
-//                     break;   // no data left
-//                 }
-//                 location = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
-// 
-//             } while (location <= endaddr);
-// 
-// find the initial location with data
-//             location = inputContent.nextContent(startaddr);
-//             if (location < 0) {
-//                 log.info("No data, which seems odd");
-//                 return;  // ends load process
-//             }
-//             location = location & 0x00FFFFF8;  // mask off bits to be multiple of 8
-// 
-//             setAddr(location);
-// 
-//             do {
-//                 // wait for completion of last operation
-//                 doWait(location);
-// 
-//                 // send this data
-//                 sentmsgs++;
-//                 sendOne(operation, // either send or verify
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++),
-//                         inputContent.getLocation(location++));
-// 
-//                 // update GUI intermittently
-//                 if ((sentmsgs % 5) == 0) {
-//                     // update progress bar via the queue to ensure synchronization
-//                     updateGUI(100 * sentmsgs / totalmsgs);
-//                 }
-// 
-//                 // update to the next location for data
-//                 int next = inputContent.nextContent(location);
-//                 if (next < 0) {
-//                     break;   // no data left
-//                 }
-//                 next = next & 0x00FFFFF8;  // mask off bits to be multiple of 8
-//                 if (next != location) {
-//                     // wait for completion
-//                     doWait(next);
-//                     // change to next location
-//                     setAddr(next);
-//                 }
-//                 location = next;
-// 
-//             } while (!isOperationAborted() && (location <= endaddr));
-// 
-// send end (after wait)
-//             doWait(location);
-//             sendOne(PXCT2ENDOPERATION, 0, 0, 0, 0, 0, 0, 0, 0);
-// 
-//             this.updateGUI(100); //draw bar to 100%
-// 
-// signal end to GUI via the queue to ensure synchronization
-//             Runnable r = new Runnable() {
-//                 @Override
-//                 public void run() {
-//                     enableGUI();
-//                 }
-//             };
-//             javax.swing.SwingUtilities.invokeLater(r);
+            log.info("Sender.run starts");
+            // define range to be checked for download
+            startaddr = 0x000000;
+            endaddr = 0xFFFFFF;
+
+            // fast scan to count messages to send for progress bar
+            location = inputContent.nextContent(startaddr);
+            totalmsgs = 0;
+            sentmsgs = 0;
+
+            do {
+                // we're assuming that data is pretty dense,
+                // so we can jump through in SIZE-sized chunks
+                location = location + SIZE;
+                totalmsgs++;
+                // update to the next location for data
+                int next = inputContent.nextContent(location);
+                if (next < 0) {
+                    break;   // no data left
+                }
+                location = next;
+                
+            } while (location <= endaddr);
+
+            log.info("Expect to send {} write messages", totalmsgs);
+            
+            // Start write sequence:
+            // find the initial location with data
+            location = inputContent.nextContent(startaddr);
+
+            // queue start up messages
+            
+            // start data loop
+            sendNext();
+
+            // rest of operation if via callbacks inside sendNext();
 
         }
+
 
         /**
-         * Send a command to resume at another address
+         * Do an OpenLCB write operation for up to 64 bytes from the current
+         * memory location.
+         *
+         * Contains call-back for next message.
+         *
+         * @param location Starting address (of 1st byte)
+         * @param space Address space to be written
          */
-        void setAddr(int location) {
-//             sendOne(PXCT2SENDADDRESS,
-//                     (location / 256 / 256) & 0xFF,
-//                     (location / 256) & 0xFF,
-//                     location & 0xFF,
-//                     0, 0, 0, 0, 0);
+        void sendNext() {
+            byte[] temp = new byte[SIZE];
+            int i;
+            for (i = 0; i < SIZE; i++) {
+                if (!inputContent.locationInUse(location+i)) 
+                    break;
+                temp[i] = (byte)inputContent.getLocation(location+i);
+            }
+            byte[] data = new byte[i];
+            System.arraycopy(temp, 0, data, 0, i);
+
+            int addr = location; // next call back might be instantaneous
+            location = location + i; 
+            log.info("Sending write to 0x{}", Integer.toHexString(location).toUpperCase());
+            mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
+                public void handleWriteReply(int code) { 
+                     // update GUI intermittently
+                    if ((sentmsgs % 20) == 0) {
+                        // update progress bar via the queue to ensure synchronization
+                        updateGUI(100 * sentmsgs / totalmsgs);
+                    }
+                    
+                    if (code == 0 && !isOperationAborted()) {
+                        // normal reply - queue next
+                        location = inputContent.nextContent(location);
+                        if (location < 0) {
+                            log.info("   Done normal");
+                            sendDataDone(true);
+                        } else {
+                            log.info("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
+                            sendNext();
+                        }
+                    } else {
+                        // non-normal reply
+                        log.info("   Done abnormal code:{}", code);
+                        sendDataDone(false);
+                    }
+                }
+            });
         }
 
+        void sendDataDone(boolean OK) {
+            // send end (after wait)
+            // ...
 
+            this.updateGUI(100); //draw bar to 100%
+
+            // signal end to GUI via the queue to ensure synchronization
+            Runnable r = new Runnable() {
+                @Override
+                public void run() {
+                    enableGUI();
+                }
+            };
+            javax.swing.SwingUtilities.invokeLater(r);
+        }
+        
         /**
          * Signal GUI that it's the end of the download
          * <P>
@@ -251,13 +261,21 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                         log.debug("updateGUI with " + value);
                     }
                     // update progress bar
-                    //bar.setValue(100 * sentmsgs / totalmsgs);
+                    bar.setValue(100 * sentmsgs / totalmsgs);
                 }
             });
         }
 
     }
 
+    /**
+     * Get NodeID from the GUI
+     */
+    NodeID destNodeID() {
+        return (NodeID) nodeSelector.getSelectedItem();
+    }
+
+    
     @Override
     protected void setDefaultFieldValues() {
 
