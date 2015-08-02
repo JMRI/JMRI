@@ -1790,8 +1790,6 @@
 
 <mapID target="manual.DecoderPro.Main_Throttle_Top" url="manual/DecoderPro/Main_Throttle.shtml#Top"/>
 
-<mapID target="manual.DecoderPro.Main_Debug_CheckXML" url="manual/DecoderPro/Main_Debug.shtml#CheckXML"/>
-
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations" url="manual/JMRI_OPS_UsersGuide/Ops_Locations.shtml"/>
 
 <mapID target="package.jmri.jmrix.grapevine.nodetable.NodeTableFrame" url="package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml"/>

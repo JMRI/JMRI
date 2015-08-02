@@ -343,7 +343,7 @@ add a "value" attribute:
 <dd>
 <p>At this point, you've created a new configuration file!</p>
 
-<p>You can check it for syntax by selecting the "Check XML file"
+<p>You can check it for syntax by selecting the "Validate XML file"
 item from the "Debug" menu.  It opens a file selection dialog;
 select your file and click "open".  If all is well, you'll get a
 dialog box that says "OK".  If not, you'll get a completely
