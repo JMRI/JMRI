@@ -14,4 +14,4 @@
  * <!-- Put @see and @since tags down here. -->
  * @since 2.9.6
  */
-package jmri.jmrix.openlcb;
+package jmri.jmrix.openlcb.swing.send;
