@@ -294,7 +294,10 @@ public class PositionablePopupUtil {
     }
 
     public Color getBackground() {
-        return _textComponent.getBackground();
+        if (_textComponent.isOpaque()) {
+            return _textComponent.getBackground();            
+        }
+        return null;
     }
 
     protected JMenu makeFontSizeMenu() {
