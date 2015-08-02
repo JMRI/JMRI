@@ -6,5 +6,9 @@
  *
  * The various *Model classes build sample data automatically.
  *
+ * For OpenLCB documentation, please see:
+ * <ul>
+ * <li><a href="http://openlcb.org/">OpenLCB project overview page</a>
+ * </ul>
  */
 package jmri.jmrix.openlcb.swing.tie;
