@@ -61,8 +61,10 @@
             </ul>
         </td>
         <td align="right" colspan="1">
-            <img src="./LocoNetDownloadFirmwareWindow.png" 
-                 alt="Example of the Download Firmware Window">
+            <a href="LoaderFrameOLCB.png">
+                <img src="LoaderFrameOLCB.png" height="137" width="156"
+                    alt="Example of the Download Firmware Window">
+            </a>
         </td>
     </tr>
 </table>
@@ -72,7 +74,8 @@
     to perform updates via an OpenLCB connection.</p>
 <p>This tool supports firmware update files distributed in
     ".hex" file format (sometimes referred to 
-    as the Intel "I8HEX" file format).</p>
+    as the 
+    <a href="https://en.wikipedia.org/wiki/Intel_HEX">Intel "I8HEX" file format</a>).</p>
 <p>The tool automatically determines how to interpret the firmware 
     update and performs a number of file and data integrity checks before the
     update information can be used.  If any issues are identified in the firmware 
@@ -120,14 +123,14 @@ To use this tool to update a OpenLCB device's firmware:
         select the file for use.  The file will then be read and inspected for 
         errors.
         <p>If the file is read and parsed successfully, the tool window will
-            enable the "Download" and "Verify" buttons, and update the status 
+            enable the "Download" button, and update the status 
             message at the bottom of the window to state "Click Download to 
             download new firmware".</p>
         <p>If the file cannot be read and parsed successfully, a pop-up message
             will appear or the tool window will update the status message at the 
             bottom of the window with a description of the problem it found.  
             For more information, see <a href="#ErrorMessages">Error 
-            Messages</a>, below.
+            Messages</a>, below.</p>
     </li>
     <li>Click the Download button to update the firmware in the device. This may  
         take a few seconds or minutes, depending on the amount of firmware to
@@ -137,14 +140,19 @@ To use this tool to update a OpenLCB device's firmware:
         one end to the other as the update gets closer to completion.
     </li>
     <li>Once the update tool completes its work, <em>the tool is unable to tell 
-            if the OpenLCB device has properly accepted the update</em>.  
-            This is a limitation of the OpenLCB messaging used for the firmware 
-            update and firmware verify processes.  Because of this limitation,
+            if the OpenLCB device has properly written the update</em>.  
+            The OpenLCB messaging used for the firmware 
+            update and firmware verify processes does tell JMRI that the node
+            accepted the data and says it did write it OK, but JMRI
+            can't actually test to see if that's true.  Because of this limitation,
             the tool is only able to report that it has completed its work.
+            It's possible that the node didn't to the programming
+            properly.
         <p>The device may provide an indication that the update process has 
             completed (or failed) using lights on the product or on the display 
             of the product.  Consult the device manufacturer's instructions for 
-            further information.</li>
+            further information.</p>
+    </li>
     <li>After performing the firmware update, it may be necessary to reset
         or remove and restore power to the device.  Consult the manufacturer's 
         firmware update instructions.</li>
@@ -157,13 +165,6 @@ To use this tool to update a OpenLCB device's firmware:
     problem.  </em>This has been recommended by at least one OpenLCB device 
     manufacturer and has been found to be effective in many cases by the 
     developers of this tool.</p>
-    <p>As an example, if the firmware in a Digitrax DT402D throttle has been
-        updated and that update was not successful, when the DT402D throttle is 
-        powered up, the display will usually show a series of dim, filled-in 
-        rectangles rather than the normal power-up display of model and firmware 
-        revision information.  In this case, re-updating the device, using the
-        process shown above, will usually restore the throttle to proper 
-        functionality.</p>
     <p>In other cases, a device may not be easily restored to proper operation 
         after a firmware update attempt.  In this case, consult the device
         manufacturer for further instructions.</p>
@@ -174,9 +175,11 @@ To use this tool to update a OpenLCB device's firmware:
 <H2 id="ErrorMessages">Error Messages</H2>
 <p>This tool can identify problems at two different stages of the firmware update 
     process.  The tool checks for problems within the firmware update file when 
-    reading the file.  When the user activates the "Download" or "Verify" button,
+    reading the file.  When the user activates the "Download" button,
     the tool checks the validity of the parameters which the user can change in 
-    the tool window for obvious problems.  If any issues are found at either of 
+    the tool window for obvious problems. (Many download files don't
+    have parameters, so this might not apply to you)
+    If any issues are found at either of 
     these stages, the tool will update the message at the bottom of the tool 
     window.  If a parameter is found to be out of range, that parameter value 
     will be shown with red text instead of black text.  The "Download" and 
@@ -218,7 +221,7 @@ To use this tool to update a OpenLCB device's firmware:
     If the tool still identifies a value as invalid, consult the device 
     manufacturer.</p>
 
-<H3 id="nullFirmwareData">Do not have any firmware information to send." Status 
+<H3 id="nullFirmwareData">"Do not have any firmware information to send." Status 
     Message</h3>
 <p>This status message indicates that the firmware file did not contain any valid
     firmware information.  Consult the device manufacturer for a valid firmware
@@ -249,7 +252,7 @@ To use this tool to update a OpenLCB device's firmware:
             based on the contents of the transfer.</td>
         <td>This tool cannot know whether any of the firmware update file 
             information was successfully programmed into a OpenLCB device's 
-            firmware.  </td>
+            memory.  </td>
     </tr>
     <tr>
         <td></td>
@@ -269,16 +272,19 @@ To use this tool to update a OpenLCB device's firmware:
         
     <table border="2">
         <thead><td align="center"><strong>Manufacturer</strong></td><td align="center"><strong>Product</strong></td></thead>
-        <tr><td rowspan="6" align="center">???</td><td>???</td></tr>
-        <tr><td>???</td></tr>
-        <tr><td rowspan="6" align="center">RR-CirKits</td><td>???</td></tr>
+        
+        <tr><td rowspan="2" align="center">???</td><td>???</td></tr>
+            <tr><td>???</td></tr>
+        
+        <tr><td rowspan="1" align="center"><!--RR-CirKits--></td><td>???</td></tr>
         <tr><td colspan="2" align="center"><strong>Table updated June, 2015</strong></td></tr>
         </table>
 <H2 id="Notes">Other Notes</H2>
 <ul>
-    <li>This version of the tool does <strong>not</strong> allow the user to configure the 
-        file addressing format.  The tool automatically determines whether the file
-        uses 16-bit or 24-bit addressing.  This removes the possibility that the
+    <li>The tool automatically determines whether the file
+        uses 16-bit or 24-bit addressing.  
+        The user can't change that selection. 
+        This removes the possibility that the
         wrong setting could be used.</li>
     <li>It's OK to have multiple OpenLCB Firmware Download windows open at the same time.  
         You can perform firmware updates and/or verifies to separate nodes simultaneously, 
@@ -295,7 +301,6 @@ caused by the tool, seek help through the "JMRI Users" Yahoo Group.</strong></p>
 <p>If you believe that your problem is related to the firmware update file or the
 hardware itself, consult the hardware instructions and the hardware manufacturer's
 technical support.</p>
-<p>Note that <strong>Digitrax does not</strong> provide any support this tool.</p>
 
 <p>(This is the package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame help page)</p>
 
