@@ -1,5 +1,5 @@
 // Bundle.java
-package jmri.jmrix.openlcb.swing.clockmon;
+package jmri.jmrix.openlcb.swing.downloader;
 
 import edu.umd.cs.findbugs.annotations.CheckReturnValue;
 import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
@@ -18,13 +18,13 @@ import edu.umd.cs.findbugs.annotations.SuppressWarnings;
  * Convention is to provide a subclass of this name in each package, working off
  * the local resource bundle name.
  *
- * @author Bob Jacobsen Copyright (C) 2012
+ * @author Bob Jacobsen Copyright (C) 2015
  * @version $Revision: 17977 $
  * @since 3.3.1
  */
 public class Bundle extends jmri.jmrix.openlcb.swing.Bundle {
 
-    private final static String name = "jmri.jmrix.openlcb.swing.clockmon.Bundle"; // NOI18N
+    private final static String name = "jmri.jmrix.openlcb.swing.downloader.Bundle"; // NOI18N
 
     //
     // below here is boilerplate to be copied exactly
