@@ -46,21 +46,45 @@ import org.slf4j.LoggerFactory;
  * Any exception thrown by at method is used to select an error message to
  * display in the status line of the pane.
  *
- * @author	Bob Jacobsen Copyright (C) 2005
+ * @author	Bob Jacobsen Copyright (C) 2005, 2015
  * @author B. Milhaupt Copyright (C) 2013, 2014
  * @version	$Revision$
  */
-public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
-        implements ActionListener {
+public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
+        implements ActionListener, jmri.jmrix.loconet.swing.LnPanelInterface {
 
-    // GUI member declarations
     /**
-     *
+     * LnPanelInterface implementation makes "memo" object available as convenience
      */
-    private static final long serialVersionUID = 6862502901108992179L;
+    protected LocoNetSystemConnectionMemo memo;
 
-    JLabel inputFileName = new JLabel("");
+    public void initContext(Object context) throws Exception {
+        if (context instanceof LocoNetSystemConnectionMemo) {
+            initComponents((LocoNetSystemConnectionMemo) context);
+        }
+    }
 
+    /** This gets invoked early. We don't want it to do anything, so 
+     * ew just fail to pass it up. Instead, we wait for the later call of
+     * initComponents(LocoNetSystemConnectionMemo memo)
+     */
+    @Override
+    public void initComponents() throws Exception {
+    }
+        
+    public void initComponents(LocoNetSystemConnectionMemo memo) throws Exception {
+        this.memo = memo; 
+        super.initComponents();
+    }
+
+    /**
+     * LnPanelInterface implementation creates standard form of title
+     */
+    public String getTitle(String menuTitle) { return jmri.jmrix.loconet.swing.LnPanel.getTitleHelper(memo, menuTitle); }
+
+
+    
+    // Local GUI member declarations
     JTextField bootload = new JTextField();
     JTextField mfg = new JTextField();
 
@@ -80,20 +104,6 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     JRadioButton checksoftwareless = new JRadioButton(Bundle.getMessage("ButtonCheckSoftwareLess"));
     ButtonGroup softgroup = new ButtonGroup();
 
-    JButton loadButton;
-    JButton verifyButton;
-    JButton abortButton;
-
-    JRadioButton address24bit = new JRadioButton(Bundle.getMessage("Button24bit"));
-    JRadioButton address16bit = new JRadioButton(Bundle.getMessage("Button16bit"));
-    ButtonGroup addressSizeButtonGroup = new ButtonGroup();
-
-    JProgressBar bar;
-    JLabel status = new JLabel("");
-    JPanel inputFileNamePanel;
-
-    MemoryContents inputContent = new MemoryContents();
-    private int inputFileLabelWidth;
 
     private static final int PXCT1DOWNLOAD = 0x40;
     static int PXCT2SETUP = 0x00;
@@ -139,67 +149,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
     }
 
     @Override
-    public void initComponents(LocoNetSystemConnectionMemo memo) {
-        super.initComponents(memo);
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        {
-            /* Create panels for displaying a filename and for providing a file 
-             * seleciton pushbutton
-             */
-            inputFileNamePanel = new JPanel();
-            inputFileNamePanel.setLayout(new FlowLayout());
-            JLabel l = new JLabel(Bundle.getMessage("LabelInpFile"));
-            inputFileLabelWidth = l.getMinimumSize().width;
-            l.setAlignmentX(java.awt.Component.CENTER_ALIGNMENT);
-            inputFileNamePanel.add(l);
-            inputFileNamePanel.add(new Box.Filler(new java.awt.Dimension(5, 20),
-                    new java.awt.Dimension(5, 20),
-                    new java.awt.Dimension(5, 20)));
-            inputFileNamePanel.add(inputFileName);
-
-            add(inputFileNamePanel);
-
-            JPanel p = new JPanel();
-            p.setLayout(new FlowLayout());
-            JButton selectButton = new JButton(Bundle.getMessage("ButtonSelect"));
-            selectButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    inputContent = new MemoryContents();
-                    setDefaultFieldValues();
-                    updateDownloadVerifyButtons();
-                    selectInputFile();
-                    doRead();
-                }
-            });
-            p.add(selectButton);
-
-            add(p);
-        }
-
-        {
-            // Create a panel for displaying the addressing type, via radio buttons
-            JPanel p = new JPanel();
-            p.setLayout(new BoxLayout(p, BoxLayout.X_AXIS));
-            JLabel l = new JLabel(Bundle.getMessage("LabelBitMode") + " ");
-            l.setEnabled(false);
-            p.add(l);
-            p.add(address16bit);
-            p.add(address24bit);
-            addressSizeButtonGroup.add(address16bit);
-            addressSizeButtonGroup.add(address24bit);
-            addressSizeButtonGroup.clearSelection();
-            address16bit.setEnabled(false);
-            address24bit.setEnabled(false);
-            add(p);
-        }
-
-        setDefaultFieldValues();
-
-        add(new JSeparator());
-
+    protected void addOptionsPanel() {
         {
             // create a panel for displaying/modifying the bootloader version
             JPanel p = new JPanel();
@@ -441,221 +391,10 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
         add(new JSeparator());
 
-        {
-            // create a panel for the upload, verify, and abort buttons
-            JPanel p = new JPanel();
-            p.setLayout(new FlowLayout());
-
-            loadButton = new JButton(Bundle.getMessage("ButtonLoad"));
-            loadButton.setEnabled(false);
-            loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
-            p.add(loadButton);
-            loadButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doLoad();
-                }
-            });
-
-            verifyButton = new JButton(Bundle.getMessage("ButtonVerify"));
-            verifyButton.setEnabled(false);
-            verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
-            p.add(verifyButton);
-            verifyButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    doVerify();
-                }
-            });
-
-            add(p);
-
-            abortButton = new JButton(Bundle.getMessage("ButtonAbort"));
-            abortButton.setEnabled(false);
-            abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-            p.add(abortButton);
-            abortButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(java.awt.event.ActionEvent e) {
-                    setOperationAborted(true);
-                }
-            });
-
-            add(p);
-
-            add(new JSeparator());
-
-            // create progress bar
-            bar = new JProgressBar(0, 100);
-            bar.setStringPainted(true);
-            add(bar);
-
-            add(new JSeparator());
-
-            {
-                // create a panel for displaying a status message
-                p = new JPanel();
-                p.setLayout(new FlowLayout());
-                status.setText(Bundle.getMessage("StatusSelectFile"));
-                status.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-                p.add(status);
-                add(p);
-            }
-
-        }
     }
 
-    JFileChooser chooser;
-
-    private void selectInputFile() {
-        String name = inputFileName.getText();
-        if (name.equals("")) {
-            name = FileUtil.getUserFilesPath();
-        }
-        if (chooser == null) {
-            chooser = new JFileChooser(name);
-            javax.swing.filechooser.FileNameExtensionFilter filter
-                    = new javax.swing.filechooser.FileNameExtensionFilter(
-                            Bundle.getMessage("FileFilterLabel",
-                                    "*.dfm, *.hex"), // NOI18N
-                            "dmf", "hex");   // NOI18N
-
-            chooser.addChoosableFileFilter(
-                    new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Digitrax Mangled Firmware (*.dmf)", "dmf")); //NOI18N
-            chooser.addChoosableFileFilter(
-                    new javax.swing.filechooser.FileNameExtensionFilter(
-                            "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
-            chooser.addChoosableFileFilter(filter);
-
-            // make the downloadable file filter the default active filter
-            chooser.setFileFilter(filter);
-
-        }
-        inputFileName.setText("");  // clear out in case of failure
-        int retVal = chooser.showOpenDialog(this);
-        if (retVal != JFileChooser.APPROVE_OPTION) {
-            return;  // give up if no file selected
-        }
-        String newFileName = chooser.getSelectedFile().getName();
-        inputFileName.setText(newFileName);
-        // check to see if it fits on the screen
-        double currentStringWidth = inputFileName.getMinimumSize().width;
-        double allowedWidth;
-        inputFileName.setToolTipText(newFileName);
-        allowedWidth = inputFileNamePanel.getSize().width * 4 / 5 - inputFileLabelWidth;
-        if (currentStringWidth > allowedWidth) {
-            // Filename won't fit on the display.
-            // need to shorten the string.
-            double startPoint
-                    = (inputFileName.getText().length()
-                    * (1.0 - (allowedWidth / currentStringWidth)));
-            String displayableName = "..." // NOI18N
-                    + inputFileName.getText().substring((int) startPoint);
-            log.info("Shortening display of filename " // NOI18N
-                    + inputFileName.getText()
-                    + " to " + displayableName);   // NOI18N
-            log.debug("Width required to display the full file name = " // NOI18N
-                    + currentStringWidth);
-            log.debug("Allowed width = " + allowedWidth);  // NOI18N
-            log.debug("Amount of text not displayed = " + startPoint);  // NOI18N
-            inputFileName.setText(displayableName);
-        }
-        inputFileName.updateUI();
-        inputFileNamePanel.updateUI();
-        updateUI();
-
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
-        verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
-        status.setText(Bundle.getMessage("StatusDoDownload"));
-    }
-
-    private void doRead() {
-        if (inputFileName.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorNoInputFile"),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // force load, verify disabled in case read fails
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
-        verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-
-        // clear the existing memory contents
-        inputContent = new MemoryContents();
-
-        bar.setValue(0);
-
-        // load
-        try {
-            inputContent.readHex(new File(chooser.getSelectedFile().getPath()));
-        } catch (FileNotFoundException f) {
-            log.error(f.getLocalizedMessage());
-            JOptionPane.showMessageDialog(this, Bundle.getMessage("ErrorFileNotFound"),
-                    Bundle.getMessage("ErrorTitle"),
-                    JOptionPane.ERROR_MESSAGE);
-            status.setText(Bundle.getMessage("StatusFileNotFound"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileRecordLengthException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileChecksumException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileUnknownRecordType f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileRecordContentException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileAddressingRangeException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileNoDataRecordsException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileNoEOFRecordException f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (MemoryContents.MemoryFileRecordFoundAfterEOFRecord f) {
-            log.error(f.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileContentsError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        } catch (IOException e) {
-            log.error(e.getLocalizedMessage());
-            status.setText(Bundle.getMessage("ErrorFileReadError"));
-            this.disableDownloadVerifyButtons();
-            return;
-        }
-        loadButton.setEnabled(true);
-        loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
-        verifyButton.setEnabled(true);
-        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyEnabled"));
-        status.setText(Bundle.getMessage("StatusDoDownload"));
-
+    @Override
+    protected void handleOptionsInFileContent(MemoryContents inputContent){
         // get some key/value pairs from the input file (if available)
         String text = inputContent.extractValueOfKey("Bootloader Version");
         if (text != null) {
@@ -710,21 +449,29 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         if (text != null) {
             eestart.setText(text);
         }
+    }
 
-        MemoryContents.LoadOffsetFieldType addresstype = inputContent.getCurrentAddressFormat();
-        if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE16BITS) {
-            address16bit.setSelected(true);
-            address24bit.setSelected(false);
-        } else if (addresstype == MemoryContents.LoadOffsetFieldType.ADDRESSFIELDSIZE24BITS) {
-            address16bit.setSelected(false);
-            address24bit.setSelected(true);
-        }
-        if (!parametersAreValid()) {
-            status.setText(Bundle.getMessage("ErrorInvalidParameter"));
-            disableDownloadVerifyButtons();
-        } else if (!inputContent.isEmpty()) {
-            enableDownloadVerifyButtons();
-        }
+    /**
+     * Add filter(s) for possible types to the input file chooser.
+     */
+    @Override
+    protected void addChooserFilters(JFileChooser chooser) {
+            javax.swing.filechooser.FileNameExtensionFilter filter
+                    = new javax.swing.filechooser.FileNameExtensionFilter(
+                            Bundle.getMessage("FileFilterLabel",
+                                    "*.dfm, *.hex"), // NOI18N
+                            "dmf", "hex");   // NOI18N
+
+            chooser.addChoosableFileFilter(
+                    new javax.swing.filechooser.FileNameExtensionFilter(
+                            "Digitrax Mangled Firmware (*.dmf)", "dmf")); //NOI18N
+            chooser.addChoosableFileFilter(
+                    new javax.swing.filechooser.FileNameExtensionFilter(
+                            "Intel Hex Format Firmware (*.hex)", "hex")); //NOI18N
+            chooser.addChoosableFileFilter(filter);
+
+            // make the downloadable file filter the default active filter
+            chooser.setFileFilter(filter);
     }
 
     private void setOptionsRadiobuttons(String text) throws NumberFormatException {
@@ -769,103 +516,23 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         }
     }
 
-    void doLoad() {
-        status.setText(Bundle.getMessage("StatusDownloading"));
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
-        verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
-        abortButton.setEnabled(true);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
+
+    @Override
+    protected void doLoad() {
+        super.doLoad();
 
         // start the download itself
         operation = PXCT2SENDDATA;
         sendSequence();
     }
 
-    void doVerify() {
-        status.setText(Bundle.getMessage("StatusVerifying"));
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
-        verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(Bundle.getMessage("TipDisabledDownload"));
-        abortButton.setEnabled(true);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortEnabled"));
+    @Override
+    protected void doVerify() {
+        super.doVerify();
 
         // start the download itself
         operation = PXCT2VERIFYDATA;
         sendSequence();
-    }
-
-    /**
-     * Cleans up the GUI interface. Updates status line to a localized "done"
-     * message or a localized "aborted" message depending on the value returned
-     * by isOperationAborted() . Assumes that the file was properly read to
-     * memory and is usable for firmware update and/or verify operations, and
-     * configures the Load, and Verify GUI buttons as enabled, and the Abort GUI
-     * button as disabled.
-     *
-     */
-    void enableDownloadVerifyButtons() {
-        if (log.isDebugEnabled()) {
-            log.debug("enableGUI");
-        }
-
-        if (isOperationAborted()) {
-            status.setText(Bundle.getMessage("StatusAbort"));
-        } else {
-            status.setText(Bundle.getMessage("StatusDone"));
-        }
-
-        // remove the
-        setOperationAborted(false);
-
-        loadButton.setEnabled(true);
-        loadButton.setToolTipText(Bundle.getMessage("TipLoadEnabled"));
-        verifyButton.setEnabled(true);
-        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyEnabled"));
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-    }
-
-    /**
-     * Cleans up the GUI interface after a firmware file read fails. Assumes
-     * that the invoking code will update the GUI status line as appropriate for
-     * the particular cause of failure. Configures the Load, Verify and Abort
-     * GUI buttons as disabled.
-     *
-     */
-    private void disableDownloadVerifyButtons() {
-        if (log.isDebugEnabled()) {
-            log.debug("disableGUI");
-        }
-
-        setOperationAborted(false);
-
-        loadButton.setEnabled(false);
-        loadButton.setToolTipText(Bundle.getMessage("TipLoadDisabled"));
-        verifyButton.setEnabled(false);
-        verifyButton.setToolTipText(Bundle.getMessage("TipVerifyDisabled"));
-        abortButton.setEnabled(false);
-        abortButton.setToolTipText(Bundle.getMessage("TipAbortDisabled"));
-    }
-
-    // boolean used to abort the threaded operation
-    // access has to be synchronized to make sure
-    // the Sender threads sees the value change from the
-    // GUI thread
-    private boolean abortOperation;
-
-    private void setOperationAborted(boolean state) {
-        synchronized (this) {
-            abortOperation = state;
-        }
-    }
-
-    private boolean isOperationAborted() {
-        synchronized (this) {
-            return abortOperation;
-        }
     }
 
     private int operation;
@@ -1219,7 +886,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
 
     }
 
-    private void setDefaultFieldValues() {
+    @Override
+    protected void setDefaultFieldValues() {
         addressSizeButtonGroup.clearSelection();
         bootload.setText("1");
         mfg.setText("1");
@@ -1252,7 +920,8 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
      *
      * @return false if one or more GUI text box contains an invalid value
      */
-    public boolean parametersAreValid() {
+    @Override
+    protected boolean parametersAreValid() {
         boolean allIsOk;
         allIsOk = true; // assume that all GUI values are ok.
         String text;    // temporary variable to hold text from GUI element
@@ -1339,33 +1008,6 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
         return allIsOk;
     }
 
-    private boolean intParameterIsValid(JTextField jtf, int minOk, int maxOk) {
-        String text;
-        int junk;
-        boolean allIsOk = true;
-        jtf.setForeground(Color.black);
-        text = jtf.getText();
-        if (text.equals("")) {
-            jtf.setText("0");
-            jtf.setForeground(Color.red);
-            allIsOk = false;
-        } else {
-            try {
-                junk = Integer.parseInt(text);
-            } catch (NumberFormatException ex) {
-                junk = -1;
-            }
-            if ((junk < minOk) || (junk > maxOk)) {
-                jtf.setForeground(Color.red);
-                allIsOk = false;
-            } else {
-                jtf.setForeground(Color.black);
-            }
-        }
-        jtf.updateUI();
-        return allIsOk;
-    }
-
     private int computeOptionsValFromRadiobuttons() {
         int control = 0;
         if (checksoftwareless.isSelected()) {
@@ -1385,7 +1027,7 @@ public class LoaderPane extends jmri.jmrix.loconet.swing.LnPanel
      * based on the validity of the parameter values in the GUI and the state of
      * the memory contents object.
      */
-    private void updateDownloadVerifyButtons() {
+    protected void updateDownloadVerifyButtons() {
         if (parametersAreValid() && !inputContent.isEmpty()) {
             enableDownloadVerifyButtons();
         } else {
