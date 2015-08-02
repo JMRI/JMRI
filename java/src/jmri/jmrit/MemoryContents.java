@@ -1497,6 +1497,21 @@ public class MemoryContents {
             super(s);
         }
     }
+    
+    /**
+     * Summarize contents
+     */
+    public String toString() {
+        StringBuffer retval = new StringBuffer("Pages occupied: ");
+        for (int page=0; page<PAGES; page++) {
+            if (isPageInitialized(page)) {
+                retval.append(page);
+                retval.append(" ");
+            }
+        }
+        return new String(retval);
+    }
+    
     static Logger log = LoggerFactory.getLogger(MemoryContents.class.getName());
 }
 
