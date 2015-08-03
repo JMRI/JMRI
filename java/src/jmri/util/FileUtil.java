@@ -1035,7 +1035,7 @@ public final class FileUtil {
      */
     public static String readURL(URL url) throws IOException {
         try {
-            InputStreamReader in = new InputStreamReader(url.openStream());
+            InputStreamReader in = new InputStreamReader(url.openStream(), "UTF-8");
             BufferedReader reader = new BufferedReader(in);
             StringBuilder builder = new StringBuilder();
             String aux;
