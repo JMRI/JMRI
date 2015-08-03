@@ -1025,8 +1025,8 @@ public final class FileUtil {
     }
 
     /**
-     * Read a text URL into a String. Would be significantly simpler with Java
-     * 7.
+     * Read a text URL into a String. Would be significantly simpler with Java 7.
+     * File is assumed to be encoded using UTF-8
      *
      * @param url The text URL.
      * @return The contents of the file.
