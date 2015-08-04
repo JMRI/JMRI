@@ -105,9 +105,6 @@ import org.slf4j.LoggerFactory;
  */
 public class LogixTableAction extends AbstractTableAction {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -6328536222461751495L;
 
     /**
@@ -163,9 +160,8 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 if (col == ENABLECOL) {
                     return enabledString;
-                } else {
-                    return super.getColumnName(col);
                 }
+                return super.getColumnName(col);
             }
 
             public Class<?> getColumnClass(int col) {
@@ -174,9 +170,8 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 if (col == ENABLECOL) {
                     return Boolean.class;
-                } else {
-                    return super.getColumnClass(col);
                 }
+                return super.getColumnClass(col);
             }
 
             public int getPreferredWidth(int col) {
@@ -192,9 +187,8 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 if (col == ENABLECOL) {
                     return new JTextField(5).getPreferredSize().width;
-                } else {
-                    return super.getPreferredWidth(col);
                 }
+                return super.getPreferredWidth(col);
             }
 
             public boolean isCellEditable(int row, int col) {
@@ -203,9 +197,8 @@ public class LogixTableAction extends AbstractTableAction {
                 }
                 if (col == ENABLECOL) {
                     return true;
-                } else {
-                    return super.isCellEditable(row, col);
                 }
+                return super.isCellEditable(row, col);
             }
 
             public Object getValueAt(int row, int col) {
@@ -259,9 +252,8 @@ public class LogixTableAction extends AbstractTableAction {
             protected boolean matchPropertyName(java.beans.PropertyChangeEvent e) {
                 if (e.getPropertyName().equals(enabledString)) {
                     return true;
-                } else {
-                    return super.matchPropertyName(e);
                 }
+                return super.matchPropertyName(e);
             }
 
             public Manager getManager() {
@@ -422,9 +414,6 @@ public class LogixTableAction extends AbstractTableAction {
 
     class RefDialog extends JDialog {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -8265381404736283286L;
         JTextField _devNameField;
         java.awt.Frame _parent;
@@ -4019,16 +4008,8 @@ public class LogixTableAction extends AbstractTableAction {
         boolean referenceByMemory = false;
         if (name.length() > 0 && name.charAt(0) == '@') {
             String memName = name.substring(1);
-            if (!_suppressIndirectRef) {
-                int response = JOptionPane.showConfirmDialog(_editActionFrame, java.text.MessageFormat.format(
-                        rbx.getString("ConfirmIndirectReference"), memName),
-                        rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
-                if (response == JOptionPane.NO_OPTION) {
-                    return false;
-                } else if (response == JOptionPane.CANCEL_OPTION) {
-                    _suppressIndirectRef = true;
-                }
+            if (!confirmIndirectMemory(memName)) {
+                return false;
             }
             memName = validateMemoryReference(memName);
             if (memName == null) {
@@ -4047,7 +4028,7 @@ public class LogixTableAction extends AbstractTableAction {
                 actionType = Conditional.ITEM_TO_SENSOR_ACTION[selection - 1];
                 if ((actionType == Conditional.ACTION_RESET_DELAYED_SENSOR)
                         || (actionType == Conditional.ACTION_DELAYED_SENSOR)) {
-                    if (!validateIntegerReference(actionType, actionString)) {
+                    if (!validateTimeReference(actionType, actionString)) {
                         return (false);
                     }
                     _curAction.setActionString(actionString);
@@ -4076,7 +4057,7 @@ public class LogixTableAction extends AbstractTableAction {
                 actionType = Conditional.ITEM_TO_TURNOUT_ACTION[selection - 1];
                 if ((actionType == Conditional.ACTION_RESET_DELAYED_TURNOUT)
                         || (actionType == Conditional.ACTION_DELAYED_TURNOUT)) {
-                    if (!validateIntegerReference(actionType, actionString)) {
+                    if (!validateTimeReference(actionType, actionString)) {
                         return (false);
                     }
                     _curAction.setActionString(actionString);
@@ -4124,7 +4105,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
                         return (false);
                     }
-                    if (!validateIntegerReference(actionType, actionString)) {
+                    if (!validateIntensityReference(actionType, actionString)) {
                         return (false);
                     }
                     _curAction.setActionString(actionString);
@@ -4141,7 +4122,7 @@ public class LogixTableAction extends AbstractTableAction {
                                 rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
                         return (false);
                     }
-                    if (!validateIntegerReference(actionType, actionString)) {
+                    if (!validateTimeReference(actionType, actionString)) {
                         return (false);
                     }
                     _curAction.setActionString(actionString);
@@ -4348,7 +4329,7 @@ public class LogixTableAction extends AbstractTableAction {
         return (true);
     }
 
-    int getActionTypeFromBox(int itemType, int actionTypeSelection) {
+    static int getActionTypeFromBox(int itemType, int actionTypeSelection) {
         if (itemType < 0 || actionTypeSelection < 0) {
             return Conditional.ACTION_NONE;
         }
@@ -4387,47 +4368,101 @@ public class LogixTableAction extends AbstractTableAction {
     /**
      * Checks if String is an integer or references an integer
      */
-    boolean validateIntegerReference(int actionType, String intReference) {
+    boolean validateIntensityReference(int actionType, String intReference) {
         if (intReference == null || intReference.trim().length() == 0) {
-            displayBadIntegerReference(actionType);
+            displayBadNumberReference(actionType);
             return false;
         }
         try {
-            return validateInteger(actionType, Integer.valueOf(intReference).intValue());
+            return validateIntensity(Integer.valueOf(intReference).intValue());
         } catch (NumberFormatException e) {
-            intReference = validateMemoryReference(intReference);
-            if (intReference != null) // memory named 'intReference' exits
+            String intRef = intReference;
+            if (intReference.length() > 1 && intReference.charAt(0) == '@') {
+                intRef = intRef.substring(1);
+            }
+            if (!confirmIndirectMemory(intRef)) {
+                return false;
+            }
+            intRef = validateMemoryReference(intRef);
+            if (intRef != null) // memory named 'intReference' exists
             {
-                Memory m = InstanceManager.memoryManagerInstance().getByUserName(intReference);
+                Memory m = InstanceManager.memoryManagerInstance().getByUserName(intRef);
                 if (m == null) {
-                    m = InstanceManager.memoryManagerInstance().getBySystemName(intReference);
+                    m = InstanceManager.memoryManagerInstance().getBySystemName(intRef);
                 }
                 try {
-                    return validateInteger(actionType, Integer.valueOf((String) m.getValue()).intValue());
+                    validateIntensity(Integer.valueOf((String) m.getValue()).intValue());
                 } catch (NumberFormatException ex) {
                     javax.swing.JOptionPane.showMessageDialog(
                             editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error24"),
                                     intReference), rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
-                    return true;
                 }
+                return true;    // above is a warning to set memory correctly
             }
-            displayBadIntegerReference(actionType);
+            displayBadNumberReference(actionType);
+        }
+        return false;
+    }
+    
+    /**
+     * Checks text represents an integer suitable for percentage
+     * NumberFormatException
+     */
+    boolean validateIntensity(int time) {
+        if (time < 0 || time > 100) {
+            javax.swing.JOptionPane.showMessageDialog(
+                    editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error38"),
+                            time, rbx.getString("Error42")), rbx.getString("ErrorTitle"), javax.swing.JOptionPane.ERROR_MESSAGE);
+            return false;
+        }
+        return true;
+    }
+    
+    /**
+     * Checks if String is decimal or references a decimal
+     */
+    boolean validateTimeReference (int actionType, String ref) {
+        if (ref == null || ref.trim().length() == 0) {
+            displayBadNumberReference(actionType);
+            return false;
+        }
+        try {
+            return validateTime(actionType, Float.valueOf(ref).floatValue());
+        } catch (NumberFormatException e) {
+            String memRef = ref;
+            if (ref.length() > 1 && ref.charAt(0) == '@') {
+                memRef = ref.substring(1);
+            }
+            if (!confirmIndirectMemory(memRef)) {
+                return false;
+            }
+            memRef = validateMemoryReference(memRef);
+            if (memRef != null) // memory named 'intReference' exists
+            {
+                Memory m = InstanceManager.memoryManagerInstance().getByUserName(memRef);
+                if (m == null) {
+                    m = InstanceManager.memoryManagerInstance().getBySystemName(memRef);
+                }
+                try {
+                    validateTime(actionType, Float.valueOf((String) m.getValue()).floatValue());
+                } catch (NumberFormatException ex) {
+                    javax.swing.JOptionPane.showMessageDialog(
+                            editConditionalFrame, java.text.MessageFormat.format(rbx.getString("Error24"),
+                                    memRef), rbx.getString("WarnTitle"), javax.swing.JOptionPane.WARNING_MESSAGE);
+                }
+                return true;    // above is a warning to set memory correctly
+            }
+            displayBadNumberReference(actionType);
         }
         return false;
     }
 
     /**
-     * Checks text represents an integer suitable for timing throws
-     * NumberFormatException
+     * Range check time (assumes seconds)
      */
-    boolean validateInteger(int actionType, int time) {
-        int maxTime = 3600;     // more than 1 hour
-        int minTime = 1;
-        if (actionType == Conditional.ACTION_SET_LIGHT_INTENSITY) {
-            maxTime = 100;
-            minTime = 0;
-
-        }
+    boolean validateTime(int actionType, float time) {
+        float maxTime = 3600;     // more than 1 hour
+        float minTime = 0.020f;
         if (time < minTime || time > maxTime) {
             String errorNum = " ";
             switch (actionType) {
@@ -4443,9 +4478,6 @@ public class LogixTableAction extends AbstractTableAction {
                 case Conditional.ACTION_RESET_DELAYED_SENSOR:
                     errorNum = "Error27";
                     break;
-                case Conditional.ACTION_SET_LIGHT_INTENSITY:
-                    errorNum = "Error42";
-                    break;
                 case Conditional.ACTION_SET_LIGHT_TRANSITION_TIME:
                     errorNum = "Error29";
                     break;
@@ -4460,7 +4492,7 @@ public class LogixTableAction extends AbstractTableAction {
         return true;
     }
 
-    void displayBadIntegerReference(int actionType) {
+    void displayBadNumberReference(int actionType) {
         String errorNum = " ";
         switch (actionType) {
             case Conditional.ACTION_DELAYED_TURNOUT:
@@ -4495,7 +4527,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateMemoryReference(String name) {
         Memory m = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 m = InstanceManager.memoryManagerInstance().getByUserName(name);
                 if (m != null) {
@@ -4510,6 +4541,21 @@ public class LogixTableAction extends AbstractTableAction {
         }
         return name;
     }
+    
+    boolean confirmIndirectMemory(String memName) {
+        if (!_suppressIndirectRef) {
+            int response = JOptionPane.showConfirmDialog(_editActionFrame, java.text.MessageFormat.format(
+                    rbx.getString("ConfirmIndirectReference"), memName),
+                    rbx.getString("ConfirmTitle"), JOptionPane.YES_NO_CANCEL_OPTION,
+                    JOptionPane.QUESTION_MESSAGE);
+            if (response == JOptionPane.NO_OPTION) {
+                return false;
+            } else if (response == JOptionPane.CANCEL_OPTION) {
+                _suppressIndirectRef = true;
+            }
+        }
+        return true;       
+    }
 
     /**
      * Checks Turnout reference of text.
@@ -4517,7 +4563,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateTurnoutReference(String name) {
         Turnout t = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 t = InstanceManager.turnoutManagerInstance().getByUserName(name);
                 if (t != null) {
@@ -4539,7 +4584,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateSignalHeadReference(String name) {
         SignalHead h = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 h = InstanceManager.signalHeadManagerInstance().getByUserName(name);
                 if (h != null) {
@@ -4561,7 +4605,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateSignalMastReference(String name) {
         SignalMast h = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 h = InstanceManager.signalMastManagerInstance().getByUserName(name);
                 if (h != null) {
@@ -4580,7 +4623,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateWarrantReference(String name) {
         Warrant w = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 w = InstanceManager.getDefault(WarrantManager.class).getByUserName(name);
                 if (w != null) {
@@ -4599,7 +4641,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateOBlockReference(String name) {
         OBlock b = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 b = InstanceManager.getDefault(jmri.jmrit.logix.OBlockManager.class).getByUserName(name);
                 if (b != null) {
@@ -4621,7 +4662,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateSensorReference(String name) {
         Sensor s = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 s = InstanceManager.sensorManagerInstance().getByUserName(name);
                 if (s != null) {
@@ -4644,7 +4684,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateLightReference(String name) {
         Light l = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 l = InstanceManager.lightManagerInstance().getByUserName(name);
                 if (l != null) {
@@ -4666,7 +4705,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateConditionalReference(String name) {
         Conditional c = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 c = _conditionalManager.getByUserName(name);
                 if (c != null) {
@@ -4688,7 +4726,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateLogixReference(String name) {
         Logix l = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 l = _logixManager.getByUserName(name);
                 if (l != null) {
@@ -4710,7 +4747,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateRouteReference(String name) {
         Route r = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 r = InstanceManager.routeManagerInstance().getByUserName(name);
                 if (r != null) {
@@ -4729,7 +4765,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateAudioReference(String name) {
         Audio a = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 a = InstanceManager.audioManagerInstance().getByUserName(name);
                 if (a != null) {
@@ -4748,7 +4783,6 @@ public class LogixTableAction extends AbstractTableAction {
     String validateEntryExitReference(String name) {
         NamedBean nb = null;
         if (name != null) {
-            name = name.trim();
             if (name.length() > 0) {
                 nb = jmri.InstanceManager.getDefault(jmri.jmrit.signalling.EntryExitPairs.class).getNamedBean(name);
                 if (nb != null) {
@@ -4768,7 +4802,6 @@ public class LogixTableAction extends AbstractTableAction {
             return null;
         }
         Light l = null;
-        name = name.trim();
         if (name.length() > 0) {
             l = InstanceManager.lightManagerInstance().getByUserName(name);
             if (l != null) {
@@ -4958,9 +4991,8 @@ public class LogixTableAction extends AbstractTableAction {
         public Class<?> getColumnClass(int c) {
             if (c == BUTTON_COLUMN) {
                 return JButton.class;
-            } else {
-                return String.class;
             }
+            return String.class;
         }
 
         public int getColumnCount() {
@@ -5036,9 +5068,8 @@ public class LogixTableAction extends AbstractTableAction {
                             _curLogix.getConditionalByNumberOrder(rx));
                     if (c != null) {
                         return c.getUserName();
-                    } else {
-                        return "";
                     }
+                    return "";
                 }
                 case STATE_COLUMN:
                     Conditional c = _conditionalManager.getBySystemName(

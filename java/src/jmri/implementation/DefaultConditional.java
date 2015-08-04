@@ -655,11 +655,11 @@ public class DefaultConditional extends AbstractNamedBean
                                 timer.setRepeats(true);
                             }
                             // Start the Timer to set the turnout
-                            value = getIntegerValue(action);
+                            value = getMillisecondValue(action);
                             if (value < 0) {
                                 break;
                             }
-                            timer.setInitialDelay(value * 1000);
+                            timer.setInitialDelay(value);
                             action.setTimer(timer);
                             action.startTimer();
                             actionCount++;
@@ -797,11 +797,11 @@ public class DefaultConditional extends AbstractNamedBean
                                 timer.setRepeats(true);
                             }
                             // Start the Timer to set the turnout
-                            value = getIntegerValue(action);
+                            value = getMillisecondValue(action);
                             if (value < 0) {
                                 break;
                             }
-                            timer.setInitialDelay(value * 1000);
+                            timer.setInitialDelay(value);
                             action.setTimer(timer);
                             action.startTimer();
                             actionCount++;
@@ -1360,25 +1360,61 @@ public class DefaultConditional extends AbstractNamedBean
         try {
             time = Integer.valueOf(sNumber).intValue();
         } catch (NumberFormatException e) {
+            if (sNumber.charAt(0) == '@') {
+                sNumber = sNumber.substring(1);
+            }
             Memory mem = getMemory(sNumber);
             if (mem == null) {
                 log.error("invalid memory name for action time variable - " + sNumber
                         + ", for Action \"" + action.getTypeString()
                         + "\", in Conditional \"" + getUserName() + "\" (" + getSystemName() + ")");
                 return -1;
-            } else {
-                try {
-                    time = Integer.valueOf((String) mem.getValue()).intValue();
-                } catch (NumberFormatException ex) {
-                    log.error("invalid action number variable from memory, \""
-                            + getUserName() + "\" (" + mem.getSystemName() + "), value = " + (String) mem.getValue()
-                            + ", for Action \"" + action.getTypeString()
-                            + "\", in Conditional \"" + getUserName() + "\" (" + getSystemName() + ")");
-                    return -1;
-                }
+            }
+            try {
+                time = Integer.valueOf((String) mem.getValue()).intValue();
+            } catch (NumberFormatException ex) {
+                log.error("invalid action number variable from memory, \""
+                        + getUserName() + "\" (" + mem.getSystemName() + "), value = " + (String) mem.getValue()
+                        + ", for Action \"" + action.getTypeString()
+                        + "\", in Conditional \"" + getUserName() + "\" (" + getSystemName() + ")");
+                return -1;
             }
         }
         return time;
+    }
+
+    /**
+     * Return int from either literal String or Internal memory reference.
+     */
+    int getMillisecondValue(ConditionalAction action) {
+        String sNumber = action.getActionString();
+        float time = 0;
+        try {
+            time = Float.valueOf(sNumber).floatValue();
+        } catch (NumberFormatException e) {
+            if (sNumber.charAt(0) == '@') {
+                sNumber = sNumber.substring(1);
+            }
+            Memory mem = getMemory(sNumber);
+            if (mem == null) {
+                log.error("invalid memory name for action time variable - " + sNumber
+                        + ", for Action \"" + action.getTypeString()
+                        + "\", in Conditional \"" + getUserName() + "\" (" + getSystemName() + ")");
+                return -1;
+            }
+            try {
+                time = Float.valueOf((String) mem.getValue()).floatValue();
+            } catch (NumberFormatException ex) {
+                time = -1;
+            }
+            if (time<=0) {
+                log.error("invalid Millisecond value from memory, \""
+                        + getUserName() + "\" (" + mem.getSystemName() + "), value = " + (String) mem.getValue()
+                        + ", for Action \"" + action.getTypeString()
+                        + "\", in Conditional \"" + getUserName() + "\" (" + getSystemName() + ")");
+            }
+        }
+        return (int)(time*1000);
     }
 
     /**
