@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Properties;
+import javax.annotation.Nonnull;
 
 /**
  * A JMRI application profile. Profiles allow a JMRI application to load
@@ -125,13 +126,13 @@ public class Profile {
     public void setName(String name) {
         String oldName = this.name;
         this.name = name;
-        ProfileManager.defaultManager().profileNameChange(this, oldName);
+        ProfileManager.getDefault().profileNameChange(this, oldName);
     }
 
     /**
      * @return the id
      */
-    public String getId() {
+    public @Nonnull String getId() {
         return id;
     }
 
