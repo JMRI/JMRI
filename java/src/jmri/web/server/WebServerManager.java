@@ -32,6 +32,8 @@ public class WebServerManager {
             if (!webServerPrefsFile.exists() && miniServerPrefsFile.exists()) {
                 // import Mini Server preferences into Web Server preferences
                 preferencesFromMiniServerPreferences(miniServerPrefsFile, webServerPrefsFile);
+            } else if (!webServerPrefsFile.exists()) {
+                InstanceManager.store(new WebServerPreferences(), WebServerPreferences.class);
             } else {
                 InstanceManager.store(new WebServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "WebServerPreferences.xml"), WebServerPreferences.class); // NOI18N
             }

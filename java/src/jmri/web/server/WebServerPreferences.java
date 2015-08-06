@@ -1,12 +1,18 @@
 package jmri.web.server;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
+import jmri.profile.ProfileManager;
+import jmri.util.FileUtil;
+import jmri.util.prefs.JmriPreferencesProvider;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -48,12 +54,69 @@ public class WebServerPreferences extends Bean {
     private static Logger log = LoggerFactory.getLogger(WebServerPreferences.class.getName());
 
     public WebServerPreferences(String fileName) {
-        openFile(fileName);
+        boolean migrate = false;
+        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
+        try {
+            if (sharedPreferences.keys().length == 0) {
+                log.info("No Webserver preferences exist.");
+                migrate = true;
+            }
+        } catch (BackingStoreException ex) {
+            log.info("No preferences file exists.");
+            migrate = true;
+        }
+        if (migrate) {
+            if (fileName != null) {
+                try {
+                    this.openFile(fileName);
+                } catch (FileNotFoundException ex) {
+                    migrate = false;
+                }
+            } else {
+                migrate = false;
+            }
+        }
+        this.readPreferences(sharedPreferences, privatePreferences);
+        if (migrate) {
+            try {
+                log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
+                sharedPreferences.sync();
+            } catch (BackingStoreException ex) {
+                log.error("Unable to write WebServer preferences.", ex);
+            }
+        }
     }
 
     public WebServerPreferences() {
+        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
+        this.readPreferences(sharedPreferences, privatePreferences);
     }
 
+    private void readPreferences(Preferences sharedPreferences, Preferences privatePreferences) {
+        this.allowRemoteConfig = sharedPreferences.getBoolean(AllowRemoteConfig, this.allowRemoteConfig);
+        this.clickDelay = sharedPreferences.getInt(ClickDelay, this.clickDelay);
+        this.plain = sharedPreferences.getBoolean(Simple, this.plain);
+        this.railRoadName = sharedPreferences.get(RailRoadName, this.railRoadName);
+        this.readonlyPower = sharedPreferences.getBoolean(ReadonlyPower, this.readonlyPower);
+        this.refreshDelay = sharedPreferences.getInt(RefreshDelay, this.refreshDelay);
+        this.useAjax = sharedPreferences.getBoolean(UseAjax, this.useAjax);
+        try {
+            if (sharedPreferences.nodeExists(DisallowedFrames)) { // throws BackingStoreException
+                Preferences frames = sharedPreferences.node(DisallowedFrames);
+                this.disallowedFrames.clear();
+                for (String key : frames.keys()) { // throws BackingStoreException
+                    this.disallowedFrames.add(frames.get(key, null));
+                }
+            }
+        } catch (BackingStoreException ex) {
+            // this is expected if sharedPreferences have not been written previously,
+            // so do nothing.
+        }
+        this.port = privatePreferences.getInt(Port, this.port);
+    }
+    
     public void load(Element child) {
         Attribute a;
         if ((a = child.getAttribute(ClickDelay)) != null) {
@@ -96,9 +159,9 @@ public class WebServerPreferences extends Bean {
         Element df = child.getChild(DisallowedFrames);
         if (df != null) {
             this.disallowedFrames.clear();
-            for (Object f : df.getChildren(Frame)) {
-                this.addDisallowedFrame(((Element) f).getText().trim());
-            }
+            df.getChildren(Frame).stream().forEach((f) -> {
+                this.addDisallowedFrame(f.getText().trim());
+            });
         }
     }
 
@@ -138,41 +201,18 @@ public class WebServerPreferences extends Bean {
         setRailRoadName(prefs.getRailRoadName());
     }
 
-    public Element store() {
-        Element prefs = new Element(WebServerPreferences);
-        prefs.setAttribute(ClickDelay, "" + getClickDelay());
-        prefs.setAttribute(RefreshDelay, "" + getRefreshDelay());
-        prefs.setAttribute(UseAjax, "" + useAjax());
-        prefs.setAttribute(Simple, "" + isPlain());
-        prefs.setAttribute(AllowRemoteConfig, "" + this.allowRemoteConfig());
-        prefs.setAttribute(ReadonlyPower, "" + this.isReadonlyPower());
-        prefs.setAttribute(DisallowedFrames, "" + getDisallowedFrames());
-        prefs.setAttribute(Port, "" + getPort());
-        prefs.setAttribute(RailRoadName, getRailRoadName());
-        Element df = new Element(DisallowedFrames);
-        for (String name : getDisallowedFrames()) {
-            Element frame = new Element(Frame);
-            frame.addContent(name);
-            df.addContent(frame);
-        }
-        prefs.addContent(df);
-        setIsDirty(false);  //  Resets only when stored
-        return prefs;
-    }
-    private String fileName;
-
-    public final void openFile(String fileName) {
-        this.fileName = fileName;
-        WebServerPreferencesXml prefsXml = new WebServerPreferences.WebServerPreferencesXml();
-        File file = new File(this.fileName);
+    public final void openFile(String fileName) throws FileNotFoundException {
+        WebServerPreferencesXml prefsXml = new WebServerPreferencesXml();
+        File file = new File(fileName);
         Element root;
         try {
             root = prefsXml.rootFromFile(file);
-        } catch (java.io.FileNotFoundException ea) {
-            log.info("Could not find Web Server preferences file. Normal if preferences have not been saved before.");
+        } catch (FileNotFoundException ex) {
+            log.debug("Could not find Web Server preferences file. Normal if preferences have not been saved before.");
             root = null;
-        } catch (IOException | JDOMException eb) {
-            log.error("Exception while loading web server preferences: " + eb);
+            throw ex;
+        } catch (IOException | JDOMException ex) {
+            log.error("Exception while loading web server preferences: " + ex);
             root = null;
         }
         if (root != null) {
@@ -181,34 +221,26 @@ public class WebServerPreferences extends Bean {
     }
 
     public void save() {
-        if (fileName == null) {
-            return;
-        }
-
-        XmlFile xmlFile = new XmlFile() {
-        };
-        xmlFile.makeBackupFile(fileName);
-        File file = new File(fileName);
+        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
+        sharedPreferences.putInt(ClickDelay, this.getClickDelay());
+        sharedPreferences.putInt(RefreshDelay, this.getRefreshDelay());
+        sharedPreferences.putBoolean(UseAjax, this.useAjax());
+        sharedPreferences.putBoolean(Simple, this.isPlain());
+        sharedPreferences.putBoolean(AllowRemoteConfig, this.allowRemoteConfig());
+        sharedPreferences.putBoolean(ReadonlyPower, this.isReadonlyPower());
+        sharedPreferences.put(RailRoadName, getRailRoadName());
+        Preferences node = sharedPreferences.node(DisallowedFrames);
+        this.getDisallowedFrames().stream().forEach((frame) -> {
+            node.put(Integer.toString(this.disallowedFrames.indexOf(frame)), frame);
+        });
         try {
-            File parentDir = file.getParentFile();
-            if (!parentDir.exists()) {
-                if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :" + fileName);
-                    return;
-                }
-            }
-            if (file.createNewFile()) {
-                log.debug("Creating new Web Server prefs file: {}", fileName);
-            }
-        } catch (IOException ea) {
-            log.error("Could not create Web Server preferences file.");
+            sharedPreferences.sync();
+        } catch (BackingStoreException ex) {
+            log.error("Exception while saving web server preferences", ex);
         }
-
-        try {
-            xmlFile.writeXML(file, XmlFile.newDocument(store()));
-        } catch (IOException eb) {
-            log.warn("Exception in storing Web Server xml: " + eb);
-        }
+        privatePreferences.putInt(Port, this.getPort());
+        setIsDirty(false);  //  Resets only when stored
     }
 
     public boolean isDirty() {
