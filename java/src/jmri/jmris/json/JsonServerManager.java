@@ -14,8 +14,13 @@ public class JsonServerManager {
     static Logger log = LoggerFactory.getLogger(JsonServer.class.getName());
 
     private JsonServerManager() {
+        String fileName = FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml";
         if (InstanceManager.getDefault(JsonServerPreferences.class) == null) {
-            InstanceManager.store(new JsonServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class); // NOI18N
+            if ((new File(fileName)).exists()) {
+                InstanceManager.store(new JsonServerPreferences(FileUtil.getUserFilesPath() + "networkServices" + File.separator + "JsonServerPreferences.xml"), JsonServerPreferences.class); // NOI18N
+            } else {
+                InstanceManager.store(new JsonServerPreferences(), JsonServerPreferences.class);
+            }
         }
         preferences = InstanceManager.getDefault(JsonServerPreferences.class);
     }

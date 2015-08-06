@@ -1,9 +1,15 @@
 package jmri.jmris.json;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.prefs.BackingStoreException;
+import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
+import jmri.profile.ProfileManager;
+import jmri.util.FileUtil;
+import jmri.util.prefs.JmriPreferencesProvider;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -26,10 +32,51 @@ public class JsonServerPreferences extends Bean {
     private static Logger log = LoggerFactory.getLogger(JsonServerPreferences.class);
 
     public JsonServerPreferences(String fileName) {
-        openFile(fileName);
+        boolean migrate = false;
+        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
+        try {
+            if (sharedPreferences.keys().length == 0) {
+                log.info("No JsonServer preferences exist.");
+                migrate = true;
+            }
+        } catch (BackingStoreException ex) {
+            log.info("No preferences file exists.");
+            migrate = true;
+        }
+        if (migrate) {
+            if (fileName != null) {
+                try {
+                    this.openFile(fileName);
+                } catch (FileNotFoundException ex) {
+                    migrate = false;
+                }
+            } else {
+                migrate = false;
+            }
+        }
+        this.readPreferences(sharedPreferences, privatePreferences);
+        if (migrate) {
+            try {
+                log.info("Migrating from old JsonServer preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
+                sharedPreferences.sync();
+            } catch (BackingStoreException ex) {
+                log.error("Unable to write JsonServer preferences.", ex);
+            }
+        }
     }
 
     public JsonServerPreferences() {
+        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
+        this.readPreferences(sharedPreferences, privatePreferences);
+    }
+
+    private void readPreferences(Preferences sharedPreferences, Preferences privatePreferences) {
+        this.setHeartbeatInterval(sharedPreferences.getInt(HEARTBEAT_INTERVAL, this.getHeartbeatInterval()));
+        this.setPort(privatePreferences.getInt(PORT, this.getPort()));
+        this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
+        this.asLoadedPort = this.getPort();
     }
 
     public void load(Element child) {
@@ -66,27 +113,16 @@ public class JsonServerPreferences extends Bean {
         this.setPort(prefs.getPort());
     }
 
-    public Element store() {
-        Element prefs = new Element(XML_PREFS_ELEMENT);
-        prefs.setAttribute(HEARTBEAT_INTERVAL, Integer.toString(this.getHeartbeatInterval()));
-        prefs.setAttribute(PORT, Integer.toString(this.getPort()));
-        // asLoadedHeartbeatInterval should only be reset if the heartbeat
-        // interval can be updated without requiring a restart
-        // this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
-        return prefs;
-    }
-    private String fileName;
-
-    public final void openFile(String fileName) {
-        this.fileName = fileName;
+    public final void openFile(String fileName) throws FileNotFoundException {
         JsonServerPreferencesXml prefsXml = new JsonServerPreferences.JsonServerPreferencesXml();
-        File file = new File(this.fileName);
+        File file = new File(fileName);
         Element root;
         try {
             root = prefsXml.rootFromFile(file);
         } catch (java.io.FileNotFoundException ea) {
             log.info("Could not find JSON Server preferences file.  Normal if preferences have not been saved before.");
             root = null;
+            throw ea;
         } catch (IOException | JDOMException eb) {
             log.error("Exception while loading JSON server preferences: {}", eb.getLocalizedMessage());
             root = null;
@@ -97,34 +133,10 @@ public class JsonServerPreferences extends Bean {
     }
 
     public void save() {
-        if (this.fileName == null) {
-            return;
-        }
-
-        XmlFile xmlFile = new XmlFile() {
-        };
-        xmlFile.makeBackupFile(this.fileName);
-        File file = new File(this.fileName);
-        try {
-            File parentDir = file.getParentFile();
-            if (!parentDir.exists()) {
-                if (!parentDir.mkdir()) {
-                    log.warn("Could not create parent directory for prefs file :{}", fileName);
-                    return;
-                }
-            }
-            if (file.createNewFile()) {
-                log.debug("Creating new JSON Server prefs file: {}", fileName);
-            }
-        } catch (IOException ea) {
-            log.error("Could not create JSON Server preferences file.");
-        }
-
-        try {
-            xmlFile.writeXML(file, XmlFile.newDocument(store()));
-        } catch (IOException eb) {
-            log.warn("Exception in storing JSON Server xml: {}", eb.getLocalizedMessage());
-        }
+        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
+        sharedPreferences.putInt(HEARTBEAT_INTERVAL, this.heartbeatInterval);
+        privatePreferences.putInt(PORT, this.port);
     }
 
     public boolean isDirty() {
