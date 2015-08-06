@@ -1,6 +1,7 @@
 // ReportPanel.java
 package jmri.jmrit.mailreport;
 
+import apps.PerformFileModel;
 import java.awt.FlowLayout;
 import java.io.File;
 import java.io.FileInputStream;
@@ -190,14 +191,27 @@ public class ReportPanel extends JPanel {
             // add panel file if OK
             if (checkPanel.isSelected()) {
                 log.debug("prepare panel attachment");
-                // Check that a panel file has been loaded
+                // Check that some startup panel files have been loaded
+                List <PerformFileModel>pfmList = PerformFileModel.rememberedObjects();
+                if (pfmList != null) {
+                    for (int i = 0; i < pfmList.size(); i++) {
+                        String fn = pfmList.get(i).getFileName();
+                        File f = new File(fn);
+                        if (f != null) {
+                            log.debug("add startup panel file: " + f);
+                            msg.addFilePart("logfileupload[]", f);
+                            
+                        }
+                    }
+                }
+                // Check that a manual panel file has been loaded
                 File file = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
                 if (file != null) {
-                    log.debug("add panel file: " + file.getPath());
+                    log.debug("add manual panel file: " + file.getPath());
                     msg.addFilePart("logfileupload[]", jmri.configurexml.LoadXmlUserAction.getCurrentFile());
                 } else {
                     // No panel file loaded
-                    log.warn("No panel file loaded - not sending");
+                    log.warn("No manual panel file loaded - not sending");
                 }
             }
 
