@@ -197,17 +197,14 @@ public class ReportPanel extends JPanel {
                     for (int i = 0; i < pfmList.size(); i++) {
                         String fn = pfmList.get(i).getFileName();
                         File f = new File(fn);
-                        if (f != null) {
-                            log.debug("add startup panel file: " + f);
-                            msg.addFilePart("logfileupload[]", f);
-                            
-                        }
+                        log.debug("add startup panel file: {}", f);
+                        msg.addFilePart("logfileupload[]", f);
                     }
                 }
                 // Check that a manual panel file has been loaded
                 File file = jmri.configurexml.LoadXmlUserAction.getCurrentFile();
                 if (file != null) {
-                    log.debug("add manual panel file: " + file.getPath());
+                    log.debug("add manual panel file: {}", file.getPath());
                     msg.addFilePart("logfileupload[]", jmri.configurexml.LoadXmlUserAction.getCurrentFile());
                 } else {
                     // No panel file loaded
@@ -222,7 +219,7 @@ public class ReportPanel extends JPanel {
                 Profile profile = ProfileManager.defaultManager().getActiveProfile();
                 File file = profile.getPath();
                 if (file != null) {
-                    log.debug("add profile: " + file.getPath());
+                    log.debug("add profile: {}", file.getPath());
                     // Now zip-up contents of profile
                     // Create temp file that will be deleted when Java quits
                     File temp = File.createTempFile("profile", ".zip");
@@ -252,11 +249,11 @@ public class ReportPanel extends JPanel {
                     org.apache.log4j.Appender a = en.nextElement();
                     // see if it's one of the ones we know
                     if (log.isDebugEnabled()) {
-                        log.debug("check appender " + a);
+                        log.debug("check appender {}", a);
                     }
                     try {
                         org.apache.log4j.FileAppender f = (org.apache.log4j.FileAppender) a;
-                        log.debug("find file: " + f.getFile());
+                        log.debug("find file: {}", f.getFile());
                         msg.addFilePart("logfileupload[]", new File(f.getFile()), "application/octet-stream");
                     } catch (ClassCastException ex) {
                     }
@@ -271,7 +268,7 @@ public class ReportPanel extends JPanel {
             log.debug("server response:");
             boolean checkResponse = false;
             for (String line : response) {
-                log.debug(line);
+                log.debug("               :{}", line);
                 if (line.contains("<p>Message successfully sent!</p>")) {
                     checkResponse = true;
                 }
@@ -297,7 +294,7 @@ public class ReportPanel extends JPanel {
     }
 
     private void addDirectory(ZipOutputStream out, File source) {
-        log.debug("Add profile: " + source.getName());
+        log.debug("Add profile: {}", source.getName());
         addDirectory(out, source, "");
     }
 
@@ -305,7 +302,7 @@ public class ReportPanel extends JPanel {
         // get directory contents
         File[] files = source.listFiles();
 
-        log.debug("Add directory: " + directory);
+        log.debug("Add directory: {}", directory);
 
         for (File file : files) {
             // if current file is a directory, call recursively
@@ -319,7 +316,7 @@ public class ReportPanel extends JPanel {
                     }
                     addDirectory(out, file, directory + file.getName() + "/");
                 } else {
-                    log.debug("Skipping: " + directory + file.getName());
+                    log.debug("Skipping: {}{}", directory, file.getName());
                 }
                 continue;
             }
@@ -327,7 +324,7 @@ public class ReportPanel extends JPanel {
             try {
                 // Only include certain files
                 if (!directory.equals("") || file.getName().toLowerCase().matches(".*(config\\.xml|\\.properties)")) {
-                    log.debug("Add file: " + directory + file.getName());
+                    log.debug("Add file: {}{}", directory, file.getName());
                     byte[] buffer = new byte[1024];
                     FileInputStream in = new FileInputStream(file);
                     out.putNextEntry(new ZipEntry(directory + file.getName()));
@@ -339,7 +336,7 @@ public class ReportPanel extends JPanel {
                     out.closeEntry();
                     in.close();
                 } else {
-                    log.debug("Skip file: " + directory + file.getName());
+                    log.debug("Skip file: {}{}", directory, file.getName());
                 }
             } catch (FileNotFoundException ex) {
                 log.error("Exception when adding file: " + ex);
