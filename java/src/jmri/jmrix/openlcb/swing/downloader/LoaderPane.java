@@ -186,18 +186,19 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
          */
         void sendNext() {
             byte[] temp = new byte[SIZE];
-            int i;
-            for (i = 0; i < SIZE; i++) {
-                if (!inputContent.locationInUse(location+i)) 
+            int count;
+            for (count = 0; count < SIZE; count++) {
+                if (!inputContent.locationInUse(location+count)) {
                     break;
-                temp[i] = (byte)inputContent.getLocation(location+i);
+                }
+                temp[count] = (byte)inputContent.getLocation(location+count);
             }
-            byte[] data = new byte[i];
-            System.arraycopy(temp, 0, data, 0, i);
+            byte[] data = new byte[count];
+            System.arraycopy(temp, 0, data, 0, count);
 
             int addr = location; // next call back might be instantaneous
-            location = location + i; 
-            log.info("Sending write to 0x{}", Integer.toHexString(location).toUpperCase());
+            location = location + count; 
+            log.info("Sending write to 0x{} length {}", Integer.toHexString(location).toUpperCase(), count);
             mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
                 public void handleWriteReply(int code) { 
                      // update GUI intermittently
