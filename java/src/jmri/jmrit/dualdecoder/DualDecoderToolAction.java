@@ -41,7 +41,6 @@ public class DualDecoderToolAction extends JmriAbstractAction {
         }
 
         setEnabled(enabled);
-        System.out.println("enabled: "+enabled);
     }
 
     public DualDecoderToolAction() {
