@@ -125,12 +125,11 @@ public class Tracker {
         long et = (System.currentTimeMillis() - _time) / 1000;
         if (getHeadBlock() == null) {
             return Bundle.getMessage("TrackerLocationLost", _trainName);
-        } else {
-            return Bundle.getMessage("TrackerStatus", _trainName, getHeadBlock().getDisplayName(), et / 60, et % 60);
         }
+        return Bundle.getMessage("TrackerStatus", _trainName, getHeadBlock().getDisplayName(), et / 60, et % 60);
     }
 
-    private Portal getPortalBetween(OBlock blkA, OBlock blkB) {
+    static private Portal getPortalBetween(OBlock blkA, OBlock blkB) {
         List<Portal> listA = blkA.getPortals();
         ArrayList<Portal> list = new ArrayList<Portal>();
 
@@ -146,19 +145,21 @@ public class Tracker {
             log.error("No portal between blocks \"" + blkA.getDisplayName() + "\" and \""
                     + blkB.getDisplayName() + "\".");
             return null;
-        } else {
-            if (size > 1) {
-                log.info(size + " portals between blocks \"" + blkA.getDisplayName() + "\" and \""
-                        + blkB.getDisplayName() + "\".");
-            }
-            return list.get(0);
         }
+        if (size > 1) {
+            log.info(size + " portals between blocks \"" + blkA.getDisplayName() + "\" and \""
+                    + blkB.getDisplayName() + "\".");
+        }
+        return list.get(0);
     }
 
     /**
      * Build array of blocks reachable from head and tail portals
      */
     private List<OBlock> makeRange() {
+        if (log.isDebugEnabled()) {
+            log.debug("Make range for \"" + _trainName + "\"");
+        }
         _headRange = new ArrayList<OBlock>();
         _tailRange = new ArrayList<OBlock>();
         _lostRange = new ArrayList<OBlock>();
@@ -171,7 +172,6 @@ public class Tracker {
                 OBlock b = iter.next().getOpposingBlock(headBlock);
                 addtoHeadRange(b);
             }
-
         } else {
             List<OPath> pathList = _headPortal.getPathsWithinBlock(headBlock);
             Iterator<OPath> iter = pathList.iterator();
@@ -207,6 +207,12 @@ public class Tracker {
             }
         }
         _time = System.currentTimeMillis();
+        if (log.isDebugEnabled()) {
+            log.debug("   _headRange.size()= " + _headRange.size());
+            log.debug("   _tailRange.size()= " + _tailRange.size());
+            log.debug("   _lostRange.size()= " + _lostRange.size());
+            log.debug("   _occupies.size()= " + _occupies.size());
+        }
 
         return getRange();
     }
@@ -245,7 +251,7 @@ public class Tracker {
     protected List<OBlock> getRange() {
         ArrayList<OBlock> range = new ArrayList<OBlock>();
         if (log.isDebugEnabled()) {
-            log.debug("Get range: Occupied blocks for \"" + _trainName + "\"");
+            log.debug("Get range for \"" + _trainName + "\"");
         }
         if (_occupies == null || _occupies.size() == 0) {
             return range;
@@ -295,16 +301,25 @@ public class Tracker {
         return _occupies;
     }
 
-    protected void removeBlock(OBlock b) {
-        if (_trainName.equals(b.getValue())) {
-            b.setValue(null);
-            b.setState(b.getState() & ~OBlock.RUNNING);
+    protected void removeBlock(OBlock block) {
+        _occupies.remove(block);
+        List<Portal> list = block.getPortals();
+        Iterator<Portal> iter = list.iterator();
+        while (iter.hasNext()) {
+            OBlock b = iter.next().getOpposingBlock(block);
+            if ((b.getState() & OBlock.DARK) !=0) {
+                _occupies.remove(b);                
+            }
+        }
+        if (_trainName.equals(block.getValue())) {
+            block.setValue(null);
+            block.setState(block.getState() & ~OBlock.RUNNING);
         }
     }
 
     protected int move(OBlock block, int state) {
         if (log.isDebugEnabled()) {
-            log.debug("move( " + block.getDisplayName() + ", " + state);
+            log.debug("move( " + block.getDisplayName() + ", " + state+")");
         }
         if ((state & OBlock.OCCUPIED) != 0) {
             if (_occupies.contains(block)) {
@@ -348,16 +363,14 @@ public class Tracker {
                     return ERROR_BLOCK;
                 }
             }
-            _occupies.remove(block);
             removeBlock(block);
             int size = _occupies.size();
             if (size == 0) {
                 log.error("\"" + block.getDisplayName() + "\", going inactive, is last block occupied by \"" + _trainName + "\"!");
                 if (recovery(block)) {
                     return ENTER_BLOCK;
-                } else {
-                    return NO_BLOCK;
                 }
+                return NO_BLOCK;
             } else if (size == 1) {
                 _headPortal = null;
                 _tailPortal = null;
@@ -378,22 +391,46 @@ public class Tracker {
      * @return
      */
     private boolean recovery(OBlock block) {
+        if (_occupies.size()==0) {
+            Iterator<OBlock> it = _headRange.iterator();
+            while (it.hasNext()) {
+                OBlock b = it.next();
+                if ((b.getState() & (OBlock.DARK | OBlock.OCCUPIED)) != 0) {
+                    _lostRange.add(b);
+                    if (log.isDebugEnabled()) {
+                        log.debug("  _lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
+                    }
+                }
+            }
+            it = _tailRange.iterator();
+            while (it.hasNext()) {
+                OBlock b = it.next();
+                if ((b.getState() & (OBlock.DARK | OBlock.OCCUPIED)) != 0) {
+                    _lostRange.add(b);
+                    if (log.isDebugEnabled()) {
+                        log.debug("  _lostRange.add " + b.getDisplayName() + " value= " + b.getValue());
+                    }
+                }
+            }            
+        }
+        if (log.isDebugEnabled()) {
+            log.debug("recovery( " + block.getDisplayName() + ") + _lostRange.size()= "+ _lostRange.size());
+        }
         if (_lostRange == null || _lostRange.size() == 0) {
             return false;
-        } else {
-            block = (OBlock) JOptionPane.showInputDialog(null, Bundle.getMessage("TrackerNoCurrentBlock",
-                    _trainName, block.getDisplayName()) + "\n" + Bundle.getMessage("PossibleLocation"),
-                    Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE, null,
-                    _lostRange.toArray(), null);
-            if (block != null) {
-                _occupies.addFirst(block);
-                showBlockValue(block);
-            } else {
-                return false;
-            }
-            setupCheck();
-            return true;
         }
+        OBlock blk = (OBlock) JOptionPane.showInputDialog(null, Bundle.getMessage("TrackerNoCurrentBlock",
+                _trainName, block.getDisplayName()) + "\n" + Bundle.getMessage("PossibleLocation"),
+                Bundle.getMessage("WarningTitle"), JOptionPane.INFORMATION_MESSAGE, null,
+                _lostRange.toArray(), null);
+        if (blk != null) {
+            _occupies.addFirst(blk);
+            showBlockValue(blk);
+        } else {
+            return false;
+        }
+        setupCheck();
+        return true;
     }
 
     public String toString() {

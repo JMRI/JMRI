@@ -233,11 +233,10 @@ public class TrackerTableAction extends AbstractAction {
                     _trainNameBox.setText((String) block.getValue());
                 }
                 return true;
-            } else {
-                if ((block.getState() & OBlock.OCCUPIED) != 0 && block.getValue() != null) {
-                    markNewTracker(block, (String) block.getValue());
-                    return true;
-                }
+            }
+            if ((block.getState() & OBlock.OCCUPIED) != 0 && block.getValue() != null) {
+                markNewTracker(block, (String) block.getValue());
+                return true;
             }
             return false;
         }
@@ -346,19 +345,18 @@ public class TrackerTableAction extends AbstractAction {
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("blockInUse", oldName, block.getDisplayName()),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     return null;
-                } else {
-                    Tracker newTracker = new Tracker(block, name);
-                    newTracker.setupCheck();
-                    _trackerList.add(newTracker);
-                    addBlockListeners(newTracker);
-                    _model.fireTableDataChanged();
-                    setStatus(Bundle.getMessage("startTracker", name, block.getDisplayName()));
-                    return newTracker;
                 }
+                Tracker newTracker = new Tracker(block, name);
+                newTracker.setupCheck();
+                _trackerList.add(newTracker);
+                addBlockListeners(newTracker);
+                _model.fireTableDataChanged();
+                setStatus(Bundle.getMessage("startTracker", name, block.getDisplayName()));
+                return newTracker;
             }
         }
 
-        protected String blockInUse(OBlock b) {
+        static protected String blockInUse(OBlock b) {
             Iterator<Tracker> iter = _trackerList.iterator();
             while (iter.hasNext()) {
                 Tracker t = iter.next();
@@ -369,7 +367,7 @@ public class TrackerTableAction extends AbstractAction {
             return null;
         }
 
-        boolean nameInuse(String name) {
+        static boolean nameInuse(String name) {
             Iterator<Tracker> iter = _trackerList.iterator();
             while (iter.hasNext()) {
                 Tracker t = iter.next();
@@ -410,8 +408,8 @@ public class TrackerTableAction extends AbstractAction {
         }
 
         /**
-         * Adds listeners to all blocks in the range of a Tracker Called when a
-         * tracker enters a block. Called when a new tracker is created.
+         * Adds listeners to all blocks in the range of a Tracker.
+         * Called when a new tracker is created.
          *
          * @param newTracker
          */
@@ -427,6 +425,9 @@ public class TrackerTableAction extends AbstractAction {
             }
         }
 
+        /**
+         * Adds listener to a block when a tracker enters.
+         */
         private void addBlockListener(OBlock block, Tracker tracker) {
             List<Tracker> trackers = _blocks.get(block);
             if (trackers == null) {
@@ -465,9 +466,8 @@ public class TrackerTableAction extends AbstractAction {
                 if (oldRange.contains(b)) {
                     oldRange.remove(b);
                     continue;	// held in common. keep listener	    			
-                } else {
-                    addBlockListener(b, tracker);		// new block.  Add Listener
                 }
+                addBlockListener(b, tracker);       // new block.  Add Listener
             }
             // blocks left in oldRange were not found in newRange.  Remove Listeners
             iter = oldRange.iterator();
@@ -534,9 +534,10 @@ public class TrackerTableAction extends AbstractAction {
                             Warrant w = b.getWarrant();
                             if (w != null) {
                                 int idx = w.getCurrentOrderIndex();
-                                // Assume it is a warranted train that entered the block
-                                // is distance of 1 block OK? maybe 2?
-                                if (Math.abs(w.getIndexOfBlock(b, idx) - idx) < 2) {
+                                // Was it a warranted train that entered the block, 
+                                // is distance of 1 block OK?
+                                // Can't tell who got notified first - tracker or warrant?
+                                if (w.getIndexOfBlock(b, idx) - idx < 2) {
                                     return;
                                 }
                             }
