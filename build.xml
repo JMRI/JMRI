@@ -1073,8 +1073,7 @@
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>
             <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/"/>
-            <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
-            <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
+            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
         </javadoc>
     </target>
@@ -1145,7 +1144,7 @@
             <link href="http://fasterxml.github.io/jackson-databind/javadoc/2.0.6"/>
             <link href="http://logging.apache.org/log4j/1.2/apidocs/"/>  
 <!--            <link href="http://java.sun.com/javase/technologies/desktop/java3d/forDevelopers/j3dapi/"/>   failes, so bypassed -->
-            <link href="http://download.java.net/media/joal/builds/nightly/javadoc_public"/>
+            <link href="https://jogamp.org/deployment/jogamp-next/javadoc/joal/javadoc/"/>
             <link href="https://commons.apache.org/proper/commons-lang/javadocs/api-release"/>
 
         </javadoc>
