@@ -1559,6 +1559,7 @@ public class TrainBuilder extends TrainCommon {
             int numCarsFromStaging = 0;
             _numOfBlocks = new Hashtable<String, Integer>();
             addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+            addLine(_buildReport, SEVEN, Bundle.getMessage("buildRemoveCarsStaging"));
             for (_carIndex = 0; _carIndex < _carList.size(); _carIndex++) {
                 Car c = _carList.get(_carIndex);
                 if (c.getLocationName().equals(_departLocation.getName())) {
