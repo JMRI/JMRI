@@ -102,6 +102,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
 
     private WarrantTableFrame() 
     {
+        super(false, true);
         setTitle(Bundle.getMessage("WarrantTable"));
         _model = new WarrantTableModel(this);
         _model.init();
@@ -390,7 +391,7 @@ public class WarrantTableFrame extends jmri.util.JmriJFrame implements MouseList
             setStatusText(msg, Color.red, false);                               
             return msg;
         }    
-        msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, false);
+        msg = w.setRunMode(Warrant.MODE_RUN, null, null, null, w.getRunBlind());
         if (msg!=null) {
             setStatusText(msg, Color.red, false);                               
             return msg;

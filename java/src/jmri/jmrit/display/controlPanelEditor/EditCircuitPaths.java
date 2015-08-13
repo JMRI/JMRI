@@ -42,9 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelectionListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -6255531106871960794L;
     private OBlock _block;
     private CircuitBuilder _parent;
@@ -93,7 +90,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         pack();
         if (_firstInstance) {
             setLocationRelativeTo(_parent._editor);
-//            setSize(500, 500);
             _firstInstance = false;
         } else {
             setLocation(_loc);
@@ -310,9 +306,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
 
     class PathListModel extends AbstractListModel<OPath> {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = 5542865970112078810L;
 
         public int getSize() {
@@ -328,9 +321,6 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
         }
     }
 
-    /**
-     * When a
-     */
     public void valueChanged(ListSelectionEvent e) {
         clearPath();
         OPath path = _pathList.getSelectedValue();
@@ -398,7 +388,7 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     /**
-     * sets the path for display
+     * Sets the path icons for display
      *
      * @param pathChanged
      */
@@ -629,7 +619,8 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
     }
 
     /**
-     * Check for icons and Portals
+     * Create or update the selected path named in the text field
+     * Checks that icons have been selected for the path
      */
     private void addPath() {
         String name = _pathName.getText();
@@ -709,6 +700,10 @@ public class EditCircuitPaths extends jmri.util.JmriJFrame implements ListSelect
             Iterator<BeanSetting> it = path.getSettings().iterator();
             while (it.hasNext()) {
                 oldPath.addSetting(it.next());
+            }
+            toPortal.addPath(oldPath);
+            if (fromPortal!=null) {
+                fromPortal.addPath(oldPath);                
             }
         } else {
             _block.addPath(path);		// OBlock adds path to portals and checks for duplicate path names
