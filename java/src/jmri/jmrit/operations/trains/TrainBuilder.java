@@ -1618,8 +1618,13 @@ public class TrainBuilder extends TrainCommon {
                 continue;
             }
             locationNames.add(rl.getName());
-            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarsAtLocation"),
-                    new Object[]{rl.getName()}));
+            if (rl.getLocation().isStaging()) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarsInStaging"),
+                        new Object[]{rl.getName()}));
+            } else {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarsAtLocation"),
+                        new Object[]{rl.getName()}));
+            }
             // now go through the car list and remove non-lead cars in kernels, destinations that aren't part of this
             // route
             int carCount = 0;
