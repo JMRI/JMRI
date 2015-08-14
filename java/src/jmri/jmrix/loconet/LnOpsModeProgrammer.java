@@ -17,17 +17,24 @@ import jmri.managers.DefaultProgrammerManager;
  * @author	Bob Jacobsen Copyright (C) 2002
  * @version	$Revision$
  */
-public class LnOpsModeProgrammer implements AddressedProgrammer {
+public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener {
 
     SlotManager mSlotMgr;
+    LocoNetSystemConnectionMemo memo;
     int mAddress;
     boolean mLongAddr;
-
+    ProgListener p;
+    
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
+            LocoNetSystemConnectionMemo memo,
             int pAddress, boolean pLongAddr) {
         mSlotMgr = pSlotMgr;
+        this.memo = memo;
         mAddress = pAddress;
         mLongAddr = pLongAddr;
+        
+        // register to listen
+        memo.getLnTrafficController().addLocoNetListener(~0, this);
     }
 
     /**
@@ -46,17 +53,128 @@ public class LnOpsModeProgrammer implements AddressedProgrammer {
     }
 
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        writeCV(Integer.parseInt(CV), val, p);
+        this.p = null;
+        // Check mode
+        if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+            this.p = p;
+            // SV2 mode
+            log.info("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+            // make message
+            LocoNetMessage m = new LocoNetMessage(15);
+            loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), val);
+            m.setElement(3, 0x01); // 1 byte write
+            log.info("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);
+        } else {
+            // DCC ops mode
+            writeCV(Integer.parseInt(CV), val, p);
+        }
     }
 
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
-        readCV(Integer.parseInt(CV), p);
+        this.p = null;
+        // Check mode
+        if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+            this.p = p;
+            // SV2 mode
+            log.info("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
+            // make message
+            LocoNetMessage m = new LocoNetMessage(15);
+            loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), 0);
+            m.setElement(3, 0x02); // 1 byte read
+            log.info("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);            
+        } else {
+            // DCC ops mode
+            readCV(Integer.parseInt(CV), p);
+        }
     }
 
     public void confirmCV(String CV, int val, ProgListener p) throws ProgrammerException {
-        confirmCV(Integer.parseInt(CV), val, p);
+        this.p = null;
+        // Check mode
+        if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+            // SV2 mode
+            log.error("confirm CV \"{}\" addr:{} in SV2 mode not implemented", CV, mAddress);
+            p.programmingOpReply(0, ProgListener.UnknownError);
+        } else {
+            // DCC ops mode
+            confirmCV(Integer.parseInt(CV), val, p);
+        }
     }
 
+    public void message(LocoNetMessage m) {
+        // see if reply
+        if ((m.getElement(0)&0xFF) != 0xE5) return;
+        if ((m.getElement(1)&0xFF) != 0x10) return;
+        if ((m.getElement(3)&0x40) != 0x00) return; // need reply bit set
+        // more checks needed?
+        
+        // return reply
+        if (p == null) {
+            log.error("received SV reply message with no reply object: {}", m);
+            return;
+        } else {
+            log.debug("returning SV programming reply: {}", m);
+            int code = ProgListener.OK;
+            int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x40) != 0x00)? 0x80:0x00);
+            p.programmingOpReply(val, code);
+            p = null;
+        }
+        
+    }
+    
+    int decodeCvNum(String CV) {
+        try {
+            return Integer.valueOf(CV).intValue();
+        } catch (java.lang.NumberFormatException e) {
+            return 0;
+        }
+    }
+    
+    void loadSV2MessageFormat(LocoNetMessage m, int mAddress, int cvAddr, int data) {
+        m.setElement(0, 0xE5);
+        m.setElement(1, 0x10);
+        m.setElement(2, 0x01);
+        // 3 SV_CMD to be filled in later
+        m.setElement(4, 0x02);
+        // 5 will come back to SVX1
+        m.setElement(6, mAddress&0xFF);
+        m.setElement(7, (mAddress>>8)&0xFF);
+        m.setElement(8, cvAddr&0xFF);
+        m.setElement(9, (cvAddr/256)&0xFF);
+        
+        // set SVX1
+        int svx1 = 0x10
+                    |((m.getElement(6)&0x80) != 0 ? 0x04 : 0)  // SV_ADRL
+                    |((m.getElement(7)&0x80) != 0 ? 0x08 : 0)  // SV_ADRH
+                    |((m.getElement(8)&0x80) != 0 ? 0x01 : 0)  // DST_L
+                    |((m.getElement(9)&0x80) != 0 ? 0x02 : 0); // DST_H
+        m.setElement(5, svx1);
+        m.setElement(6, m.getElement(6)&0x7F);
+        m.setElement(7, m.getElement(7)&0x7F);
+        m.setElement(8, m.getElement(8)&0x7F);
+        m.setElement(9, m.getElement(9)&0x7F);
+        
+        // 10 will come back to SVX2
+        m.setElement(11, data&0xFF);
+        m.setElement(12, (data>>8)&0xFF);
+        m.setElement(13, (data>>16)&0xFF);
+        m.setElement(14, (data>>24)&0xFF);
+
+        // set SVX2
+        int svx2 = 0x10
+                    |((m.getElement(11)&0x80) != 0 ? 0x01 : 0)
+                    |((m.getElement(12)&0x80) != 0 ? 0x02 : 0)
+                    |((m.getElement(13)&0x80) != 0 ? 0x04 : 0)
+                    |((m.getElement(14)&0x80) != 0 ? 0x08 : 0);
+        m.setElement(10, svx2);
+        m.setElement(11, m.getElement(11)&0x7F);
+        m.setElement(12, m.getElement(12)&0x7F);
+        m.setElement(13, m.getElement(13)&0x7F);
+        m.setElement(14, m.getElement(14)&0x7F);
+    }
+    
     // handle mode
     protected ProgrammingMode mode = DefaultProgrammerManager.OPSBYTEMODE;
 
@@ -81,6 +199,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer {
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(LnProgrammerManager.LOCONETSV2MODE);
         return ret;
     }
 

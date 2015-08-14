@@ -2,7 +2,10 @@
 package jmri.jmrix.loconet;
 
 import jmri.AddressedProgrammer;
+import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+
+import java.util.*;
 
 /**
  * Extend DefaultProgrammerManager to provide ops mode programmers on LocoNet
@@ -17,9 +20,11 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public LnProgrammerManager(SlotManager pSlotManager, LocoNetSystemConnectionMemo memo) {
         super(pSlotManager, memo);
         mSlotManager = pSlotManager;
+        this.memo = memo;
     }
 
     SlotManager mSlotManager;
+    LocoNetSystemConnectionMemo memo;
 
     /**
      * LocoNet command station does provide Ops Mode
@@ -31,12 +36,25 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     }
 
     public AddressedProgrammer getAddressedProgrammer(boolean pLongAddress, int pAddress) {
-        return new LnOpsModeProgrammer(mSlotManager, pAddress, pLongAddress);
+        return new LnOpsModeProgrammer(mSlotManager, memo, pAddress, pLongAddress);
     }
 
     public AddressedProgrammer reserveAddressedProgrammer(boolean pLongAddress, int pAddress) {
         return null;
     }
+
+    static final ProgrammingMode LOCONETSV2MODE = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
+    /**
+     * Types implemented here.
+     */
+    @Override
+    public List<ProgrammingMode> getDefaultModes() {
+        List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
+        ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(LOCONETSV2MODE);
+        return ret;
+    }
+
 }
 
 

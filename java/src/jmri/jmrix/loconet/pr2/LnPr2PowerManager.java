@@ -31,10 +31,12 @@ public class LnPr2PowerManager extends LnPowerManager {
         super(memo);
         this.sm = memo.getSlotManager();
         this.tc = memo.getLnTrafficController();
+        this.memo = memo;
     }
 
     SlotManager sm;
     LnTrafficController tc;
+    LocoNetSystemConnectionMemo memo;
 
     public void setPower(int v) throws JmriException {
         power = UNKNOWN;
@@ -44,7 +46,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // set bit 1 in CV 128
@@ -71,7 +73,7 @@ public class LnPr2PowerManager extends LnPowerManager {
             // get current active address
             DccLocoAddress activeAddress = ((LnPr2ThrottleManager) InstanceManager.throttleManagerInstance()).getActiveAddress();
             if (activeAddress != null) {
-                pm = new LnOpsModeProgrammer(sm, activeAddress.getNumber(), activeAddress.isLongAddress());
+                pm = new LnOpsModeProgrammer(sm, memo, activeAddress.getNumber(), activeAddress.isLongAddress());
                 checkOpsProg();
 
                 // reset bit 1 in CV 128
