@@ -34,40 +34,29 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     private int replyLen = 0;						// expected byte length
     private int waiting = 0;						// to catch responses not
     // intended for this module
-    private int foundCabId = -1;
     private int minCabNum = -1;		// either the USB or serial size depending on what we connect to
     private int maxCabNum = -1;		// either the USB or serial size depending on what we connect to
     private int minCabSetNum = -1;
     private int maxCabSetNum = -1;
-    private boolean supportGet = false;	// can only get cab data if memory commands are supported
-
     private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
     private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
-    private static final int CAB_MAX_USB_128 = 4;			// There are up to 10 cabs on 1.28
+    private static final int CAB_MAX_USB_128 = 4;			// There are up to 4 cabs on 1.28
     private static final int CAB_MAX_USB_165 = 10;			// There are up to 10 cabs on 1.65
     private static final int CAB_MAX_PRO = 63;			// There are up to 63 cabs
     private static final int CAB_MAX_SB3 = 5;			// There are up to 5 cabs
-    private static int USB_CAB_FLAGS1 = 70;			// NCE flag 1
-    private static final int FLAGS1_CABID_USB = 0x80;		// bit 0=0, bit 7=1;
-    private static final int FLAGS1_CABISACTIVE = 0x02;	// if cab is active
-    private static final int FLAGS1_MASK_CABID = 0x81;	// Only bits 0 and 7.
-    private static final int FLAGS1_MASK_CABISACTIVE = 0x02;	// if cab is active
 
     private static final int REPLY_1 = 1;			// reply length of 1 byte
     private static final int REPLY_2 = 2;			// reply length of 2 byte
     private static final int REPLY_4 = 4;			// reply length of 4 byte
 
     Thread NceCabUpdateThread;
-    private boolean getRequested = false;
     private boolean setRequested = false;
     private int setCabId = -1;
-    private int priorCabId = -1;
 
     private NceTrafficController tc = null;
 
     JTextField newCabId = new JTextField(5);
     JLabel oldCabId = new JLabel("     ");
-    JButton getButton = new JButton(rb.getString("ButtonGet"));
     JButton setButton = new JButton(rb.getString("ButtonSet"));
 
     JLabel space1 = new JLabel(" ");
@@ -120,7 +109,6 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
             minCabNum = CAB_MIN_USB;
             maxCabNum = CAB_MAX_USB_165;
-            supportGet = true;
         } else if (tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERHOUSE) {
             minCabNum = CAB_MIN_PRO;
             maxCabNum = CAB_MAX_PRO;
@@ -139,15 +127,6 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         JPanel p1 = new JPanel();
         p1.setLayout(new GridBagLayout());
         p1.setPreferredSize(new Dimension(400, 75));
-        oldCabId.setText(" ");
-        if (supportGet) {
-            addItem(p1, new JLabel(rb.getString("LabelCurrentCabId")), 1, 1);
-            addItem(p1, oldCabId, 2, 1);
-            addItem(p1, getButton, 3, 1);
-            addButtonAction(getButton);
-        } else {
-            addItem(p1, new JLabel(rb.getString("LabelGetNotSupported")), 2, 1);
-        }
 
         addItem(p1, new JLabel(rb.getString("LabelSetCabId")), 1, 2);
         newCabId.setText(" ");
@@ -162,79 +141,66 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         addItem(p2, statusText, 2, 1);
         add(p2);
 
-        if (supportGet) {
-            JPanel p3 = new JPanel();
-            p3.setLayout(new GridBagLayout());
-
-            addItem(p3, new JLabel(rb.getString("LabelWarning1")), 1, 1);
-            addItem(p3, new JLabel(rb.getString("LabelWarning2")), 1, 2);
-            add(p3);
-        }
-
+        JPanel p3 = new JPanel();
+        add(p3);
+        
         addButtonAction(setButton);
-
-        refreshPanel();
+    }
+    
+    // validate if a value is a legal cab id for the system
+    // needed since there are gaps in the USB based command stations
+    public boolean validateCabId(int id) {
+        if ((id < minCabNum) || (id > maxCabNum)) {
+            // rough range check
+            return false;
+        }
+        if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
+                && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
+            // is a 1.65 or better firmware, has gaps
+            if ((id  == 6) || (id == 7))
+                return false;
+        }
+        return true;
     }
 
     // button actions
     public void buttonActionPerformed(ActionEvent ae) {
         Object src = ae.getSource();
-        if (src == getButton) {
-            refreshPanel();
-        } else if (src == setButton) {
+        if (src == setButton) {
             changeCabId();
         } else {
             log.error("unknown action performed: " + src);
         }
     }
 
-    private void refreshPanel() {
-        if (supportGet) {
-            processMemory(false, true, -1);
-        }
-    }
-
     private void changeCabId() {
         int i = -1;
-        boolean tryRefresh = false;
         try {
             i = Integer.parseInt(newCabId.getText().trim());
-            tryRefresh = supportGet;
-            processMemory(true, tryRefresh, i);
+            if (validateCabId(i)) {
+                processMemory(true, i);
+            } else {
+                statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabIdEntered"), i));
+            }
         } catch (Exception e) {
             // presume it failed to convert.
         }
     }
 
-    private void processMemory(boolean doSet, boolean doGet, int cabId) {
+    private void processMemory(boolean doSet, int cabId) {
         if (doSet) {
             setRequested = true;
             setCabId = cabId;
-            if (supportGet) {
-                try {
-                    priorCabId = Integer.parseInt(oldCabId.getText().trim());
-                } catch (Exception e) {
-                    // presume it failed to convert.
-                    priorCabId = -1;
-                }
-            }
-        }
-        if (doGet) {
-            getRequested = true;
         }
         // Set up a separate thread to access CS memory
         if (NceCabUpdateThread != null && NceCabUpdateThread.isAlive()) {
             return; // thread is already running
         }
-        statusText.setText(rb.getString("StatusProcessingMemory"));
         NceCabUpdateThread = new Thread(new Runnable() {
             public void run() {
                 if (tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE) {
                     if (setRequested) {
                         cabSetIdUsb();
-                    }
-                    if (getRequested && supportGet) {
-                        cabUpdateUsb();
                     }
                 }
             }
@@ -245,60 +211,6 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
     }
 
     private boolean firstTime = true; // wait for panel to display
-
-    // Thread to update cab info, allows the use of sleep or wait, for NCE-USB connection
-    private void cabUpdateUsb() {
-
-        if (firstTime) {
-            try {
-                Thread.sleep(1000);	// wait for panel to display 
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        getRequested = false;
-        firstTime = false;
-        foundCabId = 0;
-        // build table of cabs
-        for (int currCabId = minCabNum; (currCabId <= maxCabNum) && (foundCabId == 0); currCabId++) {
-
-            statusText.setText(MessageFormat.format(rb.getString("StatusReadingCabId"), currCabId));
-            recChar = -1;
-            // read cab type by reading the FLAGS1 byte
-            setUsbCabMemoryPointer(currCabId, USB_CAB_FLAGS1);
-            if (!waitNce()) {
-                return;
-            }
-            readUsbCabMemoryN(1);
-            if (!waitNce()) {
-                return;
-            }
-            if (log.isDebugEnabled()) {
-                log.debug("ID = " + currCabId + " Read flag1 character " + recChar);
-            }
-            // test it really changed
-            if (recChar != -1) {
-                if ((recChar & FLAGS1_MASK_CABISACTIVE) != FLAGS1_CABISACTIVE) {
-                    // not active slot
-                    continue;
-                }
-                int cabId = recChar & FLAGS1_MASK_CABID; // mask off don't care bits
-                if (cabId == FLAGS1_CABID_USB) {
-                    foundCabId = currCabId;	// USB or Mini-Panel
-                    statusText.setText(MessageFormat.format(rb.getString("StatusFound"), currCabId));
-                }
-            }
-        }
-
-        if (foundCabId == 0) {
-            statusText.setText(rb.getString("StatusReadingNotFound"));
-        } else {
-            oldCabId.setText(Integer.toString(foundCabId));
-        }
-        this.setVisible(true);
-        this.repaint();
-    }
 
     // Thread to set cab id, allows the use of sleep or wait, for NCE-USB connection
     private void cabSetIdUsb() {
@@ -314,14 +226,17 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         firstTime = false;
         recChar = -1;
         setRequested = false;
-        if ((setCabId >= minCabSetNum) && (setCabId <= maxCabSetNum)) {
+        if (validateCabId(setCabId)) {
             statusText.setText(MessageFormat.format(rb.getString("StatusSetIdStart"), setCabId));
             writeUsbCabId(setCabId);
             if (!waitNce()) {
                 return;
             }
-
-            statusText.setText(MessageFormat.format(rb.getString("StatusSetIdFinished"), setCabId));
+            if (recChar != '!') {
+                statusText.setText(MessageFormat.format(rb.getString("StatusUsbErrorCode"), recChars[0]));
+            } else {
+                statusText.setText(MessageFormat.format(rb.getString("StatusSetIdFinished"), setCabId));
+            }
             synchronized (this) {
                 try {
                     wait(1000);
@@ -329,23 +244,8 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
                     //nothing to see here, move along
                 }
             }
-            if (supportGet && (priorCabId >= minCabSetNum) && (priorCabId <= maxCabSetNum)) {
-                recChar = -1;
-                // clear old cab writing the FLAGS1 byte
-                setUsbCabMemoryPointer(priorCabId, USB_CAB_FLAGS1);
-                if (!waitNce()) {
-                    return;
-                }
-                writeUsbCabMemory1(0);
-                if (!waitNce()) {
-                    return;
-                }
-                statusText.setText(MessageFormat.format(rb.getString("StatusCabPurged"), priorCabId));
-                getRequested = false;
-            }
         } else {
             statusText.setText(MessageFormat.format(rb.getString("StatusInvalidCabId"), setCabId, minCabSetNum, maxCabSetNum));
-            getRequested = false;
         }
         this.setVisible(true);
         this.repaint();
@@ -413,7 +313,7 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             }
             count--;
             if (count < 0) {
-                statusText.setText("Error");
+                statusText.setText(rb.getString("StatusReplyTimeout"));
                 return false;
             }
         }
@@ -423,51 +323,11 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
         return true;
     }
 
-    // USB set cab memory pointer
-    private void setUsbCabMemoryPointer(int cab, int offset) {
-        replyLen = REPLY_1;			// Expect 1 byte response
-        waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryPointer(cab, offset);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
-        tc.sendNceMessage(m, this);
-    }
-
-    // USB Read N bytes of NCE cab memory 
-    private void readUsbCabMemoryN(int num) {
-        switch (num) {
-            case 1:
-                replyLen = REPLY_1;	// Expect 1 byte response
-                break;
-            case 2:
-                replyLen = REPLY_2;	// Expect 2 byte response
-                break;
-            case 4:
-                replyLen = REPLY_4;	// Expect 4 byte response
-                break;
-            default:
-                log.error("Invalid usb read byte count");
-                return;
-        }
-        waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryRead((byte) num);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, replyLen);
-        tc.sendNceMessage(m, this);
-    }
-
     // USB set Cab Id in USB 
     private void writeUsbCabId(int value) {
         replyLen = REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.usbSetCabId(value);
-        NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
-        tc.sendNceMessage(m, this);
-    }
-
-    // USB Write 1 byte of NCE cab memory 
-    private void writeUsbCabMemory1(int value) {
-        replyLen = REPLY_1;			// Expect 1 byte response
-        waiting++;
-        byte[] bl = NceBinaryCommand.usbMemoryWrite1((byte) value);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, REPLY_1);
         tc.sendNceMessage(m, this);
     }
