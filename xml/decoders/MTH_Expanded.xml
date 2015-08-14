@@ -13,11 +13,13 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version author="Michael Mosher" version="1" lastUpdated="20120228"/>
-  <version author="Michael Mosher" version="1" lastUpdated="20131122"/>
+  <version author="Michael Mosher" version="2" lastUpdated="20131122"/>
+  <version author="Michael Mosher" version="3" lastUpdated="20150728"/>
   <!-- Version 1 - new file -->
   <!-- Version 2 - bug fix -->
+  <!-- Version 3 - change mfg to MTH Electric Trains, Inc. -->
   <decoder>
-    <family name="MTH HO Expanded PS3" mfg="Mikes Train House">
+    <family name="MTH HO Expanded PS3" mfg="MTH Electric Trains, Inc.">
       <model model="MTH HO Expanded PS3" lowVersionID="1" highVersionID="2"/>
     </family>
     <programming direct="yes" paged="yes" register="no" ops="yes"/>
