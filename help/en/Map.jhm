@@ -2332,6 +2332,8 @@
 
 <mapID target="html.doc.Technical.JUnit_complicatedGuiTesting" url="html/doc/Technical/JUnit.shtml#complicatedGuiTesting"/>
 
+<mapID target="package.jmri.jmrix.nce.usbinterface.UsbInterfacePanel" url="package/jmri/jmrix/nce/usbinterface/UsbInterfacePanel.shtml"/>
+
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_EngineAttributes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_EngineAttributes.shtml#Top"/>
 
 <mapID target="manual.DecoderPro.Programmer_SingleCV_Top" url="manual/DecoderPro/Programmer_SingleCV.shtml#Top"/>
