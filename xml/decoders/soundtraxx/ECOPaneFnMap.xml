@@ -13,15 +13,33 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new pane file for SoundTraxx Tsunami -->
 <pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <name>Function Map</name>
   <column>
     <row>
-      <label>
-        <text>Any check marks on Function Map tab will override these settings</text>
-      </label>
+      <column>
+        <label>
+          <text>&lt;html&gt;
+            &lt;h1&gt;Econami Extended Function Map&lt;/h1&gt;
+            &lt;br/&gt;
+            &lt;br/&gt;
+            &lt;h2&gt;&lt;em&gt;
+              Any check marks on the Legacy Function Map pane will override these settings!
+            &lt;/em&gt;&lt;/h2&gt;
+          &lt;/html&gt;</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+        <label>
+          <text>Use this sheet to determine which functions will control which outputs</text>
+          <text xml:lang="de">Hier einstellen, welche Funktion welchen Ausgang steuert</text>
+          <text xml:lang="it">Usa questo foglio per programmare quale Funzione contolla quale uscita</text>
+        </label>
+        <label>
+          <text> </text>
+        </label>
+      </column>
     </row>
-    <label>
-      <text> </text>
-    </label>
     <row>
 		<grid ipadx="10" ipady="2">
 			<!-- default padding for all grid items -->
@@ -677,6 +695,18 @@
 			</griditem>
 		</grid>
     </row>
+    <row>
+        <column>
+          <label>
+            <text>&lt;html&gt;
+              &lt;br/&gt;
+              &lt;br/&gt;
+              &lt;h2&gt;&lt;em&gt;
+                Any check marks on the Legacy Function Map pane will override these settings!
+              &lt;/em&gt;&lt;/h2&gt;
+            ;&lt;/html&gt;</text>
+          </label>
+        </column>
+    </row>
    </column>
-  <name>Extended Function Map</name>
 </pane>

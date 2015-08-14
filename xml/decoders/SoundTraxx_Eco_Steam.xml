@@ -44,10 +44,17 @@
       <authorinitials>ALM</authorinitials>
       <revremark>Updated Outputs definition to new format. Fixed mask for CV124, CV125, CV199. Fixed CV135, CV136</revremark>
     </revision>
+    <revision>
+      <revnumber>1.3</revnumber>
+      <date>2015-08-13</date>
+      <authorinitials>DGH</authorinitials>
+      <revremark>Promoted Extended Function Map to the default</revremark>
+    </revision>
   </revhistory>
   <version author="Michael Mosher" version="1" lastUpdated="20150725"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20150726"/>
   <version author="Alain Le Marchand" version="1.2" lastUpdated="20150726"/>
+  <version author="Dave Heap" version="1.3" lastUpdated="20150813"/>
   <!-- Decoder Model information follows -->
   <decoder>
     <family name="Econami Steam" mfg="SoundTraxx (Throttle-Up)" comment="These are the -retail- version Econami Steam decoders">
@@ -1175,4 +1182,5 @@
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneDDE.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
 </decoder-config>
