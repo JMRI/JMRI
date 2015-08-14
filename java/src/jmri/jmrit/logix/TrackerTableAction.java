@@ -119,9 +119,6 @@ public class TrackerTableAction extends AbstractAction {
      */
     static class TableFrame extends JmriJFrame implements PropertyChangeListener, MouseListener {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -56337259221744388L;
         private TrackerTableModel _model;
         private JmriJFrame _pickFrame;
@@ -509,17 +506,22 @@ public class TrackerTableAction extends AbstractAction {
             if (evt.getPropertyName().equals("state")) {
                 OBlock b = (OBlock) evt.getSource();
                 int state = ((Number) evt.getNewValue()).intValue();
+                int oldState = ((Number) evt.getOldValue()).intValue();
                 if (log.isDebugEnabled()) {
-                    log.debug("propertyChange to block= " + b.getDisplayName() + " state= " + state);
+                    log.debug("propertyChange to block= "+b.getDisplayName()+" state= "+state+" oldstate= "+oldState);
                 }
                 // The "jiggle" (see tracker.showBlockValue() causes some state changes to be duplicated.
                 // The following washes out the extra notifications
-                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (OBlock.UNOCCUPIED | OBlock.RUNNING)) {
+/*                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (OBlock.UNOCCUPIED | OBlock.RUNNING)) {
                     b.setState(state & ~OBlock.RUNNING);
                     return;		// will do the tracker.move() on the next (repeat call
                 } else if ((state & OBlock.RUNNING) != 0) {
                     return;		// repeats previous call that was completed.	            	
-                }
+                }*/
+                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.UNOCCUPIED | OBlock.RUNNING)) &&
+                        (state & (OBlock.OCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.OCCUPIED | OBlock.RUNNING))) {
+                    return;
+                }                    
                 List<Tracker> trackers = _blocks.get(b);
                 if (trackers == null) {
                     log.error("No Trackers found for block " + b.getDisplayName() + " going to state= " + state);
@@ -568,7 +570,7 @@ public class TrackerTableAction extends AbstractAction {
                             log.warn("Block " + b.getDisplayName() + " going active with value= "
                                     + b.getValue() + " Wasup wi dat?");
                         }
-                    } else {
+                    } else if ((state & OBlock.UNOCCUPIED) != 0) {
                         // b going unoccupied.
                         // to avoid ConcurrentModificationException if a tracker is deleted, use a copy
                         Tracker[] copy = new Tracker[trackers.size()];
@@ -582,9 +584,9 @@ public class TrackerTableAction extends AbstractAction {
                         }
                     }
                 }
-                if ((state & OBlock.UNOCCUPIED) != 0) {
+ /*               if ((state & OBlock.UNOCCUPIED) != 0) {
                     b.setValue(null);
-                }
+                }*/
             }
             _model.fireTableDataChanged();
         }
@@ -684,9 +686,6 @@ public class TrackerTableAction extends AbstractAction {
 
     static class TrackerTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -8320710926680330134L;
         public static final int NAME_COL = 0;
         public static final int STATUS_COL = 1;

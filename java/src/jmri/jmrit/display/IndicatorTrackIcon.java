@@ -35,9 +35,6 @@ import org.slf4j.LoggerFactory;
 public class IndicatorTrackIcon extends PositionableIcon
         implements java.beans.PropertyChangeListener, IndicatorTrack {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 3651878897031870004L;
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
@@ -262,7 +259,7 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
-        if ((state & OBlock.OCCUPIED) != 0) {
+        if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
         }
         repaint();

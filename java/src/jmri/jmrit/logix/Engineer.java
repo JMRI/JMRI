@@ -99,7 +99,7 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
                         // Having waited, time=ts.getTime(), so blocks should agree.  if not,
                         // wait for train to arrive at block and send sync notification.
                         // note, blind runs cannot detect entrance.
-                        if (/*!_runOnET &&*/ _syncIdx > _warrant.getCurrentOrderIndex()) {
+                        if (!_runOnET && _syncIdx > _warrant.getCurrentOrderIndex()) {
                             // commands are ahead of current train position
                             // When the next block goes active or a control command is made, a call to rampSpeedTo()
                             // will test these indexes again and can trigger a notify() to free the wait
@@ -373,7 +373,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
     * Flag from user's control
     */
     synchronized public void setHalt(boolean halt) {
-//        boolean wasHalt = _halt;
         _halt = halt;
         if (!_halt) { 
             _lock.lock();
@@ -704,7 +703,6 @@ public class Engineer extends Thread implements Runnable, java.beans.PropertyCha
         if (_speedProfile != null) {
             return _speedProfile.getSpeed(speedStep, _throttle.getIsForward())/(speedStep*1000);              
         }
-//        if (_debug) log.debug("getThrottleFactor() from Default, Factor="+factor);
         return _speedMap.getDefaultThrottleFactor();
     }
     

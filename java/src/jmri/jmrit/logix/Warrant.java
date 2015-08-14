@@ -1034,7 +1034,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
             return msg;
         }           
         int state = block.getState();
-        if ((state & OBlock.DARK) != 0) {
+        if ((state & OBlock.DARK) != 0 || _tempRunBlind) {
             msg = Bundle.getMessage("BlockDark", block.getDisplayName());
         } else if ((state & OBlock.OCCUPIED) == 0) {
             if (mode==MODE_LEARN) {
@@ -1372,6 +1372,9 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
 //            block._entryTime = System.currentTimeMillis();        already done above
             firePropertyChange("blockChange", getBlockAt(oldIndex), block);
         }
+        if (_tempRunBlind && _idxCurrentOrder>0) {
+            goingInactive(getBlockAt(_idxCurrentOrder-1));            
+        }
     }       //end goingActive
 
     /**
@@ -1385,16 +1388,6 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
                         _message = Bundle.getMessage("BlockRougeOccupied", block.getDisplayName());
                 return false;
             }
-/*            if ((block.getState() & OBlock.DARK) == 0 ) {
-                if (!_tempRunBlind && _engineer.getRunOnET()) {
-                    // Block is not dark and we are using occupancy but _engineer has been set to RunOnET.
-                    // This is a fake occupancy sent by the _engineer. Ignore for now.
-                    _engineer.setRunOnET(false);
-                    return false;
-                }
-//            } else {
-//                _engineer.setRunOnET(true); // assume train has moved into a dark block
-            }*/
             _engineer.checkHalt();      // Sync commands if train is faster than ET
         }
         return true;
@@ -1568,7 +1561,7 @@ public class Warrant extends jmri.implementation.AbstractNamedBean
         BlockOrder blkOrder = getBlockOrderAt(_idxCurrentOrder);
         OBlock curBlock = blkOrder.getBlock();
         // verify we occupy current block
-        if ((curBlock.getState() & (OBlock.OCCUPIED | OBlock.DARK))==0) {
+        if ((curBlock.getState() & (OBlock.OCCUPIED | OBlock.DARK))==0 && !_tempRunBlind) {
             _engineer.setHalt(true);        // immediate setspeed = 0
             // should not happen, but...what if...
             log.error("checkCurrentBlock, block \""+curBlock.getDisplayName()+"\" not occupied! warrant "+getDisplayName());

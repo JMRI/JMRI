@@ -309,12 +309,17 @@ public class Tracker {
             OBlock b = iter.next().getOpposingBlock(block);
             if ((b.getState() & OBlock.DARK) !=0) {
                 _occupies.remove(b);                
+                removeName(b);
+                _lostRange.add(b);  // needed to find on recovery
             }
         }
+        removeName(block);
+    }
+    private void removeName(OBlock block) {
         if (_trainName.equals(block.getValue())) {
             block.setValue(null);
             block.setState(block.getState() & ~OBlock.RUNNING);
-        }
+        }        
     }
 
     protected int move(OBlock block, int state) {
@@ -333,16 +338,16 @@ public class Tracker {
                 }
             }
             if (_headRange.contains(block)) {
-                showBlockValue(block);
                 _headPortal = getPortalBetween(getHeadBlock(), block);
                 _occupies.addFirst(block);
+                showBlockValue(block);
                 if (_tailPortal == null) {
                     _tailPortal = _headPortal;
                 }
             } else if (_tailRange.contains(block)) {
-                showBlockValue(block);
                 _tailPortal = getPortalBetween(getTailBlock(), block);
                 _occupies.addLast(block);
+                showBlockValue(block);
                 if (_headPortal == null) {
                     _headPortal = _tailPortal;
                 }
