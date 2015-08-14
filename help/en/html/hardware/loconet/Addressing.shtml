@@ -180,6 +180,30 @@ available when it changes.  JMRI refers to reporters using the name
     </div>
   </div>
 
+<h2 name="SVs">Addressing LocoNet device System Variables (SVs) in JMRI</h2>
+(The following first appeared in 
+<a href="http://jmri.org/releasenotes/jmri4.1.1.shtml">JMRI 4.1.1</a>, where
+it isn't entirely complete).
+<p>
+Like decoders can Configuration Variables (CVs) to hold their settings, 
+some LocoNet-compatible devices have System Variables (SVs).
+<p>
+There are (at least) two variations of the protocol for accessing these.
+JMRI can use version 2 to access compatible SVs by selecting
+"System Variable Type 2" as the programming mode. This option is presented
+when you're using a LocoNet connection that actually connects to a LocoNet, 
+such as a LocoBuffer-USB or PR3 in MS100 mode.
+<p>
+SVs are numbered from 1 to 2^16-1 = 65,535.  Their names can be written in several formats:
+<ul>
+<li>nnnn, e.g. 12345 - Like regular CVs, this is the format to read and write an entire
+byte.
+<li>nnnnL, e.g. 123L - This means read or write four bytes at a time.
+<li>nnnn^HH, e.g. 123^80 - This means a masked write.  Only the bits marked with a 1
+in the two hex digits after the "^" character will be written to the device.  In this case, that 
+means just the most-significant bit will be written.
+</ul>
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
