@@ -8,10 +8,14 @@ import junit.framework.TestCase;
 public class LnOpsModeProgrammerTest extends TestCase {
 
     public void testSetMode() {
-        SlotManager val1 = null;
-        LnOpsModeProgrammer lops = new LnOpsModeProgrammer(val1, null, 1, true);
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager val1 = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
+
         try {
-            lops.setMode(DefaultProgrammerManager.PAGEMODE);
+            lnopsmodeprogrammer.setMode(DefaultProgrammerManager.PAGEMODE);
         } catch (IllegalArgumentException e) {
             return;
         }
@@ -20,22 +24,35 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
 
     public void testGetMode() {
-        SlotManager val1 = null;
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, null, 1, true);
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager val1 = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
+
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
         Assert.assertEquals("OpsByteMode", DefaultProgrammerManager.OPSBYTEMODE, intRet);
     }
 
     public void testGetCanRead() {
-        SlotManager val1 = null;
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, null, 1, true);
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager val1 = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
+
         Assert.assertEquals("ops mode always can read", true,
                 lnopsmodeprogrammer.getCanRead());
     }
 
     public void testSV2DataBytes() {
         LocoNetMessage m = new LocoNetMessage(15);
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(null, null, 1, true);
+
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager val1 = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
 
         // check data bytes
         lnopsmodeprogrammer.loadSV2MessageFormat(m, 0, 0, 0x12345678);
@@ -48,7 +65,12 @@ public class LnOpsModeProgrammerTest extends TestCase {
     
     public void testSV2highBits() {
         LocoNetMessage m = new LocoNetMessage(15);
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(null, null, 1, true);
+
+        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
+        SlotManager val1 = new SlotManager(lnis);
+        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
+
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
 
         // check high bits
         lnopsmodeprogrammer.loadSV2MessageFormat(m, 0, 0, 0x01020384);
