@@ -1707,6 +1707,10 @@
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Function 2 toggle in Audio Assist</label>
 			</variable>
+			<variable item="Sound Setting 12" CV="T2CV.4.23" default="256" mask="VVVVVVVVVVVVVVVV">
+				<decVal max="65535"/>
+				<label>Minimum Chuff Volume</label>
+			</variable>
 			<variable item="Volume Group 1" CV="T3CV.6.0.1" default="40">
 				<decVal max="100"/>
 				<label>Bell</label>
