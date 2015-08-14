@@ -177,7 +177,7 @@ available when it changes.  JMRI refers to reporters using the name
 <p>Additional information on Reporters and the Reporter Table may be found at the
     <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
 
-<h2 name="SVs">Addressing LocoNet device System Variables (SVs) in JMRI</h2>
+<h2 id="SVs">Addressing LocoNet device System Variables (SVs) in JMRI</h2>
 (The following first appeared in 
 <a href="http://jmri.org/releasenotes/jmri4.1.1.shtml">JMRI 4.1.1</a>, where
 it isn't entirely complete).
