@@ -190,11 +190,11 @@ public class WarrantManagerXml //extends XmlFile
         // don't continue on to build NXFrame if no content
         if (warrants.getChildren().size() == 0) return true;
         
-//        if (!GraphicsEnvironment.isHeadless()) {
+        if (!GraphicsEnvironment.isHeadless()) {
             NXFrame nxFrame = NXFrame.getInstance();
             loadNXParams(nxFrame, warrants.getChild("nxparams"));
 //            nxFrame.init();   don't make visible
-//        }
+        }
         List<Element> warrantList = warrants.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
         for (int i=0; i<warrantList.size(); i++) {

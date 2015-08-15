@@ -33,8 +33,8 @@ public class PackageTest extends TestCase {
         suite.addTest(OBlockTest.suite());
         suite.addTest(OPathTest.suite());
         suite.addTest(WarrantTest.suite());
+        suite.addTest(LogixActionTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(LogixActionTest.suite());
             suite.addTest(LearnWarrantTest.suite());            
         }
         return suite;
