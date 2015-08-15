@@ -64,6 +64,8 @@ public class z21XPressNetTunnelTest extends TestCase {
 
     // The minimal setup for log4J
     protected void setUp() {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initConfigureManager();
         apps.tests.Log4JFixture.setUp();
     }
 
