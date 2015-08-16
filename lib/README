@@ -46,7 +46,14 @@ AppleJavaExtensions.jar
  Used for building only, not at runtime
 
 openlcb.jar
-    0.6.6 from http://openlcb.org/trunk/prototypes/java
+    0.6.4 from http://openlcb.org/trunk/prototypes/java
+    Note: This implements the protocols as adopted by the OpenLCB
+    group prior to February 2015.  There have been changes to their
+    specifications since then with uncertain provenance.
+    JMRI's use of this version means that it won't comply
+    with those.
+    Note: The OpenLCB group has orphaned development of this library. See:
+        http://sourceforge.net/p/openlcb/svn/3912/
 
 jlfgr-1_0.jar 
     icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
