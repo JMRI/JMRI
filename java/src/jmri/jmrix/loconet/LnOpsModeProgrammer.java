@@ -107,9 +107,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // see if reply
         if ((m.getElement(0)&0xFF) != 0xE5) return;
         if ((m.getElement(1)&0xFF) != 0x10) return;
-        if ((m.getElement(3)&0x40) != 0x00) return; // need reply bit set
-        // more checks needed?
-        
+
+        log.debug("reply {}",m);
+
+        if ((m.getElement(3)&0x40) == 0x00) return; // need reply bit set
+        // more checks needed? E.g. address?
+
         // return reply
         if (p == null) {
             log.error("received SV reply message with no reply object: {}", m);
@@ -117,7 +120,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         } else {
             log.debug("returning SV programming reply: {}", m);
             int code = ProgListener.OK;
-            int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x40) != 0x00)? 0x80:0x00);
+            int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
             p.programmingOpReply(val, code);
             p = null;
         }
