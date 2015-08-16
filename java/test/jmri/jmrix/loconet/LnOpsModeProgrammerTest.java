@@ -2,17 +2,21 @@ package jmri.jmrix.loconet;
 
 import jmri.ProgrammingMode;
 import jmri.managers.DefaultProgrammerManager;
+import jmri.ProgListenerScaffold;
+import jmri.ProgrammerException;
+
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
 public class LnOpsModeProgrammerTest extends TestCase {
 
+    LocoNetInterfaceScaffold lnis;
+    SlotManager sm;
+    LocoNetSystemConnectionMemo memo;
+    ProgListenerScaffold pl;
+    
     public void testSetMode() {
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        SlotManager val1 = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
-
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         try {
             lnopsmodeprogrammer.setMode(DefaultProgrammerManager.PAGEMODE);
@@ -24,35 +28,23 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
 
     public void testGetMode() {
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        SlotManager val1 = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
-
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         ProgrammingMode intRet = lnopsmodeprogrammer.getMode();
         Assert.assertEquals("OpsByteMode", DefaultProgrammerManager.OPSBYTEMODE, intRet);
     }
 
     public void testGetCanRead() {
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        SlotManager val1 = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
-
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
 
         Assert.assertEquals("ops mode always can read", true,
                 lnopsmodeprogrammer.getCanRead());
     }
 
     public void testSV2DataBytes() {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+
         LocoNetMessage m = new LocoNetMessage(15);
-
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        SlotManager val1 = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
-
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
 
         // check data bytes
         lnopsmodeprogrammer.loadSV2MessageFormat(m, 0, 0, 0x12345678);
@@ -64,13 +56,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
     }
     
     public void testSV2highBits() {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+
         LocoNetMessage m = new LocoNetMessage(15);
-
-        LocoNetInterfaceScaffold lnis = new LocoNetInterfaceScaffold();
-        SlotManager val1 = new SlotManager(lnis);
-        LocoNetSystemConnectionMemo memo = new LocoNetSystemConnectionMemo(lnis, val1);
-
-        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(val1, memo, 1, true);
 
         // check high bits
         lnopsmodeprogrammer.loadSV2MessageFormat(m, 0, 0, 0x01020384);
@@ -109,6 +97,54 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals(0x01, m.getElement(14));
     }
     
+ 
+     public void testSvWrite() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
+        lnopsmodeprogrammer.writeCV("22",33,pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        // turn the message around as a reply
+        LocoNetMessage m = lnis.outbound.get(0);
+        m.setElement(3, m.getElement(3) | 0x40);
+        lnopsmodeprogrammer.message(m);
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        
+     }
+
+     public void testSvRead() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
+        lnopsmodeprogrammer.readCV("22",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        int testVal = 130;
+        
+        // turn the message around as a reply
+        LocoNetMessage m = lnis.outbound.get(0);
+        m.setElement(3, m.getElement(3) | 0x40);
+        m.setElement(10, (m.getElement(10)&0x7E) | ((testVal & 0x80) != 0 ? 1 : 0));
+        m.setElement(11, testVal & 0x7F);
+        lnopsmodeprogrammer.message(m);
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches", 130, pl.getRcvdValue());
+        
+     }
+   
     // from here down is testing infrastructure
     public LnOpsModeProgrammerTest(String s) {
         super(s);
@@ -123,6 +159,12 @@ public class LnOpsModeProgrammerTest extends TestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        
+        lnis = new LocoNetInterfaceScaffold();
+        sm = new SlotManager(lnis);
+        memo = new LocoNetSystemConnectionMemo(lnis, sm);
+        pl = new ProgListenerScaffold();
+
     }
 
     protected void tearDown() {
