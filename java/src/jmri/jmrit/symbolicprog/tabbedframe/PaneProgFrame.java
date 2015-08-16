@@ -503,8 +503,11 @@ abstract public class PaneProgFrame extends JmriJFrame
 
                 }
 
+                // done after setting facades in case new possibilities appear
                 if (programming != null) {
                     pickProgrammerMode(programming);
+                } else {
+                    log.debug("Skipping programmer setup because found no programmer element");
                 }
 
             } else {
@@ -569,6 +572,7 @@ abstract public class PaneProgFrame extends JmriJFrame
     }
 
     protected void pickProgrammerMode(@NonNull Element programming) {
+        log.debug("pickProgrammerMode starts");
         boolean paged = true;
         boolean directbit = true;
         boolean directbyte = true;
@@ -603,11 +607,33 @@ abstract public class PaneProgFrame extends JmriJFrame
             }
         }
 
-        // is the current mode OK?
-        log.debug("XML specifies modes: P " + paged + " DBi " + directbit + " Dby " + directbyte + " R " + register + " now " + mProgrammer.getMode());
 
-        // find a mode to set it to
+        // find an accepted mode to set it to
         List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
+
+        if (log.isDebugEnabled()) {
+            log.debug("XML specifies modes: P " + paged + " DBi " + directbit + " Dby " + directbyte + " R " + register + " now " + mProgrammer.getMode());
+            log.debug("Programmer supports:");
+            for (ProgrammingMode m : modes) {
+                log.debug("   {} {}", m.getStandardName(), m.toString());
+            }
+        }
+        
+        // first try specified modes
+        for (Element el1 : programming.getChildren("mode")) {
+            String name = el1.getText();
+            if (log.isDebugEnabled()) log.debug(" mode {} was specified", name);
+            for (ProgrammingMode m : modes) {
+                if (name.equals(m.getStandardName())) {
+                    log.info("Programming mode selected: {} ({})", m.toString(), m.getStandardName());
+                    mProgrammer.setMode(m);
+                    return;
+                }
+            }
+        }
+        
+        // go through historical modes
+
         if (modes.contains(DefaultProgrammerManager.DIRECTMODE) && directbit && directbyte) {
             mProgrammer.setMode(DefaultProgrammerManager.DIRECTMODE);
             log.debug("Set to DIRECTMODE");

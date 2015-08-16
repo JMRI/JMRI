@@ -3,9 +3,13 @@ package jmri.jmrit.symbolicprog.tabbedframe;
 
 import edu.umd.cs.findbugs.annotations.NonNull;
 import javax.swing.JPanel;
+import java.util.List;
+
 import jmri.Programmer;
+import jmri.ProgrammingMode;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.roster.RosterEntry;
+
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,6 +67,30 @@ public class PaneOpsProgFrame extends PaneProgFrame
     }
 
     protected void pickProgrammerMode(@NonNull Element programming) {
+        // find an accepted mode to set it to
+        List<ProgrammingMode> modes = mProgrammer.getSupportedModes();
+
+        if (log.isDebugEnabled()) {
+            log.debug("Programmer supports:");
+            for (ProgrammingMode m : modes) {
+                log.debug("   {} {}", m.getStandardName(), m.toString());
+            }
+        }
+        
+        // first try specified modes
+        for (Element el1 : programming.getChildren("mode")) {
+            String name = el1.getText();
+            if (log.isDebugEnabled()) log.debug(" mode {} was specified", name);
+            for (ProgrammingMode m : modes) {
+                if (name.equals(m.getStandardName())) {
+                    log.info("Programming mode selected: {} ({})", m.toString(), m.getStandardName());
+                    mProgrammer.setMode(m);
+                    return;
+                }
+            }
+        }
+
+        // else leave as it is
         log.debug("Leaving mode as is, supposed to be ops mode");
     }
 
