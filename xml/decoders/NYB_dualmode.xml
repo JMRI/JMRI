@@ -21,7 +21,7 @@
     <family name="NYB Dual Mode Decoder" mfg="New York Byano Limited" type="locomotive">
       <model model="NYB Dual Mode Decoder" numOuts="2" numFns="0" lowVersionID="46" nmraWarrant="yes" connector="unspecified" extFnsNmraF13="no" extFnsNmraBSC="no" extFnsMRC="no"/>
     </family>
-    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no" bidirRead="no"/>
+    <programming direct="yes" paged="yes" register="yes" ops="yes" transpRead="no"/>
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <variable CV="2" item="Vstart" default="10" comment="Range 0-31" mask="VVVVVVVV" readOnly="no" infoOnly="no" opsOnly="no" writeOnly="no">
