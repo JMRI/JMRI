@@ -302,6 +302,13 @@ caused by the tool, seek help through the "JMRI Users" Yahoo Group.</strong></p>
 hardware itself, consult the hardware instructions and the hardware manufacturer's
 technical support.</p>
 
+<h2 id="FUNMRA">OpenLCB Technical Note</h2>
+
+This tool relies for reliable operation on an OpenLCB feature called "Freeze/Unfreeze". 
+For more information on that, including issues of standards compliance, 
+please see the
+<a href="http://jmri.org/JavaDoc/doc/jmri/jmrix/openlcb/swing/downloader/package-summary.html">package documentation</a>.
+
 <p>(This is the package/jmri/jmrix/openlcb/swing/downloader/LoaderFrame help page)</p>
 
     </div>
