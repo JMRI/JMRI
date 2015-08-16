@@ -58,12 +58,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             this.p = p;
             // SV2 mode
-            log.info("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+            log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
             // make message
             LocoNetMessage m = new LocoNetMessage(15);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), val);
             m.setElement(3, 0x01); // 1 byte write
-            log.info("  Message {}", m);
+            log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);
         } else {
             // DCC ops mode
@@ -77,12 +77,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             this.p = p;
             // SV2 mode
-            log.info("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
             // make message
             LocoNetMessage m = new LocoNetMessage(15);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), 0);
             m.setElement(3, 0x02); // 1 byte read
-            log.info("  Message {}", m);
+            log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);            
         } else {
             // DCC ops mode
