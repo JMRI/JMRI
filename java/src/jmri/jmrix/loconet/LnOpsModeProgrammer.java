@@ -104,13 +104,16 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     public void message(LocoNetMessage m) {
-        // see if reply
-        if ((m.getElement(0)&0xFF) != 0xE5) return;
-        if ((m.getElement(1)&0xFF) != 0x10) return;
+        // see if reply to LNSV2 request
+        if ((m.getElement( 0) & 0xFF) != 0xE5) return;
+        if ((m.getElement( 1) & 0xFF) != 0x10) return;
 
         log.debug("reply {}",m);
+        
+        if ((m.getElement( 3) & 0x40) == 0x00) return; // need reply bit set
+        if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
+        if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
 
-        if ((m.getElement(3)&0x40) == 0x00) return; // need reply bit set
         // more checks needed? E.g. address?
 
         // return reply
