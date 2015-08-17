@@ -71,14 +71,6 @@
       <xs:element name="programming" minOccurs="1" maxOccurs="1" >
         <xs:complexType>
           <xs:sequence>
-            <xs:element name="mode" minOccurs="0" maxOccurs="unbounded">
-              <xs:annotation><xs:documentation>
-              Content is the internal name of a supported programmer mode.
-              Having at least one of these (or the 
-              historical direct, paged, et al attributes)
-              is required or programming is not possible.
-              </xs:documentation></xs:annotation>
-            </xs:element>
             <xs:element name="capability" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
               Indicate programmer facades to be added. 
@@ -115,8 +107,16 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
+            <xs:element name="mode" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+              Content is the internal name of a supported programmer mode.
+              Having at least one of these (or the 
+              historical direct, paged, et al attributes)
+              is required or programming is not possible.
+              </xs:documentation></xs:annotation>
+            </xs:element>
           </xs:sequence>
-          <xs:attribute name="direct" default="no" >
+          <xs:attribute name="direct" default="yes" >
             <xs:annotation><xs:documentation>
             Yes indicates programmer supports one of the direct 
             programming modes,  
@@ -132,19 +132,19 @@
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
-          <xs:attribute name="paged" type="yesNoType" default="no">
+          <xs:attribute name="paged" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
             Yes indicates programmer supports Paged mode, 
             specifically the PAGEMODE type.
             </xs:documentation></xs:annotation>
           </xs:attribute>
-          <xs:attribute name="register" type="yesNoType" default="no">
+          <xs:attribute name="register" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
             Yes indicates programmer supports Register mode, 
             specifically the REGISTERMODE type.
             </xs:documentation></xs:annotation>
           </xs:attribute>
-          <xs:attribute name="ops" type="yesNoType" default="no">
+          <xs:attribute name="ops" type="yesNoType" default="yes">
             <xs:annotation><xs:documentation>
             Yes indicates programmer supports Ops mode for locomotive decoders, 
             specifically the OPSBITMODE type.
