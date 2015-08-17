@@ -233,14 +233,36 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                 reply.setParity();
                 break;
             case XNetConstants.LOCO_OPER_REQ:
-                if (m.getElement(1) == XNetConstants.LOCO_ADD_MULTI_UNIT_REQ
-                        || m.getElement(1) == XNetConstants.LOCO_REM_MULTI_UNIT_REQ
-                        || m.getElement(1) == XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD
-                        || m.getElement(1) == XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD) {
-                    reply = notSupportedReply();
-                    break;
+                switch(m.getElement(1)) {
+                     case XNetConstants.LOCO_SPEED_14:
+                     case XNetConstants.LOCO_SPEED_27:
+                     case XNetConstants.LOCO_SPEED_28:
+                     case XNetConstants.LOCO_SPEED_128:
+                          reply = okReply();
+                          break;
+                     case XNetConstants.LOCO_SET_FUNC_GROUP1:
+                     case XNetConstants.LOCO_SET_FUNC_GROUP2:
+                     case XNetConstants.LOCO_SET_FUNC_GROUP3:
+                     case XNetConstants.LOCO_SET_FUNC_GROUP4:
+                     case XNetConstants.LOCO_SET_FUNC_GROUP5:
+                          reply = okReply();
+                          break;
+                     case XNetConstants.LOCO_SET_FUNC_Group1:
+                     case XNetConstants.LOCO_SET_FUNC_Group2:
+                     case XNetConstants.LOCO_SET_FUNC_Group3:
+                     case XNetConstants.LOCO_SET_FUNC_Group4:
+                     case XNetConstants.LOCO_SET_FUNC_Group5:
+                          reply = okReply();
+                          break;
+                     case XNetConstants.LOCO_ADD_MULTI_UNIT_REQ:
+                     case XNetConstants.LOCO_REM_MULTI_UNIT_REQ:
+                     case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:
+                     case XNetConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD:
+                     default:
+                        reply = notSupportedReply();
+                        break;
                 }
-            // fall through
+                break;
             case XNetConstants.EMERGENCY_STOP:
                 reply = emergencyStopReply();
                 break;
@@ -260,8 +282,29 @@ public class XNetSimulatorAdapter extends XNetSimulatorPortController implements
                         reply.setParity();         // set the parity correctly.
                         break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC:
+                        reply.setOpCode(XNetConstants.LOCO_INFO_RESPONSE);
+                        reply.setElement(1, XNetConstants.LOCO_FUNCTION_STATUS);  // momentary function status
+                        reply.setElement(2, 0x00);  // set function group a continuous
+                        reply.setElement(3, 0x00);  // set function group b continuous
+                        reply.setElement(4, 0x00);  // set the parity byte to 0
+                        reply.setParity();         // set the parity correctly.
+                        break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC_HI_ON:
+                        reply.setOpCode(XNetConstants.LOCO_INFO_RESPONSE);
+                        reply.setElement(1, XNetConstants.LOCO_FUNCTION_STATUS_HIGH);  // F13-F28 function on/off status
+                        reply.setElement(2, 0x00);  // set function group a continuous
+                        reply.setElement(3, 0x00);  // set function group b continuous
+                        reply.setElement(4, 0x00);  // set the parity byte to 0
+                        reply.setParity();         // set the parity correctly.
+                        break;
                     case XNetConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
+                        reply.setOpCode(XNetConstants.LOCO_INFO_NORMAL_UNIT);
+                        reply.setElement(1, XNetConstants.LOCO_FUNCTION_STATUS_HIGH_MOM);  // F13-F28 momentary function status
+                        reply.setElement(2, 0x00);  // set function group a continuous
+                        reply.setElement(3, 0x00);  // set function group b continuous
+                        reply.setElement(4, 0x00);  // set the parity byte to 0
+                        reply.setParity();         // set the parity correctly.
+                        break;
                     default:
                         reply = notSupportedReply();
                 }
