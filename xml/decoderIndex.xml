@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150815-0036-jake on Fri Aug 14 17:36:47 PDT 2015 $Id$-->
-  <decoderIndex version="652">
+  <!--Written by JMRI version 20150817-1005-heap on Mon Aug 17 20:05:54 EST 2015 $Id$-->
+  <decoderIndex version="654">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4391,6 +4391,9 @@
             <soundlabel num="26">Automatic brake sound</soundlabel>
             <soundlabel num="27">Gear shift sound</soundlabel>
           </soundlabels>
+        </model>
+        <model model="LokSound Select L" numOuts="92" numFns="40" maxMotorCurrent="3A" extFnsESU="yes" productID="33554553">
+          <size length="51" width="26" height="14" units="mm" />
         </model>
         <model model="LokSound Select Diesel Generic" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="Diesel Generic">
           <size length="1.41" width=".51" height=".25" units="inches" />
