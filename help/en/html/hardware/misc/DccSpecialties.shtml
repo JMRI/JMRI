@@ -53,7 +53,7 @@ configure them.
 Brett Scott and Denny Whitaker
 have written JMRI scripts to assist with programming these, and 
 provided a nice 
-<a href="http://www.mgbrr.org/Tips/Lessons%20Learned%20on%20Hares-Wabbits%20v1.pdf">writeup</a>
+<a href="http://www.mgbrr.org/tips.html#jmri">writeup</a>
 of how to use them.  The writeup also covers how they document their layout, and
 discusses the pros and cons of several ways of connecting the Hare and Wabbit.
 <p>
@@ -63,6 +63,9 @@ and it also available in the
 <a href="http://jmri.sf.net/jython">sample scripts directory</a> in the 
 <a href="http://jmri.sourceforge.net/download">JMRI downloads</a>.
     
+    </p>
+    </div>
+    </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>

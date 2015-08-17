@@ -109,18 +109,18 @@
 	    </dd>
 	    <dt class="im">
 		<a href="http://www.digi.com/xbee">
-		<img src="http://www.digi.com/images/logo-digi-m2m.png" width="60" height="26" alt="Digi XBee"></a>
+		<img src="http://www.digi.com/images/news/digi_2c_sm.gif" width="50" height="50" alt="Digi XBee"></a>
 	    </dt>
             <dt>Digi</dt>
-            <dd><p classs="dl"><a href="XBee/index.shtml">General information on connecting to a Digi XBee network</a></p>
+            <dd><p class="dl"><a href="XBee/index.shtml">General information on connecting to a Digi XBee network</a></p>
             </dd>
 	    <dt class="im">
 		<a href="http://www.digitrax.com/">
 		<img src="images/Digitrax-logo.jpg" width="44" height="34" alt="Digitrax"></a></dt>
 	    <dt>Digitrax</dt>
 	    <dd>
-	        <p class="dl"><a href="loconet/Digitrax.shtml">General information on connecting JMRI to a Digitrax LocoNet</a>
-	        <p class="dl">Configure: Connections to a LocoNet via
+	        <p class="dl"><a href="loconet/Digitrax.shtml">General information on connecting JMRI to a Digitrax LocoNet</a></p>
+	        <p class="dl">Configure: Connections to a LocoNet via</p>
 	            <ul>
 	            <li><a href="loconet/PR3.shtml">Digitrax PR3 interface</a>
 	            <li><a href="loconet/LocoBufferUSB.shtml">RR-CirKits LocoBuffer-USB</a>
@@ -130,7 +130,6 @@
 	                <a href="loconet/MS100.shtml">MS100</a>
 	                interfaces
 	            </ul>
-		    </p>
 	        <p class="dl">Configure:
                 <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>
 	        <p class="dl">Configure: Remote connection to a LocoNet via
@@ -214,7 +213,7 @@
 	    <dt>Marklin</dt>
 	    <dd><p class="dl">Configure connection to 
 		<a href="marklin/index.shtml">CS2</a> Command Station 2.</p>
-        <a href="ecos/index.shtml">CS</a> Command Station - Reloaded see ESU ECoS</p>
+        <a href="ecos/index.shtml">CS</a> Command Station - Reloaded see ESU ECoS
 	    </dd>
 
 	    <dt class="im"><a href="http://www.merg.org.uk/">
@@ -223,7 +222,7 @@
 	    <dd><p class="dl">Configure: <a href="can/cbus/index.shtml">MERG CBUS networks</a></p></dd>
 
         <dt class="im">
-	    <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="27" width="96"></a></dt>
+	    <img src="http://www.modbus.org/images/logo_new.jpg" alt="Modbus logo" height="27" width="96"></dt>
 	    <dt>Modbus</dt>
 	    <dd><p class="dl">Configure: <a href="modbus/index.shtml">Modbus networks</a></p></dd>
 
@@ -295,7 +294,7 @@
 		<img src="https://www.raspberrypi.org/wp-content/uploads/2011/10/Raspi-PGB001-300x267.png" width="60" height="58" alt="Raspberry Pi Foundation"></a>
 	    </dt>
             <dt>Raspberry Pi Foundation</dt>
-            <dd><p classs="dl"><a href="pi/index.shtml">General information on connecting to the Raspberry PI GPIO pins.</a></p>
+            <dd><p class="dl"><a href="pi/index.shtml">General information on connecting to the Raspberry PI GPIO pins.</a></p>
             </dd>
 
 	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
