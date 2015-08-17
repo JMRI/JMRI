@@ -13,6 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
 	<version author="Michael Mosher" version="1" lastUpdated="20150730"/>
+	<version author="Michael Mosher" version="2" lastUpdated="20150814"/>
 	<!-- new file, based on Wow diesel sound set 1 -->
 	<decoder>
 		<family name="WOW Diesel Sound Set 2" mfg="Train Control Systems" >
@@ -43,6 +44,20 @@
 				<output name="Motor"/>
 				<output name="Brake"/>
 				<size length="1.28" width="0.69" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Diesel 501 SS2" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw"
+				lowVersionID="3" highVersionID="3" productID="172">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="3.00" width="1.45" units="inches"/>
 			</model>
 			<functionlabels>
 				<functionlabel num="0" lockable="true">Headlight</functionlabel>
