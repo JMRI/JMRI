@@ -6,6 +6,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.Arrays;
 import java.util.Date;
+import java.time.Instant;
 import jmri.ClockControl;
 import jmri.Memory;
 import jmri.Sensor;
@@ -107,6 +108,15 @@ public class SimpleTimebase extends jmri.implementation.AbstractNamedBean implem
         }
         handleAlarm();
     }
+
+    /**
+     * Set the current time
+     * @param i java.time.Instant
+     */
+    public void setTime(Instant i){
+       setTime(Date.from(i));
+    }
+
 
     public void userSetTime(Date d) {
         // this call only results from user changing fast clock time in Setup Fast Clock

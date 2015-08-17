@@ -2,6 +2,7 @@
 package jmri.jmrit.simpleclock;
 
 import java.util.Date;
+import java.time.Instant;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
@@ -58,6 +59,24 @@ public class SimpleTimebaseTest extends TestCase {
         Assert.assertEquals("setTime then", then, p.getStartTime());
     }
 
+    // set the time based on a date.
+    public void testSetTimeDate() {
+        SimpleTimebase p = new SimpleTimebase();
+        Date now = new Date();
+
+        p.setTime(now);
+        Assert.assertEquals("Time Set",now,p.getTime());
+    }
+
+    // set the time based on an instant.
+    public void testSetTimeInstant() {
+        SimpleTimebase p = new SimpleTimebase();
+        Instant now = Instant.now();
+        
+        p.setTime(now);
+        Assert.assertEquals("Time Set",Date.from(now),p.getTime());
+    }
+
     /* 	public void testShortDelay() { */
     /* 		SimpleTimebase p = new SimpleTimebase(); */
     /* 		Date now = new Date(); */
@@ -85,5 +104,4 @@ public class SimpleTimebaseTest extends TestCase {
         TestSuite suite = new TestSuite(SimpleTimebaseTest.class);
         return suite;
     }
-
 }

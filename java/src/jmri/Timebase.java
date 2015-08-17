@@ -3,6 +3,7 @@ package jmri;
 
 import java.beans.PropertyChangeListener;
 import java.util.Date;
+import java.time.Instant;
 
 /**
  * Provide access to clock capabilities in hardware or software.
@@ -35,6 +36,12 @@ public interface Timebase extends NamedBean {
      * Set the current time
      */
     public void setTime(Date d);
+
+    /**
+     * Set the current time
+     * @param i java.time.Instant
+     */
+    public void setTime(Instant i);
 
     /**
      * Special method for when the user changes fast clock time in Setup Fast
