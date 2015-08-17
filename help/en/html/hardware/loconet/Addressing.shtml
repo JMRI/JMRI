@@ -195,11 +195,44 @@ SVs are numbered from 1 to 2^16-1 = 65,535.  Their names can be written in sever
 <ul>
 <li>nnnn, e.g. 12345 - Like regular CVs, this is the format to read and write an entire
 byte.
-<li>nnnnL, e.g. 123L - This means read or write four bytes at a time.
+<li>nnnnL, e.g. 123L - This means read or write four bytes at a time. This is more
+efficient for large variables, but note that you should be careful not to define overlapping
+CVs that point to the same memory: having CV10L and CV12L present will cause confusion, 
+as will having both CV12L and CV13 present.
 <li>nnnn^HH, e.g. 123^80 - This means a masked write.  Only the bits marked with a 1
-in the two hex digits after the "^" character will be written to the device.  In this case, that 
-means just the most-significant bit will be written.
+in the two hex digits after the "^" character will be written to the device.  In the example case, that 
+means just the most-significant bit will be written. The values of the other bits currently
+in the device are not changed.
+This is a bit subtle, so we provide some examples.
+<table border="2">
+<tr><th>CV<br/>Number</th><th>Prior<br/>Content</th><th>Value<br/>Written</th><th>Masked<br/>Value</th><th>New<br/>Content</th><tr>
+<tr><td>CV1^01</td><td>0x55</td><td>0x22</td><td>0x01</td><td>0x23</td></tr>
+<tr><td>CV1^01</td><td>0x54</td><td>0x22</td><td>0x01</td><td>0x22</td></tr>
+<tr><td>CV1^0F</td><td>0x55</td><td>0x33</td><td>0x03</td><td>0x53</td></tr>
+<tr><td>CV1^F0</td><td>0x55</td><td>0x33</td><td>0x03</td><td>0x53</td></tr>
+<tr><td>CV1^33</td><td>0xF0</td><td>0x77</td><td>0x30</td><td>0x37</td></tr>
+</table>
+Note that, unlike the JMRI "mask" attribute, the value is not shifted over to match the mask bits.
+This is perhaps best used for single bit values via enum variables, where the specified
+choices can have the right bit coding.  Or don't use it at all, and rely on DecoderPro
+to write the combined values of full words properly.
 </ul>
+
+<h3>Using this in a DecoderPro "board" definition</h3>
+
+You can use all of the DecoderPro tools to manage a board using the LocoNet SV version 2 protocol
+if you provide an appropriate definition file.  These are in the same format as a 
+decoder definition file, except that to specify the LN SV 2 protocol you modify the
+"programming" element to looks like:
+<code><pre>
+    &lt;programming direct="no" paged="no" register="no" ops="no"&gt;
+        &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
+    &lt;/programming&gt;
+</pre></code>
+ For more information, see the 
+ <a href="">schema definition file</a>.
+ 
+
 
 
 
