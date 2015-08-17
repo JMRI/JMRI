@@ -1696,7 +1696,7 @@ public class TrainBuilder extends TrainCommon {
                     }
                 }
             }
-            addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+            addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in detailed report mode
         }
         return;
     }
@@ -1899,13 +1899,13 @@ public class TrainBuilder extends TrainCommon {
      * percent controls how many cars are placed in any given pass.
      */
     private void placeCars(int percent, boolean firstPass) throws BuildFailedException {
+        addLine(_buildReport, THREE, BLANK_LINE); // add line when in normal report mode
         if (percent < 100) {
             addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildMultiplePass"),
                     new Object[]{percent}));
             multipass = true;
         }
-        if (percent == 100 && multipass) {
-            addLine(_buildReport, SEVEN, BLANK_LINE); // add line when in very detailed report mode
+        if (percent == 100 && multipass) {           
             addLine(_buildReport, THREE, Bundle.getMessage("buildFinalPass"));
         }
         // now go through each location starting at departure and place cars as requested
@@ -1933,7 +1933,12 @@ public class TrainBuilder extends TrainCommon {
             }
             _completedMoves = 0; // the number of moves completed for this location
             _success = true; // true when done with this location
-            _reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 100; // the number of moves requested
+            _reqNumOfMoves = (rl.getMaxCarMoves() - rl.getCarMoves()) * percent / 99; // the number of moves requested
+            // round up requested moves if less than half way through build. Improves pickups when the move count is small.
+            int remainder = (rl.getMaxCarMoves() - rl.getCarMoves()) % (100 / percent);
+            if (percent < 51 && remainder > 0) {
+                _reqNumOfMoves++;
+            }
             int saveReqMoves = _reqNumOfMoves; // save a copy for status message
             // multiple pass build?
             if (firstPass) {
@@ -2209,11 +2214,11 @@ public class TrainBuilder extends TrainCommon {
             // we'll just put out a warning message here so we can find out how many cars have issues
             if (car.getTrack() == _departStageTrack
                     && (car.getDestination() == null || car.getDestinationTrack() == null || car.getTrain() == null)) {
-                addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildErrorCarStageDest"),
+                addLine(_buildReport, ONE, MessageFormat.format(Bundle.getMessage("buildWarningCarStageDest"),
                         new Object[]{car.toString()}));
                 // does the car has a final destination track going into staging? If so we need to reset this car
                 if (car.getFinalDestinationTrack() != null && car.getFinalDestinationTrack() == _terminateStageTrack) {
-                    addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStatingCarHasFinal"),
+                    addLine(_buildReport, THREE, MessageFormat.format(Bundle.getMessage("buildStagingCarHasFinal"),
                             new Object[]{car.toString(), car.getFinalDestinationName(),
                                     car.getFinalDestinationTrackName()}));
                     car.reset();
