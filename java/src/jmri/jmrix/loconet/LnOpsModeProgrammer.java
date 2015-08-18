@@ -55,7 +55,18 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void writeCV(String CV, int val, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            this.p = p;
+            // SV1 mode
+            log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
+
+            // make message
+            int locoIOAddress = mAddress;
+            int locoIOSubAddress = 0x11; // so we can see were it ends up
+            LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);            
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             this.p = p;
             // SV2 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
@@ -74,7 +85,18 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public void readCV(String CV, ProgListener p) throws ProgrammerException {
         this.p = null;
         // Check mode
-        if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+        if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            this.p = p;
+            // SV1 mode
+            log.debug("read CV \"{}\" addr:{}", CV, mAddress);
+            
+            // make message
+            int locoIOAddress = mAddress;
+            int locoIOSubAddress = 0x11; // so we can see were it ends up
+            LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            log.debug("  Message {}", m);
+            memo.getLnTrafficController().sendLocoNetMessage(m);            
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             this.p = p;
             // SV2 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
@@ -104,30 +126,49 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     }
 
     public void message(LocoNetMessage m) {
-        // see if reply to LNSV2 request
+        // see if reply to LNSV 1 or LNSV2 request
         if ((m.getElement( 0) & 0xFF) != 0xE5) return;
         if ((m.getElement( 1) & 0xFF) != 0x10) return;
 
         log.debug("reply {}",m);
+        if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
+            if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
+            if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 0
+            if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
         
-        if ((m.getElement( 3) & 0x40) == 0x00) return; // need reply bit set
-        if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
-        if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
+            // more checks needed? E.g. address?
 
-        // more checks needed? E.g. address?
+            // return reply
+            if (p == null) {
+                log.error("received SV reply message with no reply object: {}", m);
+                return;
+            } else {
+                log.debug("returning SV programming reply: {}", m);
+                int code = ProgListener.OK;
+                int val = (m.getElement(6)&0x7F)|(((m.getElement(5)&0x01) != 0x00)? 0x80:0x00);
+                p.programmingOpReply(val, code);
+                p = null;
+            }
+        } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
+            if ((m.getElement( 3) & 0x40) == 0x00) return; // need reply bit set
+            if ((m.getElement( 4) & 0xFF) != 0x02) return; // format 2
+            if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
+            if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
 
-        // return reply
-        if (p == null) {
-            log.error("received SV reply message with no reply object: {}", m);
-            return;
-        } else {
-            log.debug("returning SV programming reply: {}", m);
-            int code = ProgListener.OK;
-            int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
-            p.programmingOpReply(val, code);
-            p = null;
-        }
-        
+            // more checks needed? E.g. address?
+
+            // return reply
+            if (p == null) {
+                log.error("received SV reply message with no reply object: {}", m);
+                return;
+            } else {
+                log.debug("returning SV programming reply: {}", m);
+                int code = ProgListener.OK;
+                int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
+                p.programmingOpReply(val, code);
+                p = null;
+            }
+        }      
     }
     
     int decodeCvNum(String CV) {
@@ -205,6 +246,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(LnProgrammerManager.LOCONETSV1MODE);
         ret.add(LnProgrammerManager.LOCONETSV2MODE);
         return ret;
     }

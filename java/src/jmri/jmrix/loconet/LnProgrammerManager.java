@@ -43,7 +43,11 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
         return null;
     }
 
-    static final ProgrammingMode LOCONETSV2MODE = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
+    static final ProgrammingMode LOCONETSV1MODE    = new ProgrammingMode("LOCONETSV1MODE", Bundle.getMessage("LOCONETSV1MODE"));
+    static final ProgrammingMode LOCONETSV2MODE    = new ProgrammingMode("LOCONETSV2MODE", Bundle.getMessage("LOCONETSV2MODE"));
+    static final ProgrammingMode LOCONETBDOPSWMODE = new ProgrammingMode("LOCONETBDOPSWMODE", Bundle.getMessage("LOCONETBDOPSWMODE"));
+    static final ProgrammingMode LOCONETCSOPSWMODE = new ProgrammingMode("LOCONETCSOPSWMODE", Bundle.getMessage("LOCONETCSOPSWMODE"));
+
     /**
      * Types implemented here.
      */
@@ -51,6 +55,7 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public List<ProgrammingMode> getDefaultModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+        ret.add(LOCONETSV1MODE);
         ret.add(LOCONETSV2MODE);
         return ret;
     }

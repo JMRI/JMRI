@@ -186,12 +186,14 @@ Like decoders can Configuration Variables (CVs) to hold their settings,
 some LocoNet-compatible devices have System Variables (SVs).
 <p>
 There are (at least) two variations of the protocol for accessing these.
-JMRI can use version 2 to access compatible SVs by selecting
-"System Variable Type 2" as the programming mode. This option is presented
+JMRI can use version 1 or 2 to access compatible SVs by selecting
+"System Variable Type 1" or "System Variable Type 2" as the programming mode, respectively. 
+This option is presented
 when you're using a LocoNet connection that actually connects to a LocoNet, 
 such as a LocoBuffer-USB or PR3 in MS100 mode.
 <p>
-SVs are numbered from 1 to 2^16-1 = 65,535.  Their names can be written in several formats:
+SVs are numbered from 1 to 255 for version 1 hardware and from 1 to 2^16-1 = 65,535
+for version 2 hardware.  Their names can be written in several formats:
 <ul>
 <li>nnnn, e.g. 12345 - Like regular CVs, this is the format to read and write an entire
 byte.
@@ -222,13 +224,14 @@ to write the combined values of full words properly.
 
 You can use all of the DecoderPro tools to manage a board using the LocoNet SV version 2 protocol
 if you provide an appropriate definition file.  These are in the same format as a 
-decoder definition file, except that to specify the LN SV 2 protocol you modify the
+decoder definition file, except that to specify the LocoNet SV Version 1 protocol you modify the
 "programming" element to looks like:
 <code><pre>
     &lt;programming direct="no" paged="no" register="no" ops="no"&gt;
-        &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
+        &lt;mode&gt;LOCONETSV1MODE&lt;/mode&gt;
     &lt;/programming&gt;
 </pre></code>
+<p>LocoNet SV Version 2 protocol is the same exception you specify LOCONETSV2MODE.
  For more information, see the 
  <a href="">schema definition file</a>.
  
