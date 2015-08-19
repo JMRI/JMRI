@@ -64,6 +64,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             int locoIOAddress = mAddress;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
             LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.writeCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV), val);
+            // force version 1 tag
+            m.setElement(4, 0x01);
+
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);            
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
@@ -94,6 +97,8 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             int locoIOAddress = mAddress&0xFF;
             int locoIOSubAddress = ((mAddress+256)/256)&0x7F;
             LocoNetMessage m = jmri.jmrix.loconet.locoio.LocoIO.readCV(locoIOAddress, locoIOSubAddress, decodeCvNum(CV));
+            // force version 1 tag
+            m.setElement(4, 0x01);
                         
             log.debug("  Message {}", m);
             memo.getLnTrafficController().sendLocoNetMessage(m);            

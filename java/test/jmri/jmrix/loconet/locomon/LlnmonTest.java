@@ -48,6 +48,20 @@ public class LlnmonTest extends TestCase {
         assertEquals(" in H", "Transponder address 1056 (long) present at 175 () (BDL16x Board 11 RX4 zone H).\n", f.displayMessage(l));
     }
 
+    public void testSVProgrammingProtocolV1() {
+        LocoNetMessage l;
+        Llnmon f = new Llnmon();
+
+        l = new LocoNetMessage(new int[]{0xE5, 0x10, 0x50, 0x53, 0x01, 0x00, 0x02, 0x03, 0x00, 0x00, 0x10, 0x01, 0x00, 0x00, 0x00, 0x18});
+        assertEquals(" read SV 3", "LocoBuffer => LocoIO@53/1 Query SV3.\n", f.displayMessage(l));
+    }
+    
+    public void testSVProgrammingProtocolV2() {
+        LocoNetMessage l;
+        Llnmon f = new Llnmon();
+
+    }
+    
     public void testLissy1() {
         LocoNetMessage l = new LocoNetMessage(new int[]{0xE4, 0x08, 0x00, 0x60, 0x01, 0x42, 0x35, 0x05});
         Llnmon f = new Llnmon();
