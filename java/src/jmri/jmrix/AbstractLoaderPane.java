@@ -54,9 +54,9 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
 
     JLabel inputFileName = new JLabel("");
 
-    JButton loadButton;
-    JButton verifyButton;
-    JButton abortButton;
+    protected JButton loadButton;
+    protected JButton verifyButton;  // protected so subclass can set invisible
+    protected JButton abortButton;
 
     JRadioButton address24bit = new JRadioButton(Bundle.getMessage("Button24bit"));
     JRadioButton address16bit = new JRadioButton(Bundle.getMessage("Button16bit"));
@@ -424,7 +424,6 @@ public abstract class AbstractLoaderPane extends jmri.util.swing.JmriPanel
             status.setText(Bundle.getMessage("StatusDone"));
         }
 
-        // remove the
         setOperationAborted(false);
 
         loadButton.setEnabled(true);
