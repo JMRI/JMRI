@@ -232,14 +232,21 @@ abstract public class AbstractOperationsServer implements PropertyChangeListener
      *                  is sent to the client
      * @throws IOException on failure to send an error message
      */
-    //    public void sendFullStatus(String trainName) throws IOException {
-    //        Train train = tm.getTrainByName(trainName);
-    //        if (train != null) {
-    //            sendFullStatus(train);
-    //        } else {
-    //            sendErrorStatus("ERROR train name doesn't exist " + trainName);
-    //        }
-    //    }
+     //public void sendFullStatus(String trainName) throws IOException {
+     //   Train train = tm.getTrainByName(trainName);
+     //       if (train != null) {
+     //           sendFullStatus(train);
+     //       } else {
+     //           sendErrorStatus("ERROR train name doesn't exist " + trainName);
+     //       }
+     //}
+
+    /**
+     * sends the full status for a train to a client
+     *
+     * @param train is the Train object we are sending information about.
+     * @throws IOException on failure to send an error message
+     */
     public abstract void sendFullStatus(Train train) throws IOException;
 
     private void addPropertyChangeListeners() {
