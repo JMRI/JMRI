@@ -178,9 +178,9 @@ available when it changes.  JMRI refers to reporters using the name
     <a href="../../tools/Reporters.shtml">main Reporter page</a>.</p>
 
 <h2 id="SVs">Addressing LocoNet device System Variables (SVs) in JMRI</h2>
-(The following first appeared in 
-<a href="http://jmri.org/releasenotes/jmri4.1.1.shtml">JMRI 4.1.1</a>, where
-it isn't entirely complete).
+(The following was first fully available in
+<a href="http://jmri.org/releasenotes/jmri4.1.2.shtml">JMRI 4.1.2</a>. Versions before
+that may not be complete).
 <p>
 Like decoders can Configuration Variables (CVs) to hold their settings, 
 some LocoNet-compatible devices have System Variables (SVs).
@@ -192,16 +192,16 @@ This option is presented
 when you're using a LocoNet connection that actually connects to a LocoNet, 
 such as a LocoBuffer-USB or PR3 in MS100 mode.
 <p>
-SVs are numbered from 1 to 255 for version 1 hardware and from 1 to 2^16-1 = 65,535
+SVs are numbered from 1 to 127 for version 1 hardware and from 1 to 2^16-1 = 65,535
 for version 2 hardware.  Their names can be written in several formats:
 <ul>
 <li>nnnn, e.g. 12345 - Like regular CVs, this is the format to read and write an entire
 byte.
-<li>nnnnL, e.g. 123L - This means read or write four bytes at a time. This is more
+<li>nnnnL, e.g. 123L - (version 2 only) This means read or write four bytes at a time. This is more
 efficient for large variables, but note that you should be careful not to define overlapping
 CVs that point to the same memory: having CV10L and CV12L present will cause confusion, 
 as will having both CV12L and CV13 present.
-<li>nnnn^HH, e.g. 123^80 - This means a masked write.  Only the bits marked with a 1
+<li>nnnn^HH, e.g. 123^80 - (version 2 only) This means a masked write.  Only the bits marked with a 1
 in the two hex digits after the "^" character will be written to the device.  In the example case, that 
 means just the most-significant bit will be written. The values of the other bits currently
 in the device are not changed.
@@ -219,21 +219,42 @@ This is perhaps best used for single bit values via enum variables, where the sp
 choices can have the right bit coding.  Or don't use it at all, and rely on DecoderPro
 to write the combined values of full words properly.
 </ul>
+<h3>SV version 1 board addressing</h3>
+In some documentation, the SV version 1 protocol uses a two part address:  83/1, for example.
+(SV version 2 uses a single number with up to 14 bits; 0 is not used)
+There doesn't seem to be a standard way to map that to a single number.
+JMRI maps A/B to (B-1)*256+A.  Most boards seem to use N/1 addresses, so this
+makes that correspond to just N in JMRI.  To summarize:
+<p>
+<table border="2">
+<tr><th>Old<br/>Style</th><th>JMRI<br/>Number</th><tr>
+<tr><td>10/1</td><td>10</td></tr>
+<tr><td>83/1</td><td>83</td></tr>
+<tr><td>83/2</td><td>339</td></tr>
+<tr><td>83/0</td><td>-173</td></tr>
+</table>
+Note that N/0 addresses do special operations, and aren't really addresses:  They turn
+the programming messages into commands.  They're available using negative numbers
+as above, but they're really not recommended!
 
 <h3>Using this in a DecoderPro "board" definition</h3>
 
-You can use all of the DecoderPro tools to manage a board using the LocoNet SV version 2 protocol
+You can use all of the DecoderPro tools to manage a board using the LocoNet SV protocol
 if you provide an appropriate definition file.  These are in the same format as a 
-decoder definition file, except that to specify the LocoNet SV Version 1 protocol you modify the
+decoder definition file, except that to specify the LocoNet SV Version 2 protocol you modify the
 "programming" element to looks like:
 <code><pre>
     &lt;programming direct="no" paged="no" register="no" ops="no"&gt;
-        &lt;mode&gt;LOCONETSV1MODE&lt;/mode&gt;
+        &lt;mode&gt;LOCONETSV2MODE&lt;/mode&gt;
     &lt;/programming&gt;
 </pre></code>
-<p>LocoNet SV Version 2 protocol is the same exception you specify LOCONETSV2MODE.
+<p>LocoNet SV Version 1 protocol is the same exception you specify LOCONETSV1MODE.
  For more information, see the 
  <a href="">schema definition file</a>.
+ <p>
+ Note that the version 1 protocol is no longer recommended.  If you're writing
+ a decoder definition for a board that can use both, you should skip version 1 by
+ providing just the LOCONETSV2MODE option.
  
 
 
