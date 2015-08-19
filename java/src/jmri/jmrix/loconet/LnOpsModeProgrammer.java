@@ -139,19 +139,22 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         log.debug("reply {}",m);
         if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
-            if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 0
-            if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
+            if ((m.getElement( 5) & 0x70) != 0x00) return; // 5
         
-            // more checks needed? E.g. address?
+            // more checks needed? E.g. addresses?
 
-            // return reply
+            // Mode 1 return data comes back in 
+            // byte index 12, with the MSB in 0x01 of byte index 10
+            //
+            
+            // check pending activity
             if (p == null) {
-                log.error("received SV reply message with no reply object: {}", m);
+                log.warn("received SV reply message with no reply object: {}", m);
                 return;
             } else {
                 log.debug("returning SV programming reply: {}", m);
                 int code = ProgListener.OK;
-                int val = (m.getElement(6)&0x7F)|(((m.getElement(5)&0x01) != 0x00)? 0x80:0x00);
+                int val = (m.getElement(12)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
                 p.programmingOpReply(val, code);
                 p = null;
             }
@@ -161,7 +164,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
             if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
 
-            // more checks needed? E.g. address?
+            // more checks needed? E.g. addresses?
 
             // return reply
             if (p == null) {

@@ -97,8 +97,80 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals(0x01, m.getElement(14));
     }
     
- 
-     public void testSvWrite() throws ProgrammerException {
+      public void testSv1Write() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
+        lnopsmodeprogrammer.writeCV("83",3,pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        // turn the message around as a reply
+        LocoNetMessage m = lnis.outbound.get(0);
+        m.setElement(5, 0);
+        m.setElement(10, 0);
+        lnopsmodeprogrammer.message(m);
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        
+     }
+
+     public void testSv1ARead() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
+        lnopsmodeprogrammer.readCV("83",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        int testVal = 130;
+        
+        // turn the message around as a reply
+        LocoNetMessage m = lnis.outbound.get(0);
+        m.setElement(5, 0);
+        m.setElement(10, 0);
+        m.setElement(10, (testVal & 0x80) != 0 ? 1 : 0);
+        m.setElement(12, testVal & 0x7F);
+        lnopsmodeprogrammer.message(m);
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        
+     }
+
+     public void testSv1BRead() throws ProgrammerException {
+        LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
+        
+        lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
+        lnopsmodeprogrammer.readCV("83",pl);
+        
+        // should have written and not returned
+        Assert.assertEquals("one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+        
+        int testVal = 47; // 0x2F
+        
+        // turn the message around as a reply
+        LocoNetMessage m 
+            = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x02, 0x03, 0x66, 0x7B, 0x00, 0x01, 0x2F, 0x78, 0x10, 0x52});
+        lnopsmodeprogrammer.message(m);
+
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
+        Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches", testVal, pl.getRcvdValue());
+        
+     }
+
+     public void testSv2Write() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
         
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
@@ -119,7 +191,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
      }
 
-     public void testSvRead() throws ProgrammerException {
+     public void testSv2Read() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
         
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV2MODE);
