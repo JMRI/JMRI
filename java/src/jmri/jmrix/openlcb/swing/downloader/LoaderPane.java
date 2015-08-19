@@ -15,6 +15,7 @@ import jmri.jmrit.MemoryContents;
 
 import jmri.jmrix.can.CanSystemConnectionMemo;
 
+import org.openlcb.implementations.DatagramService;
 import org.openlcb.implementations.MemoryConfigurationService;
 import org.openlcb.MimicNodeStore;
 import org.openlcb.swing.NodeSelector;
@@ -48,10 +49,12 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     protected CanSystemConnectionMemo memo;
     MemoryConfigurationService mcs;
+    DatagramService dcs;
     MimicNodeStore store;
     NodeSelector nodeSelector;
     JPanel selectorPane;
-    
+    JTextField spaceField;
+    JCheckBox lockNode;
     /**
      * LnPanelInterface implementation creates standard form of title
      */
@@ -60,11 +63,32 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     public void initComponents(CanSystemConnectionMemo memo) throws Exception {
         this.memo = memo;
         this.mcs = memo.get(MemoryConfigurationService.class);
+        this.dcs = memo.get(DatagramService.class);
         this.store = memo.get(MimicNodeStore.class);
         this.nodeSelector = new NodeSelector(store);
         
-        // add to GUI now that it's functional        
-        selectorPane.add(nodeSelector);
+        // We can add to GUI here       
+        JPanel p;
+        
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
+        p.add(new JLabel("Target Node ID: "));
+        p.add(nodeSelector);
+        selectorPane.add(p);
+
+        p = new JPanel();
+        p.setLayout(new FlowLayout());
+        p.add(new JLabel("Address Space: "));
+        p.add(spaceField = new JTextField(""+0xFD));
+        selectorPane.add(p);
+
+        p = new JPanel();
+        p.setLayout(new FlowLayout());        
+        p.add(lockNode = new JCheckBox("Lock Node"));
+        selectorPane.add(p);
+        
+        // Verify not an option
+        verifyButton.setVisible(false);
     }
 
     public LoaderPane() {
@@ -83,8 +107,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     protected void addOptionsPanel() {
         selectorPane = new JPanel();
-        selectorPane.setLayout(new FlowLayout());
-        selectorPane.add(new JLabel("Target Node ID: "));
+        selectorPane.setLayout(new BoxLayout(selectorPane, BoxLayout.Y_AXIS));
             
         add(selectorPane);
     }
@@ -96,6 +119,9 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     @Override
     protected void doLoad() {
         super.doLoad();
+        
+        setOperationAborted(false);
+        space = Integer.valueOf(spaceField.getText());
 
         // start the download itself
         //operation = PXCT2SENDDATA;
@@ -112,162 +138,176 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     }
 
 
-    private void sendSequence() {
+    int totalmsgs;
+    int sentmsgs;
+
+    int startaddr;
+    int endaddr;
     
-        // start transmission loop
-        new Thread(new Sender()).start();
-    }
+    int location; // current working location
+    int space;
+    
+    final int SIZE = 64;
+    
+    // start sending sequence
+    private void sendSequence() {
+        // define range to be checked for download
+        startaddr = 0x000000;
+        endaddr = 0xFFFFFF;
 
-    private class Sender implements Runnable {
+        // fast scan to count messages to send for progress bar
+        location = inputContent.nextContent(startaddr);
+        totalmsgs = 0;
+        sentmsgs = 0;
 
-        int totalmsgs;
-        int sentmsgs;
-
-        int startaddr;
-        int endaddr;
-        
-        int location; // current working location
-        
-        int space = 0xEF; // this is fixed for now
-        
-        final int SIZE = 64;
-        
-        // send the next data, and a termination record when done
-        @Override
-        public void run() {
-            log.info("Sender.run starts");
-            // define range to be checked for download
-            startaddr = 0x000000;
-            endaddr = 0xFFFFFF;
-
-            // fast scan to count messages to send for progress bar
-            location = inputContent.nextContent(startaddr);
-            totalmsgs = 0;
-            sentmsgs = 0;
-
-            do {
-                // we're assuming that data is pretty dense,
-                // so we can jump through in SIZE-sized chunks
-                location = location + SIZE;
-                totalmsgs++;
-                // update to the next location for data
-                int next = inputContent.nextContent(location);
-                if (next < 0) {
-                    break;   // no data left
-                }
-                location = next;
-                
-            } while (location <= endaddr);
-
-            log.info("Expect to send {} write messages", totalmsgs);
-            
-            // Start write sequence:
-            // find the initial location with data
-            location = inputContent.nextContent(startaddr);
-
-            // queue start up messages
-            
-            // start data loop
-            sendNext();
-
-            // rest of operation if via callbacks inside sendNext();
-
-        }
-
-
-        /**
-         * Do an OpenLCB write operation for up to 64 bytes from the current
-         * memory location.
-         *
-         * Contains call-back for next message.
-         *
-         * @param location Starting address (of 1st byte)
-         * @param space Address space to be written
-         */
-        void sendNext() {
-            byte[] temp = new byte[SIZE];
-            int count;
-            for (count = 0; count < SIZE; count++) {
-                if (!inputContent.locationInUse(location+count)) {
-                    break;
-                }
-                temp[count] = (byte)inputContent.getLocation(location+count);
+        do {
+            // we're assuming that data is pretty dense,
+            // so we can jump through in SIZE-sized chunks
+            location = location + SIZE;
+            totalmsgs++;
+            // update to the next location for data
+            int next = inputContent.nextContent(location);
+            if (next < 0) {
+                break;   // no data left
             }
-            byte[] data = new byte[count];
-            System.arraycopy(temp, 0, data, 0, count);
+            location = next;
+            
+        } while (location <= endaddr);
 
-            int addr = location; // next call back might be instantaneous
-            location = location + count; 
-            log.info("Sending write to 0x{} length {}", Integer.toHexString(location).toUpperCase(), count);
-            mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
-                public void handleWriteReply(int code) { 
-                     // update GUI intermittently
-                    if ((sentmsgs % 20) == 0) {
-                        // update progress bar via the queue to ensure synchronization
-                        updateGUI(100 * sentmsgs / totalmsgs);
-                    }
-                    
-                    if (code == 0 && !isOperationAborted()) {
-                        // normal reply - queue next
-                        location = inputContent.nextContent(location);
-                        if (location < 0) {
-                            log.info("   Done normal");
-                            sendDataDone(true);
-                        } else {
-                            log.info("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
-                            sendNext();
-                        }
-                    } else {
-                        // non-normal reply
-                        log.info("   Done abnormal code:{}", code);
-                        sendDataDone(false);
-                    }
-                }
-            });
-        }
-
-        void sendDataDone(boolean OK) {
-            // send end (after wait)
-            // ...
-
-            this.updateGUI(100); //draw bar to 100%
-
-            // signal end to GUI via the queue to ensure synchronization
-            Runnable r = new Runnable() {
-                @Override
-                public void run() {
-                    enableGUI();
-                }
-            };
-            javax.swing.SwingUtilities.invokeLater(r);
-        }
+        log.info("Expect to send {} write messages", totalmsgs);
         
-        /**
-         * Signal GUI that it's the end of the download
-         * <P>
-         * Should be invoked on the Swing thread
-         */
-        void enableGUI() {
-            LoaderPane.this.enableDownloadVerifyButtons();
-        }
+        // Start write sequence:
+        // find the initial location with data
+        location = inputContent.nextContent(startaddr);
 
-        /**
-         * Update the GUI for progress
-         */
-        void updateGUI(final int value) {
-            javax.swing.SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    if (log.isDebugEnabled()) {
-                        log.debug("updateGUI with " + value);
-                    }
-                    // update progress bar
-                    bar.setValue(100 * sentmsgs / totalmsgs);
-                }
-            });
-        }
+        // queue start up messages
+        // sendFreeze();
+        
+        // instead of above, go directly to start data loop
+        sendNext();
+
+        // rest of operation if via callbacks inside sendNext();
 
     }
+
+
+    /**
+     * Do an OpenLCB write operation for up to 64 bytes from the current
+     * memory location.
+     *<p>
+     * Contains call-back for next message.
+     */
+    void sendNext() {
+        // ensure threading
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                byte[] temp = new byte[SIZE];
+                int count;
+                for (count = 0; count < SIZE; count++) {
+                    if (!inputContent.locationInUse(location+count)) {
+                        break;
+                    }
+                    temp[count] = (byte)inputContent.getLocation(location+count);
+                }
+                byte[] data = new byte[count];
+                System.arraycopy(temp, 0, data, 0, count);
+
+                int addr = location; // next call back might be instantaneous
+                location = location + count; 
+                log.info("Sending write to 0x{} length {}", Integer.toHexString(location).toUpperCase(), count);
+                mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
+                    public void handleWriteReply(int code) { 
+                        log.info("Start of handleWriteReply "+code);
+                        // update GUI intermittently
+                        sentmsgs++;
+                        if ((sentmsgs % 20) == 0) {
+                            // update progress bar via the queue to ensure synchronization
+                            updateGUI(100 * sentmsgs / totalmsgs);
+                        }
+                
+                        if (code == 0 && !isOperationAborted()) {
+                            // normal reply - queue next
+                            location = inputContent.nextContent(location);
+                            if (location < 0) {
+                                log.info("   Download completed normally");
+                                sendDataDone(true);
+                            } else {
+                                log.info("2");
+                                log.info("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
+                                sendNext();
+                            }
+                        } else {
+                            // non-normal reply
+                            log.info("   Done abnormal code:{}", code);
+                            sendDataDone(false);
+                        }
+                    }
+                });
+            }
+        });
+    }
+
+    void sendDataDone(boolean OK) {
+        // report OK or not to GUI
+        
+        // send end (after wait)
+        // ...
+
+        this.updateGUI(100); //draw bar to 100%
+
+        // signal end to GUI via the queue to ensure synchronization
+        Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                enableGUI();
+            }
+        };
+        javax.swing.SwingUtilities.invokeLater(r);
+    }
+    
+    /**
+     * Signal GUI that it's the end of the download
+     * <P>
+     * Should be invoked on the Swing thread
+     */
+    void enableGUI() {
+        LoaderPane.this.enableDownloadVerifyButtons();
+    }
+
+    /**
+     * Update the GUI for progress
+     */
+    void updateGUI(final int value) {
+        javax.swing.SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                if (log.isDebugEnabled()) {
+                    log.debug("updateGUI with " + value);
+                }
+                // update progress bar
+                bar.setValue(100 * sentmsgs / totalmsgs);
+            }
+        });
+    }
+
+    void sendFreeze() {
+        dcs.sendData(new DatagramService.DatagramServiceTransmitMemo(destNodeID(),new int[]{0x20, 0xA1, space}) {
+                public void handleReply(int code) { 
+                    log.info("freeze reply");
+                    sendNext();
+                }
+            });
+    }
+    void sendUnfreeze() {
+         dcs.sendData(new DatagramService.DatagramServiceTransmitMemo(destNodeID(),new int[]{0x20, 0xA0, space}) {
+                public void handleReply(int code) { 
+                    log.info("unfreeze reply");
+                }
+            });
+    }
+
+
 
     /**
      * Get NodeID from the GUI
@@ -275,7 +315,6 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
     NodeID destNodeID() {
         return (NodeID) nodeSelector.getSelectedItem();
     }
-
     
     @Override
     protected void setDefaultFieldValues() {
