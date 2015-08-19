@@ -55,8 +55,8 @@ public class LnProgrammerManager extends DefaultProgrammerManager {
     public List<ProgrammingMode> getDefaultModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
-        ret.add(LOCONETSV1MODE);
         ret.add(LOCONETSV2MODE);
+        ret.add(LOCONETSV1MODE); // the show in interface in order listed here
         return ret;
     }
 
