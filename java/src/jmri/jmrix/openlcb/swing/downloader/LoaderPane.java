@@ -81,6 +81,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
         p.add(new JLabel("Address Space: "));
         p.add(spaceField = new JTextField(""+0xFD));
         selectorPane.add(p);
+        spaceField.setToolTipText("The decimal number of the address space, e.g. 239");
 
         p = new JPanel();
         p.setLayout(new FlowLayout());        
