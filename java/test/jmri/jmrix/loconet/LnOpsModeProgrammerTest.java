@@ -101,7 +101,7 @@ public class LnOpsModeProgrammerTest extends TestCase {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
         
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
-        lnopsmodeprogrammer.writeCV("83",3,pl);
+        lnopsmodeprogrammer.writeCV("91",120,pl);
         
         // should have written and not returned
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
@@ -113,9 +113,8 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
 
-       // turn the message around as a reply
-        m.setElement(5, 0);
-        m.setElement(10, 0);
+        // Known-good message in reply
+        m = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x01, 0x5B, 0x66, 0x7B, 0x00, 0x01, 0x00, 0x00, 0x7B, 0x36});
         lnopsmodeprogrammer.message(m);
 
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
@@ -134,6 +133,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
         
+        Assert.assertEquals("sent byte 0", 0xE5, lnis.outbound.get(0).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x50, lnis.outbound.get(0).getElement(2) & 0xFF);
+
         int testVal = 132;
         
         // check echo of sent message has no effect
@@ -162,9 +164,12 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
         
+        Assert.assertEquals("sent byte 0", 0xE5, lnis.outbound.get(0).getElement(0) & 0xFF);
+        Assert.assertEquals("sent byte 2", 0x50, lnis.outbound.get(0).getElement(2) & 0xFF);
+        
         int testVal = 47; // 0x2F
         
-        // turn the message around as a reply
+        // Known-good message in reply
         LocoNetMessage m 
             = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x02, 0x03, 0x66, 0x7B, 0x00, 0x01, 0x2F, 0x78, 0x10, 0x52});
         lnopsmodeprogrammer.message(m);

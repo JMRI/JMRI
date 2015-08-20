@@ -141,9 +141,9 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
             if ((m.getElement( 5) & 0x70) != 0x00) return; // 5
         
-            // check for read reply (byte index 10 sent as 0x10, received as 0x00 in trace)
+            // check for src address (?) moved to 0x50
             // this might not be the right way to tell....
-            if ((m.getElement(10) & 0x70) != 0x00) return; 
+            if ((m.getElement(3) & 0x70) != 0x50) return; 
             
             // more checks needed? E.g. addresses?
 
