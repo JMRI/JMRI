@@ -141,6 +141,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             if ((m.getElement( 4) & 0xFF) != 0x01) return; // format 1
             if ((m.getElement( 5) & 0x70) != 0x00) return; // 5
         
+            // check for read reply (byte index 10 sent as 0x10, received as 0x00 in trace)
+            // this might not be the right way to tell....
+            if ((m.getElement(10) & 0x70) != 0x00) return; 
+            
             // more checks needed? E.g. addresses?
 
             // Mode 1 return data comes back in 
@@ -155,8 +159,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 log.debug("returning SV programming reply: {}", m);
                 int code = ProgListener.OK;
                 int val = (m.getElement(12)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
-                p.programmingOpReply(val, code);
+                
+                ProgListener temp = p;
                 p = null;
+                temp.programmingOpReply(val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
             if ((m.getElement( 3) & 0x40) == 0x00) return; // need reply bit set
@@ -174,8 +180,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 log.debug("returning SV programming reply: {}", m);
                 int code = ProgListener.OK;
                 int val = (m.getElement(11)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
-                p.programmingOpReply(val, code);
+
+                ProgListener temp = p;
                 p = null;
+                temp.programmingOpReply(val, code);
             }
         }      
     }
