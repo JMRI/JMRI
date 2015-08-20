@@ -107,8 +107,13 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
         
-        // turn the message around as a reply
+         // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+       // turn the message around as a reply
         m.setElement(5, 0);
         m.setElement(10, 0);
         lnopsmodeprogrammer.message(m);
@@ -131,12 +136,18 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
         int testVal = 130;
         
-        // turn the message around as a reply
+        // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        // turn the message around as a reply
         m.setElement(5, 0);
         m.setElement(10, 0);
         m.setElement(10, (testVal & 0x80) != 0 ? 1 : 0);
         m.setElement(12, testVal & 0x7F);
+        
         lnopsmodeprogrammer.message(m);
 
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
@@ -180,8 +191,13 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
         
-        // turn the message around as a reply
+        // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        // turn the message around as a reply
         m.setElement(3, m.getElement(3) | 0x40);
         lnopsmodeprogrammer.message(m);
 
@@ -203,8 +219,13 @@ public class LnOpsModeProgrammerTest extends TestCase {
         
         int testVal = 130;
         
-        // turn the message around as a reply
+        // check echo of sent message has no effect
         LocoNetMessage m = lnis.outbound.get(0);
+        lnopsmodeprogrammer.message(m);
+        Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
+        Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
+
+        // turn the message around as a reply
         m.setElement(3, m.getElement(3) | 0x40);
         m.setElement(10, (m.getElement(10)&0x7E) | ((testVal & 0x80) != 0 ? 1 : 0));
         m.setElement(11, testVal & 0x7F);
