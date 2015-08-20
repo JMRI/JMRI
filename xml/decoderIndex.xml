@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150817-1005-heap on Mon Aug 17 20:05:54 EST 2015 $Id$-->
-  <decoderIndex version="654">
+  <!--Written by JMRI version 20150820-2309-jake on Thu Aug 20 16:10:00 PDT 2015 $Id$-->
+  <decoderIndex version="656">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -5320,24 +5320,6 @@
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" file="MERG_DCCACC.xml">
         <model model="DCCACC" />
       </family>
-      <family name="MERG decoders" mfg="Public-domain and DIY" lowVersionID="104" file="MERG_DIY_10.xml">
-        <model model="MERG-DIY 10" numOuts="5" numFns="3">
-          <output name="01" label="White" />
-          <output name="02" label="Yellow" />
-          <output name="03" label="Violet" />
-          <output name="04" label="Green" />
-          <output name="05" label="Brown" />
-        </model>
-      </family>
-      <family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133" file="MERG_DIY_12A.xml">
-        <model model="MERG-DIY 12a" numOuts="5" numFns="3">
-          <output name="01" label="White" />
-          <output name="02" label="Yellow" />
-          <output name="03" label="Violet" />
-          <output name="04" label="Green" />
-          <output name="05" label="Brown" />
-        </model>
-      </family>
       <family name="MRC 14/28/128 step decoders" mfg="MRC" file="MRC_128step.xml">
         <model model="AD322" lowVersionID="32" formFactor="N" numOuts="4" numFns="6">
           <size length="28.0" width="8.5" height="2.5" units="mm" />
@@ -7853,6 +7835,27 @@
       </family>
       <family name="PpP Decoders" mfg="PpP" lowVersionID="42" highVersionID="42" comment="PpP-Sem4 decoder." file="PpP_Sem4.xml">
         <model model="PpP-Sem4" />
+      </family>
+      <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
+        <model model="Basic LocoIO" />
+      </family>
+      <family name="MERG decoders" mfg="Public-domain and DIY" lowVersionID="104" file="Public_Domain_MERG_DIY_10.xml">
+        <model model="MERG-DIY 10" numOuts="5" numFns="3">
+          <output name="01" label="White" />
+          <output name="02" label="Yellow" />
+          <output name="03" label="Violet" />
+          <output name="04" label="Green" />
+          <output name="05" label="Brown" />
+        </model>
+      </family>
+      <family name="MERG HF PWM decoders" mfg="Public-domain and DIY" lowVersionID="133" file="Public_Domain_MERG_DIY_12A.xml">
+        <model model="MERG-DIY 12a" numOuts="5" numFns="3">
+          <output name="01" label="White" />
+          <output name="02" label="Yellow" />
+          <output name="03" label="Violet" />
+          <output name="04" label="Green" />
+          <output name="05" label="Brown" />
+        </model>
       </family>
       <family name="QSI Articulated Steam" mfg="QSIndustries" lowVersionID="2" highVersionID="5" file="QSI_Articulated_Steam.xml">
         <model model="BLI AC5 Cab Forward 4-8-8-2" lowVersionID="5" numFns="14" numOuts="14" productID="403">
@@ -17767,6 +17770,19 @@
           <output name="Brake" />
           <size length="1.28" width="0.69" height="0.22" units="inches" />
         </model>
+        <model model="WOW Diesel 501 SS2" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="3" highVersionID="3" productID="172">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="3.00" width="1.45" units="inches" />
+        </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -17953,6 +17969,19 @@
           <output name="Motor" />
           <output name="Brake" />
           <size length="1.28" width="0.69" height="0.22" units="inches" />
+        </model>
+        <model model="WOW Sound 501" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw" lowVersionID="3" highVersionID="3" productID="132">
+          <output name="1" label="White" connection="solder" maxcurrent="100 mA" />
+          <output name="2" label="Yellow" connection="solder" maxcurrent="100 mA" />
+          <output name="3" label="Green" connection="solder" maxcurrent="100 mA" />
+          <output name="4" label="Purple" connection="solder" maxcurrent="100 mA" />
+          <output name="5" label="Brown" connection="solder" maxcurrent="100 mA" />
+          <output name="6" label="Pink" connection="solder" maxcurrent="100 mA" />
+          <output name="Dim" />
+          <output name="Ditch" />
+          <output name="Motor" />
+          <output name="Brake" />
+          <size length="3.00" width="1.45" units="inches" />
         </model>
         <functionlabels>
           <functionlabel num="0" lockable="true">Headlight</functionlabel>
