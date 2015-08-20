@@ -251,6 +251,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
 
     void sendDataDone(boolean OK) {
         // report OK or not to GUI
+        setOperationAborted(!OK);
         
         // send end (after wait)
         // ...
