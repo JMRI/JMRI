@@ -31,7 +31,7 @@ public class SimpleServerAction extends AbstractAction {
 
         // SimpleServerFrame f = new SimpleServerFrame();
         // f.setVisible(true);
-        SimpleServer.instance().start();
+        SimpleServerManager.getInstance().getServer().start();
     }
     static Logger log = LoggerFactory.getLogger(SimpleServerAction.class.getName());
 }

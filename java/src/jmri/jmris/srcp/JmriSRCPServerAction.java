@@ -31,7 +31,7 @@ public class JmriSRCPServerAction extends AbstractAction {
 
         //JmriSRCPServerFrame f = new JmriSRCPServerFrame();
         //f.setVisible(true);
-        JmriSRCPServer.instance().start();
+        JmriSRCPServerManager.getInstance().getServer().start();
     }
     static Logger log = LoggerFactory.getLogger(JmriSRCPServerAction.class.getName());
 }
