@@ -175,7 +175,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
             
         } while (location <= endaddr);
 
-        log.info("Expect to send {} write messages", totalmsgs);
+        log.info("Expect downloading to send {} write messages", totalmsgs);
         
         // Start write sequence:
         // find the initial location with data
@@ -219,7 +219,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                 log.info("Sending write to 0x{} length {}", Integer.toHexString(location).toUpperCase(), count);
                 mcs.request(new MemoryConfigurationService.McsWriteMemo(destNodeID(), space, addr, data) {
                     public void handleWriteReply(int code) { 
-                        log.info("Start of handleWriteReply "+code);
+                        log.debug("Start of handleWriteReply "+code);
                         // update GUI intermittently
                         sentmsgs++;
                         if ((sentmsgs % 20) == 0) {
@@ -234,8 +234,7 @@ public class LoaderPane extends jmri.jmrix.AbstractLoaderPane
                                 log.info("   Download completed normally");
                                 sendDataDone(true);
                             } else {
-                                log.info("2");
-                                log.info("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
+                                if (log.isDebugEnabled()) log.debug("   Continue to 0x{}", Integer.toHexString(location).toUpperCase());
                                 sendNext();
                             }
                         } else {
