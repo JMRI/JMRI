@@ -425,10 +425,12 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         NodeID n;
         javax.swing.Timer timer;
 
+        static final int START_DELAY = 2500; 
+        
         void start(NodeID n) {
             this.n = n;
             log.debug("StartUpHandler starts up");
-            // wait 4 seconds for adapter startup
+            // wait geological time for adapter startup
             javax.swing.Action doNextStep = new javax.swing.AbstractAction() {
                 /**
                  *
@@ -440,7 +442,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
                 }
             };
 
-            timer = new javax.swing.Timer(2500, doNextStep);
+            timer = new javax.swing.Timer(START_DELAY, doNextStep);
             timer.start();
         }
 
@@ -458,6 +460,7 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             timer.stop();
 
             // map our nodeID
+            log.debug("mapping own alias {} to own NodeID {}", (int) nidaa.getNIDa(), n);
             aliasMap.insert((int) nidaa.getNIDa(), n);
 
             // insert our protocol info
