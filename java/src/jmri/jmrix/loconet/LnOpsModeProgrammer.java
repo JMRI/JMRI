@@ -158,7 +158,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             } else {
                 log.debug("returning SV programming reply: {}", m);
                 int code = ProgListener.OK;
-                int val = (m.getElement(12)&0x7F)|(((m.getElement(10)&0x01) != 0x00)? 0x80:0x00);
+                int val = m.getPeerXfrData()[5];
                 
                 ProgListener temp = p;
                 p = null;
