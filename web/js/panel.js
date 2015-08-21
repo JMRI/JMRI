@@ -111,7 +111,7 @@ function processPanelXML($returnedData, $success, $xhr) {
         $("#panel-area").css({backgroundColor: $gPanel.backgroundcolor});
     }
 
-    //process all widgets in the panel xml, drawing them on screen, and building persistent arrays
+    //process all elements in the panel xml, drawing them on screen, and building persistent array of widgets
     $panel.contents().each(
             function() {
                 var $widget = new Array();
@@ -134,7 +134,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                     $widget.systemName = $widget["id"];
                 }
                 $widget["id"] = "widget-" + $gUnique(); //set id to a unique value (since same element can be in multiple widgets)
-                $widget['widgetFamily'] = $getWidgetFamily($widget);
+                $widget['widgetFamily'] = $getWidgetFamily($widget, this);
                 var $jc = "";
                 if (typeof $widget["class"] !== "undefined") {
                     var $ta = $widget["class"].split('.'); //get last part of java class name for a css class
@@ -150,6 +150,7 @@ function processPanelXML($returnedData, $success, $xhr) {
                 //set additional values in this widget
                 switch ($widget.widgetFamily) {
                     case "icon" :
+                        $widget['styles'] = $getTextCSSFromObj($widget);
                         switch ($widget.widgetType) {
                             case "positionablelabel" :
                                 $widget['icon' + UNKNOWN] = $(this).find('icon').attr('url');
@@ -328,6 +329,20 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 });
                                 $widget["systemName"] = $widget.name;
                                 jmri.getSensor($widget["systemName"]);
+                                break;
+                            case "memoryicon" :
+                                $widget['name'] = $widget.memory; //normalize name
+                                $widget.jsonType = "memory"; // JSON object type
+                                $widget['state'] = $widget.memory; //use name for initial state as well
+                                var memorystates = $(this).find('memorystate'); 
+                                memorystates.each(function(i, item) {  ////get any memorystates defined
+                                    //store icon url in "iconXX" where XX is the state to match
+                                	$widget['icon' + item.attributes['value'].value] = item.attributes['icon'].value; 
+                                    $widget['state'] = item.attributes['value'].value; //use value for initial state
+                                });                              
+                                if (typeof $widget["systemName"] == "undefined")
+                                    $widget["systemName"] = $widget.name;
+                                jmri.getMemory($widget["systemName"]);
                                 break;
                         }
                         $preloadWidgetImages($widget); //start loading all images
@@ -797,6 +812,8 @@ function $drawIcon($widget) {
 
         $("#panel-area").append($imgHtml);  //put the html in the panel
 
+        $("#panel-area>#" + $widget.id).css($widget.styles); //apply style array to widget
+        
         //add in overlay text if specified  (append "overlay" to id to keep them unique)
         if (typeof $widget.text !== "undefined") {
             $("#panel-area").append("<div id=" + $widget.id + "overlay class='overlay'>" + $widget.text + "</div>");
@@ -1114,6 +1131,9 @@ var $getTextCSSFromObj = function($widget) {
     if (typeof $widget.fixedWidth !== "undefined") {
         $retCSS['width'] = $widget.fixedWidth + "px ";
     }
+    if (typeof $widget.fixedHeight !== "undefined") {
+        $retCSS['height'] = $widget.fixedHeight + "px ";
+    }
     if (typeof $widget.justification !== "undefined") {
         if ($widget.justification == "centre") {
             $retCSS['text-align'] = "center";
@@ -1209,8 +1229,10 @@ var $setWidgetPosition = function(e) {
 var $reDrawIcon = function($widget) {
     //additional naming for indicator*icon widgets to reflect occupancy
     $indicator = ($widget.occupancysensor && $widget.occupancystate == ACTIVE ? "Occupied" : "");
-    if ($widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]) {
-        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  //set image src to next state's image
+    if ($widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]) { //set image src to requested state's image, if defined
+        $('img#' + $widget.id).attr('src', $widget['icon' + $indicator + ($widget.state + "").replace(/ /g, "_")]);  
+    } else if ($widget['defaulticon']) {  //if state icon not found, use default icon if provided
+        $('img#' + $widget.id).attr('src', $widget['defaulticon']); 
     } else {
         if (window.console)
             console.log("ERROR: image not defined for " + $widget.widgetType + " " + $widget.id + ", state=" + $widget.state + ", occ=" + $widget.occupancystate);
@@ -1421,16 +1443,19 @@ var $preloadWidgetImages = function($widget) {
 
 //determine widget "family" for broadly grouping behaviors
 //note: not-yet-supported widgets are commented out here so as to return undefined
-var $getWidgetFamily = function($widget) {
+var $getWidgetFamily = function($widget, $element) {
 
-    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel") && typeof $widget.text !== "undefined") {
+    if (($widget.widgetType == "positionablelabel" || $widget.widgetType == "linkinglabel") 
+    		&& typeof $widget.text !== "undefined") {
         return "text";  //special case to distinguish text vs. icon labels
     }
     if ($widget.widgetType == "sensoricon" && $widget.icon == "no") {
         return "text";  //special case to distinguish text vs. icon labels
     }
+    if ($widget.widgetType == "memoryicon" && $($element).find('memorystate').length == 0) {
+        return "text";  //if no memorystate icons, treat as text 
+    }
     switch ($widget.widgetType) {
-        case "memoryicon" :
         case "locoicon" :
         case "trainicon" :
         case "memoryComboIcon" :
@@ -1448,6 +1473,7 @@ var $getWidgetFamily = function($widget) {
         case "signalmasticon" :
         case "indicatortrackicon" :
         case "indicatorturnouticon" :
+        case "memoryicon" :
             return "icon";
             break;
         case "layoutturnout" :
@@ -1679,6 +1705,6 @@ $(document).ready(function() {
         setTimeout(function() {
             requestPanelXML(panelName);
         },
-                100);
+                500);
     }
 });
