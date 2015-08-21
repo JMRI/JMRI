@@ -28,8 +28,7 @@ public class Car extends RollingStock {
     protected boolean _loadGeneratedByStaging = false;
     protected Kernel _kernel = null;
     protected String _loadName = carLoads.getDefaultEmptyName();
-    protected int _wait = 0;
-    protected String _pickupScheduleId = NONE;
+    protected int _wait = 0;   
 
     protected Location _rweDestination = null; // return when empty destination
     protected Track _rweDestTrack = null; // return when empty track
@@ -44,6 +43,7 @@ public class Car extends RollingStock {
     protected Location _previousFinalDestination = null; // previous final destination (for train resets)
     protected Track _previousFinalDestTrack = null; // previous final track (for train resets)
     protected String _previousScheduleId = NONE; // previous schedule id (for train resets)
+    protected String _pickupScheduleId = NONE;
     protected String _nextPickupScheduleId = NONE; // when the car needs to be pulled
 
     public static final String LOAD_CHANGED_PROPERTY = "Car load changed"; // NOI18N property change descriptions
@@ -276,6 +276,10 @@ public class Car extends RollingStock {
         return _nextWait;
     }
 
+    /**
+     * Sets when this car will be picked up (day of the week)
+     * @param id See TrainSchedule.java
+     */
     public void setPickupScheduleId(String id) {
         String old = _pickupScheduleId;
         _pickupScheduleId = id;

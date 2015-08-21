@@ -8,7 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Represents a schedule for trains
+ * Represents a schedule for trains. For example, can be a day of the week. Useful when
+ * determining which trains to build and run.
  *
  * @author Daniel Boudreau Copyright (C) 2010
  * @version $Revision$
