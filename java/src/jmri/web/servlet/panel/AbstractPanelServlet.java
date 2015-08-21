@@ -152,18 +152,18 @@ abstract class AbstractPanelServlet extends HttpServlet {
 
     protected void parsePortableURIs(Element element) {
         if (element != null) {
-            for (Object child : element.getChildren()) {
-                parsePortableURIs((Element) child);
-                for (Object attr : ((Element) child).getAttributes()) {
-                    if (((Attribute) attr).getName().equals("url")) {
-                        String url = WebServer.URIforPortablePath(((Attribute) attr).getValue());
-                        if (url != null) {
-                            ((Attribute) attr).setValue(url);
-                        } else {
-//                            ((Element) child).removeAttribute("url");  //TODO: this doesn't work, gets comodification error
-                        }
+            //loop thru and update attributes of this element if value is a portable filename
+            for (Attribute attr : ((Element) element).getAttributes()) {
+                if (FileUtil.isPortableFilename(((Attribute) attr).getValue())) {
+                    String url = WebServer.URIforPortablePath(((Attribute) attr).getValue());
+                    if (url != null) {  // if portable path conversion fails, don't change the value
+                        ((Attribute) attr).setValue(url);
                     }
                 }
+            }
+            //recursively call for each child
+            for (Object child : element.getChildren()) {
+                parsePortableURIs((Element) child);
             }
 
         }
