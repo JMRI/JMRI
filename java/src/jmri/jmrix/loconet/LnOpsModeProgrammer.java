@@ -74,7 +74,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // SV2 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
             // make message
-            LocoNetMessage m = new LocoNetMessage(15);
+            LocoNetMessage m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), val);
             m.setElement(3, 0x01); // 1 byte write
             log.debug("  Message {}", m);
@@ -107,7 +107,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             // SV2 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress, mAddress);
             // make message
-            LocoNetMessage m = new LocoNetMessage(15);
+            LocoNetMessage m = new LocoNetMessage(16);
             loadSV2MessageFormat(m, mAddress, decodeCvNum(CV), 0);
             m.setElement(3, 0x02); // 1 byte read
             log.debug("  Message {}", m);
