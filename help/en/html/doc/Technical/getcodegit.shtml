@@ -6,7 +6,7 @@
  	JMRI: Getting the Code (Git Version in Development)
     </titlE>
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code SVN download">
+    <meta name="keywords" content="JMRI technical code Git SVN download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -41,47 +41,66 @@ JMRI users.</em>
 
   <h2>Quickstart</h2>
 
-  <p>You can download the most recent source code from Subversion using:
-  <code><pre>
-    svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri
-  </prE></code>
-  </p>
-
+  <p>You can download a bare copy the most recent JMRI source code
+  by going to our 
+  <a href="https://github.com/JMRI/jmri-test">GitHub.com repository</a> 
+  and clicking the "download ZIP" button on the right.</p>
+  
+  <p>Note that this will give you a bare copy. If you want to make
+  changes, and hopefully contribute them back to the JMRI project 
+  so others can benefit from them, we recommend that you use 
+  the "Clone in Desktop" button instead.  This will 
+  require you to have installed
+  "<a href="https://desktop.github.com">GitHub Desktop</a>" tool, which you can get from 
+  <a href="https://desktop.github.com">here</a>.
+  See below for more info.
+  
   <h2>Details</h2>
 
 
   <p>Our source code is distributed using <a
-  href="http://subversion.apache.org/">Subversion</a>.  (We also keep
-  the <a href="WebSite.shtml">web site</a> in Subversion, if you'd like
-  to work with it directly.)  If you want to work with the code, a few
-  minutes installing Subversion is well worth it.  We're sorry, but we
-  just can't support other methods (sending .zip files, etc), as they're
+  href="https://git-scm.com">Git</a>.  (We also keep
+  the <a href="WebSite.shtml">web site</a> in Git, if you'd like
+  to work with the source for that directly.)  
+  If you want to work with the code, a few
+  minutes installing Git is well worth it.  We're sorry, but we
+  just can't support other methods (sending around individual files, etc), as they're
   just too error prone.</p>
 
-  <p>
-  A few computers will come with Subversion installed, mostly various Linux
+  <p>We host our primary copy of the code in a repository on
+  <a href="">GitHub.com</a>.  That provides powerful (and free) tools
+  for managing the code in a community way.
+  
+  <p>It's possible to use Git from the command line, or from inside various 
+  IDEs like XCode or NetBeans.  Some of the JMRI developers prefer that approach.
+  But if you're new and reading this, we recommend that you 
+  interact with our code repository through the
+  "<a href="https://desktop.github.com">GitHub Desktop</a>" tool.
+  Download it via <a href="https://desktop.github.com">this link</a>,
+  install it and take the tutorial.
+  
+  <p><em>(Is this paragraph still needed? Or does GitHub Desktop handle this?)</em>
+  A few computers will come with Git installed, mostly various Linux
   systems.  If your computer does not have it installed, you will need
   to locate and install the needed client software.  See the
-  <a href="http://subversion.apache.org/packages.html">Subversion
-  binary downloads</a> page for packages for many operating systems
+  <a href="https://git-scm.com/downloads">Git downloads</a> 
+  page for packages for many operating systems
   (including Mac OS X, Windows and different Linux flavors).</p>
 
   <p>Many development environments (e.g., Netbeans or Eclipse) will have
-  support for Subversion, either directly or as an add-on.  Check the
-  documentation for your favorite IDE to check on SVN support.</p>
-
-  <p>The <a href="https://sourceforge.net/apps/trac/sourceforge/wiki/Subversion">
-  Subversion server at SourceForge</a> does not require any user
-  information when you check out a copy of the code.</p>  
+  support for Git, either directly or as an add-on.  Check the
+  documentation for your favorite IDE to check on Git support.</p>
 
   <p>
+  <em>(Paragraph not changed:  Decide whether to put in a 
+  command here, or a GitHub Desktop walkthrough)</em>
   If you have an existing copy of the code and want to update it
   to the most recent contents of the Subversion repository, the command is:
   <pre>
   svn update
   </prE></p>
 
-  <p>See also the <a href="SVNFAQ.shtml">Subversion FAQ page</a>.</p>
+  <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
 
   <p>After the checkout is complete, you'll find a top level
   directory called <tt>java</tt>, with subdirectories <tt>xml</tt>,
@@ -101,7 +120,7 @@ JMRI users.</em>
   install and use, and is the primary example in the documentation)</p>
 
   <p>Once you're working with the code, you'll probably create some improvements
-  you'd like to contribute back to the project.  This is where Subversion has tremendous
+  you'd like to contribute back to the project.  This is where Git has tremendous
   advantages; with the appropriate permissions and commands, you can merge your
   changes back into the common source automagically.  Contact us when you're ready to
   do that or see the <a href="index.shtml#contributing">info on
@@ -114,7 +133,7 @@ JMRI users.</em>
   see those instructions for details.</p>
 
   <p>The best way to retrieve the source for releases 2.12 and earlier
-  is from the <a href="getoldcode.shtml">CVS Repository</a>.  Please
+  is from the <a href="getcvscode.shtml">CVS Repository</a>.  Please
   see those instructions for details.</p>
 
 
