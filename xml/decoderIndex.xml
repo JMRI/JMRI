@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 20150820-2309-jake on Thu Aug 20 16:10:00 PDT 2015 $Id$-->
-  <decoderIndex version="656">
+  <!--Written by JMRI version 20150822-2117-jake on Sat Aug 22 14:17:20 PDT 2015 $Id$-->
+  <decoderIndex version="658">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -7838,6 +7838,9 @@
       </family>
       <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY" file="Public_Domain_HDL_LocoIO.xml">
         <model model="Basic LocoIO" />
+      </family>
+      <family name="LNSV2-using boards" mfg="Public-domain and DIY" file="Public_Domain_LNSV2_basic.xml">
+        <model model="Basic definition" />
       </family>
       <family name="MERG decoders" mfg="Public-domain and DIY" lowVersionID="104" file="Public_Domain_MERG_DIY_10.xml">
         <model model="MERG-DIY 10" numOuts="5" numFns="3">

@@ -16,63 +16,49 @@
   <version author="Bob Jacobsen" version="1" lastUpdated="20150812"/>
   <!-- version 1 - test only -->
   <decoder>
-    <family name="Hans De Loof LocoIO" mfg="Public-domain and DIY">
-      <model model="Basic LocoIO"/>
+    <family name="LNSV2-using boards" mfg="Public-domain and DIY">
+      <model model="Basic definition"/>
     </family>
     <programming direct="no" paged="no" register="no" ops="no">
-        <mode>LOCONETSV1MODE</mode>
+        <mode>LOCONETSV2MODE</mode>
     </programming>
     <variables>
 
-     <!-- This sets a single JMRI-style composite address in two CVs -->
-      <variable CV="1" comment="Board SV address" item="Short Address" default="81">
-        <splitVal highCV="2" factor="1" offset="-256" default="1"/>
+     <!-- Is the following actually accessible via the SV protocol? -->
+      <variable CV="999" comment="Board SV address" item="Short Address" default="03">
+        <decVal/>
         <label>Board Address</label>
       </variable>
 
-      <!-- This repurposes the UserID fields on the Basic pane to show -->
-      <!-- the indivdual address bytes                                 -->
-      <!-- Note defaults must be present both locations and agree      -->
-      <variable item="User Id #1" CV="1" default="81">
-        <decVal max="255"/>
-            <label>Low (Main) Address</label>
-      </variable>
-      <variable item="User Id #2" CV="2" default="1">
-        <decVal min="1" max="255"/>
-            <label>High (Secondary) Address</label>
-      </variable>
-
-      <variable CV="3" item="Advanced Group 1 Option 1" default="192">
+      <variable CV="1" comment="Size of memory in bytes" readOnly="yes"  item="Advanced Group 1 Option 1">
         <enumVal>
-          <enumChoice value="15">
-            <choice>Input from a toggle switch</choice>
+          <enumChoice>
+            <choice>256 bytes</choice>
           </enumChoice>
-          <enumChoice value="47">
-            <choice>Input from an active low push button</choice>
+          <enumChoice>
+            <choice>512 bytes</choice>
           </enumChoice>
-          <enumChoice value="111">
-            <choice>Input from an active high push button</choice>
+          <enumChoice>
+            <choice>1024 bytes</choice>
           </enumChoice>
-          <enumChoice value="192">
-            <choice>Output from 0xC0 command</choice>
+          <enumChoice>
+            <choice>2048 bytes</choice>
           </enumChoice>
-          <enumChoice value="128">
-            <choice>Output from 0x80 command</choice>
+          <enumChoice>
+            <choice>4096 bytes</choice>
           </enumChoice>
         </enumVal>
-        <label>RB7 Configuration</label>
+        <label>EEPROM Size</label>
       </variable>
-      <variable CV="4" item="Advanced Group 1 Option 2" default="1">
-        <hexVal/>
-        <label>RB7 Value 1 (hex)</label>
-      </variable>
-      <variable CV="5" item="Advanced Group 1 Option 3" default="0">
-        <hexVal/>
-        <label>RB7 Value 2 (hex)</label>
+      <variable CV="2" item="Decoder Version" >
+        <decVal/>
+        <label>Manufacturer Version No.</label>
       </variable>
 
-
-
+      <variable CV="8" readOnly="yes" item="Manufacturer">
+        <decVal/>
+        <label>Manufacturer ID: </label>
+      </variable>
 
       <variable item="Dummy 10" CV="10">
         <decVal/>
