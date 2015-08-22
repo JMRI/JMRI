@@ -143,7 +143,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         
             // check for src address (?) moved to 0x50
             // this might not be the right way to tell....
-            if ((m.getElement(3) & 0x70) != 0x50) return; 
+            if ((m.getElement(3) & 0x7F) != 0x50) return; 
             
             // more checks needed? E.g. addresses?
 
