@@ -869,6 +869,7 @@
     </resets>
   </decoder>
 <!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutPane.xml"/>
