@@ -25,7 +25,17 @@
 
 <H1>Configure LocoIO
 </H1>
-    
+
+<p>
+This dedicated LocoIO programmer is no longer supported.
+<p>
+You're still welcome to use it, of course, but 
+please consider switching over to configuring 
+your LocoIO boards with DecoderPro.
+There's a DecoderPro definition for the basic LocoIO device
+in the "Public Domain and DIY" category.
+
+<p>
 This is the help/jmri/jmrix/loconet/locoio/LocoIOFrame help page
 
 <!--#include virtual="/Footer" -->
