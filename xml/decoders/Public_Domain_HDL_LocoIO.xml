@@ -27,7 +27,7 @@
      <!-- This sets a single JMRI-style composite address in two CVs -->
       <variable CV="1" comment="Board SV address" item="Short Address" default="81">
         <splitVal highCV="2" factor="1" offset="-256" default="1"/>
-        <label>Board Address</label>
+        <label>Board Address (14 bit)</label>
       </variable>
 
       <!-- This repurposes the UserID fields on the Basic pane to show -->
@@ -35,11 +35,11 @@
       <!-- Note defaults must be present both locations and agree      -->
       <variable item="User Id #1" CV="1" default="81">
         <decVal max="255"/>
-            <label>Low (Main) Address</label>
+            <label>LocoIO SubAddress (7-bit low)</label>
       </variable>
       <variable item="User Id #2" CV="2" default="1">
         <decVal min="1" max="255"/>
-            <label>High (Secondary) Address</label>
+            <label>LocoIO Address (7-bit high)</label>
       </variable>
 
       <variable CV="3" item="Advanced Group 1 Option 1" default="192">
