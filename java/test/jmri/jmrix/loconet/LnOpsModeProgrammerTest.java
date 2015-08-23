@@ -100,8 +100,9 @@ public class LnOpsModeProgrammerTest extends TestCase {
       public void testSv1Write() throws ProgrammerException {
         LnOpsModeProgrammer lnopsmodeprogrammer = new LnOpsModeProgrammer(sm, memo, 1, true);
         
+        int testVal = 120;
         lnopsmodeprogrammer.setMode(LnProgrammerManager.LOCONETSV1MODE);
-        lnopsmodeprogrammer.writeCV("91",120,pl);
+        lnopsmodeprogrammer.writeCV("91",testVal,pl);
         
         // should have written and not returned
         Assert.assertEquals("one message sent", 1, lnis.outbound.size());
@@ -114,12 +115,13 @@ public class LnOpsModeProgrammerTest extends TestCase {
         Assert.assertEquals("No programming reply", 0, pl.getRcvdInvoked());
 
         // Known-good message in reply
-        m = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x01, 0x5B, 0x66, 0x7B, 0x00, 0x01, 0x00, 0x00, 0x7B, 0x36});
+        m = new LocoNetMessage(new int[]{0xE5, 0x10, 0x53, 0x50, 0x01, 0x00, 0x01, 0x5B, 0x66, 0x7B, 0x00, 0x01, 0x00, 0x00, testVal, 0x36});
         lnopsmodeprogrammer.message(m);
 
         Assert.assertEquals("still one message sent", 1, lnis.outbound.size());
         Assert.assertEquals("Got programming reply", 1, pl.getRcvdInvoked());
         Assert.assertEquals("Reply status OK", 0, pl.getRcvdStatus());
+        Assert.assertEquals("Reply value matches written", testVal, pl.getRcvdValue());
         
      }
 

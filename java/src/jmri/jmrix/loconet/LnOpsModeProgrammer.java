@@ -24,6 +24,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
     int mAddress;
     boolean mLongAddr;
     ProgListener p;
+    boolean doingWrite;
     
     public LnOpsModeProgrammer(SlotManager pSlotMgr,
             LocoNetSystemConnectionMemo memo,
@@ -57,6 +58,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
+            doingWrite = true;
             // SV1 mode
             log.debug("write CV \"{}\" to {} addr:{}", CV, val, mAddress);
 
@@ -90,6 +92,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         // Check mode
         if (getMode().equals(LnProgrammerManager.LOCONETSV1MODE)) {
             this.p = p;
+            doingWrite = false;
             // SV1 mode
             log.debug("read CV \"{}\" addr:{}", CV, mAddress);
             
@@ -158,8 +161,12 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
             } else {
                 log.debug("returning SV programming reply: {}", m);
                 int code = ProgListener.OK;
-                int val = m.getPeerXfrData()[5];
-                
+                int val;
+                if (doingWrite) {
+                    val = m.getPeerXfrData()[7];
+                } else {
+                    val = m.getPeerXfrData()[5];
+                }
                 ProgListener temp = p;
                 p = null;
                 temp.programmingOpReply(val, code);
