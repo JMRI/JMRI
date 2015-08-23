@@ -8,8 +8,6 @@
 
 <mapID target="html.tools.IdTags" url="html/tools/IdTags.shtml"/>
 
-<mapID target="html.doc.Technical.getoldcode" url="html/doc/Technical/getoldcode.shtml"/>
-
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Menu_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Menu.shtml#Top"/>
 
 <mapID target="package.jmri.jmrix.nce.packetgen.NcePacketGenFrame" url="package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml"/>
@@ -631,6 +629,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Routes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Routes.shtml#Top"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_Restore" url="package/jmri/jmrit/operations/Operations.shtml#Restore"/>
+
+<mapID target="html.doc.Technical.getcvscode" url="html/doc/Technical/getcvscode.shtml"/>
 
 <mapID target="manual.DecoderPro3.Basic_Start" url="manual/DecoderPro3/Basic_Start.shtml"/>
 
@@ -1494,6 +1494,8 @@
 
 <mapID target="manual.DecoderPro3.Main_CMRI_ConfigureNodes" url="manual/DecoderPro3/Main_CMRI.shtml#ConfigureNodes"/>
 
+<mapID target="html.doc.Technical.getcodegit" url="html/doc/Technical/getcodegit.shtml"/>
+
 <mapID target="manual.DecoderPro3.Main_SPROG_Console" url="manual/DecoderPro3/Main_SPROG.shtml#Console"/>
 
 <mapID target="manual.DecoderPro.Basic_Mode" url="manual/DecoderPro/Basic_Mode.shtml"/>
@@ -1549,6 +1551,8 @@
 <mapID target="manual.DecoderPro.Main_XpressNet_LV100CM" url="manual/DecoderPro/Main_XpressNet.shtml#LV100CM"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.index_Installing" url="manual/JMRI_OPS_UsersGuide/index.shtml#Installing"/>
+
+<mapID target="package.jmri.jmrix.openlcb.swing.downloader.OpenLCBlibrary" url="package/jmri/jmrix/openlcb/swing/downloader/OpenLCBlibrary.html"/>
 
 <mapID target="manual.DecoderPro.Main_Debug" url="manual/DecoderPro/Main_Debug.shtml"/>
 
@@ -2759,6 +2763,8 @@
 <mapID target="manual.DecoderPro3.dp3_menubar" url="manual/DecoderPro3/dp3_menubar.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_CarAttributes_Top" url="manual/JMRI_OPS_UsersGuide/Ops_CarAttributes.shtml#Top"/>
+
+<mapID target="html.doc.Technical.GitFAQ" url="html/doc/Technical/GitFAQ.shtml"/>
 
 <mapID target="package.jmri.jmrit.withrottle.Protocol" url="package/jmri/jmrit/withrottle/Protocol.shtml"/>
 
