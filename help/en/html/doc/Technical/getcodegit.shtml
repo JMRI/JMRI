@@ -79,13 +79,14 @@ JMRI users.</em>
   Download it via <a href="https://desktop.github.com">this link</a>,
   install it and take the tutorial.
   
-  <p><em>(Is this paragraph still needed? Or does GitHub Desktop handle this?)</em>
-  A few computers will come with Git installed, mostly various Linux
-  systems.  If your computer does not have it installed, you will need
-  to locate and install the needed client software.  See the
+  <p><em>
+  Note: GitHub Desktop is not (currently) available on the Linux platform. 
+  As a result, it might be necessary to locate and install the needed client 
+  software suitable for your flavor of Linux.  See the
   <a href="https://git-scm.com/downloads">Git downloads</a> 
-  page for packages for many operating systems
-  (including Mac OS X, Windows and different Linux flavors).</p>
+  page for packages for many operating systems.  Alternatively, check the
+  usual package manager for your flavor of Linux.
+  </em></p>
 
   <p>Many development environments (e.g., Netbeans or Eclipse) will have
   support for Git, either directly or as an add-on.  Check the
@@ -98,7 +99,7 @@ JMRI users.</em>
   to the most recent contents of the Subversion repository, the command is:
   <pre>
   svn update
-  </prE></p>
+  </pre></p>
 
   <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
 
