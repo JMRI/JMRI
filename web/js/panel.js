@@ -442,8 +442,10 @@ function processPanelXML($returnedData, $success, $xhr) {
                                 //just store these points in persistent variable for use when drawing tracksegments and layoutturnouts
                                 //id is ident plus ".type", e.g. "A4.2"
                                 $gPts[$widget.ident + "." + $widget.type] = $widget;
-                                if ($widget.ident.substring(0, 2) == "EB") {  //End bumpers use wrong type, so also store type 1
-                                    $gPts[$widget.ident + ".1"] = $widget;
+                              //End bumpers and Connectors use wrong type, so also store type 1
+                                if (($widget.ident.substring(0, 2) == "EB") ||
+                                     ($widget.ident.substring(0, 2) == "EC")) {  
+                                		$gPts[$widget.ident + ".1"] = $widget;
                                 }
                                 break;
                             case "layoutblock" :
