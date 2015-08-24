@@ -17,7 +17,7 @@ import java.util.prefs.Preferences;
 import javax.annotation.Nonnull;
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
-import jmri.util.JmriProperties;
+import jmri.util.OrderedProperties;
 import jmri.util.node.NodeIdentity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -160,7 +160,7 @@ public final class JmriPreferencesProvider {
 
     /**
      * Returns the name of the package for the class in a format that is treated
-     * as a single token in a {@link java.util.
+     * as a single token.
      *
      * @param cls
      * @return
@@ -172,7 +172,7 @@ public final class JmriPreferencesProvider {
     }
 
     private File getPreferencesFile() {
-        if (shared) {
+        if (this.shared || this.project == null) {
             return new File(this.getPreferencesDirectory(), "preferences.properties");
         } else {
             return new File(this.getPreferencesDirectory(), NodeIdentity.identity() + ".properties");
@@ -180,10 +180,12 @@ public final class JmriPreferencesProvider {
     }
 
     private File getPreferencesDirectory() {
+        File dir;
         if (this.project == null) {
-            return null;
+            dir = new File(FileUtil.getPreferencesPath(), "preferences");
+        } else {
+            dir = new File(this.project.getPath(), "preferences");
         }
-        File dir = new File(this.project.getPath(), "preferences");
         FileUtil.createDirectory(dir);
         return dir;
     }
@@ -275,7 +277,7 @@ public final class JmriPreferencesProvider {
             }
 
             synchronized (file) {
-                Properties p = new JmriProperties();
+                Properties p = new OrderedProperties();
                 try {
                     p.load(new FileInputStream(file));
 
@@ -315,7 +317,7 @@ public final class JmriPreferencesProvider {
             final File file = JmriPreferencesProvider.this.getPreferencesFile();
 
             synchronized (file) {
-                Properties p = new JmriProperties();
+                Properties p = new OrderedProperties();
                 try {
 
                     StringBuilder sb = new StringBuilder();

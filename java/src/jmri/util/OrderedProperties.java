@@ -14,7 +14,7 @@ import java.util.TreeSet;
  * 
  * @author Randall Wood
  */
-public class JmriProperties extends Properties {
+public class OrderedProperties extends Properties {
 
     private static final long serialVersionUID = 4901931181290330210L;
 
