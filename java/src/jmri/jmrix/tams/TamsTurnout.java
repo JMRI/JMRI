@@ -164,7 +164,8 @@ public class TamsTurnout extends AbstractTurnout
             closed = !closed;
         }
         // get control
-        TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "1" : "0"));
+        // added trailing ,1 on observation from Jan Boen 24 Aug 2015
+        TamsMessage m = new TamsMessage("xT " + _number + "," + (closed ? "1" : "0") + ",1");
         tc.sendTamsMessage(m, this);
 
     }
