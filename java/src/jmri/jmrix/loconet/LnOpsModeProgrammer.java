@@ -217,10 +217,10 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
         
         // set SVX1
         int svx1 = 0x10
-                    |((m.getElement(6)&0x80) != 0 ? 0x04 : 0)  // SV_ADRL
-                    |((m.getElement(7)&0x80) != 0 ? 0x08 : 0)  // SV_ADRH
-                    |((m.getElement(8)&0x80) != 0 ? 0x01 : 0)  // DST_L
-                    |((m.getElement(9)&0x80) != 0 ? 0x02 : 0); // DST_H
+                    |((m.getElement(6)&0x80) != 0 ? 0x01 : 0)  // DST_L
+                    |((m.getElement(7)&0x80) != 0 ? 0x02 : 0)  // DST_L
+                    |((m.getElement(8)&0x80) != 0 ? 0x04 : 0)  // DST_L
+                    |((m.getElement(9)&0x80) != 0 ? 0x08 : 0); // SV_ADRH
         m.setElement(5, svx1);
         m.setElement(6, m.getElement(6)&0x7F);
         m.setElement(7, m.getElement(7)&0x7F);
