@@ -2,7 +2,6 @@ package jmri.profile;
 
 import java.beans.PropertyChangeEvent;
 import java.io.File;
-import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -299,7 +298,7 @@ public class ProfileManager extends Bean {
         Profile oldProfile = profiles.get(index);
         if (!this.readingProfiles) {
             profiles.set(index, profile);
-            this.fireIndexedPropertyChange(PROFILES, index, oldProfile, profile);
+            this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, oldProfile, profile);
         }
     }
 
@@ -308,7 +307,7 @@ public class ProfileManager extends Bean {
             profiles.add(profile);
             if (!this.readingProfiles) {
                 int index = profiles.indexOf(profile);
-                this.fireIndexedPropertyChange(PROFILES, index, null, profile);
+                this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, null, profile);
                 try {
                     this.writeProfiles();
                 } catch (IOException ex) {
@@ -323,7 +322,7 @@ public class ProfileManager extends Bean {
             int index = profiles.indexOf(profile);
             if (index >= 0) {
                 if (profiles.remove(profile)) {
-                    this.fireIndexedPropertyChange(PROFILES, index, profile, null);
+                    this.propertyChangeSupport.fireIndexedPropertyChange(PROFILES, index, profile, null);
                     this.writeProfiles();
                 }
                 if (profile.equals(this.getNextActiveProfile())) {
@@ -497,12 +496,7 @@ public class ProfileManager extends Bean {
     }
 
     private void findProfiles(File searchPath) {
-        File[] profilePaths = searchPath.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return Profile.isProfile(pathname);
-            }
-        });
+        File[] profilePaths = searchPath.listFiles((File pathname) -> Profile.isProfile(pathname));
         if (profilePaths == null) {
             log.error("There was an error reading directory {}.", searchPath.getPath());
             return;
@@ -701,32 +695,32 @@ public class ProfileManager extends Bean {
         if (exportExternalUserFiles) {
             FileUtil.copy(new File(FileUtil.getUserFilesPath()), tempProfilePath);
             Element fileLocations = doc.getRootElement().getChild("fileLocations"); // NOI18N
-            for (Object fl : fileLocations.getChildren()) {
-                if (((Element) fl).getAttribute("defaultUserLocation") != null) { // NOI18N
-                    ((Element) fl).setAttribute("defaultUserLocation", "profile:"); // NOI18N
+            for (Element fl : fileLocations.getChildren()) {
+                if (fl.getAttribute("defaultUserLocation") != null) { // NOI18N
+                    fl.setAttribute("defaultUserLocation", "profile:"); // NOI18N
                 }
             }
         }
         if (exportExternalRoster) {
-            FileUtil.copy(new File(Roster.defaultRosterFilename()), new File(tempProfilePath, "roster.xml")); // NOI18N
-            FileUtil.copy(new File(Roster.getFileLocation(), "roster"), new File(tempProfilePath, "roster")); // NOI18N
+            FileUtil.copy(new File(Roster.getDefault().getRosterIndexPath()), new File(tempProfilePath, "roster.xml")); // NOI18N
+            FileUtil.copy(new File(Roster.getDefault().getRosterLocation(), "roster"), new File(tempProfilePath, "roster")); // NOI18N
             Element roster = doc.getRootElement().getChild("roster"); // NOI18N
             roster.removeAttribute("directory"); // NOI18N
         }
         if (exportExternalUserFiles || exportExternalRoster) {
-            FileWriter fw = new FileWriter(config);
-            XMLOutputter fmt = new XMLOutputter();
-            fmt.setFormat(Format.getPrettyFormat()
-                    .setLineSeparator(System.getProperty("line.separator"))
-                    .setTextMode(Format.TextMode.PRESERVE));
-            fmt.output(doc, fw);
-            fw.close();
+            try (FileWriter fw = new FileWriter(config)) {
+                XMLOutputter fmt = new XMLOutputter();
+                fmt.setFormat(Format.getPrettyFormat()
+                        .setLineSeparator(System.getProperty("line.separator"))
+                        .setTextMode(Format.TextMode.PRESERVE));
+                fmt.output(doc, fw);
+            }
         }
-        FileOutputStream out = new FileOutputStream(target);
-        ZipOutputStream zip = new ZipOutputStream(out);
-        this.exportDirectory(zip, tempProfilePath, tempProfilePath.getPath());
-        zip.close();
-        out.close();
+        try (FileOutputStream out = new FileOutputStream(target)) {
+            ZipOutputStream zip = new ZipOutputStream(out);
+            this.exportDirectory(zip, tempProfilePath, tempProfilePath.getPath());
+            zip.close();
+        }
         FileUtil.delete(tempDir);
     }
 
@@ -749,15 +743,15 @@ public class ProfileManager extends Bean {
         byte[] buffer = new byte[1024];
         int length;
 
-        FileInputStream input = new FileInputStream(source);
-        ZipEntry entry = new ZipEntry(this.relativeName(source, root));
-        entry.setTime(source.lastModified());
-        zip.putNextEntry(entry);
-        while ((length = input.read(buffer)) > 0) {
-            zip.write(buffer, 0, length);
+        try (FileInputStream input = new FileInputStream(source)) {
+            ZipEntry entry = new ZipEntry(this.relativeName(source, root));
+            entry.setTime(source.lastModified());
+            zip.putNextEntry(entry);
+            while ((length = input.read(buffer)) > 0) {
+                zip.write(buffer, 0, length);
+            }
+            zip.closeEntry();
         }
-        zip.closeEntry();
-        input.close();
     }
 
     private String relativeName(File file, String root) {
