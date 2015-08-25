@@ -9,7 +9,6 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Properties;
 import java.util.zip.ZipEntry;
@@ -501,7 +500,7 @@ public class ProfileManager extends Bean {
         File[] profilePaths = searchPath.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return (pathname.isDirectory() && Arrays.asList(pathname.list()).contains(Profile.PROPERTIES));
+                return Profile.isProfile(pathname);
             }
         });
         if (profilePaths == null) {
