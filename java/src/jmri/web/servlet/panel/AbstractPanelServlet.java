@@ -153,11 +153,11 @@ abstract class AbstractPanelServlet extends HttpServlet {
     protected void parsePortableURIs(Element element) {
         if (element != null) {
             //loop thru and update attributes of this element if value is a portable filename
-            for (Attribute attr : ((Element) element).getAttributes()) {
-                if (FileUtil.isPortableFilename(((Attribute) attr).getValue())) {
-                    String url = WebServer.URIforPortablePath(((Attribute) attr).getValue());
+            for (Attribute attr : element.getAttributes()) {
+                if (FileUtil.isPortableFilename(attr.getValue())) {
+                    String url = WebServer.URIforPortablePath(attr.getValue());
                     if (url != null) {  // if portable path conversion fails, don't change the value
-                        ((Attribute) attr).setValue(url);
+                        attr.setValue(url);
                     }
                 }
             }
