@@ -49,8 +49,8 @@ public final class JmriPreferencesProvider {
     private final boolean shared;
     private boolean backedUp = false;
 
-    private static final HashMap<String, JmriPreferencesProvider> sharedProviders = new HashMap<>();
-    private static final HashMap<String, JmriPreferencesProvider> privateProviders = new HashMap<>();
+    private static final HashMap<Profile, JmriPreferencesProvider> sharedProviders = new HashMap<>();
+    private static final HashMap<Profile, JmriPreferencesProvider> privateProviders = new HashMap<>();
     private static final String INVALID_KEY_CHARACTERS = "_.";
     private static final Logger log = LoggerFactory.getLogger(JmriPreferencesProvider.class);
 
@@ -67,20 +67,16 @@ public final class JmriPreferencesProvider {
      * @return The shared or private JmriPreferencesProvider for the project.
      */
     static synchronized JmriPreferencesProvider findProvider(Profile project, boolean shared) {
-        String id = null;
-        if (project != null) {
-            id = project.getId();
-        }
         if (shared) {
-            if (sharedProviders.get(id) == null) {
-                sharedProviders.put(id, new JmriPreferencesProvider(project, shared));
+            if (sharedProviders.get(project) == null) {
+                sharedProviders.put(project, new JmriPreferencesProvider(project, shared));
             }
-            return sharedProviders.get(id);
+            return sharedProviders.get(project);
         } else {
-            if (privateProviders.get(id) == null) {
-                privateProviders.put(id, new JmriPreferencesProvider(project, shared));
+            if (privateProviders.get(project) == null) {
+                privateProviders.put(project, new JmriPreferencesProvider(project, shared));
             }
-            return privateProviders.get(id);
+            return privateProviders.get(project);
         }
     }
 
@@ -114,6 +110,9 @@ public final class JmriPreferencesProvider {
      *         clazz.
      */
     Preferences getPreferences(final Class<?> clazz) {
+        if (clazz == null) {
+            return this.root;
+        }
         return this.root.node(findCNBForClass(clazz));
     }
 
