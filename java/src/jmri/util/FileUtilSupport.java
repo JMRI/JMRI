@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.CodeSource;
 import java.util.jar.JarFile;
+import javax.annotation.Nonnull;
 import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -271,6 +272,56 @@ public class FileUtilSupport extends Bean {
             log.error("Unable to open jmri.jar", ex);
             return null;
         }
+    }
+
+    /**
+     * Backup a file. The backup is in the same location as the original file,
+     * has the extension <code>.bak</code> appended to the file name, and up to
+     * four revisions are retained. The lowest numbered revision is the most
+     * recent.
+     *
+     * @param file
+     * @throws IOException
+     */
+    public void backup(File file) throws IOException {
+        this.rotate(file, 4, "bak");
+    }
+
+    /**
+     * Rotate a file.
+     *
+     * @param file      The file to rotate
+     * @param max       A positive integer
+     * @param extension The extension to use for the rotations. If null or an
+     *                  empty string, the rotation number is used as the
+     *                  extension.
+     * @throws IOException
+     * @throws IllegalArgumentException if max is less than one
+     * @see #backup(java.io.File) 
+     */
+    public void rotate(@Nonnull File file, int max, String extension) throws IOException {
+        if (max < 1) {
+            throw new IllegalArgumentException();
+        }
+        String name = file.getName();
+        if (extension != null) {
+            if (extension.length() > 0 && !extension.startsWith(".")) {
+                extension = "." + extension;
+            }
+        } else {
+            extension = "";
+        }
+        File dir = file.getParentFile();
+        File source;
+        int i = max;
+        while (i > 1) {
+            source = new File(dir, name + "." + (i - 1) + extension);
+            if (source.exists()) {
+                FileUtil.copy(source, new File(dir, name + "." + i + extension));
+            }
+            i--;
+        }
+        FileUtil.copy(file, new File(dir, name + "." + i + extension));
     }
 
     public static FileUtilSupport getDefault() {

@@ -1173,6 +1173,30 @@ public final class FileUtil {
         pw.close();
     }
 
+    /**
+     * Backup a file.
+     * 
+     * @param file
+     * @throws java.io.IOException 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     */
+    public static void backup(File file) throws IOException {
+        FileUtilSupport.getDefault().backup(file);
+    }
+    
+    /**
+     * Rotate a file
+     * @param file
+     * @param max
+     * @param extension 
+     * @throws java.io.IOException 
+     * @see jmri.util.FileUtilSupport#rotate(java.io.File, int, java.lang.String) 
+     * @see backup
+     */
+    public static void rotate(File file, int max, String extension) throws IOException {
+        FileUtilSupport.getDefault().rotate(file, max, extension);
+    }
+    
     /* Private default constructor to ensure it's not documented. */
     private FileUtil() {
     }

@@ -47,6 +47,7 @@ public final class JmriPreferencesProvider {
     private final Profile project;
     private final boolean firstUse;
     private final boolean shared;
+    private boolean backedUp = false;
 
     private static final HashMap<String, JmriPreferencesProvider> sharedProviders = new HashMap<>();
     private static final HashMap<String, JmriPreferencesProvider> privateProviders = new HashMap<>();
@@ -355,6 +356,11 @@ public final class JmriPreferencesProvider {
                         });
                     }
 
+                    if (!JmriPreferencesProvider.this.backedUp) {
+                        log.debug("Backing up {}", file);
+                        FileUtil.backup(file);
+                        JmriPreferencesProvider.this.backedUp = true;
+                    }
                     p.store(new FileOutputStream(file), "JMRI Preferences");
                 } catch (IOException e) {
                     throw new BackingStoreException(e);
