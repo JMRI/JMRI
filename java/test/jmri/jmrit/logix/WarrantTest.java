@@ -39,7 +39,7 @@ public class WarrantTest extends TestCase {
      * So this will be one large test.
      */
 
-    public void testWarrant() {
+    public void testWarrant() throws Exception {
         _OBlockMgr = InstanceManager.getDefault(OBlockManager.class);
         OBlock bWest = _OBlockMgr.createNewOBlock("OB1", "West");
         OBlock bEast = _OBlockMgr.createNewOBlock("OB2", "East");
@@ -207,6 +207,10 @@ public class WarrantTest extends TestCase {
         } catch (Exception e) {
             System.out.println(e);            
         }
+        while (warrant.getThrottle() != null) {
+            // Sometimes the engineer is blocked
+            Thread.sleep(500);            
+        }        
         msg = warrant.getRunningMessage();
         Assert.assertEquals("getRunningMessage", "Idle", msg);
     }

@@ -47,7 +47,7 @@ public class NXFrame extends WarrantRoute {
     private static final long serialVersionUID = -8971792418011219112L;
     private float _scale = 87.1f;
 
-    JTextField _trainNameBox = new JTextField(6);
+    JTextField _trainName = new JTextField(6);
     JTextField _maxSpeedBox = new JTextField(6);
     JTextField _minSpeedBox = new JTextField(6);
     JRadioButton _forward = new JRadioButton();
@@ -78,7 +78,7 @@ public class NXFrame extends WarrantRoute {
         if (!_instance.isVisible()) {
             _instance.setAddress(null);
             _instance.setTrainName(null);
-            _instance._trainNameBox.setText(null);
+            _instance._trainName.setText(null);
             _instance.clearRoute();            
         }
         return _instance;
@@ -107,7 +107,7 @@ public class NXFrame extends WarrantRoute {
         _manualPanel = new JPanel();
         _manualPanel.setLayout(new BoxLayout(_manualPanel, BoxLayout.X_AXIS));
         _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
-        _manualPanel.add(makeTextBoxPanel(false, _trainNameBox, "TrainName", "noTrainName"));
+        _manualPanel.add(makeTextBoxPanel(false, _trainName, "TrainName", "noTrainName"));
         _manualPanel.add(Box.createHorizontalStrut(2 * STRUT_SIZE));
 
         _controlPanel.add(_autoRunPanel);
@@ -308,6 +308,7 @@ public class NXFrame extends WarrantRoute {
 
     /**
      * Callback from RouteFinder.findRoute()
+     * if all goes well, WarrantTableFrame.runTrain(warrant) will run the warrant
      */
     @Override
     public void selectedRoute(ArrayList<BlockOrder> orders) {
@@ -400,7 +401,7 @@ public class NXFrame extends WarrantRoute {
     }
 
     private void runManual() {
-        String name = _trainNameBox.getText();
+        String name = _trainName.getText();
         if (name == null || name.trim().length() == 0) {
             JOptionPane.showMessageDialog(this, Bundle.getMessage("noTrainName"),
                     Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);

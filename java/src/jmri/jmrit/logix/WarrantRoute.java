@@ -73,8 +73,8 @@ public abstract class WarrantRoute extends jmri.util.JmriJFrame implements Actio
     private RosterEntry _train;
     private String _trainId = null;
     private JComboBox<String> _rosterBox = new JComboBox<String>();
-    protected JTextField _dccNumBox = new JTextField();
-    private JTextField _trainNameBox = new JTextField();
+    private JTextField _dccNumBox = new JTextField();
+    private JTextField _trainNameBox = new JTextField(6);
 
     WarrantRoute() {        
         super(false, true);
