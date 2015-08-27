@@ -191,7 +191,7 @@ public class TrainCsvManifest extends TrainCsvCommon {
             List<RollingStock> rsByLocation = CarManager.instance().getByLocationList();
             List<Car> cList = new ArrayList<Car>();
             for (RollingStock rs : rsByLocation) {
-                if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null) {
+                if (rs.getLocation() == rl.getLocation() && rs.getRouteLocation() == null && rs.getTrack() != null) {
                     cList.add((Car) rs);
                 }
             }
