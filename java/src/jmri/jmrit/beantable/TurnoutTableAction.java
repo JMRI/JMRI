@@ -1319,7 +1319,7 @@ public class TurnoutTableAction extends AbstractTableAction {
                     t = InstanceManager.turnoutManagerInstance().provideTurnout(sName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(sName);
+                    handleCreateException(ex, sName);
                     return; // without creating       
                 }
 
@@ -1376,13 +1376,20 @@ public class TurnoutTableAction extends AbstractTableAction {
         }
     }
 
-    void handleCreateException(String sysName) {
-        javax.swing.JOptionPane.showMessageDialog(addFrame,
-                java.text.MessageFormat.format(
-                        rb.getString("ErrorTurnoutAddFailed"),
-                        new Object[]{sysName}),
-                rb.getString("ErrorTitle"),
-                javax.swing.JOptionPane.ERROR_MESSAGE);
+    void handleCreateException(Exception ex, String sysName) {
+        if (ex.getMessage() != null) { 
+            javax.swing.JOptionPane.showMessageDialog(addFrame,
+                    ex.getMessage(),
+                    rb.getString("ErrorTitle"),
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } else {
+            javax.swing.JOptionPane.showMessageDialog(addFrame,
+                    java.text.MessageFormat.format(
+                            rb.getString("ErrorTurnoutAddFailed"),
+                            new Object[]{sysName}),
+                    rb.getString("ErrorTitle"),
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private boolean noWarn = false;

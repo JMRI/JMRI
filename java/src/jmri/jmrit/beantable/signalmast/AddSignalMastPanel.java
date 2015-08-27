@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.NmraPacket;
 import jmri.SignalAppearanceMap;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -1155,7 +1156,7 @@ public class AddSignalMastPanel extends JPanel {
             return false;
         }
 
-        if (address < 1 || address > 2048) {
+        if (address < NmraPacket.accIdLowLimit || address > NmraPacket.accIdAltHighLimit) {
             JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressOutOfRange"));
             log.error("invalid address " + address);
             return false;

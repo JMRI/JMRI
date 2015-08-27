@@ -789,7 +789,7 @@ public class LightTableAction extends AbstractTableAction {
             g = InstanceManager.lightManagerInstance().newLight(sName, uName);
         } catch (IllegalArgumentException ex) {
             // user input no good
-            handleCreateException(sName);
+            handleCreateException(ex, sName);
             return; // without creating       
         }
         // set control information if any
@@ -838,7 +838,7 @@ public class LightTableAction extends AbstractTableAction {
                     g = InstanceManager.lightManagerInstance().newLight(sxName, uxName);
                 } catch (IllegalArgumentException ex) {
                     // user input no good
-                    handleCreateException(sName);
+                    handleCreateException(ex, sName);
                     return; // without creating any more Lights     
                 }
             }
@@ -924,7 +924,7 @@ public class LightTableAction extends AbstractTableAction {
         lightControlTableModel.fireTableDataChanged();
     }
 
-    void handleCreateException(String sysName) {
+    void handleCreateException(Exception ex, String sysName) {
         javax.swing.JOptionPane.showMessageDialog(addFrame,
                 java.text.MessageFormat.format(
                         rb.getString("ErrorLightAddFailed"),

@@ -1561,6 +1561,7 @@ public class RouteTableAction extends AbstractTableAction {
         return false;
     }
 
+    @SuppressWarnings("null")
     int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
@@ -1573,7 +1574,14 @@ public class RouteTableAction extends AbstractTableAction {
             }
             String cSystemName = prefix + numConds + "T";
             String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            Conditional c = null;
+            try {
+                c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            } catch (Exception ex) {
+                // user input no good
+                handleCreateException(cSystemName);
+                return (Integer) null; // without creating any 
+            }
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             c.setAction(cloneActionList(actionList, option));
@@ -1585,6 +1593,7 @@ public class RouteTableAction extends AbstractTableAction {
         return numConds;
     }
 
+    @SuppressWarnings("null")
     int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox<String> box, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
@@ -1597,7 +1606,14 @@ public class RouteTableAction extends AbstractTableAction {
             }
             String cSystemName = prefix + numConds + "T";
             String cUserName = jmriBox.getSelectedDisplayName() + numConds + "C " + uName;
-            Conditional c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            Conditional c = null;
+            try {
+                c = InstanceManager.conditionalManagerInstance().createNewConditional(cSystemName, cUserName);
+            } catch (Exception ex) {
+                // user input no good
+                handleCreateException(cSystemName);
+                return (Integer) null; // without creating any 
+            }
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
             c.setAction(cloneActionList(actionList, option));
@@ -1609,6 +1625,15 @@ public class RouteTableAction extends AbstractTableAction {
         return numConds;
     }
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                        rb.getString("ErrorLightAddFailed"),
+                        new Object[]{sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     ConditionalVariable cloneVariable(ConditionalVariable v) {
         return new ConditionalVariable(v.isNegated(), v.getOpern(), v.getType(), v.getName(), v.doTriggerActions());
     }

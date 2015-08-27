@@ -976,7 +976,14 @@ public class LogixTableAction extends AbstractTableAction {
                 return;
             }
             // check if a Logix with this name already exists
-            Logix x = _logixManager.getBySystemName(sName);
+            Logix x = null;
+            try {
+                x = _logixManager.getBySystemName(sName);
+            } catch (Exception ex) {
+                // user input no good
+                handleCreateException(sName);
+                return; // without creating       
+            }
             if (x != null) {
                 // Logix already exists
                 javax.swing.JOptionPane.showMessageDialog(addLogixFrame, rbx
@@ -1002,6 +1009,14 @@ public class LogixTableAction extends AbstractTableAction {
         prefMgr.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
     }
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addLogixFrame,
+                java.text.MessageFormat.format(
+                        rb.getString("ErrorLogixAddFailed"),
+                        new Object[]{sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
     // *********** Methods for Edit Logix Window ********************
     /**
      * Responds to the Edit button pressed in Logix table

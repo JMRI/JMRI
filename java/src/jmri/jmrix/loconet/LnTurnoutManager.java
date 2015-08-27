@@ -81,7 +81,7 @@ public class LnTurnoutManager extends jmri.managers.AbstractTurnoutManager imple
         _useOffSwReqAsConfirmation = true;
     }
 
-    public Turnout createNewTurnout(String systemName, String userName) {
+    public Turnout createNewTurnout(String systemName, String userName) throws IllegalArgumentException {
         int addr;
         try {
             addr = Integer.valueOf(systemName.substring(getSystemPrefix().length() + 1)).intValue();

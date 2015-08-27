@@ -52,6 +52,10 @@ import org.slf4j.LoggerFactory;
  */
 public class NmraPacket {
 
+    static final public int accIdLowLimit = 1;
+    static final public int accIdHighLimit = 2044;
+    static final public int accIdAltHighLimit = 2048;
+    
     /**
      * Create a packet containing a one-byte instruction.
      */
@@ -340,7 +344,7 @@ public class NmraPacket {
     public static byte[] accSignalDecoderPkt(int outputAddr, int aspect) {
 
         if (outputAddr < 1 || outputAddr > 2044) {
-            log.error("invalid address " + outputAddr);
+            log.error("invalid signal decoder address " + outputAddr);
             return null;
         }
 
@@ -403,7 +407,7 @@ public class NmraPacket {
     public static byte[] altAccSignalDecoderPkt(int outputAddr, int aspect) {
 
         if (outputAddr < 1 || outputAddr > 2048) {
-            log.error("invalid address " + outputAddr);
+            log.error("invalid signal decoder address " + outputAddr);
             return null;
         }
 
@@ -417,7 +421,7 @@ public class NmraPacket {
     protected static byte[] accSignalDecoderPktCommon(int lowAddr, int boardAddr, int aspect) {
 
         if (aspect < 0 || aspect > 31) {
-            log.error("invalid aspect " + aspect);
+            log.error("invalid signal decoder aspect " + aspect);
             return null;
         }
 
