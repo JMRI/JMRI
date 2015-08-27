@@ -343,7 +343,7 @@ public class NmraPacket {
      */
     public static byte[] accSignalDecoderPkt(int outputAddr, int aspect) {
 
-        if (outputAddr < 1 || outputAddr > 2044) {
+        if (outputAddr < accIdLowLimit || outputAddr > accIdHighLimit) {
             log.error("invalid signal decoder address " + outputAddr);
             return null;
         }

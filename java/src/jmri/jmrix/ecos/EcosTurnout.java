@@ -1,6 +1,7 @@
 // EcosTurnout.java
 package jmri.jmrix.ecos;
 
+import jmri.NmraPacket;
 import jmri.Turnout;
 import jmri.implementation.AbstractTurnout;
 import org.slf4j.Logger;
@@ -41,6 +42,11 @@ public class EcosTurnout extends AbstractTurnout
     public EcosTurnout(int number, String prefix, EcosTrafficController etc, EcosTurnoutManager etm) {
         super(prefix + "T" + number);
         _number = number;
+        if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
+            throw new IllegalArgumentException("Turnout value: " + _number 
+                    + " not in the range " + NmraPacket.accIdLowLimit + " to " 
+                    + NmraPacket.accIdHighLimit);
+        }
         this.prefix = prefix;
         tc = etc;
         tm = etm;

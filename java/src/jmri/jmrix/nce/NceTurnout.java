@@ -37,6 +37,11 @@ public class NceTurnout extends AbstractTurnout {
         this.tc = tc;
         this.prefix = p + "T";
         _number = i;
+        if (_number < NmraPacket.accIdLowLimit || _number > NmraPacket.accIdHighLimit) {
+            throw new IllegalArgumentException("Turnout value: " + _number 
+                    + " not in the range " + NmraPacket.accIdLowLimit + " to " 
+                    + NmraPacket.accIdHighLimit);
+        }
         // At construction, register for messages
         initialize();
     }
