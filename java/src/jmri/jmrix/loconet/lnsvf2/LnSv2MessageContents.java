@@ -209,9 +209,9 @@ public class LnSv2MessageContents {
     /**
      *
      * @param m - LocoNet message to be verified as an SV Programming Format 2 message
-     *      with the specified &lt&CMD&gt& value
+     *      with the specified &lt;SV_CMD&gt; value
      * @param svCmd - SV Programming Format 2 command to expect
-     * @return true if message is an SV Programming Format 2 message of the specified &lt&CMD&gt&,
+     * @return true if message is an SV Programming Format 2 message of the specified &lt;SV_CMD&gt;,
      *      else false.
      */
     public static boolean isLnMessageASpecificSv2Command(LocoNetMessage m, Sv2Command svCmd) {
@@ -265,7 +265,7 @@ public class LnSv2MessageContents {
     }
     
     /**
-     * Interprets a LocoNet message to determine its SV Programming Format 2 &lt&CMD&gt&.
+     * Interprets a LocoNet message to determine its SV Programming Format 2 &lt;SV_CMD&gt;.
      * If the message is not an SV Programming Format 2 message, returns null
      * @param m - LocoNet message containing SV Programming Format 2 message
      * @return - Sv2Command found in the SV Programming Format 2 message
@@ -578,15 +578,16 @@ public class LnSv2MessageContents {
     }
     /**
      * Create a LocoNet message containing an SV Programming Format 2 message
-     * @param source - source device address (7 bit, for &lt&SRC&gt&)
-     * @param command - SV Programming Format 2 command number (for &lt&CMD&gt&
-     * @param destination = SV format 2 destination address (for &lt&DST_L&gt& and &lt&DST_H&gt&
-     * @param svNum - SV Programming Format 2 16-bit SV number (for &lt&SVN_L&gt& and &lt&SVN_H&gt&)
-     * @param d1 - SV Programming Format 2 first data value (for &lt&D1&gt&)
-     * @param d2 - SV Programming Format 2 second data value (for &lt&D2&gt&)
-     * @param d3 - SV Programming Format 2 third data value (for &lt&D3&gt&)
-     * @param d4 - SV Programming Format 2 fourth data value (for &lt&D4&gt&)
+     * @param source - source device address (7 bit, for &lt;SRC&gt;)
+     * @param command - SV Programming Format 2 command number (for &lt;SV_CMD&gt;)
+     * @param destination = SV format 2 destination address (for &lt;DST_L&gt; and &lt;DST_H&gt;)
+     * @param svNum - SV Programming Format 2 16-bit SV number (for &lt;SVN_L&gt; and &lt;SVN_H&gt;)
+     * @param d1 - SV Programming Format 2 first data value (for &lt;D1&gt;)
+     * @param d2 - SV Programming Format 2 second data value (for &lt;D2&gt;)
+     * @param d3 - SV Programming Format 2 third data value (for &lt;D3&gt;)
+     * @param d4 - SV Programming Format 2 fourth data value (for &lt;D4&gt;)
      * @return - LocoNet message for the requested message
+     * @throws IllegalArgumentException of command is not a valid SV Programming Format 2 &lt;SV_CMD&gt; value
      */
     public static LocoNetMessage createSv2Message (int source, int command, 
             int destination, int svNum, int d1, int d2, int d3, int d4) 
