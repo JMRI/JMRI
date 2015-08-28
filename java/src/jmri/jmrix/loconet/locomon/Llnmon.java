@@ -41,6 +41,7 @@ import jmri.util.StringUtil;
  * permission.
  * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
+ * @author B. Milhaupt  Copyright 2015
  * @version $Revision$
  */
 public class Llnmon {
@@ -2043,7 +2044,7 @@ public class Llnmon {
                         if (svmc != null) {
                             Locale defaultLocale = new Locale.Builder().build();
                             try {
-                                svReply = svmc.interpretSv2Message(defaultLocale);  // attempt to force display of english, instead of user-specified Locale
+                                svReply = svmc.toString(defaultLocale);  // attempt to force display of english, instead of user-specified Locale
                             } catch (java.lang.IllegalArgumentException e) {
                                 // message is not a properly-formatted SV2 message.  Ignore the exception.
                             }

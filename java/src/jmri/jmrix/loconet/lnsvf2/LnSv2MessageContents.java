@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+// LnSv2MessageContents
 package jmri.jmrix.loconet.lnsvf2;
 
 import jmri.jmrix.loconet.LnConstants;
@@ -13,13 +9,19 @@ import java.util.*;
 import java.text.*;
 
 /**
- *
- * @author given
+ * Supporting class for LocoNet SV Programming Format 2 messaging
+ * 
+ * Some of the message formats used in this class are Copyright Digitrax, Inc.
+ * and used with permission as part of the JMRI project. That permission does
+ * not extend to uses in other software products. If you wish to use this code,
+ * algorithm or these message formats outside of JMRI, please contact Digitrax
+ * Inc for separate permission.
+
+ * @author B. Milhaupt Copyright (C) 2015
  */
 public class LnSv2MessageContents {
     private int src;
     private int sv_cmd;
-    private int sv_type;
     private int dst_l;
     private int dst_h;
     private int dst;
@@ -31,7 +33,11 @@ public class LnSv2MessageContents {
     private int d3;
     private int d4;
 
+    // LocoNet "SV 2 format" helper definitions: length byte value for OPC_PEER_XFER message
+    public final static int SV2_LENGTH_ELEMENT_VALUE = 0x10;
+    
     // LocoNet "SV 2 format" helper definitions: indexes into the LocoNet message
+    public final static int SV2_LENGTH_ELEMENT_INDEX = 1;
     public final static int SV2_SRC_ELEMENT_INDEX = 2;
     public final static int SV2_SV_CMD_ELEMENT_INDEX = 3;
     public final static int SV2_SV_TYPE_ELEMENT_INDEX = 4;
@@ -47,6 +53,7 @@ public class LnSv2MessageContents {
     public final static int SV2_SVD4_ELEMENT_INDEX = 14;
     
 //  helpers for decoding SV format 2 messages (versus other OCP_PEER_XFER messages with length 0x10)
+    public final static int SV2_SRC_ELEMENT_MASK = 0x7f;
     public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_MASK = 0x70;
     public final static int SV2_SVX1_ELEMENT_VALIDITY_CHECK_VALUE = 0x10;
     public final static int SV2_SV_DST_L_DSTLX7_CHECK_MASK = 0x01;
@@ -94,6 +101,12 @@ public class LnSv2MessageContents {
     public final static int SV2_SV_CMD_REPLY_BIT_NUBMER = 0x6;
     public final static int SV2_SV_CMD_REPLY_BIT_MASK = (2^SV2_SV_CMD_REPLY_BIT_NUBMER);
 
+    /**
+     * Create a new LnSV2MessageContents object from a LocoNet message
+     * @param m LocoNet message containing an SV Programming Format 2 message
+     * @throws IllegalArgumentException if the LocoNet message is not a valid, supported 
+     *      SV Programming Format 2 message
+     */
     public LnSv2MessageContents(LocoNetMessage m)
             throws java.lang.IllegalArgumentException {
         log.debug("interpreting a LocoNet message - may be an SV2 message");  // NOI18N
@@ -105,7 +118,6 @@ public class LnSv2MessageContents {
         int svx1 = m.getElement(SV2_SVX1_ELEMENT_INDEX);
         int svx2 = m.getElement(SV2_SVX2_ELEMENT_INDEX);
         sv_cmd = m.getElement(SV2_SV_CMD_ELEMENT_INDEX);
-        sv_type = m.getElement(SV2_SV_TYPE_ELEMENT_INDEX);
         dst_l = m.getElement(SV2_SV_DST_L_ELEMENT_INDEX)
                 + (((svx1 & SV2_SV_DST_L_DSTLX7_CHECK_MASK) == SV2_SV_DST_L_DSTLX7_CHECK_MASK)
                 ? 0x80 : 0);
@@ -140,6 +152,13 @@ public class LnSv2MessageContents {
         return;
     }
 
+    /**
+     * Check a LocoNet message to determine if it is a valid SV Programming Format 
+     *      2 message.
+     * @param m - LocoNet message to check
+     * @return true if Loconet message m is a supported SV Programming Format 2 
+     *      message, else false.
+     */
     public static boolean isSupportedSv2Message(LocoNetMessage m) {
         // must be OPC_PEER_XFER opcode
         if (m.getElement(0) != LnConstants.OPC_PEER_XFER) { 
@@ -187,7 +206,15 @@ public class LnSv2MessageContents {
         return false;
     }
     
-    public static boolean isSupportedSv2Message(LocoNetMessage m, Sv2MessageType svMsgType) {
+    /**
+     *
+     * @param m - LocoNet message to be verified as an SV Programming Format 2 message
+     *      with the specified &lt&CMD&gt& value
+     * @param svCmd - SV Programming Format 2 command to expect
+     * @return true if message is an SV Programming Format 2 message of the specified &lt&CMD&gt&,
+     *      else false.
+     */
+    public static boolean isLnMessageASpecificSv2Command(LocoNetMessage m, Sv2Command svCmd) {
         // must be OPC_PEER_XFER opcode
         if (m.getElement(0) != LnConstants.OPC_PEER_XFER) { 
             log.debug ("cannot be SV2 message because not OPC_PEER_XFER");  // NOI18N
@@ -228,7 +255,7 @@ public class LnSv2MessageContents {
         // check the <SV_CMD> value
         if (isSupportedSv2Command(m.getElement(SV2_SV_CMD_ELEMENT_INDEX))) {
             log.debug("LocoNet message is a supported SV Format 2 message");  // NOI18N
-            if (extractMessageType(m).equals(svMsgType)) {
+            if (extractMessageType(m).equals(svCmd)) {
                 log.debug("LocoNet message is the specified SV Format 2 message");  // NOI18N
                 return true;
             }
@@ -237,10 +264,16 @@ public class LnSv2MessageContents {
         return false;
     }
     
-    public static Sv2MessageType extractMessageType(LocoNetMessage m) {
+    /**
+     * Interprets a LocoNet message to determine its SV Programming Format 2 &lt&CMD&gt&.
+     * If the message is not an SV Programming Format 2 message, returns null
+     * @param m - LocoNet message containing SV Programming Format 2 message
+     * @return - Sv2Command found in the SV Programming Format 2 message
+     */
+    public static Sv2Command extractMessageType(LocoNetMessage m) {
         if (isSupportedSv2Message(m)) {
             int msgCmd = m.getElement(SV2_SV_CMD_ELEMENT_INDEX);
-            for (Sv2MessageType s: Sv2MessageType.values()) {
+            for (Sv2Command s: Sv2Command.values()) {
                 if (s.getCmd() == msgCmd) {
                     log.debug("LocoNet message has SV2 message command " + msgCmd);  // NOI18N
                     return s;
@@ -250,12 +283,28 @@ public class LnSv2MessageContents {
         return null;
     }
     
-    public String interpretSv2Message() {
+    /**
+     * Interprets the SV Programming Format 2 message into a human-readable string.
+     * 
+     * @return - a String containing a human-readable version of the SV Programming 
+     *      Format 2 message
+     */
+    @Override
+    public String toString() {
         Locale l = Locale.getDefault();
-        return interpretSv2Message(l);
+        return LnSv2MessageContents.this.toString(l);
     }
     
-    public String interpretSv2Message(Locale locale) {
+    /**
+     * Interprets the SV Programming Format 2 message into a human-readable string.
+     * 
+     * @param locale - locale to use for the human-readable string
+     * @return - a String containing a human-readable version of the SV Programming 
+     *      Format 2 message, in the language specified by the Locale, if the 
+     *      properties have been translated to that Locale, else in the deafult 
+     *      English language.
+     */
+    public String toString(Locale locale) {
         String returnString;
         log.debug("interpreting an SV2 message - cmd is "+sv_cmd);  // NOI18N
         
@@ -448,6 +497,12 @@ public class LnSv2MessageContents {
         return returnString+"\n";  // NOI18N
     }
 
+    /**
+     *
+     * @param possibleCmd - integer to be compared to the command list
+     * @return  true if the possibleCmd value is one of the supported SV 
+     *      Programming Format 2 commands
+     */
     public static boolean isSupportedSv2Command(int possibleCmd) {
         switch (possibleCmd) {
             case (SV_CMD_WRITE_ONE):
@@ -474,16 +529,36 @@ public class LnSv2MessageContents {
         }
     }    
     
+    /**
+     *
+     * @return true if the SV2 message specifies a valid (known) SV Programming 
+     *      Format 2 command.
+     */
     public boolean isSupportedSv2Command() {
         return isSupportedSv2Command(sv_cmd);
     }
     
+    /**
+     *
+     * @return true if the SV2 message is a SV2 Read One Reply message
+     */
     public boolean isSupportedSv2ReadOneReply() {
         return (sv_cmd == SV_CMD_REPORT_ONE);
     }
+
+    /**
+     *
+     * @return true of the SV2 message is a SV2 Read Four Reply message
+     */
     public boolean isSupportedSv2ReadFourReply() {
-        return (sv_cmd == SV_CMD_REPORT_ONE);
+        return (sv_cmd == SV_CMD_REPORT_FOUR);
     }
+
+    /**
+     *
+     * @return true if the SV2 message is a SV2 Read One Reply message or a SV2
+     * Read Four Reply message
+     */
     public boolean isSupportedSv2ReadOneReplyOrSv2ReadFourReply() {
         return ((sv_cmd == SV_CMD_REPORT_ONE)
                 ||
@@ -493,11 +568,67 @@ public class LnSv2MessageContents {
     // initialize logging
     static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
     
+    /**
+     * Get the data from a SVs Single Read Reply message.  May also be used to
+     * return the effective SV value reported in a SV2 Single Write Reply message.
+     * @return the <D1> value from the SV2 message
+     */
     public int getSingleReadReportData() {
         return d1;
     }
+    /**
+     * Create a LocoNet message containing an SV Programming Format 2 message
+     * @param source - source device address (7 bit, for &lt&SRC&gt&)
+     * @param command - SV Programming Format 2 command number (for &lt&CMD&gt&
+     * @param destination = SV format 2 destination address (for &lt&DST_L&gt& and &lt&DST_H&gt&
+     * @param svNum - SV Programming Format 2 16-bit SV number (for &lt&SVN_L&gt& and &lt&SVN_H&gt&)
+     * @param d1 - SV Programming Format 2 first data value (for &lt&D1&gt&)
+     * @param d2 - SV Programming Format 2 second data value (for &lt&D2&gt&)
+     * @param d3 - SV Programming Format 2 third data value (for &lt&D3&gt&)
+     * @param d4 - SV Programming Format 2 fourth data value (for &lt&D4&gt&)
+     * @return - LocoNet message for the requested message
+     */
+    public static LocoNetMessage createSv2Message (int source, int command, 
+            int destination, int svNum, int d1, int d2, int d3, int d4) 
+        throws java.lang.IllegalArgumentException {
+            if ( ! isSupportedSv2Command(command)) {
+                throw new java.lang.IllegalArgumentException("Command is not a supported SV2 command");
+            }
+        LocoNetMessage m = new LocoNetMessage(SV2_LENGTH_ELEMENT_VALUE);
+        m.setOpCode(LnConstants.OPC_PEER_XFER);
+        m.setElement(SV2_LENGTH_ELEMENT_INDEX, SV2_LENGTH_ELEMENT_VALUE);
+        m.setElement(SV2_SRC_ELEMENT_INDEX, (source & SV2_SRC_ELEMENT_MASK));
+        m.setElement(SV2_SV_CMD_ELEMENT_INDEX, command);
+        m.setElement(SV2_SV_TYPE_ELEMENT_INDEX, SV2_SV_TYPE_ELEMENT_VALIDITY_CHECK_VALUE);
+        
+        int svx1 = SV2_SVX1_ELEMENT_VALIDITY_CHECK_VALUE;
+        svx1 = svx1 + (((destination & 0x80) == 0x80) ? SV2_SV_DST_L_DSTLX7_CHECK_MASK : 0);
+        svx1 = svx1 + (((destination & 0x8000) == 0x8000) ? SV2_SV_DST_H_DSTHX7_CHECK_MASK : 0);
+        svx1 = svx1 + (((svNum & 0x80) == 0x80) ? SV2_SV_ADRL_SVADRL7_CHECK_MASK : 0);
+        svx1 = svx1 + (((svNum & 0x8000) == 0x8000) ? SV2_SV_ADRH_SVADRH7_CHECK_MASK : 0);
+        m.setElement(SV2_SVX1_ELEMENT_INDEX,svx1);
+        
+        m.setElement(SV2_SV_DST_L_ELEMENT_INDEX, (destination & 0x7f));
+        m.setElement(SV2_SV_DST_H_ELEMENT_INDEX, ((destination >> 8) & 0x7f));
+        m.setElement(SV2_SV_ADRL_ELEMENT_INDEX, (svNum & 0x7f));
+        m.setElement(SV2_SV_ADRH_ELEMENT_INDEX, ((svNum >> 8) & 0x7f));
+        
+        int svx2 = SV2_SVX2_ELEMENT_VALIDITY_CHECK_VALUE;
+        svx2 = svx2 + (((d1 & 0x80) == 0x80) ? SV2_SV_D1_D1X7_CHECK_MASK : 0);
+        svx2 = svx2 + (((d2 & 0x80) == 0x80) ? SV2_SV_D2_D2X7_CHECK_MASK : 0);
+        svx2 = svx2 + (((d3 & 0x80) == 0x80) ? SV2_SV_D3_D3X7_CHECK_MASK : 0);
+        svx2 = svx2 + (((d4 & 0x80) == 0x80) ? SV2_SV_D4_D4X7_CHECK_MASK : 0);
+        m.setElement(SV2_SVX2_ELEMENT_INDEX,svx2);
+        
+        m.setElement(SV2_SVD1_ELEMENT_INDEX, (d1 & 0x7f));
+        m.setElement(SV2_SVD2_ELEMENT_INDEX, (d2 & 0x7f));
+        m.setElement(SV2_SVD3_ELEMENT_INDEX, (d3 & 0x7f));
+        m.setElement(SV2_SVD4_ELEMENT_INDEX, (d4 & 0x7f));
+        
+        return m;
+    }
 
-    public enum Sv2MessageType {
+    public enum Sv2Command {
         SV2_WRITE_ONE (0x01),
         SV2_QUERY_ONE (0x02),
         SV2_WRITE_ONE_MASKED (0x03),
@@ -519,9 +650,13 @@ public class LnSv2MessageContents {
         
         private int cmd;
         
-        Sv2MessageType(int cmd) {
+        Sv2Command(int cmd) {
             this.cmd = cmd;
         }
         int getCmd() {return cmd;}
+        
+        public static int getCmd(Sv2Command mt) {
+            return mt.getCmd();
+        }
     }
 }
