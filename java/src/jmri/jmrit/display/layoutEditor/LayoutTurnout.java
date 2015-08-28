@@ -1768,10 +1768,9 @@ public class LayoutTurnout {
                     = new java.beans.PropertyChangeListener() {
                         public void propertyChange(java.beans.PropertyChangeEvent e) {
                             if(secondNamedTurnout != null){
-                                if(e.getSource().equals(secondNamedTurnout.getBean())){
+                                if(e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
+                                            && e.getOldValue().equals(namedTurnout.getBean().getState())){
                                     namedTurnout.getBean().setCommandedState((int)e.getNewValue());
-                                } else if(e.getSource().equals(namedTurnout.getBean())){
-                                    secondNamedTurnout.getBean().setCommandedState((int)e.getNewValue());
                                 }
                             }
                             layoutEditor.redrawPanel();
