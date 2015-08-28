@@ -6,6 +6,7 @@ import edu.umd.cs.findbugs.annotations.DefaultAnnotation;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import edu.umd.cs.findbugs.annotations.Nullable;
 import edu.umd.cs.findbugs.annotations.SuppressWarnings;
+import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -82,6 +83,24 @@ public class Bundle extends jmri.jmrix.loconet.Bundle {
     }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(LnSv2MessageContents.class.getName());
+
+    /**
+     * Merges user data with a translated string for a given key in a given
+     * locale from the package resource bundle or parent.
+     * <p>
+     * Uses the transformation conventions of the Java MessageFormat utility.
+     * <p>
+     * Note that this is intentionally package-local access.
+     *
+     * @see java.text.MessageFormat
+     * @param locale The locale to be used
+     * @param key    Bundle key to be translated
+     * @param subs   One or more objects to be inserted into the message
+     * @return Internationalized text
+     */
+    static String getMessage(Locale locale, String key, Object... subs) {
+        return b.handleGetMessage(locale, key, subs);
+    }
 
 }
 

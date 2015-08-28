@@ -1,6 +1,7 @@
 // Llnmon.java
 package jmri.jmrix.loconet.locomon;
 
+import java.util.Locale;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.StringUtil;
@@ -2040,8 +2041,9 @@ public class Llnmon {
                             // message is not an SV2 message.  Ignore the exception.
                         }
                         if (svmc != null) {
+                            Locale defaultLocale = new Locale.Builder().build();
                             try {
-                                svReply = svmc.interpretSv2Message();
+                                svReply = svmc.interpretSv2Message(defaultLocale);  // attempt to force display of english, instead of user-specified Locale
                             } catch (java.lang.IllegalArgumentException e) {
                                 // message is not a properly-formatted SV2 message.  Ignore the exception.
                             }
