@@ -2176,6 +2176,11 @@ public class TrainBuilder extends TrainCommon {
                         if (!_notRoutable.contains(car)) {
                             _notRoutable.add(car);
                         }
+                        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
+                        addLine(_buildReport, FIVE, MessageFormat.format(
+                                Bundle.getMessage("buildWarningCarNotRoutable"), new Object[]{car.toString(), car.getLocationName(), 
+                                    car.getTrackName(), car.getFinalDestinationName(), car.getFinalDestinationTrackName()}));
+                        addLine(_buildReport, FIVE, BLANK_LINE); // add line when in detailed report mode
                         // move this car, routing failed!
                         findDestinationAndTrack(car, rl, routeIndex, _routeList.size());
                         continue;
