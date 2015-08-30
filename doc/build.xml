@@ -19,10 +19,13 @@
     <property name="common.content" value="common-db5" />
     <property name="src.common.dir" value="${doc.dir}/${common.content}" />
     <property name="output.dir" value="${doc.dir}/output" />
+    <property name="website.dir" value="${output.dir}/publish" />
+    <property name="javahelp.dir" value="${output.dir}/javahelp" />
     <property name="docbook.xsl" value="docbook-xsl-ns-1.78.1" />
     <property name="docbook.xsl.dir" value="${doc.dir}/${docbook.xsl}" />
     <property name="html.single.stylesheet" value="${docbook.xsl.dir}/html/onechunk.xsl" />
     <property name="html.chunked.stylesheet" value="${docbook.xsl.dir}/html/chunk.xsl" />
+    <property name="javahelp.stylesheet" value="${docbook.xsl.dir}/javahelp/javahelp.xsl" />
     <property name="pdf.stylesheet" value="${docbook.xsl.dir}/fo/docbook.xsl" />
     <property name="fop.home" value="lib/fop-2.0" />
 
@@ -131,7 +134,7 @@
         <echo message="Use -projecthelp to get a list of the available targets." />
     </target>
 
-    <target name="build" depends="build-html-chunked, build-html-single, build-pdf" description="Builds documents." />
+    <target name="build" depends="build-html-chunked, build-html-single, build-javahelp, build-pdf" description="Builds documents." />
 
     <target name="clean" depends="-clean-output-dir, -clean-build-dir" description="Cleans up generated files.">
     </target>
@@ -144,8 +147,20 @@
         <delete dir="${output.dir}" />
     </target>
 
-    <target name="-create-output-dir" description="Generates output dir.">
-        <mkdir dir="${output.dir}" />
+    <target name="-clean-website-dir" description="Cleans output dir.">
+        <delete dir="${website.dir}" />
+    </target>
+
+    <target name="-create-website-dir" description="Generates output dir.">
+        <mkdir dir="${website.dir}" />
+    </target>
+
+    <target name="-clean-javahelp-dir" description="Cleans output dir.">
+        <delete dir="${javahelp.dir}" />
+    </target>
+
+    <target name="-create-javahelp-dir" description="Generates output dir.">
+        <mkdir dir="${javahelp.dir}" />
     </target>
 
     <target name="-create-build-dir" description="Generates and populate build dir.">
@@ -180,7 +195,7 @@
         </sequential>
     </macrodef>
     
-    <target name="build-html-chunked" depends="-clean-output-dir, -create-build-dir, -create-output-dir"
+    <target name="build-html-chunked" depends="-clean-website-dir, -create-build-dir, -create-website-dir"
             description="Generates HTML5 multiple document files">
         <echo message="Building HTML5 multiple document output" />
             
@@ -200,7 +215,7 @@
         -->
         <!-- Transfer to HTML -->
         <xslt style="${html.chunked.stylesheet}" basedir="${build.dir}"
-              destdir="${output.dir}">
+              destdir="${website.dir}">
             <selector refid="src.books" />
             <param name="html.stylesheet" expression="style.css" />
             <param name="docbook.css.source" expression="" />
@@ -214,7 +229,7 @@
         <remove-empty-output />
     </target>
     
-    <target name="build-html-single" depends="-clean-output-dir, -create-build-dir, -create-output-dir"
+    <target name="build-html-single" depends="-clean-website-dir, -create-build-dir, -create-website-dir"
             description="Generates HTML5 single document files">
         <echo message="Building HTML5 single document output" />
             
@@ -234,7 +249,7 @@
         -->
         <!-- Transfer to HTML -->
         <xslt style="${html.single.stylesheet}" extension=".html" basedir="${build.dir}"
-              destdir="${output.dir}">
+              destdir="${website.dir}">
             <selector refid="src.books" />
             <param name="html.stylesheet" expression="style.css" />
             <param name="root.filename" expression="index-single" />
@@ -249,7 +264,18 @@
         <remove-empty-output />
     </target>
     
-    <target name="build-pdf" depends="-create-build-dir, -create-output-dir" description="Generates PDF files from DocBook XML">
+    <target name="build-javahelp" depends="-clean-javahelp-dir, -create-build-dir, -create-javahelp-dir" description="Generated JavaHelp from DocBook XML">
+        <xslt style="${javahelp.stylesheet}" extension=".html" basedir="${build.dir}" destdir="${javahelp.dir}">
+            <selector refid="src.books" />
+            <outputproperty name="indent" value="yes" />
+            <classpath refid="xalan.classpath" />
+            <sysproperty key="org.apache.xerces.xni.parser.XMLParserConfiguration"
+                         value="org.apache.xerces.parsers.XIncludeParserConfiguration" />
+        </xslt>
+        <remove-empty-output />
+    </target>
+
+    <target name="build-pdf" depends="-create-build-dir, -create-website-dir" description="Generates PDF files from DocBook XML">
         <xslt style="${pdf.stylesheet}" extension=".letter.fo" 
               basedir="${build.dir}" destdir="${build.dir}">
             <selector refid="src.books" />
@@ -272,7 +298,7 @@
             <classpath refid="fop.classpath" />
         </taskdef>
 
-        <fop format="application/pdf" outdir="${output.dir}">
+        <fop format="application/pdf" outdir="${website.dir}">
             <fileset dir="${build.dir}" includes="**/*.fo" />
         </fop>
     </target>
