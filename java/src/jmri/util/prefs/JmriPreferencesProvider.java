@@ -358,7 +358,7 @@ public final class JmriPreferencesProvider {
                         });
                     }
 
-                    if (!JmriPreferencesProvider.this.backedUp) {
+                    if (!JmriPreferencesProvider.this.backedUp && file.exists()) {
                         log.debug("Backing up {}", file);
                         FileUtil.backup(file);
                         JmriPreferencesProvider.this.backedUp = true;

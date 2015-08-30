@@ -108,7 +108,6 @@ public class JmriPreferencesProviderTest extends TestCase {
      * Test of findCNBForClass method, of class JmriPreferencesProvider.
      */
     public void testFindCNBForClass() {
-        System.out.println("findCNBForClass");
         Class<?> cls = this.getClass();
         String expResult = "jmri-util-prefs";
         String result = JmriPreferencesProvider.findCNBForClass(cls);
