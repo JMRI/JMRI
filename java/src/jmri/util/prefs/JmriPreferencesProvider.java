@@ -28,15 +28,15 @@ import org.slf4j.LoggerFactory;
  *
  * There are two Properties files per {@link jmri.profile.Profile} and
  * {@link jmri.util.node.NodeIdentity}, both stored in the directory
- * <code>profile:preferences</code>:
+ * <code>profile:profile</code>:
  * <ul>
- * <li><code>preferences.properties</code> preferences that are shared across
+ * <li><code>profile.properties</code> preferences that are shared across
  * multiple nodes for a single profile. An example of such a preference would be
  * the Railroad Name preference.</li>
- * <li><code>&lt;node-identity&gt;.properties</code> preferences that are
- * specific to the profile running on a specific host (&lt;node-identity&gt; is
- * the identity returned by {@link jmri.util.node.NodeIdentity#identity()}). An
- * example of such a preference would be a file location.</li>
+ * <li><code>&lt;node-identity&gt;/profile.properties</code> preferences that
+ * are specific to the profile running on a specific host (&lt;node-identity&gt;
+ * is the identity returned by {@link jmri.util.node.NodeIdentity#identity()}).
+ * An example of such a preference would be a file location.</li>
  * </ul>
  *
  * @author Randall Wood 2015
