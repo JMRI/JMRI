@@ -28,6 +28,7 @@ public class PackageTest extends TestCase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.util.prefs.PackageTest");   // no tests in this class itself
 
+        suite.addTest(JmriConfigurationProviderTest.suite());
         suite.addTest(JmriPreferencesProviderTest.suite());
 
         return suite;
