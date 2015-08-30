@@ -12,17 +12,21 @@ import javax.annotation.Nonnull;
  * completely separate set of preferences at each launch without relying on host
  * OS-specific tricks to ensure this happens.
  *
- * @author Randall Wood Copyright (C) 2013, 2014
+ * @author Randall Wood Copyright (C) 2013, 2014, 2015
  */
 public class Profile {
 
     private String name;
     private String id;
     private File path;
+    public static final String PROFILE = "profile"; // NOI18N
     protected static final String ID = "id"; // NOI18N
     protected static final String NAME = "name"; // NOI18N
     protected static final String PATH = "path"; // NOI18N
-    protected static final String PROPERTIES = "profile.properties"; // NOI18N
+    public static final String PROPERTIES = "profile.properties"; // NOI18N
+    public static final String CONFIG = "profile.xml"; // NOI18N
+    public static final String SHARED_PROPERTIES = PROFILE + "/" + PROPERTIES; // NOI18N
+    public static final String SHARED_CONFIG = PROFILE + "/" + CONFIG; // NOI18N
     public static final String CONFIG_FILENAME = "ProfileConfig.xml"; // NOI18N
 
     /**
@@ -55,7 +59,7 @@ public class Profile {
         if (!path.getName().equals(id)) {
             throw new IllegalArgumentException(id + " " + path.getName() + " do not match"); // NOI18N
         }
-        if ((new File(path, PROPERTIES)).canRead()) {
+        if (Profile.isProfile(path)) {
             throw new IllegalArgumentException("A profile already exists at " + path); // NOI18N
         }
         if (Profile.containsProfile(path)) {
@@ -72,7 +76,7 @@ public class Profile {
             throw new IllegalArgumentException(path + " is not a directory"); // NOI18N
         }
         this.save();
-        if (!(new File(path, PROPERTIES)).canRead()) {
+        if (!Profile.isProfile(path)) {
             throw new IllegalArgumentException(path + " does not contain a profile.properties file"); // NOI18N
         }
     }
@@ -95,6 +99,17 @@ public class Profile {
     }
 
     protected final void save() throws IOException {
+        ProfileProperties p = new ProfileProperties(this);
+        p.put(NAME, this.name, true);
+        p.put(ID, this.id, true);
+        this.saveXml();
+    }
+
+    /*
+     * Remove when or after support for writing ProfileConfig.xml is removed.
+     */
+    @Deprecated
+    protected final void saveXml() throws IOException {
         Properties p = new Properties();
         File f = new File(this.path, PROPERTIES);
         FileOutputStream os = null;
@@ -132,7 +147,8 @@ public class Profile {
     /**
      * @return the id
      */
-    public @Nonnull String getId() {
+    public @Nonnull
+    String getId() {
         return id;
     }
 
@@ -144,6 +160,20 @@ public class Profile {
     }
 
     private void readProfile() throws IOException {
+        ProfileProperties p = new ProfileProperties(this);
+        this.id = p.get(ID, true);
+        this.name = p.get(NAME, true);
+        if (this.id == null) {
+            this.readProfileXml();
+            this.save();
+        }
+    }
+
+    /*
+     * Remove sometime after the new profiles get entrenched (JMRI 5.0, 6.0?)
+     */
+    @Deprecated
+    private void readProfileXml() throws IOException {
         Properties p = new Properties();
         File f = new File(this.path, PROPERTIES);
         FileInputStream is = null;
@@ -256,6 +286,11 @@ public class Profile {
      */
     public static boolean isProfile(File path) {
         if (path.isDirectory()) {
+            // version 2
+            if ((new File(path, SHARED_PROPERTIES)).canRead()) {
+                return true;
+            }
+            // version 1
             if ((new File(path, PROPERTIES)).canRead()) {
                 return true;
             }

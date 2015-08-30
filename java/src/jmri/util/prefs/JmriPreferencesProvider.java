@@ -172,10 +172,10 @@ public final class JmriPreferencesProvider {
     }
 
     private File getPreferencesFile() {
-        if (this.shared || this.project == null) {
+        if (this.project == null) {
             return new File(this.getPreferencesDirectory(), "preferences.properties");
         } else {
-            return new File(this.getPreferencesDirectory(), NodeIdentity.identity() + ".properties");
+            return new File(this.getPreferencesDirectory(), Profile.PROPERTIES);
         }
     }
 
@@ -184,7 +184,10 @@ public final class JmriPreferencesProvider {
         if (this.project == null) {
             dir = new File(FileUtil.getPreferencesPath(), "preferences");
         } else {
-            dir = new File(this.project.getPath(), "preferences");
+            dir = new File(this.project.getPath(), Profile.PROFILE);
+            if (!this.shared) {
+                dir = new File(dir, NodeIdentity.identity());
+            }
         }
         FileUtil.createDirectory(dir);
         return dir;
