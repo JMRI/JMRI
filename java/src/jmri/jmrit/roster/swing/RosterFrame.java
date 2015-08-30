@@ -1440,7 +1440,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             mfg.setText(value);
             model.setText(value);
             owner.setText(value);
-            locoImage.setImagePath(value);
+            locoImage.setImagePath(null);
         } else {
             filename.setText(re.getFileName());
             dateUpdated.setText(re.getDateUpdated());
