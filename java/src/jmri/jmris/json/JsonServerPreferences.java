@@ -34,7 +34,6 @@ public class JsonServerPreferences extends Bean {
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
         Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
         try {
             if (sharedPreferences.keys().length == 0) {
                 log.info("No JsonServer preferences exist.");
@@ -55,7 +54,7 @@ public class JsonServerPreferences extends Bean {
                 migrate = false;
             }
         }
-        this.readPreferences(sharedPreferences, privatePreferences);
+        this.readPreferences(sharedPreferences);
         if (migrate) {
             try {
                 log.info("Migrating from old JsonServer preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
@@ -68,13 +67,12 @@ public class JsonServerPreferences extends Bean {
 
     public JsonServerPreferences() {
         Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
-        this.readPreferences(sharedPreferences, privatePreferences);
+        this.readPreferences(sharedPreferences);
     }
 
-    private void readPreferences(Preferences sharedPreferences, Preferences privatePreferences) {
+    private void readPreferences(Preferences sharedPreferences) {
         this.setHeartbeatInterval(sharedPreferences.getInt(HEARTBEAT_INTERVAL, this.getHeartbeatInterval()));
-        this.setPort(privatePreferences.getInt(PORT, this.getPort()));
+        this.setPort(sharedPreferences.getInt(PORT, this.getPort()));
         this.asLoadedHeartbeatInterval = this.getHeartbeatInterval();
         this.asLoadedPort = this.getPort();
     }
@@ -134,9 +132,8 @@ public class JsonServerPreferences extends Bean {
 
     public void save() {
         Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
         sharedPreferences.putInt(HEARTBEAT_INTERVAL, this.heartbeatInterval);
-        privatePreferences.putInt(PORT, this.port);
+        sharedPreferences.putInt(PORT, this.port);
     }
 
     public boolean isDirty() {

@@ -56,7 +56,6 @@ public class WebServerPreferences extends Bean {
     public WebServerPreferences(String fileName) {
         boolean migrate = false;
         Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
         try {
             if (sharedPreferences.keys().length == 0) {
                 log.info("No Webserver preferences exist.");
@@ -77,7 +76,7 @@ public class WebServerPreferences extends Bean {
                 migrate = false;
             }
         }
-        this.readPreferences(sharedPreferences, privatePreferences);
+        this.readPreferences(sharedPreferences);
         if (migrate) {
             try {
                 log.info("Migrating from old Webserver preferences in {} to new format in {}.", fileName, FileUtil.getAbsoluteFilename("profile:preferences"));
@@ -90,11 +89,10 @@ public class WebServerPreferences extends Bean {
 
     public WebServerPreferences() {
         Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
-        this.readPreferences(sharedPreferences, privatePreferences);
+        this.readPreferences(sharedPreferences);
     }
 
-    private void readPreferences(Preferences sharedPreferences, Preferences privatePreferences) {
+    private void readPreferences(Preferences sharedPreferences) {
         this.allowRemoteConfig = sharedPreferences.getBoolean(AllowRemoteConfig, this.allowRemoteConfig);
         this.clickDelay = sharedPreferences.getInt(ClickDelay, this.clickDelay);
         this.plain = sharedPreferences.getBoolean(Simple, this.plain);
@@ -114,7 +112,7 @@ public class WebServerPreferences extends Bean {
             // this is expected if sharedPreferences have not been written previously,
             // so do nothing.
         }
-        this.port = privatePreferences.getInt(Port, this.port);
+        this.port = sharedPreferences.getInt(Port, this.port);
     }
     
     public void load(Element child) {
@@ -222,7 +220,6 @@ public class WebServerPreferences extends Bean {
 
     public void save() {
         Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
-        Preferences privatePreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), false);
         sharedPreferences.putInt(ClickDelay, this.getClickDelay());
         sharedPreferences.putInt(RefreshDelay, this.getRefreshDelay());
         sharedPreferences.putBoolean(UseAjax, this.useAjax());
@@ -239,7 +236,7 @@ public class WebServerPreferences extends Bean {
         } catch (BackingStoreException ex) {
             log.error("Exception while saving web server preferences", ex);
         }
-        privatePreferences.putInt(Port, this.getPort());
+        sharedPreferences.putInt(Port, this.getPort());
         setIsDirty(false);  //  Resets only when stored
     }
 
