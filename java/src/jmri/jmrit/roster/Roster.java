@@ -91,8 +91,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     private final static Logger log = LoggerFactory.getLogger(Roster.class);
 
     /**
-     * Name of the default roster index file.
-     * {@value #DEFAULT_ROSTER_INDEX}
+     * Name of the default roster index file. {@value #DEFAULT_ROSTER_INDEX}
      */
     public static final String DEFAULT_ROSTER_INDEX = "roster.xml"; // NOI18N
     /**
@@ -106,13 +105,12 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      */
     public static final String REMOVE = "remove"; // NOI18N
     /**
-     * Name for the property change fired when changing the ID of a roster entry.
-     * {@value #CHANGE}
+     * Name for the property change fired when changing the ID of a roster
+     * entry. {@value #CHANGE}
      */
     public static final String CHANGE = "change"; // NOI18N
     /**
-     * Property change event fired when saving the roster.
-     * {@value #SAVED}
+     * Property change event fired when saving the roster. {@value #SAVED}
      */
     public static final String SAVED = "saved"; // NOI18N
     /**
@@ -867,12 +865,22 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * <p>
      * Uses writeFile(String), a protected method that can write to a specific
      * location.
+     *
+     * @deprecated
+     * @see #writeRoster()
      */
     @Deprecated
     public static void writeRosterFile() {
         Roster.getDefault().writeRoster();
     }
 
+    /**
+     * Store the roster in the default place, including making a backup if
+     * needed.
+     * <p>
+     * Uses writeFile(String), a protected method that can write to a specific
+     * location.
+     */
     public void writeRoster() {
         this.makeBackupFile(this.getRosterIndexPath());
         try {
