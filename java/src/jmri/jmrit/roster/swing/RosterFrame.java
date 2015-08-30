@@ -1305,15 +1305,13 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             menuItem.setEnabled(false);
         }
         popupMenu.add(menuItem);
-        menuItem = new JMenuItem("Delete");
+        menuItem = new JMenuItem(this.getSelectedRosterGroup() != null ? Bundle.getMessage("DeleteFromGroup") : Bundle.getMessage("DeleteFromRoster")); // NOI18N
         menuItem.addActionListener((ActionEvent e1) -> {
             deleteLoco();
         });
         popupMenu.add(menuItem);
-        if (this.checkIfEntrySelected(true)) {
-            menuItem.setEnabled(false);
-        }
-
+        menuItem.setEnabled(this.getSelectedRosterEntries().length > 0);
+        
         popupMenu.show(e.getComponent(), e.getX(), e.getY());
     }
 
