@@ -424,7 +424,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     }
 
     boolean checkIfEntrySelected() {
-        if (re == null) {
+        return this.checkIfEntrySelected(false);
+    }
+
+    boolean checkIfEntrySelected(boolean allowMultiple) {
+        if ((re == null && !allowMultiple) || (this.getSelectedRosterEntries().length < 1)) {
             JOptionPane.showMessageDialog(null, "Please select a loco from the roster first");
             return false;
         }
@@ -978,7 +982,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
                 copyLoco();
             }
         } else if (args[0].equals("deleteloco")) {
-            if (checkIfEntrySelected()) {
+            if (checkIfEntrySelected(true)) {
                 deleteLoco();
             }
         } else if (args[0].equals("setprogservice")) {
@@ -1354,7 +1358,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         popupMenu.add(menuItem);
-        if (re == null) {
+        if (this.checkIfEntrySelected(true)) {
             menuItem.setEnabled(false);
         }
 
@@ -1375,7 +1379,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         // start identifying a loco
         final RosterFrame me = this;
         Programmer p = null;
-        if (modePanel.isSelected()) p = modePanel.getProgrammer();
+        if (modePanel.isSelected()) {
+            p = modePanel.getProgrammer();
+        }
         if (p == null) {
             log.warn("Selector did not provide a programmer, use default");
             p = jmri.InstanceManager.programmerManagerInstance().getGlobalProgrammer();
