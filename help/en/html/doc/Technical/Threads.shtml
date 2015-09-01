@@ -52,13 +52,17 @@ GUI thread via:
 	}
 </PRE>
 
-This can't work forever, however, so we're working on a new
-threading model.
-
+This does a nice job of serializing the activity from the layout.
 <p>
-See the working 
-<a href="http://sourceforge.net/apps/trac/jmri/wiki/Thread%20Model">Wiki page</a>
-for more info.
+Note that this does <em>not</em> mean that other things can't be happening. For example, 
+
+<pre><code>
+    state = sensors.provideSensor("mySensor").getState()
+    turnouts.provideTurnout("myTurnout").setState(THROWN)
+    print state == sensors.provideSensor("mySensor").getState()
+</code></pre>
+
+can print either true or false, because changing that turnout <em>can</em> change associated sensors instantaneously.
 
 <!--#include virtual="/Footer" -->
 
