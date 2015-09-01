@@ -316,6 +316,16 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
     public String getDepartureTime() {
         return _departureTime;
     }
+    
+    public String getDepartureTimeHour() {
+        String[] time = getDepartureTime().split(":");
+        return time[0];
+    }
+    
+    public String getDepartureTimeMinute() {
+        String[] time = getDepartureTime().split(":");
+        return time[1];
+    }
 
     public String getFormatedDepartureTime() {
         if (getDepartureTime().equals(NONE) || !Setup.is12hrFormatEnabled()) {

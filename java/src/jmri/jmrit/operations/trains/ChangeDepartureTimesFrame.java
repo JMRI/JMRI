@@ -73,23 +73,28 @@ public class ChangeDepartureTimesFrame extends OperationsFrame {
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == changeButton) {
-            log.debug("save button activated");
+            log.debug("change button activated");
             TrainManager trainManager = TrainManager.instance();
             List<Train> trains = trainManager.getTrainsByIdList();
             for (Train train : trains) {
-                int hour = Integer.parseInt((String) hourBox.getSelectedItem())
-                        + Integer.parseInt(train.getDepartureTimeHour());
-                if (hour > 23) {
-                    hour = hour - 24;
-                }
-                RouteLocation rl = train.getTrainDepartsRouteLocation();
-                if (rl != null && !rl.getDepartureTime().equals(RouteLocation.NONE)) {
-                    rl.setDepartureTime(Integer.toString(hour), train.getDepartureTimeMinute());
-                } else {
-                    train.setDepartureTime(Integer.toString(hour), train.getDepartureTimeMinute());
+                train.setDepartureTime(adjustHour(train.getDepartureTimeHour()), train.getDepartureTimeMinute());
+                // now check the train's route to see if there are any departure times that need to be modified
+                if (train.getRoute() == null)
+                    continue;
+                for (RouteLocation rl : train.getRoute().getLocationsBySequenceList()) {
+                    if (!rl.getDepartureTime().equals(RouteLocation.NONE))
+                        rl.setDepartureTime(adjustHour(rl.getDepartureTimeHour()), rl.getDepartureTimeMinute());
                 }
             }
         }
+    }
+    
+    private String adjustHour(String time) {
+        int hour = Integer.parseInt((String) hourBox.getSelectedItem()) + Integer.parseInt(time);
+        if (hour > 23) {
+            hour = hour - 24;
+        }
+        return Integer.toString(hour);
     }
 
     static Logger log = LoggerFactory.getLogger(ChangeDepartureTimesFrame.class.getName());
