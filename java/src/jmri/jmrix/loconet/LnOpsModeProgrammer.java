@@ -172,7 +172,7 @@ public class LnOpsModeProgrammer implements AddressedProgrammer, LocoNetListener
                 temp.programmingOpReply(val, code);
             }
         } else if (getMode().equals(LnProgrammerManager.LOCONETSV2MODE)) {
-            if ((m.getElement( 3) & 0x40) == 0x00) return; // need reply bit set
+            if ((m.getElement(3) != 0x41) && (m.getElement(3) != 0x42)) return; // need a "Write One Reply", or a "Read One Reply"
             if ((m.getElement( 4) & 0xFF) != 0x02) return; // format 2
             if ((m.getElement( 5) & 0x70) != 0x10) return; // need SVX1 high nibble = 1
             if ((m.getElement(10) & 0x70) != 0x10) return; // need SVX2 high nibble = 1
