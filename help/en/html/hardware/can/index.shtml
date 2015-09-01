@@ -54,15 +54,15 @@ to adopt OpenLCB and standardize it under the
 <a href="http://nmranet.org">NMRAnet name</a>.
 
 <dt>
-<img src="http://www.merg.org.uk/images/logo1m.gif" align="right" alt="MERG logo" height="45" width="100">
+<img src="http://www.merg.org.uk/merg_images/merg_logo.png" align="right" alt="MERG logo" height="45" width="100">
 <a href="http://www.merg.org.uk/">MERG</a>
-<a href="http://www.merg.org.uk/resources/lcb.html">CBUS</a>
+<a href="http://www.merg.org.uk/merg_resources/cbus.php">CBUS</a>
 <dd>
 A group of hobbyists, under the umbrella of the Model Electronic Railway Group 
 (<a href="http://www.merg.org.uk/">MERG</a>), 
 are developing a layout control bus called CBUS.
 They are creating 
-<a href="http://www.merg.org.uk/resources/lcb.html">extensive documentation</a>.
+<a href="http://www.merg.org.uk/merg_resources/cbus.php">extensive documentation</a>.
 <p>
 JMRI includes 
 <a href="cbus/index.shtml">basic support for CBUS</a>, 
