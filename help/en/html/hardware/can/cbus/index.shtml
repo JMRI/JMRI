@@ -31,8 +31,10 @@ on any given day.</em><p>
 
 JMRI provides support for general JMRI
 <a href="../../../tools/Sensors.shtml">Sensors</a>
-and
+,
 <a href="../../../tools/Turnouts.shtml">Turnouts</a>
+and
+<a href="../../../tools/Lights.shtml">Lights</a>
 in terms of CBUS "events". 
 
 <p>
@@ -60,7 +62,7 @@ the system names.
 
 <p>
 JMRI associates CBUS events with individual
-JMRI objects (Sensors, Turnouts, etc) via the 
+JMRI objects (Sensors, Turnouts, Lights, etc.) via the 
 JMRI system names.  A system name like
 "<code>MS+123;-345</code>"
 defines a Sensor that follows the "123 ON" and "345 OFF" CBUS events
@@ -156,6 +158,11 @@ button on the
 (To be written, but the scheme is similar to Sensors above, 
 except JMRI is emitting the CBUS frames instead of receiving them, and
 the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
+
+<h2>Lights</h2>
+
+(To be written, but the scheme is similar to Turnouts above, 
+except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 
 <!--#include virtual="/Footer" -->
 </body>

@@ -40,7 +40,7 @@ lighting. Lights can also be used for any purpose that requires an on/off
 switch. A light can be used, for example, to activate an electromagnetic
 decoupler for a pre-determined time in response to a fascia panel button.
 Originally developed for use with C/MRI, Lights currently are also 
-implemented on Loconet (Digitrax) and Oaktree systems.</p>
+implemented on Loconet (Digitrax), Oaktree and MERG CBUS systems.</p>
 <p>Lights share available digital output bits with Turnouts. Either a 
 Light or a Turnout, but not both, can control a specific digital output bit.
 Since Lights lack the feedback structure of Turnouts, Lights should not 
@@ -214,7 +214,7 @@ The operation of a Light can be controlled in the following ways:
 <p>
 	A variable light allows for a variable number of intensities between on and off.
 	The typical use would be for layout lighting simulating the changes for the
-	time of day and night. Only some forms of lights have the ablity to be variable.
+	time of day and night. Only some forms of lights have the ability to be variable.
 	Examples would include Internal and PowerLine devices.
 	A number of configuration options are available for variable lights 
     <A HREF="#VariableLightSettings">below</a>.
@@ -254,7 +254,7 @@ The operation of a Light can be controlled in the following ways:
 		<dd>
 			This operation will set a target intensity for the
 			light. If the interface supports transition effects and they are
-			configured, the light will make a controled transition from the current
+			configured, the light will make a controlled transition from the current
 			setting to the new setting.
 		</dd>
     </dl>
