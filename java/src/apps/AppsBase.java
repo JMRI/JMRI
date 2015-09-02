@@ -22,9 +22,9 @@ import jmri.managers.DefaultShutDownManager;
 import jmri.managers.DefaultUserMessagePreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.Log4JUtil;
-import jmri.util.PythonInterp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -130,7 +130,7 @@ public abstract class AppsBase {
 
                 public void run() {
                     try {
-                        PythonInterp.getPythonInterpreter();
+                        JmriScriptEngineManager.getDefault().initializeAllEngines();
                     } catch (Exception ex) {
                         log.error("Error in trying to initialize python interpreter " + ex.toString());
                     }

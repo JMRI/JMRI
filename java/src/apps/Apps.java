@@ -83,11 +83,11 @@ import jmri.plaf.macosx.QuitHandler;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.profile.ProfileManagerDialog;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import jmri.util.HelpUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.Log4JUtil;
-import jmri.util.PythonInterp;
 import jmri.util.SystemType;
 import jmri.util.WindowMenu;
 import jmri.util.iharder.dnd.FileDrop;
@@ -379,7 +379,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             r = new Runnable() {
                 public void run() {
                     try {
-                        PythonInterp.getPythonInterpreter();
+                        JmriScriptEngineManager.getDefault().initializeAllEngines();
                     } catch (Exception ex) {
                         log.error("Error in trying to initialize python interpreter {}", ex.toString());
                     }

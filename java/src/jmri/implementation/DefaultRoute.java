@@ -13,6 +13,7 @@ package jmri.implementation;
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.File;
 import java.util.ArrayList;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -21,6 +22,7 @@ import jmri.NamedBeanHandle;
 import jmri.Route;
 import jmri.Sensor;
 import jmri.Turnout;
+import jmri.script.JmriScriptEngineManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -1242,7 +1244,7 @@ public class DefaultRoute extends AbstractNamedBean
 
             // run script defined for start of route set
             if ((r.getOutputScriptName() != null) && (!r.getOutputScriptName().equals(""))) {
-                jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(r.getOutputScriptName()));
+                JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(r.getOutputScriptName())));
             }
 
             // play sound defined for start of route set

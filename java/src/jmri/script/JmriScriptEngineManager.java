@@ -5,14 +5,18 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
 import java.util.Properties;
 import javax.script.Bindings;
 import javax.script.ScriptContext;
 import javax.script.ScriptEngine;
+import javax.script.ScriptEngineFactory;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
+import javax.script.SimpleBindings;
+import javax.script.SimpleScriptContext;
 import jmri.AudioManager;
 import jmri.BlockManager;
 import jmri.CommandStation;
@@ -41,6 +45,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Provide a manager for {@link javax.script.ScriptEngine}s. This manager
+ * creates a default
  *
  * @author rhwood
  */
@@ -48,12 +54,20 @@ public final class JmriScriptEngineManager {
 
     private final ScriptEngineManager manager = new ScriptEngineManager();
     private final HashMap<String, String> names = new HashMap<>();
+    private final HashMap<String, ScriptEngineFactory> factories = new HashMap<>();
     private final HashMap<String, ScriptEngine> engines = new HashMap<>();
+    private final ScriptContext context;
 
     private static JmriScriptEngineManager instance = null;
     private static final Logger log = LoggerFactory.getLogger(JmriScriptEngineManager.class);
-    private static final String defaultContextFile = "program:jython/jmri_defaults.py"; // should be replaced with default context
+    private static final String jythonDefaults = "jmri_defaults.py"; // should be replaced with default context
 
+    public static final String PYTHON = "jython";
+
+    /**
+     * Create a JmriScriptEngineManager. In most cases, it is preferable to use {@link #getDefault()
+     * } to get existing {@link javax.script.ScriptEngine} instances.
+     */
     public JmriScriptEngineManager() {
         this.manager.getEngineFactories().stream().forEach((factory) -> {
             log.info("{} {} is provided by {} {}",
@@ -73,44 +87,55 @@ public final class JmriScriptEngineManager {
                 names.put(name, factory.getEngineName());
                 log.debug("\tNames: {}", name);
             });
+            this.factories.put(factory.getEngineName(), factory);
         });
-        this.manager.put("turnouts", InstanceManager.getDefault(TurnoutManager.class));
-        this.manager.put("sensors", InstanceManager.getDefault(SensorManager.class));
-        this.manager.put("signals", InstanceManager.getDefault(SignalHeadManager.class));
-        this.manager.put("masts", InstanceManager.getDefault(SignalMastManager.class));
-        this.manager.put("lights", InstanceManager.getDefault(LightManager.class));
-        this.manager.put("dcc", InstanceManager.getDefault(CommandStation.class));
-        this.manager.put("reporters", InstanceManager.getDefault(ReporterManager.class));
-        this.manager.put("memories", InstanceManager.getDefault(MemoryManager.class));
-        this.manager.put("routes", InstanceManager.getDefault(RouteManager.class));
-        this.manager.put("blocks", InstanceManager.getDefault(BlockManager.class));
-        this.manager.put("powermanager", InstanceManager.getDefault(PowerManager.class));
-        this.manager.put("programmers", InstanceManager.getDefault(ProgrammerManager.class));
-        this.manager.put("shutdown", InstanceManager.getDefault(ShutDownManager.class));
-        this.manager.put("audio", InstanceManager.getDefault(AudioManager.class));
-        this.manager.put("layoutblocks", InstanceManager.getDefault(LayoutBlockManager.class));
-        this.manager.put("warrants", InstanceManager.getDefault(WarrantManager.class));
-        this.manager.put("CLOSED", Turnout.CLOSED);
-        this.manager.put("THROWN", Turnout.THROWN);
-        this.manager.put("CABLOCKOUT", Turnout.CABLOCKOUT);
-        this.manager.put("PUSHBUTTONLOCKOUT", Turnout.PUSHBUTTONLOCKOUT);
-        this.manager.put("UNLOCKED", Turnout.UNLOCKED);
-        this.manager.put("LOCKED", Turnout.LOCKED);
-        this.manager.put("ACTIVE", Sensor.ACTIVE);
-        this.manager.put("INACTIVE", Sensor.INACTIVE);
-        this.manager.put("UNKNOWN", NamedBean.UNKNOWN);
-        this.manager.put("INCONSISTENT", NamedBean.INCONSISTENT);
-        this.manager.put("DARK", SignalHead.DARK);
-        this.manager.put("RED", SignalHead.RED);
-        this.manager.put("YELLOW", SignalHead.YELLOW);
-        this.manager.put("GREEN", SignalHead.GREEN);
-        this.manager.put("LUNAR", SignalHead.LUNAR);
-        this.manager.put("FLASHRED", SignalHead.FLASHRED);
-        this.manager.put("FLASHYELLOW", SignalHead.FLASHYELLOW);
-        this.manager.put("FLASHGREEN", SignalHead.FLASHGREEN);
-        this.manager.put("FLASHLUNAR", SignalHead.FLASHLUNAR);
+        Bindings bindings = new SimpleBindings();
+        bindings.put("turnouts", InstanceManager.getDefault(TurnoutManager.class));
+        bindings.put("sensors", InstanceManager.getDefault(SensorManager.class));
+        bindings.put("signals", InstanceManager.getDefault(SignalHeadManager.class));
+        bindings.put("masts", InstanceManager.getDefault(SignalMastManager.class));
+        bindings.put("lights", InstanceManager.getDefault(LightManager.class));
+        bindings.put("dcc", InstanceManager.getDefault(CommandStation.class));
+        bindings.put("reporters", InstanceManager.getDefault(ReporterManager.class));
+        bindings.put("memories", InstanceManager.getDefault(MemoryManager.class));
+        bindings.put("routes", InstanceManager.getDefault(RouteManager.class));
+        bindings.put("blocks", InstanceManager.getDefault(BlockManager.class));
+        bindings.put("powermanager", InstanceManager.getDefault(PowerManager.class));
+        bindings.put("programmers", InstanceManager.getDefault(ProgrammerManager.class));
+        bindings.put("shutdown", InstanceManager.getDefault(ShutDownManager.class));
+        bindings.put("audio", InstanceManager.getDefault(AudioManager.class));
+        bindings.put("layoutblocks", InstanceManager.getDefault(LayoutBlockManager.class));
+        bindings.put("warrants", InstanceManager.getDefault(WarrantManager.class));
+        bindings.put("CLOSED", Turnout.CLOSED);
+        bindings.put("THROWN", Turnout.THROWN);
+        bindings.put("CABLOCKOUT", Turnout.CABLOCKOUT);
+        bindings.put("PUSHBUTTONLOCKOUT", Turnout.PUSHBUTTONLOCKOUT);
+        bindings.put("UNLOCKED", Turnout.UNLOCKED);
+        bindings.put("LOCKED", Turnout.LOCKED);
+        bindings.put("ACTIVE", Sensor.ACTIVE);
+        bindings.put("INACTIVE", Sensor.INACTIVE);
+        bindings.put("UNKNOWN", NamedBean.UNKNOWN);
+        bindings.put("INCONSISTENT", NamedBean.INCONSISTENT);
+        bindings.put("DARK", SignalHead.DARK);
+        bindings.put("RED", SignalHead.RED);
+        bindings.put("YELLOW", SignalHead.YELLOW);
+        bindings.put("GREEN", SignalHead.GREEN);
+        bindings.put("LUNAR", SignalHead.LUNAR);
+        bindings.put("FLASHRED", SignalHead.FLASHRED);
+        bindings.put("FLASHYELLOW", SignalHead.FLASHYELLOW);
+        bindings.put("FLASHGREEN", SignalHead.FLASHGREEN);
+        bindings.put("FLASHLUNAR", SignalHead.FLASHLUNAR);
+        bindings.put("FileUtil", FileUtil.class);
+        this.context = new SimpleScriptContext();
+        this.context.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
     }
 
+    /**
+     * Get the default instance of a JmriScriptEngineManager. Using the default
+     * instance ensures that a script retains the context of the prior script.
+     *
+     * @return the default JmriScriptEngineManager
+     */
     public static JmriScriptEngineManager getDefault() {
         if (JmriScriptEngineManager.instance == null) {
             JmriScriptEngineManager.instance = new JmriScriptEngineManager();
@@ -118,54 +143,169 @@ public final class JmriScriptEngineManager {
         return JmriScriptEngineManager.instance;
     }
 
+    /**
+     * Get the Java ScriptEngineManager that this object contains.
+     *
+     * @return the ScriptEngineManager
+     */
     public ScriptEngineManager getManager() {
         return this.manager;
     }
 
+    /**
+     * Given a file extension, get the ScriptEngine registered to handle that
+     * extension.
+     *
+     * @param extension
+     * @return a ScriptEngine or null
+     */
     public ScriptEngine getEngineByExtension(String extension) {
         String name = this.names.get(extension);
-        return this.getEngineByName(name);
+        return this.getEngine(name);
     }
 
+    /**
+     * Given a mime type, get the ScriptEngine registered to handle that mime
+     * type.
+     *
+     * @param mimeType
+     * @return a ScriptEngine or null
+     */
     public ScriptEngine getEngineByMimeType(String mimeType) {
         String name = this.names.get(mimeType);
-        return this.getEngineByName(name);
+        return this.getEngine(name);
     }
 
-    public ScriptEngine getEngineByName(String name) {
-        if (!this.engines.containsKey(name)) {
-            if ("python".equals(name)) {
+    /**
+     * Given a short name, get the ScriptEngine registered by that name.
+     *
+     * @param shortName
+     * @return a ScriptEngine or null
+     */
+    public ScriptEngine getEngineByName(String shortName) {
+        String name = this.names.get(shortName);
+        return this.getEngine(name);
+    }
+
+    /**
+     * Get a ScriptEngine by it's name.
+     *
+     * @param engineName
+     * @return a ScriptEngine or null
+     */
+    public ScriptEngine getEngine(String engineName) {
+        if (!this.engines.containsKey(engineName)) {
+            if (PYTHON.equals(engineName)) {
                 // Setup the default python engine to use the JMRI python properties
                 this.initializePython();
             } else {
-                this.engines.put(name, this.getManager().getEngineByName(name));
+                ScriptEngine engine = this.factories.get(engineName).getScriptEngine();
+                engine.setContext(this.context);
+                this.engines.put(engineName, engine);
             }
         }
-        return this.engines.get(name);
+        return this.engines.get(engineName);
     }
 
+    /**
+     * Evaluate a script using the given ScriptEngine.
+     *
+     * @param script
+     * @param engine
+     * @return
+     * @throws ScriptException
+     */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
         return engine.eval(script);
     }
 
+    /**
+     * Evaluate a script using the given ScriptEngine.
+     *
+     * @param reader
+     * @param engine
+     * @return
+     * @throws ScriptException
+     */
     public Object eval(Reader reader, ScriptEngine engine) throws ScriptException {
         return engine.eval(reader);
     }
 
+    /**
+     * Evaluate a script contained in a file. Uses the extension of the file to
+     * determine which ScriptEngine to use.
+     *
+     * @param file
+     * @return
+     * @throws ScriptException
+     * @throws FileNotFoundException
+     */
     public Object eval(File file) throws ScriptException, FileNotFoundException {
         return this.getEngineByExtension(FilenameUtils.getExtension(file.getName())).eval(new FileReader(file));
     }
-    
+
+    /**
+     * Evaluate a script contained in a file given a set of
+     * {@link javax.script.Bindings} to add to the script's context. Uses the
+     * extension of the file to determine which ScriptEngine to use.
+     *
+     * @param file
+     * @param n
+     * @return
+     * @throws ScriptException
+     * @throws FileNotFoundException
+     */
     public Object eval(File file, Bindings n) throws ScriptException, FileNotFoundException {
         return this.getEngineByExtension(FilenameUtils.getExtension(file.getName())).eval(new FileReader(file), n);
     }
-    
+
+    /**
+     * Evaluate a script contained in a file given a special context for the
+     * script. Uses the extension of the file to determine which ScriptEngine to
+     * use.
+     *
+     * @param file
+     * @param context
+     * @return
+     * @throws ScriptException
+     * @throws FileNotFoundException
+     */
     public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException {
         return this.getEngineByExtension(FilenameUtils.getExtension(file.getName())).eval(new FileReader(file), context);
     }
 
+    /**
+     * Run a script, suppressing common errors. Note that the file needs to have
+     * a registered extension, or a NullPointerException will be thrown.
+     *
+     * @param file the script to run.
+     */
+    public void runScript(File file) {
+        try {
+            eval(file);
+        } catch (FileNotFoundException ex) {
+            log.error("File {} not found.", file);
+        } catch (ScriptException ex) {
+            log.error("Error in script {}.", file, ex);
+        }
+
+    }
+
+    /**
+     * Initialize all ScriptEngines. This can be used to prevent the on-demand
+     * initialization of a ScriptEngine from causing a pause in JMRI.
+     */
+    public void initializeAllEngines() {
+        this.factories.keySet().stream().forEach((name) -> {
+            this.getEngine(name);
+        });
+    }
+
+    /**
+     * The Python ScriptEngine can 
+     */
     public void initializePython() {
-        if (!this.engines.containsKey("python")) {
+        if (!this.engines.containsKey(PYTHON)) {
             // Get properties for interpreter
             // Search in user files, the settings directory, and in the program path
             InputStream is = FileUtil.findInputStream("python.properties", new String[]{
@@ -185,20 +325,19 @@ public final class JmriScriptEngineManager {
                 PySystemState.initialize(null, properties);
             }
 
-            // must create one.
-            /*
-             TEMPORARY - will eventually be replaced with global objects in the default ScriptContext
-             for all languages.
-             */
+            // Create the interpreter
             try {
                 log.debug("create interpreter");
-                ScriptEngine python = this.manager.getEngineByName("python");
-                // have jython execute the default setup
-                log.debug("load defaults from {}", defaultContextFile);
-                python.eval(new FileReader(FileUtil.getExternalFilename(defaultContextFile)));
-                this.engines.put("python", python);
-            } catch (FileNotFoundException ex) {
-                log.error("Python is not using the default JMRI context, since {} could not be found to provide it.", defaultContextFile);
+                ScriptEngine python = this.manager.getEngineByName(PYTHON);
+                python.setContext(this.context);
+                is = FileUtil.findInputStream(jythonDefaults, new String[]{
+                    FileUtil.getUserFilesPath(),
+                    FileUtil.getPreferencesPath()
+                });
+                if (is != null) {
+                    python.eval(new InputStreamReader(is));
+                }
+                this.engines.put(PYTHON, python);
             } catch (ScriptException e) {
                 log.error("Exception creating jython system objects", e);
             }

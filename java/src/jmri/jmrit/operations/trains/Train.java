@@ -35,6 +35,7 @@ import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -2839,14 +2840,14 @@ public class Train implements java.beans.PropertyChangeListener {
             // save the current status
             int savedStatus = getStatusCode();
             setStatus(CODE_RUN_SCRIPTS);
-            jmri.util.PythonInterp.getPythonInterpreter(); // create the python interpreter thread
+            JmriScriptEngineManager.getDefault().initializeAllEngines(); // create the python interpreter thread
             // find the number of active threads
             ThreadGroup root = Thread.currentThread().getThreadGroup();
             int numberOfThreads = root.activeCount();
             //	log.debug("Number of active threads: {}", numberOfThreads);
             for (String scriptPathname : scripts) {
                 try {
-                    jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathname));
+                    JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathname)));
                 } catch (Exception e) {
                     log.error("Problem with script: {}", scriptPathname);
                 }

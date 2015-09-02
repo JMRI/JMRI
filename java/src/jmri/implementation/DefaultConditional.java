@@ -4,10 +4,12 @@ import java.awt.GraphicsEnvironment;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Date;
 import java.util.List;
+import javax.script.ScriptException;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -37,6 +39,7 @@ import jmri.jmrit.audio.AudioListener;
 import jmri.jmrit.audio.AudioSource;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.Warrant;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.PythonInterp;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -934,7 +937,7 @@ public class DefaultConditional extends AbstractNamedBean
                         break;
                     case Conditional.ACTION_RUN_SCRIPT:
                         if (!(getActionString(action).equals(""))) {
-                            jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(getActionString(action)));
+                            JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(getActionString(action))));
                             actionCount++;
                         }
                         break;
@@ -1020,7 +1023,11 @@ public class DefaultConditional extends AbstractNamedBean
                             PythonInterp.getOutputArea().append(echo);
 
                             // and execute
-                            PythonInterp.execCommand(cmd);
+                            try {
+                                PythonInterp.execCommand(cmd);
+                            } catch (ScriptException ex) {
+                                log.error("Error executing script:", ex);
+                            }
                             actionCount++;
                         }
                         break;

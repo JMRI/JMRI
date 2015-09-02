@@ -1,6 +1,8 @@
 package apps.configurexml;
 
 import apps.PerformScriptModel;
+import java.io.File;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -59,8 +61,8 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         fileName = FileUtil.getAbsoluteFilename(fileName);
         log.info("Run file " + fileName);
 
-        // run the script
-        jmri.util.PythonInterp.runScript(fileName);
+            // run the script
+        JmriScriptEngineManager.getDefault().runScript(new File(fileName));
 
         // leave an updated object around
         PerformScriptModel m = new PerformScriptModel();

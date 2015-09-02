@@ -16,6 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import jmri.jmrit.operations.OperationsFrame;
 import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -234,7 +235,7 @@ public class TrainsScriptFrame extends OperationsFrame {
             String scriptPathname = jmri.util.FileUtil.getExternalFilename(script);
             File file = new File(scriptPathname);
             if (file.exists()) {
-                jmri.util.PythonInterp.runScript(scriptPathname);
+                JmriScriptEngineManager.getDefault().runScript(file);
             } else {
                 JOptionPane.showMessageDialog(this, script, Bundle.getMessage("ScriptFileNotFound"),
                         JOptionPane.ERROR_MESSAGE);

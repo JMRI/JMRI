@@ -4,10 +4,13 @@ package jmri.jmrit.jython;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.HeadlessException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+import javax.script.ScriptException;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
@@ -18,6 +21,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.event.CaretEvent;
 import javax.swing.event.CaretListener;
+import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.PythonInterp;
 import org.slf4j.Logger;
@@ -44,14 +49,8 @@ public class InputWindow extends JPanel {
     JCheckBox alwaysOnTopCheckBox = new JCheckBox();
     static java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("jmri.jmrit.jython.JythonBundle");
 
-    JFileChooser userFileChooser;
-    {
-        userFileChooser = new JFileChooser(FileUtil.getScriptsPath());
-        jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
-        filt.addExtension("py");
-        userFileChooser.setFileFilter(filt);
-    }
-    
+    JFileChooser userFileChooser = new ScriptFileChooser(FileUtil.getScriptsPath());
+
     public InputWindow() {
 
         //setLayout(new javax.swing.BoxLayout(this, javax.swing.BoxLayout.Y_AXIS));
@@ -175,7 +174,7 @@ public class InputWindow extends JPanel {
 
                 area.setText(fileData.toString());
 
-            } catch (Exception e) {
+            } catch (IOException e) {
                 log.error("Unhandled problem in loadFile: " + e);
             }
         } else {
@@ -211,7 +210,7 @@ public class InputWindow extends JPanel {
                 writer.append(fileData);
                 writer.close();
 
-            } catch (Exception e) {
+            } catch (HeadlessException | IOException e) {
                 log.error("Unhandled problem in storeFile: " + e);
             }
         } else {
@@ -274,7 +273,11 @@ public class InputWindow extends JPanel {
         PythonInterp.getOutputArea().append(echo);
 
         // and execute
-        PythonInterp.execCommand(cmd);
+        try {
+            JmriScriptEngineManager.getDefault().getEngineByName("python").eval(cmd);
+        } catch (ScriptException ex) {
+            log.error("Error executing script", ex);
+        }
     }
     // initialize logging
     static Logger log = LoggerFactory.getLogger(InputWindow.class.getName());
