@@ -96,7 +96,7 @@ jackson-databind-2.0.6.jar
     JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
 
 jython.jar
- version 2.5.3 from jython.org (was jython-2.5.3.jar)
+ version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
  
 junit.jar
  version 3.8.2
