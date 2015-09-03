@@ -660,11 +660,6 @@ across a network to a network-to-serial adapter,
 which converts the network connection to a serial 
 stream that then goes through a RS485 convertor to the C/MRI node(s).
 <p>
-Some hobbyists have also built C/MRI nodes that 
-have native Ethernet connections. JMRI communicates
-with them via a direct TCP/IP connection using the C/MRI protocol,
-but in this case there's no need for a RS485 convertor.
-<p>
 The network-to-serial adapter is sometimes called
 a "<a href="../TerminalServer.shtml">terminal server</a>". It's also sometimes called
 a "Lantronix box" after an early manufacturer of these, though
@@ -673,6 +668,11 @@ has to be configured with the correct serial parameters for
 your C/MRI system, including the proper baud rate and 8-data-bits, no parity.
 You will probably need a RS232-to-RS485 adapter on the output of the
 network adapter.
+<p>
+Some hobbyists have also built C/MRI nodes that 
+have native Ethernet connections. JMRI communicates
+with them via a direct TCP/IP connection using the C/MRI protocol,
+but in this case there's no need for a RS485 convertor.
 <p>
 To configure JMRI to use a network connection, go to the Preferences
 screen, Connections tab. After selecting C/MRI for the System Manufacturer,
