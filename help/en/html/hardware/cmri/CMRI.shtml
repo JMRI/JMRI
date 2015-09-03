@@ -654,11 +654,16 @@ the proper one when configuring JMRI.
 <a name=net><H2>Using A Network Connection</H2></a>
 
 JMRI allows you to connect to C/MRI nodes through a 
-network connection.  JMRI will communicate via the
+network connection.  JMRI communicates via the
 TCP/IP protocol
 across a network to a network-to-serial adapter, 
 which converts the network connection to a serial 
-stream for the C/MRI node(s).
+stream that then goes through a RS485 convertor to the C/MRI node(s).
+<p>
+Some hobbyists have also built C/MRI nodes that 
+have native Ethernet connections. JMRI communicates
+with them via a direct TCP/IP connection using the C/MRI protocol,
+but in this case there's no need for a RS485 convertor.
 <p>
 The network-to-serial adapter is sometimes called
 a "<a href="../TerminalServer.shtml">terminal server</a>". It's also sometimes called
