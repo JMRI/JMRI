@@ -99,7 +99,7 @@ abstract public class AbstractSignalMastServer {
                 String state = sm.getAspect();
                 if ((sm.getHeld()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                     state = "Held";
-                } else if ((sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+                } else if ((!sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
                     state = "Dark";
                 }
                 try {

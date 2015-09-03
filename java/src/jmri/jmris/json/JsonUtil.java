@@ -1094,7 +1094,7 @@ public class JsonUtil {
             //state is appearance, plus flags for held and dark statii
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                 data.put(STATE, ASPECT_HELD);
-            } else if ((signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+            } else if ((!signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
                 data.put(STATE, ASPECT_DARK);
             } else {
                 data.put(STATE, aspect);

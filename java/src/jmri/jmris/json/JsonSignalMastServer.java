@@ -81,7 +81,7 @@ public class JsonSignalMastServer extends AbstractSignalMastServer {
                 state = sm.getAspect();
                 if ((sm.getHeld()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                     state = ASPECT_HELD;
-                } else if ((sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+                } else if ((!sm.getLit()) && (sm.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
                     state = ASPECT_DARK;
                 }
                 this.sendStatus(name, state);
