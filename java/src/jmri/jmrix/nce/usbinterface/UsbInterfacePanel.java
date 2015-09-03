@@ -154,9 +154,9 @@ public class UsbInterfacePanel extends jmri.jmrix.nce.swing.NcePanel implements 
             // rough range check
             return false;
         }
-        if ((tc.getUsbSystem() != NceTrafficController.USB_SYSTEM_NONE)
+        if ((tc.getUsbSystem() == NceTrafficController.USB_SYSTEM_POWERCAB)
                 && (tc.getCmdGroups() & NceTrafficController.CMDS_MEM) != 0) {
-            // is a 1.65 or better firmware, has gaps
+            // is a 1.65 or better firmware, has gaps, for PowerCab only
             if ((id  == 6) || (id == 7))
                 return false;
         }

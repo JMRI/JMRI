@@ -1,6 +1,7 @@
 // NceBinaryCommand.java
 package jmri.jmrix.nce;
 
+import jmri.NmraPacket;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -134,7 +135,7 @@ public class NceBinaryCommand {
 
     public static byte[] accDecoder(int number, boolean closed) {
 
-        if (number < 1 || number > 2044) {
+        if (number < NmraPacket.accIdLowLimit || number > NmraPacket.accIdAltHighLimit) {
             log.error("invalid NCE accessory address " + number);
             return null;
         }
