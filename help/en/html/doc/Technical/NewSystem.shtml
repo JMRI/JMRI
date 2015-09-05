@@ -213,6 +213,71 @@
 
     
 		</dl>
+		
+<h3>Adding a TCP/IP connection to an existing system</h3>
+
+These are rough notes from adding a TCP/IP connection to the RFID type,
+by copying the architecture of the C/MRI system.
+
+<ol>
+<li>Create a "networkdriver" directory in parallel to the "serialdriver" directory.
+<br>
+<code>svn cp java/src/jmri/jmrix/cmri/serial/networkdriver/ java/src/jmri/jmrix/rfid/</code>
+
+<li>Edit the package and import statements, all files. ".cmri.serial." to ".rfid.", 
+then ".cmri." to ".rfid.".
+
+<li>Change the "setManufacturer" call in NetworkDriverAdapter.
+
+<li>C/MRI might not have been the best starting point, but it's what we've got.
+Some specific edits needed:
+<ul>
+    <li>Change CMRISystemConnectionMemo to RfidSystemConnectionMemo
+    <li>Remove the reference to NodeConfigAction in ConnectionConfig (or
+        use this as the base for any special configuration you need; it was
+        adding a "Configure Nodes" button)
+    <li>Change the name of SerialSensorManager throughout
+    <li>Remove the SerialTurnoutManager SerialLightManager references (there aren't any in RFID)
+    <li>Add RfidReporterManager   
+</ul>
+
+<li>Needs a network driver:<br>
+<code>svn cp java/src/jmri/jmrix/cmri/serial/SerialNetworkPortController.java java/src/jmri/jmrix/rfid/RfidNetworkPortController.java</code><br>
+and edit as above.
+
+<li>java/src/jmri/jmrix/rfid/networkdriver/configurexml/ConnectionConfigXml.java 
+contains dead code for configuring the C/MRI nodes (again, maybe not the
+right system to copy from).  Leave that for later by 
+commenting out the body of extendElement(Element e) and unpackElement(Element e).
+
+<li>Change references to SerialTrafficController to RfidTrafficController.
+
+<li>Another problem with C/MRI as a prototype is that it still has an 
+instance() call in NetworkDriverAdapter.  Go to the RFID (multi-system capable)
+SerialDriverAdapter and copy the structure there.
+<code><pre>
+        // connect to the traffic controller
+        this.getSystemConnectionMemo().setRfidTrafficController(control);
+        control.setAdapterMemo(this.getSystemConnectionMemo());
+        control.connectPort(this);
+        control.sendInitString();
+
+        // declare up
+        jmri.jmrix.rfid.ActiveFlag.setActive();
+</code></pre>
+(There's also a bunch of stuff before this in the configure() method that should
+just be copied over, because the RFID connections also need some complicated configuration);
+the ctor also needs some parts copied over.
+
+<li>Add jmri.jmrix.rfid.networkdriver.ConnectionConfig to  java/src/jmri/jmrix/rfid//RfidConnectionTypeList.java
+
+<li>Change "RFID Device Connection" to "Direct Serial Connection" in ConnectionConfig.name()
+The network connection will default to "Network Connection".
+
+<li>Check that configure/save/restart brings back all the configuration options.
+It should, you copied the necessary code above, but check.
+
+</ol>		
 		</div>
 
 <!--#include virtual="/Footer" -->
