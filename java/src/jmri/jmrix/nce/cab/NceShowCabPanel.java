@@ -129,9 +129,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
     private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
     private static final int CAB_MAX_USB = 10;			// There are up to 10 cabs
-    private static final int CAB_MAX_PRO = 64;			// There are up to 64 cabs
+    private static final int CAB_MAX_PRO = 65;			// There are up to 64 cabs plus the serial computer cab
     private static final int CAB_LINE_LEN = 16;			// display line length of 16 bytes	
-    private static final int CAB_MAX_CABDATA = 65;		// Size for arrays. One more than highest cab number
+    private static final int CAB_MAX_CABDATA = 66;		// Size for arrays. One more than highest cab number
 
     Thread NceCabUpdateThread;
 
@@ -530,7 +530,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         return;
                     }
                     processAiuData(currCabId, recChars);
-                } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
+//                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                     // I don't have anything to do for the USB at this time
                 } else {
                     // read 16 bytes of memory, we'll use 7 of the 16
@@ -569,7 +569,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     int mode = readChar & 0x02;
                     // USB doesn't use the 28/128 bit
-                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) || (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
+                    cabData[currCabId].mode = "";
+                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) && (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
                         if (mode > 0) {
                             cabData[currCabId].mode = "128";
                         } else {
@@ -821,7 +822,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         return;
                     }
                     processAiuData(currCabId, recChars);
-                } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
+//                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                     // I don't have anything to do for the USB at this time
                 } else {
                     setUsbCabMemoryPointer(currCabId, CabMemoryUsb.CAB_CURR_SPEED);
@@ -909,7 +910,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     int mode = readChar & 0x02;
                     // USB doesn't use the 28/128 bit
-                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) || (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
+                    cabData[currCabId].mode = "";
+                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) && (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
                         if (mode > 0) {
                             cabData[currCabId].mode = "128";
                         } else {
@@ -1543,7 +1545,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // Write 1 byte of NCE cab memory 
     private void writeCabMemory1(int cabNum, int offset, int value) {
-        int nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryWrite1(nceCabAddr);
@@ -1554,7 +1556,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // Reads 1 byte of NCE cab memory 
     private void readCabMemory1(int cabNum, int offset) {
-        int nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead1(nceCabAddr);
@@ -1564,12 +1566,23 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // Reads 16 bytes of NCE cab memory 
     private void readCabMemory16(int cabNum, int offset) {
-        int nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_16;			// Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceCabAddr);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
         tc.sendNceMessage(m, this);
+    }
+
+    // Reads 16 bytes of NCE cab memory 
+    private int getNceCabAddr(int cabNum, int offset) {
+        int nceCabAddr;
+        if (cabNum < CAB_MAX_PRO) {
+            nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        } else {
+            nceCabAddr = CabMemorySerial.CS_COMP_CAB_MEM_PRO + offset;
+        }
+        return nceCabAddr;
     }
 
     // USB set cab memory pointer
