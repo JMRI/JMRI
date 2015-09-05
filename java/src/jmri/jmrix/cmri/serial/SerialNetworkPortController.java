@@ -1,4 +1,4 @@
-// Serial NetworkPortController.java
+// SerialNetworkPortController.java
 package jmri.jmrix.cmri.serial;
 
 import jmri.jmrix.cmri.CMRISystemConnectionMemo;

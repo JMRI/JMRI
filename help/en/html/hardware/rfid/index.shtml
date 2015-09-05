@@ -37,19 +37,21 @@ and
 <a href="../../tools/Reporters.shtml">Reporters</a>
 in terms of RFID Reader "events". 
 
-<p>You configure JMRI's serial connection to your RFID 
+<p>You configure JMRI's connection to your RFID 
 hardware in JMRI's preferences. It appears as a new
-"RFID" connection.
+"RFID" connection. Direct serial connections
+have been supported since JMRI 2.11.4; network 
+connections are targeted for the JMRI 4.1 release series.
 
 <h2>Protocols</h2>
-JMRI supports several different reader protocols when directly connected:
+JMRI supports several different reader protocols:
 <ul>
     <li>CORE-ID / ID-Innovations - since 2.11.4</li>
     <li>Olimex - since 3.9.2</li>
     <li>Parallax - since 3.9.2</li>
 </ul>
 
-<p>Choose the appropriate protocol in connection preferences.
+<p>Choose the appropriate protocol when setting the preferences.
 
 <p>
 JMRI also supports up to 8 individual readers connected via a concentrator.

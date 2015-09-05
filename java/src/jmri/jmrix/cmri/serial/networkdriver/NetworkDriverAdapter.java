@@ -10,7 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Implements SerialPortAdapter for the NCE system network connection.
+ * Implements SerialPortAdapter for a network connection.
  * <P>
  * This connects via a telnet connection. Normally
  * controlled by the NetworkDriverFrame class.
