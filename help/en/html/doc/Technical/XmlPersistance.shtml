@@ -139,7 +139,7 @@ the format definition, see below.
 <a id="schema">
 <h2>Schema Management</h2>
 
-JMRI controls XML semantics usings 
+JMRI controls XML semantics using 
 <a href="XmlSchema.shtml">XML Schema</a>.
 
 <p>
