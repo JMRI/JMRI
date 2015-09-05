@@ -586,6 +586,19 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         log.debug("Read address high character " + readChar);
                     }
                     int locoAddress = (readChar & 0x3F) * 256;
+                    boolean aType = ((readChar & 0xC0) == 0xC0) ? true : false;
+                    if (cabLongShortArray[currCabId] != aType) {
+                        foundChange++;
+                        if (log.isDebugEnabled()) {
+                            log.debug(currCabId + ": Long " + aType + "<->" + cabLongShortArray[currCabId]);
+                        }
+                    }
+                    cabLongShortArray[currCabId] = aType;
+                    if (aType) {
+                        cabData[currCabId].longShort = rb.getString("IsLongAddr");
+                    } else {
+                        cabData[currCabId].longShort = rb.getString("IsShortAddr");
+                    }
                     // read the low address byte
                     readChar = recChars[CabMemorySerial.CAB_ADDR_L - CabMemorySerial.CAB_CURR_SPEED];
                     if (log.isDebugEnabled()) {
