@@ -510,7 +510,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabsFound++;
                 }
                 int cabType = recChar & NceCmdStationMemory.FLAGS1_MASK_CABTYPE; // mask off don't care bits
-                if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
+                if (currCabId == CAB_MAX_PRO) {
+                    cabData[currCabId].type = rb.getString("TypeSerial");
+                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
                     cabData[currCabId].type = rb.getString("TypeProCab");
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_NODISP) {
                     cabData[currCabId].type = rb.getString("TypeCab04");	// Cab04 or Cab06
