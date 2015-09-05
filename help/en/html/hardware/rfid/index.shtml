@@ -29,11 +29,17 @@ JMRI: RFID Reader Support
 actual code might be ahead or behind the documentation
 on any given day.</em><p>
 
-JMRI provides support for general JMRI
+<a href="RFID_Preferences.png"><img src="RFID_Preferences.png" align="right" height="220" width="430"/></a>
+
+<p>JMRI provides support for general JMRI
 <a href="../../tools/Sensors.shtml">Sensors</a>
 and
 <a href="../../tools/Reporters.shtml">Reporters</a>
 in terms of RFID Reader "events". 
+
+<p>You configure JMRI's serial connection to your RFID 
+hardware in JMRI's preferences. It appears as a new
+"RFID" connection.
 
 <h2>Protocols</h2>
 JMRI supports several different reader protocols when directly connected:
@@ -48,7 +54,8 @@ JMRI supports several different reader protocols when directly connected:
 <p>
 JMRI also supports up to 8 individual readers connected via a concentrator.
 Right now, the only supported concentrator is that from MERG, and then only for
-readers using the CORE-ID protocol.
+readers using the CORE-ID protocol. 
+Select "MERG Concentrator" for the "Adapter" in the preferences.
 
 <h2>Naming</h2>
 
