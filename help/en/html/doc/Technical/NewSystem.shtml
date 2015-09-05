@@ -214,7 +214,7 @@
     
 		</dl>
 		
-<h3>Adding a TCP/IP connection to an existing system</h3>
+<h2>Adding a TCP/IP connection to an existing system</h2>
 
 These are rough notes from adding a TCP/IP connection to the RFID type,
 by copying the architecture of the C/MRI system.
@@ -278,7 +278,24 @@ The network connection will default to "Network Connection".
 It should, you copied the necessary code above, but check.
 
 </ol>		
-		</div>
+
+<h2>Connections with Complicated Setup</h2>
+
+Some connection types need more configuration and/or setup than you can 
+get with the usual option1/option2/option3 mechanism. Tools available are:
+
+<ul>
+<li>loadDetails() in ConnectionConfig.  This is invoked when
+setting up the preferences window, and can be used to add
+additional controls.  C/MRI uses this to add a "Configure Nodes" button.
+
+<li>extendElement(Element e) and unpackElement(Element e) in ConnectionConfigXml
+can be used to store additional information and reload it, respectively.
+C/MRI uses this to store its node information.
+
+</ul>
+
+</div>
 
 <!--#include virtual="/Footer" -->
 
