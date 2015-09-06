@@ -52,32 +52,23 @@ public class JMRIClientReporter extends AbstractReporter implements JMRIClientLi
         tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
     }
 
-    protected void sendMessage(boolean active) {
-        // get the message text
-        String text;
-        if (active) {
-            text = "REPORTER " + transmitName + " ACTIVE\n";
-        } else // thrown
-        {
-            text = "REPORTER " + transmitName + " INACTIVE\n";
-        }
-
-        // create and send the message itself
-        tc.sendJMRIClientMessage(new JMRIClientMessage(text), this);
-    }
-
     // to listen for status changes from JMRIClient system
     public void reply(JMRIClientReply m) {
         String message = m.toString();
         log.debug("Message Received: " + m);
         log.debug("length " + message.length());
-        if (!message.contains(transmitName + " ")) {
+        if (!message.contains(transmitName + " ") &&
+            !message.contains(transmitName + "\n") &&
+            !message.contains(transmitName + "\r") ) {
             return; // not for us
         } else {
             String text = "REPORTER " + transmitName + "\n";
             if (!message.equals(text)) {
-                setReport(message.substring(text.length()));  // this is an update of the report.
+                String report = message.substring(text.length());
+                log.debug("setting report to " + report);
+                setReport(report);  // this is an update of the report.
             } else {
+                log.debug("setting report to null");
                 setReport(null); // this is an update, but it is just 
                 // telling us the transient current 
                 // report is no longer valid.
