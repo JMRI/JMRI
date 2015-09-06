@@ -71,6 +71,14 @@ public interface AddressedProgrammerManager {
     public boolean isAddressedModePossible();
 
     /**
+     * Convenience method to check whether you'll be able to get an Addressed
+     * Mode programmer for a specific address
+     *
+     * @return false if there's no chance of getting one
+     */
+    public boolean isAddressedModePossible(LocoAddress address);
+
+    /**
      * Get the list of {@link ProgrammingMode} (generally) supported by
      * Programmers provided by this Manager.
      * <p>

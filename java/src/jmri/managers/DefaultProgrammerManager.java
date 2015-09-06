@@ -170,6 +170,15 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     /**
+     * Default programmer doesn't depend on address
+     *
+     * @return false if there's no chance of getting one
+     */
+    public boolean isAddressedModePossible(jmri.LocoAddress l) {
+        return isAddressedModePossible();
+    }
+
+    /**
      * Allow for implementations that do not support Service mode programming
      *
      * @return false if there's no chance of getting one

@@ -125,6 +125,15 @@ public class DeferringProgrammerManager implements ProgrammerManager {
         return ap.isAddressedModePossible();
     }
 
+    /**
+     * Default programmer doesn't depend on address
+     *
+     * @return false if there's no chance of getting one
+     */
+    public boolean isAddressedModePossible(jmri.LocoAddress l) {
+        return isAddressedModePossible();
+    }
+
     public java.util.List<ProgrammingMode> getDefaultModes() {
         return InstanceManager.getDefault(AddressedProgrammerManager.class).getDefaultModes();
     }
