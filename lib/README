@@ -95,6 +95,24 @@ jackson-databind-2.0.6.jar
     see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
     JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
 
+bluecove-2.1.1-SNAPSHOT.jar
+lib/bluecove-bluez-2.1.1-SNAPSHOT.jar
+bluecove-gpl-2.1.1-SNAPSHOT.jar
+    Installed from JMRI patch 1037
+    BlueCove (http://bluecove.org/).
+    The file bluecove-2.1.1-SNAPSHOT.jar is licensed under Apache License, 
+        Version 2.0 (http://www.apache.org/licenses/LICENSE-2.0) while the 
+        file bluecove-gpl-2.1.1-SNAPSHOT.jar, needed for use on linux, i
+        is licensed under GNU General Public License (http://www.gnu.org/licenses/gpl.html).
+    Questions to johan.bostrom@mollehem.se
+    The particular files are actually
+        lib/github-machaval/bluecove-2.1.1-SNAPSHOT.jar
+        lib/github-machaval/bluecove-bluez-2.1.1-SNAPSHOT.jar
+        lib/github-machaval/bluecove-gpl-2.1.1-SNAPSHOT.jar
+    from https://github.com/ieee8023/blucat/find/master
+    The source for these is also available there.
+    The related project seems to be https://github.com/machaval/bluecove
+
 jython.jar
  version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
  

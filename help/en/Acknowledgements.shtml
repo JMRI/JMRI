@@ -93,6 +93,8 @@
 	test the physical data fields in the decoder definitions, added
 	features to the decoder index, decoder selection tree, and speedometer,
 	and created the connection to the Zimo MX1 DCC system
+	<li>Johan Bostrom, who committed the code to 
+	support the Bluetooth LocoBridge adapter.
     <LI>Dan Boudreau, who added support for the new NCE turnout command
     and read-back of turnout positions, updated the "send packet" tool to send 
     NCE binary messages, added a tool to let NCE users send macro commands,
