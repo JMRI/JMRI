@@ -6,9 +6,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 /**
- * Tests for the jmri.jmrix.openlcb.swing package.
+ * Tests for the jmri.jmrix.openlcb package.
  *
- * @author Bob Jacobsen Copyright 2009, 2012
+ * @author Bob Jacobsen Copyright 2009, 2012, 2015
  * @version $Revision$
  */
 public class PackageTest extends TestCase {
@@ -36,7 +36,10 @@ public class PackageTest extends TestCase {
         suite.addTest(OlcbAddressTest.suite());
         suite.addTest(OpenLcbLocoAddressTest.suite());
         suite.addTest(OlcbSensorManagerTest.suite());
+        suite.addTest(OlcbProgrammerTest.suite());
+        suite.addTest(OlcbProgrammerManagerTest.suite());
         suite.addTest(OlcbSensorTest.suite());
+        suite.addTest(OlcbSystemConnectionMemoTest.suite());
         suite.addTest(OlcbTurnoutManagerTest.suite());
         suite.addTest(OlcbTurnoutTest.suite());
         suite.addTest(OlcbThrottleTest.suite());

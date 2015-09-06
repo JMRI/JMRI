@@ -61,6 +61,10 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
         InstanceManager.setThrottleManager(
                 getThrottleManager());
 
+        InstanceManager.setProgrammerManager(
+                getProgrammerManager());
+                
+
         // do the connections
         tc = adapterMemo.getTrafficController();
 
@@ -172,6 +176,18 @@ public class OlcbConfigurationManager extends jmri.jmrix.can.ConfigurationManage
             return (T) nodeID;
         }
         return null; // nothing, by default
+    }
+
+    protected OlcbProgrammerManager programmerManager;
+
+    public OlcbProgrammerManager getProgrammerManager() {
+        if (adapterMemo.getDisabled()) {
+            return null;
+        }
+        if (programmerManager == null) {
+            programmerManager = new OlcbProgrammerManager(new OlcbProgrammer());
+        }
+        return programmerManager;
     }
 
     protected OlcbThrottleManager throttleManager;
