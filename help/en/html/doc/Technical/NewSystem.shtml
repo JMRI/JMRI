@@ -288,6 +288,7 @@ get with the usual option1/option2/option3 mechanism. Tools available are:
 <li>loadDetails() in ConnectionConfig.  This is invoked when
 setting up the preferences window, and can be used to add
 additional controls.  C/MRI uses this to add a "Configure Nodes" button.
+RFID uses it to add listeners that control which combinations of options are available.
 
 <li>extendElement(Element e) and unpackElement(Element e) in ConnectionConfigXml
 can be used to store additional information and reload it, respectively.
