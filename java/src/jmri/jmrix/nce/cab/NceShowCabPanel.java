@@ -142,6 +142,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private int[] cabLocoArray = new int[CAB_MAX_CABDATA];
     private boolean[] cabLongShortArray = new boolean[CAB_MAX_CABDATA];
     private int[] cabConsistArray = new int[CAB_MAX_CABDATA];
+    private int[] cabConsistPosArray = new int[CAB_MAX_CABDATA];
     private int[] cabF0Array = new int[CAB_MAX_CABDATA];
     private int[] cabF5Array = new int[CAB_MAX_CABDATA];
     private int[] cabF13Array = new int[CAB_MAX_CABDATA];
@@ -160,6 +161,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JLabel textAddress = new JLabel(rb.getString("Loco"));
     JLabel textSpeed = new JLabel(rb.getString("Speed"));
     JLabel textConsist = new JLabel(rb.getString("Consist"));
+    JLabel textConsistPos = new JLabel(rb.getString("ConsistPos"));
     JLabel textFunctions = new JLabel(rb.getString("Functions"));
     JLabel textDisplay1 = new JLabel(rb.getString("Display1"));
     JLabel textDisplay2 = new JLabel(rb.getString("Display2"));
@@ -197,6 +199,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         String dir;
         String mode;
         int consist;
+        String consistPos;
         boolean F0;
         boolean F1;
         boolean F2;
@@ -625,6 +628,17 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabConsistArray[currCabId] = readChar;
                     cabData[currCabId].consist = readChar;
 
+                    // show consist position if relevant
+                    int pos = cabFlagsArray[currCabId] & NceCmdStationMemory.FLAGS_MASK_CONSIST_REAR;
+                    cabData[currCabId].consistPos = "";
+                    if (cabConsistArray[currCabId] != 0) {
+                        if (pos > 0) {
+                            cabData[currCabId].consistPos = rb.getString("IsRear");
+                        } else {
+                            cabData[currCabId].consistPos = rb.getString("IsLead");
+                        }
+                    }
+
                     // get the functions 0-4 values
                     readChar = recChars[CabMemorySerial.CAB_FUNC_L - CabMemorySerial.CAB_CURR_SPEED];
                     if (cabF0Array[currCabId] != readChar) {
@@ -984,6 +998,17 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabConsistArray[currCabId] = readChar;
                     cabData[currCabId].consist = readChar;
+
+                    // show consist position if relevant
+                    int pos = cabFlagsArray[currCabId] & NceCmdStationMemory.FLAGS_MASK_CONSIST_REAR;
+                    cabData[currCabId].consistPos = "";
+                    if (cabConsistArray[currCabId] != 0) {
+                        if (pos > 0) {
+                            cabData[currCabId].consistPos = rb.getString("IsRear");
+                        } else {
+                            cabData[currCabId].consistPos = rb.getString("IsLead");
+                        }
+                    }
 
                     // get the functions 13-20 values
                     setUsbCabMemoryPointer(currCabId, CabMemoryUsb.CAB_FUNC_13_20);
@@ -1733,6 +1758,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             rb.getString("ColHeaderDir"),
             rb.getString("ColHeaderMode"),
             rb.getString("ColHeaderConsist"),
+            rb.getString("ColHeaderConsistPos"),
             rb.getString("ColHeaderF0"),
             rb.getString("ColHeaderF1"),
             rb.getString("ColHeaderF2"),
@@ -1850,68 +1876,70 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 case 8:
                     return r.consist;
                 case 9:
-                    return r.F0;
+                    return r.consistPos;
                 case 10:
-                    return r.F1;
+                    return r.F0;
                 case 11:
-                    return r.F2;
+                    return r.F1;
                 case 12:
-                    return r.F3;
+                    return r.F2;
                 case 13:
-                    return r.F4;
+                    return r.F3;
                 case 14:
-                    return r.F5;
+                    return r.F4;
                 case 15:
-                    return r.F6;
+                    return r.F5;
                 case 16:
-                    return r.F7;
+                    return r.F6;
                 case 17:
-                    return r.F8;
+                    return r.F7;
                 case 18:
-                    return r.F9;
+                    return r.F8;
                 case 19:
-                    return r.F10;
+                    return r.F9;
                 case 20:
-                    return r.F11;
+                    return r.F10;
                 case 21:
-                    return r.F12;
+                    return r.F11;
                 case 22:
-                    return r.F13;
+                    return r.F12;
                 case 23:
-                    return r.F14;
+                    return r.F13;
                 case 24:
-                    return r.F15;
+                    return r.F14;
                 case 25:
-                    return r.F16;
+                    return r.F15;
                 case 26:
-                    return r.F17;
+                    return r.F16;
                 case 27:
-                    return r.F18;
+                    return r.F17;
                 case 28:
-                    return r.F19;
+                    return r.F18;
                 case 29:
-                    return r.F20;
+                    return r.F19;
                 case 30:
-                    return r.F21;
+                    return r.F20;
                 case 31:
-                    return r.F22;
+                    return r.F21;
                 case 32:
-                    return r.F23;
+                    return r.F22;
                 case 33:
-                    return r.F24;
+                    return r.F23;
                 case 34:
-                    return r.F25;
+                    return r.F24;
                 case 35:
-                    return r.F26;
+                    return r.F25;
                 case 36:
-                    return r.F27;
+                    return r.F26;
                 case 37:
-                    return r.F28;
+                    return r.F27;
                 case 38:
-                    return r.text1;
+                    return r.F28;
                 case 39:
-                    return r.text2;
+                    return r.text1;
                 case 40:
+                    return r.text2;
+                case 41:
                     return r.lastChange;
             }
             return null;
@@ -1927,9 +1955,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         public Class<?> getColumnClass(int c) {
             if (c == 0 || c == 4 || c == 5 || c == 6 || c == 8) {
                 return Integer.class;
-            } else if (c == 1 || c == 3 || c == 7 || (c >= 38 && c <= 40)) {
+            } else if (c == 1 || c == 3 || c == 7 || c == 9 || (c >= 39 && c <= 41)) {
                 return String.class;
-            } else if (c >= 9 && c <= 37) {
+            } else if (c >= 10 && c <= 38) {
                 return Boolean.class;
             } else if (c == 2) {
                 return JButton.class;
@@ -1952,11 +1980,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 width = new JTextField(3).getPreferredSize().width;
             } else if (col <= 8) {
                 width = new JTextField(4).getPreferredSize().width;
-            } else if (col <= 37) {
+            } else if (col <= 9) {
+                width = new JTextField(2).getPreferredSize().width;
+            } else if (col <= 38) {
                 width = new JCheckBox().getPreferredSize().width;
-            } else if (col <= 39) {
-                width = new JTextField(10).getPreferredSize().width;
             } else if (col <= 40) {
+                width = new JTextField(10).getPreferredSize().width;
+            } else if (col <= 41) {
                 width = new JTextField(6).getPreferredSize().width;
             } else {
                 width = 0;
