@@ -41,10 +41,41 @@ JMRI users.</em>
 
   <h2>Quickstart</h2>
 
-  <p>You can download a bare copy the most recent JMRI source code
-  by going to our 
-  <a href="https://github.com/JMRI/jmri-test">GitHub.com repository</a> 
-  and clicking the "download ZIP" button on the right.</p>
+  <p>"<a href="https://git-scm.com">Git</a>" 
+  is a powerful, free system for managing 
+  code as it's worked-on by a distributed group.  Like SVN before it, 
+  and CVS before that, it allows a group like JMRI to cooperate effectively.
+  We keep our code, help files, 
+  <a href="WebSite.shtml">web site</a>, 
+  and everything else in a 
+  Git repository hosted on 
+  <a href="https://github.com/JMRI">GitHub.com</a>.
+  
+<h3>Viewing the Code Online</h3>
+  <p>You can 
+  <a href="">browse the JMRI code directly</a> <em>(link not permanent)</em>
+  on that site. For example, if you'd like to look at this page,
+  <a href="https://github.com/JMRI/jmri-test/blob/master/help/en/html/doc/Technical/getcode.shtml">click this link</a> <em>(link not permanent)</em>
+  to see the source HTML code displayed.
+  </p>
+
+<a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
+<h3>Proposing Changes</h3>
+  
+  <p>If you want to suggest a change to a file, first get a free
+  <a href="https://github.com/join">GitHub account</a> and sign in.
+  <a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
+  Then go to the file you want to change and click the pencil icon on the upper-right of the page.
+  This will, after a second or two, give you a page where you can directly edit the
+  contents of the file.  Don't worry, you're not actually changing JMRI's version, just
+  a copy local to you. Then fill out the form at the bottom with a useful subject
+  line, and a description of why this is a good change, and click the
+  "Propose file change" button.  This sends your change to the people who've
+  agreed to maintain the JMRI central code, who will review and (usually) include it in 
+  the new JMRI release.
+  
+  
+  
   
   <p>Note that this will give you a bare copy. If you want to make
   changes, and hopefully contribute them back to the JMRI project 
@@ -55,22 +86,20 @@ JMRI users.</em>
   <a href="https://desktop.github.com">here</a>.
   See below for more info.
   
-  <h2>Details</h2>
+  <h2>Access to the Full Code</h2>
 
 
   <p>Our source code is distributed using <a
   href="https://git-scm.com">Git</a>.  (We also keep
   the <a href="WebSite.shtml">web site</a> in Git, if you'd like
   to work with the source for that directly.)  
-  If you want to work with the code, a few
-  minutes installing Git is well worth it.  We're sorry, but we
+  If you want to work with the JMRI code, 
+  the full <a href="WebSite.shtml">web site</a>,
+  or any other large part of JMRI, 
+  a minutes getting Git set up is well worth it.  We're sorry, but we
   just can't support other methods (sending around individual files, etc), as they're
   just too error prone.</p>
 
-  <p>We host our primary copy of the code in a repository on
-  <a href="">GitHub.com</a>.  That provides powerful (and free) tools
-  for managing the code in a community way.
-  
   <p>It's possible to use Git from the command line, or from inside various 
   IDEs like XCode or NetBeans.  Some of the JMRI developers prefer that approach.
   But if you're new and reading this, we recommend that you 
@@ -90,21 +119,36 @@ JMRI users.</em>
 
   <p>Many development environments (e.g., Netbeans or Eclipse) will have
   support for Git, either directly or as an add-on.  Check the
-  documentation for your favorite IDE to check on Git support.</p>
+  documentation for your favorite IDE for details on Git support.
+  <ul>
+  <li>In NetBeans, under the "Team" menu, select Git, then Clone Repository.
+    Enter the repository URL from the 
+    <a href="">JMRI GitHub page</a><em>(not final URL)</em>
+    under "Repository URL" on the NetBeans form.  We recommend that you
+    also enter your GitHub user name and password on the form, so 
+    we can attribute your contributions to you later. Click "Next".
+    Make sure that the "master*" box is checked to pull down the main
+    version of the code. Click "Next", and then click "Finish".
+    It'll take a few minutes to pull down a copy of the code
+    (note the progress bar in the lower right), 
+    and then you're good to go.
+  </ul>
+  </p>
 
   <p>
   <em>(Paragraph not changed:  Decide whether to put in a 
-  command here, or a GitHub Desktop walkthrough)</em>
+  command here, or a GitHub Desktop walkthrough, or comments on various IDEs)</em>
   If you have an existing copy of the code and want to update it
-  to the most recent contents of the Subversion repository, the command is:
+  to the most recent contents of the main JMRI repository, the command is:
   <pre>
   svn update
   </pre></p>
 
   <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
 
-  <p>After the checkout is complete, you'll find a top level
-  directory called <tt>java</tt>, with subdirectories <tt>xml</tt>,
+  <p>After the checkout is complete, go to the new directory.
+  Inside, you'll find 
+  directories called <tt>xml</tt>,
   <tt>resources</tt>, <tt>jython</tt>, <tt>help</tt>, <tt>lib</tt>,
   <tt>java</tt> and others.</p>
 
@@ -122,10 +166,17 @@ JMRI users.</em>
 
   <p>Once you're working with the code, you'll probably create some improvements
   you'd like to contribute back to the project.  This is where Git has tremendous
-  advantages; with the appropriate permissions and commands, you can merge your
-  changes back into the common source automagically.  Contact us when you're ready to
-  do that or see the <a href="index.shtml#contributing">info on
-  contributing</a>.</p>
+  advantages; you can submit a "pull request" which will allow us to merge your
+  changes back into the common source automagically.  </p>
+  
+  <p>
+  Exactly how you do that depends a bit on what tools you're using.
+  <ul>
+  <li>If you're using GitHub Desktop, there's a pull-request button on the upper right.
+  Click it, fill out the form, and click "Send Pull Request".
+  <li>
+  </ul>
+  </p>
 
   <h2>Access to Old Releases</h2>
 
