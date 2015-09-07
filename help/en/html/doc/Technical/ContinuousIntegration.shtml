@@ -6,7 +6,7 @@
  	JMRI: Continuous Integration
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins SVN">
+    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->

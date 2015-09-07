@@ -41,7 +41,7 @@ The help files are located in the "help" directory
 within the JMRI distribution directory. 
 
 <p>
-The master copy of this is stored in SVN as the "help" 
+The master copy of this is stored in our repository as the "help" 
 module.  This means to get your own local copy, just follow the steps on the  
 "<a href="getcode.shtml">getting the code</a>" page.
 
@@ -168,7 +168,7 @@ Please don't edit them manually.
 <P>
 JHelpDev is now included in the JMRI dist.  To use the tool:
 <OL>
-<li>Make sure you've run "update" from SVN before getting started.</li>
+<li>Make sure you've updated to the most recent version in the code repository before getting started.</li>
 <LI>Start the tool by clicking on the jhelpdev.jar file. (If that doesn't work, try
 running either JHelpDev.csh or JHelpDev.bat, depending on what kind of
 computer you have)</LI>
@@ -189,8 +189,8 @@ Eclipse, right-click on the help/en/build.xml file and select Run As Ant Build.)
 </OL>
 
 <p>
-The various control files that JavaHelp uses are stored in SVN, 
-so once you've done this SVN will show them as modified.  
+The various control files that JavaHelp uses are stored in our code repository, 
+so once you've done this they will show as modified.  
 Please check them in when you check in new help files so other 
 people don't have to recreate those control files for themselves.
 <P>
@@ -200,9 +200,11 @@ There's more info on how to do that on the
 
 
 <h2>Updating the JMRI.ORG site</h2>
-Changes to Help pages which are checked into svn should show up automatically on the JMRI.ORG
-site after a short while.  If this does not work, you can visit <a href="http://jmri.org/updateSVN.php" target=_new  rel="nofollow">[this page]</a>
-to push the update along. 
+Changes to Help pages which are checked-in should show up automatically on the JMRI.ORG
+site after a short while. 
+There's a 
+<a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">Jenkins job</a>
+that handles periodic updates for the static (from repository, unlike e.g. JavaDoc) pages.
 
 <!--#include virtual="/Footer" -->
 
