@@ -127,11 +127,6 @@ Much of the discussion about JMRI development takes place on the JMRI-Developers
 <a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">Archive</a>
 
 <p>
-The <a href="http://jmri.wiki.sourceforge.net/">Developer Wiki</a>
-is where we are trying to document the structure of the code and how it's evolving.
-(This is an experimental effort, not yet really working, but we keep trying...)
-
-<p>
 SourceForge.net provides project hosting:<ul>
 <li><a href="http://sourceforge.net/projects/jmri/">JMRI project page</a> and 
 <a href="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</a>.
