@@ -56,10 +56,19 @@ Click "Create".
 <li>You should get an XCode project window. In the center, it should say
 "External Build Tool Configuration".  (You might have to click around to get there).
 Change Arguments from $(ACTION) to decoderpro (or panelpro if you'd like; case matters)
-<li>Just below that is a Directory field.  CLick the icon at the right end to get a 
+<li>Just below that is a Directory field.  Click the icon at the right end to get a 
 file chooser, and again select your checked-out directory.
 <li>Click the run button, upper left. DecoderPro should start after a compilation cycle.
 </ol>
+
+<p>On XCode 5 and 6, the above runs the code, but doesn't make it easily editable.
+Those XCode versions don't have strong Java edit, compile and debug support.
+You might be better off with 
+<a href="NetBeans.shtml">NetBeans </a>
+or 
+<a href="Eclipse.shtml">Eclipse</a>.
+
+
 <H2>Procedure to setup JMRI on Xcode 3</H2>
 <ol>
 <li><p>Start <b>Xcode,</b> dismiss any window that appears, and uncheck return to 
