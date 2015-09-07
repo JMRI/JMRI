@@ -59,12 +59,12 @@ JMRI users.</em>
   to see the source HTML code displayed.
   </p>
 
-<a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
 <h3>Proposing Changes</h3>
   
+<a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
   <p>If you want to suggest a change to a file, first get a free
   <a href="https://github.com/join">GitHub account</a> and sign in.
-  <a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
+<a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
   Then go to the file you want to change and click the pencil icon on the upper-right of the page.
   This will, after a second or two, give you a page where you can directly edit the
   contents of the file.  Don't worry, you're not actually changing JMRI's version, just
@@ -74,17 +74,6 @@ JMRI users.</em>
   agreed to maintain the JMRI central code, who will review and (usually) include it in 
   the new JMRI release.
   
-  
-  
-  
-  <p>Note that this will give you a bare copy. If you want to make
-  changes, and hopefully contribute them back to the JMRI project 
-  so others can benefit from them, we recommend that you use 
-  the "Clone in Desktop" button instead.  This will 
-  require you to have installed
-  "<a href="https://desktop.github.com">GitHub Desktop</a>" tool, which you can get from 
-  <a href="https://desktop.github.com">here</a>.
-  See below for more info.
   
   <h2>Access to the Full Code</h2>
 
