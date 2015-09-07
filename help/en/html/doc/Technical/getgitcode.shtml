@@ -64,16 +64,20 @@ JMRI users.</em>
 <a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
   <p>If you want to suggest a change to a file, first get a free
   <a href="https://github.com/join">GitHub account</a> and sign in.
-<a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
+  <p>
   Then go to the file you want to change and click the pencil icon on the upper-right of the page.
+  <p>
+<a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
   This will, after a second or two, give you a page where you can directly edit the
-  contents of the file.  Don't worry, you're not actually changing JMRI's version, just
-  a copy local to you. Then fill out the form at the bottom with a useful subject
+  contents of the file with your suggested change.
+  Don't worry, you're not actually changing JMRI's version, just
+  a copy local to you. 
+  <p>
+  Then fill out the form at the bottom with a useful subject
   line, and a description of why this is a good change, and click the
   "Propose file change" button.  This sends your change to the people who've
   agreed to maintain the JMRI central code, who will review and (usually) include it in 
   the new JMRI release.
-  
   
   <h2>Access to the Full Code</h2>
 
