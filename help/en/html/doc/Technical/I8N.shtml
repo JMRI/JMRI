@@ -97,8 +97,8 @@ of the GUI controls.
 <LI>Translate the help files and other web pages.
 </UL>
 <P>
-Get a clean copy of the source code using SVN.
-(For more info on using SVN, please see the 
+Get a clean copy of the source code from the JMRI code repository.
+(For more info on doing that, please see the 
 <A HREF="getcode.shtml">page on getting a copy of the code</a>.)
 <h3>Translating Properties Files</h3>
 If they don't exist already, 
@@ -121,11 +121,12 @@ You can also check the official
 (optional second part of the suffix).
 <p>
 You then edit the language-specific files to enter text in 
-your own language. Please don't edit the lines in the 
-file that contain things like $Release: $; those are used 
-by 
-<A HREF="SVNFAQ.shtml">SVN</a> 
-to keep track of the history of changes.
+your own language. 
+<p>
+The lines in the 
+file that contain things like $Release: $; 
+are a vestiges of older version control systems; they can be 
+ignored or deleted.
 <P>
 Languages that involve non-roman letters require some
 extra care. The property files must contain only
