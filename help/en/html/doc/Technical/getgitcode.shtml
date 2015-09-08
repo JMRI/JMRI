@@ -146,10 +146,17 @@ JMRI users.</em>
   </ul>
   </p>
 
+  <p>If you want to get the code from the command line, do (substitute your GitHub account for YourGitHubName):
+  <pre><code>
+  $ mkdir ~/JMRIDevelopment
+  $ cd ~/JMRIDevelopment
+  $ git clone https://github.com/YourGitHubName/jmri.git
+  </code></pre>
+  
   <p>
   <em>(Paragraph not changed:  Decide whether to put in a 
   command here, or a GitHub Desktop walkthrough, or comments on various IDEs)</em>
-  If you have an existing copy of the code and want to update it
+  If you have an existing copy of the code ons your computer and want to update it
   to the most recent contents of the main JMRI repository, the command is:
   <pre>
   (add command sequence here)
