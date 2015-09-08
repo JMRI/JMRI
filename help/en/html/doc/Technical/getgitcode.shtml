@@ -93,7 +93,25 @@ JMRI users.</em>
   just can't support other methods (sending around individual files, etc), as they're
   just too error prone.</p>
 
-  <p>It's possible to use Git from the command line, or from inside various 
+  <p>The steps are:
+  <ul>
+  <li>Get a <a href="https://github.com/join">GitHub account</a> and login
+  <li>Tell GitHub to <a href="https://help.github.com/articles/fork-a-repo/">"fork" JMRI's repository</a> 
+  into one of your own. There's a 
+  <a href="https://help.github.com/articles/fork-a-repo/">good help page</a>,
+  but basically you go to the 
+  <a href="https://github.com/JMRI/jmri-test">JMRI repository page</a>(link not right)
+  and click the "fork" button in the upper right.
+   
+  <p>
+  This gives you your own repository, which you can then work with freely.
+  <li>Download a copy of your repository to your computer so you can work 
+  with it.
+  </ul>
+  
+  <p>
+  For working with your copy, 
+  it's possible to use Git from the command line, or from inside various 
   IDEs like XCode or NetBeans.  Some of the JMRI developers prefer that approach.
   But if you're new and reading this, we recommend that you 
   interact with our code repository through the
@@ -134,7 +152,7 @@ JMRI users.</em>
   If you have an existing copy of the code and want to update it
   to the most recent contents of the main JMRI repository, the command is:
   <pre>
-  svn update
+  (add command sequence here)
   </pre></p>
 
   <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
@@ -157,16 +175,20 @@ JMRI users.</em>
    href="JBuilder.shtml">JBuilder</a>, etc.  (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
 
-  <p>Once you're working with the code, you'll probably create some improvements
+  <p>Periodically, you should "commit" your changes back to the repository
+  copy on your local computer. 
+  When your changes are working, "push" those changes back to your
+  GitHub repository which makes them available to others.
+  
+  <p>Eventually, you'll create some improvements that
   you'd like to contribute back to the project.  This is where Git has tremendous
   advantages; you can submit a "pull request" which will allow us to merge your
   changes back into the common source automagically.  </p>
   
   <p>
-  Exactly how you do that depends a bit on what tools you're using.
+  Exactly how you do that depends a bit on what tools you're using....
   <ul>
-  <li>If you're using GitHub Desktop, there's a pull-request button on the upper right.
-  Click it, fill out the form, and click "Send Pull Request".
+  <li>If you've pushed your change back to GitHub, there's a button....
   <li>
   </ul>
   </p>
