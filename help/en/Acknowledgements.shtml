@@ -395,6 +395,7 @@
 	worked on GUI updates, and built a replacement RXTX library for Mac OS X 10.4.
 	<LI>Herb Poppe, who diagnosed a problem in some Digitrax decoder definitions
 	<li>Michael Povel, who provided definitions for TAMS decoders
+	<li>Oscar A. Pruitt, who provided the implementation to support RFID readers using the EM-18 protocol
 	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
 <a name="Q"></A>
 <a name="R"></A>
