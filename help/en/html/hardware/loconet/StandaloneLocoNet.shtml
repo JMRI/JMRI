@@ -168,6 +168,8 @@ useful.</p>
     <tr align="center"><td>Digitrax PR3 (in MS100 mode)</td><td>Optional</td><td></td>
         <td>Required, can provide</td><td></td>
     </tr>
+    <tr align="center"><td>RR-CirKits LocoBuffer-USB Rev n</td><td>Optional</td><td>Required for power **</td>
+        <td>Required, cannot provide</td><td></td>
     <tr align="center"><td>RR-CirKits LocoBuffer-II/LocoBuffer-USB</td><td>Optional</td><td>Required for power **</td>
         <td>Required, can provide</td><td></td>
     <tr align="center"><td>LocoBuffer</td><td>Optional</td><td></td><td>Required, might provide ***</td><td></td>
@@ -227,14 +229,14 @@ useful.</p>
             a non-LocoNet booster.  See 
             <A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>,
             below.</p>
-        <p>** LocoNet devices with optically-isolated LocoNet interfaces must 
+        <p>** LocoNet devices with an isolated LocoNet interfaces must 
             take power from the LocoNet RailSync wires to power the LocoNet side 
-            of their optically-isolated interface hardware.  These devices may 
+            of their isolation hardware.  These devices may 
             not require that the RailSync wires have a copy of the DCC track 
             signal, but they do require sufficient voltage and current.  A DC 
             power supply, as shown below in <a href="#rspowersupply">
             RailSync power from a DC power supply</a>, is sufficient to meet the 
-            power needs of the LocoBuffer-II, the LocoBuffer-USB RailSync, and 
+            power needs of the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB Rev-n, and 
             the TC-64.  If the RailSync wires do not provide sufficient voltage 
             and current, these devices will be unable to communicate reliably 
             with LocoNet.</p>
@@ -259,7 +261,8 @@ useful.</p>
             Some alternate terms are listed here.
             The BDL168 manual defines an OpSw setting which "Allows this BDL168 
             board to terminate LocoNet".  The LocoBuffer-II and LocoBuffer-USB 
-            devices have a hardware jumper which allows these devices to 
+            devices (except not the LocoBuffer-USB Rev-n) have a hardware jumper 
+            which allows these devices to 
             "provide LocoNet Master termination".  The PR3 has an operating mode 
             where "The PR3 has the ability to act as a LocoNet terminator."  All 
             of these are describing the term used in this document, LocoNet 
@@ -356,7 +359,7 @@ useful.</p>
                 </p></li>
                 </ul>
                 </LI>
-            <LI><strong>LocoBuffer-II, LocoBuffer-USB</strong>
+            <LI><strong>LocoBuffer-II, LocoBuffer-USB (except LocoBuffer-USB Rev-n)</strong>
                 <p>See the instructions for the appropriate hardware for the 
                     required switch and/or jumper settings.  These devices power
                     their LocoNet data signal termination using power provided by
@@ -658,8 +661,9 @@ useful.</p>
             difficult to determine the electrical connectivity within a computer 
             power supply, so it is generally a good idea to isolate the computer
             from the remainder of the system.</P>
-        <P>Isolation of LocoNet from the computer is recommended.  The LocoBuffer-II 
-            and LocoBuffer-USB computer interface devices provide "optical isolation" of the
+        <P>Isolation of LocoNet from the computer is recommended.  The LocoBuffer-II, 
+            LocoBuffer-USB, and LocoBuffer-USB Rev-n computer interface devices 
+            provide "optical isolation" of the
             LocoNet signals from the computer electrical signals.  Note that
             the LocoBuffer-II isolation is not effective when it is configured 
             for "Local Power".  The LocoBuffer-II should be configured for 
@@ -697,6 +701,7 @@ useful.</p>
             wires are not connected to the primary LocoNet, so LocoNet Master 
             termination cannot be provided by the command station.  An alternative
             source of LocoNet Data Signal Termination must be used.  The LocoBuffer-USB
+            (except not LocoBuffer-USB Rev-n)
             can easily be configured to provide "LocoNet Master termination" via an
             internal jumper setting (see the LocoBuffer-USB User's Manual).  Alternate
             sources of <A href="#dataterm">LocoNet Data Signal Termination</A> 
@@ -772,8 +777,8 @@ useful.</p>
 
 <p>Information and support for Digitrax products may be found at 
     <a href="http://www.digitrax.com/">the Digitrax website</a>.</p>
-<p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, LocoNet-Terminator,
-    SSB-Gateway, and other products by RR-CirKits may be found at 
+<p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB Rev-n,
+    the LocoNet-Terminator, the SSB-Gateway, and other products by RR-CirKits may be found at 
     <a href="http://www.rr-cirkits.com/">the RR-Cirkits website</a>.</p>
 <p>Information and support for products from Team Digital may be found at
     <a href="http://www.teamdigital1.com/">the Team Digital website</a>.</p>
