@@ -64,11 +64,11 @@ public class SimpleReporterServer extends AbstractReporterServer {
         // where xxxxxx is the reporter identifier and REPORTSTRING is
         // the report, which may contain spaces.
         if (index2 > 0 && statusString.substring(index2 + 1).length() > 0) {
-            setReporterReport(statusString.substring(index, index2), statusString.substring(index2 + 1));
+            setReporterReport(statusString.substring(index, index2).toUpperCase(), statusString.substring(index2 + 1));
         }
         //} else {
         // return report for this reporter/
-        Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(statusString.substring(index));
+        Reporter reporter = InstanceManager.reporterManagerInstance().provideReporter(statusString.substring(index).toUpperCase());
         sendReport(statusString.substring(index), reporter.getCurrentReport());
 
         //}

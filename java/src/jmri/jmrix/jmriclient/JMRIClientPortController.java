@@ -14,12 +14,21 @@ public abstract class JMRIClientPortController extends jmri.jmrix.AbstractNetwor
     // objects to JMRIClientTrafficController classes, who in turn will deal in messages.
     protected JMRIClientPortController(JMRIClientSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
+        allowConnectionRecovery=true;
     }
 
     @Override
     public JMRIClientSystemConnectionMemo getSystemConnectionMemo() {
         return (JMRIClientSystemConnectionMemo) super.getSystemConnectionMemo();
     }
+
+    @Override
+    protected void resetupConnection() {
+       // notify the memo that we've restarted, so it can ask the associated 
+       // managers to refresh status
+       getSystemConnectionMemo().requestAllStatus();       
+    }
+
 }
 
 

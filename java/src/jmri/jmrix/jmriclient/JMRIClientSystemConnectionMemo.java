@@ -85,6 +85,25 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
         jmri.InstanceManager.setReporterManager(getReporterManager());
     }
 
+    /**
+     * Request all status from the configured managers.
+     */
+    public void requestAllStatus() {
+
+        getTurnoutManager().getSystemNameList().forEach((t) -> {
+           ((JMRIClientTurnout)(getTurnoutManager().getTurnout(t))).requestUpdateFromLayout();
+        }); 
+        getSensorManager().getSystemNameList().forEach((s) -> {
+           ((JMRIClientSensor)(getSensorManager().getSensor(s))).requestUpdateFromLayout();
+        }); 
+        getLightManager().getSystemNameList().forEach((l) -> {
+           ((JMRIClientLight)(getLightManager().getLight(l))).requestUpdateFromLayout();
+        }); 
+        getReporterManager().getSystemNameList().forEach((r) -> {
+           ((JMRIClientReporter)(getReporterManager().getReporter(r))).requestUpdateFromLayout();
+        }); 
+    }
+
     /*
      * Provides access to the Power Manager for this particular connection.
      */
@@ -155,7 +174,7 @@ public class JMRIClientSystemConnectionMemo extends jmri.jmrix.SystemConnectionM
     private ReporterManager reporterManager = null;
 
     public void setTransmitPrefix(String tPrefix) {
-        transmitPrefix = tPrefix;
+        transmitPrefix = tPrefix.toUpperCase();
     }
 
     public String getTransmitPrefix() {
