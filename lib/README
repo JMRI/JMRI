@@ -112,6 +112,13 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
     from https://github.com/ieee8023/blucat/find/master
     The source for these is also available there.
     The related project seems to be https://github.com/machaval/bluecove
+    The native libraries were installed on a best guess effort;
+            exact locations might not be right.
+        lib/windows/bluecove.dll
+        lib/windows/bluecove_ce.dll
+        lib/windows/intelbth_ce.dll
+        lib/windows/x64/intelbth_x64.dll
+        lib/windows/x86/intelbth.dll
 
 jython.jar
  version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
