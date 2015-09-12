@@ -71,7 +71,6 @@ public class ArbitraryPropertySupportTest extends TestCase {
      * Test of getPropertyNames method, of class UnboundBean.
      */
     public void testGetPropertyNames() {
-        System.out.println("getPropertyNames");
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         Set<String> expResult = new HashSet<>(6);
         expResult.add(CLASS); // defined in Object
