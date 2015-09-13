@@ -48,8 +48,10 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         portNameVector = new Vector<String>();
         try {
             RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
-            for (RemoteDevice device : devices) {
-                portNameVector.add(device.getFriendlyName(false));
+            if (devices != null) {
+                for (RemoteDevice device : devices) {
+                    portNameVector.add(device.getFriendlyName(false));
+                }
             }
         } catch (BluetoothStateException BSe) {
             BSe.printStackTrace();
@@ -65,70 +67,72 @@ public class LocoNetBluetoothAdapter extends LnPortController implements jmri.jm
         try {
             // Find the RemoteDevice with this name.
             RemoteDevice[] devices = LocalDevice.getLocalDevice().getDiscoveryAgent().retrieveDevices(DiscoveryAgent.PREKNOWN);
-            for (RemoteDevice device : devices) {
-                if (device.getFriendlyName(false).equals(portName)) {
-                    Object[] waitObj = new Object[0];
-                    // Start a search for a serialport service (UUID 0x1101)
-                    LocalDevice.getLocalDevice().getDiscoveryAgent().searchServices(new int[] { 0x0100 }, new UUID[] { new UUID(0x1101) }, device, new DiscoveryListener() {
-                        @Override
-                        public void servicesDiscovered(int transID, ServiceRecord[] servRecord) {
-                            synchronized(waitObj) {
-                                for (ServiceRecord service : servRecord) {
-                                    // Service found, get url for connection.
-                                    String url = service.getConnectionURL(ServiceRecord.NOAUTHENTICATE_NOENCRYPT, false);
-                                    if (url == null) {
-                                        continue;
-                                    }
-                                    try {
-                                        // Open connection.
-                                        Connection conn = Connector.open(url, Connector.READ_WRITE);
-                                        if (conn instanceof StreamConnection) { // The connection should be a StreamConnection, otherwise it's a one way communication.
-                                            StreamConnection stream = (StreamConnection) conn;
-                                            in = stream.openInputStream();
-                                            out = stream.openOutputStream();
-                                            opened = true;
-                                            // Port is open, let openPort continue.
-                                            //waitObj.notify();
-                                        } else {
-                                            throw new IOException("Could not establish a two-way communication");
+            if (devices != null) {
+                for (RemoteDevice device : devices) {
+                    if (device.getFriendlyName(false).equals(portName)) {
+                        Object[] waitObj = new Object[0];
+                        // Start a search for a serialport service (UUID 0x1101)
+                        LocalDevice.getLocalDevice().getDiscoveryAgent().searchServices(new int[] { 0x0100 }, new UUID[] { new UUID(0x1101) }, device, new DiscoveryListener() {
+                            @Override
+                            public void servicesDiscovered(int transID, ServiceRecord[] servRecord) {
+                                synchronized(waitObj) {
+                                    for (ServiceRecord service : servRecord) {
+                                        // Service found, get url for connection.
+                                        String url = service.getConnectionURL(ServiceRecord.NOAUTHENTICATE_NOENCRYPT, false);
+                                        if (url == null) {
+                                            continue;
                                         }
-                                    } catch (IOException IOe) {
-                                        exception[0] = IOe;
+                                        try {
+                                            // Open connection.
+                                            Connection conn = Connector.open(url, Connector.READ_WRITE);
+                                            if (conn instanceof StreamConnection) { // The connection should be a StreamConnection, otherwise it's a one way communication.
+                                                StreamConnection stream = (StreamConnection) conn;
+                                                in = stream.openInputStream();
+                                                out = stream.openOutputStream();
+                                                opened = true;
+                                                // Port is open, let openPort continue.
+                                                //waitObj.notify();
+                                            } else {
+                                                throw new IOException("Could not establish a two-way communication");
+                                            }
+                                        } catch (IOException IOe) {
+                                            exception[0] = IOe;
+                                        }
+                                    }
+                                    if (!opened) {
+                                        exception[0] = new IOException("No service found to connect to");
                                     }
                                 }
-                                if (!opened) {
-                                    exception[0] = new IOException("No service found to connect to");
+                            }
+                            
+                            @Override
+                            public void serviceSearchCompleted(int transID, int respCode) {
+                                synchronized(waitObj) {
+                                    // Search for services complete, if the port was not opened, save the response code for error analysis.
+                                    responseCode[0] = respCode;
+                                    // Search completer, let openPort continue.
+                                    waitObj.notify();
+                                }
+                            }
+                            
+                            @Override
+                            public void inquiryCompleted(int discType) { }
+                            @Override
+                            public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) { }
+                        });
+                        synchronized(waitObj) {
+                            // Wait until either the port is open on the search has returned a response code.
+                            while (!opened && responseCode[0] == -1) {
+                                try {
+                                    // Wait for search to complete.
+                                    waitObj.wait();
+                                } catch (InterruptedException Ie) {
+                                    Ie.printStackTrace();
                                 }
                             }
                         }
-                        
-                        @Override
-                        public void serviceSearchCompleted(int transID, int respCode) {
-                            synchronized(waitObj) {
-                                // Search for services complete, if the port was not opened, save the response code for error analysis.
-                                responseCode[0] = respCode;
-                                // Search completer, let openPort continue.
-                                waitObj.notify();
-                            }
-                        }
-                        
-                        @Override
-                        public void inquiryCompleted(int discType) { }
-                        @Override
-                        public void deviceDiscovered(RemoteDevice btDevice, DeviceClass cod) { }
-                    });
-                    synchronized(waitObj) {
-                        // Wait until either the port is open on the search has returned a response code.
-                        while (!opened && responseCode[0] == -1) {
-                            try {
-                                // Wait for search to complete.
-                                waitObj.wait();
-                            } catch (InterruptedException Ie) {
-                                Ie.printStackTrace();
-                            }
-                        }
+                        break;
                     }
-                    break;
                 }
             }
         } catch (BluetoothStateException BSe) {
