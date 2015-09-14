@@ -55,8 +55,9 @@ JMRI users.</em>
   <p>You can 
   <a href="">browse the JMRI code directly</a> <em>(link not permanent)</em>
   on that site. For example, if you'd like to look at this page,
-  <a href="https://github.com/JMRI/jmri-test/blob/master/help/en/html/doc/Technical/getcode.shtml">click this link</a> <em>(link not permanent)</em>
-  to see the source HTML code displayed.
+  <a href="https://github.com/JMRI/jmri-test/blob/master/help/en/html/doc/Technical/getcode.shtml">click this link</a> 
+  <em>(link not permanent)</em>
+  to display its source HTML code.
   </p>
 
 <h3>Proposing Changes</h3>
@@ -100,7 +101,7 @@ JMRI users.</em>
   into one of your own. There's a 
   <a href="https://help.github.com/articles/fork-a-repo/">good help page</a>,
   but basically you go to the 
-  <a href="https://github.com/JMRI/jmri-test">JMRI repository page</a>(link not right)
+  <a href="https://github.com/JMRI/jmri-test">JMRI repository page</a><em>(link not right)</em>
   and click the "fork" button in the upper right.
    
   <p>
@@ -184,8 +185,8 @@ JMRI users.</em>
 
   <p>Periodically, you should "commit" your changes back to the repository
   copy on your local computer. 
-  When your changes are working, "push" those changes back to your
-  GitHub repository which makes them available to others.
+  That keeps your work in a separate file tree (your local repository)
+  so you can undo incorrect edits, etc.
   
   <p>Eventually, you'll create some improvements that
   you'd like to contribute back to the project.  This is where Git has tremendous
