@@ -102,7 +102,11 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         for (GlobalProgrammerManager pm : getMgrList()) {
             v.add(pm);
             // listen for changes
-            pm.getGlobalProgrammer().addPropertyChangeListener(this);
+            if (pm.getGlobalProgrammer() != null) {
+                pm.getGlobalProgrammer().addPropertyChangeListener(this);
+            } else {
+                log.warn("No GlobalProgrammer present in GlobalProgrammerManager, is there a problem with layout connection?");
+            }
         }
         add(progBox = new JComboBox<GlobalProgrammerManager>(v));
         // if only one, don't show
