@@ -47,6 +47,12 @@ On Linux and other systems, you need to have a libbluetooth installed.
 Depending on which Linux distribution you are using, you might have to use commands
 like "sudo apt-get install libbluetooth" or perhaps "sudo apt-get install libbluetooth-dev".
 
+<p>
+For more information, please see 
+<a href="http://snapshot.bluecove.org/bluecove-gpl/">this page</a>, 
+which describes the requirements to use the Blue Cove library that JMRI
+uses to access Bluetooth.
+
 <h2>Configuration</h2>
 
 <p>
