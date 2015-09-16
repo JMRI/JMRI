@@ -46,8 +46,8 @@ AppleJavaExtensions.jar
  Used for building only, not at runtime
 
 openlcb.jar
-    0.6.4 from http://openlcb.org/trunk/prototypes/java
-    Note: This implements the protocols as adopted by the OpenLCB
+    0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
+    Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB
     group prior to February 2015.  There have been changes to their
     specifications since then with uncertain provenance.
     JMRI's use of this version means that it won't comply
