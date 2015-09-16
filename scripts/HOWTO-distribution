@@ -33,6 +33,9 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
         ant remakedecoderindex
 
+        (Check 'session.log' and 'messages.log' located in current directory as,
+        in case of errors they might not always be output to the console)
+
         svn diff as a check.
         Commit.
 

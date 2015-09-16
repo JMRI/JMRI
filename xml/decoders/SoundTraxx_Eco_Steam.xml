@@ -619,7 +619,7 @@
             <choice>Hancock Step Top 3-Chime</choice>
           </enumChoice>
           <enumChoice>
-            <choice>Baldwin Single-Chime (5”)</choice>
+            <choice>Baldwin Single-Chime (5")</choice>
           </enumChoice>
           <enumChoice>
             <choice>B&amp;M Step Top 5-Chime</choice>
@@ -675,7 +675,7 @@
             <choice>Hancock Step Top 3-Chime</choice>
           </enumChoice>
           <enumChoice>
-            <choice>Baldwin Single-Chime (5”)</choice>
+            <choice>Baldwin Single-Chime (5")</choice>
           </enumChoice>
           <enumChoice>
             <choice>B&amp;M Step Top 5-Chime</choice>
@@ -917,39 +917,39 @@
       </variable>
 	  <variable CV="1.285" item="Extended Function Map Drift Mode On" default="5">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.286" item="Extended Function Map Drift Mode Off" default="6">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.297" item="Extended Function Map Whistle" default="2">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.299" item="Extended Function Map Dynamo" default="0">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.300" item="Extended Function Map Short Whistle" default="3">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.301" item="Extended Function Map Cylinder Cocks" default="4">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.302" item="Extended Function Map Water Stop" default="16">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.312" item="Extended Function Map Blowdown" default="10">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.320" item="Extended Function Map Johnson Bar" default="255">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.413" mask="XXXXXXXV" item="Drift Mode On Automatic Effects - FWDD" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>

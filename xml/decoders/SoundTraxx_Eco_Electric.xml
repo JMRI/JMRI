@@ -825,35 +825,35 @@
       </variable>
 	  <variable CV="1.285" item="Extended Function Map Forward Trolley Bell" default="255">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.286" item="Extended Function Map Reverse Trolley Bell" default="255">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.297" item="Extended Function Map Airhorn" default="2">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.299" item="Extended Function Map Pneumatic Doors" default="6">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.300" item="Extended Function Map Short Airhorn" default="3">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.301" item="Extended Function Map Pantograph" default="4">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.303" item="Extended Function Map Stop Request Bell" default="5">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.315" item="Extended Function Map Trolley Bell" default="10">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOenumFnMap.xml"/>
-		<tooltip>Mapping function keys F0-F28 to any of Econami’s effects</tooltip>
+		<tooltip>Mapping function keys F0-F28 to any of Econami's effects</tooltip>
 	  </variable>
 	  <variable CV="1.413" mask="XXXXXXXV" item="Forward Trolley Bell Automatic Effects - FWDD" default="0">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-DisableEnable_01.xml"/>
