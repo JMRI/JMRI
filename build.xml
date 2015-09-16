@@ -303,6 +303,7 @@
             <fileset file="junit-results.xml"/>
             <fileset file="jmri-fb.html"/>
             <fileset dir="temp"/>
+            <fileset dir="lib/cachedir"/>
         </delete>
     </target>
 
