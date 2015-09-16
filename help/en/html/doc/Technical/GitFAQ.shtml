@@ -44,6 +44,58 @@ JMRI users.</em>
   <p>See also the <a href="index.shtml">Technical index</a>
      for more information on maintaining JMRI code.</p>
 
+<h3 id="migrateSVN">Migrating un-committed changes from a SVN checkout</h3>
+
+If you have changes to the JMRI code in an existing SVN checkout, here's what we recommend:
+
+<ol>
+
+<li>&quot;svn update&quot; to the HEAD of SVN. You should be doing this routinely anyway, 
+because you'll need to do it before your changes can eventually be submitted.  
+Do this now and solve any problems.
+
+<li>Once the SVN repository is frozen, do &quot;svn update&quot; again.  
+Solve any conflicts, etc.
+
+<li>Do &quot;svn status&quot; and save the output.  
+Double check that no conflicts are showing.
+
+<li>Do &quot;svn diff&quot; and save the output, e.g. as &quot;patch.txt&quot;.
+
+<li>Once git is working and up, clone a copy of the repository to your machine.
+
+<li>In your new clone, do &quot;git checkout SVN-Last-Content&quot;.  
+That sets your working copy to be exactly the same as the last contents of SVN, 
+the same as the base for the &quot;svn diff&quot; you took earlier.
+
+<li>Then apply the changes between SVN and your code with &quot;patch -p0 &lt; patch.txt&quot;  
+(change that to refer to the location of the &quot;svn diff&quot; output file you saved in step 4)
+
+<li>If you had any completely new files in the SVN working directory, 
+i.e. ones with &quot;A&quot; or &quot;?&quot; status:
+    <ul>
+    <li>Copy those files into the corresponding 
+        place in your git checkout.
+    <li>To &quot;git add (pathname)&quot; on each of them to tell git about them
+    </ul>
+
+<li>Do a &quot;git status&quot;.  
+You should see the same changed files as the &quot;svn status&quot; you saved earlier.
+
+<li>&quot;git stash save&quot;
+
+<li>&quot;git checkout master&quot; (<em>Is this the right branch?</em>)
+
+<li>&quot;git stash pop&quot; - Depending on how much progress has taken place in Git, 
+this might show some conflicts.  If so, you have to resolve them here.
+
+</ol>  
+Now you can start developing, without having lost anything.
+
+
+
+
+
 
 <h3>Embedded Properties</h3>
 
@@ -61,8 +113,17 @@ SVN, we kept those in certain files, like decoder XML, properties files, etc,
 that users are likely to edit and submit back for inclusion.  
 
 <p>
-But with Git, there's really no good way to maintain these automatically,
-and very little need for them. 
+But with Git, 
+<!-- 
+    there's really no good way to maintain these automatically,
+    http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
+    
+    see .git/info/attributes
+    # see man gitattributes
+    # expands $Id$ but not $Revision$ $Author$
+    *.xml ident
+-->
+there's less need for these. 
 So we'll be removing these lines as time allows.
 If you're working on a file and happen to see one, usually
 in the header, you can just delete it.  (If it has somebody's name,
