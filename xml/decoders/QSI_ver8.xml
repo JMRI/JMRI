@@ -1431,7 +1431,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Reed Switch" CV="56.0" mask="VXXXXXXX" default="0" item="CV56.0 Reed">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-EnabledDisabled.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
       </variable>
       <variable label="Throttle Mode" CV="56.4" mask="XXXXXXVV" default="1" item="CV56.4">
         <enumVal>
