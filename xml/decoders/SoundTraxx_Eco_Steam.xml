@@ -597,6 +597,7 @@
                 <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
                 <label>F12 controls output Coupler</label>
             </variable>
+     <!-- Sound Selection follows -->
       <variable CV="112" mask="XVVXXXXX" item="Sound Option 2" default="0" tooltip="&lt;html&gt;Control the variation or timing syncopation when articulated exhaust&lt;br&gt;      is enabled to simulate slipping drive wheels or a double-header.&lt;/html&gt;">
         <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUenumSlip.xml"/>
         <label>Slip Rate Control</label>
@@ -606,10 +607,9 @@
         <label>Articulated Exhaust Control</label>
       </variable>
       <variable CV="114" item="Sound Group 3 Option 2" default="57" tooltip="&lt;html&gt;For Auto-Exhaust synchronization, the chuff rate will be generated in proportion to the&lt;br&gt;      throttle setting.  Higher values = higher chuff rates; use zero to disable exhaust sound.&lt;/html&gt;">
-        <decVal max="127"/>
+        <decVal max="255"/>
         <label>Engine Exhaust Control</label>
       </variable>
-     <!-- Sound Selection follows -->
       <variable CV="120" mask="XXXXVVVV" item="Sound Option 6" default="0" tooltip="Selects which Whistle to use">
         <enumVal>
           <enumChoice>
@@ -1183,4 +1183,5 @@
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/TSUPaneASCdiesel.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOPaneFnMap.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/soundtraxx/ECOlegacyPaneFnMap.xml"/>
+  <xi:include  href="http://jmri.org/xml/decoders/soundtraxx/ECOSoundPane.xml"/>
 </decoder-config>
