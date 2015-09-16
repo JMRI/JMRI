@@ -290,8 +290,8 @@ This greatly complicates the class, but is acceptable for now.
 
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
-<!--#include virtual="/Footer" -->
     </div>
-  </div>
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
