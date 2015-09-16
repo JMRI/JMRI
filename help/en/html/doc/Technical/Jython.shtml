@@ -5,7 +5,7 @@
    <title>Jython access to JMRI tools</title>
 
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code CVS FAQ">
+    <meta name="keywords" content="JMRI technical code Python Jython scripting">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
