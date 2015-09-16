@@ -140,7 +140,7 @@ which you can <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/"
 
 <h2>Code</h2>
 All of the JMRI code is available from Subversion.  See the 
-<a href="getcode.shtml">"Getting the code via Subversion"</a> and
+<a href="getsvncode.shtml">"Getting the code via Subversion"</a> and
 <a href="SVNFAQ.shtml">"SVN FAQ"</a>
 pages for more information on how to do that. 
 <p>
