@@ -34,6 +34,13 @@
 
   <h1>JMRI: Getting the Code</h1>
 
+<em>
+JMRI is migrating to Git instead of SVN for holding our code.
+These instructions will work only until September 17, 2015.  
+After about September 21, 2015, this page will be 
+replaced by 
+<a href="getgitcode.shtml">directions for using GitHub</a>.</em>
+
   <h2>Quickstart</h2>
 
   <p>You can download the most recent source code from Subversion using:
