@@ -266,7 +266,7 @@ Actual release steps:
     unzip release.zip
     cd release
     sha256sum JMRI*   (use 'shasum -a 256' on shell.sf.net)
-        (add the calculated hashes for each file to the release note)
+        (add the calculated hashes for each file to the release note; if a prod release, also on on the direct link on index.html)
     scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
         (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
         (for production release, use ".../production\ files/")
