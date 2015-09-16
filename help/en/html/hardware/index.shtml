@@ -129,6 +129,7 @@
 	                <a href="loconet/LocoBuffer.shtml">LocoBuffer</a> and
 	                <a href="loconet/MS100.shtml">MS100</a>
 	                interfaces
+	            <li><a href="loconet/BTLocoBridge.shtml">Bluetooth LocoBridge</a>
 	            </ul>
 	        <p class="dl">Configure:
                 <a href="loconet/LocoNetSim.shtml">LocoNet Simulator for use when disconnected from a layout</a>.</p>

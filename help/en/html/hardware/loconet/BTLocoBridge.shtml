@@ -37,17 +37,16 @@ the adapter, which then connects to a LocoNet to control your layout.
 
 <p>
 For more information on the LocoBridge itself, please see the
-<a href="http://digitrax.com/prd_compint_pr2.php">its page</a>.
+<a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">its page</a>.
 
 <h2>Setup</h2>
 
 On recent Mac and Windows systems, all necessary software comes with the JMRI download.
+
 <p>
 On Linux and other systems, you need to have a libbluetooth installed.
 Depending on which Linux distribution you are using, you might have to use commands
 like "sudo apt-get install libbluetooth" or perhaps "sudo apt-get install libbluetooth-dev".
-
-<p>
 For more information, please see 
 <a href="http://snapshot.bluecove.org/bluecove-gpl/">this page</a>, 
 which describes the requirements to use the Blue Cove library that JMRI
@@ -74,7 +73,7 @@ Open the Preferences window from the Edit menu and configure the connection by:
 </UL>
 	  
     </div>
-  </div>
+
 <!--#include virtual="/Footer" -->
 </body>
 </html>
