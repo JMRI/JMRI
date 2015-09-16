@@ -360,6 +360,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.SensorTable" url="package/jmri/jmrit/beantable/SensorTable.shtml"/>
 
+<mapID target="html.doc.Technical.getsvncode" url="html/doc/Technical/getsvncode.shtml"/>
+
 <mapID target="manual.DecoderPro.Adv_start" url="manual/DecoderPro/Adv_start.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.index" url="manual/JMRI_OPS_UsersGuide/index.shtml"/>
@@ -1004,6 +1006,8 @@
 
 <mapID target="manual.DecoderPro3.dp3_Main_Throttle_controlPanel" url="manual/DecoderPro3/dp3_Main_Throttle_controlPanel.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_ModifyLocationsByCarLoad" url="package/jmri/jmrit/operations/Operations.shtml#ModifyLocationsByCarLoad"/>
+
 <mapID target="package.jmri.jmrix.cmri.serial.assignment.ListFrame" url="package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_TMCC" url="manual/DecoderPro/Main_TMCC.shtml"/>
@@ -1390,6 +1394,8 @@
 
 <mapID target="manual.DecoderPro3.Comp_PrintData" url="manual/DecoderPro3/Comp_PrintData.shtml"/>
 
+<mapID target="html.hardware.loconet.BTLocoBridge" url="html/hardware/loconet/BTLocoBridge.shtml"/>
+
 <mapID target="html.tools.scripting.Examples" url="html/tools/scripting/Examples.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_CopyLocation" url="package/jmri/jmrit/operations/Operations.shtml#CopyLocation"/>
@@ -1493,8 +1499,6 @@
 <mapID target="package.jmri.jmrit.beantable.TurnoutTable_Lock Mode" url="package/jmri/jmrit/beantable/TurnoutTable.shtml#Lock Mode"/>
 
 <mapID target="manual.DecoderPro3.Main_CMRI_ConfigureNodes" url="manual/DecoderPro3/Main_CMRI.shtml#ConfigureNodes"/>
-
-<mapID target="html.doc.Technical.getcodegit" url="html/doc/Technical/getcodegit.shtml"/>
 
 <mapID target="manual.DecoderPro3.Main_SPROG_Console" url="manual/DecoderPro3/Main_SPROG.shtml#Console"/>
 
@@ -1791,6 +1795,8 @@
 <mapID target="index" url="index.html"/>
 
 <mapID target="manual.DecoderPro3.Comp_SoundLevels" url="manual/DecoderPro3/Comp_SoundLevels.shtml"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_ShowCarsLocations" url="package/jmri/jmrit/operations/Operations.shtml#ShowCarsLocations"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_Top" url="manual/DecoderPro/Main_Throttle.shtml#Top"/>
 
@@ -2222,6 +2228,8 @@
 
 <mapID target="package.jmri.jmrit.beantable.AudioAddEdit" url="package/jmri/jmrit/beantable/AudioAddEdit.shtml"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_Options" url="package/jmri/jmrit/operations/Operations.shtml#Options"/>
+
 <mapID target="package.jmri.jmrit.throttle.ThrottleFrame" url="package/jmri/jmrit/throttle/ThrottleFrame.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsModify_Preview" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsModify.shtml#Preview"/>
@@ -2389,8 +2397,6 @@
 <mapID target="manual.DecoderPro3.Main_PRICOM" url="manual/DecoderPro3/Main_PRICOM.shtml"/>
 
 <mapID target="manual.DecoderPro3.dp3_Main_TurnoutControl_Top" url="manual/DecoderPro3/dp3_Main_TurnoutControl.shtml#Top"/>
-
-<mapID target="package.jmri.jmrit.operations.Operations_#Options" url="package/jmri/jmrit/operations/Operations.shtml##Options"/>
 
 <mapID target="html.apps.DecoderPro.FAQ_update" url="html/apps/DecoderPro/FAQ.shtml#update"/>
 
@@ -2749,6 +2755,8 @@
 <mapID target="html.apps.index" url="html/apps/index.shtml"/>
 
 <mapID target="package.jmri.jmrix.can.cbus.swing.configtool.ConfigToolFrame" url="package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml"/>
+
+<mapID target="html.doc.Technical.getgitcode" url="html/doc/Technical/getgitcode.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddLocations" url="manual/JMRI_OPS_UsersGuide/Ops_AddLocations.shtml"/>
 
