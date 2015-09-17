@@ -146,8 +146,9 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     storeCommon(ab, e);
 
                     // store sub-type specific data
+                    String url = ab.getURL();
                     ce = new Element("url")
-                            .addContent("" + FileUtil.getPortableFilename(ab.getURL()));
+                            .addContent("" + (url.isEmpty() ? "" : FileUtil.getPortableFilename(url)));
                     e.addContent(ce);
 
                     ce = new Element("looppoint");
