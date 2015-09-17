@@ -39,7 +39,7 @@ public abstract class AbstractAudioBuffer extends AbstractAudio implements Audio
     /**
      * Holds the location of the sound sample used in this buffer
      */
-    private String url;
+    private String url = "";
 
     /**
      * Start loop point for this buffer represented as a number of samples
