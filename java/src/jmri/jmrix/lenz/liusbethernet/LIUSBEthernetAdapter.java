@@ -15,7 +15,7 @@ import org.slf4j.LoggerFactory;
  * the LIUSBEthernet has an IP address of 192.168.0.200 and listens to port
  * 5550. The LIUSBEtherenet disconnects both ports if there is 60 seconds of
  * inactivity on the port.
- *
+o*
  * @author	Paul Bender (C) 2011-2013
  * @version	$Revision$
  */
@@ -25,7 +25,7 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
     static final int COMMUNICATION_TCP_PORT = 5550;
     static final String DEFAULT_IP_ADDRESS = "192.168.0.200";
 
-    private javax.swing.Timer keepAliveTimer; // Timer used to periodically
+    private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     // send a message to both
     // ports to keep the ports 
     // open
@@ -106,20 +106,19 @@ public class LIUSBEthernetAdapter extends XNetNetworkPortController {
      */
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
-            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            keepAliveTimer = new java.util.TimerTask(){
+                public void run() {
                     // If the timer times out, send a request for status
                     LIUSBEthernetAdapter.this.getSystemConnectionMemo().getXNetTrafficController()
                             .sendXNetMessage(
                                     jmri.jmrix.lenz.XNetMessage.getCSStatusRequestMessage(),
                                     null);
                 }
-            });
+            };
+        } else {
+           keepAliveTimer.cancel();
         }
-        keepAliveTimer.stop();
-        keepAliveTimer.setInitialDelay(keepAliveTimeoutValue);
-        keepAliveTimer.setRepeats(true);
-        keepAliveTimer.start();
+        new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
     private boolean mDNSConfigure = false;
