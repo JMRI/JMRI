@@ -286,9 +286,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         ArrayList<DccLocoAddress> existingConsists = ConsistMan.getConsistList();
         if (!existingConsists.isEmpty()) {
             consistAdrBox.removeAllItems();
-            for (int i = 0; i < existingConsists.size(); i++) {
-                consistAdrBox.insertItemAt(existingConsists.get(i), i);
-            }
+            existingConsists.forEach((consist)->consistAdrBox.addItem(consist));
             consistAdrBox.setEnabled(true);
             consistAdrBox.insertItemAt("", 0);
             consistAdrBox.setSelectedItem(adrSelector.getAddress());
@@ -334,11 +332,9 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
          * get the list of locomotives to delete
          */
         ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
-
-        for (int i = (addressList.size() - 1); i >= 0; i--) {
-            DccLocoAddress locoaddress = addressList.get(i);
+        addressList.forEach((locoaddress)->{
             if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: " + address.toString());
+                log.debug("Deleting Locomotive: " + locoaddress.toString());
             }
             try {
                 tempConsist.remove(locoaddress);
@@ -348,7 +344,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                         + " from consist "
                         + address.toString());
             }
-        }
+        });
         try {
             ConsistMan.delConsist(address);
         } catch (Exception ex) {
