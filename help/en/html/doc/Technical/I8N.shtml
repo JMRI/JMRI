@@ -99,7 +99,7 @@ of the GUI controls.
 <P>
 Get a clean copy of the source code from the JMRI code repository.
 (For more info on doing that, please see the 
-<A HREF="getsvncode.shtml">page on getting a copy of the code</a>.)
+<A HREF="getgitcode.shtml">page on getting a copy of the code</a>.)
 <h3>Translating Properties Files</h3>
 If they don't exist already, 
 start by making copies of the properties files with suffix for your

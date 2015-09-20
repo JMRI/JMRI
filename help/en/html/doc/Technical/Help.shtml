@@ -43,7 +43,7 @@ within the JMRI distribution directory.
 <p>
 The master copy of this is stored in our repository as the "help" 
 module.  This means to get your own local copy, just follow the steps on the  
-"<a href="getsvncode.shtml">getting the code</a>" page.
+"<a href="getgitcode.shtml">getting the code</a>" page.
 
 <P>
 Within that, all the English-language files are located

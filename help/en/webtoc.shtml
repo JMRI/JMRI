@@ -1565,18 +1565,6 @@
 <li>Getting the Source Code <ul>
    
 <li>
-<a href="html/doc/Technical/getsvncode.shtml">Via SVN </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="html/doc/Technical/SVNFAQ.shtml">SVN FAQs </a>
-<ul></ul>
-</li>
-
-   
-<li>
 <a href="html/doc/Technical/getgitcode.shtml">Via Git </a>
 <ul></ul>
 </li>

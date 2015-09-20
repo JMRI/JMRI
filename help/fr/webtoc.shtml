@@ -1456,13 +1456,13 @@
 <li>Obtenir le Code Source <ul>
    
 <li>
-<a href="html/doc/Technical/getcode.shtml">Via CVS </a>
+<a href="html/doc/Technical/getgitcode.shtml">Via Git </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="html/doc/Technical/CVSFAQ.shtml">CVS FAQs </a>
+<a href="html/doc/Technical/GitFAQ.shtml">Git FAQs </a>
 <ul></ul>
 </li>
 

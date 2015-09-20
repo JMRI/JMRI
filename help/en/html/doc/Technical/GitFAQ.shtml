@@ -33,10 +33,7 @@
 
 <h1>JMRI: Git FAQ</h1>
 
-<em>Note that this page is under development.  JMRI
-is considering migrating to using Git instead of Subversion (SVN).
-Until that's decided and done, this page isn't relevant for 
-JMRI users.</em>
+<em>Note that this page is under development.</em>
 
   <p>This is a list of Frequently Asked Questions for Git,
      particularly regarding how we use it with JMRI.</p>
@@ -44,7 +41,13 @@ JMRI users.</em>
   <p>See also the <a href="index.shtml">Technical index</a>
      for more information on maintaining JMRI code.</p>
 
-<h3 id="migrateSVN">Migrating un-committed changes from a SVN checkout</h3>
+
+<h2 id="install">Installing Git</h2>
+
+
+
+
+<h2 id="migrateSVN">Migrating un-committed changes from a SVN checkout</h2>
 
 If you have changes to the JMRI code in an existing SVN checkout, here's what we recommend:
 
@@ -62,7 +65,7 @@ Double check that no conflicts are showing.
 
 <li>Do &quot;svn diff&quot; and save the output, e.g. as &quot;patch.txt&quot;.
 
-<li>Once git is working and up, clone a copy of the repository to your machine.
+<li>Once Git is working and up, clone a copy of the repository to your machine.
 
 <li>In your new clone, do &quot;git checkout SVN-Last-Content&quot;.  
 That sets your working copy to be exactly the same as the last contents of SVN, 
@@ -75,8 +78,8 @@ the same as the base for the &quot;svn diff&quot; you took earlier.
 i.e. ones with &quot;A&quot; or &quot;?&quot; status:
     <ul>
     <li>Copy those files into the corresponding 
-        place in your git checkout.
-    <li>To &quot;git add (pathname)&quot; on each of them to tell git about them
+        place in your Git checkout.
+    <li>To &quot;git add (pathname)&quot; on each of them to tell Git about them
     </ul>
 
 <li>Do a &quot;git status&quot;.  

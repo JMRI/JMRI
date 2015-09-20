@@ -1,0 +1,28 @@
+# build artifacts
+jmri.jar
+/dist
+java/docs
+
+# test artifacts
+junit-results.xml
+
+# runtime artifacts
+messages.log*
+session.log
+
+# transient artifacts
+.ant-targets-build.xml
+/java/classes
+/java/tmp
+*.class
+/temp
+.pydevproject
+*.swp
+
+# private / per-user configuration files
+/nbproject/private
+local.properties
+
+# OS junk files
+[Tt]humbs.db
+*.DS_Store

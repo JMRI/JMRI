@@ -136,7 +136,7 @@
                 By default, locomotives in a DAC ignore function commands 
                 sent to the consist address.  You can configure some decoders 
                 so they will respond to function commands issued to the 
-                consist address as well (through CVS 21 and 22).  If 
+                consist address as well (through CVs 21 and 22).  If 
                 supported by the decoder, The appropriate values can also 
                 be configured through DecoderPro using the Consisting Tab 
                 in the comprehensive programmer.
