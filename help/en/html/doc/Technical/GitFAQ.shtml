@@ -152,7 +152,7 @@ If other changes are added to the master branch, you can keep your
 branch up to date by merging those changes in with
 
 <pre><code>
-git checkout branchname
+git checkout branchname<br/>
 git merge -m"merging to current contents of master" master
 </code></pre>
 
@@ -162,14 +162,14 @@ merged in, you can then commit it to your branch.
 When you're done, merge your changes back into the common line of development with
 
 <pre><code>
-git checkout master
+git checkout master<br/>
 git merge -m"merging to current contents of master" branchname
 </code></pre>
 
 followed (eventually) by a commit. You can then delete your branch (if you're finally done 
 with it) with
 <pre><code>
-git checkout master
+git checkout master<br/>
 git branch -d branchname
 </code></pre>
 
@@ -182,7 +182,7 @@ When JMRI was originally using CVS, we used lines like:
 
 <code>
 <pre>
-# The next line is maintained by CVS, please don't change it
+# The next line is maintained by CVS, please don't change it<br/>
 # $Revision$
 </pre>
 </code>

@@ -98,8 +98,8 @@ and merge it into JMRI's main repository.
   check this, do a &quot;git remote -v&quot; which should show:
   
 <code><pre>
-   git remote -v
-   origin	https://github.com/JMRI/JMRI.git (fetch)
+   git remote -v<br/>
+   origin	https://github.com/JMRI/JMRI.git (fetch)<br/>
    origin	https://github.com/yourname/JMRI.git (push)
 </pre></code>
   
