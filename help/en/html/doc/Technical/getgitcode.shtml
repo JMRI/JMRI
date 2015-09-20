@@ -55,8 +55,7 @@ JMRI users.</em>
   <p>You can 
   <a href="">browse the JMRI code directly</a> <em>(link not permanent)</em>
   on that site. For example, if you'd like to look at this page,
-  <a href="https://github.com/JMRI/jmri-test/blob/master/help/en/html/doc/Technical/getcode.shtml">click this link</a> 
-  <em>(link not permanent)</em>
+  <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/doc/Technical/getgitcode.shtml">click this link</a> 
   to display its source HTML code.
   </p>
 

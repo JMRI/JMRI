@@ -40,7 +40,7 @@ Installez-le, puis:
 <UL>
 <LI> Cr&#233;er un r&#233;pertoire pour contenir votre projet.
 <LI> Dans ce r&#233;pertoire de projet, faire un
-<a href="http://jmri.org/help/en/html/doc/Technical/getcode.shtml"> checkout CVS </a> de  "All"
+<a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml"> checkout Git </a> de  "All"
  les module &#224; partir de notre r&#233;f&#233;rentiel (Repository). 
 Cela va cr&#233;er un sous-r&#233;pertoire "jmri" 
 o&#249; Ant s'ex&#233;cute, et le charge avec la source, des tests et des ressources.
