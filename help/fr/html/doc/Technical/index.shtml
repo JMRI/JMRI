@@ -119,8 +119,8 @@ que vous pouvez <A HREF="http://jmri.cvs.sourceforge.net/"> parcourir </a>.
 </ ul>
 
 <h2> Code </h2>
-Tout le code JMRI est disponible &#224; partir de Subversion. Voir pour <a href="getcode.shtml"> "Obtenir le code via Subversion" </a> et les pages
-<a href="CVSFAQ.shtml">  FAQ SVN </a>  pour plus d'informations sur la fa&#231;on de le faire.
+Tout le code JMRI est disponible &#224; partir de Subversion. Voir pour <a href="getgitcode.shtml"> "Obtenir le code via Git" </a> et les pages
+<a href="GitFAQ.shtml">  FAQ Git </a>  pour plus d'informations sur la fa&#231;on de le faire.
 <p>
 Si vous voulez juste regarder le contenu de quelques fichiers, vous pouvez
 <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">parcourir le d&#233;p&#244;t

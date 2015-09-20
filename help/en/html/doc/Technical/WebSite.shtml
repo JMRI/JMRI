@@ -55,10 +55,10 @@ JavaDocs, etc.
 <ol>
 <li>Run-time user information is made available by putting the help system
 on the web site.
-<li>Other user information is stored in Subversion as the
+<li>Other user information is stored in our repository as the
   <tt>trunk/jmri-website</tt> directory and
 placed directly on the web site.
-<li>Reference information is put on the web site from their own Subversion modules,
+<li>Reference information is put on the web site from their own repository locations,
 or created by automated Ant scripts during release builds.
 </ol>
 
@@ -94,7 +94,7 @@ SVN directories:</p>
 <LI>jython, resources, xml, web - these are taken directly from the
 directories of the same name under <tt>trunk/jmri/</tt>. They are only occasionally referenced
 directly.
-<LI>help - from the Subversion module and JavaHelp system, this has the internal
+<LI>help - also used for the JavaHelp system, this has the internal
 structure described below and on our
 <A HREF="Help.shtml">JavaHelp</a>
 page.
@@ -116,7 +116,7 @@ the source.  The <a href="/JavaDoc/doc">JavaDoc</a> is one such section, along w
 
 <p>Most of the web site contents is updated hourly from a job running on one of the
 project's Jenkins build servers.  The directories listed above constitute most of the site,
-and this content is updated from the SVN server without any additional work.</p>
+and this content is updated from the JMRI repository without any additional work.</p>
 
 <p>The regeneration of the JavaDoc and xml content involves
 significantly more work than merely updating a directory, and so these are only done once per day, as needed.</p>
