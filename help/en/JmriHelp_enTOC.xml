@@ -510,10 +510,6 @@
 
  <tocitem text="Technical Info " target="html.doc.Technical.index">
   <tocitem text="Getting the Source Code ">
-   <tocitem text="Via SVN " target="html.doc.Technical.getsvncode"/>
-
-   <tocitem text="SVN FAQs " target="html.doc.Technical.SVNFAQ"/>
-
    <tocitem text="Via Git " target="html.doc.Technical.getgitcode"/>
 
    <tocitem text="Git FAQs " target="html.doc.Technical.GitFAQ"/>
