@@ -34,6 +34,10 @@
 
 <H1>JMRI: Building with XCode</H1>
 
+<em>This page hasn't been updated to refer to our new Git
+source code repository.  Please don't use the SVN-based instructions
+below.</em>
+
 <H2>Introduction</H2>
 <p>Recent versions of <b>Mac OS X</b> come with <b>Xcode</b>, a software 
 development system developed for the Macintosh by Apple Computer. 
