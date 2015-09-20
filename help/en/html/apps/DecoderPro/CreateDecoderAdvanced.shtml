@@ -167,7 +167,7 @@ name, a new family name (new file) or both.
 <li>Generally, set the "show" attribute in the old definition to "no".  The only exception to this
 is when some users will want to select the old definition still for a new decoder, perhaps
 because automatic identification can tell the uses of the old definition from the new one.
-(E.g. you're splitting the old definition into two parts because a new subversion locomotive
+(E.g. you're splitting the old definition into two parts because a new locomotive version
 exists)
 </ol>
 

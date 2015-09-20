@@ -30,7 +30,8 @@
 
     <property environment="env"/>
 
-    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists -->
+    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists      -->
+    <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file           -->
     <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
     <property file="local.properties"/>
 

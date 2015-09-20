@@ -335,13 +335,13 @@ that there will not be any problems with file path, filesystem security,
 pre-existence of the file, etc.  These tests must also be written in a way 
 that will operate successfully in the <a href="ContinuousIntegration.shtml"> 
 continuous integration build</a> environment.  And the temporary files should 
-not become part of the SVN code repository.
+not become part of the JMRI code repository.
 <p>
 Here are some ideas which can help avoid these types of problems.
 <ul>
     <li>Place the temporary file(s) in the the "temp" directory which is a sub-
         directory of the jmri run-time directory.  This directory is used by 
-        some testcases and is already configured as excluded from the SVN code 
+        some testcases and is already configured as excluded from the JMRI code 
         repository.  It may be convenient to create a subdirectory there for files
         created by a particular test.  Be sure that the directory exists before 
         creating files in the directory, and create the directory if necessary.
