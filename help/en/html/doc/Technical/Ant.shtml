@@ -55,7 +55,7 @@ be entirely built from scratch, type <tt>ant clean</tt>.
 </ul>
 
 <p>
-To make sure everything is working, before you e.g. commit back to Subversion, please
+To make sure everything is working, before you e.g. commit your code back, please
 do:
 <code>
 <pre>
