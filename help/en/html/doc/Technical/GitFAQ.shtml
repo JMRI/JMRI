@@ -33,10 +33,13 @@
 
 <h1>JMRI: Git FAQ</h1>
 
-<em>Note that this page is under development.</em>
-
   <p>This is a list of Frequently Asked Questions for Git,
      particularly regarding how we use it with JMRI.</p>
+
+  <p>There's a
+  <a href="getgitcode.shtml">separate page</a>
+  on how to 
+  <a href="getgitcode.shtml">get the code with Git</a>.</p>
 
   <p>See also the <a href="index.shtml">Technical index</a>
      for more information on maintaining JMRI code.</p>
