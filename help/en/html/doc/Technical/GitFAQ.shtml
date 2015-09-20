@@ -33,10 +33,13 @@
 
 <h1>JMRI: Git FAQ</h1>
 
-<em>Note that this page is under development.</em>
-
   <p>This is a list of Frequently Asked Questions for Git,
      particularly regarding how we use it with JMRI.</p>
+
+  <p>There's a
+  <a href="getgitcode.shtml">separate page</a>
+  on how to 
+  <a href="getgitcode.shtml">get the code with Git</a>.</p>
 
   <p>See also the <a href="index.shtml">Technical index</a>
      for more information on maintaining JMRI code.</p>
@@ -44,7 +47,17 @@
 
 <h2 id="install">Installing Git</h2>
 
+Git is free software.  Depending on your computer type and your preferences,
+there are several ways to install it. There's more info on
+<a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">the Git web site</a>.
 
+<UL>
+<li>Get it from the <a href="http://git-scm.com/downloads">Git web site</a>.
+<li>It comes with the GitHub Desktop application,
+    available from the <a href="https://desktop.github.com">download page</a>.
+<li>On the Mac, it's included when you <a href="https://developer.apple.com/xcode/download/">install XCode</a>.
+<li>On Linux you can use your package installer, e.g. <code>sudo yum install git</code> or <code>sudo apt-get install git</code>.
+</ul>
 
 
 <h2 id="migrateSVN">Migrating un-committed changes from a SVN checkout</h2>
@@ -57,39 +70,41 @@ If you have changes to the JMRI code in an existing SVN checkout, here's what we
 because you'll need to do it before your changes can eventually be submitted.  
 Do this now and solve any problems.
 
-<li>Once the SVN repository is frozen, do &quot;svn update&quot; again.  
+<li>Once the SVN repository is frozen, do <code>svn update</code> again.  
 Solve any conflicts, etc.
 
-<li>Do &quot;svn status&quot; and save the output.  
+<li>Do <code>svn status</code> and save the output.  
 Double check that no conflicts are showing.
 
-<li>Do &quot;svn diff&quot; and save the output, e.g. as &quot;patch.txt&quot;.
+<li>Do <code>svn diff</code> and save the output, e.g. as <code>patch.txt</code>.
 
 <li>Once Git is working and up, clone a copy of the repository to your machine.
+(See the 
+<a href="getgitcode.shtml">previous page for instructions</a>.)
 
-<li>In your new clone, do &quot;git checkout SVN-Last-Content&quot;.  
+<li>In your new clone, do <code>git checkout tags/svn-30001</code>.  
 That sets your working copy to be exactly the same as the last contents of SVN, 
-the same as the base for the &quot;svn diff&quot; you took earlier.
+the same as the base for the <code>svn diff</code> you took earlier.
 
-<li>Then apply the changes between SVN and your code with &quot;patch -p0 &lt; patch.txt&quot;  
-(change that to refer to the location of the &quot;svn diff&quot; output file you saved in step 4)
+<li>Then apply the changes between SVN and your code with <code>patch -p0 &lt; patch.txt</code>  
+(change that to refer to the location of the <code>svn diff</code> output file you saved in step 4)
 
 <li>If you had any completely new files in the SVN working directory, 
 i.e. ones with &quot;A&quot; or &quot;?&quot; status:
     <ul>
     <li>Copy those files into the corresponding 
         place in your Git checkout.
-    <li>To &quot;git add (pathname)&quot; on each of them to tell Git about them
+    <li>To <code>git add (pathname)</code> on each of them to tell Git about them
     </ul>
 
-<li>Do a &quot;git status&quot;.  
+<li>Do a <code>git status</code> to get a list of changes.
 You should see the same changed files as the &quot;svn status&quot; you saved earlier.
 
-<li>&quot;git stash save&quot;
+<li><code>git stash save</code>
 
-<li>&quot;git checkout master&quot; (<em>Is this the right branch?</em>)
+<li><code>git checkout master</code>
 
-<li>&quot;git stash pop&quot; - Depending on how much progress has taken place in Git, 
+<li><code>git stash pop</code> - Depending on how much progress has taken place in Git, 
 this might show some conflicts.  If so, you have to resolve them here.
 
 </ol>  
@@ -97,9 +112,70 @@ Now you can start developing, without having lost anything.
 
 
 
+<h2 id="branch">Branching</h2>
+
+With SVN and CVS, you're check out a &quot;working directory&quit; to make your
+changes in, work for a while, and eventually commit them back to the main repository.
+<p>
+Git works on a different idea. 
+Instead of multiple working directories, you have a single repository that's been
+&quot;cloned&quot; from the main repository.  If you're making individual little
+changes, you can work directly on the &quot;master&quot; branch within it.
+<p>
+If you want to work on something more complicated, you put it on a branch so you can work
+on it independently.  You can even have multiple branches at the same time, moving between
+them as you work on different projects.
+
+<p>
+We need to be able to recognize the purposes of branches, so we recommend that you 
+name them starting with your initials.  After that, it's up to you:  
+&quot;abc-decoder-xml-change&quot;, 
+&quot;abc-2015-09-14&quot;, 
+&quot;abc-next-cool-thing&quot;
+are all fine.  With the initials, we know it's you, and you can sort the rest.
+
+<p>
+To create a branch called &quot;branchname&quot;, you do 
+
+<pre><code>git checkout -b branchname</code></pre>
+
+The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
+out that option:
+
+<pre><code>git checkout branchname</code></pre>
+
+To see all the current branches, do
+
+<pre><code>git branch</code></pre>
+
+If other changes are added to the master branch, you can keep your 
+branch up to date by merging those changes in with
+
+<pre><code>
+git checkout branchname
+git merge -m"merging to current contents of master" master
+</code></pre>
+
+(If you leave off the message option, you'll be prompted with an editor) If anything
+merged in, you can then commit it to your branch.
+
+When you're done, merge your changes back into the common line of development with
+
+<pre><code>
+git checkout master
+git merge -m"merging to current contents of master" branchname
+</code></pre>
+
+followed (eventually) by a commit. You can then delete your branch (if you're finally done 
+with it) with
+<pre><code>
+git checkout master
+git branch -d branchname
+</code></pre>
 
 
 
+<h2>Other Topics</h2>
 <h3>Embedded Properties</h3>
 
 When JMRI was originally using CVS, we used lines like:
@@ -145,7 +221,7 @@ you might want to add that to the copyright notice if there is one.)
 <body>
 <h1></h1>
 
-
+<!-- test comment -->
 
 <hr>
 <address></address>

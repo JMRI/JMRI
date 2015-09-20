@@ -36,6 +36,10 @@
 
 <H1>JMRI: Building with Eclipse</H1>
 
+<em>This page hasn't been updated to refer to our new Git
+source code repository.  Please don't use the SVN-based instructions
+below.</em>
+
 <p>Eclipse (available at <a href="http://www.eclipse.org">www.eclipse.org</a>)
 makes a great platform for working with JMRI.</p>
 

@@ -33,6 +33,11 @@
 	    <!-- - - - - - - - - -->
 
     <h1>JMRI: Building with NetBeans</h1>
+    
+<em>This page hasn't been updated to refer to our new Git
+source code repository.  Please don't use the SVN-based instructions
+below.</em>
+
     <ul>
         <li><a href="#intro">Introduction</a>
         <li><a href="#installing">Getting and Installing NetBeans</a>

@@ -18,10 +18,14 @@ session.log
 /temp
 .pydevproject
 *.swp
+/lib/cachedir
 
 # private / per-user configuration files
 /nbproject/private
 local.properties
+
+# CATS source, sometimes present for test
+/java/src/cats
 
 # OS junk files
 [Tt]humbs.db
