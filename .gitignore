@@ -24,6 +24,9 @@ session.log
 /nbproject/private
 local.properties
 
+# CATS source, sometimes present for test
+/java/src/cats
+
 # OS junk files
 [Tt]humbs.db
 *.DS_Store

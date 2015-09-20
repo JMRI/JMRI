@@ -127,15 +127,17 @@ Much of the discussion about JMRI development takes place on the JMRI-Developers
 <a href="http://sourceforge.net/mailarchive/forum.php?forum_name=jmri-developers">Archive</a>
 
 <p>
-SourceForge.net provides project hosting:<ul>
+<a href="http://GitHub.com">GitHub</a> provides our software repositories via the
+<a href="http://GitHub.com/JMRI">GitHub JMRI organization</a>.
+
+<p>
+SourceForge.net provides project support:<ul>
 <li><a href="http://sourceforge.net/projects/jmri/">JMRI project page</a> and 
 <a href="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</a>.
 <li>Trackers for 
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388313">Bugs</a>,
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388316">Feature Requests</a>, and
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">Patches</a>.
-<li>SourceForge-hosted <a href="http://jmri.svn.sourceforge.net/svnroot/jmri/">Subversion Repository</a>
-which you can <a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">browse through</a>.
 </ul>
 
 <h2>Code</h2>
@@ -144,9 +146,11 @@ All of the JMRI code is available from GitHub.  See the
 <a href="GitFAQ.shtml">"Git FAQ"</a>
 pages for more information on how to do that. 
 <p>
-If you just want to look at the contents of a few files, you can 
-<a href="http://sourceforge.net/p/jmri/code/HEAD/tree/trunk/jmri/">browse the
-Subversion repository</a> over the web.
+If you just want to look at the contents of a few files, you can browse the
+<a href="https://github.com/JMRI/JMRI">program source code</a> 
+and
+<a href="https://github.com/JMRI/website">web site source code</a> 
+over the web.
 
 <h2>Building Your Own Copy</h2>
 
@@ -160,8 +164,8 @@ with one of the popular "Integrated Development Environments" (IDEs),
 look at the navigation bar to the left for instructions on how to 
 build JMRI using
 <a href="NetBeans.shtml">NetBeans</a>,
-<a href="XCode.shtml">XCode</a>,
-<a href="Eclipse.shtml">Eclipse</a> or
+<a href="Eclipse.shtml">Eclipse</a>,
+<a href="XCode.shtml">XCode</a>, or
 <a href="JBuilder.shtml">JBuilder</a>.
 <P>
 NetBeans provides a very convenient system for building, running,
@@ -198,8 +202,10 @@ you make sure that your copy of the code is up to date, and that the
 all work.
 <P>
 If you are doing a significant amount of development, please
-contact us so the we can make it possible to directly
-commit your changes into our Subversion repository.
+see the page on 
+"<a href="gitdeveloper.shtml">Being A JMRI Developer</a>"
+for instructions on how to more effectively contribute code changes.
+
 <P>
 When you contribute your code to JMRI for the first time, 
 we'll ask you to sign an assignment form that

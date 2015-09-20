@@ -97,11 +97,11 @@ and merge it into JMRI's main repository.
   repository so that you can get the most recent updates from others.  To
   check this, do a &quot;git remote -v&quot; which should show:
   
-  <pre><code>
+<code><pre>
    git remote -v
    origin	https://github.com/JMRI/JMRI.git (fetch)
    origin	https://github.com/yourname/JMRI.git (push)
-  </code></pre>
+</pre></code>
   
 
  <h3>Push Your Changes to Your GitHub Repository</h3>

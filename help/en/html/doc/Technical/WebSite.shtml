@@ -191,7 +191,9 @@ Add the word "Includes" to the last line so it looks like
 <PRE>
 cd /Library/WebServer/Documents
 </PRE>
-    <LI>Check out the relevant files
+    <LI>Check out the relevant files.<br/>
+    <em>Note: these are the old SVN instructions. 
+    The new Git ones are not written yet.</em><br/>
 <PRE>
 # the trailing dot on the next line is important!
 svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri-website .  
