@@ -61,13 +61,13 @@ that allows JMRI to get your change from your GitHub repository
 and merge it into JMRI's main repository.
 </ol>
   
-<h3>Commit Changes to Your Local Repository<h3>
+<h3>Commit Changes to Your Local Repository</h3>
 
   <pre><code>
   git commit -m&quot;useful comment&quot;
   </code></pre>
 
-<h3>Get Your Own GitHub Repository<h3>
+<h3>Get Your Own GitHub Repository</h3>
 
   <ul>
   <li>Get a <a href="https://github.com/join">GitHub account</a> and login
@@ -104,14 +104,14 @@ and merge it into JMRI's main repository.
   </code></pre>
   
 
- <h3>Push Your Changes to Your GitHub Repository<h3>
+ <h3>Push Your Changes to Your GitHub Repository</h3>
  
   <pre><code>
   git push
   </code></pre>
 
 
- <h3>Submit a Pull Request<h3>
+ <h3>Submit a Pull Request</h3>
  
 <ul>
 <li>Login to GitHub and go to the page for your JMRI clone repository (yours, not 
