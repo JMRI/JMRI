@@ -43,7 +43,7 @@ version 2.12 (et versions ant&#233;rieures) de JMRI ont &#233;t&#233; faites &#2
 code source, vous devez utiliser les instructions d&#233;taill&#233;es ci-dessous.</p>
 
 <p>Pour acc&#233;derFor au code source de la version actuelle de JMRI, Svp voir
-<a href="getcode.shtml">L'information sur le d&#233;p&#244;t Subversion</a>.</p>
+<a href="getgitcode.shtml">L'information sur le d&#233;p&#244;t Git</a>.</p>
 
 
 <h2>D&#233;marrage Rapide</h2>

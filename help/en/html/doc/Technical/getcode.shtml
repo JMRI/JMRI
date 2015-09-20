@@ -3,11 +3,11 @@
 <html lang="en">
 <head><TITLE>JMRI: Redirected Page</TITLE>
 <META HTTP-EQUIV="PRAGMA" CONTENT="NO-CACHE">
-<META HTTP-EQUIV="Refresh" CONTENT="0; URL=getsvncode.shtml">
+<META HTTP-EQUIV="Refresh" CONTENT="0; URL=getgitcode.shtml">
 </head>
 <body>
-This page has been moved to another location
-(<A HREF="getsvncode.shtml">getsvncode.shtml</a>)
+This content has been moved to another location
+(<A HREF="getgitode.shtml">getgitcode.shtml</a>)
 as part of updating our web site.
 <P>Please update your bookmarks.  
 <P>If you got to this page from another JMRI page, please let us know so we can fix it.

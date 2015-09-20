@@ -90,6 +90,5 @@ log4j.category.org.eclipse.jetty.server.handler=WARN
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
 # log4j.category.jmri.jmrix=DEBUG
 # log4j.category.jmri.jmrix.can=DEBUG
-# log4j.category.jmri.jmrix.openlcb=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO

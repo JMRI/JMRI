@@ -42,7 +42,7 @@ release 2.12 (and earlier) were made from CVS, and to access that
 source code, you should use the detailed instructions below.</p>
 
 <p>For access to the current JMRI source code, please see
-<a href="getcode.shtml">the Subversion repository information</a>.</p>
+<a href="getgitcode.shtml">the Git repository information</a>.</p>
 
 
 <h2>Quickstart</h2>
