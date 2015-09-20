@@ -20,8 +20,8 @@ import javax.jmdns.ServiceInfo;
 import jmri.InstanceManager;
 import jmri.implementation.QuietShutDownTask;
 import jmri.profile.ProfileManager;
+import jmri.profile.ProfileUtils;
 import jmri.util.node.NodeIdentity;
-import jmri.util.prefs.JmriPreferencesProvider;
 import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -244,11 +244,11 @@ public class ZeroConfService {
             this.listeners.stream().forEach((listener) -> {
                 listener.serviceQueued(new ZeroConfServiceEvent(this, null));
             });
-            boolean useIPv4 = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(),
+            boolean useIPv4 = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
                             ZeroConfService.class,
                             false)
                     .getBoolean(ZeroConfService.IPv4, true);
-            boolean useIPv6 = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(),
+            boolean useIPv6 = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
                             ZeroConfService.class,
                             false)
                     .getBoolean(ZeroConfService.IPv6, true);
@@ -474,7 +474,7 @@ public class ZeroConfService {
         @Override
         public void inetAddressAdded(NetworkTopologyEvent nte) {
             if (nte.getInetAddress() instanceof Inet6Address
-                    && !JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(),
+                    && !ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
                             ZeroConfService.class,
                             false)
                     .getBoolean(ZeroConfService.IPv6, true)) {
@@ -482,7 +482,7 @@ public class ZeroConfService {
                 return;
             }
             if (nte.getInetAddress() instanceof Inet4Address
-                    && !JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(),
+                    && !ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(),
                             ZeroConfService.class,
                             false)
                     .getBoolean(ZeroConfService.IPv4, true)) {
