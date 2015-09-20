@@ -2,10 +2,14 @@
 # to a web sie.  This allows exclusion of every other
 # file from delete, e.g. in other repositories
 .git
+.gitignore
 xml/XSLT/pages
 JavaDoc/doc/*
 xml/XSLT/properties
 
+.classpath
+.project
+.settings
 build.xml
 default.lcf
 exclude-list
