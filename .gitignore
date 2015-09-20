@@ -18,6 +18,7 @@ session.log
 /temp
 .pydevproject
 *.swp
+/lib/cachedir
 
 # private / per-user configuration files
 /nbproject/private
