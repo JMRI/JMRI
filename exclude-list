@@ -1,0 +1,22 @@
+# List of files to exclude when rsync'ing this directory
+# to a web sie.  This allows exclusion of every other
+# file from delete, e.g. in other repositories
+.git
+xml/XSLT/pages
+JavaDoc/doc/*
+xml/XSLT/properties
+
+build.xml
+default.lcf
+exclude-list
+include-list
+java
+lib
+nbproject
+python.properties
+release.properties
+runtest.csh
+scripts
+serialver.csh
+tests.lcf
+
