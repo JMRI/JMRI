@@ -38,9 +38,8 @@ download at
 Install it, then:
 <UL>
 <LI>Create a directory to contain your project.
-<LI>In that project directory, do a 
-<a href="http://jmri.org/help/en/html/doc/Technical/getsvncode.shtml">SVN checkout</a> of the <tt>jmri</tt>
-directory from our repository. 
+<LI>In that project directory, 
+<a href="http://jmri.org/help/en/html/doc/Technical/getgitcode.shtml">get the code from GitHub</a>. 
 This will create a <tt>jmri</tt> subdirectory 
 where Ant will run, and load it with source, tests and resources.
 It will also create and populate directories for xml, libraries, etc in the 
