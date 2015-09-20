@@ -16,7 +16,6 @@ public class PathTest extends TestCase {
 
     @SuppressWarnings("all")
     public void testCreate() {
-        Assert.fail("Failing to test that Travis CI really fails on a failed test.");
         Path p = new Path();
         Assert.assertTrue("default to direction", p.getToBlockDirection() == Path.NONE);
         Assert.assertTrue("default from direction", p.getFromBlockDirection() == Path.NONE);
