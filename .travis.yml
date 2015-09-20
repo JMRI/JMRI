@@ -5,4 +5,4 @@ jdk:
   
 os:
   - linux
-  - osx
+#  - osx # Travis OS X support does not include Java
