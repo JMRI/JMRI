@@ -67,7 +67,7 @@ and merge it into JMRI's main repository.
   git commit -m&quot;useful comment&quot;
   </code></pre>
 
-<h3>Get Your Own GitHub Repository</h3>
+<h3 id="repo">Get Your Own GitHub Repository</h3>
 
   <ul>
   <li>Get a <a href="https://github.com/join">GitHub account</a> and login
@@ -104,14 +104,14 @@ and merge it into JMRI's main repository.
 </pre></code>
   
 
- <h3>Push Your Changes to Your GitHub Repository</h3>
+ <h3 id="push">Push Your Changes to Your GitHub Repository</h3>
  
   <pre><code>
   git push
   </code></pre>
 
 
- <h3>Submit a Pull Request</h3>
+ <h3 id="pull">Submit a Pull Request</h3>
  
 <ul>
 <li>Login to GitHub and go to the page for your JMRI clone repository (yours, not 
