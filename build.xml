@@ -863,6 +863,27 @@
         </junit>
     </target>
 
+
+    <target name="test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <sysproperty key="java.awt.headless" value="true"/>
+            <sysproperty key="jmri.headlesstest" value="true"/>
+
+            <classpath refid="test.class.path"/>
+
+            <test name="jmri.HeadLessTest">
+                <formatter usefile="no" type="plain"/>
+            </test>
+
+        </junit>
+    </target>
+
     <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
         <java classname="jmri.jmrit.decoderdefn.SchemaTest"
           dir="."
