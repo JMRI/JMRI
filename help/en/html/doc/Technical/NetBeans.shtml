@@ -34,10 +34,6 @@
 
     <h1>JMRI: Building with NetBeans</h1>
     
-<em>This page hasn't been updated to refer to our new Git
-source code repository.  Please don't use the SVN-based instructions
-below.</em>
-
     <ul>
         <li><a href="#intro">Introduction</a>
         <li><a href="#installing">Getting and Installing NetBeans</a>
@@ -53,17 +49,17 @@ below.</em>
     </ul>
 <a href="#SeeAlso">See Also</a>    
     <h2><a id="intro">Introduction</a></h2>
-    <p>NetBeans 7.2 (available at <a href="http://www.netbeans.org">www.netbeans.org</a>)
+    <p>NetBeans 8 (available at <a href="http://www.netbeans.org">www.netbeans.org</a>)
     makes a great platform for working with JMRI.
     The JMRI code is setup to work with NetBeans with almost no
     additional setup.
-    (The description below is accurate for the Windows version of NetBeans 7.2.
+    (The description below is accurate for the Windows version of NetBeans 8.
     NetBeans is <i>supposed</i> to be identical across platforms, but this hasn't 
     been checked on anything else). </p>
     <p>NetBeans is a very powerful Integrated Development Environment (IDE),
     which can make working with the JMRI code pretty easy.  But it takes a little
     getting used to, and reading the tutorials on the 
-    <a href="http://netbeans.org/community/releases/72/">NetBeans 7.2 web site</a>
+    <a href="http://netbeans.org">NetBeans web site</a>
     will be helpful.
     </p>
 
@@ -101,22 +97,28 @@ below.</em>
     (note the progress bar in the lower right), 
     but then you're good to go.
     
+    <p>
+    For more information on Git and NetBeans, see the
+    <a href="https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help page</a>.
+    
     <h2>Local Commits</h2>
     
     When using Git, the "commit" operation is local to your computer.
     It doesn't make any changes to the main JMRI repository.
     <p>
     You're encouraged to commit often, so that your changes are safely stored
-    away from your working directory.
+    away from your working directory and that each small change is separately
+    recorded.
 
     <h2><a id="updating">Updating the code from Git</a></h2>
 
     <p>From time to time, you should update your local copy of the code to match 
         the current "head" of the sourceforge.net JMRI Git repository contents. 
-        To do this, use the NetBeans [Team]-&gt;[Update] menu choice.</p>
+        To do this, use the NetBeans [Team] &gt; [Remote] &gt; [Pull from Upstream] menu choice.
+        </p>
     <p>You may also update a single file or the contents of a folder, by
         right-clicking on an item in the "Files" window, then selecting 
-        [Subversion]-&gt;[Update].</p>
+        [Git]-&gt;[Remote]-&gt;[Pull from Upstream].</p>
     
 
     <h2><a id="buildandrun">Building and running JMRI</a></h2>
@@ -162,15 +164,27 @@ below.</em>
     for instructions on how to do that.
 
     <p>
-    Once that's set up, configure NetBeans to push your changes to that 
-    repository.  D
+    Once that's set up, you next configure NetBeans to push your changes to your 
+    repository.  (Anybody can do this, even without direct write access
+    to the main JMRI repository) To do this, ...
     
     <p>
-    To push the changes up, ...
+    To push the changes up, 
+    use the NetBeans [Team] &gt; [Remote] &gt; [Push ...] menu choice. (The Push to Upstream
+    choice will try to write back to the main repository at first, and will fail.)
+    Click on Specify Git Repository, and enter your
+    repository URL, e.g. https://github.com/yourname/JMRI 
+    Then click next.  
+    <p>
+    NetBeans will check with the repository, and show a "master -&gt; master"
+    selection; check that box to activate it. click Next and Finish.
+    This will push up to your repository.
     
     <p>Finally, when your change is ready to submit, go to the 
     GitHub web site and 
     <a href="gitdeveloper.shtml#pull">submit the pull request</a>.
+
+
 
     <h2><a id="nsis">Making a release package for Windows using NSIS</a></h2>
 
