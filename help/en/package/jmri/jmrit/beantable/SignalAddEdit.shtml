@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!-- $Id: SignalAddEdit.shtml 29368 2015-05-29 03:33:37Z jacobsen $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -8,7 +8,7 @@
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-	<meta name="Date.Modified" content="20150102"/>
+	<meta name="Date.Modified" content="20150920"/>
     <META name="keywords" content="JMRI help Signal Heads Add Edit">
 
 <!-- Style -->
@@ -277,15 +277,17 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
   <a href="../../../../html/tools/signaling/ldt/output.shtml">LDT Examples</a> page.
   </dd>
 
+<a href="SignalHeadAddMERG.png"><IMG SRC="SignalHeadAddMERG.png" ALIGN=RIGHT WIDTH="141" HEIGHT="190" HSPACE="0" VSPACE="0" ALT="Add Signal Head panel MERG"></a>
+
 <dt>MERG Signal Driver</dt>
   <dd>
-  This driver type controls a signal that uses a MERG Signal Driver (SD2). An SD2 is connected to DCC using a steady state accessory decoder. The number of Aspects to be
-  displayed on the Signal Mast, will determine the number of Turnout outputs required, ie.<br>
-  2 Aspects require 1 turnout<br>
-  3 Aspects require 2 turnouts<br>
-  4 Aspects require 3 turnouts
+  This driver type controls a Signal that uses a MERG Signal Driver (SD2). An SD2 is connected to DCC using a steady state accessory decoder. The number of Aspects to be
+  displayed on the Signal Mast, will determine the number of <a href="TurnoutAddEdit.shtml">Turnout</a> outputs required, ie.<br>
+  2 Aspects: require 1 Turnout (pictured at right)<br>
+  3 Aspects: require 2 Turnouts<br>
+  4 Aspects: require 3 Turnouts
   <p>
-  The MERG Signal driver in JMRI has been set up to control the SD2 Aspect output only. It does not control the other features of the SD2 such as "Steam Rules" or "Feather". However these can easily be configured using Logix or Routes.
+  The MERG Signal driver in JMRI has been set up to control the SD2 Aspect output only. It does not control the other features of the SD2 such as "Steam Rules" or "Feather", however these can easily be configured using Logix or Routes.
 	  <br/>
   <b>Notes</b> - The MERG SD2 driver does not support a Flashing yellow Aspect. For Flashing yellow Aspects an additional circuit is required as documented 
   in the MERG Technical Bulletins.<br>
