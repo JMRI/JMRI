@@ -152,7 +152,7 @@ If other changes are added to the master branch, you can keep your
 branch up to date by merging those changes in with
 
 <pre><code>
-git checkout branchname
+git checkout branchname<br/>
 git merge -m"merging to current contents of master" master
 </code></pre>
 
@@ -162,14 +162,14 @@ merged in, you can then commit it to your branch.
 When you're done, merge your changes back into the common line of development with
 
 <pre><code>
-git checkout master
+git checkout master<br/>
 git merge -m"merging to current contents of master" branchname
 </code></pre>
 
 followed (eventually) by a commit. You can then delete your branch (if you're finally done 
 with it) with
 <pre><code>
-git checkout master
+git checkout master<br/>
 git branch -d branchname
 </code></pre>
 
@@ -182,7 +182,7 @@ When JMRI was originally using CVS, we used lines like:
 
 <code>
 <pre>
-# The next line is maintained by CVS, please don't change it
+# The next line is maintained by CVS, please don't change it<br/>
 # $Revision$
 </pre>
 </code>
@@ -207,6 +207,45 @@ So we'll be removing these lines as time allows.
 If you're working on a file and happen to see one, usually
 in the header, you can just delete it.  (If it has somebody's name,
 you might want to add that to the copyright notice if there is one.)
+
+<h3>Handling a SF.net Patch</h3>
+
+Eventually, we'll move from using the
+<a href="">SF.net issue tracker</a> to 
+<a href="">GitHub issues</a>
+to handle code that people want to contribute.
+In the meantime, here's a suggested way to handle a SF.net patch.
+
+<ul>
+<li>In your local repository, create a branch to hold the patch 
+via <code>git checkout -b patch-NNNN</code>, where NNNN is the patch number.
+<li>Merge in the changed code as needed.
+<li><code>git commit -m"Patch-NNNN plus the patch subject line (author name)"</code>
+</ul>
+
+It's now in your repository on a branch of it's own.
+<ul>
+<li>Push that to your GitHub repository 
+(assuming the default configuration, where "push" goes to your
+own repository on GitHub) with <code>git push origin patch-NNNN</code>
+<li>Go you your repository on GitHub and start the "pull request" process.
+<li>On the second screen, switch the branch being compared in your repository from
+"master" to "patch-NNNN".  Then the rest of the pull request goes as before.
+<li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
+put the patch changes on the master branch in the repository.
+<li>You can wait for the merge to the main repository, followed by a 
+<code>git pull</code> to update your local repository with this patch on the 
+master branch.  Or, if you need them sooner,
+you can immediately merge these changes onto your local master via
+<pre><code>
+git checkout master<br/>
+git merge patch-NNNN<br/>
+</code></pre>
+</ul>
+
+The advantage of this approach is that it lets you keep all your own work separate 
+from any patches you're handling.  The patches are on different branches than your work,
+so they don't overlap.
 
 <!--#include virtual="/Footer" -->
 
