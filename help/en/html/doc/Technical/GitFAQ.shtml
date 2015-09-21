@@ -211,8 +211,8 @@ you might want to add that to the copyright notice if there is one.)
 <h3>Handling a SF.net Patch</h3>
 
 Eventually, we'll move from using the
-<a href="">SF.net issue tracker</a> to 
-<a href="">GitHub issues</a>
+<a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
+<a href="https://guides.github.com/features/issues/">GitHub issues</a>
 to handle code that people want to contribute.
 In the meantime, here's a suggested way to handle a SF.net patch.
 
