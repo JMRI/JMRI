@@ -41,10 +41,20 @@
 
     <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
 
+    <!-- Retrieve Git revision via 'git describe' -->
+    <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
+        <arg value="rev-parse"/>
+        <arg value="--short"/>
+        <arg value="HEAD"/>
+    </exec>
+
     <condition property="release.revision_id"
-               value="${env.SVN_REVISION}"
-               else="unknown">
-        <isset property="env.SVN_REVISION"/>
+                value="${git.revision}"
+                else="unknown">
+        <and>
+            <isset property="git.revision"/>
+            <length string="${git.revision}" trim="yes" length="0" when="greater"/>
+        </and>
     </condition>
 
     <condition property="release.official" value="true" else="false">

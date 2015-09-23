@@ -1,3 +1,45 @@
+This first section is a discussion note on how to 
+build releases using Git instead of SVN.  Please edit
+as desired.  Eventually, when we build the 1st Git release,
+we'll follow whatever emerges here - BobJ
+
+In SVN, we used "branches" to record the contents of a release.  
+The "Release-4-1-1" branch was used to accumulate the content of that release, 
+and then finally to record that content. In CVS, we'd used tags to record
+the content of a release, but SVN "tag" and "branch" constructs don't really differ.
+
+Git branches are more ephemeral than SVN branches, and aren't considered a good
+way to record content.  Git tags, on the other hand, are great for that.
+
+So the proposed way to generate a release is:
+
+# Create a branch "Release-N-N-N" from the current master branch (or perhaps from an earlier branch or tag, as needed).
+
+# Set Jenkins to build that branch from GitHub.
+
+# Merge content on it as needed.
+
+# When the final version is done and the files are built for release:
+
+## set a -a tag "Release-N-N-N" on the branch (tags and branches live in different spaces)
+
+## merge the branch back to master to make sure we don't lose any fixes (but there might be a problem with the release.version file?)
+
+## delete the branch, leaving only the tag
+
+Since -a tags can't change and branches can, deleting the branch makes it clear where to go to get the definitive content for the release
+
+We sometimes build releases from each other, e.g. 4.0 from 3.12.11.  That still works
+because a branch can start at any point, including a tag.
+
+The other question is where to do this.  Jenkins can just as happily build from the release pumpkins
+GitHub repository as from the JMRI/JMRI one.  But there's some value in having the 
+release candidate branch be in the JMRI/JMRI repository so that it's clearly visible.
+So I recommend creating the branch locally, but pulling (or pushing) it to JMRI/JMRI
+before doing the final builds.
+
+
+============================================================================
 This is the HOWTO file to make a complete SourceForge downloadable
 distribution.  ($Revision$)
 
