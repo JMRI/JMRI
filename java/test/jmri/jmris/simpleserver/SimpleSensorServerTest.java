@@ -30,6 +30,68 @@ public class SimpleSensorServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
+    // test sending a message.
+    public void testSendMessage() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append(b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleSensorServer a = new SimpleSensorServer(input, output);
+        // NOTE: this test uses reflection to test a private method.
+        java.lang.reflect.Method sendMessageMethod=null;
+        try {
+          sendMessageMethod = a.getClass().getDeclaredMethod("sendMessage", String.class);
+        } catch(java.lang.NoSuchMethodException nsm) {
+          Assert.fail("Could not find method sendMessage in SimpleSensorServer class. " );
+        }
+
+        // override the default permissions.
+        Assert.assertNotNull(sendMessageMethod);
+        sendMessageMethod.setAccessible(true);
+        try {
+           sendMessageMethod.invoke(a,"Hello World");
+           Assert.assertEquals("SendMessage Check","Hello World",sb);
+        } catch (java.lang.IllegalAccessException iae) {
+           Assert.fail("Could not access method sendMessage in SimpleSensorServer class");
+        } catch (java.lang.reflect.InvocationTargetException ite){
+          Throwable cause = ite.getCause();
+          Assert.fail("sendMessage executon failed reason: " + cause.getMessage());
+       }
+    }
+
+    // test sending an error message.
+    public void testSendErrorStatus() {
+        StringBuilder sb = new StringBuilder();
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                        sb.append((char)b);
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+        SimpleSensorServer a = new SimpleSensorServer(input, output);
+        try {
+            a.sendErrorStatus("IT1");
+            Assert.assertEquals("sendErrorStatus check","SENSOR ERROR\n",sb.toString());
+        } catch(java.io.IOException ioe){
+            Assert.fail("Exception sending Error Status");
+        }
+    }
+
+
+
+
     // from here down is testing infrastructure
     public SimpleSensorServerTest(String s) {
         super(s);
