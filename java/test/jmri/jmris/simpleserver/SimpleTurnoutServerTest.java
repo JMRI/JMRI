@@ -39,7 +39,7 @@ public class SimpleTurnoutServerTest extends TestCase {
                     // could be replaced by one that checks for specific outputs
                     @Override
                     public void write(int b) throws java.io.IOException {
-                        sb.append(b);
+                        sb.append((char)b);
                     }
                 });
         java.io.DataInputStream input = new java.io.DataInputStream(System.in);
