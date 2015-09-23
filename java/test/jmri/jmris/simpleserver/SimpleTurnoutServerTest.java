@@ -57,7 +57,7 @@ public class SimpleTurnoutServerTest extends TestCase {
         sendMessageMethod.setAccessible(true);
         try {
            sendMessageMethod.invoke(a,"Hello World");
-           Assert.assertEquals("SendMessage Check","Hello World",sb);
+           Assert.assertEquals("SendMessage Check","Hello World",sb.toString());
         } catch (java.lang.IllegalAccessException iae) {
            Assert.fail("Could not access method sendMessage in SimpleTurnoutServer class");
         } catch (java.lang.reflect.InvocationTargetException ite){
