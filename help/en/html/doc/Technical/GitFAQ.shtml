@@ -1,6 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html> <head>
-<title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <html lang="en">
 <head>
@@ -227,10 +225,13 @@ In the meantime, here's a suggested way to handle a SF.net patch.
 <li>In your local repository, create a branch to hold the patch 
 via <code>git checkout -b patch-NNNN</code>, where NNNN is the patch number.
 <li>Merge in the changed code as needed.
-<li><code>git commit -m"Patch-NNNN plus the patch subject line (author name)"</code>
+<li><code>git commit -m"Patch NNNN plus the patch subject line (author name)"</code>
 </ul>
-
-It's now in your repository on a branch of it's own.
+Please don't copy the "#" symbol in the standard SF.net title line, as 
+GitHub will turn that into a reference to an item in their issues list, and the
+two don't match up.
+<p>
+The patch now in your repository on a branch of it's own.
 <ul>
 <li>Push that to your GitHub repository 
 (assuming the default configuration, where "push" goes to your
