@@ -874,8 +874,8 @@
     </target>
 
 
-    <target name="test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
+    <target name="ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -890,8 +890,12 @@
             <test name="jmri.HeadLessTest">
                 <formatter usefile="no" type="plain"/>
             </test>
-
         </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
     </target>
 
     <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
