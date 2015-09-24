@@ -1,6 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html> <head>
-<title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
 <html lang="en">
 <head>
@@ -68,17 +66,14 @@ If you have changes to the JMRI code in an existing SVN checkout, here's what we
 
 <li>&quot;svn update&quot; to the HEAD of SVN. You should be doing this routinely anyway, 
 because you'll need to do it before your changes can eventually be submitted.  
-Do this now and solve any problems.
-
-<li>Once the SVN repository is frozen, do <code>svn update</code> again.  
-Solve any conflicts, etc.
+Do this now and solve any problems. Make sure there are no conflicts showing.
 
 <li>Do <code>svn status</code> and save the output.  
 Double check that no conflicts are showing.
 
 <li>Do <code>svn diff</code> and save the output, e.g. as <code>patch.txt</code>.
 
-<li>Once Git is working and up, clone a copy of the repository to your machine.
+<li>Clone a copy of the JMRI Git repository to your machine.
 (See the 
 <a href="getgitcode.shtml">previous page for instructions</a>.)
 
@@ -87,14 +82,14 @@ That sets your working copy to be exactly the same as the last contents of SVN,
 the same as the base for the <code>svn diff</code> you took earlier.
 
 <li>Then apply the changes between SVN and your code with <code>patch -p0 &lt; patch.txt</code>  
-(change that to refer to the location of the <code>svn diff</code> output file you saved in step 4)
+(change patch.txt to refer to the <code>svn diff</code> output file you saved in step 4)
 
 <li>If you had any completely new files in the SVN working directory, 
 i.e. ones with &quot;A&quot; or &quot;?&quot; status:
     <ul>
     <li>Copy those files into the corresponding 
         place in your Git checkout.
-    <li>To <code>git add (pathname)</code> on each of them to tell Git about them
+    <li>Do <code>git add (pathname)</code> on each of them to tell Git about them
     </ul>
 
 <li>Do a <code>git status</code> to get a list of changes.
@@ -108,13 +103,26 @@ You should see the same changed files as the &quot;svn status&quot; you saved ea
 this might show some conflicts.  If so, you have to resolve them here.
 
 </ol>  
-Now you can start developing, without having lost anything.
+Now you can start developing, without having lost anything. 
 
+The procedure above puts your changes
+in a directory that's a lot like the way we used SVN, with everything being committed
+directly to the common SVN HEAD.
 
+<p>Alternately, Git lets you work on a "branch" to keep sets of changes separate 
+from each other until you're ready to bring them together. If you'd like to do that,
+replace the last <code>git stash save; git checkout; git stash pop</code> steps with
+
+<pre><code>
+git checkout -b your_new_branch_name
+</code></pre>
+That's it!  You've now ready to start committing your changes to that branch.
+<p>
+See below for more on branches, including how to pick a good name for your new branch.
 
 <h2 id="branch">Branching</h2>
 
-With SVN and CVS, you're check out a &quot;working directory&quit; to make your
+With SVN and CVS, you're check out a &quot;working directory&qu0t; to make your
 changes in, work for a while, and eventually commit them back to the main repository.
 <p>
 Git works on a different idea. 
@@ -127,8 +135,8 @@ on it independently.  You can even have multiple branches at the same time, movi
 them as you work on different projects.
 
 <p>
-We need to be able to recognize the purposes of branches, so we recommend that you 
-name them starting with your initials.  After that, it's up to you:  
+We recommend that you 
+name branches starting with your initials.  After that, it's up to you:  
 &quot;abc-decoder-xml-change&quot;, 
 &quot;abc-2015-09-14&quot;, 
 &quot;abc-next-cool-thing&quot;
@@ -148,8 +156,9 @@ To see all the current branches, do
 
 <pre><code>git branch</code></pre>
 
-If other changes are added to the master branch, you can keep your 
-branch up to date by merging those changes in with
+When changes are added to the master branch, 
+either due to your own work or somebody else's,
+you can keep your branch up to date by merging those changes in with
 
 <pre><code>
 git checkout branchname<br/>
@@ -157,7 +166,7 @@ git merge -m"merging to current contents of master" master
 </code></pre>
 
 (If you leave off the message option, you'll be prompted with an editor) If anything
-merged in, you can then commit it to your branch.
+merged in, you can then commit it to your branch. 
 
 When you're done, merge your changes back into the common line of development with
 
@@ -166,7 +175,13 @@ git checkout master<br/>
 git merge -m"merging to current contents of master" branchname
 </code></pre>
 
-followed (eventually) by a commit. You can then delete your branch (if you're finally done 
+followed (eventually) by a commit. 
+
+<p>Of course, you can use the same technique to 
+merge between any two branches.
+
+<p>
+You can then delete your branch (if you're finally done 
 with it) with
 <pre><code>
 git checkout master<br/>
@@ -220,14 +235,18 @@ In the meantime, here's a suggested way to handle a SF.net patch.
 <li>In your local repository, create a branch to hold the patch 
 via <code>git checkout -b patch-NNNN</code>, where NNNN is the patch number.
 <li>Merge in the changed code as needed.
-<li><code>git commit -m"Patch-NNNN plus the patch subject line (author name)"</code>
+<li><code>git commit -m"Patch NNNN plus the patch subject line (author name)"</code>
 </ul>
-
-It's now in your repository on a branch of it's own.
+Please don't copy the "#" symbol in the standard SF.net title line, as 
+GitHub will turn that into a reference to an item in their issues list, and the
+two don't match up.
+<p>
+The patch now in your repository on a branch of it's own.
 <ul>
 <li>Push that to your GitHub repository 
 (assuming the default configuration, where "push" goes to your
-own repository on GitHub) with <code>git push origin patch-NNNN</code>
+own repository on GitHub) with <br/>
+<code>git push origin patch-NNNN</code>
 <li>Go you your repository on GitHub and start the "pull request" process.
 <li>On the second screen, switch the branch being compared in your repository from
 "master" to "patch-NNNN".  Then the rest of the pull request goes as before.

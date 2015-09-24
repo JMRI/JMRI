@@ -40,15 +40,14 @@
   is a powerful, free system for managing 
   code as it's worked-on by a distributed group.  Like SVN before it, 
   and CVS before that, it allows a group like JMRI to cooperate effectively.
-  We keep our code, help files, 
-  <a href="WebSite.shtml">web site</a>, 
-  and everything else in a 
-  Git repository hosted on 
+  We keep our code, help files, sample scripts, XML files, etc
+  in a Git repository hosted on 
   <a href="https://github.com/JMRI">GitHub.com</a>.
+  The <a href="WebSite.shtml">web site</a> is in a similar repository.
   
 <h2>Viewing the Code Online</h3>
   <p>You can 
-  <a href="">browse the JMRI code directly</a>
+  <a href="https://github.com/JMRI/JMRI">browse the JMRI code directly</a>
   on that site. For example, if you'd like to look at this page,
   <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/doc/Technical/getgitcode.shtml">click this link</a> 
   to display its source HTML code.
@@ -57,7 +56,9 @@
 <h3>Proposing Changes Online</h3>
   
 <a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
-  <p>If you want to suggest a change to a file, first get a free
+  <p>If you want to suggest a change to a file, 
+  for example a web page like this one,
+  first get a free
   <a href="https://github.com/join">GitHub account</a> and sign in.
   <p>
   Then go to the file you want to change and click the pencil icon on the upper-right of the page.
@@ -72,7 +73,7 @@
   line, and a description of why this is a good change, and click the
   "Propose file change" button.  This sends your change to the people who've
   agreed to maintain the JMRI central code, who will review and (usually) include it in 
-  the new JMRI release.
+  the next JMRI release.
   
 
   <h2>Get Your Own Copy</h2>
@@ -97,7 +98,7 @@
   </ul>
   
   <p>If you want to develop changes to the code, see the
-  "<a href="gitdeveloper.shtml">Being a JMRI Developer</a>"
+  "<a href="gitdeveloper.shtml">Developing with JMRI Code<</a>"
   page.</p>
   
   <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
@@ -162,7 +163,8 @@
   
   <p>
   First, check whether Git is installed on your computer.  From a 
-  command line, do <code>git --version </code>  (note the two hyphens).
+  command line, do <br/>
+  <code>git --version </code>  (note the two hyphens).<br/>
   If it replies with a version greater than 2, e.g. 2.3.8, you're all set.
   If not, there are 
   <a href="GitFAQ.shtml#install">instructions for installing Git</a>
@@ -172,11 +174,9 @@
   <p>
   To get a local copy of the code, you tell Git to "clone" it from our 
   repository.  The command to do that is:
-  
   <pre><code>
   $ git clone https://github.com/JMRI/JMRI.git
   </code></pre>
-
   This will create a new "JMRI" directory and download the code into it.
   
   <p>
@@ -184,12 +184,10 @@
   and want to update it
   to the most recent contents of the main JMRI repository, start in the 
   JMRI code directory and to:
-  
   <pre><code>
   $ git pull https://github.com/JMRI/JMRI.git
   </code></pre>
   </p>
-
   <p>After the checkout is complete, go to the new JMRI directory that was created.
   Inside, you'll find 
   directories called <tt>xml</tt>,

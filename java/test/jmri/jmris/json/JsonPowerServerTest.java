@@ -1,5 +1,7 @@
-//SimplePowerServerTest.java
-package jmri.jmris.simpleserver;
+//JsonPowerServerTest.java
+package jmri.jmris.json;
+
+import jmri.jmris.JmriConnection;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -9,15 +11,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimplePowerServer class
+ * Tests for the jmri.jmris.json.JsonPowerServer class
  *
  * @author Paul Bender
  * @version $Revision$
  */
-public class SimplePowerServerTest extends TestCase {
+public class JsonPowerServerTest extends TestCase {
 
-    public void testCtorFailure() {
-        jmri.util.JUnitUtil.resetInstanceManager(); // remove the debug power manager for this test only.
+    public void testCtor() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -26,44 +27,26 @@ public class SimplePowerServerTest extends TestCase {
                     public void write(int b) throws java.io.IOException {
                     }
                 });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-
-        SimplePowerServer a = new SimplePowerServer(input, output);
+        JsonPowerServer a = new JsonPowerServer(new JmriConnection(output));
 
         jmri.util.JUnitAppender.assertErrorMessage("No power manager instance found");
         Assert.assertNotNull(a);
     }
 
-    public void testCtorSuccess() {
-        java.io.DataOutputStream output = new java.io.DataOutputStream(
-                new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
-                    @Override
-                    public void write(int b) throws java.io.IOException {
-                    }
-                });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-
-        SimplePowerServer a = new SimplePowerServer(input, output);
-
-        Assert.assertNotNull(a);
-    }
-
     // from here down is testing infrastructure
-    public SimplePowerServerTest(String s) {
+    public JsonPowerServerTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SimplePowerServerTest.class.getName()};
+        String[] testCaseName = {JsonPowerServerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimplePowerServerTest.class);
+        TestSuite suite = new TestSuite(jmri.jmris.json.JsonPowerServerTest.class);
 
         return suite;
     }
@@ -87,6 +70,6 @@ public class SimplePowerServerTest extends TestCase {
     }
 
 
-    static Logger log = LoggerFactory.getLogger(SimplePowerServerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(JsonPowerServerTest.class.getName());
 
 }
