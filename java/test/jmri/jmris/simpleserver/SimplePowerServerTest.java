@@ -16,7 +16,8 @@ import org.slf4j.LoggerFactory;
  */
 public class SimplePowerServerTest extends TestCase {
 
-    public void testCtor() {
+    public void testCtorFailure() {
+        jmri.util.JUnitUtil.resetInstanceManager(); // remove the debug power manager for this test only.
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -30,6 +31,22 @@ public class SimplePowerServerTest extends TestCase {
         SimplePowerServer a = new SimplePowerServer(input, output);
 
         jmri.util.JUnitAppender.assertErrorMessage("No power manager instance found");
+        Assert.assertNotNull(a);
+    }
+
+    public void testCtorSuccess() {
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+
+        SimplePowerServer a = new SimplePowerServer(input, output);
+
         Assert.assertNotNull(a);
     }
 
@@ -55,12 +72,20 @@ public class SimplePowerServerTest extends TestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+        jmri.util.JUnitUtil.initDebugPowerManager();
     }
 
     protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
+
 
     static Logger log = LoggerFactory.getLogger(SimplePowerServerTest.class.getName());
 

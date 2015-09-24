@@ -48,6 +48,24 @@ public class SimpleOperationsServerTest extends TestCase {
         return suite;
     }
 
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+    }
+
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
+
+
     static Logger log = LoggerFactory.getLogger(SimpleOperationsServerTest.class.getName());
 
 }
