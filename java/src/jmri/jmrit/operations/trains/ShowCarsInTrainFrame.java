@@ -183,7 +183,7 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                                 pickedupCars.add(car);
                                 log.debug("car ({}) routelocation ({}) track ({}) route destination ({})", car.toString(), car
                                         .getRouteLocation().getName(), car.getTrackName(), car.getRouteDestination().getName());
-                                JCheckBox checkBox = new JCheckBox(car.toString());
+                                JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.toString()));
                                 if (car.getRouteDestination() == rl) {
                                     addItemLeft(pCars, checkBox, 2, i++); // set out
                                 } else if (car.getRouteLocation() == rl && car.getTrack() != null) {
