@@ -393,7 +393,7 @@ public class CommonConductorYardmasterPanel extends OperationsPanel implements P
                     // determine if car is a pick up from the right track
                     if (car.getTrack() != null
                             && (!Setup.isSortByTrackEnabled() || car.getTrackName().equals(track.getName()))
-                            && car.getRouteLocation() == rl && car.getRouteDestination() == rld
+                            && car.getRouteLocation() == rl && (car.getRouteDestination() == rld || car.isPassenger())
                             && car.getRouteDestination() != rl) {
                         // yes we have a pick up
                         pWorkPanes.setVisible(true);
