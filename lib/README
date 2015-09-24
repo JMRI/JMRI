@@ -212,6 +212,16 @@ xbee-api-0.9.jar
     PBender 03-Mar-2014 This version comes from the XBee library source repository 
     (we needed some of the functionality, but the pre-compiled library has not been updated).
 
+i18nchecker.jar
+    Internationalization checker: used in source code development, for checking 
+    proper implementation of text internationalization.  This archive need not
+    be included in JMRI releases.
+    From https://github.com/phamernik/i18nchecker .
+    See license https://github.com/phamernik/i18nchecker/blob/master/i18nchecker/LICENSE-2.0.txt
+    Usage info at https://github.com/phamernik/i18nchecker/blob/master/README.md 
+    Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker 
+        and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
+
 
 Older, no longer present:
 
