@@ -93,10 +93,18 @@
     Make sure that the "master*" box is checked to pull down the main
     version of the code. Click "Next", and then click "Finish".
     <p>
-    It'll take quite a few minutes to pull down a copy of the code
+    It'll take a long time to pull down a copy of the code
     (note the progress bar in the lower right), 
     but then you're good to go.
     
+    <p>
+    <em>
+    There's an un-resolved problem with configuring
+    NetBeans to work with JMRI GitHub, please see the 
+    <a href="https://github.com/JMRI/JMRI/issues/10">discussion issue
+    on this</a></em>.
+        
+
     <p>
     For more information on Git and NetBeans, see the
     <a href="https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help page</a>.
