@@ -1,0 +1,10 @@
+language: java
+
+script: ant ci-test
+
+jdk:
+  - oraclejdk8
+  
+os:
+  - linux
+#  - osx # Travis OS X support does not include Java
