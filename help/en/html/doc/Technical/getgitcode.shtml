@@ -47,7 +47,7 @@
   
 <h2>Viewing the Code Online</h3>
   <p>You can 
-  <a href="https://github.com/JMRI/JMRI/blob/master">browse the JMRI code directly</a>
+  <a href="https://github.com/JMRI/JMRI">browse the JMRI code directly</a>
   on that site. For example, if you'd like to look at this page,
   <a href="https://github.com/JMRI/JMRI/blob/master/help/en/html/doc/Technical/getgitcode.shtml">click this link</a> 
   to display its source HTML code.
