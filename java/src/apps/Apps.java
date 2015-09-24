@@ -1026,6 +1026,8 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
                                     KeyEvent ky = (KeyEvent) e;
                                     if (ky.getKeyCode() == 119) {
                                         startupDebug();
+                                    } else {
+                                        debugmsg = false;
                                     }
                                 } else {
                                     debugmsg = false;
