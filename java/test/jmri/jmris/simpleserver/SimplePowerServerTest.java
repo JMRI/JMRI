@@ -50,6 +50,26 @@ public class SimplePowerServerTest extends TestCase {
         Assert.assertNotNull(a);
     }
 
+    // test sending an error message.
+    public void testSendErrorStatus() {
+           StringBuilder sb = new StringBuilder();
+           java.io.DataOutputStream output = new java.io.DataOutputStream(
+           new java.io.OutputStream() {
+               @Override
+               public void write(int b) throws java.io.IOException {
+                   sb.append((char)b);
+               }
+          });
+       java.io.DataInputStream input = new java.io.DataInputStream(System.in);
+       SimplePowerServer a = new SimplePowerServer(input,output);
+       try {
+          a.sendErrorStatus();
+          Assert.assertEquals("sendErrorStatus check","POWER ERROR\n",sb.toString());
+       } catch(java.io.IOException ioe){
+         Assert.fail("Exception sending Error Status");
+       }
+    }
+
     // from here down is testing infrastructure
     public SimplePowerServerTest(String s) {
         super(s);
@@ -67,6 +87,8 @@ public class SimplePowerServerTest extends TestCase {
 
         return suite;
     }
+
+ 
 
     // The minimal setup for log4J
     protected void setUp() throws Exception {
