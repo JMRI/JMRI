@@ -50,7 +50,7 @@
 
 	<dl class="faq">
 
-	  <dt class="on">How do I install Git?</dt>
+	  <dt id="install" class="on">How do I install Git?</dt>
 	  <dd>
 		Git is free software.  Depending on your computer type and your preferences,
 		there are several ways to install it. There's more info in the Git community's
@@ -279,7 +279,7 @@
 	    </blockquote>
 	</dd>
 
-<dt>Embedded CVS, RCS and SVN cookies</dt>
+<dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
 	<dd>
 		When JMRI was originally using CVS, we used lines like:
 
@@ -310,7 +310,7 @@
 		you might want to add that to the copyright notice if there is one.)
 	</dd>
 		
-<dt>Handling a SF.net Patch</dt>
+<dt id="SFnetPatches">Handling a SF.net Patch</dt>
 	<dd>
 		Eventually, we'll move from using the
 		<a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
@@ -368,7 +368,6 @@
 		so they don't overlap.
 	</dd>
 </dl>
-
 
 <!--#include virtual="/Footer" -->
 
