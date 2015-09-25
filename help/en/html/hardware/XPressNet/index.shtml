@@ -84,6 +84,7 @@ this page
 	<ul>
 	    <li> Lenz LZ100 based systems (software version 3.x)</li>
 	    <li> Lenz LZV100 based systems (software version 3.x)</li>
+            <li>OpenDCC's Command Center</li>
             <li> Paco Canada's NanoX-S88 </li>
 	</ul>
     </dd>
@@ -135,7 +136,6 @@ this page
 	<ul>
 	    <li>ZTC Controls ZTC521 (with XPressNet (aka X-Bus V3.0) software)</li>
             <li>Hornby Select</li>
-            <li>OpenDCC's Command Center</li>
             <li>Viessmann Commander</li>
             <li>Roco 10830 multiZENTRAl-PRO</li>
 	</ul>
@@ -250,14 +250,10 @@ which was first made available in version 2.13.7.</p>
     serial interface (9600baud at the moment), and a S88 connection (both traditional and S88-N connectors).
     
 
-    <li> The OpenDCC project has two potential interfaces for use with JMRI.  
+    <li> The OpenDCC project has two interfaces for use with JMRI.  
     The OpenDCC <a href="http://www.opendcc.org/elektronik/opendcc/opendcc_hw_sch_e.html">Command Station</a> and 
-    the <a href="http://www.opendcc.org/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  
-    These interfaces are untested, but should be supported by JMRI.
-
-
+    the <a href="http://www.opendcc.org/elektronik/gateway/gateway.html">OpenDCC Gateway</a>.  These devices should be configured as LI100F devices with the port speed set to 19,200bps.  The OpenDCC Command station provides feedback via an S88 connection.
     </ul>
-    
 
     <P>
     
@@ -371,7 +367,7 @@ which was first made available in version 2.13.7.</p>
         <p>The OpenDCC Command Station should be supported by JMRI through 
         either it's RS232 port or it's built in USB port.  
 
-        <p>We have no confirmation at this point in time that anyone has attempted this configuration.
+        <p>These devices should be configured as LI100F device with the port speed set to 19,200bps.
 
 
         </dd>
