@@ -1,12 +1,10 @@
-<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML//EN">
-<html> <head>
-<title><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
     <TITLE>
  	JMRI: Git FAQ
     </TITLE>
+
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code Git FAQ">
 
@@ -24,6 +22,12 @@
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
+
+<!-- FAQ-Head -->
+  <script type="text/javascript">/*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/</script>
+  <link rel="stylesheet" type="text/css" href="/css/faq.css" media="screen">
+<!-- /FAQ-Head -->
+
 </head>
 
 <!--#include virtual="/Header" -->
@@ -44,224 +48,338 @@
   <p>See also the <a href="index.shtml">Technical index</a>
      for more information on maintaining JMRI code.</p>
 
+	<dl class="faq">
 
-<h2 id="install">Installing Git</h2>
+	  <dt class="on">How do I install Git?</dt>
+	  <dd>
+		Git is free software.  Depending on your computer type and your preferences,
+		there are several ways to install it. There's more info in the Git community's
+		<a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">Getting Started</a> guide.
 
-Git is free software.  Depending on your computer type and your preferences,
-there are several ways to install it. There's more info on
-<a href="https://git-scm.com/book/en/v2/Getting-Started-Installing-Git">the Git web site</a>.
+		<UL>
+		<li>Get it from the <a href="http://git-scm.com/downloads">Git download page</a>.
+		<li>It comes with the GitHub Desktop application,
+		    available from the <a href="https://desktop.github.com">Git desktop download page</a>.
+		<li>On the Mac, it's included when you <a href="https://developer.apple.com/xcode/download/">install XCode</a>.
+		<li>On Linux you can use your package installer, e.g. <code>sudo yum install git</code> or <code>sudo apt-get install git</code>.
+		</ul>
+	  </dd>
 
-<UL>
-<li>Get it from the <a href="http://git-scm.com/downloads">Git web site</a>.
-<li>It comes with the GitHub Desktop application,
-    available from the <a href="https://desktop.github.com">download page</a>.
-<li>On the Mac, it's included when you <a href="https://developer.apple.com/xcode/download/">install XCode</a>.
-<li>On Linux you can use your package installer, e.g. <code>sudo yum install git</code> or <code>sudo apt-get install git</code>.
-</ul>
+	  <dt>Working with GIT</dt>
+	  <dd>
+		With SVN and CVS, you're check out a &quot;working directory&quot; to make your
+		changes in, work in it for a while, and eventually commit all your changes back to the main repository.
+		<p>
+		Git works on a different idea. 
+		Instead of multiple working directories, you have a single repository that's been
+		&quot;cloned&quot; from the main repository.  If you're making individual little
+		changes, you can work directly on the default &quot;master&quot; branch within it.  If not,
+		see <A href="#branch"> Branching</a>, below.
+		<p>
+		To understand Git, it is good to know about the various <em>places</em> in your 
+		local git repository:
+		<ul>
+			<li> The content from the "remote" repo, which lives under the <code>.git/</code> hidden directory,</li>
+			<li> The "staging" area (also called &quot;index&quot; or &quot;cache&quot;), and </li>
+			<li> The "branch" you are using, which lives in</li>
+			<li> The working tree.</li>
+		</ul>
 
+		When you <i>clone</i> a git repo, you are creating a directory structure that holds 
+		all of these items.  Unless you tell it otherwise, the working tree starts off 
+		filled with contents of the <em>master branch</em> of the repo you cloned - and the <em>staging 
+		area</em> is empty.  As you make changes to the files in the working tree, you need
+		to explicitly <em>add</em> them to the staging area. Git knows about these files, but 
+		they aren't yet officially part of your local repo.  
+		<p>
+		Once you have populated the staging area with of all the things you have changed, a 
+		<em>commit</em> operation will, uhm, officially commit your changes to your repo's 
+		<code>.git/</code> structure.
+		<p>
+		When you <em>pull</em> or <em>push</em>, you are telling Git to synchronize your <code>.git/</code> 
+		content with that of the remote repo you originally cloned things from.
+		<p>
+		The following command reference should get you started.
 
-<h2 id="migrateSVN">Migrating un-committed changes from a SVN checkout</h2>
+		<ul>
+		<li> Log in to GitHub and clone your own copy of the main JMRI repo.  
+			This will give you a safe place to push and pull from without impacting others.
+		<li> Clone the JMRI repo to your local system (or update it):
+			<blockquote>
+				<code>$ git clone https://github.com/JMRI/JMRI.git   </code><br/>
+			or <br/>
+				<code>$ git fetch                                    </code><br/>
+				<code>$ git diff ...origin                           </code><br/>
+				<code>$ git merge                                    </code><br/>
+			or <br/>
+				<code>$ git pull https://github.com/JMRI/JMRI.git    </code><br/>
+			</blockquote>
+		<li> Make your changes locally, test them, etc
+			<blockquote>
+				<code>$ git add <i>newfile</i>                       </code><br/>
+				<code>$ git rm <i>newfile</i>                        </code><br/>
+				<code>$ git add .                                    </code><br/>
+			<br/>
+				<code>$ git status                                   </code><br/>
+			<br/>
+				<code>$ git fetch                                    </code><br/>
+				<code>$ git merge                                    </code><br/>
+			<br/>
+			</blockquote>
+		<li> make your changes available to the community
+			<blockquote>
+				<code>$ git commit -m <i>"commit message"</i>       </code><br/>
+				or <br/>
+				<code>$ git commit -a -m <i>"commit message"</i>    </code><br/>
+			</blockquote>
+		</ul>
+	  </dd>
+	
+	
+	  <dt id="migrateSVN">Migrating un-committed changes from a SVN checkout</dt>
+	  <dd>
+		If you have changes to the JMRI code in an existing SVN checkout, here's what we recommend:
 
-If you have changes to the JMRI code in an existing SVN checkout, here's what we recommend:
+		<ol>
+		<li>&quot;Update&quot; to the HEAD of SVN. You should be doing this routinely anyway, 
+		because you'll need to do it before your changes can eventually be submitted.  
+		Do this now and solve any problems.
+		<blockquote>
+		<code>$ svn update</code>
+		</blockquote>
 
-<ol>
+		<li>Check the status and save the output.  Double check that no conflicts are showing.
+		<blockquote>
+			<code>$ svn status</code><br/><br/>
+			save a copy to reference later ...<br/><br/>
+			<code>$ svn status &gt; saved-status.txt</code>
+		</blockquote>
 
-<li>&quot;svn update&quot; to the HEAD of SVN. You should be doing this routinely anyway, 
-because you'll need to do it before your changes can eventually be submitted.  
-Do this now and solve any problems.
+		<li>Diff the sources and save the output.
+		<blockquote>
+		<code>$ svn diff &gt; patch.txt</code>
+		</blockquote>
 
-<li>Once the SVN repository is frozen, do <code>svn update</code> again.  
-Solve any conflicts, etc.
+		<li>Clone a copy of the JMRI Git repository on your machine.
+		(See the <a href="getgitcode.shtml">previous page</a> for detailed instructions.)
+		<blockquote>
+		<code>$ git clone https://github.com/JMRI/JMRI.git</code>
+		</blockquote>
 
-<li>Do <code>svn status</code> and save the output.  
-Double check that no conflicts are showing.
+		<li>In your new Git repo clone, checkout the sources as they were when the code was switched from SVN to Git:
+		<blockquote>
+		<code>$ git checkout tags/svn-30001</code>
+		</blockquote>
+		This sets your working copy to be exactly the same as the last contents of SVN, 
+		the same as the base for the <code>svn diff</code> you took earlier.<br/>
 
-<li>Do <code>svn diff</code> and save the output, e.g. as <code>patch.txt</code>.
+		<li>Apply the changes you had made in SVN to the new Git tree
+		<blockquote>
+		<code>$ patch -p0 &lt; patch.txt</code>
+		</blockquote>
 
-<li>Once Git is working and up, clone a copy of the repository to your machine.
-(See the 
-<a href="getgitcode.shtml">previous page for instructions</a>.)
+		<li>If you had created any completely new files in the SVN working directory, 
+		i.e. ones with &quot;A&quot; or &quot;?&quot; status:
+		    <ul>
+		    <li>Copy those files into the corresponding place in your Git checkout.
+		    <li><em>Add</em> them to the Git staging queue:
+			To <code>git add (pathname)</code> on each of them to tell Git about them
+			<blockquote>
+			<code>$ git add <em>pathname/to/new/file</em></code>
+			</blockquote>
+		    </ul>
 
-<li>In your new clone, do <code>git checkout tags/svn-30001</code>.  
-That sets your working copy to be exactly the same as the last contents of SVN, 
-the same as the base for the <code>svn diff</code> you took earlier.
+		<li>Check the status to get a list of changes.
+		<blockquote>
+		<code>$ git status</code>
+		</blockquote>
+		You should see the same list of changed files as the &quot;svn status&quot; you ran earlier.<br/>
 
-<li>Then apply the changes between SVN and your code with <code>patch -p0 &lt; patch.txt</code>  
-(change that to refer to the location of the <code>svn diff</code> output file you saved in step 4)
+		<li><code>git stash save</code>
 
-<li>If you had any completely new files in the SVN working directory, 
-i.e. ones with &quot;A&quot; or &quot;?&quot; status:
-    <ul>
-    <li>Copy those files into the corresponding 
-        place in your Git checkout.
-    <li>To <code>git add (pathname)</code> on each of them to tell Git about them
-    </ul>
+		<li><code>git checkout master</code>
 
-<li>Do a <code>git status</code> to get a list of changes.
-You should see the same changed files as the &quot;svn status&quot; you saved earlier.
+		<li><code>git stash pop</code><br/><br/>
+			Depending on how much progress has taken place in Git, 
+		this might show some conflicts.  If so, you have to resolve them here.
 
-<li><code>git stash save</code>
+		</ol>  
+		Now you can start developing, without having lost anything.
+     </dd>
 
-<li><code>git checkout master</code>
+     <dt id="branch">Branching</dt>
+     <dd>
+		If you're making individual little
+		changes, you can work directly on the default &quot;master&quot; branch.
+		If you want to work on something more complicated, good "Git Hygiene" encourages you
+		to create a feature branch so you can work on it independently.  
+		Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
+		and switch between them as you work on different projects.
 
-<li><code>git stash pop</code> - Depending on how much progress has taken place in Git, 
-this might show some conflicts.  If so, you have to resolve them here.
+		<p>
+		We recommend that you name branches starting with your initials (for example, "abc") and something that suggests what you are working on:  
+		<code>&quot;abc-decoder-xml-change&quot;</code>, 
+		<code>&quot;abc-2015-09-14&quot;</code>, 
+		<code>&quot;abc-next-cool-thing&quot;</code>, and
+		<code>&quot;abc-patch-NNNN&quot;</code>
+		are all fine.  With the initials, we know it's you, and you can sort out the rest.
 
-</ol>  
-Now you can start developing, without having lost anything.
+		<p>
+		To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
+		<blockquote>
+		<code>git checkout -b <em>branchname</em></code><br/>
+		</blockquote>
 
+		The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
+		out that option:<br/>
 
+		<blockquote>
+		<code>git checkout <em>branchname</em></code><br/>
+		</blockquote>
 
-<h2 id="branch">Branching</h2>
+		To see all the current branches, do<br/>
 
-With SVN and CVS, you're check out a &quot;working directory&quit; to make your
-changes in, work for a while, and eventually commit them back to the main repository.
-<p>
-Git works on a different idea. 
-Instead of multiple working directories, you have a single repository that's been
-&quot;cloned&quot; from the main repository.  If you're making individual little
-changes, you can work directly on the &quot;master&quot; branch within it.
-<p>
-If you want to work on something more complicated, you put it on a branch so you can work
-on it independently.  You can even have multiple branches at the same time, moving between
-them as you work on different projects.
+		<blockquote>
+		<code>git branch</code><br/>
+		</blockquote>
 
-<p>
-We need to be able to recognize the purposes of branches, so we recommend that you 
-name them starting with your initials.  After that, it's up to you:  
-&quot;abc-decoder-xml-change&quot;, 
-&quot;abc-2015-09-14&quot;, 
-&quot;abc-next-cool-thing&quot;
-are all fine.  With the initials, we know it's you, and you can sort the rest.
+		If other people in the community make changes to the master branch, you can keep your 
+		branch up to date by merging those changes in with your branch<br/>
+		<blockquote>
+		<code>
+		git checkout <em>branchname</em><br/>
+		git merge -m"merging in current contents of master" master
+		</code><br/>
+		</blockquote>
 
-<p>
-To create a branch called &quot;branchname&quot;, you do 
+		(If you leave off the message option, you'll be prompted to add one in an editor) If any
+		changes were picked up and merged in, you can then commit them to your branch:
+		<blockquote>
+		<code>git commit -a</code><br/>
+		</blockquote>
 
-<pre><code>git checkout -b branchname</code></pre>
+		When you're done, merge your changes back into the common line of development with<br/>
 
-The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
-out that option:
+		<blockquote>
+		<code>
+		git checkout master<br/>
+		git merge -m"merging to master" <em>branchname</em><br/>
+		git commit -a
+		</code>
+		</blockquote>
+		
+		You can then delete your branch (if you're finally done 
+		with it) with<br/>
+		
+		<blockquote>
+		<code>
+		git checkout master<br/>
+		git branch -d branchname
+		</code>
+	    </blockquote>
+	</dd>
 
-<pre><code>git checkout branchname</code></pre>
+<dt>Embedded CVS, RCS and SVN cookies</dt>
+	<dd>
+		When JMRI was originally using CVS, we used lines like:
 
-To see all the current branches, do
+		<code>
+		# The next line is maintained by CVS, please don't change it<br/>
+		# $Revision$
+		</code>
 
-<pre><code>git branch</code></pre>
+		as an additional way of tracking file versions.  When we migrated to 
+		SVN, we kept those lines in certain files, like decoder XML, properties files, etc,
+		that users are likely to edit and submit back for inclusion.  
 
-If other changes are added to the master branch, you can keep your 
-branch up to date by merging those changes in with
+		<p>
+		But with Git, 
+		<!-- 
+		    there's really no good way to maintain these automatically,
+		    http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
+   
+		    see .git/info/attributes
+		    # see man gitattributes
+		    # expands $Id$ but not $Revision$ $Author$
+		    *.xml ident
+		-->
+		there's less need for these. 
+		So we'll be removing these lines as time allows.
+		If you're working on a file and happen to see one, usually
+		in the header, you can just delete it.  (If it has somebody's name,
+		you might want to add that to the copyright notice if there is one.)
+	</dd>
+		
+<dt>Handling a SF.net Patch</dt>
+	<dd>
+		Eventually, we'll move from using the
+		<a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
+		<a href="https://guides.github.com/features/issues/">GitHub issues</a>
+		to handle code that people want to contribute.
+		In the meantime, here's a suggested way to handle a SF.net patch.
 
-<pre><code>
-git checkout branchname<br/>
-git merge -m"merging to current contents of master" master
-</code></pre>
+		<ol>
+		<li>In your local repository, create a branch to hold the patch:
+			<blockquote>
+			<code>
+				git checkout -b patch-NNNN
+			</code>
+			</blockquote>			
+			where NNNN is the patch number.
+		<li>Merge in the changed code as needed.
+		<li>Commit your changes:
+			<blockquote>
+			<code>
+				git commit -m"Patch-NNNN plus the patch subject line (author name)"
+			</code>
+			</blockquote>			
 
-(If you leave off the message option, you'll be prompted with an editor) If anything
-merged in, you can then commit it to your branch.
+		<li>It's now in your repository on a branch of it's own, where you can sanity test things as usual.
+			
+		<li>When you are happy, push your local repo's committed content to your GitHub repository 
+		(assuming the default configuration, where "push" goes to your
+		own repository on GitHub) with 
+		<blockquote>
+		<code>git push origin patch-NNNN</code>
+		</blockquote>
+		
+		<li>Go you your repository on GitHub and start the "pull request" process.
+		<li>On the second screen, switch the branch being compared in your repository from
+		"<strong>master</strong>" to "<strong>patch-NNNN</strong>".  Then the rest of the pull request goes as before.
+		<li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
+		put the patch changes on the master branch in the repository.
+		<li>You can wait for the merge to the main repository, and then perform a 
+		<blockquote>
+			<code>git pull</code>
+		</blockquote>
+		to update your local repository with this patch on the 
+		master branch.  Or, if you need them sooner,
+		you can immediately merge these changes onto your local master via
+		<blockquote>
+		<code>
+		git checkout master<br/>
+		git merge patch-NNNN<br/>
+		</code>
+		</blockquote>
+		</ol>
 
-When you're done, merge your changes back into the common line of development with
+		The advantage of this approach is that it lets you keep all your own work separate 
+		from any patches you're handling.  The patches are on different branches than your work,
+		so they don't overlap.
+	</dd>
+</dl>
 
-<pre><code>
-git checkout master<br/>
-git merge -m"merging to current contents of master" branchname
-</code></pre>
-
-followed (eventually) by a commit. You can then delete your branch (if you're finally done 
-with it) with
-<pre><code>
-git checkout master<br/>
-git branch -d branchname
-</code></pre>
-
-
-
-<h2>Other Topics</h2>
-<h3>Embedded Properties</h3>
-
-When JMRI was originally using CVS, we used lines like:
-
-<code>
-<pre>
-# The next line is maintained by CVS, please don't change it<br/>
-# $Revision$
-</pre>
-</code>
-
-as an additional way of tracking file versions.  When we migrated to 
-SVN, we kept those in certain files, like decoder XML, properties files, etc,
-that users are likely to edit and submit back for inclusion.  
-
-<p>
-But with Git, 
-<!-- 
-    there's really no good way to maintain these automatically,
-    http://thomas-cokelaer.info/blog/2014/12/moving-from-svn-to-git-id-equivalent/
-    
-    see .git/info/attributes
-    # see man gitattributes
-    # expands $Id$ but not $Revision$ $Author$
-    *.xml ident
--->
-there's less need for these. 
-So we'll be removing these lines as time allows.
-If you're working on a file and happen to see one, usually
-in the header, you can just delete it.  (If it has somebody's name,
-you might want to add that to the copyright notice if there is one.)
-
-<h3>Handling a SF.net Patch</h3>
-
-Eventually, we'll move from using the
-<a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
-<a href="https://guides.github.com/features/issues/">GitHub issues</a>
-to handle code that people want to contribute.
-In the meantime, here's a suggested way to handle a SF.net patch.
-
-<ul>
-<li>In your local repository, create a branch to hold the patch 
-via <code>git checkout -b patch-NNNN</code>, where NNNN is the patch number.
-<li>Merge in the changed code as needed.
-<li><code>git commit -m"Patch-NNNN plus the patch subject line (author name)"</code>
-</ul>
-
-It's now in your repository on a branch of it's own.
-<ul>
-<li>Push that to your GitHub repository 
-(assuming the default configuration, where "push" goes to your
-own repository on GitHub) with <code>git push origin patch-NNNN</code>
-<li>Go you your repository on GitHub and start the "pull request" process.
-<li>On the second screen, switch the branch being compared in your repository from
-"master" to "patch-NNNN".  Then the rest of the pull request goes as before.
-<li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
-put the patch changes on the master branch in the repository.
-<li>You can wait for the merge to the main repository, followed by a 
-<code>git pull</code> to update your local repository with this patch on the 
-master branch.  Or, if you need them sooner,
-you can immediately merge these changes onto your local master via
-<pre><code>
-git checkout master<br/>
-git merge patch-NNNN<br/>
-</code></pre>
-</ul>
-
-The advantage of this approach is that it lets you keep all your own work separate 
-from any patches you're handling.  The patches are on different branches than your work,
-so they don't overlap.
 
 <!--#include virtual="/Footer" -->
 
 </div><!-- closes #mainContent-->
 </div> <!-- closes #mBody-->
+
+<!-- FAQ-Tail -->
+<script type="text/javascript" src="/js/faq.js"></script>
+<!-- /FAQ-Tail -->
+
 </body>
 </html>
 
-</title>
-</head>
 
-<body>
-<h1></h1>
-
-<!-- test comment -->
-
-<hr>
-<address></address>
-</body> </html>
