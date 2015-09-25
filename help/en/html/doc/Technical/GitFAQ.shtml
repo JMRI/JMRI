@@ -110,7 +110,14 @@
 			or <br/>
 				<code>$ git fetch                                    </code><br/>
 				<code>$ git diff ...origin                           </code><br/>
-				<code>$ git merge                                    </code><br/>
+				<code>$ git merge origin/master                      <br/>
+				Auto-merging ... files ...	<br/>
+				CONFLICT (content): Merge conflict in <em>some_file</em><br/>
+				Automatic merge failed; fix conflicts and then commit the result.<br/>
+				$ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...<br/>
+				$ git add <em>some_file</em><br/>
+				$ git commit -m "Merged master fixed conflict"<br/>
+				$ git merge origin/master                      </code><br/>
 			or <br/>
 				<code>$ git pull https://github.com/JMRI/JMRI.git    </code><br/>
 			</blockquote>
