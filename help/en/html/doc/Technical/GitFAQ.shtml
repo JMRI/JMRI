@@ -50,7 +50,9 @@ on how to
 <p>See also the <a href="index.shtml">Technical index</a>
    for more information on maintaining JMRI code.</p>
 
-      <dl class="faq">
+<h2>Common User Topics</h2>
+
+<dl class="faq">
 
 	<dt id="install" class="on">How do I install Git?</dt>
 	<dd>
@@ -79,7 +81,7 @@ on how to
 	the repository.
 	<p>
 	The arrows are both operations (push, pull) and also
-	definitions of _where_ to look e.g. a URL.  Git can store
+	definitions of <em>where</em> to look e.g. a URL.  Git can store
 	shorthand for a URL, called a &quot;remote&quot;.  The default remote
 	is called &quot;origin&quot;.  You can have many remotes defined.
 	<p>
@@ -113,7 +115,7 @@ on how to
 	</ul>
 	</dd>
 
-	<dt>Working with GIT</dt>
+	<dt id="working">Working with GIT</dt>
 	<dd>
 	      With SVN and CVS, you're check out a &quot;working directory&quot; to make your
 	      changes in, work in it for a while, and eventually commit all your changes back to the main repository.
@@ -190,7 +192,140 @@ on how to
 	      </ul>
 	</dd>
       
-      
+   <dt id="branch">Branching</dt>
+   <dd>
+	      If you're making individual little
+	      changes, you can work directly on the default &quot;master&quot; branch.
+	      If you want to work on something more complicated, good &quot;Git Hygiene&quot; encourages you
+	      to create a feature branch so you can work on it independently.  
+	      Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
+	      and switch between them as you work on different projects.
+
+	      <p>
+	      We recommend that you name branches starting with your initials (for example, &quot;abc&quot;) and something that suggests what you are working on:  
+	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
+	      <code>&quot;abc-2015-09-14&quot;</code>, 
+	      <code>&quot;abc-next-cool-thing&quot;</code>, and
+	      <code>&quot;abc-patch-NNNN&quot;</code>
+	      are all fine.  With the initials, we know it's you, and you can sort out the rest.
+
+	      <p>
+	      To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
+	      <blockquote>
+	      <code>git checkout -b <em>branchname</em></code><br/>
+	      </blockquote>
+
+	      The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
+	      out that option:<br/>
+
+	      <blockquote>
+	      <code>git checkout <em>branchname</em></code><br/>
+	      </blockquote>
+
+	      To see all the current branches, do<br/>
+
+	      <blockquote>
+	      <code>git branch</code><br/>
+	      </blockquote>
+
+	      If other people in the community make changes to the master branch, you can keep your 
+	      branch up to date by merging those changes in with your branch<br/>
+	      <blockquote>
+	      <code>
+	      git checkout <em>branchname</em><br/>
+	      git merge -m&quot;merging in current contents of master&quot; master
+	      </code><br/>
+	      </blockquote>
+
+	      (If you leave off the message option, you'll be prompted to add one in an editor) If any
+	      changes were picked up and merged in, you can then commit them to your branch:
+	      <blockquote>
+	      <code>git commit -a</code><br/>
+	      </blockquote>
+
+	      When you're done, merge your changes back into the common line of development with<br/>
+
+	      <blockquote>
+	      <code>
+	      git checkout master<br/>
+	      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
+	      git commit -a
+	      </code>
+	      </blockquote>
+	      
+	      You can then delete your branch (if you're finally done 
+	      with it) with<br/>
+	      
+	      <blockquote>
+	      <code>
+	      git checkout master<br/>
+	      git branch -d branchname
+	      </code>
+	  </blockquote>
+      </dd>
+
+    <dt id="SFnetPatches">Handling a SF.net Patch</dt>
+      <dd>
+	      Eventually, we'll move from using the
+	      <a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
+	      <a href="https://guides.github.com/features/issues/">GitHub issues</a>
+	      to handle code that people want to contribute.
+	      In the meantime, here's a suggested way to handle a SF.net patch.
+
+	      <ol>
+	      <li>In your local repository, create a branch to hold the patch:
+		      <blockquote>
+		      <code>
+			      git checkout -b patch-NNNN
+		      </code>
+		      </blockquote>			
+		      where NNNN is the patch number.
+	      <li>Merge in the changed code as needed.
+	      <li>Commit your changes:
+		      <blockquote>
+		      <code>
+			      git commit -m&quot;Patch-NNNN plus the patch subject line (author name)&quot;
+		      </code>
+		      </blockquote>			
+
+	      <li>It's now in your repository on a branch of it's own, where you can sanity test things as usual.
+		      
+	      <li>When you are happy, push your local repo's committed content to your GitHub repository 
+	      (assuming the default configuration, where &quot;push&quot; goes to your
+	      own repository on GitHub) with 
+	      <blockquote>
+	      <code>git push origin patch-NNNN</code>
+	      </blockquote>
+	      
+	      <li>Go you your repository on GitHub and start the &quot;pull request&quot; process.
+	      <li>On the second screen, switch the branch being compared in your repository from
+	      &quot;<strong>master</strong>&quot; to &quot;<strong>patch-NNNN</strong>&quot;.  Then the rest of the pull request goes as before.
+	      <li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
+	      put the patch changes on the master branch in the repository.
+	      <li>You can wait for the merge to the main repository, and then perform a 
+	      <blockquote>
+		      <code>git pull</code>
+	      </blockquote>
+	      to update your local repository with this patch on the 
+	      master branch.  Or, if you need them sooner,
+	      you can immediately merge these changes onto your local master via
+	      <blockquote>
+	      <code>
+	      git checkout master<br/>
+	      git merge patch-NNNN<br/>
+	      </code>
+	      </blockquote>
+	      </ol>
+
+	      The advantage of this approach is that it lets you keep all your own work separate 
+	      from any patches you're handling.  The patches are on different branches than your work,
+	      so they don't overlap.
+      </dd>
+</dl>
+
+<h2>Less-Common Operations</h2>
+<dl class="faq">
+   
 	<dt id="migrateSVN">Migrating un-committed changes from a SVN checkout</dt>
 	<dd>
 	      If you have changes to the JMRI code in an existing SVN checkout, here's what we recommend:
@@ -334,7 +469,7 @@ on how to
 	  </blockquote>
       </dd>
 
-<dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
+    <dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
       <dd>
 	      When JMRI was originally using CVS, we used lines like:
 
@@ -365,63 +500,6 @@ on how to
 	      you might want to add that to the copyright notice if there is one.)
       </dd>
 	      
-<dt id="SFnetPatches">Handling a SF.net Patch</dt>
-      <dd>
-	      Eventually, we'll move from using the
-	      <a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
-	      <a href="https://guides.github.com/features/issues/">GitHub issues</a>
-	      to handle code that people want to contribute.
-	      In the meantime, here's a suggested way to handle a SF.net patch.
-
-	      <ol>
-	      <li>In your local repository, create a branch to hold the patch:
-		      <blockquote>
-		      <code>
-			      git checkout -b patch-NNNN
-		      </code>
-		      </blockquote>			
-		      where NNNN is the patch number.
-	      <li>Merge in the changed code as needed.
-	      <li>Commit your changes:
-		      <blockquote>
-		      <code>
-			      git commit -m&quot;Patch-NNNN plus the patch subject line (author name)&quot;
-		      </code>
-		      </blockquote>			
-
-	      <li>It's now in your repository on a branch of it's own, where you can sanity test things as usual.
-		      
-	      <li>When you are happy, push your local repo's committed content to your GitHub repository 
-	      (assuming the default configuration, where &quot;push&quot; goes to your
-	      own repository on GitHub) with 
-	      <blockquote>
-	      <code>git push origin patch-NNNN</code>
-	      </blockquote>
-	      
-	      <li>Go you your repository on GitHub and start the &quot;pull request&quot; process.
-	      <li>On the second screen, switch the branch being compared in your repository from
-	      &quot;<strong>master</strong>&quot; to &quot;<strong>patch-NNNN</strong>&quot;.  Then the rest of the pull request goes as before.
-	      <li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
-	      put the patch changes on the master branch in the repository.
-	      <li>You can wait for the merge to the main repository, and then perform a 
-	      <blockquote>
-		      <code>git pull</code>
-	      </blockquote>
-	      to update your local repository with this patch on the 
-	      master branch.  Or, if you need them sooner,
-	      you can immediately merge these changes onto your local master via
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git merge patch-NNNN<br/>
-	      </code>
-	      </blockquote>
-	      </ol>
-
-	      The advantage of this approach is that it lets you keep all your own work separate 
-	      from any patches you're handling.  The patches are on different branches than your work,
-	      so they don't overlap.
-      </dd>
 </dl>
 
 <!--#include virtual="/Footer" -->
