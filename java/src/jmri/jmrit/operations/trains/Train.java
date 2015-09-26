@@ -44,8 +44,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a train on the layout
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013,
- *         2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+ *
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */
@@ -887,6 +887,19 @@ public class Train implements java.beans.PropertyChangeListener {
                 if (!departureName.equals(name)) {
                     return false; // not a local switcher
                 }
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * Used to determine if train is carrying only passenger cars.
+     * @return true if only passenger cars have been assigned to this train.
+     */
+    public boolean isOnlyPassengerCars() {
+        for (Car car : CarManager.instance().getByTrainDestinationList(this)) {
+            if (!car.isPassenger()) {
+                return false;
             }
         }
         return true;
