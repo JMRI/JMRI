@@ -70,7 +70,7 @@ on how to
 	You can set your local repository to pull automatically
 	from the JMRI master on GitHub and push to your fork (also on GitHub):
 	<p>
-	<img src="/pub/John/images/GitHubWorkflow.png">
+	<img src="/images/GitHubWorkflow.png">
 	<p>
 	That horizontal arrow is the “Pull Request” (and subsequent
 	pull) that records information about how things get into
