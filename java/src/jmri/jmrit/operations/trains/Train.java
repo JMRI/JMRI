@@ -44,8 +44,8 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a train on the layout
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2015
- *         2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015
+ *
  * @author Rodney Black Copyright (C) 2011
  * @version $Revision$
  */

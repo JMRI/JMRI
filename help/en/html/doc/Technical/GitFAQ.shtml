@@ -70,16 +70,16 @@ on how to
 	You can set your local repository to pull automatically
 	from the JMRI master on GitHub and push to your fork (also on GitHub):
 	<p>
-	<img src="/images/GitHubWorkflow.png">
+	<img src="/web/images/GitHubWorkflow.png">
 	<p>
-	That horizontal arrow is the “Pull Request” (and subsequent
+	That horizontal arrow is the &quot;Pull Request&quot; (and subsequent
 	pull) that records information about how things get into
 	the repository.
 	<p>
 	The arrows are both operations (push, pull) and also
 	definitions of _where_ to look e.g. a URL.  Git can store
-	shorthand for a URL, called a “remote”.  The default remote
-	is called “origin”.  You can have many remotes defined.
+	shorthand for a URL, called a &quot;remote&quot;.  The default remote
+	is called &quot;origin&quot;.  You can have many remotes defined.
 	<p>
 	You do this with this command on the command line as follows:
 	<blockquote>
@@ -101,13 +101,13 @@ on how to
 	<a href="https://help.github.com/articles/creating-a-pull-request/">generate a pull request</a> (link to GitHub):
 	<ul>
 	<li> In a browser, navigate to the repository on GitHub that has the changes you want someone else to pull and
-	<li> press the Pull Request button.
+	<li> press the green compare icon <img src="/web/images/GitHubPR1.png">, then click on Create Pull Request.
 	<li> After your pull request has been reviewed, it can be
 	     merged back in to the main JMRI/JMRI repository.  The
 	     JMRI developer who &quot;pulls&quot; your changes into the
 	     community source needs to have access to an online
 	     repository that has your changes, which is why you
-	     need to have a place on GitHub...
+	     need to have a place on GitHub in the first place...
 	</ul>
 	</dd>
 
