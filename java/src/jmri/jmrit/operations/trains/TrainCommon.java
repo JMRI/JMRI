@@ -209,14 +209,14 @@ public class TrainCommon {
         List<Track> tracks = rl.getLocation().getTrackByNameList(null);
         List<String> trackNames = new ArrayList<String>();
         clearUtilityCarTypes(); // list utility cars by quantity
+        boolean isOnlyPassenger = train.isOnlyPassengerCars();
         for (Track track : tracks) {
             if (trackNames.contains(splitString(track.getName()))) {
                 continue;
             }
             trackNames.add(splitString(track.getName())); // use a track name once
             // block pick up cars by destination
-            // except for passenger cars
-            List<Car> pickedupCars = new ArrayList<Car>();
+            // except for passenger cars 
             boolean found = false; // begin blocking at rl
             for (RouteLocation rld : routeList) {
                 if (rld != rl && !found) {
@@ -228,11 +228,9 @@ public class TrainCommon {
                             && !splitString(track.getName()).equals(splitString(car.getTrackName()))) {
                         continue;
                     }
-                    if (pickedupCars.contains(car)) {
-                        continue;
-                    }
                     // note that a car in train doesn't have a track assignment
-                    if (car.getRouteLocation() == rl && car.getTrack() != null && (car.getRouteDestination() == rld || car.isPassenger())) {
+                    if (car.getRouteLocation() == rl && car.getTrack() != null && (car.getRouteDestination() == rld
+                            || (car.isPassenger() && isOnlyPassenger))) {
                         // determine if header is to be printed
                         if (printPickupHeader && !isLocalMove(car)) {
                             printPickupCarHeader(file, isManifest, !IS_TWO_COLUMN_TRACK);
@@ -261,8 +259,10 @@ public class TrainCommon {
                         if (car.getLoadType().equals(CarLoad.LOAD_TYPE_EMPTY)) {
                             emptyCars++;
                         }
-                        pickedupCars.add(car);
                     }
+                }
+                if (isOnlyPassenger) {
+                    break;
                 }
             }
             // now do set outs and local moves
