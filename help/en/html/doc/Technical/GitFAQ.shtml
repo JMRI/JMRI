@@ -104,7 +104,7 @@ on how to
 	<li> press the Pull Request button.
 	<li> After your pull request has been reviewed, it can be
 	     merged back in to the main JMRI/JMRI repository.  The
-	     JMRI developer who "pulls" your changes into the
+	     JMRI developer who &quot;pulls&quot; your changes into the
 	     community source needs to have access to an online
 	     repository that has your changes, which is why you
 	     need to have a place on GitHub...
@@ -125,9 +125,9 @@ on how to
 	      To understand Git, it is good to know about the various <em>places</em> in your 
 	      local git repository:
 	      <ul>
-		      <li> The content from the "remote" repo, which lives under the <code>.git/</code> hidden directory,</li>
-		      <li> The "staging" area (also called &quot;index&quot; or &quot;cache&quot;), and </li>
-		      <li> The "branch" you are using, which lives in</li>
+		      <li> The content from the &quot;remote&quot; repo, which lives under the <code>.git/</code> hidden directory,</li>
+		      <li> The &quot;staging&quot; area (also called &quot;index&quot; or &quot;cache&quot;), and </li>
+		      <li> The &quot;branch&quot; you are using, which lives in</li>
 		      <li> The working tree.</li>
 	      </ul>
 
@@ -162,7 +162,7 @@ on how to
 			      Automatic merge failed; fix conflicts and then commit the result.<br/>
 			      $ vi <em>some_file</em> # the file has the conflicts marked, edit to fix...<br/>
 			      $ git add <em>some_file</em><br/>
-			      $ git commit -m "Merged master fixed conflict"<br/>
+			      $ git commit -m &quot;Merged master fixed conflict&quot;<br/>
 			      $ git merge origin/master                      </code><br/>
 		      or <br/>
 			      <code>$ git pull https://github.com/JMRI/JMRI.git    </code><br/>
@@ -181,9 +181,9 @@ on how to
 		      </blockquote>
 	      <li> make your changes available to the community
 		      <blockquote>
-			      <code>$ git commit -m <i>"commit message"</i>       </code><br/>
+			      <code>$ git commit -m <i>&quot;commit message&quot;</i>       </code><br/>
 			      or <br/>
-			      <code>$ git commit -a -m <i>"commit message"</i>    </code><br/>
+			      <code>$ git commit -a -m <i>&quot;commit message&quot;</i>    </code><br/>
 		      </blockquote>
 	      </ul>
 	</dd>
@@ -264,13 +264,13 @@ on how to
    <dd>
 	      If you're making individual little
 	      changes, you can work directly on the default &quot;master&quot; branch.
-	      If you want to work on something more complicated, good "Git Hygiene" encourages you
+	      If you want to work on something more complicated, good &quot;Git Hygiene&quot; encourages you
 	      to create a feature branch so you can work on it independently.  
 	      Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
 	      and switch between them as you work on different projects.
 
 	      <p>
-	      We recommend that you name branches starting with your initials (for example, "abc") and something that suggests what you are working on:  
+	      We recommend that you name branches starting with your initials (for example, &quot;abc&quot;) and something that suggests what you are working on:  
 	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
 	      <code>&quot;abc-2015-09-14&quot;</code>, 
 	      <code>&quot;abc-next-cool-thing&quot;</code>, and
@@ -301,7 +301,7 @@ on how to
 	      <blockquote>
 	      <code>
 	      git checkout <em>branchname</em><br/>
-	      git merge -m"merging in current contents of master" master
+	      git merge -m&quot;merging in current contents of master&quot; master
 	      </code><br/>
 	      </blockquote>
 
@@ -316,7 +316,7 @@ on how to
 	      <blockquote>
 	      <code>
 	      git checkout master<br/>
-	      git merge -m"merging to master" <em>branchname</em><br/>
+	      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
 	      git commit -a
 	      </code>
 	      </blockquote>
@@ -383,22 +383,22 @@ on how to
 	      <li>Commit your changes:
 		      <blockquote>
 		      <code>
-			      git commit -m"Patch-NNNN plus the patch subject line (author name)"
+			      git commit -m&quot;Patch-NNNN plus the patch subject line (author name)&quot;
 		      </code>
 		      </blockquote>			
 
 	      <li>It's now in your repository on a branch of it's own, where you can sanity test things as usual.
 		      
 	      <li>When you are happy, push your local repo's committed content to your GitHub repository 
-	      (assuming the default configuration, where "push" goes to your
+	      (assuming the default configuration, where &quot;push&quot; goes to your
 	      own repository on GitHub) with 
 	      <blockquote>
 	      <code>git push origin patch-NNNN</code>
 	      </blockquote>
 	      
-	      <li>Go you your repository on GitHub and start the "pull request" process.
+	      <li>Go you your repository on GitHub and start the &quot;pull request&quot; process.
 	      <li>On the second screen, switch the branch being compared in your repository from
-	      "<strong>master</strong>" to "<strong>patch-NNNN</strong>".  Then the rest of the pull request goes as before.
+	      &quot;<strong>master</strong>&quot; to &quot;<strong>patch-NNNN</strong>&quot;.  Then the rest of the pull request goes as before.
 	      <li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
 	      put the patch changes on the master branch in the repository.
 	      <li>You can wait for the merge to the main repository, and then perform a 
