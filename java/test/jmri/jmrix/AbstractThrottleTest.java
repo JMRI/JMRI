@@ -701,6 +701,7 @@ public class AbstractThrottleTest extends TestCase {
         Object newValue = null;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.notifyPropertyChangeListener(property, oldValue, newValue);
+        jmri.util.JUnitAppender.assertErrorMessage("notifyPropertyChangeListener without change");
     }
 
     /**
@@ -719,6 +720,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testDispose_0args() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.dispose();
+        jmri.util.JUnitAppender.assertWarnMessage("Dispose called without knowing the original throttle listener");
     }
 
     /**
@@ -736,6 +738,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testDispatch_0args() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.dispatch();
+        jmri.util.JUnitAppender.assertWarnMessage("dispatch called without knowing the original throttle listener");
     }
 
     /**
@@ -753,6 +756,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testRelease_0args() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.release();
+        jmri.util.JUnitAppender.assertWarnMessage("Release called without knowing the original throttle listener");
     }
 
     /**
