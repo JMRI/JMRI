@@ -518,9 +518,10 @@
     and improved the LocoNet simulator file processing.
     <li>Jos Wils updated the ESU decoder definitions, and extended
     the Comprehensive programmer format for really-high-functionality decoders.
-    <li>Jim Wolters updated the MRC Sound Brilliance 1812 decoder definition.
-    <li>Randall Wood updated the fast clock support, and improved
-    the XMLIO support with some fixed memory variables
+    <li>Jim Wolters, who updated the MRC Sound Brilliance 1812 decoder definition.
+    <li>Randall Wood, who updated the fast clock support, improved
+    the XMLIO support with some fixed memory variables,
+    migrated us to Git and GutHub, and build our Travis CI support.
 <a name="X"></A>
 <a name="Y"></A>
 	<LI>Mike Yawn, who provided the instructions for building under Eclipse
