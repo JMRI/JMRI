@@ -33,7 +33,7 @@ import org.slf4j.LoggerFactory;
  * Frame for user edit of car
  *
  * @author Dan Boudreau Copyright (C) 2008, 2010, 2011, 2014
- * @version $Revision$
+ * @version $Revision: 29493 $
  */
 public class CarEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
@@ -178,12 +178,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         pType.setLayout(new GridBagLayout());
         pType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
         addItem(pType, typeComboBox, 0, 0);
-        addItem(pType, editTypeButton, 2, 0);
-        addItem(pType, hazardousCheckBox, 3, 0);
-        addItem(pType, passengerCheckBox, 0, 1);
-        addItem(pType, cabooseCheckBox, 1, 1);
-        addItem(pType, fredCheckBox, 2, 1);
-        addItem(pType, utilityCheckBox, 3, 1);
+        addItem(pType, editTypeButton, 1, 0);
+        
+        JPanel pTypeOptions = new JPanel();   
+        addItem(pTypeOptions, passengerCheckBox, 0, 1);
+        addItem(pTypeOptions, cabooseCheckBox, 1, 1);
+        addItem(pTypeOptions, fredCheckBox, 2, 1);
+        addItem(pTypeOptions, utilityCheckBox, 3, 1);
+        addItem(pTypeOptions, hazardousCheckBox, 4, 1);
+        addItemWidth(pType, pTypeOptions, 3, 0, 1);     
         pPanel.add(pType);
 
         // row 3a
@@ -398,11 +401,10 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         passengerCheckBox.setSelected(car.isPassenger());
         cabooseCheckBox.setSelected(car.isCaboose());
         utilityCheckBox.setSelected(car.isUtility());
-        utilityCheckBox.setSelected(car.isUtility());
         fredCheckBox.setSelected(car.hasFred());
         hazardousCheckBox.setSelected(car.isHazardous());
 
-        pBlocking.setVisible(passengerCheckBox.isSelected());
+        pBlocking.setVisible(passengerCheckBox.isSelected() || car.getKernel() != null);
 
         locationBox.setSelectedItem(car.getLocation());
         updateTrackLocationBox();
@@ -763,6 +765,7 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
                 }
                 _car.setBlocking(_car.getKernel().getSize());
             }
+            pBlocking.setVisible(!kernelComboBox.getSelectedItem().equals(CarManager.NONE));
         }
         if (loadComboBox.getSelectedItem() != null && !_car.getLoadName().equals(loadComboBox.getSelectedItem())) {
             _car.setLoadName((String) loadComboBox.getSelectedItem());

@@ -1,5 +1,5 @@
-//SimpleOperationsServerTest.java
-package jmri.jmris.simpleserver;
+//JmriConnectionTest.java
+package jmri.jmris;
 
 import junit.framework.Assert;
 import junit.framework.Test;
@@ -9,14 +9,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the jmri.jmris.simpleserver.SimpleOperationsServer class
+ * Tests for the jmri.jmris.JmriConnection class 
  *
  * @author Paul Bender
  * @version $Revision$
  */
-public class SimpleOperationsServerTest extends TestCase {
+public class JmriConnectionTest extends TestCase {
 
-    public void testCtor() {
+    public void testCtorwithStreamParameter() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -25,25 +25,24 @@ public class SimpleOperationsServerTest extends TestCase {
                     public void write(int b) throws java.io.IOException {
                     }
                 });
-        java.io.DataInputStream input = new java.io.DataInputStream(System.in);
-        SimpleOperationsServer a = new SimpleOperationsServer(input, output);
+        JmriConnection a = new JmriConnection(output);
         Assert.assertNotNull(a);
     }
 
     // from here down is testing infrastructure
-    public SimpleOperationsServerTest(String s) {
+    public JmriConnectionTest(String s) {
         super(s);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {SimpleOperationsServerTest.class.getName()};
+        String[] testCaseName = {JmriConnectionTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleOperationsServerTest.class);
+        TestSuite suite = new TestSuite(jmri.jmris.JmriConnectionTest.class);
 
         return suite;
     }
@@ -52,20 +51,13 @@ public class SimpleOperationsServerTest extends TestCase {
     protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
         super.setUp();
-        jmri.util.JUnitUtil.resetInstanceManager();
-        jmri.util.JUnitUtil.initInternalTurnoutManager();
-        jmri.util.JUnitUtil.initInternalLightManager();
-        jmri.util.JUnitUtil.initInternalSensorManager();
-        jmri.util.JUnitUtil.initDebugThrottleManager();
     }
 
     protected void tearDown() throws Exception {
-        jmri.util.JUnitUtil.resetInstanceManager();
         super.tearDown();
         apps.tests.Log4JFixture.tearDown();
     }
 
-
-    static Logger log = LoggerFactory.getLogger(SimpleOperationsServerTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(JmriConnectionTest.class.getName());
 
 }

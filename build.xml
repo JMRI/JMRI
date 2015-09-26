@@ -2,8 +2,6 @@
 <!-- Ant build.xml file for JMRI development                                -->
 <!-- Bob Jacobsen, Copyright 2002-2014                                      -->
 
-<!-- Revision $Revision$ -->
-
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -41,10 +39,20 @@
 
     <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
 
+    <!-- Retrieve Git revision via 'git describe' -->
+    <exec executable="git" outputproperty="git.revision" failifexecutionfails="false" errorproperty="">
+        <arg value="rev-parse"/>
+        <arg value="--short"/>
+        <arg value="HEAD"/>
+    </exec>
+
     <condition property="release.revision_id"
-               value="${env.SVN_REVISION}"
-               else="unknown">
-        <isset property="env.SVN_REVISION"/>
+                value="${git.revision}"
+                else="unknown">
+        <and>
+            <isset property="git.revision"/>
+            <length string="${git.revision}" trim="yes" length="0" when="greater"/>
+        </and>
     </condition>
 
     <condition property="release.official" value="true" else="false">
@@ -864,8 +872,8 @@
     </target>
 
 
-    <target name="test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
-        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." >
+    <target name="ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Travis-CI default target">
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
             <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
             <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
@@ -880,8 +888,12 @@
             <test name="jmri.HeadLessTest">
                 <formatter usefile="no" type="plain"/>
             </test>
-
         </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
     </target>
 
     <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">

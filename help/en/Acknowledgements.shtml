@@ -335,13 +335,14 @@
     <li>Peter Mansvelder, who contributed Flieschmann decoder definitions
 	<LI>Mark Marowicz, who provided the CT Electronik SL 51 decoder definition
 	<LI>Ken Mazer, who provided the GP40-2 Soundtraxx definition
-    <li>David McDowell of the North Raleigh Model Railroad Club created
-    a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
 	<LI>John McAleely, who contributed Hornby and Bachmann decoder definitions
     <LI>David McGowan, who handled many aspects of JMRI legal defense against Matt Katzer
     <li>Peter MacKenzie, who added definitions for the Hattons MD4 and Gaugemaster Opti DCC25 decoders.
+    <li>David McDowell of the North Raleigh Model Railroad Club created
+    a <a href="http://www.trainweb.org/nrmrc/pubs/NRMRC_Test_Division_with_JMRI.pdf">clinic</a> covering Block Occupancy, Transponding and Simple Signal Logic.
     <LI>Randy McKenzie, who contributed some CTC panel background images
 	<LI>Ron McKinnon, who fixed some problems with the lighting options in the SoundTraxx Tsunami Steam definitions
+	<LI>John McMasters, who provided an update for Digitrax decoders
 	<LI>Larry Meaney provided decoder ID for the Digitrax DN163K0b decoder
 	<LI>Philip Middlemiss provided a decoder definition Hornby R8215 decoder.
     <LI>Bob Milhaupt, who fixed a problem with transponding messages in the LocoNet monitor,
@@ -399,6 +400,7 @@
 	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
 <a name="Q"></A>
 <a name="R"></A>
+    <li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
     <li>Simon Reader, who improved the throttle, 
     added a check for completed status to Routes,
     and added the "invert" option to LocoNet Turnouts.

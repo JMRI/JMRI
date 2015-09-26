@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <TItlE>
- 	JMRI: Being a JMRI Developer
+ 	JMRI: Developing with JMRI Code 
     </titlE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code Git download">
@@ -32,7 +32,7 @@
 	    <!-- Page Contents --> <!-- Required -->
 	    <!-- ------------- -->
 
-  <h1>JMRI: Being a JMRI Developer</h1>
+  <h1>JMRI: Developing with JMRI Code</h1>
 
   <h2>Background</h2>
 
@@ -62,12 +62,20 @@ and merge it into JMRI's main repository.
 </ol>
   
 <h3>Commit Changes to Your Local Repository</h3>
+You should commit your changes into your local repository often.
+
+<p>
+With SVN, there was one central repository that everybody shared. 
+Git provides everybody with their own local repository, and then
+links them together with "pull", "push" and "pull request" operations.
+When you commit, you're saving a copy of your changes into your local
+repository where they're safe, and can eventually be moved onward.
 
   <pre><code>
   git commit -m&quot;useful comment&quot;
   </code></pre>
 
-<h3>Get Your Own GitHub Repository</h3>
+<h3 id="repo">Get Your Own GitHub Repository</h3>
 
   <ul>
   <li>Get a <a href="https://github.com/join">GitHub account</a> and login
@@ -98,21 +106,30 @@ and merge it into JMRI's main repository.
   check this, do a &quot;git remote -v&quot; which should show:
   
 <code><pre>
-   git remote -v
-   origin	https://github.com/JMRI/JMRI.git (fetch)
+   % git remote -v<br/>
+   origin	https://github.com/JMRI/JMRI.git (fetch)<br/>
    origin	https://github.com/yourname/JMRI.git (push)
 </pre></code>
   
 
- <h3>Push Your Changes to Your GitHub Repository</h3>
+ <h3 id="push">Push Your Changes to Your GitHub Repository</h3>
+ 
+ Now that you have a consistent set of changes committed locally, 
+ you can move them up to your repository on GitHub. That makes 
+ them visible to everybody else.
  
   <pre><code>
   git push
   </code></pre>
 
 
- <h3>Submit a Pull Request</h3>
- 
+ <h3 id="pull">Submit a Pull Request</h3>
+
+The last step is to make your changes, visible in your GitHub repository,
+known to the JMRI maintainers so that one of them can pull it into the main 
+JMRI repository.  To do that, you create and submit a "pull request" that
+automatically has all the needed info.
+
 <ul>
 <li>Login to GitHub and go to the page for your JMRI clone repository (yours, not 
     the main JMRI one)
