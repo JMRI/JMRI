@@ -190,8 +190,8 @@ git branch -d branchname
 
 
 
-<h2>Other Topics</h2>
-<h3>Embedded Properties</h3>
+<h2 id="other">Other Topics</h2>
+<h3 id="prop">Embedded Properties</h3>
 
 When JMRI was originally using CVS, we used lines like:
 
@@ -223,7 +223,7 @@ If you're working on a file and happen to see one, usually
 in the header, you can just delete it.  (If it has somebody's name,
 you might want to add that to the copyright notice if there is one.)
 
-<h3>Handling a SF.net Patch</h3>
+<h3 id="patch">Handling a SF.net Patch</h3>
 
 Eventually, we'll move from using the
 <a href="https://sourceforge.net/p/jmri/patches/">SF.net issue tracker</a> to 
