@@ -72,14 +72,14 @@ on how to
 	<p>
 	<img src="/web/images/GitHubWorkflow.png">
 	<p>
-	That horizontal arrow is the “Pull Request” (and subsequent
+	That horizontal arrow is the &quot;Pull Request&quot; (and subsequent
 	pull) that records information about how things get into
 	the repository.
 	<p>
 	The arrows are both operations (push, pull) and also
 	definitions of _where_ to look e.g. a URL.  Git can store
-	shorthand for a URL, called a “remote”.  The default remote
-	is called “origin”.  You can have many remotes defined.
+	shorthand for a URL, called a &quot;remote&quot;.  The default remote
+	is called &quot;origin&quot;.  You can have many remotes defined.
 	<p>
 	You do this with this command on the command line as follows:
 	<blockquote>
