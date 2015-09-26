@@ -101,13 +101,13 @@ on how to
 	<a href="https://help.github.com/articles/creating-a-pull-request/">generate a pull request</a> (link to GitHub):
 	<ul>
 	<li> In a browser, navigate to the repository on GitHub that has the changes you want someone else to pull and
-	<li> press the Pull Request button.
+	<li> press the green compare icon <img src="/web/images/GitHubPR1.png">, then click on Create Pull Request.
 	<li> After your pull request has been reviewed, it can be
 	     merged back in to the main JMRI/JMRI repository.  The
 	     JMRI developer who &quot;pulls&quot; your changes into the
 	     community source needs to have access to an online
 	     repository that has your changes, which is why you
-	     need to have a place on GitHub...
+	     need to have a place on GitHub in the first place...
 	</ul>
 	</dd>
 
