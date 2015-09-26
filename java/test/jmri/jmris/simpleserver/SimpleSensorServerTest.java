@@ -35,8 +35,6 @@ public class SimpleSensorServerTest extends TestCase {
         StringBuilder sb = new StringBuilder();
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
                     @Override
                     public void write(int b) throws java.io.IOException {
                         sb.append((char)b);
@@ -72,8 +70,6 @@ public class SimpleSensorServerTest extends TestCase {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
 
-                    // null output string drops characters
-                    // could be replaced by one that checks for specific outputs
                     @Override
                     public void write(int b) throws java.io.IOException {
                         sb.append((char)b);
@@ -109,6 +105,24 @@ public class SimpleSensorServerTest extends TestCase {
 
         return suite;
     }
+
+    // The minimal setup for log4J
+    protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp();
+        super.setUp();
+        jmri.util.JUnitUtil.resetInstanceManager();
+        jmri.util.JUnitUtil.initInternalTurnoutManager();
+        jmri.util.JUnitUtil.initInternalLightManager();
+        jmri.util.JUnitUtil.initInternalSensorManager();
+        jmri.util.JUnitUtil.initDebugThrottleManager();
+    }
+
+    protected void tearDown() throws Exception {
+        jmri.util.JUnitUtil.resetInstanceManager();
+        super.tearDown();
+        apps.tests.Log4JFixture.tearDown();
+    }
+
 
     static Logger log = LoggerFactory.getLogger(SimpleSensorServerTest.class.getName());
 

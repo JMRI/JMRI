@@ -18,7 +18,23 @@ import org.slf4j.LoggerFactory;
  */
 public class JsonPowerServerTest extends TestCase {
 
-    public void testCtor() {
+    public void testCtorFailure() {
+        jmri.util.JUnitUtil.resetInstanceManager(); // remove the debug power manager for this test only.
+        java.io.DataOutputStream output = new java.io.DataOutputStream(
+                new java.io.OutputStream() {
+                    // null output string drops characters
+                    // could be replaced by one that checks for specific outputs
+                    @Override
+                    public void write(int b) throws java.io.IOException {
+                    }
+                });
+        JsonPowerServer a = new JsonPowerServer(new JmriConnection(output));
+        jmri.util.JUnitAppender.assertErrorMessage("No power manager instance found");
+
+        Assert.assertNotNull(a);
+    }
+
+    public void testCtorSuccess() {
         java.io.DataOutputStream output = new java.io.DataOutputStream(
                 new java.io.OutputStream() {
                     // null output string drops characters
@@ -29,7 +45,6 @@ public class JsonPowerServerTest extends TestCase {
                 });
         JsonPowerServer a = new JsonPowerServer(new JmriConnection(output));
 
-        jmri.util.JUnitAppender.assertErrorMessage("No power manager instance found");
         Assert.assertNotNull(a);
     }
 
