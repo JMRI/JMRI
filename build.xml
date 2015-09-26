@@ -886,7 +886,7 @@
             <classpath refid="test.class.path"/>
 
             <test name="jmri.HeadLessTest">
-                <formatter usefile="no" type="plain"/>
+                <formatter usefile="no" type="brief"/>
             </test>
         </junit>
         <fail>
