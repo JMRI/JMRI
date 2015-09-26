@@ -32,4 +32,5 @@
  *
  * @since 3.9.6
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri.jmrix.dcc;
