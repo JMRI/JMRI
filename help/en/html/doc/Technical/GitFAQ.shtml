@@ -25,7 +25,7 @@
 
 <!-- FAQ-Head -->
   <script type="text/javascript">/*<![CDATA[*/document.documentElement.className="hasJS";/*]]>*/</script>
-  <link rel="stylesheet" type="text/css" href="/css/faq.css" media="screen">
+  <link rel="stylesheet" type="text/css" href="/web/css/faq.css" media="screen">
 <!-- /FAQ-Head -->
 
 </head>
@@ -428,7 +428,7 @@ on how to
 </div> <!-- closes #mBody-->
 
 <!-- FAQ-Tail -->
-<script type="text/javascript" src="/js/faq.js"></script>
+<script type="text/javascript" src="/web/js/faq.js"></script>
 <!-- /FAQ-Tail -->
 
 </body>
