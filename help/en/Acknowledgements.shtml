@@ -399,6 +399,7 @@
 	<li>Gerry Pruss, who provided information on connecting to the QSI Programmer
 <a name="Q"></A>
 <a name="R"></A>
+    <li>Balazs Racz, who fixed a bug in startup and improved our tech documentation
     <li>Simon Reader, who improved the throttle, 
     added a check for completed status to Routes,
     and added the "invert" option to LocoNet Turnouts.

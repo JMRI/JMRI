@@ -8,6 +8,8 @@
 # $Revision$
 
 import javax.swing.JButton
+import java.util.ResourceBundle
+import jmri.Application
 import apps
 
 f = javax.swing.JPanel()

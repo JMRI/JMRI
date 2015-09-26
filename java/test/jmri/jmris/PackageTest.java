@@ -30,6 +30,8 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmris.srcp.SRCPTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonServerTest.suite());
+        suite.addTest(jmri.jmris.JmriConnectionTest.suite());
         return suite;
     }
 
