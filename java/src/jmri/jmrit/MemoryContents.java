@@ -956,7 +956,7 @@ public class MemoryContents {
         currentPage = location / PAGESIZE;
         if (pageArray[currentPage] == null) {
             log.error("Error in getLocation(0x" // NOI18N
-                    + location
+                    + Integer.toHexString(location)
                     + "): accessed uninitialized page " // NOI18N
                     + currentPage);
             return DEFAULT_MEM_VALUE;
