@@ -22,6 +22,7 @@ public class AbstractThrottleTest extends TestCase {
 
     @Override
     protected void setUp() throws Exception {
+        apps.tests.Log4JFixture.setUp(); 
         super.setUp();
         InstanceManager.setThrottleManager(new AbstractThrottleManager() {
 
@@ -50,6 +51,7 @@ public class AbstractThrottleTest extends TestCase {
     protected void tearDown() throws Exception {
         InstanceManager.setThrottleManager(null);
         super.tearDown();
+        apps.tests.Log4JFixture.tearDown(); 
     }
 
     /**
@@ -787,6 +789,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f0 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF0(f0);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup1 needs to be implemented if invoked");
     }
 
     /**
@@ -796,6 +799,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f1 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF1(f1);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup1 needs to be implemented if invoked");
     }
 
     /**
@@ -805,6 +809,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f2 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF2(f2);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup1 needs to be implemented if invoked");
     }
 
     /**
@@ -814,6 +819,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f3 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF3(f3);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup1 needs to be implemented if invoked");
     }
 
     /**
@@ -823,6 +829,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f4 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF4(f4);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup1 needs to be implemented if invoked");
     }
 
     /**
@@ -832,6 +839,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f5 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF5(f5);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup2 needs to be implemented if invoked");
     }
 
     /**
@@ -841,6 +849,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f6 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF6(f6);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup2 needs to be implemented if invoked");
     }
 
     /**
@@ -850,6 +859,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f7 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF7(f7);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup2 needs to be implemented if invoked");
     }
 
     /**
@@ -859,6 +869,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f8 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF8(f8);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup2 needs to be implemented if invoked");
     }
 
     /**
@@ -868,6 +879,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f9 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF9(f9);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup3 needs to be implemented if invoked");
     }
 
     /**
@@ -877,6 +889,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f10 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF10(f10);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup3 needs to be implemented if invoked");
     }
 
     /**
@@ -886,6 +899,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f11 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF11(f11);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup3 needs to be implemented if invoked");
     }
 
     /**
@@ -895,6 +909,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f12 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF12(f12);
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup3 needs to be implemented if invoked");
     }
 
     /**
@@ -904,6 +919,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f13 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF13(f13);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -913,6 +929,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f14 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF14(f14);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -922,6 +939,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f15 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF15(f15);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -931,6 +949,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f16 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF16(f16);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -940,6 +959,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f17 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF17(f17);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -949,6 +969,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f18 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF18(f18);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -958,6 +979,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f19 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF19(f19);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -967,6 +989,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f20 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF20(f20);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -976,6 +999,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f21 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF21(f21);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -985,6 +1009,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f22 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF22(f22);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -994,6 +1019,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f23 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF23(f23);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -1003,6 +1029,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f24 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF24(f24);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -1012,6 +1039,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f25 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF25(f25);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -1021,6 +1049,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f26 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF26(f26);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -1030,6 +1059,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f27 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF27(f27);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -1039,6 +1069,7 @@ public class AbstractThrottleTest extends TestCase {
         boolean f28 = false;
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.setF28(f28);
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
@@ -1047,6 +1078,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testSendFunctionGroup1() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.sendFunctionGroup1();
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup1 needs to be implemented if invoked");
     }
 
     /**
@@ -1055,6 +1087,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testSendFunctionGroup2() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.sendFunctionGroup2();
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup2 needs to be implemented if invoked");
     }
 
     /**
@@ -1063,6 +1096,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testSendFunctionGroup3() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.sendFunctionGroup3();
+        jmri.util.JUnitAppender.assertErrorMessage("sendFunctionGroup3 needs to be implemented if invoked");
     }
 
     /**
@@ -1071,6 +1105,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testSendFunctionGroup4() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.sendFunctionGroup4();
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F13-F20 since no command station defined");
     }
 
     /**
@@ -1079,6 +1114,7 @@ public class AbstractThrottleTest extends TestCase {
     public void testSendFunctionGroup5() {
         AbstractThrottle instance = new AbstractThrottleImpl();
         instance.sendFunctionGroup5();
+        jmri.util.JUnitAppender.assertErrorMessage("Can't send F21-F28 since no command station defined");
     }
 
     /**
