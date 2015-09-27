@@ -71,7 +71,6 @@ public class UnboundArbitraryBeanTest extends TestCase {
      * Test of getPropertyNames method, of class UnboundBean.
      */
     public void testGetPropertyNames() {
-        System.out.println("getPropertyNames");
         UnboundArbitraryBean instance = new UnboundBeanImpl();
         Set<String> expResult = new HashSet<>(6);
         expResult.add(CLASS); // defined in Object

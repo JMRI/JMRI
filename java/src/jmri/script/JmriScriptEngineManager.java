@@ -1,6 +1,7 @@
 package jmri.script;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -41,6 +42,7 @@ import jmri.jmrit.logix.WarrantManager;
 import jmri.util.FileUtil;
 import org.apache.commons.io.FilenameUtils;
 import org.python.core.PySystemState;
+import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -63,6 +65,7 @@ public final class JmriScriptEngineManager {
     private static final String jythonDefaults = "jmri_defaults.py"; // should be replaced with default context
 
     public static final String PYTHON = "jython";
+    private PythonInterpreter jython = null;
 
     /**
      * Create a JmriScriptEngineManager. In most cases, it is preferable to use {@link #getDefault()
@@ -216,6 +219,10 @@ public final class JmriScriptEngineManager {
      * @throws ScriptException
      */
     public Object eval(String script, ScriptEngine engine) throws ScriptException {
+        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+            this.jython.exec(script);
+            return null;
+        }
         return engine.eval(script);
     }
 
@@ -241,7 +248,12 @@ public final class JmriScriptEngineManager {
      * @throws FileNotFoundException
      */
     public Object eval(File file) throws ScriptException, FileNotFoundException {
-        return this.getEngineByExtension(FilenameUtils.getExtension(file.getName())).eval(new FileReader(file));
+        ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
+        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+            this.jython.execfile(new FileInputStream(file));
+            return null;
+        }
+        return engine.eval(new FileReader(file));
     }
 
     /**
@@ -256,7 +268,12 @@ public final class JmriScriptEngineManager {
      * @throws FileNotFoundException
      */
     public Object eval(File file, Bindings n) throws ScriptException, FileNotFoundException {
-        return this.getEngineByExtension(FilenameUtils.getExtension(file.getName())).eval(new FileReader(file), n);
+        ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
+        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+            this.jython.execfile(new FileInputStream(file));
+            return null;
+        }
+        return engine.eval(new FileReader(file), n);
     }
 
     /**
@@ -271,7 +288,12 @@ public final class JmriScriptEngineManager {
      * @throws FileNotFoundException
      */
     public Object eval(File file, ScriptContext context) throws ScriptException, FileNotFoundException {
-        return this.getEngineByExtension(FilenameUtils.getExtension(file.getName())).eval(new FileReader(file), context);
+        ScriptEngine engine = this.getEngineByExtension(FilenameUtils.getExtension(file.getName()));
+        if (PYTHON.equals(engine.getFactory().getEngineName()) && this.jython != null) {
+            this.jython.execfile(new FileInputStream(file));
+            return null;
+        }
+        return engine.eval(new FileReader(file), context);
     }
 
     /**
@@ -282,7 +304,7 @@ public final class JmriScriptEngineManager {
      */
     public void runScript(File file) {
         try {
-            eval(file);
+            this.eval(file);
         } catch (FileNotFoundException ex) {
             log.error("File {} not found.", file);
         } catch (ScriptException ex) {
@@ -302,7 +324,11 @@ public final class JmriScriptEngineManager {
     }
 
     /**
-     * The Python ScriptEngine can 
+     * The Python ScriptEngine can be configured using a custom
+     * python.properties file and will run jmri_defaults.py if found in the
+     * user's configuration profile or settings directory. See python.properties
+     * in the JMRI installation directory for details of how to configure the
+     * Python ScriptEngine.
      */
     public void initializePython() {
         if (!this.engines.containsKey(PYTHON)) {
@@ -313,16 +339,24 @@ public final class JmriScriptEngineManager {
                 FileUtil.getPreferencesPath(),
                 FileUtil.getProgramPath()
             });
+            boolean execJython = false;
             if (is != null) {
                 Properties properties;
                 try {
                     properties = new Properties(System.getProperties());
                     properties.load(is);
+                    String path = properties.getProperty("python.path", "");
+                    if (path.length() != 0) {
+                        path = path.concat(File.pathSeparator);
+                    }
+                    properties.setProperty("python.path", path.concat(FileUtil.getScriptsPath().concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
+                    execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(false)));
                 } catch (IOException ex) {
                     log.error("Found, but unable to read python.properties: {}", ex.getMessage());
                     properties = null;
                 }
                 PySystemState.initialize(null, properties);
+                log.debug("Jython path is {}", PySystemState.getBaseProperties().getProperty("python.path"));
             }
 
             // Create the interpreter
@@ -334,8 +368,14 @@ public final class JmriScriptEngineManager {
                     FileUtil.getUserFilesPath(),
                     FileUtil.getPreferencesPath()
                 });
+                if (execJython) {
+                    this.jython = new PythonInterpreter();
+                }
                 if (is != null) {
                     python.eval(new InputStreamReader(is));
+                    if (this.jython != null) {
+                        this.jython.execfile(is);
+                    }
                 }
                 this.engines.put(PYTHON, python);
             } catch (ScriptException e) {

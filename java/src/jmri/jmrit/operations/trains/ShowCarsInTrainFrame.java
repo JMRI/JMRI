@@ -4,8 +4,6 @@ package jmri.jmrit.operations.trains;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JCheckBox;
@@ -172,15 +170,12 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                     addItemLeft(pCars, textSetOut, 2, i++);
                     // block cars by destination
                     // except for passenger cars, use car blocking
-                    List<Car> pickedupCars = new ArrayList<Car>();
+                    boolean isOnlyPassenger = _train.isOnlyPassengerCars();
                     for (RouteLocation rld : _train.getRoute().getLocationsBySequenceList()) {
                         for (Car car : carManager.getByTrainDestinationList(_train)) {
                             if ((car.getTrack() == null || car.getRouteLocation() == rl)
-                                    && (car.getRouteDestination() == rld || car.isPassenger())) {
-                                if (pickedupCars.contains(car)) {
-                                    continue;
-                                }
-                                pickedupCars.add(car);
+                                    && (car.getRouteDestination() == rld || (car.isPassenger() && isOnlyPassenger))) {
+ 
                                 log.debug("car ({}) routelocation ({}) track ({}) route destination ({})", car.toString(), car
                                         .getRouteLocation().getName(), car.getTrackName(), car.getRouteDestination().getName());
                                 JCheckBox checkBox = new JCheckBox(TrainCommon.splitString(car.toString()));
@@ -192,6 +187,9 @@ public class ShowCarsInTrainFrame extends OperationsFrame implements java.beans.
                                     addItemLeft(pCars, checkBox, 1, i++); // in train
                                 }
                             }
+                        }
+                        if (isOnlyPassenger) {
+                            break;
                         }
                     }
 
