@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
  <TITLE>
-      JMRI Hardware Guide: Zimo MX-1
+      JMRI Hardware Guide: ZIMO MX-1
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Zimo MX-1 java model railroad JMRI install windows">
+    <META name="keywords" content="ZIMO MX-1 java model railroad JMRI install windows">
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -27,7 +27,7 @@
     <div id="mainContent">
 
       <H2> 
-      JMRI Hardware Guide: Zimo MX-1
+      JMRI Hardware Guide: ZIMO MX-1
       </H2>
 
 	<H3>Supported Hardware</H3>
@@ -54,7 +54,7 @@
 	<H3>MX-1 Setup</H3>
 
 	  <ol>
-	  <li> To connect your computer to a Zimo MX-1 system, you can
+	  <li> To connect your computer to a ZIMO MX-1 system, you can
 	  usually just connect the command station to the computer's serial
 	  port using a serial cable.</li>
 
@@ -62,7 +62,7 @@
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.</li>
 
-	  <li> Select "Zimo MX-1" from the top selection box. You can then
+	  <li> Select "ZIMO MX-1" from the top selection box. You can then
 	  select the proper serial port in the second selection box.</li>
 
 	  <li> The baud rate selection box will give you choices from 1,200
@@ -98,7 +98,7 @@
     <li> Then go to the preferences panel of a JMRI-based program.
 	  This opens automatically the first time a program is run, or you
 	  can select it from the "Edit" menu.</li>
-    <li>From the Manufacturers List, select "Zimo" and from the system select "MXULF"</li>
+    <li>From the Manufacturers List, select "ZIMO" and from the system select "MXULF"</li>
     <li>Select the appropriate comm port from the list</li>
     <li>The Baud rate by default is set to 9600, you can change it if needs be from the advanced options</li>
     <li> Click "Save". You'll be asked if it's OK for the program to
@@ -107,7 +107,7 @@
   <li> Restart the program. You should be up and running.</li>
 	<H3>Debugging</H3>
 
-	<p><a href="http://w3.zimo.at/">Zimo main web site</a></p>
+	<p><a href="http://www.zimo.at/">ZIMO main web site</a></p>
 	<p><a href="http://www.mrsonline.net/html/zimo.html">ZIMO Agency of North America</a></p>
 
 <!--#include virtual="/Footer" -->
