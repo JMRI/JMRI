@@ -27,9 +27,10 @@ public class XBeeLightManagerXml extends jmri.managers.configurexml.AbstractLigh
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
     static Logger log = LoggerFactory.getLogger(XBeeLightManagerXml.class.getName());

@@ -46,12 +46,8 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     */
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // start the "connection"
         /*jmri.jmrix.lenz.liusbserver.LIUSBServerAdapter adapter = 

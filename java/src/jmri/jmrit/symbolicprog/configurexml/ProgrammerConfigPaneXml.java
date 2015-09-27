@@ -46,31 +46,26 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
         return programmer;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
 
-        if (element.getAttribute("defaultFile") != null) {
+        if (shared.getAttribute("defaultFile") != null) {
             if (log.isDebugEnabled()) {
-                log.debug("set programmer default file: " + element.getAttribute("defaultFile").getValue());
+                log.debug("set programmer default file: " + shared.getAttribute("defaultFile").getValue());
             }
-            jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(element.getAttribute("defaultFile").getValue());
+            jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(shared.getAttribute("defaultFile").getValue());
         }
 
         Attribute a;
-        if (null != (a = element.getAttribute("showEmptyPanes"))) {
+        if (null != (a = shared.getAttribute("showEmptyPanes"))) {
             if (a.getValue().equals("no")) {
                 PaneProgFrame.setShowEmptyPanes(false);
             } else {
                 PaneProgFrame.setShowEmptyPanes(true);
             }
         }
-        if (null != (a = element.getAttribute("showCvNumbers"))) {
+        if (null != (a = shared.getAttribute("showCvNumbers"))) {
             if (a.getValue().equals("yes")) {
                 PaneProgFrame.setShowCvNumbers(true);
             } else {

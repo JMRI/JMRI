@@ -63,23 +63,17 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
         return true;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
     @Override
-    public boolean load(Element e) {
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         String value;
 
         try {
-            if ((value = e.getAttributeValue("scheme")) != null) {
+            if ((value = shared.getAttributeValue("scheme")) != null) {
                 SystemConsole.getInstance().setScheme(Integer.parseInt(value));
             }
 
-            if ((value = e.getAttributeValue("fontfamily")) != null) {
+            if ((value = shared.getAttributeValue("fontfamily")) != null) {
 
                 // Check if stored font family exists
                 if (!FontComboUtil.getFonts(FontComboUtil.MONOSPACED).contains(value)) {
@@ -93,15 +87,15 @@ public class SystemConsoleConfigPanelXml extends jmri.configurexml.AbstractXmlAd
                 SystemConsole.getInstance().setFontFamily(value);
             }
 
-            if ((value = e.getAttributeValue("fontsize")) != null) {
+            if ((value = shared.getAttributeValue("fontsize")) != null) {
                 SystemConsole.getInstance().setFontSize(Integer.parseInt(value));
             }
 
-            if ((value = e.getAttributeValue("fontstyle")) != null) {
+            if ((value = shared.getAttributeValue("fontstyle")) != null) {
                 SystemConsole.getInstance().setFontStyle(Integer.parseInt(value));
             }
 
-            if ((value = e.getAttributeValue("wrapstyle")) != null) {
+            if ((value = shared.getAttributeValue("wrapstyle")) != null) {
                 SystemConsole.getInstance().setWrapStyle(Integer.parseInt(value));
             }
 

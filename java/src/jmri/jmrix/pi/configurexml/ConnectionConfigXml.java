@@ -1,12 +1,12 @@
 package jmri.jmrix.pi.configurexml;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.pi.ConnectionConfig;
 import jmri.jmrix.pi.RaspberryPiAdapter;
 import org.jdom2.Element;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Handle XML persistance of layout connections by persistening
@@ -59,17 +59,10 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
        return e;
     }
 
-   /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     * @throws java.lang.Exception
-     */
     @Override
-    public boolean load(Element e) throws Exception{
+    public boolean load(Element shared, Element perNode) throws Exception {
        getInstance();
-       loadCommon(e,adapter);
+       loadCommon(shared, perNode, adapter);
        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
        adapter.configure();
        return true;

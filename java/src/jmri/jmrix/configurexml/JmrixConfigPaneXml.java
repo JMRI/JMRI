@@ -46,20 +46,15 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
         }
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         java.util.Hashtable<String, String> installedLAFs = new java.util.Hashtable<String, String>(plafs.length);
-        for (int i = 0; i < plafs.length; i++) {
-            installedLAFs.put(plafs[i].getName(), plafs[i].getClassName());
+        for (UIManager.LookAndFeelInfo plaf : plafs) {
+            installedLAFs.put(plaf.getName(), plaf.getClassName());
         }
-        String name = e.getAttribute("LAFclass").getValue();
+        String name = shared.getAttribute("LAFclass").getValue();
         String className = installedLAFs.get(name);
         log.debug("GUI selection: " + name + " class name: " + className);
         // set the GUI

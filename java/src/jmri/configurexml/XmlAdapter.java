@@ -18,8 +18,23 @@ public interface XmlAdapter {
      * @throws Exception when a error prevents creating the objects as as
      *                   required by the input XML.
      * @return true if successful
+     * @deprecated use {@link #load(org.jdom2.Element, org.jdom2.Element)}
      */
+    @Deprecated
     public boolean load(Element e) throws Exception;
+
+    /**
+     * Create a set of configured objects from their XML description.
+     *
+     * @param shared  Top-level XML element containing the common, multi-node
+     *                elements of the description
+     * @param perNode Top-level XML element containing the private, single-node
+     *                elements of the description
+     * @throws Exception when a error prevents creating the objects as as
+     *                   required by the input XML.
+     * @return true if successful
+     */
+    public boolean load(Element shared, Element perNode) throws Exception;
 
     /**
      * Determine if this set of configured objects should be loaded after basic

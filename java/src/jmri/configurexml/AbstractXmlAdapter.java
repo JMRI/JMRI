@@ -1,5 +1,6 @@
 package jmri.configurexml;
 
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,11 @@ public abstract class AbstractXmlAdapter implements XmlAdapter {
         );
     }
 
+    @Override
+    public final boolean load(Element e) throws Exception {
+        return this.load(e, null);
+    }
+    
     /**
      * Determine if this set of configured objects should be loaded after basic
      * GUI construction is completed.

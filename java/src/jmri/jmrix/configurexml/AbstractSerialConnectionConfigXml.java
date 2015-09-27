@@ -74,27 +74,22 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
     protected void extendElement(Element e) {
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
         getInstance();
         // configure port name
-        String portName = e.getAttribute("port").getValue();
+        String portName = shared.getAttribute("port").getValue();
         adapter.setPort(portName);
-        String baudRate = e.getAttribute("speed").getValue();
+        String baudRate = shared.getAttribute("speed").getValue();
         adapter.configureBaudRate(baudRate);
 
-        loadCommon(e, adapter);
+        loadCommon(shared, adapter);
         // register, so can be picked up next time
         register();
         // try to open the port
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared);
             return result;
         }
 
@@ -115,7 +110,7 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
         // once all the configure processing has happened, do any
         // extra config
-        unpackElement(e);
+        unpackElement(shared);
         return result;
     }
 

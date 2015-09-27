@@ -49,24 +49,19 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // start the "connection"
         getInstance();
 
-        loadCommon(e, adapter);
+        loadCommon(shared, perNode, adapter);
 
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared);
             return result;
         }
 

@@ -47,15 +47,10 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        String className = e.getAttribute("name").getValue();
+        String className = shared.getAttribute("name").getValue();
         // rename MiniServerAction to WebServerAction
         if (className.equals("jmri.web.miniserver.MiniServerAction")) {
             className = "jmri.web.server.WebServerAction";

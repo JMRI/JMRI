@@ -50,15 +50,10 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) throws JmriException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriException {
         boolean result = true;
-        String fileName = FileUtil.getAbsoluteFilename(e.getAttribute("name").getValue());
+        String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
         log.info("Load file " + fileName);
 
         // load the file

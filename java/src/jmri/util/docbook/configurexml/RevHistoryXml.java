@@ -24,7 +24,7 @@ public class RevHistoryXml extends jmri.configurexml.AbstractXmlAdapter {
      * Usual configurexml method, this one doesn't do anything because the
      * content is explicitly loaded from the file
      */
-    public boolean load(Element e) throws Exception {
+    public boolean load(Element shared, Element perNode) throws Exception {
         return true;
     }
 

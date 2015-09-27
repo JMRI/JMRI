@@ -49,16 +49,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Port name carries the hostname for the network connection
-     *
-     * @param e Top level Element to unpack.
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
 
-        loadCommon(e, adapter);
+        this.loadCommon(shared, perNode, adapter);
         // register, so can be picked up
         register();
 

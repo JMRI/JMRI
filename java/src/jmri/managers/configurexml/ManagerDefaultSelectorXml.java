@@ -45,8 +45,9 @@ public class ManagerDefaultSelectorXml extends AbstractXmlAdapter {
         return e;
     }
 
-    public boolean load(Element e) {
-        List<Element> list = e.getChildren("setting");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        List<Element> list = shared.getChildren("setting");
 
         for (Element s : list) {
             String name = s.getChild("value").getText();

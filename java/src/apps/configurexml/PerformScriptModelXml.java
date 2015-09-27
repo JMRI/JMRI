@@ -49,15 +49,10 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
-        String fileName = e.getAttribute("name").getValue();
+        String fileName = shared.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);
         log.info("Run file " + fileName);
 

@@ -47,22 +47,17 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         return roster;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        if (element.getAttribute("directory") != null) {
-            Roster.setFileLocation(element.getAttribute("directory").getValue());
+        if (shared.getAttribute("directory") != null) {
+            Roster.setFileLocation(shared.getAttribute("directory").getValue());
             if (log.isDebugEnabled()) {
-                log.debug("set roster location (1): " + element.getAttribute("directory").getValue());
+                log.debug("set roster location (1): " + shared.getAttribute("directory").getValue());
             }
         }
-        if (element.getAttribute("ownerDefault") != null) {
-            RosterEntry.setDefaultOwner(element.getAttribute("ownerDefault").getValue());
+        if (shared.getAttribute("ownerDefault") != null) {
+            RosterEntry.setDefaultOwner(shared.getAttribute("ownerDefault").getValue());
         }
         jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.roster.RosterConfigPane());
         return result;

@@ -65,42 +65,36 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
         // simulator has fewer options in the XML, so implement
         // just needed ones       
         if (adapter.getSystemConnectionMemo() != null) {
-            if (e.getAttribute("userName") != null) {
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            if (shared.getAttribute("userName") != null) {
+                adapter.getSystemConnectionMemo().setUserName(shared.getAttribute("userName").getValue());
             }
 
-            if (e.getAttribute("systemPrefix") != null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            if (shared.getAttribute("systemPrefix") != null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
             }
         }
-        if (e.getAttribute("option1") != null) {
-            String option1Setting = e.getAttribute("option1").getValue();
+        if (shared.getAttribute("option1") != null) {
+            String option1Setting = shared.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
         }
 
-        if (e.getAttribute("manufacturer") != null) {
-            String mfg = e.getAttribute("manufacturer").getValue();
+        if (shared.getAttribute("manufacturer") != null) {
+            String mfg = shared.getAttribute("manufacturer").getValue();
             adapter.setManufacturer(mfg);
         }
-        if (e.getAttribute("port") != null) {
-            String portName = e.getAttribute("port").getValue();
+        if (shared.getAttribute("port") != null) {
+            String portName = shared.getAttribute("port").getValue();
             adapter.setPort(portName);
         }
 
-        if (e.getAttribute("disabled") != null) {
-            String yesno = e.getAttribute("disabled").getValue();
+        if (shared.getAttribute("disabled") != null) {
+            String yesno = shared.getAttribute("disabled").getValue();
             if ((yesno != null) && (!yesno.equals(""))) {
                 if (yesno.equals("no")) {
                     adapter.setDisabled(false);
@@ -109,12 +103,12 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
                 }
             }
         }
-        loadOptions(e.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), adapter);
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared);
             return result;
         }
         adapter.configure();
