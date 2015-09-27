@@ -8,7 +8,7 @@
  * @version
  */
 package jmri;
-
+// comment
 public class Address {
 
     public Address(String system, String user) {
