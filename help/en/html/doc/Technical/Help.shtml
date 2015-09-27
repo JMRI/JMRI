@@ -32,7 +32,9 @@
 		    <H1>JMRI: Use of JavaHelp</H1>
 
 This page talks about technical aspects of how JMRI provides help
-information using JavaHelp and JHelpDev.
+information using 
+<A HREF="https://javahelp.java.net">JavaHelp</a> and 
+<A HREF="http://jhelpdev.sourceforge.net/">JHelpDev</a>.
 
 
 <h2>Organization of the help files</h2>
@@ -42,7 +44,8 @@ within the JMRI distribution directory.
 
 <p>
 The master copy of this is stored in our repository as the "help" 
-module.  This means to get your own local copy, just follow the steps on the  
+directory in the JMRI code repository.
+This means to get your own local copy, just follow the steps on the  
 "<a href="getgitcode.shtml">getting the code</a>" page.
 
 <P>
@@ -61,8 +64,9 @@ should have its window-specific help in a file at
 <code>package/jmri/jmrit/speedometer/SpeedometerFrame.shtml</code>.
 <LI>html - general descriptions, tutorials, etc.  
 This in turn in organized into directories that represent general areas.
-<LI>manual - a version of the DecoderPro manual reformatted for 
-use in the help system.
+<LI>manual - the most recent version of the DecoderPro et al manuals reformatted for 
+use in the help system. (Older ones are stored in the
+<a href="WebSite.shtml">main web site</a>)
 </UL>
 
 In the long run, we want only two branches to this structure:  the "package"
@@ -82,19 +86,22 @@ JavaHelp displays "plain old HTML 4.0", without providing some of the
 syntactic sugar provided by many browsers to allow poor HTML to render.
 In particular, there are a couple things to watch for.
 <ul>
-<li>Anchor tags aren't XML. Specifically,
+<li>Anchor tags need a specific format. You can't write them as a
+single XML element, because that has no content. Specifically,
 <code><pre>
 &lt;a id="foo"/&gt;Foo!
 </pre></code>
-needs to be replaced by
-<code><pre>
-&lt;a id="foo"&gt;Foo!
-</pre></code>
 or
+<code><pre>
+&lt;a name="foo"/&gt;Foo!
+</pre></code>
+needs to be replaced by
 <code><pre>
 &lt;a name="foo"&gt;Foo!&lt;/a&gt;
 </pre></code>
-The indicator that you have to do this is an
+
+<p>
+The indicator that you have to do this is a
 &lt; character just appearing by itself on the rendered page.
 
 <li>Anchors also need to use the "name" attribute rather than
