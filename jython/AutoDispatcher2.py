@@ -67,6 +67,9 @@
 
 # JAVA imports
 
+import java
+import jmri
+
 from java.beans import PropertyChangeListener
 
 from java.lang import System
