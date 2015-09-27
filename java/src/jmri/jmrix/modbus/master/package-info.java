@@ -10,4 +10,5 @@
  * @see jmri.jmrix.modbus.slave
  * @since JMRI 3.11.1
  */
+@edu.umd.cs.findbugs.annotations.SuppressWarnings({})
 package jmri.jmrix.modbus.master;

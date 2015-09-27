@@ -100,7 +100,10 @@ public class MemoryContentsTest extends TestCase {
         verifyMemoryData(0x30003, -1, m);
 
         verifyMemoryData(0x3FFFF, -1, m);
+
         verifyMemoryData(0x9FFFF, -1, m);
+        jmri.util.JUnitAppender.assertErrorMessage("Error in getLocation(0x9ffff): accessed uninitialized page 9");
+        
         verifyMemoryData(0xA0000, 0xa0, m);
         verifyMemoryData(0xA0001, 0xa1, m);
         verifyMemoryData(0xA0002, -1, m);
