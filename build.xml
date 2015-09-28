@@ -33,8 +33,19 @@
     <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
     <property file="local.properties"/>
 
+    <!-- set any propertise not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
 
+    <!-- The Jenkins official release builds force: -->
+    <!--    release.official=true                   -->
+    <!--    release.is_branched=true                -->
+    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
+    <!-- in their "invoke ant" step                 -->
+    <!-- The Packages build (dev downloads) forces: -->
+    <!--    release.official=true                   -->
+    <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
+    <!-- in its "invoke ant" step                   -->
+    
     <property name="release.build_user" value="${user.name}"/>
 
     <property name="release" value="${release.major}.${release.minor}.${release.build}"/>
@@ -45,7 +56,7 @@
         <arg value="--short"/>
         <arg value="HEAD"/>
     </exec>
-
+    <!-- check output of git rev-parse above and place in release.revision_id -->
     <condition property="release.revision_id"
                 value="${git.revision}"
                 else="unknown">
@@ -55,10 +66,13 @@
         </and>
     </condition>
 
+    <!-- RELEASED set in the environment forces release.official to true -->
+    <!-- Unless release.properties file already set it -->
     <condition property="release.official" value="true" else="false">
       <isset property="RELEASED"/>
     </condition>
 
+    <!-- release.is_branched defaults to false unless release.properties file already set -->
     <property name="release.is_branched" value="false"/>
 
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
@@ -283,7 +297,7 @@
             <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
             <format property="NOW"   pattern="HHmm"     timezone="GMT"/>
         </tstamp>
-        <property name="release.build_date" value="${TODAY}-${NOW}"/>
+        <property name="release.build_date" value="${TODAY}:${NOW}"/>
         <!-- Create the build directory structure used by compile -->
         <quiet>
         <mkdir dir="${target}"/>
@@ -372,6 +386,10 @@
 
 
     <!-- generated source code that uses keyword substitution -->
+    <!-- Typically configured to take a template Version.properties -->
+    <!-- file from java/templates/jmri and copy it, expanded, to -->
+    <!-- java/classes where the jmri.Version class can reference -->
+    <!-- the values at run time -->
     <target name="update-template-code"
             description="create the substituted template java code"
             depends="init">
