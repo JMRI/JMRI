@@ -85,9 +85,12 @@ repository where they're safe, and can eventually be moved onward.
   This gives you your own repository, which you can then work with freely.
   
   <p>
-  The next step is to connect it to your local repository.  
+  If you're using the command line,
+  the next step is to connect it to your local repository.
+  (IDE users will do this next part in their IDE, see
+  those instructions)
   On the web page for your repository, right side, is a "HTTPS Clone URL".
-  Copy that. In your repository, do
+  Copy that. In your repository directory on your local computer, do
   
   <pre><code>
   git remote set-url --push origin https://github.com/yourname/JMRI.git
