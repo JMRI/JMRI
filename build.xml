@@ -297,7 +297,7 @@
             <format property="TODAY" pattern="yyyyMMdd" timezone="GMT"/>
             <format property="NOW"   pattern="HHmm"     timezone="GMT"/>
         </tstamp>
-        <property name="release.build_date" value="${TODAY}:${NOW}"/>
+        <property name="release.build_date" value="${TODAY}${NOW}"/>
         <!-- Create the build directory structure used by compile -->
         <quiet>
         <mkdir dir="${target}"/>
