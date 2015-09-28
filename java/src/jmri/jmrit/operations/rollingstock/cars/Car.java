@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents a car on the layout
  *
- * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014
+ * @author Daniel Boudreau Copyright (C) 2008, 2009, 2010, 2012, 2013, 2014, 2015
  * @version $Revision$
  */
 public class Car extends RollingStock {
@@ -114,6 +114,10 @@ public class Car extends RollingStock {
         }
     }
 
+    /**
+     * Used to determine if car has FRED (Flashing Rear End Device).
+     * @return true if car has FRED.
+     */
     public boolean hasFred() {
         return _fred;
     }
