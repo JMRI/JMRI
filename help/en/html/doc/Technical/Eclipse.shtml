@@ -36,10 +36,10 @@
 	</p>
 
 	<P>
-		JMRI developers use Git for source control. See <a
-			href="getgitcode.shtml">JMRI: Getting the Code</a> for more
-		information. Source control using Git is including as part of the Luna
-		download.
+		JMRI developers use Git for source control. Source control using Git
+		is including as part of the Eclipse "Luna" download. For more
+		information or an alternate method for getting the JMRI source, see <a
+			href="getgitcode.shtml">JMRI: Getting the Code</a>.
 	</P>
 
 	<P>These instructions were developed and tested using "Eclipse IDE
@@ -55,7 +55,9 @@
 	following:
 
 	<OL>
-		<LI>Open Eclipse.</LI>
+		<LI>Go to <a href="https://github.com/">GitHub.com</a> and create
+			an account.
+		<LI>Then open Eclipse.</LI>
 		<LI>From the main menu bar select "File" then "Import..."</LI>
 		<LI>Click on "Git" then "Project from Git" then the "Next"
 			button.</LI>
@@ -68,8 +70,8 @@
 	<OL>
 
 		<LI>Enter the URI "https://github.com/JMRI/JMRI".</LI>
-		<LI>Enter your GitHub username and password in the
-			authentication fields.</LI>
+		<LI>Enter your GitHub username and password in the authentication
+			fields.</LI>
 		<LI>Click the "Next" button and the Branch Selection screen
 			should appear.</LI>
 
@@ -120,7 +122,7 @@
 		<Li>Confirm that under the menu tab JRE that you've selected a
 			JDK, not a JRE.</Li>
 		<LI>Now press the "Run" button, this should start the ant build.</LI>
-		
+
 	</OL>
 
 	<P>If the ant build fails, most likely it is because you need a JDK
@@ -203,6 +205,7 @@
 
 	Instead of using the ant build to populate the "tmp" directory, you can
 	install the JavaCC plugin. Here's the steps:
+	<ol>
 	<li>Download the Eclipse JavaCC plugin following the instructions found
 		here: <A HREF="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</A>
 	<li>After restarting Eclipse, right click on the java directory
@@ -213,12 +216,17 @@
 		java/tmp/jmri/jmris/srcp/parser
 	<li>Confirm that the "Java Build Path" includes the tmp directory
 		(see Project Properties).
-	</ul>
+	</ol>
 		
 	<H2 name="push">Pushing changes to your GitHub branch</H2>
 	
 	The standard practice for getting your changes included in main JMRI code
-	repository is to:
+	repository is to commit them to your local repository periodically,
+	then when ready to publish "push" an entire set of changes to 
+	a repository belonging to you on GitHub, and then finally 
+	making a request for somebody to "pull" your changes into the main JMRI repository.
+	<p>
+	To do this:
 	<ul>
 	<li>First, commit your changes to the local repository on your computer
 	<p>
@@ -226,14 +234,26 @@
 	that you want to commit, and select "Team" followed by "Commit".
 	Enter a commit message and select the
 	files you wish to commit.
-	<li>Next, "push" a set of changes to your own GitHub repository
+	
+	<li>Next, "push" a set of changes 
+	from your local repository to your repository on GitHub. 
+	(You do this so others can access it and pick it up for inclusion into JMRI)
 	<p>
-	The first time, you'll have to
-	<a href="gitdeveloper.shtml#repo">create your own GitHub repository</a>.
+	Before you can push your changes to GitHub fort the first time, you'll have to
+	<a href="gitdeveloper.shtml#repo">create your own GitHub repository</a>
+	(which you may have done above) and "fork" the JMRI
+	repository. Log on'your you account at 
+	<a href="https://github.com/">GitHub.com</a>
+	and then navigate to the JMRI repository <a
+		href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
+	In the upper right hand corner of the page you will find a button
+	labeled "Fork". Press the "Fork" button to create your own repository of
+	the JMRI source. 
 	<p>
 	To push to your GitHub repository, again select "Team" and then "Push Branch".
 	In the "Push Branch to Remote" window, press the "New Remote" and enter the URL of your GitHub repository
 	along with your username and password.
+	
 	<li>Finally, request a "pull" to the main JMRI code
 	repository on the GitHub website.
 	<p>
@@ -248,6 +268,7 @@
 		
 		
 	<H2 name="errors">Compiler Errors and Warnings</H2>
+
 
 	The default Eclipse compiler configuration produces many unnecessary
 	warnings. You can adjust the warnings to match the screen shots as
