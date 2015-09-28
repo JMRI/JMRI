@@ -130,6 +130,10 @@ public class Car extends RollingStock {
         }
     }
 
+    /**
+     * The load name assigned to this car.
+     * @return The load name assigned to this car.
+     */
     public String getLoadName() {
         return _loadName;
     }
