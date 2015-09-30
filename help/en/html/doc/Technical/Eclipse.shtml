@@ -252,10 +252,10 @@
 			your repository on GitHub. (You do this so others can access it and
 			pick it up for inclusion into JMRI)
 			<p>
-				Before you can push your changes to GitHub fort the first time,
+				Before you can push your changes to GitHub for the first time,
 				you'll have to <a href="gitdeveloper.shtml#repo">create your own
 					GitHub repository</a> (which you may have done above) and "fork" the
-				JMRI repository. Log on'your you account at <a
+				JMRI repository. Log on to your account at <a
 					href="https://github.com/">GitHub.com</a> and then navigate to the
 				JMRI repository <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
 				In the upper right hand corner of the page you will find a button
