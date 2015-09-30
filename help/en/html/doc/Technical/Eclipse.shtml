@@ -50,7 +50,7 @@
 		release Luna for Java 8, but there are workarounds described online.</P>
 
 	<a name="getwgit"></a>
-	<h2> Getting the JMRI Source using Git</h2>
+	<h2>Getting the JMRI Source using Git</h2>
 
 	To get the source code from SourceForge using Git you need to do the
 	following:
@@ -209,67 +209,68 @@
 	Instead of using the ant build to populate the "tmp" directory, you can
 	install the JavaCC plugin. Here's the steps:
 	<ol>
-	<li>Download the Eclipse JavaCC plugin following the instructions found
-		here: <A HREF="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</A>
-	<li>After restarting Eclipse, right click on the java directory
-		in the Project Explorer or Navigator and select JavaCC Options.
-	<li>On the JavaCC Options tab, enter the output directory to be
-		java/tmp/jmri/jmris/srcp/parser
-	<li>On the JJTree options page, enter the output directory to be
-		java/tmp/jmri/jmris/srcp/parser
-	<li>Confirm that the "Java Build Path" includes the tmp directory
-		(see Project Properties).
+		<li>Download the Eclipse JavaCC plugin following the instructions
+			found here: <A HREF="http://eclipse-javacc.sourceforge.net">http://eclipse-javacc.sourceforge.net</A>
+		<li>After restarting Eclipse, right click on the java directory
+			in the Project Explorer or Navigator and select JavaCC Options.
+		<li>On the JavaCC Options tab, enter the output directory to be
+			java/tmp/jmri/jmris/srcp/parser
+		<li>On the JJTree options page, enter the output directory to be
+			java/tmp/jmri/jmris/srcp/parser
+		<li>Confirm that the "Java Build Path" includes the tmp directory
+			(see Project Properties).
 	</ol>
-		
+
 	<A name="push"></A>
 	<H2>Pushing changes to your GitHub branch</H2>
+
+	The standard practice for getting your changes included in main JMRI
+	code repository is to commit them to your local repository
+	periodically, then when ready to publish "push" an entire set of
+	changes to a repository belonging to you on GitHub, and then finally
+	making a request for somebody to "pull" your changes into the main JMRI
+	repository.
 	
-	The standard practice for getting your changes included in main JMRI code
-	repository is to commit them to your local repository periodically,
-	then when ready to publish "push" an entire set of changes to 
-	a repository belonging to you on GitHub, and then finally 
-	making a request for somebody to "pull" your changes into the main JMRI repository.
-	<p>
-	To do this:
-	<ul>
-	<li>First, commit your changes to the local repository on your computer
-	<p>
-	To commit a set of changes, right click on the project
-	that you want to commit, and select "Team" followed by "Commit".
-	Enter a commit message and select the
-	files you wish to commit.
-	
-	<li>Next, "push" a set of changes 
-	from your local repository to your repository on GitHub. 
-	(You do this so others can access it and pick it up for inclusion into JMRI)
-	<p>
-	Before you can push your changes to GitHub fort the first time, you'll have to
-	<a href="gitdeveloper.shtml#repo">create your own GitHub repository</a>
-	(which you may have done above) and "fork" the JMRI
-	repository. Log on'your you account at 
-	<a href="https://github.com/">GitHub.com</a>
-	and then navigate to the JMRI repository <a
-		href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
-	In the upper right hand corner of the page you will find a button
-	labeled "Fork". Press the "Fork" button to create your own repository of
-	the JMRI source. 
-	<p>
-	To push to your GitHub repository, again select "Team" and then "Push Branch".
-	In the "Push Branch to Remote" window, press the "New Remote" and enter the URL of your GitHub repository
-	along with your username and password.
-	
-	<li>Finally, request a "pull" to the main JMRI code
-	repository on the GitHub website.
-	<p>
-	To do this, start by signing on to the
-	<a href="http://github.com">GitHub web site</a>, selecting your repository and
-	clicking the
-	<a href="gitdeveloper.shtml#pull">Pull Request button</a>.
-	For more info,
-	see the
-	<a href="gitdeveloper.shtml#pull">developer instructions,</a>.
-	</ul>
+	<P>It is also good practice to "pull" all of the recent changes
+		from the main JMRI repository before performing your commits. After a
+		"pull" your workspace and eventually your remote GitHub repository
+		will be in synch with the main JMRI repository. To perform a "pull"
+		select your project, then "Team" then "Pull" from the menu.</P>
 		
+	<p>Pushing to your GitHub branch:
+	<ul>
+		<li>First, commit your changes to the local repository on your
+			computer
+			<p>To commit a set of changes, right click on the project that
+				you want to commit, and select "Team" followed by "Commit". Enter a
+				commit message and select the files you wish to commit.
+		<li>Next, "push" a set of changes from your local repository to
+			your repository on GitHub. (You do this so others can access it and
+			pick it up for inclusion into JMRI)
+			<p>
+				Before you can push your changes to GitHub fort the first time,
+				you'll have to <a href="gitdeveloper.shtml#repo">create your own
+					GitHub repository</a> (which you may have done above) and "fork" the
+				JMRI repository. Log on'your you account at <a
+					href="https://github.com/">GitHub.com</a> and then navigate to the
+				JMRI repository <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
+				In the upper right hand corner of the page you will find a button
+				labeled "Fork". Press the "Fork" button to create your own
+				repository of the JMRI source.
+			<p>To push to your GitHub repository, again select "Team" and
+				then "Push Branch". In the "Push Branch to Remote" window, press the
+				"New Remote" and enter the URL of your GitHub repository along with
+				your username and password.
+		<li>Finally, request a "pull" to the main JMRI code repository on
+			the GitHub website.
+			<p>
+				To do this, start by signing on to the <a href="http://github.com">GitHub
+					web site</a>, selecting your repository and clicking the <a
+					href="gitdeveloper.shtml#pull">Pull Request button</a>. For more
+				info, see the <a href="gitdeveloper.shtml#pull">developer
+					instructions,</a>.
+	</ul>
+
 	<A name="errors"></A>
 	<H2>Compiler Errors and Warnings</H2>
 
