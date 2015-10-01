@@ -9,6 +9,7 @@
  *    CSS classes are used throughout to attach events to correct widgets, as well as control appearance.
  *    The JSON type is used to send changes to JSON server and to listen for changes made elsewhere.
  *    Drawn widgets are handled by drawing directly on the javascript "canvas" layer.
+ *    An internal (to JMRI) heartbeat sensor is used to avoid one browser holding multiple server connections (refresh, links, etc.)
  *  
  *  TODO: show error notification or grey-out panel when panel and/or server goes away
  *  TODO: handle "&" in usernames (see Indicator Demo 00.xml)
@@ -27,6 +28,7 @@
  **********************************************************************************************/
 
 //persistent (global) variables
+var $gTimeout = 45; //heartbeat timeout in seconds
 var $gWidgets = {}; //array of all widget objects, key=CSSId
 var $gPanelList = {}; 	//store list of available panels
 var $gPanel = {}; 	//store overall panel info
