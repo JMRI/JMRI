@@ -39,11 +39,21 @@ public interface PreferencesProvider {
      * Get the set of PreferencesProviders that must be initialized prior to
      * initializing this PreferencesProvider.
      *
-     * @return An set or list of class names. If there are no dependencies,
-     *         return an empty set instead of null.
+     * @return An set or list of classes. If there are no dependencies, return
+     *         an empty set instead of null.
      */
     public @Nonnull
-    Iterable<String> getRequires();
+    Iterable<Class<? extends PreferencesProvider>> getRequires();
+
+    /**
+     * Get the set of PreferencesProviders that must be initialized prior to
+     * initializing this PreferencesProvider.
+     *
+     * @return An set or list of classes. If there are no dependencies, return
+     *         an empty set instead of null.
+     */
+    public @Nonnull
+    Iterable<Class<? extends PreferencesProvider>> getProvides();
 
     /**
      * Save the preferences that this provider manages for the provided Profile.
