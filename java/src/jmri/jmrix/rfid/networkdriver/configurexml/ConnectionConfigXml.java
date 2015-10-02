@@ -1,12 +1,9 @@
 package jmri.jmrix.rfid.networkdriver.configurexml;
 
-import java.util.List;
 import jmri.InstanceManager;
-import jmri.jmrix.rfid.RfidTrafficController;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.rfid.networkdriver.ConnectionConfig;
 import jmri.jmrix.rfid.networkdriver.NetworkDriverAdapter;
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

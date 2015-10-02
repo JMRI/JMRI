@@ -1,6 +1,5 @@
 package jmri.jmris.srcp.configurexml;
 
-import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
