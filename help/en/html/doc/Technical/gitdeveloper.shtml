@@ -2,9 +2,9 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-    <TItlE>
+    <TITLE>
  	JMRI: Developing with JMRI Code 
-    </titlE>
+    </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code Git download">
 
