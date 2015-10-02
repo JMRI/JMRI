@@ -394,7 +394,20 @@
           <xs:attribute name="numOuts" type="xs:int" />
           <xs:attribute name="lowVersionID" type="xs:int" />
           <xs:attribute name="highVersionID" type="xs:int" />
-          <xs:attribute name="productID" type="xs:string" />
+          <xs:attribute name="productID" type="xs:string" >
+            <xs:annotation><xs:documentation>For a decoder definition which 
+                describes a device implementing the LocoNet SV2 messaging protocol, 
+                this value is used to match a "discovered" device
+                to an appropriate decoder definition</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="developerID" type="xs:int" default="-1" >
+            <xs:annotation><xs:documentation>For a decoder definition which 
+                describes a device implementing the LocoNet SV2 messaging protocol, 
+                this value is used to match a "discovered" device
+                to an appropriate decoder definition</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="maxInputVolts" type="xs:string" />
           <xs:attribute name="maxMotorCurrent" type="xs:string" />
           <xs:attribute name="maxTotalCurrent" type="xs:string" />
