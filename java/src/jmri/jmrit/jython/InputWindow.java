@@ -274,7 +274,7 @@ public class InputWindow extends JPanel {
 
         // and execute
         try {
-            JmriScriptEngineManager.getDefault().getEngineByName("python").eval(cmd);
+            JmriScriptEngineManager.getDefault().eval(cmd, JmriScriptEngineManager.getDefault().getEngine(JmriScriptEngineManager.PYTHON));
         } catch (ScriptException ex) {
             log.error("Error executing script", ex);
         }

@@ -128,7 +128,7 @@ and
 CI servers.
 </p>
 
-<h2 id="local">Local Web Site: Mac OS X</h2>
+<a name="local" id="local"></a><h2>Local Web Site: Mac OS X</h2>
 
 <p>If you want to host a copy of the JMRI web site on your local
 Mac OS X machine, follow these instructions to first configure
@@ -210,7 +210,7 @@ svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri/xml
 which should get you a JMRI top-level page.
 </OL>
 
-<h3 id="catalog">Installing a local XML catalog</h3>
+<a name="catalog" id="catalog"></a><h3>Installing a local XML catalog</h3>
 
 Many JMRI XML files contain XIncludes that reference
 other XML files with URLs like "http://jmri.org/xml/schema/types/turnouts-2-9-6.xsd".
