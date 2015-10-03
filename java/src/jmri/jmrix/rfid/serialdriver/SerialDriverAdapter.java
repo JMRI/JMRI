@@ -275,7 +275,22 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         } else {
             // MERG Concentrator only supports CORE-ID
             log.info("set protocol to CORE-ID");
-            protocol = new CoreIdRfidProtocol();
+            String opt2 = getOptionState(option2Name);
+            switch (opt2) {
+                case "A-H" :
+                    log.info("set concentrator range to 'A-H' at position 1");
+                    protocol = new CoreIdRfidProtocol('A', 'H', 1);
+                    break;
+                case "I-P" :
+                    log.info("set concentrator range to 'I-P' at position 1");
+                    protocol = new CoreIdRfidProtocol('I', 'P', 1);
+                    break;
+                default :
+                    // unrecognised concentrator range - warn
+                    log.warn("concentrator range '{}' not supported - default to no concentrator", opt2);
+                    protocol = new CoreIdRfidProtocol();
+                    break;
+            }
         }
         this.getSystemConnectionMemo().setProtocol(protocol);
 

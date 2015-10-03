@@ -9,7 +9,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import jmri.profile.AuxiliaryConfiguration;
 import jmri.profile.Profile;
 import jmri.util.FileUtil;
-import static junit.framework.Assert.assertNotNull;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;

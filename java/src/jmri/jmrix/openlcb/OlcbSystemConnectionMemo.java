@@ -4,7 +4,6 @@ package jmri.jmrix.openlcb;
 import java.util.ResourceBundle;
 import jmri.InstanceManager;
 import jmri.ProgrammerManager;
-import jmri.ThrottleManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

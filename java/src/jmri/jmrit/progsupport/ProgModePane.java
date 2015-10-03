@@ -106,7 +106,7 @@ public class ProgModePane extends ProgModeSelector {
      * Get the configured programmer
      */
     public Programmer getProgrammer() {
-        if (mServicePane.isSelected()) {
+        if (mServicePane!=null && mServicePane.isSelected()) {
             return mServicePane.getProgrammer();
         } else if (mOpsPane != null && mOpsPane.isSelected()) {
             return mOpsPane.getProgrammer();
