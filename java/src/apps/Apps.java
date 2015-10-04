@@ -46,15 +46,15 @@ import javax.swing.UIManager;
 import javax.swing.WindowConstants;
 import javax.swing.text.DefaultEditorKit;
 import javax.swing.text.JTextComponent;
+import jmri.ConfigureManager;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.JmriPlugin;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
-import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.implementation.AbstractShutDownTask;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.DebugMenu;
 import jmri.jmrit.ToolsMenu;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
@@ -219,9 +219,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         }
 
         // Install configuration manager and Swing error handler
-        ConfigXmlManager cm = new ConfigXmlManager();
-        InstanceManager.setConfigureManager(cm);
-        ConfigXmlManager.setErrorHandler(new DialogErrorHandler());
+        ConfigureManager cm = new JmriConfigurationManager();
         InstanceManager.setConfigureManager(cm);
 
         // Install a history manager
@@ -255,7 +253,6 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
         } else {
             file = new File(configFilename);
         }
-        cm.setPrefsLocation(file);
         // load config file if it exists
         if (file.exists()) {
             if (log.isDebugEnabled()) {

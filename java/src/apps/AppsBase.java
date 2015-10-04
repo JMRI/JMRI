@@ -6,14 +6,14 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.SwingUtilities;
 import jmri.Application;
+import jmri.ConfigureManager;
 import jmri.IdTagManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.NamedBeanHandleManager;
 import jmri.UserPreferencesManager;
-import jmri.configurexml.ConfigXmlManager;
-import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.implementation.AbstractShutDownTask;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.BlockValueFile;
 import jmri.jmrit.revhistory.FileHistory;
 import jmri.jmrit.signalling.EntryExitPairs;
@@ -206,13 +206,10 @@ public abstract class AppsBase {
     }
 
     protected void installConfigurationManager() {
-        ConfigXmlManager cm = new ConfigXmlManager();
+        ConfigureManager cm = new JmriConfigurationManager();
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         InstanceManager.setConfigureManager(cm);
-        cm.setPrefsLocation(new File(getConfigFileName()));
         log.debug("config manager installed");
-        // Install Config Manager error handler
-        ConfigXmlManager.setErrorHandler(new DialogErrorHandler());
     }
 
     protected void installManagers() {
@@ -258,12 +255,10 @@ public abstract class AppsBase {
             preferenceFileExists = false;
             configOK = false;
             log.info("No pre-existing config file found, searched for '" + file.getPath() + "'");
-            ((ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
             return;
         }
         preferenceFileExists = true;
         try {
-            ((ConfigXmlManager) InstanceManager.configureManagerInstance()).setPrefsLocation(file);
             configOK = InstanceManager.configureManagerInstance().load(file);
             if (log.isDebugEnabled()) {
                 log.debug("end load config file " + file.getName() + ", OK=" + configOK);
