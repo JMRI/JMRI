@@ -1,7 +1,7 @@
 #
 # Write an attribute to the Roster
-#
-#
+
+import jmri
 
 # get a specific entry by name
 entry = jmri.jmrit.roster.Roster.instance().entryFromTitle("000test attribute")

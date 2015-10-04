@@ -2,10 +2,8 @@
 #
 # Author: Bob Jacobsen, copyright 2009
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
 
 # Send a packet; the argument includes _all_ the bytes
 def send(pkt):
