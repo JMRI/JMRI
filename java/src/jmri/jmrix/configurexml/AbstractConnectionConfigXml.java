@@ -1,10 +1,8 @@
 package jmri.jmrix.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.jmrix.ConnectionConfig;
-import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.PortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -27,11 +25,7 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     abstract protected void register();
 
     protected void register(ConnectionConfig c) {
-        InstanceManager.configureManagerInstance().registerPref(c);
-        ConnectionConfigManager cm = InstanceManager.getDefault(ConnectionConfigManager.class);
-        if (cm != null) {
-            cm.add(c);
-        }
+        c.register();
     }
 
     /**
