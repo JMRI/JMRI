@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
@@ -484,23 +485,36 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
 
     String defaultBackupDirectory = FileUtil.getUserFilesPath() + "backupPanels";
 
+    /**
+     * 
+     * @param o The object to get an XML representation of
+     * @return An XML element representing o
+     * @deprecated 
+     */
+    @Deprecated
     static public Element elementFromObject(Object o) {
-        String aName = adapterName(o);
-        log.debug("store using " + aName);
+        return ConfigXmlManager.elementFromObject(o, true);
+    }
+
+    /**
+     * 
+     * @param object The object to get an XML representation of
+     * @param shared true if the XML should be shared, false if the XML should be per-node
+     * @return An XML element representing object
+     */
+    static public Element elementFromObject(Object object, boolean shared) {
+        String aName = adapterName(object);
+        log.debug("store using {}", aName);
         XmlAdapter adapter = null;
         try {
-            adapter = (XmlAdapter) Class.forName(adapterName(o)).newInstance();
-        } catch (java.lang.ClassNotFoundException ex1) {
-            log.error("Cannot load configuration adapter for " + o.getClass().getName() + " due to " + ex1);
-        } catch (java.lang.IllegalAccessException ex2) {
-            log.error("Cannot load configuration adapter for " + o.getClass().getName() + " due to " + ex2);
-        } catch (java.lang.InstantiationException ex3) {
-            log.error("Cannot load configuration adapter for " + o.getClass().getName() + " due to " + ex3);
+            adapter = (XmlAdapter) Class.forName(adapterName(object)).newInstance();
+        } catch (java.lang.ClassNotFoundException | java.lang.IllegalAccessException | java.lang.InstantiationException ex) {
+            log.error("Cannot load configuration adapter for {}", object.getClass().getName(), ex);
         }
         if (adapter != null) {
-            return adapter.store(o);
+            return adapter.store(object, shared);
         } else {
-            log.error("Cannot store configuration for " + o.getClass().getName());
+            log.error("Cannot store configuration for {}", object.getClass().getName());
             return null;
         }
     }
