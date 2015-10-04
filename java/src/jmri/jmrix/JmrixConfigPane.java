@@ -81,10 +81,14 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         if (retval != null) {
             return retval;
         }
-        Object c = InstanceManager.configureManagerInstance()
-                .findInstance(ConnectionConfig.class, index);
-        log.debug("findInstance returned " + c);
-        retval = new JmrixConfigPane((ConnectionConfig) c);
+        ConnectionConfig c = null;
+        try {
+            c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
+            log.debug("connection {}", c);
+        } catch (IndexOutOfBoundsException ex) {
+            log.debug("connection is null, creating new one");
+        }
+        retval = new JmrixConfigPane(c);
         configPaneTable.put(index, retval);
         if (c == null) {
             retval.isDirty = true;
@@ -100,10 +104,10 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public static JmrixConfigPane createNewPanel() {
 
         int lastIndex = -1;
-        ArrayList<Object> conlist = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
+        ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
 
-        if (conlist != null) {
-            lastIndex = conlist.size();
+        if (connections.length != 0) {
+            lastIndex = connections.length;
         }
         for (int key : configPaneTable.keySet()) {
             if (key > lastIndex) {
@@ -143,6 +147,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         }
         InstanceManager.configureManagerInstance().deregister(confPane);
         InstanceManager.configureManagerInstance().deregister(confPane.ccCurrent);
+        InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
 
         configPaneTable.remove(getInstanceNumber(confPane));
     }
