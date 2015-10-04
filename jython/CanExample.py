@@ -5,9 +5,8 @@
 # Author: Gert Muller, copyright 2012
 #
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 import java
 

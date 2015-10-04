@@ -5,13 +5,12 @@
 # Author: Ken Cameron, copyright 2008
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-##
 # A ActionListener is used to get timeout events.
 #
 # A PropertyChangeListener is used to get the sensor changes.
 #
+
+import jmri
 
 import java
 import javax.swing

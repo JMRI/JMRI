@@ -6,9 +6,8 @@
 #
 # Author: Bob Jacobsen, copyright 2008
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 import apps
 
