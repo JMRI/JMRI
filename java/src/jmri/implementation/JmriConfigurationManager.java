@@ -61,7 +61,9 @@ public class JmriConfigurationManager implements ConfigureManager {
         } catch (IOException e) {
             log.error("Unable to parse PreferenceProviders property", e);
         }
-        this.legacy.setPrefsLocation(new File(ProfileManager.getDefault().getActiveProfile().getPath(), Profile.CONFIG_FILENAME));
+        if (ProfileManager.getDefault().getActiveProfile() != null) {
+            this.legacy.setPrefsLocation(new File(ProfileManager.getDefault().getActiveProfile().getPath(), Profile.CONFIG_FILENAME));
+        }
         if (!GraphicsEnvironment.isHeadless()) {
             ConfigXmlManager.setErrorHandler(new DialogErrorHandler());
         }
