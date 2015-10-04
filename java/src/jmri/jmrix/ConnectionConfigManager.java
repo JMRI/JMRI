@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import jmri.beans.Bean;
-import static jmri.configurexml.ConfigXmlManager.elementFromObject;
+import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
@@ -104,21 +104,15 @@ public class ConnectionConfigManager extends Bean implements PreferencesProvider
         this.savePreferences(profile, true);
         // store private or perNode Connection preferences
         this.savePreferences(profile, false);
+        log.debug("Saved connections preferences...");
     }
 
-    private void savePreferences(Profile profile, boolean shared) {
-        Element element = null;
-        try {
-            element = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, shared));
-        } catch (NullPointerException ex) {
-            // do nothing - expected if preferences had never been saved on this computer before
-        }
-        if (element == null) {
-            element = new Element(CONNECTIONS, NAMESPACE);
-        }
+    private synchronized void savePreferences(Profile profile, boolean shared) {
+        Element element = new Element(CONNECTIONS, NAMESPACE);
         log.debug("connections is {}null", (connections != null) ? "not " : "");
-        for (Object o : connections) {
-            Element e = elementFromObject(o, shared);
+        for (ConnectionConfig o : connections) {
+            log.debug("Saving connection {} ({})...", o.getConnectionName(), shared);
+            Element e = ConfigXmlManager.elementFromObject(o, shared);
             if (e != null) {
                 element.addContent(e);
             }
@@ -147,6 +141,10 @@ public class ConnectionConfigManager extends Bean implements PreferencesProvider
 
     public ConnectionConfig[] getConnections() {
         return this.connections.toArray(new ConnectionConfig[this.connections.size()]);
+    }
+    
+    public ConnectionConfig getConnections(int index) {
+        return this.connections.get(index);
     }
     
     @Override
