@@ -319,6 +319,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     }
 
     void selection() {
+        ConnectionConfig old = this.ccCurrent;
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         // first choice is -no- protocol chosen
@@ -334,6 +335,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             if (ccCurrent != null) {
                 ccCurrent.dispose();
             }
+        }
+        if (old != this.ccCurrent) {
+            this.ccCurrent.register();
         }
         validate();
 
