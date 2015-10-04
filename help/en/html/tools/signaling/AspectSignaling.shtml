@@ -5,7 +5,7 @@
 <!-- $Id$ -->
 <title>JMRI: Aspect Signaling</title>
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20150304"/>
+<meta name="Date.Modified" content="20151002"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -102,12 +102,12 @@ JMRI users have provided the following pre-defined Aspect Signaling Systems:
 <dt><a href="../../../../../xml/signals/Amtrak-2010/index.shtml">Amtrak-2010</a>
     <dd>Amtrak Northeast Corridor Color Position Light signals
 
-<dt><a href="B&O-1957/index.shtml">B&amp;O-1957</a>
+<dt><a href="../../../../../xml/signals/B&O-1957/index.shtml">B&amp;O-1957</a>
     <dd>1957 B&amp;O
     <br>
     (<i>Incomplete, not finished as of JMRI 3.10.</i>)
 
-<dt><a href="B&O-2009/index.shtml">B&amp;O-2009</a>
+<dt><a href="../../../../../xml/signals/B&O-2009/index.shtml">B&amp;O-2009</a>
     <dd>2009 B&amp;O (CSX)
  
 <dt><a href="../../../../../xml/signals/BN-1989/index.shtml">BN-1989</a>
@@ -119,7 +119,7 @@ JMRI users have provided the following pre-defined Aspect Signaling Systems:
 <dt><a href="../../../../../xml/signals/BR-2003/index.shtml">BR-2003</a>
     <dd>British Rail 2003 rule book
 
-<dt><a href="CFL-2014/index.shtml">CFL-2014</a>
+<dt><a href="../../../../../xml/signals/CFL-2014/index.shtml">CFL-2014</a>
     <dd>Current (2014) Luxemburg railways (Societ&eacute; Nationale des Chemins de Fer Luxembourgeois)
 
 <dt><a href="../../../../../xml/signals/CROR-2008/index.shtml">CROR-2008</a>
