@@ -4002,7 +4002,7 @@
    the train doesn't have any work. If you deselect this option, then the program only prints out
    trains that have work at that location.
 
-   <P>The next option controls how much paper is used when printing out switch lists. The
+   <P>The next option, "Page Format", controls how much paper is used when printing out switch lists. The
     "Normal" mode uses the least amount of paper, and will list the trains servicing the location
     one after another. The "Page per Train" option when selected causes the program to print a train's
     switch list on a new page for each train. This way your crew when completing the work for a
