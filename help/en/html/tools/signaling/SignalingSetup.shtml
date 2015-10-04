@@ -48,7 +48,7 @@ Pick one of the available
 <a href="../../../../../xml/signals/">Signaling Systems</a>, such as 
 <a href="../../../../../xml/signals/AAR-1946/aspects.xml">AAR-2</a> in our example, and stick with that. 
 It is a bit of a faff but not too much work. (For more information on the 
-individual signaling systems distributed with JRMI, see 
+individual signaling systems distributed with JMRI, see 
 <a href="../../../../../xml/signals/">this page</a>; for more info on how this works, see the page on 
 <a href="AspectSignaling.shtml">aspect signaling</a>)</li>
 	
