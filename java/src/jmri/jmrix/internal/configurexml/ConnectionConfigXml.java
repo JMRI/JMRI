@@ -1,6 +1,5 @@
 package jmri.jmrix.internal.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
@@ -66,8 +65,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

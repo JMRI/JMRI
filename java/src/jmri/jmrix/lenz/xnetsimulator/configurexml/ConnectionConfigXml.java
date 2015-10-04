@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.xnetsimulator.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.lenz.xnetsimulator.ConnectionConfig;
@@ -80,8 +79,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

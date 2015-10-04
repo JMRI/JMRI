@@ -23,10 +23,6 @@ abstract public class AbstractNetworkConnectionConfigXml extends AbstractConnect
 
     protected NetworkPortAdapter adapter;
 
-    abstract protected void getInstance();
-
-    abstract protected void register();
-
     protected void getInstance(Object object) {
         getInstance(); // over-ridden during migration
     }

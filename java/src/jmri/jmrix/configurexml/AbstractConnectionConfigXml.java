@@ -1,7 +1,10 @@
 package jmri.jmrix.configurexml;
 
 import java.util.List;
+import jmri.InstanceManager;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.PortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -22,6 +25,14 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     abstract protected void getInstance();
 
     abstract protected void register();
+
+    protected void register(ConnectionConfig c) {
+        InstanceManager.configureManagerInstance().registerPref(c);
+        ConnectionConfigManager cm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        if (cm != null) {
+            cm.add(c);
+        }
+    }
 
     /**
      * Default implementation for storing the static contents of the serial port
@@ -59,16 +70,17 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * 
+     *
      * @param e
      * @param adapter
-     * @deprecated use {@link #loadCommon(org.jdom2.Element, org.jdom2.Element, jmri.jmrix.PortAdapter) }
+     * @deprecated use {@link #loadCommon(org.jdom2.Element, org.jdom2.Element, jmri.jmrix.PortAdapter)
+     * }
      */
     @Deprecated
     protected void loadCommon(Element e, PortAdapter adapter) {
         this.loadCommon(e, null, adapter);
     }
-    
+
     protected void loadCommon(Element shared, Element perNode, PortAdapter adapter) {
         if (shared.getAttribute("option1") != null) {
             String option1Setting = shared.getAttribute("option1").getValue();
@@ -132,16 +144,17 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * 
+     *
      * @param e
      * @param adapter
-     * @deprecated Use {@link #loadOptions(org.jdom2.Element, org.jdom2.Element, jmri.jmrix.PortAdapter) }
+     * @deprecated Use {@link #loadOptions(org.jdom2.Element, org.jdom2.Element, jmri.jmrix.PortAdapter)
+     * }
      */
     @Deprecated
     protected void loadOptions(Element e, PortAdapter adapter) {
         this.loadOptions(e, null, adapter);
     }
-    
+
     protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
         if (shared == null) {
             return;

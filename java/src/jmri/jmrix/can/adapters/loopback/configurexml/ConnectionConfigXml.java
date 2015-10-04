@@ -1,6 +1,5 @@
 package jmri.jmrix.can.adapters.loopback.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.adapters.loopback.ConnectionConfig;
 import jmri.jmrix.can.adapters.loopback.Port;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -124,8 +123,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
         log.info("CAN Simulator Started");
     }
 

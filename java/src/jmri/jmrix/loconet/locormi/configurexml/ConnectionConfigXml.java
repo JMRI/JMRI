@@ -2,7 +2,6 @@ package jmri.jmrix.loconet.locormi.configurexml;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.locormi.ConnectionConfig;
 import org.jdom2.Element;
@@ -145,7 +144,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
     }
 
     protected void register(ConnectionConfig cc) {
-        InstanceManager.configureManagerInstance().registerPref(cc);
+        super.register(cc);
     }
 
     // initialize logging

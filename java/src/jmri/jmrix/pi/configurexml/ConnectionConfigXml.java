@@ -40,7 +40,7 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     /**

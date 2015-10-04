@@ -23,10 +23,6 @@ abstract public class AbstractSerialConnectionConfigXml extends AbstractConnecti
 
     protected SerialPortAdapter adapter;
 
-    abstract protected void getInstance();
-
-    abstract protected void register();
-
     protected void getInstance(Object object) {
         getInstance(); // over-ridden during migration
     }

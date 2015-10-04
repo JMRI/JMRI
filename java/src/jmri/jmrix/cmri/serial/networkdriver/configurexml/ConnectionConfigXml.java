@@ -1,12 +1,11 @@
 package jmri.jmrix.cmri.serial.networkdriver.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
-import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.cmri.serial.networkdriver.ConnectionConfig;
 import jmri.jmrix.cmri.serial.networkdriver.NetworkDriverAdapter;
+import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -147,8 +146,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         return null;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

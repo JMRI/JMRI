@@ -1,7 +1,6 @@
 package jmri.jmrix.loconet.hexfile.configurexml;
 
 import java.awt.GraphicsEnvironment;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.hexfile.ConnectionConfig;
 import jmri.jmrix.loconet.hexfile.LnHexFilePort;
@@ -151,8 +150,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = new LnHexFilePort();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

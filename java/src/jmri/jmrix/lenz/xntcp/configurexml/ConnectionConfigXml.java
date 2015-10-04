@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.xntcp.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.xntcp.ConnectionConfig;
 import jmri.jmrix.lenz.xntcp.XnTcpAdapter;
@@ -144,8 +143,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging
