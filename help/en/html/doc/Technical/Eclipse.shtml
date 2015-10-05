@@ -229,7 +229,9 @@
 	periodically, then when ready to publish "push" an entire set of
 	changes to a repository belonging to you on GitHub, and then finally
 	making a request for somebody to "pull" your changes into the main JMRI
-	repository.
+	repository. See
+	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a GIT environment
+	for JMRI Developers" for more information.
 
 	<P>It is also good practice to "pull" all of the recent changes
 		from the main JMRI repository before performing your commits. After a
@@ -260,11 +262,19 @@
 				JMRI repository <a href="https://github.com/JMRI/JMRI">https://github.com/JMRI/JMRI</a>
 				In the upper right hand corner of the page you will find a button
 				labeled "Fork". Press the "Fork" button to create your own
-				repository of the JMRI source.</p>
-			<p>To push to your GitHub repository, again select "Team" and
-				then "Push Branch". In the "Push Branch to Remote" window, press the
-				"New Remote" and enter the URL of your GitHub repository along with
-				your username and password.</p>
+				repository of the JMRI source.
+			</p>
+			<p>To push to your GitHub repository, again select "Team" then
+				"Remote" then "Configure Push to Upstream". In the "Configure Push"
+				window, click on the "Push URIs" and then the "Add" button. In the
+				"New URI" window enter the URL of your
+				GitHub repository along with your username and password. After
+				pressing finish the "Configure Push" window should look like the
+				image below:</p> <img src="images/EclipseConfigurePush.png">
+			<P>Press either the "Save and Push" or the "Save" button. Later
+				when you want to push new changes to your repository on GitHub, you
+				can simply committed them as described above, and then use the
+				"Push" icon in the Synchronize window.</P>
 		<li>Finally, request a "pull" to the main JMRI code repository on
 			the GitHub website.
 			<p>
@@ -272,7 +282,8 @@
 					web site</a>, selecting your repository and clicking the <a
 					href="gitdeveloper.shtml#pull">Pull Request button</a>. For more
 				info, see the <a href="gitdeveloper.shtml#pull">developer
-					instructions,</a></p>.
+					instructions,</a>
+			</p>.
 	</ul>
 
 	<A name="errors"></A>

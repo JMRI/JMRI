@@ -37,9 +37,8 @@
 # 1. Make sure you calibrate and set a "Dead zone" for each of the analogue levers in the
 # Calibration window! If you don't there will be too many events triggered 
 # and everything will slow right down....
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 #
 # Set the name of the controller you're using

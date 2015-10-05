@@ -39,6 +39,7 @@
   <a href="https://github.com/JMRI">GitHub.com</a>.
   The <a href="WebSite.shtml">web site</a> is in a similar repository.
   
+<a name="view" id="view"></a>  
 <h2>Viewing the Code Online</h3>
   <p>You can 
   <a href="https://github.com/JMRI/JMRI">browse the JMRI code directly</a>
@@ -47,6 +48,7 @@
   to display its source HTML code.
   </p>
 
+<a name="propose" id="propose"></a>
 <h3>Proposing Changes Online</h3>
   
 <a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
@@ -69,7 +71,7 @@
   agreed to maintain the JMRI central code, who will review and (usually) include it in 
   the next JMRI release.
   
-
+  <a name="get" id="get"></a>
   <h2>Get Your Own Copy</h2>
 
   <p>Our source code is distributed using <a
@@ -98,7 +100,8 @@
   <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
 
   
-  <h3 id="desktop">Using the GitHub Desktop Application</h3>
+  <a name="desktop" id="desktop"></a>
+  <h3>Using the GitHub Desktop Application</h3>
   
   <a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" align="right" height="271" width="113"/></a>
 
@@ -153,7 +156,8 @@
   install and use, and is the primary example in the documentation)</p>
 
   
-  <h3 id="cmd">Using the command line</h3>
+  <a name="cmd" id="cmd"></a>
+  <h3>Using the command line</h3>
   
   <p>
   First, check whether Git is installed on your computer.  From a 
@@ -207,7 +211,8 @@
 
 
 
-  <h3 id="ide">Using an Integrated Development Environment (IDE)</h3>
+  <a name="ide" id="ide"></a>
+  <h3>Using an Integrated Development Environment (IDE)</h3>
 
   <p>
   Most IDEs have Git support build in.  
