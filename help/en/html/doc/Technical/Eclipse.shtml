@@ -229,7 +229,9 @@
 	periodically, then when ready to publish "push" an entire set of
 	changes to a repository belonging to you on GitHub, and then finally
 	making a request for somebody to "pull" your changes into the main JMRI
-	repository.
+	repository. See
+	<a href="GitFAQ.shtml">JMRI: Git FAQ</a> "Setting up a GIT environment
+	for JMRI Developers" for more information.
 
 	<P>It is also good practice to "pull" all of the recent changes
 		from the main JMRI repository before performing your commits. After a
