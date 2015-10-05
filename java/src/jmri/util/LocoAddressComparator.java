@@ -15,7 +15,7 @@ public class LocoAddressComparator implements Comparator<LocoAddress>, java.io.S
     /**
      *
      */
-    private static final long serialVersionUID = -3811487999466749129L;
+    private static final long serialVersionUID = 10_04_2015L;
 
     public LocoAddressComparator() {
     }
