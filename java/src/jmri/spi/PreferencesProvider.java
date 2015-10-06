@@ -23,9 +23,16 @@ public interface PreferencesProvider {
      * Initialize the PreferencesProvider with preferences associated with the
      * provided Profile.
      *
+     * Implementing classes should throw an InitializationException with a user
+     * readable localized message, since it most likely be displayed to the
+     * user. Implementing classes will still want to ensure that isInitialized
+     * returns true if throwing an InitializationException to ensure that the
+     * provider is not repeatedly initialized.
+     *
      * @param profile
+     * @throws jmri.spi.InitializationException
      */
-    public void initialize(Profile profile);
+    public void initialize(Profile profile) throws InitializationException;
 
     /**
      * Test if the PreferencesProvider is initialized for the provided Profile.

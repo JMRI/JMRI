@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.ServiceLoader;
@@ -18,6 +19,7 @@ import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.swing.DialogErrorHandler;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
+import jmri.spi.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -31,6 +33,7 @@ public class JmriConfigurationManager implements ConfigureManager {
 
     private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManager.class);
     private ConfigXmlManager legacy = new ConfigXmlManager();
+    private final HashMap<PreferencesProvider, InitializationException> initializationExceptions = new HashMap<>();
 
     public JmriConfigurationManager() {
         ServiceLoader<PreferencesProvider> sl = ServiceLoader.load(PreferencesProvider.class);
@@ -202,7 +205,11 @@ public class JmriConfigurationManager implements ConfigureManager {
                 InstanceManager.getList(PreferencesProvider.class).stream().forEach((provider) -> {
                     this.initializeProvider(provider, ProfileManager.getDefault().getActiveProfile());
                 });
-            } 
+                if (!this.initializationExceptions.isEmpty()) {
+                    // TODO: Display list of errors
+                    // TODO: Open TabbedPreferences
+                }
+            }
         } catch (URISyntaxException ex) {
             log.error("Unable to get File for {}", file);
             throw new JmriException(ex.getMessage(), ex);
@@ -239,8 +246,19 @@ public class JmriConfigurationManager implements ConfigureManager {
                     this.initializeProvider(p, profile);
                 });
             }
-            provider.initialize(profile);
+            try {
+                provider.initialize(profile);
+            } catch (InitializationException ex) {
+                // only log an initializations exception for a provider the first times
+                if (!this.initializationExceptions.containsKey(provider)) {
+                    log.error("Exception initializing {}: {}", provider.getClass().getName(), this.getInitializationExceptions().put(provider, ex).getMessage());
+                }
+            }
         }
         return provider.isInitialized(profile);
+    }
+
+    public HashMap<PreferencesProvider, InitializationException> getInitializationExceptions() {
+        return initializationExceptions;
     }
 }
