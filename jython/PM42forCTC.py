@@ -21,6 +21,8 @@
 # 2008 Feb
 #
 
+import jmri
+
 import java
 
 #

@@ -5,8 +5,8 @@
 # Author: Steve Todd, copyright 2014
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 from org.apache.log4j import Logger
 

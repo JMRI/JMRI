@@ -1294,10 +1294,12 @@ public class Track {
      * Used to determine if track can service the rolling stock.
      *
      * @param rs the car or loco to be tested
-     * @return TYPE, ROAD, LENGTH, OKAY
+     * @return Error string starting with TYPE, ROAD, LENGTH, DESTINATION, or
+     *         LOAD if there's an issue. OKAY if track can service Rolling Stock.
      */
     public String accepts(RollingStock rs) {
         // first determine if rolling stock can be move to the new location
+        // note that there's code that checks for certain issues by checking the first word of the status string returned
         if (!acceptsTypeName(rs.getTypeName())) {
             log.debug("Rolling stock ({}) type ({}) not accepted at location ({}, {}) wrong type", rs.toString(), rs
                     .getTypeName(), getLocation().getName(), getName()); // NOI18N

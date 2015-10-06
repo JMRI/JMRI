@@ -8,12 +8,11 @@
 # Author: Paul Bender, copyright 2015 
 # Part of the JMRI distribution
 #
-# The next line is maintained by SVN, please don't change it
-# $Revision$
-#
 # The Reporter names is hardcoded in the example near the bottom.
 # Change those to something that makes sense for your layout
 #
+
+import jmri
 
 # First, define the listener class.  This gets messages
 # from the reporter, uses the reports to look up equipment

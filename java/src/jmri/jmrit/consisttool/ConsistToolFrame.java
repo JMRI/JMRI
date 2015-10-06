@@ -285,6 +285,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     private void initializeConsistBox() {
         ArrayList<DccLocoAddress> existingConsists = ConsistMan.getConsistList();
         if (!existingConsists.isEmpty()) {
+            java.util.Collections.sort(existingConsists,new jmri.util.LocoAddressComparator()); // sort the consist list.
             consistAdrBox.removeAllItems();
             existingConsists.forEach((consist)->consistAdrBox.addItem(consist));
             consistAdrBox.setEnabled(true);
