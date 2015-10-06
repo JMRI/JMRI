@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -196,9 +197,16 @@ public class JmriConfigurationManager implements ConfigureManager {
 
     @Override
     public boolean load(URL file, boolean registerDeferred) throws JmriException {
-        InstanceManager.getList(PreferencesProvider.class).stream().forEach((provider) -> {
-            this.initializeProvider(provider, ProfileManager.getDefault().getActiveProfile());
-        });
+        try {
+            if (file == null || (new File(file.toURI())).getName().equals("ProfileConfig.xml")) {
+                InstanceManager.getList(PreferencesProvider.class).stream().forEach((provider) -> {
+                    this.initializeProvider(provider, ProfileManager.getDefault().getActiveProfile());
+                });
+            } 
+        } catch (URISyntaxException ex) {
+            log.error("Unable to get File for {}", file);
+            throw new JmriException(ex.getMessage(), ex);
+        }
         return this.legacy.load(file, registerDeferred);
         // return true; // always return true once legacy support is dropped
     }
