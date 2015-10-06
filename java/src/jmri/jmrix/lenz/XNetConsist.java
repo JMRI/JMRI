@@ -57,8 +57,20 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
     XNetSystemConnectionMemo systemMemo;
 
     // Clean Up local storage, and remove the XNetListener
-    public void dispose() {
-        super.dispose();
+    @Override
+    synchronized public void dispose() {
+        for (int i = (ConsistList.size() - 1); i >= 0; i--) {
+            DccLocoAddress loco = ConsistList.get(i);
+            if (log.isDebugEnabled()) {
+                log.debug("Deleting Locomotive: " + loco.toString());
+            }
+            try {
+                remove(loco);
+            } catch (Exception ex) {
+                log.error("Error removing loco: " + loco.toString() + " from consist: " + ConsistAddress.toString());
+            }
+        }
+
         tc.removeXNetListener(
                 XNetInterface.COMMINFO
                 | XNetInterface.CONSIST,
@@ -152,8 +164,10 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      * Method for removing an address from the internal consist list object.
      */
     private synchronized void removeFromConsistList(DccLocoAddress LocoAddress) {
-        ConsistDir.remove(LocoAddress);
-        ConsistList.remove(LocoAddress);
+        if(ConsistList.contains(LocoAddress)) {
+           ConsistDir.remove(LocoAddress);
+           ConsistList.remove(LocoAddress);
+        }
         notifyConsistListeners(LocoAddress, ConsistListener.OPERATION_SUCCESS);
     }
 
@@ -239,6 +253,7 @@ public class XNetConsist extends jmri.implementation.DccConsist implements XNetL
      *  @param address is the Locomotive address to add to the locomotive
      */
     public synchronized void remove(DccLocoAddress LocoAddress) {
+        log.debug("Consist {}: remove called for address {}",ConsistAddress, LocoAddress );
         if (ConsistType == ADVANCED_CONSIST) {
             // save the address for the check after we get a response 
             // from the command station
