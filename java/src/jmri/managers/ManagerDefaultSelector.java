@@ -151,7 +151,7 @@ public class ManagerDefaultSelector extends Bean implements PreferencesProvider 
         if (connList == null) {
             return; // nothing to do 
         }
-        for (Class c : defaults.keySet()) {
+        for (Class<?> c : defaults.keySet()) {
             // 'c' is the class to load
             String connectionName = this.defaults.get(c);
             // have to find object of that type from proper connection
@@ -218,8 +218,7 @@ public class ManagerDefaultSelector extends Bean implements PreferencesProvider 
 
     @Override
     public boolean isInitialized(Profile profile) {
-        Boolean isInitialized = this.initialized.get(profile);
-        return (isInitialized != null) ? isInitialized : false;
+        return this.initialized.getOrDefault(profile, false);
     }
 
     @Override

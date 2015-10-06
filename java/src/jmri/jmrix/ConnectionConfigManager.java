@@ -79,10 +79,7 @@ public class ConnectionConfigManager extends Bean implements PreferencesProvider
 
     @Override
     public boolean isInitialized(Profile profile) {
-        if (this.initialized.containsKey(profile)) {
-            return this.initialized.get(profile);
-        }
-        return false;
+        return this.initialized.getOrDefault(profile, false);
     }
 
     @Override
