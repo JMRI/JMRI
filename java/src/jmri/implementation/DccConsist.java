@@ -384,6 +384,21 @@ public class DccConsist implements Consist, ProgListener {
         this.notifyConsistListeners(ConsistAddress, ConsistListener.OK);
     }
 
+    /*
+     * Restore the consist to the command station.
+     */
+    @Override
+    public void restore() {
+        // itterate through the list to re-add the addresses to the 
+        // command station.
+        java.util.Iterator<DccLocoAddress> i = ConsistList.iterator();
+        while (i.hasNext()) {
+            DccLocoAddress locoaddress = i.next();
+            add(locoaddress, getLocoDirection(locoaddress));
+        }
+        // notify any listeners that the consist changed
+        this.notifyConsistListeners(ConsistAddress, ConsistListener.OK);
+    }
 
     /*
      * Notify all listener objects of a status change.

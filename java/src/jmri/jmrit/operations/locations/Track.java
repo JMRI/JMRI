@@ -75,6 +75,7 @@ public class Track {
     protected int _reservedInRoute = 0; // length of cars in route to this track
     protected int _reservationFactor = 100; // percentage of track space for cars in route
     protected int _mode = MATCH; // default is match mode
+    protected boolean _forwardCustomLoads = false; // when true forward cars with custom loads to this spur
 
     // drop options
     protected String _dropOption = ANY; // controls which route or train can set out cars
@@ -450,6 +451,25 @@ public class Track {
 
     public Track getAlternateTrack() {
         return _location.getTrackById(_alternateTrackId);
+    }
+    
+    public void setForwardCarsWithCustomLoadsEnabled(boolean enable) {
+        boolean old = _forwardCustomLoads;
+        _forwardCustomLoads = enable;
+        setDirtyAndFirePropertyChange("forwardCarsWithCustomLoads", old, enable);
+    }
+
+    /**
+     * If enabled (true), always forward cars with custom loads to this spur
+     * with schedule rather than allowing them to go to staging if the spur and
+     * the alternate track was full. If disabled, cars with custom loads can be
+     * forwarded to staging when this spur and all others with this option are
+     * also false.
+     * 
+     * @return True if enabled
+     */
+    public boolean isForwardCarsWithCustomLoadsEnabled() {
+        return _forwardCustomLoads;
     }
 
     /**
@@ -2432,6 +2452,9 @@ public class Track {
                 log.error("Schedule mode isn't a vaild number for track {}", getName());
             }
         }
+        if ((a = e.getAttribute(Xml.FORWARD_CARS_CUSTOM)) != null) {
+            setForwardCarsWithCustomLoadsEnabled(a.getValue().equals(Xml.TRUE));
+        }
         if ((a = e.getAttribute(Xml.ALTERNATIVE)) != null) {
             _alternateTrackId = a.getValue();
         }
@@ -2655,6 +2678,7 @@ public class Track {
             e.setAttribute(Xml.ITEM_COUNT, Integer.toString(getScheduleCount()));
             e.setAttribute(Xml.FACTOR, Integer.toString(getReservationFactor()));
             e.setAttribute(Xml.SCHEDULE_MODE, Integer.toString(getScheduleMode()));
+            e.setAttribute(Xml.FORWARD_CARS_CUSTOM, isForwardCarsWithCustomLoadsEnabled() ? Xml.TRUE : Xml.FALSE);
         }
         if (getAlternateTrack() != null) {
             e.setAttribute(Xml.ALTERNATIVE, getAlternateTrack().getId());
