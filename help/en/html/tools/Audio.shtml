@@ -145,7 +145,7 @@ The JMRI audio framework makes use of either of the following audio libraries:
 <h4>Mac OS X</h4>
 Those versions of Mac OS X that are suitable for JMRI already have a suitable version installed.
 <h4>MS Windows</h4>
-By default, OpenAL will require installing on your system. Certain sound cards, notably those manufactured by Creative Labs and NVidia, will normally already come with suitable OpenAL drivers. If OpenAL is not installed, <a href="http://connect.creativelabs.com/openal/Downloads/oalinst.zip">it should be downloaded</a> from Creative Labs and then installed on your system.
+By default, OpenAL will require installing on your system. Certain sound cards, notably those manufactured by Creative Labs and NVidia, will normally already come with suitable OpenAL drivers. If OpenAL is not installed, <a href="http://www.openal.org/downloads/">it should be downloaded</a> from OpenAL.org and then installed on your system.
 <h4>Linux</h4>
 Depending on the provider of your Linux distribution, OpenAL might already be included in the default package. If not, the 'libopenal-dev' package should be installed using the package manager on your system. For Debian-based distributions, this will typically be achieved by the command:
 <pre>$ sudo apt-get install libopenal-dev</pre>
