@@ -28,15 +28,10 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         c.register();
     }
 
-    /**
-     * Default implementation for storing the static contents of the serial port
-     * implementation
-     *
-     * @param o Object to store, of type PositionableLabel
-     * @return Element containing the complete info
-     */
     @Override
-    abstract public Element store(Object o);
+    public Element store(Object o, boolean shared) {
+        return this.store(o);
+    }
 
     protected void storeCommon(Element e, PortAdapter adapter) {
         if (adapter.getSystemConnectionMemo() != null) {

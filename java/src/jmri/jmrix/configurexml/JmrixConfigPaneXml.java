@@ -47,6 +47,11 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
     }
 
     @Override
+    public Element store(Object o, boolean shared) {
+        return this.store(o);
+    }
+
+    @Override
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
