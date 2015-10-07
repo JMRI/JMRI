@@ -137,7 +137,7 @@ classes that control the audio processing.
 <h3>Technical details</h3>
 The JMRI audio framework makes use of either of the following audio libraries:
 <ul>
-<li><a href="http://java.sun.com/products/java-media/sound/">JavaSound</a> - for basic audio functions (limited to stereo)
+<li><a href="http://www.oracle.com/technetwork/java/index-139508.html">JavaSound</a> - for basic audio functions (limited to stereo)
 <p>JavaSound is normally available with a Sun Microsystems Java Runtime Environment; other vendors, such as OpenJDK, do not include JavaSound.
 <li><a href="http://www.openal.org/">OpenAL</a> - for full-featured audio functions (including support for up-to 7.1 surround)
 <p>OpenAL may already be included with your system.
