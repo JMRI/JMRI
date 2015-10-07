@@ -43,7 +43,7 @@ public class OlimexRfidProtocol extends RfidProtocol {
     public String getTag(AbstractMRReply msg) {
         StringBuilder sb = new StringBuilder(10);
 
-        for (int i = 4; i < 14; i++) {
+        for (int i = 3; i < 13; i++) {
             sb.append((char) msg.getElement(i));
         }
 
