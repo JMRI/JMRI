@@ -3019,11 +3019,10 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSetFinalDestination"),
                     new Object[]{car.toString(), car.getLoadName(), track.getLocation().getName(), track.getName()}));
 
-            // show if track has an alternate
-            if (track.getAlternateTrack() != null) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
-                        new Object[]{track.getLocation().getName(), track.getName(),
-                                track.getAlternateTrack().getName()}));
+            // show if track is requesting cars with custom loads to only go to spurs
+            if (track.isForwardCarsWithCustomLoadsEnabled()) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildForwardCarsCustom"),
+                        new Object[]{track.getLocation().getName(), track.getName()}));
             }
 
             // check the number of in bound cars to this track

@@ -3,11 +3,9 @@ package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import jmri.jmrit.operations.OperationsFrame;
@@ -32,9 +30,6 @@ class AlternateTrackFrame extends OperationsFrame {
 
     // combo boxes
     JComboBox<Track> trackBox = new JComboBox<>();
-    
-    //
-    JCheckBox forwardCars = new JCheckBox();
 
     // radio buttons
     // major buttons
@@ -57,35 +52,29 @@ class AlternateTrackFrame extends OperationsFrame {
         pAlternate.setBorder(BorderFactory.createTitledBorder(""));
         addItem(pAlternate, trackBox, 0, 0);
 
-        _track.getLocation().updateComboBox(trackBox);
-        trackBox.removeItem(_track);	// remove this track from consideration
-        trackBox.setSelectedItem(_track.getAlternateTrack());
+        if (_track != null) {
+            _track.getLocation().updateComboBox(trackBox);
+            trackBox.removeItem(_track); // remove this track from consideration
+            trackBox.setSelectedItem(_track.getAlternateTrack());
+        }
         
-        JPanel pOptions = new JPanel();
-        pOptions.setLayout(new GridBagLayout());
-        pOptions.setBorder(BorderFactory.createTitledBorder(""));
-        addItem(pOptions, forwardCars, 0, 0);
-        forwardCars.setSelected(_track.isForwardCarsWithCustomLoadsEnabled());
-        forwardCars.setText( MessageFormat.format(Bundle.getMessage("ForwardCarsWithCustomLoads"), _track.getName()));
-
         JPanel pControls = new JPanel();
         pControls.add(saveButton);
+        saveButton.setEnabled(_track != null);
 
         // button action
         addButtonAction(saveButton);
 
         getContentPane().add(pAlternate);
-        getContentPane().add(pOptions);
         getContentPane().add(pControls);
         
-        initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight200));
+        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
         
     }
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
         if (ae.getSource() == saveButton) {
             _track.setAlternateTrack((Track) trackBox.getSelectedItem());
-            _track.setForwardCarsWithCustomLoadsEnabled(forwardCars.isSelected());
             OperationsXml.save();
             if (Setup.isCloseWindowOnSaveEnabled()) {
                 dispose();
