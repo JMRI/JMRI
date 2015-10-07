@@ -1,4 +1,4 @@
-package jmri.jmrix.rfid.protocol.em18;
+package jmri.jmrix.rfid.protocol.seeedstudio;
 
 import jmri.jmrix.AbstractMRReply;
 import junit.framework.Test;
@@ -8,77 +8,84 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Tests for the Em18RfidProtocol class
- *
+ * Tests for the SeeedStudioRfidProtocol class
+ * 
+ * SeeedStudio protocol:
+ * 
+ * 1-char - [STX] - 0x02
+ * 10-chars - ASCII representation of 5 Tag ID bytes
+ * 2-chars - ASCII representation of 1 checksum bytes
+ * 1-char - [ETX] - 0x03
+ * 
  * @author Matthew Harris
  */
-public class Em18RfidProtocolTest extends TestCase {
+public class SeeedStudioRfidProtocolTest extends TestCase {
 
-    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("7800656EB6C5");
-    AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("7800656EB6C6");
+    AbstractMRReply msgStandalone = new AbstractMRReplyImpl("\u00027800652CC9F8\u0003");
+    AbstractMRReply msgBadChkSumStandalone = new AbstractMRReplyImpl("\u00027800652CC9C6\u0003");
 
     /**
-     * Test of getMaxSize method, of class Em18RfidProtocol.
+     * Test of getMaxSize method, of class SeeedStudioRfidProtocol.
      */
     public void testGetMaxSize() {
-        assertEquals(12, Em18RfidProtocol.getMaxSize());
+        assertEquals(14, SeeedStudioRfidProtocol.getMaxSize());
     }
 
     /**
-     * Test of initString method, of class Em18RfidProtocol.
+     * Test of initString method, of class SeeedStudioRfidProtocol.
      */
     public void testInitString() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals("", instance.initString());
     }
 
     /**
-     * Test of getTag method, of class Em18RfidProtocol.
+     * Test of getTag method, of class SeeedStudioRfidProtocol.
      */
     public void testGetTag() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
-        assertEquals("7800656EB6", instance.getTag(msgStandalone));
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
+        assertEquals("7800652CC9", instance.getTag(msgStandalone));
     }
 
     /**
-     * Test of providesChecksum method, of class Em18RfidProtocol.
+     * Test of providesChecksum method, of class SeeedStudioRfidProtocol.
      */
     public void testProvidesChecksum() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.providesChecksum());
     }
 
     /**
-     * Test of getCheckSum method, of class Em18RfidProtocol.
+     * Test of getCheckSum method, of class SeeedStudioRfidProtocol.
      */
     public void testGetCheckSum() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
-        assertEquals("C5", instance.getCheckSum(msgStandalone));
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
+        assertEquals("F8", instance.getCheckSum(msgStandalone));
     }
 
     /**
-     * Test of isValid method, of class Em18RfidProtocol.
+     * Test of isValid method, of class SeeedStudioRfidProtocol.
      */
     public void testIsValid() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
         assertEquals(false, instance.isValid(msgBadChkSumStandalone));
     }
 
     /**
-     * Test of isCheckSumValid method, of class Em18RfidProtocol.
+     * Test of isCheckSumValid method, of class SeeedStudioRfidProtocol.
      */
     public void testIsCheckSumValid() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.isCheckSumValid(msgStandalone));
         assertEquals(false, instance.isCheckSumValid(msgBadChkSumStandalone));
     }
 
     /**
-     * Test of endOfMessage method, of class Em18RfidProtocol.
+     * Test of endOfMessage method, of class SeeedStudioRfidProtocol.
      */
     public void testEndOfMessage() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         assertEquals(true, instance.endOfMessage(msgStandalone));
     }
 
@@ -86,17 +93,17 @@ public class Em18RfidProtocolTest extends TestCase {
      * Test of getReaderPort method, of class CoreIdRfidProtocol.
      */
     public void testGetReaderPort() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
         char expResult = 0x00;
         assertEquals(expResult, instance.getReaderPort(msgStandalone));
     }
 
     /**
-     * Test of toMonitorString method, of class Em18RfidProtocol.
+     * Test of toMonitorString method, of class SeeedStudioRfidProtocol.
      */
     public void testToMonitorString() {
-        Em18RfidProtocol instance = new Em18RfidProtocol();
-        String expResult = "Reply from EM-18 reader. Tag read 7800656EB6 checksum C5 valid? yes";
+        SeeedStudioRfidProtocol instance = new SeeedStudioRfidProtocol();
+        String expResult = "Reply from SeeedStudio reader. Tag read 7800652CC9 checksum F8 valid? yes";
         assertEquals(expResult, instance.toMonitorString(msgStandalone));
     }
 
@@ -118,19 +125,19 @@ public class Em18RfidProtocolTest extends TestCase {
     }
 
     // from here down is testing infrastructure
-    public Em18RfidProtocolTest(String testName) {
+    public SeeedStudioRfidProtocolTest(String testName) {
         super(testName);
     }
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", Em18RfidProtocolTest.class.getName()};
+        String[] testCaseName = {"-noloading", SeeedStudioRfidProtocolTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(Em18RfidProtocolTest.class);
+        TestSuite suite = new TestSuite(SeeedStudioRfidProtocolTest.class);
         return suite;
     }
 
@@ -145,6 +152,6 @@ public class Em18RfidProtocolTest extends TestCase {
         apps.tests.Log4JFixture.tearDown();
     }
 
-    static Logger log = LoggerFactory.getLogger(Em18RfidProtocolTest.class.getName());
+    static Logger log = LoggerFactory.getLogger(SeeedStudioRfidProtocolTest.class.getName());
 
 }
