@@ -5,7 +5,7 @@
     <title>
  	JMRI: Getting the Code
     </title>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code Git download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -60,16 +60,17 @@
   Then go to the file you want to change and click the pencil icon on the upper-right of the page.
   <p>
 <a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
-  This will, after a second or two, give you a page where you can directly edit the
+  This will, after a second or two, give you a page where you can edit the
   contents of the file with your suggested change.
-  Don't worry, you're not actually changing JMRI's version, just
-  a copy local to you. 
+  Don't worry, you're not actually changing JMRI's original code, just
+  your personal copy of the code. 
   <p>
   Then fill out the form at the bottom with a useful subject
   line, and a description of why this is a good change, and click the
-  "Propose file change" button.  This sends your change to the people who've
+  "Propose file change" button. This saves your edits to your personal copy on the Git server.<br />
+  Next, click on the "Pull request" button at the top right of the code panel. This sends your change to the people who've
   agreed to maintain the JMRI central code, who will review and (usually) include it in 
-  the next JMRI release.
+  the next JMRI release (<a href="gitdeveloper.shtml#pull">more details</a>).</p>
   
   <a name="get" id="get"></a>
   <h2>Get Your Own Copy</h2>
