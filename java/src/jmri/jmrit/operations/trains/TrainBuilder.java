@@ -3021,7 +3021,7 @@ public class TrainBuilder extends TrainCommon {
 
             // show if track is requesting cars with custom loads to only go to spurs
             if (track.isHoldCarsWithCustomLoadsEnabled()) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildForwardCarsCustom"),
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarsCustom"),
                         new Object[]{track.getLocation().getName(), track.getName()}));
             }
 
