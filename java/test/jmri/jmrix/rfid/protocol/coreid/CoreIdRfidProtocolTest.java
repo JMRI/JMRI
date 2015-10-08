@@ -73,11 +73,11 @@ public class CoreIdRfidProtocolTest extends TestCase {
         // First as stand-alone
         CoreIdRfidProtocol instance = new CoreIdRfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(true, instance.isValid(msgBadChkSumStandalone));
+        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
         // Now as concentrator
         instance = new CoreIdRfidProtocol('A', 'H', 1);
         assertEquals(true, instance.isValid(msgConcentrator));
-        assertEquals(true, instance.isValid(msgBadChkSumConcentrator));
+        assertEquals(false, instance.isValid(msgBadChkSumConcentrator));
     }
 
     /**
