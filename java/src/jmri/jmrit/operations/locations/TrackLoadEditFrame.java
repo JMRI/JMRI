@@ -4,7 +4,6 @@ package jmri.jmrit.operations.locations;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridBagLayout;
-import java.text.MessageFormat;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -71,7 +70,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     // check boxes
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
-    JCheckBox forwardCars = new JCheckBox();
+    JCheckBox holdCars = new JCheckBox();
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -211,7 +210,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         pOptions.setLayout(new GridBagLayout());
         pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
         pOptions.setMaximumSize(new Dimension(2000, 400));
-        addItem(pOptions, forwardCars, 0, 0);
+        addItem(pOptions, holdCars, 0, 0);
+        holdCars.setText(Bundle.getMessage("HoldCarsWithCustomLoads"));
+        holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
 
         // row 12
         JPanel panelButtons = new JPanel();
@@ -264,8 +265,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             paneShipLoadControls.setVisible(_track.getTrackType().equals(Track.STAGING));
             paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));
             pOptions.setVisible(_track.getTrackType().equals(Track.SPUR));
-            forwardCars.setSelected(_track.isForwardCarsWithCustomLoadsEnabled());
-            forwardCars.setText( MessageFormat.format(Bundle.getMessage("ForwardCarsWithCustomLoads"), _track.getName()));
+            holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             updateButtons(true);
         } else {
             updateButtons(false);
@@ -343,7 +343,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     protected void save() {
         checkForErrors();
-        _track.setForwardCarsWithCustomLoadsEnabled(forwardCars.isSelected());
+        _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();
         shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();
