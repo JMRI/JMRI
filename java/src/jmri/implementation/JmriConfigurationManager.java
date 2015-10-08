@@ -202,7 +202,8 @@ public class JmriConfigurationManager implements ConfigureManager {
     public boolean load(URL file, boolean registerDeferred) throws JmriException {
         try {
             if (file == null || (new File(file.toURI())).getName().equals("ProfileConfig.xml")) {
-                InstanceManager.getList(PreferencesProvider.class).stream().forEach((provider) -> {
+                List<PreferencesProvider> providers = new ArrayList<>(InstanceManager.getList(PreferencesProvider.class));
+                providers.stream().forEach((provider) -> {
                     this.initializeProvider(provider, ProfileManager.getDefault().getActiveProfile());
                 });
                 if (!this.initializationExceptions.isEmpty()) {
