@@ -88,12 +88,13 @@ public class SeeedStudioRfidProtocol extends RfidProtocol {
 
     @Override
     public boolean isValid(AbstractMRReply msg) {
-        return ((!isConcentrator && msg.getElement(0) == 0x02
+        return (((!isConcentrator && msg.getElement(0) == 0x02
                 && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x03)
                 || (isConcentrator
                 && msg.getElement(portPosition) >= concentratorFirst
                 && msg.getElement(portPosition) <= concentratorLast
-                && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x3E));
+                && (msg.getElement(SPECIFICMAXSIZE - 1) & 0xFF) == 0x3E))
+                && isCheckSumValid(msg));
     }
 
     public boolean isCheckSumValid(AbstractMRReply msg) {
