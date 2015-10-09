@@ -50,6 +50,9 @@
 ; -------------------------------------------------------------------------
 ; - Version History
 ; -------------------------------------------------------------------------
+; - Version 0.1.22.4
+; - Remove RXTX files as now replaced by purejavacomm
+; -------------------------------------------------------------------------
 ; - Version 0.1.22.3
 ; - Fix decpro5 file name (.ico missing)
 ; -------------------------------------------------------------------------
@@ -261,7 +264,7 @@
   ; -- usually, this will be determined by the build.xml ant script
   !define JRE_VER   "1.8"                       ; Required JRE version
 !endif
-!define INST_VER  "0.1.22.3"                    ; Installer version
+!define INST_VER  "0.1.22.4"                    ; Installer version
 !define PNAME     "${APP}.${JMRI_VER}"          ; Name of installer.exe
 !define SRCDIR    "."                           ; Path to head of sources
 InstallDir        "$PROGRAMFILES\JMRI"          ; Default install directory
@@ -570,6 +573,11 @@ SectionGroup "JMRI Core Files" SEC_CORE
 
     ; -- Delete old JOAL .dll files
     Delete "$OUTDIR\lib\x86\joal_native.dll"
+
+    ; -- Delete RXTX files
+    Delete "$OUTDIR\lib\RXTXcomm.jar"
+    Delete "$OUTDIR\lib\x86\rxtxSerial.dll"
+    Delete "$OUTDIR\lib\x64\rxtxSerial.dll"
 
     ; -- Delete old log files from program folder
     Delete "$OUTDIR\messages.log"
