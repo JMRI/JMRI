@@ -77,9 +77,8 @@ public class JmriConfigurationManager implements ConfigureManager {
     public void registerPref(Object o) {
         if ((o instanceof PreferencesProvider)) {
             InstanceManager.store((PreferencesProvider) o, PreferencesProvider.class);
-        } else {
-            this.legacy.registerPref(o);
         }
+        this.legacy.registerPref(o);
     }
 
     @Override
