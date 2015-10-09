@@ -1,15 +1,12 @@
 // SerialSensorAdapter.java
 package jmri.jmrix.serialsensor;
 
-import gnu.io.CommPortIdentifier;
-import gnu.io.PortInUseException;
-import gnu.io.SerialPort;
-import gnu.io.SerialPortEvent;
-import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ResourceBundle;
+import java.util.TooManyListenersException;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.Sensor;
@@ -17,6 +14,13 @@ import jmri.jmrix.AbstractSerialPortController;
 import jmri.jmrix.SystemConnectionMemo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
+import purejavacomm.NoSuchPortException;
+import purejavacomm.PortInUseException;
+import purejavacomm.SerialPort;
+import purejavacomm.SerialPortEvent;
+import purejavacomm.SerialPortEventListener;
+import purejavacomm.UnsupportedCommOperationException;
 
 /**
  * Implements SerialPortAdapter for connecting to two sensors via the serial
@@ -58,7 +62,7 @@ public class SerialSensorAdapter extends AbstractSerialPortController
             // try to set it for comunication via SerialDriver
             try {
                 activeSerialPort.setSerialPortParams(9600, SerialPort.DATABITS_8, SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
-            } catch (gnu.io.UnsupportedCommOperationException e) {
+            } catch (UnsupportedCommOperationException e) {
                 log.error("Cannot set serial parameters on port " + portName + ": " + e.getMessage());
                 return "Cannot set serial parameters on port " + portName + ": " + e.getMessage();
             }
@@ -137,16 +141,16 @@ public class SerialSensorAdapter extends AbstractSerialPortController
 
             opened = true;
 
-        } catch (gnu.io.NoSuchPortException ex1) {
+        } catch (NoSuchPortException ex1) {
             log.error("No such port " + portName, ex1);
             return "No such port " + portName + ": " + ex1;
-        } catch (gnu.io.UnsupportedCommOperationException ex2) {
+        } catch (UnsupportedCommOperationException ex2) {
             log.error("Exception to operation on port " + portName, ex2);
             return "Exception to operation on port " + portName + ": " + ex2;
-        } catch (java.util.TooManyListenersException ex3) {
+        } catch (TooManyListenersException ex3) {
             log.error("Too Many Listeners on port " + portName, ex3);
             return "Too Many Listeners on port " + portName + ": " + ex3;
-        } catch (java.io.IOException ex4) {
+        } catch (IOException ex4) {
             log.error("I/O error on port " + portName, ex4);
             return "I/O error on port " + portName + ": " + ex4;
         }

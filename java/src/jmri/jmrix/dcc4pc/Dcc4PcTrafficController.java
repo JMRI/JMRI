@@ -1,7 +1,6 @@
 // Dcc4PcTrafficController.java
 package jmri.jmrix.dcc4pc;
 
-import gnu.io.SerialPort;
 import java.io.DataInputStream;
 import java.util.Calendar;
 import jmri.CommandStation;
@@ -12,6 +11,7 @@ import jmri.jmrix.AbstractMRTrafficController;
 import jmri.jmrix.dcc4pc.serialdriver.SerialDriverAdapter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.SerialPort;
 
 /*import gnu.io.SerialPortEvent;
  import gnu.io.SerialPortEventListener;*/

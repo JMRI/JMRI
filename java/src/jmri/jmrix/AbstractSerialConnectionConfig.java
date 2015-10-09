@@ -1,7 +1,6 @@
 // AbstractSerialConnectionConfig.java
 package jmri.jmrix;
 
-import gnu.io.CommPortIdentifier;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridBagConstraints;
@@ -29,6 +28,7 @@ import jmri.util.PortNameMapper;
 import jmri.util.PortNameMapper.SerialPortFriendlyName;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import purejavacomm.CommPortIdentifier;
 
 /**
  * Abstract base class for common implementation of the ConnectionConfig
