@@ -1,8 +1,10 @@
 package apps.configurexml;
 
 import apps.PerformActionModel;
+import apps.StartupActionsManager;
 import java.awt.event.ActionEvent;
 import javax.swing.Action;
+import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -77,7 +79,8 @@ public class PerformActionModelXml extends jmri.configurexml.AbstractXmlAdapter 
         PerformActionModel m = new PerformActionModel();
         m.setClassName(className);
         PerformActionModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformActionPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.configureManagerInstance().registerPref(new apps.PerformActionPanel());
         return result;
     }
 

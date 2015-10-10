@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -118,7 +120,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        
+        InstanceManager.getDefault(StartupActionsManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
@@ -158,6 +160,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
         Item(AbstractActionModel m) {
             this();
             model = m;
+            InstanceManager.getDefault(StartupActionsManager.class).addModel(model);
             selections.setSelectedItem(m.getName());
         }
 
@@ -183,6 +186,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
             if (model == null) {
                 model = getNewModel();
             }
+            InstanceManager.getDefault(StartupActionsManager.class).addModel(model);
             model.setName((String) selections.getSelectedItem());
             return model;
         }
@@ -197,6 +201,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
+                InstanceManager.getDefault(StartupActionsManager.class).removeModel(model);
                 model = null;
                 dirty = true;
             }

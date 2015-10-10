@@ -1,7 +1,9 @@
 package apps.configurexml;
 
 import apps.PerformScriptModel;
+import apps.StartupActionsManager;
 import java.io.File;
+import jmri.InstanceManager;
 import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
@@ -63,7 +65,8 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         PerformScriptModel m = new PerformScriptModel();
         m.setFileName(fileName);
         PerformScriptModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformScriptPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.configureManagerInstance().registerPref(new apps.PerformScriptPanel());
         return result;
     }
 

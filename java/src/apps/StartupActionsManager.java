@@ -2,7 +2,8 @@ package apps;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import jmri.beans.Bean;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
@@ -28,6 +29,7 @@ import org.slf4j.LoggerFactory;
 public class StartupActionsManager extends Bean implements PreferencesProvider {
 
     private final HashMap<Profile, Boolean> initialized = new HashMap<>();
+    private final Set<StartupModel> models = new HashSet<>();
     public final static String STARTUP = "startup"; // NOI18N
     public final static String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/startup-2-9-6.xsd"; // NOI18N
     private final static Logger log = LoggerFactory.getLogger(StartupActionsManager.class);
@@ -78,12 +80,15 @@ public class StartupActionsManager extends Bean implements PreferencesProvider {
     }
 
     @Override
-    public void savePreferences(Profile profile) {
+    public synchronized void savePreferences(Profile profile) {
         Element element = new Element(STARTUP, NAMESPACE);
-        element.addContent(this.savePreferences(CreateButtonModel.rememberedObjects()));
-        element.addContent(this.savePreferences(PerformActionModel.rememberedObjects()));
-        element.addContent(this.savePreferences(PerformFileModel.rememberedObjects()));
-        element.addContent(this.savePreferences(PerformScriptModel.rememberedObjects()));
+        for (StartupModel model : models) {
+            log.debug("model is {}", model);
+            Element e = ConfigXmlManager.elementFromObject(model, true);
+            if (e != null) {
+                element.addContent(e);
+            }
+        }
         try {
             ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), true);
         } catch (JDOMException ex) {
@@ -91,14 +96,15 @@ public class StartupActionsManager extends Bean implements PreferencesProvider {
         }
     }
 
-    public List<Element> savePreferences(List<? extends StartupModel> models) {
-        List<Element> elements = new ArrayList<>();
-        for (StartupModel model : models) {
-            Element e = ConfigXmlManager.elementFromObject(model, true);
-            if (e != null) {
-                elements.add(e);
-            }
-        }
-        return elements;
+    public Set<StartupModel> getModels() {
+        return this.models;
+    }
+
+    public void addModel(StartupModel model) {
+        this.models.add(model);
+    }
+
+    public void removeModel(StartupModel model) {
+        this.models.remove(model);
     }
 }

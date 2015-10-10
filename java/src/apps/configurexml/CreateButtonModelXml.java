@@ -2,9 +2,11 @@ package apps.configurexml;
 
 import apps.Apps;
 import apps.CreateButtonModel;
+import apps.StartupActionsManager;
 import apps.gui3.Apps3;
 import javax.swing.Action;
 import javax.swing.JButton;
+import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -80,7 +82,8 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         CreateButtonModel m = new CreateButtonModel();
         m.setClassName(className);
         CreateButtonModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.CreateButtonPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.configureManagerInstance().registerPref(new apps.CreateButtonPanel());
         return result;
     }
 
