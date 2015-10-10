@@ -11,7 +11,7 @@ import java.util.List;
  * @version $Revision$
  * @see PerformFilePanel
  */
-public class PerformFileModel {
+public class PerformFileModel implements StartupModel {
 
     public PerformFileModel() {
         fileName = null;

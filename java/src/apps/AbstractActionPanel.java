@@ -118,7 +118,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        
     }
 
     @Override
