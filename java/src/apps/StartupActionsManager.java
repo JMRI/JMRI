@@ -83,10 +83,15 @@ public class StartupActionsManager extends Bean implements PreferencesProvider {
     public synchronized void savePreferences(Profile profile) {
         Element element = new Element(STARTUP, NAMESPACE);
         for (StartupModel model : models) {
-            log.debug("model is {}", model);
-            Element e = ConfigXmlManager.elementFromObject(model, true);
-            if (e != null) {
-                element.addContent(e);
+            log.debug("model is {} ({})", model.getName(), model);
+            if (model.getName() != null) {
+                Element e = ConfigXmlManager.elementFromObject(model, true);
+                if (e != null) {
+                    element.addContent(e);
+                }
+            } else {
+                // get an error with a stack trace if this occurs
+                log.error("model cannot have a name.", new Exception());
             }
         }
         try {

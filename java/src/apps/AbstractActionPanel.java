@@ -84,7 +84,9 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
 
     protected void addItem() {
         synchronized (self) {
-            add(new Item());
+            Item i = new Item();
+            add(i);
+            InstanceManager.getDefault(StartupActionsManager.class).addModel(i.model);
             revalidate();
             repaint();
             this.dirty = true;
@@ -153,6 +155,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
             selections.addItemListener((ItemEvent e) -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     dirty = true;
+                    model.setName((String) selections.getSelectedItem());
                 }
             });
         }
@@ -160,11 +163,10 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
         Item(AbstractActionModel m) {
             this();
             model = m;
-            InstanceManager.getDefault(StartupActionsManager.class).addModel(model);
             selections.setSelectedItem(m.getName());
         }
 
-        AbstractActionModel model = null;
+        AbstractActionModel model = getNewModel();
         JComboBox<String> selections;
 
         void updateCombo() {
@@ -186,7 +188,6 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
             if (model == null) {
                 model = getNewModel();
             }
-            InstanceManager.getDefault(StartupActionsManager.class).addModel(model);
             model.setName((String) selections.getSelectedItem());
             return model;
         }
