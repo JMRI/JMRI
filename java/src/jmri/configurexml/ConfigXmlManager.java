@@ -486,10 +486,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     String defaultBackupDirectory = FileUtil.getUserFilesPath() + "backupPanels";
 
     /**
-     * 
+     *
      * @param o The object to get an XML representation of
      * @return An XML element representing o
-     * @deprecated 
+     * @deprecated
      */
     @Deprecated
     static public Element elementFromObject(Object o) {
@@ -497,9 +497,10 @@ public class ConfigXmlManager extends jmri.jmrit.XmlFile
     }
 
     /**
-     * 
+     *
      * @param object The object to get an XML representation of
-     * @param shared true if the XML should be shared, false if the XML should be per-node
+     * @param shared true if the XML should be shared, false if the XML should
+     *               be per-node
      * @return An XML element representing object
      */
     static public Element elementFromObject(Object object, boolean shared) {
