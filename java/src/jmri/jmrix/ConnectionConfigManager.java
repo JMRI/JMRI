@@ -8,7 +8,6 @@ import jmri.beans.Bean;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
-import jmri.profile.ProfileManager;
 import jmri.profile.ProfileUtils;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
@@ -115,11 +114,10 @@ public class ConnectionConfigManager extends Bean implements PreferencesProvider
             }
         }
         try {
-            ProfileUtils.getAuxiliaryConfiguration(ProfileManager.getDefault().getActiveProfile()).putConfigurationFragment(JDOMUtil.toW3CElement(element), shared);
+            ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), shared);
         } catch (JDOMException ex) {
             log.error("Unable to create create XML", ex);
         }
-
     }
 
     public boolean add(ConnectionConfig c) {
