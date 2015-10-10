@@ -254,6 +254,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                     log.error("Exception initializing {}: {}", provider.getClass().getName(), this.getInitializationExceptions().put(provider, ex).getMessage());
                 }
             }
+            log.debug("Initialized provider {}", provider.getClass());
         }
         return provider.isInitialized(profile);
     }
