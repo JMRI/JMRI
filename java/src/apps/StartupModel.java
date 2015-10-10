@@ -9,4 +9,6 @@ package apps;
  */
 public interface StartupModel {
 
+    public String getName();
+    
 }

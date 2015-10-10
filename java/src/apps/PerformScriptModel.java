@@ -19,6 +19,11 @@ public class PerformScriptModel implements StartupModel {
 
     String fileName;
 
+    @Override
+    public String getName() {
+        return this.getFileName();
+    }
+
     public String getFileName() {
         return fileName;
     }
