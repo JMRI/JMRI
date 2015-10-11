@@ -2,14 +2,14 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-    <TITLE>
+    <title>
  	JMRI: LocoNet Tools
-    </TITLE>
-    <META content="Bob Jacobsen, Egbert Broerse" name="Author">
+    </title>
+    <meta content="Bob Jacobsen, Egbert Broerse" name="Author">
     <meta name="keywords" content="Digitrax LocoNet Tools JMRI decoderpro dcc nmra">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -206,10 +206,10 @@
 		    <H2>LocoIO Programmer</H2>
 		    <p>
 		    The LocoIO programmer provides a simple interface for configuring
-		    <a HREF="http://www.locobuffer.com/LocoIO.htm">John Jabour's LocoIO board</a>, 
+		    <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">John Jabour's LocoIO board</a>, 
 		    a powerful component for building CTC boards and control
 		    panels. (More information on the board is available at
-		    <a HREF="http://www.locobuffer.com/LocoIO.htm">http://www.locobuffer.com/LocoIO.htm</a>)
+		    <a href="http://www.locobuffer.com">http://www.locobuffer.com</a>)
 		    </p>
 
 		    <p>A LocoIO board has 16 signal pins, each of which can be
@@ -234,7 +234,7 @@
 
                     <p></p>
 		    <dd>
-			<H2><a name="cmdstn">Digitrax Command Station Configuration Tool</a></H2>
+			<h2><a name="cmdstn">Digitrax Command Station Configuration Tool</a></h2>
 			<p>
 			This tool provides a mechanism to read and write the 
                         command station OpSw values which control the basic 

@@ -1,57 +1,53 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!-- $Id$ -->
 <html lang="en">
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
-	<TITLE>JMRI LocoIO Programmer Tools</TITLE>
+<head>
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8">
+	<title>JMRI LocoIO Programmer Tools</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 
-</HEAD>
+</head>
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI LocoIO Programmer Tools</H1>
+<h1>JMRI LocoIO Programmer Tools</h1>
         
-JMRI contains tool to simplify programming the LocoIO accessory 
-input/output/controller board.
-<P>
-This tool was greatly updated by John Plocher for JMRI release 1.8.
-The first section of this page is John's description of this 
-new programmer.  
-The 
-<a href="#older">second part of the page</a>
-are the instructions for the older programmer, which is still available.
+JMRI contains a tool to simplify programming the LocoIO accessory 
+input/output/controller board. This tool was greatly updated by John Plocher for JMRI release 1.8.
+<p>The <a href="#curent">first section</a> of this page is John's description of the current LocoIO programmer.  
+The <a href="#older">second part</a> of the page
+contains instructions for the older programmer, which is still available.
 
-<P>
-
-This version ONLY deals with SV1 & SV2 (address/subaddress) and
-SV3-SV50 (primary mode,value1 and value2 for ports 1-16.
+<a name="current"><h2>Using the LocoIO Programmer</h2></a>
+<p>
+This version ONLY deals with SV1 &amp; SV2 (address/subaddress) and
+SV3-SV50 (primary mode, value1 and value2 for ports 1-16).
 In particular, it does NOT address SV0 (board level configuration),
 SV51-SV98 (alternate Opcodes) or SV101-124 (servo config).
-<P>
+<p>
 Usage model:
 <UL>
 <LI>Enter a LocoIO address and sub-address
 <LI>Click on "probe" button
 <LI>If a locoIO is found at that address, its firmware version is displayed
-    (the Monitor Loconet window will show all the LocoIOs that responded
+    (the Monitor Loconet window will show all the LocoIO's that responded
     to the probe request if you need to refresh your memory)
 
 <LI>If you wish to change the address of a locoIO board, you MUST
-    ensure that it is the ONLY locoIO-based board connected to the
+    ensure that it is the ONLY LocoIO-based board connected to the
     LocoNet, as the address is set via a broadcast message.  A popup
-    will remind you of this.  If you ignore it, then ALL of the locoIOs
-    on your loconet will be reprogrammed with the same new address.
+    will remind you of this.  If you ignore it, then ALL of the LocoIO's
+    on your Loconet will be reprogrammed with the same new address.
 
 <li>"read all" reads all the CV values from the LocoIO specified.
     "write all" writes them all out
@@ -64,7 +60,7 @@ Usage model:
     address of the selected port.
 </UL>
 
-<P>
+<p>
 To-Do list:
 <UL>
 <LI>Need UI to configure the various SV0 states.
@@ -74,14 +70,14 @@ To-Do list:
     broadcast address.
 
 <LI>Write a set of config data out to a text file in the
-    form used by Hans's programmer, and reread it back when
+    form used by Hans Deloofs standalone Windows programmer, and read it back when
     requested.
 </UL>
 
 
-<A name="older">
+<a name="older">
 
-        <h2>Instructions for Older Programmer</h2></a>
+        <h2>Using the older LocoIO Programmer</h2></a>
 			<a href="images/locoio.gif">
 			    <img src="images/locoio.gif"
 			         width=100 height=50></a>
@@ -90,10 +86,10 @@ To-Do list:
             JMRI. This section contains the instructions for that programmer.
             <P>
 		    The programmer provides a table-based interface for configuring
-		    <a HREF="http://www.locobuffer.com/LocoIO.htm">John Jabour's LocoIO board</a>, 
+		    <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">John Jabour's LocoIO board</a>, 
 		    a powerful component for building CTC boards and control
 		    panels. (More information on the board is available at
-		    <a HREF="http://www.locobuffer.com/LocoIO.htm">http://www.locobuffer.com/LocoIO.htm</a>)
+		    <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">http://www.locobuffer.com/LocoIO/LocoIO.htm</a>)
 		    </p>
 
 		    <p>A LocoIO board has 16 signal pins, each of which can be
