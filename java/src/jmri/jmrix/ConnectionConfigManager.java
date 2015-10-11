@@ -1,14 +1,14 @@
 package jmri.jmrix;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import jmri.beans.Bean;
+import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
+import jmri.spi.AbstractPreferencesProvider;
 import jmri.spi.PreferencesProvider;
 import jmri.util.jdom.JDOMUtil;
 import org.jdom2.Element;
@@ -17,12 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ * Manager for ConnectionConfig objects.
  *
- * @author rhwood
+ * @author Randall Wood (C) 2015
  */
-public class ConnectionConfigManager extends Bean implements PreferencesProvider, Iterable<ConnectionConfig> {
+public class ConnectionConfigManager extends AbstractPreferencesProvider implements Iterable<ConnectionConfig> {
 
-    private final HashMap<Profile, Boolean> initialized = new HashMap<>();
     private final ArrayList<ConnectionConfig> connections = new ArrayList<>();
     private final String NAMESPACE = "http://jmri.org/xml/schema/auxiliary-configuration/connections-2-9-6.xsd";
     private final String CONNECTIONS = "connections";
@@ -35,62 +35,52 @@ public class ConnectionConfigManager extends Bean implements PreferencesProvider
 
     @Override
     public void initialize(Profile profile) {
-        log.debug("Initializing...");
-        try {
-            Element sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
-            Element perNodeConnections = null;
+        if (!this.isInitialized(profile)) {
+            log.debug("Initializing...");
             try {
-                perNodeConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, false));
-            } catch (NullPointerException ex) {
-                log.info("No local configuration found.");
-            }
-            if (sharedConnections != null) {
-                for (Element shared : sharedConnections.getChildren(CONNECTION)) {
-                    Element perNode = null;
-                    String className = shared.getAttributeValue(CLASS);
-                    String userName = shared.getAttributeValue(USER_NAME, "");
-                    String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
-                    String manufacturer = shared.getAttributeValue(MANUFACTURER, "");
-                    log.debug("Read {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                    if (perNodeConnections != null) {
-                        for (Element e : perNodeConnections.getChildren(CONNECTION)) {
-                            if (systemName.equals(e.getAttributeValue(SYSTEM_NAME))) {
-                                perNode = e;
+                Element sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
+                Element perNodeConnections = null;
+                try {
+                    perNodeConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, false));
+                } catch (NullPointerException ex) {
+                    log.info("No local configuration found.");
+                }
+                if (sharedConnections != null) {
+                    for (Element shared : sharedConnections.getChildren(CONNECTION)) {
+                        Element perNode = null;
+                        String className = shared.getAttributeValue(CLASS);
+                        String userName = shared.getAttributeValue(USER_NAME, "");
+                        String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
+                        String manufacturer = shared.getAttributeValue(MANUFACTURER, "");
+                        log.debug("Read {}:{} ({}) class {}", userName, systemName, manufacturer, className);
+                        if (perNodeConnections != null) {
+                            for (Element e : perNodeConnections.getChildren(CONNECTION)) {
+                                if (systemName.equals(e.getAttributeValue(SYSTEM_NAME))) {
+                                    perNode = e;
+                                }
                             }
                         }
-                    }
-                    try {
-                        log.debug("Creating {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                        ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
-                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                        log.error("Unable to create {} for {}", className, shared, ex);
-                    } catch (Exception ex) {
-                        log.error("Unable to load {} into {}", shared, className, ex);
+                        try {
+                            log.debug("Creating {}:{} ({}) class {}", userName, systemName, manufacturer, className);
+                            ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
+                        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                            log.error("Unable to create {} for {}", className, shared, ex);
+                        } catch (Exception ex) {
+                            log.error("Unable to load {} into {}", shared, className, ex);
+                        }
                     }
                 }
+            } catch (NullPointerException ex) {
+                log.info("Unable to read configuration.");
             }
-        } catch (NullPointerException ex) {
-            log.info("Unable to read configuration.");
+            this.setIsInitialized(profile, true);
+            log.debug("Initialized...");
         }
-        this.initialized.put(profile, Boolean.TRUE);
-        log.debug("Initialized...");
     }
 
     @Override
-    public boolean isInitialized(Profile profile) {
-        return this.initialized.getOrDefault(profile, false);
-    }
-
-    @Override
-    public Iterable<Class<? extends PreferencesProvider>> getRequires() {
-        return new ArrayList<>();
-    }
-
-    @Override
-    public Iterable<Class<?>> getProvides() {
-        List<Class<?>> provides = new ArrayList<>();
-        provides.add(ConnectionConfigManager.class);
-        return provides;
+    public Set<Class<? extends PreferencesProvider>> getRequires() {
+        return new HashSet<>();
     }
 
     @Override
@@ -137,11 +127,11 @@ public class ConnectionConfigManager extends Bean implements PreferencesProvider
     public ConnectionConfig[] getConnections() {
         return this.connections.toArray(new ConnectionConfig[this.connections.size()]);
     }
-    
+
     public ConnectionConfig getConnections(int index) {
         return this.connections.get(index);
     }
-    
+
     @Override
     public Iterator<ConnectionConfig> iterator() {
         return this.connections.iterator();
