@@ -27,6 +27,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.ShutDownTask;
@@ -54,6 +55,7 @@ import jmri.jmrit.symbolicprog.Pr1ImportAction;
 import jmri.jmrit.symbolicprog.Pr1WinExportAction;
 import jmri.jmrit.symbolicprog.PrintAction;
 import jmri.jmrit.symbolicprog.PrintCvAction;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.Qualifier;
 import jmri.jmrit.symbolicprog.QualifierAdder;
 import jmri.jmrit.symbolicprog.ResetTableModel;
@@ -1729,27 +1731,29 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * Option to control appearance of empty panes
+     *
+     * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        showEmptyPanes = yes;
+        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
     public static boolean getShowEmptyPanes() {
-        return showEmptyPanes;
+        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
-    static boolean showEmptyPanes = true;
 
     /**
      * Option to control appearance of CV numbers in tool tips
+     *
+     * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        showCvNumbers = yes;
+        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
     }
 
     public static boolean getShowCvNumbers() {
-        return showCvNumbers;
+        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }
-    static boolean showCvNumbers = false;
 
     public RosterEntry getRosterEntry() {
         return _rosterEntry;

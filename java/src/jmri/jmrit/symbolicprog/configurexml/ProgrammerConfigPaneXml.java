@@ -1,7 +1,8 @@
 package jmri.jmrit.symbolicprog.configurexml;
 
+import jmri.InstanceManager;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.ProgrammerConfigPane;
-import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -54,25 +55,17 @@ public class ProgrammerConfigPaneXml extends jmri.configurexml.AbstractXmlAdapte
             if (log.isDebugEnabled()) {
                 log.debug("set programmer default file: " + shared.getAttribute("defaultFile").getValue());
             }
-            jmri.jmrit.symbolicprog.ProgDefault.setDefaultProgFile(shared.getAttribute("defaultFile").getValue());
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setDefaultFile(shared.getAttribute("defaultFile").getValue());
         }
 
         Attribute a;
         if (null != (a = shared.getAttribute("showEmptyPanes"))) {
-            if (a.getValue().equals("no")) {
-                PaneProgFrame.setShowEmptyPanes(false);
-            } else {
-                PaneProgFrame.setShowEmptyPanes(true);
-            }
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(!a.getValue().equals("no"));
         }
         if (null != (a = shared.getAttribute("showCvNumbers"))) {
-            if (a.getValue().equals("yes")) {
-                PaneProgFrame.setShowCvNumbers(true);
-            } else {
-                PaneProgFrame.setShowCvNumbers(false);
-            }
+            InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(a.getValue().equals("yes"));
         }
-        jmri.InstanceManager.configureManagerInstance().registerPref(new jmri.jmrit.symbolicprog.ProgrammerConfigPane(true));
+        InstanceManager.configureManagerInstance().registerPref(new ProgrammerConfigPane());
         return result;
     }
 
