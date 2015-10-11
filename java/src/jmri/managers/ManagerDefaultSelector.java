@@ -3,7 +3,6 @@ package jmri.managers;
 
 import java.beans.PropertyChangeEvent;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.prefs.BackingStoreException;
@@ -17,12 +16,10 @@ import jmri.InstanceManager;
 import jmri.PowerManager;
 import jmri.ProgrammerManager;
 import jmri.ThrottleManager;
-import jmri.beans.Bean;
-import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
-import jmri.spi.PreferencesProvider;
+import jmri.spi.AbstractPreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,11 +42,10 @@ import org.slf4j.LoggerFactory;
  * @version	$Revision$
  * @since 2.9.4
  */
-public class ManagerDefaultSelector extends Bean implements PreferencesProvider {
+public class ManagerDefaultSelector extends AbstractPreferencesProvider {
 
     //private static ManagerDefaultSelector instance = null;
     public final Hashtable<Class<?>, String> defaults = new Hashtable<>();
-    private final HashMap<Profile, Boolean> initialized = new HashMap<>();
 
     /*public static synchronized ManagerDefaultSelector instance() {
      if (instance == null) {
@@ -197,42 +193,25 @@ public class ManagerDefaultSelector extends Bean implements PreferencesProvider 
 
     @Override
     public void initialize(Profile profile) {
-        Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
-        try {
-            for (String name : settings.keys()) {
-                String connection = settings.get(name, null);
-                Class<?> cls = this.classForName(name);
-                log.debug("Loading default {} for {}", connection, name);
-                if (cls != null) {
-                    this.defaults.put(cls, connection);
-                    log.debug("Loaded default {} for {}", connection, cls);
+        if (!this.isInitialized(profile)) {
+            Preferences settings = ProfileUtils.getPreferences(profile, this.getClass(), true).node("defaults"); // NOI18N
+            try {
+                for (String name : settings.keys()) {
+                    String connection = settings.get(name, null);
+                    Class<?> cls = this.classForName(name);
+                    log.debug("Loading default {} for {}", connection, name);
+                    if (cls != null) {
+                        this.defaults.put(cls, connection);
+                        log.debug("Loaded default {} for {}", connection, cls);
+                    }
                 }
+            } catch (BackingStoreException ex) {
+                log.info("Unable to read preferences for Default Selector.");
             }
-        } catch (BackingStoreException ex) {
-            log.info("Unable to read preferences for Default Selector.");
+            this.configure();
+            InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
+            this.setIsInitialized(profile, true);
         }
-        this.configure();
-        InstanceManager.configureManagerInstance().registerPref(this); // allow ProfileConfig.xml to be written correctly
-        this.initialized.put(profile, Boolean.TRUE);
-    }
-
-    @Override
-    public boolean isInitialized(Profile profile) {
-        return this.initialized.getOrDefault(profile, false);
-    }
-
-    @Override
-    public Iterable<Class<? extends PreferencesProvider>> getRequires() {
-        List<Class<? extends PreferencesProvider>> provides = new ArrayList<>();
-        provides.add(ConnectionConfigManager.class);
-        return provides;
-    }
-
-    @Override
-    public Iterable<Class<?>> getProvides() {
-        List<Class<?>> provides = new ArrayList<>();
-        provides.add(ManagerDefaultSelector.class);
-        return provides;
     }
 
     @Override
