@@ -3,11 +3,13 @@ package jmri.jmrit.symbolicprog;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.implementation.FileLocationsPreferences;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.AbstractPreferencesProvider;
 import jmri.spi.InitializationException;
+import jmri.spi.PreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,6 +44,13 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     }
 
     @Override
+    public Set<Class<? extends PreferencesProvider>> getRequires() {
+        Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
+        requires.add(FileLocationsPreferences.class);
+        return requires;
+    }
+
+    @Override
     public Set<Class<?>> getProvides() {
         Set<Class<?>> provides = super.getProvides();
         provides.stream().forEach((provide) -> {
@@ -54,7 +63,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
     public void savePreferences(Profile profile) {
         Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
         if (this.defaultFile != null) {
-        preferences.put(DEFAULT_FILE, this.defaultFile);
+            preferences.put(DEFAULT_FILE, this.defaultFile);
         } else {
             preferences.remove(DEFAULT_FILE);
         }
