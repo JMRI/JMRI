@@ -5,7 +5,7 @@
     <TITLE>
  	JMRI: LocoNet Tools
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen, Egbert Broerse" name="Author">
     <meta name="keywords" content="Digitrax LocoNet Tools JMRI decoderpro dcc nmra">
 
 <!-- Style -->
@@ -22,7 +22,7 @@
 
 	<div id="mainContent">
 
-	    <H1>LocoNet&trade; Tools</H1>
+	    <h1>LocoNet&trade; Tools</h1>
 		<p class=subtitle>
 		   LocoNet is a trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a>
 		</p>
@@ -166,14 +166,14 @@
                     <p></p>
 		    <dt class=im100w>
                         <a name="pm4"></a>
-                        <a href="images/DS64.jpg">
-			    <img src="images/DS64.jpg"
-			         width=70 height=100
+                        <a href="images/DS64.png">
+			    <img src="images/DS64.png"
+			         width=85 height=96
 			         alt="DS64"></a>
 		    </dt>
                     
 		    <dd>
-		    <H2>BDL16, SE8c, PM4 and DS64 Programmers</H2>
+		    <H2>DS64, SE8c, PM4 and BDL16 Programmers</H2>
 		    <p>
 			These programmer tools provide
 			a simple graphic interface for configuring Digitrax
@@ -225,7 +225,7 @@
 		    <p>
 		    More information on the JMRI LocoIO programmer is
 		    available on a
-		    <A HREF="LocoIO.shtml">separate page</a>.
+		    <a href="LocoIO.shtml">separate page</a>.
 
 		    </dd>
 
