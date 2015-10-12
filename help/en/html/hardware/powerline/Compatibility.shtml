@@ -5,17 +5,17 @@
 <title>JMRI: Powerline Controllers</title>
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
 	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<link REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
@@ -57,7 +57,7 @@ See also the main page on
     <br />
     RCA HC60CRX
   </td> <!-- Model -->
-  <td><img src="http://graphics.x10.com/images/cm11asa.gif" width="125" height="150"/></td> <!-- Image -->
+  <td><img src="hc60crx.jpg" width="88" height="118"></td> <!-- Image -->
   <td>
     This adapter can be identified by the 4 pin RJ-11 connection on the bottom.
     <br />
@@ -73,7 +73,7 @@ See also the main page on
   <td nowrap>
     CP290
   </td> <!-- Model -->
-  <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71"/></td> <!-- Image -->
+  <td><img src="http://www.eng.auburn.edu/~doug/cp290.gif" width="114" height="71"></td> <!-- Image -->
   <td>
     This is a console-like adapter.  It can also provides buttons
     for operating X10 devices.
@@ -81,7 +81,7 @@ See also the main page on
     To use this with JMRI, select "Powerline Controller" in the JMRI preferences,
     the proper serial port, and "CP290" for the adapter.
     <br />
-    This adapter is no longer in production. Consider the Insteon 2412S as an alternitive.
+    This adapter is no longer in production. Consider the Insteon 2412S as an alternative.
   </td>  <!-- Comment -->
   <td>Support is available starting in JMRI 2.1.5</td> <!-- Type -->
 </tr>
@@ -89,10 +89,10 @@ See also the main page on
 <tr>
   <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td>CM15A</td> <!-- Model -->
-  <td><img src="http://graphics.x10.com/images_ahp//cm15a_c.gif" width="125" height="150"/></td> <!-- Image -->
+  <td><img src="cm15a.jpg" width="108" height="149"></td> <!-- Image -->
   <td>
     This is the adapter that comes with the ActiveHome Professional.
-    Best identified by the USB connection on the bottom and an attenna on the side.
+    Best identified by the USB connection on the bottom and an antenna on the side.
   </td>  <!-- Comment -->
   <td>Not Supported (<i>yet</i>).
   We hope to support it next, pending USB support and somebody willing to test.
@@ -104,12 +104,12 @@ See also the main page on
 <tr>
   <td><a href="http://www.x10.com">X10.com</a></td> <!-- Manufacturer -->
   <td>CM17A</td> <!-- Model -->
-  <td><img src="http://graphics.x10.com/images2/ck17a_detail.jpg" width="125" height="150"/>
-    <img src="http://graphics.x10.com/images6/fc_inter.jpg" width="125" height="150" />
+  <td><img src="cm17a.jpg" width="128" height="99">
+    <img src="tm751.jpg" width="112" height="145">
 </td> <!-- Image -->
   <td>
-    This device depends on another X10 device that is the true controller,
-    typically the TM751 device.
+    This device (top) depends on another X10 device that is the true controller,
+    typically the TM751 device (bottom).
     While it is a serial device, it uses the RTS/DTS lines instead of the data lines.
     That lets the device work while having most other serial devices work through it.
   </td>  <!-- Comment -->
