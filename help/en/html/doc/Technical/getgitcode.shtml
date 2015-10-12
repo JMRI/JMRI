@@ -96,7 +96,7 @@
   "<a href="gitdeveloper.shtml">Developing with JMRI Code</a>"
   page.</p>
   
-  <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
+  <p>Also check the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
 
   
   <a name="desktop" id="desktop"></a>
@@ -208,8 +208,6 @@
   etc.  (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
 
-
-
   <a name="ide" id="ide"></a>
   <h3>Using an Integrated Development Environment (IDE)</h3>
 
@@ -224,10 +222,9 @@
   <li><a href="JBuilder.shtml">JBuilder</a> 
   </ul>
 
-
   <h2>Access to Old Releases</h2>
 
-  <p>The best way to retrieve the source for releases 4.1.1 and earlier
+  <p>The best way to retrieve the source for releases 4.1.2 and earlier
   is from the <a href="getsvncode.shtml">SVN Repository</a>.  Please
   see those instructions for details.</p>
 
