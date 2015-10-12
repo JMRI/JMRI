@@ -44,8 +44,8 @@ source code, you should use the detailed instructions below.</p>
 
   <h2>Details</h2>
 
-  <p>Our source code up to JMRI version 4.0 was distributed using <a
-  href="http://subversion.apache.org/">Subversion</a>. (We also kept
+  <p>Our source code up to JMRI version 4.1.2 was distributed using <a
+  href="http://subversion.apache.org/">Subversion</a>. (Until then we also kept
   the <a href="WebSite.shtml">web site</a> in Subversion, if you'd like
   to work with it directly.)  If you want to work with the code, a few
   minutes installing Subversion is well worth it.  We're sorry, but we
