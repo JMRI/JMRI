@@ -2,10 +2,10 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-    <TItlE>
- 	JMRI: Getting the Code
-    </titlE>
-    <META content="Bob Jacobsen" name=Author>
+    <title>
+ 	JMRI: Getting the OLD SVN Code - no longer supported
+    </title>
+    <meta content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code SVN download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -26,25 +26,26 @@
 	    <!-- Page Contents --> <!-- Required -->
 	    <!-- ------------- -->
 
-  <h1>JMRI: Getting the Code</h1>
+  <h1>JMRI: Getting the old SVN Code</h1>
 
-<em>
-JMRI has migrated to Git instead of SVN for holding our code.
-Please see those
-<a href="getgitcode.shtml">instructions for getting the most recent code via Git</a>.</em>
+<h2>This page is kept for historical purposes only!</h2>
+
+<p><em>JMRI has migrated away from <a href="getcvscode.shtml">CVS</a> for version control to SVN in July 2011, and on to Git in September 2015. For access to the current JMRI source code, please see the <a href="getgitcode.shtml">Git repository</a> information.</em></p>
+<p>JMRI release 4.1.1 (and earlier) were made from SVN, and to access that
+source code, you should use the detailed instructions below.</p>
 
   <h2>Quickstart</h2>
 
-  <p>You can download the most recent source code from Subversion using:
+  <p>You can download the JMRI source code from Subversion using:
   <code><pre>
     svn checkout https://svn.code.sf.net/p/jmri/code/trunk/jmri
-  </prE></code>
+  </pre></code>
   </p>
 
   <h2>Details</h2>
 
-  <p>Our source code is distributed using <a
-  href="http://subversion.apache.org/">Subversion</a>.  (We also keep
+  <p>Our source code up to JMRI version 4.1.2 was distributed using <a
+  href="http://subversion.apache.org/">Subversion</a>. (Until then we also kept
   the <a href="WebSite.shtml">web site</a> in Subversion, if you'd like
   to work with it directly.)  If you want to work with the code, a few
   minutes installing Subversion is well worth it.  We're sorry, but we
@@ -72,7 +73,7 @@ Please see those
   to the most recent contents of the Subversion repository, the command is:
   <pre>
   svn update
-  </prE></p>
+  </pre></p>
 
   <p>See also the <a href="SVNFAQ.shtml">Subversion FAQ page</a>.</p>
 
@@ -100,7 +101,7 @@ Please see those
   do that or see the <a href="index.shtml#contributing">info on
   contributing</a>.</p>
 
-  <h2>Access to Old Releases</h2>
+  <h2>Access to Releases 2.12 and older</h2>
 
   <p>The best way to retrieve the source for releases 2.12 and earlier
   is from the <a href="getcvscode.shtml">CVS Repository</a>.  Please
