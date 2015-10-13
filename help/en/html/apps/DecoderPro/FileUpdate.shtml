@@ -21,16 +21,16 @@
 <div id="mainContent">
 
 
-<H1>DecoderPro User Guide - Updating Decoder Definitions</H1>
+<h1>DecoderPro User Guide - Updating Decoder Definitions</h1>
 
 Many people have contributed decoder definition
-files to DecoderPro.  Between new releases, new files will 
-be created that you might want to use.  New ones can usually be
+files to DecoderPro.  Between new releases, new files may 
+be created that you might want to use.  These can usually be
 found either on
-<a href="http://jmri.sf.net/xml/decoders">the JMRI web site</a>
+<a href="http://jmri.sf.net/xml/decoders/">the JMRI web site</a>
 or in the 
-<a href="http://groups.yahoo.com/group/jmriusers/files/">files area of the jmriusers Yahoo group</a>.
-<P>
+<a href="https://groups.yahoo.com/neo/groups/jmriusers/files/">files area of the jmriusers Yahoo group</a> (log in to access).
+<p>
 To use these xml files you need to download and install them.
 
 <p>
@@ -94,8 +94,6 @@ when you specifically imported that specific version.  If you'd prefer to use
 the one in the new JMRI version, just delete yours from your preferences directory
 and select "Rebuild Decoder Index" in the debug menu.
 
-
-
 <a name="before236">
 <h2>JMRI Version 2.3.5 And Before</h2>
 
@@ -103,49 +101,49 @@ This section describes adding a new decoder definition when you are using JMRI
 version 2.3.5 or before.
 
 <h3>On Windows Systems</h3>
-<UL>
-<LI>Go to the files menu where the decoder.XML file is located and 
+<ul>
+<li>Go to the files menu where the decoder.XML file is located and 
   right click on the file.
  <P>
   (Don't double click or you will open the file rather than saving 
 it.)
  
-<LI>Choose the menu selection "Save as" or "Save target as".  After 
+<li>Choose the menu selection "Save as" or "Save target as".  After 
 you 
   choose this menu item a window will pop up and ask you for a 
 location 
   that you want to save the file.
  
-<P> You can either type in a directory name or click the browse 
+<p> You can either type in a directory name or click the browse 
 button.  
   To save a step I suggest that you choose browse and then select 
   the "program files/JMRI/XML/Decoders" directory. 
  
-<P>If you save the file to any other directory, or the desktop you 
+<p>If you save the file to any other directory, or the desktop you 
 will 
   have to copy the file over to the correct directory using the copy 
   and paste in Windows Explorer.  It's easier to just save it in the 
   correct directory in the first place.
  
-<LI>Once the file is in the decoders directory you need to open 
+<li>Once the file is in the decoders directory you need to open 
 Decoder 
   Pro and choose the Debug menu item.  It's one of the menu items on 
   the top horizontal menu on the opening screen. 
  
-<LI>From the drop down debug menu choose the item that says "rebuild 
+<li>From the drop down debug menu choose the item that says "rebuild 
 (or 
   recreate) decoder index".  After you have rebuilt the decoder 
 index 
   the decoder should show up.
  
-<P>The key to make this work is that the downloaded XML file needs to 
+<p>The key to make this work is that the downloaded XML file needs to 
 be 
   in the JMRI/XML/decoders directory, otherwise Decoder Pro doesn't 
   know that it is there, and won't see it when you rebuild the 
 decoder 
   index.
 
-</UL>
+</ul>
 
 
     
