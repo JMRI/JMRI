@@ -413,22 +413,38 @@
     <label>
       <text> </text>
     </label>
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+		<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+			<row>
+			  	<display item="Extended mapping" format="checkbox"/>
+			</row>
+		</griditem>
+		<group>
+		  <qualifier>
+			  <variableref>Extended mapping</variableref>
+			  <relation>eq</relation>
+			  <value>1</value>
+			</qualifier>
+		  <griditem gridx="1" gridy="0" gridwidth="1" anchor="LINE_END">
+			  <column>
+				  <display item="Function to deactivate start delay"/>
+				  <display item="Function for dimmed lights"/>
+				  <display item="Function for shunting speed"/>
+			  </column>
+		  </griditem>
+		</group>
+	</grid>
     <label>
       <text> </text>
     </label>
-    <row>
-      <column>
-        <display item="Function for front and rear lights on"/>
-      </column>
-      <column>
-        <label>
-          <text>                       </text>
-        </label>
-      </column>
-      <column>
-        <display item="Function for AUX 1 and AUX 2 on"/>
-      </column>
-    </row>
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+		<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+			  	<display item="Function for front and rear lights on"/>
+		</griditem>
+        <griditem gridx="1" gridy="0" gridwidth="1" anchor="LINE_END">
+			  	<display item="Function for AUX 1 and AUX 2 on"/>
+		</griditem>
+	</grid>
     <label>
       <text> </text>
     </label>
