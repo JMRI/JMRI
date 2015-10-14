@@ -179,7 +179,8 @@
                 modifications do not cause the templates to break entirely. If
                 web access does not work as expected after modifying a template,
                 check the JMRI logs for the cause.</p>
-        </div>
+
         <!--#include virtual="/Footer" -->
-    </body>
+	  </div><!-- closes #mainContent-->
+	  </body>
 </html>

@@ -5,7 +5,7 @@
     <TITLE>
  	JMRI: Technical Info
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code ">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->

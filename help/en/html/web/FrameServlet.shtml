@@ -28,7 +28,7 @@ The JMRI Frame Servlet provides web access to JMRI windows.  Its base url is "/f
 which by itself will return a page listing available frames.
 
 <p>
-It uses the facilities of the jmri.util.JmriJFrame class
+It uses the facilities of the <code>jmri.util.JmriJFrame</code> class
 to locate windows and create an image of their current appearance.
 The window does not have to be maximized, but it does have to be open;
 it's OK for the window to have been minimized to the Start Bar (Windows)
@@ -42,9 +42,11 @@ refresh (recommended) or use the older meta-refresh.
 
 <p>
 You can override the defaults for individual pages by adding the following yes/no parameters to your URL:
-<ul><li><b>plain</b> (hide the footer links)</li>
+<ul>
+<li><b>plain</b> (hide the footer links)</li>
 <li><b>protect</b> (protect the frame from user clicks, i.e. read-only image, but with refresh)</li>
-<li><b>ajax</b> (use ajax for updates)</li></ul>
+<li><b>ajax</b> (use ajax for updates)</li>
+</ul>
 
 To display any <em>already open</em> JMRI window as a <b>clickable</b> image that periodically refreshes, use a URL like:
 
@@ -66,13 +68,12 @@ To display any <em>already open</em> JMRI window as a <b>clickable</b> image tha
             <code><a href="http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&plain=true&protect=true&retry=12">http://127.0.0.1:12080/frame/Power%20Control.html?ajax=true&amp;plain=true&amp;protect=true&amp;retry=12</a></code>
 
 <p>
-The jmri/web/servlet/frameimage/JmriJFrameServlet.properties 
+The <code>jmri/web/servlet/frameimage/JmriJFrameServlet.properties</code> 
   <a href="https://svn.code.sf.net/p/jmri/code/trunk/jmri/java/src/jmri/web/servlet/frameimage/JmriJFrameServlet.properties" target=_new>
-  file</a> can be used to configure the HTML that's returned when
-a frame is requested.
-
-</div>
+  properties file</a> can be used to configure the HTML that's returned when
+a frame is requested.</p>
 
 <!--#include virtual="/Footer" -->
-</body>
+    </div><!-- closes #mainContent-->
+  </body>
 </html>

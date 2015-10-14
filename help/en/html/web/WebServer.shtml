@@ -26,7 +26,7 @@
                 to JMRI features via standard web protocols, from other computers
                 and devices.</p>
             <p>The JMRI web server is built on the
-                <a href="http://en.wikipedia.org/wiki/Jetty_(web_server)" target="_new">Jetty</a> web server.</p>
+                <a href="https://en.wikipedia.org/wiki/Jetty_(web_server)" target="_new">Jetty</a> web server.</p>
 
             <h2>Configuration</h2>
 
@@ -45,9 +45,10 @@
                         <dt><a href="PanelServlet.shtml">PanelServlet</a></dt><dd>Real-time JMRI panels.</dd>
                         <dt><a href="RosterServlet.shtml">RosterServlet</a></dt><dd>Access the roster.</dd>
                     </dl>
-                </dd>
+                </dd></dt>
                 <dt><a href="https://svn.code.sf.net/p/jmri/code/trunk/jmri/java/src/jmri/web/server/FilePaths.properties" target=_new>jmri/web/server/FilePaths.properties</a>
                 <dd>Maps URLs to directories in JMRI and maps URLs that are redirected to other URLs.</dd>
+                </dt>
             </dl>
 
             <h2>Security</h2>
@@ -59,8 +60,7 @@
                 be careful to not put important content in those directories or link
                 them to other parts of your computer.</p>
 
-        </div>
-
-        <!--#include virtual="/Footer" -->
-    </body>
+     <!--#include virtual="/Footer" -->
+	 </div><!-- closes #mainContent-->
+	</body>
 </html>

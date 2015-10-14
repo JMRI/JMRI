@@ -1,17 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
-        <!-- Copyright 2012 -->
+        <!-- Copyright 2015 -->
         <!-- $Id$ -->
         <title>JMRI JSON Protocol</title>
 
         <!-- Style -->
         <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-        <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="/css/default.css" mediaedia="screen">
         <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
         <link rel="icon" href="/images/jmri.ico" TYPE="image/png">
         <link rel="home" title="Home" href="/">
-        <STYLE type="text/css">
+        <style type="text/css">
             table#jsonResponses {
                 border-collapse:collapse;
             }
@@ -22,7 +22,7 @@
             code {
                 white-space: normal;
             }
-        </STYLE>
+        </style>
         <!-- /Style -->
     </head>
 
@@ -41,8 +41,8 @@
             </ul>
             <h2>JMRI JSON Servlet</h2>
             <p>The <b>JMRI JSON Servlet</b> provides web access to lists and values for numerous JMRI-defined entities, in the modern
-                <a href='http://en.wikipedia.org/wiki/JSON'>JSON format</a>.  It also provides a
-                <a href='http://en.wikipedia.org/wiki/WebSocket'>WebSocket</a> interface for
+                <a href="https://en.wikipedia.org/wiki/JSON">JSON format</a>.  It also provides a
+                <a href="https://en.wikipedia.org/wiki/WebSocket">WebSocket</a> interface for
                 making changes to the state of those entities, and listening for external changes.</p>
 
             <p>The <b>HTTP GET</b> feature of the servlet responds to the following URL patterns:
@@ -75,7 +75,8 @@
                 <li>a signoff in the form: <code>{"type":"goodbye"}</code> to which an identical response
                     is sent before the connection gets closed.</li>
             </ul></p>
-            The <b>WebSocket</b> feature of the servlet can be seen
+            
+            <p>The <b>WebSocket</b> feature of the servlet can be seen
             by browsing to the <b>/json/</b> url, where a <b>JSON console</b> is providing for testing.<br>
             Example commands and responses:
             <table id="jsonResponses"><tr><th>command</th><th>response</th><th>notes</th></tr>
@@ -85,7 +86,7 @@
                 <tr><td><code>{"type":"power","data":{}}</code></td><td><code>{"type":"power","data":{"state":2}}</code></td><td>power does not need a name</td></tr>
                 <tr><td><code>{"type":"memory","data":{"name":"IMCURRENTTIME"}}</code></td><td><code>{"type":"memory","data":{"name":"IMCURRENTTIME","userName":null,"comment":null,"value":"2:53 PM"}}</code></td><td>get (fast)clock time, resent each minute</td></tr>
                 <tr><td><code>{"type":"ping"}</code></td><td><code>{"type":"pong"}</code></td><td>ping request and response</td></tr>
-                <tr><td><code>{"list":"panels"}</code></td><td><code>[{"type":"panel","data":{"name":"ControlPanel/R&R","URL":"/panel/ControlPanel/R&R?format=xml","userName":"R&R","type":"Control Panel"}},{"type":"panel","data":{"name":"Layout/Waccamaw%20Coast%20Line","URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=xml","userName":"Waccamaw Coast Line","type":"Layout"}}]</code></td>
+                <tr><td><code>{"list":"panels"}</code></td><td><code>[{"type":"panel","data":{"name":"ControlPanel/R&amp;R","URL":"/panel/ControlPanel/R&amp;R?format=xml","userName":"R&amp;R","type":"Control Panel"}},{"type":"panel","data":{"name":"Layout/Waccamaw%20Coast%20Line","URL":"/panel/Layout/Waccamaw%20Coast%20Line?format=xml","userName":"Waccamaw Coast Line","type":"Layout"}}]</code></td>
                     <td>request a list of panels, respond with array, example shows two panels</td></tr>
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","address":754}}</code></td>
                     <td><code>{"type":"throttle","data":{"address":754,"speed":0.0,"forward":true, "F0":false,"F1":false,"F2":false,"F3":false,"F4":false,"F5":false,"F6":false,"F7":false, "F8":false,"F9":false,"F10":false,"F11":false,"F12":false,"F13":false,"F14":false, "F15":false,"F16":false,"F17":false,"F18":false,"F19":false,"F20":false,"F21":false, "F22":false,"F23":false,"F24":false,"F25":false,"F26":false,"F27":false,"F28":false, "throttle":"CSX754"}}</code></td>
@@ -94,13 +95,14 @@
                 <tr><td><code>{"type":"throttle","data":{"throttle":"CSX754","release":null}}</code></td><td><code>{"type":"throttle","data":{"release":null,"throttle":"CSX754"}}</code></td><td>release the throttle "CSX754"</td></tr>
                 <tr><td><code>{"list":"trains"}</code></td><td><em>If list is empty:</em><code>[]</code></td><td>Example showing list response if there are no objects of that type.</td></tr>
             </table>
-        </div>
-        <h2>JMRI JSON Server<h2>
+            
+        <h2>JMRI JSON Server</h2>
         <p>The JMRI JSON server is functionally identical to the JSON WebSocket, but running over a standard network socket.</p>
+        
         <h2>jquery-json</h2>
         <p><em>jquery-json</em> is a JavaScript library that ships with JMRI and
             makes the JSON protocol support just work on most current browsers.</p>
-        <p>Examples of use of the jquery-json JavaScript library that ship with JMRI include (all links assume you are reading this on your JMRI web server):</p>
+        <p>Examples of use of the jquery-json JavaScript library that ships with JMRI include (all links assume you are reading this on your JMRI web server):</p>
         <ul>
             <li><a href="/operations">Operations Conductor</a> (implemented in <a href="/js/operations.js">/js/operations.js</a></li>
             <li><a href="/panel">Panel</a> (implemented in <a href="/js/panel.js">/js/panel.js</a></li>
@@ -110,6 +112,8 @@
             <li><a href="/json">JSON Console</a> (implemented in <a href="/js/json-console.js">/js/json-console.js</a></li>
             <li><a href="/web/power.html">Power Demonstration</a> (view the page source for the implementation)</li>
         </ul>
+        
         <!--#include virtual="/Footer" -->
+	</div><!-- closes #mainContent-->
     </body>
 </html>
