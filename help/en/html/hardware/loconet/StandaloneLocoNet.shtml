@@ -2,12 +2,11 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       Standalone LocoNet&reg;
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="B. Milhaupt" name=Author>
-    <META name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168  
+ </title>
+    <meta content="B. Milhaupt" name="Author">
+    <meta name="keywords" content="Digitrax LocoNet BDL16 BDL162 BDL168  
           DS64 PR3 DCS100 DB150 JMRI LocoBuffer-USB LocoBuffer-II LocoBuffer 
           FastClock ">
 
@@ -20,43 +19,43 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-      <H1>Standalone LocoNet&reg;</H1>
+<h1>Standalone LocoNet&reg;</h1>
       
-<H1>Contents</H1>
-<UL>
-    <LI><A href="#generalideas">General ideas</A></LI>
-    <LI><A href="#jmriconfig">JMRI Configuration</A></LI>
-    <LI><A href="#hwconsider">Hardware Considerations</A>
-    <UL>
-        <LI><A href="#dataterm">LocoNet Data Signal "Termination"</A>
-        <UL>
-            <LI><A href="#hwdataterm">Some commercial hardware which can provide 
-                    LocoNet Data signal termination</A></LI>
-            <LI><A href="#diyhwdataterm">Do-it-yourself LocoNet Data signal 
-                    termination</A></LI>
-        </UL></LI>
-        <LI><A href="#railsyncgen">LocoNet RailSync Signal "Generation"</A>
-        <UL>
-            <LI><a href="#hwdctorailsync">Some commercial hardware which can provide 
-                DC power to the LocoNet RailSync wires</a></LI>
-            <LI><a href="#rspowersupply">RailSync power from a DC power supply</a></li>
-            <LI><A href="#rsfromdtcs">RailSync from a Digitrax command station</A></LI>
-            <LI><A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>
+<h1>Contents</h1>
+<ul>
+    <li><a href="#generalideas">General ideas</a></li>
+    <li><a href="#jmriconfig">JMRI Configuration</a></li>
+    <li><a href="#hwconsider">Hardware Considerations</a>
+    <ul>
+        <li><a href="#dataterm">LocoNet Data Signal "Termination"</a>
+        <ul>
+            <li><a href="#hwdataterm">Some commercial hardware which can provide 
+                    LocoNet Data signal termination</a></li>
+            <li><a href="#diyhwdataterm">Do-it-yourself LocoNet Data signal 
+                    termination</a></li>
+        </ul></li>
+        <li><a href="#railsyncgen">LocoNet RailSync Signal "Generation"</a>
+        <ul>
+            <li><a href="#hwdctorailsync">Some commercial hardware which can provide 
+                DC power to the LocoNet RailSync wires</a></li>
+            <li><a href="#rspowersupply">RailSync power from a DC power supply</a></li>
+            <li><a href="#rsfromdtcs">RailSync from a Digitrax command station</a></li>
+            <li><a href="#rsfromnondtcs">RailSync from a non-Digitrax command station</a>
                 <ul>
-                <li><A href="#rsfromncecs">RailSync from an NCE command station</A></li>
+                <li><a href="#rsfromncecs">RailSync from an NCE command station</a></li>
                 </ul>
             </li>
-        </UL>
-        </LI>
-        <LI><A href="#pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</A></li>
-        <LI><A href="#multipleconnections">Multiple active LocoNet connections</A>
+        </ul>
+        </li>
+        <li><a href="#pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</a></li>
+        <li><a href="#multipleconnections">Multiple active LocoNet connections</a>
         <ul>
             <li><a href="#routeconnprefix">Routing LocoNet messages to a LocoNet 
                 connection based on "Connection Prefix"</a></li>
@@ -69,37 +68,36 @@
         </ul></li>
         
         
-        <LI><A href="#sneakpaths">"Sneak paths" and Computer Interfaces</A></LI>
-    </UL></LI>
-    <LI><A href="#examples">Examples</A>
-    <UL>
-        <LI><A href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet 
-                Turnouts, Detection & Signaling</A></LI>
-        <LI><A href="#bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals (SE8C) with non-Digitrax DCC command station</A></LI>
-        <LI><A href="#se8csigwodtcs">SE8C signaling without a Digitrax command station</A></LI>
-    </UL>
-    </LI>
-    <LI><A href="#acknowledgments">Acknowledgments</A></LI>
-    <LI><A href="#references">References</A></LI>
+        <li><a href="#sneakpaths">"Sneak paths" and Computer Interfaces</a></LI>
+    </ul></li>
+    <li><a href="#examples">Examples</a>
+    <ul>
+        <li><A href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet 
+                Turnouts, Detection & Signaling</A></li>
+        <LI><A href="#bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals (SE8C) with non-Digitrax DCC command station</A></li>
+        <LI><A href="#se8csigwodtcs">SE8C signaling without a Digitrax command station</A></li>
+    </ul>
+    </li>
+    <li><a href="#acknowledgments">Acknowledgments</a></li>
+    <li><a href="#references">References</a></li>
     
-</UL>
-<P></P>
-<H1><A name="generalideas">General ideas</A></H1>
-      <p><strong>This page is a work in progress</strong></p>
+</ul>
 
-<P>A "Standalone" LocoNet&reg; is a LocoNet bus which does not have a LocoNet 
+<h1><a name="generalideas">General ideas</a></h1>
+
+<p>A "Standalone" LocoNet&reg; is a LocoNet bus which does not have a LocoNet 
     command station.  Since it does not have a LocoNet command station, it cannot
     control locomotives, and cannot directly influence the DCC track signal created
-    by a DCC command station.</P>
-<P>There are several situations where a standalone LocoNet bus is useful.  Some 
-    of these situations are listed here:</P>
-<UL>
-    <LI>When using LocoNet peripherals with a non-LocoNet DCC command station.</LI>
-    <LI>When using LocoNet peripherals with a non-DCC railroad.</LI>
-    <LI>To isolate LocoNet peripherals from LocoNet throttle activity.</LI>
-    <LI>To avoid LocoNet traffic issues associated with the Digitrax command station's
+    by a DCC command station.</p>
+<p>There are several situations where a standalone LocoNet bus is useful.  Some 
+    of these situations are listed here:</p>
+<ul>
+    <li>When using LocoNet peripherals with a non-LocoNet DCC command station.</LI>
+    <li>When using LocoNet peripherals with a non-DCC railroad.</LI>
+    <li>To isolate LocoNet peripherals from LocoNet throttle activity.</LI>
+    <li>To avoid LocoNet traffic issues associated with the Digitrax command station's
         small buffer for forwarding LocoNet switch commands to the DCC track signal.</li>
-    <LI>Some users even find it useful to have JMRI communicate with two or more
+    <li>Some users even find it useful to have JMRI communicate with two or more
         LocoNet connections.  One LocoNet connection might be a "standard" 
         LocoNet, with a LocoNet-based command station, so that JMRI can program 
         decoders and perhaps control mobile decoders.  Another LocoNet connection could be 
@@ -110,11 +108,12 @@
         activity.  In other words, a LocoNet throttle user might send LocoNet 
         switch control messages, but those messages won't have any effect on the 
         switches and/or signals which are on the standalone LocoNet.</LI>
-</UL>
-<P>This page gives some general suggestions for implementing a standalone LocoNet
+</ul>
+<p>This page gives some general suggestions for implementing a standalone LocoNet
     as well as suggestions for configuring JMRI software to make use of the standalone
-    LocoNet.</P>
-<H1><A name="jmriconfig">JMRI Configuration</A></H1>
+    LocoNet.</p>
+    
+<h1><a name="jmriconfig">JMRI Configuration</a></h1>
 <p>When JMRI will communicate with an independent LocoNet, the JMRI computer requires
     one LocoNet adapter device per independent LocoNet.  Each adapter is configured
     on a separate JMRI "Connection" within the JMRI "Connections" settings under JMRI
@@ -130,7 +129,8 @@
     connection will typically not be associated with "Throttles", "Power Control", 
     "Command Station", or "Programmer" on the "Default" pane of the JMRI "Preferences" 
     panel.</p>
-<H1><A name="hwconsider">Hardware Considerations</A></H1>
+    
+<h1><a name="hwconsider">Hardware Considerations</a></h1>
 <p>A "LocoNet" bus implementation which has all the electrical signaling required by all LocoNet
 devices requires a LocoNet-based command station, such as the Digitrax DCS100 or
 Digitrax DB150.  Some applications do not need all of the functionality provided
@@ -227,7 +227,7 @@ useful.</p>
     <tr align="center"><td colspan="5">
         <p>* Some circuitry may be required to generate the RailSync signals from 
             a non-LocoNet booster.  See 
-            <A href="#rsfromnondtcs">RailSync from a non-Digitrax command station</A>,
+            <a href="#rsfromnondtcs">RailSync from a non-Digitrax command station</a>,
             below.</p>
         <p>** LocoNet devices with an isolated LocoNet interfaces must 
             take power from the LocoNet RailSync wires to power the LocoNet side 
@@ -251,7 +251,7 @@ useful.</p>
             have opto-isolation circuitry.</p>
     </td></tr>
 </table>
-    <H2><A name="dataterm">LocoNet Data Signal "Termination"</A></H2>
+    <h2><a name="dataterm">LocoNet Data Signal "Termination"</a></h2>
         <p>"Termination" of the LocoNet Data Signal is something that allows the
             LocoNet data path to work.  One device on LocoNet must provide this
             "termination" so that all LocoNet devices may communicate on the 
@@ -269,8 +269,8 @@ useful.</p>
             Data Signal Termination.</p>
         <H3><A name="hwdataterm">Some commercial hardware which can provide 
                 LocoNet Data signal termination</A></H3>
-        <UL>
-            <LI><strong>BDL16, BDL162, BDL168</strong>
+        <ul>
+            <li><strong>BDL16, BDL162, BDL168</strong>
                 <p>The instructions in the BDL16x manual includes a section on 
                     how to use the BDL168x with a non-Digitrax layout.  This 
                     section mentions setting one of the the BDL16x boards to act 
@@ -322,8 +322,8 @@ useful.</p>
                     own Board ID (Board Address) number so that BDL16x sensor 
                     numbers do not overlap sensor numbers for other boards or
                     sensor numbers used by other devices on the standalone LocoNet.</p>
-            </LI>
-            <LI><a id="PR3config"><strong>PR3</strong></a>
+            </li>
+            <li><a id="PR3config"><strong>PR3</strong></a>
                 <p>The PR3 provides two different operating modes which may be 
                     useful when the PR3 is used to interface to a standalone 
                     LocoNet.  One useful mode provides <A href="#dataterm">
@@ -352,36 +352,36 @@ useful.</p>
                 PR3 in its MS100 mode <em>without</em> enabling the PR3's Data 
                 signal termination feature.  In this case, it is appropriate to 
                 configure the PR3 connection for a "<code>Command Station 
-                type</code>" of "<code><strong>DCS100</strong></code>".  Because there is no command 
+                type</code>" of "<code><strong>DCS100</strong></code>". Because there is no command 
                 station connected to the LocoNet data path of the standalone 
                 LocoNet, the setting will only be used to determine how the PR3 
                 is initialized at JMRI start-up.
                 </p></li>
                 </ul>
-                </LI>
-            <LI><strong>LocoBuffer-II, LocoBuffer-USB (except LocoBuffer-USB Rev-n)</strong>
+                </li>
+            <li><strong>LocoBuffer-II, LocoBuffer-USB (except LocoBuffer-USB Rev-n)</strong>
                 <p>See the instructions for the appropriate hardware for the 
                     required switch and/or jumper settings.  These devices power
                     their LocoNet data signal termination using power provided by
                     the LocoNet RailSync wires.</p>
-            <LI><strong>LocoBuffer</strong>
+            <li><strong>LocoBuffer</strong>
                 <p>Some versions of the original LocoBuffer design allow the builder
                     to add components to provide LocoNet Data signal termination.
                     Consult your LocoBuffer documentation to determine whether your
                     hardware can provide LocoNet Data signal termination.</p>
-            </LI>
-            <LI><strong>RR-CirKits LocoNet-Terminator</strong>
+            </li>
+            <li><strong>RR-CirKits LocoNet-Terminator</strong>
                 <p>This device may be configured to provide LocoNet Data Signal 
                     termination.  It may also be configured to provide DC power 
                     on the RailSync wires.</p>
-            </LI>
-            <LI><strong>RR-CirKits SSB-Gateway</strong>
+            </li>
+            <li><strong>RR-CirKits SSB-Gateway</strong>
                 <p>This device may be configured to provide LocoNet Data Signal 
                     termination.  It may also be configured to provide DC power 
                     on the RailSync wires.</p>
-            </LI>
-        </UL>
-        <H3><A name="diyhwdataterm">Do-it-yourself LocoNet Data Signal Termination</A></H3>
+            </li>
+        </ul>
+        <h3><a name="diyhwdataterm">Do-it-yourself LocoNet Data Signal Termination</a></h3>
         <p>A Do-it-yourself LocoNet Data Signal Termination will typically be 
             implemented similar to the diagram here:</p>
         <img src="images/LocoNetDataSignalTermination.png" 
@@ -422,7 +422,7 @@ useful.</p>
             transmission line termination".  According to Digitrax documentation, there
             should not be any need to provide "electrical transmission line termination" on
             the LocoNet data signal.</p>
-    <H2><A name="railsyncgen">LocoNet RailSync Signal "Generation"</A></H2>
+    <h2><a name="railsyncgen">LocoNet RailSync Signal "Generation"</a></h2>
         <p>As shown in the table above, some LocoNet devices require that the 
             RailSync wires on the LocoNet cable are powered or are an accurate 
             representation of the DCC track signal.  In cases where the standalone 
@@ -431,23 +431,23 @@ useful.</p>
             at 12VDC is sufficient.  In other cases, one or more LocoNet device 
             requires an accurate representation of the DCC track signal on the 
             standalone LocoNet cable.</p>        
-        <H3><A name="hwdctorailsync">Some commercial hardware which can provide 
-                DC power to the LocoNet RailSync wires</A></H3>
-        <UL>
-            <LI><strong>RR-CirKits LocoNet-Terminator</strong>
+        <h3><a name="hwdctorailsync">Some commercial hardware which can provide 
+                DC power to the LocoNet RailSync wires</a></h3>
+        <ul>
+            <li><strong>RR-CirKits LocoNet-Terminator</strong>
                 <p>This device may be configured to provide DC power on the 
                     RailSync wires.  It may also be configured to provide LocoNet 
                     Data Signal termination.</p>
-            </LI>
-            <LI><strong>RR-CirKits SSB-Gateway</strong>
+            </li>
+            <li><strong>RR-CirKits SSB-Gateway</strong>
                 <p>This device may be configured to provide DC power on the 
                     RailSync wires.  It may also be configured to provide LocoNet 
                     Data Signal termination.</p>
-            </LI>
-        </UL>
+            </li>
+        </ul>
 
                 
-        <H3><a name="rspowersupply">RailSync power from a DC power supply</a></h3>
+        <h3><a name="rspowersupply">RailSync power from a DC power supply</a></h3>
             <p>For cases where the standalone LocoNet does need to provide power to 
             the RailSync lines but does <strong>not</strong> need to provide a low-power version
             of the DCC track signal, a simple power supply connected to the LocoNet
@@ -467,7 +467,7 @@ useful.</p>
                     device or circuit which actively puts a signal on the 
                     standalone LocoNet RailSync wires.</li>
             </ul>    
-        <H3><A name="rsfromdtcs">RailSync from a Digitrax command station</A></H3>
+        <h3><a name="rsfromdtcs">RailSync from a Digitrax command station</a></h3>
             <p>If the Digitrax command station's LocoNet "Ground" wire can be safely
                 connected directly to the standalone LocoNet "Ground" wire, it is 
                 sufficient to connect the Digitrax Command Station RailSync+, RailSync-, 
@@ -487,7 +487,7 @@ useful.</p>
                 isolation <strong>must</strong> be provided.  Isolation of this nature is beyond 
                 the scope of this documentation; opto-isolators could be used for 
                 this purpose.</p>
-        <H3><A name="rsfromnondtcs">RailSync from a non-Digitrax command station</A></H3>
+        <h3><a name="rsfromnondtcs">RailSync from a non-Digitrax command station</a></h3>
             <p>The Digitrax BDL16x manual gives recommendations for providing a "RailSync+"
                 signal from the "Rail A" output of a non-Digitrax DCC booster.  This 
                 instruction assumes that you have or will implement the wiring shown
@@ -516,7 +516,7 @@ useful.</p>
                 booster manufacturers only offer opto-isolated boosters, and some
                 other booster manufacturers offer some models which include optical
                 isolation.</p>
-            <H4><A name="rsfromncecs">RailSync from an NCE command station</a></H4>
+            <h4><a name="rsfromncecs">RailSync from an NCE command station</a></h4>
                 <p>NCE has recommended at least two different ways to use NCE Control Bus
                     signals to create RailSync+ and RailSync- for use by Digitrax Boosters.
                     The diagram below, based on one shown in an NCE document, shows what
@@ -536,7 +536,7 @@ useful.</p>
                     a circuit might work but would be more sensitive to electrical 
                     noise than the circuit shown above.</li>
             </ul>
-    <H2><A name="pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</A></H2>
+    <h2><a name="pseudoground">BDL16x connection to a DCC system without a "Ground" terminal</a></h2>
         <p>According to BDL16x documentation, proper BDL16x operation <strong>
             requires</strong> a "ground" connection to the DCC booster, via 
             pin 11 on the BDL16x connector.  But some boosters do not have any 
@@ -550,7 +550,8 @@ useful.</p>
            alt="Image showing circuit to generate a pseudo-ground from a command station without a 'ground' connection">
         <p>Note that this "pseudo-ground" should only be connected to BDL16x 
             devices.</p>
-    <H2><A name="multipleconnections">Multiple active LocoNet connections</A></H2>
+            
+    <h2><a name="multipleconnections">Multiple active LocoNet connections</a></h2>
         <p>When a JMRI profile is configured for more than one active LocoNet 
             connection, JMRI treats each active LocoNet connection as if it 
             is connected to an independent LocoNet.  When JMRI sends a message
@@ -612,8 +613,8 @@ useful.</p>
             "Programmer" connection, while the other LocoNet connection would be
             configured as the communications path for "Throttles", "Power 
             Control", and "Command Station".</p>             
-        <h3><A name="multconsingle">Multiple active LocoNet connections to a 
-                single LocoNet</A></h3>
+        <h3><a name="multconsingle">Multiple active LocoNet connections to a 
+                single LocoNet</a></h3>
         <p>JMRI is designed upon the assumption that each of JMRI's LocoNet 
             hardware connections are connected to <strong>independent</strong> 
             LocoNet busses.  If the user has connected the LocoNet cabling so 
@@ -636,12 +637,13 @@ useful.</p>
             connected to a LocoNet-based command station, as described in         
             <a href="Digitrax.shtml#TurnoutCmdHandling">Command Station Turnout 
                 Command Rejection and JMRI Turnout Command Handling</a>.</p>
-    <H2><A name="sneakpaths">"Sneak paths" and Computer Interfaces</A></H2>
-        <P>When multiple devices share different types of electrical connections, 
+                
+    <h2><a name="sneakpaths">"Sneak paths" and Computer Interfaces</a></h2>
+        <p>When multiple devices share different types of electrical connections, 
             unexpected current paths can be present that can cause malfunction or
             component failure.  A properly designed and implemented system prevents 
-            these problems.</P>
-        <P>A good example of this type of problem is the connectivity that
+            these problems.</p>
+        <p>A good example of this type of problem is the connectivity that
             begins at the (power receptacle) wall outlet, through power supplies,
             boards, interface devices and computers.  If there is "electrical 
             connectivity" between the wall outlet and the output of a power supply, 
@@ -654,34 +656,35 @@ useful.</p>
             for electrical current around the electrical connectivity loop.  If
             the electrical current happens to exceed the ratings of any component
             in the loop, there can be a failure of that component, and perhaps 
-            components to which it is connected.</P>
-        <P>How can such a problem be avoided?  By careful planning of the electrical
+            components to which it is connected.</p>
+        <p>How can such a problem be avoided?  By careful planning of the electrical
             connectivity within a system, and inclusion of some form of "isolation"
             where electrical connectivity concerns arise.  It is usually very 
             difficult to determine the electrical connectivity within a computer 
             power supply, so it is generally a good idea to isolate the computer
-            from the remainder of the system.</P>
-        <P>Isolation of LocoNet from the computer is recommended.  The LocoBuffer-II, 
+            from the remainder of the system.</p>
+        <p>Isolation of LocoNet from the computer is recommended.  The LocoBuffer-II, 
             LocoBuffer-USB, and LocoBuffer-USB Rev-n computer interface devices 
             provide "optical isolation" of the
             LocoNet signals from the computer electrical signals.  Note that
             the LocoBuffer-II isolation is not effective when it is configured 
             for "Local Power".  The LocoBuffer-II should be configured for 
             "isolated power" and should have an external power supply plugged in 
-            for proper operation and isolation.</P>
-        <P>Other computer interfaces can be isolated using 3rd-party isolation 
+            for proper operation and isolation.</p>
+        <p>Other computer interfaces can be isolated using 3rd-party isolation 
             devices.  Placing a USB hub with optical isolation between the computer
             and the USB device, or an RS232 optical isolation 
             device between the computer and the RS232-based interface device might 
             provide a safe and functional solution.  Note, though, that some 
             users have reported issues when using a USB hub (whether optically 
-            isolated or not) with the PR3.</P>
-        <P>Similar "sneak path" problems can happen when sharing a single power
+            isolated or not) with the PR3.</p>
+        <p>Similar "sneak path" problems can happen when sharing a single power
             supply for multiple device types that share other connectivity.  A
             LocoNet cable can provide that "other connectivity", so devices which
             connect to LocoNet must be powered with care.  A safe "general rule" 
             is that a power supply should be connected to, at most, one type of 
-            board.</P>
+            board.</p>
+            
 <h1><a name="examples">Examples</a></h1>
     <h2><a name="isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet 
                 Turnouts, Detection & Signaling</a></h2>
@@ -704,7 +707,7 @@ useful.</p>
             (except not LocoBuffer-USB Rev-n)
             can easily be configured to provide "LocoNet Master termination" via an
             internal jumper setting (see the LocoBuffer-USB User's Manual).  Alternate
-            sources of <A href="#dataterm">LocoNet Data Signal Termination</A> 
+            sources of <a href="#dataterm">LocoNet Data Signal Termination</a> 
             are described above.</p>
         <p>With the connectivity shown in the diagram above, the DS64 does not 
             get its switch commands from DCC track power.  This is an intentional
@@ -724,8 +727,8 @@ useful.</p>
             does <strong>not</strong> provide isolation, then there is a possibility that
             "sneak current paths" could be present.  See <a href="#sneakpaths">
             "Sneak paths" and Computer Interfaces</a>, above, for more information.</p>
-    <H2><A name="bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals 
-            (SE8C) with non-Digitrax DCC command station</A></H2>
+    <h2><a name="bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals 
+            (SE8C) with non-Digitrax DCC command station</a></h2>
         <p>The diagram below shows a possible implementation of a standalone LocoNet
             for computer-controlled signaling using Digitrax BDL168 boards for
             occupancy detection, Digitrax SE8C boards for driving signals, and
@@ -770,10 +773,11 @@ useful.</p>
             LocoNet-Terminator or SSB-Gateway products.</p>
         <img src="images/StandaloneLocoNetSignallingNet.jpg" 
              alt="Image showing a Standalone Loconet for SE8C signalling only">
-<H1><a name="acknowledgments">Acknowledgments</a></H1>
+             
+<h1><a name="acknowledgments">Acknowledgments</a></h1>
     <p>Among others, Elmer McKay and Dick Bronson have provided significant
             input to the content of this page.  Thank you!</p>
-<H1><A name="references">References</A></H1>
+<h1><a name="references">References</a></h1>
 
 <p>Information and support for Digitrax products may be found at 
     <a href="http://www.digitrax.com/">the Digitrax website</a>.</p>

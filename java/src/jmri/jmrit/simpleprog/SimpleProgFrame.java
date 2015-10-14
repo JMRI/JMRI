@@ -121,14 +121,10 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         getContentPane().add(resultsField);
 
-        if (modePane.getProgrammer() == null) {
-            readButton.setEnabled(false);
-            // boudreau let system Programmer determine default mode
-//         modePane.setDefaultMode();
-        }
-        // disable read button if non-functional
         if (modePane.getProgrammer() != null) {
             readButton.setEnabled(modePane.getProgrammer().getCanRead());
+        } else {
+            readButton.setEnabled(false);
         }
 
         // add help menu to window

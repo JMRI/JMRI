@@ -239,7 +239,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
                     op.setText(Bundle.getMessage("X(TrackRoad)"));
                 } else if (_car != null && !track.acceptsLoad(_car.getLoadName(), _car.getTypeName())) {
                     op.setText(Bundle.getMessage("X(TrackLoad)"));
-                } else if (_car != null && !track.acceptsDestination(_car.getFinalDestination())) {
+                } else if (_car != null && !track.acceptsDestination(_car.getFinalDestination()) && _car.getDestination() == null) {
                     op.setText(Bundle.getMessage("X(TrackDestination)"));
                 } else if ((rl.getTrainDirection() & location.getTrainDirections()) == 0) {
                     op.setText(Bundle.getMessage("X(DirLoc)"));

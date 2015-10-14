@@ -278,7 +278,8 @@ public class TrackTableModel extends AbstractTableModel implements PropertyChang
                 return Integer.toString(track.getDropRS());
             case LOAD_COLUMN:
                 return getModifiedString(track.getLoadNames().length, track.getLoadOption().equals(Track.ALL_LOADS), track
-                        .getLoadOption().equals(Track.INCLUDE_LOADS));
+                        .getLoadOption().equals(Track.INCLUDE_LOADS)) +
+                        (track.getTrackType().equals(Track.SPUR) && track.isHoldCarsWithCustomLoadsEnabled() ? " H" : "");
             case SHIP_COLUMN:
                 return getModifiedString(track.getShipLoadNames().length,
                         track.getShipLoadOption().equals(Track.ALL_LOADS), track.getShipLoadOption().equals(

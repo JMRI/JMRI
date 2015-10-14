@@ -29,7 +29,7 @@ to JMRI.
 We go through creating one from scratch, but 
 it's often easier to copy and modify one of the existing 
 ones in the 
-<a href="http://jmri.org/xml/signals">xml/signals</a>
+<a href="http://jmri.org/xml/signals/">xml/signals</a>
 directory.
 
 <h2>Creating a New Signaling System</h2>

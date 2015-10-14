@@ -8,6 +8,7 @@
 
 import java
 import javax.swing
+import jmri
 
 class SensorInitialization(jmri.jmrit.automat.AbstractAutomaton) :
 	

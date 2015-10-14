@@ -3,8 +3,6 @@
 #
 # Author: Paul Bender, Copyright 2009
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jmri
 

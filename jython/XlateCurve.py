@@ -5,13 +5,11 @@
 # Author: Ken Cameron, copyright 2011
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # A PropertyChangeListener is used to get value changes.
 #
 
 import java
+import jmri
 
 class XlateCurve (java.beans.PropertyChangeListener) :
     # initialize variables
