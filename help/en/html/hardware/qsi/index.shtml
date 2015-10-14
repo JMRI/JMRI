@@ -14,9 +14,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -25,10 +25,9 @@
 JMRI: Quantum Programmer
 </h1>
 
-JMRI can now use a Quantum Programmer module
-to read and write CVs in DCC decoders.
-
-<p>
+<p>JMRI can now use a Quantum Programmer module
+to read and write CV's in DCC decoders.
+<br />
 JMRI cannot (yet) download sounds to QSI decoders.
 
 <p>
@@ -44,23 +43,20 @@ Quantum Programmer with non-QSI decoders, particularly other
 kinds of sound decoders.  In those cases, the solution has
 usually been to use a programming track booster
 such as the 
-<a href="http://www.tonystrains.com/technews/powerpax.htm">PowerPax</a>
+<a href="http://tonystrains.com/powerpax-dcc-programming-booster/">PowerPax</a>
 or
 <a href="http://www.soundtraxx.com/access/ptb100.php">PTB-100<a>.
 
-
-
-
 <h2>Driver Installation</h2>
 
-To access the Quantum Programmer, you need to install a driver on your
+<p>To access the Quantum Programmer, you need to install a driver on your
 computer.  This section describes how to do that for several popular
 computer types.
 
 <a id="driverWin">
 <h3>Windows</h3>
 
-For JMRI to talk to the Quantum Programmer, a driver has to be installed
+<p>For JMRI to talk to the Quantum Programmer, a driver has to be installed
 so that the Quantum Programmer appears to be a serial port (a Virtual Comm Port, or
 VCP).  These drivers are compatible with the most recent version of the
 QSI Quantum Programmer software, so you can alternate between
@@ -85,7 +81,7 @@ Double-click on the installer and follow the directions.
 <li>
 Restart your computer.
 </ol>
-You should now be able to start a JMRI application
+<p>You should now be able to start a JMRI application
 and access the Quantum Programmer.  It will appear as
 "Quantum Programmer" in the preferences windows.
 
@@ -114,7 +110,7 @@ sudo ./load_qsi_prog
 
 <h2>Configure the Quantum Programmer Support</h2>
 
-You configure JMRI to use a Quantum Programmer similarly to the
+<p>You configure JMRI to use a Quantum Programmer similarly to the
 way all other connection types are configured.
 
 <ol>
@@ -129,21 +125,21 @@ Select "QSIProgrammer" as the port to use.
 <li>
 The rest of the options are fixed, and can't be changed.
 <li>
-Click the "Save" button. When prompted, allow the program to quit.
+Click the "Save" button. When prompted, allow quit the program.
 </ol>
 
-The program is now configured. Restart it, and it should be ready to use.
+<p>The program is now configured. Restart it, and it should be ready to use.
 
 <h2>Features and Limitations</h2>
 
-The Quantum Programmer hardware is capable of driving one (low-current) locomotive
+<p>The Quantum Programmer hardware is capable of driving one (low-current) locomotive
 in "Ops Mode".  This lets the user run the engine, test the lights, etc.
 JMRI does not yet have code to do this, but if there's enough interest we can certainly
 add it.
 
 <p>
 We currently don't have enough information to download sounds to the decoder through 
-the Quantum Programmer.  If we get the information, we'll certainly write this code.
+the Quantum Programmer. If we get the information, we'll certainly write this code.
 
 <!--#include virtual="/Footer" -->
 </body>

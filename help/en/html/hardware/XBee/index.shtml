@@ -2,15 +2,15 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-<TITLE>
+<title>
 JMRI: XBee Network
-</TITLE>
-<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-<META content="Paul Bender" name=Author>
+</title>
+
+<META content="Paul Bender" name="Author">
 <META name="keywords" content="XBee Configuration Information for JMRI">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
         MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -18,20 +18,19 @@ JMRI: XBee Network
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
+<h1>
+JMRI Hardware Guide: XBee Network
+</h1>
 
-<H1>
-        JMRI Hardware Guide: XBee
-</H1>
-
-<H2>Overview</H2>
+<h2>Overview</h2>
 
 <p>The <a href="http://www.digi.com/xbee">Digi International XBee Modules</a> are family of wireless communication devices that have their own microcontroller and IO pins that make them useful for many distributed control networks, including on model railroads.</p>
 
@@ -39,7 +38,7 @@ JMRI: XBee Network
 
 <p>JMRI support for the Digi XBee Modules currently includes the ability to passively read digital sensor inputs, as JMRI Sensors, and triggering digital outputs, through the JMRI Lights and Turnouts.</p>
 
-<H2>XBee Module Addressing</H2>
+<h2>XBee Module Addressing</h2>
 
 <p>Each XBee module has 5 addresses we need to be aware of:
 <ul>
@@ -52,7 +51,7 @@ JMRI: XBee Network
 
 <p>The IEEE 802.15.4 Channel Number is set by configuring the XBee's CH parameter.  The value of the CH parameter can be any (hex) value from 0x0B to 0x1A.  This corresponds to decimal values 11 to 26.  All XBee modules in the network must be set to the same channel number.</p>
 
-<p>The 16 bit PAN (Personal Area Network) address is assigned by setting the XBee's ID parameter.  All XBee modules in the network must be set to use the same PAN.</p>
+<p>The 16 bit PAN (Personal Area Network) address is assigned by setting the XBee's ID parameter. All XBee modules in the network must be set to use the same PAN.</p>
 
 <p>The 16 bit user address is defined by the XBee's MY parameter.  Some XBee firmware will automatically set the value of MY to be a unique address on the network, but others do not.  If the My parameter is user configurable, it should be a unique address.</p>
 
@@ -60,25 +59,25 @@ JMRI: XBee Network
 
 <p>The free-form Node Identifier is a 20 character text value stored in the XBee's NI parameter.  The Node Identifier should be unique, and may be human readable.</p>
 
-<p>NOTE: You need to be aware of other devices using IEEE 802.15.4 radio networks that may be operating in the same area.  Digitrax Duplex throttles and Roco MultiMaus Pro radio throttles both use IEEE 802.15.4 as the underlying network layer protocol.  If these devices share a PAN and channel with your XBee modules, the devices are all a part of the same network, and the 16 bit user address must be unique.</p>
+<p>Note: You need to be aware of other devices using IEEE 802.15.4 radio networks that may be operating in the same area.  Digitrax Duplex throttles and Roco MultiMaus Pro radio throttles both use IEEE 802.15.4 as the underlying network layer protocol.  If these devices share a PAN and channel with your XBee modules, the devices are all a part of the same network, and the 16 bit user address must be unique.</p>
 
-<H2>Input/Output pin addressing</H2>
+<h2>Input/Output pin addressing</h2>
 <p>
-When creating inputs (Sensors) and outputs (either lights or turnouts) in JMRI, the XBee's IO pins can be individually addressed.  To access a single bit, you can use the form:
-</p>
+When creating inputs (Sensors) and outputs (either Lights or Turnouts) in JMRI, the XBee's IO pins can be individually addressed.  To access a single bit, you can use the form:
 <p>
-ModuleAddress:Pin
+<code>ModuleAddress:Pin</code>
 </p>
 <p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin is an XBee IO pin number.
 </p>
 <p>
-Turnouts may be created using two bits.  To specify a turnout created with two bits, you use the following format: 
+Turnouts may be created using two bits. To specify a turnout created with two bits, you use the following format: 
 </p>
 <p>
-ModuleAddress:Pin1:Pin2
+<code>ModuleAddress:Pin1:Pin2</code>
 </p>
 <p>Where ModuleAddress is one of the 16 bit node address, the 64 bit node address, or the Node Identifier string and Pin1 and Pin2 are XBee IO pin numbers.  The Pin numbers do not need to be consecutive.
 </p>
+
 <h3>Automatic Creation of Sensors</h3>
 <p>
 When an XBee input status message is received indicating one ( or more ) of the XBee IO Pins is used as an input, JMRI will automatically create a sensor for each input pin if it does not already exist.
@@ -89,8 +88,10 @@ When an XBee input status message is received indicating one ( or more ) of the 
 <H2>Supported Hardware</H2>
 <p>The JMRI support for XBee devices supports serial interfaces to XBee Networks.  The connection to the computer may be made by any USB or RS232 XBee adapter.  Tested adapters include The Sparkfun Electronics <a href="https://www.sparkfun.com/products/8687">XBee Explorer USB</a>, the Sparkfun Electronics <a href="https://www.sparkfun.com/products/9111">XBee Explorer Serial</a>, and the CISECO <a href="http://shop.ciseco.co.uk/slice-of-pi-add-on-for-raspberry-pi/">Slice of Pi</a> (in conjunction with a Raspberry Pi).
 </p>
+
 <h3>Setup</h3>
-          <ol>
+
+<ol>
           <li> Connect your XBee adapter using the appropriate cable.
           <li>USB-connected XBee adapters may need to have a driver installed. 
           See the documentation provided by the manufacturer of your XBee Adapter.
@@ -133,8 +134,7 @@ When an XBee input status message is received indicating one ( or more ) of the 
           <li> Click "Save".  You'll be asked if it's OK for the program to
           quit, click "Yes".</li>
           <li> Restart the program. You should be up and running.
-          </ol>
-
+</ol>
 
 <!--#include virtual="/Footer" -->
 </body>
