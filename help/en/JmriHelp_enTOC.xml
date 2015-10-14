@@ -201,7 +201,7 @@
    <tocitem text="Memory Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   </tocitem>
-  <tocitem text="Operations " target="package.jmri.jmrit.operations.Operations">
+  <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
@@ -348,7 +348,7 @@
 
   </tocitem>
  </tocitem>
- <tocitem text="Operations " target="package.jmri.jmrit.operations.Operations">
+ <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
   <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
   <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">

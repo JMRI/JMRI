@@ -58,6 +58,7 @@
     <LI><A HREF="#newUserAdvice">New User Advice</A></LI>
     <LI><A HREF="#demo">Operations Demo Files</A></LI>
     <LI><A HREF="#Display">Display</A></LI>
+    <LI><A HREF="#MultipleLayouts">Multiple Layout Support</A></LI>
     <LI><A HREF="#QuickStartHelp">Quick Start Help</A></LI>
     <LI><A HREF="#Settings">Settings</A>
      <UL>
@@ -263,6 +264,13 @@
     the "Display" appearance and font size, and many other settings including the "Railroad Name". Most
     JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get information
     about the window you're using. 
+    
+   <A NAME="MultipleLayouts"></A>
+   <H3>Multiple Layout Support</H3>
+   
+   You can create and manage multiple layouts using OperationsPro&trade;. From the main help menu bar under
+   "Edit" select "Preferences" then "Config Profiles".  Create a new configuration profile for each layout
+   that you want to manage.  The database for each layout is unique and not shared with the other layouts.
 
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
@@ -1956,18 +1964,16 @@
     is default empty, the program will place the custom load into that car if one of the two options
     is selected.</P>
 
-			<P>
-				To restrict which loads the program will place into your cars, you
-				can use the staging track's load control features. Under the "Tools"
-				menu in the "Edit Track" window find <A HREF="#LoadOptions">Load
-					Options</A>. You can also control which types of loads the program will
-				place by restricting the types of loads the train departing from
-				staging is allowed to service. To control which loads a train will
-				service, select under the "Edit Train" window menu "Tools" then <A
-					HREF="#TrainLoadOptions">Train Load Options</A>.
-			</P>
+   <P>
+    To restrict which loads the program will place into your cars, you can use the staging track's
+    load control features. Under the "Tools" menu in the "Edit Track" window find <A
+     HREF="#LoadOptions">Load Options</A>. You can also control which types of loads the program
+    will place by restricting the types of loads the train departing from staging is allowed to
+    service. To control which loads a train will service, select under the "Edit Train" window menu
+    "Tools" then <A HREF="#TrainLoadOptions">Train Load Options</A>.
+   </P>
 
-			<P>The third option "Generate custom loads for any staging track" will try and place custom
+   <P>The third option "Generate custom loads for any staging track" will try and place custom
     loads into your empty cars by searching for destinations that are staging tracks. The program
     will randomly search for a staging track that isn't located at the train's departure location.
     If the program does find a staging track, it will then randomly assign a custom load that is
@@ -1991,26 +1997,31 @@
    <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
 
-   OperationsPro&trade; provides a very simplistic algorithm to block cars from staging. Since cars that have
-   been sent to staging can reside anywhere in the train, the program uses the last location where
-   the cars where picked up to block an outgoing train from staging. So for example, if a train that
-   terminated into staging had three stops, A, B, and C, the cars from A would be blocked together
-   when the next train departed staging. The same goes for previous pick ups from B and C, those
-   cars would remain together. The program when attempting to find destinations for the cars
-   departing staging, starts with the largest block of cars, and then checks the departure train's
-   route, and attempts to send the largest block to the location requesting the most moves. After
-   doing that, the program does the same with the next block of cars, it finds the second location
-   in the route and sends the cars there. This is a very simplistic approach to blocking cars, it
-   assumes that cars previously picked up at a location were placed into the train as a group. This
-   blocking feature doesn't consider where in the train the cars are, as some crew members when picking
-   up cars, will add the cars to any part of the train. So the first stop in the departure train's
-   route may not have the cars at the head of the train, but they should be in a group, somewhere in
-   the train. The first time you depart staging with this feature on, the cars will not be blocked
-   for you, you need to first terminate a new train into staging, those cars will have the blocking
-   tags assigned to them. To enable this feature, see Edit Staging Track, "Optional Car Blocking" in
-   the lower right corner of the window. There are many reasons why this option will not block cars
-   correctly. See the train's build report for more details. 
-   
+   OperationsPro&trade; provides a very simplistic algorithm to block cars from staging. Since cars
+   that have been sent to staging can reside anywhere in the train, the program uses the last
+   location where the cars where picked up to block an outgoing train from staging. So for example,
+   if a train that terminated into staging had three stops, A, B, and C, the cars from A would be
+   blocked together when the next train departed staging. The same goes for previous pick ups from B
+   and C, those cars would remain together. The program when attempting to find destinations for the
+   cars departing staging, starts with the largest block of cars, and then checks the departure
+   train's route, and attempts to send the largest block to the location requesting the most moves.
+   After doing that, the program does the same with the next block of cars, it finds the second
+   location in the route and sends the cars there. This is a very simplistic approach to blocking
+   cars, it assumes that cars previously picked up at a location were placed into the train as a
+   group. This blocking feature doesn't consider where in the train the cars are, as some crew
+   members when picking up cars, will add the cars to any part of the train. So the first stop in
+   the departure train's route may not have the cars at the head of the train, but they should be in
+   a group, somewhere in the train. The first time you depart staging with this feature on, the cars
+   will not be blocked for you, you need to first terminate a new train into staging, those cars
+   will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
+   "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
+   option will not block cars correctly. See the train's build report for more details.
+
+   <P>
+    This feature is disabled if you've decided to <A HREF="#StagingAndCarLoads">generate custom
+     loads</A> for your cars out of staging.
+   </P>
+
    <A NAME="LoopingTrainsThroughStaging"></A>
    <H3>Looping Trains through Staging</H3>
 
@@ -2473,10 +2484,13 @@
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
-
    <A NAME="CARIDTAG"></A>
    <H3>Id Tag</H3>
-   The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock.  If any of the locations have an associated <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this car is read by that Reporter, then the location will be updated.
+   The Id Tag dropdown allows you to associate a <a
+    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
+   the locations have an associated
+   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this car
+   is read by that Reporter, then the location will be updated.
 
    <H3>Add</H3>
 
@@ -2822,12 +2836,15 @@
    After creating a locomotive, you can set the locomotive's location, and optionally the
    locomotive's destination and train. Normally the locomotive's destination and assigned train are
    generated by the program, but you can use these fields to force a locomotive to a specific
-   location using a specified train. 
-  
+   location using a specified train.
    <A NAME="LocomotiveIDTAG"></A>
    <H3>Id Tag</H3>
-   The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock.  If any of the locations have an associated <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this locomotive is read by that Reporter, then the location will be updated.
-
+   The Id Tag dropdown allows you to associate a <a
+    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
+   the locations have an associated
+   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this
+   locomotive is read by that Reporter, then the location will be updated. 
+   
    <A NAME="SynchronizeWithNCEConsists"></A>
    <H3>Synchronize with NCE Consists</H3>
 

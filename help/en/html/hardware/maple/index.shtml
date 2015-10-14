@@ -14,9 +14,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -24,6 +24,7 @@
 <h1> 
 JMRI: Maple Systems
 </h1>
+
 <a href="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg"><img src="http://www.maplesystems.com/images/silverseries/SilverSeries_7-16-07.jpg" align="right" height="93" width="173"></a><br>
 
 <a href="http://www.maplesystems.com/">Maple Systems</a>
@@ -32,16 +33,14 @@ makes several series of
 that can be very useful on model railroads.
 
 <p>
-Each panel is really a standalone computer.
-It's configured and loaded using a 
-<a href="http://www.maplesystems.com/products/software/ezware.htm">configuration program</a>
-provided by Maple Systems.
+Each panel is really a standalone (Windows) computer. It's configured and loaded using the 
+<a href="http://www.maplesystems.com/products/graphic-hmi/tabmenu-features/faq/index.html#collapse-1-5">EZware configuration program</a>
+provided by Maple Systems. 
 That configuration defines the displays, button labels and locations, etc.
 
 <p>
 JMRI interacts with the panel through input and output bits 
-(called "coils", as in relay coils)
-within the panel.
+(called "coils", as in relay coils) within the panel.
 The panel configuration can set these in response to various events.
 JMRI provides Sensor objects that make them available for triggering actions
 within JMRI.
@@ -53,7 +52,7 @@ This is still in the very early stages, so details are changing rapidly.
 If you want to use these devices, please contact the JMRI developers.
 
 <p>
-The system letter for Maple connections is "K".
+The system letter for Maple connections in JMRI is "K".
 
 <p>
 You configure the Maple Systems device to use one of the supported speeds
@@ -67,8 +66,7 @@ on the
 JMRI communicates with the Maple Systems device by reading and writing 
 "discrete memory" locations, otherwise known as "LB" registers.
 
-<p>LB registers 1 through 48 are available to JMRI as input "Sensors" 1
-to 48.
+<p>LB registers 1 through 48 are available to JMRI as input "Sensors" 1 to 48.
 
 <p>LB registers 1001 through 1048 are available to JMRI as output "Turnouts" 1 through 48.
 
@@ -76,7 +74,7 @@ to 48.
 The Maple Systems node number (programmed into "Parameter 5", the "HMI station ID #")
 can be 1 through 99.  It appears as the thousands digit of JMRI Sensor and Turnouts names.
 For example, KS3001 is the 1st sensor on node 3, and would therefore be LB 1 in that Maple
-Systems unit.  KT3001 is the 1st turnout on that node, and would therefore be
+Systems unit. KT3001 is the 1st turnout on that node, and would therefore be
 LB 101 in that unit.
 
 <p>
@@ -85,7 +83,7 @@ It is very likely that we will rework and improve the addressing soon.
 <p>
 You have to configure a node into JMRI with the "Configure Nodes" button on
 the preferences window. On the new window that appears, enter the node number 
-(e.g. 1 or 2, etc) into the "UA" field, and click "Add".  Leave all the rest alone;
+(e.g. 1 or 2, etc) into the "UA" field, and click "Add". Leave all the rest alone;
 the Maple Support was created from the JMRI C/MRI support, and in 
 JMRI 2.3.7 the migration is not complete.
 
