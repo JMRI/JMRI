@@ -12,55 +12,54 @@
         <label>
           <text> </text>
         </label>
-        <label>
-          <text>Dimming options</text>
-          <text xml:lang="fr">Options d'intensité</text>
-          <text xml:lang="de">Dimmer Optionen</text>
-          <text xml:lang="it">Opzioni Dimmer</text>
-        </label>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="Lights dimming (normal)"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="Lights dimming (normal)" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="Lights dimming (alternative)"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="Lights dimming (alternative)" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 1 dimming"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 1 dimming" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 2 dimming"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 2 dimming" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
+        <!-- BEGIN - Dimming grid -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Dimming options</text>
+                <text xml:lang="fr">Options d'intensité</text>
+                <text xml:lang="de">Dimmer Optionen</text>
+                <text xml:lang="it">Opzioni Dimmer</text>
+              </label>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="Lights dimming (normal)"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Lights dimming (normal)" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="Lights dimming (alternative)"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="Lights dimming (alternative)" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 1 dimming"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 1 dimming" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 2 dimming"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 2 dimming" label="" format="hslider"/>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Dimming grid -->
       </column>
       <column>
         <label>
@@ -77,76 +76,72 @@
         <label>
           <text> </text>
         </label>
-        <label>
-          <text>Timer options</text>
-          <text xml:lang="fr">Options de temporisation</text>
-          <text xml:lang="de">Timer Optionen</text>
-          <text xml:lang="it">Opzioni Temporizzazioni</text>
-        </label>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 1 Auto-off timer"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 1 Auto-off timer" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 2 Auto-off timer"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 2 Auto-off timer" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 3 Auto-off timer"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 3 Auto-off timer" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 4 Auto-off timer"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 4 Auto-off timer" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 5 Auto-off timer"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 5 Auto-off timer" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        <row>
-          <display item="AUX 6 Auto-off timer"/>
-          <label>
-            <text> </text>
-          </label>
-          <display item="AUX 6 Auto-off timer" label="" format="hslider"/>
-        </row>
-        <label>
-          <text> </text>
-        </label>
-        
+        <!-- BEGIN - Timers grid -->
+        <grid gridy="NEXT" weightx="1" ipadx="10">
+          <griditem gridx="0" gridy="0" gridwidth="1">
+              <label>
+                <text>Auto-off Timer options</text>
+                <text xml:lang="fr">Options de temporisation (Auto-off)</text>
+                <text xml:lang="de">Timer Optionen (Auto-off)</text>
+                <text xml:lang="it">Opzioni Temporizzazioni (Auto-off)</text>
+              </label>
+          </griditem>
+          <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 1 Auto-off timer" label="AUX 1"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 1 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 2 Auto-off timer" label="AUX 2"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 2 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 3 Auto-off timer" label="AUX 3"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 3 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 4 Auto-off timer" label="AUX 4"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 4 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 5 Auto-off timer" label="AUX 5"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 5 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+          <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+			<row>
+              <display item="AUX 6 Auto-off timer" label="AUX 6"/>
+              <label>
+                <text> </text>
+              </label>
+              <display item="AUX 6 Auto-off timer" label="" format="hslider"/>
+            </row>
+          </griditem>
+        </grid>
+        <!-- END - Timers grid -->
       </column>
     </row>
     <label>
