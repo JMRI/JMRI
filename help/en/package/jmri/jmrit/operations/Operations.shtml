@@ -263,6 +263,13 @@
     the "Display" appearance and font size, and many other settings including the "Railroad Name". Most
     JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get information
     about the window you're using. 
+    
+   <A NAME="MultipleLayouts"></A>
+   <H3>Multiple Layout Support</H3>
+   
+   You can create and manage multiple layouts using OperationsPro&trade;. From the main help menu bar under
+   "Edit" select "Preferences" then "Config Profiles".  Create a new configuration profile for each layout
+   that you want to manage.  The database for each layout is unique and not shared with the other layouts.
 
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
