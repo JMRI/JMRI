@@ -476,11 +476,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         // log.debug("getDestComboBox for ScheduleItem "+si.getType());
         JComboBox<Location> cb = LocationManager.instance().getComboBox();
         filterDestinations(cb, si.getTypeName());
-        if (si.getDestination() != null && cb.getSelectedIndex() == -1) {
-            // user deleted destination
-            cb.addItem(si.getDestination());
-        }
         cb.setSelectedItem(si.getDestination());
+        if (si.getDestination() != null && cb.getSelectedIndex() == -1) {
+            // user deleted destination, this is self correcting, when user restarts program, destination
+            // assignment will be gone.
+            cb.addItem(si.getDestination());
+            cb.setSelectedItem(si.getDestination());
+        }
         return cb;
     }
 
@@ -491,12 +493,13 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             Location dest = si.getDestination();
             dest.updateComboBox(cb);
             filterTracks(dest, cb, si.getTypeName(), si.getRoadName(), si.getShipLoadName());
+            cb.setSelectedItem(si.getDestinationTrack());
             if (si.getDestinationTrack() != null && cb.getSelectedIndex() == -1) {
                 // user deleted track at destination, this is self correcting, when user restarts program, track
                 // assignment will be gone.
                 cb.addItem(si.getDestinationTrack());
+                cb.setSelectedItem(si.getDestinationTrack());
             }
-            cb.setSelectedItem(si.getDestinationTrack());
         }
         return cb;
     }
