@@ -74,6 +74,8 @@ The <code>jmri/web/servlet/frameimage/JmriJFrameServlet.properties</code>
 a frame is requested.</p>
 
 <!--#include virtual="/Footer" -->
-    </div><!-- closes #mainContent-->
-  </body>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

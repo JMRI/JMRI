@@ -260,6 +260,8 @@ Dr. T. Catherall Ed, September/October 1995
 </ul>
 
 <!--#include virtual="/Footer" -->
-	</div><!-- closes #mainContent-->
-	</body>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

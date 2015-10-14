@@ -180,7 +180,9 @@
                 web access does not work as expected after modifying a template,
                 check the JMRI logs for the cause.</p>
 
-        <!--#include virtual="/Footer" -->
-	  </div><!-- closes #mainContent-->
-	  </body>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

@@ -113,7 +113,9 @@
             <li><a href="/web/power.html">Power Demonstration</a> (view the page source for the implementation)</li>
         </ul>
         
-        <!--#include virtual="/Footer" -->
-	</div><!-- closes #mainContent-->
-    </body>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

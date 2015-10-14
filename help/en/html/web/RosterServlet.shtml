@@ -36,5 +36,7 @@ This servlet responds to the following URL patterns:
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
-  </body>
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

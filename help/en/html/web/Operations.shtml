@@ -33,7 +33,8 @@ You can click on each location and the status line to display additional details
 </p>
 
 <!--#include virtual="/Footer" -->
-</div><!-- closes #mainContent-->
-	  
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
 </body>
 </html>
