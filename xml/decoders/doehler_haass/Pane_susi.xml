@@ -11,11 +11,16 @@
 		<griditem gridx="0" gridy="0" gridwidth="1">
 			<display item="SUSI mode"/>
 		</griditem>
-		<griditem gridx="0" gridy="1" gridwidth="1">
-			<label>
-      			<text> </text>
-    		</label>
-		</griditem>
+		  <group>
+			<qualifier>
+			  <variableref>SUSI mode</variableref>
+			  <relation>eq</relation>
+			  <value>1</value>
+			</qualifier>
+			<griditem gridx="0" gridy="1" gridwidth="1">
+			  <display item="SUSI ouptuts mapping"/>
+			</griditem>
+		  </group>
 	</grid>
 	<grid gridy="NEXT" weightx="1" ipadx="10">
 		<griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END">

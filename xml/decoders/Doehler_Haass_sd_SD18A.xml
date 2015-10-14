@@ -99,9 +99,9 @@
 		<output name="5" label="AUX 3|(or SUSI ZCLK)" maxcurrent="20mA"/>
         <!-- New from fw1.03  -->
         <output name="6" label="AUX 4|(or SUSI ZDAT)" maxcurrent="20mA"/>
-        <!-- New from fw1.03  -->
-        <output name="7" label="Dimmed|Lights"/>
-        <output name="8" label="Shunting|Speed"/>
+        <!-- New from fw1.03, changed from fw1.04  -->
+        <output name="7" label="Dimmed Lights|(or AUX 5)"/>
+        <output name="8" label="Shunting Speed|(or AUX 6)"/>
         <size length="25.0" width="9.5" height="2.8" units="mm"/>
 		<protocols>
             <protocol>dcc</protocol>
@@ -141,6 +141,10 @@
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits0.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits1-2.xml"/>
+			<!-- 2015-05 fw1.04+ -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits4-5.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv125-133.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377.xml"/>
 		<!-- END combo sound variable files -->
     </variables>
 	<resets>

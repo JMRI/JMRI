@@ -125,6 +125,27 @@
         <label>
           <text> </text>
         </label>
+        <row>
+          <display item="AUX 5 Auto-off timer"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 5 Auto-off timer" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        <row>
+          <display item="AUX 6 Auto-off timer"/>
+          <label>
+            <text> </text>
+          </label>
+          <display item="AUX 6 Auto-off timer" label="" format="hslider"/>
+        </row>
+        <label>
+          <text> </text>
+        </label>
+        
       </column>
     </row>
     <label>
@@ -191,6 +212,10 @@
               <display item="F1 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F1 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F1 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F1 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F1 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F1 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F1 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -218,6 +243,10 @@
               <display item="F2 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F2 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F2 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F2 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F2 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F2 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F2 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -245,6 +274,10 @@
               <display item="F3 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F3 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F3 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F3 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F3 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F3 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F3 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -272,6 +305,10 @@
               <display item="F4 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F4 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F4 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F4 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F4 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F4 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F4 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -306,6 +343,10 @@
               <display item="F5 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F5 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F5 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F5 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F5 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F5 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F5 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -333,6 +374,10 @@
               <display item="F6 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F6 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F6 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F6 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F6 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F6 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F6 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -360,6 +405,10 @@
               <display item="F7 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F7 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F7 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F7 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F7 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F7 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F7 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>
@@ -387,6 +436,10 @@
               <display item="F8 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
               <display item="F8 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
               <display item="F8 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
+              <display item="F8 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
+              <display item="F8 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
+              <display item="F8 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
+              <display item="F8 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
             </row>
             <label>
               <text> </text>

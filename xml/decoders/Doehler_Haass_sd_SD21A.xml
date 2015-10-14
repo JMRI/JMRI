@@ -80,8 +80,9 @@
 		<output name="4" label="AUX|2" maxcurrent="300mA"/>
 		<output name="5" label="AUX|3" maxcurrent="1A"/>
 		<output name="6" label="AUX|4" maxcurrent="1A"/>
-        <output name="7" label="Dimmed|Lights"/>
-        <output name="8" label="Shunting|Speed"/>
+        <!-- AUX 5 - 6 from fw1.04  -->
+        <output name="7" label="Dimmed Lights|(or AUX 5)"/>
+        <output name="8" label="Shunting Speed|(or AUX 6)"/>
         <size length="30.2" width="15.8" height="5.2" units="mm"/>
 		<protocols>
             <protocol>dcc</protocol>
@@ -121,6 +122,10 @@
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349.xml"/>
 			<!-- <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits0.xml"/> --><!-- Irrelevant for SD21 (AUX3-4 present)-->
 			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits1-2.xml"/>
+			<!-- 2015-05 fw1.04+ -->
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv137_bits4-5.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv125-133.xml"/>
+			<xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377.xml"/>
 		<!-- END combo sound variable files -->
     </variables>
 	<resets>
