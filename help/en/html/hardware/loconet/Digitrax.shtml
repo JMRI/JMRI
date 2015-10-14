@@ -2,8 +2,7 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-  <title>JMRI Hardware Guide: Digitrax LocoNet </title>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <title>JMRI Hardware Guide: Digitrax LocoNet</title>
     <META name="keywords" content="Digitrax LocoNet LocoBuffer LocoBuffer-II
           LocoBuffer-USB MS100 PR2 PR3 DCS100 DCS50 DCS51 DB150 JMRI">
 
@@ -124,7 +123,7 @@ is more information on the <a href="PR3.shtml">PR3 setup page</a>.
 
 <h2><a name="Setup">Setup</a></h2>
 
-<p>To connect your computer to a Digitrax DCC system, you need a  <a
+<p>To connect your computer to a Digitrax DCC system, you need aÂ  <a
 title="RR-CirKits USB interface" href="LocoBufferUSB.shtml">LocoBuffer-USB</a>,
 <a title="Digitrax USB interface" href="PR3.shtml">PR3</a>, <a
 title="RR-CirKits Serial interface"
@@ -224,13 +223,13 @@ connected to a PR3 operating in stand-alone programming mode.
             unless you later consistently get a JMRI console message about the 
             LocoBuffer control leads being improperly set up, in which case you might 
             want to try to bypass that by selecting "no flow control". This box will be 
-      blank if you've selected LocoBuffer-USB, PR3 or MS100. </li>
+      blank if you've selected LocoBuffer-USB, PR3 or MS100.</li>
               
       </ul>
   
   <li>Click "Save". You'll be asked if it's OK for the program to quit, click
     "Yes". </li>
-  <li style="text-align:left;">Restart the program. You should be up and
+  <li style="text-align:left;">Restart JMRI. You should be up and
     running. <br>
   </li>
 </ol>
@@ -286,7 +285,7 @@ The Intellibox II and IB-Com have two
 LocoNet connections, called LocoNet-T and LocoNet-B. The LocoNet-T 
 connection can drive more devices, but does not provide the Rail-Synch signals that 
 some LocoNet devices (particularly boosters and the BDL16, BDL162 and BDL168) require. 
-A LocoBuffer should be connected to the LocoNet-T connection. </p>
+A LocoBuffer should be connected to the LocoNet-T connection.</p>
 
 <p><strong>PR-1 not supported</strong> - Note that DecoderPro cannot directly
 program decoders via a PR1 programmer. JMRI supports decoder programming either
@@ -294,7 +293,7 @@ via the PR3 as a stand-alone programmer or via a command station.</p>
 
 <p><b>Mac OS X and the MS100</b> - Because Mac OS X can't communicate at the
 special baud rate used by the MS100, the MS100 won't work with Mac OS X. You
-should get a LocoBuffer-USB instead. </p>
+should get a LocoBuffer-USB instead.</p>
 
 <p><b>Microsoft Vista and the MS100</b> - It has been reported that Vista does
 not support the special baud rate used by the MS100. If you find that your
@@ -302,8 +301,8 @@ MS100 does not work on your Vista machine you should get a LocoBuffer-USB or
 PR3 instead.
 </p>
 
-
 <h2><a name="Debugging">Debugging</a></h2>
+
 <ul>
     <li>When using the LocoBuffer or LocoBuffer-II, be sure that the JMRI 
         preferences for the connection are set to use the same Baud rate as the 
@@ -398,7 +397,8 @@ PR3 instead.
             on the DCC track signal.  Note that this can include devices which 
             connect to LocoNet and which monitor the DCC track signal which 
             is available on the LocoNet cable "RailSync" wires.</p>
-        <h4><a name="turncmdhandsettings">Turnout Command Handling Settings</a></h4>
+            
+  <h4><a name="turncmdhandsettings">Turnout Command Handling Settings</a></h4>
         
         <p>JMRI has various mechanisms to help handle these temporary LocoNet switch
             command buffer overloads.  These mechanisms are controlled by the "Turnout 
@@ -432,8 +432,9 @@ PR3 instead.
         <p>None of these options can <i>guarantee</i> that
             <i>all</i> LocoNet switch messages <i>will</i> be passed to the DCC 
             track signal.</p>
-        <h4><a name="alternatives">Avoidance strategies</a></h4>
-        <p>Some users may be able to reduce the liklihood of this problem occurring by allowing
+            
+  <h4><a name="alternatives">Avoidance strategies</a></h4>
+        <p>Some users may be able to reduce the likelihood of this problem occurring by allowing
             signal hardware to generate blinking signal aspects instead of programming 
             JMRI to sequentially send "on" and "off" messages to the signal hardware.</p>
         <p>Other users who do not have <i>any</i> hardware which are controlled by DCC 
@@ -455,7 +456,8 @@ PR3 instead.
             <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a> for 
             background, ideas, and suggestions for implementing a standalone 
             LocoNet.</p>
-        <h4><a name="cmdStationTrkPwrOff">Turnout command rejection when track 
+            
+  <h4><a name="cmdStationTrkPwrOff">Turnout command rejection when track 
                 power is off</a></h4>
         <p>Some more recent Digitrax command stations will refuse to accept switch
             commands when track power is turned off.  This can result in a "storm" 
@@ -484,17 +486,17 @@ PR3 instead.
 
 <h2><a name="Support">Support</a></h2>
 <p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
-        Digitrax, Inc.</a>  Digitrax product manuals may be found 
-        <a href="http://www.digitrax.com/manuals.php">here</a>.  
+        Digitrax, Inc.</a> Digitrax product manuals may be found 
+        <a href="http://www.digitrax.com/support/manuals/">here</a>.  
         Note that Digitrax does not provide support for JMRI software.</p>
-<p>Many knowledgeable Digitrax users contribute to the <a href="http://groups.yahoo.com/group/Digitrax">
-        Digitrax User's "Yahoo Group"</a>.  If you have a problem with Digitrax equipment, 
+<p>Many knowledgeable Digitrax users contribute to the <a href="https://groups.yahoo.com/neo/groups/Digitrax/info">
+        Digitrax users Yahoo group</a>. If you have a problem with Digitrax equipment, 
         this is a good place to pose your Digitrax-specific problems.  This 
         user's group is run by and for Digitrax users.  It is not directly 
         supported by Digitrax.  </p>
 <p>For JMRI-specific questions, including questions about how JMRI and Digitrax 
-hardware interact, the <a href="http://groups.yahoo.com/group/jmriusers">
-    JMRI Users "Yahoo group"</a> is very helpful.</p>  
+hardware interact, the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
+    JMRI users Yahoo group</a> is very helpful.</p>  
 
 <h2><a name="SeeAlso">See also</a></h2>
 <p>JMRI provides specific support for the a variety of Digitrax and 3rd-party 

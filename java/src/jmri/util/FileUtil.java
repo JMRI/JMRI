@@ -1150,7 +1150,7 @@ public final class FileUtil {
                 @Override
                 public FileVisitResult visitFile(final Path file,
                         final BasicFileAttributes attrs) throws IOException {
-                    Files.copy(file, dstPath.resolve(srcPath.relativize(file)));
+                    Files.copy(file, dstPath.resolve(srcPath.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
                     return FileVisitResult.CONTINUE;
                 }
             });

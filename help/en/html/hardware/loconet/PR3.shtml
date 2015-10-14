@@ -2,15 +2,15 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: Connecting to a Digitrax PR3
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
+ <title>
+      JMRI Hardware Guide: Connecting to a Digitrax PR3 (Xtra)
+ </title>
+    <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax Chief DCS Command Station MS-100 LocoBuffer java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
 	MEDIA="screen">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
@@ -18,24 +18,24 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
 <h1> 
-JMRI Hardware Guide: Connecting to a Digitrax PR3
+JMRI Hardware Guide: Connecting to a Digitrax PR3 (Xtra)
 </h1>
 
 
-<a href="http://digitrax.com/prd_compint_pr3.php">
+<a href="http://www.digitrax.com/products/computer-control/pr3xtra/">
 <img src="http://www.digitrax.com/static/apps/products/computer-control/pr3/images/PR3_jpg_350x900_q85.jpg" 
      alt="PR3 picture">
 </a><br>
 <h1>Introduction</h1>
-The Digitrax PR3 can be used as a standalone decoder programmer with its 
+The Digitrax PR3 (Xtra) can be used as a standalone decoder programmer with its 
 own dedicated programming track (much like the Digitrax PR2), or as an 
 interface between your computer and a LocoNet&reg;, much like an MS100. 
 It can only do one or the other of these at a given time. You select the 
@@ -65,26 +65,24 @@ has found that the PR3 will work with many common decoders.
 connected to LocoNet.  This includes programming decoders on a programming 
 track attached to a LocoNet command station.  Where the LocoNet command station 
 supports "programming on the main", JMRI is able to make use of that feature.</p>
-<p>The PR3 can also be used to connect JMRI to a <a href="StandaloneLoconet.html">
+<p>The PR3 can also be used to connect JMRI to a <a href="StandaloneLocoNet.shtml">
     "standalone LocoNet"</a>, which may be useful when LocoNet is used for some
     aspects of layout control while some other control system is use for other
     aspects.  An example may be track occupancy detection and signaling using 
     Digitrax BDL168 and SE8C boards while locomotive control is provided by 
     a non-LocoNet DCC system.  More information on this advanced topic is 
-    available on the <a href="StandaloneLoconet.html"> "Standalone LocoNet"</a> 
+    available on the <a href="StandaloneLocoNet.shtml"> "Standalone LocoNet"</a> 
     page.
 <p>
 For more information on the PR3 itself, please see the
-<a href="http://digitrax.com/prd_compint_pr3.php">Digitrax PR3 page</a>
+<a href="http://www.digitrax.com/products/computer-control/pr3xtra/">Digitrax PR3 page</a>
 and the 
-<a href="http://www.digitrax.com/kb/index.php?c=338">PR3 page</a>
-in the 
-<a href="http://www.digitrax.com/kb/index.php">Digitrax Knowledge Base</a>.
+<a href="http://www.digitrax.com/tsd/product/PR3/">PR3 Support page.
 
 <h2>Drivers</h2>
 The PR3 needs to have a driver installed when used with
 Microsoft Windows.  See the 
-<a href="http://digitrax.com/prd_compint_pr3.php">Digitrax PR3 page</a>
+<a href="http://www.digitrax.com/tsd/KB196/pr3-software-setup-for-microsoft-windows-xp/">Digitrax PR3 Windows Setup page</a>
 for more information.  Make sure to follow the instructions
 exactly, particularly about the order of installing the drivers
 and plugging in the device.
@@ -118,7 +116,7 @@ Open the Preferences window from the Edit menu and configure the connection by:
 <li>In the "<strong>Command Station</strong>" option, select the type of command station you've
     got on your LocoNet, e.g. "<code><strong>DCS100 (Chief)</strong></code>", "<code><strong>DCS050 (Zephyr)</strong></code>", etc.  
     <p>The "Stand-alone LocoNet" option should be selected if you don't have a command
-station connected; see the <a href="StandaloneLoconet.html"> "Standalone LocoNet"</a> 
+station connected; see the <a href="StandaloneLocoNet.shtml"> "Standalone LocoNet"</a> 
     page.  In this case, the PR3 connection will not be able to program decoders.
 <li>In the advanced settings, the speed will be fixed at 57,600 baud.
 <li>In the advanced settings, the "Flow Control" option defaults to 
@@ -176,7 +174,7 @@ Open the Preferences window from the Edit menu and configure the connection by:
 
 <h1>Usage suggestions</h1>
 
-<P> 
+<p> 
 You can use a JMRI throttle to control the locomotive connected
 to the PR3 Programmer. Use the JMRI Power Control or the "Power" menu item 
 on the Throttle's menu bar to turn on track power, and then you 
