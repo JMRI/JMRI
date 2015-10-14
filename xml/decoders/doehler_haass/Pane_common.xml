@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- version 4 - 2015-10-14 - PB - grids added and new SD fw functions -->
 <!-- version 3 - 2015-03-05 - PB - Spelling.  -->
 <!-- version 2 - 2014-06-03 - PB - improved XML -->
 <!-- version 1 - 2014-02-20 - PB - for common D&H software -->
@@ -189,268 +190,222 @@
         </label>
       </column>
     </row>
-    <row>
-      <column>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F1 precludes  </text>
-              <text xml:lang="fr"> F1 bloque  </text>
-              <text xml:lang="de"> F1 schaltet aus  </text>
-              <text xml:lang="it">Blocco F1  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F1 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F1 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F1 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F1 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F1 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F1 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F1 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F1 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F2 precludes  </text>
-              <text xml:lang="fr"> F2 bloque  </text>
-              <text xml:lang="de"> F2 schaltet aus  </text>
-              <text xml:lang="it">Blocco F2  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F2 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F2 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F2 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F2 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F2 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F2 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F2 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F2 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F3 precludes  </text>
-              <text xml:lang="fr"> F3 bloque  </text>
-              <text xml:lang="de"> F3 schaltet aus  </text>
-              <text xml:lang="it">Blocco F3  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F3 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F3 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F3 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F3 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F3 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F3 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F3 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F3 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F4 precludes  </text>
-              <text xml:lang="fr"> F4 bloque  </text>
-              <text xml:lang="de"> F4 schaltet aus  </text>
-              <text xml:lang="it">Blocco F4  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F4 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F4 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F4 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F4 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F4 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F4 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F4 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F4 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-      </column>
-      <column>
-        <label>
-          <text>          </text>
-        </label>
-      </column>
-      <column>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F5 precludes  </text>
-              <text xml:lang="fr"> F5 bloque  </text>
-              <text xml:lang="de"> F5 schaltet aus  </text>
-              <text xml:lang="it">Blocco F5  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F5 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F5 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F5 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F5 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F5 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F5 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F5 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F5 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F6 precludes  </text>
-              <text xml:lang="fr"> F6 bloque  </text>
-              <text xml:lang="de"> F6 schaltet aus  </text>
-              <text xml:lang="it">Blocco F6  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F6 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F6 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F6 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F6 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F6 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F6 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F6 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F6 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F7 precludes  </text>
-              <text xml:lang="fr"> F7 bloque  </text>
-              <text xml:lang="de"> F7 schaltet aus  </text>
-              <text xml:lang="it">Blocco F7  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F7 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F7 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F7 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F7 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F7 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F7 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F7 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F7 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-        <row>
-          <column>
-            <label>
-              <text> </text>
-            </label>
-            <label>
-              <text> F8 precludes  </text>
-              <text xml:lang="fr"> F8 bloque  </text>
-              <text xml:lang="de"> F8 schaltet aus  </text>
-              <text xml:lang="it">Blocco F8  </text>
-            </label>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-          <column>
-            <row>
-              <display item="F8 precludes front lights" format="checkbox" layout="above" label="Front lights"/>
-              <display item="F8 precludes rear lights" format="checkbox" layout="above" label="Rear lights"/>
-              <display item="F8 precludes AUX 1" format="checkbox" layout="above" label="AUX 1"/>
-              <display item="F8 precludes AUX 2" format="checkbox" layout="above" label="AUX 2"/>
-              <display item="F8 precludes AUX 3" format="checkbox" layout="above" label="AUX 3"/>
-              <display item="F8 precludes AUX 4" format="checkbox" layout="above" label="AUX 4"/>
-              <display item="F8 precludes AUX 5" format="checkbox" layout="above" label="AUX 5"/>
-              <display item="F8 precludes AUX 6" format="checkbox" layout="above" label="AUX 6"/>
-            </row>
-            <label>
-              <text> </text>
-            </label>
-          </column>
-        </row>
-      </column>
-    </row>
     <label>
       <text> </text>
     </label>
+    <!-- BEGIN - Preclusion grid -->
+    <grid gridy="NEXT" weightx="1" ipadx="10">
+      <!-- BEGIN - Row 1 (headers)-->
+      <griditem gridx="0" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F1</text></label></griditem>
+      <griditem gridx="1" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F2</text></label></griditem>
+      <griditem gridx="2" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F3</text></label></griditem>
+      <griditem gridx="3" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F4</text></label></griditem>
+      <griditem gridx="4" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F5</text></label></griditem>
+      <griditem gridx="5" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F6</text></label></griditem>
+      <griditem gridx="6" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F7</text></label></griditem>
+      <griditem gridx="7" gridy="0" gridwidth="1" anchor="LINE_END"><label><text>F8</text></label></griditem>
+      <!-- BEGIN - Row 2 (Front lights)-->
+      <griditem gridx="0" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes front lights" format="checkbox" label="Front lights"/>
+	  </griditem>
+      <griditem gridx="1" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="1" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes front lights" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 3 (Rear lights)-->
+      <griditem gridx="0" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes rear lights" format="checkbox" label="Rear lights"/>
+	  </griditem>
+      <griditem gridx="1" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="2" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes rear lights" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 4 (AUX 1)-->
+      <griditem gridx="0" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes AUX 1" format="checkbox" label="AUX 1"/>
+	  </griditem>
+      <griditem gridx="1" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="3" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes AUX 1" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 5 (AUX 2)-->
+      <griditem gridx="0" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes AUX 2" format="checkbox" label="AUX 2"/>
+	  </griditem>
+      <griditem gridx="1" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="4" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes AUX 2" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 6 (AUX 3)-->
+      <griditem gridx="0" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes AUX 3" format="checkbox" label="AUX 3"/>
+	  </griditem>
+      <griditem gridx="1" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="5" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes AUX 3" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 7 (AUX 4)-->
+      <griditem gridx="0" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes AUX 4" format="checkbox" label="AUX 4"/>
+	  </griditem>
+      <griditem gridx="1" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="6" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes AUX 4" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 8 (AUX 5)-->
+      <griditem gridx="0" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes AUX 5" format="checkbox" label="AUX 5"/>
+	  </griditem>
+      <griditem gridx="1" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="7" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes AUX 5" format="checkbox" label=""/>
+	  </griditem>
+      <!-- BEGIN - Row 9 (AUX 6)-->
+      <griditem gridx="0" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F1 precludes AUX 6" format="checkbox" label="AUX 6"/>
+	  </griditem>
+      <griditem gridx="1" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F2 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="2" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F3 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="3" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F4 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="4" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F5 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="5" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F6 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="6" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F7 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+      <griditem gridx="7" gridy="8" gridwidth="1" anchor="LINE_END">
+		<display item="F8 precludes AUX 6" format="checkbox" label=""/>
+	  </griditem>
+	</grid>
+    <!-- END - Preclusion grid -->
     <label>
       <text> </text>
     </label>
