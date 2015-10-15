@@ -64,6 +64,13 @@
 		<label xml:lang="fr">Sons aléatoire en marche</label>
 		<label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
   	</variable>
+	<!-- Added - Fw 1.04+ -->
+	<variable item="Forward random sounds to SUSI" CV="367" tooltip="CV367 bit 2" mask="XXXXXVXX" default="0" exclude="SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+		<label xml:lang="fr">Passer les sons aléatoires à SUSI</label>
+		<label xml:lang="de">Zufallsgeräusche an SUSI weiterleiten</label>
+  	</variable>
+	<!-- End Added - Fw 1.04+ -->
 	<variable label="Volume dynamic sounds" CV="368" default="128" tooltip="CV368" item="Sound Setting 31" exclude="SD18A_1.00">
 		<decVal/>
 		<label xml:lang="fr">Volume sons dynamiques</label>
