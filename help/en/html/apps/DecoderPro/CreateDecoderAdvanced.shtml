@@ -149,7 +149,7 @@ then in the program directory.  The full path must be present, e.g.
 you need an xml directory that contains a decoders directory in your preferences directory for the
 fragment file to be found.
 <p>
-Use an existing file as an example for the top elements & format needed.
+Use an existing file as an example for the top elements &amp; format needed.
  
 <a name="update" id="update"></a>
 <h3>Updates and Migration</h3>
@@ -375,7 +375,7 @@ For examples of how to use these, see the TCS WOW decoder definition.
 <h4>Split Variables - "long" addresses over 2 CVs</h4>
 
 <p>Some decoders, mostly accessory decoders, are using "long" addresses that are split over 2 CVs, contiguous or not.</p>
-<p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address. See <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard</a></p>
+<p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address, see <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard 9.2.2</a>.</p>
 
 <p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
 

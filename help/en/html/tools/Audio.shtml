@@ -137,7 +137,7 @@ classes that control the audio processing.
 <h3>Technical details</h3>
 The JMRI audio framework makes use of either of the following audio libraries:
 <ul>
-<li><a href="http://java.sun.com/products/java-media/sound/">JavaSound</a> - for basic audio functions (limited to stereo)
+<li><a href="http://www.oracle.com/technetwork/java/index-139508.html">JavaSound</a> - for basic audio functions (limited to stereo)
 <p>JavaSound is normally available with a Sun Microsystems Java Runtime Environment; other vendors, such as OpenJDK, do not include JavaSound.
 <li><a href="http://www.openal.org/">OpenAL</a> - for full-featured audio functions (including support for up-to 7.1 surround)
 <p>OpenAL may already be included with your system.
@@ -145,7 +145,7 @@ The JMRI audio framework makes use of either of the following audio libraries:
 <h4>Mac OS X</h4>
 Those versions of Mac OS X that are suitable for JMRI already have a suitable version installed.
 <h4>MS Windows</h4>
-By default, OpenAL will require installing on your system. Certain sound cards, notably those manufactured by Creative Labs and NVidia, will normally already come with suitable OpenAL drivers. If OpenAL is not installed, <a href="http://connect.creativelabs.com/openal/Downloads/oalinst.zip">it should be downloaded</a> from Creative Labs and then installed on your system.
+By default, OpenAL will require installing on your system. Certain sound cards, notably those manufactured by Creative Labs and NVidia, will normally already come with suitable OpenAL drivers. If OpenAL is not installed, <a href="http://www.openal.org/downloads/">it should be downloaded</a> from OpenAL.org and then installed on your system.
 <h4>Linux</h4>
 Depending on the provider of your Linux distribution, OpenAL might already be included in the default package. If not, the 'libopenal-dev' package should be installed using the package manager on your system. For Debian-based distributions, this will typically be achieved by the command:
 <pre>$ sudo apt-get install libopenal-dev</pre>

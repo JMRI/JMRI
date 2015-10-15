@@ -62,7 +62,7 @@ public class Em18RfidProtocolTest extends TestCase {
     public void testIsValid() {
         Em18RfidProtocol instance = new Em18RfidProtocol();
         assertEquals(true, instance.isValid(msgStandalone));
-        assertEquals(true, instance.isValid(msgBadChkSumStandalone));
+        assertEquals(false, instance.isValid(msgBadChkSumStandalone));
     }
 
     /**

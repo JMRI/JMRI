@@ -58,6 +58,7 @@
     <LI><A HREF="#newUserAdvice">New User Advice</A></LI>
     <LI><A HREF="#demo">Operations Demo Files</A></LI>
     <LI><A HREF="#Display">Display</A></LI>
+    <LI><A HREF="#MultipleLayouts">Multiple Layout Support</A></LI>
     <LI><A HREF="#QuickStartHelp">Quick Start Help</A></LI>
     <LI><A HREF="#Settings">Settings</A>
      <UL>
@@ -263,6 +264,13 @@
     the "Display" appearance and font size, and many other settings including the "Railroad Name". Most
     JMRI windows have as part of the menu bar the "Help" option. Select "Window Help.." to get information
     about the window you're using. 
+    
+   <A NAME="MultipleLayouts"></A>
+   <H3>Multiple Layout Support</H3>
+   
+   You can create and manage multiple layouts using OperationsPro&trade;. From the main help menu bar under
+   "Edit" select "Preferences" then "Config Profiles".  Create a new configuration profile for each layout
+   that you want to manage.  The database for each layout is unique and not shared with the other layouts.
 
    <A NAME="demo"></A>
    <H3>Operations Demo Files</H3>
@@ -1958,11 +1966,11 @@
 
    <P>
     To restrict which loads the program will place into your cars, you can use the staging track's
-    load control features. Under the "Tools" menu in the "Edit Track" window find "Load Options".
-    You can also control which types of loads the program will place by restricting the types of
-    loads the train departing from staging is allowed to service. To control which loads a train
-    will service, select under the "Edit Train" window menu "Tools" <A HREF="#TrainLoadOptions">Train
-     Load Options</A>.
+    load control features. Under the "Tools" menu in the "Edit Track" window find <A
+     HREF="#LoadOptions">Load Options</A>. You can also control which types of loads the program
+    will place by restricting the types of loads the train departing from staging is allowed to
+    service. To control which loads a train will service, select under the "Edit Train" window menu
+    "Tools" then <A HREF="#TrainLoadOptions">Train Load Options</A>.
    </P>
 
    <P>The third option "Generate custom loads for any staging track" will try and place custom
@@ -1989,26 +1997,31 @@
    <A NAME="BlockingCarsFromStaging"></A>
    <H3>Blocking Cars from Staging</H3>
 
-   OperationsPro&trade; provides a very simplistic algorithm to block cars from staging. Since cars that have
-   been sent to staging can reside anywhere in the train, the program uses the last location where
-   the cars where picked up to block an outgoing train from staging. So for example, if a train that
-   terminated into staging had three stops, A, B, and C, the cars from A would be blocked together
-   when the next train departed staging. The same goes for previous pick ups from B and C, those
-   cars would remain together. The program when attempting to find destinations for the cars
-   departing staging, starts with the largest block of cars, and then checks the departure train's
-   route, and attempts to send the largest block to the location requesting the most moves. After
-   doing that, the program does the same with the next block of cars, it finds the second location
-   in the route and sends the cars there. This is a very simplistic approach to blocking cars, it
-   assumes that cars previously picked up at a location were placed into the train as a group. This
-   blocking feature doesn't consider where in the train the cars are, as some crew members when picking
-   up cars, will add the cars to any part of the train. So the first stop in the departure train's
-   route may not have the cars at the head of the train, but they should be in a group, somewhere in
-   the train. The first time you depart staging with this feature on, the cars will not be blocked
-   for you, you need to first terminate a new train into staging, those cars will have the blocking
-   tags assigned to them. To enable this feature, see Edit Staging Track, "Optional Car Blocking" in
-   the lower right corner of the window. There are many reasons why this option will not block cars
-   correctly. See the train's build report for more details. 
-   
+   OperationsPro&trade; provides a very simplistic algorithm to block cars from staging. Since cars
+   that have been sent to staging can reside anywhere in the train, the program uses the last
+   location where the cars where picked up to block an outgoing train from staging. So for example,
+   if a train that terminated into staging had three stops, A, B, and C, the cars from A would be
+   blocked together when the next train departed staging. The same goes for previous pick ups from B
+   and C, those cars would remain together. The program when attempting to find destinations for the
+   cars departing staging, starts with the largest block of cars, and then checks the departure
+   train's route, and attempts to send the largest block to the location requesting the most moves.
+   After doing that, the program does the same with the next block of cars, it finds the second
+   location in the route and sends the cars there. This is a very simplistic approach to blocking
+   cars, it assumes that cars previously picked up at a location were placed into the train as a
+   group. This blocking feature doesn't consider where in the train the cars are, as some crew
+   members when picking up cars, will add the cars to any part of the train. So the first stop in
+   the departure train's route may not have the cars at the head of the train, but they should be in
+   a group, somewhere in the train. The first time you depart staging with this feature on, the cars
+   will not be blocked for you, you need to first terminate a new train into staging, those cars
+   will have the blocking tags assigned to them. To enable this feature, see Edit Staging Track,
+   "Optional Car Blocking" in the lower right corner of the window. There are many reasons why this
+   option will not block cars correctly. See the train's build report for more details.
+
+   <P>
+    This feature is disabled if you've decided to <A HREF="#StagingAndCarLoads">generate custom
+     loads</A> for your cars out of staging.
+   </P>
+
    <A NAME="LoopingTrainsThroughStaging"></A>
    <H3>Looping Trains through Staging</H3>
 
@@ -2042,20 +2055,38 @@
    <H3>Track Tools</H3>
 
    You can access some very useful tools for your tracks from the tools menu when editing a track.
-   
    <A NAME="LoadOptions"></A>
    <H4>Load Options</H4>
 
    You can restrict which car loads a track can service. Under "Tools" in the menu, Select "Load
    Options". In the "Edit Track Load Options" window select "Accept only" if you want to build a
-   list of car load names that the track will accept. Select "Exclude" if you want to build a list of
-   car load names that you want to exclude from the track. There's also an option to associate the
-   loads to a particular type of car that the track will service. Select the "Use car type and load"
-   if you want this feature. To add a load name or car type and load name to the load list, select
-   the load name or combo you want, and then press the "Add Load" button. To remove a load name from
-   the list, select the load name you want to remove, and press "Delete Load". "Delete All" will
-   remove all load names from the load list. 
-   
+   list of car load names that the track will accept. Select "Exclude" if you want to build a list
+   of car load names that you want to exclude from the track. There's also an option to associate
+   the loads to a particular type of car that the track will service. Select the "Use car type and
+   load" if you want this feature. To add a load name or car type and load name to the load list,
+   select the load name or combo you want, and then press the "Add Load" button. To remove a load
+   name from the list, select the load name you want to remove, and press "Delete Load". "Delete
+   All" will remove all load names from the load list.
+   <A NAME="SpurOption"></A>
+   <H5>Spur Option</H5>
+
+   <P>Spurs have the option "Hold cars with custom loads when spurs are full" and this option is
+    used to retrict car movement. When this option is selected, cars with custom loads are only
+    routed to spurs with schedules demanding the car's custom load. When the program finds a car
+    with a custom load but without a final destination, it will search all spurs for a schedule that
+    is demanding that car's type and load, and if found will route the car there. If all spurs are
+    full and the option "Hold cars with custom loads when spurs are full" is selected for any spur
+    demanding that car's custom load, the program will only move the car when one of the spurs can
+    accept a new car, i.e. the spur is no longer full. If however the option "Hold cars with custom
+    loads when spurs are full" isn't selected for all of the spur/schedules demanding the car's
+    custom load, the program will attempt to move the car to another location, which can be staging.</P>
+
+   <P>
+    You can have the program ignore the "Hold cars with custom loads when spurs are full" feature
+    described above by selecting the <A HREF="#SendCustomToStaging">Send cars with custom load
+     to staging</A> option for a train.
+   </P>
+
    <A NAME="RoadOptions"></A>
    <H4>Road Options</H4>
 
@@ -2099,40 +2130,24 @@
     that a single schedule assigned to a spur doesn't quite do what you want. But if the track could
     have several schedules, it would do what is needed. By entering multiple spurs with schedules
     shared via a pool, you can create any car sequence imaginable for your industry.</p>
-    
+
    <A NAME="AlternateTrack"></A>
    <H4>Alternate Track</H4>
 
    You can add an alternate track to a spur from the "Tools" menu accessed from either the edit spur
    or the edit schedule windows. The program when it finds a spur full will send cars to the track
-   you specify as the alternate track. The alternate track feature can be used to create an
-   "Off Spot" track for your cars. Once you specify a track as an alternate, only cars destined for
-   the spur will be placed on the alternate track. You can also use the same alternate track for
-   several spurs.
+   you specify as the alternate track. The alternate track feature can be used to create an "Off
+   Spot" track for your cars. Once you specify a track as an alternate, only cars destined for the
+   spur will be placed on the alternate track. You can also use the same alternate track for several
+   spurs.
 
-   <P>Specifying an alternate track for a schedule also changes the behavior of cars with custom
-    loads but without a final destination. When the program finds a car with a custom load, it will
-    search all spurs for a schedule that is demanding that car's type and load, and if found will
-    route the car there. However, if the track was full, the program will continue to search for a
-    track/schedule that can accept the car. If all tracks are full and no alternate track is
-    specified for any of the track/schedules, the program will attempt to move the car to another
-    location, which can be staging. However, if there's an alternate track specified, the program will only
-    move the car when one of the spurs can accept a new car, i.e. the track is no longer full.</P>
-
-   <P>
-    You can have the program ignore the alternate track car holding feature described above by
-    enabling the <A HREF="#SendCustomToStaging">Send cars with custom load to staging</A> option for
-    a train.
-   </P>
-
-   <P>Another feature of using an alternate track for cars with custom loads but without a final
-    destination, is that the program will try and forward some number of cars to the spur demanding
-    that car type and load. The program refers to these cars as "inbound" to the spur/industry. For
-    a car to be "inbound" is has to be transported by trains that don't directly service the
+   <P>Adding an alternate track will normally increase the number of cars that the program
+    routes to a spur / schedule. The program refers to these cars as "inbound" to the spur/industry.
+    For a car to be "inbound" is has to be transported by trains that don't directly service the
     spur/industry. The maximum number of inbound cars to a spur with an alternate track is
     determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
-    and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to
-    the spur.</P>
+    and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to the
+    spur.</P>
 
 
    <A NAME="PlannedPickUps"></A>
@@ -2469,10 +2484,13 @@
 
    Finally you can optionally enter the color, built date, owner and comment for this car. The built
    date can be entered as a four digit year, or in the format of month-year.
-
    <A NAME="CARIDTAG"></A>
    <H3>Id Tag</H3>
-   The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock.  If any of the locations have an associated <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this car is read by that Reporter, then the location will be updated.
+   The Id Tag dropdown allows you to associate a <a
+    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
+   the locations have an associated
+   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this car
+   is read by that Reporter, then the location will be updated.
 
    <H3>Add</H3>
 
@@ -2641,6 +2659,8 @@
    Normally we recommend that you don't use the "Destination" pull down menus to forward a car to a
    location, but use the "Final Destination" as described below. However, if you're manually adding
    a car to a built train, you must set the car's destination and track.
+   
+   
    <A NAME="FinalDestination"></A>
    <H4>Final Destination</H4>
 
@@ -2816,12 +2836,15 @@
    After creating a locomotive, you can set the locomotive's location, and optionally the
    locomotive's destination and train. Normally the locomotive's destination and assigned train are
    generated by the program, but you can use these fields to force a locomotive to a specific
-   location using a specified train. 
-  
+   location using a specified train.
    <A NAME="LocomotiveIDTAG"></A>
    <H3>Id Tag</H3>
-   The Id Tag dropdown allows you to associate a <a href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock.  If any of the locations have an associated <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this locomotive is read by that Reporter, then the location will be updated.
-
+   The Id Tag dropdown allows you to associate a <a
+    href="../../../../html/tools/IdTags.shtml">IdTag</a> with this piece of rolling stock. If any of
+   the locations have an associated
+   <a href=#LocationReporter>Id Tag Reader at Location</a> and the Id Tag associated with this
+   locomotive is read by that Reporter, then the location will be updated. 
+   
    <A NAME="SynchronizeWithNCEConsists"></A>
    <H3>Synchronize with NCE Consists</H3>
 
@@ -3249,27 +3272,28 @@
 
    <H4>Service all cars with a final destination</H4>
 
-   This option when selected tells the program to pull cars with a final destination even if the train
-   being built doesn't provide the most efficient route for the car. Useful if you want the train
-   being built to move cars "closer" to their final destination, even if other trains could do it
-   more efficiently. The term "closer" has to be taken with a grain of salt, as the program doesn't
-   really understand distances, only the number of trains needed to move a car. So there will be cases
-   where the train pulls the car, and it will in fact be physically farther from the car's final
-   destination. This option does two things, it will add cars to the train being built that wouldn't
-   normally travel on the train, thus freeing up track space. And second creates more work for your
-   crew as this option can and will increase the number of trains needed to move the car to its
-   final destination.
-   
+   This option when selected tells the program to pull cars with a final destination even if the
+   train being built doesn't provide the most efficient route for the car. Useful if you want the
+   train being built to move cars "closer" to their final destination, even if other trains could do
+   it more efficiently. The term "closer" has to be taken with a grain of salt, as the program
+   doesn't really understand distances, only the number of trains needed to move a car. So there
+   will be cases where the train pulls the car, and it will in fact be physically farther from the
+   car's final destination. This option does two things, it will add cars to the train being built
+   that wouldn't normally travel on the train, thus freeing up track space. And second creates more
+   work for your crew as this option can and will increase the number of trains needed to move the
+   car to its final destination.
    <A NAME="SendCustomToStaging"></A>
    <H4>Send cars with custom loads to staging</H4>
 
    When the "Send cars with custom loads to staging" is selected, the program will attempt to send a
    car with a custom load, but without a final destination, to staging when the program finds all of
    the spurs with schedules full. The program will also send a car to staging if it finds the routes
-   servicing the spurs with schedules have interim yard or C/I tracks that are also full. This option
-   tends to increase car movement to staging by ignoring the
-   <A HREF="#AlternateTrack">Alternate Track</A> feature for a spur where the program would normally
-   hold a car at its current location when all spurs with schedules were full. 
+   servicing the spurs with schedules have interim yard or C/I tracks that are also full. This
+   option tends to increase car movement to staging by ignoring the
+   <A HREF="#SpurOption">Hold cars with custom loads when spurs are full</A> feature for a spur where the
+   program would normally hold a car at its current location when all spurs with schedules were
+   full. 
+   
    
    <A NAME="BuildlocoConsist"></A>
    <H4>Build loco consist from single locos</H4>
