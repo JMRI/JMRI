@@ -6,7 +6,6 @@ import jmri.jmrix.loconet.LocoNetMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import java.util.*;
-import java.text.*;
 
 /**
  * Supporting class for LocoNet SV Programming Format 2 messaging

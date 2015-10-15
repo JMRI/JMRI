@@ -2925,8 +2925,8 @@ public class TrainBuilder extends TrainCommon {
      * Find the final destination and track for a car with a custom load. Car
      * doesn't have a destination or final destination. There's a check to see
      * if there's a spur/ schedule for this car. Returns true if a schedule was
-     * found. Hold car at current location if any of the spurs checked has an
-     * alternate track.
+     * found. Hold car at current location if any of the spurs checked has the
+     * the option to "always forward cars to this spur" enabled.
      *
      * @param car the car with the load
      * @return true if there's a schedule that can be routed to for this car and
@@ -3019,11 +3019,10 @@ public class TrainBuilder extends TrainCommon {
             addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSetFinalDestination"),
                     new Object[]{car.toString(), car.getLoadName(), track.getLocation().getName(), track.getName()}));
 
-            // show if track has an alternate
-            if (track.getAlternateTrack() != null) {
-                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildTrackHasAlternate"),
-                        new Object[]{track.getLocation().getName(), track.getName(),
-                                track.getAlternateTrack().getName()}));
+            // show if track is requesting cars with custom loads to only go to spurs
+            if (track.isHoldCarsWithCustomLoadsEnabled()) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarsCustom"),
+                        new Object[]{track.getLocation().getName(), track.getName()}));
             }
 
             // check the number of in bound cars to this track
@@ -3033,8 +3032,8 @@ public class TrainBuilder extends TrainCommon {
                 // determine if this car can be routed to the spur
                 car.setFinalDestination(track.getLocation());
                 car.setFinalDestinationTrack(track);
-                // hold car if able to route and track has an alternate
-                if (Router.instance().setDestination(car, _train, _buildReport) && track.getAlternateTrack() != null) {
+                // hold car if able to route to track
+                if (Router.instance().setDestination(car, _train, _buildReport) && track.isHoldCarsWithCustomLoadsEnabled()) {
                     routeToSpurFound = true; // if we don't find another spur, keep the car here for now
                 }
                 car.setDestination(null, null);
@@ -3051,7 +3050,7 @@ public class TrainBuilder extends TrainCommon {
             car.setFinalDestination(track.getLocation());
             car.setFinalDestinationTrack(track);
             // test to see if destination is reachable by this train
-            if (Router.instance().setDestination(car, _train, _buildReport) && track.getAlternateTrack() != null) {
+            if (Router.instance().setDestination(car, _train, _buildReport) && track.isHoldCarsWithCustomLoadsEnabled()) {
                 routeToSpurFound = true; // found a route to the spur
             }
             if (car.getDestination() != null) {
@@ -3072,7 +3071,7 @@ public class TrainBuilder extends TrainCommon {
                 car.toString(), car.getLoadName()}));
         if (routeToSpurFound && !_train.isSendCarsWithCustomLoadsToStagingEnabled()
                 && !car.getLocation().isStaging()) {
-            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarVaildRoute"),
+            addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildHoldCarValidRoute"),
                     new Object[]{car.toString(), car.getLocationName(), car.getTrackName()}));
         } else {
             // try and send car to staging

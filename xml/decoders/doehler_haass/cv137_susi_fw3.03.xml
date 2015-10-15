@@ -38,7 +38,7 @@
       <revremark>This new option appears with fw3.03 for decoders with SUSI connector</revremark>
     </revision>
   </revhistory>
-  <variable CV="137" mask="XXXXXXXV" tooltip="CV137 bit 0">
+  <variable item="SUSI mode" CV="137" mask="XXXXXXXV" tooltip="CV137 bit 0">
     <enumVal>
       <enumChoice choice="Activated" value="0">
         <choice>Activated</choice>

@@ -2,9 +2,9 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI Hardware Guide: NAC Services RPS
- </TITLE>
+ </title>
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
@@ -14,9 +14,9 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
@@ -27,13 +27,13 @@ JMRI Hardware Guide: NAC Services RPS
 </h1>
 
 <em>Please note that JMRI's RPS support is being rapidly improved.
-This page refers to most recent JMRI test version.  If you're using
+This page refers to most recent JMRI test version. If you're using
 an RPS system, you should update to new test versions as they 
 <a href="http://jmri.sf.net/download/index.shtml">are announced</a>.</em>
 
 <p>
 The 
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS System</a>
+<a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a>
 allows you to locate the 
 exact position of locomotives and other rolling stock
 that have been equipped with transmitter decoders.
@@ -68,13 +68,13 @@ receivers while you're first getting the system working.
 <p>
 Next, connect your computer to the RPS using either a USB connection
 or an RS232 cable from a serial port.
-If you use an RS232 cable, not that it should be a "straight-through"
+If you use an RS232 cable, note that it should be a "straight-through"
 or "modem" cable, <I>not</I> a "crossover" or "null-modem" cable.
 
-<P>
+<p>
 Next, configure the JMRI program.
-<UL>
-  <LI>Start your JMRI-based program (DecoderPro, PanelPro, etc).
+<ul>
+  <li>Start your JMRI-based program (DecoderPro, PanelPro, etc).
   <li> Go to the preferences panel of the program.
   This opens automatically the first time a program is run, or you
   can select it from the "Edit" menu.
@@ -88,7 +88,7 @@ Next, configure the JMRI program.
   <li>Select "RPS Base Station" from the "Aux connection 2"
   selection box.
   
-  <LI>In the associated port selection box, pick the name of the 
+  <li>In the associated port selection box, pick the name of the 
   serial port that you have connected to the RPS system.
 
   <li>The baud rate will show a fixed value of
@@ -181,16 +181,16 @@ in certain cases.
 
 </dl>
 
-You can also display RPS information on PanelPro control panels using an
+You can also display RPS information on PanelPro Control Panels using an
 "<a href="../../../package/jmri/jmrit/display/RpsIcon.shtml">RPS Icon</a>".
 <p>
 RPS information may be used to detect occupancy using 
 <a href="sensors.shtml">JMRI RPS Sensors</a>.
 
-<h2>For More Information</h2>
+<h2>More Information</h2>
 
-There's more information available on the 
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS Web Site</a>.
+More information is available on the 
+<a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS Web Site</a>.
 
 <!--#include virtual="/Footer" -->
 </body>

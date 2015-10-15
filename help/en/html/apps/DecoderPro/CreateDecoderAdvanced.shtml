@@ -60,6 +60,8 @@ For more examples see
 This provides only HTML5 support, so if something isn't displaying as you expect, 
 see if an approach using simpler HTML will work.
 </p>
+
+<a name="id" id="id"></a>
 <h3>Identification</h3>
 Three pieces:
 <dl>
@@ -70,13 +72,29 @@ Three pieces:
                     within all decoder definitions for the specific manufacturer.
                     This is a complex process that doesn't always go well 
                     due to duplicate values, etc.</dd>
-<dt>Product code:</dt><dd>a numerical value read from a manufacturer-specific CV or CVs, 
+<dt>Product ID code:</dt><dd>originally a numerical value read from a manufacturer-specific CV or CVs; 
                     this only works for certain manufacturers.  The read process
-                    is handled in the code (the jmri.jmrit.decoderdefn.IdentifyDecoder class)
-                    and has to be updated each time a manufacturer starts providing this number
-                    in a CV. When the product code is present, it should
+                    is handled in the code (the 
+                    <a href="http://jmri.org/JavaDoc/doc/jmri/jmrit/decoderdefn/IdentifyDecoder.html">jmri.jmrit.decoderdefn.IdentifyDecoder</a> class)
+                    and has to be updated each time a manufacturer 
+                    starts providing values in one or more new CVs.
+                    When the product code is present, it should
                     break any degeneracy between overlapping CV7 values within a 
-                    decoder family.</dd>
+                    decoder family.
+                    <p>
+                    Support is also being added to find this value using the
+                    <a href="../../hardware/loconet/Addressing.shtml#SVs">LocoNet SV2 protocol</a>
+                    some time during the JMRI 4.1 release series.  See the release notes
+                    for more info on the progress.
+                    <p>
+                    Since the product code works with the include/exclude operations described below,
+                    you can also use it in cases where there's no CV or CVs that contain it.
+                    In that case, no automated ID is done, but the value from the 
+                    productID attribute of the user-selected model is used during later
+                    processing and expansion of the decoder definition.
+                    Alphanumeric productID values are sometimes used for this to avoid
+                    conflicts with the numeric ones found in CVs.
+                    </dd>
 </dl>
 For example:
 <code><pre>
@@ -93,7 +111,8 @@ If the user selects a decoder model manually, that selection sets
 all three values for use by when the decoder definition is expanded 
 for programming (see section <a href="#conditional">Conditional Decoder Definitions</a> below).
 
-<h3 id="visibility">Pane Visibility</h3>
+<a name="visibility" id="visibility"></a>
+<h3>Pane Visibility</h3>
  
 The decoder-config (top-level) element has a showEmptyPanes attribute
 that can be used to control whether empty panes (panes with no variables) appear.
@@ -107,7 +126,8 @@ In some cases, e.g. a non-locomotive decoder for servos where none of the locomo
 panes make sense so the decoder definition contains lots of custom panes, 
 it's a simplification to set showEmptyPanes="no" and just remove all those.
 
-<h3 id="frag_include">Including Fragment Files</h3>
+<a name="frag_include" id="frag_include"></a>
+<h3>Including Fragment Files</h3>
 
 Common parts of decoder definitions can be placed into "fragment files", 
 which can then be included into multiple decoder definition files.
@@ -129,9 +149,10 @@ then in the program directory.  The full path must be present, e.g.
 you need an xml directory that contains a decoders directory in your preferences directory for the
 fragment file to be found.
 <p>
-Use an existing file as an example for the top elements & format needed.
+Use an existing file as an example for the top elements &amp; format needed.
  
-<h3 id="update">Updates and Migration</h3>
+<a name="update" id="update"></a>
+<h3>Updates and Migration</h3>
 
 Sometimes, we replace a decoder definition with a better one.  The old one is in use,
 but we'd like to move those users to the new one eventually.  There are model-level
@@ -221,7 +242,7 @@ For an example of where to position this capability element in the file, etc., s
     xml/decoders/ESU_LokSoundV4_0.xml</a> file.
 
 <p>
-<a id="zimocapability"></a>
+<a name="zimocapability" id="zimocapability"></a>
 Another approach, used by e.g. Zimo, is to provide a way to page the access.
 For example, to write 21 to CV614 with one of these, you need to:
 <ul>
@@ -354,7 +375,7 @@ For examples of how to use these, see the TCS WOW decoder definition.
 <h4>Split Variables - "long" addresses over 2 CVs</h4>
 
 <p>Some decoders, mostly accessory decoders, are using "long" addresses that are split over 2 CVs, contiguous or not.</p>
-<p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address. See <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard</a></p>
+<p>CV1 and CV9 are standardized by NMRA for accessory decoders primary address, see <a href="http://www.nmra.org/sites/default/files/standards/sandrp/pdf/s-9.2.2_decoder_cvs_2012.07.pdf">NMRA standard 9.2.2</a>.</p>
 
 <p>Long addresses can be accessed via "splitVal" type, as in the following example:</p>
 
@@ -381,8 +402,8 @@ For examples of how to use these, see the TCS WOW decoder definition.
 <p>For details and more advanced features, see this <a href="/JavaDoc/doc/jmri/jmrit/symbolicprog/SplitVariableValue.html" target="_blank">JavaDoc page</a></p>
 
 
-
-<h3 id="conditional">Conditional Decoder Definitions</h3>
+<a name="conditional" id="conditional"></a>
+<h3>Conditional Decoder Definitions</h3>
 
 To reduce the number of decoder definition files needed, each file can 
 contain definitions for multiple decoder models.  
@@ -393,7 +414,8 @@ These are particularly useful when using a common fragment file
 that might be included by multiple decoder definition files (defining
 different-but-similar families)
 
-<h4 id="var_include">Include/Exclude During Variable Expansion</h4>
+<a name="var_include" id="var_include"></a>
+<h4>Include/Exclude During Variable Expansion</h4>
 
 Whether a variable element is expanded and used can be made conditional on the 
 decoder type using "include" and "exclude" attributes on &lt;variables&gt; and &lt;variable&gt; elements.
@@ -432,7 +454,8 @@ Attributes on a &lt;variables&gt; element act on all the &lt;variable&gt; elemen
 along with any include or exclude attributes on those individual variables. 
 </p>
 
-<h4 id="pane_include">Include/Exclude During Pane Creation</h4>
+<a name="pane_include" id="pane_include"></a>
+<h4>Include/Exclude During Pane Creation</h4>
 
 Whether a pane (or part of a pane) is created can be made conditional on the 
 decoder type using "include" and "exclude" attributes on &lt;pane&gt; and &lt;group&gt; elements.
@@ -486,7 +509,8 @@ The text will be created only when expanding the decoder definition
 for ModelA or product ID 400.
 </p>
 
-<h4 id="qualify">Run-time Qualification of Variables</h4>
+<a name="qualify" id="qualify"></a>
+<h4>Run-time Qualification of Variables</h4>
 <h5>Qualifying Variables</h5>
 
 A "qualifier" element on a variable element allows you to enable or disable the variable
@@ -531,7 +555,8 @@ If multiple qualifier elements are present, all must be true for the
 variable to be active and displayed.
 </p>
 
-<h5 id="panes">Qualifying Panes</h5>
+<a name="panes" id="panes"></a>
+<h5>Qualifying Panes</h5>
 
 A "qualifier" element on a pane element allows you to enable or disable the pane
 depending on the current value of a variable. 
@@ -577,7 +602,8 @@ Other available operators include "gt", "ge", "ne", "lt" and "le".
 If multiple qualifier elements are present, all must be true for the 
 pane to be active and displayed.
 
-<h5 id="labels">Qualifying Elements on Panes</h5>
+<a name="labels" id="labels"></a>
+<h5>Qualifying Elements on Panes</h5>
 
 A "qualifier" element on a "label", "soundlabel", "row", "column", "grid" or "griditem" element
 allows you to enable or disable the  display of that element on a specific pane.

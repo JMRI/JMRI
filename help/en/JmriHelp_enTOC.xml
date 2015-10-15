@@ -201,7 +201,7 @@
    <tocitem text="Memory Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
   </tocitem>
-  <tocitem text="Operations " target="package.jmri.jmrit.operations.Operations">
+  <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
    <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
    <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
@@ -348,7 +348,7 @@
 
   </tocitem>
  </tocitem>
- <tocitem text="Operations " target="package.jmri.jmrit.operations.Operations">
+ <tocitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
   <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
   <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
@@ -516,9 +516,11 @@
 
   </tocitem>
   <tocitem text="Building Your Own Copy of JMRI ">
-   <tocitem text="Building with Ant " target="html.doc.Technical.NetBeans"/>
+   <tocitem text="Building with Ant " target="html.doc.Technical.Ant"/>
 
    <tocitem text="Building with NetBeans " target="html.doc.Technical.NetBeans"/>
+
+   <tocitem text="Building with Eclipse " target="html.doc.Technical.Eclipse"/>
 
   </tocitem>
   <tocitem text="How We Do Stuff ">

@@ -2,9 +2,9 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-    <TItlE>
+    <TITLE>
  	JMRI: Developing with JMRI Code 
-    </titlE>
+    </TITLE>
     <META content="Bob Jacobsen" name=Author>
     <meta name="keywords" content="JMRI technical code Git download">
 
@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -75,7 +69,7 @@ repository where they're safe, and can eventually be moved onward.
   git commit -m&quot;useful comment&quot;
   </code></pre>
 
-<h3 id="repo">Get Your Own GitHub Repository</h3>
+<a name="repo" id="repo"></a><h3>Get Your Own GitHub Repository</h3>
 
   <ul>
   <li>Get a <a href="https://github.com/join">GitHub account</a> and login
@@ -91,9 +85,12 @@ repository where they're safe, and can eventually be moved onward.
   This gives you your own repository, which you can then work with freely.
   
   <p>
-  The next step is to connect it to your local repository.  
+  If you're using the command line,
+  the next step is to connect it to your local repository.
+  (IDE users will do this next part in their IDE, see
+  those instructions)
   On the web page for your repository, right side, is a "HTTPS Clone URL".
-  Copy that. In your repository, do
+  Copy that. In your repository directory on your local computer, do
   
   <pre><code>
   git remote set-url --push origin https://github.com/yourname/JMRI.git
@@ -112,7 +109,7 @@ repository where they're safe, and can eventually be moved onward.
 </pre></code>
   
 
- <h3 id="push">Push Your Changes to Your GitHub Repository</h3>
+ <a name="push" id="push"></a><h3>Push Your Changes to Your GitHub Repository</h3>
  
  Now that you have a consistent set of changes committed locally, 
  you can move them up to your repository on GitHub. That makes 
@@ -123,7 +120,7 @@ repository where they're safe, and can eventually be moved onward.
   </code></pre>
 
 
- <h3 id="pull">Submit a Pull Request</h3>
+ <a name="pull" id="pull"></a><h3>Submit a Pull Request</h3>
 
 The last step is to make your changes, visible in your GitHub repository,
 known to the JMRI maintainers so that one of them can pull it into the main 

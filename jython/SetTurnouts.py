@@ -6,9 +6,8 @@
 # run independently after the "start" operation
 #
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 class setStartup(jmri.jmrit.automat.AbstractAutomaton) :      
   def init(self):

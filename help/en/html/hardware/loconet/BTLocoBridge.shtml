@@ -1,26 +1,23 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: BTLocoBridge.shtml 27263 2014-09-21 00:42:15Z jacobsen $ -->
+<!-- $Id: -->
 <html lang="en">
 <head>
- <TITLE>
+ <title>
       JMRI Hardware Guide: Connecting through a Bluetooth LocoBridge Adapter
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
+ </title>
+    <meta content="Bob Jacobsen" name="Author">
+    <meta name="keywords" content="Digitrax LocoNet Bluetooth LocoBridge java model railroad JMRI install windows">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link rel="stylesheet" TYPE="text/css" HREF="/css/default.css" media="screen">
+<link rel="stylesheet" TYPE="text/css" HREF="/css/print.css" media="print">
+<link rel="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<link rel="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -29,19 +26,18 @@
 JMRI Hardware Guide: Connecting through a Bluetooth LocoBridge Adapter
 </h1>
 
-
 <img src="http://www.mollehem.se/images/stories/virtuemart/product/bt_rensad2.png" alt="LocoAdapter picture" align="right" height="205" width="166"/>
 The <a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">LocoBridge</a> 
 allows you to connect remotely through Bluetooth to 
 the adapter, which then connects to a LocoNet to control your layout.
 
 <p>
-For more information on the LocoBridge itself, please see the
+For more information on the LocoBridge itself, please see 
 <a href="http://www.mollehem.se/index.php/electronics/smartphoninterface-detail">its page</a>.
 
 <h2>Setup</h2>
 
-On recent Mac and Windows systems, all necessary software comes with the JMRI download.
+<p>On recent Mac and Windows systems, all necessary software comes with the JMRI download.
 
 <p>
 On Linux and other systems, you need to have a libbluetooth installed.
@@ -58,19 +54,19 @@ uses to access Bluetooth.
 To set up a JMRI application to use the LocoBridge:
 </p>
 
-<UL>
-<LI>
-Start the application
+<ol>
 <li>
-Open the Preferences window from the Edit menu and configure the connection by:
-<UL>
-<LI>Select System manufacturer as Digitrax
-<li>Select the System connection as BT LocoBridge
-<li>Select your LocoBridge as the Bluetooth adapter
+Start JMRI
+<li>
+Open the Preferences window from the Edit menu and configure the Connection as:
+<ul>
+<li>Select System manufacturer as: Digitrax
+<li>Select the System connection as: BT LocoBridge
+<li>Select your LocoBridge as: the Bluetooth adapter
 <li>Select your Command Station type
-</UL>
-<li>Click Save at the bottom of the preferences window, quit the program and restart.
-</UL>
+</ul>
+<li>Click "Save" at the bottom of the Preferences window, quit JMRI and restart.
+</ol>
 	  
     </div>
 

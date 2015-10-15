@@ -4,9 +4,6 @@
 # Author: Ken Cameron, copyright 2008
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
-#
 # The start button is inactive until data has been entered.
 #
 # The test button is to force re-evaluation of all block and signal values.
@@ -92,6 +89,7 @@
 # allow for the removal of the PropertyChangeListener.
 #
 
+import jmri
 import java
 import javax.swing
 

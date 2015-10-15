@@ -33,13 +33,14 @@ abstract public class RfidProtocol {
      *
      * @param concentratorFirst - character representing first concentrator port
      * @param concentratorLast  - character representing last concentrator port
-     * @param portPosition      - position of port character in reply string
+     * @param portPosition      - position of port character in reply string;
+     *                            1 for first character
      */
     public RfidProtocol(char concentratorFirst, char concentratorLast, int portPosition) {
         isConcentrator = concentratorFirst != '\u0000' && concentratorLast != '\u0000' && portPosition != 0;
         this.concentratorFirst = concentratorFirst;
         this.concentratorLast = concentratorLast;
-        this.portPosition = portPosition;
+        this.portPosition = portPosition - 1; // needs to be zero-based;
     }
 
     /**
@@ -96,28 +97,10 @@ abstract public class RfidProtocol {
      */
     abstract public String initString();
 
-    /**
-     * Sets this protocol to use a concentrator.
-     *
-     * @param enabled  true to use a concentrator
-     * @param start    character representing the first port - ignored if
-     *                 disabled
-     * @param end      character representing the last port - ignored if
-     *                 disabled
-     * @param position position of port character in message; 1 for first
-     *                 character
-     */
-    public void setAsConcentrator(boolean enabled, char start, char end, int position) {
-        this.isConcentrator = enabled;
-        this.concentratorFirst = start;
-        this.concentratorLast = end;
-        this.portPosition = position - 1; // needs to be zero-based
-    }
-
     public char getReaderPort(AbstractMRReply msg) {
         if (isConcentrator) {
             Character p = (char) msg.getElement(portPosition);
-            if (p.toString().matches(this.concentratorFirst + "-" + this.concentratorLast)) {
+            if (p.toString().matches("[" + this.concentratorFirst + "-" + this.concentratorLast + "]")) {
                 return p;
             }
         }
@@ -176,7 +159,7 @@ abstract public class RfidProtocol {
     }
 
     /**
-     * Convert a single hex character to it's corresponding hex value using
+     * Convert a single hex character to its corresponding hex value using
      * pre-calculated translation table.
      *
      * @param c character to convert (0..9, a..f or A..F)

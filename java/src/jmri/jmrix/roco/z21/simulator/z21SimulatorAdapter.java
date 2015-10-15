@@ -2,7 +2,6 @@
 package jmri.jmrix.roco.z21.simulator;
 
 import jmri.jmrix.roco.z21.z21Adapter;
-import jmri.jmrix.roco.z21.z21Constants;
 import jmri.jmrix.roco.z21.z21Message;
 import jmri.jmrix.roco.z21.z21Reply;
 import jmri.jmrix.roco.z21.z21TrafficController;
