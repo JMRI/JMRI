@@ -2,9 +2,9 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI Hardware Guide: RPS Sensors
- </TITLE>
+ <title>
+      JMRI Hardware Guide: NAC Services RPS Sensors
+ </title>
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
 <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
@@ -14,33 +14,33 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
 <h1> 
-JMRI Hardware Guide: RPS Sensors
+JMRI Hardware Guide: NAC Services RPS Sensors
 </h1>
 
 <em>Please note that JMRI's RPS support is being rapidly improved.
-This page refers to most recent JMRI test version.  If you're using
+This page refers to most recent JMRI test version. If you're using
 an RPS system, you should update to new test versions as they 
 <a href="http://jmri.sf.net/download/index.shtml">are announced</a>.</em>
 
 <p>
 The 
-<a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS System</a>
+<a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS System</a>
 provides absolute location of RPS-equipped rolling stock.
 <P>
 JMRI can use that to set JMRI 
 <a href="../../tools/Sensors.shtml">Sensors</a>
 when a RPS transmitter is in a specific area, which can in turn be used to control other
 JMRI functions such as 
-<a href="../../tools/Signals.shtml">signals</a>, 
+<a href="../../tools/Signals.shtml">Signals</a>, 
 <a href="../../tools/Routes.shtml">Routes</a> and 
 <a href="../../tools/Logix.shtml">Logix</a>.
 
@@ -75,7 +75,7 @@ The "R" means the RPS system, "S" means you're defining a Sensor,
 and the rest of the name defines the coordinates of the corners
 of the region to include in the sensor.
 Each corner is specified by its X, Y and Z values, all grouped
-together with parantheses.  The corners should be separated by
+together with parentheses.  The corners should be separated by
 semicolons; see the example above.
 
 <p>
