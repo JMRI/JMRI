@@ -12,11 +12,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="3" author="PB, pierre.bln@me.com" lastUpdated="20150223"/>
+  <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150223"/>
   <!--  Moved dimmed lights/shunting mode from Adv. Mapping tab to standard mapping table.
   		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane)
 		-->
-  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20140220"/>
+  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20140220"/>
   <!-- 2 2014/02/20 Update: future proofing
 		This is a complete rewrite of my original submission for many D&H decoders.
 		This updates ensure a cleaner, more future proof organisation (despite more files). 
@@ -27,7 +27,7 @@
 		global firmware version as published on the website is numbered as an absolute number.
 		These definitions include both numbers (Firmware version & Decoder version).
 		-->
-  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20130731"/>
+  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20130731"/>
   <!-- 1 2013/07/31 Creation 
 		First decoder template for the Doehler & Haass decoder range.
 		This LOCOMOTIVE decoder file creates the corresponding family, and 
