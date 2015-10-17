@@ -42,6 +42,8 @@ public class SimpleTimebaseTest extends TestCase {
 
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Date now = new Date();
 
         p.setStartSetTime(true, now);
@@ -62,6 +64,8 @@ public class SimpleTimebaseTest extends TestCase {
     // set the time based on a date.
     public void testSetTimeDate() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Date now = new Date();
 
         p.setTime(now);

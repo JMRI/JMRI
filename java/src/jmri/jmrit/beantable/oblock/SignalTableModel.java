@@ -19,6 +19,7 @@ package jmri.jmrit.beantable.oblock;
  * @version $Revision$
  */
 import java.beans.PropertyChangeEvent;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JButton;
@@ -31,6 +32,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
+import jmri.util.IntlUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -389,13 +391,13 @@ public class SignalTableModel extends AbstractTableModel {
                 return;               
             } else if (col == LENGTHCOL) {
                 try {
-                    _tempLen = Float.valueOf((String)value).floatValue();
+                    _tempLen = IntlUtilities.floatValue(value.toString());
                     if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                         _tempLen *= 10f;
                     } else {
                         _tempLen *= 25.4f;                            
                     }
-                } catch (java.lang.NumberFormatException nfe) {
+                } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                 }
@@ -464,13 +466,13 @@ public class SignalTableModel extends AbstractTableModel {
                     float length = 0.0f;
                     boolean isMetric = tempRow[UNITSCOL].equals(Bundle.getMessage("cm"));
                     try {
-                        length = Float.valueOf(tempRow[LENGTHCOL]);
+                        length = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
                         if (isMetric) {
                             length *= 10f;
                         } else {
                             length *= 25.4f;                            
                         }
-                    } catch (java.lang.NumberFormatException nfe) {
+                    } catch (ParseException e) {
                         msg = Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]);                    
                     }
                     if (isMetric) {
@@ -613,14 +615,14 @@ public class SignalTableModel extends AbstractTableModel {
                     break;
                 case LENGTHCOL:
                     try {
-                        float len = Float.valueOf((String)value).floatValue();
+                        float len = IntlUtilities.floatValue(value.toString());
                         if (signalRow.isMetric()) {
                             signalRow.setLength(len * 10.0f);
                         } else {
                             signalRow.setLength(len * 25.4f);
                         }
                         fireTableRowsUpdated(row, row);                    
-                    } catch (java.lang.NumberFormatException nfe) {
+                    } catch (ParseException e) {
                         msg = Bundle.getMessage("BadNumber", value);                    
                     }
                     if (msg == null && signalRow.getPortal() != null) {
