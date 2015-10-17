@@ -13,7 +13,7 @@
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <version version="5" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151018"/>
-  <!--  Merged DH05x and DH10x def files (same functions and outputs) -->
+  <!--  Merged DH05C, DH10C, DH12A, DH16A, DH18A, DH21A def files (same CV characteristics) -->
   <version version="4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150223"/>
   <!--  Moved dimmed lights/shunting mode from Adv. Mapping tab to standard mapping table.
 		Removed link to doehler_haass/Pane_map_adv.xml (F1(r), F2(r), as well as dimming/shuting now in std JMRI map pane)
@@ -70,6 +70,66 @@
         <output name="7" label="Dimmed|Lights"/>
         <output name="8" label="Shunting|Speed"/>
         <size length="14.2" width="9.3" height="1.5" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+	  <model model="DH12A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH12A_3.03" comment="DH12A with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX12">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="NC - Logic Level"/>
+        <output name="6" label="AUX|4" maxcurrent="NC - Logic Level"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="14.5" width="8" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+	  <model model="DH16A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH16A_3.03" comment="DH16A-0 /DH16A-1 /DH16A-2 /DH16A-3 with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="PluX16">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="1.0A"/>
+        <output name="6" label="AUX|4" maxcurrent="1.0A"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="16.7" width="10.9" height="2.8" units="mm"/>
+        <protocols>
+          <protocol>dcc</protocol>
+          <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+	  <model model="DH18A v3.03 (firmware 3.03+)" lowVersionID="3" highVersionID="3" numOuts="6" numFns="16" productID="DH18A_3.03" comment="DH18A with update from 15 Jan 2014" maxInputVolts="30V" maxMotorCurrent="1.5A" maxTotalCurrent="1.5A" connector="Next18">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+		<output name="2" label="Rear|Light" maxcurrent="150mA"/>
+		<output name="3" label="AUX|1" maxcurrent="300mA"/>
+		<output name="4" label="AUX|2" maxcurrent="300mA"/>
+		<output name="5" label="AUX|3" maxcurrent="NC - Logic Level"/>
+		<output name="6" label="AUX|4" maxcurrent="NC - Logic Level"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="13.5" width="9.0" height="2.8" units="mm"/>
+		<protocols>
+            <protocol>dcc</protocol>
+            <protocol>selectrix</protocol>
+        </protocols>
+      </model>
+	  <model model="DH21A v3.03 (firmware 3.03+)" lowVersionID="54" highVersionID="54" numOuts="6" numFns="16" productID="DH21A_3.03" comment="DH21A with release firmware" maxInputVolts="30V" maxMotorCurrent="2A" maxTotalCurrent="2A" connector="21MTC">
+        <output name="1" label="Front|Light" maxcurrent="150mA"/>
+        <output name="2" label="Rear|Light" maxcurrent="150mA"/>
+        <output name="3" label="AUX|1" maxcurrent="300mA"/>
+        <output name="4" label="AUX|2" maxcurrent="300mA"/>
+        <output name="5" label="AUX|3" maxcurrent="1A"/>
+        <output name="6" label="AUX|4" maxcurrent="1A"/>
+        <output name="7" label="Dimmed|Lights"/>
+        <output name="8" label="Shunting|Speed"/>
+        <size length="20.7" width="15.8" height="5.2" units="mm"/>
         <protocols>
           <protocol>dcc</protocol>
           <protocol>selectrix</protocol>
