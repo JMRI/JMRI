@@ -52,9 +52,9 @@
 		    <li><dfn>Packet source</dfn>
 		    <li><dfn>PM4 programmer</dfn>
 		    <li><dfn>BDL16 programmer</dfn>
-		    <li><dfn>SE8c programmer</dfn>
+		    <li><dfn>SE8C programmer</dfn>
 		    <li><dfn>DS64 programmer</dfn>
-		    <!-- <LI><dfn>LocoIO programmer</dfn> no longer supported as of JMRI 3, prefered way is via DP3 -->
+		    <!-- <li><dfn>LocoIO programmer</dfn> no longer supported as of JMRI 3, preferred way is via DP3 -->
 		    </ul>
 		These are also available in DecoderPro and PanelPro when those are configured
 		for a LocoNet connection, but LocoTools provides them in a easier-to-use way.
@@ -64,5 +64,6 @@
 
 <!--#include virtual="/Footer" -->
 </div> <!-- close #mainContent -->
+</div> <!-- close #mBody -->
 </body>
 </html>

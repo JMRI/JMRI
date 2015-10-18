@@ -2,7 +2,7 @@
 <html lang="en">
 <head><!-- Copyright ($Author$) 2015 --><!-- $Id$ -->
 
-<title>Operations: Index</title>
+<title>Operations User's Guide Index</title>
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -46,7 +46,7 @@ free (but very large...) download at: <a href="http://java.com/download/" target
 
 <p>If this is your first visit to our manual we suggest that you
 take the Decoder Pro&reg;3 tour at <a href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
-to get an overview of what we&#8217;re about to cover.
+to get an overview of what we're about to cover.
 
 </p>
 
@@ -58,7 +58,7 @@ using the "Metal" User Interface option. While your screens will
 
 probably differ in some layout details, they will be essentially the
 
-same. All programming examples shown are with Digitrax PR3(MS100 mode)
+same. All programming examples shown are with Digitrax PR3 (in MS100 mode)
 
 connected to Digitrax Super Chief Radio Command Station. Most of the
 

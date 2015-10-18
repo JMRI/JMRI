@@ -10,7 +10,7 @@
 <dt><h3>Download as PDF</h3></dt>
       <dd>
       <ul>
-        <li><a href="http://jmri.org/manual/pdf/DP_man_3-4.pdf" target="_blank">DP Guide v3.4</a><br>
+        <li><a href="http://jmri.org/manual/pdf/DP_man_3-4.pdf" target="_blank">DP Guide v3.4</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf">DP3 Guide v3.4</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">DP Guide v3.2</a></li>
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">DP3 Guide v3.2</a></li>
@@ -20,11 +20,10 @@
         <li><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf">DP3 v2.14</a></li>
         <li><a href="http://jmri.org/manual/pdf/jmri_Man_2_14.pdf">JMRI Guide v2.14</a></li>
         <li><a href="http://jmri.org/manual/pdf/jmri_Man_2_12.pdf">JMRI Guide v2.12</a></li>
-      </li>
       </ul>
       </dd>
 
-    </div>
+</div>
 
 <div style="text-align: center;"><h3>JMRI&reg; User's Guides</h3></div>
 

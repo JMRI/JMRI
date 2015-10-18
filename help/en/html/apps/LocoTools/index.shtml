@@ -47,7 +47,7 @@
                     <dt><a HREF="#loconetstats"><dfn>LocoNet Interface Statistics monitor</dfn></a></dt>
                     <dd>Monitor the LocoNet interface hardware status.</dd>
                     
-		    <dt><a HREF="#pm4"><dfn>BDL16, SE8c, PM4 and DS64 Programmers</dfn></a> </dt>
+		    <dt><a HREF="#pm4"><dfn>DS64, SE8C, PM4 and BDL16 Programmers</dfn></a> </dt>
 		    <dd> A tool to help you configure these boards.</dd>
 
 		    <dt><a HREF="#locoio"><dfn>LocoIO Programmer</dfn></a> (deprecated)</dt>
@@ -174,7 +174,7 @@
 		    </dt>
                     
 		    <dd>
-		    <h2>DS64, SE8c, PM4 and BDL16 Programmers</h2>
+		    <h2>DS64, SE8C, PM4 and BDL16 Programmers</h2>
 		    <p>
 			These programmer tools provide
 			a simple graphic interface for configuring Digitrax
@@ -189,7 +189,7 @@
 		    More on the tool for the
 		    <ul>
 		    <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
-		    <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C</a>
 		    <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
 		    <li><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16</a>
 		    </ul>
@@ -205,7 +205,7 @@
 		    </dt>
 		    <dd>
 		    <h2>LocoIO Programmer (deprecated)</h2>
-		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with a dedicated <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a></strong>.<br>
+		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a> with a dedicated <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a></strong>.<br>
 		    <em>The following entry is only shown as reference for JMRI versions before 3.0.</em></p>
 		    <p>
 		    The LocoIO programmer provides a simple interface for configuring
