@@ -12,13 +12,13 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version version="3" author="PB, pierre.bln@me.com" lastUpdated="20150306"/>
+  <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150306"/>
   <!-- Added fw version 1.05+
 	-->
-  <version version="2" author="PB, pierre.bln@me.com" lastUpdated="20141013"/>
+  <version version="2" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20141013"/>
   <!-- Added fw version 1.04+
 	-->
-  <version version="1" author="PB, pierre.bln@me.com" lastUpdated="20140603"/>
+  <version version="1" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20140603"/>
   <!-- Sound module definition for firmwares 1.00, 1.01, 1.02 and 1.03.
 	-->
   <decoder>

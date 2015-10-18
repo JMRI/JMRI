@@ -55,6 +55,12 @@ public class Version {
     /* Has this build been created from a branch in Subversion? */
     static final public boolean branched = Boolean.parseBoolean(versionBundle.getString("release.is_branched")); // NOI18N;
 
+    /**
+     * The Modifier is the third term in the
+     * 1.2.3 version name.  It's not present in production
+     * versions that set it to zero.
+     * Non-official branched versions get an "ish"
+     */
     public static String getModifier() {
         StringBuilder modifier = new StringBuilder("");
 
@@ -62,7 +68,7 @@ public class Version {
             modifier.append(".").append(test);
         }
 
-        if (branched && !official) {
+        if (! (branched && official) ) {
             modifier.append("ish");
         }
 
@@ -73,8 +79,8 @@ public class Version {
      * Provide the current version string.
      * <P>
      * This string is built using various known build parameters, including the
-     * versionBundle.{major,minor,build} values, the SVN revision ID (if known)
-     * and the branched & versionBundle.official statuses.
+     * versionBundle.{major,minor,build} values, the Git revision ID (if known)
+     * and the branched & official properties
      *
      * @return The current version string
      */
@@ -85,13 +91,17 @@ public class Version {
             if ("unknown".equals(revisionId)) {
                 addOn = buildDate + "-" + buildUser;
             } else {
-                addOn = "r" + revisionId;
+                addOn = "R" + revisionId;
             }
             releaseName = major + "." + minor + getModifier() + "-" + addOn;
-        } else if (revisionId.equals("unknown")) {
-            releaseName = buildDate + "-" + buildUser;
-        } else {
-            releaseName = "r" + revisionId;
+        } else { // not branched, so a local build that gets a user name
+            String addOn;
+            if ("unknown".equals(revisionId)) {
+                addOn = buildDate + "-" + buildUser;
+            } else {
+                addOn = buildDate + (!official ? "-"+buildUser :"") + "-R" + revisionId;
+            }
+            releaseName = major + "." + minor + getModifier() + "-" + addOn;
         }
         return releaseName;
     }

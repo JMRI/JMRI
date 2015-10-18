@@ -2,9 +2,8 @@
 # This is particularly useful in simulator mode, when feedback is not available
 #
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 def setTurnoutToDirect(turnout):
     to = turnouts.getTurnout(turnout)

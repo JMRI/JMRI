@@ -5,7 +5,7 @@
     <TITLE>
  	JMRI: Technical Info
     </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code ">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -32,12 +26,12 @@
 	    <!--  Teaser  --> <!-- Optional -->
 	    <!-- -------- -->
 
-	    <H1>JMRI: Technical Info</H1>
+	    <h1>JMRI: Technical Info</h1>
 
 You don't need to work with your own copy of the JMRI source code, compilers,
 etc if you just want to run the programs.  You can download completely 
 built copies via the 
-<A HREF="/download">downloads page</a>.
+<a href="/download">downloads page</a>.
 But if you'd like to play with the code, or get a copy of the program
 that contains updates since the last downloadable version was published,
 this section of the web site will help you get started.
@@ -60,7 +54,7 @@ interface in-between:
      computers, with lots of types of layouts.
 <li>"Below" the interface lies code that connects to specific
      layout hardware.  We connected to a
-     <a href="../../hardware">full range of systems</a>:
+     <a href="../../hardware/index.shtml">full range of systems</a>:
      C/MRI, Digitrax, EasyDCC, Lenz, NCE, etc.
      We are certainly
      interested in connecting to other systems.
@@ -92,8 +86,6 @@ These screens show the exact contents of each specific decoder
 type. Both the programming screens and decoder information are
 stored in text files, so you can make up new ones as
 desired.</p>
-
-
 
 <h2>How can you change how JMRI does things?</h2></a>
 
@@ -131,7 +123,8 @@ Much of the discussion about JMRI development takes place on the JMRI-Developers
 <a href="http://GitHub.com/JMRI">GitHub JMRI organization</a>.
 
 <p>
-SourceForge.net provides project support:<ul>
+SourceForge.net provides project support:
+<ul>
 <li><a href="http://sourceforge.net/projects/jmri/">JMRI project page</a> and 
 <a href="http://sourceforge.net/export/projhtml.php?group_id=26788">project statistics</a>.
 <li>Trackers for 
@@ -158,7 +151,7 @@ In addition to getting a copy of the JMRI source code and reading it,
 you can also compile your own version of the program to run. You can
 even include your own modifications if you'd like.
 
-<P>
+<p>
 There several different ways to do this. If you're already familiar
 with one of the popular "Integrated Development Environments" (IDEs),
 look at the navigation bar to the left for instructions on how to 
@@ -167,23 +160,22 @@ build JMRI using
 <a href="Eclipse.shtml">Eclipse</a>,
 <a href="XCode.shtml">XCode</a>, or
 <a href="JBuilder.shtml">JBuilder</a>.
-<P>
+<p>
 NetBeans provides a very convenient system for building, running,
 and if need be debugging the program.  If you're not
 familiar with some other method, we recommend trying 
 <a href="NetBeans.shtml">NetBeans</a> first.
-<P>
+<p>
 Alternately, if you'd like to edit code with your favorite text editor
 and compile it from a command line, please see the page of instructions for
 <a href="Ant.shtml">building with Ant</a>.
-
 
 <h2><a name="contributing">Contributing</h2></a>
 
 We encourage contributions of code, decoder definitions, improvements to 
 web pages, etc, to the JMRI project so that 
 we can distribute them to the rest of the community.
-<P>
+<p>
 For your first small contributions, e.g. a new decoder file or small bug fix,
 please fill out a new "Patches" entry on SourceForge using 
 <a href="http://sourceforge.net/tracker/?group_id=26788&atid=388315">our patches page</a>
@@ -195,18 +187,18 @@ to carry your changes, and that will save us a significant amount of
 work merging them in.  Please see the 
 <A href="NetBeans.shtml#patch">instructions for creating a patch file with NetBeans</a>.
 
-<P>
+<p>
 It saves us a lot of work if, before you create and send the patch file, 
 you make sure that your copy of the code is up to date, and that the
 <a href="JUnit.shtml#run">unit tests<a/>
 all work.
-<P>
+<p>
 If you are doing a significant amount of development, please
 see the page on 
 "<a href="gitdeveloper.shtml">Being A JMRI Developer</a>"
 for instructions on how to more effectively contribute code changes.
 
-<P>
+<p>
 When you contribute your code to JMRI for the first time, 
 we'll ask you to sign an assignment form that
 allows us to register copyright on the code, and
@@ -227,7 +219,7 @@ we can add them to the
 We encourage people to build their own projects on top of JMRI.  That's the original reason
 that the project was started!
 
-<P>
+<p>
 JMRI is licensed only under the "GNU General Public License", sometimes called the "GPL".  
 We use version 2 of the license, along with the "classpath exception"
 allowing people to link JMRI with their own code under more relaxed conditions.
@@ -235,7 +227,7 @@ Copies of the license are distributed with the source and executable downloads,
 and can be gotten from 
 <a href="../../../COPYING">the web</a>. 
 
-<P>
+<p>
 This is both an "open source" and a "free" license.
 For more information
 on those definitions, please see the
@@ -245,28 +237,28 @@ web pages, including their
 and the 
 <a href="http://www.gnu.org/">Free Software Foundation</a> web pages, particularly their 
 <a href="http://www.gnu.org/licenses/">licensing page</a>.
-<P>
+<p>
 Informally, the license means that there are only a few limitations on what you
 can do with JMRI.  (Check the exact wording in 
 <a href="../../../COPYING">the license</a>
 for the details behind the following summary):
-<UL>
-<LI>You can redistribute it, for free or for a charge to cover your costs.  
-<LI>You can 
+<ul>
+<li>You can redistribute it, for free or for a charge to cover your costs.  
+<li>You can 
 build additional programs on top of all or part of JMRI, and distribute JMRI with them.
 This is OK whether or not you charge for your program.
-<LI>You can modify the JMRI code for your own purposes.  
-<LI>You can distribute that modified code,
+<li>You can modify the JMRI code for your own purposes.  
+<li>You can distribute that modified code,
 though in that case you either have to make your modifications available to us, or
 also distribute an unmodified version at the same time.
-<LI>
+<li>
 You cannot use part or all of JMRI in another project 
 without either giving credit to JMRI, or making special arrangements with us.
-<P>
+<br />
 This includes decoder definition files:  You are welcome to use them, including
 reformatting their content to another form, but you must give JMRI credit for 
 their content.
-</UL>
+</ul>
 
 If you have any questions about this, please 
 <a href="mailto:jmri@pacbell.net">contact us</a>
@@ -277,7 +269,7 @@ directly.
 development</a> from its inception to January 2009.  A Code Swarm is a fascinating
 and dynamic visual representation of change as developers come and go and make 
 changes to the files that make up a project.  More information is available on
-the <a href="/community/codeswarm.shtml">Code Swarm</a> page.
+the <a href="/community/codeswarm.shtml">Code Swarm</a> page.</p>
 
 <!--#include virtual="/Footer" -->
 

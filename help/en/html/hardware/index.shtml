@@ -2,9 +2,9 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Hardware Support
-  </TITLE>
+  </title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
@@ -15,17 +15,17 @@
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-        <H2>
+        <h2>
 		JMRI: Hardware Support
-        </H2>
+        </h2>
 
 	<p>JMRI supports a wide range of DCC "command station"-style products
 	from various model railroad automation vendors.  
@@ -42,7 +42,7 @@
 	make a computer communicate with a given piece of model railroad
 	equipment, it is possible to connect it to JMRI. If you
 	don't see your particular system here, please ask about it
-	on the <a href="http://groups.yahoo.com/group/jmriusers">user group mailing list</a>.
+	on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users  Yahoo group</a>.
 	
 	<div class="list">
 	<dl>
@@ -148,7 +148,7 @@
 	    </dd>
 
 	    <dt class="im">
-		<a href="http://www.loksound.de/us/index.php?showId=205">
+		<a href="http://www.esu.eu/en/products/digital-control/">
 		<img src="http://www.esu.eu/esu_logo.jpg" width="70" height="50" alt="ESU"></a>
 	    </dt>
 	    <dt>ESU</dt>
@@ -158,7 +158,7 @@
 	    </dd>
 
 	    <dt class="im">
-		<a href="http://www.fleischmann.de/">
+		<a href="http://www.fleischmann.de/en/home/index.html">
 		<img src="images/ico-fl.gif" width="54" height="34" alt="Fleischmann"></a>
 	    </dt>
 	    <dt>Fleischmann</dt>
@@ -167,7 +167,7 @@
 	    </dd>
 
 	    <dt class="im">
-		<a href="http://www.hornby.com/">
+		<a href="http://www.hornby.com/uk-en/">
 		Hornby</a>
 	    </dt>
 	    <dt>Hornby</dt>
@@ -195,7 +195,7 @@
 
 	    </dd>
 
-	    <dt class="im"><a href="http://www.lionel.com/GettingStarted/LionelTechnology/TMCC.cfm">
+	    <dt class="im"><a href="http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
 	    <IMG src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
 	    <dt>Lionel TMCC</dt>
 	    <dd>
@@ -210,11 +210,11 @@
 		<p>Maple Systems touch panel</p>
 	        <p class="dl">Configure: <a href="maple/index.shtml">connection via serial link</a></p>
 	    </dd>
-	    <dt class="im"><a href="http:/www.marklin.com/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
-	    <dt>Marklin</dt>
+	    <dt class="im"><a href="http://www.marklin.com/digital/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
+	    <dt>M&auml;rklin</dt>
 	    <dd><p class="dl">Configure connection to 
 		<a href="marklin/index.shtml">CS2</a> Command Station 2.</p>
-        <a href="ecos/index.shtml">CS</a> Command Station - Reloaded see ESU ECoS
+        <a href="ecos/index.shtml">CS</a> Command Station - see ESU ECoS
 	    </dd>
 
 	    <dt class="im"><a href="http://www.merg.org.uk/">
@@ -233,13 +233,13 @@
 	    <dd><p class="dl">MRC decoders can be configured via DecoderPro using any supported DCC system.</p>
 	    <p>For more information on connecting JMRI to the MRC command station, see the <a href="mrc/index.shtml">MRC system page</a>.</dd>
 
-	    <dt class=im><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">
-	    <IMG src="images/RPS.gif"
+	    <dt class=im><a href="http://www.proto87.com/model-trains-DCC-decoders.html">
+	    <img src="images/RPS.gif"
 	        width="64" height="41" alt="RPS image"></a></dt>
-	    <dt><a href="http://www.proto87.com/RPS-MR-position-detection-system.html">RPS</a></dt>
+	    <dt><a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS</a></dt>
 	    <dd>
 		<a href="rps/index.shtml">Configure connection</a>
-		 to an RPS position measurement system.
+		 to an RPS position detection system.
 		</dd>
 		
 	    <dt class="im"><a href="http://www.ncedcc.com/">
@@ -255,15 +255,13 @@
 		</dd>
 		
 	    <dt class="im"><a href="http://www.oaktreesystems.com/">
-	    <IMG src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems">
+	    <img src="images/otslogosmall.gif" width="37" height="50" alt="Oak Tree Systems">
 	    </a></dt>
 	    <dt>Oak Tree Systems</dt>
 	    <dd>
-	        <p class="dl">Configure connection to <A href="oaktree/OakTree.shtml">Oak Tree's Railroad Control Interface</a>, including
-	        the <a href="http://www.oaktreesystems.com/io-24_card.htm">IO-24</a>, 
-	        <a href="http://www.oaktreesystems.com/HTML/io-48_card.htm">IO-48</a> 
-	        and <a href="http://www.oaktreesystems.com/HTML/o-48_card.htm">O-48</a> interface cards 
-	        and <a href="">HH-2 handheld throttle</a>.
+	        <p class="dl">Configure connection to <A href="oaktree/OakTree.shtml">Oak Tree's Railroad Control Interface (RCI)</a>, including
+	        the IO-24, IO-48 and O-48 interface cards and HH-2 handheld throttle.<br />
+	        (Note: RCI is to be replaced by <a href="http://www.oaktreesystems.com/main.html?src=%2F#3,0">Layout Control System (LCS)</a>)
 		</p>
 		</dd>
 
@@ -286,7 +284,7 @@
 	        <p>QSI decoders can be programmed with DecoderPro through any DCC system. 
 	        JMRI can't load sounds into QSI decoders.</dd>
 
-	    <dt class="im"><a href="http://www.raildriver.com">
+	    <dt class="im"><a href="http://raildriver.com/">
 	    RailDriver</a></dt>
 	    <dt>PI Engineering RailDriver</dt>
 	    <dd><p class="dl">Configure: <a href="raildriver/index.shtml">RailDriver cab simulator</a></p></dd>
@@ -364,14 +362,14 @@
 		<p>Connection: X10, Insteon power-line controllers</p>
 	        <p class="dl">Configure: <a href="powerline/index.shtml">CM11, 2412S and compatible controllers</a></p></dd>
 
-	    <dt class="im"><a href="http://w3.zimo.at/">Zimo</a></dt>
-	    <dt>Zimo</dt>
+	    <dt class="im"><a href="http://www.zimo.at/">ZIMO</a></dt>
+	    <dt>ZIMO</dt>
 	    <dd>
-	    	<p class="dl">Configure: <a href="zimo/Zimo.shtml">Zimo MX-1</a> </p>
+	    	<p class="dl">Configure: <a href="zimo/Zimo.shtml">ZIMO MX-1</a> </p>
 	    </dd>
 
 	    <dt class="im">
-	        <a href="http://ztccontrols.com/">
+	        <a href="http://www.ztccontrols.com/">
 		<img src="images/ztclogo.gif" width="44" height="34" alt="ZTC"></a>
 		</dt>
 	    <dt>ZTC Controls</dt>
@@ -386,9 +384,9 @@
 	</dl>
 	</div> <!-- closes .list -->
 
-        <H2>
+        <h2>
 		JMRI: Connecting to command stations
-        </H2>
+        </h2>
 	<dl>
 	<dt class=left>Macintosh</dt>
 	<dd>

@@ -3,7 +3,6 @@ package jmri.jmrix.roco.z21.simulator.configurexml;
 import jmri.InstanceManager;
 import jmri.jmrix.roco.z21.simulator.ConnectionConfig;
 import jmri.jmrix.roco.z21.simulator.z21SimulatorAdapter;
-import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

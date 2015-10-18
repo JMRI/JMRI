@@ -5,7 +5,7 @@
     <title>
  	JMRI: Getting the Code
     </title>
-    <META content="Bob Jacobsen" name=Author>
+    <META content="Bob Jacobsen" name="Author">
     <meta name="keywords" content="JMRI technical code Git download">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -38,13 +32,14 @@
 
   <p>"<a href="https://git-scm.com">Git</a>" 
   is a powerful, free system for managing 
-  code as it's worked-on by a distributed group.  Like SVN before it, 
-  and CVS before that, it allows a group like JMRI to cooperate effectively.
-  We keep our code, help files, sample scripts, XML files, etc
+  code as it's worked-on by a distributed group.  Like <a href="getsvncode.shtml">SVN</a> before it, 
+  and <a href="getcvscode.shtml">CVS</a> before that, it allows a group like JMRI to cooperate effectively.
+  We keep the JMRI code, help files, sample scripts, XML files, etc.
   in a Git repository hosted on 
   <a href="https://github.com/JMRI">GitHub.com</a>.
-  The <a href="WebSite.shtml">web site</a> is in a similar repository.
+  The <a href="WebSite.shtml">JMRI web site</a> is in a similar repository.
   
+<a name="view" id="view"></a>  
 <h2>Viewing the Code Online</h3>
   <p>You can 
   <a href="https://github.com/JMRI/JMRI">browse the JMRI code directly</a>
@@ -53,9 +48,10 @@
   to display its source HTML code.
   </p>
 
+<a name="propose" id="propose"></a>
 <h3>Proposing Changes Online</h3>
   
-<a href="GitHubPencil.png"><img src="GitHubPencil.png" align="right" height="50" width="142"></a>
+<a href="images/GitHubPencil.png"><img src="images/GitHubPencil.png" align="right" height="50" width="142"></a>
   <p>If you want to suggest a change to a file, 
   for example a web page like this one,
   first get a free
@@ -63,19 +59,19 @@
   <p>
   Then go to the file you want to change and click the pencil icon on the upper-right of the page.
   <p>
-<a href="GitHubProposeFileChange.png "><img src="GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
-  This will, after a second or two, give you a page where you can directly edit the
+<a href="images/GitHubProposeFileChange.png "><img src="images/GitHubProposeFileChange.png " align="right" height="135" width="221"></a>
+  This will, after a second or two, give you a page where you can edit the
   contents of the file with your suggested change.
-  Don't worry, you're not actually changing JMRI's version, just
-  a copy local to you. 
+  Don't worry, you're not actually changing JMRI's original code, just
+  your personal copy of the code. 
   <p>
   Then fill out the form at the bottom with a useful subject
   line, and a description of why this is a good change, and click the
-  "Propose file change" button.  This sends your change to the people who've
-  agreed to maintain the JMRI central code, who will review and (usually) include it in 
-  the next JMRI release.
+  "Propose file change" button. This saves your edits to your personal copy on the Git server.<br />
+  Next, click on the "Pull request" button at the top right of the code panel. This sends your change to the people who've
+  agreed to maintain the JMRI central code, who will review and (usually) include it in the next JMRI release (<a href="gitdeveloper.shtml#pull">more details</a>).</p>
   
-
+  <a name="get" id="get"></a>
   <h2>Get Your Own Copy</h2>
 
   <p>Our source code is distributed using <a
@@ -86,8 +82,7 @@
   the full <a href="WebSite.shtml">web site</a>,
   or any other large part of JMRI, 
   spending a couple minutes getting Git set up is well worth it.  We're sorry, but we
-  just can't support other methods (sending around individual files, etc), as they're
-  just too error prone.</p>
+  just can't support other methods (sending around individual files, etc.), as they're just too error prone.</p>
   
   <p>Although there are lots of ways to use Git, the next sections
   show the most common ones:
@@ -98,13 +93,14 @@
   </ul>
   
   <p>If you want to develop changes to the code, see the
-  "<a href="gitdeveloper.shtml">Developing with JMRI Code<</a>"
+  "<a href="gitdeveloper.shtml">Developing with JMRI Code</a>"
   page.</p>
   
-  <p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
+  <p>Also check the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
 
   
-  <h3 id="desktop">Using the GitHub Desktop Application</h3>
+  <a name="desktop" id="desktop"></a>
+  <h3>Using the GitHub Desktop Application</h3>
   
   <a href="images/GitHubCloneDeskop.png"><img src="images/GitHubCloneDeskop.png" align="right" height="271" width="113"/></a>
 
@@ -121,13 +117,13 @@
       Get the download and install it using the instructions there.
   <li>Open the GitHub Desktop application.
   <li>In your web browser, go to the GitHub site for the 
-        "<a href="https://github.com/JMRI/JMRI">JMRI repository</a>".
-        (Clicking that link should take you there)
+        "<a href="https://github.com/JMRI/JMRI">JMRI repository</a>"
+        (clicking the link should take you there).
   <li>Click the "Clone in Desktop" button on the middle left.
   <li>The desktop application will give you a window where you can
        select the download location. Change that if desired. 
        Then click "Clone".
-  <li>The download will then start. It's likely to take a couple minutes.
+  <li>The download will start. It's likely to take a couple minutes.
   </ul>
   
   <p>
@@ -159,7 +155,8 @@
   install and use, and is the primary example in the documentation)</p>
 
   
-  <h3 id="cmd">Using the command line</h3>
+  <a name="cmd" id="cmd"></a>
+  <h3>Using the command line</h3>
   
   <p>
   First, check whether Git is installed on your computer.  From a 
@@ -211,9 +208,8 @@
   etc.  (Ant may be the easiest to
   install and use, and is the primary example in the documentation)</p>
 
-
-
-  <h3 id="ide">Using an Integrated Development Environment (IDE)</h3>
+  <a name="ide" id="ide"></a>
+  <h3>Using an Integrated Development Environment (IDE)</h3>
 
   <p>
   Most IDEs have Git support build in.  
@@ -226,10 +222,9 @@
   <li><a href="JBuilder.shtml">JBuilder</a> 
   </ul>
 
-
   <h2>Access to Old Releases</h2>
 
-  <p>The best way to retrieve the source for releases 4.1.1 and earlier
+  <p>The best way to retrieve the source for releases 4.1.2 and earlier
   is from the <a href="getsvncode.shtml">SVN Repository</a>.  Please
   see those instructions for details.</p>
 

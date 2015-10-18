@@ -12,8 +12,6 @@
 # Author: Paul Bender, copyright 2014
 # Part of the JMRI distribution
 #
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 
 # We use an Automat object to create a separate thread

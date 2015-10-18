@@ -1,4 +1,4 @@
-//ScheduleOptionsAction.java
+// ScheduleOptionsFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -18,12 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to launch schedule options.
+ * Frame used to edit alternate track selection and percentage of loads from
+ * staging.
  *
- * @author Daniel Boudreau Copyright (C) 2010, 2011
+ * @author Daniel Boudreau Copyright (C) 2010, 2011, 2015
  * @version $Revision$
  */
-class ScheduleOptionsFrame extends OperationsFrame {
+class ScheduleOptionsFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     /**
      *
@@ -43,7 +44,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
     Track _track;
 
     public ScheduleOptionsFrame(ScheduleEditFrame sef) {
-        super();
+        super(Bundle.getMessage("MenuItemScheduleOptions"));
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -66,9 +67,7 @@ class ScheduleOptionsFrame extends OperationsFrame {
         pAlternate.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("AlternateTrack")));
         addItem(pAlternate, trackBox, 0, 0);
 
-        _track.getLocation().updateComboBox(trackBox);
-        trackBox.removeItem(_track); // remove this track from consideration
-        trackBox.setSelectedItem(_track.getAlternateTrack());
+        updateTrackCombobox();
 
         JPanel pControls = new JPanel();
         pControls.add(saveButton);
@@ -79,11 +78,11 @@ class ScheduleOptionsFrame extends OperationsFrame {
         getContentPane().add(pFactor);
         getContentPane().add(pAlternate);
         getContentPane().add(pControls);
+        
+        _track.getLocation().addPropertyChangeListener(this);
 
-        setTitle(Bundle.getMessage("MenuItemScheduleOptions"));
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight200));
-        setVisible(true);
+        initMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight200));
+        
     }
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -114,6 +113,21 @@ class ScheduleOptionsFrame extends OperationsFrame {
         }
     }
 
-    static Logger log = LoggerFactory.getLogger(TrackEditFrame.class
-            .getName());
+    private void updateTrackCombobox() {
+        _track.getLocation().updateComboBox(trackBox);
+        trackBox.removeItem(_track); // remove this track from consideration
+        trackBox.setSelectedItem(_track.getAlternateTrack());
+    }
+
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (Control.showProperty) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+            updateTrackCombobox();
+        }
+    }
+
+    static Logger log = LoggerFactory.getLogger(ScheduleOptionsFrame.class.getName());
 }
