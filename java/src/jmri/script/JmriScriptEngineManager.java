@@ -164,6 +164,7 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByExtension(String extension) {
         String name = this.names.get(extension);
+        if (name==null) log.error("Could not find script engine name for extension \""+extension+"\"");
         return this.getEngine(name);
     }
 
@@ -176,6 +177,7 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByMimeType(String mimeType) {
         String name = this.names.get(mimeType);
+        if (name==null) log.error("Could not find script engine name for mime type \""+mimeType+"\"");
         return this.getEngine(name);
     }
 
@@ -187,6 +189,7 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByName(String shortName) {
         String name = this.names.get(shortName);
+        if (name==null) log.error("Could not find script engine name for short name \""+shortName+"\"");
         return this.getEngine(name);
     }
 
@@ -202,6 +205,7 @@ public final class JmriScriptEngineManager {
                 // Setup the default python engine to use the JMRI python properties
                 this.initializePython();
             } else {
+                System.out.println("Create engine for "+engineName);
                 ScriptEngine engine = this.factories.get(engineName).getScriptEngine();
                 engine.setContext(this.context);
                 this.engines.put(engineName, engine);
