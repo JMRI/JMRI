@@ -164,7 +164,7 @@ connected to a PR3 operating in stand-alone programming mode.
       connection will be selected by default.  It may be necessary to use tools 
       provided with the computer operating system to determine which "Serial Port" 
       is appropriate for your particular situation.</li>
-  <li>Select the appropriate "Command Station Type".  
+  <li>Select the appropriate "Command Station Type":  
       <p>When the "Connection Type" is set for the PR3, the "Command Station Type"
           can be set to "PR3 in stand-alone programming mode" or set to one of the
           command station types.  When set for stand-alone programming, the PR3 
@@ -183,6 +183,7 @@ connected to a PR3 operating in stand-alone programming mode.
           "MS100 mode") to allow PanelPro to communicate with the Empire Builder 
           command station and LocoNet-connected peripherals.  More PR3 setup 
           information can be found on the <a href="PR3.shtml">PR3 setup page</a>.</p>
+  </li>
   <li>The "Connection Prefix" is used to help JMRI communicate separately with 
       multiple "connections" to layout hardware.  Each "connection" must have a 
       unique identifier, which is specified as the "Connection Prefix".  By default, 
@@ -228,10 +229,11 @@ connected to a PR3 operating in stand-alone programming mode.
       </ul>
   
   <li>Click "Save". You'll be asked if it's OK for the program to quit, click
-    "Yes". </li>
+    "Yes".</li>
   <li style="text-align:left;">Restart JMRI. You should be up and
     running. <br>
   </li>
+</li>
 </ol>
 
 <p>If you are going to control turnouts, signals or other devices on your
@@ -328,7 +330,8 @@ PR3 instead.
         the PR3 or to have intermittent communication.  Users should consider
         replacing the original USB cable from the PR3 with a known-good USB
         cable.</li>
-    <li><b><a name="ErraticReadback">Erratic or Non-Functioning CV Readback</a></b>
+        </ul>
+<h4><a name="ErraticReadback">Erratic or Non-Functioning CV Readback</a></h4>
         <ul>
             <li>Some mobile decoders will only allow proper readback of CV values when
                 there is a sufficient electrical load connected to the F0F (front 
@@ -360,19 +363,17 @@ PR3 instead.
                         successfully read and program sound decoders when the PR3 is 
                         powered using an 18 Volts DC power supply instead of a 
                         lower-voltage power supply such as the PS12 or PS14. 
-                        <strong>Do this at your own risk!</strong>  <em>Current 
+                        <strong>Do this at your own risk!</strong> <em>Current 
                         Digitrax documentation for the PR3 defines a maximum 
                         input voltage of 15 Volts DC, where previously the 
-                        maximum voltage was listed as 20 Volts DC.  Use of input 
+                        maximum voltage was listed as 20 Volts DC. Use of input 
                         voltages higher than 15 Volts DC could damage the PR3 
                         hardware.</em></li>
                 </ul>
-                
             </li>
-        </ul>
-        
-    <li><b><a name="TurnoutCmdHandling">Command Station Turnout Command Rejection 
-                and JMRI Turnout Command Handling</a></b> 
+</ul>  
+<h4><a name="TurnoutCmdHandling">Command Station Turnout Command Rejection 
+                and JMRI Turnout Command Handling</a></h4> 
         <p>Digitrax command stations pass LocoNet switch command messages to
             the DCC track signal so that track-connected accessory decoders can
             receive the switch commands.  Digitrax command stations seem to buffer 
@@ -383,23 +384,22 @@ PR3 instead.
             When this happens, the command station will respond with a message 
             (a <code>\&lt;LONG_ACK\&gt;</code> opcode) saying that it rejected (did not accept) the switch 
             command.  When the command station gives this response, the switch
-            command is not placed into the buffer and is forgotten.</p>
-        <p>This can be problematic, depending on how the device which sent the 
+            command is not placed into the buffer and is forgotten.<br>
+        This can be problematic, depending on how the device which sent the 
             switch command responds to the rejection message on LocoNet.  
             Many LocoNet devices do not notice the rejection message, so do 
             not attempt to re-send the switch command.  Other LocoNet devices 
             can pay attention to the rejection message and can wait a while before
             re-sending the message.  Some LocoNet devices can be programmed either
             to resend the switch command if the rejection message is seen, or to 
-            not resend if the rejection message is seen.</p>
-        <p>This wide variety of behaviors can cause inconsistent or unreliable 
+            not resend if the rejection message is seen.<br>
+        This wide variety of behaviors can cause inconsistent or unreliable 
             behavior of any device which relies on stationary decoder messages 
             on the DCC track signal.  Note that this can include devices which 
             connect to LocoNet and which monitor the DCC track signal which 
             is available on the LocoNet cable "RailSync" wires.</p>
-            
-  <h4><a name="turncmdhandsettings">Turnout Command Handling Settings</a></h4>
-        
+<ul>
+<li><a name="turncmdhandsettings">Turnout Command Handling Settings</a>
         <p>JMRI has various mechanisms to help handle these temporary LocoNet switch
             command buffer overloads.  These mechanisms are controlled by the "Turnout 
             Command Handling" option for each LocoNet-based connection.  The four 
@@ -428,23 +428,23 @@ PR3 instead.
             by JMRI to LocoNet.</li>
         </ul>
         <p>These options do not take effect until the preferences are saved and 
-            JMRI is restarted.</p>
-        <p>None of these options can <i>guarantee</i> that
+            JMRI is restarted.<br>
+        None of these options can <i>guarantee</i> that
             <i>all</i> LocoNet switch messages <i>will</i> be passed to the DCC 
             track signal.</p>
-            
-  <h4><a name="alternatives">Avoidance strategies</a></h4>
+</li>
+<li><a name="alternatives">Avoidance strategies</a>
         <p>Some users may be able to reduce the likelihood of this problem occurring by allowing
             signal hardware to generate blinking signal aspects instead of programming 
-            JMRI to sequentially send "on" and "off" messages to the signal hardware.</p>
-        <p>Other users who do not have <i>any</i> hardware which are controlled by DCC 
+            JMRI to sequentially send "on" and "off" messages to the signal hardware.<br>
+        Other users who do not have <i>any</i> hardware which are controlled by DCC 
             stationary decoder messages on the DCC track signal (or on the LocoNet 
             cable's RailSync wires) may decide to prevent the command station from 
             forwarding <i>any</i> LocoNet switch control messages to the DCC track 
             signal (and RailSync wires) by enabling the command station's "Bushby bit".
             See the JMRI LocoNet <a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">
-            Configure Command Station</a> tool.</p>
-        <p>One good way to avoid this problem is to prevent the Digitrax command 
+            Configure Command Station</a> tool.<br>
+        One good way to avoid this problem is to prevent the Digitrax command 
             station from receiving the LocoNet switch control messages.  This can
             be done by using only devices which send and/or receive switch control
             messages via the LocoNet data bus, and to implement a <i>standalone</i>
@@ -456,16 +456,17 @@ PR3 instead.
             <a href="StandaloneLocoNet.shtml">Standalone LocoNet&reg;</a> for 
             background, ideas, and suggestions for implementing a standalone 
             LocoNet.</p>
-            
-  <h4><a name="cmdStationTrkPwrOff">Turnout command rejection when track 
-                power is off</a></h4>
+</li>
+<li><a name="cmdStationTrkPwrOff">Turnout command rejection when track 
+                power is off</a>
         <p>Some more recent Digitrax command stations will refuse to accept switch
             commands when track power is turned off.  This can result in a "storm" 
             of repeated switch messages on LocoNet if track power is off when switch
             messages are sent.  This problem can be avoided by ensuring that track
-            power is on when switch messages can be sent.</p>
-        <h4><a name="multConnTurnoutReject">Turnout command rejection and multiple 
-                active LocoNet connections</a></h4>
+            power is on when switch messages are to be sent.</p>
+            </li>
+<li><a name="multConnTurnoutReject">Turnout command rejection and multiple 
+                active LocoNet connections</a>
         <p>When JMRI has multiple active connections to a single LocoNet, it may 
             be necessary to configure all but one of the active LocoNet 
             connections for "Turnout Command Handling" type of "Only One", with 
@@ -474,15 +475,15 @@ PR3 instead.
             the various JMRI LocoNet connection instances to independently 
             attempt to resolve any turnout messages which have been rejected by 
             the command station.  This could result in a storm of turnout 
-            command retries on LocoNet.</p>
-        <p>Similarly, when multiple JMRI instances are working with the same 
+            command retries on LocoNet.<br>
+        Similarly, when multiple JMRI instances are working with the same 
             LocoNet, only one JMRI connection to the LocoNet should be configured
             for a "Turnout Command Handling" type other than "Only One".  Failure 
             to do this could cause the various JMRI LocoNet connection instances 
             to independently attempt to resolve any turnout messages which have 
             been rejected by the command station.  This could result in a storm 
             of turnout command retries on LocoNet.</p>
-</ul>
+</li></ul>
 
 <h2><a name="Support">Support</a></h2>
 <p>Support for Digitrax hardware products is available through <a href="http://www.digitrax.com">
@@ -526,7 +527,7 @@ hardware interact, the <a href="https://groups.yahoo.com/neo/groups/jmriusers/in
             <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">Configure DS64</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configure PM4x</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configure SE8C</a></li>
-            <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure LocoIO</a> (No longer supported, preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>)</li>
+            <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configure LocoIO</a> (No longer supported, preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a>)</li>
             <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configure Command Station</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configure LocoNet ID</a></li>
             <li><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configure Duplex Group</a></li>

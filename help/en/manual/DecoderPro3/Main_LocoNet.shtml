@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en"><head><!-- Copyright ($Author$) 2015 --><!-- $Id$ -->
 
 <title>LocoNet Menu</title>
 <!-- Style -->
@@ -324,9 +324,9 @@ using as the control lea</li>
 
 <div align="right">
 <p><a href="dp3_menubar.shtml">Back to Index</a><a href="index.shtml"></a></p>
-</div>
 
 <!--#include virtual="/Footer" -->
-</div>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec le 2014-09-14 -->
+<!-- Translated by Herv&#233; Blorec le 2014-09-14; Egbert Broerse (html markup); le 2015-10-18 -->
 <html lang="fr">
 <head>
  <title>
@@ -205,10 +205,10 @@
     </tr>    
 </table>
 <p>LocoNet&reg; est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
-    </div>
-  </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
     
