@@ -8,14 +8,13 @@
     <h2>LocoNet Tools</h2>
     
 	<ul>
-	<limit><a href="index.shtml#locomon">LocoNet Monitor</a>
+	<li><a href="index.shtml#locomon">LocoNet Monitor</a>
 	<li><a href="index.shtml#slotmon">Slot Monitor</a>
 	<li><a href="index.shtml#sendpkt">Packet Source</a>
 	<li><a href="index.shtml#pm4">BDL16, BDL162, BDL168 and PM4 Programmers</a>
-	<li><a href="LocoIO.shtml">LocoIO Programmer</a>
 	</ul>
 
- </div>
+ </div> <!-- close #side -->
  
  <!-- /Sidebar -->
  

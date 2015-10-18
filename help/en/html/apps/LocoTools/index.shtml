@@ -5,7 +5,7 @@
     <title>
  	JMRI: LocoNet Tools
     </title>
-    <meta content="Bob Jacobsen, Egbert Broerse" name="Author">
+    <meta name="author" content="Bob Jacobsen, Egbert Broerse">
     <meta name="keywords" content="Digitrax LocoNet Tools JMRI decoderpro dcc nmra">
 
 <!-- Style -->
@@ -50,7 +50,7 @@
 		    <dt><a HREF="#pm4"><dfn>BDL16, SE8c, PM4 and DS64 Programmers</dfn></a> </dt>
 		    <dd> A tool to help you configure these boards.</dd>
 
-		    <dt><a HREF="#locoio"><dfn>LocoIO Programmer</dfn></a> </dt>
+		    <dt><a HREF="#locoio"><dfn>LocoIO Programmer</dfn></a> (deprecated)</dt>
 		    <dd> A tool to help you configure a LocoIO board.</dd>
 
 		    <dt><a HREF="#cmdstn"><dfn>Command Station Configuration Tool</dfn></a> </dt>
@@ -87,15 +87,15 @@
 		</dl>
 
 		<p>
-		These tools also present in the JMRI demo program, and to some
+		These tools are also present in the JMRI demo program, and to some
 		extent in DecoderPro. And, of course, you can build them into a
 		program of your own!  The LocoNet Tools program is simply a
 		convenient platform for finding and accessing these features.</p>
 
 		<p>The libraries also contain utilities for controlling your
 		layout (operating turnouts and signals, responding to inputs
-		and block occupancy, etc), for programming decoders, and
-		others.  These are not LocoNet specific, so are described
+		and block occupancy, etc.), for programming decoders, and
+		others.  Those are not LocoNet specific, so are described
 		elsewhere on this web site.</p>
 
 		<div class="list">
@@ -145,7 +145,7 @@
 
                     <p></p>
 		    <dd>
-			<H2><a name="clockmon">Clock Monitor</a></H2>
+			<h2><a name="clockmon">Clock Monitor</a></h2>
 			<p>
 			The Clock Monitor tool allows the user to display and
                         set the LocoNet fast clock.
@@ -205,7 +205,7 @@
 		    </dt>
 		    <dd>
 		    <h2>LocoIO Programmer (deprecated)</h2>
-		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a></strong><br />
+		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with a dedicated <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a></strong>.<br>
 		    <em>The following entry is only shown as reference for JMRI versions before 3.0.</em></p>
 		    <p>
 		    The LocoIO programmer provides a simple interface for configuring
@@ -347,7 +347,7 @@
 
                     <p></p>
                     <dd>
-		    <H2><a name="soundedit">Sound Project Editing Tool</a></H2>
+		    <h2><a name="soundedit">Sound Project Editing Tool</a></h2>
 		    <p>
 			This tool provides a simple way to change sound schemes 
                         for Digitrax mobile sound decoders.  Details may be 

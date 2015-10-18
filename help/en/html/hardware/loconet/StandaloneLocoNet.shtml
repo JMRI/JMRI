@@ -12,10 +12,8 @@
 
 <!-- Style -->
 <meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <link REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
@@ -73,7 +71,7 @@
     <li><a href="#examples">Examples</a>
     <ul>
         <li><a href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet 
-                Turnouts, Detection & Signaling</a></li>
+                Turnouts, Detection &amp; Signaling</a></li>
         <li><a href="#bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals (SE8C) with non-Digitrax DCC command station</a></li>
         <li><a href="#se8csigwodtcs">SE8C signaling without a Digitrax command station</a></li>
     </ul>
@@ -795,7 +793,6 @@ useful.</p>
         Technologies website</a>.</p>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">
         Digitrax, Inc.</a></p>
-
 
 <!--#include virtual="/Footer" -->
   </div><!-- closes #mainContent-->
