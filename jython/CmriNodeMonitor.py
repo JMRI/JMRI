@@ -3,10 +3,8 @@
 # Created by Bob Jacobsen 2014
 #
 # Since JMRI 3.9.4
-#
-# The next line is maintained by SVN, please don't change it
-# $Revision$
 
+import jmri
 
 import java
 

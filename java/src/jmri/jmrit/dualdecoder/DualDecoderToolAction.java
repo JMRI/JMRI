@@ -2,7 +2,6 @@
 package jmri.jmrit.dualdecoder;
 
 import java.awt.event.ActionEvent;
-import javax.swing.AbstractAction;
 import javax.swing.Icon;
 import jmri.AddressedProgrammerManager;
 import jmri.GlobalProgrammerManager;

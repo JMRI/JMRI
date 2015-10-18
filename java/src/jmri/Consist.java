@@ -170,4 +170,10 @@ public interface Consist {
      * traveling
      */
     public void reverse();
+
+    /**
+     * restore the consist to the command station.
+     */
+    public void restore();
+
 }

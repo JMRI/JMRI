@@ -1,9 +1,9 @@
 # Sample script to set all defined turnouts to Closed
 #
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
+
 from time import sleep
 
 def closeTurnout(toName):

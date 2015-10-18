@@ -101,6 +101,7 @@
 # allow for the removal of the PropertyChangeListener.
 #
 
+import jmri
 import java
 import javax.swing
 import java.util.Calendar

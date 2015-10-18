@@ -178,12 +178,15 @@ public class CarEditFrame extends OperationsFrame implements java.beans.Property
         pType.setLayout(new GridBagLayout());
         pType.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Type")));
         addItem(pType, typeComboBox, 0, 0);
-        addItem(pType, editTypeButton, 2, 0);
-        addItem(pType, hazardousCheckBox, 3, 0);
-        addItem(pType, passengerCheckBox, 0, 1);
-        addItem(pType, cabooseCheckBox, 1, 1);
-        addItem(pType, fredCheckBox, 2, 1);
-        addItem(pType, utilityCheckBox, 3, 1);
+        addItem(pType, editTypeButton, 1, 0);
+        
+        JPanel pTypeOptions = new JPanel();   
+        addItem(pTypeOptions, passengerCheckBox, 0, 1);
+        addItem(pTypeOptions, cabooseCheckBox, 1, 1);
+        addItem(pTypeOptions, fredCheckBox, 2, 1);
+        addItem(pTypeOptions, utilityCheckBox, 3, 1);
+        addItem(pTypeOptions, hazardousCheckBox, 4, 1);
+        addItemWidth(pType, pTypeOptions, 3, 0, 1);     
         pPanel.add(pType);
 
         // row 3a

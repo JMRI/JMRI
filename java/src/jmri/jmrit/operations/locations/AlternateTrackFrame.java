@@ -1,4 +1,4 @@
-//AlternateTrackAction.java
+//AlternateTrackFrame.java
 package jmri.jmrit.operations.locations;
 
 import java.awt.Dimension;
@@ -16,12 +16,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Action to launch selection of alternate track.
+ * Frame that allows user to select alternate track and options.
  *
- * @author Daniel Boudreau Copyright (C) 2011
+ * @author Daniel Boudreau Copyright (C) 2011, 2015
  * @version $Revision: 17977 $
  */
-class AlternateTrackFrame extends OperationsFrame {
+class AlternateTrackFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
 
     /**
      *
@@ -38,7 +38,7 @@ class AlternateTrackFrame extends OperationsFrame {
     Track _track;
 
     public AlternateTrackFrame(TrackEditFrame tef) {
-        super();
+        super(Bundle.getMessage("AlternateTrack"));
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
@@ -52,23 +52,29 @@ class AlternateTrackFrame extends OperationsFrame {
         pAlternate.setBorder(BorderFactory.createTitledBorder(""));
         addItem(pAlternate, trackBox, 0, 0);
 
-        _track.getLocation().updateComboBox(trackBox);
-        trackBox.removeItem(_track);	// remove this track from consideration
-        trackBox.setSelectedItem(_track.getAlternateTrack());
-
+        if (_track != null) {
+            updateTrackCombobox();
+            _track.getLocation().addPropertyChangeListener(this);
+        }
+        
         JPanel pControls = new JPanel();
         pControls.add(saveButton);
+        saveButton.setEnabled(_track != null);
 
         // button action
         addButtonAction(saveButton);
 
         getContentPane().add(pAlternate);
         getContentPane().add(pControls);
-
-        setTitle(Bundle.getMessage("AlternateTrack"));
-        pack();
-        setMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
-        setVisible(true);
+        
+        initMinimumSize(new Dimension(Control.panelWidth300, Control.panelHeight100));
+        
+    }
+    
+    private void updateTrackCombobox() {
+        _track.getLocation().updateComboBox(trackBox);
+        trackBox.removeItem(_track); // remove this track from consideration
+        trackBox.setSelectedItem(_track.getAlternateTrack());
     }
 
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
@@ -80,6 +86,16 @@ class AlternateTrackFrame extends OperationsFrame {
             }
         }
     }
+    
+    public void propertyChange(java.beans.PropertyChangeEvent e) {
+        if (Control.showProperty) {
+            log.debug("Property change: ({}) old: ({}) new: ({})", e.getPropertyName(), e.getOldValue(), e
+                    .getNewValue());
+        }
+        if (e.getPropertyName().equals(Location.TRACK_LISTLENGTH_CHANGED_PROPERTY)) {
+            updateTrackCombobox();
+        }
+    }
 
-    static Logger log = LoggerFactory.getLogger(TrackEditFrame.class.getName());
+    static Logger log = LoggerFactory.getLogger(AlternateTrackFrame.class.getName());
 }

@@ -6,9 +6,8 @@
 # Author: mstevetodd, copyright 2013
 # based on SensorLog.py and BlockLister.py
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
+
+import jmri
 
 # Define routine to map status numbers to text
 def stateName(state) :

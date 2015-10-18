@@ -20,7 +20,7 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<H1>JMRI: PanelPro, An Application For Making Control Panels</H1>
+<h1>JMRI: PanelPro, An Application For Making Control Panels</h1>
 
 The  JMRI libraries
 contain the PanelPro application for creating simple control panels.
@@ -57,7 +57,7 @@ construct a description of your track and its blocks and signals.
 The software can automatically work out how to set your signals
 based on the position of turnouts and whether blocks are occupied,
 and the rules appropriate to your railroad (ie. select the signal
-rules based on different company practises!, and no need to know how to create
+rules based on different company practices!, and no need to know how to create
 the rules to link your signals to the state of turnouts, blocks and other signals !).  
 In addition, the Layout description of your railway can be used by 
 scripts such as AutoDispatcher2 to automatically control your trains. There are many
@@ -72,7 +72,7 @@ The Panel Editor builds <i>graphical control</i> Panels.  You can have as
 many of Panels as you like, covering as much or as little of
 your railway as you like, with overlaps in area or functionality if required.   
 Panels might be diagrams showing the state of the track and signals, or 
-they might be prototypical signalling and dispatcher panels.  Or anything else
+they might be prototypical signaling and dispatcher panels.  Or anything else
 you find useful to control your railroad; you have total flexibility over
 their appearance. There are several standard graphics sets distributed with
 JMRI, but it is often necessary to make some of the elements in an
@@ -105,31 +105,29 @@ application is another tool for creating modern-style control panels.
 
 
 <h2>The Panel Editor</h2>
-<A href="../../../images/CornwallPanelLit.gif"><IMG src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></A>
+<a href="../../../images/CornwallPanelLit.gif"><IMG src="../../../images/CornwallPanelLit.gif" ALT="screen shot of Cornwall panel" WIDTH="333" HEIGHT="200" HSPACE="0" VSPACE="0"></a>
 
-<BR>
+<p>
 Using the JMRI Panel Editor, 
 you can make a control panel look and operate any way you want.
 <P>
 A panel is one or more background pictures, on which are drawn
-icons to represent turnouts, sensors and signals on the layout.
-You can build the background from small icons (left above), 
+icons to represent Turnouts, Sensors and Signals on the layout.
+You can build the background from small icons (as in the image above left), 
 or provide a detailed drawing that you created in a drawing
-program (right above).
+program (image above right).
 
-<P>
+<p>
 You can use these tools to configure quite complicated panels for
 large layouts.  The example above is from 
 <A href="http://kc.pennsyrr.com/layouts/kulp/index.html">Nick Kulp's Cornwall Railroad</a>.
 There's a
 <A HREF="http://jmri.sourceforge.net/community/examples/Panels-Cornwall/Cornwall.html">page on the main web site</a>
 that describes this in detail.
-For another example, see 
-<A HREF="http://jbritton.pennsyrr.com/control_panels.ws4d">Jerry Britton's page</a> describing how he's controlling his layout.
 There's also a
-<A HREF="http://www.ownry.com/html/how_operations.html">page describing the panel</a> 
+<A HREF="http://ownry.squarespace.com/blog/2011/4/7/ctc-dispatcher-panel-on-the-ownry.html?SSScrollPosition=0">page describing the panel</a> 
 for Kent Williams's
-<A HREF="http://www.ownry.com/index.html">Oregon Washington Navigation &amp; Railway<a/>.
+<A HREF="http://ownry.squarespace.com/modelrailroad/">Oregon Washington Navigation &amp; Railway<a/>.
 Robert Bucklew's Quaker Valley Lines is also building a 
 <A HREF="http://www.quaker-valley.com/CTC/QV_CTCnew.html">CTC panel</a>
 using PanelPro.
@@ -148,14 +146,14 @@ A turnout also has "unknown" and "inconsistent" states, represented by an
 icon with a question mark and X respectively. These represent a state where
 no information has been received, and where the information is internally inconsistent
 (e.g. both closed and thrown at the same time).
-<P>
+<p>
 This control can be used in various ways.  For example, you could
 have a turnout icon covering a turnout on a schematic diagram.  When you
 click on it, the turnout on the layout would be commanded to change, and
 the track diagram would show which way a train would be routed.
 Or you could use icons that show a lever to the right or left, and create
-a panel that looks like a traditional US&S panel.
-<P>
+a panel that looks like a traditional US&amp;S panel.
+<p>
 "Sensors" can be used to represent occupancy indicators or other inputs.  The default icon
 is a small circle, with color used to represent the state of the sensor.  
 These respond to changes on the layout automatically.
@@ -167,13 +165,13 @@ These are meant to represent a lit/dark panel indicator.  A red circle represent
 <h3>Creating a panel</h3>
 These are made with a "Panel Editor", which allows you to place images
 to represent turnouts, sensors (on some systems) and trackwork.
-<P>
+<p>
 The rest of this page gives you a walk-through of the 
 process.  If you'd like to see animated clinics that
 show how each of these things are actually done on the computer screen,
 please see 
 <A HREF="http://www.rr-cirkits.com/Clinics/Clinics.html">Dick Bronson's clinics page</a>.
-<P>
+<p>
 You start the editor by selecting "New Panel..." then "Panel Editor" from the "Panels" menu
 on the main window.  You'll get a blank control panel, plus the
 editor window:<BR>

@@ -41,12 +41,12 @@ public class JsonServerTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(jmri.jmris.json.JsonServerTest.class);
-        //suite.addTest(jmri.jmris.json.JsonTurnoutServerTest.suite());
-        //suite.addTest(jmri.jmris.json.JsonPowerServerTest.suite());
-        //suite.addTest(jmri.jmris.json.JsonReporterServerTest.suite());
-        //suite.addTest(jmri.jmris.json.JsonSensorServerTest.suite());
-        //suite.addTest(jmri.jmris.json.JsonLightServerTest.suite());
-        //suite.addTest(jmri.jmris.json.JsonOperationsServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonTurnoutServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonPowerServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonReporterServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonSensorServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonLightServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonOperationsServerTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
             // put any tests that require a UI here.

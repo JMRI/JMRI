@@ -5,6 +5,7 @@ java/docs
 
 # test artifacts
 junit-results.xml
+junit*.properties
 
 # runtime artifacts
 messages.log*

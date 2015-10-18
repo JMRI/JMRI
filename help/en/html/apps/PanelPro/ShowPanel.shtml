@@ -81,7 +81,7 @@ Then change the second line of your panel file to:
 Don't change the first line!
 <p>
 For technical information on this, see the
-<a href="../../doc/Technical/XmlUsage.shtml#xslt">JMRI XML page</a>.
+<a href="../../doc/Technical/XmlUsage.shtml">JMRI XML page</a>.
    
 <!--#include virtual="/Footer" -->
 </body>
