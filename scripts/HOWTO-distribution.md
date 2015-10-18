@@ -11,32 +11,85 @@ the content of a release, but SVN "tag" and "branch" constructs don't really dif
 Git branches are more ephemeral than SVN branches, and aren't considered a good
 way to record content.  Git tags, on the other hand, are great for that.
 
-So the proposed way to generate a release is:
+So the proposed procedure is:
 
-# Create a branch "Release-N-N-N" from the current master branch (or perhaps from an earlier branch or tag, as needed).
+# In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case).  
+Commit an update to release.properties with release.is_branched=true
 
-# Set Jenkins to build that branch from GitHub.
+# Use a pull request to move that back to JMRI/JMRI with conventional title "Develop release-n.n.n" 
+The pull request is to create a record; pulling a branch pulls whatever the current contents are, 
+so it can be updated as we go along
 
-# Merge content on it as needed.
+# Create an Issue to hold discussion. Link in the pull request (that way we can find it)
+ - or is this too heavyweight, and we just have to settle on a convention for the pull request title?
 
-# When the final version is done and the files are built for release:
+# Switch to 'master' branch and update release.properties with new
+version number. Commit back and then switch checkout back to branch.
 
-## set a -a tag "Release-N-N-N" on the branch (tags and branches live in different spaces)
+# Jenkins build from that branch.  (That’s basically the same Jenkins job, expect for changing to checkout from Github)
 
-## merge the branch back to master to make sure we don't lose any fixes (but there might be a problem with the release.version file?)
+# As needed, bring in any additional commits requested to branch from master -
+probably use 'git cherry-pick {commit hash}' to do this.
+Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” 
+works with this.  
+With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, 
+then do final “svn merge” at the appointed time; we might also do this from GitHub.
+When using 'git merge' would also work we need to be aware of it stamping over 'release.properties' 
+and the correct procedure to revert that.
 
-## delete the branch, leaving only the tag
+# When it’s done, directly publish the files in the usual SF.net way, etc.
 
-Since -a tags can't change and branches can, deleting the branch makes it clear where to go to get the definitive content for the release
+# Turn off the Jenkins job; this is so it doesn't fail after later steps
 
-We sometimes build releases from each other, e.g. 4.0 from 3.12.11.  That still works
-because a branch can start at any point, including a tag.
+# If need be, merge back changes from the branch to the master as needed.
+This would be done in a personal fork repo.
+Might not necessarily need this step if we do changes in 'master' and 'cherry-pick' into branch.
 
-The other question is where to do this.  Jenkins can just as happily build from the release pumpkins
-GitHub repository as from the JMRI/JMRI one.  But there's some value in having the 
-release candidate branch be in the JMRI/JMRI repository so that it's clearly visible.
-So I recommend creating the branch locally, but pulling (or pushing) it to JMRI/JMRI
-before doing the final builds.
+# Put a tag titled Release-n.n.n-tag (note initial upper case) on the end of the branch. 
+This starts in a personal fork, then gets pushed back to JMRI/JMRI. 
+This Tag provides a way to get back if somebody accidentally adds to the branch.
+The -tag on the end of the name isn't strictly necessary.
+Git tags and branches are separate name spaces; you can have a tag and branch with the same name.  
+But it can be _very_ confusing when accessing them, 
+because the git command line tools make varying assumptions about the context of their arguments.  
+You end up having to specify whether you’re using a tag or branch most of the time 
+(if there are both with the same name), that’s not how people usually work, and mistakes can happen.
+From an immediate
+readability perspective, the '-tag' suffix does easily tell us what it is
+rather than just the capitalisation or lack thereof.
+(We will need to clean up the history to suit
+whichever convention we finally decide on)
+
+# Delete the branch (to clean up the list of branches in various GUI tools), 
+which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
+
+It might be a good idea to keep the production release branches around
+throughout the next test phases, but we should be able to prune each
+test release branch once we've tagged it. So, we'd keep the 4.0 (and
+4.0.1) branch around throughout the 4.1.x phase and then prune it when
+moving to 4.2.
+Each 4.1.x branch should be pruned once tagged as, if
+we need to do changes to a test release, we just release a new version
+on it's own branch from 'master’.
+
+How about the case near the end of a development cycle when we’re doing incremental releases?  
+E.g. 4.1.9 might be 4.1.8+deltas?  Should that be a branch from a branch?
+We'll need to develop and document this as needed.
+
+When we are ending the development cycle, we should
+keep the final 'from master' branch around at least until we've built
+the Production release.
+
+Now as you say there could be value on keeping some of these branches
+around a bit longer - perhaps we keep them for, say, one additional
+dev cycle? Let's see how the discussion pans out.
+
+Now the main thing to still decide on is how best to deal with
+bringing additional commits into the branch from master (point 3a) -
+do we 'cherry-pick' or 'merge'?
+Everybody is using pull requests, which makes it pretty easy to get the hash numbers needed for 
+cherry-pick (that can be messy with direct commits, because you’re not always sure which commits go together).
+We can play this by ear, but if somebody says “can you include PR 123?” I think that lends itself to a cherry pick pretty nicely.
 
 
 ============================================================================
