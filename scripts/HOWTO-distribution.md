@@ -13,22 +13,22 @@ way to record content.  Git tags, on the other hand, are great for that.
 
 So the proposed procedure is:
 
-# In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case).  
+() In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case).  
 Commit an update to release.properties with release.is_branched=true
 
-# Use a pull request to move that back to JMRI/JMRI with conventional title "Develop release-n.n.n" 
+() Use a pull request to move that back to JMRI/JMRI with conventional title "Develop release-n.n.n" 
 The pull request is to create a record; pulling a branch pulls whatever the current contents are, 
 so it can be updated as we go along
 
-# Create an Issue to hold discussion. Link in the pull request (that way we can find it)
- - or is this too heavyweight, and we just have to settle on a convention for the pull request title?
+() Create an Issue to hold discussion. Link in the pull request (that way we can find it)
+Or is this too heavyweight, and we just have to settle on a convention for the pull request title?
 
-# Switch to 'master' branch and update release.properties with new
+() Switch to 'master' branch and update release.properties with new
 version number. Commit back and then switch checkout back to branch.
 
-# Jenkins build from that branch.  (That’s basically the same Jenkins job, expect for changing to checkout from Github)
+() Jenkins build from that branch.  (That’s basically the same Jenkins job, expect for changing to checkout from Github)
 
-# As needed, bring in any additional commits requested to branch from master -
+() As needed, bring in any additional commits requested to branch from master -
 probably use 'git cherry-pick {commit hash}' to do this.
 Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” 
 works with this.  
@@ -37,15 +37,15 @@ then do final “svn merge” at the appointed time; we might also do this from 
 When using 'git merge' would also work we need to be aware of it stamping over 'release.properties' 
 and the correct procedure to revert that.
 
-# When it’s done, directly publish the files in the usual SF.net way, etc.
+() When it’s done, directly publish the files in the usual SF.net way, etc.
 
-# Turn off the Jenkins job; this is so it doesn't fail after later steps
+() Turn off the Jenkins job; this is so it doesn't fail after later steps
 
-# If need be, merge back changes from the branch to the master as needed.
+() If need be, merge back changes from the branch to the master as needed.
 This would be done in a personal fork repo.
 Might not necessarily need this step if we do changes in 'master' and 'cherry-pick' into branch.
 
-# Put a tag titled Release-n.n.n-tag (note initial upper case) on the end of the branch. 
+() Put a tag titled Release-n.n.n-tag (note initial upper case) on the end of the branch. 
 This starts in a personal fork, then gets pushed back to JMRI/JMRI. 
 This Tag provides a way to get back if somebody accidentally adds to the branch.
 The -tag on the end of the name isn't strictly necessary.
@@ -60,7 +60,7 @@ rather than just the capitalisation or lack thereof.
 (We will need to clean up the history to suit
 whichever convention we finally decide on)
 
-# Delete the branch (to clean up the list of branches in various GUI tools), 
+() Delete the branch (to clean up the list of branches in various GUI tools), 
 which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
 
 It might be a good idea to keep the production release branches around
@@ -93,6 +93,9 @@ We can play this by ear, but if somebody says “can you include PR 123?” I th
 
 
 ============================================================================
+
+# SVN Build Instructions
+
 This is the HOWTO file to make a complete SourceForge downloadable
 distribution.  ($Revision$)
 
@@ -116,6 +119,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows
 First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) If it's a new year, update copyright dates (done for 2012):
+
     * build.xml (3) in the jmri.copyright.years property value
     * site/Copyright.html (3 places)
     * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
@@ -139,6 +143,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 ( ) Commit any changes in your local web site directory, these can end up in help, xml, etc
 
 ( ) Remake the help index  (need a command line approach, so can put in ant!)
+
     cd help/en/
     rm ~/.jhelpdev    (to make sure the right preferences are chosen)
     ./JHelpDev.csh   (See the doc page for setup) <-- for Windows, use JHelpDev.bat
@@ -165,6 +170,7 @@ release process.  They can be skipped occasionally.
 
 ( ) Check for line ends with the scripts/checkCR.sh script.  Fix those
     that you find wrong.  (So far, not found a way to do this on Windows...)
+    
     (To scan, e.g the xml tree, do:
         find xml -type f -exec ./scripts/checkCR.sh {} \; -print
     )
@@ -204,12 +210,16 @@ release process.  They can be skipped occasionally.
     and working OK. Fix problems and commit back.
 
 ( ) This is a good place to check that the decoder XSLT transforms work
+
         cd xml/XSLT
         ant
+        
     If you fix anything, commit it back.
 
 ( ) This is a good place to make sure CATS still builds
+
         http://jmri.org/help/en/html/doc/Technical/CATS.shtml
+        
     If you fix anything, commit it back.
 
 
@@ -230,13 +240,17 @@ Second, we build the release branch:
     ant -Dsourceforge.userid='you' -Dsourceforge.password='password' make-test-release-branch
 
     instead)  
+    
     (alternately, change the svnSetting element in build.xml to:
+    
         <svnSetting
         id="svn.settings"
         javahl="false"
         svnkit="false"/>
+    
     to have it use your default command line setup; note that this doesn't include
     user name and password)
+    
     (messages like "Missing 'javahl' dependencies on the classpath !" are normal)
 
     This will do (more or less) the following actions:
@@ -262,13 +276,18 @@ Second, we build the release branch:
     cd ../../branches/jmri/releases
     svn update 3.11.6
 
-    ( if you don't have this, check out the specific section with "svn co ${SVNREPO}/branches/jmri/releases/3.11.6". Also, don't forget to copy
-    your 'local.properties' file from HEAD)
+    If you don't have this, check out the specific section with 
+    
+    svn co ${SVNREPO}/branches/jmri/releases/3.11.6
+    
+    Also, don't forget to copy
+    your 'local.properties' file from HEAD
 
 ================================================================================
 If you're doing the build using the CI engine, configure it to build the new release:
 
 ( ) Log in to the CI engine at 
+
     http://builds.jmri.org/jenkins/job/Test%20Releases/
 
 ( ) Click "New Item"
@@ -277,9 +296,11 @@ If you're doing the build using the CI engine, configure it to build the new rel
     out the new release name at the top. Click "OK"
 
 ( ) Update
+
         Project Name
         Description
         Subversion Modules Repository URL
+    
     and click "Save"
 
     The build will start shortly.
@@ -290,6 +311,7 @@ For local builds, these are the build instructions; CI builds will already be ru
 ( ) edit release.properties to say release.official=true (last line)
 
 ( ) setenv SVN_REVISION 23699
+
     ant -Dnsis.home="" clean packages
 
     (You can get the SVN_REVISION from http://sourceforge.net/p/jmri/code/HEAD/tree/branches/jmri/releases ; don't prefix an 'r')
@@ -304,10 +326,14 @@ For local builds, these are the build instructions; CI builds will already be ru
     and WAIT FOR SOME REPLIES
      
     The main JMRI web site gets completely overwritten by Jenkins, so one approach:
+    
         ssh user,jmri@shell.sf.net create
         scp dist/release/JMRI.* user,jmri@shell.sf.net:htdocs/release/
+    
     puts them at
+    
         http://user.users.sf.net/release
+    
     (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
@@ -317,18 +343,24 @@ HEAD and have you merge it into the release branch.  CI will automatically rebui
 or you'll have to redo a manual build manually.
 
 To merge everything to date: 
+
     svn merge ^/trunk/jmri
+
 If you do this, beware, the first time you'll also merge in the new release.properties file, 
 which you do NOT want to do. You can undo that merge with 'svn revert release.properties'.
 
-To merge a single later revision: svn merge -c <changeset#> ^/trunk/jmri )
+To merge a single later revision: 
+
+    svn merge -c <changeset#> ^/trunk/jmri )
 
 ================================================================================
 Third, we do the release-specific updates.
+
     (we need to work through automation of version number values)
 
 ( ) Create the _next_ release note, so that people will document new (overlapping)
     changes there.
+    
         cd (local web copy)/releasenotes
         svn update
         svn cp jmri3.11.5.shtml jmri3.11.6.shtml
@@ -368,11 +400,14 @@ Actual release steps:
     scp JMRI.* ${USER}@"frs.sourceforge.net:/home/frs/project/j/jm/jmri/test\ files/"
         (the scp is needed even if on SF.net, so that the FRS system knows you've added something; using cp is NFG)
         (for production release, use ".../production\ files/")
+    
     (clean up and logout)
 
 ( ) Create and upload the JavaDocs
     (as of late 2013, CloudBees was updating these from SVN weekly: 
+    
         https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
+    
     so please skip this step if that's working)
 
     ant javadoc-uml uploadjavadoc
@@ -398,12 +433,15 @@ Actual release steps:
 ( ) Complete all the above before continuing
 
 ( ) Update the web site front page and downloads page:
+
      index.html download/Sidebar download/index.shtml releaselist
 
 ( ) Commit site
 
 ( ) Consider submitting an anti-virus white-list request at:
+
         https://submit.symantec.com/whitelist/isv/
+
     If you don't, a bunch of Windows users are likely to whine
 
 ( ) For production releases, file copyright registration
@@ -415,6 +453,7 @@ Actual release steps:
 ( ) Wait for update on JMRI web server
 
 ( ) Mail announcement to jmriusers@yahoogroups.com
+
     Subject is "Test version 3.9.5 of JMRI/DecoderPro is available for download"
     or "JMRI 3.8 is available for download"
 
@@ -426,6 +465,7 @@ Actual release steps:
 
 ( ) Decide if worth announcing elsewhere (production version or
     big system-specific fix/feature):
+
         RailRoadSoftware&yahoogroups.com
         MAC_DCC@yahoogroups.com
         loconet_hackers@yahoogroups.com
