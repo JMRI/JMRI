@@ -133,7 +133,7 @@
         <td>&bull;</td>
         <td></td>
         <td></td>
-        <td>LocoIo, LocoServo, LocoBooster</td>
+        <td>LocoIO, LocoServo, LocoBooster</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configure Command Station</a></td>
         <td></td>

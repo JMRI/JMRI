@@ -113,14 +113,14 @@
         <td>PM4, PM42</td>
     </tr>
     <tr align="center">
-        <td><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configurer SE8c</a></td>
+        <td><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configurer SE8C</a></td>
         <td></td>
         <td></td>
 
         <td>&bull;</td>
         <td></td>
         <td></td>
-        <td>SE8c</td>
+        <td>SE8C</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configurer LocoIO</a> (d&#233;sapprouv&#233;)</td>
         <td></td>
@@ -129,7 +129,7 @@
         <td>&bull;</td>
         <td></td>
         <td></td>
-        <td>LocoIo, LocoServo, LocoBooster</td>
+        <td>LocoIO, LocoServo, LocoBooster</td>
     </tr>
     <tr align="center"><td><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configurer Centrale de Commande</td>
         <td></td>
