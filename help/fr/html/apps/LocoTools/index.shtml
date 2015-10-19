@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse; le 2015-10-16 -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-01; et Egbert Broerse; le 2015-10-19 -->
 <html lang="fr">
 <head>
     <title>
@@ -31,11 +31,8 @@
 		<p>Le projet JMRI contient un certain nombre d'outils LocoNet. Cette
 page les pr&#233;sente, d&#233;crit comment les utiliser, et autres informations. </p>
 <dl>
-<dt> <a HREF="#locomon"> <dfn>Moniteur LocoNet  </dfn> </a> </dt>.</p>
-		<dl>
-		    <dt><a HREF="#locomon"><dfn> moniteur LocoNet </dfn></a></dt>
-		    <dd>
-			Afficher et enregistrer le trafic sur le LocoNet, soit en
+<dt> <a HREF="#locomon"> <dfn>Moniteur LocoNet</dfn></a></dt>
+<dd>Afficher et enregistrer le trafic sur le LocoNet, soit en
 hexad&#233;cimal ou sous forme lisible par l'homme.
 </dd>
 
@@ -48,10 +45,10 @@ hexad&#233;cimal ou sous forme lisible par l'homme.
 <dt><a HREF="#loconetstats"><dfn>Moniteur Interface Statistiques LocoNet</dfn></a></dt>
 <dd>Moniteur statut de l'interface mat&#233;riel LocoNet.</dd>
 
-<dt> <a HREF="#pm4"> <dfn>Programmateurs BDL16, SE8c, PM4 et DS64</dfn> </a> </dt>
+<dt> <a HREF="#pm4"><dfn>Programmateurs DS64, SE8C, PM4 et BDL16</dfn> </a> </dt>
 <dd> Un outil pour vous aider &#224; configurer ces cartes. </dd>
 
-<dt> <a HREF="#locoio"> <dfn> programmateur LocoIO </dfn> </a> </dt>
+<dt> <a HREF="#locoio"> <dfn>Programmateur LocoIO</a> (d&#233;sapprouv&#233;)</dfn></dt>
 <dd> Un outil pour vous aider &#224; configurer une carte LocoIO. </dd>
 
 <dt><a HREF="#cmdstn"><dfn>Outil de Configuration de la Centrale de Commande</dfn></a> </dt>
@@ -146,7 +143,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 		    </dt>
                     
 		    <dd>
-		    <h2>BDL16, SE8c, PM4 and DS64 Programmers</Hh>
+		    <h2>Programmateurs DS64, SE8C, PM4 et BDL16</h2>
 		    <p>
 			Cet outil programmateur fournit une simple interface graphique pour configurer l'alimentation Digitrax et les cartes d'occupation de cantons. Chaque "inter de configuration" est montr&#233; comme une bo&#238;te &#224; coch&#233;e &#224; l'&#233;cran. Vous pouvez lire le contenu actuel depuis la carte et &#233;crire vos changements facilement. Il n'est pas n&#233;cessaire de sortir la carte du r&#233;seau ou de se glisser sous la plaque pour r&#233;gler les poussoirs, car ils sont tous programmables via la connection de la carte &#224; LocoNet
 		    <p>
@@ -167,7 +164,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 			         alt="LocoIO Programmer screen"></a>
 		    </dt>
 		    <dd>
-		    <h2>Programmateur LocoIO</h2>
+		    <h2>Programmateur LocoIO (d&#233;sapprouv&#233;)</h2>
 		    <p><strong>Le programmateur LocoIO est d&#233;sapprouv&#233;. Utilise <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a></strong><br />
 		    <em>Cette information est seulement comme r&#233;f&#233;rence avec JMRI versions avant 3.0.</em></p>
 		    <p>

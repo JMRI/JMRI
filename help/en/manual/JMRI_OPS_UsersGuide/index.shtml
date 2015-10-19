@@ -16,7 +16,7 @@
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
-<div id="mainContent"><a name="Top"></a>
+<div id="mainContent"><a name="Top" id="Top"></a>
 
 <h1>JMRI&reg; Operations User's Guide</h1>
 
@@ -79,7 +79,7 @@ browser.</p>
 
 <h2>Table of Contents</h2>
 
-<h4 name="Installing" id="Installing">Installing JMRI</h4>
+<h4><a name="Installing" id="Installing">Installing JMRI</a></h4>
 
 <ul>
 
@@ -95,7 +95,7 @@ JMRI Software</a>
 
 </ul>
 
-<h4><a name="startOps"></a>Starting Operations Program</h4>
+<h4><a name="startOps" id="startOps"></a>Starting Operations Program</h4>
 
 <ul>
 
@@ -113,7 +113,7 @@ do?</a></li>
 
 </ul>
 
-<h4><a name="Main"></a>DecoderPro&reg; Main Window</h4>
+<h4><a name="Main" id="Main"></a>DecoderPro&reg; Main Window</h4>
 
 <ul>
 
@@ -404,13 +404,10 @@ Bruce Shanks</td>
 
 <hr>
 
-<div align="right">Go to the
-
-<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a></div>
+<div align="right">Go to the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a></div>
 
 <!--#include virtual="/Footer" -->
-
-</div>
-
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>

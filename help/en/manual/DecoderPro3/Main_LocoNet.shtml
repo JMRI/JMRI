@@ -199,7 +199,7 @@ keeps better time. </p>
   <div align="right"><a href="#BDL16">Back</a></div>
 </div>
 <h4><a name="LocoIOProgrammer"></a>Configure LocoIO window</h4>
-<p style="text-align: center;">Note: The LocoNet Configure LocoIO tool is no longer supported; you're advised to use DecoderPro&reg;3 to program a LocoIO board as a decoder, see the <a href="../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO page</a>.<br><br>
+<p style="text-align: center;">Note: The LocoNet Configure LocoIO tool is no longer supported; you're advised to use DecoderPro&reg; to program a LocoIO board as a decoder, see the <a href="../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">LocoIO page</a>.<br><br>
 <img src="images/Main_Loconet04.png" alt="LocoNet IO programmer" border="4" height="518" width="693"></p>
 <div>
   <div align="right"><a href="#BDL16">Back</a></div>

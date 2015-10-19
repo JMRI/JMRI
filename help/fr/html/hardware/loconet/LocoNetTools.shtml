@@ -29,7 +29,6 @@
       Outils JMRI qui prennent en charge les &#233;quipements LocoNet&reg;
       </h1>
 
-
 <p>Le logiciel JMRI peut fournir une vari&#233;t&#233; d'outils pour prendre en charge le mat&#233;riel connect&#233; au bus LocoNet&reg;. Ces outils fournissent une vari&#233;t&#233; de fonctionnalit&#233;s, tel que la surveillance  des statut, la lecture et l'&#233;criture de la configuration. Chacun de ces outils fournit un ensemble de fonctionnalit&#233;s qui est appropri&#233; &#224; ce genre d'&#233;quipement qu'il prend en charge, comme r&#233;sum&#233; dans le tableau ci-dessous.</p>
 <p>Dans le tableau chaque nom d'outil est un lien vers une page d'aide sp&#233;cifique &#224; l'outil.</p>
 <table border="2">

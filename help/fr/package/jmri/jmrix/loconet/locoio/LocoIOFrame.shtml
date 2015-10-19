@@ -28,7 +28,7 @@
 <p>
 Le programmateur LocoIO comme util Loconet n'est pas plus support&#233; depuis JMRI version 3.
 <br>
-Le m&#233;thode prefer&#233; pour programmer le LocoIO est avec <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a> et une <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">D&#233;finition Decoder</a> dans le cat&#233;gorie "Public Domain and DIY".
+Le m&#233;thode prefer&#233; pour programmer le LocoIO est avec <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> et une <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">D&#233;finition Decoder</a> dans le cat&#233;gorie "Public Domain and DIY".
 
 <p>Ceci est le page d'aide /jmri/jmrix/loconet/locoio/LocoIOFrame
 

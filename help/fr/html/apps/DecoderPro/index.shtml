@@ -25,7 +25,7 @@
 <h1>DecoderPro Programmateur Symbolique</h1>
 
 <p>Les d&#233;codeurs DCC modernes sont des b&#234;tes compliqu&#233;es &#224; programmer. L'id&#233;e simple
-de «mettre l'adresse dans CV01" ne s'adaptent pas bien lorsque vous programmer des fonctions complexes en utilisant des combinaisons de motifs de bits. Une interface plus conviviale est n&#233;cessaire. Il existe des programmes qui offrent de meilleures fa&#231;ons de programmer des d&#233;codeurs sp&#233;cifiques. Malheureusement, elles sont limit&#233;es &#224; certains types d'ordinateurs, et que leurs auteurs ne puissent les personnaliser pour les nouveaux types de d&#233;codeurs.</p>
+de "mettre l'adresse dans CV01" ne s'adaptent pas bien lorsque vous programmer des fonctions complexes en utilisant des combinaisons de motifs de bits. Une interface plus conviviale est n&#233;cessaire. Il existe des programmes qui offrent de meilleures fa&#231;ons de programmer des d&#233;codeurs sp&#233;cifiques. Malheureusement, elles sont limit&#233;es &#224; certains types d'ordinateurs, et que leurs auteurs ne puissent les personnaliser pour les nouveaux types de d&#233;codeurs.</p>
 
 <p>Le programmateur symbolique DecoderPro est destin&#233; &#224; am&#233;liorer la situation. Il est configur&#233; en utilisant des fichiers texte, de sorte qu'il peut &#234;tre adapt&#233; aux types de d&#233;codeur suppl&#233;mentaires facilement. Il communique avec les d&#233;codeurs en utilisant l'interface de programmation JMRI, de sorte qu'il peut fonctionner sur n'importe quel mat&#233;riel informatique et Mat&#233;riel R&#233;seau qui supporte JMRI. Il est disponible gratuitement en t&#233;l&#233;chargement. Et puisque le code est disponible via l'open source, si vous voulez l'am&#233;liorer, vous pouvez le faire.</p>
 
@@ -42,7 +42,7 @@ pour plus d'informations sur la fa&#231;on de l'utiliser, ou consultez le
 DecoderPro est aussi couvert par le 
 <a HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
 <a HREF="http://mymemoirs.net/model-trains.php">des s&#233;ries de vid&#233;os</a>
-sur les sujets DCC de Joe Fugate
+sur les sujets DCC de Joe Fugate.
 
 <h2>De Quoi Avez vous Besoin pour Utiliser DecoderPro?</h2>
 
@@ -96,7 +96,7 @@ Les pages Guide de l'utilisateur:
 </dl>
 
 <h2>Informations d&#233;codeur</h2>
-
+<p>
 Le projet JMRI a compil&#233; un grand nombre d'informations sur les d&#233;codeurs de nombreux fabricants, nous les laissons librement disponible sous plusieurs formes. 
 Pour en savoir plus, consultez les
 <a href="http://jmri.sourceforge.net/xml/XSLT/">informations sur la page d&#233;codeur</a>.

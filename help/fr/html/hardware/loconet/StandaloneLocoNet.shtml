@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- Translated by Herv&#233; Blorec le 2013-09-14; markup Egbert Broerse; le 2015-10-18 -->
+<!-- Translated by Herv&#233; Blorec le 2013-09-14; markup Egbert Broerse; le 2015-10-19 -->
 <html lang="en">
 <head>
  <title>
@@ -49,7 +49,7 @@
             </li>
           </ul>
         </li>
-        <li><a href="#pseudoground">Connexion d'un BDL16x 0uin syst&#232;me DCC sans borne de "Masse"</a></li>
+        <li><a href="#pseudoground">Connexion d'un BDL16x &#224; un syst&#232;me DCC sans borne de "Masse"</a></li>
         <li><a href="#sneakpaths">"Courant de circulation" et Interfaces Informatiques</a></li>
     </ul></li>
     <li><a href="#examples">Exemples</a>
@@ -70,11 +70,11 @@
 <p>Un "Standalone" (autonome) LocoNet&reg; est un bus LocoNet qui n'a pas de centrale LocoNet. Puisqu'il n'a pas de centrale LocoNet, il ne peut pas commander de locomotives et ne peut pas directement influence le signal DCC de voie cr&#233;&#233; par une centrale DCC.</p>
 <p>Il y a plusieurs situations o&#249; un  bus LocoNet autonome est utile. Quelques unes de celles-ci sont list&#233;es ci-dessous:</p>
 <ul>
-    <LI>Lors de l'utilisation de p&#233;riph&#233;riques LocoNet avec une station de commande non-LocoNet DCC.</LI>
-    <LI>Lors de l'utilisation de p&#233;riph&#233;riques LocoNet avec un r&#233;seau non-DCC.</LI>
-    <LI>Tpour isoler les p&#233;riph&#233;riques LocoNet de l'activit&#233; de r&#233;gulateur LocoNet.</LI>
-    <LI>Pour &#233;viter les probl&#232;mes de circulation LocoNet associ&#233;s &#224; petit tampon de la station de commande Digitrax pour transmettre les commandes de commutation LocoNet au signal de voie de DCC..</li>
-    <LI>Certains utilisateurs trouvent m&#234;me qu'il est utile d'avoir JMRI our communiquer avec deux ou plusieurs
+    <li>Lors de l'utilisation de p&#233;riph&#233;riques LocoNet avec une station de commande non-LocoNet DCC.</LI>
+    <li>Lors de l'utilisation de p&#233;riph&#233;riques LocoNet avec un r&#233;seau non-DCC.</LI>
+    <li>Tpour isoler les p&#233;riph&#233;riques LocoNet de l'activit&#233; de r&#233;gulateur LocoNet.</LI>
+    <li>Pour &#233;viter les probl&#232;mes de circulation LocoNet associ&#233;s &#224; petit tampon de la station de commande Digitrax pour transmettre les commandes de commutation LocoNet au signal de voie de DCC..</li>
+    <li>Certains utilisateurs trouvent m&#234;me qu'il est utile d'avoir JMRI our communiquer avec deux ou plusieurs
          Connexions LocoNet. Une connexion LocoNet pourrait &#234;tre un "standard"
          LocoNet, avec une centrale LocoNet bas&#233;e sur LocoNet, de sorte que JMRI peut programmer les
          d&#233;codeurs et peut-&#234;tre commander les d&#233;codeurs mobiles. Une autre connexion LocoNet pourrait &#234;tre
@@ -187,29 +187,28 @@ utile.</p>
              ces dispositifs seront incapables de communiquer de mani&#232;re fiable
              avec LocoNet.</p>
         <p>*** Certaines versions de LocoBuffer peuvent fournir une Interruption LocoNet
-              si d'autres composants sont install&#233;s sur la carte LocoBuffer
-          ., Des versions d'origine de LocoBuffer n'ont pas de
+              si d'autres composants sont install&#233;s sur la carte LocoBuffer. Des versions d'origine de LocoBuffer n'ont pas de
              places pour les composants suppl&#233;mentaires &#224; installer. Ces commentaires
              ne s'appliquent pas &#224; la LocoBuffer-II ou &#224; la LocoBuffer-USB.</p>
    </td> </tr>
 </table>
 
-    <a name="dataterm">Interruption du Signal de Donn&#233;es LocoNet </a> </h2>
-        <p> L'interruption du Signal de Donn&#233;es LocoNet est quelque chose qui permet au chemin de Donn&#233;es 
+    <h2><a name="dataterm">Interruption du Signal de Donn&#233;es LocoNet</a></h2>
+        <p>L'interruption du Signal de Donn&#233;es LocoNet est quelque chose qui permet au chemin de Donn&#233;es 
             LocoNet de fonctionner. Un dispositif sur LocoNet doit fournir cette
            interruption de sorte que tous les dispositifs LocoNet puissent communiquer sur le fils "donn&#233;es" de LocoNet. Sans cette interruption, des dispositifs LocoNet
             ne peuvent pas transmettre de messages LocoNet de l'un &#224; l'autre.</p>
-        <p> L'interruption du Signal de Donn&#233;es LocoNet peut se trouv&#233;e sous des nomss diff&#233;rents .
+        <p>L'interruption du Signal de Donn&#233;es LocoNet peut se trouv&#233;e sous des nomss diff&#233;rents.
             Certains termes alternatifs sont list&#233;s ici.
             Le manuel BDL168 d&#233;finit un cadre OPSW qui "permet &#224; cette carte BDL168
-            d'interompre LocoNet. Les &#233;quipements  LocoBuffer -II et LocoBuffer -USB
+            d'interompre LocoNet. Les &#233;quipements  LocoBuffer -II et LocoBuffer-USB
             pr&#233;sentent un cavalier qui permet &#224; ces dispositifs de couper le signal LocoNet. Le PR3 a un mode de fonctionnement
             o&#249; " PR3 a la capacit&#233; d' agir en tant qu'interrupteur de signal LocoNet. tous
            d&#233;crivent le terme utilis&#233; dans le pr&#233;sent document, Interruption du Signal de Donn&#233;es LocoNet.</p>
-        <h3> <a name="hwdataterm"> Certains mat&#233;riels commerciaux qui peuvent fournir
-                Interruption du Signal de Donn&#233;es LocoNet</a> </h3 >
+        <h3><a name="hwdataterm">Certains mat&#233;riels commerciaux qui peuvent fournir
+                Interruption du Signal de Donn&#233;es LocoNet</a></h3>
         <ul>
-            <li> <strong> BDL16, BDL162, BDL168</strong>
+            <li><strong>BDL16, BDL162, BDL168</strong>
                 <p> Les instructions contenues dans le manuel BDL16x comprend une section sur
                     comment utiliser le BDL168x avec une &#233;quipement non Digitrax. Cette
                     section mentionne la configuration d'une carte BDL16x pour agir
@@ -447,7 +446,7 @@ utile.</p>
             pour "alimentation locale". Le LocoBuffer -II doit &#234;tre configur&#233; pour
             "alimentation isol&#233;e" et aurait une alimentation externe branch&#233;
             pour le bon fonctionnement et l'isolement.</p>
-        <P> Les autres interfaces informatiques peuvent &#234;tre isol&#233;es &#224; l'aide de l'isolement des &#233;quipement 3-rd. Placer un hub USB avec isolation optique entre l'ordinateur et le p&#233;riph&#233;rique USB, ou un &#233;quipement d'isolation optique RS232
+        <p> Les autres interfaces informatiques peuvent &#234;tre isol&#233;es &#224; l'aide de l'isolement des &#233;quipement 3-rd. Placer un hub USB avec isolation optique entre l'ordinateur et le p&#233;riph&#233;rique USB, ou un &#233;quipement d'isolation optique RS232
              entre l'ordinateur et le dispositif d'interface RS232 pourrait
             fournir une solution s&#251;re et fonctionnelle. Notez, cependant, que certains
            utilisateurs ont signal&#233; des probl&#232;mes lors de l'utilisation d'un concentrateur USB (si optiquement
@@ -497,7 +496,7 @@ g&#233;n&#233;r&#233; par les BDL168s, et peut commander les aspects du signal e
             "Les courants de circulation" et interfaces informatiques</a>, ci-dessus, pour plus d'informations.</p>
             
     <h2><a name="bdl168wnondtcs">Commutateurs (DS64), D&#233;tection (BDL168) et signaux
-            ( SE8C ) avec une centrale non Digitrax DCC</a></h2>
+            (SE8C) avec une centrale non Digitrax DCC</a></h2>
         <p> Le sch&#233;ma ci-dessous montre une application possible d'un LocoNet autonome
             pour la signalisation contr&#244;l&#233;e par ordinateur &#224; l'aide d(une carte Digitrax BDL168 pour la
             d&#233;tection d'occupation, Carte Digitrax SE8C pour les signaux, et la carte
@@ -534,7 +533,7 @@ g&#233;n&#233;r&#233; par les BDL168s, et peut commander les aspects du signal e
              il n'est pas n&#233;cessaire pour une connexion aux sorties voie du booster. Mais
              le LocoBuffer-USB n&#233;cessite une alimentation de RailSync quand il est en mode interruption dans le LocoNet
              , de sorte qu'une alimentation de RailSync est montr&#233;e.</p>
-<img src = "images/StandaloneLocoNetSignallingNet.jpg"
+<img src="images/StandaloneLocoNetSignallingNet.jpg"
               alt = "Image montrant un Loconet autonome pour SE8C signalisation seulement">
          <p> Dans le sch&#233;ma ci-dessus, le RailSync alimentation est mis en oeuvre comme
              d&#233;crit dans <a href="#rspowersupply"> alimentation de RailSync &#224; partir d'une alimentation en courant continu

@@ -1,8 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en"><head>
 
-<!-- Copyright ($Author$) 2015 --><!-- $Id$ --><title>Decoder Pro Manual: Index</title><!-- Style -->
+<!-- Copyright ($Author$) 2015 --><!-- $Id$ -->
+<title>Decoder Pro Manual: Index</title>
 
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
@@ -14,15 +16,13 @@
 
 <div id="mainContent">
 
-<a name="Top"></a>
-
-<h1>DecoderPro&reg; User's Guide</h1>
+<h1><a name="Top">DecoderPro&reg; User's Guide</a></h1>
 
 <p><strong>JMRI is a Java-based cross-platform application
 for model railroaders. JMRI contains applications for:</strong></p>
 
 <ul>
-<li>The programming of Digital Command Control (DCC) decoders (DecoderPro&reg;3)</li>
+<li>The programming of Digital Command Control (DCC) decoders (DecoderPro&reg;)</li>
 <li>Drawing computer based panels for depicting a model railroad layout (PanelPro&trade;)</li>
 <li>Controlling the layout (Layout Editor)</li>
 <li>Creating train manifests for duplicating railroad operations (Operations)</li>
@@ -37,7 +37,7 @@ require that Java be installed on the computer.<br>
 You can get Java as a free (but very large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a>
 </p>
 
-<p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg;3 tour at <a target="_blank" href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
+<p>If  this is your first visit to our manual we suggest that you take the Decoder Pro&reg; tour at <a target="_blank" href="http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml">http://jmri.sourceforge.net/help/en/html/apps/DecoderPro/Tour.shtml</a><br>
   to get an overview of what we&#8217;re about to cover.
 </p>
 Notes:
@@ -45,13 +45,13 @@ Notes:
 <li>All screen shots in this manual are from a Windows
 machine using the "Metal" User Interface option. While your screens
 will probably differ in some layout details, they will be essentially
-the same. All programming examples shown are with Digitrax PR3(MS100
+the same. All programming examples shown are with Digitrax PR3 (in "MS100"
 mode) connected to Digitrax Super Chief Radio Command Station. Most of
 the decoders in locomotive samples will be Digitrax, except for sound
 examples.
 </li>
 <li>This entire manual has been updated to correspond to
-JMRI&reg; 3.6 DecoderPro 3 only, and the SHTML verified using HTML4 and
+JMRI&reg; v3.6 DecoderPro only, and the SHTML verified using HTML4 and
 Cascading Style Sheets. If the formatting looks odd, you probably need
 to update your browser.</li>
 </ol>
@@ -576,7 +576,7 @@ to update your browser.</li>
 
 </ul>
 
-<h4 name="Error" id="Error">Error Messages</h4>
+<h4><a name="Error" id="Error">Error Messages</a></h4>
 
 <ul>
 
@@ -690,13 +690,13 @@ to update your browser.</li>
 
       Bruce Shanks<br>
 
-      Walter Thompson <br></td>
+      Walter Thompson<br></td>
 
-    <td align="left" valign="top"><p>Updated to JMRI 2.12<br>
+    <td align="left" valign="top">Updated to JMRI 2.12<br>
 
       Installation information added<br>
 
-      Contents updated to current functions</p></td>
+      Contents updated to current functions</td>
 
   </tr>
 
@@ -738,7 +738,7 @@ to update your browser.</li>
 
     <td align="left" valign="top">Updated from JMRI&reg; 3.0 and separated Operations to separate User's Guide</td>
 
-  </tr><tr><td>3.4</td><td>8/29/2013</td><td>Dale A. Tripp</td><td>Updated &nbsp;from JMRI&reg; 3.2 </td></tr><tr>
+  </tr><tr><td>3.4</td><td>8/29/2013</td><td>Dale A. Tripp</td><td>Updated from JMRI&reg; 3.2 </td></tr><tr>
 
       <td style="vertical-align: top;">3.6
 

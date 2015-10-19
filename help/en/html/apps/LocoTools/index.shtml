@@ -205,7 +205,7 @@
 		    </dt>
 		    <dd>
 		    <h2>LocoIO Programmer (deprecated)</h2>
-		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a> with a dedicated <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a></strong>.<br>
+		    <p><strong>The standalone LocoNet tool is no longer supported. The preferred method is via <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a> with a dedicated <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a></strong>.<br>
 		    <em>The following entry is only shown as reference for JMRI versions before 3.0.</em></p>
 		    <p>
 		    The LocoIO programmer provides a simple interface for configuring

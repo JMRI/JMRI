@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (desapprouve); le 2015-10-18-->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (desapprouve); le 2015-10-19-->
 <html lang="fr">
 <head>
 	<title>JMRI Outils Programmateur LocoIO (d&#233;sapprouv&#233;)</title>
@@ -23,7 +23,7 @@
 	    <h1>JMRI Outils Programmateur LocoIO (d&#233;sapprouv&#233;)</h1>
         
 <p>JMRI contient les outils pour simplifier la programmation des accessoires
-d'entr&#233;e/sortie de la carte contr&#244;leur LocoIO. <strong>Nouveau m&#233;thode: avec <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a>.</strong>
+d'entr&#233;e/sortie de la carte contr&#244;leur LocoIO. <strong>Nouveau m&#233;thode: avec <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>.</strong>
 <p>
 Cet outil a &#233;t&#233; grandement mis &#224; jour par John Plocher pour la lib&#233;ration de JMRI 1.8.
 La premi&#232;re section de cette page est la description de ce programmateur de John.

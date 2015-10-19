@@ -160,7 +160,7 @@ programmateurs autonome comme le PR2 Digitrax et PR3. La relecture des CVs d&#23
         <a href="LocoBufferII.shtml"> LocoBuffer-II</a> et
         <a href="LocoBuffer.shtml"> LocoBuffer</a> pour plus d'informations.
      </li>
-      <li>Le <a href="#TurnoutCmdHandling"> Le param&#232;tre "Command Station command Turnout
+      <li>Le <a href="#TurnoutCmdHandling">param&#232;tre "Command Station command Turnout
           Rejection and JMRI Turnout command Handling"</a>
         d&#233;crit <a href="#TurnoutCmdHandling"> ci-dessous</a>.</li>
      <li>La s&#233;lection "Connexion Utilis&#233;es" d&#233;termine comment le "flow control" est mis en oeuvre dans les logiciels. Cette s&#233;lection doit &#234;tre configur&#233;e pour le "hardware flow control"
@@ -375,7 +375,7 @@ interagissent , le <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">
       <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">Configuration de DS64</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">Configuration de PM4x</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">Configuration de SE8C</a></li>
-      <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configuration de LocoIO</a> (d&#233;sapprouv&#233;, utilise le <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a>)</li>
+      <li><a href="../../../package/jmri/jmrix/loconet/locoio/LocoIOFrame.shtml">Configuration de LocoIO</a> (d&#233;sapprouv&#233;, utilise le <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>)</li>
       <li><a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">Configuration de la centralee </a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">Configuration de LocoNet ID</a></li>
       <li><a href="../../../package/jmri/jmrix/loconet/duplexgroup/DuplexGroupTabbedPanel.shtml">Configuration de Duplex Group</a></li>

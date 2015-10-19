@@ -30,7 +30,7 @@ The dedicated Loconet LocoIO programmer tool is no longer supported as of JMRI v
 <p>
 You're still welcome to use it, of course, but 
 please consider switching over to configuring 
-your LocoIO boards with <a href="../../apps/DecoderPro/index.shtml">DecoderPro3</a>.
+your LocoIO boards with <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>.
 There's a <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a> for the basic LocoIO device
 in the "Public Domain and DIY" category.
 
