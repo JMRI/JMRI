@@ -381,6 +381,7 @@
         </copy>
         <copy todir="${target}">
             <fileset dir="${source}" includes="**/*.properties"/>
+            <fileset dir="${source}" includes="META-INF/**"/>
         </copy>
     </target>
 
