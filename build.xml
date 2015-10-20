@@ -1682,7 +1682,9 @@
             <arg value="push"/>
             <arg value="${jmri.repository.url}"/>
         </exec>
-
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="pull"/>
+        </exec>
 
         <echo message="new release branch ${branch-name}"/>
     </target>
