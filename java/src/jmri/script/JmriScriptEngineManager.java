@@ -205,7 +205,7 @@ public final class JmriScriptEngineManager {
                 // Setup the default python engine to use the JMRI python properties
                 this.initializePython();
             } else {
-                System.out.println("Create engine for "+engineName);
+                log.debug("Create engine for {}", engineName);
                 ScriptEngine engine = this.factories.get(engineName).getScriptEngine();
                 engine.setContext(this.context);
                 this.engines.put(engineName, engine);
