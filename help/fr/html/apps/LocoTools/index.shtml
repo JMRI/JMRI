@@ -1,29 +1,29 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <!-- $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-01-->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-01; et Egbert Broerse; le 2015-10-19 -->
 <html lang="fr">
 <head>
-    <TITLE>
+    <title>
  	JMRI: LocoNet Tools
-    </TITLE>
-    <META content="Bob Jacobsen" name=Author>
+    </title>
+    <meta name="Author"content="Bob Jacobsen">
     <meta name="keywords" content="Digitrax LocoNet Tools JMRI decoderpro dcc nmra">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
-
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>LocoNet&trade; Outils</H1>
+	    <h1>LocoNet&trade; Outils</h1>
 		<p class=subtitle>
 		   LocoNet est une marque d&#233;pos&#233;e de <a href="http://www.digitrax.com">Digitrax, Inc.</a>
 		</p>
@@ -31,11 +31,8 @@
 		<p>Le projet JMRI contient un certain nombre d'outils LocoNet. Cette
 page les pr&#233;sente, d&#233;crit comment les utiliser, et autres informations. </p>
 <dl>
-<dt> <a HREF="#locomon"> <dfn>Moniteur LocoNet  </dfn> </a> </dt>.</p>
-		<dl>
-		    <dt><a HREF="#locomon"><dfn> moniteur LocoNet </dfn></a></dt>
-		    <dd>
-			Afficher et enregistrer le trafic sur le LocoNet, soit en
+<dt> <a HREF="#locomon"> <dfn>Moniteur LocoNet</dfn></a></dt>
+<dd>Afficher et enregistrer le trafic sur le LocoNet, soit en
 hexad&#233;cimal ou sous forme lisible par l'homme.
 </dd>
 
@@ -48,10 +45,10 @@ hexad&#233;cimal ou sous forme lisible par l'homme.
 <dt><a HREF="#loconetstats"><dfn>Moniteur Interface Statistiques LocoNet</dfn></a></dt>
 <dd>Moniteur statut de l'interface mat&#233;riel LocoNet.</dd>
 
-<dt> <a HREF="#pm4"> <dfn>Programmateurs BDL16, SE8c, PM4 et DS64</dfn> </a> </dt>
+<dt> <a HREF="#pm4"><dfn>Programmateurs DS64, SE8C, PM4 et BDL16</dfn> </a> </dt>
 <dd> Un outil pour vous aider &#224; configurer ces cartes. </dd>
 
-<dt> <a HREF="#locoio"> <dfn> programmateur LocoIO </dfn> </a> </dt>
+<dt> <a HREF="#locoio"> <dfn>Programmateur LocoIO</a> (d&#233;sapprouv&#233;)</dfn></dt>
 <dd> Un outil pour vous aider &#224; configurer une carte LocoIO. </dd>
 
 <dt><a HREF="#cmdstn"><dfn>Outil de Configuration de la Centrale de Commande</dfn></a> </dt>
@@ -97,7 +94,7 @@ hexad&#233;cimal ou sous forme lisible par l'homme.
 			         alt="LocoNet Monitor"></a>
 		    </dt>
 		    <dd class=first>
-		    <H2><a name="locomon">Moniteur LocoNet </a></H2>
+		    <h2><a name="locomon">Moniteur LocoNet </a></h2>
 			<p>L'outil Moniteur LocoNet affiche le trafic LocoNet sous une forme lisible par l'homme. Les 20 derniers messages sont disponibles dans une fen&#234;tre de d&#233;filement. Eventuellement, vous pouvez inclure l'heure o&#249; le message a &#233;t&#233; re&#231;u, et/ou les premi&#232;rs paquets d'octets . Les informations du journal peuvent &#233;galement &#234;tre stock&#233;es dans un fichier texte. </p> Pour plus d'informations, consultez la  <a  href="../../../package/jmri/jmrix/loconet/locomonMonFrame.shtm">page d'aide </a>.
 		    </dd>
 
@@ -108,7 +105,7 @@ hexad&#233;cimal ou sous forme lisible par l'homme.
 			         alt="Command Station Slot Monitor"></a>
 		    </dt>
 		    <dd>
-			<H2><a name="slotmon">Moniteur d'Emplacement(Slot) de la Station de Commande </a></H2>
+			<h2><a name="slotmon">Moniteur d'Emplacement(Slot) de la Station de Commande </a></h2>
 			<p>
 			L'outil Moniteur Emplacement affiche un tableau du contenu des "Connecteurs du poste 
 de commande". Les slots sont utilis&#233;s pour contr&#244;ler des locomotives individuellement et des couplages "universels". 
@@ -121,7 +118,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 	   
  <p></p>
 		    <dd>
-			<H2><a name="clockmon">Moniteur Horloge</a></H2>
+			<h2><a name="clockmon">Moniteur Horloge</a></h2>
 			<p>
 			L'outil Moniteur Horloge vous permet d'afficher et de r&#233;gler l'horloge rapide LocoNet.
 			</p>
@@ -130,7 +127,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 
                     <p></p>
 		    <dd>
-			<H2><a name="loconetstats">Moniteur Statistiques Interface LocoNet</a></H2>
+			<h2><a name="loconetstats">Moniteur Statistiques Interface LocoNet</a></h2>
 			<p>
 			Cet outil vous fournit un m&#233;canisme pour examiner l'&#233;tat de l'interface mat&#233;rielle Loconet.<p>
 			Pour plus d'information voir la  <a href="../../../package/jmri/jmrix/loconet/locostats/LocoStatsFrame.shtml">page d'aide</a>.
@@ -146,16 +143,16 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 		    </dt>
                     
 		    <dd>
-		    <H2>BDL16, SE8c, PM4 and DS64 Programmers</H2>
+		    <h2>Programmateurs DS64, SE8C, PM4 et BDL16</h2>
 		    <p>
 			Cet outil programmateur fournit une simple interface graphique pour configurer l'alimentation Digitrax et les cartes d'occupation de cantons. Chaque "inter de configuration" est montr&#233; comme une bo&#238;te &#224; coch&#233;e &#224; l'&#233;cran. Vous pouvez lire le contenu actuel depuis la carte et &#233;crire vos changements facilement. Il n'est pas n&#233;cessaire de sortir la carte du r&#233;seau ou de se glisser sous la plaque pour r&#233;gler les poussoirs, car ils sont tous programmables via la connection de la carte &#224; LocoNet
 		    <p>
 		    Plus d'Info sur l'outil pour le
 		    <ul>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
-		    <LI><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/pm4/PM4Frame.shtml">PM4</a>
+		    <li><a href="../../../package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16</a>
 		    </ul>
 		    </dd>
  		    <p></p>
@@ -167,9 +164,11 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 			         alt="LocoIO Programmer screen"></a>
 		    </dt>
 		    <dd>
-		    <H2>Programmateur LocoIO</H2>
+		    <h2>Programmateur LocoIO (d&#233;sapprouv&#233;)</h2>
+		    <p><strong>Le programmateur LocoIO est d&#233;sapprouv&#233;. Utilise <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a></strong><br />
+		    <em>Cette information est seulement comme r&#233;f&#233;rence avec JMRI versions avant 3.0.</em></p>
 		    <p>
-		    Le programmateur LocoIO fournit une simple interface pour configurer<a HREF="http://www.locobuffer.com/LocoIO.htm">une carte LocoIO de John Jabour</a>, 
+		    Le programmateur LocoIO fournit une simple interface pour configurer<a href="http://www.locobuffer.com/LocoIO.htm">une carte LocoIO de John Jabour</a>, 
 		    un composant puissant pour construire des circuits CTC et des panneaux de commande.(Plus d'information sur le circuit est disponible sur le site <a HREF="http://www.locobuffer.com/LocoIO.htm">http://www.locobuffer.com/LocoIO.htm</a>)
 		    </p>
 
@@ -182,12 +181,9 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 
 		    </dd>
 
-
-
-
                     <p></p>
 		    <dd>
-			<H2><a name="cmdstn">Outil de Configuration de la Centrale de Commande Digitrax</H2>
+			<h2><a name="cmdstn">Outil de Configuration de la Centrale de Commande Digitrax</h2>
 			<p>
 			Cet outil fournit un m&#233;canisme pour lire et &#233;crire la valeur des OpSw de la centrale de Commande qui commandent les fonctions de base de la cenrale de commande.</p>
 			Pour plus d'information voir la <a href="../../../package/jmri/jmrix/loconet/cmdstnconfig/CmdStnConfigFrame.shtml">page d'aide </a>.
@@ -195,7 +191,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 
                     <p></p>
 		    <dd>
-			<H2><a name="loconetid">Outil de Configuration de l'ID LocoNet</a></H2>
+			<h2><a name="loconetid">Outil de Configuration de l'ID LocoNet</a></h2>
 			<p>
 			Cet outil fournit un m&#233;canisme pour lire et &#233;crire le num&#233;ro d'ID LocoNet. Le num&#233;ro ID LocoNet est utilis&#233; par tous les r&#233;gulateurs Digitrax qui sont capables de fonctionner soit avec une liaison infrarouge ou un lien radio simplex avec un r&#233;cepteur UR9x.</p>
 			Pour plus d'information voir la <a href="../../../package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">page d'aide </a>.
@@ -216,7 +212,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 		    </dt>
                     
 		    <dd>
-		    <H2>Outil de Configuration Groupe Duplex</H2>
+		    <h2>Outil de Configuration Groupe Duplex</h2>
 		    <p>
 			Cet outil permet la lecture et le changement des information d'identification du R&#233;seau Duplex Digitrax, incluant le nomdu Groupe Duplex, le Canal et Le Mot de Passe. Ce outil fournit aussi un m&#233;canisme de scan pour d&#233;tecter les interf&#233;rences radio sur les canaux radios Duplex.Cet outil est bas&#233; sur le programme Digitrax <i>DigiGroupSetup.exe</i>.
 		    <p>
@@ -226,7 +222,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
                     <p></p>
 
                     <dd>
-		        <H2><a name="throttlemsg">Outil d'Envoi de Message R&#233;gulateur</a></H2>
+		        <h2><a name="throttlemsg">Outil d'Envoi de Message R&#233;gulateur</a></h2>
 		    	<p>
 			Cet outil permet &#224; l'utilisateur d'envoyer des messages texte aux mod&#232;les de r&#233;gulateurs Digitrax quand le r&#233;gulateur est rattach&#233;.</p>
 			Pour plus d'information voir la 
@@ -243,7 +239,7 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 			         alt="LocoNet Packet Source image"></a>
 		    </dt>
 		    <dd>
-		        <H2>Source Paquets</h2>
+		        <h2>Source Paquets</h2>
 		    	<p>
 			L'outil Envoi Paquetvous permet de taper dans LocoNet et de l'envoyer au r&#233;seau.Vous tapez le paquet en head&#233;cimal comme une paire de caract&#232;res, de la m&#234;me fa&#231;on il s'affichera sur le moniteur LocoNet.
 			</p>
@@ -252,39 +248,39 @@ Pour plus d'informations, consultez la  <a href="../../../packagejmri/jmrixlocon
 
                     <p></p>
                     <dd>
-		    <H2><a name="pr3mode">Outil Mode PR3</a></H2>
+		    <h2><a name="pr3mode">Outil Mode PR3</a></h2>
 		    <p>
 			Cet outil fournit une fa&#231;on de configurer le mode op&#233;ratoire PR3. Des d&#233;tails peuvent &#234;tre trouv&#233;s <a href="../../../package/jmri/jmrix/loconet/pr3/swing/Pr3Select.shtml">ici .</a>
                     </dd>
 
                     <p></p>
                     <dd>
-		    <H2><a name="firmwaredownload">Outil T&#233;l&#233;chargement Firmware</a></H2>
+		    <h2><a name="firmwaredownload">Outil T&#233;l&#233;chargement Firmware</a></h2>
 		    <p>
 			Cet outil fournit une fa&#231;on de mettre &#224; jour le firmware pour certains &#233;quipements Digitrax et  some 3rd-party LocoNet devices.  Des d&#233;tails peuvent &#234;tre trouv&#233;s <a href="../../../package/jmri/jmrix/loconet/downloader/LoaderFrame.shtml">ici .</a>
                     </dd>
   		   <p></p>
 
                     <dd>
-		    <H2><a name="soundloader">Outil de T&#233;l&#233;chargement de Projet Son</a></H2>
+		    <h2><a name="soundloader">Outil de T&#233;l&#233;chargement de Projet Son</a></h2>
 		    <p>
 			Cet outil fournit un m&#233;canisme pour &#233;crire un projet son Digitrax dans un d&#233;codeur embarqu&#233; Digitrax. Des d&#233;tails peuvent &#234;tre trouv&#233;s  <a href="../../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">ici.</a>
                     </dd>
 
                     <p></p>
                     <dd>
-		    <H2><a name="soundedit">Outil Modification de Projet Son</a></H2>
+		    <h2><a name="soundedit">Outil Modification de Projet Son</a></h2>
 		    <p>
 			Cet outil fournit une m&#233;thode simple pour changer les sch&#233;mas son pour un d&#233;codeur embarqu&#233; Digitrax. Des d&#233;tails peuvent &#234;tre trouv&#233;s <a href="../../../package/jmri/jmrix/loconet/soundloader/EditorFrame.shtml">ici .</a>
                     </dd>
 
                     <p></p>
                 </dl>
-        </div>
-    </div>
+</div> <!-- Closes #list -->
 
 <!--#include virtual="/Footer" -->
-
-</BODY>
-</HTML>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>
        

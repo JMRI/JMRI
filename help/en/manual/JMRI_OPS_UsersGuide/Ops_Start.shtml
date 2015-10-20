@@ -55,12 +55,12 @@
 <strong><em>British Railways </em></strong>
 <p>The program supports an alternate set of railway terminology for our  British modelers. To use British terminologies, go to the JMRI Advanced  Preferences (Edit-&gt;Preferences.. select the Show Advanced Preferences  checkbox) and select English (United Kingdom) in the "Locale:" menu  box. The program will also convert from centimeters to meters when  entering wagon, locomotive, or location lengths, just append "cm" to any  length.
 </p>
-<hr>
 
 <div align=right>
 <p><a href="index.shtml#startOps">Back to Index</a></p>
-</div>
 
 <!--#include virtual="/Footer" -->
+</div><!-- close #mainContent -->
+</div><!-- close #mBody -->
 </body>
 </html>
