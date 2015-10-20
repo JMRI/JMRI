@@ -343,9 +343,34 @@ Note: the very first time doing this on a new machine, it will be required to ru
 
 ( ) Wait for update on JMRI web server
 
+====================================================================================
+GitHub release steps
+
+( ) on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
+
+    https://github.com/JMRI/JMRI/releases/new
+    
+( ) Fill out form:
+
+    "tag version field" gets vN.N.N (e.g. leading lower-case "v")
+    @ branch: select the release-n.n.n release branch
+    "Release title" field gets "Test/Prod Release N.N.N"
+    Drop a link to the release note in the discussion field (for now)
+    Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
+    
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/jmri/dist/release/*zip*/release.zip" 
+    
+    and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast)
+    
+    Click "Publish Release"
+    Wait for completion, which might be a while with big uploads
+    
+====================================================================================
+Announcement and post-release steps
+
 ( ) Mail announcement to jmriusers@yahoogroups.com
 
-Subject is "Test version 3.9.5 of JMRI/DecoderPro is available for download" or "JMRI 3.8 is available for download"
+    Subject is "Test version 3.9.5 of JMRI/DecoderPro is available for download" or "JMRI 3.8 is available for download"
 
 ( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 
