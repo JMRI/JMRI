@@ -1610,6 +1610,88 @@
     </target>
 
 
+    <property name="jmri.repository.url" value="https://github.com/bobjacobsen/JMRI.git"/>
+    <property name="branch-name" value="release-${release}" />
+    
+    <!-- several steps are involved in creating a new test release
+    branch from the head of the master branch.  This target intends to manage as
+    many of them as possible -->
+    <target name="make-test-release-branch"
+            description="Make a new test release branch in Git from the head of the master branch">
+
+        <!-- Create a new branch test release branch from the front of the master
+             branch in our main repository, and push back to main repo -->
+
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="master"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="pull"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="-b"/>
+            <arg value="${branch-name}"/>
+        </exec>
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+            <arg value="${branch-name}"/>
+        </exec>
+
+        <!-- In the newly created release branch, we modify
+        release.properties to show that we have indeed branched -->
+        <propertyfile file="release.properties">
+            <entry key="release.is_branched" type="string" operation="=" value="true"/>
+        </propertyfile>
+        <!-- commit and push -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="commit"/>
+            <arg value="-m'update release.is_branched for new release'"/>
+            <arg value="release.properties"/>
+        </exec>
+<!-- 
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+            <arg value="${branch-name}"/>
+        </exec>
+ -->
+
+        <!-- return to master -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="checkout"/>
+            <arg value="master"/>
+        </exec>
+        
+        <!-- in the master release.properties file, we now increment
+        the release.build value in order to point to the NEW next
+        release (the one after we're branching to create) -->
+        <propertyfile file="release.properties">
+            <entry key="release.build" type="int" operation="+" value="1"/>
+        </propertyfile>
+        <!-- commit and push -->
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="commit"/>
+            <arg value="-m'update release.build to new value post-release'"/>
+            <arg value="release.properties"/>
+        </exec>
+<!-- 
+        <exec executable="git" failifexecutionfails="true">
+            <arg value="push"/>
+            <arg value="${jmri.repository.url}"/>
+        </exec>
+ -->
+
+
+        <echo message="new release branch ${branch-name}"/>
+    </target>
+
+
+
+
+
 
     <!-- targets to support revision control repository management -->
 
@@ -1628,12 +1710,11 @@
     <property name="head-dir" value="${tempdir}/HEAD"/>
     <property name="branch-dir" value="${tempdir}/BRANCH"/>
 
-
     <!-- several steps are involved in creating a new test release
-    branch from trunk/HEAD.  This target intends to manage as
+    branch from the head of the master branch.  This target intends to manage as
     many of them as possible -->
-    <target name="make-test-release-branch"
-            description="Make a new test release branch in SVN, copying the head of the trunk to the new release dir">
+    <target name="make-test-release-branch-svn"
+            description="Make a new test release branch in Git from the head of the master branch">
 
         <!-- copy the trunk/HEAD to the new release directory.  Since
         the trunk's release.properties always points to the NEXT
