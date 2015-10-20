@@ -164,7 +164,9 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByExtension(String extension) {
         String name = this.names.get(extension);
-        if (name==null) log.error("Could not find script engine name for extension \""+extension+"\"");
+        if (name == null) {
+            log.error("Could not find script engine name for extension \"{}\"", extension);
+        }
         return this.getEngine(name);
     }
 
@@ -177,7 +179,9 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByMimeType(String mimeType) {
         String name = this.names.get(mimeType);
-        if (name==null) log.error("Could not find script engine name for mime type \""+mimeType+"\"");
+        if (name == null) {
+            log.error("Could not find script engine name for mime type \"{}\"", mimeType);
+        }
         return this.getEngine(name);
     }
 
@@ -189,7 +193,9 @@ public final class JmriScriptEngineManager {
      */
     public ScriptEngine getEngineByName(String shortName) {
         String name = this.names.get(shortName);
-        if (name==null) log.error("Could not find script engine name for short name \""+shortName+"\"");
+        if (name == null) {
+            log.error("Could not find script engine name for short name \"{}\"", shortName);
+        }
         return this.getEngine(name);
     }
 
