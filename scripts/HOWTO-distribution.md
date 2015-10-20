@@ -159,13 +159,18 @@ Second, we build the release branch:
     ant make-test-release-branch
 
 This will do (more or less) the following actions:
+
     git checkout master
     git pull
     git branch {branch}
-    git push {URL} {branch}
     
-    <check in an update of the version number of trunk/HEAD>
-    <check in an update of the version number of the new release>
+    <check in an update of the version format of the new release branch>
+    git push JMRI/JMRI {branch}
+
+    <check in an update of the version number of master
+    git push JMRI/JMRI master
+    
+    git pull
 
 ( ) If using the CI system, set up CI builds for that branch
 
