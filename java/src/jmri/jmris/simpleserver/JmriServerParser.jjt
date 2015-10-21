@@ -1,0 +1,193 @@
+/* This is a parser grammar for the JMRI simple interconnection 
+protocol written for code generation with javacc */
+
+options {
+  STATIC=false;
+  MULTI=true;
+  VISITOR=true;
+}
+
+PARSER_BEGIN(JmriServerParser)
+
+package jmri.jmris.simpleserver.parser;
+
+/* 
+ * This file defines a JavaTree/JavaCC parser implementation for
+ * the JMRI simple interconnection protocol.
+ * 
+ * @author Paul Bender Copyright (C) 2015
+ * @version $Revision: 17977 $
+ */
+
+// This is generated code.  DO NOT ATTEMPT TO FIX ANY FINDBUGS WARNINGS
+@edu.umd.cs.findbugs.annotations.SuppressWarnings(value="NM_METHOD_NAMING_CONVENTION")
+
+public class JmriServerParser {
+  
+   static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(JmriServerParser.class.getName());
+
+  }
+
+PARSER_END(JmriServerParser)
+
+// The Tokenizer specification begins here:
+
+<DEFAULT,DEVICENAME>
+SKIP:
+{
+    <RETURN: "\r">:DEFAULT
+   | <CONTINUE: "\\\n">:DEFAULT
+   | <TAB: "\t">:DEFAULT
+   | <SPACE: " ">:DEFAULT
+}
+
+<DEFAULT,DEVICENAME>
+TOKEN :
+{
+  < EOL : "\n" >:DEFAULT
+  | <#A:["a","A"]>
+  | <#B:["b","B"]>
+  | <#C:["c","C"]>
+  | <#D:["d","D"]>
+  | <#E:["e","E"]>
+  | <#F:["f","F"]>
+  | <#G:["g","G"]>
+  | <#H:["h","H"]>
+  | <#I:["i","I"]>
+  | <#J:["j","J"]>
+  | <#K:["k","K"]>
+  | <#L:["l","L"]>
+  | <#M:["m","M"]>
+  | <#N:["n","N"]>
+  | <#O:["o","O"]>
+  | <#P:["p","P"]>
+  | <#Q:["q","Q"]>
+  | <#R:["r","R"]>
+  | <#S:["s","S"]>
+  | <#T:["t","T"]>
+  | <#U:["u","U"]>
+  | <#V:["v","V"]>
+  | <#W:["w","W"]>
+  | <#X:["x","X"]>
+  | <#Y:["y","Y"]>
+  | <#Z:["z","Z"]>
+  | <BADTOKEN:~[" "]>
+}
+
+<DEVICENAME>
+TOKEN:
+{
+    < JMRITURNOUT: ((["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9"])*)<T>(["0"-"9"])+ >:DEFAULT
+//    | < JMRISENSOR: <SYSTEMPREFIX> <S> (["0"-"9"])+ >
+//    | < JMRILIGHT: <SYSTEMPREFIX> <L> (["0"-"9"])+ >
+//    | < JMRIREPORTER: <SYSTEMPREFIX> <R> (["0"-"9"])+ >
+//    | < #SYSTEMPREFIX: (["a"-"z","A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
+}
+
+<DEFAULT>
+TOKEN :
+{
+  < ADDR: ( ["0"-"9"] )+ >
+| < POWER: <P><O><W><E><R> >
+| < REPORTER: <R><E><P><O><R><T><E><R>>:DEVICENAME
+| < TURNOUT: <T><U><R><N><O><U><T> >:DEVICENAME
+| < LIGHT: <L><I><G><H><T> >:DEVICENAME
+| < SENSOR: <S><E><N><S><O><R> >:DEVICENAME
+| < THROTTLE: <T><H><R><O><T><T><L><E> >
+| < ONOFF: (<ON>|<OFF>) >
+| < #ON: <O><N>> 
+| < #OFF: <O>(<F>){2} >
+| < THROWNCLOSED: (<THROWN>|<CLOSED>) >
+| < #THROWN: <T><H><R><O><W><N> > 
+| < #CLOSED: <C><L><O><S><E><D> >
+| < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
+| < HOUR: (["0"-"2"])?["0"-"9"]>
+| < MINSEC: ["0"-"5"]["0"-"9"]>
+| < DELAY: ("-")?(["0"-"9"])+>
+}
+
+// Lexical specifications begin here
+
+SimpleNode command():{}
+{
+  // This is a simple list of the possible commands.  
+  // They are broken down further below.
+  ( LOOKAHEAD(4) powercmd() | turnoutcmd() ) <EOL>
+  {
+    log.debug("Command Production");
+    return jjtThis;
+  }
+}
+
+SimpleNode address():{Token t;}
+{
+  t=<ADDR>
+  {
+    log.debug("Address Production "+ t.image);
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode powercmd():{}
+{
+   power() (onoff())?
+   {
+     return jjtThis; 
+   }
+}
+SimpleNode power():{Token t;}
+{
+  t=<POWER>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode onoff():{Token t;}
+{
+  t=<ONOFF>
+  {
+     log.debug("OnOff Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode turnoutcmd():{}
+{
+   // need to add system name.
+   turnout() turnoutdevice() (thrownclosed())?
+   {
+     return jjtThis; 
+   }
+}
+SimpleNode turnout():{Token t;}
+{
+  t=<TURNOUT>   
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode turnoutdevice():{Token t;}
+{
+  t=<JMRITURNOUT>
+  {
+     log.debug("Turnout device Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}
+
+SimpleNode thrownclosed():{Token t;}
+{
+  t=<THROWNCLOSED>
+  {
+     log.debug("Thrown/Closed Production " +t.image);
+     jjtThis.jjtSetValue(t.image);
+     return jjtThis;
+  }
+}

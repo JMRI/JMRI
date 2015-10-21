@@ -419,6 +419,11 @@
             target="${source}/jmri/jmrix/srcp/SRCPClientParser.jjt"
             outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
             javacchome="${libdir}"/>
+        <mkdir dir="${genjavasrcdir}/jmri/jmris/simpleserver/parser"/>
+        <jjtree
+            target="${source}/jmri/jmris/simpleserver/JmriServerParser.jjt"
+            outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
+            javacchome="${libdir}"/>
         </quiet>
     </target>
 
@@ -430,6 +435,14 @@
         <jjdoc target="${genjavasrcdir}/jmri/jmris/srcp/parser/SRCPParser.jj"
                javacchome="${libdir}"
                outputfile="${doctarget}/jmri/jmris/srcp/SRCPParser.html"/>
+        <mkdir dir="${doctarget}/jmri/jmrix/srcp/"/>
+        <jjdoc target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
+               javacchome="${libdir}"
+               outputfile="${doctarget}/jmri/jmrix/srcp/SRCPClientParser.html"/>
+        <mkdir dir="${doctarget}/jmri/jmris/simpleserver/"/>
+        <jjdoc target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
+               javacchome="${libdir}"
+               outputfile="${doctarget}/jmri/jmris/simpleserver/JmriServerParser.html"/>
     </target>
 
 
@@ -445,6 +458,10 @@
         <javacc
             target="${genjavasrcdir}/jmri/jmrix/srcp/parser/SRCPClientParser.jj"
             outputdirectory="${genjavasrcdir}/jmri/jmrix/srcp/parser"
+            javacchome="${libdir}"/>
+        <javacc
+            target="${genjavasrcdir}/jmri/jmris/simpleserver/parser/JmriServerParser.jj"
+            outputdirectory="${genjavasrcdir}/jmri/jmris/simpleserver/parser"
             javacchome="${libdir}"/>
         </quiet>
     </target>
