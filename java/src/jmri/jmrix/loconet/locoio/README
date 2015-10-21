@@ -1,4 +1,5 @@
-A new LocoIO programmer, based loosely on Hans DeLoof's LocoIO/HDL programmer.
+A LocoIO programmer, based loosely on Hans DeLoof's LocoIO/HDL programmer.
+Deprecated/No longer supported as of JMRI version 3: Please use DecoderPro3 with a Public Domain/DIY decoder (2015)
 
 JMRI jmrix.loconet.locoio - a loconet programmer for LocoIO 
 and HDL based loconet IO boards using the Jabour or Hand Deloof

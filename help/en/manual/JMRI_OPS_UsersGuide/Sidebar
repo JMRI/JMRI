@@ -8,7 +8,7 @@
     <div style="text-align: center"><strong>The JMRI Manual</strong></div>
 
     <div style="text-align: right">
-      <a href="http://jmri.org/help/en/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Doownload</a>
+      <a href="http://jmri.org/help/en/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download</a>
     </div>
 
 <dl><!-- main table of contents -->
@@ -20,7 +20,7 @@
     </ul>
     </dd>
 
-<dt>/Starting DecoderPro® and Operations Program</dt>
+<dt>/Starting DecoderPro&reg; and Operations Program</dt>
     <dd>
     <ul>
     <li><a href="Start_DecoderPro.shtml">How do I start the program?</a></li>
@@ -45,5 +45,5 @@
     </dd>
 
 </dl>
-</div>
+</div> <!-- close #side -->
 <!-- /Sidebar -->
