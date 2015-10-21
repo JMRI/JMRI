@@ -22,6 +22,7 @@ package jmri.jmrit.beantable.oblock;
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -33,6 +34,7 @@ import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OPath;
 import jmri.jmrit.logix.Portal;
 import jmri.jmrit.logix.PortalManager;
+import jmri.util.IntlUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -211,8 +213,8 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                             OPath path = new OPath(strValue, _block, fromPortal, toPortal, null);                            
                             float len = 0.0f;
                             try {
-                                len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                            } catch (java.lang.NumberFormatException nfe) {
+                                len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
+                            } catch (ParseException e) {
                                 JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                         Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                             }
@@ -237,13 +239,13 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                     break;
                 case LENGTHCOL:
                     try {
-                        _tempLen = Float.valueOf((String)value).floatValue();
+                        _tempLen = IntlUtilities.floatValue(value.toString());
                         if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                             _tempLen *= 10f;
                         } else {
                             _tempLen *= 25.4f;                            
                         }
-                    } catch (java.lang.NumberFormatException nfe) {
+                    } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                     }
@@ -362,14 +364,14 @@ public class BlockPathTableModel extends AbstractTableModel implements PropertyC
                 break;
             case LENGTHCOL:
                 try {
-                    float len = Float.valueOf((String)value).floatValue();
+                    float len = IntlUtilities.floatValue(value.toString());
                     if (_units.get(row)) {
                         path.setLength(len * 10.0f);
                     } else {
                         path.setLength(len * 25.4f);
                     }
                     fireTableRowsUpdated(row, row);                    
-                } catch (java.lang.NumberFormatException nfe) {
+                } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                 }
