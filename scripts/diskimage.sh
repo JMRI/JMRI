@@ -48,16 +48,17 @@ rm -f temp.dmg $IMAGEFILE
 
 # create disk image and mount
 
+jmrisize=`du -ms "$INPUT" | awk '{print $1}'`
+imagesize=`expr $jmrisize + 10`
+
 if [ "$SYSTEM" = "MACOSX" ]
 then
-    jmrisize=`du -ms "$INPUT" | awk '{print $1}'`
-    imagesize=`expr $jmrisize + 10`
     
     hdiutil create -size ${imagesize}MB -fs HFS+ -layout SPUD -volname "JMRI ${REL_VER}" "$IMAGEFILE"
     hdiutil attach "$IMAGEFILE" -mountpoint "$tmpdir" -nobrowse
     trap '[ "$EJECTED" = 0 ] && hdiutil eject "$IMAGEFILE"' 0
 else
-    dd if=/dev/zero of="$IMAGEFILE" bs=1M count=100
+    dd if=/dev/zero of="$IMAGEFILE" bs=1m count=${imagesize}
     mkfs.hfsplus -v "JMRI ${REL_VER}" "${IMAGEFILE}"
     sudo mount -t hfsplus -o loop,rw,uid=$UID "$IMAGEFILE" $tmpdir
     trap '[ "$EJECTED" = 0 ] && sudo umount "$tmpdir"' 0

@@ -2,15 +2,14 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
- <TITLE>
-      JMRI: Configure LocoIO
- </TITLE>
-    <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-    <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help configure loconet LocoIO">
+ <title>
+      JMRI: Configure LocoIO (deprecated)
+ </title>
+    <meta name="Author" content="Bob Jacobsen">
+    <meta name="keywords" content="JMRI help Loconet configure LocoIO">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -23,22 +22,24 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-<H1>Configure LocoIO
-</H1>
+<h1>Configure LocoIO (deprecated)
+</h1>
 
 <p>
-This dedicated LocoIO programmer is no longer supported.
+The dedicated Loconet LocoIO programmer tool is no longer supported as of JMRI version 3.
 <p>
 You're still welcome to use it, of course, but 
 please consider switching over to configuring 
-your LocoIO boards with DecoderPro.
-There's a DecoderPro definition for the basic LocoIO device
+your LocoIO boards with <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>.
+There's a <a href="../../../../../../../xml/decoders/Public_Domain_HDL_LocoIO.xml">Decoder Definition</a> for the basic LocoIO device
 in the "Public Domain and DIY" category.
 
 <p>
 This is the help/jmri/jmrix/loconet/locoio/LocoIOFrame help page
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
 
