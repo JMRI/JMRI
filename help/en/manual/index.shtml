@@ -1,7 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<!-- Copyright ($Author$) 2015 -->
+<!-- $Id$ -->
 <title>Decoder Pro Manual: Index</title>
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -39,7 +40,7 @@
 </tr>
 
 <tr>
-<td><span style="font-weight: bold;">JMRI&reg; v3.6</span></td><td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro 3 v3.6 </a></td><td><br></td>
+<td><span style="font-weight: bold;">JMRI&reg; v3.6</span></td><td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro3 v3.6 </a></td><td><br></td>
 </tr>
 
 <tr>
@@ -60,7 +61,7 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro 3 v3.4</a></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3 v3.4</a></td>
 <td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf" target="_blank">Printable Guide (pdf 3.9MB)</a></td>
 <tr>
 <td></td>
@@ -82,7 +83,7 @@
 
 <tr>
 <td></td>
-<td><strong><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro 3 v3.2</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/3-2_DecoderPro3/index.shtml">DecoderPro3 v3.2</a></strong></td>
 <td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Printable Guide (pdf 4.0MB)</a></strong></td>
 </tr>
 
@@ -94,7 +95,7 @@
 
 <tr>
 <td></td>
-<td><strong><a href="http://jmri.org/manual/3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program 3v.2</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/3-2_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.2</a></strong></td>
 <td><br></td>
 </tr>
 
@@ -158,8 +159,8 @@ for model railroaders.</strong><br>
 The program contains modules for:</p>
 
 <ul>
-<li>Programming of Digital Command Control (DCC) decoders (DecoderPro&reg;3)</li>
-<li>Drawing computer based panels for depicting a model railroad layout (PanelPro&trade; and Layout Editor)</li>
+<li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
+<li>Drawing computer based panels for depicting a model railroad layout (<a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a> and <a href="../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout Editor</a>)</li>
 <li>Controlling the layout (All modules)</li>
 <li>Creating train manifests for duplicating railroad operations (Operations)</li>
 <li>Controlling the signals on the layout (All modules)</li>
