@@ -16,17 +16,19 @@ So the proposed procedure is:
 
 ( ) Jenkins build from that branch.  (That’s basically the same Jenkins job, expect for changing to checkout from Github)
 
-( ) As needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that.
+( ) As needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that. 
 
-( ) When it’s done, directly publish the files in the usual SF.net way, etc.
+( ) After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
+
+( ) (We're also looking at using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist at first.
 
 ( ) Turn off the Jenkins job; this is so it doesn't fail after later steps
 
 ( ) If need be, merge back changes from the branch to the master as needed. This would be done in a personal fork repo. Might not necessarily need this step if we do changes in 'master' and 'cherry-pick' into branch.
 
-( ) Put a tag titled Release-n.n.n-tag (note initial upper case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. This Tag provides a way to get back if somebody accidentally adds to the branch. 
+( ) Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. This Tag provides a way to get back if somebody accidentally adds to the branch. 
 
-The -tag on the end of the name isn't strictly necessary. Git tags and branches are separate name spaces; you can have a tag and branch with the same name. But it can be _very_ confusing when accessing them, because the git command line tools make varying assumptions about the context of their arguments. You end up having to specify whether you’re using a tag or branch most of the time (if there are both with the same name), that’s not how people usually work, and mistakes can happen. From an immediate readability perspective, the '-tag' suffix does easily tell us what it is rather than just the capitalisation or lack thereof. (We will need to clean up the history to suit whichever convention we finally decide on)
+(We will need to clean up the history to suit whichever convention we finally decide on)
 
 ( ) Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
 
@@ -43,10 +45,12 @@ How best to deal with bringing additional commits into the branch from master - 
 
 ============================================================================
 
-# Existing SVN Build Instructions
+# Current Instructions (Modified from Pre-GitHub Build Instructions)
 
 This is the HOWTO file to make a complete SourceForge downloadable
 distribution.
+
+The Ant task that handles the Git operations (see below) invokes Git via direct command line execution. This means that you need to have a working command-line git tool installed and configured.  Try "git status" to check.
 
 If you're building locally:
     You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
@@ -55,17 +59,12 @@ If you're building locally:
     file to the root of the nsis installation:
         nsis.home=/opt/nsis/nsis-2.46/
 
-To simplify making branches in sourceforge, put your sourceforge userid & password in the local.properties file (this does not get checked in, so your ID remains safe).
-
-    sourceforge.userid=zoo
-    sourceforge.password=IMNOTTELLING
-
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
 ================================================================================
 First, we merge in as much tentative content as possible to the SVN trunk.
 
-( ) If it's a new year, update copyright dates (done for 2012):
+( ) If it's a new year, update copyright dates (done for 2015):
 
     * build.xml (3) in the jmri.copyright.years property value
     * site/Copyright.html (3 places)
@@ -74,6 +73,8 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
 ( ) Bring in all possible sf.net patches, including decoders
 
+( ) Bring in all possible GitHub pull requests
+
 ( ) Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
 
         ant remakedecoderindex
@@ -81,7 +82,7 @@ First, we merge in as much tentative content as possible to the SVN trunk.
         (Check 'session.log' and 'messages.log' located in current directory as,
         in case of errors they might not always be output to the console)
 
-        svn diff as a check.
+        git diff # as a check.
         Commit.
 
 ( ) Update the help/en/Acknowledgements.shtml help page with any recent changes
@@ -114,35 +115,13 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 This group of items it just general code maintenance that we roll into the
 release process.  They can be skipped occasionally.
 
-( ) Check for line ends with the scripts/checkCR.sh script.  Fix those that you find wrong.  (So far, not found a way to do this on Windows...)
-    
-    (To scan, e.g the xml tree, do:
-        find xml -type f -exec ./scripts/checkCR.sh {} \; -print
-    )
-
-    Also, do 
-
-    svn propset svn:eol-style native <file-path-name>
-
-    to fix it for good. (if you hit a 'has binary mime type`, svn propdel svn:mime-type <filename> )
-
-( ) Confirm that properties, html, etc files have "CVS" properties set. (We don't do this for Git; remove item) They should, but new ones might not.
-
-    find java/src -name \*.properties -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
-    find jython -name \*.py -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
-    find xml -name \*.xml -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
-    find help -name \*html -exec svn propset -q svn:keywords "Date Revision Version Id Author" {} \;
-
-    You'll get a message for each file, but will only need to commit changes.
-    svn commit -m"setting SVN keywords" java/src jython xml help
-
 ( ) Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
 
-        grep -rlI --exclude-dir=.svn $'\xEF\xBB\xBF\xEF\xBB\xBF'
+        grep -rlI --exclude-dir=.git $'\xEF\xBB\xBF\xEF\xBB\xBF'
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
-( ) Confirm that all the above changes have been committed back to SVN trunk
+( ) Confirm that all the above changes have been committed back to GitHub trunk, and pull back to make sure your repository is at the right point
 
 ( ) Run "ant alltest"; make sure they all pass; fix problems and commit back
 
@@ -165,56 +144,24 @@ If you fix anything, commit it back.
 ================================================================================
 Second, we build the release branch:
 
-( ) Start the release by copying the current HEAD onto a new SVN "release branch" (This step doesn't seem to work under Cygwin, so needs to be done from the Windows command line) (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+( ) Start the release by creating a new "release branch" (This step didn't seem to work for SVN under Cygwin, so needed to be done from the Windows command line) (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
     ant make-test-release-branch
 
-(You need to have provided both userid and password in the local.properties file, or it will silently hang; if you don't want to put them in local.properties, you can use this form:
-
-    ant -Dsourceforge.userid='you' -Dsourceforge.password='password' make-test-release-branch
-
-instead)  
-    
-(Alternately, change the svnSetting element in build.xml to:
-    
-        <svnSetting
-        id="svn.settings"
-        javahl="false"
-        svnkit="false"/>
-    
-to have it use your default command line setup; note that this doesn't include user name and password)
-    
-(messages like "Missing 'javahl' dependencies on the classpath !" are normal)
-
 This will do (more or less) the following actions:
 
-    svn cp -m"start release" ${SVNREPO}/trunk/jmri ${SVNREPO}/branches/jmri/releases/3.9.5
-    <check in an update of the version number of trunk/HEAD>
-    <check in an update of the version number of the new release>
-
-( ) If using the CI system, set up CI builds for that branch
-
-    Sign on to Jenkins
-    Under Test Releases, select "New Item",
-        create the job with the new release name, 
-        using Copy Existing Item with the previous test release
-    Then fix the version number in a couple of places:
-        Description, 
-        and then Source Code Management|Repository URL.
-    Start the first build manually, and make sure it went OK
-
-( ) Move to the releases/ part of the SVN tree on your local machine
-    and update to get the release copy:
-
-    cd ../../branches/jmri/releases
-    svn update 3.11.6
-
-If you don't have this, check out the specific section with 
+    git checkout master
+    git pull
+    git branch {branch}
     
-    svn co ${SVNREPO}/branches/jmri/releases/3.11.6
-    
-Also, don't forget to copy your 'local.properties' file from HEAD
+    <check in an update of the version format of the new release branch>
+    git push JMRI/JMRI {branch}
 
+    <check in an update of the version number of master
+    git push JMRI/JMRI master
+    
+    git pull
+    
 ================================================================================
 If you're doing the build using the CI engine, configure it to build the new release:
 
@@ -230,7 +177,7 @@ If you're doing the build using the CI engine, configure it to build the new rel
 
         Project Name
         Description
-        Subversion Modules Repository URL
+        Git Modules: Branch
     
 and click "Save"
 
@@ -239,13 +186,15 @@ The build will start shortly.
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
+( ) Get the release in your local work directory
+
+    git checkout release-3.11.6
+
 ( ) edit release.properties to say release.official=true (last line)
 
-( ) setenv SVN_REVISION 23699
+( ) Do the build:
 
     ant -Dnsis.home="" clean packages
-
-    (You can get the SVN_REVISION from http://sourceforge.net/p/jmri/code/HEAD/tree/branches/jmri/releases ; don't prefix an 'r')
 
 Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
 
@@ -265,17 +214,9 @@ puts them at
 
 ================================================================================
 
-If anybody discovers a problem from here on in, they should fix it at the HEAD and have you merge it into the release branch.  CI will automatically rebuild, or you'll have to redo a manual build manually.
+If anybody discovers a problem from here on in, they should fix it on a Git branch and have you pull it into the release branch.  CI will automatically rebuild, or you'll have to redo a manual build manually.
 
-To merge everything to date: 
-
-    svn merge ^/trunk/jmri
-
-If you do this, beware, the first time you'll also merge in the new release.properties file, which you do NOT want to do. You can undo that merge with 'svn revert release.properties'.
-
-To merge a single later revision: 
-
-    svn merge -c <changeset#> ^/trunk/jmri )
+If you do this, beware of merging in the new release.properties file, which you do NOT want to do. (If you do, might be easiest just to edit in the fixes and commit/push it back)
 
 ================================================================================
 Third, we do the release-specific updates.
@@ -285,10 +226,10 @@ Third, we do the release-specific updates.
 ( ) Create the _next_ release note, so that people will document new (overlapping) changes there.
     
         cd (local web copy)/releasenotes
-        svn update
-        svn cp jmri3.11.5.shtml jmri3.11.6.shtml
+        git pull # to pick up everybody's changes
+        cp jmri3.11.5.shtml jmri3.11.6.shtml
         (edit the new release note accordingly)
-        svn commit -m"for release"
+        git commit -m"start new release note" jmri3.11.6.shtml
 
 ( ) Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force) update. Confirm visible on web.
 
@@ -341,7 +282,7 @@ Note: the very first time doing this on a new machine, it will be required to ru
 
 ( ) Wait until the downloads have propagated to the mirrors; check by trying to download each file
 
-( ) Commit release note file(s) to the web site SVN directory,
+( ) Commit release note file(s) to the web site GitHub repository,
 
 ( ) Wait for update on JMRI web server
 
@@ -367,9 +308,36 @@ Note: the very first time doing this on a new machine, it will be required to ru
 
 ( ) Wait for update on JMRI web server
 
+====================================================================================
+GitHub release steps
+
+( ) on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
+
+    https://github.com/JMRI/JMRI/releases/new
+    
+( ) Fill out form:
+
+    "tag version field" gets vN.N.N (e.g. leading lower-case "v")
+    @ branch: select the release-n.n.n release branch
+    "Release title" field gets "Test/Prod Release N.N.N"
+    Drop a link to the release note in the discussion field (for now)
+    Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
+    
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/jmri/dist/release/*zip*/release.zip" 
+    
+    and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast)
+    
+    Click "Publish Release"
+    Wait for completion, which might be a while with big uploads
+    
+    (It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins and https://github.com/JMRI/JMRI/issues/103 )
+    
+====================================================================================
+Announcement and post-release steps
+
 ( ) Mail announcement to jmriusers@yahoogroups.com
 
-Subject is "Test version 3.9.5 of JMRI/DecoderPro is available for download" or "JMRI 3.8 is available for download"
+    Subject is "Test version 3.9.5 of JMRI/DecoderPro is available for download" or "JMRI 3.8 is available for download"
 
 ( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 

@@ -3,30 +3,32 @@
 <div id="mBody">
 <div id="side"> <!-- Block of text on left side of page -->
 
-<dl class=toc>
+<dl class="toc">
 
-<h3>User Guide</h3></dt><DD><UL>
-<LI><a href="./Tour.shtml">Quick tour</A>
-<LI><a href="./MoreInfo.shtml">Details</A>
-<LI><a HREF="./Files.shtml">Configuration files</a>
-<LI><a HREF="./Roster.shtml">Working with the roster</a>
-<LI><a HREF="./FAQ.shtml">Frequently asked questions</a>
-<LI><a HREF="./Install.shtml">Downloading and installing DecoderPro</a>
-</UL>
+<h3>User Guide</h3></dt><DD>
+<ul>
+<li><a href="./Tour.shtml">Quick tour</A>
+<li><a href="./MoreInfo.shtml">Details</A>
+<li><a HREF="./Files.shtml">Configuration files</a>
+<li><a HREF="./Roster.shtml">Working with the roster</a>
+<li><a HREF="./FAQ.shtml">Frequently asked questions</a>
+<li><a HREF="./Install.shtml">Downloading and installing DecoderPro</a>
+</ul>
 
-<dt><h3>More advanced information</h3></dt><DD><UL>
-
-<LI><a HREF="./IntroXML.shtml">Intro to XML files</a>
-<LI><a href="./CreateDecoder.shtml">Create your own decoder definition</a>
-<LI><a href="./Programmer.shtml">Create a custom programmer definition</a>
-<LI><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a>
-<LI><a HREF="./LocoFile.shtml">Locomotive (roster) files</a>
-<LI><a HREF="./Debug.shtml">Debugging</a>
-<LI><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a>
-<LI><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a>
-</UL>
+<dt><h3>More advanced information</h3></dt><DD>
+<ul>
+<li><a HREF="./IntroXML.shtml">Intro to XML files</a>
+<li><a href="./CreateDecoder.shtml">Create your own decoder definition</a>
+<li><a href="./Programmer.shtml">Create a custom programmer definition</a>
+<li><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a>
+<li><a HREF="./LocoFile.shtml">Locomotive (roster) files</a>
+<li><a HREF="./Debug.shtml">Debugging</a>
+<li><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a>
+<li><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a>
+</ul>
 
 </dl>
 
-</div> <!-- End of block of text on left side of page -->
+</div> <!-- close #side -->
+<!-- End of block of text on left side of page -->
 
