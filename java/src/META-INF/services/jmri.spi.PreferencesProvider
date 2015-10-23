@@ -1,0 +1,5 @@
+jmri.jmrit.symbolicprog.ProgrammerConfigManager
+apps.StartupActionsManager
+jmri.jmrix.ConnectionConfigManager
+jmri.managers.ManagerDefaultSelector
+jmri.implementation.FileLocationsPreferences

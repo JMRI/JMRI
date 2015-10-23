@@ -1,16 +1,12 @@
 package jmri.implementation;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.ResourceBundle;
 import java.util.ServiceLoader;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
@@ -32,7 +28,7 @@ import org.slf4j.LoggerFactory;
 public class JmriConfigurationManager implements ConfigureManager {
 
     private final static Logger log = LoggerFactory.getLogger(JmriConfigurationManager.class);
-    private ConfigXmlManager legacy = new ConfigXmlManager();
+    private final ConfigXmlManager legacy = new ConfigXmlManager();
     private final HashMap<PreferencesProvider, InitializationException> initializationExceptions = new HashMap<>();
 
     public JmriConfigurationManager() {
@@ -42,28 +38,6 @@ public class JmriConfigurationManager implements ConfigureManager {
             for (Class provided : pp.getProvides()) { // use raw class so next line can compile
                 InstanceManager.store(provided.cast(pp), provided);
             }
-        }
-        try {
-            List<String> classNames = (new ObjectMapper()).readValue(
-                    ResourceBundle.getBundle("apps.PreferencesProviders").getString("PreferencesProviders"),
-                    new TypeReference<List<String>>() {
-                    });
-            classNames.stream().forEach((String className) -> {
-                try {
-                    Class<?> clazz = Class.forName(className);
-                    if (PreferencesProvider.class.isAssignableFrom(clazz)) {
-                        PreferencesProvider pp = (PreferencesProvider) clazz.newInstance();
-                        InstanceManager.store(pp, PreferencesProvider.class);
-                        for (Class provided : pp.getProvides()) { // use raw class so next line can compile
-                            InstanceManager.store(provided.cast(pp), provided);
-                        }
-                    }
-                } catch (ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-                    log.error("Unable to add preferences class (" + className + ")", e);
-                }
-            });
-        } catch (IOException e) {
-            log.error("Unable to parse PreferenceProviders property", e);
         }
         if (ProfileManager.getDefault().getActiveProfile() != null) {
             this.legacy.setPrefsLocation(new File(ProfileManager.getDefault().getActiveProfile().getPath(), Profile.CONFIG_FILENAME));
