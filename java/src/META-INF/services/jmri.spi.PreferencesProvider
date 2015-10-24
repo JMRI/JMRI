@@ -1,7 +1,9 @@
-jmri.jmrit.symbolicprog.ProgrammerConfigManager
+# Providers of PreferencesProvider instances
+# Order is insignificant
 apps.StartupActionsManager
-jmri.jmrix.ConnectionConfigManager
-jmri.managers.ManagerDefaultSelector
-jmri.implementation.FileLocationsPreferences
-jmri.jmrit.roster.RosterConfigManager
 apps.systemconsole.SystemConsolePreferencesManager
+jmri.implementation.FileLocationsPreferences
+jmri.managers.ManagerDefaultSelector
+jmri.jmrit.roster.RosterConfigManager
+jmri.jmrit.symbolicprog.ProgrammerConfigManager
+jmri.jmrix.ConnectionConfigManager
