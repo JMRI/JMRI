@@ -1,10 +1,13 @@
 package apps;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.util.HashSet;
 import java.util.Set;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
 import jmri.implementation.FileLocationsPreferences;
+import jmri.jmrit.roster.RosterConfigManager;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.managers.ManagerDefaultSelector;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -61,6 +64,9 @@ public class StartupActionsManager extends AbstractPreferencesProvider {
         Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
         requires.add(ManagerDefaultSelector.class);
         requires.add(FileLocationsPreferences.class);
+        requires.add(RosterConfigManager.class);
+        requires.add(ProgrammerConfigManager.class);
+        requires.add(GuiLafPreferencesManager.class);
         return requires;
     }
 
