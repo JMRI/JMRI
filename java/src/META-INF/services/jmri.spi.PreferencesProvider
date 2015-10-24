@@ -3,3 +3,5 @@ apps.StartupActionsManager
 jmri.jmrix.ConnectionConfigManager
 jmri.managers.ManagerDefaultSelector
 jmri.implementation.FileLocationsPreferences
+jmri.jmrit.roster.RosterConfigManager
+apps.systemconsole.SystemConsolePreferencesManager
