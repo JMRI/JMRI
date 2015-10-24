@@ -4,6 +4,7 @@ import apps.SystemConsole;
 import java.awt.Font;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.profile.Profile;
@@ -62,6 +63,11 @@ public class SystemConsolePreferencesManager extends Bean implements Preferences
         preferences.putInt(FONT_STYLE, this.getFontStyle());
         preferences.putInt(SCHEME, this.getScheme());
         preferences.putInt(WRAP_STYLE, this.getWrapStyle());
+        try {
+            preferences.sync();
+        } catch (BackingStoreException ex) {
+            log.error("Unable to save preferences.", ex);
+        }
     }
 
     @Override
