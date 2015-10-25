@@ -252,7 +252,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
