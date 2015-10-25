@@ -173,16 +173,26 @@ public class JmriConfigurationManager implements ConfigureManager {
 
     @Override
     public boolean load(URL file, boolean registerDeferred) throws JmriException {
+        log.debug("loading {} ...", file);
         try {
-            if (file == null || (new File(file.toURI())).getName().equals("ProfileConfig.xml")) {
+            if (file == null
+                    || (new File(file.toURI())).getName().equals("ProfileConfig.xml")
+                    || (new File(file.toURI())).getName().equals(Profile.CONFIG)) {
                 List<PreferencesProvider> providers = new ArrayList<>(InstanceManager.getList(PreferencesProvider.class));
                 providers.stream().forEach((provider) -> {
                     this.initializeProvider(provider, ProfileManager.getDefault().getActiveProfile());
                 });
                 if (!this.initializationExceptions.isEmpty()) {
-                    // TODO: Display list of errors
-                    // TODO: Open TabbedPreferences
+                    if (!GraphicsEnvironment.isHeadless()) {
+                        // TODO: Display list of errors
+                        // TODO: Open TabbedPreferences
+                    }
                 }
+                if (file != null && (new File(file.toURI())).getName().equals("ProfileConfig.xml")) {
+                    log.debug("Loading legacy configuration...");
+                    return this.legacy.load(file, registerDeferred);
+                }
+                return this.initializationExceptions.isEmpty();
             }
         } catch (URISyntaxException ex) {
             log.error("Unable to get File for {}", file);
