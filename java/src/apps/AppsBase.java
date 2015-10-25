@@ -3,7 +3,9 @@ package apps;
 
 import apps.gui3.TabbedPreferences;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import javax.swing.SwingUtilities;
 import jmri.Application;
 import jmri.ConfigureManager;
@@ -167,23 +169,20 @@ public abstract class AppsBase {
         } else {
             profileFile = new File(profileFilename);
         }
-        ProfileManager.defaultManager().setConfigFile(profileFile);
+        ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
-            ProfileManager.defaultManager().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
+            ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
-        if (!ProfileManager.defaultManager().getConfigFile().exists()) { // no profile config for this app
+        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
-                if (ProfileManager.defaultManager().migrateToProfiles(getConfigFileName())) { // migration or first use
+                if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // GUI should show message here
                     log.info(Bundle.getMessage("ConfigMigratedToProfile"));
                 }
-            } catch (IOException ex) {
-                // GUI should show message here
-                log.error("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
-            } catch (IllegalArgumentException ex) {
+            } catch (IOException | IllegalArgumentException ex) {
                 // GUI should show message here
                 log.error("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
             }
@@ -194,7 +193,7 @@ public abstract class AppsBase {
                 // Manually setting the configFilename property since calling
                 // Apps.setConfigFilename() does not reset the system property
                 System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-                log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
+                log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
             } else {
                 log.error("Specify profile to use as command line argument.");
                 log.error("If starting with saved profile configuration, ensure the autoStart property is set to \"true\"");
@@ -208,7 +207,8 @@ public abstract class AppsBase {
     protected void installConfigurationManager() {
         ConfigureManager cm = new JmriConfigurationManager();
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
-        InstanceManager.setConfigureManager(cm);
+        InstanceManager.store(cm, ConfigureManager.class);
+        InstanceManager.setDefault(ConfigureManager.class, cm);
         log.debug("config manager installed");
     }
 
@@ -242,8 +242,15 @@ public abstract class AppsBase {
     protected void setAndLoadPreferenceFile() {
         FileUtil.createDirectory(FileUtil.getUserFilesPath());
         final File file;
-        // decide whether name is absolute or relative
-        if (!new File(getConfigFileName()).isAbsolute()) {
+        File sharedConfig = null;
+        try {
+            sharedConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.SHARED_CONFIG);
+        } catch (FileNotFoundException ex) {
+            // ignore - this only means that sharedConfig does not exist.
+        }
+        if (sharedConfig != null) {
+            file = sharedConfig;
+        } else if (!new File(getConfigFileName()).isAbsolute()) {
             // must be relative, but we want it to 
             // be relative to the preferences directory
             file = new File(FileUtil.getUserFilesPath() + getConfigFileName());
@@ -260,29 +267,29 @@ public abstract class AppsBase {
         preferenceFileExists = true;
         try {
             configOK = InstanceManager.configureManagerInstance().load(file);
-            if (log.isDebugEnabled()) {
-                log.debug("end load config file " + file.getName() + ", OK=" + configOK);
-            }
-        } catch (Exception e) {
+            log.debug("end load config file {}, OK={}", file.getName(), configOK);
+        } catch (JmriException e) {
             configOK = false;
         }
 
-        // To avoid possible locks, deferred load should be
-        // performed on the Swing thread
-        if (SwingUtilities.isEventDispatchThread()) {
-            configDeferredLoadOK = doDeferredLoad(file);
+        if (sharedConfig != null) {
+            // sharedConfigs do not need deferred loads
+            configDeferredLoadOK = true;
         } else {
-            try {
-                // Use invokeAndWait method as we don't want to
-                // return until deferred load is completed
-                SwingUtilities.invokeAndWait(new Runnable() {
-
-                    public void run() {
+        // To avoid possible locks, deferred load should be
+            // performed on the Swing thread
+            if (SwingUtilities.isEventDispatchThread()) {
+                configDeferredLoadOK = doDeferredLoad(file);
+            } else {
+                try {
+                    // Use invokeAndWait method as we don't want to
+                    // return until deferred load is completed
+                    SwingUtilities.invokeAndWait(() -> {
                         configDeferredLoadOK = doDeferredLoad(file);
-                    }
-                });
-            } catch (Exception ex) {
-                log.error("Exception creating system console frame: " + ex);
+                    });
+                } catch (InterruptedException | InvocationTargetException ex) {
+                    log.error("Exception creating system console frame: " + ex);
+                }
             }
         }
     }
