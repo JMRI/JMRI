@@ -245,6 +245,9 @@ public abstract class AppsBase {
         File sharedConfig = null;
         try {
             sharedConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.SHARED_CONFIG);
+            if (!sharedConfig.canRead()) {
+                sharedConfig = null;
+            }
         } catch (FileNotFoundException ex) {
             // ignore - this only means that sharedConfig does not exist.
         }
@@ -291,6 +294,16 @@ public abstract class AppsBase {
                     log.error("Exception creating system console frame: " + ex);
                 }
             }
+        }
+        if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
+            log.info("Migrating preferences to new format...");
+            // migrate preferences
+            InstanceManager.tabbedPreferencesInstance().init();
+            InstanceManager.tabbedPreferencesInstance().saveContents();
+            InstanceManager.configureManagerInstance().storePrefs();
+            // notify user of change
+            log.info("Preferences have been migrated to new format.");
+            log.info("New preferences format will be used after JMRI is restarted.");
         }
     }
 
