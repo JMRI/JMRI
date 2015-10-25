@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import jmri.InstanceManager;
 import jmri.jmrit.revhistory.FileHistory;
-import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.FileUtil;
 import org.jdom2.Document;
 import org.jdom2.Element;
