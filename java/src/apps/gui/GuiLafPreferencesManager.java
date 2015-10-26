@@ -54,11 +54,13 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
             Locale.setDefault(this.getLocale());
             GuiLafConfigPane.setFontSize(this.getFontSize()); // This is backwards - GuiLafConfigPane should be getting our fontSize when it needs it
             this.applyLookAndFeel();
-            UIManager.getDefaults().keySet().stream().forEach((key) -> {
-                if (UIManager.get(key) instanceof FontUIResource) {
-                    UIManager.put(key, UIManager.getFont(key).deriveFont((float) this.getFontSize()));
-                }
-            });
+            if (this.getFontSize() != 0) {
+                UIManager.getDefaults().keySet().stream().forEach((key) -> {
+                    if (UIManager.get(key) instanceof FontUIResource) {
+                        UIManager.put(key, UIManager.getFont(key).deriveFont((float) this.getFontSize()));
+                    }
+                });
+            }
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
             this.initialized = true;
         }
@@ -188,7 +190,5 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
                 log.debug("Not updating look and feel {} matching existing look and feel" + lafClassName);
             }
         }
-
     }
-
 }
