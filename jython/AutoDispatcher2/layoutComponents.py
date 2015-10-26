@@ -1,4 +1,4 @@
-from AutoDispatcher.AutoDispatcher2 import *
+from AutoDispatcher2.autoDispatcher import *
 from java.awt import Color
 from java.beans import PropertyChangeListener
 from java.lang import System
@@ -12,6 +12,7 @@ from jmri import DccThrottle
 from jmri import InstanceManager
 from jmri import SignalHead
 from jmri import Turnout
+from jmri import PowerManager
 from jmri.jmrit import Sound
 from jmri.jmrit import XmlFile
 from math import sqrt
@@ -2134,7 +2135,7 @@ class ADpowerMonitor (PropertyChangeListener):
 	
     def __init__(self):
         self.powerManager = InstanceManager.powerManagerInstance()
-        if self.powerManager != None and not AutoDispatcher.lenzSimulation:
+        if self.powerManager != None:
             ADpowerMonitor.powerOn = (self.powerManager.getPower()
                                       == PowerManager.ON)
             self.powerManager.addPropertyChangeListener(self)

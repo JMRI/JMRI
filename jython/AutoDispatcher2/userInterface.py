@@ -14,7 +14,7 @@ from javax.swing import JTextArea
 from javax.swing import JTextField
 from javax.swing.filechooser import FileFilter
 from jmri import SignalHead
-from AD2UIUtil import *
+from AutoDispatcher2.util import *
 
 # USER INTERFACE CLASSES ============== Long and boring :-)
 

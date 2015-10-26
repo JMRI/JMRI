@@ -66,7 +66,7 @@
 # 2.43 - timeout and retry on acquisition failure, handle new syntax of LayoutEditor class
 # 2.44 - refactor to work with the Java ScriptEngine - Randall Wood
 
-from AutoDispatcher.AutoDispatcher2 import AutoDispatcher
+from AutoDispatcher2.AutoDispatcher import AutoDispatcher
            
 a = AutoDispatcher()
 a.setup()
