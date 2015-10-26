@@ -266,6 +266,55 @@ on how to
 	      </blockquote>
       </dd>
 
+    <dt id="share">Sharing Branches</dt>
+      <dd>
+      One of the advantages of Git branches is that it's easy for people to share
+      them.  This lets one person work with something that another has done, 
+      including editing and improving it, without it having to be released to everybody.
+      <p>
+      Say Arnie has developed something on the "arnie-great-tool" branch.  Bill wants
+      to try to use it on his layout.  The steps are:
+      
+      <ol>
+      <li>Arnie commits it to local repository, and then pushes it to his GitHub repository.
+      <blockquote>
+      <code>
+      git checkout arnie-great-tool<br/>
+      (work on changes)<br/>
+      git commit -m"Added support for the Frobnab 2000"<br/>
+      git push
+      </code>
+      </blockquote>
+      
+      <li>Bill can then get that by pulling it from Arnie's repository. 
+      <blockquote>
+      <code>
+      git pull https://github.com/arnie/JMRI.git arnie-great-tool<br/>
+      git checkout arnie-great-tool
+      </code>
+      </blockquote>
+      where the 1st part of the "pull" is the URL for Arnie's repository.
+      
+      <li>Now Bill can work with that code, and even change it as needed.
+      If he makes changes that he wants Arnie to have, he does the same process
+      in reverse:
+      <blockquote>
+      <code>
+      git commit -m"Fixed a bug in sternerstat handling"<br/>
+      git push
+      </code>
+      </blockquote>
+      Then Arnie can merge those changes into his own copy with:
+      <blockquote>
+      <code>
+      git checkout arnie-great-tool<br/>
+      git pull https://github.com/bill/JMRI.git arnie-great-tool
+      </code>
+      </blockquote>
+      </ol>
+    </dd>
+
+
     <dt id="SFnetPatches">Handling a SF.net Patch</dt>
       <dd>
 	      Eventually, we'll move from using the
