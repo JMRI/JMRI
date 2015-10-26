@@ -11,13 +11,11 @@
           FastClock ">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
+<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<link REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
 </head>
 
@@ -68,14 +66,14 @@
         </ul></li>
         
         
-        <li><a href="#sneakpaths">"Sneak paths" and Computer Interfaces</a></LI>
+        <li><a href="#sneakpaths">"Sneak paths" and Computer Interfaces</a></li>
     </ul></li>
     <li><a href="#examples">Examples</a>
     <ul>
-        <li><A href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet 
-                Turnouts, Detection & Signaling</A></li>
-        <LI><A href="#bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals (SE8C) with non-Digitrax DCC command station</A></li>
-        <LI><A href="#se8csigwodtcs">SE8C signaling without a Digitrax command station</A></li>
+        <li><a href="#isolthrdetsig">Isolating the LocoNet throttle bus from LocoNet 
+                Turnouts, Detection &amp; Signaling</a></li>
+        <li><a href="#bdl168wnondtcs">Switches (DS64), Detection (BDL168) and Signals (SE8C) with non-Digitrax DCC command station</a></li>
+        <li><a href="#se8csigwodtcs">SE8C signaling without a Digitrax command station</a></li>
     </ul>
     </li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
@@ -92,9 +90,9 @@
 <p>There are several situations where a standalone LocoNet bus is useful.  Some 
     of these situations are listed here:</p>
 <ul>
-    <li>When using LocoNet peripherals with a non-LocoNet DCC command station.</LI>
-    <li>When using LocoNet peripherals with a non-DCC railroad.</LI>
-    <li>To isolate LocoNet peripherals from LocoNet throttle activity.</LI>
+    <li>When using LocoNet peripherals with a non-LocoNet DCC command station.</li>
+    <li>When using LocoNet peripherals with a non-DCC railroad.</li>
+    <li>To isolate LocoNet peripherals from LocoNet throttle activity.</li>
     <li>To avoid LocoNet traffic issues associated with the Digitrax command station's
         small buffer for forwarding LocoNet switch commands to the DCC track signal.</li>
     <li>Some users even find it useful to have JMRI communicate with two or more
@@ -107,7 +105,7 @@
         that the block detection and signaling cannot be influenced by throttle 
         activity.  In other words, a LocoNet throttle user might send LocoNet 
         switch control messages, but those messages won't have any effect on the 
-        switches and/or signals which are on the standalone LocoNet.</LI>
+        switches and/or signals which are on the standalone LocoNet.</li>
 </ul>
 <p>This page gives some general suggestions for implementing a standalone LocoNet
     as well as suggestions for configuring JMRI software to make use of the standalone
@@ -170,8 +168,10 @@ useful.</p>
     </tr>
     <tr align="center"><td>RR-CirKits LocoBuffer-USB Rev n</td><td>Optional</td><td>Required for power **</td>
         <td>Required, cannot provide</td><td></td>
+        </tr>
     <tr align="center"><td>RR-CirKits LocoBuffer-II/LocoBuffer-USB</td><td>Optional</td><td>Required for power **</td>
         <td>Required, can provide</td><td></td>
+        </tr>
     <tr align="center"><td>LocoBuffer</td><td>Optional</td><td></td><td>Required, might provide ***</td><td></td>
     </tr>
     <tr><td colspan="5"><p></p><strong>LocoNet Throttles</strong></td></tr>
@@ -251,6 +251,7 @@ useful.</p>
             have opto-isolation circuitry.</p>
     </td></tr>
 </table>
+
     <h2><a name="dataterm">LocoNet Data Signal "Termination"</a></h2>
         <p>"Termination" of the LocoNet Data Signal is something that allows the
             LocoNet data path to work.  One device on LocoNet must provide this
@@ -267,8 +268,8 @@ useful.</p>
             where "The PR3 has the ability to act as a LocoNet terminator."  All 
             of these are describing the term used in this document, LocoNet 
             Data Signal Termination.</p>
-        <H3><A name="hwdataterm">Some commercial hardware which can provide 
-                LocoNet Data signal termination</A></H3>
+        <h3><a name="hwdataterm">Some commercial hardware which can provide 
+                LocoNet Data signal termination</a></h3>
         <ul>
             <li><strong>BDL16, BDL162, BDL168</strong>
                 <p>The instructions in the BDL16x manual includes a section on 
@@ -755,7 +756,7 @@ useful.</p>
             does <strong>not</strong> provide isolation, then there is a possibility that
             "sneak current paths" could be present.  See <A href="#sneakpaths">
             "Sneak paths" and Computer Interfaces</A>, above, for more information.</p>
-    <H2><A name="se8csigwodtcs">SE8C signaling without a Digitrax command station</A></H2>
+    <h2><a name="se8csigwodtcs">SE8C signaling without a Digitrax command station</a></h2>
         <p>The diagram below shows a possible implementation of a standalone LocoNet 
             for computer-controlled signaling using Digitrax SE8C boards.  The example
             assumes that any detection information on the standalone LocoNet is 
@@ -777,13 +778,14 @@ useful.</p>
 <h1><a name="acknowledgments">Acknowledgments</a></h1>
     <p>Among others, Elmer McKay and Dick Bronson have provided significant
             input to the content of this page.  Thank you!</p>
+            
 <h1><a name="references">References</a></h1>
 
 <p>Information and support for Digitrax products may be found at 
     <a href="http://www.digitrax.com/">the Digitrax website</a>.</p>
 <p>Information and support for the LocoBuffer-II, the LocoBuffer-USB, the LocoBuffer-USB Rev-n,
     the LocoNet-Terminator, the SSB-Gateway, and other products by RR-CirKits may be found at 
-    <a href="http://www.rr-cirkits.com/">the RR-Cirkits website</a>.</p>
+    <a href="http://www.rr-cirkits.com/">the RR-CirKits website</a>.</p>
 <p>Information and support for products from Team Digital may be found at
     <a href="http://www.teamdigital1.com/">the Team Digital website</a>.</p>
 <p>Information and support for the Logic Rail Technologies LocoNet Fast Clock 
@@ -791,9 +793,9 @@ useful.</p>
         Technologies website</a>.</p>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">
         Digitrax, Inc.</a></p>
-    </div>
 
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
-    

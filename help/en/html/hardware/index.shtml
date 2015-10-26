@@ -6,14 +6,13 @@
  	JMRI: Hardware Support
   </title>
 
+<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
 
@@ -23,9 +22,9 @@
   <div class="nomenu" id="mBody">
     <div id="mainContent">
 
-        <h2>
-		JMRI: Hardware Support
-        </h2>
+    <h1>
+	JMRI: Hardware Support
+    </h1>
 
 	<p>JMRI supports a wide range of DCC "command station"-style products
 	from various model railroad automation vendors.  
@@ -34,7 +33,7 @@
 	make a computer communicate with a given piece of model railroad
 	equipment, it is possible to connect it to JMRI.
 	<p>
-	This page lists layout layout equipment that JMRI is known
+	This page lists layout equipment that JMRI is known
 	to work with, and provides links to information on how 
 	to configure JMRI to work with each particular type.
     <p>
@@ -42,7 +41,7 @@
 	make a computer communicate with a given piece of model railroad
 	equipment, it is possible to connect it to JMRI. If you
 	don't see your particular system here, please ask about it
-	on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users  Yahoo group</a>.
+	on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI users Yahoo group</a>.
 	
 	<div class="list">
 	<dl>
@@ -163,12 +162,12 @@
 	    </dt>
 	    <dt>Fleischmann</dt>
 	    <dd><p class="dl">Configure: 
-	        <A href="loconet/Fleischmann.shtml">Twin Centre communications</a></p> 
+	        <a href="loconet/Fleischmann.shtml">Twin Centre communications</a></p> 
 	    </dd>
 
 	    <dt class="im">
 		<a href="http://www.hornby.com/uk-en/">
-		Hornby</a>
+		<img src="images/hornby.png" width="81" height="25" alt="Hornby"></a>
 	    </dt>
 	    <dt>Hornby</dt>
 	    <dd>
@@ -179,7 +178,6 @@
 		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
 
 	    </dd>
-
 
 	    <dt class="im">
 		<a href="http://www.lenz.com/">
@@ -196,7 +194,7 @@
 	    </dd>
 
 	    <dt class="im"><a href="http://legacy.lionel.com/GettingStarted/LionelTechnology/legacy/legacyHome.cfm">
-	    <IMG src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
+	    <img src="images/ico-lionel.gif" width="108" height="35" alt="Lionel TMCC"></a></dt>
 	    <dt>Lionel TMCC</dt>
 	    <dd>
 		<p>Connection: Serial cable</p>
@@ -204,12 +202,13 @@
 	    </dd>
 
 	    <dt class="im"><a href="http://www.maplesystems.com">
-	    <IMG src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="63" height="60" alt="Maple Logo"></a></dt>
+	    <img src="http://www.maplesystems.com/images/homepage-new/MapleLogo.gif" width="63" height="60" alt="Maple Logo"></a></dt>
 	    <dt>Maple Systems</dt>
 	    <dd>
 		<p>Maple Systems touch panel</p>
 	        <p class="dl">Configure: <a href="maple/index.shtml">connection via serial link</a></p>
 	    </dd>
+	    
 	    <dt class="im"><a href="http://www.marklin.com/digital/"><img src="images/marklin_logo.gif" width="101" height="22" alt="Marklin"></a></dt>
 	    <dt>M&auml;rklin</dt>
 	    <dd><p class="dl">Configure connection to 
@@ -233,7 +232,7 @@
 	    <dd><p class="dl">MRC decoders can be configured via DecoderPro using any supported DCC system.</p>
 	    <p>For more information on connecting JMRI to the MRC command station, see the <a href="mrc/index.shtml">MRC system page</a>.</dd>
 
-	    <dt class=im><a href="http://www.proto87.com/model-trains-DCC-decoders.html">
+	    <dt class="im"><a href="http://www.proto87.com/model-trains-DCC-decoders.html">
 	    <img src="images/RPS.gif"
 	        width="64" height="41" alt="RPS image"></a></dt>
 	    <dt><a href="http://www.proto87.com/model-trains-DCC-decoders.html">RPS</a></dt>
@@ -243,7 +242,7 @@
 		</dd>
 		
 	    <dt class="im"><a href="http://www.ncedcc.com/">
-	    <IMG src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
+	    <img src="images/ncelogo.jpg" width="44" height="34" alt="NCE"></a></dt>
 	    <dt>NCE</dt>
 	    <dd>
 		Configure connection to a Powerhouse Pro via 
@@ -259,16 +258,16 @@
 	    </a></dt>
 	    <dt>Oak Tree Systems</dt>
 	    <dd>
-	        <p class="dl">Configure connection to <A href="oaktree/OakTree.shtml">Oak Tree's Railroad Control Interface (RCI)</a>, including
+	        <p class="dl">Configure connection to <a href="oaktree/OakTree.shtml">Oak Tree's Railroad Control Interface (RCI)</a>, including
 	        the IO-24, IO-48 and O-48 interface cards and HH-2 handheld throttle.<br />
-	        (Note: RCI is to be replaced by <a href="http://www.oaktreesystems.com/main.html?src=%2F#3,0">Layout Control System (LCS)</a>)
+	        (Note: RCI is to be replaced by <a href="http://www.oaktreesystems.com/main.html">Layout Control System (LCS)</a>)
 		</p>
 		</dd>
 
 	    <dt class="im"><a href="http://openlcb.org/">
 	    <img src="http://openlcb.org/trunk/web/logo-ajs-dph.png" alt="OpenLCB logo" height="57" width="138"></a></dt>
 	    <dt><a href="http://openlcb.org/">OpenLCB</a></dt>
-	    <dd><p class="dl">Configure: <A HREF="openlcb/index.shtml">OpenLCB networks</a></p></dd>
+	    <dd><p class="dl">Configure: <a href="openlcb/index.shtml">OpenLCB networks</a></p></dd>
 
 	    <dt class="im"><a href="http://www.protrak.cc">
 	    <img src="http://www.protrak.cc/ptgif.gif"></a></dt>
@@ -296,7 +295,7 @@
             <dd><p class="dl"><a href="pi/index.shtml">General information on connecting to the Raspberry PI GPIO pins.</a></p>
             </dd>
 
-	    <dt class="im"><a href="http://www.roco.com/">Roco</a></dt>
+	    <dt class="im"><a href="http://www.roco.com/"><img src="images/roco.gif" width="110" height="40" alt="Roco"></a></dt>
 	    <dt>Roco</dt>
 	    <dd>
 	        <p class="dl">Configure: Roco LocoMaus 2 (Roco Part number 10760), Roco MultiMaus (Roco Part number 10810), or Roco multiZENTRAL-Pro (Roco Part number 10830) via
@@ -318,11 +317,10 @@
 	    <dt>TAMS</dt>
 	    <dd><p class="dl">Configure connection to 
 		<a href="tams/index.shtml">TAMS</a> Master Control command station.</p>
-		<p>&nbsp;</p>
-	    </dd>
+			    </dd>
         
 	    <dt class="im"><a href="http://www.uhlenbrock.de/">
-	    <IMG src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
+	    <img src="images/ico-Ur.gif" width="44" height="34" alt="Uhlenbrock"></a></dt>
 	    <dt>Uhlenbrock</dt>
 	    <dd>The Intellibox can be connected to JMRI programs either via a
 	    LocoNet connection, or via its own built-in serial (RS232) port
@@ -333,15 +331,16 @@
 		</p>
 
 	    <p class="dl">Configure: Uhlenbrock Intellibox-I via
-		<A href="loconet/Uhlenbrock.shtml#serial">built-in serial port</a>
+		<a href="loconet/Uhlenbrock.shtml#serial">built-in serial port</a>
 		</p>
 
 	    <p class="dl">Configure: Uhlenbrock Intellibox-II via
-		<A href="loconet/Uhlenbrock.shtml#usb">built-in USB connection</a>
+		<a href="loconet/Uhlenbrock.shtml#usb">built-in USB connection</a>
 		</p>
 
 	    </dd>
-	    <dt class="im"><a href="http://www.viessmann-modell.com/">Viessmann</a></dt>
+	    
+	    <dt class="im"><a href="http://www.viessmann-modell.com/"><img src="images/viessmann.png" width="75" height="74" alt="Viessmann"></a></dt>
 	    <dt>Viessmann</dt>
 	    <dd>
 	        <p class="dl">Configure: Viessmann Commander via
@@ -362,7 +361,7 @@
 		<p>Connection: X10, Insteon power-line controllers</p>
 	        <p class="dl">Configure: <a href="powerline/index.shtml">CM11, 2412S and compatible controllers</a></p></dd>
 
-	    <dt class="im"><a href="http://www.zimo.at/">ZIMO</a></dt>
+	    <dt class="im"><a href="http://www.zimo.at/"><img src="images/zimo.gif" width="100" height="65" alt="Zimo"></a></dt>
 	    <dt>ZIMO</dt>
 	    <dd>
 	    	<p class="dl">Configure: <a href="zimo/Zimo.shtml">ZIMO MX-1</a> </p>
@@ -378,53 +377,53 @@
 		<a href="XPressNet/index.shtml">Lenz LI100, LI101F, LIUSB or GenLi XPressNet interfaces, ZTC Controls ZTC640 interface, or an XPA and Hayes compatible modem</a> 
 		(requires XPressNet V3.0 software)
 		</p>
-		<p>Please check the notes above for system specific restrictions on what JMRI can do</p>
+		<p>Please check the notes above for system specific restrictions on what JMRI can and cannot do.</p>
 		</dd>
 
 	</dl>
 	</div> <!-- closes .list -->
 
         <h2>
-		JMRI: Connecting to command stations
+		JMRI: Connecting to Command Stations
         </h2>
 	<dl>
-	<dt class=left>Macintosh</dt>
+	<dt class="left">Macintosh</dt>
 	<dd>
 		<p><a href="MacintoshSerialPorts.shtml">Mac Mini-DIN8 connector</a></p>
 		<p><a href="USBtoSerial.shtml">Via a USB to Serial adapter</a></p>
 	</dd>
 
-	<dt class=left>PC</dt>
+	<dt class="left">PC</dt>
 	<dd>
 		<p><a href="USBtoSerial.shtml">Via a USB to Serial adapter</a></p>
 	</dd>
 
-	<dt class=left>Terminal Server</dt>
+	<dt class="left">Terminal Server</dt>
 	<dd>
 		<p><a href="TerminalServer.shtml">EasyDCC via a Lantronix Terminal Server</a></p>
 	</dd>
 
 	</dl>
 
-        <H2>
+        <h2>
 		JMRI: General hardware info
-        </H2>
+        </h2>
 	<dl>
-	<dt class=left><a href="../doc/Technical/TurnoutFeedback.shtml">Turnout feedback</a></dt>
+	<dt class="left"><a href="../doc/Technical/TurnoutFeedback.shtml">Turnout feedback</a></dt>
 	<dd>
         If your layout uses some feedback mechanism to sense the actual
         positions of turnouts, for example a microswitch connected to the 
         throw bars or a decoder that returns a confirmation message,
         JMRI can use that to keep track of what's actually happening 
         on the layout.  We call this "Feedback", and how to configure and
-        use it is described on
-        <a href="../doc/Technical/TurnoutFeedback.shtml">another page</a>.
+        use it is described on the
+        <a href="../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback page</a>.
 	</dd>
 
 	</dl>
 
-	</div>
-</div>
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
