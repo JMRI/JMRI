@@ -44,20 +44,10 @@ import org.slf4j.LoggerFactory;
  */
 public class ManagerDefaultSelector extends AbstractPreferencesProvider {
 
-    //private static ManagerDefaultSelector instance = null;
     public final Hashtable<Class<?>, String> defaults = new Hashtable<>();
 
-    /*public static synchronized ManagerDefaultSelector instance() {
-     if (instance == null) {
-     if (log.isDebugEnabled()) log.debug("Manager Default Selector creating instance");
-     // create and load
-     instance = new ManagerDefaultSelector();
-     }
-     if (log.isDebugEnabled()) log.debug("ManagerDefaultSelector returns instance "+instance);
-     return instance;
-     }*/
     public ManagerDefaultSelector() {
-        jmri.jmrix.SystemConnectionMemo.addPropertyChangeListener((PropertyChangeEvent e) -> {
+        SystemConnectionMemo.addPropertyChangeListener((PropertyChangeEvent e) -> {
             switch (e.getPropertyName()) {
                 case "ConnectionNameChanged":
                     String oldName = (String) e.getOldValue();
@@ -67,11 +57,12 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                         if (connectionName.equals(oldName)) {
                             ManagerDefaultSelector.this.defaults.put(c, newName);
                         }
-                    }); break;
+                    });
+                    break;
                 case "ConnectionDisabled":
                     Boolean newState = (Boolean) e.getNewValue();
                     if (newState) {
-                        jmri.jmrix.SystemConnectionMemo memo = (jmri.jmrix.SystemConnectionMemo) e.getSource();
+                        SystemConnectionMemo memo = (SystemConnectionMemo) e.getSource();
                         String disabledName = memo.getUserName();
                         ArrayList<Class<?>> tmpArray = new ArrayList<>();
                         defaults.keySet().stream().forEach((c) -> {
@@ -85,7 +76,8 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                         tmpArray.stream().forEach((tmpArray1) -> {
                             ManagerDefaultSelector.this.defaults.remove(tmpArray1);
                         });
-                    }   break;
+                    }
+                    break;
                 case "ConnectionRemoved":
                     String removedName = (String) e.getOldValue();
                     ArrayList<Class<?>> tmpArray = new ArrayList<>();
@@ -96,9 +88,11 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
                             //ManagerDefaultSelector.instance.defaults.remove(c);
                             tmpArray.add(c);
                         }
-                    }); tmpArray.stream().forEach((tmpArray1) -> {
-                    ManagerDefaultSelector.this.defaults.remove(tmpArray1);
-                }); break;
+                    });
+                    tmpArray.stream().forEach((tmpArray1) -> {
+                        ManagerDefaultSelector.this.defaults.remove(tmpArray1);
+                    });
+                    break;
             }
             this.propertyChangeSupport.firePropertyChange("Updated", null, null);
         });
@@ -143,7 +137,7 @@ public class ManagerDefaultSelector extends AbstractPreferencesProvider {
      */
     @SuppressWarnings("unchecked")
     public void configure() {
-        List<SystemConnectionMemo> connList = jmri.InstanceManager.getList(SystemConnectionMemo.class);
+        List<SystemConnectionMemo> connList = InstanceManager.getList(SystemConnectionMemo.class);
         if (connList == null) {
             return; // nothing to do 
         }
