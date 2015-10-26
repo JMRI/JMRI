@@ -252,7 +252,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/jmri/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -323,7 +323,7 @@ GitHub release steps
     Drop a link to the release note in the discussion field (for now)
     Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
     
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/jmri/dist/release/*zip*/release.zip" 
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/dist/release/*zip*/release.zip" 
     
     and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast)
     

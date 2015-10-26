@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.1.3ish-201510180417-jake-R76cad21 on Sat Oct 17 21:18:07 PDT 2015 $Id$-->
-  <decoderIndex version="660">
+  <!--Written by JMRI version 4.1.3ish-R01195e1 on Sun Oct 25 06:10:45 PDT 2015 $Id$-->
+  <decoderIndex version="662">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -9333,6 +9333,9 @@
       </family>
       <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SignalMan is normally programmed in OPs mode" file="RR-CirKits-SignalMan-basic.xml">
         <model model="SignalMan" comment="Signal Mast Driver" lowVersionID="10" />
+      </family>
+      <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SwitchMan is normally programmed in OPs mode" file="RR-CirKits-SwitchMan.xml">
+        <model model="SwitchMan" comment="16 Line I/O Driver" lowVersionID="10" />
       </family>
       <family name="Tower Controller" mfg="RR-CirKits" type="stationary" comment="The Tower Controller is normally programmed in OPs mode" file="RR-CirKits-TC-64-basic.xml">
         <model model="TC-64" comment="64 line I/O" lowVersionID="06" />
