@@ -140,7 +140,9 @@ public class TrainsScheduleTableFrame extends OperationsFrame implements Propert
         selectButton.setToolTipText(Bundle.getMessage("SelectAllButtonTip"));
         clearButton.setToolTipText(Bundle.getMessage("ClearAllButtonTip"));
         applyButton.setToolTipText(Bundle.getMessage("ApplyButtonTip"));
+        buildButton.setToolTipText(Bundle.getMessage("BuildSelectedTip"));
         activateButton.setToolTipText(Bundle.getMessage("ActivateButtonTip"));
+        terminateButton.setToolTipText(Bundle.getMessage("TerminateSelectedTip"));
 
         setPrintButtonText();
         setSwitchListButtonText();
