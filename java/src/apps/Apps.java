@@ -23,7 +23,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.EventObject;
 import java.util.Locale;
@@ -75,6 +74,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.withrottle.WiThrottleCreationAction;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.managers.DefaultIdTagManager;
@@ -878,18 +878,14 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
 
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
-        ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
         int i = 0;
-        if (connList != null) {
-            for (int x = 0; x < connList.size(); x++) {
-                ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                if (!conn.getDisabled()) {
-                    connection[i] = conn;
-                    i++;
-                }
-                if (i > 3) {
-                    break;
-                }
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                connection[i] = conn;
+                i++;
+            }
+            if (i > 3) {
+                break;
             }
         }
         buildLine4(pane2);
