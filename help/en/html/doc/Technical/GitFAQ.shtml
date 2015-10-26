@@ -202,12 +202,13 @@ on how to
 	      and switch between them as you work on different projects.
 
 	      <p>
-	      We recommend that you name branches starting with your initials (for example, &quot;abc&quot;) and something that suggests what you are working on:  
+	      We recommend that you name branches starting with your GitHub account name or initials (for example, &quot;abc&quot;) 
+	      and something that suggests what you are working on:  
 	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
 	      <code>&quot;abc-2015-09-14&quot;</code>, 
 	      <code>&quot;abc-next-cool-thing&quot;</code>, and
 	      <code>&quot;abc-patch-NNNN&quot;</code>
-	      are all fine.  With the initials, we know it's you, and you can sort out the rest.
+	      are all fine.  That way, we know it's you, and you can sort out the rest.
 
 	      <p>
 	      To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
@@ -237,13 +238,14 @@ on how to
 	      </code><br/>
 	      </blockquote>
 
-	      (If you leave off the message option, you'll be prompted to add one in an editor) If any
+	      (If you leave off the message option, you may be prompted to add one in an editor) If any
 	      changes were picked up and merged in, you can then commit them to your branch:
 	      <blockquote>
 	      <code>git commit -a</code><br/>
 	      </blockquote>
 
-	      When you're done, merge your changes back into the common line of development with<br/>
+	      
+	      <p>When you're done, merge your changes back into the common line of development with<br/>
 
 	      <blockquote>
 	      <code>
@@ -261,7 +263,7 @@ on how to
 	      git checkout master<br/>
 	      git branch -d branchname
 	      </code>
-	  </blockquote>
+	      </blockquote>
       </dd>
 
     <dt id="SFnetPatches">Handling a SF.net Patch</dt>
@@ -297,7 +299,7 @@ on how to
 	      <code>git push origin patch-NNNN</code>
 	      </blockquote>
 	      
-	      <li>Go you your repository on GitHub and start the &quot;pull request&quot; process.
+	      <li>Go to your repository on GitHub and start the &quot;pull request&quot; process.
 	      <li>On the second screen, switch the branch being compared in your repository from
 	      &quot;<strong>master</strong>&quot; to &quot;<strong>patch-NNNN</strong>&quot;.  Then the rest of the pull request goes as before.
 	      <li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
@@ -321,6 +323,7 @@ on how to
 	      from any patches you're handling.  The patches are on different branches than your work,
 	      so they don't overlap.
       </dd>
+
 </dl>
 
 <h2>Less-Common Operations</h2>
@@ -396,78 +399,6 @@ on how to
 	      </ol>  
 	      Now you can start developing, without having lost anything.
    </dd>
-
-   <dt id="branch">Branching</dt>
-   <dd>
-	      If you're making individual little
-	      changes, you can work directly on the default &quot;master&quot; branch.
-	      If you want to work on something more complicated, good &quot;Git Hygiene&quot; encourages you
-	      to create a feature branch so you can work on it independently.  
-	      Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
-	      and switch between them as you work on different projects.
-
-	      <p>
-	      We recommend that you name branches starting with your initials (for example, &quot;abc&quot;) and something that suggests what you are working on:  
-	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
-	      <code>&quot;abc-2015-09-14&quot;</code>, 
-	      <code>&quot;abc-next-cool-thing&quot;</code>, and
-	      <code>&quot;abc-patch-NNNN&quot;</code>
-	      are all fine.  With the initials, we know it's you, and you can sort out the rest.
-
-	      <p>
-	      To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
-	      <blockquote>
-	      <code>git checkout -b <em>branchname</em></code><br/>
-	      </blockquote>
-
-	      The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
-	      out that option:<br/>
-
-	      <blockquote>
-	      <code>git checkout <em>branchname</em></code><br/>
-	      </blockquote>
-
-	      To see all the current branches, do<br/>
-
-	      <blockquote>
-	      <code>git branch</code><br/>
-	      </blockquote>
-
-	      If other people in the community make changes to the master branch, you can keep your 
-	      branch up to date by merging those changes in with your branch<br/>
-	      <blockquote>
-	      <code>
-	      git checkout <em>branchname</em><br/>
-	      git merge -m&quot;merging in current contents of master&quot; master
-	      </code><br/>
-	      </blockquote>
-
-	      (If you leave off the message option, you'll be prompted to add one in an editor) If any
-	      changes were picked up and merged in, you can then commit them to your branch:
-	      <blockquote>
-	      <code>git commit -a</code><br/>
-	      </blockquote>
-
-	      When you're done, merge your changes back into the common line of development with<br/>
-
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
-	      git commit -a
-	      </code>
-	      </blockquote>
-	      
-	      You can then delete your branch (if you're finally done 
-	      with it) with<br/>
-	      
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git branch -d branchname
-	      </code>
-	  </blockquote>
-      </dd>
 
     <dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
       <dd>
