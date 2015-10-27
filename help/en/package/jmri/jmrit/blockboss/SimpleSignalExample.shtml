@@ -55,7 +55,7 @@ your computer is not connected to a layout of any kind.
 Note that you may have to look around for this file; it's in the
 same place that you installed the program.
 <LI>
-<IMG SRC="images/StartPanel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
+<IMG SRC="images/StartPanel.png" ALIGN=RIGHT WIDTH="317" HEIGHT="173" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
 You should now see a simple schematic panel for a layout consisting of a loop
 of track and one passing siding.
 <P>
@@ -71,7 +71,7 @@ turnout status, or use another tool (e.g. the "Turnout Table") to do that.
 sensors to set them "unoccupied" (which is shown as a 
 Grey, occupied is indicated by Yellow)
 <LI>
-<IMG SRC="images/SensorsCleared.png" ALIGN=RIGHT WIDTH="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
+<IMG SRC="images/SensorsCleared.png" ALIGN=RIGHT WIDTH="317" HEIGHT="173" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
 The display should now look like the image to the right. 
 The signals on the passing siding are red, as the turnouts are thrown against
 them.  All the signals on the mainline are green.
@@ -85,7 +85,7 @@ work similarly.  There's more information on this on the
 <A HREF="../../doc/Technical/Names.shtml">JMRI page on System Names and Naming</a>.
 
 <LI>
-<IMG SRC="images/SensorTuroutsSet.png" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+<IMG SRC="images/SensorTuroutsSet.png" ALIGN=RIGHT WIDTH="317" HEIGHT="173" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
 You can now click on the sensors to show how the signals would react
 to the presence of a train. For example, the image to the right
 shows a train entering a passing siding from the left side. It's about
