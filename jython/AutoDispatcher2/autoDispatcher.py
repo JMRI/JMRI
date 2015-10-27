@@ -117,7 +117,7 @@ class AutoDispatcher(jmri.jmrit.automat.AbstractAutomaton):
 
 # CONSTANTS ==========================
 
-    version = "2.43"
+    version = "2.44"
     
     # Retrieve DOUBLE_XOVER constant, depending on JMRI Version
     # (LayoutTurnout class was moved to a new package, starting with JMRI 2.9.3)
