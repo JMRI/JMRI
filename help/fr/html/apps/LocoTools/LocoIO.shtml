@@ -1,102 +1,96 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
-<!--  $Id$ -->
-<!-- UpDated by Blorec Herv&#233; le 2013-09-01-->
+<!-- $Id$ -->
+<!-- UpDated by Blorec Herv&#233; le 2013-09-01 et Egbert Broerse (desapprouve); le 2015-10-19-->
 <html lang="fr">
-<HEAD>
-	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
-	<TITLE>JMRI LocoIO Programmer Tools</TITLE>
+<head>
+	<title>JMRI Outils Programmateur LocoIO (d&#233;sapprouv&#233;)</title>
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=&#231;iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=&#231;iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
   <link rel="home" title="Home" href="/">
 <!-- /Style -->
 
-</HEAD>
-
+</head>
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 
 	<div id="mainContent">
 
-	    <H1>JMRI Outils Programmateur LocoIO</H1>
+	    <h1>JMRI Outils Programmateur LocoIO (d&#233;sapprouv&#233;)</h1>
         
-JMRI contient les outils pour simplifier la programmation des accessoires
-d'entr&#233;e/sortie de la carte contr&#244;leur LocoIO.
-<P>
+<p>JMRI contient les outils pour simplifier la programmation des accessoires
+d'entr&#233;e/sortie de la carte contr&#244;leur LocoIO. <strong>Nouveau m&#233;thode: avec <a href="../../apps/DecoderPro/index.shtml">DecoderPro</a>.</strong>
+<p>
 Cet outil a &#233;t&#233; grandement mis &#224; jour par John Plocher pour la lib&#233;ration de JMRI 1.8.
-La premi&#232;re section de cette page est la description de ce nouveau programmateur de John
-.
+La premi&#232;re section de cette page est la description de ce programmateur de John.
 La
 <a href="#older"> deuxi&#232;me partie de la page </a>
 sont les instructions de l'ancien programmateur, qui est toujours disponible
-<P>
 
+<a name="current"><h2>Instructions pour le programmateur v1.8</h2></a>
+<p>
 Cette version traite UNIQUEMENT de SV1 et SV2 (adresse/sous-adresse) et
 SV3-SV50 (mode primaire, valeur1 et valeur2 pour les ports 1-16.
 En particulier, elle ne traite pas SV0 (configuration niveau de la carte),
 SV51-SV98 (Opcodes suppl&#233;ants) ou SV101-124 (config servo).
-<P>
+<p>
 Utilisation du mod&#232;le:
-<UL>
 
-<UL>
-<LI> Entrez une adresse LocoIO et sous-adresse
-<LI> Cliquez sur la touche "probe"
-<LI><LI> Si une locoIO est trouv&#233;e &#224; cette adresse, sa version de firmware est affich&#233;e
+<ul>
+<li>Entrez une adresse LocoIO et sous-adresse.
+<li>Cliquez sur la touche "probe".
+<li>Si une LocoIO est trouv&#233;e &#224; cette adresse, sa version de firmware est affich&#233;e
 (la fen&#234;tre Moniteur LocoNet montrera tous les LocoIOs qui ont r&#233;pondu
-&#224; la requ&#234;te de sondage si vous en avez besoin pour vous rafra&#238;chir la m&#233;moire)
+&#224; la requ&#234;te de sondage si vous en avez besoin pour vous rafra&#238;chir la m&#233;moire).
 
-<LI> Si vous souhaitez changer l'adresse d'une carte locoIO, vous DEVEZ
+<li>Si vous souhaitez changer l'adresse d'une carte LocoIO, vous DEVEZ
 veiller &#224; ce qu'elle soit la seule carte locoIO  reli&#233;e &#224; 
 LocoNet, que l'adresse soit r&#233;gl&#233;e par un message de diffusion. Un message d&#233;roulant
-vous le rappelera. Si vous l'ignorez, alors toutes les locoIOs
-sur votre loconet seront reprogramm&#233;e &#224; la m&#234;me nouvelle adresse.
+vous le rappellera. Si vous l'ignorez, alors toutes les LocoIOs
+sur votre LocoNet seront reprogramm&#233;e &#224; la m&#234;me nouvelle adresse.
 
-<li> "read all", lit toutes les valeurs du CV LocoIO sp&#233;cifi&#233;.
-     "write all", les &#233;crit tous
+<li>"read all" lit toutes les valeurs du CV LocoIO sp&#233;cifi&#233;
+     "write all" les &#233;crit tous.
 
-<LI> Le bouton individuel en lecture/&#233;criture fait la m&#234;me chose, mais pour une seul boutons
+<li>Le bouton individuel en lecture/&#233;criture fait la m&#234;me chose, mais pour une seul boutons
       &#224; la fois.
 
-<LI> "capture" extrait l'adresse de sortie du prochain aiguillage ou un
+<li>"capture" extrait l'adresse de sortie du prochain aiguillage ou un
      message loconet d'un capteur d'occupation, il le voit et l'utilise comme
     adresse du port s&#233;lectionn&#233;.
-.
-</UL>
+</ul>
 
-<P>
+<!-- commented out because no longer supported - Egbert Broerse 20151018 -->
+<!-- <p>
 Liste des Choses &#224; faire:
-<UL>
-<LI> Besoin d'Interface Utilisateur pour configurer les &#233;tats SV0 diff&#233;rents.
+<ul>
+<li> Besoin d'Interface Utilisateur pour configurer les &#233;tats SV0 diff&#233;rents.
 
-<LI> R&#233;diger une routine "change address"  qui prend &#224; la fois l'ancienne 
+<li> R&#233;diger une routine "change address"  qui prend &#224; la fois l'ancienne 
 et la nouvelle adresse et fait le changement sans l'aide d'une adresse de diffusion.
 
-<LI> R&#233;diger un ensemble de donn&#233;es de configuration dans un fichier texte sous la
+<li> R&#233;diger un ensemble de donn&#233;es de configuration dans un fichier texte sous la
 forme utilis&#233;e par le programmateur de Hans, et le relire quand
-demand&#233;.
-<UL>
+demand&#233;. -->
 
-</UL>
+<a name="older">
 
-
-<A name="older">
-
-        <h2>Instructions pour les programmateurs plus anciens</h2></a>
-			<a href="images/locoio.gif">
-			    <img src="images/locoio.gif"
-			         width=100 height=50></a>
+        <h2>Instructions pour le programmateur plus ancien</h2></a>
+<a href="images/locoio.gif">
+    <img src="images/locoio.gif"
+         width=100 height=50></a>
             <p>
-          Il s'agit d'un ancien programmateur LocoIO, qui est toujours disponible dans JMRI. 
+          Il s'agit du premier programmateur LocoIO, qui est toujours disponible dans JMRI. 
 Cette section contient les instructions pour ce programmateur.
-<P>
+<p>
 Le programmateur dispose d'une interface bas&#233;e sur des tables de configuration
-<a HREF="http://www.locobuffer.com/LocoIO.htm">  de la carte LocoIO de John Jabour </a>,
-un &#233;l&#233;ment puissant pour cr&#233;er des cartes CTC et les panneaux de contr&#244;le. (Plus d'informations 
-sur la carte est disponible sur le site  <a HREF="http://www.locobuffer.com/LocoIO.htm"> http://www.locobuffer.com/LocoIO.htm  </a>)
+<a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">  de la carte LocoIO de John Jabour </a>,
+un &#233;l&#233;ment puissant pour cr&#233;er des cartes CTC et les panneaux de contr&#244;le (Plus d'informations 
+sur la carte est disponible sur le site  <a href="http://www.locobuffer.com/LocoIO/LocoIO.htm">http://www.locobuffer.com/LocoIO/LocoIO.htm</a>).
 		    </p>
 
 		    <p>Une carte LocoIO a 16 broches de signal, dont chacune peut &#234;tre
@@ -106,31 +100,29 @@ est &#233;galement parfois d&#233;crite comme ayant 16 canaux.</p>
 		    <p>Les canaux sont configur&#233;s au moyen de messages LocoNet. Le
 programmateur LocoIO utilise une table pour repr&#233;senter les configurations de chaque canal. </p>
 
-<p>
-La colonne "Action" est utilis&#233;e pour s&#233;lectionner la fa&#231;on dont le canal se comporte. Cliquez 
-dans une cellule pour donner un de menu de choix disponibles
-. Actuellement, les choix sont:
-		    <div class=list>
-		    <dl>
-		    <dt class=left><dfn>"Interrupteur &#224; bascule contr&#244;les aiguillage" </dfn> </dt>
-<jj class=first> <p>
+<p>La colonne "Action" est utilis&#233;e pour s&#233;lectionner la fa&#231;on dont le canal se comporte. Cliquez 
+dans une cellule pour donner un de menu de choix disponibles. Actuellement, les choix sont:
+
+<div class=list>
+<dl>
+<dt class=left><dfn>"Interrupteur &#224; bascule contr&#244;les aiguillage" </dfn> </dt>
+<dd class=first> <p>
 G&#233;n&#233;rer un OPC_SW_REQ pour mettre un aiguillage close/thrown (droit/d&#233;vi&#233;) 
 quand un interrupteur &#224; bascule change d'&#233;tat.
 Quand l'entr&#233;e passe au niveau haut, une commande "close"(droit) est envoy&#233;e, quand l'entr&#233;e est &#224; un niveau 
-bas, une commande "thrown"(d&#233;vi&#233;) est envoy&#233;e. La valeur de configuration de canal est 0x0F. </dd>
+bas, une commande "thrown"(d&#233;vi&#233;) est envoy&#233;e. La valeur de configuration de canal est 0x0F.</dd>
 
 <dt class=left> <dfn> "l'aiguillage bascule sur un niveau bas" </dfn> </dt>
 <dd> <p>
-G&#233;n&#233;rer un message OPC_SW_REQ LocoNet lorsque l'entr&#233;e passe au niveau bas. Ceci est pr&#233;vu pour &#234;tre utilis&#233; avec des boutons- poussoirs. La commande envoy&#233;e alterne la position de l'aiguillage ou du signal adress&#233;. Si la derni&#233;re envoy&#233;e &#233;tait "close"(droit), une "thrown"(d&#233;vi&#233;) sera envoy&#233;e maintenant et vice-versa. La valeur du canal de configuration est 0x2F.</dd>
+G&#233;n&#233;rer un message OPC_SW_REQ LocoNet lorsque l'entr&#233;e passe au niveau bas. Ceci est pr&#233;vu pour &#234;tre utilis&#233; avec des boutons- poussoirs. La commande envoy&#233;e alterne la position de l'aiguillage ou du signal adress&#233;. Si la derni&#233;re envoy&#233;e &#233;tait "close" (droit), une "thrown" (d&#233;vi&#233;) sera envoy&#233;e maintenant et vice-versa. La valeur du canal de configuration est 0x2F.</dd>
 
 <dt class=left> <dfn> "l'aiguillage bascule sur un niveau haut" </dfn> </dt>
 <dd> <p>
-G&#233;n&#233;rer un message OPC_SW_REQ LocoNet lorsque l'entr&#233;e passe au niveau haut. Ceci est pr&#233;vu pour &#234;tre utilis&#233; avec des boutons- poussoirs. La commande envoy&#233;e alterne la position de l'aiguillage ou du signal adress&#233;. Si la derni&#233;re envoy&#233;e &#233;tait "close"(droit), une "thrown"(d&#233;vi&#233;) sera envoy&#233;e maintenant et vice-versa. La valeur du canal de configuration est 0x6F.</dd>
+G&#233;n&#233;rer un message OPC_SW_REQ LocoNet lorsque l'entr&#233;e passe au niveau haut. Ceci est pr&#233;vu pour &#234;tre utilis&#233; avec des boutons- poussoirs. La commande envoy&#233;e alterne la position de l'aiguillage ou du signal adress&#233;. Si la derni&#233;re envoy&#233;e &#233;tait "close" (droit), une "thrown" (d&#233;vi&#233;) sera envoy&#233;e maintenant et vice-versa. La valeur du canal de configuration est 0x6F.</dd>
  	   
-		    <dt class=left><dfn>"Message d'&#233;tat d&#233;finissant une sortie" </dfn> </dt>
+<dt class=left><dfn>"Message d'&#233;tat d&#233;finissant une sortie" </dfn> </dt>
 <dd>
-<p> Pilote l'&#233;tat des sortie en fonction des messages re&#231;us sur les entr&#233;es OPC_INPUT_REP de LocoNet
-. La sortie passe au niveau haut lorsque le message "entr&#233;e haute" est re&#231;u, et passe au niveau bas 
+<p> Pilote l'&#233;tat des sortie en fonction des messages re&#231;us sur les entr&#233;es OPC_INPUT_REP de LocoNet. La sortie passe au niveau haut lorsque le message "entr&#233;e haute" est re&#231;u, et passe au niveau bas 
 lorsque le message "entr&#233;e basse" est re&#231;u. Les messages sont &#233;galement utilis&#233;s pour le statut 
 d'occupation de canton, la sortie passe &#224; "haut" lorsque le canton est occup&#233;, et &#224; "bas" lorsque 
 qu'il est libre. La valeur de configuration de canal est 0xC0.
@@ -151,36 +143,36 @@ canal est 0x80. Permet de r&#233;gler le champ d'adresse pour trouver une comman
 		    </div>
 
 		    <p> 
-		    Les colonnes "Hex Value 1, Value 2 "  d&#233;finissent l'adresse que la
+		    Les colonnes "Hex Value 1, Value 2"  d&#233;finissent l'adresse que la
 carte LocoIO va utiliser pour les communications LocoNet. Celle-ci contient une repr&#233;sentation hexad&#233;cimale
- des deux valeurs de configuration d&#233;crites dans le Guide de programmation LocoIO de John Jabour.  En g&#233;n&#233;ral, 
+ des deux valeurs de configuration d&#233;crites dans le Guide de programmation LocoIO de John Jabour. En g&#233;n&#233;ral, 
 vous n'aurez pas besoin de comprendre ces adresses, les boutons <span  class=button>capture</span> les 
 trouvererons pour vous.
 		    <p>
-		    Nous pr&#233;voyons aussi d'avoir une colonne "User Address "(Adresse utilisateur) qui affiche 
+		    Nous pr&#233;voyons aussi d'avoir une colonne "User Address " (Adresse utilisateur) qui affiche 
 une adresse lisible par l'homme pour les aiguillages et les capteurs. Pour les messages d'aiguillage, c'est le 
 m&#234;me nombre que vous utilisez sur votre r&#233;gulateur. Pour les messages d'occupation canton, c'est le num&#233;ro de 
 canton. Pour les messages d'&#233;tat d'entr&#233;e, c'est le num&#233;ro d'entr&#233;e, qui est le double du nombre de la Fen&#234;tre 
 Principale de l'aiguillage associ&#233;, plus un s'il s'agit d'un "switch" DS54 d'entr&#233;.  
 
 		    <p>
-		    Le bouton <span class=button> Read </span> fait une lecture de la carte via le LocoIO de 
-LocoNet et affiche la configuration actuelle pour cette broche. Le bouton<span class=button>Write </span> 
+		    Le bouton <span class=button>Read</span> fait une lecture de la carte via le LocoIO de 
+LocoNet et affiche la configuration actuelle pour cette broche. Le bouton<span class=button>Write</span> 
 emmagasine les param&#232;tres actuels sur la carte LocoIO.
 		    <p>
 
-		    Le bouton <span class=button> Capture </span> offre un moyen facile de
+		    Le bouton <span class=button>Capture</span> offre un moyen facile de
 trouver une adresse LocoNet n&#233;cessaire. Configurez l'entr&#233;e et sortie
-pour une broche particuli&#232;re, puis appuyez sur la  <span class=button>Capture </span>.
+pour une broche particuli&#232;re, puis appuyez sur la  <span class=button>Capture</span>.
 L'adresse dans le message LocoNet suivant le bon type sera mis dans la colonne des adresses.
 <p>
-Par exemple, si vous avez un canal d&#233;fini pour actionner quand un " message d'&#233;tat aiguillage droit" 
-est re&#231;u, appuyez sur la <span class=button> capture </span> et d'utiliser votre r&#233;gulateur pour commander 
+Par exemple, si vous avez un canal d&#233;fini pour actionner quand un "message d'&#233;tat aiguillage droit" 
+est re&#231;u, appuyez sur la <span class=button>capture</span> et d'utiliser votre r&#233;gulateur pour commander 
 le bon aiguillage en position droite
   
 		    <p>
 		    Comme autre exemple, si le canal est configur&#233; pour envoyer:
-"Envoyer une commande aiguillage d&#233;vi&#233; ", appuyez sur le bouton <span class=button>Capture </span> et utilisez votre
+"Envoyer une commande aiguillage d&#233;vi&#233;", appuyez sur le bouton <span class=button>Capture</span> et utilisez votre
 r&#233;gulateur pour commander le bon aiguillage en position d&#233;vi&#233;e.
 
 <p>
@@ -189,21 +181,22 @@ Les processeurs LocoIO sont envoy&#233;s avec une adresse 1051 programm&#233;e; 
 Adresse "0" est une adresse globale qui fera r&#233;pondre toutes les cartes LocoIO; assurez vous d'en avoir qu'une seule de 
 connect&#233;e lorsque vous utilisez ceci!
 		    <p>
-		    Le bouton <span class=button> Set adresse <span> va utiliser l'adresse globale pour 
+		    Le bouton <span class=button>Set adresse<span> va utiliser l'adresse globale pour 
 configurer une adresse sp&#233;cifique dans une carte LocoIO. Encore une fois, assurez vous d'avoir une seule 
-de connect&#233;e. (Ce bouton est d&#233;sactiv&#233; dans la version actuelle pendant que nous essayons de r&#233;soudre ce probl&#232;me)
+de connect&#233;e (Ce bouton est d&#233;sactiv&#233; dans la version actuelle pendant que nous essayons de r&#233;soudre ce probl&#232;me).
 <p>
 Les boutons <span class=button> Open span ...</span> et <span class=button> Sauvegarder ...</span> ne sont 
 pas encore mis en oeuvre. Ils finiront par vous permettre de charger et stocker des fichiers de configuration.
 		    <p>
-		    Les boutons  <span class=button> Tout Lire</span> et <span class=button>Tout &#201;crire </span> 
+		    Les boutons <span class=button>Tout Lire</span> et <span class=button>Tout &#201;crire </span> 
 ne lisent ni n'&#233;crivent dans tous les canaux, et sont juste une commodit&#233;.
 <p>
 Les messages d'&#233;tat lors de la capture/lecture/&#233;criture sont affich&#233;s &#224; la bas de la fen&#234;tre. Si aucune 
-r&#233;ponse n'est re&#231;ue par l'unit&#233; LocoIO , l'op&#233;ration sera renouvel&#233;e jusqu'&#224; ce qu'elle r&#233;ussisse ou jusqu'&#224; 
+r&#233;ponse n'est re&#231;ue par l'unit&#233; LocoIO, l'op&#233;ration sera renouvel&#233;e jusqu'&#224; ce qu'elle r&#233;ussisse ou jusqu'&#224; 
 ce que vous fermiez la fen&#234;tre.
 
 <!--#include virtual="/Footer" -->
-
-</BODY>
-</HTML>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

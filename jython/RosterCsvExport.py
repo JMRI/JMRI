@@ -16,6 +16,7 @@ import jmri.jmrit.roster
 import com.csvreader
 from javax.swing import JFileChooser, JOptionPane
 from jmri.jmrit.symbolicprog import CvTableModel, IndexedCvTableModel
+import java
 
 # Define some default values
 
