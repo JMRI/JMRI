@@ -55,7 +55,7 @@ your computer is not connected to a layout of any kind.
 Note that you may have to look around for this file; it's in the
 same place that you installed the program.
 <LI>
-<IMG SRC="images/StartPanel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
+<IMG SRC="../../../../html/tools/signaling/images/StartPanel.png" ALIGN=RIGHT WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
 You should now see a simple schematic panel for a layout consisting of a loop
 of track and one passing siding.
 <P>
@@ -71,7 +71,7 @@ turnout status, or use another tool (e.g. the "Turnout Table") to do that.
 sensors to set them "unoccupied" (which is shown as a 
 Grey, occupied is indicated by Yellow)
 <LI>
-<IMG SRC="images/SensorsCleared.png" ALIGN=RIGHT WIDTH="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
+<IMG SRC="../../../../html/tools/signaling/images/SensorsCleared.png" ALIGN=RIGHT WIDTH="320" HEIGHT="128" HSPACE="0" VSPACE="0" ALT="Demo screen in clear state">
 The display should now look like the image to the right. 
 The signals on the passing siding are red, as the turnouts are thrown against
 them.  All the signals on the mainline are green.
@@ -85,7 +85,7 @@ work similarly.  There's more information on this on the
 <A HREF="../../doc/Technical/Names.shtml">JMRI page on System Names and Naming</a>.
 
 <LI>
-<IMG SRC="images/SensorTuroutsSet.png" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+<IMG SRC="../../../../html/tools/signaling/images/SensorTuroutsSet.png" ALIGN=RIGHT WIDTH="327" HEIGHT="138" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
 You can now click on the sensors to show how the signals would react
 to the presence of a train. For example, the image to the right
 shows a train entering a passing siding from the left side. It's about
@@ -116,7 +116,9 @@ block on the right side (block 1), the messages are:
 </PRE>
 The three switch messages set signals 5B, D and 4C to red, red and yellow respectively.
 <LI>
-	<A HREF="../../../../images/SE8cExampleLogic.png"><IMG SRC="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="291" HEIGHT="272" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
+	<A HREF="../../../../images/SE8cExampleLogic.png">
+	   <IMG SRC="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+	</a>
 To see how the signals are configured, open the 
 "Simple Signal Logic" item in the Tools menu.
 Enter a signal name, e.g. "Section 5A" in the top
@@ -135,6 +137,11 @@ will protect a red on signal LH261 on the mainline between the turnouts.
 <LI>
 The flashing yellow checkbox isn't selected here, but if it was, this signal
 would protect a yellow signal further on with a flashing yellow.
+<LI>
+If you check the "Distant Signal" box, the 
+signal you're controlling here is programmed to show the same or a more restrictive Aspect 
+as the next signal, instead of possibly one faster. Instead of showing Yellow before a Red, it 
+will show a Red. 
 </UL>
 You can change any of these setting and click "OK" to put them into
 effect, then click on the example panel to see how the new settings work.
@@ -234,7 +241,9 @@ tell the program about those turnouts also (SE8c users skip this step).
 	<UL>
 	<LI>Open the SSL tool from the "Tools" menu. You should get a frame
 	with a number of fields:
-		<A HREF="../../../../images/SE8cExampleLogic.png"><IMG SRC="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="291" HEIGHT="272" HSPACE="0" VSPACE="0" ALT="Signal Logic Window"></a>
+		<A HREF="../../../../images/SE8cExampleLogic.png">
+		   <IMG SRC="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Signal Logic Window">
+		</a>
 	<LI>In the top box, enter the name of the signal you want to control.
 	<LI>The radio buttons below that select one of four possible uses
 	for this signal:
