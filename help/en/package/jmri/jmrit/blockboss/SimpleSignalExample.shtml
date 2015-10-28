@@ -20,8 +20,8 @@
 <body>
 <!--#include virtual="/Header" -->
 
-<!--#include virtual="Sidebar" -->
-<div id="mainContent">
+<div class="nomenu" id="mBody">
+ <div id="mainContent">
 
 
 <!-- Page Body -->
