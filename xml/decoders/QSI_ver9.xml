@@ -33,7 +33,7 @@
       </model>
       <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104">
       </model>
-      <model model="FX-SD 50 Class (Eureka)" numFns="14" numOuts="0" productID="3109">
+      <model model="FX-U 50 Class (Eureka)" numFns="14" numOuts="0" productID="3109">
       </model>
       <functionlabels>
         <functionlabel num="0" lockable="true">Light</functionlabel>
