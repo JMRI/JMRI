@@ -214,16 +214,16 @@
       <variable label="Heavy Load Feedback" CV="51.2" mask="XXXXVXXX" default="1" item="CV51.2 Heavy">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Cylinder Cocks at Startup" CV="51.2" mask="XXXVXXXX" default="1" item="CV51.2 Cocks1" include="3104">
+      <variable label="Cylinder Cocks at Startup" CV="51.2" mask="XXXVXXXX" default="1" item="CV51.2 Cocks1" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Cylinder Cocks after NFF/NFR" CV="51.2" mask="XXVXXXXX" default="1" item="CV51.2 Cocks2" include="3104">
+      <variable label="Cylinder Cocks after NFF/NFR" CV="51.2" mask="XXVXXXXX" default="1" item="CV51.2 Cocks2" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Bell Actuator Sound" CV="51.2" mask="XVXXXXXX" default="0" item="CV51.2 Bell">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Fuel Type" CV="51.3" mask="XXXXXXVV" default="1" item="CV51.3 Fuel" include="3104">
+      <variable label="Fuel Type" CV="51.3" mask="XXXXXXVV" default="1" item="CV51.3 Fuel" include="3104,3109">
         <enumVal>
           <enumChoice choice="Coal shovel">
             <choice>Coal shovel</choice>
@@ -239,19 +239,19 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Long air let-off at start" CV="51.3" mask="XXXXVXXX" default="1" item="CV51.3 Air" include="3104">
+      <variable label="Long air let-off at start" CV="51.3" mask="XXXXVXXX" default="1" item="CV51.3 Air" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Auto Mute Timeout" CV="51.5" default="0" item="CV51.5">
         <decVal/>
       </variable>
-      <variable label="Chuff Cutoff" CV="51.10" default="50" item="CV51.10" include="3104">
+      <variable label="Chuff Cutoff" CV="51.10" default="50" item="CV51.10" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Min Sound of Power" CV="51.12" default="40" item="CV51.12" include="3104">
+      <variable label="Min Sound of Power" CV="51.12" default="40" item="CV51.12" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Max Sound of Power" CV="51.13" default="65" item="CV51.13" include="3104">
+      <variable label="Max Sound of Power" CV="51.13" default="65" item="CV51.13" include="3104,3109">
         <decVal/>
       </variable>
       <variable label="System Balance" CV="51.14" mask="XVVVVVVV" default="0" item="CV51.14 Value">
@@ -295,7 +295,7 @@
       <variable label="Horn" CV="52.0" default="11" item="CV52.0" include="1115,1123,1127,1130,1132">
         <decVal max="15"/>
       </variable>
-      <variable label="Whistle" CV="52.0" default="11" item="CV52.0" include="3104">
+      <variable label="Whistle" CV="52.0" default="11" item="CV52.0" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Bell" CV="52.8" default="11" item="CV52.8">
@@ -307,7 +307,7 @@
       <variable label="Traction Motor" CV="52.10" default="11" item="CV52.10" include="2100">
         <decVal max="15"/>
       </variable>
-      <variable label="Chuff 1" CV="52.10" default="11" item="CV52.10" include="3104">
+      <variable label="Chuff 1" CV="52.10" default="11" item="CV52.10" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Diesel Motor 2 Idle" CV="52.11" default="11" item="CV52.11" include="1115,1123,1127,1130,1132">
@@ -316,13 +316,13 @@
       <variable label="Chuff 2" CV="52.11" default="11" item="CV52.11" include=",4100">
         <decVal max="15"/>
       </variable>
-      <variable label="Valve Rod Clank" CV="52.13" default="11" item="CV52.13" include="3104">
+      <variable label="Valve Rod Clank" CV="52.13" default="11" item="CV52.13" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Turbine Whoosh" CV="52.13" default="11" item="CV52.13" include="5100">
         <decVal max="15"/>
       </variable>
-      <variable label="Cylinder Cocks" CV="52.15" default="11" item="CV52.15" include="3104">
+      <variable label="Cylinder Cocks" CV="52.15" default="11" item="CV52.15" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Turbine Whine" CV="52.15" default="11" item="CV52.15" include="5100">
@@ -331,13 +331,13 @@
       <variable label="Air Pump 1" CV="52.16" default="11" item="CV52.16">
         <decVal max="15"/>
       </variable>
-      <variable label="Air Pump 2" CV="52.17" default="11" item="CV52.17" include="3104">
+      <variable label="Air Pump 2" CV="52.17" default="11" item="CV52.17" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Cooling Fans" CV="52.19" default="8" item="CV52.19" include="1115,1123,1127,1130,1132">
         <decVal max="15"/>
       </variable>
-      <variable label="Steam Blower (hiss)" CV="52.19" default="8" item="CV52.19" include="3104">
+      <variable label="Steam Blower (hiss)" CV="52.19" default="8" item="CV52.19" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Long Air Let-off" CV="52.21" default="11" item="CV52.21">
@@ -349,7 +349,7 @@
       <variable label="Squealing Brakes" CV="52.24" default="11" item="CV52.24">
         <decVal max="15"/>
       </variable>
-      <variable label="Steam Dynamo" CV="52.26" default="11" item="CV52.26" include="3104">
+      <variable label="Steam Dynamo" CV="52.26" default="11" item="CV52.26" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Dynamic Brake Fans" CV="52.28" default="11" item="CV52.28" include="1115,1123,1127,1130,1132">
@@ -358,19 +358,19 @@
       <variable label="Spitter Valve" CV="52.29" default="11" item="CV52.29" include="1115,1123,1127,1130,1132">
         <decVal max="15"/>
       </variable>
-      <variable label="Boiler Pop-off" CV="52.29" default="11" item="CV52.29" include="3104">
+      <variable label="Boiler Pop-off" CV="52.29" default="11" item="CV52.29" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Air Dryer" CV="52.30" default="11" item="CV52.30" include="1115,1123,1127,1130,1132">
         <decVal max="15"/>
       </variable>
-      <variable label="Blow Down" CV="52.30" default="11" item="CV52.30" include="3104">
+      <variable label="Blow Down" CV="52.30" default="11" item="CV52.30" include="3104,3109">
         <decVal max="15"/>
       </variable>
-      <variable label="Injector" CV="52.31" default="11" item="CV52.31" include="3104">
+      <variable label="Injector" CV="52.31" default="11" item="CV52.31" include="3104,3109">
         <decVal max="15"/>
       </variable>
-      <variable label="Fuel" CV="52.32" default="11" item="CV52.32" include="3104">
+      <variable label="Fuel" CV="52.32" default="11" item="CV52.32" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Coupler Sounds" CV="52.34" default="11" item="CV52.34">
@@ -397,7 +397,7 @@
       <variable label="Water Loading" CV="52.53" default="11" item="CV52.53">
         <decVal max="15"/>
       </variable>
-      <variable label="Water Scoop" CV="52.54" default="11" item="CV52.54" include="3104">
+      <variable label="Water Scoop" CV="52.54" default="11" item="CV52.54" include="3104,3109">
         <decVal max="15"/>
       </variable>
       <variable label="Fuel Loading" CV="52.55" default="11" item="CV52.55">
@@ -1114,19 +1114,19 @@
       <variable label="Engine Room Lights Ramp Time" CV="55.120.17" default="255" item="CV55.120.17" include="1115,1123,1127,1130,1132">
         <decVal/>
       </variable>
-      <variable label="Firebox Min Intensity" CV="55.122.11" default="4" item="CV55.122.11" include="3104">
+      <variable label="Firebox Min Intensity" CV="55.122.11" default="4" item="CV55.122.11" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Firebox Max Intensity" CV="55.122.12" default="255" item="CV55.122.12" include="3104">
+      <variable label="Firebox Max Intensity" CV="55.122.12" default="255" item="CV55.122.12" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Firebox Mid Intensity" CV="55.122.13" default="64" item="CV55.122.13" include="3104">
+      <variable label="Firebox Mid Intensity" CV="55.122.13" default="64" item="CV55.122.13" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Firebox Ramp Up Time" CV="55.122.17" default="127" item="CV55.122.17" include="3104">
+      <variable label="Firebox Ramp Up Time" CV="55.122.17" default="127" item="CV55.122.17" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Firebox Ramp Down Time" CV="55.122.18" default="127" item="CV55.122.18" include="3104">
+      <variable label="Firebox Ramp Down Time" CV="55.122.18" default="127" item="CV55.122.18" include="3104,3109">
         <decVal/>
       </variable>
       <variable label="Step Lights Initial State" CV="55.134.0" mask="XXXXXVXX" default="1" item="CV55.134.0 Step" include="1115,1123,1127,1130,1132">
@@ -1141,7 +1141,7 @@
       <variable label="Engine Room2 Light Initial State" CV="55.135.0" mask="XXXXXXVX" default="1" item="CV55.135.0 Engine2" include="1115,1123,1127,1130,1132">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Firebox Light Initial State" CV="55.135.0" mask="XXXVXXXX" default="1" item="CV55.135.0 Firebox" include="3104">
+      <variable label="Firebox Light Initial State" CV="55.135.0" mask="XXXVXXXX" default="1" item="CV55.135.0 Firebox" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Headlight" CV="55.136.0" mask="XXXXXXXV" default="1" item="CV55.136.0 70">
@@ -1386,10 +1386,10 @@
           </enumChoice>
         </enumVal>
       </variable>
-      <variable label="Chuff Cal" CV="56.0" mask="XXXXVXXX" default="0" item="CV56.0 Cal" include="3104">
+      <variable label="Chuff Cal" CV="56.0" mask="XXXXVXXX" default="0" item="CV56.0 Cal" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
-      <variable label="Chuff Sync" CV="56.0" mask="XXXVXXXX" default="0" item="CV56.0 Sync" include="3104">
+      <variable label="Chuff Sync" CV="56.0" mask="XXXVXXXX" default="0" item="CV56.0 Sync" include="3104,3109">
         <enumVal>
           <enumChoice choice="BEMF">
             <choice>BEMF</choice>
@@ -1462,7 +1462,7 @@
       <variable label="BEMF Offset Sign" CV="56.8" mask="VXXXXXXX" default="0" item="CV56.8 Sign">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
-      <variable label="Chuff per Wheel Rev" CV="56.14" default="4" item="CV56.14" include="3104">
+      <variable label="Chuff per Wheel Rev" CV="56.14" default="4" item="CV56.14" include="3104,3109">
         <decVal/>
       </variable>
       <variable label="Very Low Speed Proportional Gain" CV="56.18.0" default="30" item="CV56.18.0">
@@ -1506,10 +1506,10 @@
         <indexedPairVal highCVname="56.24.1"/>
       </ivariable>
 -->
-      <variable label="Locomotive Scale" CV="56.25.0" include="3104">
+      <variable label="Locomotive Scale" CV="56.25.0" include="3104,3109">
         <splitVal highCV="56.25.1"/>
       </variable>
-      <variable label="Scale Wheel Diameter" CV="56.26.0" include="3104">
+      <variable label="Scale Wheel Diameter" CV="56.26.0" include="3104,3109">
         <splitVal highCV="56.26.1"/>
       </variable>
       <!-- In PDF manual but not yet in default value firl from QSI
@@ -1658,10 +1658,10 @@
       <variable label="Enginer Room 2" CV="115.121.0" default="0" item="CV115.121.0" include="1115,1123,1127,1130,1132">
         <decVal/>
       </variable>
-      <variable label="Firebox" CV="115.122.0" default="0" item="CV115.122.0" include="3104">
+      <variable label="Firebox" CV="115.122.0" default="0" item="CV115.122.0" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Firebox2" CV="115.122.1" default="0" item="CV115.122.1" include="3104">
+      <variable label="Firebox2" CV="115.122.1" default="0" item="CV115.122.1" include="3104,3109">
         <decVal/>
       </variable>
       <!-- CV116.PI.SI speaker balance -->
@@ -1914,7 +1914,7 @@
       <variable label="Bell Pitch Shift Sign" CV="118.8.1" mask="VXXXXXXX" default="0" item="CV118.8 Sign 16" include="1115,1123,1127,1130,1132">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
-      <variable label="Chuff Pitch Shift" CV="118.10.0" default="0" item="CV118.10 Value 16" include="3104">
+      <variable label="Chuff Pitch Shift" CV="118.10.0" default="0" item="CV118.10 Value 16" include="3104,3109">
         <splitVal highCV="118.10.1" min="0" max="1200" upperMask="XVVVVVVV"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
@@ -1922,7 +1922,7 @@
           <value>2</value>
         </qualifier>
       </variable>
-      <variable label="Chuff Pitch Shift Sign" CV="118.10.1" mask="VXXXXXXX" default="0" item="CV118.10 Sign 16" include="3104">
+      <variable label="Chuff Pitch Shift Sign" CV="118.10.1" mask="VXXXXXXX" default="0" item="CV118.10 Sign 16" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
@@ -1937,7 +1937,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
       <!-- CV118.PI.SI pitch shift 8 bit versions, for FW before 1-20-13 -->
-      <variable label="Chuff Pitch Shift" CV="118.10" mask="XVVVVVVV" default="0" item="CV118.10 Value" include="3104">
+      <variable label="Chuff Pitch Shift" CV="118.10" mask="XVVVVVVV" default="0" item="CV118.10 Value" include="3104,3109">
         <decVal/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
@@ -1945,7 +1945,7 @@
           <value>2</value>
         </qualifier>
       </variable>
-      <variable label="Chuff Pitch Shift Sign" CV="118.10" mask="VXXXXXXX" default="0" item="CV118.10 Sign" include="3104">
+      <variable label="Chuff Pitch Shift Sign" CV="118.10" mask="VXXXXXXX" default="0" item="CV118.10 Sign" include="3104,3109">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
