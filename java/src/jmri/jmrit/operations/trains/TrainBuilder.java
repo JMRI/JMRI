@@ -3377,11 +3377,21 @@ public class TrainBuilder extends TrainCommon {
                 || si.getReceiveLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
             log.debug("Not using track ({}) schedule request type ({}) road ({}) load ({})", track.getName(), si
                     .getTypeName(), si.getRoadName(), si.getReceiveLoadName()); // NOI18N
+            if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurScheduleNotUsed"), new Object[]{
+                        track.getName(), track.getScheduleName(), si.getId(), si.getTypeName(), si.getRoadName(), 
+                        si.getReceiveLoadName()}));
+            }
             return null;
         }
         if (!si.getRoadName().equals(ScheduleItem.NONE) && !car.getRoadName().equals(si.getRoadName())) {
             log.debug("Not using track ({}) schedule request type ({}) road ({}) load ({})", track.getName(), si
                     .getTypeName(), si.getRoadName(), si.getReceiveLoadName()); // NOI18N
+            if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurScheduleNotUsed"), new Object[]{
+                        track.getName(), track.getScheduleName(), si.getId(), si.getTypeName(), si.getRoadName(), 
+                        si.getReceiveLoadName()}));
+            }
             return null;
         }
         if (!_train.acceptsLoad(si.getReceiveLoadName(), si.getTypeName())) {
