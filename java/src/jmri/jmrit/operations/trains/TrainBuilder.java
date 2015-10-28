@@ -3332,6 +3332,14 @@ public class TrainBuilder extends TrainCommon {
         if (track.getSchedule() == null) {
             return null;
         }
+        if (!track.acceptsTypeName(car.getTypeName())) {
+            log.debug("Track ({}) doesn't service car type ({})", track.getName(), car.getTypeName());
+            if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurNotThisType"), new Object[]{
+                        track.getLocation().getName(), track.getName(), track.getScheduleName(), car.getTypeName()}));
+            }
+            return null;
+        }
         ScheduleItem si = null;
         if (track.getScheduleMode() == Track.SEQUENTIAL) {
             si = track.getCurrentScheduleItem();
@@ -3379,8 +3387,8 @@ public class TrainBuilder extends TrainCommon {
                     .getTypeName(), si.getRoadName(), si.getReceiveLoadName()); // NOI18N
             if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
                 addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurScheduleNotUsed"), new Object[]{
-                        track.getName(), track.getScheduleName(), si.getId(), si.getTypeName(), si.getRoadName(), 
-                        si.getReceiveLoadName()}));
+                        track.getLocation().getName(), track.getName(), track.getScheduleName(), si.getId(), si.getTypeName(), 
+                        si.getRoadName(), si.getReceiveLoadName()}));
             }
             return null;
         }
