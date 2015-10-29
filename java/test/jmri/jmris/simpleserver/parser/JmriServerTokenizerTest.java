@@ -96,6 +96,16 @@ public class JmriServerTokenizerTest extends TestCase {
         assertTrue("Wrong token kind for THROTTLE", JmriServerParserConstants.THROTTLE == t.kind);
     }
 
+    public void testTurnoutDevice() {
+        String cmd = "IT1\n\r";
+        SimpleCharStream cs = new SimpleCharStream(new StringReader(cmd));
+        JmriServerParserTokenManager stm = new JmriServerParserTokenManager(cs);
+        stm.SwitchTo(JmriServerParserConstants.DEVICENAME);
+        Token t = stm.getNextToken();
+        assertTrue("Wrong token kind for Turnout Name", JmriServerParserConstants.JMRITURNOUT == t.kind);
+    }
+
+
     // This used to be an error.
     // now should check to see that the token produced
     // is the BADTOKEN token.

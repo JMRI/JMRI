@@ -32,7 +32,7 @@ PARSER_END(JmriServerParser)
 
 // The Tokenizer specification begins here:
 
-<DEFAULT,DEVICENAME>
+<DEFAULT>
 SKIP:
 {
     <RETURN: "\r">:DEFAULT
@@ -71,17 +71,21 @@ TOKEN :
   | <#X:["x","X"]>
   | <#Y:["y","Y"]>
   | <#Z:["z","Z"]>
-  | <BADTOKEN:~[" "]>
+}
+
+<DEVICENAME>
+MORE: {
+   <~[]>
 }
 
 <DEVICENAME>
 TOKEN:
 {
-    < JMRITURNOUT: ((["a"-"z","A"-"Z"])(["a"-"z","A"-"Z","0"-"9"])*)<T>(["0"-"9"])+ >:DEFAULT
+    < JMRITURNOUT:<T>(["0"-"9"])+ >:DEFAULT
 //    | < JMRISENSOR: <SYSTEMPREFIX> <S> (["0"-"9"])+ >
 //    | < JMRILIGHT: <SYSTEMPREFIX> <L> (["0"-"9"])+ >
 //    | < JMRIREPORTER: <SYSTEMPREFIX> <R> (["0"-"9"])+ >
-//    | < #SYSTEMPREFIX: (["a"-"z","A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])* >
+//    | < #SYSTEMPREFIX: (["a"-"z","A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])*) >
 }
 
 <DEFAULT>
@@ -90,20 +94,39 @@ TOKEN :
   < ADDR: ( ["0"-"9"] )+ >
 | < POWER: <P><O><W><E><R> >
 | < REPORTER: <R><E><P><O><R><T><E><R>>:DEVICENAME
-| < TURNOUT: <T><U><R><N><O><U><T> >:DEVICENAME
-| < LIGHT: <L><I><G><H><T> >:DEVICENAME
-| < SENSOR: <S><E><N><S><O><R> >:DEVICENAME
-| < THROTTLE: <T><H><R><O><T><T><L><E> >
+| < TURNOUT: <T><U><R><N><O><U><T>>:DEVICENAME
+| < LIGHT: <L><I><G><H><T>>:DEVICENAME
+| < SENSOR: <S><E><N><S><O><R>>:DEVICENAME
+| < THROTTLE: <T><H><R><O><T><T><L><E>>
+| < OPERATIONS: <O><P><E><R><A><T><I><O><N><S>>
 | < ONOFF: (<ON>|<OFF>) >
 | < #ON: <O><N>> 
 | < #OFF: <O>(<F>){2} >
+// turnout states
 | < THROWNCLOSED: (<THROWN>|<CLOSED>) >
 | < #THROWN: <T><H><R><O><W><N> > 
 | < #CLOSED: <C><L><O><S><E><D> >
+// dates and times
 | < JULDATE: (["1"-"9"]){2,4}["0"-"3"]["0"-"9"]["0"-"9"]>
 | < HOUR: (["0"-"2"])?["0"-"9"]>
 | < MINSEC: ["0"-"5"]["0"-"9"]>
 | < DELAY: ("-")?(["0"-"9"])+>
+// operations commands
+| < TRAIN: <T><R><A><I><N>>
+| < TRAINS: <T><R><A><I><N><S>>
+| < LOCATIONS: <L><O><C><A><T><I><O><N><S>>
+// Train stust information
+| < TRAINWEIGHT <T><R><A><I><N><W><E><I><G><H><T>>
+| < TRAINLENGTH <T><R><A><I><N><L><E><N><G><T><T>>
+| < TRAINCARS <T><R><A><I><N><C><A><R><S>>
+| < TRAINLEADLOCO <T><R><A><I><N><L><E><A><D><L><O><C><O>>
+| < TRAINCABOOSE <T><R><A><I><N><C><A><B><O><O><S><E>>
+| < TRAINSTATUS <T><R><A><I><N><S><T><A><T><U><S>>
+| < TRAINLOCATION <T><R><A><I><N><L><O><C><A><T><I><O><N>>
+| < TERMINATE <T><E><R><M><I><N><A><T><E>>
+
+// catch all
+| <BADTOKEN:~[" "]>
 }
 
 // Lexical specifications begin here
@@ -112,7 +135,7 @@ SimpleNode command():{}
 {
   // This is a simple list of the possible commands.  
   // They are broken down further below.
-  ( LOOKAHEAD(4) powercmd() | turnoutcmd() ) <EOL>
+  ( powercmd() | turnoutcmd() ) <EOL>
   {
     log.debug("Command Production");
     return jjtThis;

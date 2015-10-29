@@ -91,7 +91,7 @@ public class JmriServerParserTest extends TestCase {
 
     public void testSetTurnoutThrown() {
         boolean exceptionOccured = false;
-        String code = "TURNOUT IT1 THROWN\n\r";
+        String code = "TURNOUTIT1 THROWN\n\r";
         JmriServerParser p = new JmriServerParser(new StringReader(code));
         try {
             p.command();
