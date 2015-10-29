@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.1.3ish-R01195e1 on Sun Oct 25 06:10:45 PDT 2015 $Id$-->
-  <decoderIndex version="662">
+  <!--Written by JMRI version 4.1.3ish-R96c9883 on Thu Oct 29 09:24:34 AEDT 2015 $Id$-->
+  <decoderIndex version="666">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -9169,6 +9169,7 @@
         <model model="Titan-G F3 EMD567" numFns="14" numOuts="0" productID="1132" />
         <model model="FX-SD U30B (Atlas)" numFns="14" numOuts="0" productID="1130" />
         <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104" />
+        <model model="FX-U 50 Class (Eureka)" numFns="14" numOuts="0" productID="3109" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>

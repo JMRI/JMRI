@@ -41,7 +41,7 @@
     </Container>
     <Component class="javax.swing.ButtonGroup" name="grpStartWithSelectors">
       <AuxValues>
-        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="if (ProfileManager.defaultManager().isAutoStartActiveProfile()) {&#xa;this.rdoStartWithActiveProfile.setSelected(true);&#xa;} else {&#xa;this.rdoStartWithProfileSelector.setSelected(true);&#xa;}&#xa;"/>
+        <AuxValue name="JavaCodeGenerator_allCodePost" type="java.lang.String" value="if (ProfileManager.getDefault().isAutoStartActiveProfile()) {&#xa;this.rdoStartWithActiveProfile.setSelected(true);&#xa;} else {&#xa;this.rdoStartWithProfileSelector.setSelected(true);&#xa;}"/>
       </AuxValues>
     </Component>
   </NonVisualComponents>

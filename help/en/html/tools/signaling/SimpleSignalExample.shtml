@@ -117,7 +117,9 @@ block on the right side (block 1), the messages are:
 </PRE>
 The three switch messages set signals 5B, D and 4C to red, red and yellow respectively.
 <LI>
-<A HREF="../../../images/SE8cExampleLogic.gif"><IMG SRC="../../../images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="345" HEIGHT="225" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
+<A HREF="../../../images/SE8cExampleLogic.gif">
+   <IMG SRC="../../../images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
+</a>
 To see how the signals are configured, open the 
 "Simple Signal Logic" item in the Tools menu.
 Enter a signal name, e.g. "Section 5A" in the top
@@ -136,6 +138,11 @@ will protect a red on signal LH261 on the mainline between the turnouts.
 <LI>
 The flashing yellow checkbox isn't selected here, but if it was, this signal
 would protect a yellow signal further on with a flashing yellow.
+<LI>
+If you check the "Distant Signal" box, the 
+signal you're controlling here is programmed to show the same or a more restrictive Aspect 
+as the next signal, instead of possibly one faster. Instead of showing Yellow before a Red, it 
+will show a Red. 
 </UL>
 You can change any of these setting and click "OK" to put them into
 effect, then click on the example panel to see how the new settings work.
@@ -237,7 +244,9 @@ tell the program about those turnouts also.  (SE8c users skip this step)
 	<UL>
 	<LI>Open the tool from the "Tools" menu.  You should get a frame
 	with a number of fields:
-	<A HREF="../../../images/SE8cExampleLogic.gif"><IMG SRC="../../../images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="345" HEIGHT="225" HSPACE="0" VSPACE="0" ALT="Signal Logic Window"></a>
+	<A HREF="../../../images/SE8cExampleLogic.gif">
+	    <IMG SRC="../../../images/SE8cExampleLogic.gif" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Signal Logic Window">
+	</a>
 	<LI>In the top box, enter the name of the signal you want to control.
 	<LI>The radio buttons below that select one of four possible uses
 	for this signal:
