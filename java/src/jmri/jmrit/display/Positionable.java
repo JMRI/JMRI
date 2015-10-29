@@ -125,8 +125,6 @@ public interface Positionable extends Cloneable {
 
     public int getDegrees();
 
-    public boolean getSaveOpaque();		// for rotated text
-
     public JComponent getTextComponent();
 
     public void remove();
