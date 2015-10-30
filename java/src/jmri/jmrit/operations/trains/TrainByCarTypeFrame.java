@@ -177,7 +177,7 @@ public class TrainByCarTypeFrame extends OperationsFrame implements java.beans.P
             if (_car != null && _car.getTrack() != null && !_car.getTrack().acceptsDestination(location) && _car.getLocation() != location) {
                 JLabel locText = new JLabel();
                 locText.setText(MessageFormat.format(Bundle.getMessage("CarOnTrackDestinationRestriction"),
-                        new Object[]{_car.toString(), _car.getTrackName()}));
+                        new Object[]{_car.toString(), _car.getTrackName(), locationName}));
                 addItemWidth(pRoute, locText, 2, 1, y++);
                 continue;
             }
