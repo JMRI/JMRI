@@ -4,6 +4,9 @@
 <!-- Copyright Bob Jacobsen 2008 -->
 <title>JMRI: Simple Signal Logic Example</title>
 
+<meta name="Author" content="Bob Jacobsen, Egbert Broerse">
+<meta name="Date.Modified" content="20151030"/>
+
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -24,7 +27,7 @@
 JMRI: Simple Signal Logic Example
 </h2>
 
-This page provides an example of using the JMRI "Simple Signal Logic"
+This page provides an example of using the JMRI "<a href="Logic.shtml">Simple Signal Logic</a>"
 to control signals connected to a Digitrax SE8c.  This also works for 
 other types of signals, including LEDs connected to stationary decoders, C/MRI
 systems, etc.
@@ -184,7 +187,7 @@ tell the program about those Turnout addresses too. (SE8c users skip this step)
 
 <a name="definesignals"/>
 <li>Tell it how your signals are addressed.
-<a href="../../../images/SigTable.gif"><img src="../../../images/SigTable.gif" align="right" width="314" height="140" hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
+<a href="../../../package/jmri/jmrit/beantable/SignalHeads.png"><img src="../../../package/jmri/jmrit/beantable/SignalHeads.png" align="right" width="369" height="123" hspace="0" vspace="0" alt="Signal Head Table Figure"></a>
 
   <ul>
   <li>From the Tools menu, open the "Tables" > "Signals" > "Signal Heads" tool.
