@@ -31,3 +31,5 @@ local.properties
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
+
+help/en/images/SE8cExampleLogic.gif
