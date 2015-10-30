@@ -6,16 +6,15 @@
 <div id="mBody">
  <div id="side">
     <h2>LocoNet Tools</h2>
-	<UL>
-	<LI><A href="index.shtml#locomon">LocoNet Monitor</a>
-	<LI><A href="index.shtml#slotmon">Slot Monitor</a>
-	<LI><A href="index.shtml#sendpkt">Packet Source</a>
-	<LI><A href="index.shtml#pm4">BDL16, BDL162, BDL168 and PM4 programmers</a>
-	<LI><A href="LocoIO.shtml">LocoIO Programmer</a>
-	</UL>
+    
+	<ul>
+	<li><a href="index.shtml#locomon">LocoNet Monitor</a>
+	<li><a href="index.shtml#slotmon">Slot Monitor</a>
+	<li><a href="index.shtml#sendpkt">Packet Source</a>
+	<li><a href="index.shtml#pm4">BDL16, BDL162, BDL168 and PM4 Programmers</a>
+	</ul>
 
-
- </div>
+ </div> <!-- close #side -->
  
  <!-- /Sidebar -->
  

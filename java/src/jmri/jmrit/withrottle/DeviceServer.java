@@ -117,9 +117,7 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
     final boolean isRouteAllowed = WiThrottleManager.withrottlePreferencesInstance().isAllowRoute();
     private ConsistController consistC = null;
     private boolean isConsistAllowed;
-
-    List<RosterEntry> rosterList;
-
+    
     private DeviceManager manager;
 
     DeviceServer(Socket socket, DeviceManager manager) {
@@ -639,21 +637,21 @@ public class DeviceServer implements Runnable, ThrottleControllerListener, Contr
      *         received.
      */
     public String sendRoster() {
-        if (rosterList == null) {
-            rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
-        }
+        List<RosterEntry> rosterList;
+        rosterList = Roster.instance().getEntriesInGroup(manager.getSelectedRosterGroup());
         StringBuilder rosterString = new StringBuilder(rosterList.size() * 25);
-        for (int i = 0; i < rosterList.size(); i++) {
-            RosterEntry entry = rosterList.get(i);
+        for (RosterEntry entry : rosterList) {
             StringBuilder entryInfo = new StringBuilder(entry.getId()); //  Start with name
-            entryInfo.append("}|{" + entry.getDccAddress());    //  Append address #
+            entryInfo.append("}|{");
+            entryInfo.append(entry.getDccAddress());
             if (entry.isLongAddress()) { //  Append length value
                 entryInfo.append("}|{L");
             } else {
                 entryInfo.append("}|{S");
             }
 
-            rosterString.append("]\\[" + entryInfo);  //  Put this info in as an item
+            rosterString.append("]\\[");  //  Put this info in as an item
+            rosterString.append(entryInfo);
 
         }
         rosterString.trimToSize();

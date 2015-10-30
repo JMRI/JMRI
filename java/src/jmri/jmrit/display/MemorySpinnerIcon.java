@@ -61,9 +61,9 @@ public class MemorySpinnerIcon extends PositionableJPanel implements ChangeListe
         pos.setMemory(namedMemory.getName());
         return super.finishClone(pos);
     }
-    /*    public JComponent getTextComponent() {
-     return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
-     }*/
+    public javax.swing.JComponent getTextComponent() {
+        return ((JSpinner.DefaultEditor)spinner.getEditor()).getTextField();
+    }
 
     public Dimension getSize() {
         if (debug) {

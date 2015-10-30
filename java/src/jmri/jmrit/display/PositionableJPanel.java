@@ -172,10 +172,6 @@ public class PositionableJPanel extends JPanel implements Positionable, MouseLis
         return 0;
     }
 
-    public boolean getSaveOpaque() {
-        return isOpaque();
-    }
-
     public JComponent getTextComponent() {
         return this;
     }
