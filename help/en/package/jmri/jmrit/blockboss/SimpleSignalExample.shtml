@@ -56,16 +56,16 @@ same place that you installed the program.
 <img src="../../../../html/tools/signaling/images/StartPanel.png" ALIGN="RIGHT" WIDTH="323" HEIGHT="137" HSPACE="0" VSPACE="0" ALT="Demo screen at startup">
 You should now see a simple schematic panel for a layout consisting of a loop
 of track and one passing siding.
-<P>
+<p>
 Because there's no connection to a real layout, the status of the Sensors and
 Turnouts isn't initially known.  This example shows that by displaying the
 sensors as Red, and the turnouts as "not connected either way".
 Since the Signal Mast Logic isn't sure whether Blocks are occupied nor how Turnouts
 are set, it shows a red Aspect on all the Signal Heads.
-<P>
+<p>
 You can click on the icons to change the occupancy and
 turnout status, or use another tool (e.g. the "Turnout Table") to do that.
-<P>Click on each of the turnouts to set them to closed. Click on the 
+<p>Click on each of the turnouts to set them to closed. Click on the 
 sensors to set them "unoccupied" (which is shown as a 
 Grey, occupied is indicated by Yellow)
 <li>
@@ -73,14 +73,14 @@ Grey, occupied is indicated by Yellow)
 The display should now look like the image to the right. 
 The signals on the passing siding are red, as the turnouts are thrown against
 them.  All the signals on the mainline are green.
-<P>
+<p>
 If you "hover" the cursor over an item, a tooltip will pop with information
 about the item. For example, a turnout might show "Turnout 1 (LT1)".
 LT1 is the "System Name" for that turnout. In this case, it
 means "LocoNet Turnout with address 1". "Turnout 1" is a "User Name", 
 which can be anything you want it to be.  You can edit these with the <b>Tools > Tables > Turnouts</b> menu. Signal Heads and Sensors
 work similarly.  There's more information on this on the
-<A HREF="../../doc/Technical/Names.shtml">JMRI page on System Names and Naming</a>.
+<a HREF="../../doc/Technical/Names.shtml">JMRI page on System Names and Naming</a>.
 
 <li>
 <img src="../../../../html/tools/signaling/images/SensorTuroutsSet.png" ALIGN="RIGHT" WIDTH="317" HEIGHT="173" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains">
@@ -114,7 +114,7 @@ block on the right side (block 1), the messages are:
 </PRE>
 The three switch messages set signals 5B, D and 4C to red, red and yellow respectively.
 <li>
-	<A HREF="../../../../images/SE8cExampleLogic.png"><img src="../../../../images/SE8cExampleLogic.png" ALIGN="RIGHT" WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
+	<a HREF="../../../../images/SE8cExampleLogic.png"><img src="../../../../images/SE8cExampleLogic.png" ALIGN="RIGHT" WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Demo screen with two trains"></a>
 To see how the signals are configured, open the 
 "Simple Signal Logic" item in the Tools menu.
 Enter a signal name, e.g. "Section 5A" in the top
@@ -144,10 +144,10 @@ The complete set of steps involved in creating this example were:
 <OL>
 <li>Launch and configure the PanelPro application. Restart it to 
 have your preferences take effect.
-<P>
+<p>
 For more information on launching and configuring 
 PanelPro, please see the
-<A HREF="../../apps/PanelPro/PanelPro.shtml">PanelPro web page</a>.
+<a HREF="../../apps/PanelPro/PanelPro.shtml">PanelPro web page</a>.
 
 <li>Tell it about your sensors. 
   <ul>
@@ -183,7 +183,7 @@ tell the program about those turnouts also (SE8c users skip this step).
 
 <a name="definesignals"/>
 	<li>Tell it how your Signal Heads are addressed.<br/>
-		<A href="../beantable/SignalHeads.png"><img src="../beantable/SignalHeads.png" ALIGN=RIGHT WIDTH="554" HEIGHT="184" HSPACE="0" VSPACE="0" ALT="Signal Heads Table Figure"></a>
+		<a href="../beantable/SignalHeads.png"><img src="../beantable/SignalHeads.png" ALIGN=RIGHT WIDTH="554" HEIGHT="184" HSPACE="0" VSPACE="0" ALT="Signal Heads Table Figure"></a>
 
   <ul>
   <li>From the Tools menu, open the "Signal Heads Table"
@@ -198,7 +198,7 @@ tell the program about those turnouts also (SE8c users skip this step).
       are driven by three separate outputs.  
       The outputs are driven by JMRI turnout logic, and 
       appear in the Turnout Table.
-      <P>To configure one of these,
+      <p>To configure one of these,
       enter the name you want to give it (typically something like IH2, etc), and
       the names of the three outputs that drive the lamps.
       <DT>Double Output
@@ -208,19 +208,19 @@ tell the program about those turnouts also (SE8c users skip this step).
       will turn them both on to make yellow.
       The outputs are driven by JMRI turnout logic, and 
       appear in the Turnout Table.
-      <P>
+      <p>
       To configure one of these,
       enter the name you want to give it (typically something like IH2, etc), and
       the names of the two turnouts that drive the lamps.
       <DT>SE8c 4 aspect
       <dd>This is one signal head driven by a Digitrax SE8c.  
-      <P>
+      <p>
       Enter
       the lower of the two "turnout address" that this Signal Head
       responds to.  For example, if it's the first head on the first
       card, you can control it by setting turnout 257 and 258 with
       your throttle.  Enter 257 in the turnout control box.
-      <P>
+      <p>
       The SE8c should be configured so that the "4th aspect" is "dark";
       the program will handle any flashing that's needed.
       </dl>
@@ -232,7 +232,7 @@ tell the program about those turnouts also (SE8c users skip this step).
 	<ul>
 	<li>Open the SSL tool from the "Tools" menu. You should get a frame
 	with a number of fields:
-		<A HREF="../../../../images/SE8cExampleLogic.png"><img src="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Signal Logic Window"></a>
+		<a HREF="../../../../images/SE8cExampleLogic.png"><img src="../../../../images/SE8cExampleLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="270" HSPACE="0" VSPACE="0" ALT="Signal Logic Window"></a>
 	<li>In the top box, enter the name of the signal you want to control.
 	<li>The radio buttons below that select one of four possible uses
 	for this signal:
@@ -265,7 +265,7 @@ tell the program about those turnouts also (SE8c users skip this step).
 	enter the name of the following signal in the last box.  When that
 	signal shows red, this one will be set to yellow to warn the engineer
 	that the train must be able to stop at the next signal.
-	<P>
+	<p>
 	If you'd like to give additional warning, click the "With Flashing
 	Yellow" checkbox.  In that case, the signal before a red will show
 	 yellow, and the signal before that yellow will
@@ -277,14 +277,14 @@ tell the program about those turnouts also (SE8c users skip this step).
 </OL>
 
 You can try out your signal logic by operating your layout.
-<P>
+<p>
 Although it's a lot less fun than actually running the layout, 
 you can also test the signal logic by changing turnout
 and sensor status in the computer itself.  Just click on the status
 information in the tables to change it.  For example, is turnout
 LT23 is showing "Thrown", click on that to change it to "Closed".  The
 signal status will update to the new appearance.
-<P>
+<p>
 You can create a small control panel to do this graphically. For more
 info on how to do that, see the 
 	<a href="../../../../html/apps/PanelPro/Panels.shtml">Panels page</a>.
