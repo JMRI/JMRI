@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Simple Signal Logic Example</title>
 
 <!-- Style -->
@@ -19,7 +18,6 @@
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-
 
 <!-- Page Body -->
 <h2>
@@ -111,9 +109,9 @@ block on the right side (block 1), the messages are:
    Requesting Switch at 284 to Thrown (output Off)
    Requesting Switch at 281 to Thrown (output Off)
 </pre>
-The three switch messages set signals 5B, D and 4C to Red, Red and Yellow respectively.
+The three switch messages set signals 5B, 4D and 4C to Red, Red and Yellow respectively.
 <li>
-<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align="right" width="291" height="272" hspace="0" vspace="0" alt="Simple Signal Logic Window"></a>
+<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align="right" width="290" height="270" hspace="0" vspace="0" alt="Simple Signal Logic Window"></a>
 To see how the Signals are configured, open the 
 "Simple Signal Logic" item in the Tools menu.
 Enter a Signal name, e.g. "Section 5A" in the top
@@ -132,6 +130,11 @@ will protect a Red on signal LH261 on the mainline between the turnouts.
 <li>
 The "With Flashing Yellow" checkbox isn't selected here, but if it was, this signal
 would protect a Yellow signal further on by displaying a Flashing Yellow.
+<li>
+If you check the "Distant Signal" box, the 
+signal you're controlling here is programmed to show the same or a more restrictive Aspect 
+as the next signal, instead of possibly one faster. Instead of showing Yellow before a Red, it 
+will show a Red.
 </ul>
 You can change any of these setting and click "Apply" to put them into
 effect, then click on the example Panel to see how the new settings work.
@@ -157,8 +160,7 @@ PanelPro, please see the
       throttle or the "Power Control..." pane from the Tools menu.
       PanelPro will capture all sensor addresses from 
       the resulting LocoNet traffic.
-   <li>For layouts with a different System Connection, use the "Add..." button at the bottom of the Sensors Table to 
-   	  create the needed sensors.  
+   <li>For layouts with a different System Connection, use the "Add..." button at the bottom of the Sensors Table to create the needed sensors.  
    </ul>
 
 <li>Save your work by selecting "Save Panels..." from the "Panels" menu,
@@ -219,7 +221,7 @@ tell the program about those Turnout addresses too. (SE8c users skip this step)
       <br>
       The SE8c should be configured so that the "4th aspect" is "dark";
       the program will handle any flashing that's needed.
-      <dt>Other options are "DCC Signal Decoder" and "Acela", among many others (you may have to scroll up or down to see them all)
+      <dt>Other signal driver options are "DCC Signal Decoder" and "Acela", among many others (you may have to scroll up or down to see them all)
       <dd>See the <a href="SignalHeads.shtml">Signal Heads help page</a> for more information an each.
       </dl>
       Once you've set the options, click "OK".  You can 
@@ -230,7 +232,7 @@ tell the program about those Turnout addresses too. (SE8c users skip this step)
 	<ul>
 	<li>Open the "Simple Signal Logic" tool from the "Tools" menu.  You should get a pane
 	with a number of fields:
-	<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align=right width="291" height="272" hspace="2" vspace="0" alt="Simple Signal Logic Window"></a>
+	<a href="../../../images/SE8cExampleLogic.png"><img src="../../../images/SE8cExampleLogic.png" align=right width="290" height="270" hspace="2" vspace="0" alt="Simple Signal Logic Window"></a>
 	<li>In the top box, enter the name of the Signal you want to control.
 	<li>The radio buttons below that select one of four possible uses
 	for this Signal:
@@ -262,8 +264,8 @@ tell the program about those Turnout addresses too. (SE8c users skip this step)
 	<li>If you want multi-block logic, e.g. Absolute Block Signaling,
 	enter the name of the following Signal in the last box.  When that
 	Signal shows Red, the one you're now configuring will be set to Yellow to warn the engineer
-	that the train must be able to stop at the next signal.
-	<p>
+	that the train must be able to stop at the next signal.<br>
+	<i>We suggest you use the newer <a href="AspectSignaling.shtml">Aspect Based Signaling</a> instead of SSL for any more complex setup .</i><br>
 	If you'd like to give additional warning, click the "With Flashing
 	Yellow" checkbox.  In that case, the Signal before a Red will show
 	 Yellow, and the Signal before that yellow will
