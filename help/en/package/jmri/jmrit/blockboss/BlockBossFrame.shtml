@@ -1,7 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- $Id$ -->
 <title>JMRI: Simple Signal Logic</title>
 
 <!-- Style -->
@@ -47,7 +46,7 @@ up basic signaling situations with it.
 
 <p>Much of basic ABS signaling can be boiled down to "a Signal Head goes red when a train
 can't safely enter the block it protects; it goes yellow when the block following 
-the protected block can't be entered". Although that's a simplication, it can serve
+the protected block can't be entered". Although that's a simplification, it can serve
 as a powerful starting point for understanding signaling logic.
 	
 	<p>The SSL user interface was designed to be user friendly to
@@ -55,7 +54,7 @@ as a powerful starting point for understanding signaling logic.
 	for setting up basic signals in an intuitive manner, without the 
 	user having to be familiar with all of the logic necessary to account for the different Signal Aspects.
 	
-	<a href="images/SSLogic.png"><IMG SRC="images/SSLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="216" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
+	<a href="images/SSLogic.png"><img src="images/SSLogic.png" ALIGN=RIGHT WIDTH="290" HEIGHT="216" HSPACE="0" VSPACE="0" ALT="Simple Signal Logic panel figure"></a>
 
 <p>
 The Simple Signal Logic Tool allows you to configure JMRI to 
@@ -158,7 +157,7 @@ in the case of Turnouts and the actual hardware number of the Turnout.
 	  
 	  <a name="more"><h2>More on SSL</h2></a>
 	  <ul>
-		  <li>For more information check out the <a href="SimpleSignalExample.shtml">Simple Signal Logic example</a>.
+		  <li>For more information check out the <a href="../../../../html/tools/signaling/SimpleSignalExample.shtml">Simple Signal Logic example</a>.
 			  <li><a href="../../../../html/tools/signaling/Logic.shtml">Backgrounds on SSL</a>
 		  </ul>
 
