@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
     <head>
-        <!-- Copyright 2008 -->
+        <!-- Copyright 2015 -->
         <!-- $Id$ -->
         <title>JMRI Web Access</title>
 
@@ -59,7 +59,7 @@
             <h2>Web Server Preferences</h2>
             <p>Web Server Preferences are in two categories:</p>
             <dl>
-                <dt><a href="WebServer.shtml#Preferences">Web Server</a></dt>
+                <dt><a href="WebServer.shtml">Web Server</a></dt>
                 <dd>
                     <dl>
                         <dt>Port#</dt>
@@ -75,7 +75,7 @@
                             status, but cannot turn off or turn on layout power.</dd>
                     </dl>
                 </dd>
-                <dt><a href="FrameServlet.shtml#Preferences">Frame Server</a></dt>
+                <dt><a href="FrameServlet.shtml">Frame Server</a></dt>
                 <dd><dl>
                         <dt>Click Delay</dt>
                         <dd>Wait the specified number of seconds after a click
@@ -105,6 +105,7 @@
                 <a href="#roster">roster</a>, and <a href="#operations">operations</a>
                 services.</p>
             <!-- don't mention the servlets at all, just mention the services provided by the servlets -->
+            
             <h3><a id="panels" href="PanelServlet.shtml">Panels</a></h3>
             <!-- panelServlet intro -->
             <p>Loaded JMRI panels can be used in a modern web browser on computers,
@@ -122,6 +123,7 @@
                 other computer as a throttle device with the
                 <a href="http://localhost:12080/web/webThrottle.html">Web
                     Throttle</a>.</p>
+                    
             <h3><a id="operations" href="Operations.shtml">Operations</a></h3>
             <!-- operationsServlet intro -->
             <p>Operations services at <a href="http://localhost:12080/operations">http://localhost:12080/operations</a>
@@ -137,6 +139,7 @@
                 that not all open windows are viewable. See
                 <a href="FrameServlet.shtml">Window Services</a> for more
                 information.<p>
+                
             <h3><a id="files">File System</a></h3>
             <!-- fileServlet intro -->
             <p>A local web page (HTML file), graphic or text file, or directory
@@ -154,6 +157,7 @@
             <p>Note that if a directory contains a file named <code>index.html</code>
                 will display the index.html file instead of listing the directory
                 contents.</p>
+                
             <h3><a id="json" href="JsonServlet.shtml">JSON Protocol</a></h3>
             <!-- JsonServlet intro -->
             <p>JMRI provides a JSON Protocol to access and manipulate for a
@@ -175,7 +179,10 @@
                 modifications do not cause the templates to break entirely. If
                 web access does not work as expected after modifying a template,
                 check the JMRI logs for the cause.</p>
-        </div>
-        <!--#include virtual="/Footer" -->
-    </body>
+
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+
+</body>
 </html>

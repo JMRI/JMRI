@@ -43,16 +43,16 @@ DecoderPro simplifie la t&#226;che de configuration compliqu&#233;e des d&#233;c
 		</dd>
 		<dt><h3><a href="LocoTools/index.shtml">Outils LocoNet</a></h3></dt>
 		<dd> Un ensemble d'outils LocoNet sp&#233;cifiques Digitrax :
-		    <UL>
-		  	<LI><dfn>moniteur LocoNet</dfn>
-		   	<LI><dfn> moniteur de Slot </dfn>
+		    <ul>
+		  	<li><dfn>moniteur LocoNet</dfn>
+		   	<li><dfn> moniteur de Slot </dfn>
                    	<LI> <dfn> source de paquets </dfn>
 		    	<LI> <dfn> programmateur PM4 </dfn>
-			<LI> <dfn> programmateur BDL16 </dfn>
-			<LI> <dfn> programmateur SE8C </ dfn>
-			<LI> <dfn> programmateur DS64 </ dfn>
-			<LI> <dfn> LocoIO programmateur</dfn>
-		    </UL>
+			<li> <dfn> programmateur BDL16 </dfn>
+			<li> <dfn> programmateur SE8c </dfn>
+			<li> <dfn> programmateur DS64 </dfn>
+			<!-- <LI> <dfn> LocoIO programmateur</dfn> pour LocoIO utiliser DP3 -->
+		    </ul>
 		Ils sont &#233;galement disponibles dans DecoderPro et PanelPro lorsque ces derniers sont
 		configur&#233;s pour une connexion LocoNet, mais LocoTools leur fournit une fa&#231;on  plus facile de les
 		utilis&#233;s. 
@@ -61,5 +61,6 @@ DecoderPro simplifie la t&#226;che de configuration compliqu&#233;e des d&#233;c
 	    </dl>
 
 <!--#include virtual="/Footer" -->
+</div> <!-- close #mainContent -->
 </body>
 </html>

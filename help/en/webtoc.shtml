@@ -1,17 +1,16 @@
-<HTML LANG="en">
-<HEAD>
-<META http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<TITLE>JMRI Help System: Table of Contents</TITLE>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<META CONTENT="Bob Jacobsen" NAME="Author">
-<META NAME="keywords" CONTENT="JMRI help Route Add Edit">
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
-</HEAD>
-<BODY>
+<html lang="en">
+<head>
+<title>JMRI Help System: Table of Contents</title>
+<meta NAME="Author" CONTENT="Bob Jacobsen">
+<meta NAME="keywords" CONTENT="JMRI help Route Add Edit">
+<meta HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<link REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
+<link REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<link REL="home" TITLE="Home" HREF="/">
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="tocheader" -->
 <ul>
@@ -626,7 +625,7 @@
 </li>
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">Operations </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
    
 <li>
@@ -1074,7 +1073,7 @@
 </li>
  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">Operations </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
   
 <li>
@@ -1652,8 +1651,10 @@
 <ul></ul>
 </li>
 
-
 </ul>
+
 <!--#include virtual="/Footer" -->
-</BODY>
-</HTML>
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
+</body>
+</html>

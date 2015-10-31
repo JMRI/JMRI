@@ -204,6 +204,10 @@ public class UserInterface extends JmriJFrame implements DeviceListener, DeviceM
             @Override
             public void actionPerformed(ActionEvent e) {
                 userPreferences.addComboBoxLastSelection(rosterGroupSelectorPreferencesName, (String) ((JComboBox<String>) e.getSource()).getSelectedItem());
+//              Send new selected roster group to all devices
+                for (DeviceServer device : deviceList){
+                    device.sendPacketToDevice(device.sendRoster());
+                }
             }
         });
     }
