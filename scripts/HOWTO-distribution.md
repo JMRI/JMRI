@@ -64,18 +64,18 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ================================================================================
 First, we merge in as much tentative content as possible to the SVN trunk.
 
-( ) If it's a new year, update copyright dates (done for 2015):
+[ ] If it's a new year, update copyright dates (done for 2015):
 
     * build.xml (3) in the jmri.copyright.years property value
     * site/Copyright.html (3 places)
     * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
 
-( ) Bring in all possible sf.net patches, including decoders
+[ ] Bring in all possible sf.net patches, including decoders
 
-( ) Bring in all possible GitHub pull requests
+[ ] Bring in all possible GitHub pull requests
 
-( ) Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
+[ ] Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
 
         ant remakedecoderindex
 
@@ -85,11 +85,11 @@ First, we merge in as much tentative content as possible to the SVN trunk.
         git diff # as a check.
         Commit.
 
-( ) Update the help/en/Acknowledgements.shtml help page with any recent changes
+[ ] Update the help/en/Acknowledgements.shtml help page with any recent changes
 
-( ) Commit any changes in your local web site directory, these can end up in help, xml, etc
+[ ] Commit any changes in your local web site directory, these can end up in help, xml, etc
 
-( ) Remake the help index  (need a command line approach, so can put in ant!)
+[ ] Remake the help index  (need a command line approach, so can put in ant!)
 
     cd help/en/
     rm ~/.jhelpdev    (to make sure the right preferences are chosen)
@@ -115,26 +115,26 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 This group of items it just general code maintenance that we roll into the
 release process.  They can be skipped occasionally.
 
-( ) Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
+[ ] Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
 
         grep -rlI --exclude-dir=.git $'\xEF\xBB\xBF\xEF\xBB\xBF'
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
-( ) Confirm that all the above changes have been committed back to GitHub trunk, and pull back to make sure your repository is at the right point
+[ ] Confirm that all the above changes have been committed back to GitHub main JMRI repository master branch, and pull back to make sure your repository is at the right point
 
-( ) Run "ant alltest"; make sure they all pass; fix problems and commit back
+[ ] Run "ant alltest"; make sure they all pass; fix problems and commit back
 
-( ) Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
+[ ] Run "ant decoderpro"; check for no startup errors, right version, help index present and working OK. Fix problems and commit back.
 
-( ) This is a good place to check that the decoder XSLT transforms work
+[ ] This is a good place to check that the decoder XSLT transforms work
 
         cd xml/XSLT
         ant
         
 If you fix anything, commit it back.
 
-( ) This is a good place to make sure CATS still builds
+[ ] This is a good place to make sure CATS still builds
 
         http://jmri.org/help/en/html/doc/Technical/CATS.shtml
         
@@ -144,7 +144,7 @@ If you fix anything, commit it back.
 ================================================================================
 Second, we build the release branch:
 
-( ) Start the release by creating a new "release branch" (This step didn't seem to work for SVN under Cygwin, so needed to be done from the Windows command line) (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+[ ] Start the release by creating a new "release branch" (This step didn't seem to work for SVN under Cygwin, so needed to be done from the Windows command line) (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
     ant make-test-release-branch
 
@@ -165,15 +165,15 @@ This will do (more or less) the following actions:
 ================================================================================
 If you're doing the build using the CI engine, configure it to build the new release:
 
-( ) Log in to the CI engine at 
+[ ] Log in to the CI engine at 
 
     http://builds.jmri.org/jenkins/job/Test%20Releases/
 
-( ) Click "New Item"
+[ ] Click "New Item"
 
 ( ) Click "Copy Existing Item", and enter the name of the most recent release. Fill out the new release name at the top. Click "OK"
 
-( ) Update
+[ ] Update
 
         Project Name
         Description
@@ -186,20 +186,20 @@ The build will start shortly.
 ====================================================================================
 For local builds, these are the build instructions; CI builds will already be running)
 
-( ) Get the release in your local work directory
+[ ] Get the release in your local work directory
 
-    git checkout release-3.11.6
+    git checkout release-4.1.3
 
-( ) edit release.properties to say release.official=true (last line)
+[ ] edit release.properties to say release.official=true (last line)
 
-( ) Do the build:
+[ ] Do the build:
 
     ant -Dnsis.home="" clean packages
 
 Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
 
 
-( ) Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
+[ ] Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
      
 The main JMRI web site gets completely overwritten by Jenkins, so one approach:
     
@@ -223,36 +223,36 @@ Third, we do the release-specific updates.
 
     (we need to work through automation of version number values)
 
-( ) Create the _next_ release note, so that people will document new (overlapping) changes there.
+[ ] Create the _next_ release note, so that people will document new (overlapping) changes there.
     
         cd (local web copy)/releasenotes
         git pull # to pick up everybody's changes
-        cp jmri3.11.5.shtml jmri3.11.6.shtml
+        cp jmri4.1.3.shtml jmri4.1.4.shtml
         (edit the new release note accordingly)
-        git commit -m"start new release note" jmri3.11.6.shtml
+        git commit -m"start new release note" jmri4.1.4.shtml
 
-( ) Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force) update. Confirm visible on web.
+[ ] Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force) update. Confirm visible on web.
 
-( ) Announce the file set to jmri-developers with a download URL like:
+[ ] Announce the file set to jmri-developers with a download URL like:
 
-    http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/
+    http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.3/
 
-( ) WAIT FOR SOME REPLIES before going to "Actual release steps" below.
+[ ] WAIT FOR SOME REPLIES before going to "Actual release steps" below.
 
 ====================================================================================
 Actual release steps:
 
 
-( ) Upload the Linux, Mac OS X and Windows files to sourceforge
+[ ] Upload the Linux, Mac OS X and Windows files to sourceforge
 
 Download from CI, check integrity (make sure compressed files not expanded), then do (replace "user" with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
 
     (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
-    (the "./testrelease 3.11.2" local script on shell.sf.net does those steps)
+    (the "./testrelease 4.1.3" local script on shell.sf.net does those steps)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/dist/release/*zip*/release.zip"
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.3/ws/dist/release/*zip*/release.zip"
     rm release/JMRI*
     unzip release.zip
     cd release
@@ -264,7 +264,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
     
     (clean up and logout)
 
-( ) Create and upload the JavaDocs (as of late 2013, CloudBees was updating these from SVN weekly: 
+[ ] Create and upload the JavaDocs (as of late 2013, CloudBees was updating these from SVN weekly: 
                 
                               https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
 
@@ -272,80 +272,89 @@ so please skip this step if that's working)
 
     ant javadoc-uml uploadjavadoc
 
-( ) Create and upload the XSLT'd decoder pages
+[ ] Create and upload the XSLT'd decoder pages
 
     (cd xml/XSLT; ant xslt upload)
 
 Note: the very first time doing this on a new machine, it will be required to run the rsync command manually as the ssh fingerprint for the server wil need to be added to the local machine. Without this, it will fail via ant.
 
-( ) Format the release note page: change date, comment out "draft release", make sure links work and proper sections are commented/not commented out
+[ ] Format the release note page: change date, comment out "draft release", make sure links work and proper sections are commented/not commented out
 
-( ) Wait until the downloads have propagated to the mirrors; check by trying to download each file
+[ ] Wait until the downloads have propagated to the mirrors; check by trying to download each file
 
-( ) Commit release note file(s) to the web site GitHub repository,
+[ ] Commit release note file(s) to the web site GitHub repository,
 
-( ) Wait for update on JMRI web server
+[ ] Wait for update on JMRI web server
 
-( ) Complete all the above before continuing
+[ ] Complete all the above before continuing
 
-( ) Update the web site front page and downloads page:
+[ ] Update the web site front page and downloads page:
 
      index.html download/Sidebar download/index.shtml releaselist
 
-( ) Commit site
+[ ] Commit site
 
-( ) Consider submitting an anti-virus white-list request at:
+[ ] Consider submitting an anti-virus white-list request at:
 
         https://submit.symantec.com/whitelist/isv/
 
     If you don't, a bunch of Windows users are likely to whine
 
-( ) For production releases, file copyright registration
+[ ] For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
-( ) For production releases, make a new version of the Manual files (procedure to be developed!)
+[ ] For production releases, make a new version of the Manual files (procedure to be developed!)
 
-( ) Wait for update on JMRI web server
+[ ] Wait for update on JMRI web server
 
 ====================================================================================
 GitHub release steps
 
-( ) on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
+[ ] on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
 
     https://github.com/JMRI/JMRI/releases/new
-    
-( ) Fill out form:
+
+[ ] Fill out form:
 
     "tag version field" gets vN.N.N (e.g. leading lower-case "v")
     @ branch: select the release-n.n.n release branch
     "Release title" field gets "Test/Prod Release N.N.N"
     Drop a link to the release note in the discussion field (for now)
     Attach files by dragging them in (you might have to have downloaded them above via e.g. a separate 
-    
-    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/3.11.6/ws/dist/release/*zip*/release.zip" 
-    
-    and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast)
+
+    curl -o release.zip "http://builds.jmri.org/jenkins/job/Test%20Releases/job/4.1.3/ws/dist/release/*zip*/release.zip" 
+
+    and expansion; it's slow to upload from a typical home machine, though, so wish we had a way to cross-load from somewhere fast - if release.zip is still on SF.net, you can do
+    ssh jacobsen,jmri@shell.sf.net create
+    scp jacobsen,jmri@shell.sf.net:release.zip .
+
+    then expand the release.zip file
+
+    Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish
     
     Click "Publish Release"
     Wait for completion, which might be a while with big uploads
-    
+
+
     (It might be possible to automate this in Ant, see http://stackoverflow.com/questions/24585609/upload-build-artifact-to-github-as-release-in-jenkins and https://github.com/JMRI/JMRI/issues/103 )
     
+[ ] Once the tag is in place (confirm), manually delete the release-4.1.3 branch via the GitHub UI at https://github.com/JMRI/JMRI/branches
+
 ====================================================================================
 Announcement and post-release steps
 
-( ) Mail announcement to jmriusers@yahoogroups.com
+[ ] Mail announcement to jmriusers@yahoogroups.com
 
-    Subject is "Test version 3.9.5 of JMRI/DecoderPro is available for download" or "JMRI 3.8 is available for download"
+    Subject is "Test version 4.1.3 of JMRI/DecoderPro is available for download" or "JMRI 4.0 is available for download"
 
-( ) If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
+[ ] If a production version, update the SF automatic download icon by selecting default in SF.net FRS (3 times)
 
-( ) Wait a day for complaints
+[ ] Wait a day for complaints
 
-( ) If production release, mail announcement to jmri-announce@lists.sourceforge.net
+[ ] If production release, mail announcement to jmri-announce@lists.sourceforge.net
 
-( ) Decide if worth announcing elsewhere (production version or big system-specific fix/feature):
+[ ] Decide if worth announcing elsewhere (production version or big system-specific fix/feature):
 
         RailRoadSoftware&yahoogroups.com
         MAC_DCC@yahoogroups.com
@@ -360,9 +369,9 @@ Announcement and post-release steps
         rrsoftware@yahoogroups.com
         Apple MacOS Software
 
-( ) Commit back any changes made to this doc
+[ ] Commit back any changes made to this doc
 
-( ) Take a break!
+[ ] Take a break!
 
 
 ================================================================================
