@@ -329,7 +329,7 @@ GitHub release steps
     ssh jacobsen,jmri@shell.sf.net create
     scp jacobsen,jmri@shell.sf.net:release.zip .
 
-    then expand the release.zip file
+    then expand the release.zip file and drag-and-drop the three files onto the web page one at a time.
 
     Note there's a little progress bar that has to go across & "Uploading your release now..." has to complete before you publish
     
