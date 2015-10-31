@@ -33,9 +33,6 @@ import org.slf4j.LoggerFactory;
 public class MemoryComboIcon extends PositionableJPanel
         implements java.beans.PropertyChangeListener, ActionListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 5312988172386396581L;
     JComboBox<String> _comboBox;
     ComboModel _model;
@@ -68,12 +65,12 @@ public class MemoryComboIcon extends PositionableJPanel
         }
         setPopupUtility(new PositionablePopupUtil(this, _comboBox));
     }
+    
+    public javax.swing.JComponent getTextComponent() {
+        return _comboBox;
+    }
 
     class ComboModel extends DefaultComboBoxModel<String> {
-
-        /**
-         *
-         */
         private static final long serialVersionUID = 2915042785923780735L;
 
         ComboModel() {
