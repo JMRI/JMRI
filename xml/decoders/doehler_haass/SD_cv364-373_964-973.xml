@@ -155,7 +155,7 @@
 		<label xml:lang="fr">Modulation marche dynamique</label>
 		<label xml:lang="de">Modulation dynamische Fahrt</label>
 	</variable>
-	<variable label="Modulation dynamic run" CV="371" default="0" tooltip="CV371" item="Sound Setting 34" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02">
+	<variable label="Modulation dynamic run" CV="971" default="0" tooltip="CV971" item="Sound Setting 34" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02">
 		<decVal/>
 		<label xml:lang="fr">Modulation marche dynamique</label>
 		<label xml:lang="de">Modulation dynamische Fahrt</label>
