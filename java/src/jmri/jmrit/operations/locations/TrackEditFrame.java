@@ -150,6 +150,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         // tool tips
         autoDropCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrack"));
         autoPickupCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrack"));
+        trackLengthTextField.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackLength"), 
+                new Object[]{Setup.getLengthUnit().toLowerCase()}));
 
         // property changes
         _location.addPropertyChangeListener(this);
