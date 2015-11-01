@@ -13,22 +13,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Bob Jacobsen" version="1" lastUpdated="200090407"/>
-  <!-- Version 1 New file from 0.4 manual and BLI_Blueline_diesel v5 -->
-  <!-- for JMRI 2.5.2 use, the max functions is set to 27 instead of 28 -->
-  <version author="Michael Mosher" version="2" lastUpdated="20110129"/>
-  <!-- Version 2 fix smoke control bug, CV116-117 bug, some pane tweeks, some default value changes -->
-  <!--             add CV 121,122,203,204,205,206,207,211,234,235,236,237 -->
-  <version author="Marc Fournier" version="3" lastUpdated="20110304"/>
-  <!-- Version 3 correct wording of CV8 = 254 reset -->
-  <version author="Michael Mosher" version="4" lastUpdated="20141208"/>
-  <!-- Version 4 fix CV246 bit 7 label -->
-  <version author="Michael Mosher" version="5" lastUpdated="20150325"/>
-  <!-- Add Var's now listed in V1.10 of steam tech ref and rearrange items on panes -->
-  <version author="Michael Mosher" version="6" lastUpdated="20151016"/>
-  <!-- General cleanup, more use of external files to go along with P3 file -->
+  <version author="Michael Mosher" version="1" lastUpdated="20151016"/>
+  <!-- Version 1 New file from 0.13 manual and BLI_Paragon2_steam v5 -->
   <decoder>
-    <family name="Paragon 2" mfg="Broadway Limited Imports, LLC">
+    <family name="Paragon 3" mfg="Broadway Limited Imports, LLC">
       <model model="Steam" numOuts="3" numFns="30" connector="9pin">
         <versionCV lowVersionID="32" highVersionID="63"/>
         <output name="1" label="headlight"/>
@@ -58,6 +46,9 @@
         <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
         <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
         <functionlabel num="22" lockable="true">Horn2</functionlabel>
+        <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+        <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+        <functionlabel num="25" lockable="true">Long Whistle</functionlabel>
         <functionlabel num="26" lockable="true">Play Macro</functionlabel>
         <functionlabel num="27" lockable="true">Record Macro</functionlabel>
         <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
@@ -70,111 +61,125 @@
       <!-- assigning functions to outputs. Instead, it has -->
       <!-- a much more civilized system of one CV per function -->
       <variable CV="33" default="1" minFn="1" item="F0 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="34" default="2" minFn="1" item="F1 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="35" default="3" minFn="2" item="F2 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="36" default="17" minFn="3" item="F3 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="37" default="5" minFn="4" item="F4 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="38" default="6" minFn="5" item="F5 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="39" default="7" minFn="6" item="F6 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="40" default="21" minFn="7" item="F7 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="41" default="9" minFn="8" item="F8 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="42" default="10" minFn="9" item="F9 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="43" default="11" minFn="10" item="F10 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="44" default="12" minFn="11" item="F11 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="45" default="13" minFn="12" item="F12 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="46" default="30" minFn="13" item="F13 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="47" default="50" minFn="14" item="F14 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="48" default="51" minFn="15" item="F15 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="49" default="52" minFn="16" item="F16 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="50" default="53" minFn="17" item="F17 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="51" default="54" minFn="18" item="F18 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="52" default="55" minFn="19" item="F19 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="53" default="56" minFn="20" item="F20 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="54" default="57" minFn="21" item="F21 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="55" default="19" minFn="22" item="F22 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="56" default="8" minFn="23" item="F23 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
-      <variable CV="57" default="0" minFn="24" item="F24 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+      <variable CV="57" default="8" minFn="24" item="F24 Output Function">
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="58" default="0" minFn="25" item="F25 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="59" default="40" minFn="26" item="F26 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="60" default="41" minFn="27" item="F27 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="61" default="18" minFn="28" item="F28 Output Function">
-        <xi:include href="http://jmri.org/xml/decoders/bli/P2FunctionChoiceSteam.xml"/>
-      </variable>
-      <variable CV="119" item="EMF Option 2" default="4">
-        <decVal/>
-        <label>KlSlow</label>
+        <xi:include href="http://jmri.org/xml/decoders/bli/P3FunctionChoiceSteam.xml"/>
       </variable>
       <variable CV="156" default="128" item="Sound Setting 25">
         <decVal/>
-        <label>Passenger/Freight Volume</label>
+        <label>Station/Yard Volume</label>
       </variable>
-      <variable CV="181" default="50" item="Sound Group 3 Option 4">
+      <variable CV="176" default="114" item="Fatal OverCurrent Config" readOnly="yes" tooltip="This value determines the internal references, multiplies and comparator selection. DO NOT CHANGE.">
         <decVal/>
-        <label>Horn Fade In</label>
       </variable>
-      <variable CV="182" default="40" item="Sound Group 3 Option 5">
+      <variable CV="177" default="120" item="Fatal OverCurrent Sensitivity" tooltip="This value determines how sensitive or not the over current circuit is. Increasing this value decreases the sensitivity.">
         <decVal/>
-        <label>Horn Fade Out</label>
       </variable>
-      <variable CV="183" default="69" item="Sound Group 3 Option 6">
+      <variable CV="212" default="1" item="Sound Group 1 Option 1">
+        <decVal max="29"/>
+        <label>Rolling Thunder Address</label>
+      </variable>
+      <variable CV="213" default="128" item="Sound Group 1 Option 2">
         <decVal/>
-        <label>Horn Fade In Level</label>
+        <label>Rolling Thunder Setup</label>
+      </variable>
+      <variable CV="214" default="128" item="Sound Setting 40">
+        <decVal/>
+        <label>Rolling Thunder Volume</label>
+      </variable>
+      <variable CV="218" default="70" item="Smoke Unit Idle Heater Power">
+        <decVal/>
+        <label>Smoke Unit Idle Set Point</label>
+      </variable>
+      <variable CV="219" default="80" item="Smoke Unit Chuff Heater Power">
+        <decVal/>
+        <label>Smoke Unit Chuff Set Point</label>
+      </variable>
+      <variable CV="220" default="150" item="Chuff Adjust" tooltip="If CV246 D6=1 the locomotive uses this value as a timer to generate chuffs">
+        <decVal/>
+        <label>Chuff Timer</label>
       </variable>
       <variable item="Aux Select for DCMaster" CV="222" default="0">
         <enumVal>
@@ -238,8 +243,32 @@
           <enumChoice>
             <choice>Horn2 Toggle</choice>
           </enumChoice>
+          <enumChoice>
+            <choice>Complete Horn</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Smoke Control</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Blower</choice>
+          </enumChoice>
+          <enumChoice value="24">
+            <choice>L4</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>L5</choice>
+          </enumChoice>
+          <enumChoice value="28">
+            <choice>Dynamo</choice>
+          </enumChoice>
           <enumChoice value="30">
             <choice>Horn Grade Crossing Sound</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Track Sounds</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Johnson Bar</choice>
           </enumChoice>
           <enumChoice value="40">
             <choice>Play Macro</choice>
@@ -280,6 +309,17 @@
         </enumVal>
         <label>Aux Select for DCMaster</label>
       </variable>
+      <variable item="Sound Group 2 Option 2" CV="223" default="0">
+        <enumVal>
+          <enumChoice>
+            <choice>Bell1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Bell2</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Bell Select</label>
+      </variable>
       <variable CV="224" default="0" item="Sound Group 2 Option 1">
         <enumVal>
           <enumChoice>
@@ -291,28 +331,54 @@
           <enumChoice>
             <choice>Horn4</choice>
           </enumChoice>
+          <enumChoice>
+            <choice>Complete Horn</choice>
+          </enumChoice>
         </enumVal>
         <label>Horn Select</label>
       </variable>
-      <variable item="Chuff Adjust" CV="233" default="150" tooltip="For this to have any effect, Chuff Sensor must be off">
-        <decVal/>
-        <label>Chuff Adjust</label>
+      <variable item="Function 1 options" CV="225" mask="XXXXXVXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>L4 Light</label>
       </variable>
-      <variable item="Smoke Unit Fan Chuff Time" CV="234" default="25">
-        <decVal/>
-        <label>Smoke Unit Fan Chuff Time</label>
+      <variable item="Function 1 option 1" CV="225" mask="XXVXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>L4 follows front/rear on/off</label>
       </variable>
-      <variable item="Smoke Unit Fan Idle Power" CV="235" default="250">
-        <decVal/>
-        <label>Smoke Unit Fan Idle Power</label>
+      <variable item="Function 1 option 2" CV="225" mask="XVXXXXXX" default="0">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>L5 follows front/rear on/off</label>
       </variable>
-      <variable item="Smoke Unit Chuff Heater Power" CV="236" default="80">
+      <variable item="Consist L4 Light" CV="229" mask="XXXXVXXX" default="1" tooltip="DCC and DC)">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
+        <label>Consist L4 Light</label>
+      </variable>
+      <variable item="Smoke Unit Fan Idle Power" CV="232" default="8">
+        <decVal/>
+        <label>Fan Idle Power</label>
+      </variable>
+      <variable item="Fan Normal Chuff Power" CV="233" default="60">
+        <decVal/>
+        <label>Fan Normal Chuff Power</label>
+      </variable>
+      <variable item="Fan Loaded Chuff Power" CV="234" default="80">
+        <decVal/>
+        <label>Fan Loaded Chuff Power</label>
+      </variable>
+      <variable item="Fan Steam Cock Chuff Power" CV="235" default="70">
+        <decVal/>
+        <label>Fan Steam Cock Chuff Power</label>
+      </variable>
+      <variable item="Fan Rod Knock Chuff Power" CV="236" default="40">
         <decVal max="110"/>
-        <label>Smoke Unit Chuff Heater Power</label>
+        <label>Fan Rod Knock Chuff Power</label>
       </variable>
-      <variable item="Smoke Unit Idle Heater Power" CV="237" default="50">
+      <variable item="Smoke Unit Fan Chuff Time" CV="237" default="50">
         <decVal max="110"/>
-        <label>Smoke Unit Idle Heater Power</label>
+        <label>Fan Chuff Time</label>
+      </variable>
+      <variable item="Track Sounds Maximum Speed Step" CV="242" default="15">
+        <decVal/>
       </variable>
     </variables>
     <resets>

@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<pane xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <name>DCC Control</name>
+    <column>
+      <row>
+        <display item="DCC Uncouple Throttle Stop" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DCC Uncouple Throttle Stop" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DCC Cab Light Throttle Stop" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DCC Cab Light Throttle Stop" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DCC Brake Set Throttle Stop" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DCC Brake Set Throttle Stop" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DCC Brake Release Throttle Stop" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DCC Brake Release Throttle Stop" layout="above" format="hslider"/>
+      </row>
+    </column>
+    <column>
+      <row>
+        <display item="DCC Brake Control" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DCC Brake Control" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Brake Timer" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Brake Timer" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="DCC Startup Timer" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="DCC Startup Timer" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Over Current Delay" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Over Current Delay" layout="above" format="hslider"/>
+      </row>
+      <label>
+        <text> </text>
+      </label>
+      <row>
+        <display item="Motor Startup Delay" layout="above" label="">
+          <label/>
+        </display>
+        <label>
+          <text> </text>
+        </label>
+        <display item="Motor Startup Delay" layout="above" format="hslider"/>
+      </row>
+    </column>
+    <column>
+      <display item="Decoder Lock ID number"/>
+      <display item="Macro Recorder Speed Steps"/>
+      <display item="Recorder Repeats"/>
+      <display item="Recorder Playback Loop Adjust"/>
+    </column>
+</pane>
