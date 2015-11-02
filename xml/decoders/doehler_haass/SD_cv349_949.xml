@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -26,23 +26,29 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
-      <revnumber>1</revnumber>
-      <date>2014-06-03</date>
+      <revnumber>2</revnumber>
+      <date>2015-11-01</date>
       <authorinitials>PB</authorinitials>
-      <revremark>Creation</revremark>
+      <revremark>Included similar CVs from SUSI sound modules</revremark>
     </revision>
-  </revhistory>
-  <!-- Using JMRI item "Advanced Group 2 Option 2" and 3 -->
-  <variable CV="967" tooltip="CV967 bit 0" mask="XXXXXXXV" default="1" item="Advanced Group 2 Option 2" exclude="SH10A_1.00,SH10A_1.01">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-    <label>Random stillstand sounds</label>
-    <label xml:lang="fr">Sons aléatoire à l'arrêt</label>
-    <label xml:lang="de">Zufallsgeräusche im Stand</label>
-  </variable>
-  <variable CV="967" tooltip="CV967 bit 1" mask="XXXXXXVX" default="1" item="Advanced Group 2 Option 3" exclude="SH10A_1.00,SH10A_1.01">
-    <xi:include href="http://jmri.org/xml/decoders/parts/enum-enabledDisabled.xml"/>
-    <label>Random running sound</label>
-    <label xml:lang="fr">Sons aléatoire en marche</label>
-    <label xml:lang="de">Zufallsgeräusche während der Fahrt</label>
-  </variable>
+	<revision>
+      <revnumber>1</revnumber>
+      <date>2015-03-05</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation. Valid from firmwares as of Oct 2014</revremark>
+    </revision>
+   </revhistory>
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter --> 
+   <variable label="Volume sound fader" CV="349" default="0" tooltip="CV349: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD18A_1.02,SD21A_1.01,SD21A_1.02">
+		<decVal/>
+		<label xml:lang="fr">Volume mode silencieux</label>
+		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
+	</variable>
+	<variable label="Volume sound fader" CV="949" default="0" tooltip="CV949: 0=>0%, 255=>200%" item="Sound Setting 6" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04">
+		<decVal/>
+		<label xml:lang="fr">Volume mode silencieux</label>
+		<label xml:lang="de">Lautstärke Ausblendeffekt</label>
+	</variable>
+	
+  <!-- END SIMILAR CV --> 
 </variables>

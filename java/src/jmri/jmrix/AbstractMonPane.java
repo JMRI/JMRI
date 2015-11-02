@@ -431,21 +431,12 @@ public abstract class AbstractMonPane extends JmriPanel {
         if (freezeButton.isSelected()) {
             return;
         }
-        //note: raw is now formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
-        //don't bother to check filter if no raw value passed
-        if (raw != null && raw.length() >= 7) {
-            // if first bytes are in the skip list,  exit without adding to the Swing thread
-            String[] filters = filterField.getText().toUpperCase().split(" ");
-            String checkRaw = raw.substring(5, 7);
-
-            for (String s : filters) {
-                if (s.equals(checkRaw)) {
-                    linesBuffer.setLength(0);
-                    return;
-                }
-            }
+        
+        // if this message is filtered out, end
+        if (isFiltered(raw)) {
+            return;
         }
-
+        
         Runnable r = new Runnable() {
             @Override
             public void run() {
@@ -467,6 +458,30 @@ public abstract class AbstractMonPane extends JmriPanel {
         javax.swing.SwingUtilities.invokeLater(r);
     }
 
+    /**
+     * Default filtering implementation, more of an example
+     * than anything else, not clear it really works
+     * for any system.  Override this in system-specific subclasses to do something 
+     * useful.
+     */
+    protected boolean isFiltered(String raw) {
+        //note: raw is now formatted like "Tx - BB 01 00 45", so extract the correct bytes from it (BB) for comparison
+        //don't bother to check filter if no raw value passed
+        if (raw != null && raw.length() >= 7) {
+            // if first bytes are in the skip list,  exit without adding to the Swing thread
+            String[] filters = filterField.getText().toUpperCase().split(" ");
+            String checkRaw = raw.substring(5, 7);
+
+            for (String s : filters) {
+                if (s.equals(checkRaw)) {
+                    linesBuffer.setLength(0);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
     String newline = System.getProperty("line.separator"); // NOI18N
 
     public synchronized void clearButtonActionPerformed(java.awt.event.ActionEvent e) {
@@ -549,7 +564,7 @@ public abstract class AbstractMonPane extends JmriPanel {
     // to get a time string
     DateFormat df = new SimpleDateFormat("HH:mm:ss.SSS");
 
-    StringBuffer linesBuffer = new StringBuffer();
+    protected StringBuffer linesBuffer = new StringBuffer();
     static private int MAX_LINES = 500;
 
     private static final Logger log = LoggerFactory.getLogger(AbstractMonFrame.class.getName());

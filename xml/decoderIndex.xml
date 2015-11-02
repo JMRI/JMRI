@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.1.3ish-R01195e1 on Sun Oct 25 06:10:45 PDT 2015 $Id$-->
-  <decoderIndex version="662">
+  <!--Written by JMRI version 4.1.3ish-R08ef8d5 on Sun Nov 01 10:50:37 PST 2015 $Id$-->
+  <decoderIndex version="672">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -266,6 +266,7 @@
           <output name="2" label="rearlight" />
         </model>
         <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
           <functionlabel num="2" lockable="false">Whistle</functionlabel>
           <functionlabel num="3" lockable="true">Coupler</functionlabel>
@@ -352,6 +353,44 @@
         <functionlabels>
           <functionlabel num="0" lockable="true">L1-L4</functionlabel>
           <functionlabel num="7" lockable="true">L5</functionlabel>
+        </functionlabels>
+      </family>
+      <family name="Paragon 3" mfg="Broadway Limited Imports, LLC" file="BLI_Paragon3_Steam.xml">
+        <model model="Steam" numOuts="3" numFns="30" connector="9pin">
+          <versionCV lowVersionID="32" highVersionID="63" />
+          <output name="1" label="headlight" />
+          <output name="2" label="rearlight" />
+        </model>
+        <functionlabels>
+          <functionlabel num="0" lockable="true">Headlight</functionlabel>
+          <functionlabel num="1" lockable="true">Bell</functionlabel>
+          <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler</functionlabel>
+          <functionlabel num="4" lockable="true">Air Pump</functionlabel>
+          <functionlabel num="5" lockable="true">Blow Down/Chuff Up</functionlabel>
+          <functionlabel num="6" lockable="true">Water Fill/Chuff Dn</functionlabel>
+          <functionlabel num="7" lockable="true">Smoke Control</functionlabel>
+          <functionlabel num="8" lockable="true">Mute/Master Volume</functionlabel>
+          <functionlabel num="9" lockable="true">Shutdown and Startup</functionlabel>
+          <functionlabel num="10" lockable="true">Shovel Coal</functionlabel>
+          <functionlabel num="11" lockable="true">Water Injector</functionlabel>
+          <functionlabel num="12" lockable="true">Brake Set/Release/Squeal</functionlabel>
+          <functionlabel num="13" lockable="true">Horn Grade Crossing</functionlabel>
+          <functionlabel num="14" lockable="true">Passenger Sounds</functionlabel>
+          <functionlabel num="15" lockable="true">Freight Sounds</functionlabel>
+          <functionlabel num="16" lockable="true">Maintenance Sounds</functionlabel>
+          <functionlabel num="17" lockable="true">Radio Chatter</functionlabel>
+          <functionlabel num="18" lockable="true">City Sounds</functionlabel>
+          <functionlabel num="19" lockable="true">Farm Sounds</functionlabel>
+          <functionlabel num="20" lockable="true">Industrial Sounds</functionlabel>
+          <functionlabel num="21" lockable="true">Lumber Sounds</functionlabel>
+          <functionlabel num="22" lockable="true">Horn2</functionlabel>
+          <functionlabel num="23" lockable="true">Track Sounds</functionlabel>
+          <functionlabel num="24" lockable="true">Aux Light Control</functionlabel>
+          <functionlabel num="25" lockable="true">Long Whistle</functionlabel>
+          <functionlabel num="26" lockable="true">Play Macro</functionlabel>
+          <functionlabel num="27" lockable="true">Record Macro</functionlabel>
+          <functionlabel num="28" lockable="true">Brake Squeal</functionlabel>
         </functionlabels>
       </family>
       <family name="E-Z Command decoders" mfg="Bachmann Trains" file="Bachmann_EZDCC.xml">
@@ -3570,6 +3609,9 @@
         <model model="SH10A (firmware 1.05+)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" maxInputVolts="30V" connector="SUSI">
           <size length="20" width="12" height="1.9" units="mm" />
         </model>
+        <model model="SH10A (firmware 1.06+)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" maxInputVolts="30V" connector="SUSI">
+          <size length="20" width="12" height="1.9" units="mm" />
+        </model>
       </family>
       <family name="Bachmann" mfg="Electronic Solutions Ulm GmbH" file="ESU_Bachmann_3_function.xml">
         <model model="EZ Command 3 function decoder (36-553)" maxInputVolts="25 V" maxMotorCurrent="0.7 A" maxTotalCurrent="1.05 A" numOuts="3" numFns="5" formFactor="HO" connector="NMRAmedium">
@@ -5384,6 +5426,18 @@
       </family>
       <family name="DCCACC" mfg="MERG" comment="DCCACC is a stationary decoder, but it can be programmed in the usual way" file="MERG_DCCACC.xml">
         <model model="DCCACC" />
+      </family>
+      <family name="BTLocobridge" mfg="MGP" type="stationary" comment="Bluetooth LocoNet interface" file="MGP_BT_LocoBridge.xml">
+        <model model="BTLocobridge" lowVersionID="1" />
+      </family>
+      <family name="Panel" mfg="MGP" type="stationary" comment="Panel, a LocoNet decoder control panels" file="MGP_Panel.xml">
+        <model model="Panel" lowVersionID="1" />
+      </family>
+      <family name="Servo5" mfg="MGP" type="stationary" comment="Servo5, a LocoNet decoder for railway switches" file="MGP_Servo5.xml">
+        <model model="Servo5" lowVersionID="1" />
+      </family>
+      <family name="Signal10" mfg="MGP" type="stationary" comment="Signal10, a LocoNet decoder for railway signals" file="MGP_Signal10.xml">
+        <model model="Signal10" lowVersionID="1" />
       </family>
       <family name="MRC 14/28/128 step decoders" mfg="MRC" file="MRC_128step.xml">
         <model model="AD322" lowVersionID="32" formFactor="N" numOuts="4" numFns="6">
@@ -9169,6 +9223,7 @@
         <model model="Titan-G F3 EMD567" numFns="14" numOuts="0" productID="1132" />
         <model model="FX-SD U30B (Atlas)" numFns="14" numOuts="0" productID="1130" />
         <model model="FX-SD R Class (Eureka)" numFns="14" numOuts="0" productID="3104" />
+        <model model="FX-U 50 Class (Eureka)" numFns="14" numOuts="0" productID="3109" />
         <functionlabels>
           <functionlabel num="0" lockable="true">Light</functionlabel>
           <functionlabel num="1" lockable="true">Bell</functionlabel>
@@ -10654,116 +10709,134 @@
           <!-- headlight-->
         </model>
       </family>
+      <family name="Lighting Decoder" mfg="SoundTraxx (Throttle-Up)" comment="Athearn Genesis Bay-Window Caboose" file="SoundTraxx_Lighting_Athearn_Genesis_Caboose.xml">
+        <model model="Athearn Genesis Bay-Window Caboose" numOuts="2" numFns="14" connector="other" productID="???">
+          <versionCV lowVersionID="1" />
+          <!-- Function Mapping Table / page 17 -->
+          <output name="1" label="  Marker Lamp B  " />
+          <!-- FX0F      -->
+          <output name="2" label="  Marker Lamp A  " />
+          <!-- FX0R      -->
+          <output name="Grade Crossing Logic" label="(Horn)" />
+          <!-- XingLogic -->
+          <output name="FX5" label="  Interior Light  " />
+          <!-- FX5       -->
+          <output name="FX6" label="        n.c.      " />
+          <!-- FX6       -->
+          <output name="Dimming" />
+          <!-- Dimming   -->
+        </model>
+      </family>
       <family name="MC Motor Decoders" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_MC.xml">
         <model model="MC1Z102P6" numOuts="2" numFns="14" connector="other" productID="851001">
           <versionCV lowVersionID="80" />
-          <output name="Xing Logic" />
-          <output name="FX5" label=" Rule 17">
-            <label xml:lang="it">Regola 17</label>
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="FX5|Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
           </output>
-          <output name="FX6" label="Mode">
-            <label xml:lang="it">Modo</label>
+          <output name="5" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
           </output>
-          <output name="Dimmer" />
-          <output name="Brakes" />
+          <output name="6" label="Dimmer| " />
+          <output name="7" label="Brakes| " />
         </model>
         <model model="MC1Z102SQ" numOuts="2" numFns="14" connector="other" productID="851002">
           <versionCV lowVersionID="80" />
-          <output name="Xing Logic" />
-          <output name="FX5" label=" Rule 17">
-            <label xml:lang="it">Regola 17</label>
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="FX5|Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
           </output>
-          <output name="FX6" label="Mode">
-            <label xml:lang="it">Modo</label>
+          <output name="5" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
           </output>
-          <output name="Dimmer" />
-          <output name="Brakes" />
+          <output name="6" label="Dimmer| " />
+          <output name="7" label="Brakes| " />
         </model>
         <model model="MC1H102P8" numOuts="2" numFns="14" connector="other" productID="852001">
           <versionCV lowVersionID="80" />
-          <output name="Xing Logic" />
-          <output name="FX5" label=" Rule 17">
-            <label xml:lang="it">Regola 17</label>
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="FX5|Rule 17">
+            <label xml:lang="it">FX5|Regola 17</label>
           </output>
-          <output name="FX6" label="Mode">
-            <label xml:lang="it">Modo</label>
+          <output name="5" label="FX6|Mode">
+            <label xml:lang="it">FX6|Modo</label>
           </output>
-          <output name="Dimmer" />
-          <output name="Brakes" />
+          <output name="6" label="Dimmer| " />
+          <output name="7" label="Brakes| " />
         </model>
         <model model="MC2H104AT" numOuts="4" numFns="14" connector="other" productID="852002">
           <versionCV lowVersionID="96" />
-          <output name="Xing Logic" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Dimmer" />
-          <output name="Brakes" />
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="  FX5  | " />
+          <output name="5" label="  FX6  | " />
+          <output name="6" label="Dimmer| " />
+          <output name="7" label="Brakes| " />
         </model>
         <model model="MC2H104OP" numOuts="4" numFns="14" connector="other" productID="852003">
           <versionCV lowVersionID="96" />
-          <output name="Xing Logic" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Dimmer" />
-          <output name="Brakes" />
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="  FX5  | " />
+          <output name="5" label="  FX6  | " />
+          <output name="6" label="Dimmer| " />
+          <output name="7" label="Brakes| " />
         </model>
         <model model="MC2H104P9" numOuts="4" numFns="14" connector="other" productID="852004">
           <versionCV lowVersionID="96" />
-          <output name="Xing Logic" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Dimmer" />
-          <output name="Brakes" />
+          <output name="3" label="Xing|Logic" />
+          <output name="4" label="  FX5  | " />
+          <output name="5" label="  FX6  | " />
+          <output name="6" label="Dimmer| " />
+          <output name="7" label="Brakes| " />
         </model>
       </family>
       <family name="MC Intermountain OEM" mfg="SoundTraxx (Throttle-Up)" file="SoundTraxx_MC_IMRC_OEM.xml">
         <model model="ES44AC" numOuts="4" numFns="14" connector="other" productID="ES">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="ES44DC" numOuts="4" numFns="14" connector="other" productID="ES">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="FT" numOuts="4" numFns="14" connector="other" productID="F">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="F3" numOuts="4" numFns="14" connector="other" productID="F">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="F7" numOuts="4" numFns="14" connector="other" productID="F">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="F9" numOuts="4" numFns="14" connector="other" productID="F">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="FP7" numOuts="4" numFns="14" connector="other" productID="F">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
         <model model="SD40-2W" numOuts="4" numFns="14" connector="other" productID="SD40">
           <versionCV lowVersionID="96" />
-          <output name="3" label="  FX5  " />
-          <output name="4" label="  FX6  " />
-          <output name="Brakes" />
+          <output name="3" label="  FX5  | " />
+          <output name="4" label="  FX6  | " />
+          <output name="5" label="Brakes| " />
         </model>
       </family>
       <family name="OEM Bachmann E-Z Command decoders" mfg="SoundTraxx (Throttle-Up)" lowVersionID="1" file="SoundTraxx_OEM_Bachmann_v3.xml">
