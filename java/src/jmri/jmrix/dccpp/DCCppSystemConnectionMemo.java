@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
 
     public DCCppSystemConnectionMemo(DCCppTrafficController xt) {
-        super("H", "DCC++");
+        super("DCCpp", "DCC++");
         this.xt = xt;
         xt.setSystemConnectionMemo(this);
         register(); // registers general type
@@ -46,7 +46,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
     }
 
     public DCCppSystemConnectionMemo() {
-        super("H", "DCC++");
+        super("DCCpp", "DCC++");
         register(); // registers general type
         InstanceManager.store(this, DCCppSystemConnectionMemo.class); // also register as specific type
 
@@ -215,18 +215,19 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
                 return false;
             }
             return p.isAddressedModePossible();
+	    //TODO: Update return value of the following as Managers are brought online.
         } else if (type.equals(jmri.ThrottleManager.class)) {
             return true;
         } else if (type.equals(jmri.PowerManager.class)) {
             return true;
         } else if (type.equals(jmri.SensorManager.class)) {
-            return true;
+            return false;
         } else if (type.equals(jmri.TurnoutManager.class)) {
-            return true;
+            return false;
         } else if (type.equals(jmri.LightManager.class)) {
-            return true;
+            return false;
         } else if (type.equals(jmri.ConsistManager.class)) {
-            return true;
+            return false;
         } else if (type.equals(jmri.CommandStation.class)) {
             return true;
         } else {

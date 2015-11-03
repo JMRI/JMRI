@@ -11,18 +11,18 @@ import jmri.jmrix.AbstractProgrammer;
 import jmri.managers.DefaultProgrammerManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 
 /**
- * Programmer support for Lenz XpressNet.
+ * Programmer support for DCC++.
  * <P>
  * The read operation state sequence is:
  * <UL>
  * <LI>Send Register Mode / Paged mode /Direct Mode read request
- * <LI>Wait for Broadcast Service Mode Entry message
- * <LI>Send Request for Service Mode Results request
  * <LI>Wait for results reply, interpret
- * <LI>Send Resume Operations request
- * <LI>Wait for Normal Operations Resumed broadcast
  * </UL>
  *
  * @author Bob Jacobsen Copyright (c) 2002, 2007
@@ -37,7 +37,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     // keep track of whether or not the command station is in service 
     // mode.  Used for determining if "OK" message is an aproriate 
     // response to a request to a programming request. 
-    protected boolean _service_mode = false;
+    protected boolean _service_mode = false;  // TODO: Is this even meaningful for DCC++?
 
     public DCCppProgrammer(DCCppTrafficController tc) {
         // error if more than one constructed?
@@ -59,10 +59,10 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     @Override
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
-        ret.add(DefaultProgrammerManager.PAGEMODE);
+        //ret.add(DefaultProgrammerManager.PAGEMODE);
         ret.add(DefaultProgrammerManager.DIRECTBITMODE);
         ret.add(DefaultProgrammerManager.DIRECTBYTEMODE);
-        ret.add(DefaultProgrammerManager.REGISTERMODE);
+        //ret.add(DefaultProgrammerManager.REGISTERMODE);
         return ret;
     }
 
@@ -80,7 +80,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             return false; // check basic implementation first
         }
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
-	    return Integer.parseInt(addr) <= 1024;
+	    return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
         } else {
             return Integer.parseInt(addr) <= 256;
         }
@@ -101,7 +101,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             return false; // check basic implementation first
         }
         if (getMode().equals(DefaultProgrammerManager.DIRECTBITMODE) || getMode().equals(DefaultProgrammerManager.DIRECTBYTEMODE)) {
-	    return Integer.parseInt(addr) <= 1024;
+	    return Integer.parseInt(addr) <= DCCppConstants.MAX_DIRECT_CV;
         } else {
             return Integer.parseInt(addr) <= 256;
         }
@@ -207,221 +207,40 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     }
 
     synchronized public void message(DCCppReply m) {
-	/*
-        if (m.getElement(0) == DCCppConstants.CS_INFO
-                && m.getElement(1) == DCCppConstants.BC_SERVICE_MODE_ENTRY) {
-            if (_service_mode == false) {
-                // the command station is in service mode.  An "OK" 
-                // message can trigger a request for service mode 
-                // results if progrstate is REQUESTSENT.
-                _service_mode = true;
-            } else if (_service_mode == true) {
-                // Since we get this message as both a broadcast and
-                // a directed message, ignore the message if we're
-                //already in the indicated mode
-                return;
-            }
-        }
-        if (m.getElement(0) == XNetConstants.CS_INFO
-                && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
-            if (_service_mode == true) {
-                // the command station is not in service mode.  An 
-                // "OK" message can not trigger a request for service 
-                // mode results if progrstate is REQUESTSENT.
-                _service_mode = false;
-            } else if (_service_mode == false) {
-                // Since we get this message as both a broadcast and
-                // a directed message, ignore the message if we're
-                //already in the indicated mode
-                return;
-            }
-        }
-        if (progState == NOTPROGRAMMING) {
-            // we get the complete set of replies now, so ignore these
-            return;
-
-        } else if (progState == REQUESTSENT) {
+	if (progState == NOTPROGRAMMING) {
+	    return;
+	}
+	if (m.getElement(0) == DCCppConstants.PROGRAM_REPLY) {
             if (log.isDebugEnabled()) {
                 log.debug("reply in REQUESTSENT state");
             }
-            // see if reply is the acknowledge of program mode; if not, wait for next
-            if ((_service_mode && m.isOkMessage())
-                    || (m.getElement(0) == XNetConstants.CS_INFO
-                    && (m.getElement(1) == XNetConstants.BC_SERVICE_MODE_ENTRY
-                    || m.getElement(1) == XNetConstants.PROG_CS_READY))) {
-                if (!getCanRead()) {
-                    // on systems like the Roco MultiMaus 
-                    // (which does not support reading)
-                    // let a timeout occur so the system
-                    // has time to write data to the 
-                    // decoder
-                    restartTimer(SHORT_TIMEOUT);
-                    return;
-                }
-
-                // here ready to request the results
-                progState = INQUIRESENT;
-                //start the error timer
-                restartTimer(XNetProgrammerTimeout);
-
-                controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
-                        this);
-                return;
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.CS_NOT_SUPPORTED) {
-                // programming operation not supported by this command station
-                progState = NOTPROGRAMMING;
-                notifyProgListenerEnd(_val, jmri.ProgListener.NotImplemented);
-                return;
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
-                // We Exited Programming Mode early
-                log.error("Service mode exited before sequence complete.");
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.SequenceError);
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.PROG_SHORT_CIRCUIT) {
-                // We experienced a short Circuit on the Programming Track
-                log.error("Short Circuit While Programming Decoder");
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
-            } else if (m.isCommErrorMessage()) {
-                // We experienced a communicatiosn error
-                // If this is a Timeslot error, ignore it, 
-                // otherwise report it as an error
-                if (m.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR) {
-                    return;
-                }
-                log.error("Communications error in REQUESTSENT state while programming.  Error: " + m.toString());
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
-            }
-        } else if (progState == INQUIRESENT) {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in INQUIRESENT state");
-            }
-            // check for right message, else return
-            if (m.isPagedModeResponse()) {
-                // valid operation response, but does it belong to us?
-                try {
-                    // we always save the cv number, but if
-                    // we are using register mode, there is
-                    // at least one case (CV29) where the value
-                    // returned does not match the value we saved. 
-                    if (m.getServiceModeCVNumber() != _cv
-                            && m.getServiceModeCVNumber() != registerFromCV(_cv)) {
-                        log.debug(" result for CV " + m.getServiceModeCVNumber()
-                                + " expecting " + _cv);
-                        return;
-                    }
-                } catch (jmri.ProgrammerException e) {
-                    progState = NOTPROGRAMMING;
-                    notifyProgListenerEnd(_val, jmri.ProgListener.UnknownError);
-                }
-                // see why waiting
-                if (_progRead) {
-                    // read was in progress - get return value
-                    _val = m.getServiceModeCVValue();
-                }
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                // if this was a read, we cached the value earlier.  
-                // If its a write, we're to return the original write value
-                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                return;
-            } else if (m.isDirectModeResponse()) {
-                // valid operation response, but does it belong to us?
-                if (m.getServiceModeCVNumber() != _cv) {
-                    log.debug(" CV read " + m.getServiceModeCVNumber()
-                            + " expecting " + _cv);
-                    return;
-                }
-
-                // see why waiting
-                if (_progRead) {
-                    // read was in progress - get return value
-                    _val = m.getServiceModeCVValue();
-                }
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                // if this was a read, we cached the value earlier.  If its a
-                // write, we're to return the original write value
-                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                return;
-            } else if (m.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE
-                    && (m.getElement(1) & 0x14) == (0x14)) {
-                // valid operation response, but does it belong to us?
-                int sent_cv = m.getServiceModeCVNumber();
-                if (sent_cv != _cv && (sent_cv == 0 && _cv != 0x0400)) {
-                    return;
-                }
-                // see why waiting
-                if (_progRead) {
-                    // read was in progress - get return value
-                    _val = m.getServiceModeCVValue();
-                }
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                // if this was a read, we cached the value earlier.  If its a
-                // write, we're to return the original write value
-                notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-                return;
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.PROG_BYTE_NOT_FOUND) {
-                // "data byte not found", e.g. no reply
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.NoLocoDetected);
-                return;
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.BC_NORMAL_OPERATIONS) {
-                // We Exited Programming Mode early
-                log.error("Service Mode exited before sequence complete.");
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.SequenceError);
-                return;
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.PROG_SHORT_CIRCUIT) {
-                // We experienced a short Circuit on the Programming Track
-                log.error("Short Circuit While Programming Decoder");
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.ProgrammingShort);
-            } else if (m.getElement(0) == XNetConstants.CS_INFO
-                    && m.getElement(1) == XNetConstants.PROG_CS_BUSY) {
-                // Command station indicated it was busy in 
-                // programming mode, request results again 
-                // (do not reset timer or change mode)
-                // NOTE: Currently only sent by OpenDCC.
-                controller().sendXNetMessage(XNetMessage.getServiceModeResultsMsg(),
-                        this);
-                return;
-            } else if (m.isCommErrorMessage()) {
-                // We experienced a communicatiosn error
-                // If this is a Timeslot error, ignore it, 
-                // otherwise report it as an error
-                if (m.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR) {
-                    return;
-                }
-                log.error("Communications error in INQUIRESENT state while programming.  Error: " + m.toString());
-                progState = NOTPROGRAMMING;
-                stopTimer();
-                notifyProgListenerEnd(_val, jmri.ProgListener.CommError);
-            } else {
-                // nothing important, ignore
-                log.debug("Ignoring message " + m.toString());
-                return;
-            }
-        } else {
-            if (log.isDebugEnabled()) {
-                log.debug("reply in un-decoded state");
-            }
-        }
-	*/
+	    String syntax = "r (\\d+)\\W(\\d+)\\W(\\d+)";
+	    String s = m.toString();
+	    try {
+		Pattern p = Pattern.compile(syntax);
+		Matcher mt = p.matcher(s);
+		if (!mt.matches()) {
+		log.error("DCC++ Programming Reply does not match pattern. syntax= {} string= {}", syntax, s);
+		return;
+		}
+		log.debug("DCC++ Programming Reply value = {}", s);
+		// CALLBACKNUM = mt.group(1)
+		// CALLBACKSUB = mt.group(2)
+		_val = Integer.parseInt(mt.group(3));
+	    } catch (PatternSyntaxException e) {
+            log.error("Malformed DCC++ programming reply matcher syntax! " + syntax);
+            return;
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed syntax=" + syntax + " string= " + s);
+		return;
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds " + syntax + " string= " + s);
+		return;
+	    }
+	    progState = NOTPROGRAMMING;
+	    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
+	    
+	}
     }
 
     // listen for the messages to the LI100/LI101
@@ -437,10 +256,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 
 
     /*
-     * Since the Lenz programming sequence requires several 
-     * operations, We want to be able to check and see if we are 
-     * currently programming before allowing the Traffic Controller 
-     * to send a request to exit service mode
+     * Indicate when the Programmer is in the middle of an operation.
      */
     public boolean programmerBusy() {
         return (progState != NOTPROGRAMMING);

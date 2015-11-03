@@ -49,10 +49,9 @@ public class DCCppPacketizer extends DCCppTrafficController {
     /**
      * Forward a preformatted DCCppMessage to the actual interface.
      *
-     * Checksum is computed and overwritten here, then the message is converted
-     * to a byte array and queue for transmission
+     *The message is converted to a byte array and queue for transmission
      *
-     * @param m Message to send; will be updated with CRC
+     * @param m Message to send;
      */
     public void sendDCCppMessage(DCCppMessage m, DCCppListener reply) {
         if (m.length() != 0) {
@@ -83,13 +82,11 @@ public class DCCppPacketizer extends DCCppTrafficController {
      * @param msg    The output byte stream
      * @param offset the first byte not yet used
      */
-    // Not sure if this is necessary.  Might be a place to add the trailing ">"
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
         if (m.getNumDataElements() == 0) {
             return;
         }
-        //((XNetMessage) m).setParity();
         //msg[offset - 1] = (byte) m.getElement(m.getNumDataElements() - 1);
 	msg[offset - 1] = '>';
     }

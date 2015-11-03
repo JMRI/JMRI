@@ -63,6 +63,16 @@ public final class DCCppConstants {
     public final static int PROGRAM_REPLY   = 'r';
     public final static int VERSION_REPLY   = 'i';
 
+    // Various min/max values for messages
+    public final static int MAX_ACC_DECODER_ADDRESS = 511;
+    public final static int MAX_ACC_DECODER_SUBADDR = 3;
+    public final static int MAX_TURNOUT_ADDRESS = 32767;
+    public final static int MAX_DIRECT_CV = 1024;
+    public final static int MAX_DIRECT_CV_VAL = 255;
+    public final static int MAX_CALLBACK_NUM = 32767;
+    public final static int MAX_CALLBACK_SUB = 32767;
+    public final static int MAX_LOCO_ADDRESS = 10293;
+
     //--------------------------------------------------------------
     // XPressNet Stuff below here
 

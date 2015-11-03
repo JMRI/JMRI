@@ -63,7 +63,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      * and software version.
      *
      */
-    protected void setCommandStationStatus(DCCppReply l) {
+    protected void setCommandStationInfo(DCCppReply l) {
 	String syntax = "iDCC\\+\\+\\ BASE\\ STATION v([a-zA-Z0-9_.]+): BUILD ((\\w{3}\\W\\d{1,2}\\W\\d{4})\\W(\\d{2}:\\d{2}:\\d{2}))";
 	String s = l.toString();
 	try {
@@ -114,7 +114,10 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      * currently in that mode?
      */
     public boolean getInServiceMode() {
-        return mInServiceMode;
+        //return mInServiceMode;
+	return(true); // TODO: Verify we are effectively always in service mode.
+	//TODO: Or just eliminate the concept of Service Mode entirely.
+	// Perhaps not possible, since it is an NMRA standard.
     }
 
     /**
@@ -217,7 +220,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
 
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "H";
+            return "DCCpp";
         }
         return adaptermemo.getSystemPrefix();
     }

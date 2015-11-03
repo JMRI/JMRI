@@ -16,7 +16,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetInitializationManager by Paul Bender and Giorgio Terdina
  */
-public class DCCppInitializationManager extends AbstractDCCppInitializationManager { // TODO: Create abstract class
+public class DCCppInitializationManager extends AbstractDCCppInitializationManager {
 
     public DCCppInitializationManager(DCCppSystemConnectionMemo memo) {
         super(memo);
@@ -27,6 +27,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
             log.debug("Init called");
         }
 
+	String base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
+	String code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
 	/* First, we load things that should work on all systems */
 	//jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
 	jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
@@ -34,12 +36,10 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	   apropriate managers */
 	/* If we still don't  know what we have, load everything */
 	if (log.isDebugEnabled()) {
-	    log.debug("Command Station is Unknown type");
+	    log.debug("Command Station is type {} build {}", base_station, code_build);
 	}
 	systemMemo.setProgrammerManager(new DCCppProgrammerManager(new DCCppProgrammer(systemMemo.getDCCppTrafficController()), systemMemo));
 	jmri.InstanceManager.setProgrammerManager(systemMemo.getProgrammerManager());
-	/* the "raw" Command Station only works on systems that support   
-	   Ops Mode Programming */
 	systemMemo.setCommandStation(systemMemo.getDCCppTrafficController().getCommandStation());
 	jmri.InstanceManager.setCommandStation(systemMemo.getCommandStation());
 	/* the consist manager has to be set up AFTER the programmer, to 

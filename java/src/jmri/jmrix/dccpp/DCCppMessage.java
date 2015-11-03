@@ -30,6 +30,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 
     /* According to the specification, DCC++ has a maximum timing 
      interval of 500 milliseconds durring normal communications */
+    // TODO: Note this timing interval is actually an XpressNet thing...
+    // Need to find out what DCC++'s equivalent is.
     static protected final int DCCppProgrammingTimeout = 10000;  // TODO: Appropriate value for DCC++?
     static private int DCCppMessageTimeout = 5000;  // TODO: Appropriate value for DCC++?
 
@@ -44,7 +46,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
         setBinary(false);
         setRetries(_nRetries);
         setTimeout(DCCppMessageTimeout);
-        if (len > 20 || len < 0) {
+        if (len > DCCppConstants.MAX_MESSAGE_SIZE || len < 0) {
             log.error("Invalid length in ctor: " + len);
         }
         _nDataChars = len;
@@ -76,7 +78,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
     }
 
     /**
-     * Create an DCCppMessage from a String containing bytes.
+     * Create a DCCppMessage from a String containing bytes.
      * Since DCCppMessages are text, there is no Hex-to-byte conversion
      */
     public DCCppMessage(String s) {
@@ -84,7 +86,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
         setRetries(_nRetries);
         setTimeout(DCCppMessageTimeout);
         // gather bytes in result
-        //byte b[] = jmri.util.StringUtil.bytesFromHexString(s);
 	byte b[] = s.getBytes();
         if (b.length == 0) {
             // no such thing as a zero-length message
@@ -117,14 +118,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
         return (getElement(0) & 0xFF);
     }
 
-    /**
-     * Get a String representation of the op code in hex
-     *
-     * Not (very) useful for DCC++, which is text-based protocol.
-     * Consider removing.
-     */
-    public String getOpCodeHex() {
-        return "0x" + Integer.toHexString(getOpCode());
+    public char getOpCodeChar() {
+	return ((char) getElement(0));
     }
 
     public String getOpCodeString() {
@@ -137,36 +132,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      * Not used for DCC++ No checksum.
      */
     public boolean checkParity() {
-        int len = getNumDataElements();
-        int chksum = 0x00;  /* the seed */
-
-        int loop;
-
-        for (loop = 0; loop < len - 1; loop++) {  // calculate contents for data part
-            chksum ^= getElement(loop);
-        }
-        return ((chksum & 0xFF) == getElement(len - 1));
+	return(true);
     }
 
     public void setParity() {
-        int len = getNumDataElements();
-        int chksum = 0x00;  /* the seed */
-
-        int loop;
-
-        for (loop = 0; loop < len - 1; loop++) {  // calculate contents for data part
-            chksum ^= getElement(loop);
-        }
-        setElement(len - 1, chksum & 0xFF);
-    }
-
-    /**
-     * Get an integer representation of a BCD value
-     *
-     * Not (very) useful for DCC++ which is text based.
-     */
-    public Integer getElementBCD(int n) {
-        return Integer.decode(Integer.toHexString(getElement(n)));
+	return;
     }
 
     /**
@@ -201,6 +171,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      * a broadcast message, because the reply usually comes to us 
      * that way.
      */
+    // TODO: Not sure this is useful in DCC++
     @Override
     public boolean replyExpected() {
         return !broadcastReply;
@@ -209,9 +180,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
     private boolean broadcastReply = false;
 
     // Tell the traffic controller we expect this
-    // message to have a broadcast reply.
-    void setBroadcastReply() {
-        broadcastReply = true;
+    // message to have a broadcast reply (or not).
+    void setBroadcastReply(boolean v) {
+        broadcastReply = v;
     }
 
     // decode messages of a particular form
@@ -232,8 +203,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
 
 	// Sanity check inputs
-	if (address < 0 || address > 511) return(null);
-	if (subaddress < 0 || subaddress > 3) return(null);
+	if (address < 0 || address > DCCppConstants.MAX_ACC_DECODER_ADDRESS)
+	    return(null);
+	if (subaddress < 0 || subaddress > DCCppConstants.MAX_ACC_DECODER_SUBADDR)
+	    return(null);
 	
 	// Send the Address
 	String ad = Integer.toString(address);
@@ -264,7 +237,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
 
 	// Sanity check inputs
-	if (id < 0 || id > 32767) return(null);
+	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) return(null);
 	// Need to also validate whether turnout is predefined?  Where to store the IDs?
 
 	// Set the ID
@@ -289,10 +262,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (cv < 1 || cv > 1024) return(null);
-	if (val < 0 || val > 255) return(null);
-	if (callbacknum < 0 || callbacknum > 32767) return(null);
-	if (callbacksub < 0 || callbacksub > 32767) return(null);
+	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+	if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
+	if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
+	    return(null);
+	if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
+	    return(null);
 
 	// Write CV to Programming Track Command
 	msg.setElement(i++, DCCppConstants.PROG_WRITE_CV_BYTE);
@@ -337,10 +312,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity Check Inputs
-	if (cv < 1 || cv > 1024) return(null);
+	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
 	if (bit < 0 || bit > 7) return(null);
-	if (callbacknum < 0 || callbacknum > 32767) return(null);
-	if (callbacksub < 0 || callbacksub > 32767) return(null);
+	if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
+	    return(null);
+	if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
+	    return(null);
 
 	// Write Bit to CV on Programming Track
 	msg.setElement(i++, DCCppConstants.PROG_WRITE_CV_BYTE);
@@ -389,9 +366,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (cv < 1 || cv > 1024) return(null);
-	if (callbacknum < 0 || callbacknum > 32767) return(null);
-	if (callbacksub < 0 || callbacksub > 32767) return(null);
+	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+	if (callbacknum < 0 || callbacknum > DCCppConstants.MAX_CALLBACK_NUM)
+	    return(null);
+	if (callbacksub < 0 || callbacksub > DCCppConstants.MAX_CALLBACK_SUB)
+	    return(null);
 
 	// Read CV from Program Track
 	msg.setElement(i++, DCCppConstants.PROG_READ_CV);
@@ -426,9 +405,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 0 || address > 10293) return(null);
-	if (cv < 1 || cv > 1024) return(null);
-	if (val < 0 || val > 255) return(null);
+	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
+	    return(null);
+	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
+	if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
 	
 	// Write CV in Ops Mode
 	msg.setElement(i++, DCCppConstants.OPS_WRITE_CV_BYTE);
@@ -462,8 +442,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity Check Inputs
-	if (address < 0 || address > 10293) return(null);
-	if (cv < 1 || cv > 1024) return(null);
+	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
+	    return(null);
+	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
 	if (bit < 0 || bit > 7) return(null);
 	
 	// Write Bit in Ops Mode
@@ -535,7 +516,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
 
-	if (address < 0 || address > 10293) return(null);
+	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 
 	// Byte 1 is the command
 	msg.setElement(i++, DCCppConstants.THROTTLE_CMD);
@@ -580,7 +561,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	// Byte 1 is the command
 	msg.setElement(i++, DCCppConstants.THROTTLE_CMD);
@@ -599,7 +580,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 
 	// Field 4 is the speed (128 steps, 0-126 or -1 for emergency stop)
 	// Emergency Stop is a different JMRI-level command, though.
-	int speedVal = java.lang.Math.round(speed * 128);
+	int speedVal = java.lang.Math.round(speed * 126);
 	speedVal = ((speedVal > DCCppConstants.MAX_SPEED) ? DCCppConstants.MAX_SPEED : speedVal);
 	String sp = Integer.toString(speedVal);
 	for (int j = 0; i < sp.length(); j++, i++) {
@@ -634,7 +615,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -669,7 +650,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -703,7 +684,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -736,7 +717,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -770,7 +751,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -803,7 +784,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -844,7 +825,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -890,7 +871,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -936,7 +917,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -982,7 +963,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Sanity check inputs
-	if (address < 1 || address > 10293) return(null);
+	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
@@ -1007,33 +988,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      * Build an Emergency Off Message
      */
 
-    /**
-     * Generate the message to request the Command Station Hardware/Software
-     * Version
-     *
-     */
-    public static DCCppMessage getCSVersionRequestMessage() {
-	return(getCSStatusMsg());
-    }
-
-    /**
-     * Generate the message to request the Command Station Status
-     *
-     */
-    public static DCCppMessage getCSStatusRequestMessage() {
-	return(getCSStatusMsg());
-    }
-
-
-    /**
-     * Generate the message to request the Computer Interface Hardware/Software
-     * Version
-     *
-     */
-    public static DCCppMessage getLIVersionRequestMessage() {
-	return(getCSStatusMsg());
-    }
-    
     /**
      * Test Code Functions... not for normal use
      */

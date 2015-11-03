@@ -36,7 +36,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     }
 
     /**
-     * Request a new throttle object be creaetd for the address, and let the
+     * Request a new throttle object be created for the address, and let the
      * throttle listeners know about it.
      *
      */
@@ -65,33 +65,29 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
     /*
      * DCC++ based systems can have multiple throttles for the same 
      * device
-     * (can they?)
      */
     protected boolean singleUse() {
         return false;
     }
 
     /**
-     * Address 100 and above is a long address
+     * Address 128 and above is a long address
      *
-     * (is it?)
      */
     public boolean canBeLongAddress(int address) {
         return isLongAddress(address);
     }
 
     /**
-     * Address 99 and below is a short address
+     * Address 127 and below is a short address
      *
-     * (is it?)
      */
     public boolean canBeShortAddress(int address) {
         return !isLongAddress(address);
     }
 
     /**
-     * Are there any ambiguous addresses (short vs long) on this system?
-     * (are there?)
+     * There are no ambiguous addresses on this system.
      */
     public boolean addressTypeUnique() {
         return true;
@@ -102,7 +98,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
      * (is it?)
      */
     static protected boolean isLongAddress(int num) {
-        return (num >= 100);
+        return (num >= 128);
     }
 
     /**
@@ -118,6 +114,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
 	// Guts of how a throttle handles replies...
 	//
 	// What should this be??
+	// For now, drop the message.
 	/*
         // We want to check to see if a throttle has taken over an address
         if (r.getElement(0) == DCCppConstants.LOCO_INFO_RESPONSE) {
@@ -153,7 +150,6 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
             return true;
         }
         return false;
-        //LocoNetSlot tSlot = lnt.getLocoNetSlot();
     }
 
     static Logger log = LoggerFactory.getLogger(DCCppThrottleManager.class.getName());

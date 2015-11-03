@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  * This class provides a base implementation for Command Station/interface
- * dependent initilization for XPressNet. It adds the appropriate Managers via
+ * dependent initilization for DCC++. It adds the appropriate Managers via
  * the Initialization Manager based on the Command Station Type.
  *
  * @author	Paul Bender Copyright (C) 2003-2010
@@ -56,7 +56,7 @@ abstract public class AbstractDCCppInitializationManager {
 
     abstract protected void init();
 
-    /* Interal class to configure the XNet implementation */
+    /* Interal class to configure the DCC++ implementation */
     protected class DCCppInitializer implements Runnable, DCCppListener {
 
         private javax.swing.Timer initTimer; // Timer used to let he 
@@ -74,10 +74,10 @@ abstract public class AbstractDCCppInitializationManager {
             // Register as an XPressNet Listener
             systemMemo.getDCCppTrafficController().addDCCppListener(DCCppInterface.CS_INFO, this);
 
-            //Send Information request to LI100/LI100
+            //Send Information request to the Base Station
          /* First, we need to send a request for the Command Station
              hardware and software version */
-            DCCppMessage msg = DCCppMessage.getCSVersionRequestMessage();
+            DCCppMessage msg = DCCppMessage.getCSStatusMsg();
             //Then Send the version request to the controller
             systemMemo.getDCCppTrafficController().sendDCCppMessage(msg, this);
         }
@@ -122,7 +122,7 @@ abstract public class AbstractDCCppInitializationManager {
             dispose();
         }
 
-        // listen for the responses from the LI100/LI101
+        // listen for the responses from the Base Station
         public void message(DCCppReply l) {
             // Check to see if this is a response with the Command Station 
             // Version Info
@@ -130,7 +130,7 @@ abstract public class AbstractDCCppInitializationManager {
                 // This is the Command Station Software Version Response
 		systemMemo.getDCCppTrafficController()
 		    .getCommandStation()
-		    .setCommandStationStatus(l);
+		    .setCommandStationInfo(l);
                     finish();
 	    }
         }

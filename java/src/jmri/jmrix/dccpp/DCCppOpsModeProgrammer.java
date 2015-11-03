@@ -50,10 +50,10 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     }
 
     /**
-     * Send an ops-mode write request to the XPressnet.
+     * Send an ops-mode write request to the DC++.
      */
     synchronized public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException {
-        DCCppMessage msg = DCCppMessage.getWriteOpsModeCVMsg((mAddressHigh << 16) & mAddressLow, CV, val);
+        DCCppMessage msg = DCCppMessage.getWriteOpsModeCVMsg(mAddress, CV, val);
         tc.sendDCCppMessage(msg, this);
         /* we need to save the programer and value so we can send messages 
          back to the screen when the programing screen when we recieve 

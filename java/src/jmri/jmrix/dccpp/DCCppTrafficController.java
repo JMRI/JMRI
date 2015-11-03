@@ -93,11 +93,13 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
 	try {
+	    // NOTE: For now, just forward ALL messages without filtering
+	    ((DCCppListener) client).message((DCCppReply) m);
 	    // NOTE: For now, all listeners should register for DCCppInterface.ALL
+	    /*
 	    int mask = (mListenerMasks.get(client)).intValue();
 	    if (mask == DCCppInterface.ALL) {
 		((DCCppListener) client).message((DCCppReply) m);
-		/*
 	    } else if ((mask & DCCppInterface.COMMINFO)
 		       == DCCppInterface.COMMINFO
 		       && (((DCCppReply) m).getElement(0)
@@ -134,8 +136,8 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 			   || ((DCCppReply) m).getElement(0)
 			   == DCCppConstants.LI101_REQUEST)) {
 		((DCCppListener) client).message((DCCppReply) m);
-		*/
 	    }
+		*/
 	} catch (NullPointerException e) {
 	    // catch null pointer exceptions, caused by a client
 	    // that sent a message without being a registered listener

@@ -42,7 +42,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     public String openPort(String portName, String appName) {
-        // open the port in XPressNet mode, check ability to set moderators
+        // open the port in DCC++ mode, check ability to set moderators
         try {
             // get and open the primary port
             CommPortIdentifier portID = CommPortIdentifier.getPortIdentifier(portName);
@@ -51,7 +51,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
             } catch (PortInUseException p) {
                 return handlePortBusy(p, portName, log);
             }
-            // try to set it for XNet
+            // try to set it for DCC++
             try {
                 setSerialPort();
             } catch (gnu.io.UnsupportedCommOperationException e) {
@@ -229,7 +229,7 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
 
         new DCCppInitializationManager(this.getSystemConnectionMemo());
 
-        jmri.jmrix.lenz.ActiveFlag.setActive(); // TODO: Fix this
+        jmri.jmrix.dccpp.ActiveFlag.setActive();
     }
 
     // base class methods for the XNetSerialPortController interface

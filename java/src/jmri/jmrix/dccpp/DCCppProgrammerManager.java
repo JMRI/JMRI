@@ -24,11 +24,6 @@ public class DCCppProgrammerManager extends DefaultProgrammerManager {
         tc = memo.getDCCppTrafficController();
     }
 
-    /**
-     * DCC++ command station does provide Ops Mode We should make this
-     * return false based on what command station we're using but for now, we'll
-     * return true
-     */
     public boolean isAddressedModePossible() {
         return tc.getCommandStation().isOpsModePossible();
     }

@@ -97,7 +97,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F5, F6, F7, F8
+     * Send the DCC++ message to set the state of functions F5, F6, F7, F8
      */
     @Override
     protected void sendFunctionGroup2() {
@@ -108,7 +108,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F9, F10, F11,
+     * Send the DCC++ message to set the state of functions F9, F10, F11,
      * F12
      */
     @Override
@@ -120,7 +120,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F13, F14, F15,
+     * Send the DCC++ message to set the state of functions F13, F14, F15,
      * F16, F17, F18, F19, F20
      */
     @Override
@@ -132,7 +132,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the state of functions F21, F22, F23,
+     * Send the DCC++ message to set the state of functions F21, F22, F23,
      * F24, F25, F26, F27, F28
      */
     @Override
@@ -144,7 +144,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the Momentary state of locomotive
+     * Send the DCC++ message to set the Momentary state of locomotive
      * functions F0, F1, F2, F3, F4
      */
     protected void sendMomentaryFunctionGroup1() {
@@ -155,7 +155,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F5,
+     * Send the DCC++ message to set the momentary state of functions F5,
      * F6, F7, F8
      */
     protected void sendMomentaryFunctionGroup2() {
@@ -166,7 +166,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F9,
+     * Send the DCC++ message to set the momentary state of functions F9,
      * F10, F11, F12
      */
     protected void sendMomentaryFunctionGroup3() {
@@ -177,7 +177,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F13,
+     * Send the DCC++ message to set the momentary state of functions F13,
      * F14, F15, F16 F17 F18 F19 F20
      */
     protected void sendMomentaryFunctionGroup4() {
@@ -189,7 +189,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
-     * Send the XpressNet message to set the momentary state of functions F21,
+     * Send the DCC++ message to set the momentary state of functions F21,
      * F22, F23, F24 F25 F26 F27 F28
      */
     protected void sendMomentaryFunctionGroup5() {
@@ -236,8 +236,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         queueMessage(msg, THROTTLESPEEDSENT);
     }
 
-    /* When we set the direction, we're going to set the speed to
-     zero as well */
+    /* Since there is only one "throttle" command to the DCC++ base station,
+     * when we change the direction, we must also re-set the speed.
+     */
     public void setIsForward(boolean forward) {
         super.setIsForward(forward);
         setSpeedSetting(this.speedSetting);
@@ -249,13 +250,13 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      * <P>
      * @param Mode - the current speed step mode - default should be 128
      *              speed step mode in most cases
+     *
+     * NOTE: DCC++ only supports 128-step mode.  So we ignore the speed
+     * setting, even though we store it.
      */
     @Override
     public void setSpeedStepMode(int Mode) {
         super.setSpeedStepMode(Mode);
-        // On a lenz system, we need to send the speed to make sure the 
-        // command station knows about the change.
-        setSpeedSetting(this.speedSetting);
     }
 
     /**
@@ -281,12 +282,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
 
-    // TODO: DCC++ What if anything should these do?
     protected int getDccAddressHigh() {
         return DCCppCommandStation.getDCCAddressHigh(this.address);
     }
 
-    // TODO: DCC++ What if anything should these do?
     protected int getDccAddressLow() {
         return DCCppCommandStation.getDCCAddressLow(this.address);
     }
@@ -311,41 +310,11 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
             }
             // We haven't sent anything, but we might be told someone else 
             // has taken over this address
-	    /*
-            if (l.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Throttle - message is LOCO_INFO_RESPONSE ");
-                }
-                if (l.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE) {
-                    // the address is in bytes 3 and 4
-                    if (getDccAddressHigh() == l.getElement(2) && getDccAddressLow() == l.getElement(3)) {
-                        if (isAvailable) {
-                            //Set the Is available flag to Throttle.False
-                            log.info("Loco " + getDccAddress() + " In use by another device");
-                            setIsAvailable(false);
-                            // popup a message box that will trigger a status request
-                            //int select=JOptionPane.showConfirmDialog(null,"Throttle for address " +this.getDccAddress() + " Taken Over, reaquire?","Taken Over",JOptionPane.YES_NO_OPTION);
-                            //if(select==JOptionPane.YES_OPTION)
-                            //{
-                            // Send a request for status
-                            //sendStatusInformationRequest();
-                            //return;
-                            //} else {
-                            // Remove the throttle
-                            // TODO
-                            //}
-                        }
-                    }
-                }
-            }
-	    */
-        } else 
-	      if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT
-                || (requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
+	    // For now, do nothing.
+        } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT) {
             if (log.isDebugEnabled()) {
-                log.debug("Current throttle status is THROTTLESPEEDSENT or THROTTLEFUNCSENT");
+                log.debug("Current throttle status is THROTTLESPEEDSENT");
             }
-
 	    // For a Throttle command ("t") we get back a Throttle Status.
 	    if (l.isOkMessage()) {
                 if (log.isDebugEnabled()) {
@@ -360,7 +329,14 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 sendQueuedMessage();
                 log.warn("Received unhandled response: " + l);
             }
-        }
+	    
+	}
+	if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
+            if (log.isDebugEnabled()) {
+                log.debug("Current throttle status is THROTTLEFUNCSENT. Ignoring reply.");
+		log.debug("Reply: {}", l.toString());
+            }
+	}
         //requestState=THROTTLEIDLE;
         //sendQueuedMessage();
     }
