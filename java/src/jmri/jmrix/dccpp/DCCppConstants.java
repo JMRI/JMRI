@@ -62,6 +62,7 @@ public final class DCCppConstants {
     public final static int THROTTLE_REPLY  = 'T';
     public final static int PROGRAM_REPLY   = 'r';
     public final static int VERSION_REPLY   = 'i';
+    public final static int POWER_REPLY     = 'p';
 
     // Various min/max values for messages
     public final static int MAX_ACC_DECODER_ADDRESS = 511;

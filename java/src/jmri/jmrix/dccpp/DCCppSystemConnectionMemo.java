@@ -111,7 +111,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
      */
     public PowerManager getPowerManager() {
         if (powerManager == null) {
-            //powerManager = new DCCppPowerManager(this); // TODO: Create this power manager
+            powerManager = new DCCppPowerManager(this);
         }
         return powerManager;
 
