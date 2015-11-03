@@ -1,0 +1,960 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+
+<!-- Copyright (C) JMRI 2002, 2005, 2007 All rights reserved -->
+<!-- $Id:$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
+	<version author="Anders Boström anders.bostrom@mollehem.se" version="1" lastUpdated="20150919"/>
+  
+	<decoder>
+		<family name="BTLocobridge" mfg="MGP" type="stationary" comment="Bluetooth LocoNet interface">
+			<model model="BTLocobridge" lowVersionID="1">
+			</model>
+		</family>
+    <programming direct="no" paged="no" register="no" ops="no">
+        <mode>LOCONETSV2MODE</mode>
+    </programming>
+	
+		<variables>
+			<variable CV="2" item="Decoder Version" readOnly="yes" >
+				<decVal/>
+				<label>Manufacturer Version No.</label>
+			</variable>	  
+			<variable CV="3" item="Serial Number" readOnly="yes" >
+				<splitVal highCV="4" upperMask="XXXXVVVV"/>
+				<label>Decoder serial number</label>
+			</variable>
+			<variable CV="7" item="Manufacturer" readOnly="yes" >
+				<decVal/>
+				<label>Manufacturer Id</label>
+			</variable>
+			<variable CV="8" item="Developer Id" readOnly="yes" >
+				<decVal/>
+				<label>Developer Id</label>
+			</variable>
+			<variable CV="9" item="Product Id" readOnly="yes" >
+				<decVal/>
+				<label>Product Id</label>
+			</variable>
+
+			<variable CV="21" item="Short Address" default="1">
+				<splitVal highCV="22" upperMask="XXXXXVVV"/>
+				<label>Long Address</label>
+			</variable>	  
+
+			<variable item="Compatible with LocoBuffer" CV="12" mask="XXXXXXXV">
+				<enumVal>
+					<enumChoice choice="No" value="0"/>
+					<enumChoice choice="Yes" value="1"/>
+				</enumVal>
+				<label>Compatible with LocoBuffer</label>
+			</variable>
+			<variable item="Update BlueTooth" CV="13" mask="XXXXXXXV">
+				<enumVal>
+					<enumChoice choice="No" value="0"/>
+					<enumChoice choice="Yes" value="1"/>
+				</enumVal>
+				<label>Update BlueTooth at next startup</label>
+			</variable>
+			<variable item="Pincode" CV="14">
+				<splitVal highCV="15"/>
+				<label>Pincode (4 digits)</label>
+			</variable>
+
+			<variable item="Bluetooth name, char 1" CV="30">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, first character</label>
+			</variable>
+			<variable item="Bluetooth name, char 2" CV="31">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 2</label>
+			</variable>
+			<variable item="Bluetooth name, char 3" CV="32">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 3</label>
+			</variable>
+			<variable item="Bluetooth name, char 4" CV="33">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 4</label>
+			</variable>
+			<variable item="Bluetooth name, char 5" CV="34">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 5</label>
+			</variable>
+			<variable item="Bluetooth name, char 6" CV="35">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 6</label>
+			</variable>
+			<variable item="Bluetooth name, char 7" CV="36">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 7</label>
+			</variable>
+			<variable item="Bluetooth name, char 8" CV="37">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 8</label>
+			</variable>
+			<variable item="Bluetooth name, char 9" CV="38">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 9</label>
+			</variable>
+			<variable item="Bluetooth name, char 10" CV="39">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 10</label>
+			</variable>
+			<variable item="Bluetooth name, char 11" CV="40">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 11</label>
+			</variable>
+			<variable item="Bluetooth name, char 12" CV="41">
+				<enumVal>
+					<enumChoice choice="" value="0"/>
+					<enumChoice choice="0" value="48"/>
+					<enumChoice choice="1" value="49"/>
+					<enumChoice choice="2" value="50"/>
+					<enumChoice choice="3" value="51"/>
+					<enumChoice choice="4" value="52"/>
+					<enumChoice choice="5" value="53"/>
+					<enumChoice choice="6" value="54"/>
+					<enumChoice choice="7" value="55"/>
+					<enumChoice choice="8" value="56"/>
+					<enumChoice choice="9" value="57"/>
+					<enumChoice choice="A" value="65"/>
+					<enumChoice choice="B" value="66"/>
+					<enumChoice choice="C" value="67"/>
+					<enumChoice choice="D" value="68"/>
+					<enumChoice choice="E" value="69"/>
+					<enumChoice choice="F" value="70"/>
+					<enumChoice choice="G" value="71"/>
+					<enumChoice choice="H" value="72"/>
+					<enumChoice choice="I" value="73"/>
+					<enumChoice choice="J" value="74"/>
+					<enumChoice choice="K" value="75"/>
+					<enumChoice choice="L" value="76"/>
+					<enumChoice choice="M" value="77"/>
+					<enumChoice choice="N" value="78"/>
+					<enumChoice choice="O" value="79"/>
+					<enumChoice choice="P" value="80"/>
+					<enumChoice choice="Q" value="81"/>
+					<enumChoice choice="R" value="82"/>
+					<enumChoice choice="S" value="83"/>
+					<enumChoice choice="T" value="84"/>
+					<enumChoice choice="U" value="85"/>
+					<enumChoice choice="V" value="86"/>
+					<enumChoice choice="W" value="87"/>
+					<enumChoice choice="X" value="88"/>
+					<enumChoice choice="Y" value="89"/>
+					<enumChoice choice="Z" value="90"/>
+					<enumChoice choice="a" value="97"/>
+					<enumChoice choice="b" value="98"/>
+					<enumChoice choice="c" value="99"/>
+					<enumChoice choice="d" value="100"/>
+					<enumChoice choice="e" value="101"/>
+					<enumChoice choice="f" value="102"/>
+					<enumChoice choice="g" value="103"/>
+					<enumChoice choice="h" value="104"/>
+					<enumChoice choice="i" value="105"/>
+					<enumChoice choice="j" value="106"/>
+					<enumChoice choice="k" value="107"/>
+					<enumChoice choice="l" value="108"/>
+					<enumChoice choice="m" value="109"/>
+					<enumChoice choice="n" value="110"/>
+					<enumChoice choice="o" value="111"/>
+					<enumChoice choice="p" value="112"/>
+					<enumChoice choice="q" value="113"/>
+					<enumChoice choice="r" value="114"/>
+					<enumChoice choice="s" value="115"/>
+					<enumChoice choice="t" value="116"/>
+					<enumChoice choice="u" value="117"/>
+					<enumChoice choice="v" value="118"/>
+					<enumChoice choice="w" value="119"/>
+					<enumChoice choice="x" value="120"/>
+					<enumChoice choice="y" value="121"/>
+					<enumChoice choice="z" value="122"/>
+				</enumVal>
+				<label>Bluetooth name, character 12</label>
+			</variable>
+
+		</variables>
+	</decoder>
+
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  -->	  
+  <pane>
+    <name>General info</name>
+    <column>
+      <label>
+        <text>LocoNet address to Bluetooth interface</text>
+      </label>
+      <display item="Short Address"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Decoder Version" label="Software Version"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Manufacturer Id" label="Manufacturer Id"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Developer Id" label="Developer Id"/>
+      <label>
+        <text> </text>
+      </label>
+      <display item="Product Id" label="Product Id"/>
+    </column>
+  </pane>
+
+	<pane>
+		<name>Bluetooth</name>
+		<column>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Compatible with LocoBuffer"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Update BlueTooth"/>
+			<label>
+				<text> </text>
+			</label>
+			<display item="Pincode"/>
+			<label>
+				<text> </text>
+			</label>
+			<row>
+			<label><text>Bluetooth name</text></label>
+			<display item="Bluetooth name, char 1"><label></label></display>
+			<display item="Bluetooth name, char 2"><label></label></display>
+			<display item="Bluetooth name, char 3"><label></label></display>
+			<display item="Bluetooth name, char 4"><label></label></display>
+			<display item="Bluetooth name, char 5"><label></label></display>
+			<display item="Bluetooth name, char 6"><label></label></display>
+			<display item="Bluetooth name, char 7"><label></label></display>
+			<display item="Bluetooth name, char 8"><label></label></display>
+			<display item="Bluetooth name, char 9"><label></label></display>
+			<display item="Bluetooth name, char 10"><label></label></display>
+			<display item="Bluetooth name, char 11"><label></label></display>
+			<display item="Bluetooth name, char 12"><label></label></display>
+			</row>
+		</column>
+	</pane>
+
+</decoder-config>
+

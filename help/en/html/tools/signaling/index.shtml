@@ -5,7 +5,7 @@
 <title>JMRI: Signaling introduction</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-<meta name="Date.Modified" content="20151030"/>
+<meta name="Date.Modified" content="20151102"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -105,14 +105,15 @@ Example #2: Dennis Drury's CTC signals get even numbers with a directional modif
 	<h3>Further reading</h3>	
 	<p>There are a lot of excellent sources of information on prototype signaling, including:
 <ul>
-	<li>The <a href="https://en.wikipedia.org/wiki/Railway_signal">Wikipedia Signaling page</a></li>
-	<li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling simply explained</a> by A.A. Krug</li>
-	<li><a href="http://www.lundsten.dk/us_signaling/">North American Signaling</a> is a comprehensive website by Carsten S. Lundsten
-		<li>The <a href="http://www.railway-technical.com/sigind.shtml">Railway Technical Index Signaling chapter</a> provides lots of information from all over the world
-	<li>John Armstrong's book <em>The Railroad: What It Is, What It Does</em>, Simmons-Boardman Books Inc., 1990
-		<li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev 3.0</em> has signaling information in chapter 12.
-<li>US prototype AAR rules section 2 (<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>) provides a starting point for understanding US signaling rules.</li>
-<li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit Nomenclature</a> helps in prototypically naming parts of a signaling system.</li>
+  <li>The <a href="https://en.wikipedia.org/wiki/Railway_signal">Wikipedia Signaling page</a></li>
+  <li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling simply explained</a> by A.A. Krug</li>
+  <li><a href="http://www.lundsten.dk/us_signaling/">North American Signaling</a> is a comprehensive website by Carsten S. Lundsten</li>
+  <li>The <a href="http://www.railway-technical.com/sigind.shtml">Railway Technical Index Signaling chapter</a> provides lots of information from all over the world.</li>
+  <li><a href="http://catalog.hathitrust.org/Record/002567896">Railroad operation and railway signaling</a> by Edmund J. Phillips, Jr., Simmons-Boardman Publ., 1942</li>
+  <li>John Armstrong's book <em>The Railroad: What It Is, What It Does</em>, Simmons-Boardman Books Inc., 1990</li>
+  <li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev 3.0</em> has signaling information in chapter 12.</li>
+  <li>US prototype AAR rules section 2 (<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>) provides a starting point for understanding US signaling rules.</li>
+  <li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit Nomenclature</a> helps in prototypically naming parts of a signaling system.</li>
 </ul>
 
 <a name="tools"><h2>JMRI Signaling Tools</h2></a>

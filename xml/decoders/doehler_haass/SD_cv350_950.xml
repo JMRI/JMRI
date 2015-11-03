@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2001, 2005, 2007, 2-009, 2010 All rights reserved -->
 <!--                                                                        -->
@@ -26,16 +26,29 @@
   </authorgroup>
   <revhistory xmlns="http://docbook.org/ns/docbook">
     <revision>
+      <revnumber>2</revnumber>
+      <date>2015-11-01</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Included similar CVs from SUSI sound modules</revremark>
+    </revision>
+	<revision>
       <revnumber>1</revnumber>
       <date>2014-10-13</date>
       <authorinitials>PB</authorinitials>
       <revremark>Creation</revremark>
     </revision>
-  </revhistory>
-  <variable label="Required speedsteps before braking sound" CV="966" tooltip="CV966" default="0" item="Sound Option 15" exclude="SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03">
-	<decVal min="0" max="127"/>
-    <label>Required speedsteps before braking sound</label>
-    <label xml:lang="fr">Pas de vitesse nécessaires avant son de freinage</label>
-    <label xml:lang="de">Bremsenquietschen Mindestverzögerung</label>
-  </variable>
+   </revhistory>
+  <!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->    
+  <variable label="Max time to standstill sound" CV="350" tooltip="CV350 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="SUSI sound modules">
+	<decVal min="0" max="255"/>
+	<label xml:lang="fr">Délai max avant son marche arrêt</label>
+	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
+   </variable>
+  <variable label="Max time to standstill sound" CV="950" tooltip="CV950 (0-255 x100ms)" default="0" item="Sound Option 8" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01">
+	<decVal min="0" max="255"/>
+	<label xml:lang="fr">Délai max avant son marche arrêt</label>
+	<label xml:lang="de">Leerlauf Verzögerungszeit</label>
+   </variable>
+  
+  <!-- END SIMILAR CV --> 
 </variables>
