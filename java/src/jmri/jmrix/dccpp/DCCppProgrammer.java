@@ -96,7 +96,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
         if (log.isDebugEnabled()) {
             log.debug("check CV " + addr);
         }
-        log.error("cs Type: " + controller().getCommandStation().getCommandStationType() + " CS Version: " + controller().getCommandStation().getCommandStationSoftwareVersion());
+        log.error("cs Type: " + controller().getCommandStation().getBaseStationType() + " CS Version: " + controller().getCommandStation().getCodeBuildDate());
         if (!getCanWrite()) {
             return false; // check basic implementation first
         }

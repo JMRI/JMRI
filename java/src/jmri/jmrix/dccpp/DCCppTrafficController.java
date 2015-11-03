@@ -92,58 +92,55 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      */
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
-	/*
-        if (!((DCCppReply) m).checkParity()) {
-            log.warn("Ignore packet with bad checksum: " + ((DCCppReply) m).toString());
-        } else {
-            try {
-                int mask = (mListenerMasks.get(client)).intValue();
-                if (mask == DCCppInterface.ALL) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                } else if ((mask & DCCppInterface.COMMINFO)
-                        == DCCppInterface.COMMINFO
-                        && (((DCCppReply) m).getElement(0)
-                        == DCCppConstants.LI_MESSAGE_RESPONSE_HEADER)) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                } else if ((mask & DCCppInterface.CS_INFO)
-                        == DCCppInterface.CS_INFO
-                        && (((DCCppReply) m).getElement(0)
-                        == DCCppConstants.CS_INFO
-                        || ((DCCppReply) m).getElement(0)
-                        == DCCppConstants.CS_SERVICE_MODE_RESPONSE
-                        || ((DCCppReply) m).getElement(0)
-                        == DCCppConstants.CS_REQUEST_RESPONSE
-                        || ((DCCppReply) m).getElement(0)
-                        == DCCppConstants.BC_EMERGENCY_STOP)) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                } else if ((mask & DCCppInterface.FEEDBACK)
-                        == DCCppInterface.FEEDBACK
-                        && (((DCCppReply) m).isFeedbackMessage()
-                        || ((DCCppReply) m).isFeedbackBroadcastMessage())) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                } else if ((mask & DCCppInterface.THROTTLE)
-                        == DCCppInterface.THROTTLE
-                        && ((DCCppReply) m).isThrottleMessage()) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                } else if ((mask & DCCppInterface.CONSIST)
-                        == DCCppInterface.CONSIST
-                        && ((DCCppReply) m).isConsistMessage()) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                } else if ((mask & DCCppInterface.INTERFACE)
-                        == DCCppInterface.INTERFACE
-                        && (((DCCppReply) m).getElement(0)
-                        == DCCppConstants.LI_VERSION_RESPONSE
-                        || ((DCCppReply) m).getElement(0)
-                        == DCCppConstants.LI101_REQUEST)) {
-                    ((DCCppListener) client).message((DCCppReply) m);
-                }
-            } catch (NullPointerException e) {
-                // catch null pointer exceptions, caused by a client
-                // that sent a message without being a registered listener
-                ((DCCppListener) client).message((DCCppReply) m);
-            }
-        }
-	*/
+	try {
+	    // NOTE: For now, all listeners should register for DCCppInterface.ALL
+	    int mask = (mListenerMasks.get(client)).intValue();
+	    if (mask == DCCppInterface.ALL) {
+		((DCCppListener) client).message((DCCppReply) m);
+		/*
+	    } else if ((mask & DCCppInterface.COMMINFO)
+		       == DCCppInterface.COMMINFO
+		       && (((DCCppReply) m).getElement(0)
+			   == DCCppConstants.LI_MESSAGE_RESPONSE_HEADER)) {
+		((DCCppListener) client).message((DCCppReply) m);
+	    } else if ((mask & DCCppInterface.CS_INFO)
+		       == DCCppInterface.CS_INFO
+		       && (((DCCppReply) m).getElement(0)
+			   == DCCppConstants.CS_INFO
+			   || ((DCCppReply) m).getElement(0)
+			   == DCCppConstants.CS_SERVICE_MODE_RESPONSE
+			   || ((DCCppReply) m).getElement(0)
+			   == DCCppConstants.CS_REQUEST_RESPONSE
+			   || ((DCCppReply) m).getElement(0)
+			   == DCCppConstants.BC_EMERGENCY_STOP)) {
+		((DCCppListener) client).message((DCCppReply) m);
+	    } else if ((mask & DCCppInterface.FEEDBACK)
+		       == DCCppInterface.FEEDBACK
+		       && (((DCCppReply) m).isFeedbackMessage()
+			   || ((DCCppReply) m).isFeedbackBroadcastMessage())) {
+		((DCCppListener) client).message((DCCppReply) m);
+	    } else if ((mask & DCCppInterface.THROTTLE)
+		       == DCCppInterface.THROTTLE
+		       && ((DCCppReply) m).isThrottleMessage()) {
+		((DCCppListener) client).message((DCCppReply) m);
+	    } else if ((mask & DCCppInterface.CONSIST)
+		       == DCCppInterface.CONSIST
+		       && ((DCCppReply) m).isConsistMessage()) {
+		((DCCppListener) client).message((DCCppReply) m);
+	    } else if ((mask & DCCppInterface.INTERFACE)
+		       == DCCppInterface.INTERFACE
+		       && (((DCCppReply) m).getElement(0)
+			   == DCCppConstants.LI_VERSION_RESPONSE
+			   || ((DCCppReply) m).getElement(0)
+			   == DCCppConstants.LI101_REQUEST)) {
+		((DCCppListener) client).message((DCCppReply) m);
+		*/
+	    }
+	} catch (NullPointerException e) {
+	    // catch null pointer exceptions, caused by a client
+	    // that sent a message without being a registered listener
+	    ((DCCppListener) client).message((DCCppReply) m);
+	}
     }
 
     // We use the pollMessage routines for high priority messages.

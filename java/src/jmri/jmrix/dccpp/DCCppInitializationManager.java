@@ -26,12 +26,6 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
         if (log.isDebugEnabled()) {
             log.debug("Init called");
         }
-        float CSSoftwareVersion = systemMemo.getDCCppTrafficController()
-                .getCommandStation()
-                .getCommandStationSoftwareVersion();
-        int CSType = systemMemo.getDCCppTrafficController()
-                .getCommandStation()
-                .getCommandStationType();
 
 	/* First, we load things that should work on all systems */
 	//jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());

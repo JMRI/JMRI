@@ -5,6 +5,9 @@ package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Defines the standard/common routines used in multiple classes related to the
@@ -25,88 +28,65 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      * get from the layout.
      *
      */
-    private int cmdStationType = -1;
-    private float cmdStationSoftwareVersion = -1;
-    private int cmdStationSoftwareVersionBCD = -1;
+    private String baseStationType;
+    private String codeBuildDate;
+    private int registers[];
 
-    /**
-     * return the CS Type
-     *
-     */
-    public int getCommandStationType() {
-        return cmdStationType;
+    /** ctor */
+    public DCCppCommandStation() {
+	super();
+	registers = new int[DCCppConstants.MAX_MAIN_REGISTERS];
+	// Zero out the register addresses.
+	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++)
+	    registers[i] = DCCppConstants.REGISTER_UNALLOCATED;
+	
+    }
+
+    public void setBaseStationType(String s) {
+	baseStationType = s;
+    }
+    
+    public String getBaseStationType() {
+	return baseStationType;
+    }
+
+    public void setCodeBuildDate(String s) {
+	codeBuildDate = s;
+    }
+
+    public String getCodeBuildDate() {
+	return codeBuildDate;
     }
 
     /**
-     * set the CS Type
+     * Parses the DCC++ CS status response to pull out the base station version
+     * and software version.
      *
      */
-    public void setCommandStationType(int t) {
-        cmdStationType = t;
-    }
-
-    /**
-     * Set the CS type based on an XPressNet Message
-     *
-     */
-    public void setCommandStationType(DCCppReply l) {
-	/* TODO: Create this based on DCC++ protocol
-	 *
-        if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
-            // This is the Command Station Software Version Response
-            if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                cmdStationType = l.getElement(3);
-            }
+    protected void setCommandStationStatus(DCCppReply l) {
+	String syntax = "iDCC\\+\\+\\ BASE\\ STATION v([a-zA-Z0-9_.]+): BUILD ((\\w{3}\\W\\d{1,2}\\W\\d{4})\\W(\\d{2}:\\d{2}:\\d{2}))";
+	String s = l.toString();
+	try {
+	    Pattern p = Pattern.compile(syntax);
+	    Matcher m = p.matcher(s);
+	    if (!m.matches()) {
+		log.error("DCC++ Status string does not match pattern. syntax= {} string= {}", syntax, s);
+		return;
+	    }
+	    log.debug("DCC++ Status version = {} build date = {} time = {}",
+		      m.group(1), m.group(2));
+	    baseStationType = m.group(1);
+	    codeBuildDate = m.group(2);
+	} catch (PatternSyntaxException e) {
+            log.error("Malformed DCC++ version syntax! " + syntax);
+            return;
+        } catch (IllegalStateException e) {
+            log.error("Group called before match operation executed syntax=" + syntax + " string= " + s);
+            return;
+        } catch (IndexOutOfBoundsException e) {
+            log.error("Index out of bounds " + syntax + " string= " + s);
+            return;
         }
-	*/
-    }
-
-    /**
-     * return the CS Software Version
-     *
-     */
-    public float getCommandStationSoftwareVersion() {
-        return cmdStationSoftwareVersion;
-    }
-
-    /**
-     * return the CS Software Version in BCD (for use in comparisons)
-     *
-     */
-    public float getCommandStationSoftwareVersionBCD() {
-        return cmdStationSoftwareVersionBCD;
-    }
-
-    /**
-     * set the CS Software Version
-     *
-     */
-    public void setCommandStationSoftwareVersion(float v) {
-        cmdStationSoftwareVersion = v;
-    }
-
-    /**
-     * Set the CS Software Version based on an DCC++ Message
-     *
-     */
-    public void setCommandStationSoftwareVersion(DCCppReply l) {
-	/* TODO: Create this based on DCC++ protocol
-	 *
-        if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
-            // This is the Command Station Software Version Response
-            if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                try {
-                    cmdStationSoftwareVersion = (l.getElementBCD(2).floatValue()) / 10;
-                } catch (java.lang.NumberFormatException nfe) {
-                    // the number was not in BCD format as expected.
-                    // the upper nibble is the major version and the lower 
-                    // nibble is the minor version.
-                    cmdStationSoftwareVersion = ((l.getElement(2) & 0xf0) >> 4) + (l.getElement(2) & 0x0f) / 100.0f;
-                }
-                cmdStationSoftwareVersionBCD = l.getElement(2);
-            }
-        }
-	*/
     }
 
     /**
@@ -123,7 +103,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      * command station has, and is currently in service mode 
      */
     /**
-     * Lenz does use a service mode
+     * DCC++ does use a service mode
      */
     public boolean getHasServiceMode() {
         return true;
@@ -144,19 +124,9 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
     boolean mInServiceMode = false;
 
     /**
-     * DCC++ command station does provide Ops Mode We should make this
-     * return false based on what command station we're using but for now, we'll
-     * return true
+     * DCC++ command station does provide Ops Mode.
      */
     public boolean isOpsModePossible() {
-	/* TODO: Create this based on DCC++ protocol
-	 *
-        if (cmdStationType == 0x01 || cmdStationType == 0x02) {
-            return false;
-        } else {
-            return true;
-        }
-	*/
 	return true;
     }
 
@@ -166,10 +136,10 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      * address
      */
     public static int getDCCAddressLow(int address) {
-        /* For addresses below 100, we just return the address, otherwise,
+        /* For addresses below 128, we just return the address, otherwise,
          we need to return the upper byte of the address after we add the
-         offset 0xC000. The first address used for addresses over 99 is 0xC064*/
-        if (address < 100) {
+         offset 0xC000. The first address used for addresses over 127 is 0xC080*/
+        if (address < 128) {
             return (address);
         } else {
             int temp = address + 0xC000;
@@ -183,11 +153,11 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      * address
      */
     public static int getDCCAddressHigh(int address) {
-        /* this isn't actually the high byte, For addresses below 100, we
+        /* this isn't actually the high byte, For addresses below 128, we
          just return 0, otherwise, we need to return the upper byte of the
          address after we add the offset 0xC000 The first address used for
-         addresses over 99 is 0xC064*/
-        if (address < 100) {
+         addresses over 127 is 0xC080*/
+        if (address < 128) {
             return (0x00);
         } else {
             int temp = address + 0xC000;
@@ -214,13 +184,12 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
             return;
         }
 
-	// TODO: This is broken
-	/*
-        DCCppMessage msg = DCCppMessage.getWriteDCCPacketMainMsg(packet);
+	int reg = 1; // TODO: Fix this when I understand registers...
+	DCCppMessage msg = DCCppMessage.getWriteDCCPacketMainMsg(reg, packet.length, packet);
+
         for (int i = 0; i < repeats; i++) {
             _tc.sendDCCppMessage(msg, null);
         }
-	*/
     }
 
     /*

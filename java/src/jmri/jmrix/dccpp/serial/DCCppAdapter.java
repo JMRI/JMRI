@@ -296,11 +296,11 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         return validSpeeds;
     }
 
-    protected String[] validSpeeds = new String[]{"57,600 baud"};
-    protected int[] validSpeedValues = new int[]{57600};
+    protected String[] validSpeeds = new String[]{"115,200 baud"};
+    protected int[] validSpeedValues = new int[]{115200};
 
     // meanings are assigned to these above, so make sure the order is consistent
-    protected String[] validOption1 = new String[]{"hardware flow control (recommended for Lenz 23150)", "no flow control (required for Lenz 23151)"};
+    protected String[] validOption1 = new String[]{"hardware flow control", "no flow control"};
 
     private boolean opened = false;
     InputStream serialStream = null;

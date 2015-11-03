@@ -1039,7 +1039,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      */
 
     /** Write DCC Packet to a specified Register on the Main*/
-    public static DCCppMessage getWriteDCCPacketMainMsg( int register, int num_bytes, int bytes[]) {
+    public static DCCppMessage getWriteDCCPacketMainMsg( int register, int num_bytes, byte[] bytes) {
 	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
 	int i = 0;
 

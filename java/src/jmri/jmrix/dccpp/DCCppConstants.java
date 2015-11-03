@@ -23,7 +23,8 @@ public final class DCCppConstants {
 
     public final static int MESSAGE_SIZE = 20;
     public final static int MAX_MESSAGE_SIZE = 20;
-    public final static int MAX_MAIN_REGISTERS = 20; // TODO: Check this
+    public final static int MAX_MAIN_REGISTERS = 12; // TODO: Check this
+    public final static int REGISTER_UNALLOCATED = -1;
 
     // DCC++ Command OpCodes
 
@@ -60,6 +61,7 @@ public final class DCCppConstants {
     // Message Replies
     public final static int THROTTLE_REPLY  = 'T';
     public final static int PROGRAM_REPLY   = 'r';
+    public final static int VERSION_REPLY   = 'i';
 
     //--------------------------------------------------------------
     // XPressNet Stuff below here

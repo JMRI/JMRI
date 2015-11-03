@@ -64,6 +64,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    /* Get the opcode as a one character string */
+    public char getOpCodeChar() {
+	return ((char)getOpCode());
+    }
+
     /* Get the opcode as a string in hex format */
     // Not sure how this is used or applies in DCC++
     public String getOpCodeHex() {

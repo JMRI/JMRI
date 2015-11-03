@@ -126,20 +126,13 @@ abstract public class AbstractDCCppInitializationManager {
         public void message(DCCppReply l) {
             // Check to see if this is a response with the Command Station 
             // Version Info
-	    /*
-            if (l.getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE) {
+	    if (l.getElement(0) == DCCppConstants.VERSION_REPLY) {
                 // This is the Command Station Software Version Response
-                if (l.getElement(1) == XNetConstants.CS_SOFTWARE_VERSION) {
-                    systemMemo.getXNetTrafficController()
-                            .getCommandStation()
-                            .setCommandStationSoftwareVersion(l);
-                    systemMemo.getXNetTrafficController()
-                            .getCommandStation()
-                            .setCommandStationType(l);
+		systemMemo.getDCCppTrafficController()
+		    .getCommandStation()
+		    .setCommandStationStatus(l);
                     finish();
-                }
-            }
-	    */
+	    }
         }
 
         // listen for the messages to the LI100/LI101
