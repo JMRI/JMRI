@@ -85,6 +85,13 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     }
 
     /**
+     * Get the Register Number for this Throttle's assigned address
+     */
+    int getRegisterNum() {
+	return(tc.getCommandStation().getRegisterNum(this.getDccAddress()));
+    }
+
+    /**
      * Send the DCC++  message to set the state of locomotive direction and
      * functions F0, F1, F2, F3, F4
      */
@@ -218,9 +225,11 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 speed = (float) 1.0;
             }
             /* we're sending a speed to the locomotive */
-            DCCppMessage msg = DCCppMessage.getSpeedAndDirectionMsg(getDccAddress(),
-                    speed,
-                    this.isForward);
+            DCCppMessage msg = DCCppMessage.getSpeedAndDirectionMsg(
+								    getRegisterNum(),
+								    getDccAddress(),
+								    speed,
+								    this.isForward);
             // now, queue the message for sending to the command station
             queueMessage(msg, THROTTLESPEEDSENT);
         }
@@ -231,7 +240,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      */
     protected void sendEmergencyStop() {
         /* Emergency stop sent */
-        DCCppMessage msg = DCCppMessage.getAddressedEmergencyStop(this.getDccAddress());
+        DCCppMessage msg = DCCppMessage.getAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
         // now, queue the message for sending to the command station
         queueMessage(msg, THROTTLESPEEDSENT);
     }

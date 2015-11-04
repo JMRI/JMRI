@@ -23,8 +23,9 @@ public final class DCCppConstants {
 
     public final static int MESSAGE_SIZE = 20;
     public final static int MAX_MESSAGE_SIZE = 20;
-    public final static int MAX_MAIN_REGISTERS = 12; // TODO: Check this
+    public final static int MAX_MAIN_REGISTERS = 12;
     public final static int REGISTER_UNALLOCATED = -1;
+    public final static int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
 
     // DCC++ Command OpCodes
 

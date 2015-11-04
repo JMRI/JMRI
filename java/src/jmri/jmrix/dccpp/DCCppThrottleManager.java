@@ -48,6 +48,11 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
         if (throttles.containsKey(address)) {
             notifyThrottleKnown(throttles.get(address), address);
         } else {
+	    if (tc.getCommandStation().requestNewRegister(address.getNumber()) == DCCppConstants.NO_REGISTER_FREE) {
+		// TODO: Eventually add something more robust here.
+		log.error("No Register available for Throttle. Address = {}", address);
+		return;
+	    }
             throttle = new DCCppThrottle((DCCppSystemConnectionMemo) adapterMemo, address, tc);
             throttles.put(address, throttle);
             notifyThrottleKnown(throttle, address);
@@ -145,6 +150,7 @@ public class DCCppThrottleManager extends AbstractThrottleManager implements Thr
 
     public boolean disposeThrottle(jmri.DccThrottle t, jmri.ThrottleListener l) {
         if (super.disposeThrottle(t, l)) {
+	    tc.getCommandStation().releaseRegister(t.getLocoAddress().getNumber());
             DCCppThrottle lnt = (DCCppThrottle) t;
             lnt.throttleDispose();
             return true;

@@ -30,16 +30,14 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      */
     private String baseStationType;
     private String codeBuildDate;
-    private int registers[];
+    private DCCppRegisterManager rmgr = null;
 
     /** ctor */
     public DCCppCommandStation() {
 	super();
-	registers = new int[DCCppConstants.MAX_MAIN_REGISTERS];
-	// Zero out the register addresses.
-	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++)
-	    registers[i] = DCCppConstants.REGISTER_UNALLOCATED;
-	
+	if (rmgr == null) {
+	    rmgr = new DCCppRegisterManager();
+	}
     }
 
     public void setBaseStationType(String s) {
@@ -223,6 +221,24 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
             return "DCCpp";
         }
         return adaptermemo.getSystemPrefix();
+    }
+
+    public int requestNewRegister(int addr) {
+	return(rmgr.requestRegister(addr));
+    }
+
+    public void releaseRegister(int addr) {
+	rmgr.releaseRegister(addr);
+    }
+
+    // REturns DCCppConstants.NO_REGISTER_FREE if address is not in list.
+    public int getRegisterNum(int addr) {
+	return(rmgr.getRegisterNum(addr));
+    }
+
+    // Returns DCCppConstants.REGISTER_UNALLOCATED if register is unused.
+    public int getRegisterAddress(int num) {
+	return(rmgr.getRegisterAddress(num));
     }
 
     /*

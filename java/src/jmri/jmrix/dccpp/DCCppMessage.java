@@ -512,7 +512,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      *
      * Note: This just sends a THROTTLE command with speed = -1
      */
-    public static DCCppMessage getAddressedEmergencyStop(int address) {
+    public static DCCppMessage getAddressedEmergencyStop(int register, int address) {
 	int i = 0;
 	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
 
@@ -523,7 +523,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
 
 	// Field 2 is the Register (WTH?)
-	msg.setElement(i++, DCCppConstants.REGISTER_1);
+	msg.setElement(i++, register);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
 
 	// Field 3 is the DCC address
@@ -556,7 +556,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
      */
-    public static DCCppMessage getSpeedAndDirectionMsg(int address, float speed, boolean isForward) {
+    public static DCCppMessage getSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
 	int i = 0;
 	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
 
@@ -568,7 +568,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
 
 	// Field 2 is the Register (WTH?)
-	msg.setElement(i++, DCCppConstants.REGISTER_1);
+	msg.setElement(i++, register);
 	msg.setElement(i++, DCCppConstants.WHITESPACE);
 
 	// Field 3 is the DCC address
