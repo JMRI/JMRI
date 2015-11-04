@@ -29,35 +29,35 @@ public final class DCCppConstants {
 
     // DCC++ Command OpCodes
 
-    public final static int THROTTLE_CMD           = 't'; // Throttle command
-    public final static int FUNCTION_CMD           = 'f'; // F0-F28
-    public final static int STATIONARY_DECODER_CMD = 'a'; // Stationary accessory decoder
-    public final static int TURNOUT_CMD            = 'T'; // Turnout command
-    public final static int OPS_WRITE_CV_BYTE      = 'w'; // Write CV byte on ops track
-    public final static int OPS_WRITE_CV_BIT       = 'b'; // Set/Clear a single CV bit on ops track
-    public final static int PROG_WRITE_CV_BYTE     = 'W'; // Write CV byte on program track
-    public final static int PROG_WRITE_CV_BIT      = 'B'; // Set/Clear a single CV bit on ops track
-    public final static int PROG_READ_CV           = 'R'; // Read CV byte on program track
-    public final static int TRACK_POWER_ON         = '1'; // Track power ON
-    public final static int TRACK_POWER_OFF        = '0'; // Track power OFF
-    public final static int READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
-    public final static int READ_CS_STATUS         = 's'; // Read status from command station
+    public final static char THROTTLE_CMD           = 't'; // Throttle command
+    public final static char FUNCTION_CMD           = 'f'; // F0-F28
+    public final static char STATIONARY_DECODER_CMD = 'a'; // Stationary accessory decoder
+    public final static char TURNOUT_CMD            = 'T'; // Turnout command
+    public final static char OPS_WRITE_CV_BYTE      = 'w'; // Write CV byte on ops track
+    public final static char OPS_WRITE_CV_BIT       = 'b'; // Set/Clear a single CV bit on ops track
+    public final static char PROG_WRITE_CV_BYTE     = 'W'; // Write CV byte on program track
+    public final static char PROG_WRITE_CV_BIT      = 'B'; // Set/Clear a single CV bit on ops track
+    public final static char PROG_READ_CV           = 'R'; // Read CV byte on program track
+    public final static char TRACK_POWER_ON         = '1'; // Track power ON
+    public final static char TRACK_POWER_OFF        = '0'; // Track power OFF
+    public final static char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
+    public final static char READ_CS_STATUS         = 's'; // Read status from command station
 
     // Special Commands not for normal use.  Diagnostic and Test Use Only
-    public final static int WRITE_DCC_PACKET_MAIN  = 'M';
-    public final static int WRITE_DCC_PACKET_PROG  = 'P';
-    public final static int GET_FREE_MEMORY        = 'F';
-    public final static int LIST_REGISTER_CONTENTS = 'L';
+    public final static char WRITE_DCC_PACKET_MAIN  = 'M';
+    public final static char WRITE_DCC_PACKET_PROG  = 'P';
+    public final static char GET_FREE_MEMORY        = 'F';
+    public final static char LIST_REGISTER_CONTENTS = 'L';
 	
-    public final static int WHITESPACE = ' ';
+    public final static char WHITESPACE = ' ';
     public final static int MAX_SPEED = 126;
-    public final static int FORWARD_DIR = '1';
-    public final static int REVERSE_DIR = '0';
+    public final static char FORWARD_DIR = '1';
+    public final static char REVERSE_DIR = '0';
 
     public final static int REGISTER_1 = '1';
 
-    public final static int FUNCTION_GROUP4_BYTE1 = 222;
-    public final static int FUNCTION_GROUP5_BYTE1 = 223;
+    public final static char FUNCTION_GROUP4_BYTE1 = 222;
+    public final static char FUNCTION_GROUP5_BYTE1 = 223;
 
     // Message Replies
     public final static int THROTTLE_REPLY  = 'T';

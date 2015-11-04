@@ -189,73 +189,101 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      * so they appear here. 
      */
 
+    /**
+     * Stationary Decoder Message
+     *
+     * Format: <a ADDRESS SUBADDRESS ACTIVATE>
+     *
+     *    ADDRESS:  the primary address of the decoder (0-511)
+     *    SUBADDRESS: the subaddress of the decoder (0-3)
+     *    ACTIVATE: 1=on (set), 0=off (clear)
+     *
+     *    Note that many decoders and controllers combine the ADDRESS and SUBADDRESS into a single number, N,
+     *    from  1 through a max of 2044, where
+     *    
+     *    N = (ADDRESS - 1) * 4 + SUBADDRESS + 1, for all ADDRESS>0
+     *    
+     *    OR
+     *    
+     *    ADDRESS = INT((N - 1) / 4) + 1
+     *    SUBADDRESS = (N - 1) % 4
+     *    
+     *    returns: NONE
+    */
     public static DCCppMessage getStationaryDecoderMsg(int address, int subaddress, boolean activate) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
-	// Stationary Decoder Command
-	msg.setElement(i++, DCCppConstants.STATIONARY_DECODER_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-
 	// Sanity check inputs
 	if (address < 0 || address > DCCppConstants.MAX_ACC_DECODER_ADDRESS)
 	    return(null);
 	if (subaddress < 0 || subaddress > DCCppConstants.MAX_ACC_DECODER_SUBADDR)
 	    return(null);
 	
-	// Send the Address
-	String ad = Integer.toString(address);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	// Stationary Decoder Command
+	String s = new String(Character.toString(DCCppConstants.STATIONARY_DECODER_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Add the Address
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
-	// Send the Subaddress
-	ad = Integer.toString(subaddress);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	// Add the Subaddress
+	s += Integer.toString(subaddress);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Add the activate / deactivate
+	s += (activate ? "1" : "0");
 
-	// Send the activate/deactrivate
-	msg.setElement(i++, (activate ? '1': '0'));
-
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
+    /**
+     * Predefined Turnout Control Message
+     *
+     * Format: <T ID THROW>
+     *
+     *   ID: the numeric ID (0-32767) of the turnout to control
+     *   THROW: 0 (unthrown) or 1 (thrown)
+     *   
+     *   returns: <H ID THROW>
+     */
     public static DCCppMessage getTurnoutCommandMsg(int id, boolean thrown) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
-	// Turnout Command
-	msg.setElement(i++, DCCppConstants.TURNOUT_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-
 	// Sanity check inputs
 	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) return(null);
 	// Need to also validate whether turnout is predefined?  Where to store the IDs?
+	// Turnout Command
+	String s = new String(Character.toString(DCCppConstants.TURNOUT_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 
 	// Set the ID
-	String ad = Integer.toString(id);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(id);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set the state.
-	msg.setElement(i++, (thrown ? '1' : '0'));
+	s += (thrown ? "1" : "0");
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
+    /**
+     * Write Direct CV Byte to Programming Track
+     *
+     * Format: <W CV VALUE CALLBACKNUM CALLBACKSUB>
+     *
+     *   ID: the numeric ID (0-32767) of the turnout to control
+     *   THROW: 0 (unthrown) or 1 (thrown)
+     *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
+     *    VALUE: the value to be written to the Configuration Variable memory location (0-255) 
+     *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
+     *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
+     *    
+     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
+     *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
+     */
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val) {
 	return(getWriteDirectCVMsg(cv, val, 0, 0));
     }
 
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val, int callbacknum, int callbacksub) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
 	if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
@@ -265,46 +293,48 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	    return(null);
 
 	// Write CV to Programming Track Command
-	msg.setElement(i++, DCCppConstants.PROG_WRITE_CV_BYTE);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.PROG_WRITE_CV_BYTE));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set CV
-	String ad = Integer.toString(cv);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(cv);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Value
-	ad = Integer.toString(val);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(val);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Callback Number
-	ad = Integer.toString(callbacknum);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(callbacknum);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Callback Sub
-	ad = Integer.toString(callbacksub);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
+	s += Integer.toString(callbacksub);
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
+    /**
+     * Write Direct CV Bit to Programming Track
+     *
+     * Format: <B CV BIT VALUE CALLBACKNUM CALLBACKSUB>
+     *
+     *    writes, and then verifies, a single bit within a Configuration Variable to the decoder of an engine on the programming track
+     *    
+     *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
+     *    BIT: the bit number of the Configurarion Variable memory location to write (0-7)
+     *    VALUE: the value of the bit to be written (0-1)
+     *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
+     *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
+     *    
+     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
+     *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
+     */    
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val) {
 	return(getBitWriteDirectCVMsg(cv, bit, val, 0, 0));
     }
 
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val, int callbacknum, int callbacksub) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
 
 	// Sanity Check Inputs
 	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
@@ -315,50 +345,49 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	    return(null);
 
 	// Write Bit to CV on Programming Track
-	msg.setElement(i++, DCCppConstants.PROG_WRITE_CV_BYTE);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.PROG_WRITE_CV_BIT));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set CV
-	String ad = Integer.toString(cv);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(cv);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Bit
-	ad = Integer.toString(bit);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-
+	s += Integer.toString(bit);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	// Set Value
-	msg.setElement(i, (val ? '1' : '0'));	
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += (val ? "1" : "0");
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Callback Number
-	ad = Integer.toString(callbacknum);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(callbacknum);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Callback Sub
-	ad = Integer.toString(callbacksub);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
+	s += Integer.toString(callbacksub);
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
+    /**
+     * Read Direct CV Byte from Programming Track
+     *
+     * Format: <R CV CALLBACKNUM CALLBACKSUB>
+     *
+     *    reads a Configuration Variable from the decoder of an engine on the programming track
+     *    
+     *    CV: the number of the Configuration Variable memory location in the decoder to read from (1-1024)
+     *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
+     *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
+     *    
+     *    returns: <r CALLBACKNUM|CALLBACKSUB|CV VALUE)
+     *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
+     */    
     public static DCCppMessage getReadDirectCVMsg(int cv) {
 	return(getReadDirectCVMsg(cv, 0, 0));
     }
 
     public static DCCppMessage getReadDirectCVMsg(int cv, int callbacknum, int callbacksub) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
 
 	// Sanity check inputs
 	if (cv < 1 || cv > DCCppConstants.MAX_DIRECT_CV) return(null);
@@ -368,37 +397,38 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	    return(null);
 
 	// Read CV from Program Track
-	msg.setElement(i++, DCCppConstants.PROG_READ_CV);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.PROG_READ_CV));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set CV
-	String ad = Integer.toString(cv);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(cv);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Callback Number
-	ad = Integer.toString(callbacknum);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(callbacknum);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Callback Sub
-	ad = Integer.toString(callbacksub);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
+	s += Integer.toString(callbacksub);
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
     
+    /**
+     * Write Direct CV Byte to Main Track
+     *
+     * Format: <w CAB CV VALUE>
+     *
+     *    writes, without any verification, a Configuration Variable to the decoder of an engine on the main operations track
+     *    
+     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder 
+     *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
+     *    VALUE: the value to be written to the Configuration Variable memory location (0-255)
+     *    
+     *    returns: NONE
+     */    
     public static DCCppMessage getWriteOpsModeCVMsg(int address, int cv, int val) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
 	    return(null);
@@ -406,35 +436,38 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	if (val < 0 || val > DCCppConstants.MAX_DIRECT_CV_VAL) return(null);
 	
 	// Write CV in Ops Mode
-	msg.setElement(i++, DCCppConstants.OPS_WRITE_CV_BYTE);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.OPS_WRITE_CV_BYTE));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set address
-	String ad = Integer.toString(address);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set CV
-	ad = Integer.toString(cv);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(cv);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Value
-	ad = Integer.toString(val);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
+	s += Integer.toString(val);
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
+    /**
+     * Write Direct CV Bit to Main Track
+     *
+     * Format: <b CAB CV BIT VALUE>
+     *
+     *    writes, without any verification, a single bit within a Configuration Variable to the decoder of an engine on the main operations track
+     *    
+     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder 
+     *    CV: the number of the Configuration Variable memory location in the decoder to write to (1-1024)
+     *    BIT: the bit number of the Configurarion Variable regsiter to write (0-7)
+     *    VALUE: the value of the bit to be written (0-1)
+     *    
+     *    returns: NONE
+     */        
     public static DCCppMessage getBitWriteOpsModeCVMsg(int address, int cv, int bit, boolean val) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
 
 	// Sanity Check Inputs
 	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS)
@@ -443,40 +476,37 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	if (bit < 0 || bit > 7) return(null);
 	
 	// Write Bit in Ops Mode
-	msg.setElement(i++, DCCppConstants.OPS_WRITE_CV_BIT);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.OPS_WRITE_CV_BIT));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Address
-	String ad = Integer.toString(address);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set CV
-	ad = Integer.toString(cv);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(cv);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Bit
-	ad = Integer.toString(bit);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(bit);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Set Value
-	msg.setElement(i, val ? '1' : '0');
+	s += (val ? "1" : "0");
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
 
+    /**
+     * Set Track Power ON or OFFf
+     *
+     * Format: <1> (ON) or <0> (OFF)
+     *
+     * Returns <p1> (ON) or <p0> (OFF)
+     */
     public static DCCppMessage getSetTrackPowerMsg(boolean on) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	msg.setElement(0, (on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF));
-	return(msg);
+	String s = new String(Character.toString((on ? DCCppConstants.TRACK_POWER_ON : DCCppConstants.TRACK_POWER_OFF)));
+	return(new DCCppMessage(s));
     }
 
     public static DCCppMessage getTrackPowerOnMsg() {
@@ -488,16 +518,34 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
     }
 
 
-    public static DCCppMessage getReadTrackCurrentMsg() {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	msg.setElement(0, DCCppConstants.READ_TRACK_CURRENT);
-	return(msg);
+    /**
+     * Read main operations track current
+     *
+     * Format: <c>
+     *
+     *    reads current being drawn on main operations track
+     *    
+     *    returns: <a CURRENT> 
+     *    where CURRENT = 0-1024, based on exponentially-smoothed weighting scheme
+     */
+   public static DCCppMessage getReadTrackCurrentMsg() {
+	String s = new String(Character.toString(DCCppConstants.READ_TRACK_CURRENT));
+	return(new DCCppMessage(s));
     }
 
-    public static DCCppMessage getCSStatusMsg() {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	msg.setElement(0, DCCppConstants.READ_CS_STATUS);
-	return(msg);
+     /**
+     * Read DCC++ Base Station Status
+     *
+     * Format: <s>
+     *
+     *    returns status messages containing track power status, throttle status, turn-out status, and a version number
+     *    NOTE: this is very useful as a first command for an interface to send to this sketch in order to verify connectivity and update any GUI to reflect actual throttle and turn-out settings
+     *    
+     *    returns: series of status messages that can be read by an interface to determine status of DCC++ Base Station and important settings
+     */
+  public static DCCppMessage getCSStatusMsg() {
+	String s = new String(Character.toString(DCCppConstants.READ_CS_STATUS));
+	return(new DCCppMessage(s));
     }
 
 
@@ -508,86 +556,122 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
      * Note: This just sends a THROTTLE command with speed = -1
      */
     public static DCCppMessage getAddressedEmergencyStop(int register, int address) {
-	int i = 0;
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-
+	// Sanity check inputs
 	if (address < 0 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 
 	// Byte 1 is the command
-	msg.setElement(i++, DCCppConstants.THROTTLE_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.THROTTLE_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 2 is the Register (WTH?)
-	msg.setElement(i++, register);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(register);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 3 is the DCC address
-	String ad = Integer.toString(address);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 4 is the speed ( -1 for emergency stop)
-	String sp = "-1";
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += "-1";
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 5 is direction.
-	msg.setElement(i, DCCppConstants.FORWARD_DIR);
+	s += Character.toString(DCCppConstants.FORWARD_DIR);
 
-	return(msg);
-
+	return(new DCCppMessage(s));
     }
-
+    
     /*
      * Generate a Speed and Direction Request message
+     * @param register is the DCC++ base station register assigned.
      * @param address is the locomotive address
-     * @param speedStepMode is the speedstep mode see @jmri.DccThrottle 
-     *                       for possible values.
      * @param speed a normalized speed value (a floating point number between 0 
      *              and 1).  A negative value indicates emergency stop.
      * @param isForward true for forward, false for reverse.
+     *
+     * Format: <t REGISTER CAB SPEED DIRECTION>
+     *
+     *    sets the throttle for a given register/cab combination 
+     *    
+     *    REGISTER: an internal register number, from 1 through MAX_MAIN_REGISTERS (inclusive), to store the DCC packet used to control this throttle setting
+     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder
+     *    SPEED: throttle speed from 0-126, or -1 for emergency stop (resets SPEED to 0)
+     *    DIRECTION: 1=forward, 0=reverse.  Setting direction when speed=0 or speed=-1 only effects directionality of cab lighting for a stopped train
+     *    
+     *    returns: <T REGISTER SPEED DIRECTION>
+     *    
      */
     public static DCCppMessage getSpeedAndDirectionMsg(int register, int address, float speed, boolean isForward) {
-	int i = 0;
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
 	// Byte 1 is the command
-	msg.setElement(i++, DCCppConstants.THROTTLE_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.THROTTLE_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 2 is the Register (WTH?)
-	msg.setElement(i++, register);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(register);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 3 is the DCC address
-	String ad = Integer.toString(address);
-	for (int j = 0; j < ad.length(); j++, i++) {
-	    msg.setElement(i, ad.charAt(j));
-	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 4 is the speed (128 steps, 0-126 or -1 for emergency stop)
 	// Emergency Stop is a different JMRI-level command, though.
-	int speedVal = java.lang.Math.round(speed * 126);
-	speedVal = ((speedVal > DCCppConstants.MAX_SPEED) ? DCCppConstants.MAX_SPEED : speedVal);
-	String sp = Integer.toString(speedVal);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
+	if (speed < 0.0) {
+	    s += "-1";
+	} else {
+	    int speedVal = java.lang.Math.round(speed * 126);
+	    speedVal = ((speedVal > DCCppConstants.MAX_SPEED) ? DCCppConstants.MAX_SPEED : speedVal);
+	    s += Integer.toString(speedVal);
 	}
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 
 	// Field 5 is direction.
-	msg.setElement(i, (isForward ? DCCppConstants.FORWARD_DIR : DCCppConstants.REVERSE_DIR));
+	s += Character.toString(isForward ? DCCppConstants.FORWARD_DIR : DCCppConstants.REVERSE_DIR);
 
-	return(msg);
+	return(new DCCppMessage(s));
     }
+
+    /** 
+     * Function Group Messages (common serial format)
+     * 
+     * Format: <f CAB BYTE1 [BYTE2]>
+     *
+     *    turns on and off engine decoder functions F0-F28 (F0 is sometimes called FL)  
+     *    NOTE: setting requests transmitted directly to mobile engine decoder --- current state of engine functions is not stored by this program
+     *    
+     *    CAB:  the short (1-127) or long (128-10293) address of the engine decoder
+     *    
+     *    To set functions F0-F4 on (=1) or off (=0):
+     *      
+     *    BYTE1:  128 + F1*1 + F2*2 + F3*4 + F4*8 + F0*16
+     *    BYTE2:  omitted
+     *   
+     *    To set functions F5-F8 on (=1) or off (=0):
+     *   
+     *    BYTE1:  176 + F5*1 + F6*2 + F7*4 + F8*8
+     *    BYTE2:  omitted
+     *   
+     *    To set functions F9-F12 on (=1) or off (=0):
+     *   
+     *    BYTE1:  160 + F9*1 +F10*2 + F11*4 + F12*8
+     *    BYTE2:  omitted
+     *   
+     *    To set functions F13-F20 on (=1) or off (=0):
+     *   
+     *    BYTE1: 222 
+     *    BYTE2: F13*1 + F14*2 + F15*4 + F16*8 + F17*16 + F18*32 + F19*64 + F20*128
+     *   
+     *    To set functions F21-F28 on (=1) of off (=0):
+     *   
+     *    BYTE1: 223
+     *    BYTE2: F21*1 + F22*2 + F23*4 + F24*8 + F25*16 + F26*32 + F27*64 + F28*128
+     *   
+     *    returns: NONE
+     * 
+     */
 
     /*
      * Generate a Function Group One Operation Request message
@@ -606,24 +690,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f3,
             boolean f4) 
     { 
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 128 + (f0 ? 16 : 0);
 	byte1 += (f1 ? 1 : 0);
 	byte1 += (f2 ? 2 : 0);
 	byte1 += (f3 ? 4 : 0);
 	byte1 += (f4 ? 8 : 0);
-	String sp = Integer.toString(byte1);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte1);
+
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -641,24 +721,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f2,
             boolean f3,
             boolean f4) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
 
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte1 = 128 + (f0 ? 16 : 0);
 	byte1 += (f1 ? 1 : 0);
 	byte1 += (f2 ? 2 : 0);
 	byte1 += (f3 ? 4 : 0);
 	byte1 += (f4 ? 8 : 0);
-	String sp = Integer.toString(byte1);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte1);
+
+	return(new DCCppMessage(s));
     }
 
 
@@ -675,24 +751,20 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f6,
             boolean f7,
             boolean f8) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
 
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte1 = 176;
 	byte1 += (f5 ? 1 : 0);
 	byte1 += (f6 ? 2 : 0);
 	byte1 += (f7 ? 4 : 0);
 	byte1 += (f8 ? 8 : 0);
-	String sp = Integer.toString(byte1);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte1);
+
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -708,24 +780,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f6,
             boolean f7,
             boolean f8) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte1 = 176;
 	byte1 += (f5 ? 1 : 0);
 	byte1 += (f6 ? 2 : 0);
 	byte1 += (f7 ? 4 : 0);
 	byte1 += (f8 ? 8 : 0);
-	String sp = Integer.toString(byte1);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte1);
+	return(new DCCppMessage(s));
     }
 
 
@@ -742,24 +808,19 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f10,
             boolean f11,
             boolean f12) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
 
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte1 = 160;
 	byte1 += (f9 ? 1 : 0);
 	byte1 += (f10 ? 2 : 0);
 	byte1 += (f11 ? 4 : 0);
 	byte1 += (f12 ? 8 : 0);
-	String sp = Integer.toString(byte1);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte1);
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -775,24 +836,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f10,
             boolean f11,
             boolean f12) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte1 = 160;
 	byte1 += (f9 ? 1 : 0);
 	byte1 += (f10 ? 2 : 0);
 	byte1 += (f11 ? 4 : 0);
 	byte1 += (f12 ? 8 : 0);
-	String sp = Integer.toString(byte1);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte1);
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -816,15 +871,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f18,
             boolean f19,
             boolean f20) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-	msg.setElement(i++, DCCppConstants.FUNCTION_GROUP4_BYTE1);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	s += Character.toString(DCCppConstants.FUNCTION_GROUP4_BYTE1);
 	int byte2 = 0;
 	byte2 += (f13 ? 1 : 0);
 	byte2 += (f14 ? 2 : 0);
@@ -834,11 +886,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	byte2 += (f18 ? 32 : 0);
 	byte2 += (f19 ? 64 : 0);
 	byte2 += (f20 ? 128 : 0);
-	String sp = Integer.toString(byte2);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte2);
+
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -862,15 +912,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f18,
             boolean f19,
             boolean f20) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-	msg.setElement(i++, DCCppConstants.FUNCTION_GROUP4_BYTE1);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	s += Character.toString(DCCppConstants.FUNCTION_GROUP4_BYTE1);
 	int byte2 = 0;
 	byte2 += (f13 ? 1 : 0);
 	byte2 += (f14 ? 2 : 0);
@@ -880,11 +927,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	byte2 += (f18 ? 32 : 0);
 	byte2 += (f19 ? 64 : 0);
 	byte2 += (f20 ? 128 : 0);
-	String sp = Integer.toString(byte2);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte2);
+
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -908,15 +953,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f26,
             boolean f27,
             boolean f28) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-	msg.setElement(i++, DCCppConstants.FUNCTION_GROUP4_BYTE1);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	s += Character.toString(DCCppConstants.FUNCTION_GROUP5_BYTE1);
 	int byte2 = 0;
 	byte2 += (f21 ? 1 : 0);
 	byte2 += (f22 ? 2 : 0);
@@ -926,11 +968,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	byte2 += (f26 ? 32 : 0);
 	byte2 += (f27 ? 64 : 0);
 	byte2 += (f28 ? 128 : 0);
-	String sp = Integer.toString(byte2);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte2);
+
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -954,15 +994,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
             boolean f26,
             boolean f27,
             boolean f28) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity check inputs
 	if (address < 1 || address > DCCppConstants.MAX_LOCO_ADDRESS) return(null);
 	
-	msg.setElement(i++, DCCppConstants.FUNCTION_CMD);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
-	msg.setElement(i++, DCCppConstants.FUNCTION_GROUP4_BYTE1);
+	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	s += Character.toString(DCCppConstants.FUNCTION_GROUP5_BYTE1);
 	int byte2 = 0;
 	byte2 += (f21 ? 1 : 0);
 	byte2 += (f22 ? 2 : 0);
@@ -972,11 +1009,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	byte2 += (f26 ? 32 : 0);
 	byte2 += (f27 ? 64 : 0);
 	byte2 += (f28 ? 128 : 0);
-	String sp = Integer.toString(byte2);
-	for (int j = 0; i < sp.length(); j++, i++) {
-	    msg.setElement(i, sp.charAt(j)); // TODO: Is this right?  Does it properly convert the string char to an int?
-	}
-	return(msg);
+	s += Integer.toString(byte2);
+
+	return(new DCCppMessage(s));
     }
 
     /*
@@ -990,64 +1025,49 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 
     /** Write DCC Packet to a specified Register on the Main*/
     public static DCCppMessage getWriteDCCPacketMainMsg( int register, int num_bytes, byte[] bytes) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity Check Inputs
 	if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
 	if (num_bytes < 2 || num_bytes > 5) return(null);
 	for (int j = 0; j < num_bytes; j++) { if (bytes[j] < 0 || bytes[j] > 255) return(null); }
 	
 	// Write DCC Packet to the track
-	msg.setElement(i++, DCCppConstants.WRITE_DCC_PACKET_MAIN);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.WRITE_DCC_PACKET_MAIN));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	
 	// Set Bytes
 	for (int k = 0; k < num_bytes; k++) {
-	    String ad = Integer.toString(bytes[k]);
-	    for (int j = 0; j < ad.length(); j++, i++) {
-		msg.setElement(i, ad.charAt(j));
-	    }
-	    msg.setElement(i++, DCCppConstants.WHITESPACE);
+	    s += Integer.toString(bytes[k]);
+	    s += Character.toString(DCCppConstants.WHITESPACE);
 	}
 	
-	return(msg);	
+	return(new DCCppMessage(s));	
     }
 	
     /** Write DCC Packet to a specified Register on the Programming Track*/
     public static DCCppMessage getWriteDCCPacketProgMsg( int register, int num_bytes, int bytes[]) {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Sanity Check Inputs
 	if (register < 0 || register > DCCppConstants.MAX_MAIN_REGISTERS) return(null);
 	if (num_bytes < 2 || num_bytes > 5) return(null);
 	for (int j = 0; j < num_bytes; j++) { if (bytes[j] < 0 || bytes[j] > 255) return(null); }
 	
 	// Write DCC Packet to the track
-	msg.setElement(i++, DCCppConstants.WRITE_DCC_PACKET_PROG);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);
+	String s = new String(Character.toString(DCCppConstants.WRITE_DCC_PACKET_PROG));
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	
 	// Set Bytes
 	for (int k = 0; k < num_bytes; k++) {
-	    String ad = Integer.toString(bytes[k]);
-	    for (int j = 0; j < ad.length(); j++, i++) {
-		msg.setElement(i, ad.charAt(j));
-	    }
-	    msg.setElement(i++, DCCppConstants.WHITESPACE);
+	    s += Integer.toString(bytes[k]);
+	    s += Character.toString(DCCppConstants.WHITESPACE);
 	}
 	
-	return(msg);	
+	return(new DCCppMessage(s));	
     }
 
     public static DCCppMessage getCheckFreeMemMsg() {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Write DCC Packet to the track
-	msg.setElement(i++, DCCppConstants.GET_FREE_MEMORY);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);	
-	return(msg);
+	String s = new String(Character.toString(DCCppConstants.GET_FREE_MEMORY));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	return(new DCCppMessage(s));
     }
 
     public static DCCppMessage getListRegisterContentsMsg() {
@@ -1055,9 +1075,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
 	int i = 0;
 
 	// Write DCC Packet to the track
-	msg.setElement(i++, DCCppConstants.LIST_REGISTER_CONTENTS);
-	msg.setElement(i++, DCCppConstants.WHITESPACE);	
-	return(msg);
+	String s = new String(Character.toString(DCCppConstants.LIST_REGISTER_CONTENTS));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	return(new DCCppMessage(s));
     }
 
     // initialize logging    
