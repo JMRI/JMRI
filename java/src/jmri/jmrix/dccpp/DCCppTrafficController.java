@@ -74,6 +74,11 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      */
     abstract public void sendDCCppMessage(DCCppMessage m, DCCppListener reply);
 
+    protected int lengthOfByteStream(AbstractMRMessage m) {
+        int len = m.getNumDataElements();
+        return len + 2;
+    }
+
     /**
      * Forward a preformatted DCCppMessage to a specific listener interface.
      *
@@ -233,7 +238,10 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     // endOfMessage() not really used in DCC++ .. it's handled in the Packetizer.
     protected boolean endOfMessage(AbstractMRReply msg) {
-	return true;
+	if (msg.getElement(msg.getNumDataElements()-1) == '>')
+	    return true;
+	else
+	    return false;
     }
 
     protected AbstractMRReply newReply() {
@@ -254,16 +262,39 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
+        byte lastbyte = (byte) 0xFF;
+	boolean found_start = false;
+        if (log.isDebugEnabled()) {
+            log.debug("loading characters from port");
+        }
+
+	// Spin waiting for start-of-frame '<' character (and toss it)
+	byte char1;
+	found_start = false;
+	while (!found_start) {
+	    char1 = readByteProtected(istream);
+	    if ((char1 & 0xFF) == '<') {
+		found_start = true;
+		log.debug("Found starting < ");
+		break; // A bit redundant with setting the loop condition true (false)
+	    } else {
+		char1 = readByteProtected(istream);
+	    }
+	}
+	// Now, suck in the rest of the message...
         for (i = 0; i < msg.maxSize(); i++) {
-            byte char1 = readByteProtected(istream);
-            msg.setElement(i, char1 & 0xFF);
-            if (endOfMessage(msg)) {
-                break;
-            }
-        }
-        if (mCurrentState == IDLESTATE) {
-            msg.setUnsolicited();
-        }
+            char1 = readByteProtected(istream);
+	    if (char1 == '>') {
+		log.debug("msg found > ");
+		// Don't store the >
+		break;
+	    } else {
+		log.debug("msg read byte {}", char1);
+		msg.setElement(i, char1 & 0xFF);
+	    }
+	}
+	// TODO: Still need to strip leading and trailing whitespace.
+	log.debug("Complete message = {}", msg.toString());
     }
 
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {

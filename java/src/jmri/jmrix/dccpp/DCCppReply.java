@@ -672,9 +672,12 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         // NOTE: The feedback messages may be received in either solicited
         // or unsolicited form.  requesting code can mark the reply as solicited
         // by calling the resetUnsolicited function.
+	return(false);
+	/*
         return (super.isUnsolicited()
                 || this.isThrottleTakenOverMessage()
                 || (this.isFeedbackMessage() && reallyUnsolicited));
+	*/
     }
 
     public final void resetUnsolicited() {

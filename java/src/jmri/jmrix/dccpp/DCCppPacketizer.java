@@ -5,6 +5,7 @@ package jmri.jmrix.dccpp;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.nio.charset.StandardCharsets;
 
 /**
  * Converts Stream-based I/O to/from DCC++ messages. The "DCCppInterface" side
@@ -68,7 +69,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
      */
     protected int addHeaderToOutput(byte[] msg, jmri.jmrix.AbstractMRMessage m) {
         if (log.isDebugEnabled()) {
-            log.debug("Appending '<' to start of outgoing message");
+            log.debug("Appending '<' to start of outgoing message. msg length = {}", msg.length);
         }
         msg[0] = (byte) '<';
         return 1;
@@ -84,11 +85,13 @@ public class DCCppPacketizer extends DCCppTrafficController {
      */
     @Override
     protected void addTrailerToOutput(byte[] msg, int offset, jmri.jmrix.AbstractMRMessage m) {
+	log.debug("aTTO offset = {} message = {} msg length = {}", offset, m.toString(), msg.length);
         if (m.getNumDataElements() == 0) {
             return;
         }
         //msg[offset - 1] = (byte) m.getElement(m.getNumDataElements() - 1);
-	msg[offset - 1] = '>';
+	msg[offset] = '>';
+	log.debug("finished string = {}", new String(msg, StandardCharsets.UTF_8));
     }
 
     /**
