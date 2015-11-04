@@ -21,11 +21,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -3422831570914017638L; // TODO: New value for this?
-
     static private int _nRetries = 5;
 
     /* According to the specification, DCC++ has a maximum timing 

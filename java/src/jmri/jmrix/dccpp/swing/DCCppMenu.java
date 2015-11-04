@@ -15,10 +15,6 @@ import javax.swing.JMenu;
  */
 public class DCCppMenu extends JMenu {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -8473128194237379596L; // TODO: Change this?
 
     public DCCppMenu(String name, jmri.jmrix.dccpp.DCCppSystemConnectionMemo memo) {
         this(memo);
