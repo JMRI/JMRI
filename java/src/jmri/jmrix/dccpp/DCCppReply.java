@@ -102,8 +102,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      *
      * Messages that have responses expected:
      * t : <T REGISTER SPEED DIRECTION>
-     * F : (none)
-     * A : (none)
+     * f : (none)
+     * a : (none)
      * T : <H ID THROW>
      * w : (none)
      * b : (none)
@@ -116,10 +116,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * s : Series of status messages...
      *
      * Debug messages:
-     * W : (none)
+     * M : (none)
      * P : (none)
-     * F : <f MEM>
-     * M : <M ... data ... >
+     * f : <f MEM>
+     * L : <M ... data ... >
 
 
     // decode messages of a particular form 

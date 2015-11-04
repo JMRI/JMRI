@@ -14,6 +14,9 @@ import jmri.jmrix.dccpp.DCCppPacketizer;
 import jmri.jmrix.dccpp.DCCppReply;
 import jmri.jmrix.dccpp.DCCppSimulatorPortController;
 import jmri.jmrix.dccpp.DCCppTrafficController;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,6 +43,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
+    private boolean TrackPowerState = false;
+    // One extra array element so that i can index directly from the
+    // CV value, ignoring CVs[0].
+    private int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV+1];
 
     private int csStatus;
     // status flags from the XPressNet Documentation.
@@ -69,6 +76,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             return;
         }
         csStatus = csNormalMode;
+	// Zero out the CV table.
+	for (int i = 0; i < DCCppConstants.MAX_DIRECT_CV+1; i++)
+	    CVs[i] = 0;
     }
 
     public String openPort(String portName, String appName) {
@@ -178,10 +188,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
                 log.debug("Simulator Thread received message " + m.toString());
             }
             DCCppReply r = generateReply(m);
-            writeReply(r);
-            if (log.isDebugEnabled()) {
-                log.debug("Simulator Thread sent Reply" + r.toString());
-            }
+	    // If generateReply() returns null, do nothing. No reply to send.
+	    if (r != null) {
+		writeReply(r);
+		if (log.isDebugEnabled()) {
+		    log.debug("Simulator Thread sent Reply" + r.toString());
+		}
+	    }
         }
     }
 
@@ -203,221 +216,196 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     // generateReply is the heart of the simulation.  It translates an 
     // incoming DCCppMessage into an outgoing DCCppReply.
     @SuppressWarnings("fallthrough")
-    private DCCppReply generateReply(DCCppMessage m) {
-        DCCppReply reply = new DCCppReply();
-        switch (m.getElement(0)) {
+    private DCCppReply generateReply(DCCppMessage msg) {
+	String s, r;
+	Pattern p;
+	Matcher m;
+        DCCppReply reply = null;
 
-            case DCCppConstants.CS_REQUEST:
-                switch (m.getElement(1)) {
-                    case DCCppConstants.CS_VERSION:
-                        reply = xNetVersionReply();
-                        break;
-                    case DCCppConstants.RESUME_OPS:
-                        csStatus=csNormalMode;
-                        reply = normalOpsReply();
-                        break;
-                    case DCCppConstants.EMERGENCY_OFF:
-                        csStatus=csEmergencyStop;
-                        reply = everythingOffReply();
-                        break;
-                    case DCCppConstants.CS_STATUS:
-                        reply=csStatusReply();
-                        break;
-                    case DCCppConstants.SERVICE_MODE_CSRESULT:
-                    default:
-                        reply = notSupportedReply();
-                }
-                break;
-            case DCCppConstants.LI_VERSION_REQUEST:
-                reply.setOpCode(DCCppConstants.LI_VERSION_RESPONSE);
-                reply.setElement(1, 0x00);  // set the hardware type to 0
-                reply.setElement(2, 0x00);  // set the firmware version to 0
-                reply.setElement(3, 0x00);  // set the parity byte to 0
-                break;
-            case DCCppConstants.LOCO_OPER_REQ:
-                switch(m.getElement(1)) {
-                     case DCCppConstants.LOCO_SPEED_14:
-                     case DCCppConstants.LOCO_SPEED_27:
-                     case DCCppConstants.LOCO_SPEED_28:
-                     case DCCppConstants.LOCO_SPEED_128:
-                          reply = okReply();
-                          break;
-                     case DCCppConstants.LOCO_SET_FUNC_GROUP1:
-                     case DCCppConstants.LOCO_SET_FUNC_GROUP2:
-                     case DCCppConstants.LOCO_SET_FUNC_GROUP3:
-                     case DCCppConstants.LOCO_SET_FUNC_GROUP4:
-                     case DCCppConstants.LOCO_SET_FUNC_GROUP5:
-                          reply = okReply();
-                          break;
-                     case DCCppConstants.LOCO_SET_FUNC_Group1:
-                     case DCCppConstants.LOCO_SET_FUNC_Group2:
-                     case DCCppConstants.LOCO_SET_FUNC_Group3:
-                     case DCCppConstants.LOCO_SET_FUNC_Group4:
-                     case DCCppConstants.LOCO_SET_FUNC_Group5:
-                          reply = okReply();
-                          break;
-                     case DCCppConstants.LOCO_ADD_MULTI_UNIT_REQ:
-                     case DCCppConstants.LOCO_REM_MULTI_UNIT_REQ:
-                     case DCCppConstants.LOCO_IN_MULTI_UNIT_REQ_FORWARD:
-                     case DCCppConstants.LOCO_IN_MULTI_UNIT_REQ_BACKWARD:
-                     default:
-                        reply = notSupportedReply();
-                        break;
-                }
-                break;
-            case DCCppConstants.EMERGENCY_STOP:
-                reply = emergencyStopReply();
-                break;
-            case DCCppConstants.ACC_OPER_REQ:
-                reply = okReply();
-                break;
-            case DCCppConstants.LOCO_STATUS_REQ:
-                switch (m.getElement(1)) {
-                    case DCCppConstants.LOCO_INFO_REQ_V3:
-                        reply.setOpCode(DCCppConstants.LOCO_INFO_NORMAL_UNIT);
-                        reply.setElement(1, 0x04);  // set to 128 speed step mode
-                        reply.setElement(2, 0x00);  // set the speed to 0 
-                        // direction reverse
-                        reply.setElement(3, 0x00);  // set function group a off
-                        reply.setElement(4, 0x00);  // set function group b off
-                        reply.setElement(5, 0x00);  // set the parity byte to 0
-                        break;
-                    case DCCppConstants.LOCO_INFO_REQ_FUNC:
-                        reply.setOpCode(DCCppConstants.LOCO_INFO_RESPONSE);
-                        reply.setElement(1, DCCppConstants.LOCO_FUNCTION_STATUS);  // momentary function status
-                        reply.setElement(2, 0x00);  // set function group a continuous
-                        reply.setElement(3, 0x00);  // set function group b continuous
-                        reply.setElement(4, 0x00);  // set the parity byte to 0
-                        break;
-                    case DCCppConstants.LOCO_INFO_REQ_FUNC_HI_ON:
-                        reply.setOpCode(DCCppConstants.LOCO_INFO_RESPONSE);
-                        reply.setElement(1, DCCppConstants.LOCO_FUNCTION_STATUS_HIGH);  // F13-F28 function on/off status
-                        reply.setElement(2, 0x00);  // set function group a continuous
-                        reply.setElement(3, 0x00);  // set function group b continuous
-                        reply.setElement(4, 0x00);  // set the parity byte to 0
-                        break;
-                    case DCCppConstants.LOCO_INFO_REQ_FUNC_HI_MOM:
-                        reply.setOpCode(DCCppConstants.LOCO_INFO_NORMAL_UNIT);
-                        reply.setElement(1, DCCppConstants.LOCO_FUNCTION_STATUS_HIGH_MOM);  // F13-F28 momentary function status
-                        reply.setElement(2, 0x00);  // set function group a continuous
-                        reply.setElement(3, 0x00);  // set function group b continuous
-                        reply.setElement(4, 0x00);  // set the parity byte to 0
-                        break;
-                    default:
-                        reply = notSupportedReply();
-                }
-                break;
-            case DCCppConstants.ACC_INFO_REQ:
-                reply.setOpCode(DCCppConstants.ACC_INFO_RESPONSE);
-                reply.setElement(1, m.getElement(1));
-                if (m.getElement(1) < 64) {
-                    // treat as turnout feedback request.
-                    if (m.getElement(2) == 0x80) {
-                        reply.setElement(2, 0x00);
-                    } else {
-                        reply.setElement(2, 0x10);
-                    }
-                } else {
-                    // treat as feedback encoder request.
-                    if (m.getElement(2) == 0x80) {
-                        reply.setElement(2, 0x40);
-                    } else {
-                        reply.setElement(2, 0x50);
-                    }
-                }
-                reply.setElement(3, 0x00);
-                break;
-            case DCCppConstants.LI101_REQUEST:
-            case DCCppConstants.CS_SET_POWERMODE:
-            //case DCCppConstants.PROG_READ_REQUEST:  //PROG_READ_REQUEST 
-            //and CS_SET_POWERMODE 
-            //have the same value
-            case DCCppConstants.PROG_WRITE_REQUEST:
-            case DCCppConstants.OPS_MODE_PROG_REQ:
-            case DCCppConstants.LOCO_DOUBLEHEAD:
+        switch (msg.getElement(0)) {
+
+	case DCCppConstants.THROTTLE_CMD:
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile("t\\s(\\d+)\\s(\\d+)\\s([1,0])");
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Throttle Command: {}", s);
+		    reply = null;
+		    break;
+		}
+		r = "T " + m.group(1) + " " + m.group(2) + " " + m.group(3);
+		reply = new DCCppReply(r);
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+
+	case DCCppConstants.TURNOUT_CMD:
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile("T\\s(\\d+)\\s([1,0])");
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Turnout Command: {}", s);
+		    reply = null;
+		    break;
+		}
+		r = "H " + m.group(1) + " " + m.group(2);
+		reply = new DCCppReply(r);
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+
+	case DCCppConstants.PROG_WRITE_CV_BYTE:
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile("W\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)");
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Turnout Command: {}", s);
+		    reply = null;
+		    break;
+		}
+		r = "r " + m.group(3) + " " + 
+		    m.group(4) + " " +
+		    m.group(2);
+		CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
+		reply = new DCCppReply(r);
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+
+	case DCCppConstants.PROG_WRITE_CV_BIT:
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile("B\\s(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)");
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Turnout Command: {}", s);
+		    reply = null;
+		    break;
+		}
+		r = "r " + m.group(4) + " " + 
+		    m.group(5) + " " +
+		    m.group(3);
+		int idx = Integer.parseInt(m.group(1));
+		int bit = Integer.parseInt(m.group(2));
+		int v = Integer.parseInt(m.group(3));
+		if (v == 1)
+		    CVs[idx] = CVs[idx] | (0x0001 << bit);
+		else
+		    CVs[idx] = CVs[idx] & ~(0x0001 << bit);
+		reply = new DCCppReply(r);
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+
+	case DCCppConstants.PROG_READ_CV:
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile("R\\s(\\d+)\\s\\s(\\d+)\\s(\\d+)");
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Turnout Command: {}", s);
+		    reply = null;
+		    break;
+		}
+		// TODO: Work Magic Here to retrieve stored value.
+		int cv = CVs[Integer.parseInt(m.group(1))];
+		r = "r " + m.group(2) + " " + m.group(3) + " " + Integer.toString(cv);
+		reply = new DCCppReply(r);
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+
+	case DCCppConstants.TRACK_POWER_ON:
+	    TrackPowerState = true;
+	    reply = new DCCppReply("p1");
+	    break;
+
+	case DCCppConstants.TRACK_POWER_OFF:
+	    TrackPowerState = false;
+	    reply = new DCCppReply("p0");
+	    break;
+
+	case DCCppConstants.READ_TRACK_CURRENT:
+	    reply = new DCCppReply("a " + (TrackPowerState ? "512" : "0"));
+	    break;
+
+	case DCCppConstants.READ_CS_STATUS:
+	    generateReadCSStatusReply(); // Handle this special.
+	    break;
+
+	case DCCppConstants.FUNCTION_CMD:
+	case DCCppConstants.STATIONARY_DECODER_CMD:
+	case DCCppConstants.OPS_WRITE_CV_BYTE:
+	case DCCppConstants.OPS_WRITE_CV_BIT:
+	case DCCppConstants.WRITE_DCC_PACKET_MAIN:
+	case DCCppConstants.WRITE_DCC_PACKET_PROG:
+	    // Send no reply.
+	    reply = null;;
+
             default:
-                reply = notSupportedReply();
+                reply = null;
         }
         return (reply);
     }
 
-    // We have a few canned response messages.
-    // Create an Unsupported DCCppReply message
-    private DCCppReply notSupportedReply() {
-        DCCppReply r = new DCCppReply();
-        r.setOpCode(DCCppConstants.CS_INFO);
-        r.setElement(1, DCCppConstants.CS_NOT_SUPPORTED);
-        r.setElement(2, 0x00); // set the parity byte to 0
-        return r;
-    }
-
-    // Create an OK DCCppReply message
-    private DCCppReply okReply() {
-        DCCppReply r = new DCCppReply();
-        r.setOpCode(DCCppConstants.LI_MESSAGE_RESPONSE_HEADER);
-        r.setElement(1, DCCppConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
-        r.setElement(2, 0x00); // set the parity byte to 0
-        return r;
-    }
-
-    // Create a "Normal Operations Resumed" message
-    private DCCppReply normalOpsReply() {
-        DCCppReply r = new DCCppReply();
-        r.setOpCode(DCCppConstants.CS_INFO);
-        r.setElement(1, DCCppConstants.BC_NORMAL_OPERATIONS);
-        r.setElement(2, 0x00); // set the parity byte to 0
-        return r;
-    }
-
-    // Create a broadcast "Everything Off" reply
-    private DCCppReply everythingOffReply() {
-        DCCppReply r = new DCCppReply();
-        r.setOpCode(DCCppConstants.CS_INFO);
-        r.setElement(1, DCCppConstants.BC_EVERYTHING_OFF);
-        r.setElement(2, 0x00); // set the parity byte to 0
-        return r;
-    }
-
-    // Create a broadcast "Emergecy Stop" reply
-    private DCCppReply emergencyStopReply() {
-        DCCppReply r = new DCCppReply();
-        r.setOpCode(DCCppConstants.BC_EMERGENCY_STOP);
-        r.setElement(1, DCCppConstants.BC_EVERYTHING_OFF);
-        r.setElement(2, 0x00); // set the parity byte to 0
-        return r;
-    }
-
-    // Create a reply to a request for the XPressNet Version
-    private DCCppReply xNetVersionReply(){
-        DCCppReply reply=new DCCppReply();
-        reply.setOpCode(DCCppConstants.CS_SERVICE_MODE_RESPONSE);
-        reply.setElement(1, DCCppConstants.CS_SOFTWARE_VERSION);
-        reply.setElement(2, 0x36 & 0xff); // indicate we are version 3.6
-        reply.setElement(3, 0x00 & 0xff); // indicate we are an LZ100;
-        reply.setElement(4, 0x00); // set the parity byte to 0
-        return reply;
-    }
-
-    // Create a reply to a request for the Command Station Status
-    private DCCppReply csStatusReply(){
-        DCCppReply reply=new DCCppReply();
-        reply.setOpCode(DCCppConstants.CS_REQUEST_RESPONSE);
-        reply.setElement(1, DCCppConstants.CS_STATUS_RESPONSE);
-        reply.setElement(2, csStatus);
-        reply.setElement(3, 0x00); // set the parity byte to 0
-        return reply;
+    private void generateReadCSStatusReply() {
+	// for now, do nothing. This is a biggie.
     }
 
     private void writeReply(DCCppReply r) {
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
-        for (i = 0; i < len; i++) {
-            try {
-                outpipe.writeByte((byte) r.getElement(i));
-            } catch (java.io.IOException ex) {
-                ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
-            }
-        }
+	// If r == null, there is no reply to be sent.
+	for (i = 0; i < len; i++) {
+	    try {
+		outpipe.writeByte((byte) r.getElement(i));
+	    } catch (java.io.IOException ex) {
+		ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
+	    }
+	}
     }
 
     /**
