@@ -62,7 +62,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      *
      */
     protected void setCommandStationInfo(DCCppReply l) {
-	String syntax = "iDCC\\+\\+\\ BASE\\ STATION v([a-zA-Z0-9_.]+): BUILD ((\\w{3}\\W\\d{1,2}\\W\\d{4})\\W(\\d{2}:\\d{2}:\\d{2}))";
+	String syntax = "iDCC\\+\\+\\s+BASE\\s+STATION\\s+v([a-zA-Z0-9_.]+):\\s+BUILD\\s+((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
 	String s = l.toString();
 	try {
 	    Pattern p = Pattern.compile(syntax);
