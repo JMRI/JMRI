@@ -53,7 +53,6 @@
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29speedSteps.xml"/>
             <xi:include href="http://jmri.org/xml/decoders/nmra/cv29analog.xml"/>
             <variable CV="150" default="1" item="EMF Enable" comment="Motor Algorithm">
-                <label>Motor Algorithm</label>
                 <enumVal>
                     <enumChoice choice="1" value="1">
                         <choice>1</choice>
@@ -62,6 +61,7 @@
                         <choice>2</choice>
                     </enumChoice>
                 </enumVal>
+                <label>Motor Algorithm</label>
             </variable>
             <variable CV="151" default="50" item="EMF Static Config" tooltip="P(1) adjustment, 0-255" comment="Range 0-255">
                 <decVal max="255"/>
