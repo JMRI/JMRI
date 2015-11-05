@@ -1,5 +1,5 @@
 // ConnectionConfig.java
-package jmri.jmrix.dccpp.dccppsimulator;
+package jmri.jmrix.dccpp.simulator;
 
 /**
  * Handle configuring a DCC++ layout connection via a DCCppSimulator

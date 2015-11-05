@@ -27,10 +27,18 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
             log.debug("Init called");
         }
 
+	
 	String base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
 	String code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
 	/* First, we load things that should work on all systems */
-	//jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+	if (systemMemo.getPowerManager() == null)
+	    log.error("Power Manager not created!");
+	jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
+	if (jmri.InstanceManager.powerManagerInstance() == null) {
+	    log.error("Power Manager not accessible!");
+	} else {
+	    log.error("Power Manager: {}", jmri.InstanceManager.powerManagerInstance());
+	}
 	jmri.InstanceManager.setThrottleManager(systemMemo.getThrottleManager());
 	/* Next we check the command station type, and add the 
 	   apropriate managers */

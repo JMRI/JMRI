@@ -1,5 +1,5 @@
 // DCCppSimulatorAdapter.java
-package jmri.jmrix.dccpp.dccppsimulator;
+package jmri.jmrix.dccpp.simulator;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -392,19 +392,36 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     }
 
     private void generateReadCSStatusReply() {
-	// for now, do nothing. This is a biggie.
+	/*
+	String s = new String("<p" + (TrackPowerState ? "1" : "0") + ">");
+	DCCppReply r = new DCCppReply(s);
+	writeReply(r);
+	if (log.isDebugEnabled()) {
+	    log.debug("Simulator Thread sent Reply" + r.toString());
+	}
+	*/
+
+	DCCppReply r = new DCCppReply("<iDCC++ BASE STATION vUNO_1.0: BUILD 05 Nov 2015 00:09:57");
+	writeReply(r);
+	if (log.isDebugEnabled()) {
+	    log.debug("Simulator Thread sent Reply" + r.toString());
+	}
+
+	// Generate the other messages too...
     }
 
     private void writeReply(DCCppReply r) {
         int i;
         int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
 	// If r == null, there is no reply to be sent.
-	for (i = 0; i < len; i++) {
-	    try {
+	try {
+	    outpipe.writeByte((byte)'<');
+	    for (i = 0; i < len; i++) {
 		outpipe.writeByte((byte) r.getElement(i));
-	    } catch (java.io.IOException ex) {
-		ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
 	    }
+	    outpipe.writeByte((byte)'>');
+	} catch (java.io.IOException ex) {
+	    ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_DOWN);
 	}
     }
 
@@ -419,18 +436,36 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
      * @throws IOException when presented by the input source.
      */
     private DCCppMessage loadChars() throws java.io.IOException {
-        int i;
-        byte char1;
-	// TODO: Make sure this handles the brackets correctly.
-        char1 = readByteProtected(inpipe);
-        int len = (char1 & 0x0f);  // opCode+Nbytes
-        DCCppMessage msg = new DCCppMessage(len);
-        msg.setElement(0, char1 & 0xFF);
-        for (i = 1; i < len; i++) {
+	// Spin waiting for start-of-frame '<' character (and toss it)
+	String s = new String();
+	byte char1;
+	boolean found_start = false;
+
+	while (!found_start) {
+	    char1 = readByteProtected(inpipe);
+	    if ((char1 & 0xFF) == '<') {
+		found_start = true;
+		log.debug("Found starting < ");
+		break; // A bit redundant with setting the loop condition true (false)
+	    } else {
+		char1 = readByteProtected(inpipe);
+	    }
+	}
+	// Now, suck in the rest of the message...
+        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
             char1 = readByteProtected(inpipe);
-            msg.setElement(i, char1 & 0xFF);
-        }
-        return msg;
+	    if (char1 == '>') {
+		log.debug("msg found > ");
+		// Don't store the >
+		break;
+	    } else {
+		log.debug("msg read byte {}", char1);
+		s += Byte.toString(char1);
+	    }
+	}
+	// TODO: Still need to strip leading and trailing whitespace.
+	log.debug("Complete message = {}", s);
+	return(new DCCppMessage(s));
     }
 
     /**

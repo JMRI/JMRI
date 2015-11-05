@@ -1,10 +1,10 @@
-package jmri.jmrix.dccpp.dccppsimulator.configurexml;
+package jmri.jmrix.dccpp.simulator.configurexml;
 
 import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
-import jmri.jmrix.dccpp.dccppsimulator.ConnectionConfig;
-import jmri.jmrix.dccpp.dccppsimulator.DCCppSimulatorAdapter;
+import jmri.jmrix.dccpp.simulator.ConnectionConfig;
+import jmri.jmrix.dccpp.simulator.DCCppSimulatorAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

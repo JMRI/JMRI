@@ -113,6 +113,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         if (powerManager == null) {
             powerManager = new DCCppPowerManager(this);
         }
+	log.debug("power manager created: {}", powerManager);
         return powerManager;
 
     }

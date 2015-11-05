@@ -6,6 +6,10 @@ import jmri.DccThrottle;
 import jmri.LocoAddress;
 import jmri.Throttle;
 import jmri.jmrix.AbstractThrottle;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -323,7 +327,12 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         } else if ((requestState & THROTTLESPEEDSENT) == THROTTLESPEEDSENT) {
             if (log.isDebugEnabled()) {
                 log.debug("Current throttle status is THROTTLESPEEDSENT");
-            }
+	    }
+	    // This is a reply to a Throttle message, or to a Status message.
+	    if (l.isThrottleReply()) {
+		// Update our state with the register's information.
+		handleThrottleReply(l);
+	    }
 	    // For a Throttle command ("t") we get back a Throttle Status.
 	    if (l.isOkMessage()) {
                 if (log.isDebugEnabled()) {
@@ -348,6 +357,52 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 	}
         //requestState=THROTTLEIDLE;
         //sendQueuedMessage();
+    }
+
+    private void handleThrottleReply(DCCppReply l) {
+	int reg, speed, dir;
+	String s = l.toString();
+	try {
+	    Pattern p = Pattern.compile("t\\s(\\d+)\\s(\\d+)\\s([1,0])");
+	    Matcher m = p.matcher(s);
+	    if (!m.matches()) {
+		log.error("Malformed Throttle command: {}", s);
+		return;
+	    }
+	    reg = Integer.parseInt(m.group(1));
+	    speed = Integer.parseInt(m.group(2));
+	    dir = Integer.parseInt(m.group(3));
+	} catch (PatternSyntaxException e) {
+	    log.error("Malformed pattern syntax! ");
+	    return;
+	} catch (IllegalStateException e) {
+	    log.error("Group called before match operation executed string= " + s);
+	    return;
+	} catch (IndexOutOfBoundsException e) {
+	    log.error("Index out of bounds string= " + s);
+	    return;
+	}
+
+	// Check to see if register matches MY throttle.
+	// If so, update my values to match the returned values.
+	// TODO: Make sure this doesn't cause an endless loop of throttle commands
+	// and replies.
+	int regaddr = tc.getCommandStation().getRegisterAddress(reg);
+	if ((regaddr == DCCppConstants.REGISTER_UNALLOCATED) ||
+	    (regaddr != this.address)) {
+	    // This register doesn't match anything.
+	    // Or the assigned address doesn't match mine.
+	    return;
+	} else {
+	    // The assigned address matches mine.  Update my info 
+	    // to match the returned register info.
+	    if (speed < 0)
+		this.setSpeedSetting(0.0f);
+	    else
+		this.setSpeedSetting((speed * 1.0f)/126.0f);
+	    this.setIsForward((dir == 1 ? true : false));
+	}
+	
     }
 
 	

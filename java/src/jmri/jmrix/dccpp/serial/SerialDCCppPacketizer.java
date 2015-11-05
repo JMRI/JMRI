@@ -67,11 +67,11 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
         }
         for (i = 0; i < msg.maxSize(); i++) {
             byte char1 = readByteProtected(istream);
-            // This is a test for the LIUSB device
+	    // Spin waiting for the start-of-frame '<' character
             while ((i == 0)) {
                 if ((char1 & 0xFF) != '<') {
                     // save this so we can check for unsolicited
-                    // messages.
+                    // messages. ( TODO: Not needed for DCC++)
                     lastbyte = char1;
                     //  toss this byte and read the next one
                     char1 = readByteProtected(istream);

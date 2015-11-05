@@ -114,13 +114,26 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * 0 : <p0>
      * c : <a CURRENT>
      * s : Series of status messages...
+     *     <p[0,1]>  Power state
+     *     <T ...>Throttle responses from all 12 registers
+     *     <iDCC++ ... > Base station version and build date
+     *     <H ...> All turnout states.
      *
      * Debug messages:
      * M : (none)
      * P : (none)
      * f : <f MEM>
      * L : <M ... data ... >
+     */
 
+     // Message Identification functions
+    public boolean isThrottleReply() { return (this.getElement(0) == 'T'); }
+    public boolean isTurnoutReply() { return (this.getElement(0) == 'H'); }
+    public boolean isProgramReply() { return (this.getElement(0) == 'r'); }
+    public boolean isPowerReply() { return (this.getElement(0) == 'p'); }
+    public boolean isCurrentReply() { return (this.getElement(0) == 'a'); }
+    public boolean isMemoryReply() { return (this.getElement(0) == 'f'); }
+    public boolean isListPacketRegsReply() { return (this.getElement(0) == 'L'); }
 
     // decode messages of a particular form 
     /* 
