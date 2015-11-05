@@ -11,8 +11,8 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <version author="Dave Heap" version="3" lastUpdated="20151028"/>
-  <!-- Version 4 Preliminary Eureka 50 Class (based on existing R Class). Neither may be complete. -->
+  <version author="Dave Heap" version="4" lastUpdated="20151105"/>
+  <!-- Version 4 Eureka 50 Class, now matched to Quantum CV Manager. -->
   <version author="jacobsen@mac.com" version="3" lastUpdated="20150628"/>
   <!-- Version 3 Using regular variable elements intead of ivariables -->
   <version author="Michael Mosher" version="2" lastUpdated="20140214"/>
@@ -94,6 +94,70 @@
       <variable item="Consist Address Active For F12" CV="22" mask="XXVXXXXX" tooltip="F12 = Cab Lights (default); Recommendation: Lead = OFF, Mid = OFF, End = OFF">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
         <label>Consist Address Active For F12</label>
+      </variable>
+      <variable item="Consist Address Active For F13" CV="56.36.0" mask="XXXXXXXV" tooltip="F13 = System Volume Decrease (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F13</label>
+      </variable>
+      <variable item="Consist Address Active For F14" CV="56.36.0" mask="XXXXXXVX" tooltip="F14 = System Volume Increase (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F14</label>
+      </variable>
+      <variable item="Consist Address Active For F15" CV="56.36.0" mask="XXXXXVXX" tooltip="F15 = Grade Crossing (default); Recommendation: Lead = ON, Mid = OFF, End = OFF">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F15</label>
+      </variable>
+      <variable item="Consist Address Active For F16" CV="56.36.0" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F16</label>
+      </variable>
+      <variable item="Consist Address Active For F17" CV="56.36.0" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F17</label>
+      </variable>
+      <variable item="Consist Address Active For F18" CV="56.36.0" mask="XXVXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F18</label>
+      </variable>
+      <variable item="Consist Address Active For F19" CV="56.36.0" mask="XVXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F19</label>
+      </variable>
+      <variable item="Consist Address Active For F20" CV="56.36.0" mask="VXXXXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F20</label>
+      </variable>
+      <variable item="Consist Address Active For F21" CV="56.36.1" mask="XXXXXXXV">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F21</label>
+      </variable>
+      <variable item="Consist Address Active For F22" CV="56.36.1" mask="XXXXXXVX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F22</label>
+      </variable>
+      <variable item="Consist Address Active For F23" CV="56.36.1" mask="XXXXXVXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F23</label>
+      </variable>
+      <variable item="Consist Address Active For F24" CV="56.36.1" mask="XXXXVXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F24</label>
+      </variable>
+      <variable item="Consist Address Active For F25" CV="56.36.1" mask="XXXVXXXX">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F25</label>
+      </variable>
+      <variable item="Consist Address Active For F26" CV="56.36.1" mask="XXVXXXXX" tooltip="F26 = Fuel Loading Scenario (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F26</label>
+      </variable>
+      <variable item="Consist Address Active For F27" CV="56.36.1" mask="XVXXXXXX" tooltip="F27 = Maintenance Scenario (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F27</label>
+      </variable>
+      <variable item="Consist Address Active For F28" CV="56.36.1" mask="VXXXXXXX" tooltip="F28 = Water Loading Scenario (default); Recommendation: Lead = ON, Mid = ON, End = ON">
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-LocoAddrConsistAddr.xml"/>
+        <label>Consist Address Active For F28</label>
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/consistAccelDecelSigned.xml"/>
       <variable CV="25" item="Speed Table Selection" default="2" comment="value is applied">
@@ -340,6 +404,9 @@
       <variable label="Steam Blower (hiss)" CV="52.19" default="8" item="CV52.19" include="3104,3109">
         <decVal max="15"/>
       </variable>
+      <variable label="Snifter Valve Volume" CV="52.20" default="11" item="CV52.20">
+        <decVal max="15"/>
+      </variable>
       <variable label="Long Air Let-off" CV="52.21" default="11" item="CV52.21">
         <decVal max="15"/>
       </variable>
@@ -379,7 +446,13 @@
       <variable label="Air Brakes" CV="52.37" default="11" item="CV52.37">
         <decVal max="15"/>
       </variable>
+      <variable label="Ambiance Volume" CV="52.39" default="11" item="CV52.39">
+        <decVal max="15"/>
+      </variable>
       <variable label="Alt Horn" CV="52.40" default="11" item="CV52.40">
+        <decVal max="15"/>
+      </variable>
+      <variable label="Reverser Volume" CV="52.41" default="11" item="CV52.41">
         <decVal max="15"/>
       </variable>
       <variable label="User Sound" CV="52.46" default="11" item="CV52.46">
@@ -403,7 +476,7 @@
       <variable label="Fuel Loading" CV="52.55" default="11" item="CV52.55">
         <decVal max="15"/>
       </variable>
-      <variable label="Maintenence" CV="52.56" default="11" item="CV52.56">
+      <variable label="Maintenance" CV="52.56" default="11" item="CV52.56">
         <decVal max="15"/>
       </variable>
       <!-- Output mapping -->
@@ -518,7 +591,7 @@
       <variable label="Output 19 - Forward/Reverse Only" CV="53.19.0" default="10" item="CV53.19.0">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceMovV8.xml"/>
       </variable>
-      <variable label=" - Neutral Only" CV="53.19.1" default="10" item="CV53.1+.1">
+      <variable label=" - Neutral Only" CV="53.19.1" default="10" item="CV53.19.1">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceNeuV8.xml"/>
       </variable>
       <variable label="Output 20 - Forward/Reverse Only" CV="53.20.0" default="10" item="CV53.20.0">
@@ -687,6 +760,9 @@
       </variable>
       <variable label="Auto Mars Light NFR" CV="55.76.4" default="1" item="CV55.76.4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
+      </variable>
+      <variable label="Mars Light Strobe Hold Time" CV="55.76.5" default="100" item="CV55.76.5">
+        <decVal/>
       </variable>
       <variable label="Mars Light Period" CV="55.76.6" default="100" item="CV55.76.6">
         <decVal/>
@@ -1127,6 +1203,21 @@
         <decVal/>
       </variable>
       <variable label="Firebox Ramp Down Time" CV="55.122.18" default="127" item="CV55.122.18" include="3104,3109">
+        <decVal/>
+      </variable>
+      <variable label="Firebox2 Min Intensity" CV="55.122.21" default="4" item="CV55.122.21" include="3104,3109">
+        <decVal/>
+      </variable>
+      <variable label="Firebox2 Max Intensity" CV="55.122.22" default="255" item="CV55.122.22" include="3104,3109">
+        <decVal/>
+      </variable>
+      <variable label="Firebox2 Mid Intensity" CV="55.122.23" default="64" item="CV55.122.23" include="3104,3109">
+        <decVal/>
+      </variable>
+      <variable label="Firebox2 Ramp Up Time" CV="55.122.27" default="127" item="CV55.122.27" include="3104,3109">
+        <decVal/>
+      </variable>
+      <variable label="Firebox2 Ramp Down Time" CV="55.122.28" default="127" item="CV55.122.28" include="3104,3109">
         <decVal/>
       </variable>
       <variable label="Step Lights Initial State" CV="55.134.0" mask="XXXXXVXX" default="1" item="CV55.134.0 Step" include="1115,1123,1127,1130,1132">
@@ -1761,6 +1852,12 @@
       <variable label="Cooling Fans  Balance Sign" CV="116.19" mask="VXXXXXXX" default="0" item="CV116.19 Sign" include="1115,1123,1127,1132,3109">
         <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </variable>
+      <variable label="Snifter Valve  Balance" CV="116.20" mask="XVVVVVVV" default="0" item="CV116.20 Value" include="3109">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Snifter Valve Balance Sign" CV="116.20" mask="VXXXXXXX" default="0" item="CV116.20 Sign" include="3109">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
+      </variable>
       <variable label="Long Air Letoff Balance" CV="116.21" mask="XVVVVVVV" default="0" item="CV116.21 Value" include="1115,1123,1127,1132,3109">
         <decVal max="127"/>
       </variable>
@@ -1837,6 +1934,12 @@
         <decVal max="127"/>
       </variable>
       <variable label="Alt Horn Balance Sign" CV="116.40" mask="VXXXXXXX" default="0" item="CV116.40 Sign" include="1115,1123,1127,1132,3109">
+        <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
+      </variable>
+      <variable label="Reverser Balance" CV="116.41" mask="XVVVVVVV" default="0" item="CV116.41 Value" include="3109">
+        <decVal max="127"/>
+      </variable>
+      <variable label="Reverser Balance Sign" CV="116.41" mask="VXXXXXXX" default="0" item="CV116.41 Sign" include="3109">
         <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </variable>
       <variable label="User Sound Balance" CV="116.46" mask="XVVVVVVV" default="0" item="CV116.46 Value" include="1115,1123,1127,1132,3109">
@@ -1922,7 +2025,7 @@
           <value>2</value>
         </qualifier>
       </variable>
-      <variable label="Chuff Pitch Shift Sign" CV="118.10.1" mask="VXXXXXXX" default="0" item="CV118.10 Sign 16" include="3104,3109">
+      <variable label="Chuff Pitch Shift Sign" CV="118.10.1" mask="VXXXXXXX" default="0" item="CV118.10 Sign 16" include="3104">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
@@ -1937,7 +2040,7 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
       <!-- CV118.PI.SI pitch shift 8 bit versions, for FW before 1-20-13 -->
-      <variable label="Chuff Pitch Shift" CV="118.10" mask="XVVVVVVV" default="0" item="CV118.10 Value" include="3104,3109">
+      <variable label="Chuff Pitch Shift" CV="118.10" mask="XVVVVVVV" default="0" item="CV118.10 Value" include="3104">
         <decVal/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
@@ -1945,7 +2048,7 @@
           <value>2</value>
         </qualifier>
       </variable>
-      <variable label="Chuff Pitch Shift Sign" CV="118.10" mask="VXXXXXXX" default="0" item="CV118.10 Sign" include="3104,3109">
+      <variable label="Chuff Pitch Shift Sign" CV="118.10" mask="VXXXXXXX" default="0" item="CV118.10 Sign" include="3104">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
@@ -2003,6 +2106,9 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Ready to Move Silence 6" CV="120.9.0" default="30" item="CV120.9.0">
+        <decVal/>
+      </variable>
+      <variable label="Ready to Move Bell Hold Time" CV="120.10.0" item="CV120.10.0">
         <decVal/>
       </variable>
       <!-- Sound component volumes -->
@@ -2202,6 +2308,32 @@
       </variable>
       <variable label="Transition RPM Drop Time" CV="129.55.0" default="75" item="CV129.55.0" tooltip="unit 0.04 sec (40ms)" include="1115,1123,1127,1130,1132">
         <decVal/>
+      </variable>
+      <variable label="Locomotive Type" CV="133.1.0" default="1" item="CV133.1.0" include="3109">
+        <enumVal>
+          <enumChoice>
+            <choice>Small</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Medium</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>Large</choice>
+          </enumChoice>
+        </enumVal>
+      </variable>
+      <variable label="Chuff Intensity" CV="133.2.0" default="1" item="CV133.2.0" include="3109">
+        <enumVal>
+          <enumChoice>
+            <choice>0</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>1</choice>
+          </enumChoice>
+          <enumChoice>
+            <choice>2</choice>
+          </enumChoice>
+        </enumVal>
       </variable>
     </variables>
     <resets>
