@@ -1,7 +1,9 @@
 // DCCppMessage.java
 package jmri.jmrix.dccpp;
 
-import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -19,7 +21,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on XNetMessage by Bob Jacobsen and Paul Bender
  */
-public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serializable {
+public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     static private int _nRetries = 5;
 
@@ -159,6 +161,295 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
         DCCppMessageTimeout = t;
     }
 
+    //------------------------------------------------------
+    // Message Helper Functions
+
+ // Core methods
+    private Matcher match(String s, String pat, String name) {
+	try {
+	    Pattern p = Pattern.compile(pat);
+	    Matcher m = p.matcher(s);
+	    if (!m.matches()) {
+		log.error("Malformed {} Command: {}",name, s);
+		return(null);
+	    }
+	    return(m);
+
+	} catch (PatternSyntaxException e) {
+            log.error("Malformed DCC++ message syntax! ");
+	    return(null);
+        } catch (IllegalStateException e) {
+            log.error("Group called before match operation executed string= " + s);
+	    return(null);
+        } catch (IndexOutOfBoundsException e) {
+            log.error("Index out of bounds string= " + s);
+	    return(null);
+        }
+    }
+    
+    // Identity Methods
+    public boolean isThrottleMessage() {	return(this.getElement(0) == DCCppConstants.THROTTLE_CMD);
+    }
+    public boolean isTurnoutMessage() { return(this.getElement(0) == DCCppConstants.TURNOUT_CMD);
+    }
+    public boolean isProgWriteByteMessage() { return(this.getElement(0) == DCCppConstants.PROG_WRITE_CV_BYTE);
+    }
+    public boolean isProgWriteBitMessage() { return(this.getElement(0) == DCCppConstants.PROG_WRITE_CV_BIT);
+    }
+    public boolean isProgReadMessage() { return(this.getElement(0) == DCCppConstants.PROG_READ_CV);
+    }
+
+
+
+
+    //------------------------------------------------------
+    // Helper methods for Throttle Commands
+
+    public String getRegisterString() {
+	if (this.isThrottleMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getRegisterInt() {
+	return(Integer.parseInt(this.getRegisterString()));
+    }
+
+    public String getAddressString() {
+	if (this.isThrottleMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getAddressInt() {
+	return(Integer.parseInt(this.getAddressString()));
+    }
+
+    public String getSpeedString() {
+	if (this.isThrottleMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(3));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getSpeedInt() {
+	return(Integer.parseInt(this.getSpeedString()));
+    }
+
+    public String getDirectionString() {
+	if (this.isThrottleMessage()) {
+	    return(this.getDirectionInt() == 1 ? "Forward" : "Reverse");
+	} else {
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    return("Not a Throttle");
+	}
+    }
+
+    public int getDirectionInt() {
+	if (this.isThrottleMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(4).equals(DCCppConstants.THROTTLE_FORWARD) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    return(0);
+    }
+
+    //------------------------------------------------------
+    // Helper methods for Turnout Commands
+
+    public String getTOIDString() {
+	if (this.isTurnoutMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("Turnout Parser called on non-Turnout message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getTOIDInt() {
+	return(Integer.parseInt(this.getTOIDString()));
+    }
+
+    public String getTOStateString() {
+	if (isTurnoutMessage()) {
+	    return(this.getTOStateInt() == 1 ? "THROWN" : "CLOSED");
+	} else {
+	    return("Not a Turnout");
+	}
+    }
+
+    public int getTOStateInt() {
+	if (this.isThrottleMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(2).equals(DCCppConstants.TURNOUT_THROWN) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("Turnout Parser called on non-Turnout message type {}", this.getElement(0));
+	    return(0);
+    }
+
+
+    //------------------------------------------------------
+    // Helper methods for Prog Write Byte Commands
+
+    public String getCVString() {
+	Matcher m;
+	int idx = 1;
+	if (this.isProgWriteByteMessage()) {
+	    idx = 1;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BYTE_REGEX, "ProgWriteByte");
+	} else if (this.isProgWriteBitMessage()) {
+	    idx = 1;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BYTE_REGEX, "ProgWriteByte");
+	} else if (this.isProgReadMessage()) {
+	    idx = 1;
+	   m = match(this.toString(), DCCppConstants.PROG_READ_REGEX, "ProgRead");
+	} else {
+	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(idx));
+	} else {
+	    return("");
+	}
+    }
+
+    public int getCVInt() {
+	return(Integer.parseInt(this.getCVString()));
+	
+    }
+
+    public String getCallbackNumString() {
+	Matcher m;
+	int idx = 1;
+	if (this.isProgWriteByteMessage()) {
+	    idx = 3;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BYTE_REGEX, "ProgWriteByte");
+	} else if (this.isProgWriteBitMessage()) {
+	    idx = 4;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
+	} else if (this.isProgReadMessage()) {
+	    idx = 2;
+	    m = match(this.toString(), DCCppConstants.PROG_READ_REGEX, "ProgRead");
+	} else {
+	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(idx));
+	} else {
+	    return("");
+	}
+    }
+
+    public int getCallbackNumInt() {
+	return(Integer.parseInt(this.getCallbackNumString()));
+    }
+
+    public String getCallbackSubString() {
+	Matcher m;
+	int idx = 1;
+	if (this.isProgWriteByteMessage()) {
+	    idx = 4;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BYTE_REGEX, "ProgWriteByte");
+	} else if (this.isProgWriteBitMessage()) {
+	    idx = 5;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
+	} else if (this.isProgReadMessage()) {
+	    idx = 3;
+	    m = match(this.toString(), DCCppConstants.PROG_READ_REGEX, "ProgRead");
+	} else {
+	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(idx));
+	} else {
+	    return("");
+	}
+    }
+
+    public int getCallbackSubInt() {
+	return(Integer.parseInt(this.getCallbackSubString()));
+    }
+
+    public String getValueString() {
+	Matcher m;
+	int idx = 1;
+	if (this.isProgWriteByteMessage()) {
+	    idx = 2;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BYTE_REGEX, "ProgWriteByte");
+	} else if (this.isProgWriteBitMessage()) {
+	    idx = 3;
+	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
+	} else {
+	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(idx));
+	} else {
+	    return("");
+	}
+    }
+
+    public int getValueInt() {
+	return(Integer.parseInt(this.getValueString()));
+    }
+
+    //------------------------------------------------------
+    // Helper methods for Prog Write Bit Commands
+
+    public String getBitString() {
+	if (this.isProgWriteBitMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("PWBit Parser called on non-PWBit message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getBitInt() {
+	return(Integer.parseInt(this.getBitString()));
+    }
+
+    //------------------------------------------------------
 
     /*
      * Most messages are sent with a reply expected, but
@@ -1071,9 +1362,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage implements Serial
     }
 
     public static DCCppMessage getListRegisterContentsMsg() {
-	DCCppMessage msg = new DCCppMessage(DCCppConstants.MESSAGE_SIZE);
-	int i = 0;
-
 	// Write DCC Packet to the track
 	String s = new String(Character.toString(DCCppConstants.LIST_REGISTER_CONTENTS));
 	s += Character.toString(DCCppConstants.WHITESPACE);

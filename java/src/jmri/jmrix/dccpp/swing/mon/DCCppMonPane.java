@@ -69,12 +69,38 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	
 	// Beautify and display
 	String text = new String();
-	if (true) {
-	    // Put beautification code here
-	}
-        // we use Llnmon to format, expect it to provide consistent \n after each line
-        nextLine(text + "\n", new String(raw));
 
+	switch(l.getElement(0)) {
+	    case DCCppConstants.THROTTLE_REPLY:
+		text = "Throttle Reply: \n";
+		text += "\tRegister: " + l.getRegisterString() + "\n";
+		text += "\tSpeed: " + l.getSpeedString() + "\n";
+		text += "\tDirection: " + l.getDirectionString() + "\n";
+		break;
+	    case DCCppConstants.TURNOUT_REPLY:
+		text = "Turnout Reply: \n";
+		text += "\tT/O Number: " + l.getTOIDString()  + "\n";
+		text += "\tDirection: " + l.getTOStateString() + "\n";
+		break;
+	    case DCCppConstants.PROGRAM_REPLY:
+		text = "Program Reply: \n";
+		text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
+		text += "\tCallback Sub: " + l.getCallbackSubString()  + "\n";
+		text += "\tCV Value: " + l.getCVString()  + "\n";
+		break;
+	    case DCCppConstants.VERSION_REPLY:
+		text = "Base Station Status: ";
+		break;
+	    case DCCppConstants.POWER_REPLY:
+		text = "Power Status: ";
+		text += ((char)(l.getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+		break;
+	    default:
+		text += "Unregonized reply: ";
+	    }
+
+	// we use Llnmon to format, expect it to provide consistent \n after each line
+	nextLine(text + "\n", new String(raw));
     }
 
     // listen for the messages to the LI100/LI101
@@ -90,10 +116,84 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 
 	// Beautify and display
 	String text = new String();
-	if (true) {
-	    // Put beautification code here
-	}
 
+	switch(l.getElement(0)) {
+	case DCCppConstants.THROTTLE_CMD:
+	    text = "Throttle Cmd: ";
+	    text += "\n\tRegister: " + l.getRegisterString();
+	    text += "\n\tAddress: " + l.getAddressString();
+	    text += "\n\tSpeed: " + l.getSpeedString();
+	    text += "\n\t:Direction: " + l.getDirectionString();
+	    text += "\n";
+	    break;
+	case DCCppConstants.FUNCTION_CMD:
+	    text = "Function Cmd: ";
+	    break;
+	case DCCppConstants.STATIONARY_DECODER_CMD:
+	    text = "Stationary Decoder Cmd: ";
+	    break;
+	case DCCppConstants.TURNOUT_CMD:
+	    text = "Turnout Cmd: ";
+	    text += "\n\tT/O ID: " + l.getTOIDString();
+	    text += "\n\t:State: " + l.getTOStateString();
+	    text += "\n";
+	    break;
+	case DCCppConstants.OPS_WRITE_CV_BYTE:
+	    text = "Ops Write Byte Cmd: ";
+	    break;
+	case DCCppConstants.OPS_WRITE_CV_BIT:
+	    text = "Ops Write Bit Cmd: ";
+	    break;
+	case DCCppConstants.PROG_WRITE_CV_BYTE:
+	    text = "Prog Write Byte Cmd: ";
+	    text += "\n\tCV : " + l.getCVString();
+	    text += "\n\tValue: " + l.getValueString();
+	    text += "\n\tCallback Num: " + l.getCallbackNumString();
+	    text += "\n\tCallback Sub: " + l.getCallbackSubString() + "\n";
+	    break;
+	    
+	case DCCppConstants.PROG_WRITE_CV_BIT:
+	    text = "Prog Write Bit Cmd: ";
+	    text += "\n\tCV : " + l.getCVString();
+	    text += "\n\tBit : " + l.getBitString();
+	    text += "\n\tValue: " + l.getValueString();
+	    text += "\n\tCallback Num: " + l.getCallbackNumString();
+	    text += "\n\tCallback Sub: " + l.getCallbackSubString() + "\n";
+	    break;
+	case DCCppConstants.PROG_READ_CV:
+	    text = "Prog Read Cmd: ";
+	    text += "\n\tCV: " + l.getCVString();
+	    text += "\n\tCallback Num: " + l.getCallbackNumString();
+	    text += "\n\tCallback Sub: " + l.getCallbackSubString() + "\n";
+	    break;
+	case DCCppConstants.TRACK_POWER_ON:
+	    text = "Track Power On Cmd: ";
+	    break;
+	case DCCppConstants.TRACK_POWER_OFF:
+	    text = "Track Power Off Cmd: ";
+	    break;
+	case DCCppConstants.READ_TRACK_CURRENT:
+	    text = "Read Track Current Cmd: ";
+	    break;
+	case DCCppConstants.READ_CS_STATUS:
+	    text = "Status Cmd: ";
+	    break;
+	case DCCppConstants.WRITE_DCC_PACKET_MAIN:
+		text = "Write DCC Packet Main Cmd: ";
+		break;
+	case DCCppConstants.WRITE_DCC_PACKET_PROG:
+	    text = "Write DCC Packet Prog Cmd: ";
+	    break;
+	case DCCppConstants.GET_FREE_MEMORY:
+	    text = "Get Free Memory Cmd: ";
+	    break;
+	case DCCppConstants.LIST_REGISTER_CONTENTS:
+	    text = "List Register Contents Cmd: ";
+	    break;
+	default:
+	    text = "Unknown Message: ";
+	}
+	
         // we use Llnmon to format, expect it to provide consistent \n after each line
         nextLine(text + "\n", new String(raw));
 
@@ -529,11 +629,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
      * Nested class to create one of these using old-style defaults
      */
     static public class Default extends jmri.util.swing.JmriNamedPaneAction {
-
-        /**
-         *
-         */
-        private static final long serialVersionUID = 8987187719675249342L;
 
         public Default() {
             super(java.util.ResourceBundle.

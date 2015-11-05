@@ -1,6 +1,9 @@
 // DCCppReply.java
 package jmri.jmrix.dccpp;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -98,6 +101,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	return DCCppConstants.MAX_MESSAGE_SIZE;
     }
 
+    public int getLength() {
+	return(_nDataChars);
+    }
+
     /* Some notes on DCC++ messages and responses...
      *
      * Messages that have responses expected:
@@ -126,14 +133,198 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * L : <M ... data ... >
      */
 
+    //-------------------------------------------------------------------
+    // Message helper functions
+    // Core methods
+    private Matcher match(String s, String pat, String name) {
+	try {
+	    Pattern p = Pattern.compile(pat);
+	    Matcher m = p.matcher(s);
+	    if (!m.matches()) {
+		log.error("Malformed {} Command: {}",name, s);
+		return(null);
+	    }
+	    return(m);
+
+	} catch (PatternSyntaxException e) {
+            log.error("Malformed DCC++ message syntax! ");
+	    return(null);
+        } catch (IllegalStateException e) {
+            log.error("Group called before match operation executed string= " + s);
+	    return(null);
+        } catch (IndexOutOfBoundsException e) {
+            log.error("Index out of bounds string= " + s);
+	    return(null);
+        }
+    }
+
+     //------------------------------------------------------
+    // Helper methods for ThrottleReplies
+
+    public String getRegisterString() {
+	if (this.isThrottleReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_REPLY_REGEX, "ThrottleReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getRegisterInt() {
+	return(Integer.parseInt(this.getRegisterString()));
+    }
+
+    public String getSpeedString() {
+	if (this.isThrottleReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_REPLY_REGEX, "ThrottleReply");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getSpeedInt() {
+	return(Integer.parseInt(this.getSpeedString()));
+    }
+
+    public String getDirectionString() {
+	if (this.isThrottleReply()) {
+	    return(this.getDirectionInt() == 1 ? "Forward" : "Reverse");
+	} else {
+	    log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getElement(0));
+	    return("Not a Throttle");
+	}
+    }
+
+    public int getDirectionInt() {
+	if (this.isThrottleReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_REPLY_REGEX, "TurnoutReply");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.THROTTLE_FORWARD) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getElement(0));
+	    return(0);
+    }
+
+     //------------------------------------------------------
+    // Helper methods for Turnout Replies
+
+    public String getTOIDString() {
+	if (this.isTurnoutReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_REPLY_REGEX, "TurnoutReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getTOIDInt() {
+	return(Integer.parseInt(this.getTOIDString()));
+    }
+
+    public String getTOStateString() {
+	if (this.isTurnoutReply()) {
+	    return(this.getTOStateInt() == 1 ? "Thrown" : "Closed");
+	} else {
+	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
+	    return("Not a Turnout");
+	}
+    }
+
+    public int getTOStateInt() {
+	if (this.isTurnoutReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_REPLY_REGEX, "TurnoutReply");
+	    if (m != null) {
+		return(m.group(2).equals(DCCppConstants.TURNOUT_THROWN) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
+	    return(0);
+    }
+
+
+     //------------------------------------------------------
+    // Helper methods for Program Replies
+
+    public String getCallbackNumString() {
+	if (this.isProgramReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getCallbackNumInt() {
+	return(Integer.parseInt(this.getCallbackNumString()));
+    }
+
+    public String getCallbackSubString() {
+	if (this.isProgramReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getCallbackSubInt() {
+	return(Integer.parseInt(this.getCallbackSubString()));
+    }
+
+    public String getCVString() {
+	if (this.isProgramReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
+	    if (m != null) {
+		return(m.group(3));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
+	    return("0");
+    }
+
+    public int getCVInt() {
+	return(Integer.parseInt(this.getCVString()));
+    }
+
+    //-------------------------------------------------------------------
+
+
      // Message Identification functions
-    public boolean isThrottleReply() { return (this.getElement(0) == 'T'); }
-    public boolean isTurnoutReply() { return (this.getElement(0) == 'H'); }
-    public boolean isProgramReply() { return (this.getElement(0) == 'r'); }
-    public boolean isPowerReply() { return (this.getElement(0) == 'p'); }
-    public boolean isCurrentReply() { return (this.getElement(0) == 'a'); }
-    public boolean isMemoryReply() { return (this.getElement(0) == 'f'); }
-    public boolean isListPacketRegsReply() { return (this.getElement(0) == 'L'); }
+    public boolean isThrottleReply() { return (this.getElement(0) == DCCppConstants.THROTTLE_REPLY); }
+    public boolean isTurnoutReply() { return (this.getElement(0) == DCCppConstants.TURNOUT_REPLY); }
+    public boolean isProgramReply() { return (this.getElement(0) == DCCppConstants.PROGRAM_REPLY); }
+    public boolean isPowerReply() { return (this.getElement(0) == DCCppConstants.POWER_REPLY); }
+    public boolean isCurrentReply() { return (this.getElement(0) == DCCppConstants.CURRENT_REPLY); }
+    public boolean isMemoryReply() { return (this.getElement(0) == DCCppConstants.MEMORY_REPLY); }
+    public boolean isListPacketRegsReply() { return (this.getElement(0) == DCCppConstants.LISTPACKET_REPLY); }
 
     // decode messages of a particular form 
     /* 
@@ -397,6 +588,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+
+
     /**
      * Is this a feedback response message?
      */
@@ -594,15 +787,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * Is this message a service mode response?
      */
     public boolean isServiceModeResponse() {
-	return false;
-	/*
-        return (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE
-                && (getElement(1) == XNetConstants.CS_SERVICE_DIRECT_RESPONSE
-                || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 1)
-                || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 2)
-                || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 3)
-                || getElement(1) == XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE));
-	*/
+	return(getElement(0) == DCCppConstants.PROGRAM_REPLY);
+    }
+
+    /*
+     * Is this a programming response
+     */
+    public boolean isProgrammingResponse() {
+	return(getElement(0) == DCCppConstants.PROGRAM_REPLY);
     }
 
     /*
@@ -621,13 +813,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      */
     public boolean isDirectModeResponse() {
 	return (getElement(0) == DCCppConstants.PROGRAM_REPLY);
-	/*
-        return (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE
-                && (getElement(1) == XNetConstants.CS_SERVICE_DIRECT_RESPONSE
-                || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 1)
-                || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 2)
-                || getElement(1) == (XNetConstants.CS_SERVICE_DIRECT_RESPONSE + 3)));
-	*/
     }
 
     /*

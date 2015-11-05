@@ -87,6 +87,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     public List<ProgrammingMode> getSupportedModes() {
         List<ProgrammingMode> ret = new ArrayList<ProgrammingMode>();
         ret.add(DefaultProgrammerManager.OPSBYTEMODE);
+	ret.add(DefaultProgrammerManager.OPSBITMODE);
         return ret;
     }
 
@@ -106,14 +107,14 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
     // hardware is present, so we return true for all command 
     // stations on which the Operations Mode Programmer is enabled.
     synchronized public void message(DCCppReply l) {
-	progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
-	/*	    
+	progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);	    
         if (progState == DCCppProgrammer.NOTPROGRAMMING) {
             // We really don't care about any messages unless we send a 
             // request, so just ignore anything that comes in
             return;
         } else if (progState == DCCppProgrammer.REQUESTSENT) {
-            if (l.isOkMessage()) {
+	    
+            if (l.isProgrammingResponse()) {
                 // Before we set the programmer state to not programming, 
                 // delay for a short time to give the decoder a chance to 
                 // process the request.
@@ -126,24 +127,10 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
                 stopTimer();
                 progListener.programmingOpReply(value, jmri.ProgListener.OK);
             } else {
-                // this is an error
-                if (l.isRetransmittableErrorMsg()) {
-                    return;  // just ignore this, since we are retransmitting 
-                    // the message.
-                } else if (l.getElement(0) == DCCppConstants.CS_INFO
-                        && l.getElement(2) == DCCppConstants.CS_NOT_SUPPORTED) {
-                    progState = DCCppProgrammer.NOTPROGRAMMING;
-                    stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.NotImplemented);
-                } else {
-                    // this is an unknown error
-                    progState = DCCppProgrammer.NOTPROGRAMMING;
-                    stopTimer();
-                    progListener.programmingOpReply(value, jmri.ProgListener.UnknownError);
-                }
+		// This is a message we can (and/or should) ignore.
+		return;
             }
         }
-	*/
     }
 
     public boolean getLongAddress() {

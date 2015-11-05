@@ -222,20 +222,24 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	Matcher m;
         DCCppReply reply = null;
 
+	log.debug("Generate Reply to message type {} string = {}", msg.getElement(0), msg.toString());
+
         switch (msg.getElement(0)) {
 
 	case DCCppConstants.THROTTLE_CMD:
+	    log.debug("THROTTLE_CMD detected");
 	    s = msg.toString();
 	    try {
-		p = Pattern.compile("t\\s(\\d+)\\s(\\d+)\\s([1,0])");
+		p = Pattern.compile(DCCppConstants.THROTTLE_CMD_REGEX);
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Throttle Command: {}", s);
 		    reply = null;
 		    break;
 		}
-		r = "T " + m.group(1) + " " + m.group(2) + " " + m.group(3);
+		r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
 		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
 	    } catch (PatternSyntaxException e) {
 		log.error("Malformed pattern syntax! ");
 		return(null);
@@ -249,9 +253,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    break;
 
 	case DCCppConstants.TURNOUT_CMD:
+	    log.debug("TURNOUT_CMD detected");
 	    s = msg.toString();
 	    try {
-		p = Pattern.compile("T\\s(\\d+)\\s([1,0])");
+		p = Pattern.compile(DCCppConstants.TURNOUT_CMD_REGEX);
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Turnout Command: {}", s);
@@ -260,6 +265,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		}
 		r = "H " + m.group(1) + " " + m.group(2);
 		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
 	    } catch (PatternSyntaxException e) {
 		log.error("Malformed pattern syntax! ");
 		return(null);
@@ -273,12 +279,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    break;
 
 	case DCCppConstants.PROG_WRITE_CV_BYTE:
+	    log.debug("PROG_WRITE_CV_BYTE detected");
 	    s = msg.toString();
 	    try {
-		p = Pattern.compile("W\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)");
+		p = Pattern.compile(DCCppConstants.PROG_WRITE_BYTE_REGEX);
 		m = p.matcher(s);
 		if (!m.matches()) {
-		    log.error("Malformed Turnout Command: {}", s);
+		    log.error("Malformed ProgWriteCVByte Command: {}", s);
 		    reply = null;
 		    break;
 		}
@@ -287,6 +294,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		    m.group(2);
 		CVs[Integer.parseInt(m.group(1))] = Integer.parseInt(m.group(2));
 		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
 	    } catch (PatternSyntaxException e) {
 		log.error("Malformed pattern syntax! ");
 		return(null);
@@ -300,12 +308,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    break;
 
 	case DCCppConstants.PROG_WRITE_CV_BIT:
+	    log.debug("PROG_WRITE_CV_BIT detected");
 	    s = msg.toString();
 	    try {
-		p = Pattern.compile("B\\s(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)");
+		p = Pattern.compile(DCCppConstants.PROG_WRITE_BIT_REGEX);
 		m = p.matcher(s);
 		if (!m.matches()) {
-		    log.error("Malformed Turnout Command: {}", s);
+		    log.error("Malformed ProgWriteCVBit Command: {}", s);
 		    reply = null;
 		    break;
 		}
@@ -320,6 +329,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		else
 		    CVs[idx] = CVs[idx] & ~(0x0001 << bit);
 		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
 	    } catch (PatternSyntaxException e) {
 		log.error("Malformed pattern syntax! ");
 		return(null);
@@ -333,12 +343,13 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    break;
 
 	case DCCppConstants.PROG_READ_CV:
+	    log.debug("PROG_READ_CV detected");
 	    s = msg.toString();
 	    try {
-		p = Pattern.compile("R\\s(\\d+)\\s\\s(\\d+)\\s(\\d+)");
+		p = Pattern.compile(DCCppConstants.PROG_READ_REGEX);
 		m = p.matcher(s);
 		if (!m.matches()) {
-		    log.error("Malformed Turnout Command: {}", s);
+		    log.error("Malformed PROG_READ_CV Command: {}", s);
 		    reply = null;
 		    break;
 		}
@@ -346,6 +357,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		int cv = CVs[Integer.parseInt(m.group(1))];
 		r = "r " + m.group(2) + " " + m.group(3) + " " + Integer.toString(cv);
 		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
 	    } catch (PatternSyntaxException e) {
 		log.error("Malformed pattern syntax! ");
 		return(null);
@@ -359,20 +371,27 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    break;
 
 	case DCCppConstants.TRACK_POWER_ON:
+	    log.debug("TRACK_POWER_ON detected");
 	    TrackPowerState = true;
 	    reply = new DCCppReply("p1");
+	    log.debug("Reply generated = {}", reply.toString());
 	    break;
 
 	case DCCppConstants.TRACK_POWER_OFF:
+	    log.debug("TRACK_POWER_OFF detected");
 	    TrackPowerState = false;
 	    reply = new DCCppReply("p0");
+	    log.debug("Reply generated = {}", reply.toString());
 	    break;
 
 	case DCCppConstants.READ_TRACK_CURRENT:
+	    log.debug("READ_TRACK_CURRENT detected");
 	    reply = new DCCppReply("a " + (TrackPowerState ? "512" : "0"));
+	    log.debug("Reply generated = {}", reply.toString());
 	    break;
 
 	case DCCppConstants.READ_CS_STATUS:
+	    log.debug("READ_CS_STATUS detected");
 	    generateReadCSStatusReply(); // Handle this special.
 	    break;
 
@@ -382,6 +401,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	case DCCppConstants.OPS_WRITE_CV_BIT:
 	case DCCppConstants.WRITE_DCC_PACKET_MAIN:
 	case DCCppConstants.WRITE_DCC_PACKET_PROG:
+	    log.debug("non-reply message detected");
 	    // Send no reply.
 	    reply = null;;
 
@@ -412,7 +432,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private void writeReply(DCCppReply r) {
         int i;
-        int len = (r.getElement(0) & 0x0f) + 2;  // opCode+Nbytes+ECC
+        int len = r.getLength();  // opCode+Nbytes+ECC
 	// If r == null, there is no reply to be sent.
 	try {
 	    outpipe.writeByte((byte)'<');
@@ -460,11 +480,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		break;
 	    } else {
 		log.debug("msg read byte {}", char1);
-		s += Byte.toString(char1);
+		char c = (char) (char1 & 0x00FF);
+		s += Character.toString(c);
 	    }
 	}
 	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", s);
+	log.debug("Complete message = {}", s.toString());
 	return(new DCCppMessage(s));
     }
 

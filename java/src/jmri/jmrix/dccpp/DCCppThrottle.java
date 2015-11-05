@@ -363,10 +363,10 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 	int reg, speed, dir;
 	String s = l.toString();
 	try {
-	    Pattern p = Pattern.compile("t\\s(\\d+)\\s(\\d+)\\s([1,0])");
+	    Pattern p = Pattern.compile(DCCppConstants.THROTTLE_REPLY_REGEX);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed Throttle command: {}", s);
+		log.error("Malformed Throttle reply: {}", s);
 		return;
 	    }
 	    reg = Integer.parseInt(m.group(1));
