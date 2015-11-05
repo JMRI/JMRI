@@ -404,7 +404,7 @@
       <variable label="Steam Blower (hiss)" CV="52.19" default="8" item="CV52.19" include="3104,3109">
         <decVal max="15"/>
       </variable>
-      <variable label="Snifter Valve Volume" CV="52.20" default="11" item="CV52.20">
+      <variable label="Snifter Valve Volume" CV="52.20" default="11" item="CV52.20" include="3109">
         <decVal max="15"/>
       </variable>
       <variable label="Long Air Let-off" CV="52.21" default="11" item="CV52.21">
@@ -446,13 +446,13 @@
       <variable label="Air Brakes" CV="52.37" default="11" item="CV52.37">
         <decVal max="15"/>
       </variable>
-      <variable label="Ambiance Volume" CV="52.39" default="11" item="CV52.39">
+      <variable label="Ambiance Volume" CV="52.39" default="11" item="CV52.39" include="3109">
         <decVal max="15"/>
       </variable>
       <variable label="Alt Horn" CV="52.40" default="11" item="CV52.40">
         <decVal max="15"/>
       </variable>
-      <variable label="Reverser Volume" CV="52.41" default="11" item="CV52.41">
+      <variable label="Reverser Volume" CV="52.41" default="11" item="CV52.41" include="3109">
         <decVal max="15"/>
       </variable>
       <variable label="User Sound" CV="52.46" default="11" item="CV52.46">
@@ -761,7 +761,7 @@
       <variable label="Auto Mars Light NFR" CV="55.76.4" default="1" item="CV55.76.4">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
       </variable>
-      <variable label="Mars Light Strobe Hold Time" CV="55.76.5" default="100" item="CV55.76.5">
+      <variable label="Mars Light Strobe Hold Time" CV="55.76.5" default="100" item="CV55.76.5" include="3109">
         <decVal/>
       </variable>
       <variable label="Mars Light Period" CV="55.76.6" default="100" item="CV55.76.6">
@@ -1205,19 +1205,19 @@
       <variable label="Firebox Ramp Down Time" CV="55.122.18" default="127" item="CV55.122.18" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="Firebox2 Min Intensity" CV="55.122.21" default="4" item="CV55.122.21" include="3104,3109">
+      <variable label="Firebox2 Min Intensity" CV="55.122.21" default="4" item="CV55.122.21" include="3109">
         <decVal/>
       </variable>
-      <variable label="Firebox2 Max Intensity" CV="55.122.22" default="255" item="CV55.122.22" include="3104,3109">
+      <variable label="Firebox2 Max Intensity" CV="55.122.22" default="255" item="CV55.122.22" include="3109">
         <decVal/>
       </variable>
-      <variable label="Firebox2 Mid Intensity" CV="55.122.23" default="64" item="CV55.122.23" include="3104,3109">
+      <variable label="Firebox2 Mid Intensity" CV="55.122.23" default="64" item="CV55.122.23" include="3109">
         <decVal/>
       </variable>
-      <variable label="Firebox2 Ramp Up Time" CV="55.122.27" default="127" item="CV55.122.27" include="3104,3109">
+      <variable label="Firebox2 Ramp Up Time" CV="55.122.27" default="127" item="CV55.122.27" include="3109">
         <decVal/>
       </variable>
-      <variable label="Firebox2 Ramp Down Time" CV="55.122.28" default="127" item="CV55.122.28" include="3104,3109">
+      <variable label="Firebox2 Ramp Down Time" CV="55.122.28" default="127" item="CV55.122.28" include="3109">
         <decVal/>
       </variable>
       <variable label="Step Lights Initial State" CV="55.134.0" mask="XXXXXVXX" default="1" item="CV55.134.0 Step" include="1115,1123,1127,1130,1132">
@@ -1597,7 +1597,7 @@
         <indexedPairVal highCVname="56.24.1"/>
       </ivariable>
 -->
-      <variable label="Locomotive Scale" CV="56.25.0" include="3104">
+      <variable label="Locomotive Scale" CV="56.25.0" include="">
         <splitVal highCV="56.25.1"/>
       </variable>
       <variable label="Scale Wheel Diameter" CV="56.26.0" include="3104,3109">
@@ -1740,7 +1740,7 @@
       <variable label="Front Cab" CV="115.116.0" default="0" item="CV115.116.0">
         <decVal/>
       </variable>
-      <variable label="Rear Cab" CV="115.118.0" default="0" item="CV115.118.0" include="1115,1123,1127,1130,1132,3109">
+      <variable label="Rear Cab" CV="115.118.0" default="0" item="CV115.118.0" include="1115,1123,1127,1130,1132,3104,3109">
         <decVal/>
       </variable>
       <variable label="Engine Room" CV="115.120.0" default="0" item="CV115.120.0" include="1115,1123,1127,1130,1132">
