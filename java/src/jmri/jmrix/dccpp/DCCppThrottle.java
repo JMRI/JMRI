@@ -385,8 +385,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
 	// Check to see if register matches MY throttle.
 	// If so, update my values to match the returned values.
-	// TODO: Make sure this doesn't cause an endless loop of throttle commands
-	// and replies.
+	// Make (relatively) direct writes to the memories, so we don't
+	// cause looped throttle messages.
 	int regaddr = tc.getCommandStation().getRegisterAddress(reg);
 	if ((regaddr == DCCppConstants.REGISTER_UNALLOCATED) ||
 	    (regaddr != this.address)) {
@@ -396,11 +396,15 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 	} else {
 	    // The assigned address matches mine.  Update my info 
 	    // to match the returned register info.
-	    if (speed < 0)
-		this.setSpeedSetting(0.0f);
-	    else
-		this.setSpeedSetting((speed * 1.0f)/126.0f);
-	    this.setIsForward((dir == 1 ? true : false));
+	    if (speed < 0) {
+		//this.setSpeedSetting(0.0f);
+		this.speedSetting = 0.0f;
+	    }
+	    else {
+		//this.setSpeedSetting((speed * 1.0f)/126.0f);
+		this.speedSetting = (speed * 1.0f)/126.0f;
+	    }
+	    this.isForward = (dir == 1 ? true : false);
 	}
 	
     }

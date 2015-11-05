@@ -40,10 +40,10 @@ public class DCCppPowerManager implements PowerManager, DCCppListener {
         power = UNKNOWN;
         checkTC();
         if (v == ON) {
-            // send RESUME_OPS
-            //tc.sendDCCppMessage(XNetMessage.getResumeOperationsMsg(), this);
+            // send TRACK_POWER_ON
+            tc.sendDCCppMessage(DCCppMessage.getTrackPowerOnMsg(), this);
         } else if (v == OFF) {
-            // send EMERGENCY_OFF
+            // send TRACK_POWER_OFF
             tc.sendDCCppMessage(DCCppMessage.getTrackPowerOffMsg(), this);
         }
         firePropertyChange("Power", null, null);
