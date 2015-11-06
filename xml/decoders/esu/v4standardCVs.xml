@@ -390,17 +390,21 @@
     <decVal min="4" max="32"/>
     <label>ABC detection threshold</label>
   </variable>
-  <variable CV="138" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 2" exclude="LokPilot Fx V4.0">
+  <variable CV="138" default="128" item="ESU V4 Extra Smoke Unit Slider 2" exclude="LokPilot Fx V4.0" include="ESU LokSound V4.0">
     <decVal/>
-    <label>Smoke Unit Minimum Steam Chuff Duration</label>
+    <label>Fan Speed Trim</label>
   </variable>
-  <variable CV="139" default="128" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 3" exclude="LokPilot Fx V4.0">
+  <variable CV="139" default="128" item="ESU V4 Extra Smoke Unit Slider 3" include="ESU LokSound V4.0">
     <decVal/>
-    <label>Smoke Unit Maximum Steam Chuff Duration</label>
+    <label>Temperature Trim</label>
   </variable>
-  <variable CV="140" default="0" tooltip="Unit is 5 seconds" include="ESU LokSound V4.0" item="ESU V4 Extra Smoke Unit Slider 1" exclude="LokPilot Fx V4.0">
+  <variable CV="140" default="120" tooltip="Unit is 5 seconds" item="ESU V4 Extra Smoke Unit Slider 1" include="ESU LokSound V4.0">
     <decVal/>
-    <label>Smoke Unit Chuff Duration rel. to trig. dist.</label>
+    <label>Smoke Unit Automatic Power Off Time</label>
+  </variable>
+  <variable CV="144" default="150" tooltip="Unit is degrees Celsius" item="ESU V4 Extra Smoke Unit Slider 4" include="ESU LokSound V4.0">
+    <decVal/>
+    <label>Preheating Temperature for Secondary Smoke Unit</label>
   </variable>
   <variable CV="246" default="0" item="ESU V4 Extra Auto Uncoupling Slider 1" exclude="LokPilot Fx V4.0">
     <decVal/>
@@ -422,7 +426,7 @@
     <decVal/>
     <label>Constant Brake Mode - Brake Rate</label>
   </variable>
-  <variable CV="254" default="0" item="Advanced Group 1 Option 2" exclude="LokPilot Fx V4.0">
+  <variable CV="254" default="0" item="Advanced Group ƒOption 2" exclude="LokPilot Fx V4.0">
     <decVal/>
     <label>Constant Brake Mode - Brake Distance Forward</label>
   </variable>
@@ -451,8 +455,8 @@
     <label>Firmware Major Version</label>
   </variable>
   <!-- Decoder Information -->
-<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4decoderInfoCVs.xml"/>
   <!-- Function Outputs -->
   <xi:include href="http://jmri.org/xml/decoders/esu/v4fnOutCVs.xml"/>
-<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4testCVs.xml"/>
 </variables>
