@@ -133,8 +133,11 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\n\tByte 2: " + l.getFuncByte2String();
 	    text += "\n\t(No Reply Expected)\n";
 	    break;
-	case DCCppConstants.STATIONARY_DECODER_CMD:
-	    text = "Stationary Decoder Cmd: ";
+	case DCCppConstants.ACCESSORY_CMD:
+	    text = "Accessory Decoder Cmd: ";
+	    text += "\n\tAddress: " + l.getAccessoryAddrString();
+	    text += "\n\tSubaddr: " + l.getAccessorySubString();
+	    text += "\n\tState: " + l.getAccessoryStateString() + "\n";
 	    break;
 	case DCCppConstants.TURNOUT_CMD:
 	    text = "Turnout Cmd: ";

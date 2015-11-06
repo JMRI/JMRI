@@ -31,7 +31,7 @@ public final class DCCppConstants {
 
     public final static char THROTTLE_CMD           = 't'; // Throttle command
     public final static char FUNCTION_CMD           = 'f'; // F0-F28
-    public final static char STATIONARY_DECODER_CMD = 'a'; // Stationary accessory decoder
+    public final static char ACCESSORY_CMD          = 'a'; // Stationary accessory decoder
     public final static char TURNOUT_CMD            = 'T'; // Turnout command
     public final static char OPS_WRITE_CV_BYTE      = 'w'; // Write CV byte on ops track
     public final static char OPS_WRITE_CV_BIT       = 'b'; // Set/Clear a single CV bit on ops track
@@ -61,8 +61,8 @@ public final class DCCppConstants {
 
     // Message / Reply Regexes
     public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s([-]*\\d+)\\s([1,0])";
-    public final static String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // TODO
-    public final static String STATIONARY_CMD_REGEX = " "; // TODO
+    public final static String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?";
+    public final static String ACCESSORY_CMD_REGEX = "a\\s(\\d+)\\s(\\d+)\\s([1,0])";
     public final static String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])";
     public final static String OPS_WRITE_BYTE_REGEX = " "; // TODO
     public final static String OPS_WRITE_BIT_REGEX = " "; // TODO
@@ -90,10 +90,14 @@ public final class DCCppConstants {
     public final static String TURNOUT_CLOSED   = "0";
     public final static String THROTTLE_FORWARD = "1";
     public final static String THROTTLE_REVERSE = "0";
+    public final static String ACCESSORY_ON     = "1";
+    public final static String ACCESSORY_OFF    = "0";
 
     // Various min/max values for messages
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
     public final static int MAX_ACC_DECODER_SUBADDR = 3;
+    // Max JMRI addr = ((MAX_ADDRESS - 1) * (MAX_SUBADDR+1)) + (MAX_SUBADDR) + 1
+    public final static int MAX_ACC_DECODER_JMRI_ADDR = 2044;
     public final static int MAX_TURNOUT_ADDRESS = 32767;
     public final static int MAX_DIRECT_CV = 1024;
     public final static int MAX_DIRECT_CV_VAL = 255;

@@ -176,12 +176,71 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     
     // Identity Methods
     public boolean isThrottleMessage() { return(this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD); }
+    public boolean isAccessoryMessage() { return(this.getOpCodeChar() == DCCppConstants.ACCESSORY_CMD); }
     public boolean isFunctionMessage() { return(this.getOpCodeChar() == DCCppConstants.FUNCTION_CMD); }
     public boolean isTurnoutMessage() { return(this.getOpCodeChar() == DCCppConstants.TURNOUT_CMD); }
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
 
+
+    //------------------------------------------------------
+    // Helper methods for Accessory Decoder Commands
+
+    public String getAccessoryAddrString() {
+	if (this.isAccessoryMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getAccessoryAddrInt() {
+	return(Integer.parseInt(this.getAccessoryAddrString()));
+    }
+
+    public String getAccessorySubString() {
+	if (this.isAccessoryMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+	return("0");
+    }
+
+    public int getAccessorySubInt() {
+	return(Integer.parseInt(this.getAccessorySubString()));
+    }
+
+    public String getAccessoryStateString() {
+	if (isAccessoryMessage()) {
+	    return(this.getAccessoryStateInt() == 1 ? "ON" : "OFF");
+	} else {
+	    return("Not an Accessory Decoder");
+	}
+    }
+
+    public int getAccessoryStateInt() {
+	if (this.isAccessoryMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.ACCESSORY_ON) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return(0);
+    }
 
 
 
@@ -559,7 +618,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      *    returns: NONE
     */
-    public static DCCppMessage getStationaryDecoderMsg(int address, int subaddress, boolean activate) {
+    public static DCCppMessage getAccessoryDecoderMsg(int address, int subaddress, boolean activate) {
 	// Sanity check inputs
 	if (address < 0 || address > DCCppConstants.MAX_ACC_DECODER_ADDRESS)
 	    return(null);
@@ -567,7 +626,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    return(null);
 	
 	// Stationary Decoder Command
-	String s = new String(Character.toString(DCCppConstants.STATIONARY_DECODER_CMD));
+	String s = new String(Character.toString(DCCppConstants.ACCESSORY_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
 	
 	// Add the Address
