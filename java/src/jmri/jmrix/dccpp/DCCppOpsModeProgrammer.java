@@ -114,7 +114,7 @@ public class DCCppOpsModeProgrammer extends jmri.jmrix.AbstractProgrammer implem
             return;
         } else if (progState == DCCppProgrammer.REQUESTSENT) {
 	    
-            if (l.isProgrammingResponse()) {
+            if (l.isProgramReply()) {
                 // Before we set the programmer state to not programming, 
                 // delay for a short time to give the decoder a chance to 
                 // process the request.

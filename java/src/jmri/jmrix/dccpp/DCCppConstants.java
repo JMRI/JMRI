@@ -61,7 +61,7 @@ public final class DCCppConstants {
 
     // Message / Reply Regexes
     public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s([-]*\\d+)\\s([1,0])";
-    public final static String FUNCTION_CMD_REGEX = " "; // TODO
+    public final static String FUNCTION_CMD_REGEX = "f\\s(\\d+)\\s(\\d+)\\s*(\\d+)?"; // TODO
     public final static String STATIONARY_CMD_REGEX = " "; // TODO
     public final static String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])";
     public final static String OPS_WRITE_BYTE_REGEX = " "; // TODO
@@ -83,8 +83,8 @@ public final class DCCppConstants {
 
     public final static int REGISTER_1 = '1';
 
-    public final static char FUNCTION_GROUP4_BYTE1 = 222;
-    public final static char FUNCTION_GROUP5_BYTE1 = 223;
+    public final static int FUNCTION_GROUP4_BYTE1 = 222;
+    public final static int FUNCTION_GROUP5_BYTE1 = 223;
 
     public final static String TURNOUT_THROWN   = "1";
     public final static String TURNOUT_CLOSED   = "0";

@@ -101,10 +101,14 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      */
     @Override
     protected void sendFunctionGroup1() {
+	log.debug("sendFunctionGroup1(): f0 {} f1 {} f2 {} f3 {} f4{}",
+		  f0, f1, f2, f3, f4);
         DCCppMessage msg = DCCppMessage.getFunctionGroup1OpsMsg(this.getDccAddress(),
                 f0, f1, f2, f3, f4);
+	log.debug("sendFunctionGroup1(): Message: {}", msg.toString());
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -115,7 +119,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         DCCppMessage msg = DCCppMessage.getFunctionGroup2OpsMsg(this.getDccAddress(),
                 f5, f6, f7, f8);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -127,7 +132,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         DCCppMessage msg = DCCppMessage.getFunctionGroup3OpsMsg(this.getDccAddress(),
                 f9, f10, f11, f12);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -139,7 +145,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         DCCppMessage msg = DCCppMessage.getFunctionGroup4OpsMsg(this.getDccAddress(),
                 f13, f14, f15, f16, f17, f18, f19, f20);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -148,10 +155,14 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
      */
     @Override
     protected void sendFunctionGroup5() {
+	log.debug("sendFunctionGroup5(): f21 {} f22 {} f23 {} f24 {} f25 {} f26 {} f27 {} f28 {}",
+		  f21, f22, f23, f24, f25, f26, f27, f28);
         DCCppMessage msg = DCCppMessage.getFunctionGroup5OpsMsg(this.getDccAddress(),
                 f21, f22, f23, f24, f25, f26, f27, f28);
+	log.debug("sendFunctionGroup5(): Message: {}", msg.toString());
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -162,7 +173,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         DCCppMessage msg = DCCppMessage.getFunctionGroup1SetMomMsg(this.getDccAddress(),
                 f0Momentary, f1Momentary, f2Momentary, f3Momentary, f4Momentary);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -173,7 +185,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         DCCppMessage msg = DCCppMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
                 f5Momentary, f6Momentary, f7Momentary, f8Momentary);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -184,7 +197,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         DCCppMessage msg = DCCppMessage.getFunctionGroup2SetMomMsg(this.getDccAddress(),
                 f9Momentary, f10Momentary, f11Momentary, f12Momentary);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -196,7 +210,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 f13Momentary, f14Momentary, f15Momentary, f16Momentary,
                 f17Momentary, f18Momentary, f19Momentary, f20Momentary);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /**
@@ -208,7 +223,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
                 f21Momentary, f22Momentary, f23Momentary, f24Momentary,
                 f25Momentary, f26Momentary, f27Momentary, f28Momentary);
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLEFUNCSENT);
+        //queueMessage(msg, THROTTLEFUNCSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /* 
@@ -344,7 +360,7 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 	}
 	if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
             if (log.isDebugEnabled()) {
-                log.debug("Current throttle status is THROTTLEFUNCSENT. Ignoring reply.");
+                log.debug("Current throttle status is THROTTLEFUNCSENT. Ignoring Reply");
 		log.debug("Reply: {}", l.toString());
             }
 	}

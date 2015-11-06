@@ -175,16 +175,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     // Identity Methods
-    public boolean isThrottleMessage() {	return(this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD);
-    }
-    public boolean isTurnoutMessage() { return(this.getOpCodeChar() == DCCppConstants.TURNOUT_CMD);
-    }
-    public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE);
-    }
-    public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT);
-    }
-    public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV);
-    }
+    public boolean isThrottleMessage() { return(this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD); }
+    public boolean isFunctionMessage() { return(this.getOpCodeChar() == DCCppConstants.FUNCTION_CMD); }
+    public boolean isTurnoutMessage() { return(this.getOpCodeChar() == DCCppConstants.TURNOUT_CMD); }
+    public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
+    public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
+    public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
 
 
 
@@ -263,6 +259,64 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	} else 
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return(0);
+    }
+
+    //------------------------------------------------------
+    // Helper methods for Function Commands
+
+    public String getFuncAddressString() {
+	if (this.isFunctionMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getFuncAddressInt() {
+	return(Integer.parseInt(this.getFuncAddressString()));
+    }
+
+    public String getFuncByte1String() {
+	if (this.isFunctionMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getFuncByte1Int() {
+	return(Integer.parseInt(this.getFuncByte1String()));
+    }
+
+    public String getFuncByte2String() {
+	if (this.isFunctionMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
+	    if ((m != null) && (m.groupCount() > 2)){
+		return(m.group(3));
+	    } else {
+		return("");
+	    }
+	} else 
+	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getFuncByte2Int() {
+	if (this.getFuncByte2String() != "") {
+	    return(Integer.parseInt(this.getFuncByte2String()));
+	} else {
+	    return(0);
+	}
     }
 
     //------------------------------------------------------
@@ -991,6 +1045,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
 
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 128 + (f0 ? 16 : 0);
 	byte1 += (f1 ? 1 : 0);
 	byte1 += (f2 ? 2 : 0);
@@ -1022,6 +1079,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 128 + (f0 ? 16 : 0);
 	byte1 += (f1 ? 1 : 0);
 	byte1 += (f2 ? 2 : 0);
@@ -1052,6 +1113,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 176;
 	byte1 += (f5 ? 1 : 0);
 	byte1 += (f6 ? 2 : 0);
@@ -1080,6 +1145,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 176;
 	byte1 += (f5 ? 1 : 0);
 	byte1 += (f6 ? 2 : 0);
@@ -1109,6 +1178,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 160;
 	byte1 += (f9 ? 1 : 0);
 	byte1 += (f10 ? 2 : 0);
@@ -1136,6 +1209,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte1 = 160;
 	byte1 += (f9 ? 1 : 0);
 	byte1 += (f10 ? 2 : 0);
@@ -1171,7 +1248,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
-	s += Character.toString(DCCppConstants.FUNCTION_GROUP4_BYTE1);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(DCCppConstants.FUNCTION_GROUP4_BYTE1);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte2 = 0;
 	byte2 += (f13 ? 1 : 0);
 	byte2 += (f14 ? 2 : 0);
@@ -1212,7 +1294,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
-	s += Character.toString(DCCppConstants.FUNCTION_GROUP4_BYTE1);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(DCCppConstants.FUNCTION_GROUP4_BYTE1);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte2 = 0;
 	byte2 += (f13 ? 1 : 0);
 	byte2 += (f14 ? 2 : 0);
@@ -1253,7 +1341,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
-	s += Character.toString(DCCppConstants.FUNCTION_GROUP5_BYTE1);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(DCCppConstants.FUNCTION_GROUP5_BYTE1);
+	s += Character.toString(DCCppConstants.WHITESPACE);
 	int byte2 = 0;
 	byte2 += (f21 ? 1 : 0);
 	byte2 += (f22 ? 2 : 0);
@@ -1263,7 +1356,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	byte2 += (f26 ? 32 : 0);
 	byte2 += (f27 ? 64 : 0);
 	byte2 += (f28 ? 128 : 0);
-	s += Integer.toString(byte2);
+	s += Integer.toString((byte2 & 0x00FF));
+	log.debug("DCCppMessage: Byte2 = {} string = {}", byte2, s);
 
 	return(new DCCppMessage(s));
     }
@@ -1294,7 +1388,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	
 	String s = new String(Character.toString(DCCppConstants.FUNCTION_CMD));
 	s += Character.toString(DCCppConstants.WHITESPACE);
-	s += Character.toString(DCCppConstants.FUNCTION_GROUP5_BYTE1);
+
+	s += Integer.toString(address);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	s += Integer.toString(DCCppConstants.FUNCTION_GROUP5_BYTE1);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
 	int byte2 = 0;
 	byte2 += (f21 ? 1 : 0);
 	byte2 += (f22 ? 2 : 0);
