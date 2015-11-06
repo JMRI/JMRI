@@ -69,9 +69,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+    public int getOpCode() {
+	return((getElement(0) & 0x00FF));
+    }
+
     /* Get the opcode as a one character string */
     public char getOpCodeChar() {
-	return ((char)getOpCode());
+	return ((char)(getElement(0) & 0x00FF));
     }
 
     /* Get the opcode as a string in hex format */
@@ -173,7 +177,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return("0");
 	    }
 	} else 
-	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -190,7 +194,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return("0");
 	    }
 	} else 
-	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -202,7 +206,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	if (this.isThrottleReply()) {
 	    return(this.getDirectionInt() == 1 ? "Forward" : "Reverse");
 	} else {
-	    log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getElement(0));
+	    log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getOpCodeChar());
 	    return("Not a Throttle");
 	}
     }
@@ -216,7 +220,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return(0);
 	    }
 	} else 
-	    log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getElement(0));
+	    log.error("ThrottleReply Parser called on non-ThrottleReply message type {}", this.getOpCodeChar());
 	    return(0);
     }
 
@@ -232,7 +236,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return("0");
 	    }
 	} else 
-	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
+	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -244,7 +248,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	if (this.isTurnoutReply()) {
 	    return(this.getTOStateInt() == 1 ? "Thrown" : "Closed");
 	} else {
-	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
+	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
 	    return("Not a Turnout");
 	}
     }
@@ -258,7 +262,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return(0);
 	    }
 	} else 
-	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
+	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
 	    return(0);
     }
 
@@ -275,7 +279,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return("0");
 	    }
 	} else 
-	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -292,7 +296,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return("0");
 	    }
 	} else 
-	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -309,7 +313,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 		return("0");
 	    }
 	} else 
-	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -321,13 +325,13 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
 
      // Message Identification functions
-    public boolean isThrottleReply() { return (this.getElement(0) == DCCppConstants.THROTTLE_REPLY); }
-    public boolean isTurnoutReply() { return (this.getElement(0) == DCCppConstants.TURNOUT_REPLY); }
-    public boolean isProgramReply() { return (this.getElement(0) == DCCppConstants.PROGRAM_REPLY); }
-    public boolean isPowerReply() { return (this.getElement(0) == DCCppConstants.POWER_REPLY); }
-    public boolean isCurrentReply() { return (this.getElement(0) == DCCppConstants.CURRENT_REPLY); }
-    public boolean isMemoryReply() { return (this.getElement(0) == DCCppConstants.MEMORY_REPLY); }
-    public boolean isListPacketRegsReply() { return (this.getElement(0) == DCCppConstants.LISTPACKET_REPLY); }
+    public boolean isThrottleReply() { return (this.getOpCodeChar() == DCCppConstants.THROTTLE_REPLY); }
+    public boolean isTurnoutReply() { return (this.getOpCodeChar() == DCCppConstants.TURNOUT_REPLY); }
+    public boolean isProgramReply() { return (this.getOpCodeChar() == DCCppConstants.PROGRAM_REPLY); }
+    public boolean isPowerReply() { return (this.getOpCodeChar() == DCCppConstants.POWER_REPLY); }
+    public boolean isCurrentReply() { return (this.getOpCodeChar() == DCCppConstants.CURRENT_REPLY); }
+    public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }
+    public boolean isListPacketRegsReply() { return (this.getOpCodeChar() == DCCppConstants.LISTPACKET_REPLY); }
 
     // decode messages of a particular form 
     /* 
@@ -597,7 +601,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * Is this a feedback response message?
      */
     public boolean isFeedbackMessage() {
-        //return (this.getElement(0) == XNetConstants.ACC_INFO_RESPONSE);
+        //return (this.getOpCodeChar() == XNetConstants.ACC_INFO_RESPONSE);
 	return false;
     }
 
@@ -606,7 +610,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      */
     public boolean isFeedbackBroadcastMessage() {
 	return false;
-        //return ((this.getElement(0) & 0xF0) == XNetConstants.BC_FEEDBACK);
+        //return ((this.getOpCodeChar() & 0xF0) == XNetConstants.BC_FEEDBACK);
     }
 
     /**
@@ -658,231 +662,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         } else {
             return -1;
         }
-    }
-
-    /* 
-     * Next we have a few throttle related messages
-     */
-    /**
-     * If this is a throttle-type message, return address. Otherwise return -1.
-     * Note we only identify the command now; the reponse to a request for
-     * status is not yet seen here.
-     */
-    public int getThrottleMsgAddr() {
-        if (this.isThrottleMessage()) {
-            int a1 = this.getElement(2);
-            int a2 = this.getElement(3);
-            if (a1 == 0) {
-                return (a2);
-            } else {
-                return (((a1 * 256) & 0xFF00) + (a2 & 0xFF) - 0xC000);
-            }
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * Is this a throttle message?
-     */
-    public boolean isThrottleMessage() {
-        int message = this.getElement(0);
-        if (message == DCCppConstants.THROTTLE_REPLY) {
-            return true;
-        }
-        return false;
-    }
-
-    /**
-     * Does this message indicate the locomotive has been taken over by another
-     * device?
-     */
-    public boolean isThrottleTakenOverMessage() {
-	return false;
-	/*
-        return (this.getElement(0) == XNetConstants.LOCO_INFO_RESPONSE
-                && this.getElement(1) == XNetConstants.LOCO_NOT_AVAILABLE);
-	*/
-    }
-
-    /**
-     * Is this a consist message?
-     */
-    public boolean isConsistMessage() {
-	/*
-        int message = this.getElement(0);
-        if (message == XNetConstants.LOCO_MU_DH_ERROR
-                || message == XNetConstants.LOCO_DH_INFO_V1
-                || message == XNetConstants.LOCO_DH_INFO_V2) {
-            return true;
-        }
-	*/
-        return false;
-    }
-
-    /* 
-     * Finally, we have some commonly used routines that are used for 
-     * checking specific, generic, response messages.
-     */
-
-    /* 
-     * In the interest of code reuse, The following function checks to see 
-     * if an XPressNet Message is the OK message (01 04 05)
-     */
-    public boolean isOkMessage() {
-	return(true);
-	/*
-        return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
-                && this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_SEND_SUCCESS);
-	*/
-    }
-
-    /* 
-     * In the interest of code reuse, The following function checks to see 
-     * if an XPressNet Message is the Command Station Busy message (61 81 e3)
-     */
-    public boolean isCSBusyMessage() {
-	return false;
-	/*
-        return (this.getElement(0) == XNetConstants.CS_INFO
-                && this.getElement(1) == XNetConstants.CS_BUSY);
-	*/
-    }
-
-
-    /* 
-     * In the interest of code reuse, The following function checks to see 
-     * if an XPressNet Message is the Command Station Transfer Error 
-     * message (61 80 e1)
-     */
-    public boolean isCSTransferError() {
-	return false;
-	/*
-        return (this.getElement(0) == XNetConstants.CS_INFO
-                && this.getElement(1) == XNetConstants.CS_TRANSFER_ERROR);
-	*/
-    }
-
-    /* 
-     * In the interest of code reuse, The following function checks to see 
-     * if an XPressNet Message is a communications error message.
-     * the errors handeled are:
-     *		01 01 00  -- Error between interface and the PC
-     *		01 02 03  -- Error between interface and the Command Station
-     *		01 03 02  -- Unknown Communications Error
-     *		01 05 04  -- Timeslot Error
-     *          01 06 07  -- LI10x Buffer Overflow
-     */
-    public boolean isCommErrorMessage() {
-	return false;
-	/*
-        return (this.getElement(0) == XNetConstants.LI_MESSAGE_RESPONSE_HEADER
-                && ((this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_UNKNOWN_DATA_ERROR
-                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_CS_DATA_ERROR
-                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_PC_DATA_ERROR
-                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_BUFFER_OVERFLOW
-                || this.getElement(1) == XNetConstants.LI_MESSAGE_RESPONSE_TIMESLOT_ERROR)));
-	*/
-    }
-
-
-    /*
-     * Is this message a service mode response?
-     */
-    public boolean isServiceModeResponse() {
-	return(getElement(0) == DCCppConstants.PROGRAM_REPLY);
-    }
-
-    /*
-     * Is this a programming response
-     */
-    public boolean isProgrammingResponse() {
-	return(getElement(0) == DCCppConstants.PROGRAM_REPLY);
-    }
-
-    /*
-     * Is this message a register or paged mode programming response?
-     */
-    public boolean isPagedModeResponse() {
-	return false;
-	/*
-        return (getElement(0) == XNetConstants.CS_SERVICE_MODE_RESPONSE
-                && getElement(1) == XNetConstants.CS_SERVICE_REG_PAGE_RESPONSE);
-	*/
-    }
-
-    /*
-     * Is this message a direct CV mode programming response?
-     */
-    public boolean isDirectModeResponse() {
-	return (getElement(0) == DCCppConstants.PROGRAM_REPLY);
-    }
-
-    /*
-     * @return the CV value associated with a service mode reply
-     * return -1 if not a service mode message.
-     */
-    public int getServiceModeCVNumber() {
-        int cv = -1;
-	/*
-        if (isServiceModeResponse()) {
-            if ((getElement(1) & XNetConstants.CS_SERVICE_DIRECT_RESPONSE) == XNetConstants.CS_SERVICE_DIRECT_RESPONSE) {
-                cv = (getElement(1) - XNetConstants.CS_SERVICE_DIRECT_RESPONSE) * 256 + getElement(2);
-            } else {
-                cv = getElement(2);
-            }
-        }
-	*/
-        return (cv);
-    }
-
-    /*
-     * @return the value returned by the DCC system associated with a 
-     * service mode reply
-     * return -1 if not a service mode message.
-     */
-    public int getServiceModeCVValue() {
-        int value = -1;
-	/*
-        if (isServiceModeResponse()) {
-            value = getElement(3);
-        }
-	*/
-        return (value);
-    }
-
-    /*
-     * Return True if the message is an error message indicating 
-     * we should retransmit.
-     */
-    @Override
-    public boolean isRetransmittableErrorMsg() {
-        return (this.isCSBusyMessage()
-                || this.isCommErrorMessage()
-                || this.isCSTransferError());
-    }
-
-    /*
-     * Return true of the message is an unsolicited message
-     */
-    @Override
-    public boolean isUnsolicited() {
-        // The message may be set as an unsolicited message else where
-        // or it may be classified as unsolicited based on the type of 
-        // message received.
-        // NOTE: The feedback messages may be received in either solicited
-        // or unsolicited form.  requesting code can mark the reply as solicited
-        // by calling the resetUnsolicited function.
-	return(false);
-	/*
-        return (super.isUnsolicited()
-                || this.isThrottleTakenOverMessage()
-                || (this.isFeedbackMessage() && reallyUnsolicited));
-	*/
-    }
-
-    public final void resetUnsolicited() {
-        reallyUnsolicited = false;
     }
 
     // initialize logging

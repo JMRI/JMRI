@@ -70,7 +70,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	// Beautify and display
 	String text = new String();
 
-	switch(l.getElement(0)) {
+	switch(l.getOpCode()) {
 	    case DCCppConstants.THROTTLE_REPLY:
 		text = "Throttle Reply: \n";
 		text += "\tRegister: " + l.getRegisterString() + "\n";
@@ -117,7 +117,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	// Beautify and display
 	String text = new String();
 
-	switch(l.getElement(0)) {
+	switch(l.getOpCode()) {
 	case DCCppConstants.THROTTLE_CMD:
 	    text = "Throttle Cmd: ";
 	    text += "\n\tRegister: " + l.getRegisterString();

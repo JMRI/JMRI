@@ -334,20 +334,13 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 		handleThrottleReply(l);
 	    }
 	    // For a Throttle command ("t") we get back a Throttle Status.
-	    if (l.isOkMessage()) {
-                if (log.isDebugEnabled()) {
-                    log.debug("Last Command processed successfully.");
-                }
-                setIsAvailable(true);
-                requestState = THROTTLEIDLE;
-                sendQueuedMessage();
-	    } else {
-                /* this is an unknown error */
-                requestState = THROTTLEIDLE;
-                sendQueuedMessage();
-                log.warn("Received unhandled response: " + l);
-            }
-	    
+	    if (log.isDebugEnabled()) {
+		log.debug("Last Command processed successfully.");
+	    }
+	    setIsAvailable(true);
+	    requestState = THROTTLEIDLE;
+	    sendQueuedMessage();
+		
 	}
 	if ((requestState & THROTTLEFUNCSENT) == THROTTLEFUNCSENT) {
             if (log.isDebugEnabled()) {

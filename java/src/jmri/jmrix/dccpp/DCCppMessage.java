@@ -112,11 +112,11 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public int getOpCode() {
-        return (getElement(0) & 0xFF);
+	return (getElement(0) & 0xFF);
     }
 
     public char getOpCodeChar() {
-	return ((char) getElement(0));
+	return ((char) (getElement(0) & 0x00FF));
     }
 
     public String getOpCodeString() {
@@ -175,15 +175,15 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
     
     // Identity Methods
-    public boolean isThrottleMessage() {	return(this.getElement(0) == DCCppConstants.THROTTLE_CMD);
+    public boolean isThrottleMessage() {	return(this.getOpCodeChar() == DCCppConstants.THROTTLE_CMD);
     }
-    public boolean isTurnoutMessage() { return(this.getElement(0) == DCCppConstants.TURNOUT_CMD);
+    public boolean isTurnoutMessage() { return(this.getOpCodeChar() == DCCppConstants.TURNOUT_CMD);
     }
-    public boolean isProgWriteByteMessage() { return(this.getElement(0) == DCCppConstants.PROG_WRITE_CV_BYTE);
+    public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE);
     }
-    public boolean isProgWriteBitMessage() { return(this.getElement(0) == DCCppConstants.PROG_WRITE_CV_BIT);
+    public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT);
     }
-    public boolean isProgReadMessage() { return(this.getElement(0) == DCCppConstants.PROG_READ_CV);
+    public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV);
     }
 
 
@@ -201,7 +201,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -218,7 +218,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -235,7 +235,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -247,7 +247,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (this.isThrottleMessage()) {
 	    return(this.getDirectionInt() == 1 ? "Forward" : "Reverse");
 	} else {
-	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("Not a Throttle");
 	}
     }
@@ -261,7 +261,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return(0);
 	    }
 	} else 
-	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
+	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return(0);
     }
 
@@ -277,7 +277,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("Turnout Parser called on non-Turnout message type {}", this.getElement(0));
+	    log.error("Turnout Parser called on non-Turnout message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -302,7 +302,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return(0);
 	    }
 	} else 
-	    log.error("Turnout Parser called on non-Turnout message type {}", this.getElement(0));
+	    log.error("Turnout Parser called on non-Turnout message type {}", this.getOpCodeChar());
 	    return(0);
     }
 
@@ -323,7 +323,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    idx = 1;
 	   m = match(this.toString(), DCCppConstants.PROG_READ_REGEX, "ProgRead");
 	} else {
-	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    log.error("Program Parser called on non-Program message type {}", this.getOpCodeChar());
 	    return("0");
 	}
 	if (m != null) {
@@ -351,7 +351,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    idx = 2;
 	    m = match(this.toString(), DCCppConstants.PROG_READ_REGEX, "ProgRead");
 	} else {
-	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    log.error("Program Parser called on non-Program message type {}", this.getOpCodeChar());
 	    return("0");
 	}
 	if (m != null) {
@@ -378,7 +378,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    idx = 3;
 	    m = match(this.toString(), DCCppConstants.PROG_READ_REGEX, "ProgRead");
 	} else {
-	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    log.error("Program Parser called on non-Program message type {}", this.getOpCodeChar());
 	    return("0");
 	}
 	if (m != null) {
@@ -402,7 +402,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    idx = 3;
 	    m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
 	} else {
-	    log.error("Program Parser called on non-Program message type {}", this.getElement(0));
+	    log.error("Program Parser called on non-Program message type {}", this.getOpCodeChar());
 	    return("0");
 	}
 	if (m != null) {
@@ -428,7 +428,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("PWBit Parser called on non-PWBit message type {}", this.getElement(0));
+	    log.error("PWBit Parser called on non-PWBit message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -448,7 +448,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     @Override
     public boolean replyExpected() {
 	boolean retv = false;
-	switch(this.getElement(0)) {
+	switch(this.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_CMD:
 	case DCCppConstants.TURNOUT_CMD:
 	case DCCppConstants.PROG_WRITE_CV_BYTE:
