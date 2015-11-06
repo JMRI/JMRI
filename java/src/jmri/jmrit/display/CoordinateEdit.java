@@ -467,7 +467,9 @@ public class CoordinateEdit extends JmriJFrame {
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int l = ((Number) spinX.getValue()).intValue();
-                pl.getPopupUtility().setBorderSize(l);
+                PositionablePopupUtil util = pl.getPopupUtility();
+                util.setBorderSize(l);
+                pl.getEditor().setAttributes(util, pl);
                 textX.setText("Border= " + l);
                 dispose();
             }
@@ -503,7 +505,9 @@ public class CoordinateEdit extends JmriJFrame {
         okButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent e) {
                 int l = ((Number) spinX.getValue()).intValue();
+                PositionablePopupUtil util = pl.getPopupUtility();
                 pl.getPopupUtility().setMargin(l);
+                pl.getEditor().setAttributes(util, pl);
                 textX.setText("Margin= " + l);
                 dispose();
             }
@@ -552,6 +556,7 @@ public class CoordinateEdit extends JmriJFrame {
                 int width = ((Number) spinY.getValue()).intValue();
                 PositionablePopupUtil util = pl.getPopupUtility();
                 util.setFixedSize(width, height);
+                pl.getEditor().setAttributes(util, pl);
                 textX.setText("Height= " + util.getFixedHeight());
                 textY.setText("Width= " + util.getFixedWidth());
                 dispose();

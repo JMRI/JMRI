@@ -2148,6 +2148,9 @@
     determined by the length of the spur and the alternate track. So if the spur could hold 6 cars,
     and the alternate track 5, then the program would allow a maximum of 11 cars to be sent to the
     spur.</P>
+    
+    <P>You can see all "inbound" cars by using the sort by "FD" or 
+    <A HREF=#FinalDestination>Final Destination</A> in the <A HREF="#Cars">Cars</A> window.</P>
 
 
    <A NAME="PlannedPickUps"></A>
@@ -2168,10 +2171,10 @@
     track, and will set out new cars up to the length of the track. This also means that the program
     can overload the track up to 100%. So if the track could hold 10 cars, the program could send
     another 10 cars to the track. Now the track could be overloaded until this train or a later
-    train arrives and picks up the original 10 cars. Therefore you need to have some temporary track
-    space available to hold the new cars. So if you don't have "extra" space for cars, don't use
-    this feature! Note that it is your responsibility and not the programs to build and terminate a
-    train that picks up the original cars.</P>
+    train arrives and picks up the original 10 cars. Therefore you might need some temporary track
+    space available to hold the new cars. So if you don't have "extra" space for cars, you might not
+    wnat to use this feature! Note that it is your responsibility when using planned pickups and not
+    the programs to build and terminate a train that eliminates the potential overloading.</P>
 
    <P>Guaranteeing that cars will be picked up from a track can be a bit tricky, so it is
     recommended that you not use this feature until you become an expert with regards to using this
