@@ -43,19 +43,19 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppProgrammerManagerTest.class));
         suite.addTest(new TestSuite(DCCppPowerManagerTest.class));
         suite.addTest(new TestSuite(DCCppThrottleManagerTest.class));
+        suite.addTest(new TestSuite(DCCppLightTest.class));
+        suite.addTest(new TestSuite(DCCppLightManagerTest.class));
+        suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
+        suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
 	/*
         suite.addTest(new TestSuite(XNetTurnoutTest.class));
         suite.addTest(new TestSuite(XNetSensorTest.class));
-        suite.addTest(new TestSuite(XNetLightTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
         suite.addTest(new TestSuite(XNetSensorManagerTest.class));
-        suite.addTest(new TestSuite(XNetLightManagerTest.class));
         suite.addTest(new TestSuite(XNetConsistManagerTest.class));
         suite.addTest(new TestSuite(XNetConsistTest.class));
-        suite.addTest(new TestSuite(XNetOpsModeProgrammerTest.class));
         suite.addTest(new TestSuite(XNetExceptionTest.class));
         suite.addTest(new TestSuite(XNetMessageExceptionTest.class));
-        suite.addTest(new TestSuite(XNetStreamPortControllerTest.class));
         suite.addTest(jmri.jmrix.lenz.li100.LI100Test.suite());
         suite.addTest(jmri.jmrix.lenz.li100f.LI100FTest.suite());
         suite.addTest(jmri.jmrix.lenz.li101.LI101Test.suite());

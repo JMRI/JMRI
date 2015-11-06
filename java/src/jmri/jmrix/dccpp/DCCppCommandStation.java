@@ -218,7 +218,7 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
 
     public String getSystemPrefix() {
         if (adaptermemo == null) {
-            return "DCCpp";
+            return "DCCPP";
         }
         return adaptermemo.getSystemPrefix();
     }

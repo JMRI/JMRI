@@ -39,7 +39,7 @@ public class DCCppReplyTest extends TestCase {
     public void testIsDirectModeResponse() {
         // CV 1 in direct mode.
         DCCppReply r = new DCCppReply("r 1234 5678 23");
-        Assert.assertTrue(r.isDirectModeResponse());
+        Assert.assertTrue(r.isProgramReply());
     }
 
     // check get service mode CV Number response code.

@@ -44,9 +44,9 @@ public class DCCppMessageTest extends TestCase {
     }
 
     // Test the "Get" methods.
-    public void testGetStationaryDecoderMsg() {
-	DCCppMessage m = DCCppMessage.getStationaryDecoderMsg(23, 2, true);
-	log.debug("stationary decoder message = {}", m.toString());
+    public void testGetAccessoryDecoderMsg() {
+	DCCppMessage m = DCCppMessage.getAccessoryDecoderMsg(23, 2, true);
+	log.debug("accessory decoder message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'a', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -60,7 +60,7 @@ public class DCCppMessageTest extends TestCase {
 
     public void testGetTurnoutCommandMsg() {
 	DCCppMessage m = DCCppMessage.getTurnoutCommandMsg(23, true);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("turnout message = {}", m.toString());
         Assert.assertEquals("length", 6, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'T', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -72,7 +72,7 @@ public class DCCppMessageTest extends TestCase {
 
     public void testGetWriteDirectCVMsg() {
 	DCCppMessage m = DCCppMessage.getWriteDirectCVMsg(29, 12, 1, 2);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("write cv message = {}", m.toString());
         Assert.assertEquals("length", 11, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'W', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -89,7 +89,7 @@ public class DCCppMessageTest extends TestCase {
 
     public void testGetBitWriteDirectCVMsg() {
 	DCCppMessage m = DCCppMessage.getBitWriteDirectCVMsg(17, 4, true, 3, 4);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("write cv bit message = {}", m.toString());
         Assert.assertEquals("length", 12, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'B', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -107,7 +107,7 @@ public class DCCppMessageTest extends TestCase {
 
     public void testGetReadDirectCVMsg() {
 	DCCppMessage m = DCCppMessage.getReadDirectCVMsg(17, 4, 3);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("read cv message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'R', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -121,7 +121,7 @@ public class DCCppMessageTest extends TestCase {
 
     public void testGetWriteOpsModeCVMsg() {
 	DCCppMessage m = DCCppMessage.getWriteOpsModeCVMsg(17, 4, 3);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("write ops cv message = {}", m.toString());
         Assert.assertEquals("length", 8, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'w', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -135,7 +135,7 @@ public class DCCppMessageTest extends TestCase {
 
     public void testGetBitWriteOpsModeCVMsg() {
 	DCCppMessage m = DCCppMessage.getBitWriteOpsModeCVMsg(17, 4, 3, true);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("write ops bit cv message = {}", m.toString());
         Assert.assertEquals("length", 10, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'b', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -151,33 +151,33 @@ public class DCCppMessageTest extends TestCase {
 
     public void testSetTrackPowerMsg() {
 	DCCppMessage m = DCCppMessage.getSetTrackPowerMsg(true);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("track power on message = {}", m.toString());
         Assert.assertEquals("length", 1, m.getNumDataElements());
         Assert.assertEquals("0th byte", '1', m.getElement(0) & 0xFF);
 
 	DCCppMessage m2 = DCCppMessage.getSetTrackPowerMsg(false);
-	log.debug("stationary decoder message = {}", m2.toString());
+	log.debug("track power off message = {}", m2.toString());
         Assert.assertEquals("length", 1, m2.getNumDataElements());
         Assert.assertEquals("0th byte", '0', m2.getElement(0) & 0xFF);
     }
 
     public void testReadTrackCurrentMsg() {
 	DCCppMessage m = DCCppMessage.getReadTrackCurrentMsg();
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("read track current message = {}", m.toString());
         Assert.assertEquals("length", 1, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'c', m.getElement(0) & 0xFF);
     }
 
     public void testGetCSStatusMsg() {
 	DCCppMessage m = DCCppMessage.getCSStatusMsg();
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("get status message = {}", m.toString());
         Assert.assertEquals("length", 1, m.getNumDataElements());
         Assert.assertEquals("0th byte", 's', m.getElement(0) & 0xFF);
     }
 
     public void testGetAddressedEmergencyStopMsg() {
 	DCCppMessage m = DCCppMessage.getAddressedEmergencyStop(5, 24);
-	log.debug("stationary decoder message = {}", m.toString());
+	log.debug("emergency stop message = {}", m.toString());
         Assert.assertEquals("length", 11, m.getNumDataElements());
         Assert.assertEquals("0th byte", 't', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
