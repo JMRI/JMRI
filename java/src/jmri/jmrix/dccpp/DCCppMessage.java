@@ -331,7 +331,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("Turnout Parser called on non-Turnout message type {}", this.getOpCodeChar());
+	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
     }
 
@@ -348,7 +348,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public int getTOStateInt() {
-	if (this.isThrottleMessage()) {
+	if (this.isTurnoutMessage()) {
 	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
 	    if (m != null) {
 		return(m.group(2).equals(DCCppConstants.TURNOUT_THROWN) ? 1 : 0);
@@ -356,7 +356,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return(0);
 	    }
 	} else 
-	    log.error("Turnout Parser called on non-Turnout message type {}", this.getOpCodeChar());
+	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
     }
 

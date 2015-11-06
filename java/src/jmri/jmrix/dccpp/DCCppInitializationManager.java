@@ -54,8 +54,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	   prevent the default consist manager from being loaded on top of it */
 	//systemMemo.setConsistManager(new jmri.jmrix.dccpp.DCCppConsistManager(systemMemo));
 	//jmri.InstanceManager.setConsistManager(systemMemo.getConsistManager());
-	//systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
-	//jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
+	systemMemo.setTurnoutManager(new jmri.jmrix.dccpp.DCCppTurnoutManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+	jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
 	//systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
 	//jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
 	//systemMemo.setSensorManager(new jmri.jmrix.dccppDCCppSensorManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));

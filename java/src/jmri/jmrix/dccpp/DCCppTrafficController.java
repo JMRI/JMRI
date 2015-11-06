@@ -342,20 +342,18 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         mMemo = m;
     }
 
-    //private DCCppFeedbackMessageCache _FeedbackCache = null;
+    private DCCppTurnoutReplyCache _TurnoutReplyCache = null;
 
     /**
-     * return an DCCppFeedbackMessageCache object associated with this traffic
+     * return an DCCppTurnoutReplyCache object associated with this traffic
      * controller.
      */
-    /*
-    public DCCppFeedbackMessageCache getFeedbackMessageCache() {
-        if (_FeedbackCache == null) {
-            _FeedbackCache = new DCCppFeedbackMessageCache(this);
+    public DCCppTurnoutReplyCache getTurnoutReplyCache() {
+        if (_TurnoutReplyCache == null) {
+            _TurnoutReplyCache = new DCCppTurnoutReplyCache(this);
         }
-        return _FeedbackCache;
+        return _TurnoutReplyCache;
     }
-    */
     static Logger log = LoggerFactory.getLogger(DCCppTrafficController.class.getName());
 }
 

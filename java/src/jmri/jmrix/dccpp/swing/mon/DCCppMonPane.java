@@ -139,7 +139,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	case DCCppConstants.TURNOUT_CMD:
 	    text = "Turnout Cmd: ";
 	    text += "\n\tT/O ID: " + l.getTOIDString();
-	    text += "\n\t:State: " + l.getTOStateString();
+	    text += "\n\tState: " + l.getTOStateString();
 	    text += "\n";
 	    break;
 	case DCCppConstants.OPS_WRITE_CV_BYTE:

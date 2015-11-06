@@ -266,6 +266,14 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    return(0);
     }
 
+    public boolean getTOIsThrown() {
+	return(this.getTOStateString().equals(DCCppConstants.TURNOUT_THROWN));
+    }
+
+    public boolean getTOIsClosed() {
+	return(this.getTOStateString().equals(DCCppConstants.TURNOUT_CLOSED));
+    }
+
 
      //------------------------------------------------------
     // Helper methods for Program Replies
@@ -339,101 +347,6 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * control code.  These are used in multiple places within the code, 
      * so they appear here. 
      */
-    /**
-     * <p>
-     * If this is a feedback response message for a turnout, return the address.
-     * Otherwise return -1.
-     * </p>
-     *
-     * @return the integer address or -1 if not a turnout message
-     */
-    public int getTurnoutMsgAddr() {
-        if (this.isFeedbackMessage()) {
-            int a1 = this.getElement(1);
-            int a2 = this.getElement(2);
-            int messagetype = this.getFeedbackMessageType();
-            if (messagetype == 0 || messagetype == 1) {
-                // This is a turnout message
-                int address = (a1 & 0xff) * 4;
-                if (((a2 & 0x13) == 0x01) || ((a2 & 0x13) == 0x02)) {
-                    // This is the first address in the group*/
-                    return (address + 1);
-                } else if (((a2 & 0x1c) == 0x04) || ((a2 & 0x1c) == 0x08)) {
-                    // This is the second address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 1);
-                } else if (((a2 & 0x13) == 0x11) || ((a2 & 0x13) == 0x12)) {
-                    // This is the third address in the group
-                    return (address + 3);
-                } else if (((a2 & 0x1c) == 0x14) || ((a2 & 0x1c) == 0x18)) {
-                    // This is the fourth address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 3);
-                } else if ((a2 & 0x1f) == 0x10) {
-                    // This is an address in the upper nibble, but neither 
-                    // address has been operated.
-                    return (address + 3);
-                } else {
-                    // This is an address in the lower nibble, but neither 
-                    // address has been operated
-                    return (address + 1);
-                }
-            } else {
-                return -1;
-            }
-        } else {
-            return -1;
-        }
-    }
-
-    /**
-     * <p>
-     * If this is a feedback broadcast message and the specified startbyte is
-     * the address byte of an addres byte data byte pair for a turnout, return
-     * the address. Otherwise return -1.
-     * </p>
-     *
-     * @param startByte address byte of the address byte/data byte pair.
-     * @return the integer address or -1 if not a turnout message
-     */
-    public int getTurnoutMsgAddr(int startByte) {
-        if (this.isFeedbackBroadcastMessage()) {
-            int a1 = this.getElement(startByte);
-            int a2 = this.getElement(startByte + 1);
-            int messagetype = this.getFeedbackMessageType();
-            if (messagetype == 0 || messagetype == 1) {
-                // This is a turnout message
-                int address = (a1 & 0xff) * 4;
-                if (((a2 & 0x13) == 0x01) || ((a2 & 0x13) == 0x02)) {
-                    // This is the first address in the group*/
-                    return (address + 1);
-                } else if (((a2 & 0x1c) == 0x04) || ((a2 & 0x1c) == 0x08)) {
-                    // This is the second address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 1);
-                } else if (((a2 & 0x13) == 0x11) || ((a2 & 0x13) == 0x12)) {
-                    // This is the third address in the group
-                    return (address + 3);
-                } else if (((a2 & 0x1c) == 0x14) || ((a2 & 0x1c) == 0x18)) {
-                    // This is the fourth address in the group
-                    // return the odd address associated with this turnout
-                    return (address + 3);
-                } else if ((a2 & 0x1f) == 0x10) {
-                    // This is an address in the upper nibble, but neither 
-                    // address has been operated.
-                    return (address + 3);
-                } else {
-                    // This is an address in the lower nibble, but neither 
-                    // address has been operated
-                    return (address + 1);
-                }
-            } else {
-                return -1;
-            }
-        } else {
-            return -1;
-        }
-    }
 
     /**
      * <p>
@@ -609,8 +522,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * Is this a feedback broadcast message?
      */
     public boolean isFeedbackBroadcastMessage() {
-	return false;
-        //return ((this.getOpCodeChar() & 0xF0) == XNetConstants.BC_FEEDBACK);
+	return(this.isTurnoutReply());
     }
 
     /**

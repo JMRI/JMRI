@@ -72,7 +72,7 @@ public final class DCCppConstants {
     public final static String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
 
     public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
-    public final static String TURNOUT_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([1,0])\\s*";
+    public final static String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
 
     // Misc standard values
