@@ -1,0 +1,92 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2001, 2005, 2007, 2009, 2010, 2014 All rights reserved -->
+<!-- $Id$				-->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- no need to translate the following, as it generally only appears -->
+<!-- in the function map selection pane -->  
+<variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <copyright xmlns="http://docbook.org/ns/docbook">
+    <year>2015</year>
+    <holder>JMRI</holder>
+  </copyright>
+  <authorgroup xmlns="http://docbook.org/ns/docbook">
+    <author>
+      <personname>
+        <firstname>Pierre</firstname>
+        <surname>Billon</surname>
+      </personname>
+    </author>
+  </authorgroup>
+  <revhistory xmlns="http://docbook.org/ns/docbook">
+    <revision>
+      <revnumber>2</revnumber>
+      <date>2015-11-01</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Included similar CVs from SUSI sound modules</revremark>
+    </revision>
+	<revision>
+      <revnumber>1</revnumber>
+      <date>2015-10-14</date>
+      <authorinitials>PB</authorinitials>
+      <revremark>Creation</revremark>
+    </revision>
+   </revhistory>
+  	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
+	<variable label="Reduce volume with function" CV="374" default="0" tooltip="CV374: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 10" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Réduire volume avec function</label>
+		<label xml:lang="de">Funktionszuordnung Lautstärke verkleinen</label>
+	</variable> 
+	<variable label="Reduce volume with function" CV="974" default="0" tooltip="CV974: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 10" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Réduire volume avec function</label>
+		<label xml:lang="de">Funktionszuordnung Lautstärke verkleinen</label>
+	</variable>
+	<!-- END SIMILAR CV --> 
+	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->   
+	<variable label="Increase volume with function" CV="375" default="0" tooltip="CV375: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 11" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Augmenter volume avec function</label>
+		<label xml:lang="de">Funktionszuordnung Lautstärke vergrößen</label>
+	</variable>
+	<variable label="Increase volume with function" CV="975" default="0" tooltip="CV975: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 11" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Augmenter volume avec function</label>
+		<label xml:lang="de">Funktionszuordnung Lautstärke vergrößen</label>
+	</variable>
+	<!-- END SIMILAR CV --> 
+	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->  
+	<variable label="Deactivate braking sound with function" CV="376" default="0" tooltip="CV376: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 12" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Déactiver son freinage avec function</label>
+		<label xml:lang="de">Funktionszuordnung Bremsenquietschen deaktivieren</label>
+	</variable>
+	<variable label="Deactivate braking sound with function" CV="976" default="0" tooltip="CV976: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 12" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Déactiver son freinage avec function</label>
+		<label xml:lang="de">Funktionszuordnung Bremsenquietschen deaktivieren</label>
+	</variable>
+	<!-- END SIMILAR CV --> 
+	<!-- BEGIN SIMILAR CV for sound decoders (SD18A, SD21A...) and modules (SH10A...). Mind the exclude parameter -->   
+	<variable label="Force neutral gear sound with function" CV="377" default="0" tooltip="CV377: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 13" exclude="SUSI sound modules,SD18A_1.00,SD18A_1.01,SD21A_1.01,SD18A_1.02,SD21A_1.02,SD18A_1.03,SD21A_1.03">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Forcer son à vide avec function</label>
+		<label xml:lang="de">Funktionszuordnung Zwangslehrlauf</label>
+	</variable>
+	<variable label="Force neutral gear sound with function" CV="977" default="0" tooltip="CV977: 0=>Off, 1-28=>F1-F8, 29=>F0" item="Sound Group 1 Option 13" exclude="Combo sound decoders,SH10A_1.00,SH10A_1.01,SH10A_1.02,SH10A_1.03,SH10A_1.04,SH10A_1.05">
+		<xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_enum-map.xml"/>
+		<label xml:lang="fr">Forcer son à vide avec function</label>
+		<label xml:lang="de">Funktionszuordnung Zwangslehrlauf</label>
+	</variable>
+	<!-- END SIMILAR CV --> 
+</variables>

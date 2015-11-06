@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import javax.swing.AbstractAction;
 import javax.swing.ButtonGroup;
 import javax.swing.JCheckBoxMenuItem;
+import javax.swing.JComponent;
 import javax.swing.JMenu;
 import javax.swing.JPopupMenu;
 import javax.swing.JRadioButtonMenuItem;
@@ -949,6 +950,24 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         }
 
         @Override
+        public SensorPopupUtil clone(Positionable parent, JComponent textComp) {
+            SensorPopupUtil util = new SensorPopupUtil(parent, textComp);
+            util.setJustification(getJustification());
+            util.setHorizontalAlignment(getJustification());
+            util.setFixedWidth(getFixedWidth());
+            util.setFixedHeight(getFixedHeight());
+            util.setMargin(getMargin());
+            util.setBorderSize(getBorderSize());
+            util.setBorderColor(getBorderColor());
+            util.setFont(util.getFont().deriveFont(getFontStyle()));
+            util.setFontSize(getFontSize());
+            util.setOrientation(getOrientation());
+            util.setBackgroundColor(getBackground());
+            util.setForeground(getForeground());
+            util.setHasBackground(hasBackground());     // must do this AFTER setBackgroundColor
+            return util;
+        }
+        @Override
         public void setTextJustificationMenu(JPopupMenu popup) {
             if (isText()) {
                 super.setTextJustificationMenu(popup);
@@ -1028,7 +1047,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                             break;
                         case BACKGROUND_COLOR:
                             if (color == null) {
-                                setOpaque(false);
+                                _self.setHasBackground(false);
+/*                                setOpaque(false);
                                 //We need to force a redisplay when going to clear as the area
                                 //doesn't always go transparent on the first click.
                                 java.awt.Point p = getLocation();
@@ -1037,9 +1057,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                                 java.awt.Container parent = getParent();
                                 // force redisplay
                                 parent.revalidate();
-                                parent.repaint(p.x, p.y, w, h);
+                                parent.repaint(p.x, p.y, w, h);*/
                             } else {
                                 setBackgroundColor(desiredColor);
+                                _self.setHasBackground(true);
                             }
                             break;
                         case BORDER_COLOR:
@@ -1056,9 +1077,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                             break;
                         case ACTIVE_BACKGROUND_COLOR:
                             setBackgroundActive(desiredColor);
+                            _self.setHasBackground(true);
                             break;
                         case INACTIVE_FONT_COLOR:
                             setTextInActive(desiredColor);
+                            _self.setHasBackground(true);
                             break;
                         case INACTIVE_BACKGROUND_COLOR:
                             setBackgroundInActive(desiredColor);
@@ -1072,7 +1095,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                         default:
                             break;
                     }
-                }
+                    _parent.getEditor().setAttributes(_self, _parent);
+               }
             };
             JRadioButtonMenuItem r = new JRadioButtonMenuItem(name);
             r.addActionListener(a);
@@ -1082,7 +1106,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     setColorButton(getForeground(), color, r);
                     break;
                 case BACKGROUND_COLOR:
-                    setColorButton(getBackground(), color, r);
+                    if (hasBackground()) {
+                        setColorButton(getBackground(), color, r);                       
+                    } else {
+                        setColorButton(null, color, r);                        
+                    }
                     break;
                 case BORDER_COLOR:
                     setColorButton(getBorderColor(), color, r);
