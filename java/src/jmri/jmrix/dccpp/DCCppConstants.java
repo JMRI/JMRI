@@ -22,6 +22,7 @@ package jmri.jmrix.dccpp;
 public final class DCCppConstants {
 
     public final static int MAX_MESSAGE_SIZE = 30;
+    public final static int MAX_REPLY_SIZE = 256;
     public final static int MAX_MAIN_REGISTERS = 12;
     public final static int REGISTER_UNALLOCATED = -1;
     public final static int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
@@ -42,6 +43,12 @@ public final class DCCppConstants {
     public final static char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public final static char READ_CS_STATUS         = 's'; // Read status from command station
 
+    // Special Commands not for normal use.  Diagnostic and Test Use Only
+    public final static char WRITE_DCC_PACKET_MAIN  = 'M';
+    public final static char WRITE_DCC_PACKET_PROG  = 'P';
+    public final static char GET_FREE_MEMORY        = 'F';
+    public final static char LIST_REGISTER_CONTENTS = 'L';
+	
     // Message Replies
     public final static char THROTTLE_REPLY   = 'T';
     public final static char TURNOUT_REPLY    = 'H';
@@ -53,27 +60,21 @@ public final class DCCppConstants {
     public final static char LISTPACKET_REPLY = 'L';
 
     // Message / Reply Regexes
-    public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s([1,0])";
+    public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s([-]*\\d+)\\s([1,0])";
     public final static String FUNCTION_CMD_REGEX = " "; // TODO
     public final static String STATIONARY_CMD_REGEX = " "; // TODO
     public final static String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])";
     public final static String OPS_WRITE_BYTE_REGEX = " "; // TODO
     public final static String OPS_WRITE_BIT_REGEX = " "; // TODO
     
-    public final static String PROG_WRITE_BYTE_REGEX = "W\\s(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
-    public final static String PROG_WRITE_BIT_REGEX = "B\\s(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
-    public final static String PROG_READ_REGEX = "R\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)";
+    public final static String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
+    public final static String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
+    public final static String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
 
-    public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s+(\\d+)\\s+(\\d+)\\s+([1,0])\\s*";
-    public final static String TURNOUT_REPLY_REGEX = "\\s*T\\s+(\\d+)\\s+([1,0])\\s*";
-    public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s+(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
+    public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
+    public final static String TURNOUT_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([1,0])\\s*";
+    public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
 
-    // Special Commands not for normal use.  Diagnostic and Test Use Only
-    public final static char WRITE_DCC_PACKET_MAIN  = 'M';
-    public final static char WRITE_DCC_PACKET_PROG  = 'P';
-    public final static char GET_FREE_MEMORY        = 'F';
-    public final static char LIST_REGISTER_CONTENTS = 'L';
-	
     // Misc standard values
     public final static char WHITESPACE = ' ';
     public final static int MAX_SPEED = 126;

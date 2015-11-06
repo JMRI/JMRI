@@ -15,6 +15,8 @@ import org.slf4j.LoggerFactory;
  * @author	Mark Underwood Copyright (C) 2015
  * @version	$Revision$
  *
+ * Based on XNetReply
+ *
  */
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
@@ -98,7 +100,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int maxSize() {
-	return DCCppConstants.MAX_MESSAGE_SIZE;
+	return DCCppConstants.MAX_REPLY_SIZE;
     }
 
     public int getLength() {
@@ -165,9 +167,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	if (this.isThrottleReply()) {
 	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_REPLY_REGEX, "ThrottleReply");
 	    if (m != null) {
+		log.debug("register: {}", m.group(1));
 		return(m.group(1));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getElement(0));
@@ -184,7 +187,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    if (m != null) {
 		return(m.group(2));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("ThrottleReply Parser called on non-Throttle message type {}", this.getElement(0));
@@ -226,7 +229,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    if (m != null) {
 		return(m.group(1));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getElement(0));
@@ -269,7 +272,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    if (m != null) {
 		return(m.group(1));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));
@@ -303,7 +306,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    if (m != null) {
 		return(m.group(3));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getElement(0));

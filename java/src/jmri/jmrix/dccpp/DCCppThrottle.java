@@ -362,26 +362,9 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
     private void handleThrottleReply(DCCppReply l) {
 	int reg, speed, dir;
 	String s = l.toString();
-	try {
-	    Pattern p = Pattern.compile(DCCppConstants.THROTTLE_REPLY_REGEX);
-	    Matcher m = p.matcher(s);
-	    if (!m.matches()) {
-		log.error("Malformed Throttle reply: {}", s);
-		return;
-	    }
-	    reg = Integer.parseInt(m.group(1));
-	    speed = Integer.parseInt(m.group(2));
-	    dir = Integer.parseInt(m.group(3));
-	} catch (PatternSyntaxException e) {
-	    log.error("Malformed pattern syntax! ");
-	    return;
-	} catch (IllegalStateException e) {
-	    log.error("Group called before match operation executed string= " + s);
-	    return;
-	} catch (IndexOutOfBoundsException e) {
-	    log.error("Index out of bounds string= " + s);
-	    return;
-	}
+	reg = l.getRegisterInt();
+	speed = l.getSpeedInt();
+	dir = l.getDirectionInt();
 
 	// Check to see if register matches MY throttle.
 	// If so, update my values to match the returned values.

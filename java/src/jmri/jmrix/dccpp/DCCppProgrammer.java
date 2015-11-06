@@ -214,32 +214,12 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
             if (log.isDebugEnabled()) {
                 log.debug("reply in REQUESTSENT state");
             }
-	    String syntax = "r (\\d+)\\W(\\d+)\\W(\\d+)";
-	    String s = m.toString();
-	    try {
-		Pattern p = Pattern.compile(syntax);
-		Matcher mt = p.matcher(s);
-		if (!mt.matches()) {
-		log.error("DCC++ Programming Reply does not match pattern. syntax= {} string= {}", syntax, s);
-		return;
-		}
-		log.debug("DCC++ Programming Reply value = {}", s);
-		// CALLBACKNUM = mt.group(1)
-		// CALLBACKSUB = mt.group(2)
-		_val = Integer.parseInt(mt.group(3));
-	    } catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ programming reply matcher syntax! " + syntax);
-            return;
-	    } catch (IllegalStateException e) {
-		log.error("Group called before match operation executed syntax=" + syntax + " string= " + s);
-		return;
-	    } catch (IndexOutOfBoundsException e) {
-		log.error("Index out of bounds " + syntax + " string= " + s);
-		return;
-	    }
+	    log.debug("DCC++ Programming Reply value = {}", m.getCVString());
+	    // CALLBACKNUM = mt.group(1)
+	    // CALLBACKSUB = mt.group(2)
+	    _val = m.getCVInt();
 	    progState = NOTPROGRAMMING;
 	    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
-	    
 	}
     }
 

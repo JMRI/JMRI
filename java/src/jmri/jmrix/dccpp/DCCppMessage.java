@@ -124,19 +124,6 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * check whether the message has a valid parity
-     *
-     * Not used for DCC++ No checksum.
-     */
-    public boolean checkParity() {
-	return(true);
-    }
-
-    public void setParity() {
-	return;
-    }
-
-    /**
      * return the message length
      */
     public int length() {
@@ -164,13 +151,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     //------------------------------------------------------
     // Message Helper Functions
 
- // Core methods
+    // Core methods
     private Matcher match(String s, String pat, String name) {
 	try {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed {} Command: {}",name, s);
+		log.error("Malformed {} Command: {} Pattern: {}",name, s, p.toString());
 		return(null);
 	    }
 	    return(m);
@@ -211,7 +198,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    if (m != null) {
 		return(m.group(1));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
@@ -228,7 +215,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    if (m != null) {
 		return(m.group(2));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
@@ -245,7 +232,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    if (m != null) {
 		return(m.group(3));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getElement(0));
@@ -287,7 +274,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    if (m != null) {
 		return(m.group(1));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("Turnout Parser called on non-Turnout message type {}", this.getElement(0));
@@ -342,7 +329,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (m != null) {
 	    return(m.group(idx));
 	} else {
-	    return("");
+	    return("0");
 	}
     }
 
@@ -370,7 +357,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (m != null) {
 	    return(m.group(idx));
 	} else {
-	    return("");
+	    return("0");
 	}
     }
 
@@ -397,7 +384,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (m != null) {
 	    return(m.group(idx));
 	} else {
-	    return("");
+	    return("0");
 	}
     }
 
@@ -421,7 +408,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (m != null) {
 	    return(m.group(idx));
 	} else {
-	    return("");
+	    return("0");
 	}
     }
 
@@ -438,7 +425,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    if (m != null) {
 		return(m.group(2));
 	    } else {
-		return("");
+		return("0");
 	    }
 	} else 
 	    log.error("PWBit Parser called on non-PWBit message type {}", this.getElement(0));
@@ -460,15 +447,32 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // TODO: Not sure this is useful in DCC++
     @Override
     public boolean replyExpected() {
-        return !broadcastReply;
+	boolean retv = false;
+	switch(this.getElement(0)) {
+	case DCCppConstants.THROTTLE_CMD:
+	case DCCppConstants.TURNOUT_CMD:
+	case DCCppConstants.PROG_WRITE_CV_BYTE:
+	case DCCppConstants.PROG_WRITE_CV_BIT:
+	case DCCppConstants.PROG_READ_CV:
+	case DCCppConstants.TRACK_POWER_ON:
+	case DCCppConstants.TRACK_POWER_OFF:
+	case DCCppConstants.READ_TRACK_CURRENT:
+	case DCCppConstants.READ_CS_STATUS:
+	case DCCppConstants.GET_FREE_MEMORY:
+	case DCCppConstants.LIST_REGISTER_CONTENTS:
+	    retv = true;
+	default:
+	    retv = false;
+	}
+	return(retv);
     }
 
-    private boolean broadcastReply = false;
+    private boolean responseExpected = true;
 
     // Tell the traffic controller we expect this
     // message to have a broadcast reply (or not).
-    void setBroadcastReply(boolean v) {
-        broadcastReply = v;
+    void setResponseExpected(boolean v) {
+        responseExpected = v;
     }
 
     // decode messages of a particular form
