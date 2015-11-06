@@ -150,7 +150,7 @@
       <factReset label="Reset All CVs." CV="8" default="8"/>
     </resets>
   </decoder>
-<!--   <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/> -->
+  <xi:include href="http://jmri.org/xml/decoders/esu/v4testPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4speedTablePane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4infoPane.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/esu/v4soundPane.xml"/>

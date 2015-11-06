@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.1.3ish-R08ef8d5 on Sun Nov 01 10:50:37 PST 2015 $Id$-->
-  <decoderIndex version="672">
+  <!--Written by JMRI version 4.1.3ish-R300eb58 on Fri Nov 06 13:45:34 AEDT 2015 $Id$-->
+  <decoderIndex version="674">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />
@@ -4373,7 +4373,7 @@
             <soundlabel num="27">Gear shift sound</soundlabel>
           </soundlabels>
         </model>
-        <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543">
+        <model model="LokSound Select Direct" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
@@ -4436,7 +4436,7 @@
             <soundlabel num="27">Gear shift sound</soundlabel>
           </soundlabels>
         </model>
-        <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543">
+        <model model="LokSound Select Micro" numOuts="92" numFns="40" maxMotorCurrent="1.1A" extFnsESU="yes" productID="33554506,33554543,33554560">
           <size length="1.41" width=".51" height=".25" units="inches" />
           <functionlabels>
             <functionlabel num="0" lockable="true" />
