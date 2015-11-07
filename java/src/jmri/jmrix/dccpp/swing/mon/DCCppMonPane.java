@@ -71,33 +71,36 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	String text = new String();
 
 	switch(l.getOpCode()) {
-	    case DCCppConstants.THROTTLE_REPLY:
-		text = "Throttle Reply: \n";
-		text += "\tRegister: " + l.getRegisterString() + "\n";
-		text += "\tSpeed: " + l.getSpeedString() + "\n";
-		text += "\tDirection: " + l.getDirectionString() + "\n";
-		break;
-	    case DCCppConstants.TURNOUT_REPLY:
-		text = "Turnout Reply: \n";
-		text += "\tT/O Number: " + l.getTOIDString()  + "\n";
-		text += "\tDirection: " + l.getTOStateString() + "\n";
-		break;
-	    case DCCppConstants.PROGRAM_REPLY:
-		text = "Program Reply: \n";
-		text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
-		text += "\tCallback Sub: " + l.getCallbackSubString()  + "\n";
-		text += "\tCV Value: " + l.getCVString()  + "\n";
-		break;
-	    case DCCppConstants.VERSION_REPLY:
-		text = "Base Station Status: ";
-		break;
-	    case DCCppConstants.POWER_REPLY:
-		text = "Power Status: ";
-		text += ((char)(l.getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
-		break;
-	    default:
-		text += "Unregonized reply: ";
-	    }
+	case DCCppConstants.THROTTLE_REPLY:
+	    text = "Throttle Reply: \n";
+	    text += "\tRegister: " + l.getRegisterString() + "\n";
+	    text += "\tSpeed: " + l.getSpeedString() + "\n";
+	    text += "\tDirection: " + l.getDirectionString() + "\n";
+	    break;
+	case DCCppConstants.TURNOUT_REPLY:
+	    text = "Turnout Reply: \n";
+	    text += "\tT/O Number: " + l.getTOIDString()  + "\n";
+	    text += "\tDirection: " + l.getTOStateString() + "\n";
+	    break;
+	case DCCppConstants.PROGRAM_REPLY:
+	    text = "Program Reply: \n";
+	    text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
+	    text += "\tCallback Sub: " + l.getCallbackSubString()  + "\n";
+	    text += "\tCV Value: " + l.getCVString()  + "\n";
+	    break;
+	case DCCppConstants.VERSION_REPLY:
+	    text = "Base Station Status: ";
+	    break;
+	case DCCppConstants.POWER_REPLY:
+	    text = "Power Status: ";
+	    text += ((char)(l.getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
+	    break;
+	case DCCppConstants.CURRENT_REPLY:
+	    text = "CUrrent: " + l.getCurrentString() + " / 1024";
+	    break;
+	default:
+	    text += "Unregonized reply: ";
+	}
 
 	// we use Llnmon to format, expect it to provide consistent \n after each line
 	nextLine(text + "\n", new String(raw));

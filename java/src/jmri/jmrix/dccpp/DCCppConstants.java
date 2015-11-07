@@ -74,6 +74,7 @@ public final class DCCppConstants {
     public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
     public final static String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
+    public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
@@ -104,6 +105,8 @@ public final class DCCppConstants {
     public final static int MAX_CALLBACK_NUM = 32767;
     public final static int MAX_CALLBACK_SUB = 32767;
     public final static int MAX_LOCO_ADDRESS = 10293;
+    public final static int MAX_CURRENT = 1024;
+    public final static int METER_INTERVAL_MS = 1000;
 
     //--------------------------------------------------------------
     // XPressNet Stuff below here

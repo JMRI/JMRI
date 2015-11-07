@@ -17,6 +17,7 @@ import jmri.jmrix.dccpp.DCCppTrafficController;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import java.util.Random;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,6 +49,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     // CV value, ignoring CVs[0].
     private int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV+1];
 
+    private Random rgen = null;
+
     private int csStatus;
     // status flags from the XPressNet Documentation.
     private final static int csEmergencyStop = 0x01; // bit 0
@@ -78,7 +81,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         csStatus = csNormalMode;
 	// Zero out the CV table.
 	for (int i = 0; i < DCCppConstants.MAX_DIRECT_CV+1; i++)
-	    CVs[i] = 0;
+	    CVs[i] = 0; 
+
+	rgen = new Random(); // used to generate randomized output for current meter
     }
 
     public String openPort(String portName, String appName) {
@@ -386,17 +391,18 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
 	case DCCppConstants.READ_TRACK_CURRENT:
 	    log.debug("READ_TRACK_CURRENT detected");
-	    reply = new DCCppReply("a " + (TrackPowerState ? "512" : "0"));
+	    int randint = 480 + rgen.nextInt(64);
+	    reply = new DCCppReply("a " + (TrackPowerState ? Integer.toString(randint) : "0"));
 	    log.debug("Reply generated = {}", reply.toString());
 	    break;
 
 	case DCCppConstants.READ_CS_STATUS:
 	    log.debug("READ_CS_STATUS detected");
 	    generateReadCSStatusReply(); // Handle this special.
-	    break;
+	    break;	    
 
 	case DCCppConstants.FUNCTION_CMD:
-	case DCCppConstants.STATIONARY_DECODER_CMD:
+	case DCCppConstants.ACCESSORY_CMD:
 	case DCCppConstants.OPS_WRITE_CV_BYTE:
 	case DCCppConstants.OPS_WRITE_CV_BIT:
 	case DCCppConstants.WRITE_DCC_PACKET_MAIN:

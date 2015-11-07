@@ -34,6 +34,7 @@ public class DCCppMenu extends JMenu {
         }
 
         add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction());
+	add(new jmri.jmrit.ampmeter.AmpMeterAction());
         //add(new jmri.jmrix.dccpp.swing.systeminfo.SystemInfoAction(rb.getString("MenuItemDCCppSystemInformation"), memo));
         //add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
         //add(new javax.swing.JSeparator());

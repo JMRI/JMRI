@@ -329,6 +329,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	return(Integer.parseInt(this.getCVString()));
     }
 
+    public String getCurrentString() {
+	if (this.isCurrentReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.CURRENT_REPLY_REGEX, "ProgramReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("CurrentReply Parser called on non-CurrentReply message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return("0");
+	
+    }
+
+    public int getCurrentInt() {
+	return(Integer.parseInt(this.getCurrentString()));
+    }
+
     //-------------------------------------------------------------------
 
 
