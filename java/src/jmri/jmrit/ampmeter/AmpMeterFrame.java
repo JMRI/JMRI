@@ -38,47 +38,48 @@ import org.slf4j.LoggerFactory;
 public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChangeListener {
 
     // GUI member declarations
-    JLabel h1;  // msb of hours
-    JLabel h2;
-    JLabel m1;  // msb of minutes
-    JLabel m2;
-    JLabel colon;
+    JLabel d1;  // Decimal 1 (msb)
+    JLabel d2;  // Decimal 2
+    JLabel d3;  // Decimal 3 (lsb)
+    JLabel percent;
+    JLabel decimal;
 
     double aspect;
     double iconAspect;
 
-    Timebase clock;
-
     MultiMeter meter;
 
-    NamedIcon tubes[] = new NamedIcon[10];
-    NamedIcon baseTubes[] = new NamedIcon[10];
-    NamedIcon colonIcon;
-    NamedIcon baseColon;
+    NamedIcon digits[] = new NamedIcon[10];
+    NamedIcon baseDigits[] = new NamedIcon[10];
+    NamedIcon percentIcon;
+    NamedIcon basePercent;
+    NamedIcon decimalIcon;
+    NamedIcon baseDecimal;
     //"base" variables used to hold original gifs, other variables used with scaled images
 
     public AmpMeterFrame() {
         super(Bundle.getMessage("MenuItemAmpMeter"));
 
-	// TODO: Replace this with a data source that polls the command station.
-        //clock = InstanceManager.timebaseInstance();
 	meter = InstanceManager.getDefault(MultiMeter.class);
 
         //Load the images (these are now the larger version of the original gifs
-	// TODO: At least add a ".", if not use new icons.
         for (int i = 0; i < 10; i++) {
-            baseTubes[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
-            tubes[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            baseDigits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
+            digits[i] = new NamedIcon("resources/icons/misc/LCD/Lcd_" + i + "b.GIF", "resources/icons/misc/LCD/Lcd_" + i + "b.GIF");
         }
-        colonIcon = new NamedIcon("resources/icons/misc/LCD/Lcd_Colonb.GIF", "resources/icons/misc/LCD/Lcd_Colonb.GIF");
-        baseColon = new NamedIcon("resources/icons/misc/LCD/Lcd_Colonb.GIF", "resources/icons/misc/LCD/Lcd_Colonb.GIF");
+        percentIcon = new NamedIcon("resources/icons/misc/LCD/percentb.GIF", "resources/icons/misc/LCD/percentb.GIF");
+        basePercent = new NamedIcon("resources/icons/misc/LCD/percentb.GIF", "resources/icons/misc/LCD/percentb.GIF");
+        decimalIcon = new NamedIcon("resources/icons/misc/LCD/LCD_Colonb.GIF", "resources/icons/misc/LCD/LCD_Colonb.GIF");
+        baseDecimal = new NamedIcon("resources/icons/misc/LCD/LCD_Colonb.GIF", "resources/icons/misc/LCD/LCD_Colonb.GIF");
         // set initial size the same as the original gifs
         for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseTubes[i].getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
-            tubes[i].setImage(scaledImage);
+            Image scaledImage = baseDigits[i].getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
+            digits[i].setImage(scaledImage);
         }
-        Image scaledImage = baseColon.getImage().getScaledInstance(12, 32, Image.SCALE_SMOOTH);
-        colonIcon.setImage(scaledImage);
+        Image scaledImage = basePercent.getImage().getScaledInstance(23, 32, Image.SCALE_SMOOTH);
+        percentIcon.setImage(scaledImage);
+        scaledImage = baseDecimal.getImage().getScaledInstance(12, 32, Image.SCALE_SMOOTH);
+        decimalIcon.setImage(scaledImage);
 
         // determine aspect ratio of a single digit graphic
         iconAspect = 24. / 32.;
@@ -86,30 +87,32 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
         // determine the aspect ratio of the 4 digit base graphic plus a half digit for the colon
         // this DOES NOT allow space for the Run/Stop button, if it is
         // enabled.  When the Run/Stop button is enabled, the layout will have to be changed
-        aspect = (4.5 * 24.) / 32.;
+        aspect = (4.5 * 24.) / 32.; // used to be 4.5??
 
         // listen for changes to the timebase parameters
 	meter.addPropertyChangeListener(this);
         //clock.addPropertyChangeListener(this);
 
         // init GUI
-        m1 = new JLabel(tubes[0]);
-        m2 = new JLabel(tubes[0]);
-        h1 = new JLabel(tubes[0]);
-        h2 = new JLabel(tubes[0]);
-        colon = new JLabel(colonIcon);
+        d1 = new JLabel(digits[0]);
+        d2 = new JLabel(digits[0]);
+        d3 = new JLabel(digits[0]);
+        percent = new JLabel(percentIcon);
+	decimal = new JLabel(decimalIcon);
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-        getContentPane().add(h1);
-        getContentPane().add(colon);
-        getContentPane().add(h2);
-        getContentPane().add(m1);
-        getContentPane().add(m2);
+        getContentPane().add(d1);
+        getContentPane().add(d2);
+        getContentPane().add(decimal);
+        getContentPane().add(d3);
+	getContentPane().add(percent);
 
         getContentPane().add(b = new JButton("Stop"));
         b.addActionListener(new ButtonListener());
         // since Run/Stop button looks crummy, don't display for now
         b.setVisible(false);
+
+	meter.enable();
 
         update();
         pack();
@@ -150,11 +153,14 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
             iconHeight = (int) (iconWidth / iconAspect);
         }
         for (int i = 0; i < 10; i++) {
-            Image scaledImage = baseTubes[i].getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
-            tubes[i].setImage(scaledImage);
+            Image scaledImage = baseDigits[i].getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
+            digits[i].setImage(scaledImage);
         }
-        Image scaledImage = baseColon.getImage().getScaledInstance(iconWidth / 2, iconHeight, Image.SCALE_SMOOTH);
-        colonIcon.setImage(scaledImage);
+        Image scaledImage = basePercent.getImage().getScaledInstance(iconWidth, iconHeight, Image.SCALE_SMOOTH);
+        percentIcon.setImage(scaledImage);
+        scaledImage = baseDecimal.getImage().getScaledInstance(iconWidth / 2, iconHeight, Image.SCALE_SMOOTH);
+        decimalIcon.setImage(scaledImage);
+	
 
 //      Ugly hack to force frame to redo the layout.
 //      Without this the image is scaled but the label size and position doesn't change.
@@ -173,16 +179,17 @@ public class AmpMeterFrame extends JmriJFrame implements java.beans.PropertyChan
 
 	int v1 = (int)(val*10); // first decimal digit
 	int v2 = ((int)(val*100)) % 10; // second decimal digit.
+	int v3 = ((int)(val *1000)) % 10; // third decimal digit.
 
-	log.debug("Current update: val {} v1 {} v2 {}", val, v1, v2);
+	log.debug("Current update: val {} v1 {} v2 {} v3 {}", val, v1, v2, v3);
 
-        h1.setIcon(tubes[0]);
-        h2.setIcon(tubes[v1]);
-        m1.setIcon(tubes[v2]);
-        m2.setIcon(tubes[0]);
+        d1.setIcon(digits[v1]);
+        d2.setIcon(digits[v2]);
+        d3.setIcon(digits[v3]);
     }
 
     public void dispose() {
+	meter.disable();
 	meter.removePropertyChangeListener(this);
 	meter.removeDataUpdateListener(this);
         super.dispose();

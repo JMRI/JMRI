@@ -22,6 +22,8 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
     private float current_float = 0.0f;
     private float voltage_float = 0.0f;
 
+    private boolean is_enabled = false;
+
     private UpdateTask intervalTask = null;
     private Timer intervalTimer = null;
 
@@ -35,7 +37,11 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
 	// at some point this will have to be customized.
 	tc.addDCCppListener(DCCppInterface.THROTTLE, this);
 
+	is_enabled = false;
+
 	initTimer();
+
+	
 
         if (log.isDebugEnabled()) {
             log.debug("DCCppMultiMeter constructor called");
@@ -78,6 +84,7 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
     private class UpdateTask extends TimerTask {
 	private int sleep_interval = DCCppConstants.METER_INTERVAL_MS;
 	private DCCppMultiMeter parent = null;
+	private boolean is_enabled = false;
 
 	public UpdateTask(DCCppMultiMeter p) {
 	    super();
@@ -87,13 +94,17 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
 	public void setInterval(int i) { sleep_interval = i; }
 
 	public int interval() { return(sleep_interval); }
+	
+	public void enable() { is_enabled = true; }
+	public void disable() { is_enabled = false; }
 
 	@Override
 	public void run() {
 	    try {
-		//log.debug("Timer Pop");
-		tc.sendDCCppMessage(DCCppMessage.getReadTrackCurrentMsg(), parent);
-		
+		if (is_enabled) {
+		    //log.debug("Timer Pop");
+		    tc.sendDCCppMessage(DCCppMessage.getReadTrackCurrentMsg(), parent);
+		}
 		Thread.sleep(sleep_interval);
 	    } catch (Exception e) {
 		log.error("Error running timer update task! {}", e);
@@ -102,6 +113,16 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
     }
 
     // MultiMeter Interface Methods
+    
+    public void enable() {
+	log.debug("Enabling meter.");
+	intervalTask.enable();
+    }
+    
+    public void disable() {
+	log.debug("Disabling meter.");
+	intervalTask.disable();
+    }
     
     public void updateCurrent(float c) {
 	current_float = c;

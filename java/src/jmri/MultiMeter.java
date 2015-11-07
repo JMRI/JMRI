@@ -17,6 +17,10 @@ import java.beans.PropertyChangeSupport;
  */
 
 public interface MultiMeter {
+
+    public void enable();
+   
+    public void disable();
     
     public void updateCurrent(float c);
 
