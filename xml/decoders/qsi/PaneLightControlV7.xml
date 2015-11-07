@@ -129,6 +129,10 @@
           </column>
         </row>
         <row>
+          <display item="CV55.76.5" layout="above" label=""/>
+          <display item="CV55.76.5" layout="above" format="hslider-percent"/>
+        </row>
+        <row>
           <display item="CV55.76.6" layout="above" label=""/>
           <display item="CV55.76.6" layout="above" format="hslider-percent"/>
         </row>
@@ -725,32 +729,66 @@
           </column>
         </row>
         <row>
-          <display item="CV55.122.11" layout="above" label=""/>
-          <display item="CV55.122.11" layout="above" format="hslider-percent"/>
-        </row>
-        <row>
-          <display item="CV55.122.12" layout="above" label=""/>
-          <display item="CV55.122.12" layout="above" format="hslider-percent"/>
-        </row>
-        <row>
-          <display item="CV55.122.13" layout="above" label=""/>
-          <display item="CV55.122.13" layout="above" format="hslider-percent"/>
-        </row>
-        <row>
-          <display item="CV55.122.15" layout="above" label=""/>
-          <display item="CV55.122.15" layout="above" format="hslider-percent"/>
-        </row>
-        <row>
-          <display item="CV55.122.16" layout="above" label=""/>
-          <display item="CV55.122.16" layout="above" format="hslider-percent"/>
-        </row>
-        <row>
-          <display item="CV55.122.17" layout="above" label=""/>
-          <display item="CV55.122.17" layout="above" format="hslider-percent"/>
-        </row>
-        <row>
-          <display item="CV55.122.18" layout="above" label=""/>
-          <display item="CV55.122.18" layout="above" format="hslider-percent"/>
+          <column>
+            <row>
+              <display item="CV55.122.11" layout="above" label=""/>
+              <display item="CV55.122.11" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.12" layout="above" label=""/>
+              <display item="CV55.122.12" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.13" layout="above" label=""/>
+              <display item="CV55.122.13" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.15" layout="above" label=""/>
+              <display item="CV55.122.15" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.16" layout="above" label=""/>
+              <display item="CV55.122.16" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.17" layout="above" label=""/>
+              <display item="CV55.122.17" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.18" layout="above" label=""/>
+              <display item="CV55.122.18" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
+          <column>
+            <row>
+              <display item="CV55.122.21" layout="above" label=""/>
+              <display item="CV55.122.21" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.22" layout="above" label=""/>
+              <display item="CV55.122.22" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.23" layout="above" label=""/>
+              <display item="CV55.122.23" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.25" layout="above" label=""/>
+              <display item="CV55.122.25" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.26" layout="above" label=""/>
+              <display item="CV55.122.26" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.27" layout="above" label=""/>
+              <display item="CV55.122.27" layout="above" format="hslider-percent"/>
+            </row>
+            <row>
+              <display item="CV55.122.28" layout="above" label=""/>
+              <display item="CV55.122.28" layout="above" format="hslider-percent"/>
+            </row>
+          </column>
         </row>
       </column>
     </row>
