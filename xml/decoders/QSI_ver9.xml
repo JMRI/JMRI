@@ -318,10 +318,10 @@
       <variable label="Max Sound of Power" CV="51.13" default="65" item="CV51.13" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="System Balance" CV="51.14" mask="XVVVVVVV" default="0" item="CV51.14 Value">
+      <variable label="System Balance" CV="51.14" mask="XVVVVVVV" default="0" item="CV51.14 Value" exclude="3104">
         <decVal max="127"/>
       </variable>
-      <variable label="System Balance Sign" CV="51.14" mask="VXXXXXXX" default="0" item="CV51.14 Sign">
+      <variable label="System Balance Sign" CV="51.14" mask="VXXXXXXX" default="0" item="CV51.14 Sign" exclude="3104">
         <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </variable>
       <variable label="System Pitch Shift" CV="51.15" mask="XVVVVVVV" default="0" item="CV51.15 Value">
@@ -330,7 +330,7 @@
       <variable label="System Pitch Shift Sign" CV="51.15" mask="VXXXXXXX" default="0" item="CV51.15 Sign">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
-      <variable label="Atmospherics Level" CV="51.16" default="2" item="CV51.16">
+      <variable label="Atmospherics Level" CV="51.16" default="2" item="CV51.16" exclude="3104">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2108,7 +2108,7 @@
       <variable label="Ready to Move Silence 6" CV="120.9.0" default="30" item="CV120.9.0">
         <decVal/>
       </variable>
-      <variable label="Ready to Move Bell Hold Time" CV="120.10.0" item="CV120.10.0">
+      <variable label="Ready to Move Bell Hold Time" CV="120.10.0" item="CV120.10.0" exclude="3104">
         <decVal/>
       </variable>
       <!-- Sound component volumes -->
