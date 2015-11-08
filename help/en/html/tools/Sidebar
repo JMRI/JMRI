@@ -29,7 +29,7 @@
 		<dt><h3><a href="../apps/LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
 		<dd> A set of Digitrax LocoNet specific tools
 		    <ul>
-		    li><dfn>LocoNet monitor</dfn>
+		    <li><dfn>LocoNet monitor</dfn>
 		    <li><dfn>Slot monitor</dfn>
 		    <li><dfn>Packet source</dfn>
 		    <li><dfn>PM4 programmer</dfn>
