@@ -720,6 +720,9 @@
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
                   </xs:element>
                   <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
@@ -746,6 +749,11 @@
               <xs:attribute name="include" type="xs:string" default=""/>
               <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
+            <xs:unique name="UniqueVariableLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
           </xs:element>
       
           <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
