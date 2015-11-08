@@ -39,6 +39,15 @@
       </xsl:copy>
     </xsl:template>
 
+<!--Preserve processing instructions -->
+    <xsl:template match="processing-instruction()">
+      <xsl:copy>
+        <xsl:apply-templates select="processing-instruction()"/>
+      </xsl:copy>
+       <xsl:text>
+</xsl:text><!-- indent matters -->
+    </xsl:template>
+
 <!--Identity template copies content forward -->
     <xsl:template match="@*|node()">
       <xsl:copy>
