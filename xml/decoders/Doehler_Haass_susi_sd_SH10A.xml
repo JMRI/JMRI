@@ -12,6 +12,10 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" showEmptyPanes="no" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <version version="4" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20151101"/>
+  <!-- Added fw version 1.06+
+	   Merged some CV definitions with the equivalent from the Combo sound decoders (removed duplicate files)
+	-->
   <version version="3" author="Pierre Billon, pierre.bln@me.com" lastUpdated="20150306"/>
   <!-- Added fw version 1.05+
 	-->
@@ -41,6 +45,9 @@
       <model model="SH10A (firmware 1.05+)" numOuts="0" numFns="0" productID="SH10A_1.05" comment="SH10A with firmware 1.05 or later" maxInputVolts="30V" connector="SUSI">
         <size length="20" width="12" height="1.9" units="mm"/>
       </model>
+	  <model model="SH10A (firmware 1.06+)" numOuts="0" numFns="0" productID="SH10A_1.06" comment="SH10A with firmware 1.06 or later" maxInputVolts="30V" connector="SUSI">
+        <size length="20" width="12" height="1.9" units="mm"/>
+      </model>
     </family>
     <programming direct="yes" paged="yes" register="yes" ops="yes"/>
     <variables>
@@ -50,21 +57,19 @@
       <!-- Identification CVs  -->
       <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv900-905.xml"/>
       <!-- Mapping & volume CVs  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv911-948.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv311-348_911-948.xml"/>
       <!-- Settings CVs  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv951-959.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv351-359_951-959.xml"/>
       <!-- CVs added in fw 1.01  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv960-962.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv964-965.xml"/>
-      <!-- CVs added in fw 1.02  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv950.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv967.xml"/>
-      <!-- CVs added in fw 1.03  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv968-973.xml"/>
-      <!-- CVs added in fw 1.04  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv966.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv360-362_960-962.xml"/>
+      <!-- CVs added in fw 1.01, 1.02, 1.03, 1.04  -->	
+	  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv364-373_964-973.xml"/>
+	  <!-- CVs added in fw 1.02  -->
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv350_950.xml"/>
       <!-- CVs added in fw 1.05  -->
-      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/Susi-SD_cv949.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv349_949.xml"/>
+	  <!-- CVs added in fw 1.06  -->
+	  <xi:include href="http://jmri.org/xml/decoders/doehler_haass/SD_cv374-377_974-977.xml"/>
     </variables>
     <resets>
       <factReset label="Reset All CVs" CV="900" default="101">

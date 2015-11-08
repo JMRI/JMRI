@@ -175,10 +175,6 @@ public class PositionableJComponent extends JComponent implements Positionable {
         return 0;
     }
 
-    public boolean getSaveOpaque() {
-        return isOpaque();
-    }
-
     public String getNameString() {
         return getName();
     }

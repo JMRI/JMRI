@@ -226,7 +226,7 @@ public class HtmlManifest extends HtmlTrainCommon {
                     // if (this.isUtilityCar(car)) {
                     // builder.append(setoutUtilityCars(cars, car, location, isManifest));
                     // } else
-                    if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled()) {
+                    if (isManifest && Setup.isTruncateManifestEnabled() && location.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
                         // use truncated format if there's a switch list
                         builder.append(dropCar(car, Setup.getDropTruncatedManifestMessageFormat(), local));
                     } else {
