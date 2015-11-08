@@ -26,7 +26,7 @@ JMRI applications provide a large number of ways of automating your layout,
 ranging from simple fill-in forms to full-fledged scripting and 
 programming capabilities.  These include:
 
-<DL>
+<dl>
 
 <dt><a href="../signaling/index.shtml">Signaling</a>
 <dd>JMRI provides signaling logic from simple to prototypical, which can be used to
@@ -48,8 +48,11 @@ programming language, it gives you access to all the JMRI capabilities.
 <dd>The JMRI libraries greatly simplify writing a program to 
 make your layout do exactly what you want.  
 
-</DL>
+</dl>
 
 <!--#include virtual="/Footer" -->
+
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
