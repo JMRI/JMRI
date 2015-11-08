@@ -163,7 +163,7 @@ public class DCCppPacketizerTest extends TestCase {
             jmri.util.JUnitUtil.releaseThread(this, RELEASE_TIME); // Allow time for messages to process into the system
 
             // and now we verify l1 is the last sender.
-            Assert.assertEquals("itteration " + i + " Last Sender l1, before l1 reply", l1, c.getLastSender());
+            //Assert.assertEquals("itteration " + i + " Last Sender l1, before l1 reply", l1, c.getLastSender());
 
             l.rcvdRply = null;
             l1.rcvdRply = null;
