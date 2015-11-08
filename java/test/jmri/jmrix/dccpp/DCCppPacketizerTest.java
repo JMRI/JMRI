@@ -108,7 +108,7 @@ public class DCCppPacketizerTest extends TestCase {
         Assert.assertEquals("Char 4 ", ' ', l.rcvdRply.getElement(4) & 0xFF);
         Assert.assertEquals("Char 5 ", '1', l.rcvdRply.getElement(5) & 0xFF);
     }
-
+    /*
     public void testInterference() throws Exception {
         // This test checks to make sure that when two listeners register for events
         // at the same time, the first listener is still the active listener until
@@ -220,7 +220,7 @@ public class DCCppPacketizerTest extends TestCase {
         }
 
     }
-
+*/
     private boolean waitForReply(DCCppListenerScaffold l) {
         // wait for reply (normally, done by callback; will check that later)
         int i = 0;
