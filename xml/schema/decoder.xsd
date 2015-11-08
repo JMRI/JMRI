@@ -575,8 +575,14 @@
       
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
-              <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:choice>
+              <xs:sequence minOccurs="1" maxOccurs="1">
+                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Qualifies whether this variable will appear in the interface, depending
+                    on the value in other variables.
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                <xs:choice minOccurs="1" maxOccurs="1">
                   <xs:element name="enumVal" type="EnumValType">
                     <xs:annotation><xs:documentation>
                     A fixed set of choices is defined, each corresponding to a specific value
@@ -709,7 +715,7 @@
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
-                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="1" />
                 </xs:choice>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
@@ -720,12 +726,6 @@
                   </xs:element>
                   <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
-                  </xs:element>
-                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
-                    <xs:annotation><xs:documentation>
-                    Qualifies whether this variable will appear in the interface, depending
-                    on the value in other variables.
-                    </xs:documentation></xs:annotation>
                   </xs:element>
                 </xs:sequence>
               </xs:sequence>
