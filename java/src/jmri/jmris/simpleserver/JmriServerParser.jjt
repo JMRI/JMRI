@@ -82,10 +82,9 @@ MORE: {
 TOKEN:
 {
     < JMRITURNOUT:<T>(["0"-"9"])+ >:DEFAULT
-//    | < JMRISENSOR: <SYSTEMPREFIX> <S> (["0"-"9"])+ >
-//    | < JMRILIGHT: <SYSTEMPREFIX> <L> (["0"-"9"])+ >
-//    | < JMRIREPORTER: <SYSTEMPREFIX> <R> (["0"-"9"])+ >
-//    | < #SYSTEMPREFIX: (["a"-"z","A"-"Z"] (["a"-"z","A"-"Z","0"-"9"])*) >
+    | < JMRISENSOR:<S> (["0"-"9"])+ >:DEFAULT
+    | < JMRILIGHT:<L> (["0"-"9"])+ >:DEFAULT
+    | < JMRIREPORTER:<R> (["0"-"9"])+ >:DEFAULT
 }
 
 <DEFAULT>
@@ -116,14 +115,14 @@ TOKEN :
 | < TRAINS: <T><R><A><I><N><S>>
 | < LOCATIONS: <L><O><C><A><T><I><O><N><S>>
 // Train stust information
-| < TRAINWEIGHT <T><R><A><I><N><W><E><I><G><H><T>>
-| < TRAINLENGTH <T><R><A><I><N><L><E><N><G><T><T>>
-| < TRAINCARS <T><R><A><I><N><C><A><R><S>>
-| < TRAINLEADLOCO <T><R><A><I><N><L><E><A><D><L><O><C><O>>
-| < TRAINCABOOSE <T><R><A><I><N><C><A><B><O><O><S><E>>
-| < TRAINSTATUS <T><R><A><I><N><S><T><A><T><U><S>>
-| < TRAINLOCATION <T><R><A><I><N><L><O><C><A><T><I><O><N>>
-| < TERMINATE <T><E><R><M><I><N><A><T><E>>
+| < TRAINWEIGHT: <T><R><A><I><N><W><E><I><G><H><T>>
+| < TRAINLENGTH: <T><R><A><I><N><L><E><N><G><T><T>>
+| < TRAINCARS: <T><R><A><I><N><C><A><R><S>>
+| < TRAINLEADLOCO: <T><R><A><I><N><L><E><A><D><L><O><C><O>>
+| < TRAINCABOOSE: <T><R><A><I><N><C><A><B><O><O><S><E>>
+| < TRAINSTATUS: <T><R><A><I><N><S><T><A><T><U><S>>
+| < TRAINLOCATION: <T><R><A><I><N><L><O><C><A><T><I><O><N>>
+| < TERMINATE: <T><E><R><M><I><N><A><T><E>>
 
 // catch all
 | <BADTOKEN:~[" "]>
