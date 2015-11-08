@@ -2,19 +2,17 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Signal Heads Documentation
-  </TITLE>
-  <meta http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  </title>
 
 <meta name="Author" content="Bob Jacobsen, Egbert Broerse">
-<meta name="Date.Modified" content="20140515"/>
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<meta name="Date.Modified" content="20151030"/>
   <meta name="keywords"
         content="turnout model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <META http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
