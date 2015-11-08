@@ -47,57 +47,33 @@
         </programming>
 
         <variables>
-            <variable label="Minor Version Number" CV="56.254.6" readOnly="no" default="0" item="CV56.254.6"> 
-                <decVal/> 
-            </variable>
-
-            <variable label="Major Version Number" CV="56.254.7" readOnly="no" default="0" item="CV56.254.7"> 
-                <decVal/> 
-            </variable>
-
-            <variable label="Primary Address" CV="1" comment="Short address" item="Short Address" default="03">
-                <shortAddressVal/>
-            </variable>
-
-            <variable label="CV2" CV="2" default="2" tooltip="QSI uses this only if speed tables are used" comment="A value of 255 corresponds to 100%">
-                <decVal/>
-            </variable>
-
-            <variable label="CV3" CV="3" item="CV3">
-                <decVal/>
-            </variable>
-
 
             <variable label="iCV53.5.0 qual cv3 gt 100" CV="53.5.0" default="0" item="iCV53.5.0">
-                <enumVal>
-                    <enumChoice choice="Off"/>
-                    <enumChoice choice="On"/>
-                </enumVal>
                 <qualifier>
                     <variableref>CV3</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
-            </variable>
-
-
-            <variable label="CV55.92.0 qual minor gt 100" CV="55.92.0" mask="XXXXXXXV" default="1" item="iCV55.92.0">
                 <enumVal>
                     <enumChoice choice="Off"/>
                     <enumChoice choice="On"/>
                 </enumVal>
+            </variable>
+
+
+            <variable label="CV55.92.0 qual minor gt 100" CV="55.92.0" mask="XXXXXXXV" default="1" item="iCV55.92.0">
                 <qualifier>
                     <variableref>Minor Version Number</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
-            </variable>
-
-            <variable label="CV55.92.1 qual minor, major gt 100" CV="55.92.1" mask="XXXXXXXV" default="1" item="iCV55.92.1">
                 <enumVal>
                     <enumChoice choice="Off"/>
                     <enumChoice choice="On"/>
                 </enumVal>
+            </variable>
+
+            <variable label="CV55.92.1 qual minor, major gt 100" CV="55.92.1" mask="XXXXXXXV" default="1" item="iCV55.92.1">
                 <qualifier>
                     <variableref>Minor Version Number</variableref>
                     <relation>ge</relation>
@@ -108,24 +84,28 @@
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
             </variable>
 
             <variable label="CV4 qual cv3 ge 100" CV="4" item="CV4">
-                <decVal max="31"/>
                 <qualifier>
                     <variableref>CV3</variableref>
                     <relation>ge</relation>
                     <value>100</value>
                 </qualifier>
+                <decVal max="31"/>
             </variable>
 
             <variable label="CV5 qual cv3 le 100" CV="5" item="CV5">
-                <decVal max="31"/>
                 <qualifier>
                     <variableref>CV3</variableref>
                     <relation>le</relation>
                     <value>100</value>
                 </qualifier>
+                <decVal max="31"/>
             </variable>
 
             <variables>
@@ -141,22 +121,7 @@
 
         </variables>
 
-        <resets>
-            <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
-        </resets>
     </decoder>
-
-    <pane>
-        <name>Testing</name>
-        <column>
-            <display item="Minor Version Number"/>
-            <display item="Primary Address"/>
-            <display item="CV2"/>
-            <display item="CV3"/>
-            <display item="iCV53.5.0"/>
-            <display item="iCV55.92.0"/>
-        </column>
-    </pane>
 
 
 </decoder-config>

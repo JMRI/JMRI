@@ -1496,7 +1496,6 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-NegPosPulse.xml"/>
         <label>Servo Protocol</label>
         <label xml:lang="it">Protocollo Servo</label>
-        <label>Servo Protocol</label>
       </variable>
       <variable item="Servo Control Wire Active" CV="161" mask="XXXXXXVX" default="0">
         <enumVal>
