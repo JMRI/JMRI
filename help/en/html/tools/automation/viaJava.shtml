@@ -22,7 +22,7 @@
 
 
 <!-- Page Body -->
-<H2>JMRI: Layout Automation in Java</h2>
+<h2>JMRI: Layout Automation in Java</h2>
 
 The JMRI library provides a very powerful set of tools for
 automating your layout.  If the tools built into
@@ -190,6 +190,7 @@ and invoke it at startup, via a Logix, or whenever you desire.
 
 
 </dl>
+<p>Back to the <a href="index.shtml">Automation Help page</a>.
 
 <!--#include virtual="/Footer" -->
 </body>
