@@ -1,11 +1,12 @@
 <hr class="hide">
+<!-- This is the common sidebar definition for html/tools/Throttle pages -->
 <div id="mBody">
   <div id="side"> <!-- Block of text on left side of page -->
     <div style="text-align: center"><b>Throttle Tool<br>User Guide</b></div>
     <div style="text-align: center; font: xx-small; font-size: xx-small">Revision 2004.11.21<br>Based on JMRI 1.5.3</div>
     <br>
     <div style="text-align: center; font: x-small; font-size: x-small">
-      <a href="http://downloads.sourceforge.net/sourceforge/jmri/ThrottleDocs.1.5.3.pdf?download" title="Click to view this user guide in PDF format">View/download<BR>this document using <BR>Adobe Reader</a>
+      <a href="http://downloads.sourceforge.net/sourceforge/jmri/ThrottleDocs.1.5.3.pdf?download" title="Click to view this user guide in PDF format">View/download<br>this document using <br>Adobe Reader</a>
     </div>
     <br>
     <dl>
@@ -34,7 +35,7 @@
       <dt>Introduction</dt>
       <dd>
 	<ul>
-	  <li><a href="ThrottleMain.shtml" title="What is the throttle tool?">What is this tool?</a>
+	  <li><a href="ThrottleMain.shtml" title="What is the Throttle tool?">What is this tool?</a>
 	  <li><a href="ThrottleMain.shtml#HowToUse" title="How to use this guide">How to use this guide</a>
 	</ul>
       </dd>
@@ -42,7 +43,7 @@
       <dt>Getting Started</dt>
       <dd>
 	<ul>
-	  <li><a href="ThrottleChapter1.shtml" title="Where do I find the throttle tool?">Where to find it</a>
+	  <li><a href="ThrottleChapter1.shtml" title="Where do I find the Throttle tool?">Where to find it</a>
 	    <ul>
 	      <li><a style="font-size: x-small" href="ThrottleChapter1.shtml#MainMenu" title="The Main Menu">The Main Menu</a>
 	      <li><a style="font-size: x-small" href="ThrottleChapter1.shtml#ThrottlesSub" title="The Throttles Sub-Menu">The Throttles Sub-Menu</a>
