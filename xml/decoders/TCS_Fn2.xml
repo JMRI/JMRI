@@ -134,7 +134,6 @@
 		<variable CV="118" default="1" item="Function F0R effect generated">
 			<decVal min="1" max="5"/>
 			<label>Beacon Min Brightness</label>
-			<label xml:lang="it">Beacon Min Brightness</label>
 			<label xml:lang="it">Luminosità Min Faro</label>
 		</variable>
 		<variable CV="119" default="5" item="Function F0R option 2">

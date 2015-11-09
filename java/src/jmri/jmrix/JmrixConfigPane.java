@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -6184977238513337292L;
     private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean isDirty = false;
 

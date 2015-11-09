@@ -63,7 +63,8 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.ieee802154.PackageTest.suite());
         suite.addTest(jmri.jmrix.roco.PackageTest.suite());
         suite.addTest(jmri.jmrix.rfid.PackageTest.suite());
-
+        suite.addTest(jmri.jmrix.dccpp.PackageTest.suite());
+	
         return suite;
 
     }
