@@ -63,6 +63,7 @@ public class JmriServerParserTest extends TestCase {
         assertFalse(exceptionOccured);
     }
 
+   // test valid Turnout related commands
    
     public void testTurnoutProduction() {
         boolean exceptionOccured = false;
@@ -101,12 +102,36 @@ public class JmriServerParserTest extends TestCase {
         assertFalse(exceptionOccured);
     }
 
+    public void testTurnoutCmdClosed() {
+        boolean exceptionOccured = false;
+        String code = "TURNOUT IT1 CLOSED\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.turnoutcmd();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
     public void testSetTurnoutClosed() {
         boolean exceptionOccured = false;
         String code = "TURNOUT IT1 CLOSED\n\r";
         JmriServerParser p = new JmriServerParser(new StringReader(code));
         try {
             p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+ 
+   public void testGetTurnoutCmdStatus() {
+        boolean exceptionOccured = false;
+        String code = "TURNOUT IT1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.turnoutcmd();
         } catch (ParseException pe) {
             exceptionOccured = true;
         }
@@ -124,6 +149,197 @@ public class JmriServerParserTest extends TestCase {
         }
         assertFalse(exceptionOccured);
     }
+
+   // test valid Light related commands
+   
+    public void testLightProduction() {
+        boolean exceptionOccured = false;
+        String code = "LIGHT IL1 ON\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.light();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testLightDeviceProduction() {
+        boolean exceptionOccured = false;
+        String code = "IL1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.token_source.SwitchTo(JmriServerParserConstants.DEVICENAME);
+            p.lightdevice();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testSetLightOn() {
+        boolean exceptionOccured = false;
+        String code = "LIGHT IL1 ON\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testLightCmdOff() {
+        boolean exceptionOccured = false;
+        String code = "LIGHT IL1 OFF\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.lightcmd();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testSetLightOff() {
+        boolean exceptionOccured = false;
+        String code = "LIGHT IL1 OFF\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetLightCmdStatus() {
+        boolean exceptionOccured = false;
+        String code = "LIGHT IL1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.lightcmd();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetLightStatus() {
+        boolean exceptionOccured = false;
+        String code = "LIGHT IL1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+   // test valid Reporter related commands
+   
+    public void testReporterProduction() {
+        boolean exceptionOccured = false;
+        String code = "REPORTER IR1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.reporter();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testReporterDeviceProduction() {
+        boolean exceptionOccured = false;
+        String code = "IR1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.token_source.SwitchTo(JmriServerParserConstants.DEVICENAME);
+            p.reporterdevice();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetReporterCmd() {
+        boolean exceptionOccured = false;
+        String code = "REPORTER IR1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.reportercmd();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetReporterStatus() {
+        boolean exceptionOccured = false;
+        String code = "REPORTER IR1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+   // test valid Sensor related commands
+   
+    public void testSensorProduction() {
+        boolean exceptionOccured = false;
+        String code = "Sensor IS1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.sensor();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testSensorDeviceProduction() {
+        boolean exceptionOccured = false;
+        String code = "IS1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.token_source.SwitchTo(JmriServerParserConstants.DEVICENAME);
+            p.sensordevice();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testSensorCmd() {
+        boolean exceptionOccured = false;
+        String code = "Sensor IS1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.sensorcmd();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetSensorStatus() {
+        boolean exceptionOccured = false;
+        String code = "Sensor IS1\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    // Main entry point
 
     // Main entry point
     static public void main(String[] args) {
