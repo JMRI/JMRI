@@ -62,6 +62,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         mListenerMasks = new Hashtable<DCCppListener, Integer>();
         HighPriorityQueue = new java.util.concurrent.LinkedBlockingQueue<DCCppMessage>();
         HighPriorityListeners = new java.util.concurrent.LinkedBlockingQueue<DCCppListener>();
+	log.debug("DCCppTrafficController created.");
     }
 
     // Abstract methods for the DCCppInterface

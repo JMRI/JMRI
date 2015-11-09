@@ -16,8 +16,8 @@ public class DCCppConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
     public String[] getAvailableProtocolClasses() {
         return new String[]{
             "jmri.jmrix.dccpp.serial.ConnectionConfig",
-	    "jmri.jmrix.dccpp.network.ConnectionConfig",
-	    "jmri.jmrix.dccpp.simulator.ConnectionConfig"
+	    "jmri.jmrix.dccpp.simulator.ConnectionConfig",
+	    "jmri.jmrix.dccpp.dccppovertcp.ConnectionConfig"
         };
     }
 

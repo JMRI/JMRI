@@ -22,15 +22,16 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      * Ctor for an object being created during load process; Swing init is
      * deferred.
      */
-    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
-        super(p);
+    public ConnectionConfig() {
+        super();
     }
 
     /**
      * Ctor for a functional Swing object with no prexisting adapter
      */
-    public ConnectionConfig() {
-        super();
+    public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
+        super(p);
+	log.debug("NetworkPortAdapter ConnectionConfig Ctor called.");
     }
 
     public String name() {

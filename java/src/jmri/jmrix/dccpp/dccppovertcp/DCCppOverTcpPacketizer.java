@@ -73,6 +73,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 
         xmtHandler = new XmtHandler();
         rcvHandler = new RcvHandler(this);
+	log.debug("DCCppOverTcpPacketizer created.");
     }
 
     public DCCppNetworkPortController networkController = null;
@@ -160,7 +161,11 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 		    final int trim = RECEIVE_PREFIX.length();
 		    rxLine = rxLine.substring(trim);
 
-		    DCCppMessage msg = new DCCppMessage(rxLine.substring(rxLine.indexOf("<"),
+		    int firstidx = rxLine.indexOf("<");
+		    int lastidx = rxLine.lastIndexOf(">");
+		    log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
+		    //  Note: the substring call below also strips off the "< >"
+		    DCCppMessage msg = new DCCppMessage(rxLine.substring(rxLine.indexOf("<")+1,
 							    rxLine.lastIndexOf(">")));
 		    
 		    if (!msg.isValidMessageFormat()) {

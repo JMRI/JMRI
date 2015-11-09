@@ -1,13 +1,14 @@
 // ServerAction.java
-package jmri.jmrix.loconet.loconetovertcp;
+package jmri.jmrix.dccpp.dccppovertcp;
 
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 
 /**
- * Implementation of the LocoNetOverTcp LbServer Server Protocol
+ * Implementation of the DCCppOverTcp LbServer Server Protocol
  *
  * @author Alex Shepherd Copyright (C) 2006
+ * @author Mark Underwood Copyright (C) 2015
  * @version	$Revision$
  */
 public class ServerAction

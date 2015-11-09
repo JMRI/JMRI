@@ -1,6 +1,7 @@
 // LnTcpDriverAdapter.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
+import jmri.jmrix.dccpp.DCCppPortController;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppPacketizer;
@@ -21,7 +22,7 @@ import org.slf4j.LoggerFactory;
  *
  * Based on LnTcpDriverAdapter
  */
-public class DCCppTcpDriverAdapter extends DCCppNetworkPortController {
+public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements DCCppPortController {
 
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());
@@ -66,6 +67,11 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController {
         log.debug("configureOption1: " + value);
         setCommandStationType(value);
     }
+
+    public void setOutputBufferEmpty(boolean s) {
+    }
+
+    public boolean okToSend() { return true; }
 
     static Logger log = LoggerFactory.getLogger(DCCppTcpDriverAdapter.class.getName());
 

@@ -32,7 +32,7 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	String code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
 	/* First, we load things that should work on all systems */
 	if (systemMemo.getPowerManager() == null)
-	    log.error("Power Manager not created!");
+	    log.error("Power Manager not (yet) created!");
 	jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
 	if (jmri.InstanceManager.powerManagerInstance() == null) {
 	    log.error("Power Manager not accessible!");
