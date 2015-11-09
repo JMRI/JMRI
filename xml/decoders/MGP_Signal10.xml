@@ -169,7 +169,6 @@
 	<!-- <SV svNumber="30" type="int2" minValue='1'  maxValue='4070' name="Sensor Start Address" rw="1"/> -->
 	<variable CV="30" item="Sensor Start Address" default="1">
         <decVal min="1" max="4070"/>
-		<splitVal highCV="31" upperMask="XXXXVVVV"/>
 	</variable>	  
 	<!-- <SV svNumber="32" type="bits" start='0' length='5' name="Number of used sensors" maxValue='16' rw="1"/> -->
 	<variable item="Number of used sensors" CV="32" mask="XXXVVVVV">

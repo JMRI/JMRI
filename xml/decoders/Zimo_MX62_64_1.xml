@@ -842,14 +842,14 @@
         <label>Exponential Acceleration</label>
         <label xml:lang="it">Accellerazione Esponenziale</label>
         <comment>Adds an exponential acceleration</comment>
-        <label xml:lang="it">Aggiunge Accellerazione Esponenziale</label>
+        <comment xml:lang="it">Aggiunge Accellerazione Esponenziale</comment>
       </variable>
       <variable item="Exponential Deceleration" CV="122" default="0" comment="Adds an exponential deceleration">
         <decVal min="0" max="99"/>
         <label>Exponential Deceleration</label>
         <label xml:lang="it">Decellerazione Esponenziale</label>
         <comment>Adds an exponential deceleration</comment>
-        <label xml:lang="it">Aggiunge Decellerazione Esponenziale</label>
+        <comment xml:lang="it">Aggiunge Decellerazione Esponenziale</comment>
       </variable>
       <variable item="Adaption Acceleration/Deceleration" CV="123" default="0" comment="Not understood">
         <decVal min="0" max="99"/>
