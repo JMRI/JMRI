@@ -77,9 +77,9 @@ because it caused way too much confusion)
 
 <h2>Insteon</h2>
 
-Insteon adapters are labelled with a four-part number that looks
+Insteon adapters are labelled with a three-part number that looks
 like "01.2A.B4". These are just random
-strings as part as the user and the program is concerned, and
+strings as far as the user and the program is concerned, and
 we don't make any effort to subdivide them.  You should
 enter these exactly as they appear on the device you 
 want to address. Do not delete or add leading zeros, etc.
@@ -93,6 +93,9 @@ the corresponding Light system name is "PL01.2A.B4".
 <p>More information on the X10 hardware can be found on the
 (admittedly obnoxious)
 <a href="http://www.x10.com">X10.com web site</a>.
+
+<p>More information on Insteon hardware can be found on the
+<a href="http://www.insteon.com">insteon.com web site</a>.
 
 <p>Back to the <a href="index.shtml">Powerline Help page</a>
 

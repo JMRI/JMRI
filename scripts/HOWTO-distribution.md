@@ -1,36 +1,38 @@
-This first section is a discussion note on how to build releases using Git instead of SVN.  Please edit as desired.  Eventually, when we build the 1st Git release, we'll follow whatever emerges here - BobJ
+# How we build and release JMRI distributions
 
 In SVN, we used "branches" to record the contents of a release. The "Release-4-1-1" branch was used to accumulate the content of that release, and then finally to record that content. In CVS, we'd used tags to record the content of a release, but SVN "tag" and "branch" constructs don't really differ.
 
 Git branches are more ephemeral than SVN branches, and aren't considered a good way to record content.  Git tags, on the other hand, are great for that.
 
-So the proposed procedure is:
+So our releases procedure is, in outline:
 
-( ) In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case). Commit an update to release.properties with release.is_branched=true
+* Create a GitHub Issue to hold discussion with conventional title "Develop release-n.n.n". 
 
-( ) Use a pull request to move that back to JMRI/JMRI with conventional title "Develop release-n.n.n" The pull request is to create a record; pulling a branch pulls whatever the current contents are, so it can be updated as we go along
+* Do lots of updates
 
-( ) Create an Issue to hold discussion. Link in the pull request (that way we can find it) Or is this too heavyweight, and we just have to settle on a convention for the pull request title?
+* In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case). Commit an update to release.properties with release.is_branched=true
 
-( ) Switch to 'master' branch and update release.properties with new version number. Commit back and then switch checkout back to branch.
+* Push the branch back to the JMRI/JMRI repository (you can't use a pull request until the branch exists)
 
-( ) Jenkins build from that branch.  (That’s basically the same Jenkins job, expect for changing to checkout from Github)
+* Switch to 'master' branch and update release.properties with new version number. Commit back and then switch checkout back to the release-n.n.n branch.
 
-( ) As needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that. 
+* Jenkins build from release-n.n.n branch.  (That’s basically the same Jenkins job, except for changing to checkout from Github)
 
-( ) After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
+* As needed, bring in any additional commits requested to branch from master - probably use 'git cherry-pick {commit hash}' to do this. Sometimes also “git merge”, though we’ll have to see exactly how “release.properties” works with this. With SVN, we sometimes created the release a few days in advance to make sure Jenkins was set up, etc, then do final “svn merge” at the appointed time; we might also do this from GitHub. When using 'git merge' would also work we need to be aware of it stamping over 'release.properties'  and the correct procedure to revert that. 
 
-( ) (We're also looking at using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist at first.
+* After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
 
-( ) Turn off the Jenkins job; this is so it doesn't fail after later steps
+* (We're also looking at using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist at first.
 
-( ) If need be, merge back changes from the branch to the master as needed. This would be done in a personal fork repo. Might not necessarily need this step if we do changes in 'master' and 'cherry-pick' into branch.
+* Turn off the Jenkins job; this is so it doesn't fail after later steps
 
-( ) Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. This Tag provides a way to get back if somebody accidentally adds to the branch. 
+* If need be, merge back changes from the branch to the master as needed. This would be done in a personal fork repo. Might not necessarily need this step if we do changes in 'master' and 'cherry-pick' into branch.
+
+* Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. This Tag provides a way to get back if somebody accidentally adds to the branch. 
 
 (We will need to clean up the history to suit whichever convention we finally decide on)
 
-( ) Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
+* Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
 
 It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.0 (and 4.0.1) branch around throughout the 4.1.x phase and then prune it when moving to 4.2. Each 4.1.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’.
 
@@ -45,24 +47,24 @@ How best to deal with bringing additional commits into the branch from master - 
 
 ============================================================================
 
-# Current Instructions (Modified from Pre-GitHub Build Instructions)
+# Detailed Instructions (Modified from Pre-GitHub Build Instructions)
 
-This is the HOWTO file to make a complete SourceForge downloadable
-distribution.
+The Ant task that handles the Git operations (see below) invokes Git via direct command line execution. This means that you need to have a working command-line git tool installed and configured.  Try "git status" to check.  
 
-The Ant task that handles the Git operations (see below) invokes Git via direct command line execution. This means that you need to have a working command-line git tool installed and configured.  Try "git status" to check.
-
-If you're building locally:
-    You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
-
-    Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties
-    file to the root of the nsis installation:
-        nsis.home=/opt/nsis/nsis-2.46/
+People building releases for distribution need permission to directly operate with the JMRI/JMRI GitHub repository.
 
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
 ================================================================================
-First, we merge in as much tentative content as possible to the SVN trunk.
+## First, we merge in as much tentative content as possible to the GitHub master branch.
+
+[ ] Create a GitHub Issue to hold discussion with conventional title "Develop release-n.n.n". 
+
+[ ] Bring in all possible GitHub JMRI/JMRI pull requests
+
+[ ] (Do we want to add a step about the use of milestones here?  If we're using them, we should make sure that all closed pull requests have the right one(s) set)
+
+[ ] Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
 [ ] If it's a new year, update copyright dates (done for 2015):
 
@@ -73,23 +75,20 @@ First, we merge in as much tentative content as possible to the SVN trunk.
 
 [ ] Bring in all possible sf.net patches, including decoders
 
-[ ] Bring in all possible GitHub pull requests
-
 [ ] Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
 
         ant remakedecoderindex
 
-        (Check 'session.log' and 'messages.log' located in current directory as,
-        in case of errors they might not always be output to the console)
+(Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console)
 
         git diff # as a check.
         Commit.
 
 [ ] Update the help/en/Acknowledgements.shtml help page with any recent changes
 
-[ ] Commit any changes in your local web site directory, these can end up in help, xml, etc
+[ ] Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
 
-[ ] Remake the help index  (need a command line approach, so can put in ant!)
+[ ] Remake the help index (need a command line approach, so can put in ant!)
 
     cd help/en/
     rm ~/.jhelpdev    (to make sure the right preferences are chosen)
@@ -98,22 +97,20 @@ First, we merge in as much tentative content as possible to the SVN trunk.
     (click "Create All", takes a bit of time, wait for button to release)
     (quit)
 
-    In that same directory, also remake the index and toc web
-    pages by doing invoking ant (no argument needed).
+In that same directory, also remake the index and toc web pages by doing invoking ant (no argument needed).
 
     ant
 
-    (Need to consider whether to do this in help/fr, and eventually others)
+(Need to consider whether to do this in help/fr, and eventually others)
 
-    Run the program and make sure help works.
+Run the program and make sure help works.
 
-    (for Windows, run updated files through dos2unix to convert line endings)
-
-    Commit any changed files.
+Commit any changed files.
 
 ================================================================================
-This group of items it just general code maintenance that we roll into the
-release process.  They can be skipped occasionally.
+## General Maintenance Items
+
+We roll some general code maintenance items into the release process.  They can be skipped occasionally.
 
 [ ] Check for any files with multiple UTF-8 Byte-Order-Marks.  This shouldn't usually happen but when it does can be a bit tricky to find. Scan from the root of the repository and fix any files found:
 
@@ -121,7 +118,9 @@ release process.  They can be skipped occasionally.
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
 
-[ ] Confirm that all the above changes have been committed back to GitHub main JMRI repository master branch, and pull back to make sure your repository is at the right point
+[ ] Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, and accept that.
+
+[ ] Pull back to make sure your repository is at the right point
 
 [ ] Run "ant alltest"; make sure they all pass; fix problems and commit back
 
@@ -140,11 +139,14 @@ If you fix anything, commit it back.
         
 If you fix anything, commit it back.
 
+[ ] Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, and accept that.
+
+[ ] Pull back to make sure your repository is at the right point
 
 ================================================================================
-Second, we build the release branch:
+## Create the Release Branch
 
-[ ] Start the release by creating a new "release branch" (This step didn't seem to work for SVN under Cygwin, so needed to be done from the Windows command line) (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+[ ] Start the release by creating a new "release branch"  (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
     ant make-test-release-branch
 
@@ -155,15 +157,17 @@ This will do (more or less) the following actions:
     git branch {branch}
     
     <check in an update of the version format of the new release branch>
+    
     git push JMRI/JMRI {branch}
 
     <check in an update of the version number of master
+    
     git push JMRI/JMRI master
     
     git pull
     
 ================================================================================
-If you're doing the build using the CI engine, configure it to build the new release:
+## Build Files with Jenkins
 
 [ ] Log in to the CI engine at 
 
@@ -184,7 +188,16 @@ and click "Save"
 The build will start shortly.
 
 ====================================================================================
-For local builds, these are the build instructions; CI builds will already be running)
+#### Local-build Alternative
+
+If you can't use Jenkins for the actual build, you can create the files locally:
+
+If you're building locally:
+* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
+* Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
+
+        nsis.home=/opt/nsis/nsis-2.46/
+
 
 [ ] Get the release in your local work directory
 
@@ -197,7 +210,6 @@ For local builds, these are the build instructions; CI builds will already be ru
     ant -Dnsis.home="" clean packages
 
 Ant will do the various builds, construct the distribution directories, and finally construct the Linux, Mac OS X and Windows distribution files in dist/releases/
-
 
 [ ] Put the Linux, Mac OS X and Windows files where developers can take a quick look, send an email to the developer list, and WAIT FOR SOME REPLIES
      
@@ -219,7 +231,7 @@ If anybody discovers a problem from here on in, they should fix it on a Git bran
 If you do this, beware of merging in the new release.properties file, which you do NOT want to do. (If you do, might be easiest just to edit in the fixes and commit/push it back)
 
 ================================================================================
-Third, we do the release-specific updates.
+## Release-specific Updates
 
     (we need to work through automation of version number values)
 
@@ -240,15 +252,16 @@ Third, we do the release-specific updates.
 [ ] WAIT FOR SOME REPLIES before going to "Actual release steps" below.
 
 ====================================================================================
-Actual release steps:
+## Release Files on SF.net
 
 
 [ ] Upload the Linux, Mac OS X and Windows files to sourceforge
 
 Download from CI, check integrity (make sure compressed files not expanded), then do (replace "user" with your SourceForge.net user name; must have SSH keys for SourceForge.net set up)
 
-    (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
-    (the "./testrelease 4.1.3" local script on shell.sf.net does those steps)
+(If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
+
+(the "./testrelease 4.1.3" local script on shell.sf.net does those steps)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
@@ -266,7 +279,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
 
 [ ] Create and upload the JavaDocs (as of late 2013, CloudBees was updating these from SVN weekly: 
                 
-                              https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
+                             https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/
 
 so please skip this step if that's working)
 
@@ -282,34 +295,12 @@ Note: the very first time doing this on a new machine, it will be required to ru
 
 [ ] Wait until the downloads have propagated to the mirrors; check by trying to download each file
 
-[ ] Commit release note file(s) to the web site GitHub repository,
-
-[ ] Wait for update on JMRI web server
-
-[ ] Complete all the above before continuing
-
-[ ] Update the web site front page and downloads page:
-
-     index.html download/Sidebar download/index.shtml releaselist
-
-[ ] Commit site
-
-[ ] Consider submitting an anti-virus white-list request at:
-
-        https://submit.symantec.com/whitelist/isv/
-
-    If you don't, a bunch of Windows users are likely to whine
-
-[ ] For production releases, file copyright registration
-
-    https://eco.copyright.gov/eService_enu/   (Firefox only!)
-
-[ ] For production releases, make a new version of the Manual files (procedure to be developed!)
-
-[ ] Wait for update on JMRI web server
-
 ====================================================================================
-GitHub release steps
+## Create GitHub Release
+
+This puts the right tag on the branch, then removes the branch.  If we decide not to use GitHub releases, those steps need to be included in separate instructions.
+
+[ ] Turn off the Jenkins job; this is so it doesn't fail after later steps
 
 [ ] on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
 
@@ -341,8 +332,38 @@ GitHub release steps
     
 [ ] Once the tag is in place (confirm), manually delete the release-4.1.3 branch via the GitHub UI at https://github.com/JMRI/JMRI/branches
 
+
 ====================================================================================
-Announcement and post-release steps
+## Associated Documentation
+
+[ ] Commit release note file(s) to the web site GitHub repository,
+
+[ ] Wait for update on JMRI web server
+
+[ ] Complete all the above before continuing
+
+[ ] Update the web site front page and downloads page:
+
+     index.html download/Sidebar download/index.shtml releaselist
+
+[ ] Commit site
+
+[ ] Consider submitting an anti-virus white-list request at:
+
+        https://submit.symantec.com/whitelist/isv/
+
+    If you don't, a bunch of Windows users are likely to whine
+
+[ ] For production releases, file copyright registration
+
+    https://eco.copyright.gov/eService_enu/   (Firefox only!)
+
+[ ] For production releases, make a new version of the Manual files (procedure to be developed!)
+
+[ ] Wait for update on JMRI web server
+
+====================================================================================
+## Announcement and Post-release Steps
 
 [ ] Mail announcement to jmriusers@yahoogroups.com
 
@@ -376,7 +397,7 @@ Announcement and post-release steps
 
 ================================================================================
 
-Notes for those attempting this on MS Windows platform:
+## Notes for those attempting this on MS Windows platform:
 
 Given that many of the steps involved assume the behaviour of certain POSIX commands (for which there are either no direct equivalent or have subtle behavioural differences), it is easiest to perform these tasks via Cygwin:
 
