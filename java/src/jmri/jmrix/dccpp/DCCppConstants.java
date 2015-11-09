@@ -88,6 +88,7 @@ public final class DCCppConstants {
     public final static String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
+    public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
@@ -106,6 +107,8 @@ public final class DCCppConstants {
     public final static String THROTTLE_REVERSE = "0";
     public final static String ACCESSORY_ON     = "1";
     public final static String ACCESSORY_OFF    = "0";
+    public final static String POWER_ON         = "1";
+    public final static String POWER_OFF        = "0";
 
     // Various min/max values for messages
     public final static int MAX_ACC_DECODER_ADDRESS = 511;

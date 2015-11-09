@@ -8,6 +8,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
+import jmri.InstanceManager;
+import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppListener;
 import jmri.jmrix.dccpp.DCCppMessage;
@@ -27,7 +29,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     Socket clientSocket;
     BufferedReader inStream;
     OutputStream outStream;
-    LinkedList<DCCppMessage> msgQueue;
+    LinkedList<DCCppReply> replyQueue;
     Thread txThread;
     String inString;
     String remoteAddress;
@@ -51,8 +53,9 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
             inStream = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
             outStream = clientSocket.getOutputStream();
 
-            msgQueue = new LinkedList<DCCppMessage>();
-            DCCppTrafficController.instance().addDCCppListener(~0, this);
+	    DCCppSystemConnectionMemo memo = InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
+	    memo.getDCCppTrafficController().addDCCppListener(~0, this);
+            //DCCppTrafficController.instance().addDCCppListener(~0, this);
 
             txThread = new Thread(new ClientTxHandler(this));
             txThread.setDaemon(true);
@@ -99,8 +102,8 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
         txThread = null;
         inStream = null;
         outStream = null;
-        msgQueue.clear();
-        msgQueue = null;
+        replyQueue.clear();
+        replyQueue = null;
 
         try {
             clientSocket.close();
@@ -121,7 +124,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 
     class ClientTxHandler implements Runnable {
 
-        DCCppMessage msg;
+        DCCppReply msg;
         StringBuffer outBuf;
         Thread parentThread;
 
@@ -135,24 +138,29 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
                 outBuf = new StringBuffer("VERSION JMRI Server ");
                 outBuf.append(jmri.Version.name()).append("\r\n");
                 outStream.write(outBuf.toString().getBytes());
+		
+		replyQueue = new LinkedList<DCCppReply>(); // Should this be in the other thread?
 
                 while (!isInterrupted()) {
                     msg = null;
 
-                    synchronized (msgQueue) {
-                        if (msgQueue.isEmpty()) {
-                            msgQueue.wait();
+                    synchronized (replyQueue) {
+                        if (replyQueue.isEmpty()) {
+                            replyQueue.wait();
                         }
 
-                        if (!msgQueue.isEmpty()) {
-                            msg = msgQueue.removeFirst();
+                        if (!replyQueue.isEmpty()) {
+                            msg = replyQueue.removeFirst();
+			    log.debug("Prepping to send message: {}", msg.toString());
                         }
                     }
 
                     if (msg != null) {
                         outBuf.setLength(0);
                         outBuf.append("RECEIVE ");
+			outBuf.append("<");
                         outBuf.append(msg.toString());
+			outBuf.append(">");
                         log.debug("ClientTxHandler: Send: " + outBuf.toString());
                         outBuf.append("\r\n");
                         // See if we are waiting for an echo of a sent message
@@ -182,13 +190,14 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
     }
 
     public void message(DCCppMessage msg) {
-        synchronized (msgQueue) {
-            msgQueue.add(msg);
-            msgQueue.notify();
-        }
     }
 
     public void message(DCCppReply msg) {
+        synchronized (replyQueue) {
+            replyQueue.add(msg);
+            replyQueue.notify();
+	    log.debug("Message added to queue: {}", msg.toString());
+        }
     }
 
     public void notifyTimeout(DCCppMessage m) {

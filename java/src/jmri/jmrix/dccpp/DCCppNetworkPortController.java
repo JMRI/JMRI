@@ -46,6 +46,7 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
 	for (int i = 0; i < commandStationNames.length; i++) {
 	    if (commandStationNames[i].matches(name)) {
 		commandStationType = i;
+                return;
 	    }
 	}
 	log.error("CommandStation Type not found: {}", name);

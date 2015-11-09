@@ -2,8 +2,10 @@
 package jmri.jmrix.dccpp.dccppovertcp;
 
 import jmri.jmrix.dccpp.DCCppPortController;
+import jmri.jmrix.dccpp.DCCppCommandStation;
 import jmri.jmrix.dccpp.DCCppNetworkPortController;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
+import jmri.jmrix.dccpp.DCCppInitializationManager;
 import jmri.jmrix.dccpp.DCCppPacketizer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,10 +29,10 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
     public DCCppTcpDriverAdapter() {
         super(new DCCppSystemConnectionMemo());
 	// TODO: Figure out what these options are, and should be.
-        option2Name = "CommandStation";
-        option3Name = "TurnoutHandle";
-        options.put(option2Name, new Option("Command station type:", commandStationNames, false));
-        options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
+        //option2Name = "CommandStation";
+        //option3Name = "TurnoutHandle";
+        //options.put(option2Name, new Option("Command station type:", commandStationNames, false));
+        //options.put(option3Name, new Option("Turnout command handling:", new String[]{"Normal", "Spread", "One Only", "Both"}));
     }
 
     /**
@@ -39,18 +41,20 @@ public class DCCppTcpDriverAdapter extends DCCppNetworkPortController implements
      */
     public void configure() {
 
-        setCommandStationType(getOptionState(option2Name));
-        setTurnoutHandling(getOptionState(option3Name));
+        //setCommandStationType(getOptionState(option2Name));
+        //setTurnoutHandling(getOptionState(option3Name));
         // connect to a packetizing traffic controller
-        DCCppPacketizer packets = new DCCppOverTcpPacketizer();
+        DCCppOverTcpPacketizer packets = new DCCppOverTcpPacketizer(new DCCppCommandStation());
         packets.connectPort(this);
 
         // create memo
         this.getSystemConnectionMemo().setDCCppTrafficController(packets);
         // do the common manager config
 
+	new DCCppInitializationManager(this.getSystemConnectionMemo());
+
         // start operation
-        //packets.startThreads();
+        packets.startThreads();
         jmri.jmrix.dccpp.ActiveFlag.setActive();
 
     }

@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import java.io.BufferedReader;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -248,6 +250,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     protected AbstractMRReply newReply() {
         return new DCCppReply();
     }
+
+    // Defined this way to reduce new object creation
+    private char[] rcvCharBuffer = new char[1];
 
     /**
      * Get characters from the input source, and file a message.

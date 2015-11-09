@@ -27,9 +27,15 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
             log.debug("Init called");
         }
 
-	
-	String base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
-	String code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
+	String base_station = "Unknown";
+	String code_build = "Unknown";
+
+	if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
+	    base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
+	}
+	if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
+	    code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
+	}
 	/* First, we load things that should work on all systems */
 	if (systemMemo.getPowerManager() == null)
 	    log.error("Power Manager not (yet) created!");

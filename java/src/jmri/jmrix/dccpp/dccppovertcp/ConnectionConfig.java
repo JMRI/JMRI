@@ -31,7 +31,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
      */
     public ConnectionConfig(jmri.jmrix.NetworkPortAdapter p) {
         super(p);
-	log.debug("NetworkPortAdapter ConnectionConfig Ctor called.");
+	log.debug("NetworkPortAdapter ConnectionConfig Ctor called. ");
     }
 
     public String name() {
