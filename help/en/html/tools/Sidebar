@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for html/tools pages -->
 	<hr class="hide">
 	<div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -43,7 +44,7 @@
 		to running trains in the background.
 		    <ul>
 		    <li><dfn><a href="signaling/index.shtml">Signaling</a></dfn>
-            <li><dfn><a href="EntryExit.shtml">Entry Exit (NX)</a></dfn>
+        <li><dfn><a href="EntryExit.shtml">Entry Exit (NX)</a></dfn>
 		    <li><dfn><a href="Routes.shtml">Routes</a></dfn>
 		    <li><dfn><a href="fastclock/index.shtml">Fast Clocks</a></dfn>
 		    <li><dfn><a href="scripting/index.shtml">Scripting</a></dfn>

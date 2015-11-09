@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for html/tools/scripting pages -->
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
@@ -20,7 +21,7 @@
 		<dt><h3><a href="http://www.python.org">Python</a></h3></dt>
 		<dd>JMRI scripts are in Python, a popular general-purpose computer language
 		    <ul>
-		    <li><dfn><a href="Python.shtml">Python & JMRI</a></dfn>
+		    <li><dfn><a href="Python.shtml">Python &amp; JMRI</a></dfn>
 		    <li><dfn><a href="http://www.python.org">Python home page</a></dfn>
 		    <li><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">Python tutorial for non-programmers</a></dfn>
 		    <li><dfn><a href="http://wiki.python.org/moin/BeginnersGuide/Programmers">Python tutorial for programmers</a></dfn>
@@ -46,6 +47,19 @@
         <li><dfn><a href="../IdTags.shtml">Id Tags</a></dfn>
 		    </ul>
 		</dd>
+
+<dt><h3><a href="../automation/index.shtml">Layout Automation</a></h3></dt>
+<dd>JMRI can be used to automate parts 
+of your layout, from simply controlling a crossing gate
+to running trains in the background.
+    <ul>
+    <li><dfn><a href="../signaling/index.shtml">Signaling</a></dfn>
+    <li><dfn><a href="../EntryExit.shtml">Entry Exit (NX)</a></dfn>
+    <li><dfn><a href="../Routes.shtml">Routes</a></dfn>
+    <li><dfn><a href="../fastclock/index.shtml">Fast Clocks</a></dfn>
+    <li><dfn><a href="index.shtml">Scripting</a></dfn>
+    </ul>
+</dd>
 
 	    </dl>
 
