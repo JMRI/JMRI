@@ -51,13 +51,7 @@ How best to deal with bringing additional commits into the branch from master - 
 
 The Ant task that handles the Git operations (see below) invokes Git via direct command line execution. This means that you need to have a working command-line git tool installed and configured.  Try "git status" to check.  
 
-People building releasees for distribution need permission to directly operate with the JMRI/JMRI GitHub repository.
-
-If you're building locally:
-* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
-* Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
-
-        nsis.home=/opt/nsis/nsis-2.46/
+People building releases for distribution need permission to directly operate with the JMRI/JMRI GitHub repository.
 
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
@@ -150,7 +144,7 @@ If you fix anything, commit it back.
 [ ] Pull back to make sure your repository is at the right point
 
 ================================================================================
-## Second, we build the release branch:
+## Create the Release Branch
 
 [ ] Start the release by creating a new "release branch"  (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
@@ -173,7 +167,7 @@ This will do (more or less) the following actions:
     git pull
     
 ================================================================================
-## If you're doing the build using the Jenkins CI engine, configure it to build the new release:
+## Build Files with Jenkins
 
 [ ] Log in to the CI engine at 
 
@@ -194,7 +188,16 @@ and click "Save"
 The build will start shortly.
 
 ====================================================================================
-### If you can't use Jenkins for the actual build, you can create the files locally:
+#### Local-build Alternative
+
+If you can't use Jenkins for the actual build, you can create the files locally:
+
+If you're building locally:
+* You need to have installed NSIS from http://nsis.sourceforge.net (we use version 2.44)
+* Either make sure that 'makensis' is in your path, or set nsis.home in your local.properties file to the root of the nsis installation:
+
+        nsis.home=/opt/nsis/nsis-2.46/
+
 
 [ ] Get the release in your local work directory
 
@@ -228,7 +231,7 @@ If anybody discovers a problem from here on in, they should fix it on a Git bran
 If you do this, beware of merging in the new release.properties file, which you do NOT want to do. (If you do, might be easiest just to edit in the fixes and commit/push it back)
 
 ================================================================================
-## Third, we do the release-specific updates.
+## Release-specific Updates
 
     (we need to work through automation of version number values)
 
@@ -293,7 +296,7 @@ Note: the very first time doing this on a new machine, it will be required to ru
 [ ] Wait until the downloads have propagated to the mirrors; check by trying to download each file
 
 ====================================================================================
-## GitHub release steps
+## Create GitHub Release
 
 This puts the right tag on the branch, then removes the branch.  If we decide not to use GitHub releases, those steps need to be included in separate instructions.
 
@@ -331,7 +334,7 @@ This puts the right tag on the branch, then removes the branch.  If we decide no
 
 
 ====================================================================================
-## Associated documentation
+## Associated Documentation
 
 [ ] Commit release note file(s) to the web site GitHub repository,
 
@@ -360,7 +363,7 @@ This puts the right tag on the branch, then removes the branch.  If we decide no
 [ ] Wait for update on JMRI web server
 
 ====================================================================================
-## Announcement and post-release steps
+## Announcement and Post-release Steps
 
 [ ] Mail announcement to jmriusers@yahoogroups.com
 
