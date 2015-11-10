@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
-<head><!-- Copyright ($Author$) 2015 --><!-- $Id$ -->
+<head>
 
 <title>Operations User's Guide Index</title>
 <!-- Style -->
@@ -116,25 +116,17 @@ do?</a></li>
 <h4><a name="Main" id="Main"></a>DecoderPro&reg; Main Window</h4>
 
 <ul>
-
 <li style="font-weight: bold;"><a href="Main_Main.shtml">Main Window</a></li>
-
 <li style="font-weight: bold;"><a href="Main_Menu.shtml">Menu Overview</a></li>
-
 <ul>
 
 <li><span style="font-weight: bold;">Tools Menu</span>
 
 <ul>
-
-
-<li style="font-weight: bold;">Operations
+<li style="font-weight: bold;">Operations</li>
 
 <ul>
-
-<li><a href="Ops_Settings.shtml">Settings</a>
-
-</li>
+<li><a href="Ops_Settings.shtml">Settings</a></li>
 
 <li><a href="Ops_Locations.shtml">Locations</a>
 
@@ -341,8 +333,12 @@ Railroad Reporting Marks</a><br>
 </li>
 
 <ul>
-
-<ul><li><a href="Ops_Engines_menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li><ul><li><a href="Ops_ImportEngines_FromRoster.shtml"><span style="font-style: italic;">Import from JMRI &nbsp;Roster</span></a></li></ul><li><a href="Ops_ImportEngines_FromFiles.shtml"><span style="font-style: italic;">Import from JMRI File</span></a></li></ul>
+  <ul>
+  <li><a href="Ops_Engines_menu.shtml"><span style="font-style: italic;">Menu Bar</span></a></li>
+  <ul><li><a href="Ops_ImportEngines_FromRoster.shtml"><span style="font-style: italic;">Import from JMRI &nbsp;Roster</span></a></li>
+  </ul>
+<li><a href="Ops_ImportEngines_FromFiles.shtml"><span style="font-style: italic;">Import from JMRI File</span></a></li>
+</ul>
 
 <li><a href="Ops_AddEngine.shtml"><span style="font-style: italic;">Add Locomotive</span></a></li>
 
@@ -362,9 +358,25 @@ Railroad Reporting Marks</a><br>
 </ul>
 </ul>
 </ul>
+</div>
 
-</div><ul><ul><ul><li><a href="Ops_EditTrain.shtml"><span style="font-style: italic;">Edit Train</span></a></li>
-<li><span style="font-style: italic;"><a href="Ops_AddTrain.shtml">Add Trains</a></span></li><li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Build Trains</a></span></li><ul><li><span style="font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a><br></span></li></ul><ul><li><span style="font-style: italic;"><a href="Ops_BuildReportPrint.shtml">Build Reports</a></span></li></ul><li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Switch Lists by Location</a><br></span></li></ul></ul></ul><div id="mainContent">
+<ul>
+  <ul>
+     <ul>
+     <li><a href="Ops_EditTrain.shtml"><span style="font-style: italic;">Edit Train</span></a></li>
+     <li><span style="font-style: italic;"><a href="Ops_AddTrain.shtml">Add Trains</a></span></li>
+     <li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Build Trains</a></span></li>
+        <ul>
+          <li><span style="font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a><br></span></li>
+        </ul>
+        <ul>
+          <li><span style="font-style: italic;"><a href="Ops_BuildReportPrint.shtml">Build Reports</a></span></li></ul>
+          <li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Switch Lists by Location</a><br></span></li>
+        </ul>
+     </ul>
+  </ul>
+
+<div id="mainContent">
 <li><strong><a href="Ops_TripThruOperations.shtml">A Trip through Operations</a></strong></li>
 
 <h3>Revisions</h3>
