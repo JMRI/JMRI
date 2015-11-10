@@ -8,8 +8,8 @@ import java.util.prefs.Preferences;
 import jmri.beans.Bean;
 import jmri.jmrit.XmlFile;
 import jmri.profile.ProfileManager;
+import jmri.profile.ProfileUtils;
 import jmri.util.FileUtil;
-import jmri.util.prefs.JmriPreferencesProvider;
 import org.jdom2.Attribute;
 import org.jdom2.DataConversionException;
 import org.jdom2.Element;
@@ -33,7 +33,7 @@ public class JsonServerPreferences extends Bean {
 
     public JsonServerPreferences(String fileName) {
         boolean migrate = false;
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         try {
             if (sharedPreferences.keys().length == 0) {
                 log.info("No JsonServer preferences exist.");
@@ -66,7 +66,7 @@ public class JsonServerPreferences extends Bean {
     }
 
     public JsonServerPreferences() {
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         this.readPreferences(sharedPreferences);
     }
 
@@ -131,7 +131,7 @@ public class JsonServerPreferences extends Bean {
     }
 
     public void save() {
-        Preferences sharedPreferences = JmriPreferencesProvider.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
+        Preferences sharedPreferences = ProfileUtils.getPreferences(ProfileManager.getDefault().getActiveProfile(), this.getClass(), true);
         sharedPreferences.putInt(HEARTBEAT_INTERVAL, this.heartbeatInterval);
         sharedPreferences.putInt(PORT, this.port);
     }

@@ -8,7 +8,6 @@ import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -22,6 +21,7 @@ import jmri.InstanceManager;
 import jmri.jmrit.jython.Jynstrument;
 import jmri.jmrit.jython.JynstrumentFactory;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.FileUtil;
@@ -245,18 +245,14 @@ public abstract class AppsLaunchPane extends JPanel implements PropertyChangeLis
 
         // add listerner for Com port updates
         ConnectionStatus.instance().addPropertyChangeListener(this);
-        ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
         int i = 0;
-        if (connList != null) {
-            for (int x = 0; x < connList.size(); x++) {
-                ConnectionConfig conn = (ConnectionConfig) connList.get(x);
-                if (!conn.getDisabled()) {
-                    connection[i] = conn;
-                    i++;
-                }
-                if (i > 3) {
-                    break;
-                }
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                connection[i] = conn;
+                i++;
+            }
+            if (i > 3) {
+                break;
             }
         }
         buildLine4(pane2);

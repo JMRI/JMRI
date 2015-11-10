@@ -1,6 +1,5 @@
 package jmri.jmrix.roco.z21.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.roco.z21.ConnectionConfig;
 import jmri.jmrix.roco.z21.z21Adapter;
@@ -38,7 +37,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void register() {
-        InstanceManager.getDefault(jmri.ConfigureManager.class).registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

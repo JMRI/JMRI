@@ -27,6 +27,11 @@ public interface ConnectionConfig {
 
     public void setManufacturer(String Manufacturer);
 
+    /**
+     * Register the ConnectionConfig with the running JMRI process.
+     */
+    public void register();
+    
     public void dispose();
 
     public boolean getDisabled();

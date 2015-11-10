@@ -24,7 +24,8 @@ public class DefaultJavaBeanConfigXML extends jmri.configurexml.AbstractXmlAdapt
     public DefaultJavaBeanConfigXML() {
     }
 
-    public boolean load(Element e) throws Exception {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         return true;
     }
 
