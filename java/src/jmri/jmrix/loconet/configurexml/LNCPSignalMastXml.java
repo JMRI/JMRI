@@ -22,15 +22,16 @@ public class LNCPSignalMastXml extends jmri.implementation.configurexml.DccSigna
     public LNCPSignalMastXml() {
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         LNCPSignalMast m;
-        String sys = getSystemName(element);
+        String sys = getSystemName(shared);
         m = new jmri.jmrix.loconet.LNCPSignalMast(sys);
 
-        if (getUserName(element) != null) {
-            m.setUserName(getUserName(element));
+        if (getUserName(shared) != null) {
+            m.setUserName(getUserName(shared));
         }
-        return loadCommonDCCMast(m, element);
+        return loadCommonDCCMast(m, shared);
 
     }
 

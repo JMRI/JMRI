@@ -541,93 +541,42 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         return panel;
     }
 
-    /**
-     * Get the Preferences Item identifier.
-     *
-     * Multiple PreferencePanels can be displayed as tabs in a single item.
-     * Preferences items are listed in the menu on the left of the preferences
-     * window.
-     *
-     * @return the preferences item identifier.
-     */
+    @Override
     public String getPreferencesItem() {
         return "WARRANTS"; // NOI18N
     }
 
-    /**
-     * Get the text for the Preferences Item in the preferences window list of
-     * preferences categories.
-     *
-     * Multiple PreferencePanels can be displayed as tabs in a single item.
-     * Preferences items are listed in the menu on the left of the preferences
-     * window.
-     *
-     * @return the text for the preferences item.
-     */
+    @Override
     public String getPreferencesItemText() {
         return Bundle.getMessage("TitleWarrantPreferences");
     }
 
-    /**
-     * Get the title for the tab containing this preferences item.
-     *
-     * @return a tab title
-     */
+    @Override
     public String getTabbedPreferencesTitle() {
         return null;
     }
 
-    /**
-     * Text displayed above the preferences panel
-     *
-     * This label is only displayed if the preferences panel is in a tabbed set
-     * of preferences. This label can contain multiple lines.
-     *
-     * @return label text
-     */
+    @Override
     public String getLabelKey() {
         return null;
     }
 
-    /**
-     * Get the preferences component for display
-     *
-     * @return the preferences panel
-     */
+    @Override
     public JComponent getPreferencesComponent() {
         return this;
     }
 
-    /**
-     * Indicates that this PrefernecesPanel should be stored across application
-     * starts by the PreferencesManager
-     *
-     * This should be true if the implementing class relies on the
-     * {@link jmri.ConfigureManager} stores and retrieves the preferences
-     * managed by the implementing class on behalf of the implementing class.
-     *
-     * @return false if the implementing class stores its own preferences
-     */
+    @Override
     public boolean isPersistant() {
         return false;
     }
 
-    /**
-     * The tooltip to display for a tabbed preferences panel
-     *
-     * @return tooltip text
-     */
+    @Override
     public String getPreferencesTooltip() {
         return Bundle.getMessage("ToolTipLayoutScale");
     }
 
-    /**
-     * Save any changes to preferences.
-     *
-     * This method is called for every instance of a PreferencesPanel that is
-     * loaded by {@link apps.gui3.TabbedPreferences} if {@link #isPersistant()}
-     * is false.
-     */
+    @Override
     public void savePreferences() {
         setValues();
         if (_isDirty) {
@@ -637,20 +586,12 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         }
     }
 
-    /**
-     * Indicate that preferences need to be saved.
-     *
-     * @return true if preferences need to be saved, false otherwise
-     */
+    @Override
     public boolean isDirty() {
         return this._isDirty;
     }
 
-    /**
-     * Indicate that the preferences will not take effect until restarted.
-     *
-     * @return true if the application needs to restart
-     */
+    @Override
     public boolean isRestartRequired() {
         return false;
     }
@@ -764,9 +705,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public AppearanceTableModel() {
             super();
         }
+        @Override
         public int getColumnCount () {
             return 2;
         }
+        @Override
         public int getRowCount() {
             return _appearanceMap.size();
         }
@@ -792,6 +735,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             return new JTextField(15).getPreferredSize().width;
         }
 
+        @Override
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _appearanceMap.size()){
@@ -838,9 +782,11 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
         public StepIncrementTableModel() {
             super();
         }
+        @Override
         public int getColumnCount () {
             return 2;
         }
+        @Override
         public int getRowCount() {
             return _stepIncrementMap.size();
         }
@@ -866,6 +812,7 @@ public class WarrantPreferencesPanel extends JPanel implements PreferencesPanel,
             }
             return new JTextField(5).getPreferredSize().width;
         }
+        @Override
         public Object getValueAt(int row, int col) {
             // some error checking
             if (row >= _stepIncrementMap.size()){

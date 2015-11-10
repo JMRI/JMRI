@@ -1,6 +1,5 @@
 package jmri.jmrix.cmri.serial.sim.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.cmri.serial.sim.ConnectionConfig;
 import jmri.jmrix.cmri.serial.sim.SimDriverAdapter;
 import org.slf4j.Logger;
@@ -32,8 +31,9 @@ public class ConnectionConfigXml extends jmri.jmrix.cmri.serial.serialdriver.con
         adapter = SimDriverAdapter.instance();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

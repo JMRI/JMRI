@@ -1,6 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.adapters.gridconnect.net.ConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.net.NetworkDriverAdapter;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
@@ -35,8 +34,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

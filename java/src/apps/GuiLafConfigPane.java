@@ -1,10 +1,12 @@
 // GuiLafConfigPane.java
 package apps;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Locale;
@@ -20,6 +22,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
+import jmri.InstanceManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.swing.SwingSettings;
 import org.slf4j.Logger;
@@ -67,6 +70,9 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.setLayout(new FlowLayout());
         mouseEvent = new JCheckBox("Use non-standard release event for mouse click?");
         mouseEvent.setSelected(SwingSettings.getNonStandardMouseEvent());
+        mouseEvent.addItemListener((ItemEvent e) -> {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(mouseEvent.isSelected());
+        });
         panel.add(mouseEvent);
     }
 
@@ -85,6 +91,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
             LAFGroup.add(jmi);
             jmi.setActionCommand(name);
             jmi.addActionListener((ActionEvent e) -> {
+                InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
                 this.dirty = true;
             });
             if (installedLAFs.get(name).equals(UIManager.getLookAndFeel().getClass().getName())) {
@@ -120,6 +127,9 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
                 localeBox.setModel(new DefaultComboBoxModel<>(localeNames));
                 //localeBox.setModel(new javax.swing.DefaultComboBoxModel(locale.keySet().toArray()));
                 localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
+                localeBox.addActionListener((ActionEvent e) -> {
+                    InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale.getOrDefault((String) localeBox.getSelectedItem(), Locale.getDefault()));
+                });
             };
             SwingUtilities.invokeLater(update);
         };
@@ -146,7 +156,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
     static int fontSize = 0;
 
     public static void setFontSize(int size) {
-        fontSize = size < 9 ? 9 : size > 18 ? 18 : size;
+        fontSize = size == 0 ? 0 : size < 9 ? 9 : size > 18 ? 18 : size;
         //fontSizeComboBox.setSelectedItem(fontSize);
     }
 
@@ -199,7 +209,8 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
         panel.add(fontSizeUoM);
 
         fontSizeComboBox.addActionListener(listener = (ActionEvent e) -> {
-            setFontSize((Integer) fontSizeComboBox.getSelectedItem());
+            setFontSize((int) fontSizeComboBox.getSelectedItem());
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize((int) fontSizeComboBox.getSelectedItem());
             this.dirty = true;
         });
     }

@@ -27,9 +27,10 @@ public class InternalLightManagerXml extends jmri.managers.configurexml.Abstract
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        loadLights(lights);
+        loadLights(shared);
         return true;
     }
 

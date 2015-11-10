@@ -39,16 +39,11 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
         return element;
     }
 
-    /**
-     * Create a VirtualSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // put it together
-        String sys = getSystemName(element);
-        String uname = getUserName(element);
+        String sys = getSystemName(shared);
+        String uname = getUserName(shared);
         SignalHead h;
         if (uname == null) {
             h = new VirtualSignalHead(sys);
@@ -56,7 +51,7 @@ public class VirtualSignalHeadXml extends jmri.managers.configurexml.AbstractNam
             h = new VirtualSignalHead(sys, uname);
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;

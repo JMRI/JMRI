@@ -1,6 +1,5 @@
 package jmri.jmrix.jmriclient.json.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.json.JsonClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.json.JsonNetworkConnectionConfig;
@@ -35,7 +34,7 @@ public class JsonNetworkConnectionConfigXml extends AbstractNetworkConnectionCon
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new JsonNetworkConnectionConfig(this.adapter));
+        this.register(new JsonNetworkConnectionConfig(this.adapter));
     }
 
     @Override

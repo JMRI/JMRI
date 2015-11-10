@@ -1,6 +1,5 @@
 package jmri.jmrix.mrc.simulator.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.mrc.simulator.ConnectionConfig;
 import jmri.jmrix.mrc.simulator.SimulatorAdapter;
@@ -35,8 +34,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = new SimulatorAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo.mxulf.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.zimo.mxulf.ConnectionConfig;
 import jmri.jmrix.zimo.mxulf.SerialDriverAdapter;
@@ -25,8 +24,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     protected void getInstance() {
