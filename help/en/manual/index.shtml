@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2015 -->
-<!-- $Id$ -->
 <title>Decoder Pro Manual: Index</title>
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -36,7 +34,7 @@
 <td></td>
 </tr>
 <tr><td><br></td>
-<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v4.0</a><br>&nbsp;</td><td>scheduled for update<br>&nbsp;</td>
+<td style="font-weight: bold;">JMRI&reg; Operations Program v4.0<br>&nbsp;</td><td>scheduled for update, use <a href="JMRI_OPS_UsersGuide/index.shtml">v3.6 online Help</a> for now<br>&nbsp;</td>
 </tr>
 
 <tr>
