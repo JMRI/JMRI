@@ -1,6 +1,7 @@
 // ConnectionConfig.java
 package jmri.jmrix.dccpp.dccppovertcp;
 
+import jmri.jmrix.dccpp.DCCppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,7 +46,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig
     protected void setInstance() {
         if (adapter == null) {
             adapter = new DCCppTcpDriverAdapter();
-            adapter.setPort(1234); // TODO: Choose another port?
+            adapter.setPort(DCCppConstants.DCCPP_OVER_TCP_PORT); // TODO: Choose another port?
         }
     }
 

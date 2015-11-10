@@ -16,6 +16,7 @@ import jmri.implementation.QuietShutDownTask;
 import jmri.util.FileUtil;
 import jmri.util.SocketUtil;
 import jmri.util.zeroconf.ZeroConfService;
+import jmri.jmrix.dccpp.DCCppConstants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,7 +78,7 @@ public class Server {
 
                 String val = settings.getProperty(AUTO_START_KEY, "0");
                 autoStart = (val.equals("1"));
-                val = settings.getProperty(PORT_NUMBER_KEY, "1234");
+                val = settings.getProperty(PORT_NUMBER_KEY, Integer.toString(DCCppConstants.DCCPP_OVER_TCP_PORT));
                 portNumber = Integer.parseInt(val, 10);
             } catch (FileNotFoundException ex) {
                 log.debug("Server: loadSettings file not found");
@@ -122,7 +123,7 @@ public class Server {
         settingsChanged = true;
         updateServerStateListener();
     }
-    private int portNumber = 1234;
+    private int portNumber = DCCppConstants.DCCPP_OVER_TCP_PORT;
 
     public int getPortNumber() {
         loadSettings();

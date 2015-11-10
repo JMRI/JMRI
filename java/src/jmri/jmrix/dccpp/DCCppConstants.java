@@ -26,6 +26,9 @@ public final class DCCppConstants {
     public final static int MAX_MAIN_REGISTERS = 12;
     public final static int REGISTER_UNALLOCATED = -1;
     public final static int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
+    
+    // DCC++ over TCP Port Number
+    public final static int DCCPP_OVER_TCP_PORT = 1235;
 
     // Command Station Types
     public final static int DCCPP_UNO_1_5 = 1;
