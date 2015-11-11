@@ -295,7 +295,11 @@ public class AddProfileDialog extends javax.swing.JDialog {
             ProfileManager.getDefault().saveActiveProfile(p, ProfileManager.getDefault().isAutoStartActiveProfile());
             this.setCursor(Cursor.getDefaultCursor());
             this.dispose();
-            log.info("Created profile \"{}\" by copying profile \"{}\"", p.getName(), this.source.getName());
+            if (this.source != null) {
+                log.info("Created profile \"{}\" by copying profile \"{}\"", p.getName(), this.source.getName());
+            } else {
+                log.info("Created new profile \"{}\"", p.getName());
+            }
         } catch (IOException | IllegalArgumentException ex) {
             this.setCursor(Cursor.getDefaultCursor());
             JOptionPane.showMessageDialog(this, ex.getLocalizedMessage(), "Error Creating Profile", JOptionPane.ERROR_MESSAGE);

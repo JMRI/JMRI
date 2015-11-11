@@ -72,11 +72,6 @@ public class BlockContentsIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the BlockContentsIcon element, then all the
      * value-icon pairs

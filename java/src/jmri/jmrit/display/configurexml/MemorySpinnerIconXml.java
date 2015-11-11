@@ -38,11 +38,6 @@ public class MemorySpinnerIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the memoryicon element, then all the value-icon pairs
      *

@@ -49,7 +49,6 @@
       <variable CV="19" mask="XVVVVVVV" default="0" item="Consist Address" tooltip="XVVVVVVV  (0 -127) default=0">
         <decVal min="0" max="127"/>
         <label>Consist Address</label>
-        <label>Advanced Consist Address</label>
        <label xml:lang="it">Indirizzo Consist Avanzato</label>
        <label xml:lang="fr">Addresse UM</label>
        <label xml:lang="de">Verbundadresse</label>

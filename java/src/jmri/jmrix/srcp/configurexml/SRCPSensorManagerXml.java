@@ -1,5 +1,6 @@
 package jmri.jmrix.srcp.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import jmri.jmrix.srcp.SRCPSensorManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -28,11 +29,12 @@ public class SRCPSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // create the master object
         SRCPSensorManager.instance();
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
     static Logger log = LoggerFactory.getLogger(SRCPSensorManagerXml.class.getName());

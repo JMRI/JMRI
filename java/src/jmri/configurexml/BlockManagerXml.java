@@ -209,14 +209,17 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
      * <p>
      * The BlockManager in the InstanceManager is created automatically.
      *
-     * @param blocks Element containing the block elements to load.
+     * @param sharedBlocks Element containing the block elements to load.
+     * @param perNodeBlocks
      * @return true if successful
+     * @throws jmri.configurexml.JmriConfigureXmlException
      */
-    public boolean load(Element blocks) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element sharedBlocks, Element perNodeBlocks) throws JmriConfigureXmlException {
         boolean result = true;
         try {
-            if (blocks.getChild("defaultspeed") != null) {
-                String speed = blocks.getChild("defaultspeed").getText();
+            if (sharedBlocks.getChild("defaultspeed") != null) {
+                String speed = sharedBlocks.getChild("defaultspeed").getText();
                 if (speed != null && !speed.equals("")) {
                     InstanceManager.blockManagerInstance().setDefaultSpeed(speed);
                 }
@@ -225,7 +228,7 @@ public class BlockManagerXml extends jmri.managers.configurexml.AbstractMemoryMa
             log.error(ex.toString());
         }
 
-        List<Element> list = blocks.getChildren("block");
+        List<Element> list = sharedBlocks.getChildren("block");
         if (log.isDebugEnabled()) {
             log.debug("Found " + list.size() + " objects");
         }

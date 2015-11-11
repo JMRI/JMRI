@@ -1,6 +1,7 @@
 package apps.configurexml;
 
 import apps.PerformFileModel;
+import apps.StartupActionsManager;
 import java.io.File;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -50,15 +51,10 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) throws JmriException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriException {
         boolean result = true;
-        String fileName = FileUtil.getAbsoluteFilename(e.getAttribute("name").getValue());
+        String fileName = FileUtil.getAbsoluteFilename(shared.getAttribute("name").getValue());
         log.info("Load file " + fileName);
 
         // load the file
@@ -69,7 +65,8 @@ public class PerformFileModelXml extends jmri.configurexml.AbstractXmlAdapter {
         PerformFileModel m = new PerformFileModel();
         m.setFileName(fileName);
         PerformFileModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformFilePanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.configureManagerInstance().registerPref(new apps.PerformFilePanel());
         return result;
     }
 

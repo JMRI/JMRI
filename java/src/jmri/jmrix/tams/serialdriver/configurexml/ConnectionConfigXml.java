@@ -1,6 +1,5 @@
 package jmri.jmrix.tams.serialdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.tams.serialdriver.ConnectionConfig;
 import jmri.jmrix.tams.serialdriver.SerialDriverAdapter;
@@ -34,8 +33,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

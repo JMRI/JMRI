@@ -83,6 +83,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.ProgDebugger;
@@ -1491,13 +1492,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammer = gpm.getUserName();
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (Object connection : connList) {
-                    ConnectionConfig conn = (ConnectionConfig) connection;
-                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(serviceModeProgrammer)) {
-                        serModeProCon = conn;
-                    }
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammer)) {
+                    serModeProCon = connection;
                 }
             }
         }
@@ -1506,13 +1503,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             //Ideally we should probably have the progDebugger manager reference the username configured in the system connection memo.
             //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
             String opsModeProgrammer = apm.getUserName();
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (Object connection : connList) {
-                    ConnectionConfig conn = (ConnectionConfig) connection;
-                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(opsModeProgrammer)) {
-                        opsModeProCon = conn;
-                    }
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammer)) {
+                    opsModeProCon = connection;
                 }
             }
         }

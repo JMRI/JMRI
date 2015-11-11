@@ -575,8 +575,14 @@
       
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
-              <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:choice>
+              <xs:sequence minOccurs="1" maxOccurs="1">
+                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Qualifies whether this variable will appear in the interface, depending
+                    on the value in other variables.
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                <xs:choice minOccurs="1" maxOccurs="1">
                   <xs:element name="enumVal" type="EnumValType">
                     <xs:annotation><xs:documentation>
                     A fixed set of choices is defined, each corresponding to a specific value
@@ -709,23 +715,20 @@
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
-                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="1" />
                 </xs:choice>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
                   </xs:element>
                   <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
                   </xs:element>
                   <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
-                  </xs:element>
-                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
-                    <xs:annotation><xs:documentation>
-                    Qualifies whether this variable will appear in the interface, depending
-                    on the value in other variables.
-                    </xs:documentation></xs:annotation>
                   </xs:element>
                 </xs:sequence>
               </xs:sequence>
@@ -746,6 +749,11 @@
               <xs:attribute name="include" type="xs:string" default=""/>
               <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
+            <xs:unique name="UniqueVariableLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
           </xs:element>
       
           <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />

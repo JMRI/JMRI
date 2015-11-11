@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.bluetooth.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.bluetooth.ConnectionConfig;
 import jmri.jmrix.loconet.bluetooth.LocoNetBluetoothAdapter;
@@ -31,8 +30,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

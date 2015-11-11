@@ -54,30 +54,25 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
         return elem;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param element Top level blocks Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         Timebase clock = InstanceManager.timebaseInstance();
         String val, val2;
-        if (element.getAttribute("master") != null) {
-            val = element.getAttributeValue("master");
+        if (shared.getAttribute("master") != null) {
+            val = shared.getAttributeValue("master");
             if (val.equals("yes")) {
                 clock.setInternalMaster(true, false);
             }
             if (val.equals("no")) {
                 clock.setInternalMaster(false, false);
-                if (element.getAttribute("mastername") != null) {
-                    clock.setMasterName(element.getAttributeValue("mastername"));
+                if (shared.getAttribute("mastername") != null) {
+                    clock.setMasterName(shared.getAttributeValue("mastername"));
                 }
             }
         }
-        if (element.getAttribute("sync") != null) {
-            val = element.getAttributeValue("sync");
+        if (shared.getAttribute("sync") != null) {
+            val = shared.getAttributeValue("sync");
             if (val.equals("yes")) {
                 clock.setSynchronize(true, false);
             }
@@ -85,8 +80,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setSynchronize(false, false);
             }
         }
-        if (element.getAttribute("correct") != null) {
-            val = element.getAttributeValue("correct");
+        if (shared.getAttribute("correct") != null) {
+            val = shared.getAttributeValue("correct");
             if (val.equals("yes")) {
                 clock.setCorrectHardware(true, false);
             }
@@ -94,8 +89,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setCorrectHardware(false, false);
             }
         }
-        if (element.getAttribute("display") != null) {
-            val = element.getAttributeValue("display");
+        if (shared.getAttribute("display") != null) {
+            val = shared.getAttributeValue("display");
             if (val.equals("yes")) {
                 clock.set12HourDisplay(true, false);
             }
@@ -103,8 +98,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.set12HourDisplay(false, false);
             }
         }
-        if (element.getAttribute("run") != null) {
-            val = element.getAttributeValue("run");
+        if (shared.getAttribute("run") != null) {
+            val = shared.getAttributeValue("run");
             if (val.equals("yes")) {
                 clock.setRun(true);
                 clock.setStartStopped(false);
@@ -114,9 +109,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 clock.setStartStopped(true);
             }
         }
-        if (element.getAttribute("rate") != null) {
+        if (shared.getAttribute("rate") != null) {
             try {
-                double r = element.getAttribute("rate").getDoubleValue();
+                double r = shared.getAttribute("rate").getDoubleValue();
                 try {
                     clock.userSetRate(r);
                 } catch (jmri.TimebaseRateException e1) {
@@ -128,11 +123,11 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 result = false;
             }
         }
-        if (element.getAttribute("startsettime") != null) {
-            val = element.getAttributeValue("startsettime");
+        if (shared.getAttribute("startsettime") != null) {
+            val = shared.getAttributeValue("startsettime");
             if (val.equals("yes")) {
-                if (element.getAttribute("time") != null) {
-                    val2 = element.getAttributeValue("time");
+                if (shared.getAttribute("time") != null) {
+                    val2 = shared.getAttributeValue("time");
                     try {
                         clock.setStartSetTime(true, format.parse(val2));
                         clock.setTime(format.parse(val2));
@@ -143,8 +138,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                     }
                 }
             } else if (val.equals("no")) {
-                if (element.getAttribute("time") != null) {
-                    val2 = element.getAttributeValue("time");
+                if (shared.getAttribute("time") != null) {
+                    val2 = shared.getAttributeValue("time");
                     try {
                         clock.setStartSetTime(false, format.parse(val2));
                     } catch (ParseException e) {
@@ -154,9 +149,9 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                     }
                 }
             }
-        } else if (element.getAttribute("time") != null) {
+        } else if (shared.getAttribute("time") != null) {
             // this only to preserve previous behavior for preexisting files
-            val2 = element.getAttributeValue("time");
+            val2 = shared.getAttributeValue("time");
             try {
                 clock.setStartSetTime(true, format.parse(val2));
                 clock.setTime(format.parse(val2));
@@ -166,8 +161,8 @@ public class SimpleTimebaseXml extends jmri.configurexml.AbstractXmlAdapter {
                 result = false;
             }
         }
-        if (element.getAttribute("startclockoption") != null) {
-            int option = Integer.parseInt(element.getAttribute(
+        if (shared.getAttribute("startclockoption") != null) {
+            int option = Integer.parseInt(shared.getAttribute(
                     "startclockoption").getValue());
             clock.setStartClockOption(option);
             clock.initializeClock();

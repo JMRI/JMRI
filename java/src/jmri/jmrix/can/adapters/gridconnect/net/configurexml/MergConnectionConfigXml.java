@@ -1,6 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.net.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.adapters.gridconnect.net.MergConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.net.MergNetworkDriverAdapter;
 import org.slf4j.Logger;
@@ -34,8 +33,9 @@ public class MergConnectionConfigXml extends ConnectionConfigXml {
         adapter = ((MergConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new MergConnectionConfig(adapter));
+        this.register(new MergConnectionConfig(adapter));
     }
 
     // initialize logging
