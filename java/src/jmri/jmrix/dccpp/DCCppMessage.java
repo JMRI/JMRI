@@ -684,11 +684,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
      *    
+     * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
+     *
      *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val) {
-	return(getWriteDirectCVMsg(cv, val, 0, 0));
+	return(getWriteDirectCVMsg(cv, val, 0, DCCppConstants.PROG_WRITE_CV_BYTE));
     }
 
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val, int callbacknum, int callbacksub) {
@@ -735,11 +737,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
      *    
+     * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
+     *
      *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val) {
-	return(getBitWriteDirectCVMsg(cv, bit, val, 0, 0));
+	return(getBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
     }
 
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val, int callbacknum, int callbacksub) {
@@ -788,11 +792,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
      *    
+     * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
+     *
      *    returns: <r CALLBACKNUM|CALLBACKSUB|CV VALUE)
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
      */    
     public static DCCppMessage getReadDirectCVMsg(int cv) {
-	return(getReadDirectCVMsg(cv, 0, 0));
+	return(getReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
     }
 
     public static DCCppMessage getReadDirectCVMsg(int cv, int callbacknum, int callbacksub) {

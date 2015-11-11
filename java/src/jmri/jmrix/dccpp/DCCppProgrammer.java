@@ -32,6 +32,9 @@ import java.util.regex.PatternSyntaxException;
  */
 public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener {
 
+    // NOTE: We will embed the command opcode in the CALLBACKSUB field
+    // so that we can tell what type of message the response keys to.
+
     static protected final int DCCppProgrammerTimeout = 90000;
 
     // keep track of whether or not the command station is in service 
@@ -117,6 +120,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
     protected int _cv;	// remember the cv being read/written
 
     // programming interface
+
     synchronized public void writeCV(int CV, int val, jmri.ProgListener p) throws jmri.ProgrammerException {
         if (log.isDebugEnabled()) {
             log.debug("writeCV " + CV + " listens " + p);

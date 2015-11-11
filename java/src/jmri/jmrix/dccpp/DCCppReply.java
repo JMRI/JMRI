@@ -120,9 +120,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * T : <H ID THROW>
      * w : (none)
      * b : (none)
-     * W : <r CALLBACKNUM CALLBACKSUB CV_Value>
-     * B : <r CALLBACKNUM CALLBACKSUB CV_Bit_Value>
-     * R : <r CALLBACKNUM CALLBACKSUB CV_Value>
+     * W : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
+     * B : <r CALLBACKNUM CALLBACKSUB|CV|Bit CV_Bit_Value>
+     * R : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
      * 1 : <p1>
      * 0 : <p0>
      * c : <a CURRENT>
@@ -329,6 +329,25 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	return(Integer.parseInt(this.getCVString()));
     }
 
+    public String getReadValueString() {
+	if (this.isProgramReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
+	    if (m != null) {
+		if (m.group(2).equals("B"))
+		    return(m.group(6));
+		else
+		    return(m.group(4));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getReadValueInt() {
+	return(Integer.parseInt(this.getCVString()));
+    }
     public String getCurrentString() {
 	if (this.isCurrentReply()) {
 	    Matcher m = match(this.toString(), DCCppConstants.CURRENT_REPLY_REGEX, "ProgramReply");
