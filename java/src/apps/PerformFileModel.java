@@ -11,7 +11,7 @@ import java.util.List;
  * @version $Revision$
  * @see PerformFilePanel
  */
-public class PerformFileModel {
+public class PerformFileModel implements StartupModel {
 
     public PerformFileModel() {
         fileName = null;
@@ -19,6 +19,11 @@ public class PerformFileModel {
 
     String fileName;
 
+    @Override
+    public String getName() {
+        return this.getFileName();
+    }
+    
     public String getFileName() {
         return fileName;
     }

@@ -116,6 +116,8 @@ public class PowerPane extends jmri.util.swing.JmriPanel
     private boolean mgrOK() {
         if (listening == null) {
             listening = selectMenu.getManager();
+	    log.warn("Manager = {}", listening);
+		
             if (listening == null) {
                 log.warn("No power manager instance found, panel not active");
                 return false;

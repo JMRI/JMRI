@@ -60,11 +60,6 @@ public class PositionablePolygonXml extends PositionableShapeXml {
         return elem;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
      *

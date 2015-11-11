@@ -3,7 +3,6 @@ package jmri.profile;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.prefs.BackingStoreException;
-import jmri.util.prefs.JmriPreferencesProvider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,13 +19,13 @@ public class ProfileProperties implements AuxiliaryProperties {
     
     @Override
     public String get(String key, boolean shared) {
-        return JmriPreferencesProvider.getPreferences(this.project, null, shared).node(Profile.PROFILE).get(key, null);
+        return ProfileUtils.getPreferences(this.project, null, shared).node(Profile.PROFILE).get(key, null);
     }
 
     @Override
     public Iterable<String> listKeys(boolean shared) {
         try {
-            String[] keys = JmriPreferencesProvider.getPreferences(this.project, null, shared).node(Profile.PROFILE).keys();
+            String[] keys = ProfileUtils.getPreferences(this.project, null, shared).node(Profile.PROFILE).keys();
             return new ArrayList<>(Arrays.asList(keys));
         } catch (BackingStoreException ex) {
             log.error("Unable to read properties.", ex);
@@ -36,7 +35,7 @@ public class ProfileProperties implements AuxiliaryProperties {
 
     @Override
     public void put(String key, String value, boolean shared) {
-        JmriPreferencesProvider.getPreferences(this.project, null, shared).node(Profile.PROFILE).put(key, value);
+        ProfileUtils.getPreferences(this.project, null, shared).node(Profile.PROFILE).put(key, value);
     }
     
 }
