@@ -690,7 +690,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val) {
-	return(getWriteDirectCVMsg(cv, val, 0, DCCppConstants.PROG_WRITE_CV_BYTE));
+	return(getWriteDirectCVMsg(cv, val, 0, (int)DCCppConstants.PROG_WRITE_CV_BYTE));
     }
 
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val, int callbacknum, int callbacksub) {
@@ -743,7 +743,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val) {
-	return(getBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
+	return(getBitWriteDirectCVMsg(cv, bit, val, 0, (int)DCCppConstants.PROG_WRITE_CV_BIT));
     }
 
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val, int callbacknum, int callbacksub) {
@@ -798,7 +798,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
      */    
     public static DCCppMessage getReadDirectCVMsg(int cv) {
-	return(getReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
+	return(getReadDirectCVMsg(cv, 0, (int)DCCppConstants.PROG_READ_CV));
     }
 
     public static DCCppMessage getReadDirectCVMsg(int cv, int callbacknum, int callbacksub) {

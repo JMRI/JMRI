@@ -221,7 +221,7 @@ public class DCCppProgrammer extends AbstractProgrammer implements DCCppListener
 	    log.debug("DCC++ Programming Reply value = {}", m.getCVString());
 	    // CALLBACKNUM = mt.group(1)
 	    // CALLBACKSUB = mt.group(2)
-	    _val = m.getCVInt();
+	    _val = m.getReadValueInt();
 	    progState = NOTPROGRAMMING;
 	    notifyProgListenerEnd(_val, jmri.ProgListener.OK);
 	}

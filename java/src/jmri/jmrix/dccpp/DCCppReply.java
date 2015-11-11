@@ -333,7 +333,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	if (this.isProgramReply()) {
 	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
 	    if (m != null) {
-		if (m.group(2).equals("B"))
+		if (m.group(2).equals(Integer.toString((int)DCCppConstants.PROG_WRITE_CV_BIT)))
 		    return(m.group(6));
 		else
 		    return(m.group(4));
@@ -346,7 +346,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public int getReadValueInt() {
-	return(Integer.parseInt(this.getCVString()));
+	return(Integer.parseInt(this.getReadValueString()));
     }
     public String getCurrentString() {
 	if (this.isCurrentReply()) {
