@@ -20,9 +20,6 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
-    private boolean reallyUnsolicited = true;  // used to override automatic
-    // unsolicited by message type.
-
     // Create a new reply.
     public DCCppReply() {
         super();
@@ -142,6 +139,11 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     //-------------------------------------------------------------------
     // Message helper functions
     // Core methods
+
+    private boolean matches(String pat) {
+	return(match(this.toString(), pat, "Validator") != null);
+    }
+
     private Matcher match(String s, String pat, String name) {
 	try {
 	    Pattern p = Pattern.compile(pat);
@@ -366,6 +368,20 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	return(Integer.parseInt(this.getCurrentString()));
     }
 
+    public boolean getPowerBool() {
+	if (this.isPowerReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TRACK_POWER_REPLY_REGEX, "PowerReply");
+	    if (m != null) {
+		return(m.group(1).equals(DCCppConstants.POWER_ON));
+	    } else {
+		return(false);
+	    }
+	} else 
+	    log.error("CurrentReply Parser called on non-CurrentReply message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return(false);
+
+    }
+
     //-------------------------------------------------------------------
 
 
@@ -376,7 +392,26 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isPowerReply() { return (this.getOpCodeChar() == DCCppConstants.POWER_REPLY); }
     public boolean isCurrentReply() { return (this.getOpCodeChar() == DCCppConstants.CURRENT_REPLY); }
     public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }
+    public boolean isVersionReply() { return (this.getOpCodeChar() == DCCppConstants.VERSION_REPLY); }
     public boolean isListPacketRegsReply() { return (this.getOpCodeChar() == DCCppConstants.LISTPACKET_REPLY); }
+
+    public boolean isValidReplyFormat() {
+	// NOTE: Does not (yet) handle STATUS replies
+	if (this.matches(DCCppConstants.THROTTLE_REPLY_REGEX))
+	    return(true);
+	if (this.matches(DCCppConstants.TURNOUT_REPLY_REGEX))
+	    return(true);
+	if (this.matches(DCCppConstants.PROGRAM_REPLY_REGEX))
+	    return(true);
+	if (this.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX))
+	    return(true);
+	if (this.matches(DCCppConstants.CURRENT_REPLY_REGEX))
+	    return(true);
+	if (this.isVersionReply())
+	    return(true);
+
+	return(false);
+    }
 
     // decode messages of a particular form 
     /* 

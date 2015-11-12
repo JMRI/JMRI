@@ -152,6 +152,48 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Message Helper Functions
 
     // Core methods
+
+    public boolean isValidMessageFormat() {
+	if (this.match(DCCppConstants.THROTTLE_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.FUNCTION_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.ACCESSORY_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.OPS_WRITE_BYTE_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.OPS_WRITE_BIT_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.PROG_WRITE_BYTE_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.PROG_WRITE_BIT_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.PROG_READ_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.TRACK_POWER_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.READ_TRACK_CURRENT_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.READ_CS_STATUS_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.GET_FREE_MEMORY_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.LIST_REGISTER_CONTENTS_REGEX) != null)
+	    return(true);
+
+	return(false);
+    }
+
+    private Matcher match(String pat) {
+	return(match(this.toString(), pat, "Validator"));
+    }
+
     private Matcher match(String s, String pat, String name) {
 	try {
 	    Pattern p = Pattern.compile(pat);
