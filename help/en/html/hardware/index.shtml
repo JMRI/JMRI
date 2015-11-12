@@ -97,6 +97,17 @@
 	    </dd>
 
 	    <dt class="im">
+		<a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw">
+		<img src="dccpp/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
+	    </dt>
+	    <dt>DCC++</dt>
+	    <dd><p class="dl">Configure:  
+		<a href="dccpp/index.shtml">DCC++ Open Source Arduino
+		Command Station</a>.</p>
+		<p>&nbsp;</p>
+	    </dd>
+
+	    <dt class="im">
 		<a href="http://www.dccspecialties.com">
 		<img src="http://www.dccspecialties.com/common/top-logo.gif" width="60" height="26" alt="DCC Specialties"></a>
 	    </dt>
