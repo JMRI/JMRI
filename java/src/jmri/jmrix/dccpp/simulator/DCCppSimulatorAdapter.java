@@ -51,20 +51,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 
     private Random rgen = null;
 
-    private int csStatus;
-    // status flags from the XPressNet Documentation.
-    private final static int csEmergencyStop = 0x01; // bit 0
-    private final static int csTrackVoltageOff = 0x02; // bit 1
-    private final static int csAutomaticMode = 0x04; // bit 2 
-    private final static int csServiceMode = 0x08; // bit 3
-    // bit 4 is reserved
-    // bit 5 is reserved
-    private final static int csPowerUpMode = 0x40; // bit 6
-    private final static int csRamCheckError = 0x80; // bit 7
-    
-    // 0x00 means normal mode.
-    private final static int csNormalMode = 0x00;
-
     public DCCppSimulatorAdapter() {
         setPort("None");
         try {
@@ -78,8 +64,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             log.error("init (pipe): Exception: " + e.toString());
             return;
         }
-        csStatus = csNormalMode;
-	// Zero out the CV table.
+  	// Zero out the CV table.
 	for (int i = 0; i < DCCppConstants.MAX_DIRECT_CV+1; i++)
 	    CVs[i] = 0; 
 
@@ -239,8 +224,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Throttle Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
 		reply = new DCCppReply(r);
@@ -265,8 +249,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Turnout Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "H " + m.group(1) + " " + m.group(2);
 		reply = new DCCppReply(r);
@@ -291,8 +274,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed ProgWriteCVByte Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "r " + m.group(3) + " " + 
 		    m.group(4) + " " +
@@ -320,8 +302,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed ProgWriteCVBit Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "r " + m.group(4) + " " + 
 		    m.group(5) + " " +
@@ -355,8 +336,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed PROG_READ_CV Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		// TODO: Work Magic Here to retrieve stored value.
 		int cv = CVs[Integer.parseInt(m.group(1))];
@@ -409,8 +389,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Sensor Query Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "Q " + m.group(1) + " ";
 		// Fake reply: Odd sensors always active, even always inactive.
@@ -437,10 +416,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	case DCCppConstants.WRITE_DCC_PACKET_PROG:
 	    log.debug("non-reply message detected");
 	    // Send no reply.
-	    reply = null;;
+	    return(null);
 
-            default:
-                reply = null;
+	default:
+	    return(null);
         }
         return (reply);
     }
