@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
-<!-- Copyright (C) JMRI 2006, 2007, 2008, 2014 All rights reserved -->
+<!-- Copyright (C) JMRI 2006, 2007, 2008, 2014, 2015 All rights reserved -->
 <!-- $Id: RR-CirKits-SwitchMan-basic.xml 27260 2014-09-21 00:21:27Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -13,10 +13,11 @@
 <!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
 <!-- for more details.                                                      -->
 <decoder-config xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd" showEmptyPanes="no">
-  <version author="dick@rr-cirkits.com" version="0.16" lastUpdated="20151020"/>
+  <version author="dick@rr-cirkits.com" version="0.16" lastUpdated="20151029"/>
   <!-- Version 0.01  Working version modified from MotorMan -->
   <!-- Version 0.15  SwitchMan version -->
   <!-- Version 0.16  Corrected multipliers -->
+  <!-- Version 0.17  Removed unused CVs and added Composite info -->
   <decoder>
     <family name="Decoders" mfg="RR-CirKits" type="stationary" comment="The SwitchMan is normally programmed in OPs mode">
       <model model="SwitchMan" comment="16 Line I/O Driver" lowVersionID="10"/>
@@ -251,37 +252,6 @@
         <label>PA1 Effect</label>
       </variable>
       
-     <variable CV="138" mask="VVVVVVVV" default="100" item="PA Out1 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB1</label>
-      </variable>
-
-      <variable item="PA FU1 Re-trigger" CV="139" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU1 Re-trigger</label>
-      </variable>
-      <variable item="PA FU1 Multiplier" CV="139" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU1 Multiplier</label>
-      </variable>
-      <variable item="PA FU1 Interval" CV="139" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU1 Interval</label>
-      </variable>
-
-      <variable item="PA FD1 Re-trigger" CV="140" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD1 Re-trigger</label>
-      </variable>
-      <variable item="PA FD1 Multiplier" CV="140" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD1 Multiplier</label>
-      </variable>
-      <variable item="PA FD1 Interval" CV="140" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD1 Interval</label>
-      </variable>
-
 
       <!-- Input #2 -->
       <variable label="PA2 Base Address" CV="141" mask="VVVVVVVV" default="0">
@@ -415,36 +385,6 @@
         <label>PA2 Effect</label>
       </variable>
       
-     <variable CV="150" mask="VVVVVVVV" default="100" item="PA Out2 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB2</label>
-      </variable>
-
-      <variable item="PA FU2 Re-trigger" CV="151" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU2 Re-trigger</label>
-      </variable>
-      <variable item="PA FU2 Multiplier" CV="151" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU2 Multiplier</label>
-      </variable>
-      <variable item="PA FU2 Interval" CV="151" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU2 Interval</label>
-      </variable>
-
-      <variable item="PA FD2 Re-trigger" CV="152" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD2 Re-trigger</label>
-      </variable>
-      <variable item="PA FD2 Multiplier" CV="152" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD2 Multiplier</label>
-      </variable>
-      <variable item="PA FD2 Interval" CV="152" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD2 Interval</label>
-      </variable>
 
       <!-- Input #3 -->
       <variable label="PA3 Base Address" CV="153" mask="VVVVVVVV" default="0">
@@ -576,37 +516,6 @@
       <variable item="PA3 Effect" CV="161" mask="XXXXVVVV" default="0">
         <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSwitchManLampEffect.xml"/>
         <label>PA3 Effect</label>
-      </variable>
-      
-     <variable CV="162" mask="VVVVVVVV" default="100" item="PA Out3 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB3</label>
-      </variable>
-
-      <variable item="PA FU3 Re-trigger" CV="163" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU3 Re-trigger</label>
-      </variable>
-      <variable item="PA FU3 Multiplier" CV="163" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU3 Multiplier</label>
-      </variable>
-      <variable item="PA FU3 Interval" CV="163" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU3 Interval</label>
-      </variable>
-
-      <variable item="PA FD3 Re-trigger" CV="164" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD3 Re-trigger</label>
-      </variable>
-      <variable item="PA FD3 Multiplier" CV="164" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD3 Multiplier</label>
-      </variable>
-      <variable item="PA FD3 Interval" CV="164" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD3 Interval</label>
       </variable>
       
 
@@ -742,37 +651,6 @@
         <label>PA4 Effect</label>
       </variable>
       
-     <variable CV="174" mask="VVVVVVVV" default="100" item="PA Out4 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB4</label>
-      </variable>
-
-      <variable item="PA FU4 Re-trigger" CV="175" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU4 Re-trigger</label>
-      </variable>
-      <variable item="PA FU4 Multiplier" CV="175" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU4 Multiplier</label>
-      </variable>
-      <variable item="PA FU4 Interval" CV="175" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU4 Interval</label>
-      </variable>
-
-      <variable item="PA FD4 Re-trigger" CV="176" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD4 Re-trigger</label>
-      </variable>
-      <variable item="PA FD4 Multiplier" CV="176" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD4 Multiplier</label>
-      </variable>
-      <variable item="PA FD4 Interval" CV="176" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD4 Interval</label>
-      </variable>
-
 
       <!-- Input #5 -->
       <variable label="PA5 Base Address" CV="177" mask="VVVVVVVV" default="0">
@@ -911,38 +789,6 @@
         <label>PA5 Effect</label>
       </variable>
       
-     <variable CV="186" mask="VVVVVVVV" default="100" item="PA Out5 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB5</label>
-      </variable>
-
-      <variable item="PA FU5 Re-trigger" CV="187" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU5 Re-trigger</label>
-      </variable>
-      <variable item="PA FU5 Multiplier" CV="187" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU5 Multiplier</label>
-      </variable>
-      <variable item="PA FU5 Interval" CV="187" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU5 Interval</label>
-      </variable>
-
-      <variable item="PA FD5 Re-trigger" CV="188" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD5 Re-trigger</label>
-      </variable>
-      <variable item="PA FD5 Multiplier" CV="188" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD5 Multiplier</label>
-      </variable>
-      <variable item="PA FD5 Interval" CV="188" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD5 Interval</label>
-      </variable>
-
-
       <!-- Input #6 -->
       <variable label="PA6 Base Address" CV="189" mask="VVVVVVVV" default="0">
         <splitVal highCV="190" upperMask="XXXXVVVV" offset="1"/>
@@ -1075,38 +921,6 @@
         <label>PA6 Effect</label>
       </variable>
       
-     <variable CV="198" mask="VVVVVVVV" default="100" item="PA Out6 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB6</label>
-      </variable>
-
-      <variable item="PA FU6 Re-trigger" CV="199" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU6 Re-trigger</label>
-      </variable>
-      <variable item="PA FU6 Multiplier" CV="199" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU6 Multiplier</label>
-      </variable>
-      <variable item="PA FU6 Interval" CV="199" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU6 Interval</label>
-      </variable>
-
-      <variable item="PA FD6 Re-trigger" CV="200" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD6 Re-trigger</label>
-      </variable>
-      <variable item="PA FD6 Multiplier" CV="200" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD6 Multiplier</label>
-      </variable>
-      <variable item="PA FD6 Interval" CV="200" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD6 Interval</label>
-      </variable>
-
-
       <!-- Input #7 -->
       <variable label="PA7 Base Address" CV="201" mask="VVVVVVVV" default="0">
         <splitVal highCV="202" upperMask="XXXXVVVV" offset="1"/>
@@ -1239,38 +1053,6 @@
         <label>PA7 Effect</label>
       </variable>
       
-     <variable CV="210" mask="VVVVVVVV" default="100" item="PA Out7 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB7</label>
-      </variable>
-
-      <variable item="PA FU7 Re-trigger" CV="211" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU7 Re-trigger</label>
-      </variable>
-      <variable item="PA FU7 Multiplier" CV="211" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU7 Multiplier</label>
-      </variable>
-      <variable item="PA FU7 Interval" CV="211" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU7 Interval</label>
-      </variable>
-
-      <variable item="PA FD7 Re-trigger" CV="212" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD7 Re-trigger</label>
-      </variable>
-      <variable item="PA FD7 Multiplier" CV="212" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD7 Multiplier</label>
-      </variable>
-      <variable item="PA FD7 Interval" CV="212" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD7 Interval</label>
-      </variable>
-
-
       <!-- Input #8 -->
       <variable label="PA8 Base Address" CV="213" mask="VVVVVVVV" default="0">
         <splitVal highCV="214" upperMask="XXXXVVVV" offset="1"/>
@@ -1403,38 +1185,7 @@
         <label>PA8 Effect</label>
       </variable>
       
-     <variable CV="222" mask="VVVVVVVV" default="100" item="PA Out8 Brightness" tooltip="Brightness Percent">
-        <decVal min="1" max="100"/>
-        <label>LB8</label>
-      </variable>
-
-      <variable item="PA FU8 Re-trigger" CV="223" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FU8 Re-trigger</label>
-      </variable>
-      <variable item="PA FU8 Multiplier" CV="223" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FU8 Multiplier</label>
-      </variable>
-      <variable item="PA FU8 Interval" CV="223" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FU8 Interval</label>
-      </variable>
-
-      <variable item="PA FD8 Re-trigger" CV="224" default="0" mask="VXXXXXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceSS.xml"/>
-        <label>FD8 Re-trigger</label>
-      </variable>
-      <variable item="PA FD8 Multiplier" CV="224" default="0" mask="XVVVVXXX">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceMultiple.xml"/>
-        <label>FD8 Multiplier</label>
-      </variable>
-      <variable item="PA FD8 Interval" CV="224" default="0" mask="XXXXXVVV">
-        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceIntervalt.xml"/>
-        <label>FD8 Interval</label>
-      </variable>
-
-      
+     
       <!-- End Outputs -->
       <!-- Logic Table entry #1 -->
       <variable item="LT1 Block End" CV="257" mask="XVXXXXXX" default="1">
@@ -10214,6 +9965,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB1 Output-Input" value="0"/>
             <compositeSetting label="PB2 Output-Input" value="0"/>
+				<compositeSetting label="PB FU1 Multiplier" value="0"/>
+				<compositeSetting label="PB FU1 Interval" value="0"/>
+				<compositeSetting label="PB FU2 Multiplier" value="0"/>
+				<compositeSetting label="PB FU2 Interval" value="0"/>
+				<compositeSetting label="PB FD1 Multiplier" value="0"/>
+				<compositeSetting label="PB FD1 Interval" value="0"/>
+				<compositeSetting label="PB FD2 Multiplier" value="0"/>
+				<compositeSetting label="PB FD2 Interval" value="0"/>
             <compositeSetting label="PB1 Paired" value="2"/>
             <compositeSetting label="PB2 Paired" value="2"/>
             <compositeSetting label="PB1 Mode" value="0"/>
@@ -10267,6 +10026,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB1 Output-Input" value="0"/>
             <compositeSetting label="PB2 Output-Input" value="0"/>
+				<compositeSetting label="PB FU1 Multiplier" value="0"/>
+				<compositeSetting label="PB FU1 Interval" value="0"/>
+				<compositeSetting label="PB FU2 Multiplier" value="0"/>
+				<compositeSetting label="PB FU2 Interval" value="0"/>
+				<compositeSetting label="PB FD1 Multiplier" value="0"/>
+				<compositeSetting label="PB FD1 Interval" value="0"/>
+				<compositeSetting label="PB FD2 Multiplier" value="0"/>
+				<compositeSetting label="PB FD2 Interval" value="0"/>
             <compositeSetting label="PB1 Paired" value="2"/>
             <compositeSetting label="PB2 Paired" value="2"/>
             <compositeSetting label="PB1 Mode" value="0"/>
@@ -10320,6 +10087,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB3 Output-Input" value="0"/>
             <compositeSetting label="PB4 Output-Input" value="0"/>
+				<compositeSetting label="PB FU3 Multiplier" value="0"/>
+				<compositeSetting label="PB FU3 Interval" value="0"/>
+				<compositeSetting label="PB FU4 Multiplier" value="0"/>
+				<compositeSetting label="PB FU4 Interval" value="0"/>
+				<compositeSetting label="PB FD3 Multiplier" value="0"/>
+				<compositeSetting label="PB FD3 Interval" value="0"/>
+				<compositeSetting label="PB FD4 Multiplier" value="0"/>
+				<compositeSetting label="PB FD4 Interval" value="0"/>
             <compositeSetting label="PB3 Paired" value="2"/>
             <compositeSetting label="PB4 Paired" value="2"/>
             <compositeSetting label="PB3 Mode" value="0"/>
@@ -10373,6 +10148,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB3 Output-Input" value="0"/>
             <compositeSetting label="PB4 Output-Input" value="0"/>
+				<compositeSetting label="PB FU3 Multiplier" value="0"/>
+				<compositeSetting label="PB FU3 Interval" value="0"/>
+				<compositeSetting label="PB FU4 Multiplier" value="0"/>
+				<compositeSetting label="PB FU4 Interval" value="0"/>
+				<compositeSetting label="PB FD3 Multiplier" value="0"/>
+				<compositeSetting label="PB FD3 Interval" value="0"/>
+				<compositeSetting label="PB FD4 Multiplier" value="0"/>
+				<compositeSetting label="PB FD4 Interval" value="0"/>
             <compositeSetting label="PB3 Paired" value="2"/>
             <compositeSetting label="PB4 Paired" value="2"/>
             <compositeSetting label="PB3 Mode" value="0"/>
@@ -10426,6 +10209,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB5 Output-Input" value="0"/>
             <compositeSetting label="PB6 Output-Input" value="0"/>
+				<compositeSetting label="PB FU5 Multiplier" value="0"/>
+				<compositeSetting label="PB FU5 Interval" value="0"/>
+				<compositeSetting label="PB FU6 Multiplier" value="0"/>
+				<compositeSetting label="PB FU6 Interval" value="0"/>
+				<compositeSetting label="PB FD5 Multiplier" value="0"/>
+				<compositeSetting label="PB FD5 Interval" value="0"/>
+				<compositeSetting label="PB FD6 Multiplier" value="0"/>
+				<compositeSetting label="PB FD6 Interval" value="0"/>
             <compositeSetting label="PB5 Paired" value="2"/>
             <compositeSetting label="PB6 Paired" value="2"/>
             <compositeSetting label="PB5 Mode" value="0"/>
@@ -10479,6 +10270,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB5 Output-Input" value="0"/>
             <compositeSetting label="PB6 Output-Input" value="0"/>
+				<compositeSetting label="PB FU5 Multiplier" value="0"/>
+				<compositeSetting label="PB FU5 Interval" value="0"/>
+				<compositeSetting label="PB FU6 Multiplier" value="0"/>
+				<compositeSetting label="PB FU6 Interval" value="0"/>
+				<compositeSetting label="PB FD5 Multiplier" value="0"/>
+				<compositeSetting label="PB FD5 Interval" value="0"/>
+				<compositeSetting label="PB FD6 Multiplier" value="0"/>
+				<compositeSetting label="PB FD6 Interval" value="0"/>
             <compositeSetting label="PB5 Paired" value="2"/>
             <compositeSetting label="PB6 Paired" value="2"/>
             <compositeSetting label="PB5 Mode" value="0"/>
@@ -10532,6 +10331,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB7 Output-Input" value="0"/>
             <compositeSetting label="PB8 Output-Input" value="0"/>
+				<compositeSetting label="PB FU7 Multiplier" value="0"/>
+				<compositeSetting label="PB FU7 Interval" value="0"/>
+				<compositeSetting label="PB FU8 Multiplier" value="0"/>
+				<compositeSetting label="PB FU8 Interval" value="0"/>
+				<compositeSetting label="PB FD7 Multiplier" value="0"/>
+				<compositeSetting label="PB FD7 Interval" value="0"/>
+				<compositeSetting label="PB FD8 Multiplier" value="0"/>
+				<compositeSetting label="PB FD8 Interval" value="0"/>
             <compositeSetting label="PB7 Paired" value="2"/>
             <compositeSetting label="PB8 Paired" value="2"/>
             <compositeSetting label="PB7 Mode" value="0"/>
@@ -10585,6 +10392,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PB7 Output-Input" value="0"/>
             <compositeSetting label="PB8 Output-Input" value="0"/>
+				<compositeSetting label="PB FU7 Multiplier" value="0"/>
+				<compositeSetting label="PB FU7 Interval" value="0"/>
+				<compositeSetting label="PB FU8 Multiplier" value="0"/>
+				<compositeSetting label="PB FU8 Interval" value="0"/>
+				<compositeSetting label="PB FD7 Multiplier" value="0"/>
+				<compositeSetting label="PB FD7 Interval" value="0"/>
+				<compositeSetting label="PB FD8 Multiplier" value="0"/>
+				<compositeSetting label="PB FD8 Interval" value="0"/>
             <compositeSetting label="PB7 Paired" value="2"/>
             <compositeSetting label="PB8 Paired" value="2"/>
             <compositeSetting label="PB7 Mode" value="0"/>
@@ -10639,6 +10454,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC1 Output-Input" value="0"/>
             <compositeSetting label="PC2 Output-Input" value="0"/>
+				<compositeSetting label="PC FU1 Multiplier" value="0"/>
+				<compositeSetting label="PC FU1 Interval" value="0"/>
+				<compositeSetting label="PC FU2 Multiplier" value="0"/>
+				<compositeSetting label="PC FU2 Interval" value="0"/>
+				<compositeSetting label="PC FD1 Multiplier" value="0"/>
+				<compositeSetting label="PC FD1 Interval" value="0"/>
+				<compositeSetting label="PC FD2 Multiplier" value="0"/>
+				<compositeSetting label="PC FD2 Interval" value="0"/>
             <compositeSetting label="PC1 Paired" value="2"/>
             <compositeSetting label="PC2 Paired" value="2"/>
             <compositeSetting label="PC1 Mode" value="0"/>
@@ -10692,6 +10515,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC1 Output-Input" value="0"/>
             <compositeSetting label="PC2 Output-Input" value="0"/>
+				<compositeSetting label="PC FU1 Multiplier" value="0"/>
+				<compositeSetting label="PC FU1 Interval" value="0"/>
+				<compositeSetting label="PC FU2 Multiplier" value="0"/>
+				<compositeSetting label="PC FU2 Interval" value="0"/>
+				<compositeSetting label="PC FD1 Multiplier" value="0"/>
+				<compositeSetting label="PC FD1 Interval" value="0"/>
+				<compositeSetting label="PC FD2 Multiplier" value="0"/>
+				<compositeSetting label="PC FD2 Interval" value="0"/>
             <compositeSetting label="PC1 Paired" value="2"/>
             <compositeSetting label="PC2 Paired" value="2"/>
             <compositeSetting label="PC1 Mode" value="0"/>
@@ -10745,6 +10576,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC3 Output-Input" value="0"/>
             <compositeSetting label="PC4 Output-Input" value="0"/>
+				<compositeSetting label="PC FU3 Multiplier" value="0"/>
+				<compositeSetting label="PC FU3 Interval" value="0"/>
+				<compositeSetting label="PC FU4 Multiplier" value="0"/>
+				<compositeSetting label="PC FU4 Interval" value="0"/>
+				<compositeSetting label="PC FD3 Multiplier" value="0"/>
+				<compositeSetting label="PC FD3 Interval" value="0"/>
+				<compositeSetting label="PC FD4 Multiplier" value="0"/>
+				<compositeSetting label="PC FD4 Interval" value="0"/>
             <compositeSetting label="PC3 Paired" value="2"/>
             <compositeSetting label="PC4 Paired" value="2"/>
             <compositeSetting label="PC3 Mode" value="0"/>
@@ -10798,6 +10637,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC3 Output-Input" value="0"/>
             <compositeSetting label="PC4 Output-Input" value="0"/>
+				<compositeSetting label="PC FU3 Multiplier" value="0"/>
+				<compositeSetting label="PC FU3 Interval" value="0"/>
+				<compositeSetting label="PC FU4 Multiplier" value="0"/>
+				<compositeSetting label="PC FU4 Interval" value="0"/>
+				<compositeSetting label="PC FD3 Multiplier" value="0"/>
+				<compositeSetting label="PC FD3 Interval" value="0"/>
+				<compositeSetting label="PC FD4 Multiplier" value="0"/>
+				<compositeSetting label="PC FD4 Interval" value="0"/>
             <compositeSetting label="PC3 Paired" value="2"/>
             <compositeSetting label="PC4 Paired" value="2"/>
             <compositeSetting label="PC3 Mode" value="0"/>
@@ -10851,6 +10698,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC5 Output-Input" value="0"/>
             <compositeSetting label="PC6 Output-Input" value="0"/>
+				<compositeSetting label="PC FU5 Multiplier" value="0"/>
+				<compositeSetting label="PC FU5 Interval" value="0"/>
+				<compositeSetting label="PC FU6 Multiplier" value="0"/>
+				<compositeSetting label="PC FU6 Interval" value="0"/>
+				<compositeSetting label="PC FD5 Multiplier" value="0"/>
+				<compositeSetting label="PC FD5 Interval" value="0"/>
+				<compositeSetting label="PC FD6 Multiplier" value="0"/>
+				<compositeSetting label="PC FD6 Interval" value="0"/>
             <compositeSetting label="PC5 Paired" value="2"/>
             <compositeSetting label="PC6 Paired" value="2"/>
             <compositeSetting label="PC5 Mode" value="0"/>
@@ -10904,6 +10759,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC5 Output-Input" value="0"/>
             <compositeSetting label="PC6 Output-Input" value="0"/>
+				<compositeSetting label="PC FU5 Multiplier" value="0"/>
+				<compositeSetting label="PC FU5 Interval" value="0"/>
+				<compositeSetting label="PC FU6 Multiplier" value="0"/>
+				<compositeSetting label="PC FU6 Interval" value="0"/>
+				<compositeSetting label="PC FD5 Multiplier" value="0"/>
+				<compositeSetting label="PC FD5 Interval" value="0"/>
+				<compositeSetting label="PC FD6 Multiplier" value="0"/>
+				<compositeSetting label="PC FD6 Interval" value="0"/>
             <compositeSetting label="PC5 Paired" value="2"/>
             <compositeSetting label="PC6 Paired" value="2"/>
             <compositeSetting label="PC5 Mode" value="0"/>
@@ -10957,6 +10820,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC7 Output-Input" value="0"/>
             <compositeSetting label="PC8 Output-Input" value="0"/>
+				<compositeSetting label="PC FU7 Multiplier" value="0"/>
+				<compositeSetting label="PC FU7 Interval" value="0"/>
+				<compositeSetting label="PC FU8 Multiplier" value="0"/>
+				<compositeSetting label="PC FU8 Interval" value="0"/>
+				<compositeSetting label="PC FD7 Multiplier" value="0"/>
+				<compositeSetting label="PC FD7 Interval" value="0"/>
+				<compositeSetting label="PC FD8 Multiplier" value="0"/>
+				<compositeSetting label="PC FD8 Interval" value="0"/>
             <compositeSetting label="PC7 Paired" value="2"/>
             <compositeSetting label="PC8 Paired" value="2"/>
             <compositeSetting label="PC7 Mode" value="0"/>
@@ -11010,6 +10881,14 @@
           <compositeChoice choice="Dual Coil">
             <compositeSetting label="PC7 Output-Input" value="0"/>
             <compositeSetting label="PC8 Output-Input" value="0"/>
+				<compositeSetting label="PC FU7 Multiplier" value="0"/>
+				<compositeSetting label="PC FU7 Interval" value="0"/>
+				<compositeSetting label="PC FU8 Multiplier" value="0"/>
+				<compositeSetting label="PC FU8 Interval" value="0"/>
+				<compositeSetting label="PC FD7 Multiplier" value="0"/>
+				<compositeSetting label="PC FD7 Interval" value="0"/>
+				<compositeSetting label="PC FD8 Multiplier" value="0"/>
+				<compositeSetting label="PC FD8 Interval" value="0"/>
             <compositeSetting label="PC7 Paired" value="2"/>
             <compositeSetting label="PC8 Paired" value="2"/>
             <compositeSetting label="PC7 Mode" value="0"/>
@@ -11464,6 +11343,14 @@
             <compositeSetting label="PB2 Paired" value="2"/>
             <compositeSetting label="PB1 Mode" value="0"/>
             <compositeSetting label="PB2 Mode" value="0"/>
+				<compositeSetting label="PB FU1 Multiplier" value="0"/>
+				<compositeSetting label="PB FU1 Interval" value="0"/>
+				<compositeSetting label="PB FU2 Multiplier" value="0"/>
+				<compositeSetting label="PB FU2 Interval" value="0"/>
+				<compositeSetting label="PB FD1 Multiplier" value="0"/>
+				<compositeSetting label="PB FD1 Interval" value="0"/>
+				<compositeSetting label="PB FD2 Multiplier" value="0"/>
+				<compositeSetting label="PB FD2 Interval" value="0"/>
             <compositeSetting label="PB1 Output Direction" value="0"/>
             <compositeSetting label="PB2 Output Direction" value="1"/>
             <compositeSetting label="PB1 Type" value="0"/>
@@ -11476,6 +11363,14 @@
             <compositeSetting label="PB4 Paired" value="2"/>
             <compositeSetting label="PB3 Mode" value="0"/>
             <compositeSetting label="PB4 Mode" value="0"/>
+				<compositeSetting label="PB FU3 Multiplier" value="0"/>
+				<compositeSetting label="PB FU3 Interval" value="0"/>
+				<compositeSetting label="PB FU4 Multiplier" value="0"/>
+				<compositeSetting label="PB FU4 Interval" value="0"/>
+				<compositeSetting label="PB FD3 Multiplier" value="0"/>
+				<compositeSetting label="PB FD3 Interval" value="0"/>
+				<compositeSetting label="PB FD4 Multiplier" value="0"/>
+				<compositeSetting label="PB FD4 Interval" value="0"/>
             <compositeSetting label="PB3 Output Direction" value="0"/>
             <compositeSetting label="PB4 Output Direction" value="1"/>
             <compositeSetting label="PB3 Type" value="0"/>
@@ -11488,6 +11383,14 @@
             <compositeSetting label="PB6 Paired" value="2"/>
             <compositeSetting label="PB5 Mode" value="0"/>
             <compositeSetting label="PB6 Mode" value="0"/>
+				<compositeSetting label="PB FU5 Multiplier" value="0"/>
+				<compositeSetting label="PB FU5 Interval" value="0"/>
+				<compositeSetting label="PB FU6 Multiplier" value="0"/>
+				<compositeSetting label="PB FU6 Interval" value="0"/>
+				<compositeSetting label="PB FD5 Multiplier" value="0"/>
+				<compositeSetting label="PB FD5 Interval" value="0"/>
+				<compositeSetting label="PB FD6 Multiplier" value="0"/>
+				<compositeSetting label="PB FD6 Interval" value="0"/>
             <compositeSetting label="PB5 Output Direction" value="0"/>
             <compositeSetting label="PB6 Output Direction" value="1"/>
             <compositeSetting label="PB5 Type" value="0"/>
@@ -11500,6 +11403,14 @@
             <compositeSetting label="PB8 Paired" value="2"/>
             <compositeSetting label="PB7 Mode" value="0"/>
             <compositeSetting label="PB8 Mode" value="0"/>
+				<compositeSetting label="PB FU7 Multiplier" value="0"/>
+				<compositeSetting label="PB FU7 Interval" value="0"/>
+				<compositeSetting label="PB FU8 Multiplier" value="0"/>
+				<compositeSetting label="PB FU8 Interval" value="0"/>
+				<compositeSetting label="PB FD7 Multiplier" value="0"/>
+				<compositeSetting label="PB FD7 Interval" value="0"/>
+				<compositeSetting label="PB FD8 Multiplier" value="0"/>
+				<compositeSetting label="PB FD8 Interval" value="0"/>
             <compositeSetting label="PB7 Output Direction" value="0"/>
             <compositeSetting label="PB8 Output Direction" value="1"/>
             <compositeSetting label="PB7 Type" value="0"/>
@@ -11646,6 +11557,14 @@
             <compositeSetting label="PC2 Paired" value="2"/>
             <compositeSetting label="PC1 Mode" value="0"/>
             <compositeSetting label="PC2 Mode" value="0"/>
+				<compositeSetting label="PC FU1 Multiplier" value="0"/>
+				<compositeSetting label="PC FU1 Interval" value="0"/>
+				<compositeSetting label="PC FU2 Multiplier" value="0"/>
+				<compositeSetting label="PC FU2 Interval" value="0"/>
+				<compositeSetting label="PC FD1 Multiplier" value="0"/>
+				<compositeSetting label="PC FD1 Interval" value="0"/>
+				<compositeSetting label="PC FD2 Multiplier" value="0"/>
+				<compositeSetting label="PC FD2 Interval" value="0"/>
             <compositeSetting label="PC1 Output Direction" value="0"/>
             <compositeSetting label="PC2 Output Direction" value="1"/>
             <compositeSetting label="PC1 Type" value="0"/>
@@ -11658,6 +11577,14 @@
             <compositeSetting label="PC4 Paired" value="2"/>
             <compositeSetting label="PC3 Mode" value="0"/>
             <compositeSetting label="PC4 Mode" value="0"/>
+				<compositeSetting label="PC FU3 Multiplier" value="0"/>
+				<compositeSetting label="PC FU3 Interval" value="0"/>
+				<compositeSetting label="PC FU4 Multiplier" value="0"/>
+				<compositeSetting label="PC FU4 Interval" value="0"/>
+				<compositeSetting label="PC FD3 Multiplier" value="0"/>
+				<compositeSetting label="PC FD3 Interval" value="0"/>
+				<compositeSetting label="PC FD4 Multiplier" value="0"/>
+				<compositeSetting label="PC FD4 Interval" value="0"/>
             <compositeSetting label="PC3 Output Direction" value="0"/>
             <compositeSetting label="PC4 Output Direction" value="1"/>
             <compositeSetting label="PC3 Type" value="0"/>
@@ -11670,6 +11597,14 @@
             <compositeSetting label="PC6 Paired" value="2"/>
             <compositeSetting label="PC5 Mode" value="0"/>
             <compositeSetting label="PC6 Mode" value="0"/>
+				<compositeSetting label="PC FU5 Multiplier" value="0"/>
+				<compositeSetting label="PC FU5 Interval" value="0"/>
+				<compositeSetting label="PC FU6 Multiplier" value="0"/>
+				<compositeSetting label="PC FU6 Interval" value="0"/>
+				<compositeSetting label="PC FD5 Multiplier" value="0"/>
+				<compositeSetting label="PC FD5 Interval" value="0"/>
+				<compositeSetting label="PC FD6 Multiplier" value="0"/>
+				<compositeSetting label="PC FD6 Interval" value="0"/>
             <compositeSetting label="PC5 Output Direction" value="0"/>
             <compositeSetting label="PC6 Output Direction" value="1"/>
             <compositeSetting label="PC5 Type" value="0"/>
@@ -11682,6 +11617,14 @@
             <compositeSetting label="PC8 Paired" value="2"/>
             <compositeSetting label="PC7 Mode" value="0"/>
             <compositeSetting label="PC8 Mode" value="0"/>
+				<compositeSetting label="PC FU7 Multiplier" value="0"/>
+				<compositeSetting label="PC FU7 Interval" value="0"/>
+				<compositeSetting label="PC FU8 Multiplier" value="0"/>
+				<compositeSetting label="PC FU8 Interval" value="0"/>
+				<compositeSetting label="PC FD7 Multiplier" value="0"/>
+				<compositeSetting label="PC FD7 Interval" value="0"/>
+				<compositeSetting label="PC FD8 Multiplier" value="0"/>
+				<compositeSetting label="PC FD8 Interval" value="0"/>
             <compositeSetting label="PC7 Output Direction" value="0"/>
             <compositeSetting label="PC8 Output Direction" value="1"/>
             <compositeSetting label="PC7 Type" value="0"/>
@@ -11938,7 +11881,7 @@
             <text>Use DecoderPro Version 4.1.3 or later.</text>
           </label>
           <label>
-            <text>Decoder File Version: 0.16</text>
+            <text>Decoder File Version: 0.17</text>
           </label>
         </column>
       </row>
