@@ -26,6 +26,15 @@ public final class DCCppConstants {
     public final static int MAX_MAIN_REGISTERS = 12;
     public final static int REGISTER_UNALLOCATED = -1;
     public final static int NO_REGISTER_FREE = -1; // TODO: Should this be a unique value?
+    
+    // DCC++ over TCP Port Number
+    public final static int DCCPP_OVER_TCP_PORT = 1235;
+
+    // Command Station Types
+    public final static int DCCPP_UNO_1_5 = 1;
+    public final static String CommandStationNames[] = {
+	"DCCPP Arduino Uno v1.5"
+    };
 
     // DCC++ Command OpCodes
 
@@ -70,11 +79,19 @@ public final class DCCppConstants {
     public final static String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public final static String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
     public final static String PROG_READ_REGEX = "R\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)";
+    public final static String TRACK_POWER_REGEX = "\\s*[0,1]\\s*";
+    public final static String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*";
+    public final static String READ_CS_STATUS_REGEX = "\\s*s\\s*";
+    public final static String WRITE_DCC_PACKET_MAIN_REGEX = "\\s*M\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
+    public final static String WRITE_DCC_PACKET_PROG_REGEX = "\\s*P\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
+    public final static String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
+    public final static String LIST_REGISTER_CONTENTS_REGEX = "\\s*L\\s*";
 
     public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
     public final static String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
     public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
+    public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
@@ -93,6 +110,8 @@ public final class DCCppConstants {
     public final static String THROTTLE_REVERSE = "0";
     public final static String ACCESSORY_ON     = "1";
     public final static String ACCESSORY_OFF    = "0";
+    public final static String POWER_ON         = "1";
+    public final static String POWER_OFF        = "0";
 
     // Various min/max values for messages
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
