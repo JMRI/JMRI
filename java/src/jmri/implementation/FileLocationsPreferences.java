@@ -1,8 +1,8 @@
 package jmri.implementation;
 
 import java.io.FileNotFoundException;
-import java.text.MessageFormat;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.Preferences;
 import jmri.profile.Profile;
@@ -39,25 +39,25 @@ public class FileLocationsPreferences extends AbstractPreferencesProvider {
             this.setIsInitialized(profile, true);
             try {
                 if (!FileUtil.getFile(userFiles).isDirectory()) {
-                    String message = "User files location \"{0}\" is not a directory.";
+                    String message = "UserFilesIsNotDir"; // NOI18N
                     userFiles = FileUtil.getAbsoluteFilename(userFiles);
-                    throw new InitializationException(MessageFormat.format(message, userFiles), Bundle.getMessage(message, userFiles));
+                    throw new InitializationException(Bundle.getMessage(Locale.ENGLISH, message, userFiles), Bundle.getMessage(message, userFiles));
                 }
             } catch (FileNotFoundException ex) {
-                String message = "User files location \"{0}\" does not exist.";
+                String message = "UserFilesDoesNotExist"; // NOI18N
                 userFiles = FileUtil.getAbsoluteFilename(userFiles);
-                throw new InitializationException(MessageFormat.format(message, userFiles), Bundle.getMessage(message, userFiles));
+                throw new InitializationException(Bundle.getMessage(Locale.ENGLISH, message, userFiles), Bundle.getMessage(message, userFiles));
             }
             try {
                 if (!FileUtil.getFile(scripts).isDirectory()) {
-                    String message = "Scripts location \"{0}\" is not a directory.";
+                    String message = "ScriptsIsNotDir"; // NOI18N
                     scripts = FileUtil.getAbsoluteFilename(scripts);
-                    throw new InitializationException(MessageFormat.format(message, scripts), Bundle.getMessage(message, scripts));
+                    throw new InitializationException(Bundle.getMessage(Locale.ENGLISH, message, scripts), Bundle.getMessage(message, scripts));
                 }
             } catch (FileNotFoundException ex) {
-                String message = "Scripts location \"{0}\" does not exist.";
+                String message = "ScriptsDoesNotExist"; // NOI18N
                 scripts = FileUtil.getAbsoluteFilename(scripts);
-                throw new InitializationException(MessageFormat.format(message, scripts), Bundle.getMessage(message, scripts));
+                throw new InitializationException(Bundle.getMessage(Locale.ENGLISH, message, scripts), Bundle.getMessage(message, scripts));
             }
         }
     }
