@@ -1,5 +1,6 @@
 package jmri.jmrix.dccpp.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,5 +35,10 @@ public class DCCppSensorManagerXml extends jmri.managers.configurexml.AbstractSe
     }
 
     static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerXml.class.getName());
+
+    @Override
+    public boolean load(Element sharedSensors, Element perNodeSensors) throws JmriConfigureXmlException {
+        return this.loadSensors(sharedSensors);
+    }
 
 }

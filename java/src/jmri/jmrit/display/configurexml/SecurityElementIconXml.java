@@ -46,7 +46,7 @@ public class SecurityElementIconXml extends AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }

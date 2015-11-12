@@ -150,11 +150,6 @@ public class SensorIconXml extends PositionableLabelXml {
         element.addContent(elem);
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     boolean _icon;
 
     /**

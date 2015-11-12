@@ -2,6 +2,7 @@ package jmri.util;
 
 import java.beans.PropertyChangeListener;
 import jmri.ConditionalManager;
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
 import jmri.LogixManager;
@@ -9,6 +10,7 @@ import jmri.MemoryManager;
 import jmri.PowerManager;
 import jmri.SignalHeadManager;
 import jmri.SignalMastLogicManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.jmrit.display.layoutEditor.LayoutBlockManager;
 import jmri.jmrit.logix.OBlockManager;
 import jmri.jmrit.logix.WarrantManager;
@@ -100,7 +102,7 @@ public class JUnitUtil {
     }
 
     public static void initConfigureManager() {
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        InstanceManager.setDefault(ConfigureManager.class, new JmriConfigurationManager());
     }
 
     public static void initInternalTurnoutManager() {
@@ -180,7 +182,6 @@ public class JUnitUtil {
     public static void initDebugThrottleManager() {
         jmri.ThrottleManager m = new DebugThrottleManager();
         InstanceManager.setThrottleManager(m);
-        return;
     }
 
     public static void initDebugPowerManager() {
