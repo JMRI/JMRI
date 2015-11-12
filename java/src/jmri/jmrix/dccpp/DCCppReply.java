@@ -248,7 +248,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public String getTOStateString() {
 	if (this.isTurnoutReply()) {
-	    return(this.getTOStateInt() == 1 ? "Thrown" : "Closed");
+	    return(this.getTOStateInt() == 1 ? DCCppConstants.TURNOUT_THROWN : DCCppConstants.TURNOUT_CLOSED);
 	} else {
 	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
 	    return("Not a Turnout");
