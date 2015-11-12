@@ -1,5 +1,6 @@
 package jmri.implementation;
 
+import apps.gui3.TabbedPreferencesAction;
 import java.awt.GraphicsEnvironment;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -185,7 +186,7 @@ public class JmriConfigurationManager implements ConfigureManager {
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
                         // TODO: Display list of errors
-                        // TODO: Open TabbedPreferences
+                        (new TabbedPreferencesAction()).actionPerformed();
                     }
                 }
                 if (file != null && (new File(file.toURI())).getName().equals("ProfileConfig.xml")) {
@@ -233,9 +234,12 @@ public class JmriConfigurationManager implements ConfigureManager {
             try {
                 provider.initialize(profile);
             } catch (InitializationException ex) {
-                // only log an initializations exception for a provider the first times
-                if (!this.initializationExceptions.containsKey(provider)) {
-                    log.error("Exception initializing {}: {}", provider.getClass().getName(), this.getInitializationExceptions().put(provider, ex).getMessage());
+                // log all initialization exceptions, but only retain for GUI display the
+                // first initialization exception for a provider
+                InitializationException put = this.initializationExceptions.putIfAbsent(provider, ex);
+                log.error("Exception initializing {}: {}", provider.getClass().getName(), ex.getMessage());
+                if (put != null) {
+                    log.error("Additional exception initializing {}: {}", provider.getClass().getName(), ex.getMessage());
                 }
             }
             log.debug("Initialized provider {}", provider.getClass());

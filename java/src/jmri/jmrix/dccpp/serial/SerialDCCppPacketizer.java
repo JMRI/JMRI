@@ -58,7 +58,7 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    @Override
+    //@Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
         byte lastbyte = (byte) 0xFF;

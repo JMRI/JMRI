@@ -237,7 +237,7 @@ public class DCCppSystemConnectionMemo extends jmri.jmrix.SystemConnectionMemo {
         } else if (type.equals(jmri.TurnoutManager.class)) {
             return false;
         } else if (type.equals(jmri.LightManager.class)) {
-            return false;
+            return true;
         } else if (type.equals(jmri.ConsistManager.class)) {
             return false;
         } else if (type.equals(jmri.CommandStation.class)) {

@@ -1,11 +1,14 @@
 package jmri.jmrit.roster;
 
+import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
 import jmri.spi.AbstractPreferencesProvider;
 import jmri.spi.InitializationException;
+import jmri.spi.PreferencesProvider;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +55,13 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
         }
     }
 
+    @Override
+    public Set<Class <? extends PreferencesProvider>> getRequires() {
+        Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
+        requires.add(FileLocationsPreferences.class);
+        return requires;
+    }
+    
     /**
      * @return the defaultOwner
      */
