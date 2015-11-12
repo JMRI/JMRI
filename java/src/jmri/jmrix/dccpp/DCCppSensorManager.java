@@ -53,39 +53,23 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
-	// TODO: Don't know how to do this yet.
-	/*
-        if (l.isFeedbackBroadcastMessage()) {
-            int numDataBytes = l.getElement(0) & 0x0f;
-            for (int i = 1; i < numDataBytes; i += 2) {
-                if (l.getFeedbackMessageType(i) == 2) {
-                    // This is a feedback encoder message. The address of the 
-                    // Feedback sensor is byte two of the message.
-                    int address = l.getFeedbackEncoderMsgAddr(i);
-                    if (log.isDebugEnabled()) {
-                        log.debug("Message for feedback encoder " + address);
-                    }
-
-                    int firstaddress = ((address) * 8) + 1;
-                    // Each Feedback encoder includes 8 addresses, so register 
-                    // a sensor for each address.
-                    for (int j = 0; j < 8; j++) {
-                        String s = prefix + typeLetter() + (firstaddress + j);
-                        if (null == getBySystemName(s)) {
-                            // The sensor doesn't exist.  We need to create a 
-                            // new sensor, and forward this message to it.
-                            ((DCCppSensor) provideSensor(s)).initmessage(l);
-                        } else {
-                            // The sensor exists.  We need to forward this 
-                            // message to it.
-                            ((DCCppSensor) getBySystemName(s)).message(l);
-                        }
-                    }
-                }
-            }
-        }
-	*/
-    }
+	int addr = l.getSensorNumInt();
+	if (l.isSensorReply()) {
+	    if (log.isDebugEnabled()) {
+		log.debug("Message for feedback encoder " + addr);
+	    }
+	    String s = prefix + typeLetter() + (addr);
+	    if (null == getBySystemName(s)) {
+		// The sensor doesn't exist.  We need to create a 
+		// new sensor, and forward this message to it.
+		((DCCppSensor) provideSensor(s)).initmessage(l);
+	    } else {
+		// The sensor exists.  We need to forward this 
+		// message to it.
+		((DCCppSensor) getBySystemName(s)).message(l);
+	    }
+	}
+    };
 
     // listen for the messages to the LI100/LI101
     public void message(DCCppMessage l) {

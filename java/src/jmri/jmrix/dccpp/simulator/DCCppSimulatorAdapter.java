@@ -399,8 +399,36 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	case DCCppConstants.READ_CS_STATUS:
 	    log.debug("READ_CS_STATUS detected");
 	    generateReadCSStatusReply(); // Handle this special.
-	    break;	    
+	    break;
 
+	case DCCppConstants.QUERY_SENSOR_STATE:
+	    log.debug("QUERY_SENSOR_STATUS detected");
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile(DCCppConstants.QUERY_SENSOR_REGEX);
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Sensor Query Command: {}", s);
+		    reply = null;
+		    break;
+		}
+		r = "Q " + m.group(1) + " ";
+		// Fake reply: Odd sensors always active, even always inactive.
+		r += ((Integer.parseInt(m.group(1)) % 2) == 1 ? "1" : "0");
+		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+		
 	case DCCppConstants.FUNCTION_CMD:
 	case DCCppConstants.ACCESSORY_CMD:
 	case DCCppConstants.OPS_WRITE_CV_BYTE:

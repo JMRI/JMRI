@@ -82,6 +82,11 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\tT/O Number: " + l.getTOIDString()  + "\n";
 	    text += "\tDirection: " + l.getTOStateString() + "\n";
 	    break;
+	case DCCppConstants.SENSOR_REPLY:
+	    text = "Sensor Reply: \n";
+	    text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
+	    text += "\tState: " + l.getSensorStateString() + "\n";
+	    break;
 	case DCCppConstants.PROGRAM_REPLY:
 	    text = "Program Reply: \n";
 	    text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
@@ -187,6 +192,9 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    break;
 	case DCCppConstants.READ_CS_STATUS:
 	    text = "Status Cmd: ";
+	    break;
+	case DCCppConstants.QUERY_SENSOR_STATE:
+	    text = "Sensor Status Cmd: ";
 	    break;
 	case DCCppConstants.WRITE_DCC_PACKET_MAIN:
 		text = "Write DCC Packet Main Cmd: ";

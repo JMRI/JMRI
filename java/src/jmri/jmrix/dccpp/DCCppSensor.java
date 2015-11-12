@@ -51,7 +51,10 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private void init(String id) {
         // store address
         systemName = id;
-        address = Integer.parseInt(id.substring(2, id.length()));
+	// WARNING: This address assignment is brittle. If the user changes the System Name prefix
+	// it will fail.  Probably better to do a regex parse, or to look for the last instance of 'S'
+	// TODO: Fix this to be more robust.  And check the other things (T/O's, etc.) for the same bug
+        address = Integer.parseInt(id.substring(6, id.length())); 
         // calculate the base address, the nibble, and the bit to examine
         baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;
@@ -143,32 +146,19 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
             log.debug("recieved message: " + l);
         }
 	// Don't know how to do this yet.
-	/*
-        if (l.isFeedbackBroadcastMessage()) {
-            int numDataBytes = l.getElement(0) & 0x0f;
-            for (int i = 1; i < numDataBytes; i += 2) {
-                if ((l.getFeedbackMessageType(i) == 2)
-                        && baseaddress == l.getFeedbackEncoderMsgAddr(i)
-                        && nibble == (l.getElement(i + 1) & 0x10)) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Message for sensor " + systemName
-                                + " (Address " + baseaddress
-                                + " position " + (address - (baseaddress * 8))
-                                + ")");
-                    }
-                    if (statusRequested && l.isUnsolicited()) {
-                        l.resetUnsolicited();
-                        statusRequested = false;
-                    }
-                    if (((l.getElement(i + 1) & nibblebit) != 0) ^ _inverted) {
-                        setOwnState(Sensor.ACTIVE);
-                    } else {
-                        setOwnState(Sensor.INACTIVE);
-                    }
-                }
-            }
-        }
-	*/
+        if (l.isSensorReply() && (l.getSensorNumInt() == address)) {
+	    if (log.isDebugEnabled()) {
+		log.debug("Message for sensor " + systemName
+			  + " (Address " + baseaddress
+			  + " position " + (address - (baseaddress * 8))
+			  + ")");
+	    }
+	    if (l.getSensorStateInt() == Integer.parseInt(DCCppConstants.SENSOR_ON)) {
+		setOwnState(Sensor.ACTIVE);
+	    } else {
+		setOwnState(Sensor.INACTIVE);
+	    }
+	}
         return;
     }
 

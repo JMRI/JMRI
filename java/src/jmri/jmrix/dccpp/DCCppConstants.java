@@ -51,6 +51,7 @@ public final class DCCppConstants {
     public final static char TRACK_POWER_OFF        = '0'; // Track power OFF
     public final static char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public final static char READ_CS_STATUS         = 's'; // Read status from command station
+    public final static char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
 
     // Special Commands not for normal use.  Diagnostic and Test Use Only
     public final static char WRITE_DCC_PACKET_MAIN  = 'M';
@@ -83,6 +84,7 @@ public final class DCCppConstants {
     public final static String TRACK_POWER_REGEX = "\\s*[0,1]\\s*";
     public final static String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*";
     public final static String READ_CS_STATUS_REGEX = "\\s*s\\s*";
+    public final static String QUERY_SENSOR_REGEX = "\\s*q\\s*(\\d+)\\s*";
     public final static String WRITE_DCC_PACKET_MAIN_REGEX = "\\s*M\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
     public final static String WRITE_DCC_PACKET_PROG_REGEX = "\\s*P\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
     public final static String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
