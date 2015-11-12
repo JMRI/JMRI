@@ -101,11 +101,8 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     public void connectPort(DCCppNetworkPortController p) {
         istream = p.getInputStream();
-	if (istream == null) { log.error("ERROR: Null input stream!"); }
 	InputStreamReader isr = new InputStreamReader(istream);
-	if (isr == null) { log.error("ERROR: Null ISReader!"); }
 	istreamReader = new BufferedReader(new InputStreamReader(istream));
-	if (istreamReader == null) { log.error("Error: Failed to create BufferedReader"); }
         ostream = p.getOutputStream();
         if (networkController != null) {
             log.warn("connectPort: connect called while connected");
@@ -253,7 +250,6 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 		    // return a notification via the queue to ensure end
 		    Runnable r = new Runnable() {
                             DCCppReply msgForLater = thisMsg;
-                            DCCppPacketizer myTC = thisTC;
 			    
                             public void run() {
                                 notifyReply(msgForLater, null);

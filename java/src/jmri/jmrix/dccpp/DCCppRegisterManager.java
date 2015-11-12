@@ -26,7 +26,6 @@ public class DCCppRegisterManager {
     }
     
     public int requestRegister(int addr) {
-	int retv;
 	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
 	    if (registers[i].getAddress() == addr) {
 		registers[i].allocate();
@@ -87,7 +86,7 @@ class DCCppRegister {
 
     public int getUserCount() { return(user_count); }
     public void setUserCount(int i) { user_count = i; } // Don't use this...
-    public void incUserCount() { user_count++;};
+    public void incUserCount() { user_count++;}
 
     public void decUserCount() { 
 	if (user_count > 0) { 
