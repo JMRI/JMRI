@@ -129,7 +129,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      *     <iDCC++ ... > Base station version and build date
      *     <H ...> All turnout states.
      *
-     * Unsolicted Replies
+     * Unsolicited Replies
      *   | <Q snum [0,1]> Sensor reply.
      * Debug messages:
      * M : (none)

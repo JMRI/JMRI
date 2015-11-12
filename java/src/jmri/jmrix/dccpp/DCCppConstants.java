@@ -121,6 +121,7 @@ public final class DCCppConstants {
     public final static String SENSOR_OFF       = "0";
 
     // Various min/max values for messages
+    public final static int MAX_SENSOR_NUMBER = 2048; // TODO: Check this
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
     public final static int MAX_ACC_DECODER_SUBADDR = 3;
     // Max JMRI addr = ((MAX_ADDRESS - 1) * (MAX_SUBADDR+1)) + (MAX_SUBADDR) + 1

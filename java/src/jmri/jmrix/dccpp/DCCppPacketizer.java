@@ -76,10 +76,10 @@ public class DCCppPacketizer extends DCCppTrafficController {
         return 1;
     }
 
-    public void startThreads() {
-	// Doesn't do anything generically.  Here for TCP version.
-	// Not abstract because I don't want to have to deal with that.
-    }
+    //    public void startThreads() {
+	// Doesn't do anything generically.
+	// Most Packetizers won't do anything.  The TCP
+    //}
 
 
     /**
