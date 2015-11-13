@@ -268,7 +268,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        byte lastbyte = (byte) 0xFF;
 	boolean found_start = false;
         if (log.isDebugEnabled()) {
             log.debug("loading characters from port");
