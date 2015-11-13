@@ -66,6 +66,10 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
      * @return the defaultOwner
      */
     public @Nonnull String getDefaultOwner() {
+        // defaultOwner should never be null, but check anyway to ensure its not
+        if (defaultOwner == null) {
+            defaultOwner = "";
+        }
         return defaultOwner;
     }
 
