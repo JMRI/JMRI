@@ -370,7 +370,6 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 
     private void handleThrottleReply(DCCppReply l) {
 	int reg, speed, dir;
-	String s = l.toString();
 	reg = l.getRegisterInt();
 	speed = l.getSpeedInt();
 	dir = l.getDirectionInt();

@@ -117,9 +117,9 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      * T : <H ID THROW>
      * w : (none)
      * b : (none)
-     * W : <r CALLBACKNUM CALLBACKSUB CV_Value>
-     * B : <r CALLBACKNUM CALLBACKSUB CV_Bit_Value>
-     * R : <r CALLBACKNUM CALLBACKSUB CV_Value>
+     * W : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
+     * B : <r CALLBACKNUM CALLBACKSUB|CV|Bit CV_Bit_Value>
+     * R : <r CALLBACKNUM|CALLBACKSUB|CV CV_Value>
      * 1 : <p1>
      * 0 : <p0>
      * c : <a CURRENT>
@@ -129,6 +129,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
      *     <iDCC++ ... > Base station version and build date
      *     <H ...> All turnout states.
      *
+     * Unsolicited Replies
+     *   | <Q snum [0,1]> Sensor reply.
      * Debug messages:
      * M : (none)
      * P : (none)
@@ -331,6 +333,26 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	return(Integer.parseInt(this.getCVString()));
     }
 
+    public String getReadValueString() {
+	if (this.isProgramReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
+	    if (m != null) {
+		if (m.group(2).equals(Integer.toString((int)DCCppConstants.PROG_WRITE_CV_BIT)))
+		    return(m.group(6));
+		else
+		    return(m.group(4));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("ProgramReply Parser called on non-ProgramReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getReadValueInt() {
+	return(Integer.parseInt(this.getReadValueString()));
+    }
+
     public String getCurrentString() {
 	if (this.isCurrentReply()) {
 	    Matcher m = match(this.toString(), DCCppConstants.CURRENT_REPLY_REGEX, "ProgramReply");
@@ -363,6 +385,54 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     }
 
+
+    public String getSensorNumString() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_REPLY_REGEX, "SensorReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getSensorNumInt() {
+	return(Integer.parseInt(this.getSensorNumString()));
+    }
+
+    public String getSensorStateString() {
+	if (this.isTurnoutReply()) {
+	    return(this.getSensorStateInt() == 1 ? "Active" : "Inactive");
+	} else {
+	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
+	    return("Not a Sensor");
+	}
+    }
+
+    public int getSensorStateInt() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_REPLY_REGEX, "SensorReply");
+	    if (m != null) {
+		return(m.group(2).equals(DCCppConstants.SENSOR_ON) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
+	    return(0);
+    }
+
+    public boolean getSensorIsActive() {
+	return(this.getSensorStateString().equals(DCCppConstants.SENSOR_ON));
+    }
+
+    public boolean getSensorIsInactive() {
+	return(this.getSensorStateString().equals(DCCppConstants.SENSOR_OFF));
+    }
+
     //-------------------------------------------------------------------
 
 
@@ -375,6 +445,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isMemoryReply() { return (this.getOpCodeChar() == DCCppConstants.MEMORY_REPLY); }
     public boolean isVersionReply() { return (this.getOpCodeChar() == DCCppConstants.VERSION_REPLY); }
     public boolean isListPacketRegsReply() { return (this.getOpCodeChar() == DCCppConstants.LISTPACKET_REPLY); }
+    public boolean isSensorReply() { return(this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY); }
 
     public boolean isValidReplyFormat() {
 	// NOTE: Does not (yet) handle STATUS replies
@@ -387,6 +458,10 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	if (this.matches(DCCppConstants.TRACK_POWER_REPLY_REGEX))
 	    return(true);
 	if (this.matches(DCCppConstants.CURRENT_REPLY_REGEX))
+	    return(true);
+	if (this.matches(DCCppConstants.SENSOR_REPLY_REGEX))
+	    return(true);
+	if (this.matches(DCCppConstants.BROKEN_SENSOR_REPLY_REGEX))
 	    return(true);
 	if (this.isVersionReply())
 	    return(true);
