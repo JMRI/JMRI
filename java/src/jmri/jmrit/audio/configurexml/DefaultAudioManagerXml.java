@@ -49,15 +49,15 @@ public class DefaultAudioManagerXml extends AbstractAudioManagerConfigXML {
      * Create a AudioManager object of the correct class, then register and fill
      * it.
      *
-     * @param audio Top level Element to unpack.
+     * @param shared Top level Element to unpack.
      * @return true if successful
      */
     @Override
-    public boolean load(Element audio) {
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         InstanceManager.audioManagerInstance();
-        // load individual audio objects
-        loadAudio(audio);
+        // load individual shared objects
+        loadAudio(shared);
         return true;
     }
 }

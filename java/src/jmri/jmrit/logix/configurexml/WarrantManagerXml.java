@@ -177,25 +177,20 @@ public class WarrantManagerXml //extends XmlFile
         return;
     }
 
-    /**
-     * Create a Warrant object of the correct class, then
-     * register and fill it.
-     * @param warrants Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element warrants) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
 
         WarrantManager manager = InstanceManager.getDefault(WarrantManager.class);
         
         // don't continue on to build NXFrame if no content
-        if (warrants.getChildren().size() == 0) return true;
+        if (shared.getChildren().size() == 0) return true;
         
         if (!GraphicsEnvironment.isHeadless()) {
             NXFrame nxFrame = NXFrame.getInstance();
-            loadNXParams(nxFrame, warrants.getChild("nxparams"));
+            loadNXParams(nxFrame, shared.getChild("nxparams"));
 //            nxFrame.init();   don't make visible
         }
-        List<Element> warrantList = warrants.getChildren("warrant");
+        List<Element> warrantList = shared.getChildren("warrant");
         if (log.isDebugEnabled()) log.debug("Found "+warrantList.size()+" Warrant objects");
         for (int i=0; i<warrantList.size(); i++) {
             Element elem = warrantList.get(i);

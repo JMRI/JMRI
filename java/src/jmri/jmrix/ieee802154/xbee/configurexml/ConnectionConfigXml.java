@@ -1,7 +1,6 @@
 package jmri.jmrix.ieee802154.xbee.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.AbstractStreamPortController;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.ieee802154.xbee.ConnectionConfig;
@@ -162,8 +161,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return null;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

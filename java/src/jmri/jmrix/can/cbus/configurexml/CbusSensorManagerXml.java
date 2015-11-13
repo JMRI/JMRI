@@ -1,5 +1,6 @@
 package jmri.jmrix.can.cbus.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,10 +29,11 @@ public class CbusSensorManagerXml extends jmri.managers.configurexml.AbstractSen
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         boolean result = true;
         // load individual sensors
-        result = loadSensors(sensors);
+        result = loadSensors(shared);
         // Request the status of these sensors from the layout, if appropriate.
         //mgr.updateAll();
         return result;

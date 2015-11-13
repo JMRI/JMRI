@@ -39,7 +39,6 @@ import org.slf4j.LoggerFactory;
  */
 public class JmrixConfigPane extends JPanel implements PreferencesPanel {
 
-    private static final long serialVersionUID = -6184977238513337292L;
     private static final ResourceBundle acb = ResourceBundle.getBundle("apps.AppsConfigBundle");
     private boolean isDirty = false;
 
@@ -81,10 +80,14 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         if (retval != null) {
             return retval;
         }
-        Object c = InstanceManager.configureManagerInstance()
-                .findInstance(ConnectionConfig.class, index);
-        log.debug("findInstance returned " + c);
-        retval = new JmrixConfigPane((ConnectionConfig) c);
+        ConnectionConfig c = null;
+        try {
+            c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
+            log.debug("connection {}", c);
+        } catch (IndexOutOfBoundsException ex) {
+            log.debug("connection is null, creating new one");
+        }
+        retval = new JmrixConfigPane(c);
         configPaneTable.put(index, retval);
         if (c == null) {
             retval.isDirty = true;
@@ -100,10 +103,10 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     public static JmrixConfigPane createNewPanel() {
 
         int lastIndex = -1;
-        ArrayList<Object> conlist = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
+        ConnectionConfig[] connections = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
 
-        if (conlist != null) {
-            lastIndex = conlist.size();
+        if (connections.length != 0) {
+            lastIndex = connections.length;
         }
         for (int key : configPaneTable.keySet()) {
             if (key > lastIndex) {
@@ -143,6 +146,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         }
         InstanceManager.configureManagerInstance().deregister(confPane);
         InstanceManager.configureManagerInstance().deregister(confPane.ccCurrent);
+        InstanceManager.getDefault(ConnectionConfigManager.class).remove(confPane.ccCurrent);
 
         configPaneTable.remove(getInstanceNumber(confPane));
     }
@@ -314,6 +318,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
     }
 
     void selection() {
+        ConnectionConfig old = this.ccCurrent;
         int current = modeBox.getSelectedIndex();
         details.removeAll();
         // first choice is -no- protocol chosen
@@ -329,6 +334,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
             if (ccCurrent != null) {
                 ccCurrent.dispose();
             }
+        }
+        if (old != this.ccCurrent) {
+            this.ccCurrent.register();
         }
         validate();
 

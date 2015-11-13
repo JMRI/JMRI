@@ -1,8 +1,9 @@
 package jmri.jmrix.pi.configurexml;
 
+import jmri.configurexml.JmriConfigureXmlException;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
  * Provides load and store functionality for
@@ -28,9 +29,10 @@ public class RaspberryPiSensorManagerXml extends jmri.managers.configurexml.Abst
         log.error("Invalid method called");
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
+    @Override
+    public boolean load(Element shared, Element perNode) throws JmriConfigureXmlException {
         // load individual sensors
-        return loadSensors(sensors);
+        return loadSensors(shared);
     }
 
     static Logger log = LoggerFactory.getLogger(RaspberryPiTurnoutManagerXml.class.getName());

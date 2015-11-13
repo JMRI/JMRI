@@ -1,6 +1,5 @@
 package jmri.jmrix.internal.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.internal.ConnectionConfig;
@@ -49,16 +48,12 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Port name carries the hostname for the network connection
-     *
-     * @param e Top level Element to unpack.
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         getInstance();
 
-        loadCommon(e, adapter);
+        this.loadCommon(shared, perNode, adapter);
         // register, so can be picked up
         register();
 
@@ -70,8 +65,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return result;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

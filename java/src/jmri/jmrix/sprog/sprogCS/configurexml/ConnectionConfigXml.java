@@ -1,6 +1,5 @@
 package jmri.jmrix.sprog.sprogCS.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.sprog.sprogCS.ConnectionConfig;
 import jmri.jmrix.sprog.sprogCS.SprogCSSerialDriverAdapter;
@@ -30,8 +29,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = SprogCSSerialDriverAdapter.instance();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

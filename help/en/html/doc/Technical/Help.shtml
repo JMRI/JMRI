@@ -198,10 +198,33 @@ The various control files that JavaHelp uses are stored in our code repository,
 so once you've done this they will show as modified.  
 Please check them in when you check in new help files so other 
 people don't have to recreate those control files for themselves.
-<P>
-You can also use the tool to add them to the table of contents, etc, if you'd like. 
+
+<a name="tocAndIndex" id="tocAndIndex"></a><h3>Table of Contents and Index</h3>
+
+Java Help includes a 
+<a href="http://jmri.org/help/en/webtoc.shtml">table of contents</a> and an 
+<a href="http://jmri.org/help/en/webindex.shtml">index</a>. These are both available
+as hyperlinks on the web, and provided via a nicer user interface when using
+JavaHelp in the program.
+<p>
+The underlying information must be manually maintained in the 
+help/en/JmriHelp_enTOC.xml and help/en/JmriHelp_enIndex.xml 
+files, respectively.  JHelpDev then makes the files that Java Help needs, 
+and an "ant" step in the directory makes the webtoc.shtml and webindex.shtml
+files that are displayed on the web.
+<p>
+Note: This means you should not manually change the webToc.shtml and webindex.shtml files,
+because those changes will be overwritten by later steps.
+<p>
+The JmriHelp_enTOC.xml and JmriHelp_enIndex.xml files are straight-forward
+XML, and you can manually edit them.  Make sure to run the JHelpDev "create all" 
+step and "ant" after doing so.
+<p>
+You can also use the JHelpDev tool to add items to the table of contents
+and index if you'd like. 
 There's more info on how to do that on the
-<a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>.
+<a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>. Remember to run 
+"ant" after that to include your updates on the web versions.
 
 
 <a name="site" id="site"></a><h2>Updating the JMRI.ORG site</h2>

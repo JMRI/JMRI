@@ -24,7 +24,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import jmri.Application;
-import jmri.jmrit.roster.RosterEntry;
+import jmri.InstanceManager;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrix.JmrixConfigPane;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
@@ -125,7 +126,7 @@ public class FirstTimeStartUpWizard {
         p2.setLayout(new FlowLayout());
         p2.add(new JLabel(/*rb.getString("LabelDefaultOwner")*/"Default Owner"));
 
-        owner.setText(RosterEntry.getDefaultOwner());
+        owner.setText(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         if (owner.getText().equals("")) {
             owner.setText(System.getProperty("user.name"));
         }
@@ -278,12 +279,12 @@ public class FirstTimeStartUpWizard {
                     return;
                 }
             }
-            RosterEntry.setDefaultOwner(owner.getText());
-            jmri.InstanceManager.tabbedPreferencesInstance().init();
-            jmri.InstanceManager.tabbedPreferencesInstance().saveContents();
+            InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+            InstanceManager.tabbedPreferencesInstance().init();
+            InstanceManager.tabbedPreferencesInstance().saveContents();
             /*We have to double register the connection as when the saveContents is called is removes the original pref and 
              replaces it with the jmrixconfigpane, which is not picked up by the DP3 window*/
-            jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+            InstanceManager.configureManagerInstance().registerPref(connect);
             dispose();
         }
     }

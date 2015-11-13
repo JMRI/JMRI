@@ -36,7 +36,8 @@ public class LayoutSignalHeadIconXml extends AbstractXmlAdapter {
 
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
