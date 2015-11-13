@@ -1,7 +1,6 @@
 package jmri.jmrix.cmri.serial.serialdriver.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.cmri.serial.SerialNode;
 import jmri.jmrix.cmri.serial.SerialTrafficController;
 import jmri.jmrix.cmri.serial.serialdriver.ConnectionConfig;
@@ -141,8 +140,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return null;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

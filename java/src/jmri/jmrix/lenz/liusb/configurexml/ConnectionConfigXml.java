@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.liusb.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.lenz.configurexml.AbstractXNetSerialConnectionConfigXml;
 import jmri.jmrix.lenz.liusb.ConnectionConfig;
 import jmri.jmrix.lenz.liusb.LIUSBAdapter;
@@ -37,8 +36,9 @@ public class ConnectionConfigXml extends AbstractXNetSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

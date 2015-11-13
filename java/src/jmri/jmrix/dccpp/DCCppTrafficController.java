@@ -6,6 +6,8 @@ import jmri.jmrix.AbstractMRListener;
 import jmri.jmrix.AbstractMRMessage;
 import jmri.jmrix.AbstractMRReply;
 import jmri.jmrix.AbstractMRTrafficController;
+import java.io.BufferedReader;
+import java.io.IOException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -62,6 +64,7 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         mListenerMasks = new Hashtable<DCCppListener, Integer>();
         HighPriorityQueue = new java.util.concurrent.LinkedBlockingQueue<DCCppMessage>();
         HighPriorityListeners = new java.util.concurrent.LinkedBlockingQueue<DCCppListener>();
+	log.debug("DCCppTrafficController created.");
     }
 
     // Abstract methods for the DCCppInterface
@@ -248,6 +251,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         return new DCCppReply();
     }
 
+    // Defined this way to reduce new object creation
+    private char[] rcvCharBuffer = new char[1];
+
     /**
      * Get characters from the input source, and file a message.
      * <P>
@@ -262,7 +268,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
     @Override
     protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        byte lastbyte = (byte) 0xFF;
 	boolean found_start = false;
         if (log.isDebugEnabled()) {
             log.debug("loading characters from port");

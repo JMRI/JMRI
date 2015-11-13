@@ -205,6 +205,21 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
     @Override
     abstract public void setDisabled(boolean disable);
 
+    /**
+     * Register the ConnectionConfig with the running JMRI process. It is
+     * strongly recommended that overriding implementations call
+     * super.register() since this implementation performs all required
+     * registration tasks.
+     */
+    @Override
+    public void register() {
+        InstanceManager.configureManagerInstance().registerPref(this);
+        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        if (ccm != null) {
+            ccm.add(this);
+        }
+    }
+
     static protected Logger log = LoggerFactory.getLogger(AbstractConnectionConfig.class.getName());
 
 }

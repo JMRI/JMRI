@@ -47,11 +47,11 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppLightManagerTest.class));
         suite.addTest(new TestSuite(DCCppOpsModeProgrammerTest.class));
         suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
+        suite.addTest(new TestSuite(DCCppSensorTest.class));
+        suite.addTest(new TestSuite(DCCppSensorManagerTest.class));
 	/*
         suite.addTest(new TestSuite(XNetTurnoutTest.class));
-        suite.addTest(new TestSuite(XNetSensorTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
-        suite.addTest(new TestSuite(XNetSensorManagerTest.class));
         suite.addTest(new TestSuite(XNetConsistManagerTest.class));
         suite.addTest(new TestSuite(XNetConsistTest.class));
         suite.addTest(new TestSuite(XNetExceptionTest.class));

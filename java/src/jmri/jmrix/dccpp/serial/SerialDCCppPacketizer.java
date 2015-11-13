@@ -39,11 +39,6 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      */
     protected int lengthOfByteStream(jmri.jmrix.AbstractMRMessage m) {
         int len = m.getNumDataElements() + 2;
-        int cr = 0;
-        if (!m.isBinary()) { // TODO: Hmm... need to understand this isBinary stuff better...
-            cr = 1;  // space for return
-        }
-        //return len + cr;
         return len;
     }
 
@@ -58,10 +53,9 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    @Override
+    //@Override
     protected void loadChars(jmri.jmrix.AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
         int i;
-        byte lastbyte = (byte) 0xFF;
         if (log.isDebugEnabled()) {
             log.debug("loading characters from port");
         }
@@ -72,7 +66,6 @@ public class SerialDCCppPacketizer extends DCCppPacketizer {
                 if ((char1 & 0xFF) != '<') {
                     // save this so we can check for unsolicited
                     // messages. ( TODO: Not needed for DCC++)
-                    lastbyte = char1;
                     //  toss this byte and read the next one
                     char1 = readByteProtected(istream);
                 }

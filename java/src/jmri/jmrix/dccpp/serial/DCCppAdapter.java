@@ -7,6 +7,8 @@ import gnu.io.SerialPort;
 import gnu.io.SerialPortEvent;
 import gnu.io.SerialPortEventListener;
 import java.io.DataInputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.DataOutputStream;
 import java.io.InputStream;
 import jmri.jmrix.dccpp.DCCppCommandStation;
@@ -233,12 +235,17 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     // base class methods for the XNetSerialPortController interface
-    public DataInputStream getInputStream() {
+    public BufferedReader getInputStreamBR() {
         if (!opened) {
             log.error("getInputStream called before load(), stream not available");
             return null;
         }
-        return new DataInputStream(serialStream);
+        return new BufferedReader(new InputStreamReader(serialStream));
+    }
+
+    public DataInputStream getInputStream() {
+	log.error("Not Using DataInputStream version anymore!");
+	return(null);
     }
 
     public DataOutputStream getOutputStream() {

@@ -57,20 +57,15 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         UIManager.LookAndFeelInfo[] plafs = UIManager.getInstalledLookAndFeels();
         java.util.Hashtable<String, String> installedLAFs = new java.util.Hashtable<String, String>(plafs.length);
         for (int i = 0; i < plafs.length; i++) {
             installedLAFs.put(plafs[i].getName(), plafs[i].getClassName());
         }
-        String name = e.getAttribute("LAFclass").getValue();
+        String name = shared.getAttribute("LAFclass").getValue();
         String className = installedLAFs.get(name);
         log.debug("GUI selection: " + name + " class name: " + className);
         // set the GUI
@@ -87,22 +82,22 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
                 result = false;
             }
         }
-        Attribute langAttr = e.getAttribute("LocaleLanguage");
-        Attribute countryAttr = e.getAttribute("LocaleCountry");
-        Attribute varAttr = e.getAttribute("LocaleVariant");
+        Attribute langAttr = shared.getAttribute("LocaleLanguage");
+        Attribute countryAttr = shared.getAttribute("LocaleCountry");
+        Attribute varAttr = shared.getAttribute("LocaleVariant");
         if (countryAttr != null && langAttr != null && varAttr != null) {
             Locale.setDefault(new Locale(langAttr.getValue(), countryAttr.getValue(),
                     varAttr.getValue()));
         }
 
-        Attribute clickAttr = e.getAttribute("nonStandardMouseEvent");
+        Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
             jmri.util.swing.SwingSettings.setNonStandardMouseEvent(clickAttr.getValue().equals("yes"));
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
         jmri.InstanceManager.configureManagerInstance().registerPref(g);
 
-        Attribute fontsize = e.getAttribute("fontsize");
+        Attribute fontsize = shared.getAttribute("fontsize");
         if (fontsize != null) {
             int size = Integer.parseInt(fontsize.getValue());
             GuiLafConfigPane.setFontSize(size);
