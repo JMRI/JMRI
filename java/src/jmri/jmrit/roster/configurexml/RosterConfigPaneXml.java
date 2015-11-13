@@ -4,7 +4,6 @@ import jmri.InstanceManager;
 import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterConfigPane;
-import jmri.jmrit.roster.RosterEntry;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +60,6 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
             }
         }
         if (shared.getAttribute("ownerDefault") != null) {
-            RosterEntry.setDefaultOwner(shared.getAttribute("ownerDefault").getValue());
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(shared.getAttribute("ownerDefault").getValue());
         }
         InstanceManager.configureManagerInstance().registerPref(new RosterConfigPane());

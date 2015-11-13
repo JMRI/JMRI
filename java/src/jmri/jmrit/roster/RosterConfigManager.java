@@ -3,6 +3,7 @@ package jmri.jmrit.roster;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -38,7 +39,6 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             this.setDirectory(preferences.get(DIRECTORY, this.getDirectory()));
             this.setDefaultOwner(preferences.get(DEFAULT_OWNER, this.getDefaultOwner()));
             Roster.getDefault().setRosterLocation(this.getDirectory());
-            RosterEntry.setDefaultOwner(this.getDefaultOwner());
             this.setIsInitialized(profile, true);
         }
     }
@@ -65,7 +65,7 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
     /**
      * @return the defaultOwner
      */
-    public String getDefaultOwner() {
+    public @Nonnull String getDefaultOwner() {
         return defaultOwner;
     }
 
