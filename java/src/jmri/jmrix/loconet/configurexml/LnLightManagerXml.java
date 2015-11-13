@@ -28,9 +28,10 @@ public class LnLightManagerXml extends jmri.managers.configurexml.AbstractLightM
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
     static Logger log = LoggerFactory.getLogger(LnLightManagerXml.class.getName());

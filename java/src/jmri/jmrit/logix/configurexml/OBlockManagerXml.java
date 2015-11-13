@@ -245,18 +245,13 @@ public class OBlockManagerXml // extends XmlFile
         return path;
     }
 
-    /**
-     * Create a OBlock object of the correct class, then register and fill it.
-     *
-     * @param blocks Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element blocks) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         _blockMap = new HashMap<String, OBlock>();
         _pathMap = new HashMap<String, OPath>();
         _manager = InstanceManager.getDefault(OBlockManager.class);
         _portalMgr = InstanceManager.getDefault(PortalManager.class);
-        List<Element> blockList = blocks.getChildren("oblock");
+        List<Element> blockList = shared.getChildren("oblock");
         if (log.isDebugEnabled()) {
             log.debug("Found " + blockList.size() + " OBlock objects");
         }

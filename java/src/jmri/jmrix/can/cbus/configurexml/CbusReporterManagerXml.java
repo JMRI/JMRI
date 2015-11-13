@@ -43,9 +43,9 @@ public class CbusReporterManagerXml extends AbstractReporterManagerConfigXML {
     }
 
     @Override
-    public boolean load(Element reporters) {
+    public boolean load(Element shared, Element perNode) {
         // load individual reporters
-        return loadReporters(reporters);
+        return loadReporters(shared);
     }
 
     private static final Logger log = LoggerFactory.getLogger(CbusReporterManagerXml.class.getName());

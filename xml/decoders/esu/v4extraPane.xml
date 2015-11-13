@@ -183,6 +183,13 @@
     <label>
       <text> </text>
     </label>
+    <row>
+      <display item="ESU V4 Extra Smoke Unit Slider 4" layout="above" label=""/>
+      <display item="ESU V4 Extra Smoke Unit Slider 4" layout="above" format="hslider"/>
+    </row>
+    <label>
+      <text> </text>
+    </label>
     <separator/>
     <label>
       <text>Smoke Chuffs</text>

@@ -37,13 +37,8 @@ public class PerformActionPanelXml extends jmri.configurexml.AbstractXmlAdapter 
         return null;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("load(Element) should not have been invoked");
         return false;
     }

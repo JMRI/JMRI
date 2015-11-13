@@ -1112,7 +1112,11 @@ var $getTextCSSFromObj = function($widget) {
     if (typeof $widget.red !== "undefined") {
         $retCSS['color'] = "rgb(" + $widget.red + "," + $widget.green + "," + $widget.blue + ") ";
     }
-    if (typeof $widget.redBack !== "undefined") {
+    //check for new hasBackground element, ignore background colors unless set to yes
+    if (typeof $widget.hasBackground !== "undefined" && $widget.hasBackground == "yes") {
+        $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
+    }
+    if (typeof $widget.hasBackground == "undefined" && $widget.redBack !== "undefined") {
         $retCSS['background-color'] = "rgb(" + $widget.redBack + "," + $widget.greenBack + "," + $widget.blueBack + ") ";
     }
     if (typeof $widget.size !== "undefined") {

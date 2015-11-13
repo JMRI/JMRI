@@ -52,9 +52,9 @@ for more information on how to use it, or look at the
 information on how it works.
 <p>
 DecoderPro is also covered in 
-<a HREF="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
+<a href="http://mymemoirs.net/model-trains-set1-vol3b.php">Volume 3</a> 
 of Joe Fugate's
-<a HREF="http://mymemoirs.net/model-trains.php">series of videos<a/>
+<a href="http://mymemoirs.net/model-trains.php">series of videos<a/>
 on DCC topics.</a>
 
 <h2>What You Need to Use DecoderPro</h2>
@@ -64,13 +64,13 @@ through 9.2 and MacOS X), and OS/2. It will probably also work on most
 other modern operating systems that have Java available; contact us for
 help if you'd like to try it on some other system. You need to have a
 serial port available, either on the computer itself, or via a 
-<a HREF="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
+<a href="../../hardware/USBtoSerial.shtml">USB adapter</a>. 
 For more information, please see the
-<a HREF="http://jmri.sourceforge.net/download/index.shtml">download pages</a>.</p>
+<a href="http://jmri.sourceforge.net/download/index.shtml">download pages</a>.</p>
 
 <p>You also need to have a serial connection to your DCC system.
 For more information, please see the
-<a HREF="../../hardware/index.shtml">DCC hardware pages</a>.</p>
+<a href="../../hardware/index.shtml">DCC hardware pages</a>.</p>
 
 <h2>What you can do to help</h2>
 
@@ -96,24 +96,24 @@ for more information on how to use DecoderPro.
 The User Guide pages:
 <dl class=toc>
 <dt><a href="./MoreInfo.shtml">Details</a></dt>
-<dt><a HREF="./Files.shtml">Configuration files</a></dt>
-<dt><a HREF="./Roster.shtml">Working with the roster</a></dt>
-<dt><a HREF="./FAQ.shtml">Frequently asked questions</a></dt>
-<dt><a HREF="./Install.shtml">Downloading and installing DecoderPro</a></dt>
+<dt><a href="./Files.shtml">Configuration files</a></dt>
+<dt><a href="./Roster.shtml">Working with the roster</a></dt>
+<dt><a href="./FAQ.shtml">Frequently asked questions</a></dt>
+<dt><a href="./Install.shtml">Downloading and installing DecoderPro</a></dt>
 </dl>
 
 
 <h2>More advanced information</h2>
 <dl class=toc>
 
-<dt><a HREF="./IntroXML.shtml">Intro to XML files</a></dt>
+<dt><a href="./IntroXML.shtml">Intro to XML files</a></dt>
 <dt><a href="./CreateDecoder.shtml">Create your own decoder definition</a></dt>
 <dt><a href="./Programmer.shtml">Create a custom programmer definition</a></dt>
-<dt><a HREF="./RosterFile.shtml">How the roster is stored; updating it by hand</a></dt>
-<dt><a HREF="./LocoFile.shtml">Locomotive (roster) files</a></dt>
-<dt><a HREF="./Debug.shtml">Debugging</a></dt>
-<dt><a HREF="./NetworkFiles.shtml">Sharing Rosters Among Computers</a></dt>
-<dt><a HREF="./FileUpdate.shtml">Updating Decoder Definitions</a></dt>
+<dt><a href="./RosterFile.shtml">How the roster is stored; updating it by hand</a></dt>
+<dt><a href="./LocoFile.shtml">Locomotive (roster) files</a></dt>
+<dt><a href="./Debug.shtml">Debugging</a></dt>
+<dt><a href="./NetworkFiles.shtml">Sharing Rosters Among Computers</a></dt>
+<dt><a href="./FileUpdate.shtml">Updating Decoder Definitions</a></dt>
 </dl>
 
 <h2>Decoder information</h2>

@@ -56,11 +56,6 @@ public class TrainIconXml extends LocoIconXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * TrainIcons should be loaded by the operations function, not here
      *

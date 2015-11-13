@@ -224,6 +224,8 @@ public class TrainBuilder extends TrainCommon {
         }
         if (_train.isBuildConsistEnabled()) {
             addLine(_buildReport, FIVE, Bundle.getMessage("BuildConsist"));
+            addLine(_buildReport, FIVE, MessageFormat.format(Bundle.getMessage("BuildConsistHPT"), new Object[]{
+            Setup.getHorsePowerPerTon()}));
         }
         addLine(_buildReport, ONE, BLANK_LINE); // add line
         // TODO: DAB control minimal build by each train
@@ -3332,6 +3334,14 @@ public class TrainBuilder extends TrainCommon {
         if (track.getSchedule() == null) {
             return null;
         }
+        if (!track.acceptsTypeName(car.getTypeName())) {
+            log.debug("Track ({}) doesn't service car type ({})", track.getName(), car.getTypeName());
+            if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurNotThisType"), new Object[]{
+                        track.getLocation().getName(), track.getName(), track.getScheduleName(), car.getTypeName()}));
+            }
+            return null;
+        }
         ScheduleItem si = null;
         if (track.getScheduleMode() == Track.SEQUENTIAL) {
             si = track.getCurrentScheduleItem();
@@ -3377,11 +3387,21 @@ public class TrainBuilder extends TrainCommon {
                 || si.getReceiveLoadName().equals(CarLoads.instance().getDefaultLoadName())) {
             log.debug("Not using track ({}) schedule request type ({}) road ({}) load ({})", track.getName(), si
                     .getTypeName(), si.getRoadName(), si.getReceiveLoadName()); // NOI18N
+            if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurScheduleNotUsed"), new Object[]{
+                        track.getLocation().getName(), track.getName(), track.getScheduleName(), si.getId(), si.getTypeName(), 
+                        si.getRoadName(), si.getReceiveLoadName()}));
+            }
             return null;
         }
         if (!si.getRoadName().equals(ScheduleItem.NONE) && !car.getRoadName().equals(si.getRoadName())) {
             log.debug("Not using track ({}) schedule request type ({}) road ({}) load ({})", track.getName(), si
                     .getTypeName(), si.getRoadName(), si.getReceiveLoadName()); // NOI18N
+            if (!Setup.getRouterBuildReportLevel().equals(Setup.BUILD_REPORT_NORMAL)) {
+                addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildSpurScheduleNotUsed"), new Object[]{
+                        track.getName(), track.getScheduleName(), si.getId(), si.getTypeName(), si.getRoadName(), 
+                        si.getReceiveLoadName()}));
+            }
             return null;
         }
         if (!_train.acceptsLoad(si.getReceiveLoadName(), si.getTypeName())) {

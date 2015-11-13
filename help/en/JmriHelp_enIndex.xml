@@ -137,6 +137,8 @@
    <indexitem text="Signals " target="html.hardware.cmri.Signals"/>
 
   </indexitem>
+  <indexitem text="DCC++ " target="html.hardware.dccpp.index"/>
+
   <indexitem text="DCC Specialties " target="html.hardware.misc.DccSpecialties"/>
 
   <indexitem text="Digitrax LocoNet " target="html.hardware.loconet.Digitrax"/>

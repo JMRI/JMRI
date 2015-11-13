@@ -74,11 +74,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("green", "" + util.getForeground().getGreen());
         element.setAttribute("blue", "" + util.getForeground().getBlue());
 
-        if (p.isOpaque() || p.getSaveOpaque()) {
-            element.setAttribute("redBack", "" + util.getBackground().getRed());
-            element.setAttribute("greenBack", "" + util.getBackground().getGreen());
-            element.setAttribute("blueBack", "" + util.getBackground().getBlue());
-        }
+        element.setAttribute("hasBackground", util.hasBackground() ? "yes" : "no");
+        // store default regardless
+        element.setAttribute("redBack", "" + util.getBackground().getRed());
+        element.setAttribute("greenBack", "" + util.getBackground().getGreen());
+        element.setAttribute("blueBack", "" + util.getBackground().getBlue());
+
         if (util.getMargin() != 0) {
             element.setAttribute("margin", "" + util.getMargin());
         }
@@ -168,7 +169,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         return element;
     }
 
-    public boolean load(Element element) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }
@@ -306,6 +308,12 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
+        a = element.getAttribute("hasBackground");
+        if (a!=null) {
+            util.setHasBackground("yes".equals(a.getValue()));            
+        } else {
+            util.setHasBackground(true);                        
+        }
         try {
             int red = element.getAttribute("redBack").getIntValue();
             int blue = element.getAttribute("blueBack").getIntValue();
@@ -314,9 +322,9 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse background color attributes!");
         } catch (NullPointerException e) {
-            util.setBackgroundColor(null);// if the attributes are not listed, we consider the background as clear.
+            util.setHasBackground(false);// if the attributes are not listed, we consider the background as clear.
         }
-
+        
         int fixedWidth = 0;
         int fixedHeight = 0;
         try {

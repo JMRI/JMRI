@@ -34,9 +34,6 @@ import org.slf4j.LoggerFactory;
  */
 public class PositionableLabel extends JLabel implements Positionable {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 2620446240151660560L;
 
     public static final ResourceBundle rbean = ResourceBundle.getBundle("jmri.NamedBeanBundle");
@@ -251,7 +248,6 @@ public class PositionableLabel extends JLabel implements Positionable {
             pos.setPopupUtility(getPopupUtility().clone(pos, pos.getTextComponent()));
         }
         pos.setOpaque(isOpaque());
-        pos._saveOpaque = _saveOpaque;
         if (_namedIcon != null) {
             pos._namedIcon = cloneIcon(_namedIcon, pos);
             pos.setIcon(pos._namedIcon);
@@ -651,39 +647,28 @@ public class PositionableLabel extends JLabel implements Positionable {
         }
         return ((NamedIcon) getIcon()).getScale();
     }
-
-    private boolean _saveOpaque;
-
-    public void saveOpaque(boolean set) {
-        _saveOpaque = set;
-    }
-
-    public boolean getSaveOpaque() {
-        return _saveOpaque;
-    }
-
+    
     public void rotate(int deg) {
         _degrees = deg;
         if (_rotateText) {
             if (deg == 0) {				// restore unrotated whatever
                 _rotateText = false;
-                if (_text && _icon) {	// restore horizontal icon and its text
-                    String url = _namedIcon.getURL();
-                    _namedIcon = new NamedIcon(url, url);
+                if(_text) {
                     super.setText(_unRotatedText);
-                    setIcon(new NamedIcon(url, url));
-                } else if (_text) {		// restore original text as a label
-                    setIcon(null);
-                    _namedIcon = null;
-                    super.setText(_unRotatedText);
-                    setOpaque(_saveOpaque);
-                    _popupUtil.setBorder(true);
+                    setOpaque( _popupUtil.hasBackground());
+                    if (_icon) {
+                        String url = _namedIcon.getURL();
+                        _namedIcon = new NamedIcon(url, url);                        
+                    } else {
+                        _namedIcon = null;
+                        _popupUtil.setBorder(true);
+                    }
+                    setIcon(_namedIcon);
                 } else {
                     _namedIcon.rotate(deg, this);
                     setIcon(_namedIcon);
                 }
             } else {
-                setOpaque(_saveOpaque);
                 if (_text & _icon) {	// update text over icon
                     _namedIcon = makeTextOverlaidIcon(_unRotatedText, _namedIcon);
                 } else if (_text) {		// update text only icon image        			
@@ -691,7 +676,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 }
                 _namedIcon.rotate(deg, this);
                 setIcon(_namedIcon);
-                setOpaque(false);
+                setOpaque(false);   // rotations cannot be opaque
             }
         } else {
             if (deg != 0) {	// first time text or icon is rotated from horizontal
@@ -700,7 +685,6 @@ public class PositionableLabel extends JLabel implements Positionable {
                     super.setText(null);
                     _rotateText = true;
                 } else if (_text) {
-                    _saveOpaque = isOpaque();
                     _namedIcon = makeTextIcon(_unRotatedText);
                     super.setText(null);
                     _rotateText = true;
@@ -814,7 +798,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                 RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 
         if (_popupUtil != null) {
-            if (/*isOpaque() &&*/_popupUtil.getBackground() != null) {
+            if ( _popupUtil.hasBackground()) {
                 g2d.setColor(_popupUtil.getBackground());
                 g2d.fillRect(0, 0, width, height);
             }

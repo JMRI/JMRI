@@ -1,6 +1,5 @@
 package jmri.jmrix.zimo.mx1.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.zimo.mx1.ConnectionConfig;
 import jmri.jmrix.zimo.mx1.Mx1Adapter;
@@ -29,8 +28,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = Mx1Adapter.instance();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging
