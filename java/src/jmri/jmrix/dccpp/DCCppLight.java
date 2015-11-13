@@ -88,7 +88,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
     static final int OFFSENT = 1;
     static final int COMMANDSENT = 2;
     static final int IDLE = 0;
-    private int InternalState = IDLE;
+    //private int InternalState = IDLE;
 
     /**
      * Return the current state of this Light
@@ -120,7 +120,7 @@ public class DCCppLight extends AbstractLight implements DCCppListener {
 	    DCCppMessage msg = DCCppMessage.getAccessoryDecoderMsg(addr,
 								    subaddr,
 								    state);
-	    InternalState = COMMANDSENT;
+	    //InternalState = COMMANDSENT;
 	    tc.sendDCCppMessage(msg, this);
 
 	    if (newState != mState) {
