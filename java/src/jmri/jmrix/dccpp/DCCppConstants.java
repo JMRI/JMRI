@@ -51,6 +51,7 @@ public final class DCCppConstants {
     public final static char TRACK_POWER_OFF        = '0'; // Track power OFF
     public final static char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public final static char READ_CS_STATUS         = 's'; // Read status from command station
+    public final static char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
 
     // Special Commands not for normal use.  Diagnostic and Test Use Only
     public final static char WRITE_DCC_PACKET_MAIN  = 'M';
@@ -67,6 +68,7 @@ public final class DCCppConstants {
     public final static char CURRENT_REPLY    = 'a';
     public final static char MEMORY_REPLY     = 'f';
     public final static char LISTPACKET_REPLY = 'L';
+    public final static char SENSOR_REPLY     = 'Q';
 
     // Message / Reply Regexes
     public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s([-]*\\d+)\\s([1,0])";
@@ -82,6 +84,7 @@ public final class DCCppConstants {
     public final static String TRACK_POWER_REGEX = "\\s*[0,1]\\s*";
     public final static String READ_TRACK_CURRENT_REGEX = "\\s*c\\s*";
     public final static String READ_CS_STATUS_REGEX = "\\s*s\\s*";
+    public final static String QUERY_SENSOR_REGEX = "\\s*q\\s*(\\d+)\\s*";
     public final static String WRITE_DCC_PACKET_MAIN_REGEX = "\\s*M\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
     public final static String WRITE_DCC_PACKET_PROG_REGEX = "\\s*P\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+((\\d+)\\s+)?((\\d+)\\s+)?(\\d+)*\\s*";
     public final static String GET_FREE_MEMORY_REGEX = "\\s*f\\s*";
@@ -89,9 +92,11 @@ public final class DCCppConstants {
 
     public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
     public final static String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
-    public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*";
+    public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)(\\s+(\\d+))?\\s*";
     public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
     public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
+    public final static String SENSOR_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+([0,1])\\s*";
+    public final static String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+)\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
@@ -112,8 +117,11 @@ public final class DCCppConstants {
     public final static String ACCESSORY_OFF    = "0";
     public final static String POWER_ON         = "1";
     public final static String POWER_OFF        = "0";
+    public final static String SENSOR_ON        = "1";
+    public final static String SENSOR_OFF       = "0";
 
     // Various min/max values for messages
+    public final static int MAX_SENSOR_NUMBER = 2048; // TODO: Check this
     public final static int MAX_ACC_DECODER_ADDRESS = 511;
     public final static int MAX_ACC_DECODER_SUBADDR = 3;
     // Max JMRI addr = ((MAX_ADDRESS - 1) * (MAX_SUBADDR+1)) + (MAX_SUBADDR) + 1

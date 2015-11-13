@@ -22,7 +22,7 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
     private float current_float = 0.0f;
     private float voltage_float = 0.0f;
 
-    private boolean is_enabled = false;
+    //private boolean is_enabled = false;
 
     private UpdateTask intervalTask = null;
     private Timer intervalTimer = null;
@@ -37,7 +37,7 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
 	// at some point this will have to be customized.
 	tc.addDCCppListener(DCCppInterface.THROTTLE, this);
 
-	is_enabled = false;
+	//is_enabled = false;
 
 	initTimer();
 
@@ -91,9 +91,9 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
 	    parent = p;
 	}
 
-	public void setInterval(int i) { sleep_interval = i; }
+	//public void setInterval(int i) { sleep_interval = i; }
 
-	public int interval() { return(sleep_interval); }
+	//public int interval() { return(sleep_interval); }
 	
 	public void enable() { is_enabled = true; }
 	public void disable() { is_enabled = false; }
@@ -146,11 +146,11 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
 
     public String getHardwareMeterName() {
 	return("DCC++");
-    };
+    }
 
     public boolean hasCurrent() {
 	return true;
-    };
+    }
 
     public boolean hasVoltage() {
 	return false;
@@ -162,7 +162,7 @@ public class DCCppMultiMeter implements MultiMeter, DCCppListener {
      * garbage-collected.
      */
     public void dispose() { 
-    };
+    }
 
     // Property Change Support Functions
 
