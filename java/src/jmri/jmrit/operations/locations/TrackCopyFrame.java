@@ -19,6 +19,7 @@ import jmri.jmrit.operations.rollingstock.RollingStockManager;
 import jmri.jmrit.operations.rollingstock.cars.CarManager;
 import jmri.jmrit.operations.rollingstock.engines.EngineManager;
 import jmri.jmrit.operations.setup.Control;
+import jmri.jmrit.operations.trains.TrainCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -231,7 +232,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
 
     /**
      *
-     * @return true if name entered and isn't too long
+     * @return true if name entered OK and isn't too long
      */
     protected boolean checkName() {
         if (trackNameTextField.getText().trim().equals("")) {
@@ -239,7 +240,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
                     .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (trackNameTextField.getText().length() > Control.max_len_string_track_name) {
+        if (TrainCommon.splitString(trackNameTextField.getText()).length() > Control.max_len_string_track_name) {
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(Control.max_len_string_track_name + 1)}), MessageFormat.format(Bundle
                             .getMessage("CanNotTrack"), new Object[]{Bundle.getMessage("Copy")}), JOptionPane.ERROR_MESSAGE);
