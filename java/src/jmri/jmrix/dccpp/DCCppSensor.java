@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     private boolean statusRequested = false;
+    private String prefix;
 
     private int address;
     private int baseaddress; /* The result of integer division of the 
@@ -51,10 +52,13 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private void init(String id) {
         // store address
         systemName = id;
+	//prefix = jmri.InstanceManager.getDefault(jmri.jmrix.dccpp.DCCppSensorManager.class).getSystemPrefix();
 	// WARNING: This address assignment is brittle. If the user changes the System Name prefix
 	// it will fail.  Probably better to do a regex parse, or to look for the last instance of 'S'
 	// TODO: Fix this to be more robust.  And check the other things (T/O's, etc.) for the same bug
-        address = Integer.parseInt(id.substring(6, id.length())); 
+        //address = Integer.parseInt(id.substring(6, id.length())); 
+	address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
+	log.debug("New sensor prefix {} address {}", prefix, address);
         // calculate the base address, the nibble, and the bit to examine
         baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;

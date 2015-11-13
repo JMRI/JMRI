@@ -92,3 +92,7 @@ log4j.category.org.eclipse.jetty.server.handler=WARN
 # log4j.category.jmri.jmrix.can=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.org.eclipse.jetty=INFO
+log4j.category.jmri.jmrix.dccpp=DEBUG
+#log4j.category.jmri.jmrix.dccpp.dccppovertcp=DEBUG
+#log4j.category.jmri.jmrix.AbstractMRTrafficController=DEBUG
+#log4j.category.jmri.util.zeroconf=DEBUG
