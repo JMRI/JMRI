@@ -404,7 +404,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getSensorStateString() {
-	if (this.isTurnoutReply()) {
+	if (this.isSensorReply()) {
 	    return(this.getSensorStateInt() == 1 ? "Active" : "Inactive");
 	} else {
 	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
