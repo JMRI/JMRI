@@ -491,6 +491,7 @@
     <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>,
     and has done a large amount of work on decoder definitions.
     <li>Mark Underwood, who provided a fix for a problem with looping sounds
+    and added support for the DCC++ hardware.
 <a name="V"></A>
     <li>Darryl Van Nort, who provided a definition for an MRC decoder
     <li>Tjeerd Verhage, who provided the logo for our SourceForge.net page
