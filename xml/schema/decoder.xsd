@@ -107,7 +107,7 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
-            <xs:element name="mode" minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
               Content is the internal name of a supported programmer mode.
               Having at least one of these (or the 
@@ -766,24 +766,43 @@
 
   <xs:complexType name="ResetsType">
     <xs:sequence>
+      <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>
+          Content is the internal name of a supported programmer mode.
+        </xs:documentation></xs:annotation>
+      </xs:element>
       <xs:element name="factReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-            <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+                Content is the internal name of a supported programmer mode.
+              </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="label" minOccurs="0" maxOccurs="unbounded" >
+                <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CV" type="cvNameType"/>
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute name="mode" type="modeType"/>
           <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+                Content is the internal name of a supported programmer mode.
+              </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CVname" type="cvNameType"/>
@@ -793,10 +812,12 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
+          <xs:attribute name="mode" type="modeType"/>
           <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="mode" type="modeType"/>
     <xs:attribute ref="xml:base" />
   </xs:complexType>
 
@@ -884,6 +905,31 @@
       <xs:pattern value="(V|X)*"/>
       <xs:minLength value="8"/>
       <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="modeType">
+    <xs:annotation>
+      <xs:documentation>
+        Content is the internal name of a supported programmer mode.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PAGEMODE"/>
+      <xs:enumeration value="OPSBITMODE"/>
+      <xs:enumeration value="OPSACCEXTBYTEMODE"/>
+      <xs:enumeration value="OPSACCBITMODE"/>
+      <xs:enumeration value="OPSACCEXTBITMODE"/>
+      <xs:enumeration value="OPSACCBYTEMODE"/>
+      <xs:enumeration value="NONE"/>
+      <xs:enumeration value="ADDRESSMODE"/>
+      <xs:enumeration value="OPSBYTEMODE"/>
+      <xs:enumeration value="DIRECTBYTEMODE"/>
+      <xs:enumeration value="REGISTERMODE"/>
+      <xs:enumeration value="DIRECTBITMODE"/>
+      <xs:enumeration value="DIRECTMODE"/>
+      <xs:enumeration value="LOCONETSV1MODE"/>
+      <xs:enumeration value="LOCONETSV2MODE"/>
     </xs:restriction>
   </xs:simpleType>
 
