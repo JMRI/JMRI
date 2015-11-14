@@ -15,7 +15,6 @@
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div> <!-- remove -->
 <div id="mainContent"><a name="Top" id="Top"></a>
 
 <h1>JMRI&reg; OperationsPro Manual</h1>
@@ -23,7 +22,6 @@
 
 <p><strong>JMRI</strong> is a Java-based cross-platform application
 for model railroaders. JMRI contains applications for:</p>
-
 <ul>
 <li>The programming of Digital Command Control (DCC) decoders (DecoderPro&reg;3)</li>
 <li>Drawing computer based panels for depicting a model railroad layout (PanelPro&trade;)</li>
@@ -50,14 +48,14 @@ to get an overview of what we're about to cover.
 
 <p>Note: All screen shots in this manual are from a Windows machine using the "Metal" User Interface option. While your screens will probably differ in some layout details, they will be essentially the same. All programming examples shown are with Digitrax PR3 (in MS100 mode) connected to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive samples will be Digitrax, except for sound examples.</p>
 
-<p>Note: This entire manual has been updated to correspond to DecoderPro 3.4 and the HTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you probably need to update your browser.</p>
+<p>Note: This entire manual has been updated to correspond to DecoderPro 3.6 and the HTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you probably need to update your browser.</p>
 
 <h2>Table of Contents</h2>
 
 <h4><a name="Installing" id="Installing">Installing JMRI</a></h4>
 <ul>
-<li><a href="Installing_JMRI.shtml">Preparing to Install JMRI</a></li>
-<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing JMRI Software</a></li>
+<li><a href="Installing_JMRI.shtml">Preparing to install</a></li>
+<li><a href="Installing_JMRI.shtml#InstallJMRI">Installing the Software</a></li>
 </ul>
 
 <h4><a name="startOps" id="startOps"></a>Starting OperationsPro</h4>
@@ -169,11 +167,12 @@ to get an overview of what we're about to cover.
   </ul>
   </li>
   <li style="font-weight: bold;"><a href="Ops_AddCars.shtml"><span style="font-style: italic;"><span style="font-weight: normal;">Add Car</span></span></a></li>
-  <li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_AddCars.shtml">Edit Car</a></span></span></li>
+  <li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_AddCars.shtml">Edit Car</a></span></span>
     <ul>
     <li style="font-weight: bold;"><span style="font-style: italic;font-weight: normal;"><a href="Ops_CarAttributes.shtml">Edit Car Attributes</a></span></li>
-    <li style="font-weight: bold;"><span style="font-style: italic;font-weight: normal;"><a href="http://www.railserve.com/aar_railroad_reporting_marks.html">AAR Railroad Reporting Marks</a><br></span></li>
+    <li style="font-weight: bold;"><span style="font-style: italic;font-weight: normal;"><a href="http://www.railserve.com/aar_railroad_reporting_marks.html">AAR Railroad Reporting Marks</a></span></li>
     </ul>
+  </li>
   </ul>
 </li>
 
@@ -262,7 +261,7 @@ to get an overview of what we're about to cover.
 </ul>
 </li>
 
-<li><strong><a href="Ops_TripThruOperations.shtml">A Trip through Operations</a></strong></li>
+<li><strong><a href="Ops_TripThruOperations.shtml">A Trip through OperationsPro</a></strong></li>
 </ul>
 
 <h3><a name="revisions">Revisions</a></h3>

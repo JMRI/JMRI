@@ -1,13 +1,13 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for (current) DP3 Manual pages -->
+<!-- This is the common sidebar definition for (current) DP(3) Manual pages -->
 <hr class="hide">
 
 <div id="mBody">
 
 <div id="side"> <!-- Block of text on left side of page -->
-    <div style="text-align: center"><strong>DecoderPro3&reg; Manual</strong></div>
+    <div style="text-align: center"><strong>DecoderPro&reg; Manual</strong></div>
 
-    <div style="text-align: right">
+    <div style="text-align: center">
        <a href="http://jmri.org/manual/pdf/DP3_Man_3-2.pdf">Download</a>
     </div>
 
@@ -26,11 +26,11 @@
     <li><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a>
     <li><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a>
     <li><a href="Start_DecoderPro.shtml">How do I start the program?</a>
-    <li><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro3&reg; program for the First Time User?</a>
+    <li><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro&reg; program for the First Time User?</a>
     <li><a href="Start_Preferences.shtml">How do I set up my Preferences?</a>
     </ul>
    
- <div style="text-align: center"><strong>Using DecoderPro3&reg;</strong></div>   
+ <div style="text-align: center"><strong>Using DecoderPro&reg;</strong></div>   
 
     <ul>
     <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a>
@@ -77,15 +77,15 @@
     </ul>
     </dd>
     
- <div style="text-align: center"><strong>Function Labels and Roster Media</strong></div> 
+ <div style="text-align: center"><strong>Advanced Features</strong></div> 
 	   <dd>
        <ul>
-        <li><a href="Comp_FunctionLabel.shtml">Function Labels Pane</a></li>
+        <li><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></li>
         <li><a href="RosterMedia.shtml">Roster Media</a></li>
         </ul>
       </dd>
 
-<div style="text-align: center"><strong>DecoderPro3&reg; Main Window</strong></div>    
+<div style="text-align: center"><strong>DecoderPro&reg; Main Window</strong></div>    
 
     <ul>
       <li><a href="dp3_menubar.shtml">Menu Bar</a></li>

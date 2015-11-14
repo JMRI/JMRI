@@ -1,16 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ --><title>Operations-Add Yard</title><!-- Style -->
+<title>JMRI OperationsPro - Add Yard</title>
 
-
-
-
-
+<!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head><body>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
@@ -18,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Add Yard</h1>
+<h2>OperationsPro: Add Yard</h2>
 
 <div align="right">
 <p><a href="Ops_AddLocations.shtml">Back</a><a href="Ops_AddInterchange.shtml"></a></p>
@@ -26,7 +27,7 @@
 </div>
 
 <hr>
-<p align="left">Add<a href="Ops_Locations.shtml"> Location as Yards</a> and the <strong>Add Location </strong>window for Yards is opened from Add Location window. </p>
+<p align="left">Add <a href="Ops_Locations.shtml">Location as Yards</a> and the <strong>Add Location </strong>window for Yards is opened from Add Location window. </p>
 <p align="left"><br>
   To add a location as a Yard: in the <strong>Add Location</strong> window, type the<strong> Name</strong>
   <input name="textfield" id="textfield" type="text">

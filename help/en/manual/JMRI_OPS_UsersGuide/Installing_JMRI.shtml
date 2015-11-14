@@ -20,10 +20,11 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>
-<img src="images/logo.gif" alt="JMRI DecoderPro Logo" border="0" height="135" vspace="15" width="160"></h1>
+
+<img src="images/logo.gif" alt="JMRI DecoderPro Logo" border="0" height="135" vspace="15" width="160">
 
 <h1>Installing JMRI&reg;</h1>
+
 <div align="right">
   <p><a href="index.shtml#Installing">Back to Index</a></p>
 </div>

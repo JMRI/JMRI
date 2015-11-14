@@ -1,8 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-
 <title>OperationsPro Menus</title>
+
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -28,9 +28,10 @@
 
 <hr>
 <p wrap="">All of the JMRI functions can be accessed via the menu bar
-on the DecoderPro&reg; window. We are concerned with Operations(Pro) only in
+on either the DecoderPro&reg; or PanelPro main window. We are only concerned with OperationsPro in
 this Manual.</p>
 <p><img src="images/Main_05_MenuBar.png" alt="menu bar" height="100" width="505"></p>
+
 <h4>File</h4>
 <h4>Edit</h4>
 <h4>Tools</h4>
@@ -38,7 +39,7 @@ this Manual.</p>
   <li></li>
   <li></li>
   <li></li>
-  <li><strong><a href="Ops_Start.shtml">Operations </a><img src="images/arrow.gif" alt="aroww" height="9" width="20"></strong>(on menu bar only if checked in the Operations Settings)
+  <li><strong><a href="Ops_Start.shtml">Operations </a><img src="images/arrow.gif" alt="aroww" height="9" width="20"></strong> (only displayed on menu bar if checked in the Operations Settings)
     <ul>
       <li><a href="Ops_Settings.shtml">Settings</a></li>
       <li><a href="Ops_Locations.shtml">Locations</a></li>
@@ -70,13 +71,14 @@ this Manual.</p>
 <ul></ul>
 </blockquote>
 <h4><span class="style1"><a name="System"></a>System</span><br>
-  <span class="ACCENT">(This
-menu name will depend upon the system that you selected in Preferences.
-The options are listed. If (none) is selected in Preferences this menu
-will not be displayed.)</span></h4>
+(This
+menu name will depend upon the System Connection(s) that you selected in Preferences.
+The options are listed. If (<em>None</em>) is selected in Preferences, a System menu
+will not be displayed.)</h4>
 <h4>Debug</h4>
 <h4>Window</h4>
 <h4>Help</h4>
+
 <hr>
 
 <div align="right">
@@ -85,5 +87,6 @@ will not be displayed.)</span></h4>
 
 <!--#include virtual="/Footer" -->
 </div> <!-- closes #mainContent -->
+</div>
 </body>
 </html>
