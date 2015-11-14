@@ -1,15 +1,18 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
 
+<title>Operations-Settings</title>
 
-
-
-
-<title>Operations-Settings</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,14 +21,15 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Settings Window</h1>
+<h2>Operations Settings Window</h2>
 
 <div align="right">
 <p><a href="Ops_Locations.shtml">Next</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
-<hr><span style="font-weight: bold;">Operations Settings </span>Window is opened from DecoderPro&reg; &nbsp; <span style="font-weight: bold;">Tools</span>&nbsp;menu / <span style="font-weight: bold;">Operations</span>&nbsp;<img style="width: 20px; height: 9px;" alt="arrow" src="images/arrow.gif"> <span style="font-weight: bold;">Settings</span> &nbsp;or &nbsp;<span style="font-weight: bold;">Operations</span> menu / &nbsp;<span style="font-weight: bold;">Settings</span> if selected in &nbsp;<span style="font-weight: bold;">Operations Setting</span>&nbsp; window.<p style="text-align: center;"><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p><p><a style="font-weight: bold;" href="Ops_Settings_menubar.shtml">Menu Bar</a></p><p><span style="font-weight: bold;">Settings &nbsp;-- </span>describes your railroad to the operations program.</p><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="2" rowspan="1"><img style="width: 800px; height: 156px;" alt="Name" src="images/Ops_Setting05.png"></td></tr><tr><td><strong>Railroad Name</strong>
+<hr>
+<p>The <span style="font-weight: bold;">Operations Settings </span>Window is opened from DecoderPro&reg; &nbsp; <span style="font-weight: bold;">Tools</span>&nbsp;menu / <span style="font-weight: bold;">Operations</span>&nbsp;<img style="width: 20px; height: 9px;" alt="arrow" src="images/arrow.gif"> <span style="font-weight: bold;">Settings</span> &nbsp;or &nbsp;<span style="font-weight: bold;">Operations</span> menu / &nbsp;<span style="font-weight: bold;">Settings</span> if selected in &nbsp;<span style="font-weight: bold;">Operations Setting</span>&nbsp; window.<p style="text-align: center;"><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p><p><a style="font-weight: bold;" href="Ops_Settings_menubar.shtml">Menu Bar</a></p><p><span style="font-weight: bold;">Settings &nbsp;-- </span>describes your railroad to the operations program.</p><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="2" rowspan="1"><img style="width: 800px; height: 156px;" alt="Name" src="images/Ops_Setting05.png"></td></tr><tr><td><strong>Railroad Name</strong>
         <input name="textfield" id="textfield" type="text">      
         <br>
 Enter the name of your railroad. This name will show up on your
@@ -98,15 +102,16 @@ complete the restoration of the operation files.</td><td style="vertical-align: 
 and then stores the operation files in a directory that is based on the
 day you created the backup. For example, if today was November 21,
 2008, the program will create a backup directory named <strong>2008_11_21</strong>.</td><td style="vertical-align: top;">When you're finished with the settings window, press the <span style="font-weight: bold;">Save</span> button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the <span style="font-weight: bold;">Save</span> button
-</td></tr></tbody></table><hr>
+</td></tr></tbody>
+</table>
+<hr>
 	  
-  <div align="right">
     <div align="right">
       <p><a href="Ops_Locations.shtml">Next</a></p>
       <p><a href="index.shtml#Main">Back to Index</a></p>
     </div>
-    <p>.</p>
-</div>
 	  
   <!--#include virtual="/Footer" -->
-</div></body></html>
+</div>
+</body>
+</html>

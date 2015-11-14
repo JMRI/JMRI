@@ -1,5 +1,5 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for Manual pages -->
+<!-- This is the sidebar definition for (current) OperationsPro Manual pages -->
 <hr class="hide">
 
 <div id="mBody">
@@ -8,7 +8,7 @@
     <div style="text-align: center"><strong>The JMRI Manual</strong></div>
 
     <div style="text-align: right">
-      <a href="http://jmri.org/help/en/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download</a>
+      <a href="http://jmri.org/manual/pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Download</a>
     </div>
 
 <dl><!-- main table of contents -->
@@ -20,11 +20,11 @@
     </ul>
     </dd>
 
-<dt>/Starting DecoderPro&reg; and Operations Program</dt>
+<dt>Starting DecoderPro&reg; and OperationsPro</dt>
     <dd>
     <ul>
-    <li><a href="Start_DecoderPro.shtml">How do I start the program?</a></li>
-    <li><a href="Start_Preferences.shtml">How do I set up my preferences?</a></li>
+    <li><a href="Start_DecoderPro.shtml">How to start DecoderPro</a></li>
+    <li><a href="Start_Preferences.shtml">Set Preferences</a></li>
     </ul>
     </dd>
  
@@ -33,7 +33,7 @@
     <ul>
       <li><a href="Main_Main.shtml">Main Window</a></li>
       <li><a href="Main_Tool.shtml">Tools Menu</a></li>
- 	  <li><a href="Ops_Start.shtml">Operations</a></li>
+ 	    <li><a href="Ops_Start.shtml">Operations</a></li>
       <li><a href="Ops_Settings.shtml">Settings</a></li>
       <li><a href="Ops_Locations.shtml">Locations</a></li>
       <li><a href="Ops_Cars.shtml">Cars</a></li>

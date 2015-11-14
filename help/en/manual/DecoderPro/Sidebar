@@ -1,11 +1,11 @@
 <!-- Sidebar -->
-<!-- This is the common sidebar definition for Manual pages -->
+<!-- This is the common sidebar definition for (current) DP Manual pages -->
 <hr class="hide">
 
 <div id="mBody">
 
-<div id="side"> <!-- Block of text at top -->
-    <div style="text-align: center"><strong>The JMRI Manual</strong></div>
+<div id="side"> <!-- Block of text on left side of page -->
+    <div style="text-align: center"><strong>The JMRI Manual</strong></strong></div>
 
     <div style="text-align: right">
       <a href="http://jmri.org/manual/pdf/DP_man_3-2.pdf">Download</a>
@@ -31,7 +31,7 @@
     </ul>
     </dd>
     
-<dt>Using DecoderPro®</dt>
+<dt>Using DecoderPro&reg;</dt>
     <dd>
     <ul>
     <li><a href="Programmer_Setup.shtml">How do I set up to program a decoder?</a></li>
@@ -69,7 +69,7 @@
     <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
     <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
     <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
-    <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
+    <li><a href="Comp_Speed_Talble.shtml">Speed Table Pane</a></li>
     <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
     
     <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
@@ -83,6 +83,7 @@
     <li><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></li>
     </ul>
     </dd>
+
 <dt>The Advanced Programmer</dt>
     <dd>
     <ul>
@@ -92,7 +93,7 @@
     <li><a href="Comp_Basic.shtml">Expanded Basic Pane</a></li>
     <li><a href="Comp_Motor.shtml">Motor Control Pane</a></li>
     <li><a href="Comp_Speed.shtml">Speed Control Pane</a></li>
-    <li><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></li>
+    <li><a href="Comp_Speed_Talble.shtml">Speed Table Pane</a></li>
     <li><a href="Comp_FMap.shtml">Function Mapping Pane</a></li>
     
     <li><a href="Comp_LightFX.shtml">Lights Pane</a></li>
@@ -123,9 +124,6 @@
       <li><a href="Main_Help.shtml">Help Menu</a></li>
     </ul>
     </dd>
-    
-
-
 
 <dt><a NAME="DecoderDefinition"></a>Creating a Decoder Definition </dt>
     <dd>
@@ -143,8 +141,6 @@
       <li><a href="Error.shtml">Decoder Programmer Error Messages</a></li>
     </ul>
     </dd>
-
-
 
 </dl>
 </div>

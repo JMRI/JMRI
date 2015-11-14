@@ -1,6 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
-
+<html lang="en">
+<head>
 <title>Installing JMRI</title>
 
 <!-- Style -->
@@ -10,19 +10,18 @@
 <link rel="icon" href="/images/jmri.ico" type="image/png">
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
+</head>
+
+<body>
 
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-</head>
 
-
-<body><div id="mainContent">
+<div id="mainContent">
 
 <a name="Top"></a>
 <h1>
 <img src="images/logo.gif" alt="JMRI DecoderPro Logo" border="0" height="135" vspace="15" width="160"></h1>
-
-
 
 <h1>Installing JMRI&reg;</h1>
 <div align="right">
@@ -37,7 +36,7 @@
   <li>PanelPro&trade;</li>
   <li>SoundPro&trade;</li>
 </ul>
-<p>There are always two versions of the software availabe:</p>
+<p>Two versions of the software are available:</p>
 <ul>
   <li>Production Version: The current stable version that is
 fixed in design and for general use. If just starting, this is the
@@ -47,15 +46,16 @@ under development for testing and is used to validate new features and
 changes to existing features. If you are familiar with JMRI and want to
 help in the validation and testing process, then use this version.</li>
 </ul>
-<p>Supported systems(check<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank"> supported hardware</a> systems.)</p>
-<p>Prior to installing JMRI, you must <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct version for your computer system. </p>
+<p>Supported systems (check<a href="http://www.jmri.org/help/en/html/hardware/index.shtml" target="_blank"> supported hardware</a> systems.)</p>
+<p>Prior to installing JMRI, you must <a href="http://www.jmri.org/download/index.shtml" target="_blank">download</a> the correct version for your computer system.</p>
 <ul>
   <li>Windows</li>
   <li>Mac OS X</li>
   <li>Linux</li>
 </ul>
+
 <h1><a name="InstallJMRI"></a>Installing JMRI software</h1>
-<p>After downloading the JMRI file, now install using the appropriate Installation guide:</p>
+<p>After downloading the JMRI file, install using the appropriate Installation guide:</p>
 <ul>
   <li><a href="http://www.jmri.org/install/WindowsNew.shtml" target="_blank">Windows Installation Guide</a></li>
   <li><a href="http://www.jmri.org/install/MacOSX.html" target="_blank">Mac OS X  Installation Guide</a></li>
@@ -67,24 +67,14 @@ help in the validation and testing process, then use this version.</li>
     </ul>
   </li>
 </ul>
-<p>&nbsp;</p>
 
 <hr>
 
 <div align="right">
 <p><a href="index.shtml#Installing">Back to Index</a></p>
-</div>
-
-
-This site is hosted by
-<br>
-<a href="http://sourceforge.net">
-<img src="images/sflogo.png" alt="SourceForge Logo" align="top" border="0" height="30" hspace="10" vspace="5" width="120"></a>
-<br>
-</div>
 
 <!--#include virtual="/Footer" -->
-
-
-<!--#include virtual="/Footer" -->
-</body></html>
+</div> <!-- closes #mainContent -->
+</div>
+</body>
+</html>
