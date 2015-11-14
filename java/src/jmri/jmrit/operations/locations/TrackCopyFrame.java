@@ -113,7 +113,7 @@ public class TrackCopyFrame extends OperationsFrame implements java.beans.Proper
         LocationManager.instance().addPropertyChangeListener(this);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_CopyTrack", true); // NOI18N
 
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));

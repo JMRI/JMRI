@@ -1451,7 +1451,9 @@
    <H4>Show Trains Servicing this Location</H4>
 
    This tool can show you which trains can service a location. If you only want to see trains that
-   can can actually work the location, deselect the "Show all Trains" checkbox. 
+   can can actually work the location, deselect the "Show all Trains" checkbox. You can also
+   determine if a certain car type will be serviced by the trains visiting the location. Use the
+   "Type" drop down menu to select a car type. 
    
    <A NAME="EditCarType"></A>
    <H4>Edit Car Type</H4>

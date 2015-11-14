@@ -103,7 +103,7 @@ public class LocationCopyFrame extends OperationsFrame implements java.beans.Pro
         locationManager.addPropertyChangeListener(this);
 
         // add help menu to window
-        addHelpMenu("package.jmri.jmrit.operations.Operations_Locations", true); // NOI18N
+        addHelpMenu("package.jmri.jmrit.operations.Operations_CopyLocation", true); // NOI18N
 
         pack();
         setMinimumSize(new Dimension(Control.panelWidth400, Control.panelHeight400));
