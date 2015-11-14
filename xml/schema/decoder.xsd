@@ -570,28 +570,6 @@
             </xs:unique>
           </xs:element>
       
-          <xs:element name="iconstant" minOccurs="0" maxOccurs="unbounded" >
-            <xs:complexType>
-              <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
-                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                </xs:element>
-              </xs:sequence>
-              <xs:attribute name="label" type="xs:string"/>
-              <xs:attribute name="default" type="xs:int"/>
-              <xs:attribute name="comment" type="xs:string"/>
-              <xs:attribute name="item" type="xs:string" use="required"/>
-              <xs:attribute name="minFn" type="xs:int"/>
-              <xs:attribute name="minOut" type="xs:int"/>
-              <xs:attribute name="inOptions" type="xs:string"/>
-            </xs:complexType>
-            <xs:unique name="UniqueIConstantLabel1">
-              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
-              <xs:selector xpath="label"/>
-              <xs:field xpath="@xml:lang"/>
-            </xs:unique>
-          </xs:element>
-      
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
               <xs:sequence minOccurs="1" maxOccurs="1">
