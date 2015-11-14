@@ -785,7 +785,6 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
-          <xs:attribute name="mode" type="modeType"/>
           <xs:attribute ref="xml:base" />
         </xs:complexType>
         <xs:unique name="UniqueResetLabel1">
@@ -814,7 +813,6 @@
           <xs:attribute name="default" type="xs:string"/>
           <xs:attribute name="comment" type="xs:string"/>
           <xs:attribute name="item" type="xs:string"/>
-          <xs:attribute name="mode" type="modeType"/>
           <xs:attribute ref="xml:base" />
         </xs:complexType>
       </xs:element>
