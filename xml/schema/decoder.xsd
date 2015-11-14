@@ -762,7 +762,7 @@
     <xs:sequence>
       <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
         <xs:annotation><xs:documentation>
-          Content is the internal name of a supported programmer mode.
+          Specifies programmer mode(s) for use during reset
         </xs:documentation></xs:annotation>
       </xs:element>
       <xs:element name="factReset" minOccurs="0" maxOccurs="unbounded" >
@@ -770,7 +770,7 @@
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
-                Content is the internal name of a supported programmer mode.
+                Specifies programmer mode(s) for use during reset
               </xs:documentation></xs:annotation>
             </xs:element>
             <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
@@ -798,7 +798,7 @@
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
             <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
               <xs:annotation><xs:documentation>
-                Content is the internal name of a supported programmer mode.
+                Specifies programmer mode(s) for use during reset
               </xs:documentation></xs:annotation>
             </xs:element>
             <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" >
@@ -911,7 +911,7 @@
   <xs:simpleType name="modeType">
     <xs:annotation>
       <xs:documentation>
-        Content is the internal name of a supported programmer mode.
+        Content limited to the the internal name of a supported programmer mode.
       </xs:documentation>
     </xs:annotation>
     <xs:restriction base="xs:string">
