@@ -545,6 +545,11 @@
 
           <xs:element name="constant" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
+              <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                </xs:element>
+              </xs:sequence>
               <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="default" type="xs:int"/>
               <xs:attribute name="comment" type="xs:string"/>
@@ -555,13 +560,19 @@
               <xs:attribute name="include" type="xs:string" default=""/>
               <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
+            <xs:unique name="UniqueConstantLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
           </xs:element>
       
           <xs:element name="iconstant" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
               <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
+                <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                </xs:element>
               </xs:sequence>
               <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="default" type="xs:int"/>
@@ -571,6 +582,11 @@
               <xs:attribute name="minOut" type="xs:int"/>
               <xs:attribute name="inOptions" type="xs:string"/>
             </xs:complexType>
+            <xs:unique name="UniqueIConstantLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
           </xs:element>
       
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
