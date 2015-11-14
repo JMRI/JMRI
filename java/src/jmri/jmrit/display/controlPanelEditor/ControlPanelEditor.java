@@ -1706,7 +1706,7 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);
                 } else if (p instanceof SensorIcon) {
-                    popup.add(CoordinateEdit.getTextEditAction((SensorIcon)p, "OverlayText"));
+                    popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
                 } else {
                     popupSet = p.setTextEditMenu(popup);                
                 }

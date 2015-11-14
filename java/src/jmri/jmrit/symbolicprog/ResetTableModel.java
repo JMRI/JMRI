@@ -68,7 +68,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         }
     }
 
-    public boolean hasOpsModeFlag = false;
+    private boolean hasOpsModeFlag = false;
 
     protected void flagIfOpsMode(String mode) {
         if (mode.startsWith("OPS")) {
@@ -76,7 +76,7 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         }
     }
 
-    public boolean hasOpsMode() {
+    public boolean hasOpsModeReset() {
         return hasOpsModeFlag;
     }
 
@@ -193,8 +193,6 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
             String iCv = e.getAttribute("CV").getValue();
             int icvVal = Integer.valueOf(e.getAttribute("default").getValue()).intValue();
 
-            
-            
             CvValue resetCV = new CvValue("" + row, cvName, _piCv, piVal, _siCv, siVal, iCv, mProgrammer);
             resetCV.addPropertyChangeListener(this);
 
@@ -280,8 +278,8 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                 resetModeList = resetModeList.substring(1);
             }
 
+            
             if (resetModeList.length() > 0) {
-
                 boolean modeFound = false;
                 search:
                     for (ProgrammingMode m : modes) {
@@ -293,8 +291,15 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                             }
                         }
                     }
+
+                if (mProgrammer.getMode().getStandardName().startsWith("OPS")) {
+                    if ( !opsResetOk() ) {
+                        return;
+                    }
+                }
+                
                 if (!modeFound) {
-                    if (!userOK((savedMode.toString()), resetModeList, programmerModeList)) {
+                    if (!badModeOk((savedMode.toString()), resetModeList, programmerModeList)) {
                         return;
                     }
                     log.warn(labelVector.get(row)+ " for " + decoderModel + " was attempted in "+ savedMode.toString() + " mode.");
@@ -397,14 +402,13 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
         }
     }
 
-    
         /**
      * Can provide some mechanism to prompt for user for one last chance to
      * change his/her mind
      *
      * @return true if user says to continue
      */
-    boolean userOK(String currentMode, String resetModes, String availableModes) {
+    boolean badModeOk(String currentMode, String resetModes, String availableModes) {
         String resetWarning =
                 ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetModeWarn1")
                 + "\n\n"
@@ -423,7 +427,35 @@ public class ResetTableModel extends AbstractTableModel implements ActionListene
                         JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE));
     }
 
-    
+        /**
+     * Can provide some mechanism to prompt for user for one last chance to
+     * change his/her mind
+     *
+     * @return true if user says to continue
+     */
+    boolean opsResetOk() {
+        String resetWarning =
+                ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn1")
+                + "\n\n"
+                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn2")
+                + "\n"
+                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn3")
+                + "\n"
+                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn4")
+                + "\n\n"
+                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn5")
+                + "\n"
+                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn6")
+                + "\n\n"
+                + ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsWarn7")
+                ;
+        return (JOptionPane.YES_OPTION
+                == JOptionPane.showConfirmDialog(null,
+                        resetWarning,
+                        ResourceBundle.getBundle("jmri.jmrit.symbolicprog.SymbolicProgBundle").getString("FactoryResetOpsTitle"),
+                        JOptionPane.YES_NO_OPTION,JOptionPane.WARNING_MESSAGE));
+    }
+
     public void dispose() {
         if (log.isDebugEnabled()) {
             log.debug("dispose");
