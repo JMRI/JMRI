@@ -184,7 +184,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         menuBar.add(fileMenu);
 
         // add a "Factory Reset" menu
-        if (!_opsMode) {
+        if (!_opsMode || true) {
             resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
             menuBar.add(resetMenu);
             resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
@@ -457,7 +457,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel.setFileDirty(false);
 
         // if the Reset Table was used lets enable the menu item
-        if (!_opsMode) {
+        if (!_opsMode || resetModel.hasOpsModeReset()) {
             if (resetModel.getRowCount() > 0) {
                 resetMenu.setEnabled(true);
             }
