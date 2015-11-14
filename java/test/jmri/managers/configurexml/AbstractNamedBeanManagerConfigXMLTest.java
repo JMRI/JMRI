@@ -233,5 +233,5 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
         public Element store(Object o) {
             return null;
         }
-    };
+    }
 }
