@@ -324,8 +324,12 @@
             <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
               <xs:complexType>
                 <xs:sequence>
-                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded"/>
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
+                  </xs:element>
                 </xs:sequence>
                 <xs:attribute name="name" type="xs:string" use="required"/>
                 <xs:attribute name="label" type="xs:string" />
@@ -345,6 +349,11 @@
                   </xs:simpleType>
                 </xs:attribute>
               </xs:complexType>
+              <xs:unique name="UniqueOutputLabel1">
+                <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="label"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
             </xs:element>
             <xs:element name="size" minOccurs="0" maxOccurs="1" >
               <xs:complexType>
@@ -590,10 +599,6 @@
                     A decimal value is used, subject to mask and limit requirements
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-                      </xs:sequence>
                       <xs:attribute name="min" type="xs:int" default="0"/>
                       <xs:attribute name="max" type="xs:int" default="255"/>
                       <xs:attribute name="comment" type="xs:string"/>
@@ -604,10 +609,6 @@
                     A hexadecimal value is used, subject to mask and limit requirements
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-                      </xs:sequence>
                       <xs:attribute name="min" type="xs:string" default="0"/>
                       <xs:attribute name="max" type="xs:string" default="ff"/>
                       <xs:attribute name="comment" type="xs:string"/>
@@ -651,10 +652,6 @@
                     NMRA long address, including its unique behaviors
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-                      </xs:sequence>
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
@@ -776,8 +773,11 @@
                 Content is the internal name of a supported programmer mode.
               </xs:documentation></xs:annotation>
             </xs:element>
-            <xs:element name="label" minOccurs="0" maxOccurs="unbounded" >
-                <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+            <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+              <xs:complexType mixed="true">
+                <xs:attribute ref="xml:lang" default=""/>
+              </xs:complexType>
             </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
@@ -788,6 +788,11 @@
           <xs:attribute name="mode" type="modeType"/>
           <xs:attribute ref="xml:base" />
         </xs:complexType>
+        <xs:unique name="UniqueResetLabel1">
+          <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+          <xs:selector xpath="label"/>
+          <xs:field xpath="@xml:lang"/>
+        </xs:unique>
       </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
