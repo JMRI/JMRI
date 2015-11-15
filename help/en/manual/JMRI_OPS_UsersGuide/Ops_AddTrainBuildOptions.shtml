@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>Operations-Add Train</title>
+<title>JMRI Operations - Add Train</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,10 +18,9 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Train Build Options<br>
-</h1>
+<h2>OperationsPro: Train Build Options</h2>
 
 <div align=right>
 <p><a href="Ops_Trains.shtml">Back</a><a href="#"></a></p>
@@ -31,8 +28,8 @@
 </div>
 
 <hr>
-<p>The  Train Build Options window is opened from the 
-  Add Trains Window Tools menu..</p>
+<p>The <strong>Train Build Options</strong> window is opened from the 
+  <strong>Add Trains Window Tools</strong> menu.</p>
 <blockquote>
   <blockquote>
     <p><img src="images/Ops_TrainBuildOptions.png" width="550" height="600" alt="build"></p>
@@ -44,5 +41,7 @@
 </div>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>
