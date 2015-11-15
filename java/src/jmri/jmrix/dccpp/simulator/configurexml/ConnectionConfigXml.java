@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.simulator.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.SerialPortAdapter;
 import jmri.jmrix.configurexml.AbstractConnectionConfigXml;
 import jmri.jmrix.dccpp.simulator.ConnectionConfig;
@@ -10,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Handle XML persistance of layout connections by persistening the
+ * Handle XML persistence of layout connections by persisting the
  * DCCppSimulatorAdapter (and connections). Note this is named as the XML version
  * of a ConnectionConfig object, but it's actually persisting the
  * DCCppSimulatorAdapter.
@@ -50,24 +49,19 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         return e;
     }
 
-    /**
-     * Update static data from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // start the "connection"
         getInstance();
 
-        loadCommon(e, adapter);
+        loadCommon(shared, perNode, adapter);
 
         // register, so can be picked up next time
         register();
 
         if (adapter.getDisabled()) {
-            unpackElement(e);
+            unpackElement(shared);
             return result;
         }
 
@@ -86,8 +80,9 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

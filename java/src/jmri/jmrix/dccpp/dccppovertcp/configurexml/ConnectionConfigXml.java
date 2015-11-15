@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.dccppovertcp.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.dccpp.dccppovertcp.ConnectionConfig;
 import jmri.jmrix.dccpp.dccppovertcp.DCCppTcpDriverAdapter;
@@ -28,16 +27,19 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         super();
     }
 
+    @Override
     protected void getInstance() {
         adapter = new DCCppTcpDriverAdapter();
     }
 
+    @Override
     protected void getInstance(Object object) {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging
