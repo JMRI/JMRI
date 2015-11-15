@@ -128,7 +128,7 @@ public class GuiLafConfigPane extends JPanel implements PreferencesPanel {
                 //localeBox.setModel(new javax.swing.DefaultComboBoxModel(locale.keySet().toArray()));
                 localeBox.setSelectedItem(Locale.getDefault().getDisplayName());
                 localeBox.addActionListener((ActionEvent e) -> {
-                    InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale.getOrDefault((String) localeBox.getSelectedItem(), Locale.getDefault()));
+                    InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale.getOrDefault(localeBox.getSelectedItem(), Locale.getDefault()));
                 });
             };
             SwingUtilities.invokeLater(update);

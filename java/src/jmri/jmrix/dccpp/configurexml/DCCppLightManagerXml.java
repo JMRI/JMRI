@@ -36,5 +36,10 @@ public class DCCppLightManagerXml extends jmri.managers.configurexml.AbstractLig
         return loadLights(lights);
     }
 
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        return loadLights(shared);
+    }
+    
     static Logger log = LoggerFactory.getLogger(DCCppLightManagerXml.class.getName());
 }

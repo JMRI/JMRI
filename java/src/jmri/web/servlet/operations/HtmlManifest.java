@@ -39,6 +39,9 @@ public class HtmlManifest extends HtmlTrainCommon {
     // newer than the Html manifest, the cached copy is returned instead.
     public String getLocations() throws IOException {
         // build manifest from JSON manifest
+        if (this.getJsonManifest() == null) {
+            return "Error manifest file not found for this train";
+        }
         StringBuilder builder = new StringBuilder();
         ArrayNode locations = (ArrayNode) this.getJsonManifest().path(JSON.LOCATIONS);
         String previousLocationName = null;
@@ -501,7 +504,11 @@ public class HtmlManifest extends HtmlTrainCommon {
 
     protected JsonNode getJsonManifest() throws IOException {
         if (this.jsonManifest == null) {
-            this.jsonManifest = this.mapper.readTree((new JsonManifest(this.train)).getFile());
+            try {
+                this.jsonManifest = this.mapper.readTree((new JsonManifest(this.train)).getFile());
+            } catch (IOException e) {
+                log.error("Json manifest file not found for train ({})", this.train.getName());
+            }
         }
         return this.jsonManifest;
     }

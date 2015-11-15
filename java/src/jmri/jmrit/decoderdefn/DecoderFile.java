@@ -475,12 +475,12 @@ public class DecoderFile extends XmlFile {
             List<Element> resetList = decoderElement.getChild("resets").getChildren("factReset");
             for (int i = 0; i < resetList.size(); i++) {
                 Element e = resetList.get(i);
-                resetModel.setRow(i, e);
+                resetModel.setRow(i, e, decoderElement.getChild("resets"), _model);
             }
             List<Element> iresetList = decoderElement.getChild("resets").getChildren("ifactReset");
             for (int i = 0; i < iresetList.size(); i++) {
                 Element e = iresetList.get(i);
-                resetModel.setIndxRow(i, e);
+                resetModel.setIndxRow(i, e, decoderElement.getChild("resets"), _model);
             }
         }
     }
