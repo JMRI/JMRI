@@ -27,9 +27,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private int nibble;      /* Is this sensor in the upper or lower 
      nibble for the feedback encoder */
 
-    private int nibblebit;   /* Which bit in the nibble represents this 
-     sensor */
-
     private String systemName;
 
     protected DCCppTrafficController tc = null;
@@ -67,22 +64,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
             nibble = 0x00;
         } else {
             nibble = 0x10;
-        }
-        switch (temp % 4) {
-            case 0:
-                nibblebit = 0x01;
-                break;
-            case 1:
-                nibblebit = 0x02;
-                break;
-            case 2:
-                nibblebit = 0x04;
-                break;
-            case 3:
-                nibblebit = 0x08;
-                break;
-            default:
-                nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
             log.debug("Created Sensor " + systemName
