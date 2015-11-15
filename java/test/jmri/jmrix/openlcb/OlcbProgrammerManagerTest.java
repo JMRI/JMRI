@@ -18,7 +18,7 @@ import org.slf4j.LoggerFactory;
 public class OlcbProgrammerManagerTest extends TestCase {
 
     public void testCtor() {
-        OlcbSystemConnectionMemo sm = new OlcbSystemConnectionMemo();
+        new OlcbSystemConnectionMemo();
         OlcbProgrammerManager s = new OlcbProgrammerManager(new OlcbProgrammer());
         Assert.assertNotNull(s);
     }
