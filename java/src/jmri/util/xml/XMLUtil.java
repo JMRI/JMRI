@@ -727,7 +727,7 @@ public final class XMLUtil extends Object {
         for (int i = 0; i < chars.length(); i++) {
             char ch = chars.charAt(i);
 
-            if (((int) ch) <= 93) { // we are UNICODE ']'
+            if (ch <= 93) { // we are UNICODE ']'
 
                 switch (ch) {
                 case 0x9:
@@ -746,7 +746,7 @@ public final class XMLUtil extends Object {
 
                 default:
 
-                    if (((int) ch) < 0x20) {
+                    if (ch < 0x20) {
                         throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
                     }
                 }
@@ -768,7 +768,7 @@ public final class XMLUtil extends Object {
         for (int i = 0; i < chars.length(); i++) {
             char ch = chars.charAt(i);
 
-            if (((int) ch) <= 93) { // we are UNICODE ']'
+            if (ch <= 93) { // we are UNICODE ']'
 
                 switch (ch) {
                 case 0x9:
@@ -795,7 +795,7 @@ public final class XMLUtil extends Object {
 
                 default:
 
-                    if (((int) ch) < 0x20) {
+                    if (ch < 0x20) {
                         throw new CharConversionException("Invalid XML character &#" + ((int) ch) + ";.");
                     }
                 }

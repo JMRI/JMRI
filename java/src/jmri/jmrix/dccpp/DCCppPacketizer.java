@@ -40,6 +40,7 @@ public class DCCppPacketizer extends DCCppTrafficController {
         // self variable, and the instance method does this for us in a
         // static way (which makes findbugs happy).
         //instance();
+	log.debug("DCCppPacketizer created.");
     }
 
 // The methods to implement the DCCppInterface
@@ -74,6 +75,11 @@ public class DCCppPacketizer extends DCCppTrafficController {
         msg[0] = (byte) '<';
         return 1;
     }
+
+    //    public void startThreads() {
+	// Doesn't do anything generically.
+	// Most Packetizers won't do anything.  The TCP
+    //}
 
 
     /**

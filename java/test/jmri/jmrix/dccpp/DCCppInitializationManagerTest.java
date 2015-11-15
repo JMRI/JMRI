@@ -31,10 +31,6 @@ public class DCCppInitializationManagerTest extends TestCase {
                 return 50;   // shorten, because this will fail & delay test
             }
         };
-	log.debug("t is {}", (t == null ? "null" : "not null"));
-	log.debug("l is {}", (l == null ? "null" : "not null"));
-	log.debug("m is {}", (m == null ? "null" : "not null"));
-	log.debug("memo is {}", (memo == null ? "null" : "not null"));
         Assert.assertNotNull("exists", t);
         Assert.assertNotNull("exists", l);
         Assert.assertNotNull("exists", m);

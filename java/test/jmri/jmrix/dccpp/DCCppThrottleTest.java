@@ -38,7 +38,7 @@ public class DCCppThrottleTest extends TestCase {
     // Test the initilization sequence.
     public void testInitSequence() throws Exception {
         DCCppInterfaceScaffold tc = new DCCppInterfaceScaffold(new DCCppCommandStation());
-        int n = tc.outbound.size();
+        //int n = tc.outbound.size();
         DCCppThrottle t = new DCCppThrottle(new DCCppSystemConnectionMemo(tc), new jmri.DccLocoAddress(3, false), tc);
         Assert.assertNotNull(t);
 

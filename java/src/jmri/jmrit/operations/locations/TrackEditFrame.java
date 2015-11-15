@@ -35,6 +35,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -621,7 +622,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                     .getMessage("CanNotTrack"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (trackNameTextField.getText().length() > MAX_NAME_LENGTH) {
+        if (TrainCommon.splitString(trackNameTextField.getText()).length() > MAX_NAME_LENGTH) {
             log.error("Track name must be less than " + Integer.toString(MAX_NAME_LENGTH + 1) + " charaters"); // NOI18N
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
