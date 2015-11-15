@@ -101,7 +101,6 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
      */
     public void connectPort(DCCppNetworkPortController p) {
         istream = p.getInputStream();
-	InputStreamReader isr = new InputStreamReader(istream);
 	istreamReader = new BufferedReader(new InputStreamReader(istream));
         ostream = p.getOutputStream();
         if (networkController != null) {
@@ -246,7 +245,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 		    }
 
 		    final DCCppReply thisMsg = msg;
-		    final DCCppPacketizer thisTC = trafficController;
+		    //final DCCppPacketizer thisTC = trafficController;
 		    // return a notification via the queue to ensure end
 		    Runnable r = new Runnable() {
                             DCCppReply msgForLater = thisMsg;

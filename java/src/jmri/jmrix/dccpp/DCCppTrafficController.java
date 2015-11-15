@@ -251,9 +251,6 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
         return new DCCppReply();
     }
 
-    // Defined this way to reduce new object creation
-    private char[] rcvCharBuffer = new char[1];
-
     /**
      * Get characters from the input source, and file a message.
      * <P>
