@@ -1,8 +1,11 @@
 package jmri.jmrit.roster;
 
+import java.beans.PropertyChangeEvent;
+import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
+import javax.annotation.Nonnull;
 import jmri.implementation.FileLocationsPreferences;
 import jmri.profile.Profile;
 import jmri.profile.ProfileUtils;
@@ -10,6 +13,7 @@ import jmri.spi.AbstractPreferencesProvider;
 import jmri.spi.InitializationException;
 import jmri.spi.PreferencesProvider;
 import jmri.util.FileUtil;
+import jmri.util.FileUtilSupport;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -24,21 +28,36 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterConfigManager extends AbstractPreferencesProvider {
 
-    private String directory = FileUtil.PREFERENCES;
+    private String directory = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES);
     private String defaultOwner = "";
 
-    private static final String DIRECTORY = "directory";
-    private static final String DEFAULT_OWNER = "defaultOwner";
+    public static final String DIRECTORY = "directory";
+    public static final String DEFAULT_OWNER = "defaultOwner";
     private static final Logger log = LoggerFactory.getLogger(RosterConfigManager.class);
+
+    public RosterConfigManager() {
+        FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+            if (RosterConfigManager.this.getDirectory().equals(evt.getOldValue())) {
+                RosterConfigManager.this.setDirectory((String) evt.getNewValue());
+            }
+        });
+    }
 
     @Override
     public void initialize(Profile profile) throws InitializationException {
         if (!this.isInitialized(profile)) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
-            this.setDirectory(preferences.get(DIRECTORY, this.getDirectory()));
             this.setDefaultOwner(preferences.get(DEFAULT_OWNER, this.getDefaultOwner()));
+            try {
+                this.setDirectory(preferences.get(DIRECTORY, this.getDirectory()));
+            } catch (IllegalArgumentException ex) {
+                this.setIsInitialized(profile, true);
+                throw new InitializationException(
+                        Bundle.getMessage(Locale.ENGLISH, "IllegalRosterLocation", preferences.get(DIRECTORY, this.getDirectory())),
+                        ex.getMessage(),
+                        ex);
+            }
             Roster.getDefault().setRosterLocation(this.getDirectory());
-            RosterEntry.setDefaultOwner(this.getDefaultOwner());
             this.setIsInitialized(profile, true);
         }
     }
@@ -56,16 +75,21 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
     }
 
     @Override
-    public Set<Class <? extends PreferencesProvider>> getRequires() {
+    public Set<Class<? extends PreferencesProvider>> getRequires() {
         Set<Class<? extends PreferencesProvider>> requires = super.getRequires();
         requires.add(FileLocationsPreferences.class);
         return requires;
     }
-    
+
     /**
      * @return the defaultOwner
      */
-    public String getDefaultOwner() {
+    public @Nonnull
+    String getDefaultOwner() {
+        // defaultOwner should never be null, but check anyway to ensure its not
+        if (defaultOwner == null) {
+            defaultOwner = "";
+        }
         return defaultOwner;
     }
 
@@ -96,6 +120,9 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             directory = FileUtil.PREFERENCES;
         }
         String oldDirectory = this.directory;
+        if (directory != null && FileUtil.getAbsoluteFilename(directory) == null) {
+            throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory));
+        }
         this.directory = FileUtil.getAbsoluteFilename(directory);
         propertyChangeSupport.firePropertyChange(DIRECTORY, oldDirectory, directory);
     }

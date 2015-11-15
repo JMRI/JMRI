@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.TreeSet;
+import javax.annotation.Nonnull;
 import javax.swing.JOptionPane;
 import jmri.InstanceManager;
 import jmri.UserPreferencesManager;
@@ -73,7 +74,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     /*
      * This should only be non-null if explictly set to a non-default location.
      */
-    private String rosterLocation = null;
+    private String rosterLocation = FileUtil.getUserFilesPath();
     private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
     // since we can't do a "super(this)" in the ctor to inherit from PropertyChangeSupport, we'll
     // reflect to it.
@@ -143,9 +144,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     public Roster() {
         super();
         FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
-            // rosterLocation == null if location is default location
-            if (Roster.this.rosterLocation == null) {
-                Roster.this.setRosterLocation(null); // trigger LocoFile location change
+            if (Roster.this.getRosterLocation().equals(evt.getOldValue())) {
+                Roster.this.setRosterLocation((String) evt.getNewValue());
                 Roster.this.reloadRosterFile();
             }
         });
@@ -971,22 +971,34 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * locomotive files.
      *
      * @param f Absolute pathname to use. A null or "" argument flags a return
-     *          to the original default in the user's files directory.
+     *          to the original default in the user's files directory. This
+     *          parameter must be a potentially valid path on the system.
      */
     public void setRosterLocation(String f) {
-        if (f != null) {
-            if (f.isEmpty()) {
-                f = null;
-            } else if (!f.endsWith(File.separator)) {
-                f = f + File.separator;
+        String oldRosterLocation = this.rosterLocation;
+        String p = f;
+        if (p != null) {
+            if (p.isEmpty()) {
+                p = null;
+            } else {
+                p = FileUtil.getAbsoluteFilename(p);
+                if (p == null) {
+                    throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", f)); // NOI18N
+                }
+                if (!p.endsWith(File.separator)) {
+                    p = p + File.separator;
+                }
             }
         }
-        this.rosterLocation = f;
-        if (this.rosterLocation != null) {
-            LocoFile.setFileLocation(this.rosterLocation + "roster"); // NOI18N
-        } else {
+        if (p == null) {
+            p = FileUtil.getUserFilesPath();
+        }
+        this.rosterLocation = p;
+        if (this.rosterLocation.equals(FileUtil.getUserFilesPath())) {
             log.debug("Roster location reset to default");
-            LocoFile.setFileLocation(FileUtil.getUserFilesPath() + "roster" + File.separator); // NOI18N
+        }
+        if (!this.rosterLocation.equals(oldRosterLocation)) {
+            this.firePropertyChange(RosterConfigManager.DIRECTORY, oldRosterLocation, this.rosterLocation);
         }
         this.reloadRosterFile();
     }
@@ -999,10 +1011,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
      * @return location of the Roster file
      * @see jmri.util.FileUtil#getUserFilesPath()
      */
-    public String getRosterLocation() {
-        if (this.rosterLocation == null) {
-            return FileUtil.getUserFilesPath();
-        }
+    public @Nonnull
+    String getRosterLocation() {
         return this.rosterLocation;
     }
 
