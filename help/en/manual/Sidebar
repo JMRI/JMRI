@@ -28,8 +28,8 @@
 <dt>JMRI&reg; v4.x</dt>
   <dd>
     <ul>
-    <li style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro&reg; v4</a></li>
-    <li style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro v4</a></li>
+    <li style="font-weight: bold;"><a href="../apps/DecoderPro/index.shtml">DecoderPro&reg; v4</a></li>
+    <li style="font-weight: bold;"><a href="../en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro v4</a></li>
     </ul>
   </dd>
 
@@ -38,7 +38,7 @@
     <ul>
     <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro3/index.shtml">DecoderPro3&reg; v3.6</a></li>
     <li style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></li>
-    <li style="font-weight: bold;">OperationsPro v3.6</li>
+    <li style="font-weight: bold;">< a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro v3.6</</li>
     </ul>
   </dd>
 

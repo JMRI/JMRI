@@ -200,7 +200,7 @@ to the right of that Car. The <strong><a href="Ops_AddCars.shtml">Edit Car</a></
 make changes and save them in the Car Roster.</p>
 <p align="left">The 
   <input type="submit" name="button16" id="button16" value="Set"> 
-when pressed, opens the <strong>Set Car Location</strong> pane and allows you to override the program and set a Car at a Location that is defined in your Operations database.</p>
+when pressed, opens the <strong>Set Car Location</strong> pane and allows you to override the program and set a Car at a Location that is defined in your OperationsPro database.</p>
 <table width="90%" border="0" cellspacing="1" cellpadding="2">
   <tr>
     <td width="47%" valign="top"><img src="images/Ops_SetCarLocation.png" width="500" height="650" alt="set car location"></td>

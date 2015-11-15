@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>Operations-Add Routes window</title>
+<title>Operations - Add Route window</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,7 +19,7 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>Add Route Window</h2>
+<h2>OperationsPro: Add Route window</h2>
 
 <div align="right">
 <p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
@@ -30,7 +30,7 @@
 <p>The <strong>Add Route</strong> window opens to add a Route to your OperationsPro database.</p>
 <p><img src="images/Ops_AddRoute.png" alt="add route" height="239" width="900"></p>
 
-<h4><a href="Ops_Routes_Menu.shtml">Menu Bar</a></h4>Type the Route <strong>Name</strong>
+Type the Route <strong>Name</strong>
   <input name="textfield" id="textfield" size="30" type="text">
 Each route must have a unique Name. 
 <p>Then  press 
@@ -51,24 +51,25 @@ located at the left bottom side of the window.</p>
 An updated <strong>Add Route</strong> window will be displayed with all the attributes
 required active. Repeat until all stops are entered for the Route.</p>
 <p><img src="images/Ops_AddRoute02.png" alt="add route" height="239" width="900"></p>
-<p> Now build your Route by selecting the next location the Train will
-visit, select all Locations that the Train will pass through even if
-the Train will not work the Location. This way your train's engineer
-will know when reading his Manifest the towns he will be traveling
-through. Each time you add a Location to the Route, the table shows the
-order in which the Train will visit them.</p>
-<p>We will now add all the Locations to the Route. Make sure that 
+<p>We will now add all the Locations to the Route. Each time you add a Location to the Route, the table shows the
+order in which the Train will visit them. Make sure that 
   <input name="radio3" id="radio3" value="radio3" checked="checked" type="radio"> 
 <strong>Add location at end</strong> is selected to add after the first location. </p>
+<p> Build your Route by selecting the next Location the Train will
+visit; select all Locations that the Train will pass through even if
+the Train will not work the Location. This way your train's engineer
+will know when reading his Manifest the towns he will be traveling
+through.</p>
 <p>Make sure you press  
   <input name="button3" id="button3" value="Save Route" type="submit"> 
   when you are done entering the Locations.
 </p>
 <p><img src="images/Ops_AddRoute03.png" alt="route" height="350" width="900"></p>
-<p>Each <strong>Location</strong> has the Train's departure direction(<strong>Train Direction</strong>), number of desired car <strong>Moves</strong> and whether Car <strong>Pickups?</strong> and/or car <strong>Drops?</strong> are allowed at that Location. </p>
+<p>Each <strong>Location</strong> has the Train's departure direction (<strong>Train Direction</strong>), number of desired car <strong>Moves</strong> and whether Car <strong>Pickups?</strong> and/or car <strong>Drops?</strong> are allowed at that Location. </p>
 <p>You can also adjust the maximum Train length (<strong>Max Length</strong>)
-that can depart that Location. A Car move can be a car Pickup or car
-Drop at that Location. For example, 5 moves can be 5 Pickups or 5 Drops
+that can depart that Location.</p>
+<p>A Car <strong>Move</strong> can be a car Pickup or car
+Drop at that Location. For example, 5 Moves can be 5 Pickups or 5 Drops
 or any combination of 5 Pickups and Drops.</p>
 <p>The <strong>Grade</strong> is used to determine how many Engines the Train will require for that segment. The <strong>X</strong> and <strong>Y</strong>
 are the coordinates on your dispatcher's Panel for the optional Train
@@ -97,9 +98,9 @@ to save your route. The program will create a file
 "operations". A backup file with the last settings for all of your
 routes is also created each time <input name="button5" id="button5" value="Save Route" type="submit">
 pressed.</p>
-<p>Now we have our first route set up.</p>
+<p>Now we have our first Route set up.</p>
 <p><img src="images/Ops_AddRoute04.png" alt="route" height="365" width="900"></p>
-<p>You may start a new route using the Add Route window and entering a new route name and repeat this process for each route.</p>
+<p>You may start a new Route using the <strong>Add Route</strong> window and entering a new Route Name and repeat this process for each Route.</p>
 <p>Now back to the Route window, which will show us a list of all the Routes.</p>
 <p><img src="images/Ops_Routes01.png" alt="routes" height="310" width="730"></p>
 <p>Note that you may press 
@@ -109,6 +110,10 @@ on any Route and the <strong><a href="Ops_EditRoutes.shtml">Edit Route</a></stro
   <input name="button7" id="button7" value="Add" type="submit"> 
   to add another Route, repeating the process just completed, or close the <strong>Route</strong> pane.
 </p>
+
+<h3><a href="Ops_Routes_Menu.shtml">Add Route menu</a></h3>
+<p><strong>Window </strong>-- Standard JMRI&reg; window menu.</p>
+<p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p>
 
 <hr>
 

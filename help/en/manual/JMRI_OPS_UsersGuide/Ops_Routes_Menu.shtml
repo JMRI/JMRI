@@ -90,12 +90,12 @@ Routes files<br>
 </ul>
 <div style="text-align: center;"><img style="width: 657px; height: 352px;" alt="operation routes preview" src="images/Ops_RoutesPreview.png"><br>
 </div>
-<p><strong>Operations</strong> (Same as Main
-Operations menu)<br>
-</p>
-<p><strong>Window </strong>-- Standard JMRI&reg; window
-menu.</p>
-<p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p><hr>
+
+<h3><strong>Operations</strong> menu (same as main OperationsPro menu)</h3>
+<p><strong>Window </strong>-- Standard JMRI&reg; window menu.</p>
+<p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p>
+
+<hr>
 <div align="right">
 <p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>

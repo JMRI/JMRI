@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>JMRI OperationsPro - Add Siding</title>
+<title>JMRI OperationsPro - Add Spur</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -93,14 +93,16 @@ to select all types, then select or deselect rolling stock types you wish the Sp
 </tbody></table>
 <p><strong>Add Spur Track</strong> window now displays with all options active to let you detail the spur.</p>
 <p><img src="images/Ops_AddSidingTrack01.png" alt="spur" height="726" width="750"></p>
-<h3><strong>Select the rolling stock serviced by this spur</strong></h3>
+
+<h4><strong>Select the rolling stock serviced by this spur</strong></h4>
 <p>Only the items selected in the Location of this Spur will be displayed. The program uses those that are checked.
   <input name="button18" id="button18" value="Clear all" type="button">
   unchecks all rolling stock. Now you may select any you require or press the
   <input name="button19" id="button19" value="Select all" type="button">
   to check all rolling stock types.</p>
 <p>We are setting up a spur for an Oil Co. so we will clear all and then select Tank for oil, kerosene and gas.</p>
-<h3><strong>Select the roads serviced by this track</strong></h3>
+
+<h4><strong>Select the roads serviced by this track</strong></h4>
 <blockquote>
   <p>
     <input name="radio3" id="radio3" value="radio3" checked="checked" type="radio">
@@ -121,7 +123,7 @@ Road form the Spure select from the drop-down list then press <input name="butto
     <strong>Exclude</strong><br>
   Similar to Accept only but creates a list of Roads that you do no want to service this location.</p>
 </blockquote>
-<h3><strong>Select loads serviced by this track</strong></h3>
+<h4><strong>Select loads serviced by this track</strong></h4>
 <blockquote>
   <p>
     <input name="radio3" id="radio6" value="radio3" checked="checked" type="radio">
@@ -176,11 +178,11 @@ or Load, the press <input name="button22" id="button22" value="Add Load" type="b
   <strong>Exclude Routes</strong></p>
   <p><img src="images/Ops_Select_setOuts_ExcludeRoutes.png" alt="exclude routes" height="113" width="761"></p>
 </blockquote>
-<h3><strong>Select trains or routes for car pick ups</strong></h3>
+<h4><strong>Select trains or routes for car pick ups</strong></h4>
 <blockquote>
   <p>This option is almost identical to Car set outs except now Car pick up options are selected.</p>
 </blockquote>
-<h3><strong>Optional Schedule</strong></h3>
+<h4><strong>Optional Schedule</strong></h4>
 <blockquote>
   <p><img src="images/Ops_Select_schedule.png" alt="schedule" height="199" width="756"><br>
     Optionally, a schedule may be selected from the drop-down list.
@@ -188,7 +190,7 @@ or Load, the press <input name="button22" id="button22" value="Add Load" type="b
       <input name="button27" id="button27" value="Edit" type="button">
   to open Add Schedule for Spur Tank Facility. <strong><a href="Ops_schedule.shtml">Schedule</a></strong></p>
 </blockquote>
-<h3><strong>Comment</strong></h3>
+<h4><strong>Comment</strong></h4>
 <p>You may now press
   <input name="button11" id="button11" value="Save Spur Track" type="button">
   to add to the location or press
@@ -216,10 +218,10 @@ from your database.</p>
 <p>The Locations window shows all the Locations in your OperationsPro database, displaying the Track Types and total Track Length for each.</p>
 <p>You may add as many Locations and Tracks as needed to complete the description of your layout.</p>
 
-<h4>Add Spur Track menu</h4>
+<h3>Add Spur Track menu</h3>
 <p><img src="images/Ops_AddSidingMenu.png" alt="menu" height="213" width="758"></p>
 
-<h3>Tools</h3>
+<h4>Tools</h4>
 <blockquote>
   <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
   <p><strong>Track Pools</strong></p>

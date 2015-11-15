@@ -31,13 +31,14 @@
 
 <tr>
 <td><span style="font-weight: bold;">JMRI&reg; v4.0</span></td>
-<td style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro v4.0</a></td>
+<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.0</a></td>
 <td></td>
 </tr>
 
 <tr>
 <td></td>
-<td style="font-weight: bold;">JMRI&reg; Operations Program v4.0<br>&nbsp;</td><td>scheduled for update, use <a href="JMRI_OPS_UsersGuide/index.shtml">v3.6 online Help</a> for now<br>&nbsp;</td>
+<td style="font-weight: bold;"><a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
+<td></td>
 </tr>
 
 <tr>
@@ -155,7 +156,7 @@
 </tbody>
 </table>
 
-<p>Updated 10/19/2015</p>
+<p>Updated 11/15/2015</p>
 
 <h2>JMRI&reg; Applications</h2>
 
@@ -167,11 +168,11 @@ The program contains modules for:</p>
 <li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
 <li>Drawing computer based panels for depicting a model railroad layout (<a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a> and <a href="../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout Editor</a>)</li>
 <li>Controlling the layout (All modules)</li>
-<li>Creating train manifests for duplicating railroad operations (Operations)</li>
+<li>Creating train manifests for duplicating railroad operations (<a href="../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
 <li>Controlling the signals on the layout (All modules)</li>
-<li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
+<li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 </ul>
-<p>All this capability is contained in one program (JMRI) which has several &quot;start-up&quot; modules for the various applications.</p>
+<p>All this capability is contained in one program (JMRI&reg;) which has several &quot;start-up&quot; modules for the various applications.</p>
 
 <h2>System Requirements</h2>
 

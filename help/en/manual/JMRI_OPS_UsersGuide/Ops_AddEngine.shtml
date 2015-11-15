@@ -112,8 +112,8 @@ which opens the<br>
 <img src="images/Ops_AddEngine_consist.png" width="275" height="151" alt="consist">     where you may enter a new Consist Name. Then select the Consist Name from the drop-down list.</p>
 
 <h4>Synchronize with NCE Consists</h4>
-If you are using NCE as your DCC command station, you can have the program synchronize your consist numbers with your locomotives. The program  will read all of the consists out of your NCE system and then will search for matching locomotives in your OperationsPro Roster. The program will assign the Consist Name <code>nce_xxx</code> where xxx is the NCE consist number. To synchronize your consists, select "Synchronize with NCE Consists" under the "Tools" menu (dimmed when no NCE Connection is set).
-<p>&nbsp;</p></td>
+If you are using NCE as your DCC command station, you can have the program synchronize your consist numbers with your locomotives. The program  will read all of the consists out of your NCE system and then will search for matching locomotives in your OperationsPro Roster. The program will assign the Consist Name <code>nce_xxx</code> where xxx is the NCE consist number. To synchronize your consists, select "Synchronize with NCE Consists" under the "Tools" menu (dimmed when no NCE Connection is set).<br>&nbsp;
+</td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarBuilt.png" width="474" height="91" alt="Built"></td>
@@ -129,7 +129,7 @@ If you are using NCE as your DCC command station, you can have the program synch
       </select>
     </strong>, if the owner's name is not in the list press
     <input type="submit" name="button7" id="button7" value="Edit">
-which opens<img src="images/Ops_AddEngine_owner.png" width="275" height="151" alt="owner"> <br>
+which opens <p><img src="images/Ops_AddEngine_owner.png" width="275" height="151" alt="owner"></p>
 where you may enter the owner's name. Then select the Owner Name from the drop-down list.</td>
   </tr>
   <tr>
@@ -154,7 +154,7 @@ where you may enter the owner's name. Then select the Owner Name from the drop-d
     <p></p></td>
   </tr>
 </table>
-<p>&nbsp;</p>
+
 <p>Now that you have your Locomotives stored in the Engine Roster, you will need to add <a href="Ops_Routes.shtml">Routes</a> that your Trains will use to operate on your layout.</p>
 <hr>
 

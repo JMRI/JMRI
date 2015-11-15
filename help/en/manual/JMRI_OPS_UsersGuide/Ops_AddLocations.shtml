@@ -1,5 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
+<html lang="en">
+<head>
 <title>JMRI OperationsPro - Location</title>
 
 <!-- Style -->
@@ -20,7 +21,7 @@
 <a name="Top"></a>
 
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h2>OperationsPro: Add Location Window</h2>
+<h2>OperationsPro: Add Location window</h2>
 
 <div align="right">
 <p><a href="Ops_Locations.shtml">Back</a><a href="Ops_Cars.shtml"></a></p>
@@ -36,20 +37,9 @@ The Location name must be unique; OperationsPro will not allow two
 Locations with identical names. However, if you want more than one
 Location to have the same name on your Manifests and Switch Lists, add
 a hyphen and a number to the end of the Locations name. For example, <strong>Boston-1</strong> and <strong>Boston-2</strong> will both print as <strong>Boston</strong>. The program will remove the hyphen and number when printing Manifests and Switch Lists.</p>
-<p><span style="font-weight: bold;">Add Location</span> Window Menu</p>
-<p style="text-align: center;"><img src="images/Ops_AddLocation_menu.png" alt="menu" height="168" width="776"></p>
+Press <input name="button2" id="button2" value="Add Location" type="submit">
+at the bottom of the panel. The various fields that were disabled should now be enabled.</p>
 
-<p><strong>Tools</strong></p>
-<blockquote>
-  <p><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a></p>
-  <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
-  <p><strong>Change Track Type</strong></p>
-  <p><img src="images/Ops_location_ChangeTrackType.png" alt="track type" height="107" width="388"><br>
-    <br>
-    Press 
-    <input name="button2" id="button2" value="Add Location" type="submit">
-    at the bottom of the panel. The various fields that were disabled should now be enabled.</p>
-</blockquote>
 <p style="text-align: center;"><img src="images/Ops_AddLocation01.png" alt="Add Location" height="585" width="772"></p>
 <p>Each Location can have several Yard, Spur, Interchange or Staging Tracks:
 <ul>
@@ -107,7 +97,7 @@ fields. </p>
   button at the bottom of the window will change to match the option you chose as "Tracks at this Location".<br>
   
 </p>
-<h3><a name="addtracks">Add Spurs, Yards, Classification/Interchange, or Staging Only (corresponding to the present task)</a></h3>
+<h4><a name="addtracks">Add Spurs, Yards, Classification/Interchange, or Staging Only (corresponding to the present task)</a></h4>
 <p>To add a Location, press the "Add [location]" button, which shows one of the following types</p>
 <p><a href="Ops_AddSiding.shtml"><input name="button4" id="button4" value="Add Spur Track" type="button">
 </a>  <a href="Ops_AddSiding.shtml">Add Spur Track</a></p>
@@ -120,15 +110,26 @@ fields. </p>
 <p><a href="Ops_AddStaging.shtml"><input name="button7" id="button7" value="Add Staging Only Track" type="button">
 </a><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></p>
 <p>Each of these buttons opens a corresponding dialog to describe its function.</p>
-<h3>Save [...] Track</h3>
+
+<h4>Save [...] Track</h4>
 <p>Press the 
 <input name="button8" id="button8" value="Save Location" type="submit">
 to save your work. The program will create a file
 (OperationsLocationRoster.xml) in your JMRI directory in a folder
 called "operations". The program will also create a backup file
 containing the last settings for all of your locations. <a name="Sidings"></a></p>
-<p>Spurs are very similar to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information. You can if you wish schedule the order that Cars will be delivered to a Spur. See <a href="Ops_schedule.shtml">Schedules</a> for more information.
-</p>
+<p>Spurs are very similar to <a href="Ops_AddYard.shtml">Yards</a>, so see above for more information. You can if you wish schedule the order that Cars will be delivered to a Spur. See <a href="Ops_schedule.shtml">Schedules</a> for more information.</p>
+
+<h3><span style="font-weight: bold;">Add Location</span> window  menu</h3>
+<p style="text-align: center;"><img src="images/Ops_AddLocation_menu.png" alt="menu" height="168" width="776"></p>
+
+<p><strong>Tools</strong></p>
+<blockquote>
+  <p><a href="Ops_Locations_byCar.shtml"><strong>Modify Locations by Car Type</strong></a></p>
+  <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
+  <p><strong>Change Track Type</strong></p>
+  <p><img src="images/Ops_location_ChangeTrackType.png" alt="track type" height="107" width="388"><br>
+</blockquote>
 <hr>
 
 <div align="right">
