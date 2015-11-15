@@ -145,7 +145,6 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
         FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
             // rosterLocation == null if location is default location
             if (Roster.this.rosterLocation == null) {
-                Roster.this.setRosterLocation(null); // trigger LocoFile location change
                 Roster.this.reloadRosterFile();
             }
         });
@@ -982,11 +981,8 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             }
         }
         this.rosterLocation = f;
-        if (this.rosterLocation != null) {
-            LocoFile.setFileLocation(this.rosterLocation + "roster"); // NOI18N
-        } else {
+        if (this.rosterLocation == null) {
             log.debug("Roster location reset to default");
-            LocoFile.setFileLocation(FileUtil.getUserFilesPath() + "roster" + File.separator); // NOI18N
         }
         this.reloadRosterFile();
     }
