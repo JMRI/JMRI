@@ -53,7 +53,6 @@ public class RosterConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
     public boolean load(Element shared, Element perNode) {
         boolean result = true;
         if (shared.getAttribute("directory") != null) {
-            Roster.getDefault().setRosterLocation(shared.getAttribute("directory").getValue());
             InstanceManager.getDefault(RosterConfigManager.class).setDirectory(shared.getAttribute("directory").getValue());
             if (log.isDebugEnabled()) {
                 log.debug("set roster location (1): " + shared.getAttribute("directory").getValue());
