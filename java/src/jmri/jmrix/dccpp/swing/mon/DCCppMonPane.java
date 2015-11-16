@@ -230,12 +230,13 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
      * need to get translated back into a single address by reversing the
      * formulas used to calculate them in the first place.
      */
+    /* NOT USED
     private int calcLocoAddress(int AH, int AL) {
         if (AH == 0x00) {
-            /* if AH is 0, this is a short address */
+            // if AH is 0, this is a short address
             return (AL);
         } else {
-            /* This must be a long address */
+            // This must be a long address
             int address = 0;
             address = ((AH * 256) & 0xFF00);
             address += (AL & 0xFF);
@@ -243,7 +244,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
             return (address);
         }
     }
-
+    */
 
     /**
      * Nested class to create one of these using old-style defaults
