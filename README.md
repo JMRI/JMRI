@@ -1,7 +1,7 @@
-# JMRI Code Repository
+# JMRI
 
 Model railroad software
 
-For more information, see the JMRI project web site http://jmri.org
+For more information, see [JMRI.org](http://jmri.org)
 
-The JMRI technical pages start at http://jmri.org/help/en/html/doc/Technical/index.shtml
+For development information, see [Technical Info](http://jmri.org/help/en/html/doc/Technical)
