@@ -41,7 +41,7 @@ SKIP:
    | <SPACE: " ">:DEFAULT
 }
 
-<DEFAULT,DEVICENAME>
+<DEFAULT,DEVICENAME,VALUE>
 TOKEN :
 {
   < EOL : "\n" >:DEFAULT
@@ -87,6 +87,16 @@ TOKEN:
     | < JMRIREPORTER:<R> (["0"-"9"])+ >:DEFAULT
 }
 
+<VALUE>
+MORE: {
+  <~[",","\n","\r"]>
+}
+
+<VALUE,DEFAULT>
+TOKEN: {  
+  < COMMA: ",">:DEFAULT
+}
+
 <DEFAULT>
 TOKEN :
 {
@@ -123,7 +133,7 @@ TOKEN :
 | < TRAINSTATUS: <T><R><A><I><N><S><T><A><T><U><S>>
 | < TRAINLOCATION: <T><R><A><I><N><L><O><C><A><T><I><O><N>>
 | < TERMINATE: <T><E><R><M><I><N><A><T><E>>
-
+| < EQUALS: "=">:VALUE
 // catch all
 | <BADTOKEN:~[" "]>
 }
@@ -134,7 +144,7 @@ SimpleNode command():{}
 {
   // This is a simple list of the possible commands.  
   // They are broken down further below.
-  ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() ) <EOL>
+  ( powercmd() | turnoutcmd() |reportercmd() | lightcmd() |sensorcmd() | operationscmd()) <EOL>
   {
     log.debug("Command Production");
     return jjtThis;
@@ -272,7 +282,6 @@ SimpleNode reporterdevice():{Token t;}
 
 SimpleNode sensorcmd():{}
 {
-   // need to add system name.
    sensor() sensordevice()
    {
      return jjtThis; 
@@ -298,3 +307,79 @@ SimpleNode sensordevice():{Token t;}
   }
 }
 
+SimpleNode operationscmd():{}
+{
+   operations() (trains() | locations() | terminate() | traincmd() ) 
+   {
+     return jjtThis; 
+   }
+}
+
+SimpleNode operations():{Token t;}
+{
+  t=<OPERATIONS>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode trains():{Token t;}
+{
+  t=<TRAINS>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode locations():{Token t;}
+{
+  t=<LOCATIONS>
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode terminate():{Token t;}
+{
+  t=<TERMINATE> attributelist()
+  {
+    jjtThis.jjtSetValue(t.image);
+    return jjtThis;
+  }
+}
+
+SimpleNode traincmd():{SimpleNode s;}
+{
+  <TRAIN> <EQUALS> s=value() <COMMA> attributename() (<EQUALS> value())?
+  {
+    jjtThis.jjtSetValue(s.jjtGetValue());
+    return jjtThis;
+  } 
+}
+
+SimpleNode attributelist():{Token t;}
+{
+   attributename() (<EQUALS> value() (<COMMA> attributelist())?)?
+   {
+     return jjtThis;
+   }
+}
+
+SimpleNode attributename():{}
+{
+  ( <TRAIN> | <TRAINLENGTH> | <TRAINWEIGHT> | <TRAINCARS> |
+    <TRAINLEADLOCO> | <TRAINCABOOSE> | <TRAINSTATUS> | <TRAINLOCATION> )
+  {
+    return jjtThis;
+  }
+}
+
+SimpleNode value():{}
+{
+  {
+     return jjtThis;
+  }
+}

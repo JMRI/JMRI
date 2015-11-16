@@ -339,6 +339,121 @@ public class JmriServerParserTest extends TestCase {
         assertFalse(exceptionOccured);
     }
 
+
+// test operations related commands.
+    public void testGetOperationsTrains() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAINS\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetOperationsLocations() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS LOCATIONS\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
+    public void testGetTrainLocation() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINLOCATION\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testSetTrainLocation() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINLOCATION=ABCD\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testGetTrainWeight() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINWEIGHT\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testGetTrainCars() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINCARS\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testGetTrainLeadLoco() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINLEADLOCO\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testGetTrainCaboose() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINCABOOSE\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testGetTrainStatus() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TRAIN=ABC1234 , TRAINSTATUS\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+    public void testGetTerminanteTrain() {
+        boolean exceptionOccured = false;
+        String code = "OPERATIONS TERMINATE TRAIN=ABC1234\n\r";
+        JmriServerParser p = new JmriServerParser(new StringReader(code));
+        try {
+            p.command();
+        } catch (ParseException pe) {
+            exceptionOccured = true;
+        }
+        assertFalse(exceptionOccured);
+    }
+
     // Main entry point
 
     // Main entry point
