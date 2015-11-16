@@ -1,7 +1,9 @@
 // SampleMinimalProgram.java
 package apps;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.util.Log4JUtil;
 import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
@@ -106,7 +108,7 @@ public class SampleMinimalProgram {
         adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        ConfigureManager cm = new JmriConfigurationManager();
 
         // not setting preference file location!
         InstanceManager.setConfigureManager(cm);

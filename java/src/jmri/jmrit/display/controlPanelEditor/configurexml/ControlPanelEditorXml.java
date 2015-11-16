@@ -112,11 +112,12 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
      * Create a ControlPanelEditor object, then register and fill it, then pop
      * it in a JFrame
      *
-     * @param element Top level Element to unpack.
+     * @param shared Top level Element to unpack.
+     * @param perNode
      * @return true if successful
      */
     @Override
-    public boolean load(Element element) {
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
         // find coordinates
         int x = 0;
@@ -124,18 +125,18 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         int height = 400;
         int width = 300;
         try {
-            x = element.getAttribute("x").getIntValue();
-            y = element.getAttribute("y").getIntValue();
-            height = element.getAttribute("height").getIntValue();
-            width = element.getAttribute("width").getIntValue();
+            x = shared.getAttribute("x").getIntValue();
+            y = shared.getAttribute("y").getIntValue();
+            height = shared.getAttribute("height").getIntValue();
+            width = shared.getAttribute("width").getIntValue();
         } catch (org.jdom2.DataConversionException e) {
             log.error("failed to convert ControlPanelEditor's attribute");
             result = false;
         }
         // find the name
         String name = "Control Panel";
-        if (element.getAttribute("name") != null) {
-            name = element.getAttribute("name").getValue();
+        if (shared.getAttribute("name") != null) {
+            name = shared.getAttribute("name").getValue();
         }
         // confirm that panel hasn't already been loaded
         if (jmri.jmrit.display.PanelMenu.instance().isPanelNameUsed(name)) {
@@ -151,13 +152,13 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         // items are loaded, to preserve the individual item settings
         Attribute a;
         boolean value = true;
-        if ((a = element.getAttribute("editable")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("editable")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllEditable(value);
 
         value = true;
-        if ((a = element.getAttribute("positionable")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("positionable")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllPositionable(value);
@@ -169,36 +170,36 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
          panel.setShowCoordinates(value);
          */
         value = true;
-        if ((a = element.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("showtooltips")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllShowTooltip(value);
 
         value = true;
-        if ((a = element.getAttribute("controlling")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("controlling")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setAllControlling(value);
 
         value = false;
-        if ((a = element.getAttribute("hide")) != null && a.getValue().equals("yes")) {
+        if ((a = shared.getAttribute("hide")) != null && a.getValue().equals("yes")) {
             value = true;
         }
         panel.setShowHidden(value);
 
         value = true;
-        if ((a = element.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("panelmenu")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setPanelMenuVisible(value);
 
         value = true;
-        if ((a = element.getAttribute("shapeSelect")) != null && a.getValue().equals("no")) {
+        if ((a = shared.getAttribute("shapeSelect")) != null && a.getValue().equals("no")) {
             value = false;
         }
         panel.setShapeSelect(value);
 
-        if ((a = element.getAttribute("state")) != null) {
+        if ((a = shared.getAttribute("state")) != null) {
             try {
                 int xState = a.getIntValue();
                 panel.setExtendedState(xState);
@@ -209,21 +210,21 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         String state = "both";
-        if ((a = element.getAttribute("scrollable")) != null) {
+        if ((a = shared.getAttribute("scrollable")) != null) {
             state = a.getValue();
         }
         panel.setScroll(state);
         try {
-            int red = element.getAttribute("redBackground").getIntValue();
-            int blue = element.getAttribute("blueBackground").getIntValue();
-            int green = element.getAttribute("greenBackground").getIntValue();
+            int red = shared.getAttribute("redBackground").getIntValue();
+            int blue = shared.getAttribute("blueBackground").getIntValue();
+            int green = shared.getAttribute("greenBackground").getIntValue();
             panel.setBackgroundColor(new Color(red, green, blue));
         } catch (org.jdom2.DataConversionException e) {
             log.warn("Could not parse color attributes!");
         } catch (NullPointerException e) {  // considered normal if the attributes are not present
         }
 
-        Element icons = element.getChild("icons");
+        Element icons = shared.getChild("icons");
         if (icons != null) {
             HashMap<String, NamedIcon> portalIconMap = new HashMap<String, NamedIcon>();
             portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
@@ -233,13 +234,13 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             portalIconMap.put(PortalIcon.FROM_ARROW, loadIcon("from_arrow", icons, panel));
             panel.setDefaultPortalIcons(portalIconMap);
         }
-        element.removeChild("icons");
+        shared.removeChild("icons");
 
         //set the (global) editor display widgets to their flag settings
         panel.initView();
 
         // load the contents
-        List<Element> items = element.getChildren();
+        List<Element> items = shared.getChildren();
         for (Element item : items) {
             String adapterName = item.getAttribute("class").getValue();
             log.debug("load via {}", adapterName);

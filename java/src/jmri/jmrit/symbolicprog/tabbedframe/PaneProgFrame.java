@@ -27,6 +27,7 @@ import javax.swing.JSeparator;
 import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.WindowConstants;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.ProgrammingMode;
 import jmri.ShutDownTask;
@@ -49,11 +50,13 @@ import jmri.jmrit.symbolicprog.EnumVariableValue;
 import jmri.jmrit.symbolicprog.FactoryResetAction;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
 import jmri.jmrit.symbolicprog.LokProgImportAction;
+import jmri.jmrit.symbolicprog.QuantumCvMgrImportAction;
 import jmri.jmrit.symbolicprog.Pr1ExportAction;
 import jmri.jmrit.symbolicprog.Pr1ImportAction;
 import jmri.jmrit.symbolicprog.Pr1WinExportAction;
 import jmri.jmrit.symbolicprog.PrintAction;
 import jmri.jmrit.symbolicprog.PrintCvAction;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.Qualifier;
 import jmri.jmrit.symbolicprog.QualifierAdder;
 import jmri.jmrit.symbolicprog.ResetTableModel;
@@ -181,7 +184,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         menuBar.add(fileMenu);
 
         // add a "Factory Reset" menu
-        if (!_opsMode) {
+        if (!_opsMode || true) {
             resetMenu = new JMenu(SymbolicProgBundle.getMessage("MenuReset"));
             menuBar.add(resetMenu);
             resetMenu.add(new FactoryResetAction(SymbolicProgBundle.getMessage("MenuFactoryReset"), resetModel, this));
@@ -216,6 +219,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         importSubMenu.add(new CsvImportAction(SymbolicProgBundle.getMessage("MenuImportCSV"), cvModel, this));
         importSubMenu.add(new Pr1ImportAction(SymbolicProgBundle.getMessage("MenuImportPr1"), cvModel, this));
         importSubMenu.add(new LokProgImportAction(SymbolicProgBundle.getMessage("MenuImportLokProg"), cvModel, this));
+        importSubMenu.add(new QuantumCvMgrImportAction(SymbolicProgBundle.getMessage("MenuImportQuantumCvMgr"), cvModel, this));
 
         // add "Export" submenu; this is heirarchical because
         // some of the names are so long, and we expect more formats
@@ -453,7 +457,7 @@ abstract public class PaneProgFrame extends JmriJFrame
         variableModel.setFileDirty(false);
 
         // if the Reset Table was used lets enable the menu item
-        if (!_opsMode) {
+        if (!_opsMode || resetModel.hasOpsModeReset()) {
             if (resetModel.getRowCount() > 0) {
                 resetMenu.setEnabled(true);
             }
@@ -1729,27 +1733,29 @@ abstract public class PaneProgFrame extends JmriJFrame
 
     /**
      * Option to control appearance of empty panes
+     *
+     * @param yes true if empty panes should be shown
      */
     public static void setShowEmptyPanes(boolean yes) {
-        showEmptyPanes = yes;
+        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowEmptyPanes(yes);
     }
 
     public static boolean getShowEmptyPanes() {
-        return showEmptyPanes;
+        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowEmptyPanes();
     }
-    static boolean showEmptyPanes = true;
 
     /**
      * Option to control appearance of CV numbers in tool tips
+     *
+     * @param yes true is CV numbers should be shown
      */
     public static void setShowCvNumbers(boolean yes) {
-        showCvNumbers = yes;
+        InstanceManager.getDefault(ProgrammerConfigManager.class).setShowCvNumbers(yes);
     }
 
     public static boolean getShowCvNumbers() {
-        return showCvNumbers;
+        return InstanceManager.getDefault(ProgrammerConfigManager.class).isShowCvNumbers();
     }
-    static boolean showCvNumbers = false;
 
     public RosterEntry getRosterEntry() {
         return _rosterEntry;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
 <!-- Copyright (C) JMRI 2002, 2005, 2006, 2007, 2013 All rights reserved -->
-<!-- $Id$ -->
+<!-- $Id: CV100_CV187_wow.xml 29241 2015-05-09 16:40:42Z jacobsen $ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -288,46 +288,6 @@
     <decVal/>
     <label>Brake Light On Time</label>
     <label xml:lang="it">Tempo di On Luci Freni</label>
-  </variable>
-  <variable item="FL(f) controls output Brake" CV="139" mask="XXXXXXXV" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>FL(f) controls output Brake</label>
-    <label xml:lang="it">Luci(in avanti) controlla uscita Freni</label>
-  </variable>
-  <variable item="FL(r) controls output Brake" CV="139" mask="XXXXXXVX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>FL(r) controls output Brake</label>
-    <label xml:lang="it">Luci(in retro) controlla uscita Freni</label>
-  </variable>
-  <variable item="F1 controls output Brake" CV="139" mask="XXXXXVXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F1 controls output Brake</label>
-   <label xml:lang="it">F1 controlla uscita Freni</label>
-  </variable>
-  <variable item="F2 controls output Brake" CV="139" mask="XXXXVXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F2 controls output Brake</label>
-    <label xml:lang="it">F2 controlla uscita Freni</label>
-  </variable>
-  <variable item="F3 controls output Brake" CV="139" mask="XXXVXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F3 controls output Brake</label>
-    <label xml:lang="it">F3 controlla uscita Freni</label>
-  </variable>
-  <variable item="F4 controls output Brake" CV="139" mask="XXVXXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F4 controls output Brake</label>
-    <label xml:lang="it">F4 controlla uscita Freni</label>
-  </variable>
-  <variable item="F5 controls output Brake" CV="139" mask="XVXXXXXX" minOut="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F5 controls output Brake</label>
-    <label xml:lang="it">F5 controlla uscita Freni</label>
-  </variable>
-  <variable item="F6 controls output Brake" CV="139" mask="VXXXXXXX" minOut="1" default="1">
-   <xi:include href="http://jmri.org/xml/decoders/parts/enum-NoYes.xml"/>
-    <label>F6 controls output Brake</label>
-    <label xml:lang="it">F6 controlla uscita Freni</label>
   </variable>
   <variable CV="140" default="140" item="Function 3 effect generated">
     <decVal/>

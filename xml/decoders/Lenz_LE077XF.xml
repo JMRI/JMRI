@@ -75,7 +75,7 @@
         <label xml:lang="fr">V démarr.</label>
         <label xml:lang="de">Anfahrspannung</label>
         <comment>Range 0-31</comment>
-        <label xml:lang="de">Vstart</label>
+        <comment xml:lang="de">Vstart</comment>
         <comment xml:lang="de">Range 0-31</comment>
       </variable>
       <!-- CV 3-4 -->

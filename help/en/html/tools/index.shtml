@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>
@@ -148,9 +147,9 @@
 		</dd>
 		
 		
-		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations</a></h3></dt>
+		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a></h3></dt>
 		<dd>
-		The Operations tool allows you to produce computer generated
+		The OperationsPro tool allows you to produce computer generated
 		manifests and switch lists for your railroad from lists of rolling stock, trains and destinations.
 		</dd>
 	  </dl>

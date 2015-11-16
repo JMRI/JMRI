@@ -1114,56 +1114,56 @@
         <label>Value Dim Output 1</label>
         <label xml:lang="it">Valore Smorzamento uscita 1</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 2" CV="88" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 2</label>
         <label xml:lang="it">Valore Smorzamento uscita 2</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 3" CV="89" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 3</label>
         <label xml:lang="it">Valore Smorzamento uscita 3</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 4" CV="90" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 4</label>
         <label xml:lang="it">Valore Smorzamento uscita 4</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 5" CV="91" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 5</label>
         <label xml:lang="it">Valore Smorzamento uscita 5</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 6" CV="92" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 6</label>
         <label xml:lang="it">Valore Smorzamento uscita 6</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 7" CV="93" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 7</label>
         <label xml:lang="it">Valore Smorzamento uscita 7</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable item="Value Dim Output 8" CV="94" default="0" comment="Controls Dim Output Individually">
         <decVal min="0" max="255"/>
         <label>Value Dim Output 8</label>
         <label xml:lang="it">Valore Smorzamento uscita 8</label>
         <comment>Controls Dim Output Individually</comment>
-        <label xml:lang="it">Controlla Smorzamento uscita singola</label>
+        <comment xml:lang="it">Controlla Smorzamento uscita singola</comment>
       </variable>
       <variable CV="105" default="255" item="User Id #1">
         <decVal/>

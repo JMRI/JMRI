@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Made from the QSI_Diesel_Ver7.xml file for testing purposes           -->
+<!-- $Id$ -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<decoder-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+    <version author="Bob Jacobsen" version="1" lastUpdated="20100119"/>
+
+    <decoder>
+
+        <family name="Test QSI Decoder" mfg="QSIndustries" lowVersionID="7">
+            <model model="Test QSI Decoder" numFns="14" numOuts="0" productID="1050">
+            </model>
+            <model model="P2k U28B/30B" numFns="14" numOuts="14" productID="124">
+                <output name="1" label="" connection="other"/>
+                <output name="2" label="" connection="other"/>
+                <output name="3" label="" connection="other"/>
+                <output name="4" label="" connection="other"/>
+            </model>
+            <functionlabels>
+                <functionlabel num="0" lockable="true">Light</functionlabel>
+                <functionlabel num="1" lockable="true">Bell</functionlabel>
+                <functionlabel num="2" lockable="true">Horn</functionlabel>
+                <functionlabel num="3" lockable="true">Coupler</functionlabel>
+                <functionlabel num="4" lockable="true">Fans</functionlabel>
+                <functionlabel num="5" lockable="true">Dynamic</functionlabel>
+                <functionlabel num="6" lockable="true">Doppler</functionlabel>
+                <functionlabel num="7" lockable="true">Squeal</functionlabel>
+                <functionlabel num="8" lockable="true">Mute</functionlabel>
+                <functionlabel num="9" lockable="true">Heavy Load</functionlabel>
+                <functionlabel num="10" lockable="true">Status</functionlabel>
+                <functionlabel num="11" lockable="true">Number Board</functionlabel>
+                <functionlabel num="12" lockable="true">Cab Light</functionlabel>
+            </functionlabels>
+
+        </family>
+
+        <programming direct="yes" paged="yes" register="yes" ops="yes">
+        </programming>
+
+        <variables>
+
+          <variable CV="3" item="CV3">
+            <decVal max="31"/>
+            <label xml:lang="it">Accellerazione (0-31)</label>
+            <label xml:lang="fr">Accelération (0-31)</label>
+            <label xml:lang="de">Anfahrverzögerung (0-31)</label>
+            <label>Acceleration Rate</label>
+          </variable>
+
+            <variable label="Minor Version Number" CV="56.254.5" readOnly="yes" item="CV56.254.5">
+              <decVal/>
+            </variable>
+            <variable label="Major Version Number" CV="56.254.6" readOnly="yes" item="CV56.254.6">
+              <decVal/>
+            </variable>
+
+            <variable label="iCV53.5.0 qual cv3 gt 100" CV="53.5.0" default="0" item="iCV53.5.0">
+                <qualifier>
+                    <variableref>CV3</variableref>
+                    <relation>ge</relation>
+                    <value>100</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
+            </variable>
+
+
+            <variable label="CV55.92.0 qual minor gt 100" CV="55.92.0" mask="XXXXXXXV" default="1" item="iCV55.92.0">
+                <qualifier>
+                    <variableref>Minor Version Number</variableref>
+                    <relation>ge</relation>
+                    <value>100</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
+            </variable>
+
+            <variable label="CV55.92.1 qual minor, major gt 100" CV="55.92.1" mask="XXXXXXXV" default="1" item="iCV55.92.1">
+                <qualifier>
+                    <variableref>Minor Version Number</variableref>
+                    <relation>ge</relation>
+                    <value>100</value>
+                </qualifier>
+                <qualifier>
+                    <variableref>Major Version Number</variableref>
+                    <relation>ge</relation>
+                    <value>100</value>
+                </qualifier>
+                <enumVal>
+                    <enumChoice choice="Off"/>
+                    <enumChoice choice="On"/>
+                </enumVal>
+            </variable>
+
+            <variable label="CV4 qual cv3 ge 100" CV="4" item="CV4">
+                <qualifier>
+                    <variableref>CV3</variableref>
+                    <relation>ge</relation>
+                    <value>100</value>
+                </qualifier>
+                <decVal max="31"/>
+            </variable>
+
+            <variable label="CV5 qual cv3 le 100" CV="5" item="CV5">
+                <qualifier>
+                    <variableref>CV3</variableref>
+                    <relation>le</relation>
+                    <value>100</value>
+                </qualifier>
+                <decVal max="31"/>
+            </variable>
+
+            <variables>
+                <qualifier>
+                    <variableref>CV3</variableref>
+                    <relation>le</relation>
+                    <value>100</value>
+                </qualifier>
+                <variable label="CV6 qual cv3 le 100 w variables" CV="6" item="CV6">
+                    <decVal max="31"/>
+                </variable>
+            </variables>
+
+        </variables>
+
+    </decoder>
+
+
+</decoder-config>

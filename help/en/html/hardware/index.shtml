@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
   <title>
@@ -94,6 +93,17 @@
 	    <dd><p class="dl">Configure: EasyDCC command station via
 		<a href="easydcc/EasyDCC.shtml">Serial</a> or 
 		<a href="TerminalServer.shtml">Terminal Server</a></p>
+		<p>&nbsp;</p>
+	    </dd>
+
+	    <dt class="im">
+		<a href="https://www.youtube.com/channel/UCJmvQx-fe0OMAIH-_g-_rZw">
+		<img src="dccpp/dccpp_logo.jpg" width="60" height="26" alt="DCC++"></a>
+	    </dt>
+	    <dt>DCC++</dt>
+	    <dd><p class="dl">Configure:  
+		<a href="dccpp/index.shtml">DCC++ Open Source Arduino
+		Command Station</a>.</p>
 		<p>&nbsp;</p>
 	    </dd>
 
@@ -419,7 +429,7 @@
         use it is described on the
         <a href="../doc/Technical/TurnoutFeedback.shtml">Turnout Feedback page</a>.
 	</dd>
-
+  <dt class="left"><a href="PDA.shtml">PDA</a></dt><dd>A way to use a PDA to access JMRI.</dd>
 	</dl>
 
 <!--#include virtual="/Footer" -->
