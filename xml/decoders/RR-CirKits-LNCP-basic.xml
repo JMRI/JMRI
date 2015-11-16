@@ -2664,7 +2664,7 @@
         <label>MA16 C PR</label>
       </variable>
       <variable CV="638" mask="XXXVVVVV" default="8" item="MA16 D">
-        <xi:include href="http://jmri.org/xml/decoders/rr/cirkits/ChoiceLamp.xml"/>
+        <xi:include href="http://jmri.org/xml/decoders/rr-cirkits/ChoiceLamp.xml"/>
         <label>Lamp D</label>
       </variable>
       <variable item="MA16 D PR" CV="638" mask="VVVXXXXX" default="0">
