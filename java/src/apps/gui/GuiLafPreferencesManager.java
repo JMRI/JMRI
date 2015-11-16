@@ -108,7 +108,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
      * @param locale the locale to set
      */
     public void setLocale(Locale locale) {
-        java.util.Locale oldLocale = this.locale;
+        Locale oldLocale = this.locale;
         this.locale = locale;
         propertyChangeSupport.firePropertyChange(LOCALE, oldLocale, locale);
     }
