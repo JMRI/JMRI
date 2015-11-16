@@ -1,6 +1,5 @@
 package jmri.jmrix.dccpp.serial.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.dccpp.configurexml.AbstractDCCppSerialConnectionConfigXml;
 import jmri.jmrix.dccpp.serial.ConnectionConfig;
 import jmri.jmrix.dccpp.serial.DCCppAdapter;
@@ -38,8 +37,9 @@ public class ConnectionConfigXml extends AbstractDCCppSerialConnectionConfigXml 
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

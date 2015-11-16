@@ -69,7 +69,7 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
 		((DCCppSensor) getBySystemName(s)).message(l);
 	    }
 	}
-    };
+    }
 
     // listen for the messages to the LI100/LI101
     public void message(DCCppMessage l) {
