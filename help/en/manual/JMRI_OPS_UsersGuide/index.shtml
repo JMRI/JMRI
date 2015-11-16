@@ -15,10 +15,11 @@
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top" id="Top"></a>
+<div id="mainContent">
+<a name="Top" id="Top"></a>
 
 <h1>JMRI&reg; OperationsPro Manual</h1>
-<p><a href="#revisions">Revised</a> 11/14/2015 to cover version 3.6 and later</p>
+<p><a href="#revisions">Revised</a> 11/16/2015 to cover version 3.6</p>
 
 <p><strong>JMRI</strong> is a Java-based cross-platform application
 for model railroaders. JMRI contains applications for:</p>
@@ -46,7 +47,7 @@ take the Decoder Pro&reg; tour at <a href="http://jmri.sourceforge.net/help/en/h
 to get an overview of what we're about to cover.
 </p>
 
-<p>Note: All screen shots in this manual are from a Windows machine using the "Metal" User Interface option. While your screens will probably differ in some layout details, they will be essentially the same. All programming examples shown are with Digitrax PR3 (in MS100 mode) connected to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive samples will be Digitrax, except for sound examples.</p>
+<p>Note: All screen shots in this manual are from a Windows machine using the "Metal" User Interface option. While your screens will probably differ in some layout details, they will be essentially the same. All programming examples shown are with Digitrax PR3 (in MS100 mode) connected to Digitrax Super Chief Radio Command Station. Most of the decoders in locomotive samples are Digitrax, except for sound examples.</p>
 
 <p>Note: This entire manual has been updated to correspond to DecoderPro 3.6 and the HTML verified using HTML4 and Cascading Style Sheets. If the formatting looks odd, you probably need to update your browser.</p>
 
@@ -70,7 +71,7 @@ to get an overview of what we're about to cover.
 <li style="font-weight: bold;"><a href="Main_Main.shtml">Main Window</a></li>
 <li><a href="Main_Menu.shtml"><span style="font-weight: bold;">Menu Overview</span></a>
   <ul>
-  <li><span style="font-weight: bold;">Tools Menu</span>
+  <li><span style="font-weight: bold;">Tools menu</span>
     <ul>
     <li><span style="font-weight: bold;">Operations</span>
       <ul>
@@ -85,113 +86,113 @@ to get an overview of what we're about to cover.
     </ul>
   </li>
   
-  <li><span style="font-weight: bold;">Operations Menu</span>
+  <li><span style="font-weight: bold;">Operations menu</span>
   <ul>
   <li><a href="Ops_Settings.shtml"><span style="font-weight: bold;">Settings</span></a>
     <ul>
     <li><a href="Ops_Settings_menubar.shtml">Menu Bar</a>
-       <ul>
-       <li><span style="font-style: italic;">Tools</span>
-       <ul>
-       <li><a href="Ops_Settings_Tools_Options.shtml">Options</a></li>
-       <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
-       <li>Build Report Options</li>
-       <li>Backup</li>
-       <li>Restore</li>
-       <li>Load Demo Files</li>
-       <li>Reset Databases</li>
-       <li>Manage Auto Backups</li>
-       </ul>
-       </li>
-    </ul>
+      <ul>
+      <li><span style="font-style: italic;">Tools</span>
+        <ul>
+        <li><a href="Ops_Settings_Tools_Options.shtml">Options</a></li>
+        <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
+        <li>Build Report Options</li>
+        <li>Backup</li>
+        <li>Restore</li>
+        <li>Load Demo Files</li>
+        <li>Reset Databases</li>
+        <li>Manage Auto Backups</li>
+        </ul>
+      </li>
+      </ul>
     </li>
     </ul>
   </li>
 
-<li><a href="Ops_Locations.shtml"><span style="font-weight: bold;">Locations</span></a>
-  <ul>
-  <li><a href="Ops_Locations_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a>
+  <li><a href="Ops_Locations.shtml"><span style="font-weight: bold;">Locations</span></a>
     <ul>
-    <li><span style="font-style: italic;">Tools</span>
+    <li><a href="Ops_Locations_Menu.shtml">Menu Bar</a>
       <ul>
-      <li><a href="Ops_schedule.shtml#Schedules">Schedules</a></li>
-      <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
-      <li><a href="Ops_Cars.shtml">Show Cars</a></li>
-      <li>Print</li>
-      <li>Preview</li>
+      <li><span style="font-style: italic;">Tools</span>
+        <ul>
+        <li><a href="Ops_schedule.shtml#Schedules">Schedules</a></li>
+        <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
+        <li><a href="Ops_Cars.shtml">Show Cars</a></li>
+        <li>Print</li>
+        <li>Preview</li>
+        </ul>
+      </li>
       </ul>
     </li>
+    <li><a href="Ops_Locations_List.shtml">Locations List</a></li>
+    <li><a href="Ops_Locations_SwitchList.shtml">Yardmaster button</a></li>
+    <li><a href="Ops_EditLocation.shtml">Edit Location button</a></li>
+    <li><a href="Ops_AddLocations.shtml">Add Locations</a>
+      <ul><span style="font-style: italic;">
+      <li><a href="Ops_AddSiding.shtml">Add Spur Track</a></li>
+      <li><a href="Ops_AddYard.shtml">Add Yard Track</a></li>
+      <li><a href="Ops_AddInterchange.shtml">Add Classification/Interchange Track</a></li>
+      <li><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></li>
+      </span></ul>
+    </li>
+    <li>Edit Locations
+      <ul><span style="font-style: italic;">
+      <li><a href="Ops_EditLocation.shtml">Edit Location</a></li>
+      <li><a href="Ops_EditLocation_track.shtml">Edit Track at a Location</a></li>
+      </span></ul>
+    </li>
+    </ul>
+  </li>
+
+  <li><a href="Ops_Cars.shtml"><span style="font-weight: bold;">Cars</span></a>
+    <ul>
+    <li><a href="Ops_Cars_Menu.shtml">Menu Bar</a>
+      <ul>
+      <li><span style="font-style: italic;">Tools</span>
+        <ul>
+        <li>Car Roster
+          <ul><span style="font-style: italic;">
+          <li><a href="Ops_ImportCarsFile.shtml">Import from file</a></li>
+          <li>Export to file</li>
+          <li>Delete all cars</li>
+          <li>Reset move count all cars</li>
+          <li>Print</li>
+          <li>Preview</li>
+          </span></ul>
+        </li>
+      <li><a href="Ops_Locations_byCar.shtml">Modify Locations by Car Type</a></li>
+      <li><a href="Ops_Locations_Modify_Trains.shtml">Modify Trains by Car Type</a></li>
+      <li><a href="Ops_Locations_setCars.shtml">Set Cars</a></li>
+    </ul>
+  </li>
+  <li><a href="Ops_AddCars.shtml">Add Car</a></li>
+  <li><a href="Ops_AddCars.shtml">Edit Car</a>
+    <ul>
+    <li><a href="Ops_CarAttributes.shtml">Edit Car Attributes</a></li>
+    </ul>
+    <li><a href="http://www.railserve.com/aar_railroad_reporting_marks.html">AAR Railroad Reporting Marks</a> (background info)</li>
+  </li>
   </ul>
-  </li>
-  <li><a href="Ops_Locations_List.shtml">Locations List</a></li>
-  <li><a href="Ops_Locations_SwitchList.shtml">Yardmaster button</a></li>
-  <li><a href="Ops_EditLocation.shtml">Edit Location button</a></li>
-  <li><a href="Ops_AddLocations.shtml">Add Locations</a>
-    <ul>
-    <li><a href="Ops_AddSiding.shtml">Add Spur Track</a></li>
-    <li><a href="Ops_AddYard.shtml">Add Yard Track</a></li>
-    <li><a href="Ops_AddInterchange.shtml">Add Classification/Interchange Track</a></li>
-    <li><a href="Ops_AddStaging.shtml">Add Staging Only Track</a></li>
-    </ul>
-  </li>
-  <li>Edit Locations
-    <ul>
-    <li><a href="Ops_EditLocation.shtml">Edit Location</a></li>
-    <li><a href="Ops_EditLocation_track.shtml">Edit Track at a Location</a></li>
-    </ul>
   </li>
 </ul>
 </li>
 
-<li><a href="Ops_Cars.shtml"><span style="font-weight: bold;">Cars</span></a>
+<li><a href="Ops_Engines.shtml"><span style="font-weight: bold;">Locomotives</span></a>
   <ul>
-  <li><a href="Ops_Cars_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a>
+  <li><a href="Ops_Engines_menu.shtml">Menu Bar</a>
   <ul>
     <li><span style="font-style: italic;">Tools</span>
     <ul>
-    <li>Car Roster
-      <ul>
-      <li style="font-weight: bold;"><span style="font-style: italic;"><a style="font-weight: normal;" href="Ops_ImportCarsFile.shtml">Import from File</a></span></li>
-      <li>Export to File</li>
-      <li>Delete all Cars</li>
+    <li>Locomotive Roster
+      <ul><span style="font-style: italic;">
+      <li><a href="Ops_ImportEngines_FromRoster.shtml">Import from JMRI Roster</a></li>
+      <li><a href="Ops_ImportEngines_FromFiles.shtml">Import from file</a></li>
+      <li>Export to file</li>
+      <li>Delete all locomotives</li>
       <li>Reset move count all cars</li>
       <li>Print</li>
       <li>Preview</li>
-      </ul>
-      </li>
-    <li><a href="Ops_Locations_byCar.shtml"><span style="font-style: italic;">Modify Locations by Car Type</span></a></li>
-    <li><a href="Ops_Locations_Modify_Trains.shtml"><span style="font-style: italic;">Modify Trains by Car Type</span></a></li>
-    <li style="font-weight: bold;"><span style="font-style: italic;"><a href="Ops_Locations_setCars.shtml"><span style="font-weight: normal;">Set Cars</span></a></span></li>
-  </ul>
-  </li>
-  </ul>
-  </li>
-  <li style="font-weight: bold;"><a href="Ops_AddCars.shtml"><span style="font-style: italic;"><span style="font-weight: normal;">Add Car</span></span></a></li>
-  <li style="font-weight: bold;"><span style="font-style: italic;"><span style="font-weight: normal;"><a href="Ops_AddCars.shtml">Edit Car</a></span></span>
-    <ul>
-    <li style="font-weight: bold;"><span style="font-style: italic;font-weight: normal;"><a href="Ops_CarAttributes.shtml">Edit Car Attributes</a></span></li>
-    <li style="font-weight: bold;"><span style="font-style: italic;font-weight: normal;"><a href="http://www.railserve.com/aar_railroad_reporting_marks.html">AAR Railroad Reporting Marks</a></span></li>
-    </ul>
-  </li>
-  </ul>
-</li>
-
-<li><a href="Ops_Engines.shtml"><span style="font-weight: bold;">Locomotives</span></a>
-  <ul>
-  <li><a href="Ops_Engines_menu.shtml"><span style="font-style: italic;">Menu Bar</span></a>
-<ul>
-  <li><span style="font-style: italic;">Tools</span>
-  <ul>
-  <li>Locomotive Roster
-    <ul>
-    <li><a href="Ops_ImportEngines_FromRoster.shtml"><span style="font-style: italic;">Import from JMRI Roster</span></a></li>
-    <li><a href="Ops_ImportEngines_FromFiles.shtml"><span style="font-style: italic;">Import from file</span></a></li>
-    <li>Export to file</li>
-    <li>Delete all locomotives</li>
-    <li>Reset move count all cars</li>
-    <li>Print</li>
-    <li>Preview</li>
-    </ul>
+      </span></ul>
     </li>
     <li>Synchronize with NCE consists</li>
   </li>
@@ -199,16 +200,16 @@ to get an overview of what we're about to cover.
 </li>
 </ul>
 </li>
-<li><a href="Ops_AddEngine.shtml"><span style="font-style: italic;">Add Locomotive</span></a></li>
-<li><span style="font-style: italic;"><a href="Ops_SetEngines.shtml">Set Locomotive Location</a><br></span></li>
-<li><span style="font-style: italic;"><a href="Ops_EditEngines.shtml">Edit Locomotive</a><br></span></li>
+<li><a href="Ops_AddEngine.shtml">Add Locomotive</a></li>
+<li><a href="Ops_SetEngines.shtml">Set Locomotive Location</a></li>
+<li><a href="Ops_EditEngines.shtml">Edit Locomotive</a></li>
 </li>
 </ul>
 </li>
 
 <li><a style="font-weight: bold;" href="Ops_Routes.shtml">Routes</a>
   <ul>
-  <li><a href="Ops_Routes_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a>
+  <li><a href="Ops_Routes_Menu.shtml">Menu Bar</a>
   <ul>
     <li><span style="font-style: italic;">Tools</span>
     <ul>
@@ -220,22 +221,22 @@ to get an overview of what we're about to cover.
     </li>
   </ul>
   </li>
-  <li><a href="Ops_EditRoutes.shtml"><span style="font-style: italic;">Edit Route</span></a></li>
-  <li><span style="font-style: italic;"><a href="Ops_AddRoutes.shtml">Add Route</a></span></li>
+  <li><a href="Ops_EditRoutes.shtml">Edit Route</a></li>
+  <li><a href="Ops_AddRoutes.shtml">Add Route</a></li>
   </ul>
 </li>
 
 <li><a style="font-weight: bold;" href="Ops_Trains.shtml">Trains</a>
 <ul>
-    <li><a href="Ops_Trains_Menu.shtml"><span style="font-style: italic;">Menu Bar</span></a>
+    <li><a href="Ops_Trains_Menu.shtml">Menu Bar</a>
     <ul>
     <li><span style="font-style: italic;">Tools</span>
       <ul>
       <li>Options</li>
-      <li><a href="Ops_PrintOptions.shtml" style="font-style: italic;">Manifest Print Options</a></li>
+      <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
       <li>Build Report Options</li>
-      <li><a style="font-style: italic;" href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
-      <li><a href="Ops_Trains_Timetable.shtml"><span style="font-style: italic;">Timetable</span><br></a></li>
+      <li><a href="Ops_TrainsModify.shtml">Modify Trains by Car Type</a></li>
+      <li><a href="Ops_Trains_Timetable.shtml">Timetable</a></li>
       <li>Copy Train</li>
       <li>Scripts</li>
       <li>Setup Excel Program (Manifest Creator)</li>
@@ -244,24 +245,20 @@ to get an overview of what we're about to cover.
       </ul>
     </li>
     </ul>
-   </li>  
-   <li><a href="Ops_EditTrain.shtml"><span style="font-style: italic;">Edit Train</span></a></li>
-   <li><span style="font-style: italic;"><a href="Ops_AddTrain.shtml">Add Train</a></span></li>
-   <li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Build Trains</a></span></li>
-  <ul>
-  <li><span style="font-style: italic;"><a href="Ops_PrintOptions.shtml">Manifest Print Options</a><br></span></li>
-  <li><span style="font-style: italic;"><a href="Ops_BuildReportPrint.shtml">Build Reports</a></span></li>
-  <li><span style="font-style: italic;"><a href="Ops_TrainsBuild.shtml">Switch Lists by Location</a><br></span></li>
+    <li><a href="Ops_EditTrain.shtml">Edit Train</a></li>
+    <li><a href="Ops_AddTrain.shtml">Add Train</a></li>
+    <li><a href="Ops_TrainsBuild.shtml">Build Trains</a></li>
+    <li><a href="Ops_PrintOptions.shtml">Manifest Print Options</a></li>
+    <li><a href="Ops_BuildReportPrint.shtml">Build Reports</a></li>
+    <li><a href="Ops_TrainsBuild.shtml">Switch Lists by Location</a></li>
+    </ul>
+    </li>  
   </ul>
   </li>
-  </ul>
-  </li>
-</ul>
-</li>
 </ul>
 </li>
 
-<li><strong><a href="Ops_TripThruOperations.shtml">A Trip through OperationsPro</a></strong></li>
+<li><a href="Ops_TripThruOperations.shtml"><span style="font-weight: bold;">A Trip through OperationsPro</span></a></li>
 </ul>
 
 <h3><a name="revisions">Revisions</a></h3>
@@ -298,7 +295,7 @@ Bruce Shanks</td>
 
 <tr>
 <td>3.6</td>
-<td>11/14/2015</td>
+<td>11/16/2015</td>
 <td>Egbert Broerse</td>
 <td>Updated from Version 3.4; New menu items</td>
 </tr>
