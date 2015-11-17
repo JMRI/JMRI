@@ -32,7 +32,7 @@ public class ProgrammerConfigManager extends AbstractPreferencesProvider {
         if (!this.isInitialized(profile)) {
             Preferences preferences = ProfileUtils.getPreferences(profile, this.getClass(), true);
             if (preferences.get(DEFAULT_FILE, this.getDefaultFile()) != null) {
-                this.setDefaultFile(preferences.get("format", this.getDefaultFile()));
+                this.setDefaultFile(preferences.get(DEFAULT_FILE, this.getDefaultFile()));
                 ProgDefault.setDefaultProgFile(this.getDefaultFile());
             }
             this.setShowEmptyPanes(preferences.getBoolean(SHOW_EMPTY_PANES, this.isShowEmptyPanes()));
