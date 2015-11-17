@@ -119,7 +119,7 @@ public class FileUtilSupport extends Bean {
     public String getPreferencesPath() {
         // return jmri.prefsdir property if present
         String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
-        if (!jmriPrefsDir.isEmpty()) {
+        if (!jmriPrefsDir.isEmpty() && !jmriPrefsDir.endsWith(File.separator)) {
             return jmriPrefsDir + File.separator;
         }
         String result;
