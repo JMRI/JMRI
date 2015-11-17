@@ -1,10 +1,10 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-
-<!-- Copyright ($Author$) 2015 --><!-- $Id$ -->
-<title>DecoderPro&reg; Manual: Index</title>
+<html lang="en">
+<head>
+<title>JMRI DecoderPro3&reg; Manual: Index</title>
 
 <meta name="Author" content="Dale A. Tripp, Bruce Shanks, Egbert Broerse">
+
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -20,13 +20,12 @@
 
 <div id="mainContent"><a name="Top"></a>
 
-<h1>DecoderPro&reg;</h1>
+<h1>JMRI&reg;: DecoderPro3&reg; Manual</h1>
+<p><a href="#revisions">Revised</a> 2/17/2014 to cover version 3.6</p>
 
-<p><strong>DecoderPro&reg; is a Java-based cross-platform
+<p><strong>DecoderPro3&reg;</strong> is a Java-based cross-platform application for model railroaders.</p>
 
-application for model railroaders.</strong></p>
-
-<p>DecoderPro&reg; can run on any computer system that will run Java 1.6.0 or later,
+<p>DecoderPro3&reg; can run on any computer system that will run Java 1.6.0 or later,
 whether it is Macintosh, Windows, or Linux based. It does require that Java be installed on the computer.<br>
 You can get Java as a free (but large) download at: <a href="http://java.com/download/" target="_blank">java.com/download/</a>
 </p>
@@ -36,7 +35,7 @@ Notes:
 <li>All screen shots in this manual are from a Windows
 machine using the "Metal" User Interface option. While your screens
 will probably differ in some layout details, they will be essentially
-the same. All programming examples shown are with Digitrax PR3(MS100
+the same. All programming examples shown are with Digitrax PR3 (MS100
 mode) connected to Digitrax Super Chief Radio Command Station. Most of
 the decoders in locomotive samples will be Digitrax, except for sound
 examples.
@@ -45,7 +44,7 @@ examples.
 JMRI&reg; 3.6 DecoderPro only, and the SHTML verified using HTML4 and
 Cascading Style Sheets. If the formatting looks odd, you probably need
 to update your browser.</li>
-<li>DecoderPro&reg; v3.x was at one time known as DecoderPro&reg;3 v3.x, however since JMRI version 4 we leave out the 3 in the name.</li>
+<li>DecoderPro&reg; v3.x was at one time known as DecoderPro3&reg; v3.x, however since JMRI version 4 we leave out the 3 in the name.</li>
 </ol>
 
 <h1 name="index" id="index">Table of Contents</h1>
@@ -57,23 +56,21 @@ to update your browser.</li>
 </ul>
 
 <h4 name="GettingStarted" id="GettingStarted">Getting started</h4>
-
 <ul>
 <li><a href="Start_DCC.shtml"><strong>What is DCC?</strong></a></li>
-<li> <strong><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro&reg; work with?</a></strong></li>
+<li> <strong><a href="Start_DCC_Systems.shtml">What DCC systems will DecoderPro3&reg; work with?</a></strong></li>
 <li> <strong><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></strong></li>
 <li> <strong><a href="Start_DecoderPro.shtml">How do I start the program?</a></strong></li>
-<li><strong><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro program for First Time User?</a></strong></li>
+<li><strong><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro3 program for First Time User?</a></strong></li>
 <li> <strong><a href="Start_Preferences.shtml">How do I set up my preferences?</a></strong></li>
 </ul>
 
-<h4 name="Setting up" id="Setting up">Using DecoderPro</h4>
+<h4 name="Setting up" id="Setting up">Using DecoderPro3</h4>
 <ul>
 <li><a href="Programmer_Setup.shtml"><strong>How do I set up to program a decoder?</strong></a></li>
 </ul>
 
 <h4>DecoderPro Programming Modes</h4>
-
 <ul>
 <li><a href="Programmer_SingleCV.shtml"><strong>Single CV Programmer</strong></a></li>
 <li><strong><a href="Programmer_ServiceMode.shtml">Service Mode Programmer</a></strong></li>
@@ -81,7 +78,6 @@ to update your browser.</li>
 </ul>
 
 <h4 name="Basic Programmer"id="Basic Programmer">The Basic Programmer</h4>
-
 <ul>
 <li><a href="Basic_Start.shtml"><strong>Entering locomotives in the "Roster"</strong></a></li>
 <li><strong><a href="Basic_BasicPane.shtml">The basic programmer</a></strong></li>
@@ -93,7 +89,6 @@ to update your browser.</li>
 </ul>
 
 <h4 name="Advanced Programmer" id="Advanced Programmer">The Comprehensive Programmer</h4>
-
 <ul>
 <li><a href="Comp_Setup_Roster.shtml"><strong>Set-up and Roster Panes</strong></a></li>
 <li><strong><a href="Adv_FunctionLabel.shtml">Function Labels Pane</a></strong></li>
@@ -101,7 +96,7 @@ to update your browser.</li>
 <li><strong><a href="Comp_Basic.shtml">Expanded Basic Pane</a></strong></li>
 <li><strong><a href="Comp_Motor.shtml">Motor Control Pane</a></strong></li>
 <li><strong><a href="Comp_Speed.shtml">Basic Speed Control Pane</a></strong></li>
-<li><strong><a href="Comp_Speed_Talble.shtml" target="_parent">Speed Table Pane</a></strong></li>
+<li><strong><a href="Comp_Speed_Talble.shtml">Speed Table Pane</a></strong></li>
 <li><strong><a href="Comp_FMap.shtml">Function Mapping Pane</a></strong></li>
 <li><strong><a href="Comp_LightFX.shtml">Lights Pane</a></strong></li>
 <li><strong><a href="Comp_Consist.shtml">Consisting Pane</a></strong></li>
@@ -114,8 +109,7 @@ to update your browser.</li>
 <li><strong><a href="Comp_PrintData.shtml">Printing the Decoder Data</a></strong></li>
 </ul>
 
-<h4 name="Main" id="Main">DecoderPro&reg; Main Window</h4>
-
+<h4 name="Main" id="Main">DecoderPro3&reg; Main Window</h4>
 <ul>
 <li><a href="dp3_Main_Main.shtml"><strong>Main Window</strong></a>
   <ul>
@@ -127,13 +121,13 @@ to update your browser.</li>
   </ul>
 </li>
 
-<li><strong>System dependent menu </strong>
+<li><strong>System dependent menu</strong>
   <ul>
   <li><a href="Main_acela.shtml"><strong>Acela</strong></a></li>
   <li><strong><a href="Main_CMRI.shtml">CMRI</a></strong></li>
   <li><strong><a href="Main_EasyDCC.shtml">EasyDCC</a></strong></li>
   <li><strong><a href="Main_GrapeVine.shtml">Grapevine</a></strong></li>
-  <li><strong><a href="Main_LocoNet.shtml">LocoNet</a>&nbsp;&nbsp;&nbsp;</strong></li>
+  <li><strong><a href="Main_LocoNet.shtml">LocoNet</a></strong></li>
   <li><strong><a href="Main_NCE.shtml">NCE</a></strong></li>
   <li><strong><a href="Main_OakTreeSystems.shtml">OakTreeSystems</a></strong></li>
   <li><strong><a href="Main_Powerline.shtml">Powerline</a></strong></li>
@@ -142,7 +136,7 @@ to update your browser.</li>
   <li><strong><a href="Main_SECSI.shtml">SECSI</a></strong></li>
   <li><strong><a href="Main_SPROG.shtml">SPROG</a></strong></li>
   <li><strong><a href="Main_TMCC.shtml">TMCC</a></strong></li>
-  <li><strong><a href="Main_wangrow.shtml">wangrow</a></strong></li>
+  <li><strong><a href="Main_wangrow.shtml">Wangrow</a></strong></li>
   <li><strong><a href="Main_XpressNet.shtml">XpressNet</a></strong></li>
   <li><strong><a href="Main_Zimo.shtml">Zimo</a></strong></li>
   </ul>
@@ -150,26 +144,19 @@ to update your browser.</li>
 </ul>
 
 <h4 name="Error" id="Error">Error Messages</h4>
-
 <ul>
 <li><a href="Error.shtml"><strong>Decoder Programmer Error Messages</strong></a></li>
 </ul>
 
 <hr>
 
-<p>The <a href="http://jmri.org/download/index.shtml">JMRI download page</a> is hosted by: <br>
-<a href="http://sourceforge.net/projects/jmri/"><img src="https://sourceforge.net/sflogo.php?group_id=26788&type=12" width="120" height="30" border="0" alt="Get JMRI Model Railroad Interface at SourceForge.net. Fast, secure and Free Open Source software downloads" /></a></p>
-
 <p>To give feedback on this On Line manual, ask questions about things not covered, or make suggestions for improvements to the manual or the software, join us on the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a>.
-</p>
-
-<p>Suggestions for revisions are best submitted to the <a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a> in plain text format. This will make it easier to copy into the files.
 </p>
 
 <p>Thanks for reading, and Let's Run Trains!
 </p>
 
-<h3> Revisions </h3>
+<h3><a name="revisions">Revisions</a></h3>
 <table align="center" border="1" cellpadding="2" cellspacing="1" width="90%">
 
 <tbody>
@@ -224,11 +211,8 @@ Bruce Shanks </td>
 
 <hr>
 
-<div align="right">Go to the
-
-<a href="https://groups.yahoo.com/neo/groups/jmriusers/info">JMRI Users Yahoo Group</a></div>
-
 <!--#include virtual="/Footer" -->
+</div>
 </div>
 </body>
 </html>
