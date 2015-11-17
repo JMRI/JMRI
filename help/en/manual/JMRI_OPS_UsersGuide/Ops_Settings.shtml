@@ -1,15 +1,17 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Operations-Settings</title>
 
-
-
-
-
-<title>Operations-Settings</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 
@@ -18,18 +20,19 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Settings Window</h1>
+<h2>OperationsPro: Settings Window</h2>
 
 <div align="right">
 <p><a href="Ops_Locations.shtml">Next</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 
-<hr><span style="font-weight: bold;">Operations Settings </span>Window is opened from DecoderPro&reg; &nbsp; <span style="font-weight: bold;">Tools</span>&nbsp;menu / <span style="font-weight: bold;">Operations</span>&nbsp;<img style="width: 20px; height: 9px;" alt="arrow" src="images/arrow.gif"> <span style="font-weight: bold;">Settings</span> &nbsp;or &nbsp;<span style="font-weight: bold;">Operations</span> menu / &nbsp;<span style="font-weight: bold;">Settings</span> if selected in &nbsp;<span style="font-weight: bold;">Operations Setting</span>&nbsp; window.<p style="text-align: center;"><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p><p><a style="font-weight: bold;" href="Ops_Settings_menubar.shtml">Menu Bar</a></p><p><span style="font-weight: bold;">Settings &nbsp;-- </span>describes your railroad to the operations program.</p><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="2" rowspan="1"><img style="width: 800px; height: 156px;" alt="Name" src="images/Ops_Setting05.png"></td></tr><tr><td><strong>Railroad Name</strong>
+<hr>
+<p>The <span style="font-weight: bold;">Operations Settings </span>Window is opened from DecoderPro&reg; &nbsp; <span style="font-weight: bold;">Tools</span>&nbsp;menu / <span style="font-weight: bold;">Operations</span>&nbsp;<img style="width: 20px; height: 9px;" alt="arrow" src="images/arrow.gif"> <span style="font-weight: bold;">Settings</span> &nbsp;or &nbsp;<span style="font-weight: bold;">Operations</span> menu / &nbsp;<span style="font-weight: bold;">Settings</span> if selected in &nbsp;<span style="font-weight: bold;">Operations Setting</span>&nbsp; window.<p style="text-align: center;"><img src="images/Ops_Setting01.png" alt="ops setting" height="608" width="778"></p><p><a style="font-weight: bold;" href="Ops_Settings_menubar.shtml">Menu Bar</a></p><p><span style="font-weight: bold;">Settings &nbsp;-- </span>describes your railroad to the operations program.</p><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="2" rowspan="1"><img style="width: 800px; height: 156px;" alt="Name" src="images/Ops_Setting05.png"></td></tr><tr><td><strong>Railroad Name</strong>
         <input name="textfield" id="textfield" type="text">      
         <br>
 Enter the name of your railroad. This name will show up on your
-manifests You may use a different name for every train in your roster.
+manifests You may use a different name for every train in your Roster.
 See <a href="Ops_Trains.shtml">Train Options</a> for details<strong>.<br>
         </strong></td><td><strong>
         Trains Travel 
@@ -64,13 +67,13 @@ this value to 0.</td><td style="vertical-align: top;"><strong>Switch Time (minut
 </td><td style="vertical-align: top;"><strong>Travel Time (minutes)</strong>
           <input name="textfield5" id="textfield5" type="text">
           <br>
-The program when generating switch lists for the various locations on
-your railroad, will estimate the arrival times for your trains based on
-the train's departure time and the switch and travel times. Enter the
+The program when generating Switch Lists for the various Locations on
+your railroad, will estimate the arrival times for your Trains based on
+the Train's departure time and the switch and travel times. Enter the
 average number of minutes it takes to drop or pickup a car on your
 railroad. Then enter the average amount of time in minutes it takes to
-travel from one location to the another. Later when you create a <strong><a href="Ops_Routes.shtml">route</a></strong><br>
-          you will be able to increase or decrease the train's travel time betwee any two locations</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="3" rowspan="1"><img style="width: 800px; height: 137px;" alt="car types" src="images/Ops_Setting08.png"></td></tr><tr><td style="vertical-align: top; width: 33%;"><p><strong>Car Types</strong>
+travel from one Location to the another. Later when you create a <strong><a href="Ops_Routes.shtml">route</a></strong><br>
+          you will be able to increase or decrease the train's travel time between any two locations</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="3" rowspan="1"><img style="width: 800px; height: 137px;" alt="car types" src="images/Ops_Setting08.png"></td></tr><tr><td style="vertical-align: top; width: 33%;"><p><strong>Car Types</strong>
         </p>
         
         <input name="radio" id="radio" value="radio" checked="checked" type="radio">
@@ -85,8 +88,8 @@ travel from one location to the another. Later when you create a <strong><a href
           <input name="textfield7" id="textfield7" type="text">
           <br>
           You can optionally enter the year you want printed on your train manifest.</td></tr></tbody></table><table style="text-align: left; width: 100%;" border="0" cellpadding="2" cellspacing="2"><tbody><tr align="center"><td colspan="4" rowspan="1"><img style="width: 797px; height: 153px;" alt="options" src="images/Ops_Setting09.png"></td></tr><tr><td style="width: 30%;"><span style="font-weight: bold;">Options</span><br><input name="checkbox3" id="checkbox3" checked="checked" type="checkbox">
-        <strong>Add Operations Menu to Main Menu</strong><br>
-When selected, and saved, the operations menu will be added to the main
+<strong>Add Operations Menu to Main Menu</strong><br>
+When selected, and saved, the Operations menu will be added to the main
 menu bar the next time you start JMRI.. To remove it go through the
 same procedure&#8230; in the Settings window uncheck the box, &#8220;Save&#8221; the
 change and restart DecoderPro&reg;.<br><p><img style="width: 300px; height: 245px;" alt="setting" src="images/Ops_Setting02.png"><br></p></td><td style="vertical-align: top; width: 20%;"><input name="checkbox4" id="checkbox4" type="checkbox">
@@ -98,15 +101,17 @@ complete the restoration of the operation files.</td><td style="vertical-align: 
 and then stores the operation files in a directory that is based on the
 day you created the backup. For example, if today was November 21,
 2008, the program will create a backup directory named <strong>2008_11_21</strong>.</td><td style="vertical-align: top;">When you're finished with the settings window, press the <span style="font-weight: bold;">Save</span> button to  store the setting in a file called <strong>Operations.xml.</strong> You can find this  file in your JMRI directory in a folder called <strong>operations</strong>. The program  will also create a backup file each time you press the <span style="font-weight: bold;">Save</span> button
-</td></tr></tbody></table><hr>
+</td></tr></tbody>
+</table>
+<hr>
 	  
-  <div align="right">
-    <div align="right">
-      <p><a href="Ops_Locations.shtml">Next</a></p>
-      <p><a href="index.shtml#Main">Back to Index</a></p>
-    </div>
-    <p>.</p>
+<div align="right">
+  <p><a href="Ops_Locations.shtml">Next</a></p>
+  <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
 	  
   <!--#include virtual="/Footer" -->
-</div></body></html>
+</div>
+</div>
+</body>
+</html>
