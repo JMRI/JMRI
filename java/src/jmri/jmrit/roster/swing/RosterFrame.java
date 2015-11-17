@@ -74,7 +74,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.jmrit.symbolicprog.ProgDefault;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
@@ -372,9 +372,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
-        if (ProgDefault.getDefaultProgFile() != null) {
-            programmer1 = ProgDefault.getDefaultProgFile();
+        if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+            programmer1 = this.getProgrammerConfigManager().getDefaultFile();
         }
+        this.getProgrammerConfigManager().addPropertyChangeListener(ProgrammerConfigManager.DEFAULT_FILE, (PropertyChangeEvent evt) -> {
+            if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+                programmer1 = this.getProgrammerConfigManager().getDefaultFile();
+            }
+        });
 
         String lastProg = (String) prefsMgr.getProperty(getWindowFrameRef(), "selectedProgrammer");
         if (lastProg != null) {
@@ -753,6 +758,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return groups.getSelectedRosterGroup();
     }
 
+    protected ProgrammerConfigManager getProgrammerConfigManager() {
+        return InstanceManager.getDefault(ProgrammerConfigManager.class);
+    }
+    
     void handleQuit(WindowEvent e) {
         if (e != null && frameInstances.size() == 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";

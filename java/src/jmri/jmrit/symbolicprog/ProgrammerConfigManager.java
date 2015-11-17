@@ -20,9 +20,9 @@ import org.slf4j.LoggerFactory;
 public class ProgrammerConfigManager extends AbstractPreferencesProvider {
 
     private final static Logger log = LoggerFactory.getLogger(ProgrammerConfigManager.class);
-    private final static String DEFAULT_FILE = "defaultFile";
-    private final static String SHOW_EMPTY_PANES = "showEmptyPanes";
-    private final static String SHOW_CV_NUMBERS = "showCvNumbers";
+    public final static String DEFAULT_FILE = "defaultFile";
+    public final static String SHOW_EMPTY_PANES = "showEmptyPanes";
+    public final static String SHOW_CV_NUMBERS = "showCvNumbers";
     private String defaultFile = null;
     private boolean showEmptyPanes = true;
     private boolean showCvNumbers = false;
