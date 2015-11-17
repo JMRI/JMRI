@@ -250,7 +250,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public String getTOStateString() {
 	if (this.isTurnoutReply()) {
-	    return(this.getTOStateInt() == 1 ? "Thrown" : "Closed");
+	    return(this.getTOStateInt() == 1 ? DCCppConstants.TURNOUT_THROWN : DCCppConstants.TURNOUT_CLOSED);
 	} else {
 	    log.error("TurnoutReply Parser called on non-TurnoutReply message type {}", this.getOpCodeChar());
 	    return("Not a Turnout");
@@ -337,7 +337,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	if (this.isProgramReply()) {
 	    Matcher m = match(this.toString(), DCCppConstants.PROGRAM_REPLY_REGEX, "ProgramReply");
 	    if (m != null) {
-		if (m.group(2).equals(Integer.toString((int)DCCppConstants.PROG_WRITE_CV_BIT)))
+		if (m.group(2).equals(Integer.toString(DCCppConstants.PROG_WRITE_CV_BIT)))
 		    return(m.group(6));
 		else
 		    return(m.group(4));
@@ -404,7 +404,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
     public String getSensorStateString() {
-	if (this.isTurnoutReply()) {
+	if (this.isSensorReply()) {
 	    return(this.getSensorStateInt() == 1 ? "Active" : "Inactive");
 	} else {
 	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());

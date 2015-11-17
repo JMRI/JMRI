@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ServiceLoader;
+import javax.swing.JList;
+import javax.swing.JOptionPane;
+import jmri.Application;
 import jmri.ConfigureManager;
 import jmri.InstanceManager;
 import jmri.JmriException;
@@ -177,7 +180,7 @@ public class JmriConfigurationManager implements ConfigureManager {
         log.debug("loading {} ...", file);
         try {
             if (file == null
-                    || (new File(file.toURI())).getName().equals("ProfileConfig.xml")
+                    || (new File(file.toURI())).getName().equals("ProfileConfig.xml") //NOI18N
                     || (new File(file.toURI())).getName().equals(Profile.CONFIG)) {
                 List<PreferencesProvider> providers = new ArrayList<>(InstanceManager.getList(PreferencesProvider.class));
                 providers.stream().forEach((provider) -> {
@@ -185,11 +188,31 @@ public class JmriConfigurationManager implements ConfigureManager {
                 });
                 if (!this.initializationExceptions.isEmpty()) {
                     if (!GraphicsEnvironment.isHeadless()) {
-                        // TODO: Display list of errors
+                        String[] errors = new String[this.initializationExceptions.size()];
+                        int i = 0;
+                        for (InitializationException e : this.initializationExceptions.values()) {
+                            errors[i] = e.getLocalizedMessage();
+                            i++;
+                        }
+                        Object list;
+                        if (this.initializationExceptions.size() == 1) {
+                            list = errors[0];
+                        } else {
+                            list = new JList<>(errors);
+                        }
+                        JOptionPane.showMessageDialog(null,
+                                new Object[]{
+                                    list,
+                                    "<html><br></html>", // NOI18N // Add a visual break between list of errors and notes
+                                    Bundle.getMessage("InitExMessageLogs"), // NOI18N
+                                    Bundle.getMessage("InitExMessagePrefs"), // NOI18N
+                                },
+                                Bundle.getMessage("InitExMessageTitle", Application.getApplicationName()), // NOI18N
+                                JOptionPane.ERROR_MESSAGE);
                         (new TabbedPreferencesAction()).actionPerformed();
                     }
                 }
-                if (file != null && (new File(file.toURI())).getName().equals("ProfileConfig.xml")) {
+                if (file != null && (new File(file.toURI())).getName().equals("ProfileConfig.xml")) { // NOI18N
                     log.debug("Loading legacy configuration...");
                     return this.legacy.load(file, registerDeferred);
                 }

@@ -224,8 +224,8 @@ public class FileUtilSupport extends Bean {
         }
         // scriptsPath not set by user, return default if it exists
         File file = new File(this.getProgramPath() + File.separator + "jython" + File.separator); // NOI18N
-        if (file.exists()) {
-            return file.getPath();
+        if (file.exists() && file.isDirectory()) {
+            return file.getPath() + File.separator;
         }
         // if default does not exist, return user's files directory
         return this.getUserFilesPath();

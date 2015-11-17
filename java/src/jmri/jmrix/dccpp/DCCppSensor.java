@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     private boolean statusRequested = false;
+    private String prefix;
 
     private int address;
     private int baseaddress; /* The result of integer division of the 
@@ -25,9 +26,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     private int nibble;      /* Is this sensor in the upper or lower 
      nibble for the feedback encoder */
-
-    private int nibblebit;   /* Which bit in the nibble represents this 
-     sensor */
 
     private String systemName;
 
@@ -51,10 +49,13 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private void init(String id) {
         // store address
         systemName = id;
+	//prefix = jmri.InstanceManager.getDefault(jmri.jmrix.dccpp.DCCppSensorManager.class).getSystemPrefix();
 	// WARNING: This address assignment is brittle. If the user changes the System Name prefix
 	// it will fail.  Probably better to do a regex parse, or to look for the last instance of 'S'
 	// TODO: Fix this to be more robust.  And check the other things (T/O's, etc.) for the same bug
-        address = Integer.parseInt(id.substring(6, id.length())); 
+        //address = Integer.parseInt(id.substring(6, id.length())); 
+	address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
+	log.debug("New sensor prefix {} address {}", prefix, address);
         // calculate the base address, the nibble, and the bit to examine
         baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;
@@ -63,22 +64,6 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
             nibble = 0x00;
         } else {
             nibble = 0x10;
-        }
-        switch (temp % 4) {
-            case 0:
-                nibblebit = 0x01;
-                break;
-            case 1:
-                nibblebit = 0x02;
-                break;
-            case 2:
-                nibblebit = 0x04;
-                break;
-            case 3:
-                nibblebit = 0x08;
-                break;
-            default:
-                nibblebit = 0x00;
         }
         if (log.isDebugEnabled()) {
             log.debug("Created Sensor " + systemName

@@ -42,6 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
+    final static int SENSOR_MSG_RATE = 10;
+
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
     private boolean TrackPowerState = false;
@@ -171,7 +173,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread Started");
         }
-        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+	
+	Random rgen = new Random();
+        
+	ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
             if (log.isDebugEnabled()) {
@@ -184,6 +189,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		if (log.isDebugEnabled()) {
 		    log.debug("Simulator Thread sent Reply" + r.toString());
 		}
+	    }
+
+	    // Once every SENSOR_MSG_RATE loops, generate a random Sensor message.
+	    int rand = rgen.nextInt(SENSOR_MSG_RATE);
+	    if (rand == 1) {
+		generateRandomSensorReply();
 	    }
         }
     }
@@ -434,13 +445,30 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	}
 	*/
 
-	DCCppReply r = new DCCppReply("<iDCC++ BASE STATION vUNO_1.0: BUILD 05 Nov 2015 00:09:57");
+	DCCppReply r = new DCCppReply("iDCC++ BASE STATION vUNO_1.0: BUILD 05 Nov 2015 00:09:57");
 	writeReply(r);
 	if (log.isDebugEnabled()) {
 	    log.debug("Simulator Thread sent Reply" + r.toString());
 	}
 
 	// Generate the other messages too...
+    }
+
+    private void generateRandomSensorReply() {
+	// Pick a random sensor number between 0 and 10;
+	Random sNumGenerator = new Random();
+	int sensorNum = sNumGenerator.nextInt(10); // Generate a random sensor number between 0 and 9
+	Random valueGenerator = new Random();
+	int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
+       
+	String reply = new String("Q " + Integer.toString(sensorNum) + " " +
+				  Integer.toString(value));
+	
+	DCCppReply r = new DCCppReply(reply);
+	writeReply(r);
+	if (log.isDebugEnabled()) {
+	    log.debug("Simulator Thread sent Reply" + r.toString());
+	}	
     }
 
     private void writeReply(DCCppReply r) {
