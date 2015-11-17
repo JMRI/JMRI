@@ -75,7 +75,7 @@ or Digitrax for the layout support (PanelPro).
 
     <li> Because Digitrax and CMRI have published their interfaces
 there are more products available for layout control for
-those two systems than for NCE. Both RR-Cirkits and
+those two systems than for NCE. Both RR-CirKits and
 Team Digital have excellent products out that work for
 Digitrax (for instance). As far as I know there are no
 such products for NCE. I do not know what is/isn't
@@ -99,7 +99,7 @@ decisions. It is possible to implement a system where a
 human being, usually the dispatcher, does all of the
 decisions ... the more complex the layout/signaling system
 the more errors the dispatcher will make. And there is
-also the "workload" issue(s) ... but a computer running
+also the "workload" issue(s)... but a computer running
 PanelPro is usually loafing and has more than enough
 power to keep ahead of the needs of the layout.
 <p>
@@ -215,15 +215,15 @@ They'll then show up in the "files" part of the selection box when you press
 a "Change icon..." button on the panel editor.
 
 <p>For example, if the preferences directory contains the files shown below,
-you'll get the file display shown at the right.
-<code><pre>
+you'll get the file display shown at the right.</p>
+<code>
 > ls resources/
 decoderpro.gif  green.gif  icons  red.gif  tester.gif
 > ls resources/icons/
 something  tester.gif
 > ls resources/icons/something/
 tester.gif
-</pre></code>
+</code>
 
 <p>
 It's also possible to put your files in the <code>resources</code> directory
