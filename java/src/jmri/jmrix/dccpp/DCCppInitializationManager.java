@@ -27,12 +27,19 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
             log.debug("Init called");
         }
 
-	
-	String base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
-	String code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
+	String base_station = "Unknown";
+	String code_build = "Unknown";
+
+	if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
+	    base_station = systemMemo.getDCCppTrafficController().getCommandStation().getBaseStationType();
+	}
+	if (systemMemo.getDCCppTrafficController().getCommandStation() != null) {
+	    code_build = systemMemo.getDCCppTrafficController().getCommandStation().getCodeBuildDate();
+	}
 	/* First, we load things that should work on all systems */
-	if (systemMemo.getPowerManager() == null)
-	    log.error("Power Manager not created!");
+	if (systemMemo.getPowerManager() == null) {
+	    log.error("Power Manager not (yet) created!");
+	}
 	jmri.InstanceManager.setPowerManager(systemMemo.getPowerManager());
 	if (jmri.InstanceManager.powerManagerInstance() == null) {
 	    log.error("Power Manager not accessible!");
@@ -58,8 +65,8 @@ public class DCCppInitializationManager extends AbstractDCCppInitializationManag
 	jmri.InstanceManager.setTurnoutManager(systemMemo.getTurnoutManager());
 	systemMemo.setLightManager(new jmri.jmrix.dccpp.DCCppLightManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
 	jmri.InstanceManager.setLightManager(systemMemo.getLightManager());
-	//systemMemo.setSensorManager(new jmri.jmrix.dccppDCCppSensorManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
-	//jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
+	systemMemo.setSensorManager(new jmri.jmrix.dccpp.DCCppSensorManager(systemMemo.getDCCppTrafficController(), systemMemo.getSystemPrefix()));
+	jmri.InstanceManager.setSensorManager(systemMemo.getSensorManager());
 	systemMemo.setMultiMeter(new DCCppMultiMeter(systemMemo));
 	jmri.InstanceManager.store(systemMemo.getMultiMeter(), jmri.MultiMeter.class);
 	

@@ -152,6 +152,50 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Message Helper Functions
 
     // Core methods
+
+    public boolean isValidMessageFormat() {
+	if (this.match(DCCppConstants.THROTTLE_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.FUNCTION_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.ACCESSORY_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.OPS_WRITE_BYTE_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.OPS_WRITE_BIT_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.PROG_WRITE_BYTE_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.PROG_WRITE_BIT_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.PROG_READ_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.TRACK_POWER_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.READ_TRACK_CURRENT_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.READ_CS_STATUS_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.GET_FREE_MEMORY_REGEX) != null)
+	    return(true);
+	if (this.match(DCCppConstants.LIST_REGISTER_CONTENTS_REGEX) != null)
+	    return(true);
+
+	return(false);
+    }
+
+    private Matcher match(String pat) {
+	return(match(this.toString(), pat, "Validator"));
+    }
+
     private Matcher match(String s, String pat, String name) {
 	try {
 	    Pattern p = Pattern.compile(pat);
@@ -182,9 +226,30 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
+    public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
 
 
     //------------------------------------------------------
+    // Helper methods for Sensor Query Commands
+    public String getSensorNumString() {
+	if (this.isAccessoryMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.QUERY_SENSOR_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getSensorNumInt() {
+	return(Integer.parseInt(this.getSensorNumString()));
+    }
+
+
+
     // Helper methods for Accessory Decoder Commands
 
     public String getAccessoryAddrString() {
@@ -196,7 +261,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 		return("0");
 	    }
 	} else 
-	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
+	    log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
 	    return("0");
     }
 
@@ -572,20 +637,23 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	case DCCppConstants.READ_TRACK_CURRENT:
 	case DCCppConstants.READ_CS_STATUS:
 	case DCCppConstants.GET_FREE_MEMORY:
+	case DCCppConstants.QUERY_SENSOR_STATE:
 	case DCCppConstants.LIST_REGISTER_CONTENTS:
 	    retv = true;
+	    break;
 	default:
 	    retv = false;
 	}
 	return(retv);
     }
 
-    private boolean responseExpected = true;
+    //private boolean responseExpected = true;
 
     // Tell the traffic controller we expect this
     // message to have a broadcast reply (or not).
+    //(Not really used)
     void setResponseExpected(boolean v) {
-        responseExpected = v;
+        //responseExpected = v;
     }
 
     // decode messages of a particular form
@@ -644,6 +712,31 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
+     * Query Sensor Message
+     *
+     * Format: <q NUMBER>
+     *
+     *    NUMBER:  the sensor number to be queried
+     *
+     *    
+     *    returns: <Q NUMBER STATE>
+    */
+    public static DCCppMessage getQuerySensorMsg(int address) {
+	// Sanity check inputs
+	if (address < 0 || address > DCCppConstants.MAX_SENSOR_NUMBER)
+	    return(null);
+	
+	// Stationary Decoder Command
+	String s = new String(Character.toString(DCCppConstants.QUERY_SENSOR_STATE));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Add the Address
+	s += Integer.toString(address);
+
+	return(new DCCppMessage(s));
+    }
+
+    /**
      * Predefined Turnout Control Message
      *
      * Format: <T ID THROW>
@@ -684,11 +777,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
      *    
+     * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
+     *
      *    returns: <r CALLBACKNUM|CALLBACKSUB|CV Value)
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if verificaiton read fails
      */
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val) {
-	return(getWriteDirectCVMsg(cv, val, 0, 0));
+	return(getWriteDirectCVMsg(cv, val, 0, DCCppConstants.PROG_WRITE_CV_BYTE));
     }
 
     public static DCCppMessage getWriteDirectCVMsg(int cv, int val, int callbacknum, int callbacksub) {
@@ -735,11 +830,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
      *    
+     * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
+     *
      *    returns: <r CALLBACKNUM|CALLBACKSUB|CV BIT VALUE)
      *    where VALUE is a number from 0-1 as read from the requested CV bit, or -1 if verificaiton read fails
      */    
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val) {
-	return(getBitWriteDirectCVMsg(cv, bit, val, 0, 0));
+	return(getBitWriteDirectCVMsg(cv, bit, val, 0, DCCppConstants.PROG_WRITE_CV_BIT));
     }
 
     public static DCCppMessage getBitWriteDirectCVMsg(int cv, int bit, boolean val, int callbacknum, int callbacksub) {
@@ -788,11 +885,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    CALLBACKNUM: an arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs that call this function
      *    CALLBACKSUB: a second arbitrary integer (0-32767) that is ignored by the Base Station and is simply echoed back in the output - useful for external programs (e.g. DCC++ Interface) that call this function
      *    
+     * Note: The two-argument form embeds the opcode in CALLBACKSUB to aid in decoding the responses.
+     *
      *    returns: <r CALLBACKNUM|CALLBACKSUB|CV VALUE)
      *    where VALUE is a number from 0-255 as read from the requested CV, or -1 if read could not be verified
      */    
     public static DCCppMessage getReadDirectCVMsg(int cv) {
-	return(getReadDirectCVMsg(cv, 0, 0));
+	return(getReadDirectCVMsg(cv, 0, DCCppConstants.PROG_READ_CV));
     }
 
     public static DCCppMessage getReadDirectCVMsg(int cv, int callbacknum, int callbacksub) {

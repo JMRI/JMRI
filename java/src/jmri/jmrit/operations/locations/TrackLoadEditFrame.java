@@ -284,6 +284,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         loadAndTypeCheckBox.setSelected(loadAndType);
         shipLoadAndTypeCheckBox.setSelected(shipLoadAndType);
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_LoadOptions", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight400));
     }

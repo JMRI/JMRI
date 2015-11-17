@@ -15,6 +15,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,7 +84,9 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
 
     protected void addItem() {
         synchronized (self) {
-            add(new Item());
+            Item i = new Item();
+            add(i);
+            InstanceManager.getDefault(StartupActionsManager.class).addModel(i.model);
             revalidate();
             repaint();
             this.dirty = true;
@@ -118,7 +122,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        InstanceManager.getDefault(StartupActionsManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
@@ -151,6 +155,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
             selections.addItemListener((ItemEvent e) -> {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     dirty = true;
+                    model.setName((String) selections.getSelectedItem());
                 }
             });
         }
@@ -161,7 +166,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
             selections.setSelectedItem(m.getName());
         }
 
-        AbstractActionModel model = null;
+        AbstractActionModel model = getNewModel();
         JComboBox<String> selections;
 
         void updateCombo() {
@@ -197,6 +202,7 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
+                InstanceManager.getDefault(StartupActionsManager.class).removeModel(model);
                 model = null;
                 dirty = true;
             }

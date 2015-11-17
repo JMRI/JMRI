@@ -51,12 +51,6 @@ public class LocoLabelXml extends PositionableRectangleXml {
         return element;
     }
 
-    @Override
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a PositionableShape, then add to a target JLayeredPane
      *

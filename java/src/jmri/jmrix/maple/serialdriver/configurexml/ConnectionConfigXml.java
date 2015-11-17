@@ -1,7 +1,6 @@
 package jmri.jmrix.maple.serialdriver.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.maple.InputBits;
 import jmri.jmrix.maple.OutputBits;
@@ -123,8 +122,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return null;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

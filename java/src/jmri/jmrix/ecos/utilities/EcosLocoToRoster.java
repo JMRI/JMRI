@@ -35,11 +35,13 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.DefaultTreeSelectionModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import jmri.InstanceManager;
 import jmri.Programmer;
 import jmri.jmrit.XmlFile;
 import jmri.jmrit.decoderdefn.DecoderFile;
 import jmri.jmrit.decoderdefn.DecoderIndexFile;
 import jmri.jmrit.roster.Roster;
+import jmri.jmrit.roster.RosterConfigManager;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.symbolicprog.CvTableModel;
 import jmri.jmrit.symbolicprog.IndexedCvTableModel;
@@ -540,11 +542,7 @@ public class EcosLocoToRoster implements EcosListener {
         re.setRoadNumber("");
         re.setMfg("");
         re.setModel("");
-        if (RosterEntry.getDefaultOwner() == null) {
-            re.setOwner("");
-        } else {
-            re.setOwner(RosterEntry.getDefaultOwner());
-        }
+        re.setOwner(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         re.setComment("Automatically Imported from the Ecos");
         re.setDecoderComment("");
         re.putAttribute(adaptermemo.getPreferenceManager().getRosterAttribute(), _ecosObject);

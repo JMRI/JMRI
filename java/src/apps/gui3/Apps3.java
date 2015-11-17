@@ -8,11 +8,13 @@ import apps.SystemConsole;
 import java.awt.AWTEvent;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.GraphicsEnvironment;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.EventObject;
@@ -316,16 +318,16 @@ public abstract class Apps3 extends AppsBase {
         } else {
             profileFile = new File(profileFilename);
         }
-        ProfileManager.defaultManager().setConfigFile(profileFile);
+        ProfileManager.getDefault().setConfigFile(profileFile);
         // See if the profile to use has been specified on the command line as
         // a system property jmri.profile as a profile id.
         if (System.getProperties().containsKey(ProfileManager.SYSTEM_PROPERTY)) {
-            ProfileManager.defaultManager().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
+            ProfileManager.getDefault().setActiveProfile(System.getProperty(ProfileManager.SYSTEM_PROPERTY));
         }
         // @see jmri.profile.ProfileManager#migrateToProfiles JavaDoc for conditions handled here
-        if (!ProfileManager.defaultManager().getConfigFile().exists()) { // no profile config for this app
+        if (!ProfileManager.getDefault().getConfigFile().exists()) { // no profile config for this app
             try {
-                if (ProfileManager.defaultManager().migrateToProfiles(getConfigFileName())) { // migration or first use
+                if (ProfileManager.getDefault().migrateToProfiles(getConfigFileName())) { // migration or first use
                     // notify user of change only if migration occured
                     // TODO: a real migration message
                     JOptionPane.showMessageDialog(sp,
@@ -333,13 +335,7 @@ public abstract class Apps3 extends AppsBase {
                             jmri.Application.getApplicationName(),
                             JOptionPane.INFORMATION_MESSAGE);
                 }
-            } catch (IOException ex) {
-                JOptionPane.showMessageDialog(sp,
-                        ex.getLocalizedMessage(),
-                        jmri.Application.getApplicationName(),
-                        JOptionPane.ERROR_MESSAGE);
-                log.error(ex.getMessage(), ex);
-            } catch (IllegalArgumentException ex) {
+            } catch (IOException | IllegalArgumentException ex) {
                 JOptionPane.showMessageDialog(sp,
                         ex.getLocalizedMessage(),
                         jmri.Application.getApplicationName(),
@@ -352,9 +348,32 @@ public abstract class Apps3 extends AppsBase {
             // Manually setting the configFilename property since calling
             // Apps.setConfigFilename() does not reset the system property
             System.setProperty("org.jmri.Apps.configFilename", Profile.CONFIG_FILENAME);
-            log.info("Starting with profile {}", ProfileManager.defaultManager().getActiveProfile().getId());
+            log.info("Starting with profile {}", ProfileManager.getDefault().getActiveProfile().getId());
         } catch (IOException ex) {
             log.info("Profiles not configurable. Using fallback per-application configuration. Error: {}", ex.getMessage());
+        }
+    }
+
+    @Override
+    protected void setAndLoadPreferenceFile() {
+        File sharedConfig = null;
+        try {
+            sharedConfig = FileUtil.getFile(FileUtil.PROFILE + Profile.SHARED_CONFIG);
+            if (!sharedConfig.canRead()) {
+                sharedConfig = null;
+            }
+        } catch (FileNotFoundException ex) {
+            // ignore - this only means that sharedConfig does not exist.
+        }
+        super.setAndLoadPreferenceFile();
+        if (sharedConfig == null && configOK == true && configDeferredLoadOK == true) {
+            // this was logged in the super method
+            if (!GraphicsEnvironment.isHeadless()) {
+                JOptionPane.showMessageDialog(sp,
+                        Bundle.getMessage("SingleConfigMigratedToSharedConfig", ProfileManager.getDefault().getActiveProfile().getName()),
+                        jmri.Application.getApplicationName(),
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 

@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.serialdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.rfid.serialdriver.ConnectionConfig;
 import jmri.jmrix.rfid.serialdriver.SerialDriverAdapter;
@@ -38,7 +37,7 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
 }

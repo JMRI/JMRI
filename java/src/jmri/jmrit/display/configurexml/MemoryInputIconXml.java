@@ -41,11 +41,6 @@ public class MemoryInputIconXml extends PositionableLabelXml {
         return element;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Load, starting with the memoryInputIcon element, then all the value-icon
      * pairs
