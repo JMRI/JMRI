@@ -1,5 +1,6 @@
 package apps.gui3;
 
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Cursor;
@@ -280,6 +281,7 @@ public class FirstTimeStartUpWizard {
                 }
             }
             InstanceManager.getDefault(RosterConfigManager.class).setDefaultOwner(owner.getText());
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
             /*We have to double register the connection as when the saveContents is called is removes the original pref and 

@@ -16,7 +16,6 @@ import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -24,7 +23,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.util.ResourceBundle;
 import javax.swing.GroupLayout;
@@ -71,28 +69,18 @@ public class ProfileManagerDialog extends JDialog {
     public ProfileManagerDialog(Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        ProfileManager.defaultManager().addPropertyChangeListener(ProfileManager.ACTIVE_PROFILE, new PropertyChangeListener() {
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                profiles.setSelectedValue(ProfileManager.defaultManager().getActiveProfile(), true);
-                profiles.repaint();
+        ProfileManager.getDefault().addPropertyChangeListener(ProfileManager.ACTIVE_PROFILE, (PropertyChangeEvent evt) -> {
+            profiles.setSelectedValue(ProfileManager.getDefault().getActiveProfile(), true);
+            profiles.ensureIndexIsVisible(profiles.getSelectedIndex());
+            profiles.repaint();
+        });
+        ProfileManager.getDefault().addPropertyChangeListener(Profile.NAME, (PropertyChangeEvent evt) -> {
+            if (evt.getSource().getClass().equals(Profile.class) && evt.getPropertyName().equals(Profile.NAME)) {
+                profileNameChanged(((Profile) evt.getSource()));
             }
         });
-        ProfileManager.defaultManager().addPropertyChangeListener(Profile.NAME, new PropertyChangeListener() {
-
-            @Override
-            public void propertyChange(PropertyChangeEvent evt) {
-                if (evt.getSource().getClass().equals(Profile.class) && evt.getPropertyName().equals(Profile.NAME)) {
-                    profileNameChanged(((Profile) evt.getSource()));
-                }
-            }
-        });
-        this.jScrollPane1.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-
-            @Override
-            public void adjustmentValueChanged(AdjustmentEvent e) {
-                profilesValueChanged(null);
-            }
+        this.jScrollPane1.getVerticalScrollBar().addAdjustmentListener((AdjustmentEvent e) -> {
+            profilesValueChanged(null);
         });
     }
 
@@ -107,7 +95,7 @@ public class ProfileManagerDialog extends JDialog {
 
         listLabel = new JLabel();
         jScrollPane1 = new JScrollPane();
-        profiles = new JList();
+        profiles = new JList<>();
         btnSelect = new JButton();
         btnCreate = new JButton();
         btnUseExisting = new JButton();
@@ -134,21 +122,22 @@ public class ProfileManagerDialog extends JDialog {
         listLabel.setText(bundle.getString("ProfileManagerDialog.listLabel.text")); // NOI18N
 
         profiles.setModel(new ProfileListModel());
-        profiles.setSelectedValue(ProfileManager.defaultManager().getActiveProfile(), true);
+        profiles.setSelectedValue(ProfileManager.getDefault().getActiveProfile(), true);
         profiles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         profiles.setToolTipText(bundle.getString("ProfileManagerDialog.profiles.toolTipText")); // NOI18N
         profiles.setNextFocusableComponent(btnSelect);
-        profiles.addListSelectionListener(new ListSelectionListener() {
-            public void valueChanged(ListSelectionEvent evt) {
-                profilesValueChanged(evt);
-            }
-        });
         profiles.addKeyListener(new KeyAdapter() {
             public void keyPressed(KeyEvent evt) {
                 profilesKeyPressed(evt);
             }
         });
+        profiles.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+                profilesValueChanged(evt);
+            }
+        });
         jScrollPane1.setViewportView(profiles);
+        profiles.ensureIndexIsVisible(profiles.getSelectedIndex());
         profiles.getAccessibleContext().setAccessibleName(bundle.getString("ProfileManagerDialog.profiles.AccessibleContext.accessibleName")); // NOI18N
 
         btnSelect.setText(bundle.getString("ProfileManagerDialog.btnSelect.text")); // NOI18N
@@ -221,7 +210,7 @@ public class ProfileManagerDialog extends JDialog {
         countDown = -1;
         countDownLbl.setVisible(false);
         if (profiles.getSelectedValue() != null) {
-            ProfileManager.defaultManager().setActiveProfile((Profile) profiles.getSelectedValue());
+            ProfileManager.getDefault().setActiveProfile(profiles.getSelectedValue());
             dispose();
         }
     }//GEN-LAST:event_btnSelectActionPerformed
@@ -245,7 +234,7 @@ public class ProfileManagerDialog extends JDialog {
         if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             try {
                 Profile p = new Profile(chooser.getSelectedFile());
-                ProfileManager.defaultManager().addProfile(p);
+                ProfileManager.getDefault().addProfile(p);
                 profiles.setSelectedValue(p, true);
             } catch (IOException ex) {
                 log.warn("{} is not a profile directory", chooser.getSelectedFile());
@@ -255,27 +244,24 @@ public class ProfileManagerDialog extends JDialog {
     }//GEN-LAST:event_btnUseExistingActionPerformed
 
     private void formWindowOpened(WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
-        countDown = ProfileManager.defaultManager().getAutoStartActiveProfileTimeout();
+        countDown = ProfileManager.getDefault().getAutoStartActiveProfileTimeout();
         countDownLbl.setText(Integer.toString(countDown));
-        timer = new Timer(1000, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (countDown > 0) {
-                    countDown--;
-                    countDownLbl.setText(Integer.toString(countDown));
-                } else {
-                    setVisible(false);
-                    ProfileManager.defaultManager().setActiveProfile((Profile) profiles.getSelectedValue());
-                    log.info("Automatically starting with profile " + ProfileManager.defaultManager().getActiveProfile().getId() + " after timeout.");
-                    timer.stop();
-                    countDown = -1;
-                    dispose();
-                }
+        timer = new Timer(1000, (ActionEvent e) -> {
+            if (countDown > 0) {
+                countDown--;
+                countDownLbl.setText(Integer.toString(countDown));
+            } else {
+                setVisible(false);
+                ProfileManager.getDefault().setActiveProfile(profiles.getSelectedValue());
+                log.info("Automatically starting with profile " + ProfileManager.getDefault().getActiveProfile().getId() + " after timeout.");
+                timer.stop();
+                countDown = -1;
+                dispose();
             }
         });
         timer.setRepeats(true);
         if (profiles.getModel().getSize() > 0
-                && null != ProfileManager.defaultManager().getActiveProfile()
+                && null != ProfileManager.getDefault().getActiveProfile()
                 && countDown > 0) {
             timer.start();
         } else {
@@ -295,13 +281,13 @@ public class ProfileManagerDialog extends JDialog {
     public static Profile getStartingProfile(Frame f) throws IOException {
         if (ProfileManager.getStartingProfile() == null
                 || (System.getProperty(ProfileManager.SYSTEM_PROPERTY) == null
-                && !ProfileManager.defaultManager().isAutoStartActiveProfile())) {
+                && !ProfileManager.getDefault().isAutoStartActiveProfile())) {
             ProfileManagerDialog pmd = new ProfileManagerDialog(f, true);
             pmd.setLocationRelativeTo(f);
             pmd.setVisible(true);
-            ProfileManager.defaultManager().saveActiveProfile();
+            ProfileManager.getDefault().saveActiveProfile();
         }
-        return ProfileManager.defaultManager().getActiveProfile();
+        return ProfileManager.getDefault().getActiveProfile();
     }
 
     private void profileNameChanged(Profile p) {
@@ -346,7 +332,7 @@ public class ProfileManagerDialog extends JDialog {
     private JLabel countDownLbl;
     private JScrollPane jScrollPane1;
     private JLabel listLabel;
-    private JList profiles;
+    private JList<Profile> profiles;
     // End of variables declaration//GEN-END:variables
     private static final Logger log = LoggerFactory.getLogger(ProfileManagerDialog.class);
 }

@@ -1,28 +1,38 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>Operations-Routes Menu Bar</title>
 
-
-
-<title>Operations-Routes Menu Bar</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top"></a>
+<div id="mainContent">
+<a name="Top"></a>
+
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Routes Menu Bar</h1>
+<h2>Operations Routes Menu Bar</h2>
+
 <div align="right">
 <p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations"></a></p><p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
-<hr>This Menu Bar is common to the <span style="font-weight: bold;">Routes</span> window, &nbsp;<span style="font-weight: bold;">Add Route</span> window and <span style="font-weight: bold;">Edit Route</span> Window.<br><br><img src="images/Ops_RoutesMenu.png" alt="routes menu" height="111" width="277">
-<h3><strong>Tools</strong></h3>
+<hr>
+
+<p>This menu bar is common to the <span style="font-weight: bold;">Routes</span> window, &nbsp;<span style="font-weight: bold;">Add Route</span> window and <span style="font-weight: bold;">Edit Route</span> Window.<br><br><img src="images/Ops_RoutesMenu.png" alt="routes menu" height="111" width="277">
+
+<h3>Tools</h3>
 <ul>
-<li><strong>Copy Route</strong> opens the <strong>Route
-Copy</strong> dialog. This allows you to copy an existing route.</li>
+<li><a name="copyroute" id="copyroute"></a><strong>Copy Route</strong> opens the <strong>Route
+Copy</strong> dialog. This allows you to copy an existing Route.</li>
 </ul>
 <blockquote>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
@@ -33,10 +43,10 @@ Copy</strong> dialog. This allows you to copy an existing route.</li>
 <p>Type the <strong>New Route Name</strong> <input name="textfield" id="textfield" type="text"> </p>
 <p><strong>Select Route to Copy</strong>
 <select name="select" id="select"></select>
-this route will be copied and saved with the new name.</p>
+this Route will be copied and saved with the new name.</p>
 <p> <input name="checkbox" id="checkbox" type="checkbox"> <strong> Invert </strong>will
-reverse the sequence of the route when copied.</p>
-<p> <input name="button" id="button" value="Copy" type="submit"> press to copy the route
+reverse the sequence of the Route when copied.</p>
+<p> <input name="button" id="button" value="Copy" type="submit"> press to copy the Route
 into your Route file.</p>
 </td>
 </tr>
@@ -44,22 +54,22 @@ into your Route file.</p>
 </table>
 </blockquote>
 <ul>
-<li><strong>Set Train Icons Coordinates</strong><br>
+<li><a name="settrainicons" id="settrainicons"><strong>Set Train Icons Coordinates</strong></a><br>
 This tool
-is used to set the default X and Y coordinates of your train icons for
-each location. The tool allows you to specify the icon coordinates
-based on the trains direction. You can also update all of your existing
-routes and locations with these new coordinates. As an alternative, you
-can use a route's <strong>Tools--&gt;Set Train Icon
+is used to set the default X and Y coordinates of your Train Icons for
+each Location. The tool allows you to specify the icon coordinates
+based on the Trains direction. You can also update all of your existing
+Routes and Locations with these new coordinates. As an alternative, you
+can use a Route's <strong>Tools --&gt; Set Train Icon
 Coordinates for this Route</strong> to create coordinates unique
-to a specific route.<br>
+to a specific Route.<br>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
 <tbody>
 <tr>
 <td valign="top" width="53%"><img style="width: 350px; height: 243px;" alt="set icoons" src="images/Ops_Routes_SetTrainIcons.png"><br></td>
 <td v="" valign="top" width="47%">
 <p><strong>Location</strong><br>
-Select location from
+Select Location from
 <select name="select2" id="select2"><option>Bakerfield</option></select>
 </p>
 <p><strong>Set Eastbound Train Icon Coordinates<br>
@@ -67,11 +77,11 @@ Select location from
 Set Westbound Train Icon Coordinates </strong><br>
 <br>
 Set the X, Y coordinates where you want the icon located at the
-selected location,</p>
+selected Location,</p>
 <p> <input name="button3" id="button3" value="Place Test Icons" type="button"> check
-location on your layout</p><p><img style="width: 375px; height: 211px;" alt="Demo Panel" src="images/Ops_Route_DemoPanel.png"></p><p>
-<input name="button4" id="button4" value="Update Routes" type="button"> update the
-routes with icon data<br>
+location on your layout</p><p><img style="width: 375px; height: 211px;" alt="Demo Panel" src="images/Ops_Route_DemoPanel.png"></p>
+<p><input name="button4" id="button4" value="Update Routes" type="button"> update the
+Routes with icon data<br>
 <input name="button5" id="button5" value="Save" type="button">saves the icon data in the
 Routes files<br>
 </p>
@@ -80,26 +90,30 @@ Routes files<br>
 </tbody>
 </table>
 </li>
-<li><strong>Print</strong></li>
+
+<li><a name="print" id="print"><strong>Print</strong></a></li>
 </ul>
 <blockquote>
 <p><img src="images/Ops_RoutesPrint.png" alt="print" height="358" width="800"></p>
 </blockquote>
 <ul>
-<li><strong>Preview</strong></li>
+<li><a name="preview" id="preview"><strong>Preview</strong></a></li>
 </ul>
 <div style="text-align: center;"><img style="width: 657px; height: 352px;" alt="operation routes preview" src="images/Ops_RoutesPreview.png"><br>
 </div>
-<p><strong>Operations</strong> (Same as Main
-Operations menu)<br>
-</p>
-<p><strong>Window </strong>-- Standard JMRI&reg; window
-menu.</p>
-<p><strong>Help</strong> -- Standard JMRI&reg; Help menu.</p><hr>
+
+<h3><strong>Operations</strong> menu (same as main OperationsPro menu)</h3>
+<p><strong>Window </strong> - the standard JMRI&reg; Window menu.</p>
+<p><strong>Help</strong> - the standard JMRI&reg; Help menu.</p>
+
+<hr>
 <div align="right">
 <p><a href="Ops_Routes.shtml">Back</a><a href="Ops_Trains.shtml"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
 </div>
-</body></html>
+</div>
+</body>
+</html>

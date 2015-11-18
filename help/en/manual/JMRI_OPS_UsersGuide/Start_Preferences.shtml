@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>Decoder Pro Manual: Getting Started</title>
+<title>OperationsPro Manual: Getting Started</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -27,10 +25,10 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
-<h1>Getting Started with DecoderPro&reg;</h1>
-<h1>How do I set up my preferences?</h1>
+<h1>Getting Started</h1>
+<h2>How do I set up my preferences?</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Start_DecoderPro.shtml">Previous</a>
 <p><a href="index.shtml#startOps">Back to Index</a> </div>
 
@@ -38,8 +36,7 @@ function MM_jumpMenu(targ,selObj,restore){ //v3.0
 <h3>&nbsp;</h3>
 <p>
  Click on the Edit menu and then Preferences... option
-in the screen below, which opens the Preferences window. (This window may open automatically the first time you
-run the program.) 
+in the screen below, which opens the Preferences window (This window may open automatically the first time you run the program).
 <p>As a first time user the most  important information is the <strong>Connections</strong> screen where you describe how the  computer will talk to the command station.&nbsp;  Most of rest you can leave at the initial or &ldquo;default&rdquo; settings until  you find a need to change things to suit your fancy.
 <p><strong>Most importantly, you must click  
   <input type="button" name="button9" id="button9" value="Save">
@@ -274,8 +271,9 @@ removes the item from the Start Up sequence. All of the panes are of the same fo
   <input type="submit" name="button8" id="button8" value="Save">
 button to save all your selections.</h2>
 <h2 align="center">You must restart DecoderPro for preferences to take effect</h2>
+
 <hr>
-<div align=right>
+<div align="right">
 <p><a href="Start_DecoderPro.shtml">Previous</a>
 <p><a href="index.shtml#startOps">Back to Index</a> </div>
 

@@ -1,12 +1,14 @@
 package apps.configurexml;
 
 import apps.GuiLafConfigPane;
+import apps.gui.GuiLafPreferencesManager;
 import java.awt.Font;
 import java.util.Enumeration;
 import java.util.Locale;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.plaf.FontUIResource;
+import jmri.InstanceManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -70,6 +72,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         log.debug("GUI selection: " + name + " class name: " + className);
         // set the GUI
         if (className != null) {
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLookAndFeel(name);
             try {
                 if (!className.equals(UIManager.getLookAndFeel().getClass().getName())) {
                     log.debug("set GUI to " + name + "," + className);
@@ -86,13 +89,16 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         Attribute countryAttr = shared.getAttribute("LocaleCountry");
         Attribute varAttr = shared.getAttribute("LocaleVariant");
         if (countryAttr != null && langAttr != null && varAttr != null) {
-            Locale.setDefault(new Locale(langAttr.getValue(), countryAttr.getValue(),
-                    varAttr.getValue()));
+            Locale locale = new Locale(langAttr.getValue(), countryAttr.getValue(), varAttr.getValue());
+            Locale.setDefault(locale);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(locale);
         }
 
         Attribute clickAttr = shared.getAttribute("nonStandardMouseEvent");
         if (clickAttr != null) {
-            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(clickAttr.getValue().equals("yes"));
+            boolean nonStandardMouseEvent = clickAttr.getValue().equals("yes");
+            jmri.util.swing.SwingSettings.setNonStandardMouseEvent(nonStandardMouseEvent);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setNonStandardMouseEvent(nonStandardMouseEvent);
         }
         GuiLafConfigPane g = new GuiLafConfigPane();
         jmri.InstanceManager.configureManagerInstance().registerPref(g);
@@ -101,6 +107,7 @@ public class GuiLafConfigPaneXml extends jmri.configurexml.AbstractXmlAdapter {
         if (fontsize != null) {
             int size = Integer.parseInt(fontsize.getValue());
             GuiLafConfigPane.setFontSize(size);
+            InstanceManager.getDefault(GuiLafPreferencesManager.class).setFontSize(size);
             this.setUIFontSize(size);
         }
         return result;
