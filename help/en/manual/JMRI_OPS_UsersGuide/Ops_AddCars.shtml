@@ -19,9 +19,9 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Add Car (Edit Car) Window</h1>
+<h1>OperationsPro: Add Car (Edit Car) Window</h1>
 
-<div align=right>
+<div align="right">
 <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
@@ -109,7 +109,7 @@ is based on the first and only has entries if there is more than one track at th
     Auto selection</p></td>
   </tr>
   <tr>
-    <td colspan="2" align="center" valign="top"><p><strong>Optional Car Attributes</strong></p></td>
+    <td colspan="2" align="center" valign="top"><h3>Optional Car Attributes</h3></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarColor.png" width="475" height="119" alt="Car Color"></td>
@@ -281,7 +281,7 @@ when pressed, opens the <strong>Set Car Location</strong> pane and allows you to
 <p align="left">Now that you have your Cars stored in the Roster, you will probably want to add some <a href="Ops_Engines.shtml">Engines</a> to move your Cars about the layout.</p>
 <hr>
 
-<div align=right>
+<div align="right">
 <p><a href="Ops_Cars.shtml">Back</a><a href="#"></a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
