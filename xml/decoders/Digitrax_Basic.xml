@@ -48,7 +48,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable CV="13" mask="XXXXXXXV" minFn="1" item="Analog Mode Function Status - F1">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
