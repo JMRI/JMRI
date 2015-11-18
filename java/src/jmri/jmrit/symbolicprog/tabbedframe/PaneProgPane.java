@@ -2548,39 +2548,10 @@ public class PaneProgPane extends javax.swing.JPanel
         // start with CV description
         String descString = cvDescription;
 
-        // generate bit numbers from bitmask if applicable
-        if ((mask != null) && (mask.contains("X"))) {
-            int lastBit = mask.length() - 1;
-            int lastV = -2;
-            if (mask.contains("V")) {
-                if (mask.indexOf('V') == mask.lastIndexOf('V')) {
-                    descString = descString + " bit " + (lastBit - mask.indexOf('V'));
-                } else {
-                    descString = descString + " bits ";
-                    for (int i = 0; i <= lastBit; i++) {
-                        char descStringLastChar = descString.charAt(descString.length() - 1);
-                        if (mask.charAt(lastBit - i) == 'V') {
-                            if (descStringLastChar == ' ') {
-                                descString = descString + i;
-                            } else if (lastV == (i - 1)) {
-                                if (descStringLastChar != '-') {
-                                    descString = descString + "-";
-                                }
-                            } else {
-                                descString = descString + "," + i;
-                            }
-                            lastV = i;
-                        }
-                        descStringLastChar = descString.charAt(descString.length() - 1);
-                        if ((descStringLastChar == '-') && ((mask.charAt(lastBit - i) != 'V') || (i == lastBit))) {
-                            descString = descString + lastV;
-                        }
-                    }
-                }
-            } else {
-                descString = descString + " no bits";
-            }
-            log.trace("{} Mask:{}", descString, mask);
+        // add bit numbers from bitmask if applicable
+        String temp = getMaskDescription(mask);
+        if (temp.length() > 0) {
+                        descString = descString + " " + temp;
         }
 
         // add to tool tip if Show CV Numbers enabled
@@ -2598,6 +2569,54 @@ public class PaneProgPane extends javax.swing.JPanel
         }
 
         return toolTip;
+    }
+
+    /**
+     * Generate bit numbers from bitmask if applicable.
+     * Returns empty String if not applicable.
+     *
+     * Needs to be independent of VariableValue methods to allow use by
+     * non-standard elements such as SpeedTableVarValue, DccAddressPanel,
+     * FnMapPanel.
+     */
+    public static String getMaskDescription(String mask) {
+        String maskDescString = "";
+
+        // generate bit numbers from bitmask if applicable
+        if ((mask != null) && (mask.contains("X"))) {
+            int lastBit = mask.length() - 1;
+            int lastV = -2;
+            if (mask.contains("V")) {
+                if (mask.indexOf('V') == mask.lastIndexOf('V')) {
+                    maskDescString = maskDescString + "bit " + (lastBit - mask.indexOf('V'));
+                } else {
+                    maskDescString = maskDescString + "bits ";
+                    for (int i = 0; i <= lastBit; i++) {
+                        char descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
+                        if (mask.charAt(lastBit - i) == 'V') {
+                            if (descStringLastChar == ' ') {
+                                maskDescString = maskDescString + i;
+                            } else if (lastV == (i - 1)) {
+                                if (descStringLastChar != '-') {
+                                    maskDescString = maskDescString + "-";
+                                }
+                            } else {
+                                maskDescString = maskDescString + "," + i;
+                            }
+                            lastV = i;
+                        }
+                        descStringLastChar = maskDescString.charAt(maskDescString.length() - 1);
+                        if ((descStringLastChar == '-') && ((mask.charAt(lastBit - i) != 'V') || (i == lastBit))) {
+                            maskDescString = maskDescString + lastV;
+                        }
+                    }
+                }
+            } else {
+                maskDescString = maskDescString + "no bits";
+            }
+            log.trace("{} Mask:{}", maskDescString, mask);
+        }
+        return maskDescString;
     }
 
     JComponent getRep(int i, String format) {
