@@ -935,7 +935,7 @@
 -->
             <classpath refid="test.class.path"/>
 
-            <test name="jmri.tests.AllTest">
+            <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
