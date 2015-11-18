@@ -150,11 +150,22 @@ public class SprogCommandStation implements CommandStation, SprogListener, Runna
     }
 
     private SprogSlot findAddressSpeedPacket(DccLocoAddress address) {
-            while ( (currentSprogAddress == -1) || ( findAddress(new DccLocoAddress(currentSprogAddress,true)) != null) ||
-                    ( address.isLongAddress() && (address.getNumber() == currentSprogAddress ) ) ) {
+        // SPROG doesn't use IDLE packets but sends speed 0 commands to last address selected by "A" command.
+        // We may need to move these pseudo-idle packets to an unused long address so locos will not receive conflicting speed commands.
+        // Some short-address-only decoders may also respond to same-numbered long address so we avoid any number match irrespective of type
+        // We need to find a suitable free long address, save (currentSprogAddress) and use it for pseudo-idle packets
+        int lastSprogAddress = currentSprogAddress;
+        while ( (currentSprogAddress <= 0) || // initialisation || avoid address 0 for reason above
+                    ( (address.getNumber() == currentSprogAddress ) ) || // avoid this address (slot may not exist but we will be creating one)
+                    ( findAddress(new DccLocoAddress(currentSprogAddress,true)) != null) || ( findAddress(new DccLocoAddress(currentSprogAddress,false)) != null) // avoid in-use (both long or short versions of) address
+                    ) {
                     currentSprogAddress++;
                     currentSprogAddress = currentSprogAddress % 10240;
             }
+        if (currentSprogAddress != lastSprogAddress) {
+            log.info("Changing currentSprogAddress (for pseudo-idle packets) to "+currentSprogAddress+"(L)");
+            lastSprogAddress = currentSprogAddress;
+        }   
             SprogTrafficController.instance().sendSprogMessage(new SprogMessage("A " + currentSprogAddress + " 0"));
             for (SprogSlot s : slots) {
             if (s.isActiveAddressMatch(address) && s.isSpeedPacket()) {

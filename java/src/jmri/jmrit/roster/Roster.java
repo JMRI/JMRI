@@ -994,6 +994,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
             p = FileUtil.getUserFilesPath();
         }
         this.rosterLocation = p;
+        log.debug("Setting roster location from {} to {}", oldRosterLocation, this.rosterLocation);
         if (this.rosterLocation.equals(FileUtil.getUserFilesPath())) {
             log.debug("Roster location reset to default");
         }
