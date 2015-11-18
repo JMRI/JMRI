@@ -6,7 +6,7 @@
 -->
 <variables xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
   <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
-  <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+  <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
   <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
   <variable item="Motor Frequency and EMF sample Rate" CV="9" default="0">
