@@ -36,7 +36,9 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
     private static final Logger log = LoggerFactory.getLogger(RosterConfigManager.class);
 
     public RosterConfigManager() {
-        FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+        log.debug("Roster is {}", this.directory);
+        FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
+            log.debug("UserFiles changed from {} to {}", evt.getOldValue(), evt.getNewValue());
             if (RosterConfigManager.this.getDirectory().equals(evt.getOldValue())) {
                 RosterConfigManager.this.setDirectory((String) evt.getNewValue());
             }
@@ -124,6 +126,7 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory));
         }
         this.directory = FileUtil.getAbsoluteFilename(directory);
+        log.debug("Roster is {}", this.directory);
         propertyChangeSupport.firePropertyChange(DIRECTORY, oldDirectory, directory);
     }
 
