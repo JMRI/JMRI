@@ -1,6 +1,6 @@
 This is the JMRI "lib" directory, available as the "lib" directory in JMRI/JMRI Git.   These are the binary files, typically .jars, needed at build and run time.
 
-** Contents:
+## Contents:
 
 Generally, we use subdirectories to hold the Git-resident versions of OS-specific code for Windows (.dll files) and Linux (.so files) so that we can separate various builds.
 
@@ -37,13 +37,8 @@ log4j.jar
 
 openlcb.jar
     0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
-    Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB
-    group prior to February 2015.  There have been changes to their
-    specifications since then with uncertain provenance.
-    JMRI's use of this version means that it won't comply
-    with those.
-    Note: The OpenLCB group has orphaned development of this library. See:
-        http://sourceforge.net/p/openlcb/svn/3912/
+    Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB group prior to February 2015.  There have been changes to their specifications since then with uncertain provenance. JMRI's use of this version means that it won't comply with those.
+    Note: The OpenLCB group has orphaned development of this library. See: http://sourceforge.net/p/openlcb/svn/3912/
 
 jlfgr-1_0.jar 
     icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
@@ -67,9 +62,7 @@ xercesImpl.jar
   from http://www.apache.org/dist/xerces/j/
 
 jdom.jar
- (deprecated, we've moved to JDOM2; 
-  will be removed from here and control files post JMRI 3.12, 
-  but remains for e.g. CATS now)         
+ (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)         
  version 1.1
  from <jdom.org>
  
@@ -182,7 +175,7 @@ xbee-api-0.9.jar
     (we needed some of the functionality, but the pre-compiled library has not been updated).
 
 
-** For unit tests & development work only:
+## For unit tests & development work only:
 
 UmlGraph-5.7
     from http://www.umlgraph.org/download.html
@@ -221,16 +214,16 @@ annotations.jar, jsr305.jar:
     Only needed at compile/build time, not runtime
     
 
-** Older, no longer present:
+## Older, no longer present:
 
-#crimson.jar             
-# version 1.1.3
-# from <http://xml.apache.org/crimson/>
-# No longer used as of JMRI 2.7.6
+crimson.jar             
+ version 1.1.3
+ from <http://xml.apache.org/crimson/>
+ No longer used as of JMRI 2.7.6
 
-#MRJAdaper.jar
-# version, source unknown
-# No longer used as of JMRI 2.13.4
+MRJAdaper.jar
+ version, source unknown
+ No longer used as of JMRI 2.13.4
 
 ExternalLinkContentViewerUI.jar
   made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class,
