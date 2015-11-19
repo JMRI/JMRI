@@ -28,10 +28,13 @@
 
     <property environment="env"/>
 
-    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists      -->
-    <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file           -->
-    <!-- this file should NEVER be checked-in to SVN, it is in the svn:ignore properties list -->
+    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists -->
+    <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file      -->
     <property file="local.properties"/>
+
+    <!-- Configure Java default logging, used by the JMDNS.jar library  -->
+    <!-- User at runtime                                                -->
+    <property file="fulllogging.properties"/>
 
     <!-- set any propertise not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
@@ -118,7 +121,6 @@
     <property name="resourcedir"  value="${basedir}/resources"/>
     <property name="scriptdir"    value="${basedir}/scripts"/>
     <property name="javadir"      value="${basedir}/java"/>
-    <property name="svnantdir"    value="${libdir}/svnant"/>
     <property name="doctarget"    value="${javadir}/doc"/>
     <property name="source"       value="${javadir}/src"/>
     <property name="target"       value="${javadir}/classes"/>
@@ -221,13 +223,6 @@
         <path   refid="project.class.path"/>
     </path>
     
-    <path id="path.svnant">
-      <pathelement location="${svnantdir}/svnant.jar"/>
-      <pathelement location="${svnantdir}/svnClientAdapter.jar"/>
-      <pathelement location="${svnantdir}/svnjavahl.jar"/>
-      <pathelement location="${svnantdir}/svnkit.jar"/>
-    </path>
-
     <macrodef name="quiet">
         <element name="body" implicit="yes"/>
         <sequential>
@@ -252,26 +247,6 @@
             </script>
         </sequential>
     </macrodef>
-
-    <typedef
-        resource="org/tigris/subversion/svnant/svnantlib.xml"
-        classpathref="path.svnant"/>
-    
-    <!-- to use default command link authentification -->
-    <svnSetting
-        id="svn.settings"
-        javahl="false"
-        svnkit="false"/>
-
-    <!-- to use authentification credentials from local.properties file -->
-<!-- 
-    <svnSetting
-        id="svn.settings"
-        username="${sourceforge.userid}"
-        password="${sourceforge.password}"
-        javahl="true"
-        svnkit="true"/>
- -->
 
     <target name="check-ant-requirements"
             description="check build system requirements">
