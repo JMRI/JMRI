@@ -177,16 +177,13 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by owner list", c1, cars.get(4));
         
         // test sort by rfid
-        // this radio button might not be showing if window size width is too small
-        if (ctf.sortByRfid.isShowing()) {
-            getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
-            cars = ctf.carsTableModel.getSelectedCarList();
-            Assert.assertEquals("1st car in sort by rfid list", c5, cars.get(0));
-            Assert.assertEquals("2nd car in sort by rfid list", c2, cars.get(1));
-            Assert.assertEquals("3rd car in sort by rfid list", c1, cars.get(2));
-            Assert.assertEquals("4th car in sort by rfid list", c4, cars.get(3));
-            Assert.assertEquals("5th car in sort by rfid list", c3, cars.get(4));
-        }
+        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
+        cars = ctf.carsTableModel.getSelectedCarList();
+        Assert.assertEquals("1st car in sort by rfid list", c5, cars.get(0));
+        Assert.assertEquals("2nd car in sort by rfid list", c2, cars.get(1));
+        Assert.assertEquals("3rd car in sort by rfid list", c1, cars.get(2));
+        Assert.assertEquals("4th car in sort by rfid list", c4, cars.get(3));
+        Assert.assertEquals("5th car in sort by rfid list", c3, cars.get(4));
 
         // test sort by road
         getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRoad));
