@@ -1,4 +1,4 @@
-This is the JMRI "lib" directory, available as the "lib" directory in JMRI/JMRI Git.   These are the binary files, typically .jars, needed at build and run time.
+This is the JMRI distributed "lib" directory, available as the "lib" directory in JMRI/JMRI Git.   These are the library files, .jars and others, needed at build and run time.
 
 ## Contents:
 
@@ -10,78 +10,76 @@ A similar mechanism is used for Linux under the linux/ directory.
 
 MacOS X fat binaries are treated slightly differently, see the README file there.
 
-Specific components:
+### Specific components:
 
-####vecmath.jar
+##### vecmath.jar
 - from Java3D 1.3.2
 - from <https://java3d.dev.java.net/binary-builds-old.html>
 
-#####Serialio.jar*
+##### Serialio.jar
 - from <http://serialio.com>
- 
-commons-lang3-3.2.1.jar
-    version 3.2.1
-    provides org.apache.commons.lang3
-    from https://commons.apache.org/proper/commons-lang/
-     
-javacsv.jar
- version 2.0 of 2006-12-12
- from <http://javacsv.sourceforge.net/>
 
-jhall.jar
- version 2.03
- from <http://java.sun.com/javase/technologies/desktop/javahelp/>
- 
-log4j.jar
- version 1.2.15
-
-slf4j-api-1.7.13.jar, slf4j-log4j12-1.7.13.jar, jul-to-slf4j-1.7.13.jar
-    slf4j logging interface to log4j
-    from http://www.slf4j.org
-    updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
+##### commons-lang3-3.2.1.jar
+- version 3.2.1
+- provides org.apache.commons.lang3
+- from https://commons.apache.org/proper/commons-lang/
     
-openlcb.jar
-    0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
-    Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB group prior to February 2015.  There have been changes to their specifications since then with uncertain provenance. JMRI's use of this version means that it won't comply with those.
-    Note: The OpenLCB group has orphaned development of this library. See: http://sourceforge.net/p/openlcb/svn/3912/
+##### javacsv.jar
+- version 2.0 of 2006-12-12
+- from <http://javacsv.sourceforge.net/>
 
-jlfgr-1_0.jar 
-    icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
+##### jhall.jar
+- version 2.03
+- from <http://java.sun.com/javase/technologies/desktop/javahelp/>
+ 
+##### log4j.jar
+- version 1.2.15
 
-javax.comm.properties
-  left over from javax.comm version 2.0 (minor version unknown) from Sun
-  
-RXTXcomm.jar, librxtxSerial.jnilib
-  From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
-  The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
-  The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
-  For MacOS X:
+##### slf4j-api-1.7.13.jar, slf4j-log4j12-1.7.13.jar, jul-to-slf4j-1.7.13.jar
+- slf4j logging interface to log4j
+- from http://www.slf4j.org
+- updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
+    
+##### openlcb.jar
+- 0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
+- Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB group prior to February 2015.  There have been changes to their specifications since then with uncertain provenance. JMRI's use of this version means that it won't comply with those.
+- Note: The OpenLCB group has orphaned development of this library. See: http://sourceforge.net/p/openlcb/svn/3912/
+
+##### jlfgr-1_0.jar 
+- icons from see http://www.coderanch.com/t/341737/GUI/java/Expand-Collapse-Panels
+
+##### javax.comm.properties
+- left over from javax.comm version 2.0 (minor version unknown) from Sun
+
+##### RXTXcomm.jar, librxtxSerial.jnilib
+- From Rxtx-2.2pre2  http://rxtx.qbang.org (http://rxtx.qbang.org/pub/rxtx/rxtx-2.2pre2-bins.zip)
+- The win32 and win64 directories contain the necessary rxtxSerial.dll for the two windows varients
+- The i686-pc-linux-gnu directory contains two .so libraries for 32-bit Linux
+- For MacOS X:
     macosx/librxtxSerial.jnilib     169488  from rxtx-2.2pre2-bins distribution
     macosx/ppc/librxtxSerial.jnilib 301908  built for MacOS X 10.4 by John Plocher 2010-02-04
-  
-security.policy
- (JMRI file)
 
-xercesImpl.jar
-  version Xerces-J 2.9.1
-  from http://www.apache.org/dist/xerces/j/
+##### security.policy
+- (JMRI file)
 
-jdom.jar
- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)         
- version 1.1
- from <jdom.org>
+##### xercesImpl.jar
+- version Xerces-J 2.9.1
+- from http://www.apache.org/dist/xerces/j/
+
+##### jdom.jar
+- (deprecated, we've moved to JDOM2; will be removed from here and control files post JMRI 3.12, but remains for e.g. CATS now)         
+- version 1.1
+- from <jdom.org>
  
-jdom-2.0.5.jar               
- version 2.0.5
- from <jdom.org>
+##### jdom-2.0.5.jar               
+- version 2.0.5
+- from <jdom.org>
  
-jackson-annotations-2.0.6.jar
-jackson-core-2.0.6.jar
-jackson-databind-2.0.6.jar
-    JSON processing library com.fasterxml.jackson
-    version 2.0.6
-    see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
-    JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
+##### jackson-annotations-2.0.6.jar, jackson-core-2.0.6.jar, jackson-databind-2.0.6.jar
+- JSON processing library com.fasterxml.jackson
+- version 2.0.6
+- see http://www.journaldev.com/2324/jackson-json-processing-api-in-java-example-tutorial
+- JavaDoc http://fasterxml.github.io/jackson-databind/javadoc/2.0.6
 
 bluecove-2.1.1-SNAPSHOT.jar
 lib/bluecove-bluez-2.1.1-SNAPSHOT.jar
@@ -108,18 +106,18 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
         lib/windows/x64/intelbth_x64.dll
         lib/windows/x86/intelbth.dll
 
-jython.jar
- version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
+##### jython.jar
+- version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
  
-jakarta-regexp-1.5.jar
-  (needed for jfcunit)
-  Used for testing only, not at runtime
+##### jakarta-regexp-1.5.jar
+- (needed for jfcunit)
+- Used for testing only, not at runtime
   
-jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
-  from <https://jinput.dev.java.net/> jinput_dist_20090401
-  (most recent as of 2010-Jan-02)
+##### jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
+- from <https://jinput.dev.java.net/> jinput_dist_20090401
+- (most recent as of 2010-Jan-02)
 
-libusb-jar (ch.ntb.usb.jar)
+##### libusb-jar (ch.ntb.usb.jar)
         http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
         http://libusb.wiki.sourceforge.net/
         libusb installers from "TWAIN SANE" http://www.ellert.se/twain-sane/
@@ -129,11 +127,11 @@ libusb-jar (ch.ntb.usb.jar)
   LibusbJava.dll for Windows is 0.2.3.0 (Feb 18, 2008)
   libusbJava.so for Linux was built on Ubuntu 7.10 w libusb 2:0.1.12-7
   
-JavaMail 1.4.1
-  mailapi.jar
-  smtp.jar
+##### JavaMail 1.4.1
+- mailapi.jar
+- smtp.jar
   
-Joal 1.1.2
+##### Joal 1.1.2
   from <https://joal.dev.java.net/servlets/ProjectDocumentList?folderID=9265&expandFolder=9265&folderID=9264>
   cross-platform .jar files
     from any one of the platform-specific download .zip files
@@ -156,47 +154,47 @@ Joal 1.1.2
       libjoal_native.so
       libgluegen-rt.so
 
-jmdns.jar 
-    Version 3.4.1, 429,083 bytes, 2011-08-25
-    from http://sourceforge.net/projects/jmdns
+##### jmdns.jar 
+- Version 3.4.1, 429,083 bytes, 2011-08-25
+- from http://sourceforge.net/projects/jmdns
 
-jakarta-regexp-1.5.jar
+##### jakarta-regexp-1.5.jar
 
-ecj.jar
-    Eclipse compiler 3.5.1 from 
-    http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.5.1-200909170800/ecj-3.5.1.jar
+##### ecj.jar
+- Eclipse compiler 3.5.1 from 
+    - http://www.eclipse.org/downloads/download.php?file=/eclipse/downloads/drops/R-3.5.1-200909170800/ecj-3.5.1.jar
     
-WinRegistry4-4.jar
-    Version 4.4
-    https://sourceforge.net/projects/java-registry/
+##### WinRegistry4-4.jar
+- Version 4.4
+- https://sourceforge.net/projects/java-registry/
     
-xAPlib.jar
-    xAP automation protocol support
-    From http://patrick.lidstone.net/html/dev_tools.html
-    See license http://patrick.lidstone.net/html/xap.html
+##### xAPlib.jar
+- xAP automation protocol support
+- From http://patrick.lidstone.net/html/dev_tools.html
+- See license http://patrick.lidstone.net/html/xap.html
 
-xbee-api-0.9.jar
-    PBender 03-Mar-2014 This version comes from the XBee library source repository 
-    (we needed some of the functionality, but the pre-compiled library has not been updated).
+##### xbee-api-0.9.jar
+- PBender 03-Mar-2014 This version comes from the XBee library source repository 
+- (we needed some of the functionality, but the pre-compiled library has not been updated).
 
 
 ## For unit tests & development work only:
 
-UmlGraph-5.7
-    from http://www.umlgraph.org/download.html
-    only used for ant javadoc-uml
+##### UmlGraph-5.7
+- from http://www.umlgraph.org/download.html
+- only used for ant javadoc-uml
 
-junit.jar
- version 3.8.2
- Used for testing only, not at runtime
- from <junit.org>
+##### junit.jar
+- version 3.8.2
+- Used for testing only, not at runtime
+- from <junit.org>
 
-jfcunit.jar
-  version 2.08 
-  Used for testing only, not at runtime
-  from <http://jfcunit.sourceforge.net>
+##### jfcunit.jar
+- version 2.08 
+- Used for testing only, not at runtime
+- from <http://jfcunit.sourceforge.net>
 
-i18nchecker.jar
+##### i18nchecker.jar
     Internationalization checker: used in source code development, for checking 
     proper implementation of text internationalization.  This archive need not
     be included in JMRI releases.
@@ -206,35 +204,34 @@ i18nchecker.jar
     Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker 
         and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
-rscbundlecheck.jar
-    check for duplicated properties
+##### rscbundlecheck.jar
+- check for duplicated properties
 
-AppleJavaExtensions.jar
- version 1.5
- from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
- Used for building only, not at runtime
+##### AppleJavaExtensions.jar
+- version 1.5
+- from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
+- Used for building only, not at runtime
 
-annotations.jar, jsr305.jar:
-    From Findbugs 3.0.0 from http://findbugs.sourceforge.net
-    Only needed at compile/build time, not runtime
+##### annotations.jar, jsr305.jar
+- From Findbugs 3.0.0 from http://findbugs.sourceforge.net
+- Only needed at compile/build time, not runtime
     
 
 ## Older, no longer present:
 
-crimson.jar             
- version 1.1.3
- from <http://xml.apache.org/crimson/>
- No longer used as of JMRI 2.7.6
+##### crimson.jar             
+- version 1.1.3
+- from <http://xml.apache.org/crimson/>
+- No longer used as of JMRI 2.7.6
 
-MRJAdaper.jar
- version, source unknown
- No longer used as of JMRI 2.13.4
+##### MRJAdaper.jar
+- version, source unknown
+- No longer used as of JMRI 2.13.4
 
-ExternalLinkContentViewerUI.jar
-  made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class,
-  now being carried in this jar file instead of source until we migrate to Java 1.6
-  No longer used as of JMRI 2.99.1
+##### ExternalLinkContentViewerUI.jar
+- made with Java 1.6 by JMRI to handle the single jmri.util.ExternalLinkContentViewerUI class, now being carried in this jar file instead of source until we migrate to Java 1.6
+- No longer used as of JMRI 2.99.1
   
-servlet.jar:
-  jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
+##### servlet.jar:
+- jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
 
