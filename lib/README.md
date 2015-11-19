@@ -168,7 +168,7 @@ Joal 1.1.2
       libgluegen-rt.so
 
 jmdns.jar 
-    Version 3.0, 84670 bytes, December 7, 2009
+    Version 3.4.1, 429,083 bytes, 2011-08-25
     from http://sourceforge.net/projects/jmdns
 
 jakarta-regexp-1.5.jar
