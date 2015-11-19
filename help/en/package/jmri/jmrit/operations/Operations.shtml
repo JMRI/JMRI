@@ -1629,20 +1629,25 @@
    </P>
 
    <P>
-    You can decide where a car is to be sent after being serviced by the spur/industry. Select the
-    where the car is to be delivered by selecting the "Destination". If you want to car delivered to
-    a specific track, select the track you want under the "Track" field. Only destination tracks
-    that can accept the car type are shown in the track pull down menu. The destination loaded by a
-    schedule is shown as the car's <A HREF="#CarsSet">Final Destination</A> in the various car
-    windows.
+    You can decide where a car is to be sent after being serviced by the spur/industry. Use the
+    "Destination" field to tell the program where the car is to be delivered. If you want to car
+    delivered to a specific track at the destination, select the track you want under the "Track"
+    field. Only destination tracks that can accept the car type are shown in the track pull down
+    menu. The destination loaded by a schedule is shown as the car's
+    <A HREF="#CarsSet">Final Destination</A> in the various car windows.
    </P>
 
-   <P>If you wanted the same car type to be delivered consecutively, increase the "Count"
-    to the number that you wish. The maximum count is 100 and the minimum is 1. The "Wait" field
-    allows you determine how many trains will try to service the spur before picking up the car.
-    Useful if you want a car to remain still for several operating sessions.</P>
-    
-    <H4>Schedule Example</H4>
+   <P>If you wanted the same car type to be delivered consecutively, increase the "Count" to the
+    number that you wish. The maximum count is 100 and the minimum is 1. For example, a count of 3
+    is the same as entering the exact same schedule item three times in a row.</P>
+
+   <P>The "Wait" field allows you determine how many trains will try to service the spur before
+    picking up the car. Useful if you want a car to remain still for several operating sessions.
+    Note that the car's load won't change immediately if there's a wait count. Once the wait count
+    reaches zero, the program will switch the car load to the schedule item's shipped load, or
+    whatever is appropriate if a shipped load wasn't specified.</P>
+
+   <H4>Schedule Example</H4>
 
    <P>In the schedule shown above, the schedule is requesting two SP boxcars in a row with any
     load, then a tankcar with with a load of "Oil". Reading the entire schedule line for the two SP
