@@ -177,7 +177,9 @@ public class CarsTableFrameTest extends OperationsSwingTestCase {
         Assert.assertEquals("5th car in sort by owner list", c1, cars.get(4));
         
         // test sort by rfid
-        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
+//        getHelper().enterClickAndLeave(new MouseEventData(this, ctf.sortByRfid));
+        // use doClick() in case the radio button isn't visible due to scrollbars
+        ctf.sortByRfid.doClick();
         cars = ctf.carsTableModel.getSelectedCarList();
         Assert.assertEquals("1st car in sort by rfid list", c5, cars.get(0));
         Assert.assertEquals("2nd car in sort by rfid list", c2, cars.get(1));
