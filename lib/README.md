@@ -1,15 +1,10 @@
-This is the JMRI "lib" directory, available as the "lib" package in JMRI CVS.  
-These are the binary files, typically .jars, needed at build and run time.
+This is the JMRI "lib" directory, available as the "lib" directory in JMRI/JMRI Git.   These are the binary files, typically .jars, needed at build and run time.
 
-Contents:
+** Contents:
 
-Generally, we use subdirectories to hold the
-CVS-resident versions of OS-specific code for Windows (.dll files)
-and Linux (.so files) so that we can separate various builds.
+Generally, we use subdirectories to hold the Git-resident versions of OS-specific code for Windows (.dll files) and Linux (.so files) so that we can separate various builds.
 
-For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit
-and 64-bit Windows, but the files have the same name.  We store them
-in separate subdirectories under windows/, and let the installer sort them out.
+For example, the RXTX rxtxSerial.dll comes in separate versions for 32-bit and 64-bit Windows, but the files have the same name.  We store them in separate subdirectories under windows/, and let the installer sort them out.
 
 A similar mechanism is used for Linux under the linux/ directory.
 
@@ -223,7 +218,7 @@ i18nchecker.jar
         and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
 
-Older, no longer present:
+** Older, no longer present:
 
 
 #crimson.jar             
