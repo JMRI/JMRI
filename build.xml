@@ -32,11 +32,7 @@
     <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file      -->
     <property file="local.properties"/>
 
-    <!-- Configure Java default logging, used by the JMDNS.jar library  -->
-    <!-- User at runtime                                                -->
-    <property file="fulllogging.properties"/>
-
-    <!-- set any propertise not overridden by local.properties -->
+    <!-- set any properties not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
 
     <!-- The Jenkins official release builds force: -->
@@ -924,6 +920,8 @@
 
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
+
+            <sysproperty key="java.util.logging.config.file" value="fulllogging.properties"/>
 
             <classpath refid="test.class.path"/>
 
