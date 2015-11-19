@@ -1,4 +1,8 @@
-# Default log4j configuration file for JMRI project development.
+# Default logging configuration file for JMRI project development.
+
+# #############################################################
+#  Log4J configuration
+# #############################################################
 
 # Output is sent to system.err, generally a console window.
 # The output info consists of relative time, priority, thread name,
@@ -76,6 +80,9 @@ log4j.appender.T.MaxBackupIndex=2
 # Default Jetty server to only logging WARN since it can be verbose at points
 log4j.category.org.eclipse.jetty=WARN
 log4j.category.org.eclipse.jetty.server.handler=WARN
+
+# Turning off logging for Java JMDNS he hopes
+log4j.category.com.strangeberry=NONE
 
 # Examples of changing priority of specific categories (classes, packages):
 #

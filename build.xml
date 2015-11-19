@@ -921,8 +921,6 @@
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
 
-            <sysproperty key="java.util.logging.config.file" value="fulllogging.properties"/>
-
             <classpath refid="test.class.path"/>
 
             <test name="jmri.HeadLessTest">
