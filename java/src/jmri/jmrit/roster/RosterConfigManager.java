@@ -28,7 +28,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterConfigManager extends AbstractPreferencesProvider {
 
-    private String directory = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES);
+    private String directory = FileUtil.PREFERENCES;
     private String defaultOwner = "";
 
     public static final String DIRECTORY = "directory";
@@ -40,7 +40,7 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
         FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
             log.debug("UserFiles changed from {} to {}", evt.getOldValue(), evt.getNewValue());
             if (RosterConfigManager.this.getDirectory().equals(evt.getOldValue())) {
-                RosterConfigManager.this.setDirectory((String) evt.getNewValue());
+                RosterConfigManager.this.setDirectory(FileUtil.PREFERENCES);
             }
         });
     }
@@ -111,7 +111,10 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
      * @return the directory
      */
     public String getDirectory() {
-        return directory;
+        if (FileUtil.PREFERENCES.equals(this.directory)) {
+            return FileUtil.getUserFilesPath();
+        }
+        return this.directory;
     }
 
     /**
@@ -122,11 +125,14 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             directory = FileUtil.PREFERENCES;
         }
         String oldDirectory = this.directory;
-        if (directory != null && FileUtil.getAbsoluteFilename(directory) == null) {
+        if (FileUtil.getAbsoluteFilename(directory) == null) {
             throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory));
         }
-        this.directory = FileUtil.getAbsoluteFilename(directory);
-        log.debug("Roster is {}", this.directory);
+        if (!directory.equals(FileUtil.PREFERENCES)) {
+            directory = FileUtil.getAbsoluteFilename(directory);
+        }
+        this.directory = directory;
+        log.debug("Roster changed from {} to {}", oldDirectory, this.directory);
         propertyChangeSupport.firePropertyChange(DIRECTORY, oldDirectory, directory);
     }
 
