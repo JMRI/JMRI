@@ -51,12 +51,16 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.configurexml.PackageTest.suite());
         suite.addTest(jmri.implementation.PackageTest.suite());
         suite.addTest(jmri.managers.PackageTest.suite());
-        suite.addTest(jmri.jmrix.PackageTest.suite());  // last due to threading issues?
         suite.addTest(jmri.jmrit.PackageTest.suite());  // last due to classloader issues?
         suite.addTest(jmri.swing.PackageTest.suite());
+
+        
+        suite.addTest(jmri.jmrix.PackageTest.suite());  // last due to threading issues? To give late start to jmdns logging?
+        suite.addTest(jmri.jmris.PackageTest.suite());
+
         suite.addTest(jmri.util.PackageTest.suite());
         suite.addTest(jmri.web.PackageTest.suite());
-        suite.addTest(jmri.jmris.PackageTest.suite());
+
         return suite;
     }
 

@@ -43,8 +43,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.direct.PackageTest.suite());
         suite.addTest(jmri.jmrix.easydcc.PackageTest.suite());
         suite.addTest(jmri.jmrix.grapevine.PackageTest.suite());
-        suite.addTest(jmri.jmrix.jmriclient.PackageTest.suite());
-        suite.addTest(jmri.jmrix.lenz.PackageTest.suite());
         suite.addTest(jmri.jmrix.loconet.PackageTest.suite());
         suite.addTest(jmri.jmrix.maple.PackageTest.suite());
         suite.addTest(jmri.jmrix.modbus.PackageTest.suite());
@@ -65,6 +63,10 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.rfid.PackageTest.suite());
         suite.addTest(jmri.jmrix.dccpp.PackageTest.suite());
 	
+	    // last to start jmdns last chance
+        suite.addTest(jmri.jmrix.jmriclient.PackageTest.suite());
+        suite.addTest(jmri.jmrix.lenz.PackageTest.suite());
+	    
         return suite;
 
     }
