@@ -12,12 +12,12 @@ MacOS X fat binaries are treated slightly differently, see the README file there
 
 Specific components:
 
-vecmath.jar
- from Java3D 1.3.2
- from <https://java3d.dev.java.net/binary-builds-old.html>
+####vecmath.jar
+- from Java3D 1.3.2
+- from <https://java3d.dev.java.net/binary-builds-old.html>
 
-Serialio.jar
- from <http://serialio.com>
+#####Serialio.jar*
+- from <http://serialio.com>
  
 commons-lang3-3.2.1.jar
     version 3.2.1
