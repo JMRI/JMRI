@@ -35,9 +35,10 @@ jhall.jar
 log4j.jar
  version 1.2.15
 
-slf4j-api-1.7.6.jar, slf4j-log4j12-1.7.6.jar
-    slf4j logging interface
+slf4j-api-1.7.13.jar, slf4j-log4j12-1.7.13.jar, jul-to-slf4j-1.7.13.jar
+    slf4j logging interface to log4j
     from http://www.slf4j.org
+    updated JMRI 4.1.4 from version 1.7.6, added jul-to-slf4j
     
 openlcb.jar
     0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
