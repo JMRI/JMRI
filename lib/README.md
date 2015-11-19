@@ -35,6 +35,10 @@ jhall.jar
 log4j.jar
  version 1.2.15
 
+slf4j-api-1.7.6.jar, slf4j-log4j12-1.7.6.jar
+    slf4j logging interface
+    from http://www.slf4j.org
+    
 openlcb.jar
     0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
     Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB group prior to February 2015.  There have been changes to their specifications since then with uncertain provenance. JMRI's use of this version means that it won't comply with those.
