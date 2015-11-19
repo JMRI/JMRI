@@ -118,16 +118,6 @@ bluecove-gpl-2.1.1-SNAPSHOT.jar
 jython.jar
  version 2.7.0 from jython.org (was jython-standalone-2.7.0.jar)
  
-junit.jar
- version 3.8.2
- Used for testing only, not at runtime
- from <junit.org>
-
-jfcunit.jar
-  version 2.08 
-  Used for testing only, not at runtime
-  from <http://jfcunit.sourceforge.net>
-
 jakarta-regexp-1.5.jar
   (needed for jfcunit)
   Used for testing only, not at runtime
@@ -140,9 +130,6 @@ annotations.jar, jsr305.jar:
     From Findbugs 3.0.0 from http://findbugs.sourceforge.net
     Only needed at compile/build time, not runtime
     
-servlet.jar:
-  jakarta-servletapi-3.2.3-src/lib/servlet.jar
-
 libusb-jar (ch.ntb.usb.jar)
         http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
         http://libusb.wiki.sourceforge.net/
@@ -180,10 +167,6 @@ Joal 1.1.2
       libjoal_native.so
       libgluegen-rt.so
 
-UmlGraph-5.7
-    from http://www.umlgraph.org/download.html
-    only used for ant javadoc-uml
-
 jmdns.jar 
     Version 3.0, 84670 bytes, December 7, 2009
     from http://sourceforge.net/projects/jmdns
@@ -206,6 +189,24 @@ xAPlib.jar
 xbee-api-0.9.jar
     PBender 03-Mar-2014 This version comes from the XBee library source repository 
     (we needed some of the functionality, but the pre-compiled library has not been updated).
+
+
+** For unit tests & development work only:
+
+UmlGraph-5.7
+    from http://www.umlgraph.org/download.html
+    only used for ant javadoc-uml
+
+junit.jar
+ version 3.8.2
+ Used for testing only, not at runtime
+ from <junit.org>
+
+jfcunit.jar
+  version 2.08 
+  Used for testing only, not at runtime
+  from <http://jfcunit.sourceforge.net>
+
 
 i18nchecker.jar
     Internationalization checker: used in source code development, for checking 
@@ -235,3 +236,6 @@ ExternalLinkContentViewerUI.jar
   now being carried in this jar file instead of source until we migrate to Java 1.6
   No longer used as of JMRI 2.99.1
   
+servlet.jar:
+  jakarta-servletapi-3.2.3-src/lib/servlet.jar but no longer included
+
