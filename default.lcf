@@ -81,7 +81,7 @@ log4j.appender.T.MaxBackupIndex=2
 log4j.category.org.eclipse.jetty=WARN
 log4j.category.org.eclipse.jetty.server.handler=WARN
 
-# Turning off logging for Java JMDNS he hopes
+# Turning off logging for Java JMDNS
 log4j.category.com.strangeberry=NONE
 log4j.category.javax.jmdns=NONE
 
