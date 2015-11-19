@@ -49,15 +49,16 @@ public class Log4JUtil {
     /**
      * Initialize Log4J.
      * <p>
-     * Use the logging control file <i>default.lcf</i> or the file specified in
-     * the <i>jmri.log</i> property. If the file cannot be found in the current
+     * Use the logging control file specified in
+     * the <i>jmri.log</i> property or, if none,
+     * the default.lcf file. If the file cannot be found in the current
      * directory, look for the file first in the settings directory and then in
      * the installation directory.
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
-    static public void initLog4J() {
+    static void initLog4J(String logFile) {
         if (log4JSetUp) {
             log.debug("initLog4J already initialized!");
             return;
@@ -72,7 +73,6 @@ public class Log4JUtil {
         initializeJavaUtilLogging();
         
         // initialize log4j - from logging control file (lcf) only
-        String logFile = System.getProperty("jmri.log", "default.lcf");
         try {
             if (new File(logFile).canRead()) {
                 configureLogging(logFile);
@@ -95,6 +95,13 @@ public class Log4JUtil {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     }
 
+    static public void initLogging() {
+        initLogging(System.getProperty("jmri.log", "default.lcf"));
+    }
+    static public void initLogging(String controlfile) {
+        initLog4J(controlfile);
+    }
+    
     static void initializeJavaUtilLogging() {
         // Optionally remove existing handlers attached to j.u.l root logger
         org.slf4j.bridge.SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
