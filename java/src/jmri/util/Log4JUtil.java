@@ -67,6 +67,10 @@ public class Log4JUtil {
         // stdout and stderr streams are set-up and usable by the ConsoleAppender
         SystemConsole.create();
         log4JSetUp = true;
+        
+        // initialize the java.util.logging to log4j bridge
+        initializeJavaUtilLogging();
+        
         // initialize log4j - from logging control file (lcf) only
         String logFile = System.getProperty("jmri.log", "default.lcf");
         try {
@@ -91,6 +95,15 @@ public class Log4JUtil {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     }
 
+    static void initializeJavaUtilLogging() {
+        // Optionally remove existing handlers attached to j.u.l root logger
+        org.slf4j.bridge.SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
+
+        // add SLF4JBridgeHandler to j.u.l's root logger, should be done once during
+        // the initialization phase of your application
+        org.slf4j.bridge.SLF4JBridgeHandler.install();
+    }
+    
     @SuppressWarnings("unchecked")
     static public String startupInfo(String program) {
         log.info(jmriLog);

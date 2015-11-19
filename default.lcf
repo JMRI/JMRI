@@ -83,6 +83,7 @@ log4j.category.org.eclipse.jetty.server.handler=WARN
 
 # Turning off logging for Java JMDNS he hopes
 log4j.category.com.strangeberry=NONE
+log4j.category.javax.jmdns=NONE
 
 # Examples of changing priority of specific categories (classes, packages):
 #
