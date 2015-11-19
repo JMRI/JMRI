@@ -35,11 +35,6 @@ jhall.jar
 log4j.jar
  version 1.2.15
 
-AppleJavaExtensions.jar
- version 1.5
- from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
- Used for building only, not at runtime
-
 openlcb.jar
     0.6.5 from https://sourceforge.net/p/openlcb/svn/HEAD/tree/trunk/prototypes/java/
     Note (from 0.6.4): This implements the protocols as adopted by the OpenLCB
@@ -126,10 +121,6 @@ jinput (including jinput.jar, three jinput DLLs, and two libjinputs)
   from <https://jinput.dev.java.net/> jinput_dist_20090401
   (most recent as of 2010-Jan-02)
 
-annotations.jar, jsr305.jar:
-    From Findbugs 3.0.0 from http://findbugs.sourceforge.net
-    Only needed at compile/build time, not runtime
-    
 libusb-jar (ch.ntb.usb.jar)
         http://inf.ntb.ch/infoportal/help/index.jsp?topic=/ch.ntb.infoportal/tools.html
         http://libusb.wiki.sourceforge.net/
@@ -207,7 +198,6 @@ jfcunit.jar
   Used for testing only, not at runtime
   from <http://jfcunit.sourceforge.net>
 
-
 i18nchecker.jar
     Internationalization checker: used in source code development, for checking 
     proper implementation of text internationalization.  This archive need not
@@ -218,9 +208,20 @@ i18nchecker.jar
     Additional useful information at https://blogs.oracle.com/geertjan/entry/i18nchecker 
         and https://blogs.oracle.com/geertjan/entry/i18nchecker_part_2
 
+rscbundlecheck.jar
+    check for duplicated properties
+
+AppleJavaExtensions.jar
+ version 1.5
+ from <http://developer.apple.com/library/mac/samplecode/AppleJavaExtensions/>
+ Used for building only, not at runtime
+
+annotations.jar, jsr305.jar:
+    From Findbugs 3.0.0 from http://findbugs.sourceforge.net
+    Only needed at compile/build time, not runtime
+    
 
 ** Older, no longer present:
-
 
 #crimson.jar             
 # version 1.1.3
