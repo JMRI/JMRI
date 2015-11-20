@@ -572,7 +572,8 @@ public class Setup {
     public static void setRailroadName(String name) {
         String old = railroadName;
         railroadName = name;
-        setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
+        if (old == null || !old.equals(name))
+            setDirtyAndFirePropertyChange("Railroad Name Change", old, name); // NOI18N
     }
 
     public static String getHazardousMsg() {
@@ -1756,7 +1757,10 @@ public class Setup {
         Element values;
         Element e = new Element(Xml.OPERATIONS);
         e.addContent(values = new Element(Xml.RAIL_ROAD));
-        values.setAttribute(Xml.NAME, getRailroadName());
+        if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName()))
+            values.setAttribute(Xml.NAME, Xml.USE_JMRI_RAILROAD_NAME);
+        else
+            values.setAttribute(Xml.NAME, getRailroadName());
 
         e.addContent(values = new Element(Xml.SETUP));
         values.setAttribute(Xml.COMMENT, getComment());
@@ -1993,7 +1997,10 @@ public class Setup {
             if (log.isDebugEnabled()) {
                 log.debug("railroadName: {}", name);
             }
-            railroadName = name; // don't set the dirty bit
+            if (name.equals(Xml.USE_JMRI_RAILROAD_NAME))
+                railroadName = null;
+            else
+                railroadName = name; // don't set the dirty bit
         }
 
         if ((operations.getChild(Xml.SETUP) != null)
