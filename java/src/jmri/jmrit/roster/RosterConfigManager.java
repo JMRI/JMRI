@@ -1,6 +1,8 @@
 package jmri.jmrit.roster;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
@@ -125,11 +127,18 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             directory = FileUtil.PREFERENCES;
         }
         String oldDirectory = this.directory;
-        if (FileUtil.getAbsoluteFilename(directory) == null) {
-            throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory));
+        try {
+            if (!FileUtil.getFile(directory).isDirectory()) {
+                throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory)); // NOI18N
+            }
+        } catch (FileNotFoundException ex) { // thrown by getFile() if directory does not exist
+            throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory)); // NOI18N
         }
         if (!directory.equals(FileUtil.PREFERENCES)) {
             directory = FileUtil.getAbsoluteFilename(directory);
+            if (!directory.endsWith(File.separator)) {
+                directory = directory + File.separator;
+            }
         }
         this.directory = directory;
         log.debug("Roster changed from {} to {}", oldDirectory, this.directory);
