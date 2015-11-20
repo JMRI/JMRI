@@ -667,7 +667,7 @@ public class NXFrame extends WarrantRoute {
                 }
             }
             
-            // Possible case where curDistance can exceed the length of a very short block that was just entered.
+            // Possible case where curDistance can exceed the length of a block that was just entered.
             // Move to next block and adjust the distance times into that block
             if (speedProfile != null) {
                 if (curDistance>=blockLen) {
@@ -781,30 +781,25 @@ public class NXFrame extends WarrantRoute {
                 } else {
                     dist = (curSpeed+nextSpeed)/2*_intervalTime*scaleFactor;
                 }
-                if (curDistance + dist <= blockLen) {
-                    curDistance += dist;
-                    curSpeed = nextSpeed;
-                    remRamp -= dist;
-                    w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
-                    if (log.isDebugEnabled()) log.debug("Ramp Down in block \""+blockName+"\" to speed "+
-                            curSpeed+" in "+(int)speedTime+"ms to reach curDistance= "+curDistance+" with remRamp= "+remRamp);                        
-                    speedTime = _intervalTime;
+                curDistance += dist;
+                curSpeed = nextSpeed;
+                remRamp -= dist;
+                w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", Float.toString(curSpeed), blockName));
+                if (log.isDebugEnabled()) log.debug("Ramp Down in block \""+blockName+"\" to speed "+
+                        curSpeed+" in "+(int)speedTime+"ms to reach curDistance= "+curDistance+" with remRamp= "+remRamp);
+                if (curDistance>=blockLen) {
+                    if (speedProfile != null) {
+                        speedTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, curSpeed, Math.round(curDistance-blockLen)));                        
+                    } else {
+                        speedTime = (curDistance-blockLen)/(curSpeed*scaleFactor);                                        
+                    }                    
                 } else {
-                    break;
+                    speedTime = _intervalTime;                    
                 }
+                noopTime = _intervalTime - speedTime;
             } while (curDistance < blockLen && curSpeed > 0);
             
             if (nextIdx < orders.size()) {
-                if (speedProfile != null) {
-                    noopTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, (curSpeed+_minSpeed/2), Math.round(blockLen-curDistance)));
-                } else {
-                    noopTime = (blockLen-curDistance)/(curSpeed*scaleFactor);                                
-                }
-                if (noopTime<0 || _intervalTime<noopTime) {
-                    log.error("Ramp Down NoOp time invalid! noopTime= "+noopTime);
-                    noopTime = _intervalTime/2;
-                }
-                speedTime = _intervalTime - noopTime;
                 totalLen -= blockLen;
                 if (log.isDebugEnabled()) log.debug("Leave RampDown block \""+blockName+"\" noopTime= "+noopTime+
                         ", in distance="+curSpeed*noopTime*scaleFactor+", blockLen= "+blockLen+
@@ -833,21 +828,9 @@ public class NXFrame extends WarrantRoute {
             }
         }
         // Ramp down finished
-        if (curSpeed>0) {   // cleanup fractional speeds. insure speed 0
-            if (log.isDebugEnabled()) {
-                // wild guesstimates to approximate remRamp
-                float dist;
-                if (speedProfile != null) {
-                    curDistance = speedProfile.getSpeed(curSpeed/2, isForward)*speedTime/1000;
-                    dist = speedProfile.getSpeed(curSpeed/2, isForward)*_intervalTime/1000;
-                } else {
-                    curDistance = (curSpeed/2)*speedTime*scaleFactor;
-                    dist = (curSpeed/2)*_intervalTime*scaleFactor;
-                }
-                remRamp -=  dist;                
-                log.debug("Ramp down LAST speed change in block \""+blockName+"\" to speed "+0.0f+
-                        " after "+(int)speedTime+"ms. to reach curDistance= "+curDistance+" with remRamp= "+remRamp);         
-            }            
+        if (curSpeed>0) {   // cleanup fractional speeds. insure speed 0 - should never happen.
+            log.warn("Ramp down LAST speed change in block \""+blockName+"\" to speed 0  after "+
+                (int)speedTime+"ms. curSpeed= "+curSpeed+", curDistance= "+curDistance+", remRamp= "+remRamp);         
             w.addThrottleCommand(new ThrottleSetting((int)speedTime, "Speed", "0.0", blockName));               
         }
         w.addThrottleCommand(new ThrottleSetting(500, "F1", "false", blockName));
