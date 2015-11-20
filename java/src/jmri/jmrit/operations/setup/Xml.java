@@ -41,6 +41,7 @@ public class Xml {
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
     static final String RAIL_ROAD = "railRoad"; // NOI18N
+    static final String USE_JMRI_RAILROAD_NAME = "useJmriRailroadName"; // NOI18N
     static final String SETTINGS = "settings"; // NOI18N
     static final String MAIN_MENU = "mainMenu"; // NOI18N
     static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N	
