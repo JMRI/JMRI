@@ -57,7 +57,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
             if (this.getFontSize() != 0) {
                 UIManager.getDefaults().keySet().stream().forEach((key) -> {
                     if (UIManager.get(key) instanceof FontUIResource) {
-                        UIManager.put(key, UIManager.getFont(key).deriveFont((float) this.getFontSize()));
+                        UIManager.put(key, UIManager.getFont(key).deriveFont(UIManager.getFont(key).getStyle(), (float) this.getFontSize()));
                     }
                 });
             }
@@ -125,7 +125,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
      */
     public void setFontSize(int fontSize) {
         int oldFontSize = this.fontSize;
-        this.fontSize = fontSize == 0 ? 0 : fontSize < 9 ? 9 : fontSize > 18 ? 18 : fontSize;
+        this.fontSize = (fontSize == 0) ? 0 : ((fontSize < 9) ? 9 : ((fontSize > 18) ? 18 : fontSize));
         if (this.fontSize != oldFontSize) {
             propertyChangeSupport.firePropertyChange(FONT_SIZE, oldFontSize, this.fontSize);
         }
