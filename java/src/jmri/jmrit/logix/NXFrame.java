@@ -685,7 +685,7 @@ public class NXFrame extends WarrantRoute {
             if (totalLen - blockLen <= rampLength) {
                 break;
             }
-            if (nextIdx < orders.size()) {    // not the last block
+            if (remRamp >0.0f && nextIdx < orders.size()) {    // not the last block
                 totalLen -= blockLen;
                 if (log.isDebugEnabled()) log.debug("Leave RampUp block \""+blockName+"\" noopTime= "+noopTime+
                         ", in distance="+curSpeed*noopTime*scaleFactor+", blockLen= "+blockLen+
@@ -695,43 +695,55 @@ public class NXFrame extends WarrantRoute {
                 blockLen = bo.getPath().getLengthMm();
                 if (blockLen<=0)  {
                     blockLen = defaultBlockLen;
-                }                
+                }
                 w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
                 if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+
-                        noopTime+", blockLen= "+blockLen);
+                        noopTime+", blockLen= "+blockLen);                    
             }
         }
         if (log.isDebugEnabled()) log.debug("Ramp Up done at block \""+blockName+"\" curSpeed=" +
                 ""+curSpeed+", blockLen= "+blockLen+" totalLen= "+totalLen+", rampLength= "+
                 rampLength+", remRamp= "+remRamp);
+        
+        if (totalLen-blockLen > rampLength) {
             
-        // run through mid route at max speed
-        while (nextIdx < orders.size()) {
-            if (totalLen-blockLen <= rampLength) {
-                // Start ramp down in current block
-                break;
+            if (nextIdx < orders.size()) {    // not the last block)
+                bo = orders.get(nextIdx++);
+                blockName = bo.getBlock().getDisplayName();
+                blockLen = bo.getPath().getLengthMm();
+                if (blockLen<=0)  {
+                    blockLen = defaultBlockLen;
+                }
+                w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
+                if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+
+                        noopTime+", blockLen= "+blockLen);
+                curDistance = 0;
             }
-            totalLen -= blockLen;
-            // constant speed, get time to next block
-            if (speedProfile != null) {
-                noopTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, curSpeed, Math.round(blockLen-curDistance)));
-            } else {
-                noopTime = (blockLen-curDistance)/(curSpeed*scaleFactor);                                
+            
+            // run through mid route at max speed
+            while (nextIdx < orders.size()) {
+                totalLen -= blockLen;
+                // constant speed, get time to next block
+                if (speedProfile != null) {
+                    noopTime = Math.round(1000*speedProfile.getDurationOfTravelInSeconds(isForward, curSpeed, Math.round(blockLen-curDistance)));
+                } else {
+                    noopTime = (blockLen-curDistance)/(curSpeed*scaleFactor);                                
+                }
+                if (log.isDebugEnabled()) log.debug("Leave MidRoute block \""+blockName+"\" noopTime= "+noopTime+
+                        ", curDistance="+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen);
+                bo = orders.get(nextIdx++);
+                blockName = bo.getBlock().getDisplayName();
+                blockLen = bo.getPath().getLengthMm();
+                if (nextIdx == orders.size()) {
+                    blockLen /= 2;
+                } else if (blockLen<=0) {
+                    blockLen = defaultBlockLen;
+                }
+                w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
+                if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
+                curDistance = 0;
             }
-            if (log.isDebugEnabled()) log.debug("Leave MidRoute block \""+blockName+"\" noopTime= "+noopTime+
-                    ", curDistance="+curDistance+", blockLen= "+blockLen+", totalLen= "+totalLen);
-            bo = orders.get(nextIdx++);
-            blockName = bo.getBlock().getDisplayName();
-            blockLen = bo.getPath().getLengthMm();
-            if (nextIdx == orders.size()) {
-                blockLen /= 2;
-            } else if (blockLen<=0) {
-                blockLen = defaultBlockLen;
-            }
-            w.addThrottleCommand(new ThrottleSetting((int)noopTime, "NoOp", "Enter Block", blockName));
-            if (log.isDebugEnabled()) log.debug("Enter block \""+blockName+"\" noopTime= "+noopTime);
-            curDistance = 0;
-        }
+        } // else Start ramp down in current block
         
         // Ramp down.  use negative delta
         remRamp = rampLength;

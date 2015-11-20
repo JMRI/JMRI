@@ -1,6 +1,8 @@
 package jmri.jmrit.roster;
 
 import java.beans.PropertyChangeEvent;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Set;
 import java.util.prefs.BackingStoreException;
@@ -28,7 +30,7 @@ import org.slf4j.LoggerFactory;
  */
 public class RosterConfigManager extends AbstractPreferencesProvider {
 
-    private String directory = FileUtil.getAbsoluteFilename(FileUtil.PREFERENCES);
+    private String directory = FileUtil.PREFERENCES;
     private String defaultOwner = "";
 
     public static final String DIRECTORY = "directory";
@@ -36,9 +38,11 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
     private static final Logger log = LoggerFactory.getLogger(RosterConfigManager.class);
 
     public RosterConfigManager() {
-        FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+        log.debug("Roster is {}", this.directory);
+        FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
+            log.debug("UserFiles changed from {} to {}", evt.getOldValue(), evt.getNewValue());
             if (RosterConfigManager.this.getDirectory().equals(evt.getOldValue())) {
-                RosterConfigManager.this.setDirectory((String) evt.getNewValue());
+                RosterConfigManager.this.setDirectory(FileUtil.PREFERENCES);
             }
         });
     }
@@ -109,7 +113,10 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
      * @return the directory
      */
     public String getDirectory() {
-        return directory;
+        if (FileUtil.PREFERENCES.equals(this.directory)) {
+            return FileUtil.getUserFilesPath();
+        }
+        return this.directory;
     }
 
     /**
@@ -120,10 +127,21 @@ public class RosterConfigManager extends AbstractPreferencesProvider {
             directory = FileUtil.PREFERENCES;
         }
         String oldDirectory = this.directory;
-        if (directory != null && FileUtil.getAbsoluteFilename(directory) == null) {
-            throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory));
+        try {
+            if (!FileUtil.getFile(directory).isDirectory()) {
+                throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory)); // NOI18N
+            }
+        } catch (FileNotFoundException ex) { // thrown by getFile() if directory does not exist
+            throw new IllegalArgumentException(Bundle.getMessage("IllegalRosterLocation", directory)); // NOI18N
         }
-        this.directory = FileUtil.getAbsoluteFilename(directory);
+        if (!directory.equals(FileUtil.PREFERENCES)) {
+            directory = FileUtil.getAbsoluteFilename(directory);
+            if (!directory.endsWith(File.separator)) {
+                directory = directory + File.separator;
+            }
+        }
+        this.directory = directory;
+        log.debug("Roster changed from {} to {}", oldDirectory, this.directory);
         propertyChangeSupport.firePropertyChange(DIRECTORY, oldDirectory, directory);
     }
 

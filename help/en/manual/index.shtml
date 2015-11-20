@@ -1,9 +1,8 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2015 -->
-<!-- $Id$ -->
 <title>Decoder Pro Manual: Index</title>
+
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -32,11 +31,14 @@
 
 <tr>
 <td><span style="font-weight: bold;">JMRI&reg; v4.0</span></td>
-<td style="font-weight: bold;"><a href="DecoderPro3/index.shtml">DecoderPro v4.0</a></td>
+<td style="font-weight: bold;"><a href="../html/apps/DecoderPro/index.shtml">DecoderPro v4.0</a></td>
 <td></td>
 </tr>
-<tr><td><br></td>
-<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v4.0</a><br>&nbsp;</td><td>scheduled for update<br>&nbsp;</td>
+
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
+<td></td>
 </tr>
 
 <tr>
@@ -44,13 +46,15 @@
 </tr>
 
 <tr>
-<td><br>
-</td><td style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
+<td></td>
+<td style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
 <td></td>
 </tr>
 
-<tr><td><br></td>
-<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.6</a></td><td></td>
+<tr>
+<td></td>
+<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.6</a></td>
+<td></td>
 </tr>
 
 <tr>
@@ -63,6 +67,8 @@
 <td></td>
 <td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3 v3.4</a></td>
 <td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf" target="_blank">Printable Guide (pdf 3.9MB)</a></td>
+</tr>
+
 <tr>
 <td></td>
 <td><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml"></a><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg; v3.4 </a></td>
@@ -101,7 +107,7 @@
 
 <tr>
 <td><strong>JMRI&reg; v3.0</strong></td>
-<td><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td>
+<td><strong>&nbsp;</strong></td>
 <td></td>
 </tr>
 
@@ -150,7 +156,7 @@
 </tbody>
 </table>
 
-<p>Updated 10/19/2015</p>
+<p>Updated 11/15/2015</p>
 
 <h2>JMRI&reg; Applications</h2>
 
@@ -162,11 +168,11 @@ The program contains modules for:</p>
 <li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
 <li>Drawing computer based panels for depicting a model railroad layout (<a href="../html/apps/PanelPro/PanelPro.shtml">PanelPro&trade;</a> and <a href="../html/apps/PanelPro/PanelPro.shtml#layouteditor">Layout Editor</a>)</li>
 <li>Controlling the layout (All modules)</li>
-<li>Creating train manifests for duplicating railroad operations (Operations)</li>
+<li>Creating train manifests for duplicating railroad operations (<a href="../html/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a>)</li>
 <li>Controlling the signals on the layout (All modules)</li>
-<li>Controlling lighting and sound in the room, and so forth (SoundPro&trade;)</li>
+<li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 </ul>
-<p>All this capability is contained in one program (JMRI) which has several &quot;start-up&quot; modules for the various applications.</p>
+<p>All this capability is contained in one program (JMRI&reg;) which has several &quot;start-up&quot; modules for the various applications.</p>
 
 <h2>System Requirements</h2>
 
@@ -188,6 +194,7 @@ to get an overview of what we're about to cover.
 
 <!--#include virtual="/Footer" -->
 
-</div><!-- close #mainContent -->
+</div><!-- closes #mainContent -->
+</div>
 </body>
 </html>

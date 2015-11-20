@@ -98,7 +98,7 @@
       <SubComponents>
         <Component class="javax.swing.JList" name="profiles">
           <Properties>
-            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="profiles.setSelectedValue(ProfileManager.defaultManager().getActiveProfile(), true);">
+            <Property name="model" type="javax.swing.ListModel" editor="org.netbeans.modules.form.RADConnectionPropertyEditor" postCode="profiles.setSelectedValue(ProfileManager.getDefault().getActiveProfile(), true);">
               <Connection code="new ProfileListModel()" type="code"/>
             </Property>
             <Property name="selectionMode" type="int" value="0"/>
@@ -115,11 +115,13 @@
             </Property>
           </AccessibilityProperties>
           <Events>
-            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="profilesValueChanged"/>
             <EventHandler event="keyPressed" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="profilesKeyPressed"/>
+            <EventHandler event="valueChanged" listener="javax.swing.event.ListSelectionListener" parameters="javax.swing.event.ListSelectionEvent" handler="profilesValueChanged"/>
           </Events>
           <AuxValues>
-            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList()"/>
+            <AuxValue name="JavaCodeGenerator_AddingCodePost" type="java.lang.String" value="profiles.ensureIndexIsVisible(profiles.getSelectedIndex());"/>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JList&lt;&gt;()"/>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;Profile&gt;"/>
           </AuxValues>
         </Component>
       </SubComponents>

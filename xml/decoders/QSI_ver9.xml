@@ -70,7 +70,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>

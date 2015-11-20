@@ -1023,16 +1023,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Left as a deprecated method because other code, e.g. CATS is still using
      * in in JMRI 3.7 and perhaps 3.8
      *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLog4J}
+     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
      * directly.
      */
     @Deprecated
     static protected void initLog4J() {
-        jmri.util.Log4JUtil.initLog4J();
+        jmri.util.Log4JUtil.initLogging();
     }
 
     static protected void splash(boolean show, boolean debug) {
-        Log4JUtil.initLog4J();
+        Log4JUtil.initLogging();
         if (debugListener == null && debug) {
             // set a global listener for debug options
             debugFired = false;
