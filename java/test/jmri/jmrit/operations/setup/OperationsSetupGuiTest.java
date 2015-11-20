@@ -126,7 +126,6 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         OptionFrame f = new OptionFrame();
         f.setLocation(0, 0); // entire panel must be visible for tests to work properly
         f.initComponents();
-        // f.setVisible(true);
         OptionPanel p = (OptionPanel) f.getContentPane();
 
         // confirm defaults
@@ -153,7 +152,9 @@ public class OperationsSetupGuiTest extends OperationsSwingTestCase {
         getHelper().enterClickAndLeave(new MouseEventData(this, p.localYardCheckBox));
         Assert.assertTrue("yard", p.localYardCheckBox.isSelected());
 
-        getHelper().enterClickAndLeave(new MouseEventData(this, p.rfidCheckBox));
+//        getHelper().enterClickAndLeave(new MouseEventData(this, p.rfidCheckBox));
+        // use doClick() in case the checkbox isn't visible due to scrollbars.
+        p.rfidCheckBox.doClick();
         Assert.assertTrue("rfid", p.rfidCheckBox.isSelected());
 
         getHelper().enterClickAndLeave(new MouseEventData(this, p.carLoggerCheckBox));

@@ -1529,9 +1529,16 @@ public class TrainBuilder extends TrainCommon {
                 if (car.getWait() > 0 && _train.services(car)) {
                     addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildExcludeCarWait"),
                             new Object[]{car.toString(), car.getTypeName(),
-                                    (car.getLocationName() + ", " + car.getTrackName()), car.getWait()}));
+                                    car.getLocationName(), car.getTrackName(), car.getWait()}));
                     car.setWait(car.getWait() - 1); // decrement wait count
+                    // a car's load changes when the wait count reaches 0
+                    String oldLoad = car.getLoadName();
                     car.updateLoad(); // has the wait count reached 0?
+                    String newLoad = car.getLoadName();
+                    if (!oldLoad.equals(newLoad)) {
+                        addLine(_buildReport, SEVEN, MessageFormat.format(Bundle.getMessage("buildCarLoadChangedWait"),
+                                new Object[]{car.toString(), car.getTypeName(), oldLoad, newLoad}));
+                    }
                     _carList.remove(car);
                     _carIndex--;
                     continue;
