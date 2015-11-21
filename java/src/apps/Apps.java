@@ -334,24 +334,29 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             }
         }
         // Now load deferred config items
-        if (file.exists() && file.equals(singleConfig)) {
-            // To avoid possible locks, deferred load should be
-            // performed on the Swing thread
-            if (SwingUtilities.isEventDispatchThread()) {
-                configDeferredLoadOK = doDeferredLoad(file);
-            } else {
-                try {
-                    // Use invokeAndWait method as we don't want to
-                    // return until deferred load is completed
-                    SwingUtilities.invokeAndWait(new Runnable() {
-                        @Override
-                        public void run() {
-                            configDeferredLoadOK = doDeferredLoad(file);
-                        }
-                    });
-                } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Exception creating system console frame", ex);
+        if (file.exists()) {
+            if (file.equals(singleConfig)) {
+                // To avoid possible locks, deferred load should be
+                // performed on the Swing thread
+                if (SwingUtilities.isEventDispatchThread()) {
+                    configDeferredLoadOK = doDeferredLoad(file);
+                } else {
+                    try {
+                        // Use invokeAndWait method as we don't want to
+                        // return until deferred load is completed
+                        SwingUtilities.invokeAndWait(new Runnable() {
+                            @Override
+                            public void run() {
+                                configDeferredLoadOK = doDeferredLoad(file);
+                            }
+                        });
+                    } catch (InterruptedException | InvocationTargetException ex) {
+                        log.error("Exception creating system console frame", ex);
+                    }
                 }
+            } else {
+                // deferred loading is not done in the new config
+                configDeferredLoadOK = true;
             }
         } else {
             configDeferredLoadOK = false;
@@ -416,7 +421,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             thr3.start();
         }
         // if the configuration didn't complete OK, pop the prefs frame and help
-        log.debug("Config go OK? {}", (configOK || configDeferredLoadOK));
+        log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);
         if (!configOK || !configDeferredLoadOK) {
             HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
             doPreferences();
