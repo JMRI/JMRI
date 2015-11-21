@@ -1,6 +1,11 @@
 language: java
 
-script: ant ci-test
+before_script:
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
+  - sleep 3 # give xvfb some time to start
+
+script: travis_wait ant ci-test
 
 jdk:
   - oraclejdk8

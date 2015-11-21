@@ -918,13 +918,13 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-
+<!--
             <sysproperty key="java.awt.headless" value="true"/>
             <sysproperty key="jmri.headlesstest" value="true"/>
-
+-->
             <classpath refid="test.class.path"/>
 
-            <test name="jmri.HeadLessTest">
+            <test name="apps.tests.AllTest">
                 <formatter usefile="no" type="brief"/>
             </test>
         </junit>
