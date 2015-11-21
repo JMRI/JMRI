@@ -240,6 +240,8 @@
 
 <mapID target="manual.DecoderPro3.index_Top" url="manual/DecoderPro3/index.shtml#Top"/>
 
+<mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddLocations_addtracks" url="manual/JMRI_OPS_UsersGuide/Ops_AddLocations.shtml#addtracks"/>
+
 <mapID target="manual.DecoderPro.Comp_Basic" url="manual/DecoderPro/Comp_Basic.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_addressPanel_Top" url="manual/DecoderPro/Main_Throttle_addressPanel.shtml#Top"/>
@@ -1338,6 +1340,8 @@
 
 <mapID target="package.jmri.jmrit.operations.Operations_HorsepowerPerTon" url="package/jmri/jmrit/operations/Operations.shtml#HorsepowerPerTon"/>
 
+<mapID target="manual.DecoderPro3.index_revisions" url="manual/DecoderPro3/index.shtml#revisions"/>
+
 <mapID target="html.doc.Technical.JUnit_issues" url="html/doc/Technical/JUnit.shtml#issues"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Start_DCC_Hardware_Top" url="manual/JMRI_OPS_UsersGuide/Start_DCC_Hardware.shtml#Top"/>
@@ -1974,6 +1978,8 @@
 
 <mapID target="manual.DecoderPro.Main_Main_Top" url="manual/DecoderPro/Main_Main.shtml#Top"/>
 
+<mapID target="package.jmri.jmrit.operations.Operations_LocationRollingStock" url="package/jmri/jmrit/operations/Operations.shtml#LocationRollingStock"/>
+
 <mapID target="manual.DecoderPro.Main_OakTreeSystems" url="manual/DecoderPro/Main_OakTreeSystems.shtml"/>
 
 <mapID target="html.hardware.bachrus.index" url="html/hardware/bachrus/index.shtml"/>
@@ -2159,6 +2165,8 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddEngine_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddEngine.shtml#Top"/>
 
 <mapID target="html.tools.throttle.ThrottleChapter2_StandardActions" url="html/tools/throttle/ThrottleChapter2.shtml#StandardActions"/>
+
+<mapID target="package.jmri.jmrit.operations.Operations_RollingStockServiced" url="package/jmri/jmrit/operations/Operations.shtml#RollingStockServiced"/>
 
 <mapID target="package.jmri.jmrix.rps.aligntable.AlignTableFrame" url="package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml"/>
 
@@ -2439,6 +2447,8 @@
 <mapID target="html.tools.signaling.ldt.output" url="html/tools/signaling/ldt/output.shtml"/>
 
 <mapID target="manual.DecoderPro.Main_Throttle_functionPanel_Top" url="manual/DecoderPro/Main_Throttle_functionPanel.shtml#Top"/>
+
+<mapID target="manual.JMRI_OPS_UsersGuide.index_revisions" url="manual/JMRI_OPS_UsersGuide/index.shtml#revisions"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_TerminateTrain" url="package/jmri/jmrit/operations/Operations.shtml#TerminateTrain"/>
 

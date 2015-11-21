@@ -1,14 +1,14 @@
-# How we build and release JMRI distributions
+# (How we build and release JMRI distributions)[https://github.com/JMRI/JMRI/blob/master/scripts/HOWTO-distribution.md]
 
 In SVN, we used "branches" to record the contents of a release. The "Release-4-1-1" branch was used to accumulate the content of that release, and then finally to record that content. In CVS, we'd used tags to record the content of a release, but SVN "tag" and "branch" constructs don't really differ.
 
-Git branches are more ephemeral than SVN branches, and aren't considered a good way to record content.  Git tags, on the other hand, are great for that.
+Git branches are more ephemeral than SVN branches. They're great for development work, but aren't considered a good way to record content.  Git tags, on the other hand, are great for that.
 
 So our releases procedure is, in outline:
 
 * Create a GitHub Issue to hold discussion with conventional title "Develop release-n.n.n". 
 
-* Do lots of updates
+* Do lots of updates and merge completely onto master
 
 * In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case). Commit an update to release.properties with release.is_branched=true
 
@@ -22,17 +22,20 @@ So our releases procedure is, in outline:
 
 * After Jenkins has processed the final set of changes, directly publish the files in the usual SF.net way, etc.
 
-* (We're also looking at using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist at first.
+* We're also looking at using GitHub releases for distributing the files; this is being done in parallel, so the SF.net file method will co-exist at first.
 
 * Turn off the Jenkins job; this is so it doesn't fail after later steps
 
-* If need be, merge back changes from the branch to the master as needed. This would be done in a personal fork repo. Might not necessarily need this step if we do changes in 'master' and 'cherry-pick' into branch.
-
-* Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. This Tag provides a way to get back if somebody accidentally adds to the branch. 
-
-(We will need to clean up the history to suit whichever convention we finally decide on)
+* Put a tag titled vn.n.n (note initial lower case) on the end of the branch. This starts in a personal fork, then gets pushed back to JMRI/JMRI. 
 
 * Delete the branch (to clean up the list of branches in various GUI tools), which can be done in the main JMRI/JMRI repo via the web interface or in a fork & pushed back
+
+
+### Issues
+
+Are we using GitHub milestones?  How?
+
+If somebody starts their work from a release tag (which they might do it they're e.g. "fixing something I saw in 4.1.7"), their branch will include the changed version properties.  That's not good, because it makes it hard to merge that branch back.
 
 It might be a good idea to keep the production release branches around throughout the next test phases, but we should be able to prune each test release branch once we've tagged it. So, we'd keep the 4.0 (and 4.0.1) branch around throughout the 4.1.x phase and then prune it when moving to 4.2. Each 4.1.x branch should be pruned once tagged as, if we need to do changes to a test release, we just release a new version on it's own branch from 'master’.
 
@@ -44,10 +47,9 @@ There could be value on keeping some of these branches around a bit longer - per
 
 How best to deal with bringing additional commits into the branch from master - do we 'cherry-pick' or 'merge'? Everybody is using pull requests, which makes it pretty easy to get the hash numbers needed for cherry-pick (that can be messy with direct commits, because you’re not always sure which commits go together). We can play this by ear, but if somebody says “can you include PR 123?” I think that lends itself to a cherry pick pretty nicely.
 
-
 ============================================================================
 
-# Detailed Instructions (Modified from Pre-GitHub Build Instructions)
+# Detailed Instructions
 
 The Ant task that handles the Git operations (see below) invokes Git via direct command line execution. This means that you need to have a working command-line git tool installed and configured.  Try "git status" to check.  
 
@@ -56,39 +58,43 @@ People building releases for distribution need permission to directly operate wi
 If you're attempting to perform this on MS Windows, refer to the MS Windows notes section at the bottom of this document.
 
 ================================================================================
-## First, we merge in as much tentative content as possible to the GitHub master branch.
+## Notification
 
-[ ] Create a GitHub Issue to hold discussion with conventional title "Develop release-n.n.n". 
+- Create a (GitHub Issue)[https://github.com/JMRI/JMRI/issues] to hold discussion with conventional title "Create release-n.n.n". 
 
-[ ] Bring in all possible GitHub JMRI/JMRI pull requests
 
-[ ] (Do we want to add a step about the use of milestones here?  If we're using them, we should make sure that all closed pull requests have the right one(s) set)
+================================================================================
+## Update Content
 
-[ ] Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
+- Go to the master branch on your local repository. Pull back from the main JMRI/JMRI repository to make sure you're up to date.
 
-[ ] If it's a new year, update copyright dates (done for 2015):
+- If it's a new year, update copyright dates (done for 2015):
 
     * build.xml (3) in the jmri.copyright.years property value
     * site/Copyright.html (3 places)
     * xml/XSLT/build.xml in the property value, index.html, CSVindex.html
     * (grep -r for the previous year in the web site, xml; don't change copyright notices!)
 
-[ ] Bring in all possible sf.net patches, including decoders
+- Bring in all possible GitHub JMRI/JMRI [pull requests](https://github.com/JMRI/JMRI/pulls)
 
-[ ] Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
+(Do we want to add a step about the use of milestones here?  If we're using them, we should make sure that all closed pull requests have the right one(s) set)
+
+- Bring in all possible [sf.net patches](https://sourceforge.net/p/jmri/patches/), including decoders
+
+- Check if the decoder definitions have changed since the previous release (almost always true) If so, remake the decoder index.
 
         ant remakedecoderindex
 
 (Check 'session.log' and 'messages.log' located in current directory as, in case of errors they might not always be output to the console)
 
-        git diff # as a check.
-        Commit.
+        git diff xml/decoderIndex.xml
+        git commit -m"update decoder index" xml/decoderIndex.xml
 
-[ ] Update the help/en/Acknowledgements.shtml help page with any recent changes
+- Update the help/en/Acknowledgements.shtml help page with any recent changes
 
-[ ] Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
+- Commit any changes in your local web site directory, as these can end up in help, xml, etc (See the JMRI page on local web sites for details)
 
-[ ] Remake the help index (need a command line approach, so can put in ant!)
+- Remake the help index (need a command line approach, so can put in ant!)
 
     cd help/en/
     rm ~/.jhelpdev    (to make sure the right preferences are chosen)
@@ -105,7 +111,7 @@ In that same directory, also remake the index and toc web pages by doing invokin
 
 Run the program and make sure help works.
 
-Commit any changed files.
+    git commit -m"JavaHelp indexing update" .
 
 ================================================================================
 ## General Maintenance Items
@@ -117,10 +123,6 @@ We roll some general code maintenance items into the release process.  They can 
         grep -rlI --exclude-dir=.git $'\xEF\xBB\xBF\xEF\xBB\xBF'
 
 It might be necessary to use a Hex editor to remove the erroneous extra Byte-Order-Marks - a valid UTF-8 file should only have either one 3-byte BOM (EF BB BF) or no BOM at all.
-
-[ ] Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, and accept that.
-
-[ ] Pull back to make sure your repository is at the right point
 
 [ ] Run "ant alltest"; make sure they all pass; fix problems and commit back
 
@@ -139,14 +141,14 @@ If you fix anything, commit it back.
         
 If you fix anything, commit it back.
 
-[ ] Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, and accept that.
-
-[ ] Pull back to make sure your repository is at the right point
-
 ================================================================================
 ## Create the Release Branch
 
-[ ] Start the release by creating a new "release branch"  (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+[ ] Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, and accept that.
+
+[ ] Pull back to make sure your repository is fully up to date
+
+[ ] Start the release by creating a new "release branch" with ant.  (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
     ant make-test-release-branch
 
@@ -154,14 +156,14 @@ This will do (more or less) the following actions:
 
     git checkout master
     git pull
-    git branch {branch}
-    
-    <check in an update of the version format of the new release branch>
-    
+    git checkout -b {branch}
     git push JMRI/JMRI {branch}
-
-    <check in an update of the version number of master
     
+    <commit a release.is_branched=true property to the new release branch>
+    git push JMRI/JMRI {branch}
+    
+    git checkout master
+    <commit a version number increment to master
     git push JMRI/JMRI master
     
     git pull
@@ -225,8 +227,9 @@ puts them at
 (The user has to have put the htdocs link in their SF.net account)
 
 ================================================================================
+## Further Changes
 
-If anybody discovers a problem from here on in, they should fix it on a Git branch and have you pull it into the release branch.  CI will automatically rebuild, or you'll have to redo a manual build manually.
+If anybody discovers a problem from here on in, they should fix it on a Git branch and have you pull it into the release branch and onto master.  CI will automatically rebuild, or you'll have to redo a manual build manually.
 
 If you do this, beware of merging in the new release.properties file, which you do NOT want to do. (If you do, might be easiest just to edit in the fixes and commit/push it back)
 
