@@ -11,11 +11,11 @@ So our releases procedure is, in outline:
 
 * Do lots of updates and merge completely onto master
 
-* In an up-to-date Git repository, create a branch named "release-n.n.n" (note initial lower case). Commit an update to release.properties with release.is_branched=true
+* In an up-to-date Git repository, update the release.properties file with the new version number
 
-* Push the branch back to the JMRI/JMRI repository (you can't use a pull request until the branch exists)
+* Create a branch named "release-n.n.n" (note initial lower case). 
 
-* Switch to 'master' branch and update release.properties with new version number. Commit back and then switch checkout back to the release-n.n.n branch.
+* Push the branch back to the JMRI/JMRI repository (you can't use a pull request until the branch exists), then switch back to master so you don't accidentally change the release branch
 
 * Jenkins build from release-n.n.n branch.  (That’s basically the same Jenkins job, except for changing to checkout from Github)
 
@@ -158,16 +158,11 @@ This will do (more or less) the following actions:
 
     git checkout master
     git pull
+    (commit a version number increment to master)
+    git push JMRI/JMRI master
     git checkout -b {branch}
     git push JMRI/JMRI {branch}
-    
-    <commit a release.is_branched=true property to the new release branch>
-    git push JMRI/JMRI {branch}
-    
-    git checkout master
-    <commit a version number increment to master
-    git push JMRI/JMRI master
-    
+    git checkout master    
     git pull
     
 ================================================================================
