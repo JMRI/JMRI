@@ -1,6 +1,7 @@
 package jmri;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -476,9 +477,24 @@ public class Block extends jmri.implementation.AbstractNamedBean implements Phys
         return _curvature;
     }
 
+    /*
+     * Set length.  length must be in millimeters.
+     * Paths will inherit this length, if their length is not
+     * specifically set.  This length is the maximum length of
+     * any Path in the block. Path lengths will be modified to
+     * not exceed this length.
+     */
     public void setLength(float l) {
         _length = l;
-    }  // l must be in millimeters
+        List<Path> paths = getPaths();
+        Iterator<Path> it = paths.iterator();
+        while (it.hasNext()) {
+            Path p = it.next();
+            if (p.getLength() > l) {
+                p.setLength(0);   // set to default
+            }
+        }
+    }
 
     public float getLengthMm() {
         return _length;

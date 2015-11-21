@@ -75,10 +75,11 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         element.setAttribute("blue", "" + util.getForeground().getBlue());
 
         element.setAttribute("hasBackground", util.hasBackground() ? "yes" : "no");
-        // store default regardless
-        element.setAttribute("redBack", "" + util.getBackground().getRed());
-        element.setAttribute("greenBack", "" + util.getBackground().getGreen());
-        element.setAttribute("blueBack", "" + util.getBackground().getBlue());
+        if (util.hasBackground()) {
+            element.setAttribute("redBack", "" + util.getBackground().getRed());
+            element.setAttribute("greenBack", "" + util.getBackground().getGreen());
+            element.setAttribute("blueBack", "" + util.getBackground().getBlue());
+        }
 
         if (util.getMargin() != 0) {
             element.setAttribute("margin", "" + util.getMargin());
@@ -311,18 +312,18 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         a = element.getAttribute("hasBackground");
         if (a!=null) {
             util.setHasBackground("yes".equals(a.getValue()));            
-        } else {
-            util.setHasBackground(true);                        
         }
-        try {
-            int red = element.getAttribute("redBack").getIntValue();
-            int blue = element.getAttribute("blueBack").getIntValue();
-            int green = element.getAttribute("greenBack").getIntValue();
-            util.setBackgroundColor(new Color(red, green, blue));
-        } catch (org.jdom2.DataConversionException e) {
-            log.warn("Could not parse background color attributes!");
-        } catch (NullPointerException e) {
-            util.setHasBackground(false);// if the attributes are not listed, we consider the background as clear.
+        if (util.hasBackground()) {
+            try {
+                int red = element.getAttribute("redBack").getIntValue();
+                int blue = element.getAttribute("blueBack").getIntValue();
+                int green = element.getAttribute("greenBack").getIntValue();
+                util.setBackgroundColor(new Color(red, green, blue));
+            } catch (org.jdom2.DataConversionException e) {
+                log.warn("Could not parse background color attributes!");
+            } catch (NullPointerException e) {
+                util.setHasBackground(false);// if the attributes are not listed, we consider the background as clear.
+            }            
         }
         
         int fixedWidth = 0;
