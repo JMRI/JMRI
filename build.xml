@@ -37,7 +37,6 @@
 
     <!-- The Jenkins official release builds force: -->
     <!--    release.official=true                   -->
-    <!--    release.is_branched=true                -->
     <!--    nsis.home=/opt/nsis/nsis-2.46/          -->
     <!-- in their "invoke ant" step                 -->
     <!-- The Packages build (dev downloads) forces: -->
@@ -70,9 +69,6 @@
     <condition property="release.official" value="true" else="false">
       <isset property="RELEASED"/>
     </condition>
-
-    <!-- release.is_branched defaults to false unless release.properties file already set -->
-    <property name="release.is_branched" value="false"/>
 
     <!-- should compiler warn of use of deprecated APIs? (on/off) -->
     <property name="deprecation" value="off"/> <!-- off at start of 3.11 series, as we work through changes -->
@@ -288,7 +284,6 @@
             <filter token="release.build_user"     value="${release.build_user}"/>
             <filter token="release.official"       value="${release.official}"/>
             <filter token="release.build_date"     value="${release.build_date}"/>
-            <filter token="release.is_branched"    value="${release.is_branched}"/>
             <filter token="jmri.copyright.year"    value="${jmri.copyright.year}"/>
         </filterset>
     </target>
@@ -1634,39 +1629,22 @@
             <arg value="${branch-name}"/>
         </exec>
 
-        <!-- In the newly created release branch, we modify
-        release.properties to show that we have indeed branched -->
-        <propertyfile file="release.properties">
-            <entry key="release.is_branched" type="string" operation="=" value="true"/>
-        </propertyfile>
-        <!-- commit and push -->
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="commit"/>
-            <arg value="-m'update release.is_branched for new release'"/>
-            <arg value="release.properties"/>
-        </exec>
-        <exec executable="git" failifexecutionfails="true">
-            <arg value="push"/>
-            <arg value="${jmri.repository.url}"/>
-            <arg value="${branch-name}"/>
-        </exec>
-
         <!-- return to master -->
         <exec executable="git" failifexecutionfails="true">
             <arg value="checkout"/>
             <arg value="master"/>
         </exec>
         
-        <!-- in the master release.properties file, we now increment
+        <!-- in the master release.properties file, increment
         the release.build value in order to point to the NEW next
-        release (the one after we're branching to create) -->
+        release (the one after the one we're creating now) -->
         <propertyfile file="release.properties">
             <entry key="release.build" type="int" operation="+" value="1"/>
         </propertyfile>
         <!-- commit and push -->
         <exec executable="git" failifexecutionfails="true">
             <arg value="commit"/>
-            <arg value="-m'update release.build to new value post-release'"/>
+            <arg value="-m'update release.build to value for next release'"/>
             <arg value="release.properties"/>
         </exec>
         <exec executable="git" failifexecutionfails="true">
@@ -1677,7 +1655,7 @@
             <arg value="pull"/>
         </exec>
 
-        <echo message="new release branch ${branch-name}"/>
+        <echo message="new release branch ${branch-name} created"/>
     </target>
 
 </project>
