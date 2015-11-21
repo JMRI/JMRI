@@ -29,7 +29,7 @@
 
 <hr>
 
-<p><img style="width: 800px; height: 1215px;" alt="build previiew" src="images/Ops_BuildReportPreview.png"></p>
+<div style="margin-left: 40px;"><img style="width: 800px; height: 1215px;" alt="build previiew" src="images/Ops_BuildReportPreview.png"></div>
 
 <div align="right">
   <p><a href="Ops_EditTrain.shtml">Back</a><a href="#"></a></p>

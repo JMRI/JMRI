@@ -54,12 +54,12 @@ opens the <strong><a href="Ops_Locations_setCars.shtml">Set Car Location</a></st
 opens the <a href="Ops_AddCars.shtml"><strong>Edit Car</strong></a> window,
 similar to the <strong>Add Car</strong> window.</p>
 
-<h4>Bottom of the page</h4>
+<h4>Bottom of the panel</h4>
 
 <p>A series of radio buttons that allow you to select the sort order. Also the total number of Cars is displayed.
 
 <p><input name="button2" id="button2" value="Add" type="button">
-Opens the<strong><a href="Ops_AddCars.shtml">Add Car</a></strong>
+Opens the <strong><a href="Ops_AddCars.shtml">Add Car</a></strong> 
 window and allows you to add a new Car to your Roster.</p>
 
 <p> <input name="button3" id="button3" value="Save" type="button">
@@ -68,7 +68,8 @@ Saves the Car Roster to disk.
 
 <p><input name="button4" id="button4" value="Find" type="button"> <input name="textfield" id="textfield" size="10" type="text">
 Used to find a Car by its Road Number. The wild card "*" (without quotes) may be used 
-when entering a car number. For example, if you want to find all the
+when entering a car number.</p>
+<p>For example, if you want to find all the
 Cars with a Number ending in ...345 , enter *345 and each time you press on <input name="button5" id="button5" value="Find" type="button">
 the next Car with the ...345 ending will be displayed.</p>
 

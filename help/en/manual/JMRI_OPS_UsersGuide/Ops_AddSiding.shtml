@@ -30,8 +30,11 @@
 <hr>
 <p align="left">A Spur Track is used to service an industry or just a place where a Car is loaded or
 unloaded. Spurs are very similar to <strong><a href="Ops_AddYard.shtml">Yards</a></strong>. You can if you wish schedule the order that Cars will be delivered to a Spur, or demand Cars with certain Loads using <strong><a href="Ops_schedule.shtml">Schedules</a></strong>.</p>
+<p>For a Train to service a Location, there must be at least one Track for that Location.</p>
 <p align="left">When a Car is placed at a Spur, the Car's Load status is modified. OperationsPro provides two Load names for all Cars: the default <strong>Empty</strong> (or <strong>E</strong>) and the default <strong>Load</strong> (or <strong>L</strong>). If a Car has one of these Loads when it arrives at a Spur, the Load will change to the other, i.e. <strong>E</strong> becomes <strong>L</strong> and <strong>L</strong> becomes <strong>E</strong>.</p>
-<p>For a Train to service a Location, there must be at least one Track for that Location. To add a Track as a Spur, in the <a href="Ops_AddLocations.shtml"><strong>Add/Edit Locations</strong></a> window select <strong>Tracks at this location</strong>
+
+<h3>Add a Spur Track</h3>
+<p>To add a Track as a Spur, in the <a href="Ops_AddLocations.shtml"><strong>Add/Edit Locations</strong></a> window select <strong>Tracks at this location</strong>
   <input name="radio" id="radio" value="radio" checked="checked" type="radio">
   <strong>Spurs</strong>, then press 
   <input name="button" id="button" value="Add Spur Track" type="submit">
@@ -91,7 +94,8 @@ to select all types, then select or deselect rolling stock types you wish the Sp
     the siding track is added and the greyed out features are activated.</p></td>
   </tr>
 </tbody></table>
-<p><strong>Add Spur Track</strong> window now displays with all options active to let you detail the spur.</p>
+
+<p>The <strong>Add Spur Track</strong> window now displays with all options active to let you detail the spur.</p>
 <p><img src="images/Ops_AddSidingTrack01.png" alt="spur" height="726" width="750"></p>
 
 <h4><strong>Select the rolling stock serviced by this spur</strong></h4>
@@ -202,6 +206,8 @@ to add the Track.</p>
 <p>Close the window when done with this Spur Track.</p>
 <p>The <strong>Add Location</strong> window shows one siding track at the Tank Facility in Red Rock Oil.</p>
 <p><img src="images/Ops_AddLocation03.png" alt="location" height="479" width="768"></p>
+
+<a name="editspur"><h3>Edit a Spur Track</h3></a>
 <p>If you want to change information for any Track entry, press  
   <input name="button14" id="button14" value="Edit" type="submit"> 
 in the Tracks table on the Location pane to open the <strong>Edit Spur Track</strong> window.</p>
@@ -213,27 +219,26 @@ the <input name="button15" id="button15" value="Save Spur Track" type="button">
 to save the changes. You may also
   <input name="button16" id="button16" value="Delete Spur Track" type="submit">
 from your database.</p>
-<p>Note we changed the Length of the Spur to 200 scale feet.</p>
+<p>Note we changed the Length of the Spur Track to 200 scale feet.</p>
 <p>When done with editing close the window.</p>
 <p>The Locations window shows all the Locations in your OperationsPro database, displaying the Track Types and total Track Length for each.</p>
 <p>You may add as many Locations and Tracks as needed to complete the description of your layout.</p>
 
-<h3>Add Spur Track menu</h3>
+<h3>Add Spur Track window menu</h3>
 <p><img src="images/Ops_AddSidingMenu.png" alt="menu" height="213" width="758"></p>
 
-<h4>Tools</h4>
-<blockquote>
-  <p><strong><a href="Ops_Cars.shtml">Show Cars</a></strong></p>
-  <p><strong>Track Pools</strong></p>
-  <p>Spurs may be combined and the their lengths combined.</p>
-  <p><strong>Alternate Track</strong></p>
-  <p><img src="images/Ops_AddSidingTrack05.png" height="100" width="300"></p>
-  <p><strong>Change Track Type</strong></p>
-  <p><img src="images/Ops_AddSidingTrack06.png" height="107" width="305"></p>
-  <p><strong>Planned Pick Ups</strong><br>
-  </p>
-  <p><img src="images/Ops_AddSidingTrack07.png" height="117" width="321"></p>
-</blockquote>
+<h4>Tools <img src="images/arrow.gif"></h4>
+<ul>
+  <li><strong><a href="Ops_Cars.shtml">Show Cars</a></strong><br>&nbsp;</li>
+  <li><strong>Track Pools</strong>
+  <p>Spurs may be combined and the their lengths combined.</p></li>
+  <li><strong>Alternate Track</strong>
+  <p><img src="images/Ops_AddSidingTrack05.png" height="100" width="300"></p></li>
+  <li><strong>Change Track Type</strong>
+  <p><img src="images/Ops_AddSidingTrack06.png" height="107" width="305"></p></li>
+  <li><strong>Planned Pick Ups</strong>
+  <p><img src="images/Ops_AddSidingTrack07.png" height="117" width="321"></p></li>
+</ul>
 
 <hr>
 

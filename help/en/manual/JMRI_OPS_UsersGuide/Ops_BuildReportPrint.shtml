@@ -28,9 +28,7 @@
 </div>
 
 <hr>
-<blockquote>
-  <p><img style="width: 714px; height: 779px;" alt="Build report" src="images/Ops_BuildReportPrint.png"><br></p>
-</blockquote>
+<div style="margin-left: 40px;"><img style="width: 714px; height: 779px;" alt="Build report" src="images/Ops_BuildReportPrint.png"></div>
 <hr>
 
 <div align="right">
