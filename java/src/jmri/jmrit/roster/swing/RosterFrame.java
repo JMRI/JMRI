@@ -74,7 +74,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.RosterEntrySelector;
 import jmri.jmrit.roster.rostergroup.RosterGroupSelector;
-import jmri.jmrit.symbolicprog.ProgDefault;
+import jmri.jmrit.symbolicprog.ProgrammerConfigManager;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneOpsProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneProgFrame;
 import jmri.jmrit.symbolicprog.tabbedframe.PaneServiceProgFrame;
@@ -83,6 +83,7 @@ import jmri.jmrit.throttle.ThrottleFrame;
 import jmri.jmrit.throttle.ThrottleFrameManager;
 import jmri.jmrix.ActiveSystemsMenu;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.ConnectionStatus;
 import jmri.profile.ProfileManager;
 import jmri.progdebugger.ProgDebugger;
@@ -371,9 +372,14 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             }
         });
         getSplitPane().addPropertyChangeListener(propertyChangeListener);
-        if (ProgDefault.getDefaultProgFile() != null) {
-            programmer1 = ProgDefault.getDefaultProgFile();
+        if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+            programmer1 = this.getProgrammerConfigManager().getDefaultFile();
         }
+        this.getProgrammerConfigManager().addPropertyChangeListener(ProgrammerConfigManager.DEFAULT_FILE, (PropertyChangeEvent evt) -> {
+            if (this.getProgrammerConfigManager().getDefaultFile() != null) {
+                programmer1 = this.getProgrammerConfigManager().getDefaultFile();
+            }
+        });
 
         String lastProg = (String) prefsMgr.getProperty(getWindowFrameRef(), "selectedProgrammer");
         if (lastProg != null) {
@@ -752,6 +758,10 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         return groups.getSelectedRosterGroup();
     }
 
+    protected ProgrammerConfigManager getProgrammerConfigManager() {
+        return InstanceManager.getDefault(ProgrammerConfigManager.class);
+    }
+    
     void handleQuit(WindowEvent e) {
         if (e != null && frameInstances.size() == 1) {
             final String rememberWindowClose = this.getClass().getName() + ".closeDP3prompt";
@@ -1491,13 +1501,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         GlobalProgrammerManager gpm = InstanceManager.getDefault(GlobalProgrammerManager.class);
         if (gpm != null) {
             String serviceModeProgrammer = gpm.getUserName();
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (Object connection : connList) {
-                    ConnectionConfig conn = (ConnectionConfig) connection;
-                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(serviceModeProgrammer)) {
-                        serModeProCon = conn;
-                    }
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(serviceModeProgrammer)) {
+                    serModeProCon = connection;
                 }
             }
         }
@@ -1506,13 +1512,9 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
             //Ideally we should probably have the progDebugger manager reference the username configured in the system connection memo.
             //but as DP3 (jmri can not use mutliple programmers!) isn't designed for multi-connection enviroments this should be sufficient*/
             String opsModeProgrammer = apm.getUserName();
-            ArrayList<Object> connList = InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class);
-            if (connList != null) {
-                for (Object connection : connList) {
-                    ConnectionConfig conn = (ConnectionConfig) connection;
-                    if (conn.getConnectionName() != null && conn.getConnectionName().equals(opsModeProgrammer)) {
-                        opsModeProCon = conn;
-                    }
+            for (ConnectionConfig connection : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+                if (connection.getConnectionName() != null && connection.getConnectionName().equals(opsModeProgrammer)) {
+                    opsModeProCon = connection;
                 }
             }
         }

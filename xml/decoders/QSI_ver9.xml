@@ -70,7 +70,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>
@@ -2334,6 +2334,8 @@
       </variable>
     </variables>
     <resets>
+      <mode>PAGEMODE</mode>
+      <mode>OPSBYTEMODE</mode>
       <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
       <ifactReset label="Reset Individual Sounds" CVname="56.128.52" CV="56" PI="128" SI="52" default="113" item="CV56.128.52"/>
       <ifactReset label="Reset Function Output Mappings" CVname="56.128.53" CV="56" PI="128" SI="53" default="113" item="CV56.128.53"/>

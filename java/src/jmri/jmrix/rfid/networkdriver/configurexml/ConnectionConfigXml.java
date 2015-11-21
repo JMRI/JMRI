@@ -1,6 +1,5 @@
 package jmri.jmrix.rfid.networkdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.rfid.networkdriver.ConnectionConfig;
 import jmri.jmrix.rfid.networkdriver.NetworkDriverAdapter;
@@ -36,8 +35,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

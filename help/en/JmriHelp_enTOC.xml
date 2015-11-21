@@ -19,6 +19,8 @@
 
   <tocitem text="CMRI " target="html.hardware.cmri.CMRI"/>
 
+  <tocitem text="DCC++ " target="html.hardware.dccpp.index"/>
+
   <tocitem text="DCC Specialties " target="html.hardware.misc.DccSpecialties"/>
 
   <tocitem text="EasyDCC " target="html.hardware.easydcc.EasyDCC"/>

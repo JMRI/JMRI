@@ -114,6 +114,9 @@ public class ShowTrainsServingLocationFrame extends OperationsFrame implements j
         } else {
             setTitle(MessageFormat.format(Bundle.getMessage("TitleShowTrains"), new Object[]{_location.getName()}));
         }
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_ShowTrainsServicingThisLocation", true); // NOI18N
 
         setPreferredSize(null);
         initMinimumSize();

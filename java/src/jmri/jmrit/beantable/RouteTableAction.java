@@ -1561,7 +1561,10 @@ public class RouteTableAction extends AbstractTableAction {
         return false;
     }
 
-    @SuppressWarnings("null")
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeSensorConditional(JmriBeanComboBox jmriBox, JComboBox<String> sensorbox, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
@@ -1580,7 +1583,8 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
-                return (Integer) null; // without creating any 
+                // throw without creating any 
+                throw new IllegalArgumentException("user input no good");
             }
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
@@ -1593,7 +1597,10 @@ public class RouteTableAction extends AbstractTableAction {
         return numConds;
     }
 
-    @SuppressWarnings("null")
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeTurnoutConditional(JmriBeanComboBox jmriBox, JComboBox<String> box, int numConds,
             boolean onChange, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> vetoList, Logix logix, String prefix, String uName) {
@@ -1612,7 +1619,8 @@ public class RouteTableAction extends AbstractTableAction {
             } catch (Exception ex) {
                 // user input no good
                 handleCreateException(cSystemName);
-                return (Integer) null; // without creating any 
+                // throw without creating any 
+                throw new IllegalArgumentException("user input no good");
             }
             c.setStateVariables(varList);
             int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;

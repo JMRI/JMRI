@@ -30,9 +30,14 @@ public class DCCppTurnoutManagerXml extends jmri.managers.configurexml.AbstractT
 
     public boolean load(Element turnouts) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(turnouts, null);
     }
 
     static Logger log = LoggerFactory.getLogger(DCCppTurnoutManagerXml.class.getName());
+
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        return this.loadTurnouts(shared, perNode);
+    }
 
 }

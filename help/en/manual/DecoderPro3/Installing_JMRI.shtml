@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
 <title>Installing JMRI</title>
 
 <!-- Style -->
@@ -13,16 +11,16 @@
 <link rel="home" title="Home" href="/">
 <!-- /Style -->
 </head>
+
+<body>
 <!--#include virtual="/Header" -->
 
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 <h1>
-<img SRC="images/logo.gif" ALT="JMRI DecoderPro Logo" BORDER=0 height=135 width=160 vspace="15"></h1>
-
-
+<img src="images/Logo.gif" alt="JMRI DecoderPro Logo" BORDER="0" height="135" width="160" vspace="15"></h1>
 
 <h1>Installing JMRI&reg;</h1>
 <div align=right>
@@ -30,15 +28,15 @@
 </div>
 
 <hr>
-<h1>Preparing to Install JMRI&reg;</h1>
+<h2>Preparing to Install JMRI&reg;</h2>
 <p>The JMRI software package includes:</p>
 <ul>
   <li>DecoderPro&reg;</li>
   <li>PanelPro&trade;</li>
   <li>SoundPro&trade;</li>
-  <li>Operations is embedded in DecoderPro and PanelPro</li>
+  <li>OperationsPro&trade;, embedded in DecoderPro and PanelPro</li>
 </ul>
-<p>There are always two versions of the software available:</p>
+<p>Two versions of the software are available:</p>
 <ul>
   <li>Production Version: The current stable version that is fixed in design and for general use. If just starting, this is the version for you.</li>
   <li>Development Version: The version that is under development for testing and is used to validate new features and changes to existing features. If you are familiar with JMRI and want to help in the validation and testing process, then use this version.</li>
@@ -50,8 +48,8 @@
   <li>Mac OS X</li>
   <li>Linux</li>
 </ul>
-<h1><a name="InstallJMRI"></a>Installing JMRI software</h1>
-<p>After downloading the JMRI file, now install using the appropriate Installation guide:</p>
+<h2><a name="InstallJMRI"></a>Installing JMRI software</h2>
+<p>After downloading the JMRI file, install using the appropriate Installation guide:</p>
 <ul>
   <li><a href="http://www.jmri.org/install/WindowsNew.shtml" target="_blank">Windows Installation Guide</a></li>
   <li><a href="http://www.jmri.org/install/MacOSX.html" target="_blank">Mac OS X  Installation Guide</a></li>
@@ -63,20 +61,11 @@
     </ul>
   </li>
 </ul>
-<p>&nbsp;</p>
 
 <hr>
 
 <div align=right>
 <p><a href="index.shtml#Installing">Back to Index</a></p>
-</div>
-
-
-This site is hosted by
-<br>
-<a href="http://sourceforge.net">
-<IMG src="images/sflogo.png" width="120" height="30" border="0" alt="SourceForge Logo" hspace="10" vspace="5" align="top"></a>
-<br>
 </div>
 
 <!--#include virtual="/Footer" -->

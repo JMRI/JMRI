@@ -47,17 +47,43 @@ public class Log4JUtil {
     private static final Logger log = LoggerFactory.getLogger(Log4JUtil.class.getName());
 
     /**
+     * Initialize logging from a default control file.
+     * <p>
+     * Primary functions:
+     * <ul>
+     * <li>Initialize the JMRI system console
+     * <li>Set up the slf4j j.u.logging to log4J bridge
+     * <li>Start log4j
+     * <li>Initialize some default exception handlers (to feed the logs?)
+     * </ul>
+     */
+    static public void initLogging() {
+        initLogging(System.getProperty("jmri.log", "default.lcf"));
+    }
+    /**
+     * Initialize logging, specifying a control file.
+     * <p>
+     * Generally, only used for unit testing.  Much better
+     * to use allow this class to find the control file
+     * using a set of conventions.
+     */
+    static public void initLogging(String controlfile) {
+        initLog4J(controlfile);
+    }
+    
+    /**
      * Initialize Log4J.
      * <p>
-     * Use the logging control file <i>default.lcf</i> or the file specified in
-     * the <i>jmri.log</i> property. If the file cannot be found in the current
+     * Use the logging control file specified in
+     * the <i>jmri.log</i> property or, if none,
+     * the default.lcf file. If the file cannot be found in the current
      * directory, look for the file first in the settings directory and then in
      * the installation directory.
      *
      * @see jmri.util.FileUtil#getPreferencesPath()
      * @see jmri.util.FileUtil#getProgramPath()
      */
-    static public void initLog4J() {
+    static void initLog4J(String logFile) {
         if (log4JSetUp) {
             log.debug("initLog4J already initialized!");
             return;
@@ -67,8 +93,11 @@ public class Log4JUtil {
         // stdout and stderr streams are set-up and usable by the ConsoleAppender
         SystemConsole.create();
         log4JSetUp = true;
+        
+        // initialize the java.util.logging to log4j bridge
+        initializeJavaUtilLogging();
+        
         // initialize log4j - from logging control file (lcf) only
-        String logFile = System.getProperty("jmri.log", "default.lcf");
         try {
             if (new File(logFile).canRead()) {
                 configureLogging(logFile);
@@ -91,6 +120,15 @@ public class Log4JUtil {
         Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionHandler());
     }
 
+    static void initializeJavaUtilLogging() {
+        // Optionally remove existing handlers attached to j.u.l root logger
+        org.slf4j.bridge.SLF4JBridgeHandler.removeHandlersForRootLogger();  // (since SLF4J 1.6.5)
+
+        // add SLF4JBridgeHandler to j.u.l's root logger, should be done once during
+        // the initialization phase of your application
+        org.slf4j.bridge.SLF4JBridgeHandler.install();
+    }
+    
     @SuppressWarnings("unchecked")
     static public String startupInfo(String program) {
         log.info(jmriLog);

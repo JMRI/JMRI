@@ -1,11 +1,9 @@
 // AboutDialog.java
 package jmri.swing;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.Locale;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -17,8 +15,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import jmri.Application;
+import jmri.InstanceManager;
 import jmri.Version;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -82,20 +82,10 @@ public class AboutDialog extends JDialog {
         log.debug("start labels");
 
         // add listener for Com port updates
-        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
-        if (connList != null && !connList.isEmpty()) {
-            for (Object conn : connList) {
-                if (!((ConnectionConfig) conn).getDisabled()) {
-                    pane1.add(new ConnectionLabel((ConnectionConfig) conn));
-                }
+        for (ConnectionConfig conn : InstanceManager.getDefault(ConnectionConfigManager.class)) {
+            if (!conn.getDisabled()) {
+                pane1.add(new ConnectionLabel(conn));
             }
-        } else {
-            /**
-             * Internationalization fix - Jens E Christensen
-             */
-            JLabel error = new JLabel(Bundle.getMessage("ConnectionListReadError"));
-            error.setForeground(Color.red);
-            pane1.add(error);
         }
         pane1.add(Box.createRigidArea(new Dimension(0, 15)));
 

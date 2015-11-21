@@ -19,12 +19,13 @@
  * or
  * (b) MADC commands will be added to support Predefined Turnouts.
  *
- * Having said *THAT*, assuming (b) will happen, I've written this to
- * use the T command with feedback, using the DCC++ Turnout ID as a direct
- * match for the JMRI Turnout Number.
+ * The DCCppTurnout supports two types of feedback:
+ * <ul>
+ * <li> DIRECT:  No actual feedback, uses Stationary Decoder command and
+ *      fakes the response.</li>
+ * <li> MONITORING: Uses the Turnout command, lets the Base Station
+ *      fake the response :) </li>
  *
- * TODO: Figure out how JMRI turnout numbers are mapped to DCC stationary
- * decoder addresses, and get the DCC++ folks to implement MADC.
  *
  * Turnout operation on DCC++ based systems goes through the following
  * sequence:
@@ -50,7 +51,6 @@ import org.slf4j.LoggerFactory;
 public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     /* State information */
-    protected static final int OFFSENT = 1;
     protected static final int COMMANDSENT = 2;
     protected static final int STATUSREQUESTSENT = 4;
     protected static final int IDLE = 0;
@@ -75,7 +75,8 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
         mNumber = pNumber; // this is the address.
 
         /* Add additional feedback types information */
-        _validFeedbackTypes |= DIRECT;
+	// Note DIRECT, ONESENSOR and TWOSENSOR are already OR'ed in.
+	_validFeedbackTypes |= MONITORING;   // uses the Turnout command <t...>
 
         // Default feedback mode is DIRECT
         _activeFeedbackType = DIRECT;
@@ -94,8 +95,6 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     //Set the mode information for DCC++ Turnouts.
-    //NOTE: DCC++ currently only does DIRECT mode, but we'll keep enough commented out code here
-    // to show how to activate the other modes later, if needed.
     synchronized static private void setModeInformation(String[] feedbackNames, int[] feedbackModes) {
         // if it hasn't been done already, create static arrays to hold 
         // the DCC++ specific feedback information.
@@ -103,22 +102,16 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
             if (feedbackNames.length != feedbackModes.length) {
                 log.error("int and string feedback arrays different length");
             }
-            //modeNames = new String[feedbackNames.length + 3];
-            //modeValues = new int[feedbackNames.length + 3];
+	    // NOTE: What we are doing here is tacking extra modes to the list
+	    // *beyond* the defaults of DIRECT, ONESENSOR and TWOSENSOR
             modeNames = new String[feedbackNames.length + 1];
             modeValues = new int[feedbackNames.length + 1];
             for (int i = 0; i < feedbackNames.length; i++) {
                 modeNames[i] = feedbackNames[i];
                 modeValues[i] = feedbackModes[i];
             }
-            modeNames[feedbackNames.length] = "DIRECT";
-            modeValues[feedbackNames.length] = DIRECT;
-            //modeNames[feedbackNames.length] = "MONITORING";
-            //modeValues[feedbackNames.length] = MONITORING;
-            //modeNames[feedbackNames.length + 1] = "EXACT";
-            //modeValues[feedbackNames.length + 1] = EXACT;
-            //modeNames[feedbackNames.length + 2] = "SIGNAL";
-            //modeValues[feedbackNames.length + 2] = SIGNAL;
+            modeNames[feedbackNames.length] = "MONITORING";
+            modeValues[feedbackNames.length] = MONITORING;
         }
     }
 
@@ -157,16 +150,24 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 
     // Handle a request to change state by sending a DCC++ command
     synchronized protected void forwardCommandChangeToLayout(int s) {
+	DCCppMessage msg;
         if (s != _mClosed && s != _mThrown) {
             log.warn("Turnout " + mNumber + ": state " + s + " not forwarded to layout.");
             return;
         }
+	if (_activeFeedbackType == MONITORING) {
 
-	// Convert the integer Turnout value to boolean for DCC++ internal code.
-	// Assume if it's not THROWN (true), it must be CLOSED (false).
-        DCCppMessage msg = DCCppMessage.getTurnoutCommandMsg(mNumber, (s == THROWN));
+	    // Convert the integer Turnout value to boolean for DCC++ internal code.
+	    // Assume if it's not THROWN (true), it must be CLOSED (false).
+	    msg = DCCppMessage.getTurnoutCommandMsg(mNumber, (s == THROWN));
+	    internalState = COMMANDSENT;
+	} else { // Assume Direct Mode
+	    int addr = (mNumber -1) / 4 + 1;
+	    int sub = (mNumber - 1) % 4;
+	    msg = DCCppMessage.getAccessoryDecoderMsg(addr, sub, (s == THROWN));
+	    internalState = IDLE; // change this!
+	}
 	tc.sendDCCppMessage(msg, this);
-	internalState = COMMANDSENT;
     }
 
     protected void turnoutPushbuttonLockout(boolean _pushButtonLockout) {
@@ -249,7 +250,7 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
 	    break;
 	case DIRECT:
 	default:
-	    // Default is direct mode
+	    // Default is direct mode - we should never get here, actually.
 	    handleDirectModeFeedback(l);
         }
     }
@@ -266,14 +267,9 @@ public class DCCppTurnout extends AbstractTurnout implements DCCppListener {
     }
 
     /*
-     *  With Direct Mode feedback, if we see ANY valid response to our
-     *  request, we ask the command station to stop sending information 
-     *  to the stationary decoder.
-     *  <p>
-     *  No effort is made to interpret feedback when using direct mode
-     *
-     *  @param l an {@link DCCppReply} message
-     *
+     * With DIRECT mode we don't actually expect a response from the
+     * Base Station, but we'll leave this code in, in case the Base Station
+     * implements an ACK or OK response later.
      */
     synchronized private void handleDirectModeFeedback(DCCppReply l) {
         /* If commanded state does not equal known state, we are 

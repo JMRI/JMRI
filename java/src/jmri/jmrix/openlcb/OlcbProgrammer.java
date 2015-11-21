@@ -56,7 +56,7 @@ public class OlcbProgrammer extends jmri.jmrix.AbstractProgrammer implements jmr
     
     @Override
     public List<ProgrammingMode> getSupportedModes() {
-        List<ProgrammingMode> retval = new ArrayList();
+        List<ProgrammingMode> retval = new ArrayList<ProgrammingMode>();
         retval.add(OlcbProgrammerManager.OPENLCBMODE);
         return retval;
     }

@@ -38,7 +38,11 @@ public class DCCppReplyTest extends TestCase {
     // check is direct mode response
     public void testIsDirectModeResponse() {
         // CV 1 in direct mode.
-        DCCppReply r = new DCCppReply("r 1234 5678 23");
+        DCCppReply r = new DCCppReply("r 1234|87|23 12");
+        Assert.assertTrue(r.isProgramReply());
+        r = new DCCppReply("r 1234|66|23 4 1");
+        Assert.assertTrue(r.isProgramReply());
+        r = new DCCppReply("r 1234|82|23 4");
         Assert.assertTrue(r.isProgramReply());
     }
 

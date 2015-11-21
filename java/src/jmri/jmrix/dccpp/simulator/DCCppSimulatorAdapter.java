@@ -42,6 +42,8 @@ import org.slf4j.LoggerFactory;
  */
 public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implements Runnable {
 
+    final static int SENSOR_MSG_RATE = 10;
+
     private boolean OutputBufferEmpty = true;
     private boolean CheckBuffer = true;
     private boolean TrackPowerState = false;
@@ -50,20 +52,6 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
     private int[] CVs = new int[DCCppConstants.MAX_DIRECT_CV+1];
 
     private Random rgen = null;
-
-    private int csStatus;
-    // status flags from the XPressNet Documentation.
-    private final static int csEmergencyStop = 0x01; // bit 0
-    private final static int csTrackVoltageOff = 0x02; // bit 1
-    private final static int csAutomaticMode = 0x04; // bit 2 
-    private final static int csServiceMode = 0x08; // bit 3
-    // bit 4 is reserved
-    // bit 5 is reserved
-    private final static int csPowerUpMode = 0x40; // bit 6
-    private final static int csRamCheckError = 0x80; // bit 7
-    
-    // 0x00 means normal mode.
-    private final static int csNormalMode = 0x00;
 
     public DCCppSimulatorAdapter() {
         setPort("None");
@@ -78,8 +66,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
             log.error("init (pipe): Exception: " + e.toString());
             return;
         }
-        csStatus = csNormalMode;
-	// Zero out the CV table.
+  	// Zero out the CV table.
 	for (int i = 0; i < DCCppConstants.MAX_DIRECT_CV+1; i++)
 	    CVs[i] = 0; 
 
@@ -186,7 +173,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
         if (log.isDebugEnabled()) {
             log.debug("Simulator Thread Started");
         }
-        ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
+	
+	Random rgen = new Random();
+        
+	ConnectionStatus.instance().setConnectionState(this.getCurrentPortName(), ConnectionStatus.CONNECTION_UP);
         for (;;) {
             DCCppMessage m = readMessage();
             if (log.isDebugEnabled()) {
@@ -199,6 +189,12 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		if (log.isDebugEnabled()) {
 		    log.debug("Simulator Thread sent Reply" + r.toString());
 		}
+	    }
+
+	    // Once every SENSOR_MSG_RATE loops, generate a random Sensor message.
+	    int rand = rgen.nextInt(SENSOR_MSG_RATE);
+	    if (rand == 1) {
+		generateRandomSensorReply();
 	    }
         }
     }
@@ -239,8 +235,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Throttle Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "T " + m.group(1) + " " + m.group(3) + " " + m.group(4);
 		reply = new DCCppReply(r);
@@ -265,8 +260,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed Turnout Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "H " + m.group(1) + " " + m.group(2);
 		reply = new DCCppReply(r);
@@ -291,8 +285,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed ProgWriteCVByte Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "r " + m.group(3) + " " + 
 		    m.group(4) + " " +
@@ -320,8 +313,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed ProgWriteCVBit Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		r = "r " + m.group(4) + " " + 
 		    m.group(5) + " " +
@@ -355,8 +347,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		m = p.matcher(s);
 		if (!m.matches()) {
 		    log.error("Malformed PROG_READ_CV Command: {}", s);
-		    reply = null;
-		    break;
+		    return(null);
 		}
 		// TODO: Work Magic Here to retrieve stored value.
 		int cv = CVs[Integer.parseInt(m.group(1))];
@@ -399,8 +390,35 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	case DCCppConstants.READ_CS_STATUS:
 	    log.debug("READ_CS_STATUS detected");
 	    generateReadCSStatusReply(); // Handle this special.
-	    break;	    
+	    break;
 
+	case DCCppConstants.QUERY_SENSOR_STATE:
+	    log.debug("QUERY_SENSOR_STATUS detected");
+	    s = msg.toString();
+	    try {
+		p = Pattern.compile(DCCppConstants.QUERY_SENSOR_REGEX);
+		m = p.matcher(s);
+		if (!m.matches()) {
+		    log.error("Malformed Sensor Query Command: {}", s);
+		    return(null);
+		}
+		r = "Q " + m.group(1) + " ";
+		// Fake reply: Odd sensors always active, even always inactive.
+		r += ((Integer.parseInt(m.group(1)) % 2) == 1 ? "1" : "0");
+		reply = new DCCppReply(r);
+		log.debug("Reply generated = {}", reply.toString());
+	    } catch (PatternSyntaxException e) {
+		log.error("Malformed pattern syntax! ");
+		return(null);
+	    } catch (IllegalStateException e) {
+		log.error("Group called before match operation executed string= " + s);
+		return(null);
+	    } catch (IndexOutOfBoundsException e) {
+		log.error("Index out of bounds string= " + s);
+		return(null);
+	    }
+	    break;
+		
 	case DCCppConstants.FUNCTION_CMD:
 	case DCCppConstants.ACCESSORY_CMD:
 	case DCCppConstants.OPS_WRITE_CV_BYTE:
@@ -409,10 +427,10 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	case DCCppConstants.WRITE_DCC_PACKET_PROG:
 	    log.debug("non-reply message detected");
 	    // Send no reply.
-	    reply = null;;
+	    return(null);
 
-            default:
-                reply = null;
+	default:
+	    return(null);
         }
         return (reply);
     }
@@ -427,13 +445,30 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	}
 	*/
 
-	DCCppReply r = new DCCppReply("<iDCC++ BASE STATION vUNO_1.0: BUILD 05 Nov 2015 00:09:57");
+	DCCppReply r = new DCCppReply("iDCC++ BASE STATION vUNO_1.0: BUILD 05 Nov 2015 00:09:57");
 	writeReply(r);
 	if (log.isDebugEnabled()) {
 	    log.debug("Simulator Thread sent Reply" + r.toString());
 	}
 
 	// Generate the other messages too...
+    }
+
+    private void generateRandomSensorReply() {
+	// Pick a random sensor number between 0 and 10;
+	Random sNumGenerator = new Random();
+	int sensorNum = sNumGenerator.nextInt(10); // Generate a random sensor number between 0 and 9
+	Random valueGenerator = new Random();
+	int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
+       
+	String reply = new String("Q " + Integer.toString(sensorNum) + " " +
+				  Integer.toString(value));
+	
+	DCCppReply r = new DCCppReply(reply);
+	writeReply(r);
+	if (log.isDebugEnabled()) {
+	    log.debug("Simulator Thread sent Reply" + r.toString());
+	}	
     }
 
     private void writeReply(DCCppReply r) {

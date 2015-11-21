@@ -7,9 +7,9 @@ import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
+import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.jdom2.Element;
 
 /**
  * Checks of basic NamedBean storage
@@ -21,18 +21,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     public void testStoreBean() {
         // Create the manager to test
-        AbstractNamedBeanManagerConfigXML x = new AbstractNamedBeanManagerConfigXML() {
-            public boolean load(Element e) {
-                return false;
-            }
-
-            public void load(Element e, Object o) {
-            }
-
-            public Element store(Object o) {
-                return null;
-            }
-        };
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
@@ -90,18 +79,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     public void testStoreNoProperties() {
         // Create the manager to test
-        AbstractNamedBeanManagerConfigXML x = new AbstractNamedBeanManagerConfigXML() {
-            public boolean load(Element e) {
-                return false;
-            }
-
-            public void load(Element e, Object o) {
-            }
-
-            public Element store(Object o) {
-                return null;
-            }
-        };
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
@@ -156,18 +134,7 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
 
     public void testStoreNullProperty() {
         // Create the manager to test
-        AbstractNamedBeanManagerConfigXML x = new AbstractNamedBeanManagerConfigXML() {
-            public boolean load(Element e) {
-                return false;
-            }
-
-            public void load(Element e, Object o) {
-            }
-
-            public Element store(Object o) {
-                return null;
-            }
-        };
+        AbstractNamedBeanManagerConfigXML x = new NamedBeanManagerConfigXMLTest();
 
         // create a NamedBean with two properties to store
         NamedBean from = new AbstractNamedBean("sys", "usr") {
@@ -250,4 +217,21 @@ public class AbstractNamedBeanManagerConfigXMLTest extends TestCase {
     }
 
     static Logger log = LoggerFactory.getLogger(AbstractNamedBeanManagerConfigXMLTest.class.getName());
+    
+    private class NamedBeanManagerConfigXMLTest extends AbstractNamedBeanManagerConfigXML {
+
+        @Override
+        public boolean load(Element shared, Element perNode) {
+            return false;
+        }
+
+        @Override
+        public void load(Element e, Object o) {
+        }
+
+        @Override
+        public Element store(Object o) {
+            return null;
+        }
+    }
 }

@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>Decoder Pro Manual: Getting Started</title>
+<title>OperationsPro Manual: Getting Started</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -20,11 +18,11 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
-<h1>Getting Started with DecoderPro&reg;</h1>
-<h1>How do I start the DecoderPro&reg; program?</h1>
+<a name="Top"></a>
+<h1>Getting Started with Operations</h1>
+<h2>How do I start the OperationsPro program</h2>
 
-<div align=right>
+<div align="right">
 <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
 <p><a href="index.shtml#startOps">Back to Index</a> </div>
 
@@ -51,12 +49,16 @@ and slower computers. Remember that you are essentially running the program
 on a Java emulator over your native operating system software. New computers
 can do this fairly quickly, but older ones will feel like they're taking
 forever. <strong>Be patient</strong> - it will come up eventually! Even on older computers, once the program is up the response time is quite good.
-<p>If this is the first time you have run the program after you installed the software, the <a href="Start_Preferences.shtml">Preferences</a> screen will  come up automatically to allow  you to set up the system for your particular configuration.&nbsp; Also if you change  your system configuration, OR if you have your laptop away from the railroad,  but you want to play with JMRI there is a simulator mode you may want to  try.&nbsp; &nbsp;So click next, and we&rsquo;ll have a look at  preferences.
+<p>If this is the first time you have run the program after you installed the software, the <a href="Start_Preferences.shtml">Preferences</a> screen will  come up automatically to allow  you to set up the system for your particular configuration. Also if you change  your system configuration, OR if you have your laptop away from the railroad,  but you want to play with JMRI there is a simulator mode you may want to try. So click next, and we&quot;ll have a look at Preferences.
+
 <hr>
 <div align=right>
 <p><a href="Start_DCC_Hardware.shtml">Previous</a> <a href="Start_Preferences.shtml">| Next</a>
-<p><a href="index.shtml#startOps">Back to Index</a> </div>
+<p><a href="index.shtml#startOps">Back to Index</a>
+</div>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

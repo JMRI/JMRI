@@ -1,4 +1,5 @@
 <!-- Sidebar -->
+<!-- This is the common sidebar definition for html/web pages -->
 	  <hr class="hide">
 	  <div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->

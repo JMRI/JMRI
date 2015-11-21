@@ -1,39 +1,34 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Route Documentation
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  </title>
 
-  <META content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+  <meta content="Bob Jacobsen" name="Author">
   <meta name="keywords"
         content="hardware layout java model railroad JMRI CMRI decoderpro panelpro tools loconet lenz nce easydcc dcc nmra">
 
 <!-- Style -->
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
-<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
-<LINK REL="home" TITLE="Home" HREF="/">
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css"
+	media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css"
+	media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</HEAD>
+</head>
 
-<BODY>
+<body>
 <!--#include virtual="/Header" -->
-  <div class="nomenu" id="mBody">
-    <div id="mainContent">
+<!--#include virtual="Sidebar" -->
+<div id="mainContent">
 
 
-<H2>JMRI: Route Documentation</H2>
+<h2>JMRI: Route Documentation</h2>
 
-<h3>What are 
-Routes?</h3>
+<h3>What are Routes?</h3>
 
 <p>Routes are collections of Turnouts and/or Sensors whose states may be 
 set all at once. Also when a Route is triggered, a sound may be played, 
@@ -342,7 +337,8 @@ is one, must be in their non-veto state _and_ at least one of the
 triggering sensors or a triggering turnout must see the appropriate 
 change for the Route to be set.</p>  
 
-    
 <!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 </body>
 </html>
