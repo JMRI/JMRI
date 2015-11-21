@@ -148,9 +148,25 @@ If you fix anything, commit it back.
 
 - Commit any remaining changes, push to your local repository, bring back to the main JMRI/JMRI repository with a pull request, wait for the CI test to complete, and merge the pull request.
 
+- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the new release number
+
+- Create the _next_ release note, so that people will document new (overlapping) changes there. (We need to work through automation of version number values below)
+    
+        cd (local web copy)/releasenotes
+        git pull 
+        cp jmri4.1.4.shtml jmri4.1.5.shtml
+        (edit the new release note accordingly)
+            change numbers throughout
+            move new warnings to old
+            remove old-version change notes
+        git add jmri4.1.5.shtml
+        git commit -m"start new 4.1.5 release note" jmri4.1.5.shtml
+        PR and pull back.
+        cd (local JMRI copy)
+
 - Pull back to make sure your repository is fully up to date
 
-- Start the release by creating a new "release branch" with ant.  (If needing to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
+- Start the release by creating a new "release branch" using Ant.  (If you need to make a "branch from a branch", such as nearing the end of the development cycle, this will need to be done manually rather than via ant.)
 
     ant make-test-release-branch
 
@@ -164,7 +180,9 @@ This will do (more or less) the following actions:
     git push JMRI/JMRI {branch}
     git checkout master    
     git pull
-    
+
+
+ - Put a comment in the release GitHub item saying the branch exists, and all future changes should be documented in the new release note
 ================================================================================
 ## Build Files with Jenkins
 
@@ -230,16 +248,6 @@ If you do this, beware of merging in the new release.properties file, which you 
 ================================================================================
 ## Release-specific Updates
 
-    (we need to work through automation of version number values)
-
-- Create the _next_ release note, so that people will document new (overlapping) changes there.
-    
-        cd (local web copy)/releasenotes
-        git pull # to pick up everybody's changes
-        cp jmri4.1.3.shtml jmri4.1.4.shtml
-        (edit the new release note accordingly)
-        git commit -m"start new release note" jmri4.1.4.shtml
-
 - Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force) update. Confirm visible on web.
 
 - Announce the file set to jmri-developers with a download URL like:
@@ -300,8 +308,6 @@ This puts the right tag on the branch, then removes the branch.  If we decide no
 - Turn off the Jenkins job; this is so it doesn't fail after later steps
 
 - Close the [current milestone](https://github.com/JMRI/JMRI/milestones) with the current release number
-
-- Create a [new milestone](https://github.com/JMRI/JMRI/milestones) with the new release number
 
 - on GitHub JMRI/JMRI go to the "releases" link, then click "Draft a new release" e.g.
 
