@@ -297,7 +297,7 @@ public final class FileUtil {
      */
     static public String getExternalFilename(String pName) {
         String filename = FileUtil.pathFromPortablePath(pName);
-        return (filename != null) ? filename : pName;
+        return (filename != null) ? filename : pName.replace(SEPARATOR, File.separatorChar);
     }
 
     /**
