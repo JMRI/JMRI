@@ -56,6 +56,7 @@ public class SampleMinimalProgram {
 
     /**
      * Static method to get Log4J working before the rest of JMRI starts up.
+     * In a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only

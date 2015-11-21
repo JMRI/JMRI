@@ -334,24 +334,29 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             }
         }
         // Now load deferred config items
-        if (file.exists() && file.equals(singleConfig)) {
-            // To avoid possible locks, deferred load should be
-            // performed on the Swing thread
-            if (SwingUtilities.isEventDispatchThread()) {
-                configDeferredLoadOK = doDeferredLoad(file);
-            } else {
-                try {
-                    // Use invokeAndWait method as we don't want to
-                    // return until deferred load is completed
-                    SwingUtilities.invokeAndWait(new Runnable() {
-                        @Override
-                        public void run() {
-                            configDeferredLoadOK = doDeferredLoad(file);
-                        }
-                    });
-                } catch (InterruptedException | InvocationTargetException ex) {
-                    log.error("Exception creating system console frame", ex);
+        if (file.exists()) {
+            if (file.equals(singleConfig)) {
+                // To avoid possible locks, deferred load should be
+                // performed on the Swing thread
+                if (SwingUtilities.isEventDispatchThread()) {
+                    configDeferredLoadOK = doDeferredLoad(file);
+                } else {
+                    try {
+                        // Use invokeAndWait method as we don't want to
+                        // return until deferred load is completed
+                        SwingUtilities.invokeAndWait(new Runnable() {
+                            @Override
+                            public void run() {
+                                configDeferredLoadOK = doDeferredLoad(file);
+                            }
+                        });
+                    } catch (InterruptedException | InvocationTargetException ex) {
+                        log.error("Exception creating system console frame", ex);
+                    }
                 }
+            } else {
+                // deferred loading is not done in the new config
+                configDeferredLoadOK = true;
             }
         } else {
             configDeferredLoadOK = false;
@@ -416,7 +421,7 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
             thr3.start();
         }
         // if the configuration didn't complete OK, pop the prefs frame and help
-        log.debug("Config go OK? {}", (configOK || configDeferredLoadOK));
+        log.debug("Config OK? {}, deferred config OK? {}", configOK, configDeferredLoadOK);
         if (!configOK || !configDeferredLoadOK) {
             HelpUtil.displayHelpRef("package.apps.AppConfigPanelErrorPage");
             doPreferences();
@@ -1023,16 +1028,16 @@ public class Apps extends JPanel implements PropertyChangeListener, WindowListen
      * Left as a deprecated method because other code, e.g. CATS is still using
      * in in JMRI 3.7 and perhaps 3.8
      *
-     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLog4J}
+     * @deprecated Since 3.7.2, use @{link jmri.util.Log4JUtil#initLogging}
      * directly.
      */
     @Deprecated
     static protected void initLog4J() {
-        jmri.util.Log4JUtil.initLog4J();
+        jmri.util.Log4JUtil.initLogging();
     }
 
     static protected void splash(boolean show, boolean debug) {
-        Log4JUtil.initLog4J();
+        Log4JUtil.initLogging();
         if (debugListener == null && debug) {
             // set a global listener for debug options
             debugFired = false;
