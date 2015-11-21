@@ -20,6 +20,10 @@ session.log
 .pydevproject
 *.swp
 /lib/cachedir
+xml/XSLT/DTD
+xml/XSLT/properties
+xml/XSLT/xml
+xml/XSLT/pages
 
 # private / per-user configuration files
 /nbproject/private

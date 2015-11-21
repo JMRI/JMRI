@@ -341,6 +341,7 @@
             <fileset file="${javadir}/manifest"/>
             <fileset dir="${tempdir}"/>
         </delete>
+        <ant dir="xml/XSLT" target="clean" />
     </target>
 
 
