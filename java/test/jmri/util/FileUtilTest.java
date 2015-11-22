@@ -38,8 +38,8 @@ public class FileUtilTest extends TestCase {
     // tests of internal to external mapping
     // relative file with no prefix: Leave relative in system-specific form
     public void testGEFRel() {
-        String name = FileUtil.getExternalFilename("resources/non-existant-file-foo");
-        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name);
+        String name = FileUtil.getExternalFilename("resources/non-existant-file-foo"); // provides / regardless of local File.separator
+        Assert.assertEquals("resources/non-existant-file-foo", name); 
     }
 
     // relative file with no prefix: Leave relative in system-specific form
