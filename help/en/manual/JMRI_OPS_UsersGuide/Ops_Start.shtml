@@ -34,10 +34,10 @@
 
 <h3>OperationsPro Demo Files</h3>
 <p>The OperationsPro program provides a set of demo files to help introduce you to the some of the features and capabilities of this program.</p>
-<table width="80%" border="1" cellspacing="1" cellpadding="2">
+<table width="80%" border="0" cellspacing="1" cellpadding="2">
   <tr>
     <td><img src="images/Ops_Start01.png" width="487" height="483" alt="start"></td>
-    <td valign="top"> <p><img src="images/Ops_Start02.png" width="496" height="282" alt="start"></p>
+    <td valign="top"><img src="images/Ops_Start02.png" width="496" height="282" alt="start">
     <p>Load the demo files from the <strong>Tools</strong> menu in the Operations &gt; Settings window, select <strong>Load Demo Files</strong>; the demo files will load after you restart DecoderPro.</p></td>
   </tr>
 </table>

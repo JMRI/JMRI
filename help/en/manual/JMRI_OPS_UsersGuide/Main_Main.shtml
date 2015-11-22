@@ -19,7 +19,7 @@
 <div id="mainContent">
 
 <a name="Top"></a>
-<h1>JMRI: OperationsPro Main Window</h1>
+<h2>JMRI: OperationsPro Main Window</h2>
 
 <div align="right">
 <p><a href="index.shtml#Main">Back to Index</a></p>
@@ -34,9 +34,9 @@ can be accessed via the menu bar on either the DecoderPro&reg; or PanelPro main 
 <p align="center"><img style="width: 496px; height: 282px;" alt="splash screen" src="images/Splash_Screen.png"></p>
 <p>DecoderPro&reg; icon and DecoderPro&reg; version information is displayed. The version of Java installed and in use is also shown.</p>
 
-<h2><a href="Main_Menu.shtml"><strong>Menu Bar</strong></a></h2>
+<h2><a href="Main_Menu.shtml">Main window menu bar</a></h2>
 <p>The main menu contains the menus that allow you to access all the features of JMRI.</p>
-<p>This Manual focusses on the functions and menus that apply to JMRI&reg; OperationsPro.<br>
+<p>This Manual focusses on the functions and menus that apply to JMRI&reg; OperationsPro version 3.x.<br>
 Please consult the other JMRI&reg; Manuals for other functions.</p>
 
 <div align="right">
