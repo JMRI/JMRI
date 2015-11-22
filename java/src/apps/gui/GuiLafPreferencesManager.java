@@ -1,6 +1,8 @@
 package apps.gui;
 
 import apps.GuiLafConfigPane;
+import java.awt.Font;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -54,13 +56,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
             Locale.setDefault(this.getLocale());
             GuiLafConfigPane.setFontSize(this.getFontSize()); // This is backwards - GuiLafConfigPane should be getting our fontSize when it needs it
             this.applyLookAndFeel();
-            if (this.getFontSize() != 0) {
-                UIManager.getDefaults().keySet().stream().forEach((key) -> {
-                    if (UIManager.get(key) instanceof FontUIResource) {
-                        UIManager.put(key, UIManager.getFont(key).deriveFont(UIManager.getFont(key).getStyle(), (float) this.getFontSize()));
-                    }
-                });
-            }
+            this.applyFontSize();
             SwingSettings.setNonStandardMouseEvent(this.isNonStandardMouseEvent());
             this.initialized = true;
         }
@@ -188,6 +184,25 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
                 }
             } else {
                 log.debug("Not updating look and feel {} matching existing look and feel" + lafClassName);
+            }
+        }
+    }
+
+    private void applyFontSize() {
+        if (this.getFontSize() != 0) {
+//            UIManager.getDefaults().keySet().stream().forEach((key) -> {
+//                Object value = UIManager.get(key);
+//                if (value instanceof FontUIResource) {
+//                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font)value).getStyle(), (float) this.getFontSize()));
+//                }
+//            });
+            Enumeration<Object> keys = UIManager.getDefaults().keys();
+            while (keys.hasMoreElements()) {
+                Object key = keys.nextElement();
+                Object value = UIManager.get(key);
+                if (value instanceof FontUIResource) {
+                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), (float) this.getFontSize()));
+                }
             }
         }
     }

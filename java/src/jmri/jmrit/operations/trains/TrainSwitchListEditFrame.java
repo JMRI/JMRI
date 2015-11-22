@@ -273,7 +273,7 @@ public class TrainSwitchListEditFrame extends OperationsFrame implements java.be
             Location location = locationManager.getLocationByName(locationName);
             JComboBox<?> comboBox = locationComboBoxes.get(i);
             String printerName = (String) comboBox.getSelectedItem();
-            if (printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
+            if (printerName == null || printerName.equals(TrainPrintUtilities.getDefaultPrinterName())) {
                 location.setDefaultPrinterName(Location.NONE);
             } else {
                 log.debug("Location " + location.getName() + " has selected printer " + printerName);

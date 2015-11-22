@@ -1428,7 +1428,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
         statusField.setText(Bundle.getMessage("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
-        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
+        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())), null);
     }
 
     protected void systemsMenu() {
