@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Ant build.xml file for JMRI development                                -->
-<!-- Bob Jacobsen, Copyright 2002-2014                                      -->
+<!-- Bob Jacobsen, Copyright 2002-2015                                      -->
 
 <!-- This file is part of JMRI.                                             -->
 <!--                                                                        -->
@@ -31,7 +31,20 @@
     <!-- allow for persistent local values, shouldn't be an error if this doesn't exists -->
     <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file      -->
     <!-- Things you might want to set:                                                   -->
-    <!--    sourceforge.userid                                                           -->               
+    <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
+    <!--    sourceforge.userid=                                                          -->               
+    <!--    # The directory where Findbugs is installed                                  -->
+    <!--    findbugs.home=                                                               -->
+    <!--    # You can specify a DecoderPro/PanelPro config file at runtime               -->
+    <!--    # with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"                 -->
+    <!--    antargline=DecoderProFile.xml                                                -->
+    <!--    # If building releases, define directory where nsis is found                 -->
+    <!--    # Make sure the trailing / is present,                                       -->
+    <!--    # since the usage is ${nsis.home}makensis,                                   -->
+    <!--    # Ant will do a $PATH search if nsis.home is not set.                        -->
+    <!--    nsis.home=/opt/nsis/nsis-2.46/                                               -->
+    <!--    # or                                                                         -->
+    <!--    nsis.home=C:/Program Files/NSIS/                                             -->
     <property file="local.properties"/>
 
     <!-- set any properties not overridden by local.properties -->
@@ -84,30 +97,6 @@
         <not><isset property="nsis.home"/></not>
     </condition>
 
-    <!-- options you might want to change to match your environment -->
-    <!-- but set them in the local.properties file, instead of here -->
-    <!-- that you don't accidentally commit them                    -->
-
-    <!--
-    # Set this to the directory where Findbugs is installed
-    findbugs.home=
-
-    # Set this to the directory where nsis is found (if it's not in $PATH).
-    # Make sure the trailing / is present, since the usage is ${nsis.home}makensis,
-    # which will do a $PATH search if nsis.home is not set.
-    nsis.home=/opt/nsis/nsis-2.46/
-    # or
-    nsis.home=C:/Program Files/NSIS/
-
-    # You can specify a DecoderPro/PanelPro config file at runtime
-    # with e.g. "ant -Dantargline=DecoderProFile.xml decoderpro"
-    antargline=DecoderProFile.xml
-
-    -->
-
-    <!-- end of local.properties list -->
-
-
     <!-- set global properties for this build -->
     <property name="dist"         value="${basedir}/dist"/>
     <property name="jartarget"    value="${basedir}"/>
@@ -130,7 +119,7 @@
     <!-- this is the list of jar files and class path elements that are not
          a part of the JMRI codebase itself but which are needed at runtime
          for the various apps.  These will all be copied into the release
-         packages
+         packages. Does not include JMRI itself.
     -->
     <path id="runtime.class.path">
         <pathelement location="${libdir}/RXTXcomm.jar"/>
@@ -184,7 +173,6 @@
         <pathelement location="${libdir}/bluecove-bluez-2.1.1-SNAPSHOT.jar"/>
         <pathelement location="${libdir}/bluecove-gpl-2.1.1-SNAPSHOT.jar"/>
     </path>
-
     <pathconvert property="runtime.class.jars" refid="runtime.class.path"/>
    
     <!-- jars needed for i18n testing only -->
@@ -193,7 +181,6 @@
         <pathelement location="${libdir}/antlr-3.4-complete.jar"/>
         <pathelement location="${libdir}/i18nchecker.jar"/>
     </path>
-
     <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
 
     <!-- jars that are needed at build and/or test time -->
@@ -207,15 +194,18 @@
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
     </path>
 
+    <!-- path to run regular executables -->
     <path id="project.class.path">
         <pathelement location="${jartarget}"/>
         <path        refid="runtime.class.path"/>
         <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
 
+    <!-- path to run tests -->
     <path id="test.class.path">
-        <path   refid="i18n.class.path"/>
+        <pathelement location="${jartarget}"/>
         <path   refid="compile.class.path"/>
+        <pathelement location="${target}/"/>  <!-- last to check for name collisions -->
     </path>
     
     <macrodef name="quiet">
@@ -243,23 +233,14 @@
         </sequential>
     </macrodef>
 
-    <target name="check-ant-requirements"
-            description="check build system requirements">
-      <antversion property="ant-version-ok" atleast="1.8.0"/>
-      <antversion property="ant-version-actual"/>
-      <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
-    </target>
+    <!-- end of definitions -->
 
-    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
-        <property name="i18n.modulefilter" value=""/>
-        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
-        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
-        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
-        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
-        <!-- check includes all .properties files including ones we use for non-translatable files -->
-        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
-    </target>
-    
+    <!-- target definitions start here -->
+
+    <!-- ============================================================================= -->
+    <!-- Utility targets                                                               -->
+    <!-- ============================================================================= -->
+
     <target name="init"
             description="create needed directories">
         <!-- Create the time stamp properties -->
@@ -288,6 +269,13 @@
             <filter token="release.build_date"     value="${release.build_date}"/>
             <filter token="jmri.copyright.year"    value="${jmri.copyright.year}"/>
         </filterset>
+    </target>
+
+    <target name="check-ant-requirements"
+            description="check build system requirements">
+      <antversion property="ant-version-ok" atleast="1.8.0"/>
+      <antversion property="ant-version-actual"/>
+      <fail unless="ant-version-ok" message="Minimum ant version required is 1.8.0, this is ${ant-version-actual}"/>
     </target>
 
 
@@ -341,6 +329,11 @@
         <ant dir="xml/XSLT" target="clean" />
     </target>
 
+    <!-- end of utility targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Program build targets                                                         -->
+    <!-- ============================================================================= -->
 
     <target name="copyfiles"
             description="copy resource files"
@@ -558,6 +551,11 @@
         </rmic>
     </target>
 
+    <!-- end of program build targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Application startup targets                                                   -->
+    <!-- ============================================================================= -->
 
 
     <target name="runtime-library-selection">
@@ -819,6 +817,10 @@
 
     <!-- end of application startup targets -->
 
+    <!-- ============================================================================= -->
+    <!-- I18N testing section                                                          -->
+    <!-- ============================================================================= -->
+    
 
     <!-- Force false language/country to check I8N -->
     <target name="locale"
@@ -852,8 +854,22 @@
         </java>
     </target>
 
+    <target name="i18n-consistency-check"  description="Verification of localized strings in source code" depends="jar">
+        <property name="i18n.modulefilter" value=""/>
+        <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
+        <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
+        <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
+        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
+        <!-- check includes all .properties files including ones we use for non-translatable files -->
+        <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
+    </target>
 
+    <!-- end of I18N test targets -->
 
+    <!-- ============================================================================= -->
+    <!-- NetBeans targets: profiling et al                                             -->
+    <!-- ============================================================================= -->
+    
 
     <!-- Note if modifying the profile target, please be sure to up date the -->
     <!-- NetBeans IDE profile target in this file -->
@@ -873,7 +889,82 @@
         </java>
     </target>
 
-    <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
+    <!-- The next target is NetBeans-specific, but is here so it -->
+    <!-- can use other info defined in this file -->
+    <!-- The profiler is not so well integrated into the IDE and requires -->
+    <!-- the build target to be specified in the ANT build script -->
+    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run DecoderPro app with NetBeans profiling">
+        <property name="antargline" value="DecoderProConfig2.xml"/>
+        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
+        <nbprofiledirect>
+            <classpath refid="project.class.path"/>
+        </nbprofiledirect>
+        <java classname="apps.DecoderPro.DecoderPro"
+            dir="."
+                fork="yes" >
+            <classpath refid="project.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <jvmarg value="${profiler.info.jvmargs.agent}"/>
+       <!-- <jvmarg value="-verbose"/> -->
+       <!-- <jvmarg value="-verbosegc"/> -->
+       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <!-- end of NetBeans targets -->
+
+    <!-- ============================================================================= -->
+    <!-- File-checking (e.g. XML tests) targets                                        -->
+    <!-- ============================================================================= -->
+
+    <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
+        <java classname="jmri.jmrit.decoderdefn.SchemaTest"
+          dir="."
+          fork="yes" >
+            <classpath refid="test.class.path"/>
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <arg value="${antargline}"/>
+        </java>
+    </target>
+
+    <!-- See http://rscbundlecheck.sourceforge.net/ -->
+    <target name="checkPropertiesFiles" description="check all JMRI properties files for duplicate properties in same file" >
+        <taskdef classpath="${libdir}/rscbundlecheck.jar" resource="task.properties"/>
+        <resourceCheck failonerror="true">
+            <fileset dir="${source}">
+                <include name="**/*.properties"/>
+            </fileset>
+            <checks>
+                <include name="duplicate key check"/>
+                <exclude name="unicode check"/>
+                <exclude name="upper lower check"/>
+                <exclude name="line end check"/>
+                <exclude name="empty key check"/>
+                <exclude name="placeholder check"/>
+                <exclude name="empty value check"/>
+                <exclude name="invalid char check"/>
+                <exclude name="messageformat check"/>
+                <exclude name="cross bundle check"/>
+            </checks>
+        </resourceCheck>
+    </target>
+
+    <!-- end of file-checking targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Test execution targets                                                        -->
+    <!-- ============================================================================= -->
+
+   <target name="quicktest" depends="tests, runtime-library-selection" description="build and run test suite">
         <java classname="apps.tests.AllTest"
           dir="."
           fork="yes" >
@@ -933,19 +1024,6 @@
         </fail>
     </target>
 
-    <target name="decodercheck" depends="debug, tests, runtime-library-selection" description="run decoder XML checks">
-        <java classname="jmri.jmrit.decoderdefn.SchemaTest"
-          dir="."
-          fork="yes" >
-            <classpath refid="test.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <arg value="${antargline}"/>
-        </java>
-    </target>
 
     <!-- Note if modifying the alltest target, please be sure to up date the -->
     <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
@@ -981,32 +1059,11 @@
         </junit>
     </target>
 
-    <!-- The next target is NetBeans-specific, but is here so it -->
-    <!-- can use other info defined in this file -->
-    <!-- The profiler is not so well integrated into the IDE and requires -->
-    <!-- the build target to be specified in the ANT build script -->
-    <target name="profile-nb" depends="debug, runtime-library-selection" description="build and run DecoderPro app with NetBeans profiling">
-        <property name="antargline" value="DecoderProConfig2.xml"/>
-        <fail unless="netbeans.home">This target can only run inside the NetBeans IDE.</fail>
-        <nbprofiledirect>
-            <classpath refid="project.class.path"/>
-        </nbprofiledirect>
-        <java classname="apps.DecoderPro.DecoderPro"
-            dir="."
-                fork="yes" >
-            <classpath refid="project.class.path"/>
-            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
-            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
-            <sysproperty key="log4j.ignoreTCL" path="true/"/>
-            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
-            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-            <jvmarg value="${profiler.info.jvmargs.agent}"/>
-       <!-- <jvmarg value="-verbose"/> -->
-       <!-- <jvmarg value="-verbosegc"/> -->
-       <!-- <jvmarg value="-Xloggc:memory.vgc"/> --> <!-- for JTune -->
-            <arg value="${antargline}"/>
-        </java>
-    </target>
+    <!-- end of test execution targets -->
+
+    <!-- ============================================================================= -->
+    <!-- Distribution build targets                                                    -->
+    <!-- ============================================================================= -->
 
     <target name="jar"
             description="create working jar file with current contents"
@@ -1311,27 +1368,6 @@
         </findbugs>
     </target>
 
-    <!-- See http://rscbundlecheck.sourceforge.net/ -->
-    <target name="checkPropertiesFiles" description="check all JMRI properties files for duplicate properties in same file" >
-        <taskdef classpath="${libdir}/rscbundlecheck.jar" resource="task.properties"/>
-        <resourceCheck failonerror="true">
-            <fileset dir="${source}">
-                <include name="**/*.properties"/>
-            </fileset>
-            <checks>
-                <include name="duplicate key check"/>
-                <exclude name="unicode check"/>
-                <exclude name="upper lower check"/>
-                <exclude name="line end check"/>
-                <exclude name="empty key check"/>
-                <exclude name="placeholder check"/>
-                <exclude name="empty value check"/>
-                <exclude name="invalid char check"/>
-                <exclude name="messageformat check"/>
-                <exclude name="cross bundle check"/>
-            </checks>
-        </resourceCheck>
-    </target>
 
 
 <!-- targets to support the creation & packaging of the distributions -->
