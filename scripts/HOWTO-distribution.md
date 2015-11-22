@@ -264,7 +264,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
 
 (If you use a browser to download instead of curl, make sure the .tgz wasn't auto-expanded)
 
-(the "./testrelease 4.1.4" local script on shell.sf.net does the right steps)
+(the "./testrelease 4.1.4" local script on shell.sf.net does the following steps, except for the edit, of course)
 
     ssh user,jmri@shell.sf.net create
     ssh user,jmri@shell.sf.net
@@ -280,7 +280,7 @@ Download from CI, check integrity (make sure compressed files not expanded), the
     
     (clean up and logout)
 
-- Create and upload the JavaDocs (as of late 2013, [CloudBees](https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/) was updating these from SVN weekly, in which case skip): 
+- Create and upload the JavaDocs (as of late 2013, [CloudBees](https://jmri.ci.cloudbees.com/job/Development/job/Web%20Site/job/Generate%20Website%20Components/) was updating these from git weekly, in which case skip): 
 
     ant javadoc-uml uploadjavadoc
 
@@ -338,17 +338,11 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 
 - Format the release note page: change date, comment out "draft release", make sure links work and proper sections are commented/not commented out
 
-- Commit release note file(s) to the web site GitHub repository,
-
-- Wait for update on JMRI web server
-
-- Complete all the above before continuing
-
 - Update the web site front page and downloads page:
 
      index.html download/Sidebar download/index.shtml releaselist
 
-- Commit site
+- Commit site, push, etc.
 
 - Consider submitting an anti-virus white-list request at:
 
@@ -359,8 +353,6 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 - For production releases, file copyright registration
 
     https://eco.copyright.gov/eService_enu/   (Firefox only!)
-
-- For production releases, make a new version of the Manual files (procedure to be developed!)
 
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/Web%20Site/) to speed it along; note there are multiple components that need to run)
 
