@@ -28,8 +28,8 @@
 
     <property environment="env"/>
 
-    <!-- allow for persistent local values, shouldn't be an error if this doesn't exists -->
-    <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file      -->
+    <!-- local.properties file      (not an error if doesn't exist)                      -->
+    <!--                                                                                 -->
     <!-- Things you might want to set:                                                   -->
     <!--    # Your SourceForge ID (used for JavaDocs, distribution) if different         -->
     <!--    sourceforge.userid=                                                          -->               
@@ -45,7 +45,11 @@
     <!--    nsis.home=/opt/nsis/nsis-2.46/                                               -->
     <!--    # or                                                                         -->
     <!--    nsis.home=C:/Program Files/NSIS/                                             -->
+    <!--                                                                                 -->
+    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!--                                                                                 -->
     <property file="local.properties"/>
+
 
     <!-- set any properties not overridden by local.properties -->
     <property file="${basedir}/release.properties"/>
@@ -631,9 +635,6 @@
     </target>
 
 
-
-
-
     <!-- the two targets in the depends are correct: only one will run, depending upon ${debugger} -->
     <target name="-run-jmri-application"
             description="run a given JMRI application, under the debugger if the debugger property is set"
@@ -719,6 +720,7 @@
                They all use the same back-end target run-jmri-application to do the work,
                with the only differences among them being the value of the initial classname
                to run and the startup configfile as specified in the antargline -->
+
     <target name="decoderpro-old"
             description="build and run the old DecoderPro app"
             depends="debug, copyfiles">
