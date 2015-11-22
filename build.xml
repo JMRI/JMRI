@@ -30,6 +30,8 @@
 
     <!-- allow for persistent local values, shouldn't be an error if this doesn't exists -->
     <!-- this file should NEVER be checked-in to Git, it is in the  .gitignore file      -->
+    <!-- Things you might want to set:                                                   -->
+    <!--    sourceforge.userid                                                           -->               
     <property file="local.properties"/>
 
     <!-- set any properties not overridden by local.properties -->
@@ -152,8 +154,6 @@
         <pathelement location="${libdir}/mailapi.jar"/>
         <pathelement location="${libdir}/smtp.jar"/>
         <pathelement location="${libdir}/xAPlib.jar"/>
-        <pathelement location="${libdir}/junit.jar"/>
-        <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement location="${libdir}/WinRegistry-4.4.jar"/>
         <pathelement location="${libdir}/commons-lang3-3.2.1.jar"/>
         <pathelement location="${libdir}/jakarta-regexp-1.5.jar"/>
@@ -196,12 +196,14 @@
 
     <pathconvert property="i18n.class.jars" refid="i18n.class.path"/>
 
-    <!-- jars that are needed at build time -->
+    <!-- jars that are needed at build and/or test time -->
     <path id="compile.class.path">
         <pathelement path="${runtime.class.jars}"/>
         <pathelement location="${libdir}/AppleJavaExtensions.jar"/> <!-- build with Mac OS X-specific support -->
         <pathelement location="${libdir}/annotations.jar"/> <!-- findbugs build-time only-->
         <pathelement location="${libdir}/jsr305.jar"/>      <!-- findbugs build-time only-->
+        <pathelement location="${libdir}/junit.jar"/>
+        <pathelement location="${libdir}/jfcunit.jar"/>
         <pathelement path="${i18n.class.jars}"/>            <!-- i18n test -->
     </path>
 
@@ -1381,6 +1383,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib/windows"/>
         <copy todir="${dist.windows}/JMRI/lib/windows">
@@ -1420,6 +1423,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib/macosx"/>
         <copy todir="${dist.macosx}/JMRI/lib/macosx">
@@ -1475,6 +1479,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib/linux"/>
         <copy todir="${dist.linux}/JMRI/lib/linux">
