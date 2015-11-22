@@ -215,7 +215,7 @@
 
     <path id="test.class.path">
         <path   refid="i18n.class.path"/>
-        <path   refid="project.class.path"/>
+        <path   refid="compile.class.path"/>
     </path>
     
     <macrodef name="quiet">
@@ -255,7 +255,7 @@
         <property name="i18n.logger" value="log" /> <!-- name of logging token to match with logging methods -->
         <property name="i18n.loggerMethods" value="info,debug,error,warn" /> <!-- logging methods that should not be checked for i18n consistency -->
         <echo>I18N Consistency Check - use modulefilter property if you want to see errors only from one module</echo>
-        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpath="${ant.home}/lib/ant.jar:lib/antlr-3.4-complete.jar:lib/i18nchecker.jar"/>
+        <taskdef classname="org.i18nchecker.I18nChecker" name="i18nConsistencyCheck" classpathref="i18n.class.path"/>
         <!-- check includes all .properties files including ones we use for non-translatable files -->
         <i18nConsistencyCheck srcdir="${basedir}" topdirs="." allProperties="true" logger="${i18n.logger}" loggerMethods="${i18n.loggerMethods}" modulefilter="${i18n.modulefilter}"/>
     </target>
