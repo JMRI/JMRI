@@ -1,5 +1,25 @@
 version: '{build}'
 clone_depth: 50
+build_script:
+- cmd: >-
+    java -version
+    javac -version
+    where javac
+    choco -y install ant
+    echo ON
+    echo PATH %PATH%
+    echo JAVA_HOME %JAVA_HOME%
+    echo ANT_HOME %ANT_HOME%
+    SET ANT_HOME=C:\tools\apache-ant-1.9.4
+    SET PATH=%PATH%;C:\tools\apache-ant-1.9.4\bin
+    SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
+    echo PATH %PATH%
+    echo JAVA_HOME %JAVA_HOME%
+    echo ANT_HOME %ANT_HOME%
+    java -version
+    javac -version
+    ant -version
+    ant debug
 test_script:
 - cmd: >-
     java -version
