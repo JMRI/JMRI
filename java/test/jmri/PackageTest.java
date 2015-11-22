@@ -39,6 +39,7 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.LightTest.suite());
         suite.addTest(jmri.NmraPacketTest.suite());
         suite.addTest(jmri.PathTest.suite());
+        suite.addTest(jmri.PathLengthTest.suite());
         suite.addTest(jmri.PushbuttonPacketTest.suite());
         suite.addTest(jmri.TurnoutTest.suite());
         suite.addTest(jmri.ApplicationTest.suite());
