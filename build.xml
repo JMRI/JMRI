@@ -1381,6 +1381,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.windows}/JMRI/lib/windows"/>
         <copy todir="${dist.windows}/JMRI/lib/windows">
@@ -1420,6 +1421,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.macosx}/JMRI/lib/macosx"/>
         <copy todir="${dist.macosx}/JMRI/lib/macosx">
@@ -1475,6 +1477,7 @@
                 <pathelement path="${runtime.class.jars}"/>
             </path>
             <fileset file="${libdir}/security.policy"/>
+            <fileset file="${libdir}/README.md"/>
         </copy>
         <mkdir dir="${dist.linux}/JMRI/lib/linux"/>
         <copy todir="${dist.linux}/JMRI/lib/linux">
