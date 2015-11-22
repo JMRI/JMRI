@@ -39,7 +39,7 @@ public class FileUtilTest extends TestCase {
     // relative file with no prefix: Leave relative in system-specific form
     public void testGEFRel() {
         String name = FileUtil.getExternalFilename("resources/non-existant-file-foo");
-        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name);
+        Assert.assertEquals("resources" + File.separator + "non-existant-file-foo", name); 
     }
 
     // relative file with no prefix: Leave relative in system-specific form
