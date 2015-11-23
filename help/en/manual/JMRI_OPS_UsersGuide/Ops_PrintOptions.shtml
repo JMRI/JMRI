@@ -108,6 +108,16 @@ and select a file with the image you want to display. Each Train in your Roster 
 <p>Allows you to add a notification for operators to be looking for Cars that have been misplaced.</p>
 <p><strong>Hazardous Comment</strong></p>
 <p>You can declare a car load as Hazardous.</p>
+
+<!-- New in version 3.8 -->
+<div style="margin:40px; padding:10px; background-color:#eee;">New in v3.8:
+<ul>
+<li>New Manifest and Switch List format: two columns, one for pulls and one for spots, with your Track names centered in each column.</li>
+<li>Add headers in Manifests and Switch Lists describing each of the Car attributes. Select "Print Headers" in the "Manifest Print Options". You can also customize all of the header text: "Manifest Print Options" panel -&gt; Tools -&gt; Edit Header Text menu.</li>
+</ul>
+</div>
+<!-- End of New -->
+
 <p>Be sure to press 
   <input name="button" id="button" value="Save" type="submit">
   after changing the Manifest Print selections.</p>
