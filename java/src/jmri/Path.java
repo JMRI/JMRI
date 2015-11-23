@@ -225,30 +225,57 @@ public class Path {
         return b.toString();
     }
 
+    /*
+     * Set path length.  length must be in millimeters.
+     */
     public void setLength(float l) {
         _length = l;
-    }  // l must be in millimeters
+        if (_block!=null) {
+            if (l > _block.getLengthMm()) {
+                _length = _block.getLengthMm();
+            }
+        }
+    }
 
+    /**
+     * Return actual stored length.  default 0.
+     */
+    public float getLength() {
+        return _length;
+    }
+
+    /**
+     * Return length in millimeters. Default length of 0 
+     * will return the block length.
+     */
     public float getLengthMm() {
         if (_length <= 0.0f) {
             return _block.getLengthMm();
         }
         return _length;
-    } // return length in millimeters
+    }
 
+    /**
+     * Return length in centimeters. Default length of 0 
+     * will return the block length.
+     */
     public float getLengthCm() {
         if (_length <= 0.0f) {
             return _block.getLengthCm();
         }
         return (_length / 10.0f);
-    }  // return length in centimeters
+    }
 
+    /**
+     * Return length in inches. Default length of 0 
+     * will return the block length.
+     */
     public float getLengthIn() {
         if (_length <= 0.0f) {
             return _block.getLengthIn();
         }
         return (_length / 25.4f);
-    }  // return length in inches
+    }
 
     static private void appendOne(StringBuffer b, String t) {
         if (b.length() != 0) {

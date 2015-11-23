@@ -190,7 +190,8 @@ public class OBlockManagerXml // extends XmlFile
         }
         elem.setAttribute("fromDirection", "" + path.getFromBlockDirection());
         elem.setAttribute("toDirection", "" + path.getToBlockDirection());
-        elem.setAttribute("length", "" + path.getLengthMm());
+        // get actual object stored length.
+        elem.setAttribute("length", "" + path.getLength());
         return elem;
     }
 
