@@ -34,12 +34,13 @@ public class ConnectionConfigXml extends AbstractConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
-    /*protected void getInstance() {
-     log.error("unexpected call to getInstance");
-     new Exception().printStackTrace();
-     }*/
+
+    @Override
     public Element store(Object o) {
         getInstance(o);
+        
+        if (adapter == null) return null;
+        
         Element e = new Element("connection");
         storeCommon(e, adapter);
 
