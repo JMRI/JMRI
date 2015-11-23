@@ -72,9 +72,6 @@ public final class JmriConfigurationProvider {
      *                the {@link jmri.profile.ProfileManager#getActiveProfile()}
      *                method of the ProfileManager returned by
      *                {@link jmri.profile.ProfileManager#getDefault()}
-     * @param shared  True if the preferences apply to this profile irregardless
-     *                of host. If false, the preferences only apply to this
-     *                computer.
      * @return The shared or private JmriPreferencesProvider for the project.
      */
     static synchronized JmriConfigurationProvider findProvider(Profile project) {
