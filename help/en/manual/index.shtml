@@ -25,7 +25,7 @@
 
 <tr>
 <td>Version:<br>&nbsp;</td>
-<td>Online Manual for modules:<br>&nbsp;</td>
+<td>Applications with Online Manual:<br>&nbsp;</td>
 <td>PDF Manual:<br>&nbsp;</td>
 </tr>
 
@@ -160,9 +160,9 @@
 
 <h2>JMRI&reg; Applications</h2>
 
-<p><strong>JMRI is a Java-based cross-platform application
+<p><strong>JMRI is a Java-based cross-platform program suite
 for model railroaders.</strong><br>
-The program contains modules for:</p>
+It contains modular applications for:</p>
 
 <ul>
 <li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
@@ -172,7 +172,7 @@ The program contains modules for:</p>
 <li>Controlling the signals on the layout (All modules)</li>
 <li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 </ul>
-<p>All this capability is contained in one program (JMRI&reg;) which has several &quot;start-up&quot; modules for the various applications.</p>
+<p>All this capability is contained in one install.</p>
 
 <h2>System Requirements</h2>
 

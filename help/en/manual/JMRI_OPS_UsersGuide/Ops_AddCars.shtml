@@ -109,7 +109,7 @@ is based on the first and only has entries if there is more than one track at th
     Auto selection</p></td>
   </tr>
   <tr>
-    <td colspan="2" align="center" valign="top"><h3>Optional Car Attributes</h3></td>
+    <td colspan="2" valign="top"><h3>Optional Car Attributes</h3></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarColor.png" width="475" height="119" alt="Car Color"></td>
@@ -134,14 +134,13 @@ to create your own Car Load codes, but beware there are restrictions. Only sidin
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarKernel.png" width="471" height="93" alt="Car Kernel"></td>
     <td width="51%" align="left" valign="top"><p><strong>Kernel</strong></p>
-      <p>If you wish this Car to be part of a kernel, which is a group of cars that you want to switch as one unit, select 
+      <p>If you wish this Car to be part of a Kernel, which is a group of Cars that you want to switch as one unit, select 
         <select name="select6" id="select6">
           <option>Coal Empty</option>
         </select> 
-        kernel from drop-down list. If the kernel you want is not there 
-        press
+        Kernel from drop-down list. If the Kernel you want is not there, press
         <input type="submit" name="button7" id="button7" value="Edit">
-      and  enter a <a href="Ops_CarAttributes.shtml">Kernel name.</a> to add to the list. Then select the Kernel from the drop-down list.</p></td>
+      and enter a <a href="Ops_CarAttributes.shtml">Kernel name.</a> to add to the list. Then select the Kernel from the drop-down list.</p></td>
   </tr>
   <tr>
     <td align="left" valign="top"><img src="images/Ops_CarBuilt.png" width="474" height="91" alt="Car Built"></td>
@@ -171,15 +170,16 @@ for  this car.</td>
       add another car.</p>
       <p>
         <input type="submit" name="button10" id="button10" value="Delete">
-        delete the car currently open.</p>
+        delete the Car currently open.</p>
       <p>
         <input type="submit" name="button11" id="button11" value="Save">
-        to store the Car's settings. The program will create a file  (OperationsCarRoster.xml) in your JMRI directory in a folder called  "operations". A backup file with the last settings for all of your Cars is also created each time the
+        to store the Car's settings. The program will create a file  (OperationsCarRoster.xml) in your JMRI directory in a folder called "operations". A backup file with the last settings for all of your Cars is also created each time the
   <input type="submit" name="button12" id="button12" value="Save">
         button is pressed. </p>
     <p></p></td>
   </tr>
 </table>
+
 <p>Now lets add several cars to our Car Roster. When we add and save the Cars, they will be added to the Roster and shown in the <strong>Cars</strong> window.</p>
 <p align="center"><img src="images/Ops_Cars06.png" width="922" height="421" alt="Cars with roster"></p>
 <p align="left">Now if you desire to change a value of a <strong>Cars</strong> attributes that is already in the Cars Roster, press the 
@@ -209,10 +209,11 @@ when pressed, opens the <strong>Set Car Location</strong> pane and allows you to
       <strong>Type</strong> displays Car Type <br>
       <strong>Status </strong><br>
       <input type="checkbox" name="checkbox7" id="checkbox7">
-      <strong>Location Unkown<br>
+      Location Unknown<br>
     <input type="checkbox" name="checkbox8" id="checkbox8">
-    Out of Service</strong></p>
-    <p><strong>Location</strong> using <strong>Name
+    Out of Service</p>
+    <p><strong>Location</strong><br>
+    Using <strong>Name
       <select name="select10" id="select10">
         <option>North Yard</option>
       </select>
@@ -222,7 +223,7 @@ when pressed, opens the <strong>Set Car Location</strong> pane and allows you to
     </select>
     </strong>you can set the Car at any defined Location on your layout.<br>
     <input type="checkbox" name="checkbox9" id="checkbox9">
-    <strong>Auto</strong> selection</p>
+    <strong>Auto</strong> When checked, OperationsPro will choose a Location</p>
     <p><strong>Optional</strong></p>
     <p><strong>Return When Empty</strong><br>
       <select name="select15" size="1" id="select15">
@@ -235,7 +236,7 @@ when pressed, opens the <strong>Set Car Location</strong> pane and allows you to
     Auto</strong> selection</p>
     <p><strong>Load</strong><br>
       <select name="select17" id="select17">
-        <option>E&lt;empty&gt;</option>
+        <option>E&lt;mpty&gt;</option>
       </select>
       type of load 
       <input type="button" name="button18" id="button18" value="Edit">

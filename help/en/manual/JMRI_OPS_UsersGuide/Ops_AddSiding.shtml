@@ -192,7 +192,7 @@ or Load, the press <input name="button22" id="button22" value="Add Load" type="b
     Optionally, a schedule may be selected from the drop-down list.
       Press 
       <input name="button27" id="button27" value="Edit" type="button">
-  to open Add Schedule for Spur Tank Facility. <strong><a href="Ops_schedule.shtml">Schedule</a></strong></p>
+  to open Add Schedule for Spur Tank Facility. More detail on the <strong><a href="Ops_schedule.shtml">Schedule</a></strong> page.</p>
 </blockquote>
 <h4><strong>Comment</strong></h4>
 <p>You may now press
