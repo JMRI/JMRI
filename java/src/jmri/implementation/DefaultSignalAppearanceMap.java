@@ -41,10 +41,10 @@ public class DefaultSignalAppearanceMap extends AbstractNamedBean implements jmr
     }
 
     static public DefaultSignalAppearanceMap getMap(String signalSystemName, String aspectMapName) {
-        log.debug("getMap signalSystem= \"()\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
+        log.debug("getMap signalSystem= \"{}\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
         DefaultSignalAppearanceMap map = maps.get("map:" + signalSystemName + ":" + aspectMapName);
         if (map == null) {
-            log.debug("not located, request loadMap signalSystem= \"()\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
+            log.debug("not located, request loadMap signalSystem= \"{}\", aspectMap= \"{}\"", signalSystemName, aspectMapName);
             map = loadMap(signalSystemName, aspectMapName);
         }
         return map;
