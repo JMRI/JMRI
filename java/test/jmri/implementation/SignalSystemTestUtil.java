@@ -8,10 +8,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Static utilities for testing signal system code
  *
- * @author	Bob Jacobsen Copyright 2014
+ * @author	Bob Jacobsen Copyright 2014, 2015
  * @version	$Revision$
  */
 public class SignalSystemTestUtil {
@@ -50,7 +53,9 @@ public class SignalSystemTestUtil {
                     out.write(buf, 0, len);
                 }
             }
-
+        } catch (Exception e) {
+            log.error("Exception during createMockSystem", e);
+            throw e;
         } finally {
             if (in != null) {
                 in.close();
@@ -75,4 +80,5 @@ public class SignalSystemTestUtil {
         new File(path + File.separator + "signals" + File.separator + dummy).delete();
     }
 
+    static protected Logger log = LoggerFactory.getLogger(SignalSystemTestUtil.class.getName());
 }
