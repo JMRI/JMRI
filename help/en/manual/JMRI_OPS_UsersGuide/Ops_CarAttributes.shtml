@@ -30,7 +30,7 @@
 <hr>
 <p>To the right of each of the Car attributes (<strong>Road</strong>, <strong>Type</strong>, <strong>Length</strong>, <strong>Color</strong>, <strong>Load</strong>, <strong>Kernel</strong>, <strong>Owner</strong>) there is an 
   <input type="submit" name="button" id="button" value="Edit">
-  that displays the Edit (attribute) dialog to allow you to edit the list of attributes available to use for Car definition. Use this to 
+  that displays the Edit [attribute] dialog to allow you to edit the list of attributes available to use for Car definition. Use this to 
   <input type="submit" name="button2" id="button2" value="Add">
   ,
   <input type="submit" name="button3" id="button3" value="Delete">
@@ -74,7 +74,7 @@
         <td colspan="2" valign="top">
           <p>
             <input type="submit" name="button5" id="button5" value="Add">
-            To add a new Car attribute, enter the desired text in the text box and press
+            To add a new Car attribute (value), enter the desired text in the text box and press
   <input type="submit" name="button6" id="button6" value="Add">
             .  When you first enter a new Car attribute it will show up at the start of the list. Later when your restart the program it will be sorted in the correct order.</p>
           <p>
@@ -84,9 +84,9 @@
             .</p>
           <p>
             <input type="submit" name="button9" id="button9" value="Replace">
-            If you need to change a specific Car attribute (road, type, color, etc.) in your entire car roster, you can use the
+            If you need to change a specific Car attribute (Road, Type, Color, etc.) in your entire Car Roster, you can use the
   <input type="submit" name="button10" id="button10" value="Replace">
-            found at the  bottom right of the Edit Car attribute pane.</p>
+            found at the bottom right of the Edit Car attribute pane.</p>
           <p><img src="images/Ops_Replace.png" width="269" height="119" alt="Replace"></p>
           <p>For example, if you wish  to change the Car road name attribute "UP" to "UPS" for all of your  cars, press
             <input type="submit" name="button11" id="button11" value="Replace">

@@ -27,7 +27,7 @@
 </div>
 
 <hr>
-<p>The <strong>Options</strong> window is opened from the <strong>Trains</strong> window <strong>Tools</strong> menu.</p>
+<p>The <strong>Options</strong> pane is opened from the <strong>Trains</strong> pane's <strong>Tools</strong> menu.</p>
 <table border="0" cellpadding="2" cellspacing="1" width="90%">
   <tbody><tr>
     <td valign="top" width="57%"><img style="width: 477px; height: 691px;" alt="trains build options" src="images/Ops_Trains_BuildOptions.png"><br></td>
@@ -38,10 +38,10 @@
       <input name="radio2" id="radio2" value="radio2" type="radio">
       Agressive</strong> <br>
 Normal builds are recommended when you first begin the program. Normal
-builds guarantee that when a car is delivered (set out) by a train that
+builds guarantee that when a Car is delivered (set out) by a train that
 there will be track space available for the car.<br>
       <br>
-      Aggressive builds makes the car's track space available as soon a a car is scheduled for pick up.<br>
+      Aggressive builds makes the Car's track space available as soon a a car is scheduled for pick up.<br>
       <br>
 Note that once you've built a train, the build option can not be changed until all trains are terminated or reset.</p>
     <p><strong>Switcher Service</strong></p>
@@ -78,10 +78,10 @@ When enabled, the program will use multiple trains to deliver a car to
 its final destination. It is recommended that you leave this option
 enabled. When enabled , you can use <strong><a href="Ops_schedule.shtml">Schedule</a></strong> to deliver a car to a specific location.</p><p><input name="cb10" type="checkbox"> <span style="font-weight: bold;">Enable Car Routing via Yards</span></p>
 <p><strong>Logging Options<br>
-</strong><br> You can have the progrm log your locomotive, car, or
+</strong><br> You can have the program log your locomotive, car, or
 train movement to a file by selecting the appropriate check boxes. The
 program creates a new directory "logger" in the operations directory.
-For each day's sessioon the program will create a new file (.csv) using
+For each day's session the program will create a new file (.csv) using
 the day's date.</p>
     <p> <strong>Options</strong><br>
 Allow you to create your own custom manifest using .csv file. Import
