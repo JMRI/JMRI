@@ -251,7 +251,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 								    speed,
 								    this.isForward);
             // now, queue the message for sending to the command station
-            queueMessage(msg, THROTTLESPEEDSENT);
+            //queueMessage(msg, THROTTLESPEEDSENT);
+            queueMessage(msg, THROTTLEIDLE);
         }
     }
 
@@ -262,7 +263,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
         /* Emergency stop sent */
         DCCppMessage msg = DCCppMessage.getAddressedEmergencyStop(this.getRegisterNum(), this.getDccAddress());
         // now, queue the message for sending to the command station
-        queueMessage(msg, THROTTLESPEEDSENT);
+        //queueMessage(msg, THROTTLESPEEDSENT);
+        queueMessage(msg, THROTTLEIDLE);
     }
 
     /* Since there is only one "throttle" command to the DCC++ base station,
@@ -364,8 +366,8 @@ public class DCCppThrottle extends AbstractThrottle implements DCCppListener {
 		log.debug("Reply: {}", l.toString());
             }
 	}
-        //requestState=THROTTLEIDLE;
-        //sendQueuedMessage();
+        requestState=THROTTLEIDLE;
+        sendQueuedMessage();
     }
 
     private void handleThrottleReply(DCCppReply l) {
