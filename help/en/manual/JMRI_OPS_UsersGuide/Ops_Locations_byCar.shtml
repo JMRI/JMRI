@@ -1,85 +1,79 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head>
-<!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
-  <title>Operations-Locations by Car</title>
-
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Modify Locations by Car Type</title>
   
 <!-- Style -->
-  
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-
-  
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-
-  
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-
-  
-  <link rel="home" title="Home" href="/">
-
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
+<link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
+<link rel="icon" href="/images/jmri.ico" type="image/png">
+<link rel="home" title="Home" href="/">
 <!-- /Style -->
-</head><body>
+</head>
+
+<body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
 <div id="mainContent"><a name="Top"></a>
+
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Modify Locations by Car Type Window</h1>
+<h2>OperationsPro: Modify Locations by Car Type window</h2>
+
 <div align="right">
 <p><a href="Ops_Locations_Menu.shtml">Back </a></p>
 </div>
 <hr>
-<p>This tool can opens from the <strong>Locations</strong> window<strong>
-Tool </strong>menu.
-Use this tool to quickly modify the type of cars your locations and
-tracks will service. Very useful when adding a new car type to your
-roster.</p>
-<table border="0" cellpadding="2" cellspacing="1" width="90%">
+
+<p>This tool opens from the <strong>(Edit) Locations</strong> window's <strong>Tool</strong> menu.<br>
+Use this tool to quickly modify the type of Cars your Locations and
+Tracks will service. It is very useful when adding a new Car Type to your Roster.</p>
+
+<table border="0" cellpadding="2" cellspacing="1">
   <tbody>
     <tr>
-      <td width="47%"><img src="images/Ops_location_byCar.png" alt="by Car" height="1050" width="318"></td>
-      <td valign="top" width="53%">
-      <p><strong>Menu Bar</strong></p>
-      <p><strong>Tool </strong></p>
-      <ul>
-        <li><a href="Ops_Locations_printByCarType.shtml"><strong>Print
-Locations by Car Type</strong></a><br>
-Opens system printer dialog</li>
-      </ul>
-      <ul>
-        <li><strong><a href="Ops_Locations_print-Preview_ByCarType.shtml">Preview Locations
-by Car Type</a></strong><br>
-Opens the list in printer previw window </li>
-      </ul>
-      <p><strong>Window</strong></p>
-      <p><strong>Help</strong></p>
+      <td width="340"><img src="images/Ops_location_byCar.png" alt="by Car" height="1050" width="318"></td>
+      <td width="340" valign="top">
       <p>First
-select the car type you wish to modify from the drop-down list. When
-the type is selected notice that all cars of that type at the locations
-selected will be checked.</p>
-      <p>Select or deselect the locations and tracks you want to
-service, and press <input name="button" id="button" value="Save" type="button"> to modify your locations and tracks. </p>
+select the Car Type you wish to modify from the drop-down list. When
+the Type is selected, notice that all Cars of that Type at the selected Locations
+ will be checked.</p>
+      <p>Select  the Locations and Tracks you want to
+service - or deselect the ones you don't want to service - and press <input name="button" id="button" value="Save" type="button"> to modify your Locations and Tracks.</p>
       <p>You can also <input name="checkbox" id="checkbox" type="checkbox"> <strong>Copy</strong>
-how an existing car is serviced by your locations and apply those rules
-to another car. To make a car behave like another, first select the car
-you would like to copy, then select the <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox"> <strong>Copy</strong>
-, the car type will now appear to the right of the checkbox, then
-select the type of car you want to modify, and press <input name="button2" id="button2" value="Save" type="button"> to have both
-car types serviced by the same locations and tracks. </p>
+how all cars of an existing Car Type are to be serviced by your Locations and apply those rules
+to another Car Type. To make a Car Type behave like another, first select the Car Type
+you would like to copy, then select the <input name="checkbox2" id="checkbox2" checked="checked" type="checkbox"> <strong>Copy</strong>.</p>
+<p>The Car Type will now appear to the right of the <strong>Copy</strong> checkbox.</p>
+<img src="images/Ops_copyLocationbyCarType413.png" width="327" height="250">
+<p>Now select the Car Types you want to apply these settings to and press <input name="button2" id="button2" value="Save" type="button"> to have both
+Car Types serviced by the same Locations and Tracks.</p>
       </td>
     </tr>
   </tbody>
 </table>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
-<p>&nbsp;</p>
+
+<h3>Menu Bar</h3>
+<ul>
+<li><strong>Tool</strong> <img src="images/arrow.gif">
+  <ul>
+  <li><a href="Ops_Locations_printByCarType.shtml"><strong>Print
+Locations by Car Type.</strong></a><br>
+Opens system printer dialog</li>
+  <li><strong><a href="Ops_Locations_print-Preview_ByCarType.shtml">Preview Locations
+by Car Type</a></strong><br>
+Opens the list in printer preview window, grouped by Car Type and then by Location.</li>
+  </ul></li>
+<li><strong>Window</strong></li>
+<li><strong>Help</strong></li>
+
 <hr>
 <div align="right">
 <p><a href="Ops_Locations_Menu.shtml">Back </a></p>
 </div>
+
 <!--#include virtual="/Footer" -->
 </div>
-
-</body></html>
+</div>
+</body>
+</html>
