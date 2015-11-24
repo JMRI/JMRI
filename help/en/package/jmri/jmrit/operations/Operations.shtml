@@ -1622,27 +1622,33 @@
     are available see the <A HREF="#RoadOptions">road options</A> for this spur.</P>
 
    <P>
-    You can also specify the car load "Received" and "Shipped". Leaving the field blank allows any
-    load to be received or shipped from the spur/industry. When the shipped field is blank, the
-    program will only place the default empty "E" or default load "L" into the car. See <A
-     HREF="#Sidings">Spurs</A> for how the program deals with the default loads.
+    You can also specify the car load received and shipped. Leaving the "Receive" field blank
+    allows any load to be received by the spur/industry. When the "Ship" field is blank, the program
+    will only place the default empty "E" or default load "L" into the car. See <A HREF="#Sidings">Spurs</A>
+    for how the program deals with the default loads.
    </P>
 
    <P>
-    You can decide where a car is to be sent after being serviced by the spur/industry. Select the
-    where the car is to be delivered by selecting the "Destination". If you want to car delivered to
-    a specific track, select the track you want under the "Track" field. Only destination tracks
-    that can accept the car type are shown in the track pull down menu. The destination loaded by a
-    schedule is shown as the car's <A HREF="#CarsSet">Final Destination</A> in the various car
-    windows.
+    You can decide where a car is to be sent after being serviced by the spur/industry. Use the
+    "Destination" field to tell the program where the car is to be delivered. If you want to car
+    delivered to a specific track at the destination, select the track you want under the "Track"
+    field. Only destination tracks that can accept the car type are shown in the track pull down
+    menu. The destination loaded by a schedule is shown as the car's
+    <A HREF="#CarsSet">Final Destination</A> in the various car windows.
    </P>
 
-   <P>If you wanted the same car type to be delivered consecutively, increase the "Count"
-    to the number that you wish. The maximum count is 100 and the minimum is 1. The "Wait" field
-    allows you determine how many trains will try to service the spur before picking up the car.
-    Useful if you want a car to remain still for several operating sessions.</P>
-    
-    <H4>Schedule Example</H4>
+   <P>If you wanted the same car type to be delivered consecutively, increase the "Count" to the
+    number that you wish. The maximum count is 100 and the minimum is 1. For example, a count of 3
+    is equal to entering the exact same schedule item three times in a row.</P>
+
+   <P>The "Wait" field allows you determine how many trains will try to service the spur before
+    picking up the car. Useful if you want a car to remain still for several operating sessions.
+    Note that the car's load won't change immediately if there's a wait count. Once the wait count
+    reaches zero, the program will switch the car load to the schedule item's ship load, or
+    whatever is appropriate if a ship load wasn't specified. Each time a train is built that
+    could service the car, the car's wait count is decremented.</P>
+
+   <H4>Schedule Example</H4>
 
    <P>In the schedule shown above, the schedule is requesting two SP boxcars in a row with any
     load, then a tankcar with with a load of "Oil". Reading the entire schedule line for the two SP
@@ -1655,7 +1661,7 @@
    <P>The next line in the schedule is requesting a tankcar with a load of "Oil". Reading the
     entire schedule line for the tankcar, there isn't an random value, the car is only delivered on
     Mondays, the tankcar's road name doesn't matter, the new load will be the default empty or "E"
-    since the car arrived with a custom load, and and the car is to be shipped to "Susanville", but
+    since the car arrived with a custom load, and and the car is to be sent to "Susanville", but
     only on Fridays. After the tankcar is delivered the schedule starts from the beginning, again
     requesting two SP boxcars followed by a tankcar with oil.</P>
 
@@ -1803,7 +1809,7 @@
     destination, but without the track assignment. The car will be accepted by yards,
     classification/interchange tracks, staging, and spurs at the destination that have a schedule
     that is demanding that car type and custom load. Spurs without a schedule can not service a car
-    with a custom load, unless the car is shipped directly to that spur.</P>
+    with a custom load, unless the car is sent directly to that spur.</P>
 
    <P>
     One more consideration is empty cars. The program doesn't route cars with the default loads "E"
@@ -2164,7 +2170,7 @@
     and another 110' for industry 2. The program could set out up to two cars on each of the tracks
     serving each industry.</p>
 
-   <p>But let's say you want to have up to four cars shipped to either industry. If you "pool"
+   <p>But let's say you want to have up to four cars sent to either industry. If you "pool"
     the two industry tracks, the program can borrow space from the other industry if needed. So now
     the program could set out up to four cars at each industry, but no more than four cars total.</p>
 

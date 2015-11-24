@@ -382,7 +382,7 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         initMinimumSize(new Dimension(Control.panelWidth700, Control.panelHeight500));
 
         // now provide the railroad name
-        railroadNameTextField.setText(Setup.getRailroadName()); // default
+        railroadNameTextField.setText(Setup.getRailroadName());
         if (Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
             railroadNameTextField.setEnabled(false);
         }
@@ -560,11 +560,11 @@ public class OperationsSetupPanel extends OperationsPreferencesPanel implements 
         if (scaleG.isSelected()) {
             Setup.setScale(Setup.G_SCALE);
         }
-        Setup.setRailroadName(railroadNameTextField.getText());
         if (!Setup.getRailroadName().equals(WebServerManager.getWebServerPreferences().getRailRoadName())) {
+            Setup.setRailroadName(railroadNameTextField.getText());
             int results = JOptionPane.showConfirmDialog(this, MessageFormat.format(Bundle
                     .getMessage("ChangeRailroadName"), new Object[]{
-                        WebServerManager.getWebServerPreferences().getRailRoadName(), Setup.getRailroadName()}), Bundle
+                    WebServerManager.getWebServerPreferences().getRailRoadName(), Setup.getRailroadName()}), Bundle
                     .getMessage("ChangeJMRIRailroadName"), JOptionPane.YES_NO_OPTION);
             if (results == JOptionPane.OK_OPTION) {
                 WebServerManager.getWebServerPreferences().setRailRoadName(Setup.getRailroadName());

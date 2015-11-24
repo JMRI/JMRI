@@ -62,7 +62,7 @@ public abstract class AppsBase {
      * main() routine.
      */
     static public void preInit(String applicationName) {
-        Log4JUtil.initLog4J();
+        Log4JUtil.initLogging();
 
         try {
             Application.setApplicationName(applicationName);
@@ -89,7 +89,7 @@ public abstract class AppsBase {
             setConfigFilename(configFileDef, args);
         }
 
-        Log4JUtil.initLog4J();
+        Log4JUtil.initLogging();
 
         configureProfile();
 
