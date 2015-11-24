@@ -64,7 +64,7 @@ public class PositionablePopupUtil {
         _self = this;
         debug = log.isDebugEnabled();
         defaultForeground = _textComponent.getForeground();
-        defaultBackground = _textComponent.getBackground();
+//        defaultBackground = _textComponent.getBackground();
         defaultBorderColor = _parent.getBackground();
         _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }
@@ -282,6 +282,7 @@ public class PositionablePopupUtil {
     public void setBackgroundColor(Color color) {
         if (color == null) {
             _hasBackground = false;
+            _textComponent.setBackground(null);
         } else {
             _hasBackground = true;
             _textComponent.setBackground(color);
@@ -309,6 +310,9 @@ public class PositionablePopupUtil {
 
 
     public Color getBackground() {
+        if(!_hasBackground) {
+            return null;
+        }
         return _textComponent.getBackground();            
     }
 
@@ -471,7 +475,7 @@ public class PositionablePopupUtil {
         return c;
     }
 
-    protected void makeColorMenu(JMenu colorMenu, int type) {
+    protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
         ButtonGroup buttonGrp = new ButtonGroup();
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"), Color.darkGray, type);
@@ -487,6 +491,7 @@ public class PositionablePopupUtil {
         if (type == BACKGROUND_COLOR) {
             addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
         }
+        return buttonGrp;
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,

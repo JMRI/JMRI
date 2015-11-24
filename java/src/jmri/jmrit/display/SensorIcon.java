@@ -1009,21 +1009,15 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             }
         }
 
+        public void setBackgroundMenu(JPopupMenu popup) {
+            if (isIcon()) {
+                super.setBackgroundMenu(popup);
+            }         
+        }
         @Override
         @SuppressWarnings("fallthrough")
-        protected void makeColorMenu(JMenu colorMenu, int type) {
-            ButtonGroup buttonGrp = new ButtonGroup();
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"), Color.darkGray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Gray"), Color.gray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("LightGray"), Color.lightGray, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("White"), Color.white, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Red"), Color.red, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Orange"), Color.orange, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Yellow"), Color.yellow, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Green"), Color.green, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Blue"), Color.blue, type);
-            addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Magenta"), Color.magenta, type);
+        protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
+            ButtonGroup buttonGrp = super.makeColorMenu( colorMenu,  type);
             switch (type) {
                 case UNKOWN_BACKGROUND_COLOR:
                 case ACTIVE_BACKGROUND_COLOR:
@@ -1031,6 +1025,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                 case INCONSISTENT_BACKGROUND_COLOR:
                     addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
             }
+            return buttonGrp;
         }
 
         @Override
@@ -1048,19 +1043,10 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                         case BACKGROUND_COLOR:
                             if (color == null) {
                                 _self.setHasBackground(false);
-/*                                setOpaque(false);
-                                //We need to force a redisplay when going to clear as the area
-                                //doesn't always go transparent on the first click.
-                                java.awt.Point p = getLocation();
-                                int w = getWidth();
-                                int h = getHeight();
-                                java.awt.Container parent = getParent();
-                                // force redisplay
-                                parent.revalidate();
-                                parent.repaint(p.x, p.y, w, h);*/
                             } else {
                                 setBackgroundColor(desiredColor);
                                 _self.setHasBackground(true);
+                                setOpaque(true);
                             }
                             break;
                         case BORDER_COLOR:
