@@ -5,6 +5,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 import jmri.configurexml.AbstractXmlAdapter;
 import jmri.configurexml.ConfigXmlManager;
 import jmri.configurexml.XmlAdapter;
+import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -30,7 +31,7 @@ public class JmrixConfigPaneXml extends AbstractXmlAdapter {
      * Forward to the configurexml class for the specific object type.
      */
     public Element store(Object o) {
-        Object oprime = ((JmrixConfigPane) o).getCurrentObject();
+        ConnectionConfig oprime = ((JmrixConfigPane) o).getCurrentObject();
         if (oprime == null) {
             return null;
         }
