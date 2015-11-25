@@ -241,7 +241,17 @@ puts them at
 ================================================================================
 ## Further Changes
 
-If anybody discovers a problem from here on in, they should fix it on a Git branch and have you pull it into the release branch and onto master. Jenkins will automatically rebuild, or you'll have to redo a manual build manually.
+If anybody wants to add a change from here on in, they should
+
+- commit it to a branch of their own, and push as needed to get it to their GitHub fork.
+
+- On the GitHub web site, make _two_ pull requests:  
+
+   - One to master, as usual
+   
+   - One to the release branch e.g. "release-4.1.4".  The comment on this PR should explain why this should be included instead of waiting for the next release.
+   
+  Merging the PR to the master makes those changes available on further developments forever; the one on the release, if accepted, includes the change and kicks off new runs of the various CI and build jobs.
 
 ================================================================================
 ## Release-specific Updates
