@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2015 -->
-<!-- $Id$ -->
 <title>JMRI: Applications</title>
 
 <!-- Style -->
@@ -20,15 +18,13 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-      <!-- Page Body -->
-        <h2>
-		JMRI: Applications
-        </h2>
+<!-- Page Body -->
+<h2>JMRI: Applications</h2>
 
 	<p>
 	JMRI provides several applications that are optimized for 
 	specific purposes. You can of course also write your own.
-	    <dl>
+  <dl>
 		<dt><h3><a href="./DecoderPro/index.shtml">DecoderPro</a></h3></dt>
 		<dd>
 		    A better tool for programming decoders.
@@ -39,28 +35,21 @@
 
 		<dt><h3><a href="./PanelPro/PanelPro.shtml">PanelPro</a></h3></dt>
 		<dd>
-		    Operating CRT based CTC control panels that reflects the real-time
+		    Operating CRT based CTC control panels that reflect the real-time
 		    state of your railroad <em>and</em> let you control it - almost like
 		    a Prototype dispatcher!
 		</dd>
 
-		<dt><h3><a href="LocoTools/index.shtml">LocoNet Tools</a></h3></dt>
-		<dd> A set of Digitrax LocoNet-specific tools:
+		<dt><h3>System Specific Tools</h3></dt>
+		<dd>
 		    <ul>
-		    <li><dfn>LocoNet monitor</dfn>
-		    <li><dfn>Slot monitor</dfn>
-		    <li><dfn>Packet source</dfn>
-		    <li><dfn>PM4 programmer</dfn>
-		    <li><dfn>BDL16 programmer</dfn>
-		    <li><dfn>SE8C programmer</dfn>
-		    <li><dfn>DS64 programmer</dfn>
-		    <!-- <li><dfn>LocoIO programmer</dfn> no longer supported as of JMRI 3, preferred way is via DP3 -->
+		    <li><a href="LocoTools/index.shtml">LocoNet Tools</a>, an easy-to-use set of tools for Digitrax LocoNet</li>
+		    <li></li>
 		    </ul>
-		These are also available in DecoderPro and PanelPro when those are configured
-		for a LocoNet connection, but LocoTools provides them in a easier-to-use way.
+		Many of these tools are also available in DecoderPro and PanelPro from their own menus when you have JMRI configured
+		for that System Connection.
 		</dd>
-
-	    </dl>
+ </dl>
 
 <!--#include virtual="/Footer" -->
 </div> <!-- close #mainContent -->
