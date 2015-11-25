@@ -53,7 +53,7 @@ If you're attempting to perform this on MS Windows, refer to the MS Windows note
 ================================================================================
 ## Notification
 
-- Create a (GitHub Issue)[https://github.com/JMRI/JMRI/issues] to hold discussion with conventional title "Create release-n.n.n". 
+- Create a [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n". 
 
 
 ================================================================================
