@@ -23,11 +23,11 @@ Finish by clicking the "OK" button.</p>
 
 <H2>Creating A Number of Sensors</H2>
 <p>It is also possible to create a number of Sensors in one go.<br>
-Where supported the "Add Range" check box will be enabled.</p>
+Where supported the "Add a range" check box will be enabled.</p>
 <img src="AddTurnoutNumber.png">
 <p>When checking the "Add Range" box, this will then enable the "Number To Add" field.  
 Here enter the number of Sensors that you wish to add. Clicking "OK" will then create that 
-sequential number of  Sensors.</p>
+ number of sequential Sensors.</p>
 If a User Name has been entered, a number will be added to the end of the name to keep 
 each Sensor User Name unique.<p>
 
