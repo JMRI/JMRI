@@ -244,8 +244,17 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     public DataInputStream getInputStream() {
-	log.error("Not Using DataInputStream version anymore!");
-	return(null);
+	//log.error("Not Using DataInputStream version anymore!");
+    	//return(null);
+        if (!opened) {
+            log.error("getInputStream called before load(), stream not available");
+        }
+        try {
+            return new DataInputStream(activeSerialPort.getInputStream());
+        } catch (java.io.IOException e) {
+            log.error("getInputStream exception: " + e.getMessage());
+        }
+        return null;
     }
 
     public DataOutputStream getOutputStream() {
