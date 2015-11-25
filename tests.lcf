@@ -84,7 +84,7 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
-log4j.category.jmri.implementation=DEBUG
+# log4j.category.jmri.implementation=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
