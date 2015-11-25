@@ -57,7 +57,7 @@ public class DCCppRegisterManager {
     public int getRegisterNum(int addr) {
 	for (int i = 0; i < DCCppConstants.MAX_MAIN_REGISTERS; i++) {
 	    if (registers[i].getAddress() == addr) {
-		return(i);
+		return(i+1);
 	    }
 	}
 	// Optional:  If a nonexistant register is requested, create one?
@@ -65,7 +65,7 @@ public class DCCppRegisterManager {
     }
 
     public int getRegisterAddress(int num) {
-	return(registers[num].getAddress());
+	return(registers[num-1].getAddress());
     }
 
     /*

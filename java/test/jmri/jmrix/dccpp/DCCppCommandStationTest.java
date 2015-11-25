@@ -29,9 +29,14 @@ public class DCCppCommandStationTest extends TestCase {
     public void testVersion() {
         // test setting the command station version from an DCCppReply
         DCCppCommandStation c = new DCCppCommandStation();
-        DCCppReply r = new DCCppReply("iDCC++ BASE STATION vUNO_1.0: BUILD 23 Feb 2015 09:23:57");
+	// V1.0 Status Message
+        //DCCppReply r = new DCCppReply("iDCC++BASE STATION vUNO_1.0: BUILD 23 Feb 2015 09:23:57");
+	// V1.1 Status Message
+        DCCppReply r = new DCCppReply("iDCC++BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 23 Feb 2015 09:23:57");
         c.setCommandStationInfo(r);
-        Assert.assertTrue(c.getBaseStationType().equals("UNO_1.0"));
+	// Assert.assertTrue(c.getBaseStationType().equals("UNO_1.0"));
+        //Assert.assertTrue(c.getBaseStationType().equals("MEGA / ARDUINO MOTOR SHIELD"));
+	Assert.assertTrue(c.getBaseStationType().equals("BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD")); 
 	Assert.assertTrue(c.getCodeBuildDate().equals("23 Feb 2015 09:23:57"));
     }
 
