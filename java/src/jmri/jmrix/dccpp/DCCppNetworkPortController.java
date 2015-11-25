@@ -25,7 +25,8 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     protected boolean mTurnoutExtraSpace = false;
 
     protected int[] commandStationTypes = {
-	DCCppConstants.DCCPP_UNO_1_5
+	DCCppConstants.DCCPP_UNO_1_0,
+	DCCppConstants.DCCPP_ARDUINO_1_1
     };
 
     protected String[] commandStationNames;

@@ -154,42 +154,36 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     // Core methods
 
     public boolean isValidMessageFormat() {
-	if (this.match(DCCppConstants.THROTTLE_CMD_REGEX) != null)
+	if ((this.match(DCCppConstants.THROTTLE_CMD_REGEX) != null) ||
+	    (this.match(DCCppConstants.FUNCTION_CMD_REGEX) != null) ||
+	    (this.match(DCCppConstants.ACCESSORY_CMD_REGEX) != null) ||
+	    (this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null) ||
+	    (this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null) ||
+	    (this.match(DCCppConstants.TURNOUT_DELETE_REGEX) != null) ||
+	    (this.match(DCCppConstants.LIST_TURNOUTS_REGEX) != null) ||
+	    (this.match(DCCppConstants.SENSOR_ADD_REGEX) != null) ||
+	    (this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null) ||
+	    (this.match(DCCppConstants.LIST_SENSORS_REGEX) != null) ||
+	    (this.match(DCCppConstants.WRITE_TO_EEPROM_REGEX) != null) ||
+	    (this.match(DCCppConstants.CLEAR_EEPROM_REGEX) != null) ||
+	    (this.match(DCCppConstants.OPS_WRITE_BYTE_REGEX) != null) ||
+	    (this.match(DCCppConstants.OPS_WRITE_BIT_REGEX) != null) || 
+	    (this.match(DCCppConstants.PROG_WRITE_BYTE_REGEX) != null) ||
+	    (this.match(DCCppConstants.PROG_WRITE_BIT_REGEX) != null) ||
+	    (this.match(DCCppConstants.PROG_READ_REGEX) != null) ||
+	    (this.match(DCCppConstants.TRACK_POWER_REGEX) != null)  ||
+	    (this.match(DCCppConstants.READ_TRACK_CURRENT_REGEX) != null) ||
+	    (this.match(DCCppConstants.READ_CS_STATUS_REGEX) != null)  ||
+	    (this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null) ||
+	    (this.match(DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX) != null) ||
+	    (this.match(DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX) != null) ||
+	    (this.match(DCCppConstants.GET_FREE_MEMORY_REGEX) != null)||
+	    (this.match(DCCppConstants.LIST_REGISTER_CONTENTS_REGEX) != null)
+	    ) {
 	    return(true);
-	if (this.match(DCCppConstants.FUNCTION_CMD_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.ACCESSORY_CMD_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.OPS_WRITE_BYTE_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.OPS_WRITE_BIT_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.PROG_WRITE_BYTE_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.PROG_WRITE_BIT_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.PROG_READ_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.TRACK_POWER_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.READ_TRACK_CURRENT_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.READ_CS_STATUS_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.GET_FREE_MEMORY_REGEX) != null)
-	    return(true);
-	if (this.match(DCCppConstants.LIST_REGISTER_CONTENTS_REGEX) != null)
-	    return(true);
-
-	return(false);
+	} else {
+	    return(false);
+	}
     }
 
     private Matcher match(String pat) {
@@ -223,10 +217,21 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isAccessoryMessage() { return(this.getOpCodeChar() == DCCppConstants.ACCESSORY_CMD); }
     public boolean isFunctionMessage() { return(this.getOpCodeChar() == DCCppConstants.FUNCTION_CMD); }
     public boolean isTurnoutMessage() { return(this.getOpCodeChar() == DCCppConstants.TURNOUT_CMD); }
+    public boolean isSensorMessage() { return(this.getOpCodeChar() == DCCppConstants.SENSOR_CMD); }
+    public boolean isEEPROMWriteMessage() { return(this.getOpCodeChar() == DCCppConstants.WRITE_TO_EEPROM_CMD); }
+    public boolean isEEPROMClearMessage() { return(this.getOpCodeChar() == DCCppConstants.CLEAR_EEPROM_CMD); }
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
     public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
+
+    public boolean isTurnoutCmdMessage() { return(this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null); }
+    public boolean isTurnoutAddMessage() { return(this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null); }
+    public boolean isTurnoutDeleteMessage() { return(this.match(DCCppConstants.TURNOUT_DELETE_REGEX) != null); }
+    public boolean isListTurnoutsMessage() { return(this.match(DCCppConstants.LIST_TURNOUTS_REGEX) != null); }
+    public boolean isSensorAddMessage() { return(this.match(DCCppConstants.SENSOR_ADD_REGEX) != null); }
+    public boolean isSensorDeleteMessage() { return(this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null); }
+    public boolean isListSensorsMessage() { return(this.match(DCCppConstants.LIST_SENSORS_REGEX) != null); }
 
 
     //------------------------------------------------------
@@ -246,6 +251,69 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getSensorNumInt() {
 	return(Integer.parseInt(this.getSensorNumString()));
+    }
+
+    public String getSensorIDString() {
+	Matcher m;
+	if (this.isSensorAddMessage()) {
+	    m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else if (this.isSensorDeleteMessage()) {
+	    m = match(this.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getSensorIDInt() {
+	return(Integer.parseInt(this.getSensorIDString()));
+    }
+
+    public String getSensorPinString() {
+	if (this.isSensorAddMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getSensorPinInt() {
+	return(Integer.parseInt(this.getSensorPinString()));
+    }
+
+    public String getSensorPullupString() {
+	if (isSensorAddMessage()) {
+	    return(this.getSensorPullupInt() == 1 ? "PULLUP" : "NO PULLUP");
+	} else {
+	    return("Not a Sensor");
+	}
+    }
+
+    public int getSensorPullupInt() {
+	if (this.isSensorAddMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.SENSOR_ON) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return(0);
     }
 
 
@@ -485,6 +553,40 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
 
+    public String getTOAddressString() {
+	if (this.isTurnoutAddMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return("0");
+    }
+
+    public int getTOAddressInt() {
+	return(Integer.parseInt(this.getTOAddressString()));
+    }
+
+    public String getTOSubAddressString() {
+	if (this.isTurnoutAddMessage()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(3));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return("0");
+    }
+
+    public int getTOSubAddressInt() {
+	return(Integer.parseInt(this.getTOSubAddressString()));
+    }
+
     //------------------------------------------------------
     // Helper methods for Prog Write Byte Commands
 
@@ -712,7 +814,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     /**
-     * Query Sensor Message
+     * Query Sensor Message  (obsolete as of V1.1?)
      *
      * Format: <q NUMBER>
      *
@@ -745,6 +847,19 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *   THROW: 0 (unthrown) or 1 (thrown)
      *   
      *   returns: <H ID THROW>
+     *
+     * ADD: <T ID ADDRESS SUBADDRESS>
+     *    ID: the numeric ID (0-32767) of the turnout to control
+     *    ADDRESS: Decoder address (0-511)
+     *    SUBADDRESS: Decoder subaddress (0-3)
+     *    RETURNS: <O> on success, <X> on failure
+     *
+     * DELETE: <T ID>
+     *    ID: the numeric ID (0-32767) of the turnout to control
+     *    RETURNS: <O> on success, <X> on failure
+     *
+     * LIST: <T>
+     *    RETURNS: <H ID ADDRESS SUBADDRESS THROW> for each defined turnout or <X> if no turnouts defined.
      */
     public static DCCppMessage getTurnoutCommandMsg(int id, boolean thrown) {
 	// Sanity check inputs
@@ -763,6 +878,101 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	s += (thrown ? "1" : "0");
 
 	return(new DCCppMessage(s));
+    }
+
+    public static DCCppMessage getTurnoutAddMsg(int id, int addr, int subaddr) {
+	// Sanity check inputs
+	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+	if (addr < 0 || addr > DCCppConstants.MAX_ACC_DECODER_ADDRESS) { return(null); }
+	if (subaddr < 0 || subaddr > DCCppConstants.MAX_ACC_DECODER_SUBADDR) { return(null); }
+
+	String s = new String(Character.toString(DCCppConstants.TURNOUT_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Set the ID
+	s += Integer.toString(id);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	// Set the Address
+	s += Integer.toString(addr);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	// Set the SubAddress
+	s += Integer.toString(subaddr);
+
+	return(new DCCppMessage(s));
+    }
+
+    public static DCCppMessage getTurnoutDeleteMsg(int id) {
+	// Sanity check inputs
+	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+
+	String s = new String(Character.toString(DCCppConstants.TURNOUT_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Set the ID
+	s += Integer.toString(id);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	return(new DCCppMessage(s));
+    }
+
+    public static DCCppMessage getTurnoutlistMsg() {
+	return(new DCCppMessage(Character.toString(DCCppConstants.TURNOUT_CMD)));
+    }
+
+    /** Create/Delete/Query Sensor
+     * 
+     * ADD: <S ID PIN PULLUP>
+     *    ID (0-32767)
+     *    PIN: Arduino Pin # of sensor
+     *    PULLUP: TRUE if use internal pullup for PIN, FALSE if don't.
+     *    RETURNS: <O> on success, <X> on failure
+     *
+     * DELETE: <S ID>
+     *    RETURNS: <O> on success, <X> on failure
+     *
+     * LIST: <S>
+     *    RETURNS: <Q ID PIN PULLUP> for each defined sensor, or <X> if no sensors defined.
+     */
+    public static DCCppMessage getSensorAddMsg(int id, int pin, boolean pullup) {
+	// Sanity check inputs
+	// TODO: Optional sanity check pin number vs. Arduino model.
+	if (id < 0 || id > DCCppConstants.MAX_SENSOR_ID) { return(null); }
+
+	String s = new String(Character.toString(DCCppConstants.SENSOR_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Set the ID
+	s += Integer.toString(id);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	// Set the Pin
+	s += Integer.toString(pin);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	// Set the Pullup
+	s += (pullup ? "1" : "0"); // TODO: Use Constants
+
+	return(new DCCppMessage(s));
+    }
+
+    public static DCCppMessage getSensorDeleteMessage(int id) {
+	// Sanity check inputs
+	if (id < 0 || id > DCCppConstants.MAX_SENSOR_ID) { return(null); }
+
+	String s = new String(Character.toString(DCCppConstants.SENSOR_CMD));
+	s += Character.toString(DCCppConstants.WHITESPACE);
+	
+	// Set the ID
+	s += Integer.toString(id);
+	s += Character.toString(DCCppConstants.WHITESPACE);
+
+	return(new DCCppMessage(s));
+    }
+
+    public static DCCppMessage getSensorlistMsg() {
+	return(new DCCppMessage(Character.toString(DCCppConstants.SENSOR_CMD)));
     }
 
     /**

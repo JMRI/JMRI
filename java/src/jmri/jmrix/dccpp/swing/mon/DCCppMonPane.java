@@ -82,10 +82,21 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\tT/O Number: " + l.getTOIDString()  + "\n";
 	    text += "\tDirection: " + l.getTOStateString() + "\n";
 	    break;
-	case DCCppConstants.SENSOR_REPLY:
-	    text = "Sensor Reply: \n";
+	    //case DCCppConstants.SENSOR_REPLY:
+	    //text = "Sensor Reply: \n";
+	    //text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
+	    //text += "\tState: " + l.getSensorStateString() + "\n";
+	    //break;
+	case DCCppConstants.SENSOR_REPLY_H:
+	    text = "Sensor Reply (Inactive): \n";
 	    text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
-	    text += "\tState: " + l.getSensorStateString() + "\n";
+	    text += "\tState: INACTIVE\n";
+	    break;
+	case DCCppConstants.SENSOR_REPLY_L:
+	    // Also covers the V1.0 version SENSOR_REPLY
+	    text = "Sensor Reply (Active): \n";
+	    text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
+	    text += "\tState: ACTIVE\n";
 	    break;
 	case DCCppConstants.PROGRAM_REPLY:
 	    text = "Program Reply: \n";
@@ -101,7 +112,15 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += ((char)(l.getElement(1) & 0x00FF) == '1' ? "ON" : "OFF");
 	    break;
 	case DCCppConstants.CURRENT_REPLY:
-	    text = "CUrrent: " + l.getCurrentString() + " / 1024";
+	    text = "Current: " + l.getCurrentString() + " / 1024";
+	    break;
+	case DCCppConstants.LISTPACKET_REPLY:
+	    // TODO: Implement this fully
+	    text = "List Packet Reply...\n";
+	    break;
+	case DCCppConstants.MEMORY_REPLY:
+	    // TODO: Implement this fully
+	    text = "Memory Reply...\n";
 	    break;
 	default:
 	    text += "Unregonized reply: ";
@@ -111,7 +130,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	nextLine(text + "\n", new String(raw));
     }
 
-    // listen for the messages to the LI100/LI101
+    // listen for the messages to the Base Station
     @SuppressWarnings("fallthrough")
     public synchronized void message(DCCppMessage l) {
         // display the raw data if requested  
@@ -148,16 +167,49 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\n\tState: " + l.getAccessoryStateString() + "\n";
 	    break;
 	case DCCppConstants.TURNOUT_CMD:
-	    text = "Turnout Cmd: ";
-	    text += "\n\tT/O ID: " + l.getTOIDString();
-	    text += "\n\tState: " + l.getTOStateString();
-	    text += "\n";
+	    if (l.isTurnoutAddMessage()) {
+		text = "Add Turnout: ";
+		text += "\n\tT/O ID: " + l.getTOIDString();
+		text += "\n\tAddress: " + l.getTOAddressString();
+		text += "\n\tSubaddr: " + l.getTOSubAddressString();
+		text += "\n";
+	    } else if (l.isTurnoutDeleteMessage()) {
+		text = "Delete Turnout: ";
+		text += "\n\tT/O ID: " + l.getTOIDString();
+		text += "\n";
+	    } else if (l.isListTurnoutsMessage()) {
+		text = "List Turnouts...\n";
+	    } else {
+		text = "Turnout Cmd: ";
+		text += "\n\tT/O ID: " + l.getTOIDString();
+		text += "\n\tState: " + l.getTOStateString();
+		text += "\n";
+	    }
+	    break;
+	case DCCppConstants.SENSOR_CMD:
+	    if (l.isSensorAddMessage()) {
+		text = "Add Sensor: ";
+		text += "\n\tSensor ID: " + l.getSensorIDString();
+		text += "\n\tPin: " + l.getSensorPinString();
+		text += "\n\tPullup: " + l.getSensorPullupString();
+		text += "\n";
+	    } else if (l.isSensorDeleteMessage()) {
+		text = "Delete Sensor: ";
+		text += "\n\tSensor ID: " + l.getSensorIDString();
+		text += "\n";
+	    } else if (l.isListSensorsMessage()) {
+		text = "List Sensors...\n";
+	    } else {
+		text = "Unknown Sensor Cmd... \n";
+	    }
 	    break;
 	case DCCppConstants.OPS_WRITE_CV_BYTE:
 	    text = "Ops Write Byte Cmd: ";
+	    // TODO: Fill this out
 	    break;
 	case DCCppConstants.OPS_WRITE_CV_BIT:
 	    text = "Ops Write Bit Cmd: ";
+	    // TODO: Fill thsi out
 	    break;
 	case DCCppConstants.PROG_WRITE_CV_BYTE:
 	    text = "Prog Write Byte Cmd: ";
