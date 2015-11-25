@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>Decoder Pro Manual: Index</title>
+<title>JMRI Manual: Index</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -37,7 +37,7 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
 <td></td>
 </tr>
 
