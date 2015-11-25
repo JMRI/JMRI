@@ -1369,10 +1369,10 @@
 
     <target name="findbugs" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
-                output="html"
-                                                outputFile="${jartarget}/jmri-fb.html"
-                                                jvmargs="-Xmx1024m"
-                                                timeout="12000000">
+                  output="html"
+                  outputFile="${jartarget}/jmri-fb.html"
+                  jvmargs="-Xmx1024m"
+                  timeout="12000000">
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
         </findbugs>
@@ -1380,10 +1380,10 @@
 
     <target name="findbugs-ci" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
-                output="xml:withMessages"
-                outputFile="findbugs.xml"
-                jvmargs="-Xmx1024m"
-                timeout="12000000">
+                  output="xml:withMessages"
+                  outputFile="findbugs.xml"
+                  jvmargs="-Xmx1024m"
+                  timeout="12000000">
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
         </findbugs>
@@ -1659,19 +1659,19 @@
 
 
     <!-- set this next to a standard remote, e.g. "origin", if you don't want to
-         go directly back to the main repo; direct JMRI/JMRI require write access -->
+    go directly back to the main repo; direct JMRI/JMRI require write access -->
     <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
 
     <property name="branch-name" value="release-${release}" />
     
     <!-- several steps are involved in creating a new test release
-         branch from the head of the master branch.  This target intends to manage as
-         many of them as possible -->
+    branch from the head of the master branch.  This target intends to manage as
+    many of them as possible -->
     <target name="make-test-release-branch"
             description="Make a new test release branch in Git from the head of the master branch">
 
         <!-- Create a new branch test release branch from the front of the master
-             branch in our main repository, and push back to main repo -->
+        branch in our main repository, and push back to main repo -->
 
         <exec executable="git" failifexecutionfails="true">
             <arg value="checkout"/>
