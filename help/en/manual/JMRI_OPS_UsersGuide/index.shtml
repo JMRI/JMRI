@@ -20,7 +20,7 @@
 
 <h1>JMRI&reg; OperationsPro Manual</h1>
 <h2>Introduction</h2>
-<p><a href="#revisions">Revised</a> to cover version 3.6 and <a href="#newfeatures">3.8 - 3.10</a></p>
+<p><a href="#revisions">Revised</a> to cover versions 3.6 and <a href="#newfeatures">3.8 - 3.10</a></p>
 
 <p>JMRI <strong>OperationsPro</strong> is contained within the
 DecoderPro, PanelPro and SoundPro modules and accessible from their main menu bar. Through the Operations menu you will be able to build trains from all your rolling stock, follow them on your JMRI Panels, print the paperwork to hand out to your crew and much more.<br>&nbsp;<br>
@@ -282,7 +282,7 @@ for model railroaders. It contains modular applications for:</p>
 <li>Alternate Track for a Spur Track now works without Schedules or Custom Loads</li>
 <li>Add the Lead Locomotive number to a Train's description using tag {1}.</li>
 <li>Random moves at any Location in a Train's Route. The Route Edit panel has a new "Random" column with a menu of 10 items, The default is "Off" or disabled, and there are values between 10 and 100. If you select 10, it tells the program to randomly reduce the number of cars moves at the location by up to 10%. So if you asked for 10 moves, you could get 10 or 9 moves. If you selected 50, you could get any number of moves between 10 and 5. If you select 100, you could get any number of moves between 10 and 0. Be sure to press "Save Route" to save you setting.<br>
-<img src="images/Ops_EditRouteRandom413.png" width="1070" height="427"></li>
+<a href="images/Ops_EditRouteRandom413.png" target="_new"><img src="images/Ops_EditRouteRandom413.png" width="535" height="213"></a></li>
 <li>Copy a Location, Locations panel -&gt; Tools -&gt; Copy Location.</li>
 <li>Select the type of sort directly in the Car Roster Print or Preview pane.</li>
 <li>The entire Location and Track names in your car Roster are printed instead of just 38 characters.</li>
@@ -290,9 +290,9 @@ for model railroaders. It contains modular applications for:</p>
 <li>"Check Destinations" button on the "Edit Track Destinations" panel for I/C Tracks. When pressed will check all Car types, roads, and loads that the Track services, and confirm if the destinations selected can also service the same types, roads, and load. Also checks there's a Train that can service the Track and the destinations for all car types services by the Track. The check stops when the first problem is found.</li>
 <li>Locations panel -&gt; "Modify Locations by Car Load". Now you can quickly see and adjust which tracks at a Location can accept certain loads. Also show which loads staging tracks can ship.</li>
 <li>"Show Car Types Serviced" tool the the "Trains" window. Select a Train in the top pop-up menu and a Car Type to the left to view an overview of where this car type might be handled:<br>
-<img src="images/Ops_ShowCarTypesServiced38.png" width="505" height="252"></li>
+<a href="images/Ops_ShowCarTypesServiced38.png" target="_new"><img src="images/Ops_ShowCarTypesServiced38.png" width="252" height="126"></a></li>
 <li>Trains panel -&gt; Tools -&gt; "Trains Table Colors" to Manually select a background color for a train's row in the "Trains" panel. There's also an "Auto" option that allows you to select a background color for when a train is built, build fails, or is terminated.<br>
-<img src="images/Ops_TrainColorManual38.png"> &nbsp; <img src="images/Ops_TrainColorAuto38.png"></li>
+<span width="90%"><a href="images/Ops_TrainColorManual38.png" target="_new"><img src="images/Ops_TrainColorManual38.png" width="200" height="200"></a> &nbsp; <a href="images/Ops_TrainColorAuto38.png" target="_new"><img src="images/Ops_TrainColorAuto38.png" width="200" height="200"></a></span></li>
 <li>Manifests and Switch Lists text is completely customizable, no more fixed titles.</li>
 </ul>
 </div>
@@ -331,7 +331,7 @@ Bruce Shanks</td>
 
 <tr>
 <td>3.6</td>
-<td>11/23/2015</td>
+<td>11/24/2015</td>
 <td>Egbert Broerse</td>
 <td>Updated from Version 3.4; New menu items added, text &amp; HTML edits, New 3.8/3.10 features marked</td>
 </tr>
