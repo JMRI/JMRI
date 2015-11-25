@@ -18,14 +18,14 @@
 
 <div id="mainContent"><a name="Top"></a>
 
-<h1>JMRI&reg; User's Guides</h1>
+<h1>JMRI&reg; Manuals</h1>
 
 <table border="0">
 <tbody>
 
 <tr>
 <td>Version:<br>&nbsp;</td>
-<td>Modules with online Help:<br>&nbsp;</td>
+<td>Applications with Online Manual:<br>&nbsp;</td>
 <td>PDF Manual:<br>&nbsp;</td>
 </tr>
 
@@ -53,7 +53,7 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.6</a></td>
+<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro&trade; v3.6 - v3.10</a></td>
 <td></td>
 </tr>
 
@@ -156,13 +156,13 @@
 </tbody>
 </table>
 
-<p>Updated 11/15/2015</p>
+<p>Updated 11/22/2015</p>
 
 <h2>JMRI&reg; Applications</h2>
 
-<p><strong>JMRI is a Java-based cross-platform application
+<p><strong>JMRI is a Java-based cross-platform program suite
 for model railroaders.</strong><br>
-The program contains modules for:</p>
+It contains modular applications for:</p>
 
 <ul>
 <li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
@@ -172,7 +172,7 @@ The program contains modules for:</p>
 <li>Controlling the signals on the layout (All modules)</li>
 <li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 </ul>
-<p>All this capability is contained in one program (JMRI&reg;) which has several &quot;start-up&quot; modules for the various applications.</p>
+<p>All this capability is contained in one install.</p>
 
 <h2>System Requirements</h2>
 

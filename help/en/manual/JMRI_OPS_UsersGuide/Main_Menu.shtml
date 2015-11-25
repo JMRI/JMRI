@@ -69,8 +69,7 @@ on either the DecoderPro&reg; or PanelPro main window. We are only concerned wit
 <ul></ul>
 </blockquote>
 <h4><span class="style1"><a name="System"></a>[System]</span></h4>
-<p>(This
-menu name will depend upon the System Connection(s) that you selected in Preferences.
+<p>(This menu name will depend upon the System Connection(s) that you selected in JMRI Preferences.
 The options are listed. If (<em>None</em>) is selected in Preferences, a System menu
 will not be displayed.)</p>
 <h4>Debug</h4>

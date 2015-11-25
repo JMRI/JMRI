@@ -38,12 +38,21 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
         if (!this.isInitialized(profile)) {
             log.debug("Initializing...");
             try {
-                Element sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
+            
+                Element sharedConnections = null;
+                
+                if (ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true) != null) {
+                    sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
+                } else {
+                    log.error("ConnectionConfigManager currently doesn't cleanly handle the case of no connections; can this really be normal?");
+                }
+                
                 Element perNodeConnections = null;
+
                 try {
                     perNodeConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, false));
                 } catch (NullPointerException ex) {
-                    log.info("No local configuration found.");
+                    log.error("Null pointer while trying to find local configuration; can this really be normal?");
                 }
                 if (sharedConnections != null) {
                     for (Element shared : sharedConnections.getChildren(CONNECTION)) {
@@ -71,7 +80,7 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     }
                 }
             } catch (NullPointerException ex) {
-                log.info("Unable to read configuration.");
+                log.error("Null pointer while trying to read configuration.", ex);
             }
             this.setIsInitialized(profile, true);
             log.debug("Initialized...");
@@ -103,10 +112,15 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                 element.addContent(e);
             }
         }
-        try {
-            ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), shared);
-        } catch (JDOMException ex) {
-            log.error("Unable to create create XML", ex);
+        // if there are no <connection> Elements in the <connections> Element, skip storing
+        if (element.getChildren("connection").size() > 0) {
+            try {
+                ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), shared);
+            } catch (JDOMException ex) {
+                log.error("Unable to create create XML", ex);
+            }
+        } else {
+            log.debug("No connections, skipping store of <connections>");
         }
     }
 
