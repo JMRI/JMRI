@@ -60,16 +60,20 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                     String userName = shared.getAttributeValue(USER_NAME, "");
                     String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
                     String manufacturer = shared.getAttributeValue(MANUFACTURER, "");
-                    log.debug("Read {}:{} ({}) class {}", userName, systemName, manufacturer, className);
+                    log.debug("Read shared connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                     if (perNodeConnections != null) {
                         for (Element e : perNodeConnections.getChildren(CONNECTION)) {
                             if (systemName.equals(e.getAttributeValue(SYSTEM_NAME))) {
                                 perNode = e;
+                                className = perNode.getAttributeValue(CLASS);
+                                userName = perNode.getAttributeValue(USER_NAME, "");
+                                manufacturer = perNode.getAttributeValue(MANUFACTURER, "");
+                                log.debug("Read perNode connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                             }
                         }
                     }
                     try {
-                        log.debug("Creating {}:{} ({}) class {}", userName, systemName, manufacturer, className);
+                        log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                         ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
                     } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
                         log.error("Unable to create {} for {}", className, shared, ex);
