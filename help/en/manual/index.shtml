@@ -47,7 +47,7 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
 <td></td>
 </tr>
 
@@ -66,18 +66,18 @@
 <tr>
 <td></td>
 <td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3 v3.4</a></td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf" target="_blank">Printable Guide (pdf 3.9MB)</a></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf">Printable Guide (pdf 3.9MB)</a></td>
 </tr>
 
 <tr>
 <td></td>
 <td><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml"></a><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg; v3.4 </a></td>
-<td> <a style="font-weight: bold;" href="http://jmri.org/manual/pdf/DP_man_3-4.pdf" target="_blank">Printable Guide (pdf 6.5MB)</a><br></td>
+<td> <a style="font-weight: bold;" href="http://jmri.org/manual/pdf/DP_man_3-4.pdf">Printable Guide (pdf 6.5MB)</a><br></td>
 </tr>
 
 <tr>
 <td></td>
-<td><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">JMRI&reg; Operations Program v3.4 </a></td>
+<td><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.4 </a></td>
 <td> <br></td>
 </tr>
 
@@ -126,7 +126,7 @@
 <tr>
 <td>&nbsp;</td>
 <td><strong><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.0</a></strong></td>
-<td><strong><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Printable Guide (pdf 4.0MB)</a></strong></td>
+<td><strong><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf" target="_blank">Printable Guide (pdf 4.0MB)</a></strong></td>
 </tr>
 
 <tr>
@@ -137,7 +137,7 @@
 
 <tr>
 <td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml" target="_blank">JMRI&reg; v2.14.1</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; v2.14.1</a></strong></td>
 <td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target="_blank">Printable Guide (pdf 6.7MB)</a></strong></td>
 </tr>
 
@@ -156,7 +156,7 @@
 </tbody>
 </table>
 
-<p>Updated 11/22/2015</p>
+<p>Updated 11/25/2015</p>
 
 <h2>JMRI&reg; Applications</h2>
 
