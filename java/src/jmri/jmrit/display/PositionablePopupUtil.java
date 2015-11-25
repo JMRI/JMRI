@@ -300,7 +300,8 @@ public class PositionablePopupUtil {
             _textComponent.setOpaque(_hasBackground);
         }
         if (!_hasBackground) {
-            _parent.setOpaque(false);            
+            _parent.setOpaque(false);
+            _textComponent.setOpaque(false);
         }
     }
 
@@ -506,26 +507,7 @@ public class PositionablePopupUtil {
                         _textComponent.setForeground(desiredColor);
                         break;
                     case BACKGROUND_COLOR:
-                        if (desiredColor == null) {
-                            _self.setHasBackground(false);
-/*                            _textComponent.setOpaque(false);
-                            _parent.setOpaque(false);
-                            //We need to force a redisplay when going to clear as the area
-                            //doesn't always go transparent on the first click.
-                            Point p = _parent.getLocation();
-                            int w = _parent.getWidth();
-                            int h = _parent.getHeight();
-                            Container parent = _parent.getParent();
-                            // force redisplay
-                            if(_hasBackground) {
-                                setMargin(margin);  //This rebuilds margin and clears it color.                                
-                            }
-                            parent.revalidate();
-                            parent.repaint(p.x, p.y, w, h);*/
-                        } else {
-                            setBackgroundColor(desiredColor);
-                            _self.setHasBackground(true);
-                       }
+                        setBackgroundColor(desiredColor);
                         break;
                     case BORDER_COLOR:
                         setBorderColor(desiredColor);

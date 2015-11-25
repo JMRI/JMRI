@@ -142,7 +142,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (_iconMap == null) {
                 makeIconMap();
             }
-            //           displayState(sensorState());
             getSensor().addPropertyChangeListener(this, s.getName(), "SensorIcon on Panel " + _editor.getName());
             setName(namedSensor.getName());  // Swing name for e.g. tests
         }
@@ -198,7 +197,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
             if (textColorInconsistent == null) {
                 textColorInconsistent = Color.black;
             }
-            setOpaque(true);
         } else {
             setOpaque(false);
         }
@@ -446,7 +444,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     getPopupUtility().setForeground(textColorInconsistent);
                     break;
             }
-            rotate(getDegrees());
+            int deg = getDegrees();
+            rotate(deg);
+            if (deg==0) {
+                setOpaque(getPopupUtility().hasBackground());
+            }
         }
 
         updateSize();
@@ -751,11 +753,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     Color backgroundColorActive = null;
 
     public void setBackgroundActive(Color color) {
-        if (color == null) {
-            setOpaque(false);
-        } else {
-            setOpaque(true);
-        }
         backgroundColorActive = color;
         displayState(sensorState());
     }
@@ -767,11 +764,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     Color backgroundColorInActive = null;
 
     public void setBackgroundInActive(Color color) {
-        if (color == null) {
-            setOpaque(false);
-        } else {
-            setOpaque(true);
-        }
         backgroundColorInActive = color;
         displayState(sensorState());
     }
@@ -783,11 +775,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     Color backgroundColorUnknown = null;
 
     public void setBackgroundUnknown(Color color) {
-        if (color == null) {
-            setOpaque(false);
-        } else {
-            setOpaque(true);
-        }
         backgroundColorUnknown = color;
         displayState(sensorState());
     }
@@ -799,11 +786,6 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
     Color backgroundColorInconsistent = null;
 
     public void setBackgroundInconsistent(Color color) {
-        if (color == null) {
-            setOpaque(false);
-        } else {
-            setOpaque(true);
-        }
         backgroundColorInconsistent = color;
         displayState(sensorState());
     }
@@ -1041,13 +1023,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                             setForeground(desiredColor);
                             break;
                         case BACKGROUND_COLOR:
-                            if (color == null) {
-                                _self.setHasBackground(false);
-                            } else {
-                                setBackgroundColor(desiredColor);
-                                _self.setHasBackground(true);
-                                setOpaque(true);
-                            }
+                            setBackgroundColor(desiredColor);
                             break;
                         case BORDER_COLOR:
                             setBorderColor(desiredColor);
@@ -1056,26 +1032,28 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                             setTextUnknown(desiredColor);
                             break;
                         case UNKOWN_BACKGROUND_COLOR:
+                            _self.setHasBackground(color!=null);
                             setBackgroundUnknown(desiredColor);
                             break;
                         case ACTIVE_FONT_COLOR:
                             setTextActive(desiredColor);
                             break;
                         case ACTIVE_BACKGROUND_COLOR:
+                            _self.setHasBackground(color!=null);
                             setBackgroundActive(desiredColor);
-                            _self.setHasBackground(true);
                             break;
                         case INACTIVE_FONT_COLOR:
                             setTextInActive(desiredColor);
-                            _self.setHasBackground(true);
                             break;
                         case INACTIVE_BACKGROUND_COLOR:
+                            _self.setHasBackground(color!=null);
                             setBackgroundInActive(desiredColor);
                             break;
                         case INCONSISTENT_FONT_COLOR:
                             setTextInconsistent(desiredColor);
                             break;
                         case INCONSISTENT_BACKGROUND_COLOR:
+                            _self.setHasBackground(color!=null);
                             setBackgroundInconsistent(desiredColor);
                             break;
                         default:
