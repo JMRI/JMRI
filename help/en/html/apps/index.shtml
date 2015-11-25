@@ -40,11 +40,20 @@
 		    a Prototype dispatcher!
 		</dd>
 
+		<dt><h3><a href="./DispatcherPro/index.shtml">DispatcherPro</a></h3></dt>
+		<dd>
+		    A tool for Dispatching, grouping your Roster and Throttles.
+		</dd>
+
+		<dt><h3><a href="./SoundPro/SoundPro.shtml">SoundPro</a></h3></dt>
+		<dd>
+		    A tool for using Audio with JMRI.
+		</dd>
+
 		<dt><h3>System Specific Tools</h3></dt>
 		<dd>
 		    <ul>
 		    <li><a href="LocoTools/index.shtml">LocoNet Tools</a>, an easy-to-use set of tools for Digitrax LocoNet</li>
-		    <li></li>
 		    </ul>
 		Many of these tools are also available in DecoderPro and PanelPro from their own menus when you have JMRI configured
 		for that System Connection.
