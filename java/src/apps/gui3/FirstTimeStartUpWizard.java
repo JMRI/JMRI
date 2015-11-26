@@ -27,7 +27,10 @@ import javax.swing.border.BevelBorder;
 import jmri.Application;
 import jmri.InstanceManager;
 import jmri.jmrit.roster.RosterConfigManager;
+import jmri.jmrix.AbstractConnectionConfig;
+import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.JmrixConfigPane;
+import jmri.jmrix.PortAdapter;
 import jmri.util.FileUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -264,11 +267,11 @@ public class FirstTimeStartUpWizard {
         public void run() {
             Cursor hourglassCursor = new Cursor(Cursor.WAIT_CURSOR);
             parent.setCursor(hourglassCursor);
-            Object connect = JmrixConfigPane.instance(0).getCurrentObject();
-            jmri.InstanceManager.configureManagerInstance().registerPref(connect);
+            ConnectionConfig connect = JmrixConfigPane.instance(0).getCurrentObject();
+            InstanceManager.configureManagerInstance().registerPref(connect);
             if (connect instanceof jmri.jmrix.AbstractConnectionConfig) {
-                ((jmri.jmrix.AbstractConnectionConfig) connect).updateAdapter();
-                jmri.jmrix.PortAdapter adp = ((jmri.jmrix.AbstractConnectionConfig) connect).getAdapter();
+                ((AbstractConnectionConfig) connect).updateAdapter();
+                PortAdapter adp = connect.getAdapter();
                 try {
                     adp.connect();
                     adp.configure();
@@ -276,7 +279,10 @@ public class FirstTimeStartUpWizard {
                     log.error(ex.getLocalizedMessage(), ex);
                     Cursor normalCursor = new Cursor(Cursor.DEFAULT_CURSOR);
                     parent.setCursor(normalCursor);
-                    JOptionPane.showMessageDialog(null, "An error occured while trying to connect to " + ((jmri.jmrix.AbstractConnectionConfig) connect).getConnectionName() + ", press the back button and check the connection details", "Error Opening Connection", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null,
+                            "An error occured while trying to connect to " + connect.getConnectionName() + ", press the back button and check the connection details",
+                            "Error Opening Connection",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
             }
@@ -284,9 +290,6 @@ public class FirstTimeStartUpWizard {
             InstanceManager.getDefault(GuiLafPreferencesManager.class).setLocale(Locale.getDefault());
             InstanceManager.tabbedPreferencesInstance().init();
             InstanceManager.tabbedPreferencesInstance().saveContents();
-            /*We have to double register the connection as when the saveContents is called is removes the original pref and 
-             replaces it with the jmrixconfigpane, which is not picked up by the DP3 window*/
-            InstanceManager.configureManagerInstance().registerPref(connect);
             dispose();
         }
     }

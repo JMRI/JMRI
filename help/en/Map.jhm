@@ -18,8 +18,6 @@
 
 <mapID target="manual.DecoderPro.index_Installing" url="manual/DecoderPro/index.shtml#Installing"/>
 
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Throttle" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Throttle"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_MakeDepartureTrackAvailable" url="package/jmri/jmrit/operations/Operations.shtml#MakeDepartureTrackAvailable"/>
 
 <mapID target="html.hardware.powerline.Compatibility" url="html/hardware/powerline/Compatibility.shtml"/>
@@ -69,8 +67,6 @@
 <mapID target="html.doc.Technical.JavaDoc" url="html/doc/Technical/JavaDoc.shtml"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_AllowLocalCarMovements" url="package/jmri/jmrit/operations/Operations.shtml#AllowLocalCarMovements"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_WiThrottle" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#WiThrottle"/>
 
 <mapID target="package.jmri.jmrix.lenz.systeminfo.SystemInfoFrame" url="package/jmri/jmrix/lenz/systeminfo/SystemInfoFrame.shtml"/>
 
@@ -464,6 +460,8 @@
 
 <mapID target="manual.DecoderPro3.Main_FastClockSetup" url="manual/DecoderPro3/Main_FastClockSetup.shtml"/>
 
+<mapID target="manual.JMRI_OPS_UsersGuide.index_newfeatures" url="manual/JMRI_OPS_UsersGuide/index.shtml#newfeatures"/>
+
 <mapID target="package.jmri.jmrit.display.SetSignalsAt3WayTurnout" url="package/jmri/jmrit/display/SetSignalsAt3WayTurnout.shtml"/>
 
 <mapID target="html.Dropbox" url="html/Dropbox.shtml"/>
@@ -579,8 +577,6 @@
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_TrainsModify_PrintTop" url="manual/JMRI_OPS_UsersGuide/Ops_TrainsModify.shtml#PrintTop"/>
 
 <mapID target="manual.DecoderPro3.Main_LocoNet_Sounds" url="manual/DecoderPro3/Main_LocoNet.shtml#Sounds"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_JSON" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#JSON"/>
 
 <mapID target="package.jmri.jmrit.beantable.SignalMastLogicTable" url="package/jmri/jmrit/beantable/SignalMastLogicTable.shtml"/>
 
@@ -929,8 +925,6 @@
 <mapID target="html.tools.signaling.SignalGroups_speed" url="html/tools/signaling/SignalGroups.shtml#speed"/>
 
 <mapID target="manual.DecoderPro.Start_DCC_Hardware_Top" url="manual/DecoderPro/Start_DCC_Hardware.shtml#Top"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Roster" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Roster"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_LocationTools" url="package/jmri/jmrit/operations/Operations.shtml#LocationTools"/>
 
@@ -1367,8 +1361,6 @@
 <mapID target="manual.DecoderPro3.Start_Preferences_FileLocations" url="manual/DecoderPro3/Start_Preferences.shtml#FileLocations"/>
 
 <mapID target="html.hardware.loconet.StandaloneLocoNet_se8csigwodtcs" url="html/hardware/loconet/StandaloneLocoNet.shtml#se8csigwodtcs"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Messages" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Messages"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_AddLocation" url="package/jmri/jmrit/operations/Operations.shtml#AddLocation"/>
 
@@ -1850,8 +1842,6 @@
 
 <mapID target="manual.DecoderPro.Main_NCE_ClockMon" url="manual/DecoderPro/Main_NCE.shtml#ClockMon"/>
 
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_MiniServer" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#MiniServer"/>
-
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Start" url="manual/JMRI_OPS_UsersGuide/Ops_Start.shtml"/>
 
 <mapID target="html.doc.Technical.SystemStructure" url="html/doc/Technical/SystemStructure.shtml"/>
@@ -2078,8 +2068,6 @@
 
 <mapID target="manual.DecoderPro.VSD_Manager" url="manual/DecoderPro/VSD_Manager.shtml"/>
 
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Top" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Top"/>
-
 <mapID target="package.jmri.jmrit.operations.Operations_ReadingBuildReport" url="package/jmri/jmrit/operations/Operations.shtml#ReadingBuildReport"/>
 
 <mapID target="manual.DecoderPro.Main_RPS_Align" url="manual/DecoderPro/Main_RPS.shtml#Align"/>
@@ -2117,8 +2105,6 @@
 <mapID target="html.tools.throttle.ThrottleChapter4_CloseThrottle" url="html/tools/throttle/ThrottleChapter4.shtml#CloseThrottle"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Cars_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Cars.shtml#Top"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Modify_Trains_print" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Modify_Trains.shtml#print"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_AddTrainBuildOptions_Top" url="manual/JMRI_OPS_UsersGuide/Ops_AddTrainBuildOptions.shtml#Top"/>
 
@@ -2278,8 +2264,6 @@
 
 <mapID target="manual.DecoderPro.Main_LocoNet_Slots" url="manual/DecoderPro/Main_LocoNet.shtml#Slots"/>
 
-<mapID target="manual.JMRI_OPS_UsersGuide.Start_Preferences_Display" url="manual/JMRI_OPS_UsersGuide/Start_Preferences.shtml#Display"/>
-
 <mapID target="html.doc.Technical.XmlPersistance" url="html/doc/Technical/XmlPersistance.shtml"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Menu" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Menu.shtml"/>
@@ -2419,8 +2403,6 @@
 <mapID target="manual.DecoderPro.Main_File_Top" url="manual/DecoderPro/Main_File.shtml#Top"/>
 
 <mapID target="manual.JMRI_OPS_UsersGuide.Ops_Settings_menubar_Top" url="manual/JMRI_OPS_UsersGuide/Ops_Settings_menubar.shtml#Top"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.Ops_Locations_Modify_Trains_preview" url="manual/JMRI_OPS_UsersGuide/Ops_Locations_Modify_Trains.shtml#preview"/>
 
 <mapID target="package.jmri.jmrit.operations.Operations_AddRoute" url="package/jmri/jmrit/operations/Operations.shtml#AddRoute"/>
 
@@ -2848,8 +2830,6 @@
 
 <mapID target="html.tools.signaling.ldt.output5_html_m212244f" url="html/tools/signaling/ldt/output5_html_m212244f.png"/>
 
-<mapID target="manual.JMRI_OPS_UsersGuide.images.separator" url="manual/JMRI_OPS_UsersGuide/images/separator.png"/>
-
 <mapID target="manual.DecoderPro.images.separator" url="manual/DecoderPro/images/separator.png"/>
 
 <mapID target="html.tools.signaling.ldt.output2_html_m30be16a8" url="html/tools/signaling/ldt/output2_html_m30be16a8.png"/>
@@ -2883,8 +2863,6 @@
 <mapID target="html.hardware.images.marklin_logo" url="html/hardware/images/marklin_logo.gif"/>
 
 <mapID target="html.tools.signaling.ldt.output3_html_258f4a97" url="html/tools/signaling/ldt/output3_html_258f4a97.png"/>
-
-<mapID target="manual.JMRI_OPS_UsersGuide.images.sflogo" url="manual/JMRI_OPS_UsersGuide/images/sflogo.png"/>
 
 <mapID target="html.tools.signaling.ldt.output6_html_6f691e17" url="html/tools/signaling/ldt/output6_html_6f691e17.png"/>
 

@@ -47,7 +47,9 @@
 
   <indexitem text="Introduction " target="html.apps.DecoderPro.index"/>
 
-  <indexitem text="DecoderPro Manual " target="manual.DecoderPro.index"/>
+  <indexitem text="Manual " target="manual.DecoderPro3.index"/>
+
+  <indexitem text="Programming decoders " target="manual.DecoderPro3.Programmer_Setup"/>
 
   <indexitem text="Roster Pane " target="manual.Comp_Setup_Roster"/>
 
@@ -63,7 +65,7 @@
 
   <indexitem text="Digitrax Duplex Radio System " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
 
-  <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
+  <indexitem text="DS54 " target="html.hardware.loconet.DS54"/>
 
   <indexitem text="DS64 " target="package.jmri.jmrix.loconet.ds64.DS64Frame"/>
 
@@ -83,7 +85,7 @@
 
   <indexitem text="PR3 Mode Selection Tool " target="package.jmri.jmrix.loconet.pr3.swing.Pr3Select"/>
 
-  <indexitem text="SE8c " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
+  <indexitem text="SE8C " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
 
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
 
@@ -104,8 +106,6 @@
   <indexitem text="UR91 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
   <indexitem text="UR92 " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
-
-  <indexitem text="UR92 " target="package.jmri.jmrix.loconet.locoid.LocoIdFrame"/>
 
  </indexitem>
  <indexitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
@@ -199,7 +199,7 @@
 
   <indexitem text="Light Control " target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
 
-  <indexitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
+  <indexitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
  </indexitem>
  <indexitem text="LocoNet ">
@@ -221,7 +221,7 @@
 
   <indexitem text="PR3 " target="html.hardware.loconet.PR3"/>
 
-  <indexitem text="SE8c " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
+  <indexitem text="SE8C " target="package.jmri.jmrix.loconet.se8.SE8Frame"/>
 
   <indexitem text="Slot Monitor " target="package.jmri.jmrix.loconet.slotmon.SlotMonFrame"/>
 
@@ -266,13 +266,13 @@
   <indexitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
   <indexitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
-   <indexitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
+   <indexitem text="Interchange Tracks " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
-   <indexitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+   <indexitem text="Spur Tracks " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
-   <indexitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
+   <indexitem text="Staging Tracks " target="package.jmri.jmrit.operations.Operations_Staging"/>
 
-   <indexitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
+   <indexitem text="Yard Tracks " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
   </indexitem>
   <indexitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
@@ -281,9 +281,13 @@
 
   <indexitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
-  <indexitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
+  <indexitem text="Schedules " target="package.jmri.jmrit.operations.Operations_Schedules"/>
 
   <indexitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
+
+  <indexitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
+
+  <indexitem text="Building Trains " target="package.jmri.jmrit.operations.Operations_BuildingTrains"/>
 
  </indexitem>
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
@@ -295,7 +299,7 @@
 
   <indexitem text="Panel Editor " target="package.jmri.jmrit.display.PanelEditor"/>
 
-  <indexitem text="Viewing Files " target="html.apps.PanelPro.ShowPanel"/>
+  <indexitem text="Viewing Panel Files " target="html.apps.PanelPro.ShowPanel"/>
 
  </indexitem>
  <indexitem text="Panels Menu " target="package.jmri.jmrit.display.PanelMenuHelp"/>
@@ -318,16 +322,16 @@
   <indexitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
  </indexitem>
- <indexitem text="Roster " target="manual.DecoderPro.Main_Roster">
-  <indexitem text="Groups " target="manual.DecoderPro.Main_RosterGroup"/>
+ <indexitem text="Rosters " target="manual.DecoderPro.Main_Roster">
+  <indexitem text="Roster Groups " target="manual.DecoderPro.Main_RosterGroup"/>
 
  </indexitem>
- <indexitem text="Route ">
+ <indexitem text="Routes ">
   <indexitem text="Add Route " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
   <indexitem text="Edit Route " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
-  <indexitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+  <indexitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
  </indexitem>
  <indexitem text="RPS Position System " target="html.hardware.rps.index">
@@ -349,17 +353,17 @@
  <indexitem text="Sections " target="package.jmri.jmrit.beantable.SectionTable">
   <indexitem text="Section Add/Edit " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
-  <indexitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
+  <indexitem text="Sections Table " target="package.jmri.jmrit.beantable.SectionTable"/>
 
  </indexitem>
  <indexitem text="Send DCC Packet " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
 
- <indexitem text="Sensor " target="html.tools.Sensors">
+ <indexitem text="Sensors " target="html.tools.Sensors">
   <indexitem text="Add Sensor " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
   <indexitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
-  <indexitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+  <indexitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
  </indexitem>
  <indexitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
@@ -371,13 +375,13 @@
 
   <indexitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
-  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+  <indexitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
  </indexitem>
  <indexitem text="Signal Masts " target="html.tools.signaling.SignalMasts">
   <indexitem text="Add Signal Mast " target="package.jmri.jmrit.beantable.SignalMastAddEdit"/>
 
-  <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+  <indexitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
  </indexitem>
  <indexitem text="Signaling " target="html.tools.signaling.index">
@@ -411,9 +415,9 @@
  <indexitem text="Tables ">
   <indexitem text="Audio Table " target="package.jmri.jmrit.beantable.AudioTable"/>
 
-  <indexitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+  <indexitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
-  <indexitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
+  <indexitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
   <indexitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
 
@@ -423,17 +427,19 @@
 
   <indexitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
-  <indexitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+  <indexitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
-  <indexitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+  <indexitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-  <indexitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+  <indexitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
-  <indexitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+  <indexitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
   <indexitem text="Thread Table " target="package.jmri.jmrit.automat.monitor.AutomatTableFrame"/>
 
-  <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+  <indexitem text="Transits Table " target="package.jmri.jmrit.beantable.TransitTable"/>
+
+  <indexitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
  <indexitem text="Throttles " target="html.tools.throttle.ThrottleMain">
@@ -455,15 +461,15 @@
  <indexitem text="Transits " target="package.jmri.jmrit.beantable.TransitTable">
   <indexitem text="Transit Add/Edit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
 
-  <indexitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
+  <indexitem text="Transits Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
  </indexitem>
- <indexitem text="Turnout " target="html.tools.Turnouts">
+ <indexitem text="Turnouts " target="html.tools.Turnouts">
   <indexitem text="Add Turnout " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
 
   <indexitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
 
-  <indexitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+  <indexitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
  </indexitem>
  <indexitem text="Upload Debugging Information " target="package.jmri.jmrit.mailreport.Report"/>
