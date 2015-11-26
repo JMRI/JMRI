@@ -20,12 +20,15 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private boolean statusRequested = false;
     private String prefix;
 
-    private int address;
-    private int baseaddress; /* The result of integer division of the 
-     sensor address by 8 */
+    private int address; // NOTE: For DCC++ this is the Base Station index #
+    //private int baseaddress; /* The result of integer division of the 
+    // sensor address by 8 */
+    
+    private int pin;
+    private boolean pullup;
 
-    private int nibble;      /* Is this sensor in the upper or lower 
-     nibble for the feedback encoder */
+    //private int nibble;      /* Is this sensor in the upper or lower 
+     //nibble for the feedback encoder */
 
     private String systemName;
 
@@ -57,19 +60,16 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 	address = Integer.parseInt(id.substring(id.lastIndexOf('S')+1, id.length()));
 	log.debug("New sensor prefix {} address {}", prefix, address);
         // calculate the base address, the nibble, and the bit to examine
-        baseaddress = ((address - 1) / 8);
+        //baseaddress = ((address - 1) / 8);
         int temp = (address - 1) % 8;
-        if (temp < 4) {
-            // This address is in the lower nibble
-            nibble = 0x00;
-        } else {
-            nibble = 0x10;
-        }
+//        if (temp < 4) {
+//            // This address is in the lower nibble
+//            nibble = 0x00;
+//        } else {
+//            nibble = 0x10;
+//        }
         if (log.isDebugEnabled()) {
-            log.debug("Created Sensor " + systemName
-                    + " (Address " + baseaddress
-                    + " position " + (((address - 1) % 8) + 1)
-                    + ")");
+            log.debug("Created Sensor " + systemName);
         }
         // Finally, request the current state from the layout.
         //this.requestUpdateFromLayout();
@@ -130,19 +130,32 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
-	// Don't know how to do this yet.
-        if (l.isSensorReply() && (l.getSensorNumInt() == address)) {
+
+        if (l.isSensorDefReply()) {
+            if (l.getSensorDefNumInt() == address) {
+                if (log.isDebugEnabled()) {
+                    log.debug("Def Message for sensor " + systemName
+                              + " (Pin " + address + ")");
+                }
+                pin = l.getSensorDefPinInt();
+                pullup = l.getSensorDefPullupBool();
+                setOwnState(Sensor.UNKNOWN);
+                // For reference set NamedBean properties for the pin # and pullup
+                setProperty("Pin", pin);
+                setProperty("Pullup", pullup);
+            }
+        } else if (l.isSensorReply() && (l.getSensorNumInt() == address)) {
 	    if (log.isDebugEnabled()) {
 		log.debug("Message for sensor " + systemName
-			  + " (Address " + baseaddress
-			  + " position " + (address - (baseaddress * 8))
-			  + ")");
+			  + " (Pin " + address + ")");
 	    }
-	    if (l.getSensorStateInt() == Integer.parseInt(DCCppConstants.SENSOR_ON)) {
+	    if (l.getSensorIsActive()) {
 		setOwnState(Sensor.ACTIVE);
-	    } else {
+	    } else if (l.getSensorIsInactive()){
 		setOwnState(Sensor.INACTIVE);
-	    }
+	    } else {
+                setOwnState(Sensor.UNKNOWN);
+            }
 	}
         return;
     }
@@ -169,12 +182,14 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
 
     // package protected routine to get the Sensor Base Address
     int getBaseAddress() {
-        return baseaddress;
+        //return baseaddress;
+        return(address);
     }
 
     // package protected routine to get the Sensor Nibble
     int getNibble() {
-        return nibble;
+        //return nibble;
+        return(0);
     }
 
     static Logger log = LoggerFactory.getLogger(DCCppSensor.class.getName());

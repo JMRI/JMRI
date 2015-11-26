@@ -94,9 +94,16 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    break;
 	case DCCppConstants.SENSOR_REPLY_L:
 	    // Also covers the V1.0 version SENSOR_REPLY
-	    text = "Sensor Reply (Active): \n";
-	    text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
-	    text += "\tState: ACTIVE\n";
+            if (l.isSensorDefReply()) {
+                text = "Sensor Def Reply: \n";
+                text += "\tSensor Number: " + l.getSensorDefNumString() + "\n";
+                text += "\tSensor Pin: " + l.getSensorDefPinString() + "\n";
+                text += "\tSensor Pullup: " + l.getSensorDefPullupString() + "\n";
+            } else {
+                text = "Sensor Reply (Active): \n";
+                text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
+                text += "\tState: ACTIVE\n";
+            }
 	    break;
 	case DCCppConstants.PROGRAM_REPLY:
 	    text = "Program Reply: \n";

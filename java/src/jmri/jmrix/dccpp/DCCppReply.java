@@ -386,6 +386,74 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     }
 
 
+    public String getSensorDefNumString() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_DEF_REPLY_REGEX, "SensorDefReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("SensorDefReply Parser called on non-SensorDefReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getSensorDefNumInt() {
+	return(Integer.parseInt(this.getSensorDefNumString()));
+    }
+
+    public String getSensorDefPinString() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_DEF_REPLY_REGEX, "SensorDefReply");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("SensorDefReply Parser called on non-SensorDefReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getSensorDefPinInt() {
+	return(Integer.parseInt(this.getSensorDefPinString()));
+    }
+
+    public String getSensorDefPullupString() {
+	if (this.isSensorReply()) {
+	    return(this.getSensorStateInt() == 1 ? "Pullup" : "NoPullup");
+	} else {
+	    log.error("SensorDefReply Parser called on non-SensorDefReply message type {}", this.getOpCodeChar());
+	    return("Not a Sensor");
+	}
+    }
+
+    public int getSensorDefPullupInt() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_DEF_REPLY_REGEX, "SensorDefReply");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.SENSOR_ON) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else 
+	    log.error("SensorDefReply Parser called on non-SensorDefReply message type {}", this.getOpCodeChar());
+	    return(0);
+    }
+    public boolean getSensorDefPullupBool() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_DEF_REPLY_REGEX, "SensorDefReply");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.SENSOR_ON));
+	    } else {
+		return(false);
+	    }
+	} else 
+	    log.error("SensorDefReply Parser called on non-SensorDefReply message type {}", this.getOpCodeChar());
+	    return(false);
+    }
+    
     public String getSensorNumString() {
 	if (this.isSensorReply()) {
 	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_REPLY_REGEX, "SensorReply");
@@ -405,8 +473,8 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public String getSensorStateString() {
 	if (this.isSensorReply()) {
-	    return(this.getSensorStateInt() == 1 ? "Active" : "Inactive");
-	} else {
+	    return(this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX) ? "Active" : "Inactive");
+        } else {
 	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
 	    return("Not a Sensor");
 	}
@@ -414,23 +482,18 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     public int getSensorStateInt() {
 	if (this.isSensorReply()) {
-	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_REPLY_REGEX, "SensorReply");
-	    if (m != null) {
-		return(m.group(2).equals(DCCppConstants.SENSOR_ON) ? 1 : 0);
-	    } else {
-		return(0);
-	    }
+    	    return(this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX) ? 1 : 0);
 	} else 
 	    log.error("SensorReply Parser called on non-SensorReply message type {}", this.getOpCodeChar());
 	    return(0);
     }
 
     public boolean getSensorIsActive() {
-	return(this.getSensorStateString().equals(DCCppConstants.SENSOR_ON));
+	return(this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX));
     }
 
     public boolean getSensorIsInactive() {
-	return(this.getSensorStateString().equals(DCCppConstants.SENSOR_OFF));
+	return(this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX));
     }
 
     //-------------------------------------------------------------------
@@ -448,6 +511,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isSensorReply() { return((this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY) ||
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_H) ||
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_L)); }
+    public boolean isSensorDefReply() { return(this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)); }
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
 
@@ -462,6 +526,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    (this.matches(DCCppConstants.CURRENT_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.SENSOR_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.BROKEN_SENSOR_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)) ||    
 	    (this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||

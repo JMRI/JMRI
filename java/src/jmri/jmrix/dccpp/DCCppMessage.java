@@ -971,7 +971,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	return(new DCCppMessage(s));
     }
 
-    public static DCCppMessage getSensorlistMsg() {
+    public static DCCppMessage getSensorListMsg() {
 	return(new DCCppMessage(Character.toString(DCCppConstants.SENSOR_CMD)));
     }
 
