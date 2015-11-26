@@ -62,7 +62,7 @@ to update your browser.</li>
 <li> <strong><a href="Start_DCC_Hardware.shtml">What hardware do I need?</a></strong></li>
 <li> <strong><a href="Start_DecoderPro.shtml">How do I start the program?</a></strong></li>
 <li><strong><a href="Start_DecoderPro_New.shtml">How do I start DecoderPro3 program for First Time User?</a></strong></li>
-<li> <strong><a href="Start_Preferences.shtml">How do I set up my preferences?</a></strong></li>
+<li> <strong><a href="Start_Preferences.shtml">How do I set up my Preferences?</a></strong></li>
 </ul>
 
 <h4 name="Setting up" id="Setting up">Using DecoderPro3</h4>
@@ -79,8 +79,8 @@ to update your browser.</li>
 
 <h4 name="Basic Programmer"id="Basic Programmer">The Basic Programmer</h4>
 <ul>
-<li><a href="Basic_Start.shtml"><strong>Entering locomotives in the "Roster"</strong></a></li>
-<li><strong><a href="Basic_BasicPane.shtml">The basic programmer</a></strong></li>
+<li><a href="Basic_Start.shtml"><strong>Entering Locomotives in the "Roster"</strong></a></li>
+<li><strong><a href="Basic_BasicPane.shtml">The Basic Programmer</a></strong></li>
 <li><strong><a href="Basic_BasicPane.shtml#ReadData">Reading the data from the decoder</a></strong></li>
 <li><strong><a href="Basic_BasicPane.shtml#EnterEditData">Entering and editing new data</a></strong></li>
 <li><strong><a href="Basic_BasicPane.shtml#WriteData">Writing the new data to the decoder</a></strong></li>
