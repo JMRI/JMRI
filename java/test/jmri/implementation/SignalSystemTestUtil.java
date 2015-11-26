@@ -31,8 +31,6 @@ public class SignalSystemTestUtil {
     static public void createMockSystem() throws IOException {
         // creates mock (no appearances) system
         // in the user area.
-        InputStream in = null;
-        OutputStream out = null;
         try {
             new File(path).mkdir(); // might already exist
             new File(path + File.separator + "signals").mkdir();  // already exists if using signals
@@ -52,13 +50,6 @@ public class SignalSystemTestUtil {
         } catch (Exception e) {
             log.error("Exception during createMockSystem", e);
             throw e;
-        } finally {
-            if (in != null) {
-                in.close();
-            }
-            if (out != null) {
-                out.close();
-            }
         }
         
     }
