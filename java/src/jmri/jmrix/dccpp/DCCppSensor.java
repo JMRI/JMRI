@@ -33,7 +33,7 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
     private String systemName;
 
     protected DCCppTrafficController tc = null;
-
+    
     public DCCppSensor(String systemName, String userName, DCCppTrafficController controller) {
         super(systemName, userName);
         tc = controller;
@@ -45,6 +45,10 @@ public class DCCppSensor extends AbstractSensor implements DCCppListener {
         tc = controller;
         init(systemName);
     }
+    
+    public boolean getPullup() { return(pullup); }
+    public int getPin() { return(pin); }
+    public int getIndex() { return(address); }
 
     /**
      * Common initialization for both constructors
