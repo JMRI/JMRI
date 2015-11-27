@@ -130,8 +130,10 @@ public class DefaultSignalAppearanceMapTest extends TestCase {
     }
 
     // The minimal setup for log4J
-    protected void setUp() {
+    protected void setUp() throws Exception {
         apps.tests.Log4JFixture.setUp();
+        super.setUp(); 
+        jmri.util.JUnitUtil.resetInstanceManager();
         h1 = new DefaultSignalHead("h1", "head1") {
             /**
              *
