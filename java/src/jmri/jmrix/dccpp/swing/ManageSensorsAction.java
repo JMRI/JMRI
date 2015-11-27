@@ -21,9 +21,11 @@ package jmri.jmrix.dccpp.swing;
 import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.util.HashMap;
+import java.util.List;
 import javax.swing.AbstractAction;
-import jmri.jmrix.dccpp.DCCppTurnout;
-import jmri.jmrix.dccpp.DCCppTurnoutManager; // Need this?
+import jmri.jmrix.dccpp.DCCppConstants;
+import jmri.jmrix.dccpp.DCCppSensor;
+import jmri.jmrix.dccpp.DCCppSensorManager; // Need this?
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppInterface;
@@ -42,34 +44,35 @@ import jmri.jmrix.dccpp.DCCppMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConfigureTurnoutsAction extends AbstractAction {
+public class ManageSensorsAction extends AbstractAction {
 
+    /**
+     *
+     */
+    private ManageSensorsFrame f = null;
+    private HashMap<String, DCCppSensor> sensorMap;
     
-    private ConfigureTurnoutsFrame f = null;
-    //private HashMap<String, DCCppTurnout> sensorMap;
-    
-    public ConfigureTurnoutsAction(String s, String a) {
+    public ManageSensorsAction(String s, String a) {
         super(s);
     }
 
-    @Override
     public void actionPerformed(ActionEvent e) {
         if (f == null || !f.isVisible()) {
             
             // Get info on Sensors
             DCCppSystemConnectionMemo systemMemo = jmri.InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
-            DCCppTurnoutManager tmgr = (DCCppTurnoutManager)systemMemo.getTurnoutManager();
+            DCCppSensorManager smgr = (DCCppSensorManager)systemMemo.getSensorManager();
             // Send query for sensor values
             DCCppTrafficController tc = systemMemo.getDCCppTrafficController();
     
-            f = new ConfigureTurnoutsFrame(tmgr, tc);
+            f = new ManageSensorsFrame(smgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
-            //tc.sendDCCppMessage(DCCppMessage.getTurnoutListMsg(), f); // TODO: Put this in Constants?
+            tc.sendDCCppMessage(DCCppMessage.getSensorListMsg(), f); // TODO: Put this in Constants?
         }
         f.setExtendedState(Frame.NORMAL);
     }
 
     static private Logger log = LoggerFactory
-            .getLogger(ConfigureTurnoutsAction.class.getName());
+            .getLogger(ManageSensorsAction.class.getName());
 
 }
