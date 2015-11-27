@@ -58,7 +58,9 @@
 
  <indexitem text="Digitrax ">
   <indexitem text="BDL16 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
   <indexitem text="BDL162 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
+
   <indexitem text="BDL168 " target="package.jmri.jmrix.loconet.bdl16.BDL16Frame"/>
 
   <indexitem text="Digitrax Duplex Radio System " target="package.jmri.jmrix.loconet.duplexgroup.DuplexGroupTabbedPanel"/>
@@ -107,7 +109,6 @@
 
  </indexitem>
  <indexitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
- 
   <indexitem text="Active Trains " target="package.jmri.jmrit.dispatcher.Dispatcher_atrains"/>
 
   <indexitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher"/>
@@ -258,23 +259,20 @@
  <indexitem text="Names " target="html.doc.Technical.Names"/>
 
  <indexitem text="OpenLCB " target="html.hardware.openlcb.index">
- 
- <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
+  <indexitem text="Configure Nodes " target="package.jmri.jmrix.openlcb.swing.networktree.NetworkTreePane"/>
 
  </indexitem>
  <indexitem text="OperationsPro " target="package.jmri.jmrit.operations.Operations">
-
   <indexitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
   <indexitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
-   
-  <indexitem text="Interchange Tracks " target="package.jmri.jmrit.operations.Operations_Interchange"/>
+   <indexitem text="Interchange Tracks " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
-  <indexitem text="Spur Tracks " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+   <indexitem text="Spur Tracks " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
-  <indexitem text="Staging Tracks " target="package.jmri.jmrit.operations.Operations_Staging"/>
+   <indexitem text="Staging Tracks " target="package.jmri.jmrit.operations.Operations_Staging"/>
 
-  <indexitem text="Yard Tracks " target="package.jmri.jmrit.operations.Operations_Yards"/>
+   <indexitem text="Yard Tracks " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
   </indexitem>
   <indexitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
@@ -284,7 +282,7 @@
   <indexitem text="Routes " target="package.jmri.jmrit.operations.Operations_Routes"/>
 
   <indexitem text="Schedules " target="package.jmri.jmrit.operations.Operations_Schedules"/>
-  
+
   <indexitem text="Switch List " target="package.jmri.jmrit.operations.Operations_SwitchList"/>
 
   <indexitem text="Trains " target="package.jmri.jmrit.operations.Operations_Trains"/>
@@ -292,9 +290,7 @@
   <indexitem text="Building Trains " target="package.jmri.jmrit.operations.Operations_BuildingTrains"/>
 
  </indexitem>
- 
  <indexitem text="PanelPro " target="html.apps.PanelPro.Panels">
- 
   <indexitem text="Intro " target="html.apps.PanelPro.Panels"/>
 
   <indexitem text="Layout Editor " target="package.jmri.jmrit.display.LayoutEditor"/>

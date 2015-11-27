@@ -71,9 +71,12 @@ log4j.appender.R.layout.ConversionPattern=%-5p - %m [%t] %c{2}.%M()%n
 log4j.category.org.eclipse.jetty=WARN
 log4j.category.org.eclipse.jetty.server.handler=WARN
 
-# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l routinely
+# Turning off logging for Java JMDNS; logs SEVERE and WARNING to j.u.l too routinely
 log4j.category.com.strangeberry=OFF
 log4j.category.javax.jmdns=OFF
+
+# Needed for Jenkins I18N testing
+log4j.category.jmri.util.I18NTest=DEBUG
 
 # Needed for jmri.util.Log4JUtilTest
 log4j.category.jmri.util.Log4JUtilTest = WARN
@@ -81,7 +84,7 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 # Examples of changing priority of specific categories (classes, packages):
 #
 # log4j.category.jmri=DEBUG
-# log4j.category.jmri.jmrit.symbolicprog=DEBUG
+# log4j.category.jmri.implementation=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.tabbedframe.PaneProgPaneTest=DEBUG
 # log4j.category.jmri.jmrit.symbolicprog.DecVariableValue=DEBUG
@@ -90,6 +93,4 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
 # log4j.category.jmri.jmrix.dccpp=DEBUG
 
-# keep this one for Jenkins testing
-log4j.category.jmri.util.I18NTest=DEBUG
 

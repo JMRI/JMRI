@@ -159,7 +159,13 @@
 
   
 <li>
-<a href="manual/DecoderPro/index.shtml">DecoderPro Manual </a>
+<a href="manual/DecoderPro3/index.shtml">Manual </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="manual/DecoderPro3/Programmer_Setup.shtml">Programming decoders </a>
 <ul></ul>
 </li>
 
@@ -185,13 +191,11 @@
 <a href="package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL16 </a>
 <ul></ul>
 </li>
-
   
 <li>
 <a href="package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL162 </a>
 <ul></ul>
 </li>
-
   
 <li>
 <a href="package/jmri/jmrix/loconet/bdl16/BDL16Frame.shtml">BDL168 </a>
@@ -206,7 +210,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 </a>
+<a href="html/hardware/loconet/DS54.shtml">DS54 </a>
 <ul></ul>
 </li>
 
@@ -266,7 +270,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c </a>
+<a href="package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C </a>
 <ul></ul>
 </li>
 
@@ -329,12 +333,6 @@
 <ul></ul>
 </li>
 
-  
-<li>
-<a href="package/jmri/jmrix/loconet/locoid/LocoIdFrame.shtml">UR92 </a>
-<ul></ul>
-</li>
-
  
 </ul>
 </li>
@@ -342,6 +340,7 @@
 <li>
 <a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a>
 <ul>
+ 
   
 <li>
 <a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains </a>
@@ -617,7 +616,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table </a>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
 <ul></ul>
 </li>
 
@@ -682,7 +681,7 @@
 
   
 <li>
-<a href="package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8c </a>
+<a href="package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C </a>
 <ul></ul>
 </li>
 
@@ -794,7 +793,8 @@
 <li>
 <a href="html/hardware/openlcb/index.shtml">OpenLCB </a>
 <ul>
-  
+ 
+ 
 <li>
 <a href="package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a>
 <ul></ul>
@@ -807,6 +807,7 @@
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
 <ul>
+
   
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
@@ -818,26 +819,27 @@
 <a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations </a>
 <ul>
    
+  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange Tracks </a>
 <ul></ul>
 </li>
 
-   
+  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spurs </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spur Tracks </a>
 <ul></ul>
 </li>
 
-   
+  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging Tracks </a>
 <ul></ul>
 </li>
 
-   
+  
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yards </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yard Tracks </a>
 <ul></ul>
 </li>
 
@@ -864,13 +866,25 @@
 
   
 <li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Schedules">Schedules </a>
+<ul></ul>
+</li>
+  
+  
+<li>
+<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
+<ul></ul>
+</li>
+
+  
+<li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#BuildingTrains">Building Trains </a>
 <ul></ul>
 </li>
 
@@ -878,9 +892,11 @@
 </ul>
 </li>
  
+ 
 <li>
 <a href="html/apps/PanelPro/Panels.shtml">PanelPro </a>
 <ul>
+ 
   
 <li>
 <a href="html/apps/PanelPro/Panels.shtml">Intro </a>
@@ -907,7 +923,7 @@
 
   
 <li>
-<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Files </a>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Panel Files </a>
 <ul></ul>
 </li>
 
@@ -976,11 +992,11 @@
 </li>
  
 <li>
-<a href="manual/DecoderPro/Main_Roster.shtml">Roster </a>
+<a href="manual/DecoderPro/Main_Roster.shtml">Rosters </a>
 <ul>
   
 <li>
-<a href="manual/DecoderPro/Main_RosterGroup.shtml">Groups </a>
+<a href="manual/DecoderPro/Main_RosterGroup.shtml">Roster Groups </a>
 <ul></ul>
 </li>
 
@@ -988,7 +1004,7 @@
 </ul>
 </li>
  
-<li>Route <ul>
+<li>Routes <ul>
   
 <li>
 <a href="package/jmri/jmrit/beantable/RouteAddEdit.shtml">Add Route </a>
@@ -1003,7 +1019,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table </a>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
 <ul></ul>
 </li>
 
@@ -1071,7 +1087,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Section Table </a>
+<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Sections Table </a>
 <ul></ul>
 </li>
 
@@ -1086,7 +1102,7 @@
 
  
 <li>
-<a href="html/tools/Sensors.shtml">Sensor </a>
+<a href="html/tools/Sensors.shtml">Sensors </a>
 <ul>
   
 <li>
@@ -1102,7 +1118,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
 <ul></ul>
 </li>
 
@@ -1137,7 +1153,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
 <ul></ul>
 </li>
 
@@ -1156,7 +1172,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table </a>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
 <ul></ul>
 </li>
 
@@ -1259,13 +1275,13 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Block Table </a>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Light Table </a>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
 <ul></ul>
 </li>
 
@@ -1295,25 +1311,25 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Route Table </a>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Head Table </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
 <ul></ul>
 </li>
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Mast Table </a>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
 <ul></ul>
 </li>
 
@@ -1325,7 +1341,13 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table </a>
+<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
 <ul></ul>
 </li>
 
@@ -1393,7 +1415,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transit Table </a>
+<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits Table </a>
 <ul></ul>
 </li>
 
@@ -1402,7 +1424,7 @@
 </li>
  
 <li>
-<a href="html/tools/Turnouts.shtml">Turnout </a>
+<a href="html/tools/Turnouts.shtml">Turnouts </a>
 <ul>
   
 <li>
@@ -1418,7 +1440,7 @@
 
   
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnout Table </a>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
 <ul></ul>
 </li>
 

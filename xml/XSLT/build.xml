@@ -33,6 +33,16 @@
   <property name="target" value="pages/"/>
   <property name="propertiesdir" value="properties/"/>
 
+    <!-- ../../local.properties file      (not an error if doesn't exist)                -->
+    <!--                                                                                 -->
+    <!-- Things you might want to set:                                                   -->
+    <!--    # Your SourceForge ID (used for upload) if different                         -->
+    <!--    sourceforge.userid=me                                                        -->               
+    <!--                                                                                 -->
+    <!-- This file should NEVER be checked-in to Git, it is in the .gitignore file       -->
+    <!--                                                                                 -->
+    <property file="../../local.properties"/>
+
   <target name="init" description="create needed directories">
     <!-- Create the time stamp -->
     <tstamp/>

@@ -217,8 +217,8 @@
     <tocitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
 
     <tocitem text="Schedules " target="package.jmri.jmrit.operations.Operations_Schedules"/>
-    
-  </tocitem>
+
+   </tocitem>
    <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
    <tocitem text="Locomotives " target="package.jmri.jmrit.operations.Operations_Locomotives"/>
@@ -357,7 +357,6 @@
   <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
   <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
-
    <tocitem text="Yard Tracks " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
    <tocitem text="Spur Tracks " target="package.jmri.jmrit.operations.Operations_Sidings"/>
@@ -379,9 +378,7 @@
 
  </tocitem>
  <tocitem text="Dispatcher " target="package.jmri.jmrit.dispatcher.Dispatcher">
-
   <tocitem text="Introduction " target="package.jmri.jmrit.dispatcher.Dispatcher">
-
    <tocitem text="Glossary " target="package.jmri.jmrit.dispatcher.Dispatcher_glossary"/>
 
    <tocitem text="Using Transits and Sections " target="package.jmri.jmrit.dispatcher.Dispatcher_transits"/>
@@ -518,14 +515,12 @@
 
  <tocitem text="Technical Info " target="html.doc.Technical.index">
   <tocitem text="Getting the Source Code ">
-
    <tocitem text="Via Git " target="html.doc.Technical.getgitcode"/>
 
    <tocitem text="Git FAQs " target="html.doc.Technical.GitFAQ"/>
 
   </tocitem>
   <tocitem text="Building Your Own Copy of JMRI ">
-
    <tocitem text="Building with Ant " target="html.doc.Technical.Ant"/>
 
    <tocitem text="Building with NetBeans " target="html.doc.Technical.NetBeans"/>
@@ -534,12 +529,10 @@
 
   </tocitem>
   <tocitem text="How We Do Stuff ">
-
    <tocitem text="The Website " target="html.doc.Technical.WebSite"/>
 
   </tocitem>
   <tocitem text="XML Information " target="html.apps.DecoderPro.IntroXML">
-
    <tocitem text="Technical Info " target="html.doc.Technical.XmlView"/>
 
    <tocitem text="XML Editors " target="html.doc.Technical.XmlEditors"/>
