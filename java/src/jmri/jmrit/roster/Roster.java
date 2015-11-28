@@ -72,7 +72,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     protected List<RosterEntry> _list = new ArrayList<>();
     private boolean dirty = false;
     /*
-     * This should only be non-null if explictly set to a non-default location.
+     * This should always be a real path, changes in the UserFiles location are
+     * tracked by listening to FileUtilSupport for those changes and updating
+     * this path as needed.
      */
     private String rosterLocation = FileUtil.getUserFilesPath();
     private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
