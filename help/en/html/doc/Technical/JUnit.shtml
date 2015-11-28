@@ -313,7 +313,7 @@ For more complicated GUI testing, we're starting to use
 
 <p>
 For a very simple example of the use of JFCUnit, see the
-<a href="https://sourceforge.net/apps/trac/jmri/browser/trunk/jmri/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
+<a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
 
 <p>
 To use JFCUnit, you first inherit your class From
