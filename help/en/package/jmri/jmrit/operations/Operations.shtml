@@ -390,12 +390,15 @@
    </P>
 
    <P>
-    You should now be well on your way with regards to JMRI operations. Each window in OperationsPro&trade;
-    has a "Help" item on the menu bar which will direct you to the section in this document that
-    covers that window's capabilities. Help is also available at the
-    <A HREF="http://groups.yahoo.com/group/jmriusers/">jmriusers list.</A> And finally under the
-    "Tools" item on the menu bar, you will find many useful functions, like the ability to print the
-    contents of the window.
+    You should now be well on your way with regards to JMRI operations. Each window in
+    OperationsPro&trade; has a "Help" item on the menu bar which will direct you to the section in
+    this document that covers that window's capabilities. Help is also available at the <A
+     HREF="http://groups.yahoo.com/group/jmriusers/">JMRI users</A> which is part of the
+    Yahoo groups. Another good source for help is a series of articles written by David Haynes <A
+     HREF="http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf">http://rcairgallery.com/stuff/Using-JMRI-Operations-A-Worked-Example.pdf</A>.
+
+    And finally under the "Tools" item on the menu bar, you will find many useful functions, like
+    the ability to print the contents of the window.
    </P>
 
    <A NAME="BritishRailways"></A>
