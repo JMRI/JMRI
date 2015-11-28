@@ -145,7 +145,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
         super();
-        FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+        FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
             if (Roster.this.getRosterLocation().equals(evt.getOldValue())) {
                 Roster.this.setRosterLocation((String) evt.getNewValue());
                 Roster.this.reloadRosterFile();
