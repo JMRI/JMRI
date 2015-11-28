@@ -26,21 +26,18 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Vector;
 import java.util.Iterator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 import javax.swing.DefaultCellEditor;
 import javax.swing.BoxLayout;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JCheckBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -49,8 +46,6 @@ import javax.swing.UIManager;
 import javax.swing.event.EventListenerList;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableModel;
-import jmri.jmrix.dccpp.DCCppTurnout;
 import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppListener;
@@ -135,6 +130,9 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
         turnoutTable.setPreferredScrollableViewportSize(new Dimension(520, 200));
         turnoutTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellRenderer(new ButtonRenderer());
         turnoutTable.getColumn(Bundle.getMessage("FieldTableDeleteColumn")).setCellEditor(new ButtonEditor(new JCheckBox(), turnoutTable));
+        turnoutTable.removeColumn(turnoutTable.getColumn("isNew"));
+        turnoutTable.removeColumn(turnoutTable.getColumn("isDirty"));
+        turnoutTable.removeColumn(turnoutTable.getColumn("isDelete"));
 
         tabbedPane = new JTabbedPane();
         tabbedPane.addTab(Bundle.getMessage("FieldTurnoutsTabTitle"), turnoutScrollPanel);
@@ -208,14 +206,12 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
     public void message(DCCppReply r) {
         // When we get a SensorDefReply message, add the
         // sensor information to the data map for the model.
-        // TODO: FIX THIS
-        if (r.isTurnoutReply()) {
+        if (r.isTurnoutDefReply()) {
             Vector v = new Vector();
-            v.add(r.getSensorDefNumInt());
-            v.add(r.getSensorDefPinInt());
-            v.add(r.getSensorDefPullupBool());
-            //v.add("Delete");
-            turnoutModel.insertData(v, false);
+            v.add(r.getTurnoutDefNumInt());
+            v.add(r.getTurnoutDefAddrInt());
+            v.add(r.getTurnoutDefSubAddrInt());
+             turnoutModel.insertData(v, false);
         }
     }
     
@@ -251,10 +247,9 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
 
     private void addButtonPressed(ActionEvent e) {
         Vector v = new Vector();
-        v.add(0);
-        v.add(0);
-        v.add(false);
-        v.add("Delete");
+        v.add(0); // Index
+        v.add(0); // Address
+        v.add(0); // Subaddress
         turnoutModel.insertData(v, true);
     }
     
@@ -277,33 +272,39 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
 
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
-        // TODO: FIX THIS FOR TURNOUTS
-        Iterator it = turnoutModel.getRowData().iterator();
-        while(it.hasNext()) {
-            Vector r = (Vector)it.next();
+        
+        for (int i = 0; i < turnoutModel.getRowData().size(); i++) {
+                    
+            Vector r = (Vector)turnoutModel.getRowData().elementAt(i);
+            boolean isnew = (boolean)r.elementAt(4);
+            boolean isdirty = (boolean)r.elementAt(5);
+            boolean isdelete = (boolean)r.elementAt(6);
             int row = turnoutModel.getRowData().indexOf(r);
-            if (turnoutModel.isNewRow(row)) {
+            //if (sensorModel.isNewRow(row)) {
+            if (isnew) {
                 // WARNING: Conversions here are brittle. Be careful.
-                String m = "S " + Integer.toString((int)r.elementAt(0)); // Index
-                m += " " + (Integer.toString((int)r.elementAt(1)));      // Pin
-                m += " " + ((boolean)r.elementAt(2) ? "1" : "0");        // Pullup
+                String m = "T " + Integer.toString((int)r.elementAt(0)); // Index
+                m += " " + (Integer.toString((int)r.elementAt(1)));      // Address
+                m += " " + (Integer.toString((int)r.elementAt(2)));      // Subaddress
                 tc.sendDCCppMessage(new DCCppMessage(m), this);
                 log.debug("Sending: " + m);
                 turnoutModel.setNewRow(row, false);
-            } else if (turnoutModel.isMarkedForDelete(row)) {
-                String m = "S " + Integer.toString((int)r.elementAt(0));
+            //} else if (sensorModel.isMarkedForDelete(row)) {
+            } else if (isdelete) {
+                String m = "T " + Integer.toString((int)r.elementAt(0));
                 tc.sendDCCppMessage(new DCCppMessage(m), this);
                 log.debug("Sending: " + m);
                 turnoutModel.getRowData().remove(r);
-            } else if (turnoutModel.isDirtyRow(row)) {
+            //} else if (sensorModel.isDirtyRow(row)) {
+            } else if (isdirty) {
                 // Send a Delete, then an Add (for now).
-                String m = "S " + Integer.toString((int)r.elementAt(0));
+                String m = "T " + Integer.toString((int)r.elementAt(0));
                 tc.sendDCCppMessage(new DCCppMessage(m), this);
                 log.debug("Sending: " + m);
                 // WARNING: Conversions here are brittle. Be careful.
-                m = "S " + Integer.toString((int)r.elementAt(0)); // Index
-                m += " " + (Integer.toString((int)r.elementAt(1)));      // Pin
-                m += " " + ((boolean)r.elementAt(2) ? "1" : "0");        // Pullup
+                m = "S " + Integer.toString((int)r.elementAt(0));   // Index
+                m += " " + (Integer.toString((int)r.elementAt(1))); // Address
+                m += " " + (Integer.toString((int)r.elementAt(2))); // Subaddress
                 tc.sendDCCppMessage(new DCCppMessage(m), this);
                 log.debug("Sending: " + m);
                 turnoutModel.setNewRow(row, false);
@@ -330,20 +331,23 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
     private static class TurnoutTableModel extends AbstractTableModel {
 
         // These get internationalized at runtime in the constructor below.
-        private String[] columnNames = new String[4];
+        private String[] columnNames = new String[7];
         private Vector rowData = new Vector();
-        private Vector isNew = new Vector();
-        private Vector isDirty = new Vector();
-        private Vector markDelete = new Vector();
+        //private Vector isNew = new Vector();
+        //private Vector isDirty = new Vector();
+        //private Vector markDelete = new Vector();
 
         public TurnoutTableModel() {
             super();
             // Use i18n-ized column titles.
             //columnNames[0] = Bundle.getMessage("FieldTableNameColumn");
             columnNames[0] = Bundle.getMessage("FieldTableIndexColumn");
-            columnNames[1] = Bundle.getMessage("FieldTablePinColumn");
-            columnNames[2] = Bundle.getMessage("FieldTablePullupColumn");
+            columnNames[1] = Bundle.getMessage("FieldTableAddressColumn");
+            columnNames[2] = Bundle.getMessage("FieldTableSubaddrColumn");
             columnNames[3] = Bundle.getMessage("FieldTableDeleteColumn");
+            columnNames[4] = "isNew"; // NOI18N -- hidden column;
+            columnNames[5] = "isDirty"; // NOI18N -- hidden column;
+            columnNames[6] = "isDelete"; // NOI18N -- hidden column;
             rowData = new Vector();
         }
 
@@ -353,32 +357,37 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
             for (int i = 0; i < values.length; i++) {
                 v.add(values[i]);
             }
-            v.add("Delete"); // TODO: Fix this
             insertData(v, isnew);
         }
         
         public boolean isNewRow(int row) {
-            return((boolean) isNew.elementAt(row));
+            //return((boolean) isNew.elementAt(row));
+            return((boolean)((Vector)rowData.elementAt(row)).elementAt(4));
         }
         
         public void setNewRow(int row, boolean n) {
-            isNew.setElementAt(n, row);
+            //isNew.setElementAt(n, row);
+            ((Vector)rowData.elementAt(row)).setElementAt(n, 4);
         }
         
         public boolean isDirtyRow(int row) {
-            return((boolean)isDirty.elementAt(row));
+            //return((boolean)isDirty.elementAt(row));
+            return((boolean)((Vector)rowData.elementAt(row)).elementAt(5));
         }
         
         public void setDirtyRow(int row, boolean d) {
-            isDirty.setElementAt(d, row);
+            //isDirty.setElementAt(d, row);
+            ((Vector)rowData.elementAt(row)).setElementAt(d, 5);
         }
         
         public boolean isMarkedForDelete(int row) {
-            return((boolean)markDelete.elementAt(row));            
+            //return((boolean)markDelete.elementAt(row));            
+            return((boolean)((Vector)rowData.elementAt(row)).elementAt(6));
         }
         
         public void markForDelete(int row, boolean mark) {
-            markDelete.setElementAt(mark, row);
+            //markDelete.setElementAt(mark, row);
+            ((Vector)rowData.elementAt(row)).setElementAt(mark, 6);
         }
 
         public boolean contains(Vector v) {
@@ -395,27 +404,17 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
         public void insertData(Vector v, boolean isnew) {
             if (!rowData.contains(v)) {
                 v.add("Delete");
+                v.add(isnew); // is new
+                v.add(false); // is dirty (no)
+                v.add(false); // is marked for delete (of course not)
                 rowData.add(v);
-                isNew.add(isnew);
-                isDirty.add(false);
-                markDelete.add(false);
+                //isNew.add(isnew);
+                //isDirty.add(false);
+                //markDelete.add(false);
             }
             fireTableDataChanged();
         }
-        // Probably going to get obsoleted... used in "Save Data Values"
-        // which is going to work very differently, soon.
-//        public HashMap<String, DCCppSensor> getDataMap() {
-//            //TODO: What should this be?
-//            // Includes only the ones with the checkbox made
-//            HashMap<String, DCCppSensor> retv = new HashMap<String, DCCppSensor>();
-//            for (Object[] row : rowData) {
-//                if ((Boolean) row[1]) {
-//                    retv.put((String) row[0],
-//                            new DCCppSensor();
-//                }
-//            }
-//            return (retv);
-//        }
+
         public Vector getRowData() {
             return(rowData);
         }
@@ -442,7 +441,11 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
 
         public void setValueAt(Object value, int row, int col) {
             ((Vector)((Vector)rowData.elementAt(row))).setElementAt(value, col);
-            setDirtyRow(row, true);
+            if (col < 3) {
+                // Only set dirty if data changed, not state
+                // Data is in columns 0-2
+                setDirtyRow(row, true);
+            }
             fireTableCellUpdated(row, col);
         }
 
@@ -450,8 +453,13 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
             switch (columnIndex) {
                 case 0:
                 case 1:
-                    return Integer.class;
                 case 2:
+                    return Integer.class;
+                case 3:
+                    return ButtonEditor.class;
+                case 4:
+                case 5:
+                case 6:
                     return Boolean.class;
                 default:
                     return super.getColumnClass(columnIndex);
@@ -520,12 +528,12 @@ public class ConfigureTurnoutsFrame extends JmriJFrame implements DCCppListener 
                 if (model.isMarkedForDelete(sel)) {
                     model.markForDelete(sel, false);
                     log.debug("UnDelete sensor {}", idx);
-                    JOptionPane.showMessageDialog(button, "Sensor " + Integer.toString(idx) +
+                    JOptionPane.showMessageDialog(button, "Turnout " + Integer.toString(idx) +
                                                 " Not Marked for Deletion");
                 } else {
                     model.markForDelete(sel, true);
                     log.debug("Delete sensor {}", idx);
-                    JOptionPane.showMessageDialog(button, "Sensor " + Integer.toString(idx) +
+                    JOptionPane.showMessageDialog(button, "Turnout " + Integer.toString(idx) +
                                                 " Marked for Deletion");
                 }
             }

@@ -28,25 +28,15 @@ import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppMessage;
-
-//import jmri.Block;
-//import jmri.BlockManager;
-//import jmri.PhysicalLocationReporter;
-//import jmri.Reporter;
-//import jmri.ReporterManager;
-//import jmri.jmrit.operations.locations.Location;
-//import jmri.jmrit.operations.locations.LocationManager;
-//import jmri.jmrit.vsdecoder.VSDecoderManager;
-//import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-//import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class ConfigureTurnoutsAction extends AbstractAction {
 
-    
+    /**
+     *
+     */
     private ConfigureTurnoutsFrame f = null;
-    //private HashMap<String, DCCppTurnout> sensorMap;
     
     public ConfigureTurnoutsAction(String s, String a) {
         super(s);
@@ -64,7 +54,7 @@ public class ConfigureTurnoutsAction extends AbstractAction {
     
             f = new ConfigureTurnoutsFrame(tmgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
-            //tc.sendDCCppMessage(DCCppMessage.getTurnoutListMsg(), f); // TODO: Put this in Constants?
+            tc.sendDCCppMessage(DCCppMessage.getTurnoutListMsg(), f); // TODO: Put this in Constants?
         }
         f.setExtendedState(Frame.NORMAL);
     }

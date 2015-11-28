@@ -917,7 +917,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	return(new DCCppMessage(s));
     }
 
-    public static DCCppMessage getTurnoutlistMsg() {
+    public static DCCppMessage getTurnoutListMsg() {
 	return(new DCCppMessage(Character.toString(DCCppConstants.TURNOUT_CMD)));
     }
 

@@ -276,9 +276,9 @@ public class ConfigureSensorsFrame extends JmriJFrame implements DCCppListener {
     @edu.umd.cs.findbugs.annotations.SuppressWarnings(value = "WMI_WRONG_MAP_ITERATOR", justification = "only in slow debug")
     private void saveTableValues() {
         
-        Iterator it = sensorModel.getRowData().iterator();
-        while(it.hasNext()) {
-            Vector r = (Vector)it.next();
+        for (int i = 0; i < sensorModel.getRowData().size(); i++) {
+                    
+            Vector r = (Vector)sensorModel.getRowData().elementAt(i);
             boolean isnew = (boolean)r.elementAt(4);
             boolean isdirty = (boolean)r.elementAt(5);
             boolean isdelete = (boolean)r.elementAt(6);

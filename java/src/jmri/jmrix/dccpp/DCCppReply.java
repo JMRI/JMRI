@@ -385,6 +385,57 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 
     }
 
+    public String getTurnoutDefNumString() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_DEF_REPLY_REGEX, "TurnoutDefReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getTurnoutDefNumInt() {
+	return(Integer.parseInt(this.getTurnoutDefNumString()));
+    }
+
+    public String getTurnoutDefAddrString() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_DEF_REPLY_REGEX, "TurnoutDefReply");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getTurnoutDefAddrInt() {
+	return(Integer.parseInt(this.getTurnoutDefAddrString()));
+    }
+
+    public String getTurnoutDefSubAddrString() {
+	if (this.isSensorReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_DEF_REPLY_REGEX, "TurnoutDefReply");
+	    if (m != null) {
+		return(m.group(3));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("TurnoutDefReply Parser called on non-TurnoutDefReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getTurnoutDefSubAddrInt() {
+	return(Integer.parseInt(this.getTurnoutDefSubAddrString()));
+    }
+
 
     public String getSensorDefNumString() {
 	if (this.isSensorReply()) {
@@ -512,6 +563,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_H) ||
 					    (this.getOpCodeChar() == DCCppConstants.SENSOR_REPLY_L)); }
     public boolean isSensorDefReply() { return(this.matches(DCCppConstants.SENSOR_DEF_REPLY_REGEX)); }
+    public boolean isTurnoutDefReply() { return(this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)); }
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
 
