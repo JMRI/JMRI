@@ -54,7 +54,7 @@ public final class DCCppConstants {
     public final static char TRACK_POWER_OFF        = '0'; // Track power OFF
     public final static char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public final static char READ_CS_STATUS         = 's'; // Read status from command station
-    public final static char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
+//    public final static char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
     public final static char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public final static char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
 
@@ -124,6 +124,7 @@ public final class DCCppConstants {
     public final static String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+)\\s*";
     public final static String MADC_FAIL_REPLY_REGEX = "\\s*X\\s*";
     public final static String MADC_SUCCESS_REPLY_REGEX = "\\s*O\\s*";
+    public final static String STATUS_REPLY_REGEX = "iDCC\\+\\+(.*): BUILD (.*)";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';

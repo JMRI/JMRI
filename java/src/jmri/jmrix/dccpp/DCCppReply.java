@@ -168,6 +168,38 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
         }
     }
 
+
+
+    public String getStatusVersionString() {
+        if (this.isStatusReply()) {
+            Matcher m = match(this.toString(), DCCppConstants.STATUS_REPLY_REGEX, "Status");
+            if (m!= null) {
+                return(m.group(1));
+            } else {
+                return("Version Unknown");
+            }
+        } else {
+	    log.error("Status Parser called on non-Status message type {}", this.getOpCodeChar());
+	    return("Version Unknown");
+            
+        }
+    }
+
+    public String getStatusBuildDateString() {
+        if (this.isStatusReply()) {
+            Matcher m = match(this.toString(), DCCppConstants.STATUS_REPLY_REGEX, "Status");
+            if (m!= null) {
+                return(m.group(2));
+            } else {
+                return("Build Date Unknown");
+            }
+        } else {
+	    log.error("Status Parser called on non-Status message type {}", this.getOpCodeChar());
+	    return("Build Date Unknown");
+            
+        }
+    }
+
      //------------------------------------------------------
     // Helper methods for ThrottleReplies
 
@@ -566,6 +598,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isTurnoutDefReply() { return(this.matches(DCCppConstants.TURNOUT_DEF_REPLY_REGEX)); }
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
+    public boolean isStatusReply() { return(this.matches(DCCppConstants.STATUS_REPLY_REGEX)); }
 
     public boolean isValidReplyFormat() {
 	// NOTE: Does not (yet) handle STATUS replies
@@ -583,6 +616,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    (this.matches(DCCppConstants.SENSOR_ACTIVE_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.MADC_FAIL_REPLY_REGEX)) ||
 	    (this.matches(DCCppConstants.MADC_SUCCESS_REPLY_REGEX)) ||
+            (this.matches(DCCppConstants.STATUS_REPLY_REGEX)) ||
 	    (this.isVersionReply())
 	    ) {
 	    return(true);

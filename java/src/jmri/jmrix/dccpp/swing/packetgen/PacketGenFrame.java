@@ -37,6 +37,13 @@ public class PacketGenFrame extends jmri.jmrix.swing.AbstractPacketGenFrame {
             log.debug("Empty Packet...");
             return null; // message cannot be empty
         }
+        // Strip off the brackets, if present.
+        if (s.charAt(0) == '<') {
+            s = s.substring(1);
+        }
+        if (s.lastIndexOf('>') != -1) {
+            s = s.substring(0, s.lastIndexOf('>'));
+        }
         DCCppMessage m = new DCCppMessage(s);
         log.debug("Sending: {}", m.toString());
         return(m);

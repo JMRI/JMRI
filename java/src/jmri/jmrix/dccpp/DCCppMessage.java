@@ -174,7 +174,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    (this.match(DCCppConstants.TRACK_POWER_REGEX) != null)  ||
 	    (this.match(DCCppConstants.READ_TRACK_CURRENT_REGEX) != null) ||
 	    (this.match(DCCppConstants.READ_CS_STATUS_REGEX) != null)  ||
-	    (this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null) ||
+	    //(this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null) ||
 	    (this.match(DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX) != null) ||
 	    (this.match(DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX) != null) ||
 	    (this.match(DCCppConstants.GET_FREE_MEMORY_REGEX) != null)||
@@ -223,7 +223,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
-    public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
+    //public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
 
     public boolean isTurnoutCmdMessage() { return(this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null); }
     public boolean isTurnoutAddMessage() { return(this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null); }
@@ -233,9 +233,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isSensorDeleteMessage() { return(this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null); }
     public boolean isListSensorsMessage() { return(this.match(DCCppConstants.LIST_SENSORS_REGEX) != null); }
 
-
     //------------------------------------------------------
     // Helper methods for Sensor Query Commands
+    /*
     public String getSensorNumString() {
 	if (this.isAccessoryMessage()) {
 	    Matcher m = match(this.toString(), DCCppConstants.QUERY_SENSOR_REGEX, "Sensor");
@@ -252,7 +252,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public int getSensorNumInt() {
 	return(Integer.parseInt(this.getSensorNumString()));
     }
-
+    */
     public String getSensorIDString() {
 	Matcher m;
 	if (this.isSensorAddMessage()) {
@@ -739,7 +739,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	case DCCppConstants.READ_TRACK_CURRENT:
 	case DCCppConstants.READ_CS_STATUS:
 	case DCCppConstants.GET_FREE_MEMORY:
-	case DCCppConstants.QUERY_SENSOR_STATE:
+	//case DCCppConstants.QUERY_SENSOR_STATE:
 	case DCCppConstants.LIST_REGISTER_CONTENTS:
 	    retv = true;
 	    break;
@@ -823,20 +823,21 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      *    returns: <Q NUMBER STATE>
     */
-    public static DCCppMessage getQuerySensorMsg(int address) {
-	// Sanity check inputs
-	if (address < 0 || address > DCCppConstants.MAX_SENSOR_NUMBER)
-	    return(null);
-	
-	// Stationary Decoder Command
-	String s = new String(Character.toString(DCCppConstants.QUERY_SENSOR_STATE));
-	s += Character.toString(DCCppConstants.WHITESPACE);
-	
-	// Add the Address
-	s += Integer.toString(address);
-
-	return(new DCCppMessage(s));
-    }
+    
+//    public static DCCppMessage getQuerySensorMsg(int address) {
+//	// Sanity check inputs
+//	if (address < 0 || address > DCCppConstants.MAX_SENSOR_NUMBER)
+//	    return(null);
+//	
+//	// Stationary Decoder Command
+//	String s = new String(Character.toString(DCCppConstants.QUERY_SENSOR_STATE));
+//	s += Character.toString(DCCppConstants.WHITESPACE);
+//	
+//	// Add the Address
+//	s += Integer.toString(address);
+//
+//	return(new DCCppMessage(s));
+//    }
 
     /**
      * Predefined Turnout Control Message
