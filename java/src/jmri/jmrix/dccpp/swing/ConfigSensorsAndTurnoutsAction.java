@@ -24,32 +24,23 @@ import java.util.HashMap;
 import javax.swing.AbstractAction;
 import jmri.jmrix.dccpp.DCCppSensor;
 import jmri.jmrix.dccpp.DCCppSensorManager; // Need this?
+import jmri.jmrix.dccpp.DCCppTurnoutManager;
 import jmri.jmrix.dccpp.DCCppSystemConnectionMemo;
 import jmri.jmrix.dccpp.DCCppTrafficController;
 import jmri.jmrix.dccpp.DCCppInterface;
 import jmri.jmrix.dccpp.DCCppMessage;
 
-//import jmri.Block;
-//import jmri.BlockManager;
-//import jmri.PhysicalLocationReporter;
-//import jmri.Reporter;
-//import jmri.ReporterManager;
-//import jmri.jmrit.operations.locations.Location;
-//import jmri.jmrit.operations.locations.LocationManager;
-//import jmri.jmrit.vsdecoder.VSDecoderManager;
-//import jmri.jmrit.vsdecoder.listener.ListeningSpot;
-//import jmri.util.PhysicalLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ConfigureSensorsAction extends AbstractAction {
+public class ConfigSensorsAndTurnoutsAction extends AbstractAction {
 
     /**
      *
      */
-    private ConfigureSensorsFrame f = null;
+    private ConfigSensorsAndTurnoutsFrame f = null;
     
-    public ConfigureSensorsAction(String s, String a) {
+    public ConfigSensorsAndTurnoutsAction(String s, String a) {
         super(s);
     }
 
@@ -60,10 +51,11 @@ public class ConfigureSensorsAction extends AbstractAction {
             // Get info on Sensors
             DCCppSystemConnectionMemo systemMemo = jmri.InstanceManager.getDefault(DCCppSystemConnectionMemo.class);
             DCCppSensorManager smgr = (DCCppSensorManager)systemMemo.getSensorManager();
+            DCCppTurnoutManager tmgr = (DCCppTurnoutManager)systemMemo.getTurnoutManager();
             // Send query for sensor values
             DCCppTrafficController tc = systemMemo.getDCCppTrafficController();
     
-            f = new ConfigureSensorsFrame(smgr, tc);
+            f = new ConfigSensorsAndTurnoutsFrame(smgr, tmgr, tc);
             tc.addDCCppListener(DCCppInterface.CS_INFO, f);
             tc.sendDCCppMessage(DCCppMessage.getSensorListMsg(), f); // TODO: Put this in Constants?
         }
@@ -71,6 +63,6 @@ public class ConfigureSensorsAction extends AbstractAction {
     }
 
     static private Logger log = LoggerFactory
-            .getLogger(ConfigureSensorsAction.class.getName());
+            .getLogger(ConfigSensorsAndTurnoutsAction.class.getName());
 
 }

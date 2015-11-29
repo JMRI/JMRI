@@ -25,7 +25,7 @@ public class DCCppMenu extends JMenu {
 
         super();
 
-        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dccpp.DCCppBundle");
+        ResourceBundle rb = ResourceBundle.getBundle("jmri.jmrix.dccpp.swing.DCCppSwingBundle");
 
         if (memo != null) {
             setText(memo.getUserName());
@@ -34,22 +34,11 @@ public class DCCppMenu extends JMenu {
         }
 
         add(new jmri.jmrix.dccpp.swing.mon.DCCppMonAction());
+        add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
 	add(new jmri.jmrit.ampmeter.AmpMeterAction());
+        add(new jmri.jmrix.dccpp.swing.ConfigSensorsAndTurnoutsAction(rb.getString("MenuItemConfigSensorsAndTurnouts"), null));
+        add(new javax.swing.JSeparator());
         add(new jmri.jmrix.dccpp.dccppovertcp.ServerAction(rb.getString("MenuItemDCCppOverTCPServer")));
-        add(new jmri.jmrix.dccpp.swing.ConfigureSensorsAction(rb.getString("MenuItemManageSensors"), null));
-        add(new jmri.jmrix.dccpp.swing.ConfigureTurnoutsAction(rb.getString("MenuItemManageTurnouts"), null));
-        //add(new jmri.jmrix.dccpp.swing.systeminfo.SystemInfoAction(rb.getString("MenuItemDCCppSystemInformation"), memo));
-        //add(new jmri.jmrix.dccpp.swing.packetgen.PacketGenAction(rb.getString("MenuItemSendDCCppCommand"), memo));
-        //add(new javax.swing.JSeparator());
-        //add(new jmri.jmrix.dccpp.swing.stackmon.StackMonAction(rb.getString("MenuItemCSDatabaseManager"), memo));
-        //add(new jmri.jmrix.dccpp.swing.li101.LI101Action(rb.getString("MenuItemLI101ConfigurationManager"), memo));
-        //add(new jmri.jmrix.dccpp.swing.liusb.LIUSBConfigAction(rb.getString("MenuItemLIUSBConfigurationManager"), memo));
-        //add(new jmri.jmrix.dccpp.swing.lz100.LZ100Action(rb.getString("MenuItemLZ100ConfigurationManager"), memo));
-        //add(new jmri.jmrix.dccpp.swing.lzv100.LZV100Action(rb.getString("MenuItemLZV100ConfigurationManager"), memo));
-        // The LV102 configuration works with OpsModeProgramming, so does not
-        // need the system connection memo.
-        //add(new jmri.jmrix.dccpp.swing.lv102.LV102Action(rb.getString("MenuItemLV102ConfigurationManager")));
-
     }
 
 }
