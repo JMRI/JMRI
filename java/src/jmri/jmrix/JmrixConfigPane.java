@@ -375,7 +375,7 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         return classConnectionList[current].getInfo();
     }
 
-    public Object getCurrentObject() {
+    public ConnectionConfig getCurrentObject() {
         int current = modeBox.getSelectedIndex();
         if (current != 0) {
             return classConnectionList[current];
