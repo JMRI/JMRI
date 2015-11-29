@@ -1,11 +1,17 @@
 package jmri.jmrit.display;
 
-import java.awt.Dimension;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import junit.framework.Test;
-import junit.framework.TestSuite;
+import jmri.*;
+import jmri.util.*;
+
+import java.awt.*;
+import java.awt.image.*;
+import java.util.*;
+
+import javax.swing.*;
+
+import junit.framework.*;
+import junit.extensions.jfcunit.*;
+import junit.extensions.jfcunit.finder.*;
 
 /**
  * PositionableLabelTest.java
@@ -54,6 +60,65 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
     // animate the visible frame
     public void whereButtonPushed() {
     }
+    
+    // Load labels with backgrounds and make sure they have right color
+    // The file used was written with 4.0.1, and behaves as expected from panel names
+    public void testBackgroundColors() throws Exception {
+        if (!System.getProperty("jmri.headlesstest","false").equals("false")) {
+            return;
+        }
+        // make four windows
+        InstanceManager.configureManagerInstance()
+                .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
+
+        // Find color in label by frame name
+        int color1 = getColor("F Bkg none, label Bkg none");
+
+        int color2 = getColor("F Bkg blue, label Bkg none");
+
+        int color3 = getColor("F Bkg none, label Bkg yellow");
+
+        int color4 = getColor("F Bkg blue, label Bkg yellow");
+
+        Assert.assertEquals("F Bkg none, label Bkg none color", "0xffffffff",   // white background
+                            String.format("0x%8s", Integer.toHexString(color1)).replace(' ', '0'));
+        Assert.assertEquals("F Bkg blue, label Bkg none color", "0xff0000ff",   // blue background
+                            String.format("0x%8s", Integer.toHexString(color2)).replace(' ', '0')); // no blue, looking at transparent label
+        Assert.assertEquals("F Bkg none, label Bkg yellow color", "0xffffff00", // yellow
+                            String.format("0x%8s", Integer.toHexString(color3)).replace(' ', '0'));
+        Assert.assertEquals("F Bkg blue, label Bkg yellow color", "0xffffff00", // yellow
+                            String.format("0x%8s", Integer.toHexString(color4)).replace(' ', '0'));
+
+    }
+    
+    int getColor(String name) {
+        // Find window by name
+        JmriJFrame ft = JmriJFrame.getFrame(name);
+        Assert.assertNotNull("frame: "+name, ft);
+        
+        // find label within that
+        JLabelFinder finder = new JLabelFinder("....");
+        java.util.List list = finder.findAll(ft);
+        Assert.assertNotNull("list: "+name, list);
+        Assert.assertTrue("length: "+name+": "+list.size(), list.size()>0);
+        
+        // find a point in upper left of label
+        Point p = SwingUtilities.convertPoint(((JComponent)list.get(0)),1,1,ft);
+        
+        // check pixel color (from http://stackoverflow.com/questions/13307962/how-to-get-the-color-of-a-point-in-a-jpanel )
+        BufferedImage image = new BufferedImage(400, 300, BufferedImage.TYPE_4BYTE_ABGR);
+        Graphics2D g2 = image.createGraphics();
+        ft.paint(g2);
+        
+        int color = image.getRGB(p.x,p.y);
+
+        g2.dispose();
+        // Ask to close table window
+        ft.setVisible(false);
+        //TestHelper.disposeWindow(ft, this);
+        return color;
+    }
+    
     // from here down is testing infrastructure
 
     public PositionableLabelTest(String s) {
