@@ -180,6 +180,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         String text = Bundle.getMessage("sample");
         _util = item.getPopupUtility();
         JPanel samplePanel = new JPanel();
+        samplePanel.setLayout(new BoxLayout(samplePanel, BoxLayout.X_AXIS));
         samplePanel.add(Box.createHorizontalStrut(STRUT));
         samplePanel.setBackground(_editor.getTargetPanel().getBackground());
 
@@ -281,6 +282,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         item.setVisible(false);		// otherwise leaves traces for PositionableJPanels
         _previewPanel.add(Box.createVerticalStrut(STRUT));
         _previewPanel.add(samplePanel);
+        _previewPanel.add(Box.createVerticalStrut(STRUT));
     }
 
     protected void makeFontPanels() {
@@ -421,8 +423,11 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
 
             public void actionPerformed(ActionEvent a) {
                 if (button.isSelected()) {
+                    int prevButton = _selectedButton;
                     _selectedButton = button.which;
-                    changeColor();
+                    if (Math.abs(prevButton-_selectedButton)<5) {
+                        changeColor();                        
+                    }
                 }
             }
 
@@ -446,14 +451,13 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         }
         Font font = _util.getFont();
         int just = _util.getJustification();
+        
+        int width = STRUT;
+        int height = STRUT;
+        
         Iterator<PositionableLabel> it = _sample.values().iterator();
         while (it.hasNext()) {
             PositionableLabel sam = it.next();
-/*            PositionablePopupUtil util = sam.getPopupUtility();
-            util.setMargin(mar);
-            util.setBorderSize(bor);
-            util.setFixedSize(_util.getFixedWidth(), _util.getFixedHeight());*/
-//            util.setHorizontalAlignment(just);
             sam.setFont(font);
             Border borderMargin;
             if (sam.isOpaque()) {
@@ -474,9 +478,10 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                     sam.setHorizontalAlignment(JLabel.CENTER);
             }
             sam.updateSize();
+            width += sam.getWidth()+STRUT;
+            height += sam.getHeight()+STRUT;
         }
-        _previewPanel.invalidate();
-        _previewPanel.repaint();
+        _previewPanel.getComponent(0).setSize(width, height);
     }
 
     public void stateChanged(ChangeEvent e) {
@@ -601,22 +606,6 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 _sample.get("Inconsistent").setBackground(_chooser.getColor());
                 _sample.get("Inconsistent").setOpaque(true);
                 break;
-/*                case TRANSPARENT_COLOR:
-                _sample.get("Text").setOpaque(false);
-//                _util.setHasBackground(false);
-                break;
-            case ACTIVE_TRANSPARENT_COLOR:
-                _sample.get("Active").setOpaque(false);
-                break;
-            case INACTIVE_TRANSPARENT_COLOR:
-                _sample.get("InActive").setOpaque(false);
-                break;
-            case UNKNOWN_TRANSPARENT_COLOR:
-                _sample.get("Unknown").setOpaque(false);
-                break;
-            case INCONSISTENT_TRANSPARENT_COLOR:
-                _sample.get("Inconsistent").setOpaque(false);
-                break;*/
             case BORDER_COLOR:
                 _util.setBorderColor(_chooser.getColor());
                 break;
