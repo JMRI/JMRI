@@ -77,57 +77,106 @@
 	<p>Many Linux distributions have NetBeans available in their software repositories
 	- search your package manager for NetBeans.</p>
     
-    <h2><a id="checkout">Checking out code</a></h2>
-    <p>GitHub provides JMRI's code repository using the Git tool.  
-        NetBeans provides built-in support 
-        for Git functionality.  NetBeans Git support may be configured in either 
-        of two ways, depending on how the user wishes to interact with the Git 
-        repository.</p>
-
-  <li>In NetBeans, under the "Team" menu, select Git, then Clone Repository.
-    Enter the https://github.com/JMRI/JMRI.git repository URL from the 
-    <a href="https://github.com/JMRI/JMRI">JMRI GitHub page</a>
-    on the NetBeans form under "Repository URL".  We recommend that you
-    also enter your GitHub user name and password on the form, so 
-    we can attribute your contributions to you later. Click "Next".
-    Make sure that the "master*" box is checked to pull down the main
-    version of the code. Click "Next", and then click "Finish".
-    <p>
-    It'll take a long time to pull down a copy of the code
-    (note the progress bar in the lower right), 
-    but then you're good to go.
+    <h2><a id="gituse" name="gituse"></a>Using NetBeans with JMRI's Git Code Repository</h2>
     
-    <p>
-    <em>
-    There's an un-resolved problem with configuring
-    NetBeans to work with JMRI GitHub, please see the 
-    <a href="https://github.com/JMRI/JMRI/issues/10">discussion issue
-    on this</a></em>.
+      <p>GitHub provides JMRI's code repository using the Git tool. 
+        For more information on how JMRI uses Git, see the
+        "<a href="getgitcode.shtml">getting the code via Git</a>" and
+        JMRI <a href="GitFAQ.shtml">Git FAQ</a> pages.
         
+        <p>Once set up, NetBeans provides built-in support 
+        for using Git.</p>
+        
+        <p>For more information on Git and NetBeans, see the
+        <a href="https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help page</a>
 
-    <p>
-    For more information on Git and NetBeans, see the
-    <a href="https://netbeans.org/kb/docs/ide/git.html">NetBeans Git help page</a>.
+    <h3><a id="setup" name="setup"></a>Checking out code</h3>
+      <li>In NetBeans, under the "Team" menu, select Git, then Clone Repository.
+        Enter the https://github.com/JMRI/JMRI.git repository URL from the 
+        <a href="https://github.com/JMRI/JMRI">JMRI GitHub page</a>
+        on the NetBeans form under "Repository URL".  We recommend that you
+        also enter your GitHub user name and password on the form, so 
+        we can attribute your contributions to you later. Click "Next".
+        Make sure that the "master*" box is checked to pull down the main
+        version of the code. Click "Next", and then click "Finish".
+        <p>
+        It'll take a long time to pull down a copy of the code
+        (note the progress bar in the lower right), 
+        but then you're good to go.
     
-    <h2>Local Commits</h2>
+    <h3>Local Commits</h3>
     
-    When using Git, the "commit" operation is local to your computer.
-    It doesn't make any changes to the main JMRI repository.
-    <p>
-    You're encouraged to commit often, so that your changes are safely stored
-    away from your working directory and that each small change is separately
-    recorded.
+        When using Git, the "commit" operation is local to your computer.
+        It doesn't make any changes to the main JMRI repository.
+        <p>
+        You're encouraged to commit often, so that your changes are safely stored
+        away from your working directory and that each small change is separately
+        recorded.
 
-    <h2><a id="updating">Updating the code from Git</a></h2>
+    <h3><a id="updating" name="updating"></a>Updating the code from Git</h3>
 
-    <p>From time to time, you should update your local copy of the code to match 
-        the current "head" of the sourceforge.net JMRI Git repository contents. 
-        To do this, use the NetBeans [Team] &gt; [Remote] &gt; [Pull from Upstream] menu choice.
-        </p>
-    <p>You may also update a single file or the contents of a folder, by
-        right-clicking on an item in the "Files" window, then selecting 
-        [Git]-&gt;[Remote]-&gt;[Pull from Upstream].</p>
+        <p>From time to time, you should update your local copy of the code to match 
+            the current "HEAD" of the main JMRI Git repository contents. 
+            The basic process is to pull 
+            the most recent copies from the main JMRI repository, doing any merging that's
+            needed if you've made conflicting changes, and then pushing that up to your
+            own GitHub repository.
+            
+        <p>To do this, use the NetBeans [Team] &gt; [Remote] &gt; [Pull from Upstream] menu choice.
+            Tell NetBeans to pull from the "github" remote you defined above.
+        
+        <p>You may also update a single file or the contents of a folder, by
+            right-clicking on an item in the "Files" window, then selecting 
+            [Git]-&gt;[Remote]-&gt;[Pull from Upstream].</p>
     
+
+    <h3><a id="pullreq" name="pullreq"></a>Creating a Pull Request</h3>
+    
+        <p>A "pull request" is an easy way to gather up all your changes, even
+        if they span multiple files, into something that you can then submit
+        for inclusion in the main JMRI repository.
+        
+        <p>First, you need to set up a GitHub account and your
+        own repository. 
+          <ul>
+          <li>Get a <a href="https://github.com/join">GitHub account</a> and login
+          <li>Tell GitHub to <a href="https://help.github.com/articles/fork-a-repo/">"fork" JMRI's repository</a> 
+          into one of your own. There's a 
+          <a href="https://help.github.com/articles/fork-a-repo/">good help page</a>,
+          but basically you go to the 
+          <a href="https://github.com/JMRI/JMRI">JMRI repository page</a>
+          and click the "fork" button in the upper right.
+   
+          </ul>
+
+        This gives you your own repository, which you can then work with freely.
+
+        <p>
+        Next, push the changes up to your repository.  (Anybody can push to their own 
+        repository, but most people don't have permission to directly modify the main
+        JMRI repository; that's why the pull request is needed) To do this:
+        <ul>
+        <li>Use the NetBeans [Team] &gt; [Remote] &gt; [Push ...] menu choice. (If you try to use the "Push to Upstream"
+        choice, it will try to write back to the main repository, and will fail.)
+        <li>Click on Specify Git Repository, and enter the URL for your own repository, e.g. https://github.com/yourname/JMRI.git
+        <li>Then click next.  
+        <li>
+        NetBeans will check with the repository, and show an indication of branches to push
+        e.g. "master -&gt; master"
+        Check the appropriate box to for the branch you've been working on. 
+        <li>Click Next and Finish.
+        Netbeans will do the actual push to your repository.
+        </ul>
+        You can repeat this as many times as you'd like as you're working on your changes.
+        Each time, the most recent changes are pushed up and made available.
+        <p>Finally, when your change is ready to submit, go to the 
+        GitHub web site to
+        <a href="gitdeveloper.shtml#pull">fill out and submit a pull request</a>.
+        <p>Eventually, somebody will look at the pull request and decide whether to 
+        merge it in. Sometimes they'll ask for additional changes. In that case, you
+        can update the pull request by just pushing new changes to the your repository, where
+        they'll automatically be picked up.
+        
 
     <h2><a id="buildandrun">Building and running JMRI</a></h2>
     <p>    To build and run DecoderPro, all you have to do is select
@@ -135,9 +184,9 @@
     </p>
 
     <ul>
-        <li>Run -> Run Project (JMRI)  <em>will compile and invoke DecoderPro</em>
-        <li><em>You can choose other targets (i.e. PanelPro...) by changing 
-                [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]</em>
+        <li>[Run] -> [Run Project (JMRI)] will compile and invoke DecoderPro 
+        <li>You can choose other targets (i.e. PanelPro...) by changing 
+                [File]-&gt;[Project Properties (JMRI)]-&gt;[Build and Run]-&gt;[Run Project]
     </ul>
     <p>
         If you want to run the program under the NetBeans debugger,
@@ -159,40 +208,6 @@
     <p>Alternately, from the "Files" window, right-click on the build.xml file,
         and select "Run Target", then "jar".</p>
     
-    <h2><a id="pullreq">Creating a Pull Request</a></h2>
-    
-    <p>A "pull request" is an easy way to gather up all your changes, even
-    if they span multiple files, into one file that you can then submit
-    for inclusion in the main JMRI repository.
-    The process is quite simple with NetBeans
-    First, you need to set up a GitHub account and your
-    own repository. 
-    Please see the page on 
-    "<a href="gitdeveloper.shtml#repo">Being A JMRI Developer</a>"
-    for instructions on how to do that.
-
-    <p>
-    Once that's set up, you next configure NetBeans to push your changes to your 
-    repository.  (Anybody can do this, even without direct write access
-    to the main JMRI repository) To do this, ...
-    
-    <p>
-    To push the changes up, 
-    use the NetBeans [Team] &gt; [Remote] &gt; [Push ...] menu choice. (The Push to Upstream
-    choice will try to write back to the main repository at first, and will fail.)
-    Click on Specify Git Repository, and enter your
-    repository URL, e.g. https://github.com/yourname/JMRI 
-    Then click next.  
-    <p>
-    NetBeans will check with the repository, and show a "master -&gt; master"
-    selection; check that box to activate it. click Next and Finish.
-    This will push up to your repository.
-    
-    <p>Finally, when your change is ready to submit, go to the 
-    GitHub web site and 
-    <a href="gitdeveloper.shtml#pull">submit the pull request</a>.
-
-
 
     <h2><a id="nsis">Making a release package for Windows using NSIS</a></h2>
 
