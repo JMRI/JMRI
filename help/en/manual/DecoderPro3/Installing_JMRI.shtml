@@ -23,7 +23,7 @@
 <img src="images/Logo.gif" alt="JMRI DecoderPro Logo" BORDER="0" height="135" width="160" vspace="15"></h1>
 
 <h1>Installing JMRI&reg;</h1>
-<div align=right>
+<div align="right">
   <p><a href="index.shtml#Installing">Back to Index</a></p>
 </div>
 
@@ -69,7 +69,8 @@
 </div>
 
 <!--#include virtual="/Footer" -->
-</div>
-
 <!--#include virtual="/Footer" -->
+</div>
+</div>
+</body>
 </html>
