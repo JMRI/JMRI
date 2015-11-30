@@ -491,6 +491,7 @@
     <a href="html/doc/Technical/XmlEditors.shtml">page on XML editors</a>,
     and has done a large amount of work on decoder definitions.
     <li>Mark Underwood, who provided a fix for a problem with looping sounds
+    and added support for the DCC++ hardware.
 <a name="V"></A>
     <li>Darryl Van Nort, who provided a definition for an MRC decoder
     <li>Tjeerd Verhage, who provided the logo for our SourceForge.net page
@@ -521,7 +522,8 @@
     <li>Jim Wolters, who updated the MRC Sound Brilliance 1812 decoder definition.
     <li>Randall Wood, who updated the fast clock support, improved
     the XMLIO support with some fixed memory variables,
-    migrated us to Git and GitHub, and build our Travis CI support.
+    migrated us to Git and GitHub, and build our Travis (Linux/Mac) and
+    Appveyor (Windows) continuous integration & test support.
 <a name="X"></A>
 <a name="Y"></A>
 	<LI>Mike Yawn, who provided the instructions for building under Eclipse

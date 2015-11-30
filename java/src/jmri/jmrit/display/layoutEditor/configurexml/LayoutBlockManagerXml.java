@@ -97,18 +97,12 @@ public class LayoutBlockManagerXml extends jmri.managers.configurexml.AbstractNa
         log.error("Invalid method called");
     }
 
-    /**
-     * Create a LayoutBlockManager object of the correct class, then register
-     * and fill it.
-     *
-     * @param layoutblocks Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element layoutblocks) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         replaceLayoutBlockManager();
         // load individual layoutblocks
-        loadLayoutBlocks(layoutblocks);
+        loadLayoutBlocks(shared);
         return true;
     }
 

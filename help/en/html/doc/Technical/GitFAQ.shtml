@@ -202,12 +202,13 @@ on how to
 	      and switch between them as you work on different projects.
 
 	      <p>
-	      We recommend that you name branches starting with your initials (for example, &quot;abc&quot;) and something that suggests what you are working on:  
+	      We recommend that you name branches starting with your GitHub account name or initials (for example, &quot;abc&quot;) 
+	      and something that suggests what you are working on:  
 	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
 	      <code>&quot;abc-2015-09-14&quot;</code>, 
 	      <code>&quot;abc-next-cool-thing&quot;</code>, and
 	      <code>&quot;abc-patch-NNNN&quot;</code>
-	      are all fine.  With the initials, we know it's you, and you can sort out the rest.
+	      are all fine.  That way, we know it's you, and you can sort out the rest.
 
 	      <p>
 	      To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
@@ -237,13 +238,14 @@ on how to
 	      </code><br/>
 	      </blockquote>
 
-	      (If you leave off the message option, you'll be prompted to add one in an editor) If any
+	      (If you leave off the message option, you may be prompted to add one in an editor) If any
 	      changes were picked up and merged in, you can then commit them to your branch:
 	      <blockquote>
 	      <code>git commit -a</code><br/>
 	      </blockquote>
 
-	      When you're done, merge your changes back into the common line of development with<br/>
+	      
+	      <p>When you're done, merge your changes back into the common line of development with<br/>
 
 	      <blockquote>
 	      <code>
@@ -261,8 +263,106 @@ on how to
 	      git checkout master<br/>
 	      git branch -d branchname
 	      </code>
-	  </blockquote>
+	      </blockquote>
       </dd>
+
+    <dt id="share">Sharing Branches</dt>
+      <dd>
+      One of the advantages of Git branches is that it's easy for people to share
+      them.  This lets one person work with something that another has done, 
+      including editing and improving it, without it having to be released to everybody.
+      <p>
+      Say Arnie has developed something on the "arnie-great-tool" branch.  Bill wants
+      to try to use it on his layout.  The steps are:
+      
+      <ol>
+      <li>Arnie commits it to local repository, and then pushes it to his GitHub repository.
+      <blockquote>
+      <code>
+      git checkout arnie-great-tool<br/>
+      (work on changes)<br/>
+      git commit -m"Added support for the Frobnab 2000"<br/>
+      git push
+      </code>
+      </blockquote>
+      
+      <li>Bill can then get that by pulling it from Arnie's repository. 
+      <blockquote>
+      <code>
+      git pull https://github.com/arnie/JMRI.git arnie-great-tool<br/>
+      git checkout arnie-great-tool
+      </code>
+      </blockquote>
+      where the 1st part of the "pull" is the URL for Arnie's repository.
+      
+      <li>Now Bill can work with that code, and even change it as needed.
+      If he makes changes that he wants Arnie to have, he does the same process
+      in reverse:
+      <blockquote>
+      <code>
+      git commit -m"Fixed a bug in sternerstat handling"<br/>
+      git push
+      </code>
+      </blockquote>
+      Then Arnie can merge those changes into his own copy with:
+      <blockquote>
+      <code>
+      git checkout arnie-great-tool<br/>
+      git pull https://github.com/bill/JMRI.git arnie-great-tool
+      </code>
+      </blockquote>
+      </ol>
+    </dd>
+
+    <dt id="testPR">Testing a Pull Request</dt>
+    <dd>
+    Pull requests are just a special case of a branch.  If you want to test them
+    before merging them into master, you can bring them into your local repository
+    and work with them.
+    <a href="images/GitHubPullPRLinks.png"><img src="images/GitHubPullPRLinks.png" align="right" width="196" height="52" /></a>
+    <p>
+    In some cases, GitHub makes specific instructions available right on the pull-request itself.
+    Look near the bottom of the discussion thread, in the last information block.
+    The nice thing about those is that they automatically have the right branch names, etc, included.
+    <p>
+    Please note that, in some cases, these have a "Step 1" for looking at the pull request
+    locally, and a "Step 2" for merging it back.  Please do not do that Step 2 requests from the command line,
+    but instead use the web interface for doing the actual merge.
+    <p>
+    If there are no instructions there, here's the sequence of things to do:
+    <ul>
+        <a href="images/GitHubPRbranchInfo.png"><img src="images/GitHubPRbranchInfo.png" align="right" width="223" height="57" /></a>
+        <li>Find the source repository and branch name.  To do this, look at the top of the branch request
+        for a line that says:
+    
+        <blockquote>
+        <u>user</u> wants to merge <u>3</u> commits into JMRI:master from <u>user</u>:<u>branch</u>
+        </blockquote>
+    
+        <li>Next, pull that branch onto your own machine with the command:
+        <pre><code>
+        git fetch https://github.com/<u>user</u>/JMRI.git <u>branch</u>:<u>local-branch</u>
+        </code></pre>
+        where you have to replace each underlined value:
+        <ul>
+            <li>Change "user" to the correct GitHub user name
+            <li>Change "branch" to the name of the branch in the pull request (it's OK if this is e.g. master)
+            <li>Change "local-branch" to what you want to call the branch on your own machine. 
+            <em>This must not exist already</em>. Something like "me-user-branch" will remind you
+            of who's repository you pulled it from, while marking as subsequent changes as yours 
+            if you later share it with somebody else.  
+            (It's recommended that people start their branch names with 
+            their own name, which simplifies all sorts of operations)
+        </ul>
+        <li>The branch now exists in your machine, and you can just move to it:
+        <pre><code>
+        git checkout <u>local-branch</u>
+        </code></pre>
+        then compile, test, etc as you'd like. You can even commit and share changes
+        if you'd like, because this is now your own development branch: It started at the 
+        other person's, but it's now your own.
+    </ul>
+    </dd>
 
     <dt id="SFnetPatches">Handling a SF.net Patch</dt>
       <dd>
@@ -297,7 +397,7 @@ on how to
 	      <code>git push origin patch-NNNN</code>
 	      </blockquote>
 	      
-	      <li>Go you your repository on GitHub and start the &quot;pull request&quot; process.
+	      <li>Go to your repository on GitHub and start the &quot;pull request&quot; process.
 	      <li>On the second screen, switch the branch being compared in your repository from
 	      &quot;<strong>master</strong>&quot; to &quot;<strong>patch-NNNN</strong>&quot;.  Then the rest of the pull request goes as before.
 	      <li>Eventually, a JMRI maintainer will handle the pull request and merge it, which will
@@ -316,11 +416,11 @@ on how to
 	      </code>
 	      </blockquote>
 	      </ol>
-
 	      The advantage of this approach is that it lets you keep all your own work separate 
 	      from any patches you're handling.  The patches are on different branches than your work,
 	      so they don't overlap.
       </dd>
+
 </dl>
 
 <h2>Less-Common Operations</h2>
@@ -396,78 +496,6 @@ on how to
 	      </ol>  
 	      Now you can start developing, without having lost anything.
    </dd>
-
-   <dt id="branch">Branching</dt>
-   <dd>
-	      If you're making individual little
-	      changes, you can work directly on the default &quot;master&quot; branch.
-	      If you want to work on something more complicated, good &quot;Git Hygiene&quot; encourages you
-	      to create a feature branch so you can work on it independently.  
-	      Branches in Git are easy and cheap to create and use; you can have multiple branches at the same time, 
-	      and switch between them as you work on different projects.
-
-	      <p>
-	      We recommend that you name branches starting with your initials (for example, &quot;abc&quot;) and something that suggests what you are working on:  
-	      <code>&quot;abc-decoder-xml-change&quot;</code>, 
-	      <code>&quot;abc-2015-09-14&quot;</code>, 
-	      <code>&quot;abc-next-cool-thing&quot;</code>, and
-	      <code>&quot;abc-patch-NNNN&quot;</code>
-	      are all fine.  With the initials, we know it's you, and you can sort out the rest.
-
-	      <p>
-	      To create a branch called &quot;<em>branchname</em>&quot;, you do <br/>
-	      <blockquote>
-	      <code>git checkout -b <em>branchname</em></code><br/>
-	      </blockquote>
-
-	      The &quot;-b&quot; says to create the branch.  To switch to an existing branch, just leave
-	      out that option:<br/>
-
-	      <blockquote>
-	      <code>git checkout <em>branchname</em></code><br/>
-	      </blockquote>
-
-	      To see all the current branches, do<br/>
-
-	      <blockquote>
-	      <code>git branch</code><br/>
-	      </blockquote>
-
-	      If other people in the community make changes to the master branch, you can keep your 
-	      branch up to date by merging those changes in with your branch<br/>
-	      <blockquote>
-	      <code>
-	      git checkout <em>branchname</em><br/>
-	      git merge -m&quot;merging in current contents of master&quot; master
-	      </code><br/>
-	      </blockquote>
-
-	      (If you leave off the message option, you'll be prompted to add one in an editor) If any
-	      changes were picked up and merged in, you can then commit them to your branch:
-	      <blockquote>
-	      <code>git commit -a</code><br/>
-	      </blockquote>
-
-	      When you're done, merge your changes back into the common line of development with<br/>
-
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git merge -m&quot;merging to master&quot; <em>branchname</em><br/>
-	      git commit -a
-	      </code>
-	      </blockquote>
-	      
-	      You can then delete your branch (if you're finally done 
-	      with it) with<br/>
-	      
-	      <blockquote>
-	      <code>
-	      git checkout master<br/>
-	      git branch -d branchname
-	      </code>
-	  </blockquote>
-      </dd>
 
     <dt id="CVSCookies">Embedded CVS, RCS and SVN cookies</dt>
       <dd>

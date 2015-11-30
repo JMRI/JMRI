@@ -1,6 +1,5 @@
 package jmri.jmrix.loconet.locobuffer.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
 import jmri.jmrix.loconet.locobuffer.ConnectionConfig;
 import jmri.jmrix.loconet.locobuffer.LocoBufferAdapter;
@@ -34,8 +33,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

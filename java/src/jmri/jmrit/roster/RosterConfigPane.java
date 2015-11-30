@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
+import jmri.InstanceManager;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.FileUtil;
 
@@ -61,10 +63,10 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         p.setLayout(new FlowLayout());
         p.add(new JLabel(Bundle.getMessage("LabelMoveLocation")));
 
-        p.add(filename = new JLabel(Roster.getFileLocation()));
+        p.add(filename = new JLabel(Roster.getDefault().getRosterLocation()));
         // don't show default location, so it's not deemed a user selection
         // and saved
-        if (FileUtil.getUserFilesPath().equals(Roster.getFileLocation())) {
+        if (FileUtil.getUserFilesPath().equals(Roster.getDefault().getRosterLocation())) {
             filename.setText("");
         }
         JButton b = new JButton(Bundle.getMessage("ButtonSetDots"));
@@ -125,7 +127,7 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
         JPanel p2 = new JPanel();
         p2.setLayout(new FlowLayout());
         p2.add(new JLabel(Bundle.getMessage("LabelDefaultOwner")));
-        owner.setText(RosterEntry.getDefaultOwner());
+        owner.setText(InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner());
         p2.add(owner);
         add(p2);
     }
@@ -179,13 +181,16 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        RosterConfigManager manager = InstanceManager.getDefault(RosterConfigManager.class);
+        manager.setDefaultOwner(this.getDefaultOwner());
+        manager.setDirectory(this.getSelectedItem());
+        manager.savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
     public boolean isDirty() {
         return (this.isFileLocationChanged()
-                || !RosterEntry.getDefaultOwner().equals(this.getDefaultOwner()));
+                || !InstanceManager.getDefault(RosterConfigManager.class).getDefaultOwner().equals(this.getDefaultOwner()));
     }
 
     @Override
@@ -194,9 +199,9 @@ public class RosterConfigPane extends JPanel implements PreferencesPanel {
     }
 
     private boolean isFileLocationChanged() {
-        return (this.getSelectedItem() == null || this.getSelectedItem().equals(""))
-                ? !Roster.getFileLocation().equals(FileUtil.getUserFilesPath())
-                : !Roster.getFileLocation().equals(this.getSelectedItem());
+        return (this.getSelectedItem() == null || this.getSelectedItem().isEmpty())
+                ? !Roster.getDefault().getRosterLocation().equals(FileUtil.getUserFilesPath())
+                : !Roster.getDefault().getRosterLocation().equals(this.getSelectedItem());
     }
 
     @Override

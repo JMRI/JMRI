@@ -42,6 +42,8 @@ public class SimpleTimebaseTest extends TestCase {
 
     public void testSetStartTime() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Date now = new Date();
 
         p.setStartSetTime(true, now);
@@ -62,10 +64,12 @@ public class SimpleTimebaseTest extends TestCase {
     // set the time based on a date.
     public void testSetTimeDate() {
         SimpleTimebase p = new SimpleTimebase();
+        p.setRun(false); // prevent clock ticking during test
+
         Date now = new Date();
 
         p.setTime(now);
-        Assert.assertEquals("Time Set",now,p.getTime());
+        Assert.assertEquals("Time Set",now.toString(),p.getTime().toString());
     }
 
     // set the time based on an instant.
@@ -74,7 +78,7 @@ public class SimpleTimebaseTest extends TestCase {
         Instant now = Instant.now();
         
         p.setTime(now);
-        Assert.assertEquals("Time Set",Date.from(now),p.getTime());
+        Assert.assertEquals("Time Set",Date.from(now).toString(),p.getTime().toString());
     }
 
     /* 	public void testShortDelay() { */

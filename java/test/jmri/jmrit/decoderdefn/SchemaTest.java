@@ -31,12 +31,15 @@ public class SchemaTest extends jmri.configurexml.SchemaTestBase {
     public static Test suite() {
         TestSuite suite = new TestSuite("jmri.jmrit.decoderdefn.SchemaTest"); // no tests in this class itself
 
-        // Some specific files for early tests
-        validateDirectory(suite, "java/test/jmri/jmrit/decoderdefn/");
+        // check that the schema passes useful constructs
+        validateDirectory(suite, "java/test/jmri/jmrit/decoderdefn/pass");
+        
+        // check that the schema detects errors
+        validateDirectoryFail(suite, "java/test/jmri/jmrit/decoderdefn/fail");
 
         validateSubdirectories(suite, "xml/decoders/");
         validateDirectory(suite, "xml/decoders/");
-
+        
         return suite;
     }
 

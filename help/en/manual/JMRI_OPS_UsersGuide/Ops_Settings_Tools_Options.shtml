@@ -1,24 +1,33 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
 
+<title>OperationsPro - Settings Menu Bar</title>
 
-
-<title>Operations-Settings Menu Bar</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
+
 <body>
 <!--#include virtual="/Header" -->
 <!--#include virtual="Sidebar" -->
-<div id="mainContent"><a name="Top"></a>
+<div id="mainContent">
+<a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Settings Options Window</h1>
+<h2>OperationsPro Settings Options Window</h2>
+
 <div align="right">
 <p><a href="Ops_Settings_menubar.shtml"><span style="text-decoration: underline;">Back</span></a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
-<hr>The <span style="font-weight: bold;">Options</span> window is opened from the <span style="font-weight: bold;">Settings/Tools</span> menu and allows you to set several options that can
+<hr>
+
+<p>The <span style="font-weight: bold;">Options</span> window is opened from the <span style="font-weight: bold;">Settings > Tools</span> menu and allows you to set several options that can
 be modified.
 <table align="center" border="1" cellpadding="2" cellspacing="1" width="82%">
 <tbody>
@@ -60,10 +69,10 @@ these types of moves, select the appropriate checkbox.<strong><br>
 <p><strong>Staging </strong></p>
 <p> <input name="checkbox5" id="checkbox5" checked="checked" type="checkbox"> <strong>Enable
 Type, Road and </strong>Load Restrictions into Staging<br>
-This opton restricts trains to staging tracks that only accept the
+This option restricts trains to staging tracks that only accept the
 train's rolling stock type, road and load names. This is useful when
 you want trains delivered to staging tracks based on the train's
-rolling stock restrictions. However, if you want certan car types, car
+rolling stock restrictions. However, if you want certain car types, car
 loads, or road name to be transported by a train, but not delivered to
 staging, deselect this feature</p>
 </td>
@@ -76,7 +85,7 @@ When selected the departure track in staging becomes a available for
 other trains immediately after the departure train is built. For trains
 that return to same staging location, this option allow the train to
 return to the same track it departed on. This option is only available
-when using the aggessive mode for building trains.<br>
+when using the aggressive mode for building trains.<br>
 </p>
 </td>
 </tr>
@@ -296,8 +305,8 @@ for Virtual Sound Decoder -</strong></p>
 <tr>
 <td colspan="3">
 <p>The
-car parametes for pick up car (PC) and set out car (SC) are road,
-number, type, length, load, color, location namel, track name,
+car parameters for pick up car (PC) and set out car (SC) are road,
+number, type, length, load, color, location name, track name,
 destination name, destination track name, owner name, kernel name, car
 comment, pick up comment, set out comment, C, F, H, RFID. Where C =
 Caboose, F = FRED, and H = Hazardous.</p>
@@ -306,7 +315,7 @@ parameters for pick up (PL) and set out loco (SL) are road, number,
 model, length, type, hp, location name, track name, destination name,
 destination track name, owner name, consist name, car comment, RFID.</p>
 <p><a href="http://groups.yahoo.com/group/jmriusers/files/Operations" target="_blank">Examples of custom manifests</a>
-(requires that you have Yahoo ID and Password to JMRI Groups)</p>
+(requires that you have Yahoo ID and Password to JMRI Users Yahoo group).</p>
 </td>
 </tr>
 </tbody>
@@ -316,12 +325,13 @@ destination track name, owner name, consist name, car comment, RFID.</p>
 </tr>
 </tbody>
 </table>
-<div align="right">
+
 <div align="right">
 <p><a href="Ops_Settings_menubar.shtml">Back</a></p>
 <p><a href="index.shtml#Main">Back to Index</a></p>
 </div>
-<p>.</p>
+
+<!--#include virtual="/Footer" -->
 </div>
-<!--#include virtual="/Footer" --></div>
-</body></html>
+</body>
+</html>

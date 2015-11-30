@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -120,7 +121,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>
@@ -1981,70 +1982,62 @@
       </variable>
       <!-- CV118.PI.SI pitch shift 16 bit versions for FW after 1-20-13 -->
       <variable label="Chuff Pitch Shift" CV="118.10.0" default="0" item="CV118.10 Value 16" include="3100,3101,3106,3107,4100,4101,4102">
-        <splitVal highCV="118.10.1" min="0" max="1200" upperMask="XVVVVVVV"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>ge</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <splitVal highCV="118.10.1" min="0" max="1200" upperMask="XVVVVVVV"/></variable>
       <variable label="Chuff Pitch Shift Sign" CV="118.10.1" mask="VXXXXXXX" default="0" item="CV118.10 Sign 16" include="3100,3101,3106,3107,4100,4101,4102">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>ge</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/></variable>
       <variable label="Chuff2 Pitch Shift" CV="118.11.0" default="7" item="CV118.11 Value 16" include="4100,4101,4102">
-        <splitVal highCV="118.11.1" min="0" max="1200" upperMask="XVVVVVVV"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>ge</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <splitVal highCV="118.11.1" min="0" max="1200" upperMask="XVVVVVVV"/></variable>
       <variable label="Chuff2 Pitch Shift Sign" CV="118.11.1" mask="VXXXXXXX" default="0" item="CV118.11 Sign 16" include="4100,4101,4102">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>ge</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/></variable>
       <!-- CV118.PI.SI pitch shift 8 bit versions, for FW before 1-20-13 -->
       <variable label="Chuff Pitch Shift" CV="118.10" mask="XVVVVVVV" default="0" item="CV118.10 Value" include="3100,3101,3106,3107,4100,4101,4102">
-        <decVal/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>lt</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Chuff Pitch Shift Sign" CV="118.10" mask="VXXXXXXX" default="0" item="CV118.10 Sign" include="3100,3101,3106,3107,4100,4101,4102">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>lt</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/></variable>
       <variable label="Chuff2 Pitch Shift" CV="118.11" mask="XVVVVVVV" default="7" item="CV118.11 Value" include="4100,4101,4102">
-        <decVal/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>lt</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Chuff2 Pitch Shift Sign" CV="118.11" mask="VXXXXXXX" default="0" item="CV118.11 Sign" include="4100,4101,4102">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>lt</relation>
           <value>9</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/></variable>
       <!-- CV120.PI.SI ready to move -->
       <variable label="Ready to Move Silence 1" CV="120.1.0" default="40" item="CV120.1.0">
         <decVal/>

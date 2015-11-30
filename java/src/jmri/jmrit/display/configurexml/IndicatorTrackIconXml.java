@@ -106,11 +106,6 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         return elem;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a IndicatorTrackIcon, then add to a target JLayeredPane
      *

@@ -40,8 +40,9 @@
 
             <p>Panel redisplay requires a modern browser with HTML5 support (Chrome, FireFox, Safari, IE9).</p>
 
-        </div>
+<!--#include virtual="/Footer" -->
+  </div><!-- closes #mainContent-->
+</div> <!-- closes #mBody-->
 
-        <!--#include virtual="/Footer" -->
-    </body>
+</body>
 </html>

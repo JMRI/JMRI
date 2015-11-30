@@ -1,9 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2009 -->
-<!-- $Id$ -->
-<title>Operations-Locations</title>
+<title>JMRI OperationsPro - Set Cars window</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -19,76 +17,85 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-<a NAME="Top"></a>
+<a name="Top"></a>
 
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Operations Set Cars Window</h1>
+<h2>OperationsPro: Set Car(s) window</h2>
 
 <div align=right>
 <p><a href="Ops_Cars.shtml">Back </a></p>
 </div>
 
 <hr>
-<p>You can select the <strong>Set Cars</strong> from the <strong><a href="Ops_Cars.shtml">Cars </a></strong>window <strong>Tools</strong> menu. This allows you to change the location, destinationa, status, or train assignment for a group of cars. This tool works the same as the <strong>Set Car Location </strong>tool as described below, except that multiple cars are modified. Select the cars you want in the table and then select <strong>Set Cars. </strong>The first selected car becomes the default, and if you press 
-  <input type="button" name="button" id="button" value="Change"> 
-  , all of the other selected cars will have the same settings as the default car.  Be sure to 
+<h3>Set Cars (multiple)</h3>
+<p>You can select <strong>Set Cars</strong> from the <strong><a href="Ops_Cars.shtml">Cars</a></strong> window's <strong>Tools</strong> menu. This allows you to change the Location, destination, status, or Train assignment for a group of Cars. This tool works the same as the <a href="#setcarlocation"><strong>Set Car Location</strong></a> tool described below, except that multiple Cars are modified in one action.<br>
+Select the Cars you want in the Cars table by Shift/Command + clicking their names, and then select <strong>Set Cars</strong> from the Tools menu. The first selected Car becomes the default, and if you press 
+  <input type="button" name="button" id="button" value="Change"> , all of the other selected Cars will have the same settings as the default Car. Be sure to 
   <input type="button" name="button5" id="button5" value="Save"> 
 in the <a href="Ops_Cars.shtml">Cars</a> window if you want to keep your changes. </p>
-<p>Displays when <strong>Set Cars</strong> window opens. This warns that when you Save the changes from the <strong>Set Cars</strong> window those cars are no longer part of a train.</p>
+
+<p>The following message displays when you choose <strong>Set Cars</strong> if (one of) the Cars you selected are part of a Train. This warns that when you save the changes from the <strong>Set Cars</strong> window, those Cars are no longer part of a previously built Train is was assigned to.</p>
 <p><img src="images/Ops_car_release.png" width="406" height="122" alt="release"></p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
+<table border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td valign="top"><p>&nbsp;</p>
-    <p><img src="images/Ops_location_setCars.png" width="500" height="650" alt="set cars"></p></td>
-    <td><p><strong>Status</strong>      </p>
+    <td width="550" valign="top">
+    <p><img src="images/Ops_location_setCars.png" width="500" height="650" alt="set Cars"></p></td>
+    <td valign="top"><br>&nbsp;<br><p><strong>Status</strong></p>
       <p><strong>
         <input type="checkbox" name="checkbox4" id="checkbox4">
-        Location Unkown</strong> results in: program will ignore the car when building a new train; on manifests and switch lists, the program will list the car as misplaced. This selection disables all other selections in this window.</p>
+        Location Unknown</strong><br>
+        Causes the program to ignore the Car when building a new train; on Manifests and Switch Lists the program will list the Car as "Misplaced". This selection disables all other selections in this pane.</p>
       <p>
         <input type="checkbox" name="checkbox4" id="checkbox5">
-        <strong>Out of Service</strong> when selected instructs the program to ignore the car when building new trains. Many operators have a RIP (Repair in Place) track and use this feature to hold the care there until repairs have been completed.</p>
+        <strong>Out of Service</strong><br>
+        When selected instructs the program to ignore the Car when building new Trains. Many operators have a RIP (Repair in Place) track and use this feature to hold the Care there until repairs have been completed.</p>
       <p><strong>Location</strong></p>
-      <p>Use the location set to place the car on the layout.</p>
-      <p><strong>Return When Empty</strong></p>
-      <p>Enter location to return the car to when empty.
+      <p>Use the Location Name/Track fields to place the Car on the layout.<br>
+      <input type="checkbox" name="checkbox4" id="checkbox6">
+      <strong>Auto</strong> instructs the program to place the Car anywhere in the next Build.</p>
+      <p><strong>Optional</strong></p>
+      <div style="margin-left: 40px;"><p><strong>Return When Empty</strong></p>
+      <p>Select the Location to return the Car to when empty.<br>
         <input type="checkbox" name="checkbox4" id="checkbox6">
-        <strong>Auto
-          shows</strong> valid track for a given location.</p>
+        <strong>Auto</strong> shows valid track for a given Location.</p>
       <p><strong>Load</strong></p>
-      <p>You may also change the cars load.</p>
-      <p><strong>Optional--Normally Set by Progam</strong></p>
-    <p>See window help </p></td>
+      <p>You may also change the Car's load.</p>
+      </div>
+    <p><strong>Optional--Normally Set by Program</strong></p>
+    <div style="margin-left: 40px;"><p>See window help </p></div></td>
   </tr>
 </table>
-<p>After creating a car, you can set the car's location, and optionally the car's destination and train by using the
+
+<a name="setcarlocation" id="setcarlocation"></a><h3>Set Car</h3>
+<p>After creating a Car, you can set the Car's Location, and optionally the Car's destination and Train by using the
   <input type="button" name="button3" id="button3" value="Set">
-found for each car in the <strong><a href="Ops_Cars.shtml">Cars</a></strong> window. Normally the car's destination and assigned train are generated by the program, but you can use this window and its options to force a car to specific location using a specified train.</p>
-<p>Displays when <strong>Set Cars Location </strong>window opens. This warns that when you Save the changes from the <strong>Set Cars Location</strong> window those cars are no longer part of a train.</p>
+found for each Car in the <strong><a href="Ops_Cars.shtml">Cars</a></strong> window. Normally the Car's destination and assigned Train are generated by the program, but you can use this panel and its options to force a Car to a specific Location using a specified Train.</p>
+<p>The following message displays when you choose <strong>Set Car</strong> if the Car is part of a Train. This warns that when you Save the changes from the <strong>Set Cars Location</strong> window those Cars are no longer part of a Train.</p>
 <p><img src="images/Ops_car_release.png" width="406" height="122" alt="release"></p>
-<table width="90%" border="0" cellspacing="1" cellpadding="2">
+<table border="0" cellspacing="1" cellpadding="2">
   <tr>
-    <td width="71%"><img src="images/Ops_car_SetCarLocation.png" width="500" height="650" alt="set car location"></td>
-    <td width="29%" valign="top"><p><strong>Status</strong></p>
+    <td width="550"><img src="images/Ops_car_SetCarLocation.png" width="500" height="650" alt="set Car Location"></td>
+    <td valign="top"><p><strong>Status</strong></p>
       <p><strong>
         <input type="checkbox" name="checkbox" id="checkbox">
-    Location Unkown</strong> results in: program will ignore the car when building a new train; on manifests and switch lists, the program will list the car as misplaced. This selection disables all other selections in this window.</p>
+    Location Unknown</strong> results in: the program will ignore the Car when building a new Train; on manifests and switch lists, the program will list the Car as misplaced. This selection disables all other selections in this window.</p>
     <p>
       <input type="checkbox" name="checkbox2" id="checkbox2">
-        <strong>Out of Service</strong> when selected instructs the program to ignore the car when building new trains. Many operators have a RIP (Repair in Place) track and use this feature to hold the care there until repairs have been completed.</p>
+        <strong>Out of Service</strong> when selected instructs OperationsPro to ignore the Car when building new Trains. Many operators have a RIP (Repair in Place) track and use this feature to hold the Car there until repairs have been completed.</p>
     <p><strong>Location</strong></p>
-    <p>Use the location set to place the car on the layout.</p>
+    <p>Use the Location set to place the Car on the layout.</p>
     <p><strong>Return When Empty</strong></p>
-    <p>Enter location to return the car to when empty. 
+    <p>Enter Location to return the Car to when empty. 
       <input type="checkbox" name="checkbox3" id="checkbox3">
       <strong>Auto
-    shows</strong> valid track for a given location.</p>
+    shows</strong> valid track for a given Location.</p>
     <p><strong>Load</strong></p>
-    <p>You may also change the cars load.</p>
-    <p><strong>Optional--Normally Set by Progam</strong></p>
-    <p>See window help </p></td>
+    <p>You may also change the Car's load.</p>
+    <p><strong>Optional - Normally Set by the program</strong></p>
+    <p>See window help</p>
+    </td>
   </tr>
 </table>
-<p>&nbsp;</p>
 <hr>
 
 <div align=right>
@@ -96,5 +103,7 @@ found for each car in the <strong><a href="Ops_Cars.shtml">Cars</a></strong> win
 </div>
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

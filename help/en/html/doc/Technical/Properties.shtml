@@ -74,6 +74,17 @@ The Linux startup scripts will do this if you have set the JMRI_SERIAL_PORT envi
 <dl>
 
 <dt>
+jmri.log
+<dd>
+Name of JMRI's logging control file, typically default.lcf
+
+<dt>
+jmri.log.path
+<dd>
+The directory for storing logs. If not specified,
+logs are stored in the JMRI settings directory.
+
+<dt>
 jmri.prefsdir
 <dd>
 By setting this property, you can explicitly set where JMRI
@@ -96,6 +107,16 @@ If set, provides a minimum inset value for the width of JMRI windows.
 The inset is the space allowed for decorations around the sides of the screen.
 Set this to a positive integer N to ensure that JMRI windows open with at
 least N pixels available on the sides.
+
+<dt>
+org.jmri.Apps.(key)
+<dd>
+
+
+<dt>
+org.jmri.Apps.configFilename
+<dd>
+
 
 </dl>
     

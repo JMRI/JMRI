@@ -1,6 +1,5 @@
 package jmri.jmrix.jmriclient.networkdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.jmriclient.JMRIClientSystemConnectionMemo;
 import jmri.jmrix.jmriclient.networkdriver.ConnectionConfig;
@@ -44,7 +43,7 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     /**

@@ -42,15 +42,10 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
         return element;
     }
 
-    /**
-     * Create a Grapevine SerialSignalHead
-     *
-     * @param element Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element element) {
-        String sys = element.getAttribute("systemName").getValue();
-        Attribute a = element.getAttribute("userName");
+    @Override
+    public boolean load(Element shared, Element perNode) {
+        String sys = shared.getAttribute("systemName").getValue();
+        Attribute a = shared.getAttribute("userName");
         SignalHead h;
         if (a == null) {
             h = new SerialSignalHead(sys);
@@ -58,7 +53,7 @@ public class SerialSignalHeadXml extends AbstractNamedBeanManagerConfigXML {
             h = new SerialSignalHead(sys, a.getValue());
         }
 
-        loadCommon(h, element);
+        loadCommon(h, shared);
 
         InstanceManager.signalHeadManagerInstance().register(h);
         return true;

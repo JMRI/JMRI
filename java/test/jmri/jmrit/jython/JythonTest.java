@@ -22,8 +22,10 @@ public class JythonTest extends TestCase {
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
         jmri.util.JUnitAppender.clearBacklog();
         // open output window
+        JythonWindow outputWindow;  // actually an Action class
         try {
-            new JythonWindow().actionPerformed(null);
+            outputWindow = new JythonWindow();
+            outputWindow.actionPerformed(null);
         } catch (Exception e) {
             Assert.fail("exception opening output window: " + e);
         }
@@ -31,12 +33,17 @@ public class JythonTest extends TestCase {
         // create input window
         InputWindow w = new InputWindow();
 
-        // run a null test
+        // run a null op test
         try {
             w.buttonPressed();
         } catch (Exception e) {
             Assert.fail("exception during execution: " + e);
         }
+        
+        // find, close output window
+        JFrame f = jmri.util.JmriJFrame.getFrame("Script Output");
+        Assert.assertTrue("found output frame", f != null);
+        f.dispose();
 
         // error messages are a fail
         if (jmri.util.JUnitAppender.clearBacklog() != 0) {
@@ -46,14 +53,8 @@ public class JythonTest extends TestCase {
 
     public void testInput() {
         new InputWindowAction().actionPerformed(null);
-//    }
-//  test order isn't guaranteed!
-//    public void testXXFrameCreation() {
         JFrame f = jmri.util.JmriJFrame.getFrame("Script Entry");
-        Assert.assertTrue("found frame", f != null);
-        f.dispose();
-        f = jmri.util.JmriJFrame.getFrame("Script Output");
-        Assert.assertTrue("found frame", f != null);
+        Assert.assertTrue("found input frame", f != null);
         f.dispose();
     }
 

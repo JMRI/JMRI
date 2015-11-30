@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Scripting</title>
 
 <!-- Style -->
@@ -22,24 +21,26 @@
 
 
       <!-- Page Body -->
-        <H2>
+        <h2>
 		JMRI: Scripting
-        </H2>
+        </h2>
 
 These pages discusses scripting JMRI
 using a language called Jython.
 
-<P>
+<p>
 Information is available on 
-<OL>
-<LI><A HREF="Start.shtml">Getting started with simple scripts</a>
-<LI><A HREF="Python.shtml">The language itself</a>
-<LI><A HREF="Examples.shtml">Examples</a>
-<LI><A HREF="FAQ.shtml">Frequently asked questions</a>
-<LI><A HREF="Jynstruments.shtml">Modifying the GUI with Jynstruments</a>
-</OL>
+<ol>
+<li><a href="Start.shtml">Getting started with simple scripts</a>
+<li><a href="Python.shtml">The language itself</a>
+<li><a href="Examples.shtml">Examples</a>
+<li><a href="FAQ.shtml">Frequently asked questions</a>
+<li><a href="Jynstruments.shtml">Modifying the GUI with Jynstruments</a>
+</ol>
 
 <!--#include virtual="/Footer" -->
+    </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
 </body>
 </html>
 

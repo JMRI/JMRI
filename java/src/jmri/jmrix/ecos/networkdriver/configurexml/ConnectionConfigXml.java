@@ -1,7 +1,6 @@
 package jmri.jmrix.ecos.networkdriver.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.ecos.EcosPreferences;
 import jmri.jmrix.ecos.networkdriver.ConnectionConfig;
@@ -257,8 +256,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
 
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

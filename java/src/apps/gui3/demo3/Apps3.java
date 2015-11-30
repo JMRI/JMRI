@@ -21,6 +21,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToolBar;
 import jmri.InstanceManager;
 import jmri.JmriException;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.util.FileUtil;
 import jmri.util.JmriJFrame;
 import jmri.util.Log4JUtil;
@@ -50,7 +51,7 @@ public class Apps3 {
     static public void preInit() {
         // TODO Launch splash screen: splash(true)
 
-        Log4JUtil.initLog4J();
+        Log4JUtil.initLogging();
         log.info(Log4JUtil.startupInfo("Demo3"));
 
         // TODO setConfigFilename("Demo3Config3.xml", args)
@@ -214,7 +215,7 @@ public class Apps3 {
     }
 
     protected void installConfigurationManager() {
-        InstanceManager.setConfigureManager(new jmri.configurexml.ConfigXmlManager());
+        InstanceManager.setConfigureManager(new JmriConfigurationManager());
         log.debug("start load config file");
     }
 
