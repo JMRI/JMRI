@@ -220,6 +220,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isSensorMessage() { return(this.getOpCodeChar() == DCCppConstants.SENSOR_CMD); }
     public boolean isEEPROMWriteMessage() { return(this.getOpCodeChar() == DCCppConstants.WRITE_TO_EEPROM_CMD); }
     public boolean isEEPROMClearMessage() { return(this.getOpCodeChar() == DCCppConstants.CLEAR_EEPROM_CMD); }
+    public boolean isOpsWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.OPS_WRITE_CV_BYTE); }
+    public boolean isOpsWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.OPS_WRITE_CV_BIT); }
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
@@ -587,6 +589,96 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	return(Integer.parseInt(this.getTOSubAddressString()));
     }
 
+    //------------------------------------------------------
+    // Helper methods for Ops Write Byte Commands
+
+     public String getOpsWriteAddrString() {
+	Matcher m;
+	if (this.isOpsWriteByteMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else if (this.isOpsWriteBitMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(1));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteAddrInt() {
+	return(Integer.parseInt(this.getOpsWriteAddrString()));
+	
+ 
+    }
+
+    public String getOpsWriteCVString() {
+	Matcher m;
+	if (this.isOpsWriteByteMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else if (this.isOpsWriteBitMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(2));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteCVInt() {
+	return(Integer.parseInt(this.getOpsWriteCVString())); 
+    }
+    
+    public String getOpsWriteBitString() {
+	Matcher m;
+        if (this.isOpsWriteBitMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(3));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteBitInt() {
+	return(Integer.parseInt(this.getOpsWriteBitString())); 
+    }
+    
+    public String getOpsWriteValueString() {
+	Matcher m;
+        int idx;
+	if (this.isOpsWriteByteMessage()) {
+            idx = 3;
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else if (this.isOpsWriteBitMessage()) {
+            idx = 4;
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(idx));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteValueInt() {
+	return(Integer.parseInt(this.getOpsWriteValueString())); 
+    }
+    
     //------------------------------------------------------
     // Helper methods for Prog Write Byte Commands
 

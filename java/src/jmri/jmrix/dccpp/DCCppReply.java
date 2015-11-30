@@ -578,6 +578,24 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean getSensorIsInactive() {
 	return(this.matches(DCCppConstants.SENSOR_INACTIVE_REPLY_REGEX));
     }
+    
+    public String getFreeMemoryString() {
+ 	if (this.isFreeMemoryReply()) {
+	    Matcher m = match(this.toString(), DCCppConstants.FREE_MEMORY_REPLY_REGEX, "FreeMemoryReply");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else 
+	    log.error("FreeMemoryReply Parser called on non-FreeMemoryReply message type {}", this.getOpCodeChar());
+	    return("0");
+    }
+
+    public int getFreeMemoryInt() {
+	return(Integer.parseInt(this.getFreeMemoryString()));
+    }
+   
 
     //-------------------------------------------------------------------
 
@@ -599,6 +617,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
     public boolean isMADCFailReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_FAIL_REPLY); }
     public boolean isMADCSuccessReply() { return(this.getOpCodeChar() == DCCppConstants.MADC_SUCCESS_REPLY); }
     public boolean isStatusReply() { return(this.matches(DCCppConstants.STATUS_REPLY_REGEX)); }
+    public boolean isFreeMemoryReply() { return(this.matches(DCCppConstants.FREE_MEMORY_REPLY_REGEX)); }
 
     public boolean isValidReplyFormat() {
 	// NOTE: Does not (yet) handle STATUS replies

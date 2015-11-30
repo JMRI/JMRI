@@ -125,6 +125,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	case DCCppConstants.MEMORY_REPLY:
 	    // TODO: Implement this fully
 	    text = "Memory Reply...\n";
+            text += "\tFree Memory: " + l.getFreeMemoryString() + "\n";
 	    break;
 	default:
 	    text += "Unregonized reply: ";
@@ -208,12 +209,17 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    }
 	    break;
 	case DCCppConstants.OPS_WRITE_CV_BYTE:
-	    text = "Ops Write Byte Cmd: ";
-	    // TODO: Fill this out
+	    text = "Ops Write Byte Cmd: \n"; // <w cab cv val>
+            text += "\tAddress: " + l.getOpsWriteAddrString() + "\n";
+            text += "\tCV: " + l.getOpsWriteCVString() + "\n";
+            text += "\tValue: " + l.getOpsWriteValueString() + "\n";
 	    break;
-	case DCCppConstants.OPS_WRITE_CV_BIT:
+	case DCCppConstants.OPS_WRITE_CV_BIT: // <b cab cv bit val>
 	    text = "Ops Write Bit Cmd: ";
-	    // TODO: Fill thsi out
+            text += "\tAddress: " + l.getOpsWriteAddrString() + "\n";
+            text += "\tCV: " + l.getOpsWriteCVString() + "\n";
+            text += "\tBit: " + l.getOpsWriteBitString() + "\n";
+            text += "\tValue: " + l.getOpsWriteValueString() + "\n";
 	    break;
 	case DCCppConstants.PROG_WRITE_CV_BYTE:
 	    text = "Prog Write Byte Cmd: ";
@@ -249,9 +255,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	case DCCppConstants.READ_CS_STATUS:
 	    text = "Status Cmd ";
 	    break;
-//	case DCCppConstants.QUERY_SENSOR_STATE:
-//	    text = "Sensor Status Cmd: ";
-//	    break;
 	case DCCppConstants.WRITE_DCC_PACKET_MAIN:
             text = "Write DCC Packet Main Cmd: ";
             break;

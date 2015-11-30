@@ -126,6 +126,7 @@ public final class DCCppConstants {
     public final static String MADC_FAIL_REPLY_REGEX = "\\s*X\\s*";
     public final static String MADC_SUCCESS_REPLY_REGEX = "\\s*O\\s*";
     public final static String STATUS_REPLY_REGEX = "iDCC\\+\\+(.*): BUILD (.*)";
+    public final static String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
