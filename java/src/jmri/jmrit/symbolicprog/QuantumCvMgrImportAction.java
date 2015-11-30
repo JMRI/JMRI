@@ -1,13 +1,10 @@
 // QuantumCvMgrImportAction.java
 package jmri.jmrit.symbolicprog;
 
-import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
-import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import jmri.util.FileChooserFilter;
+import javax.swing.JLabel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,44 +15,20 @@ import org.slf4j.LoggerFactory;
  * @author	Dave Heap Copyright (C) 2015
  * @version $Revision: 22821 $
  */
-public class QuantumCvMgrImportAction extends AbstractAction {
+public class QuantumCvMgrImportAction extends GenericImportAction {
 
-    /**
-     *
-     */
-    private static final long serialVersionUID = -2113094604113840817L;
-    CvTableModel mModel;
-    JFrame mParent;
-    FileChooserFilter fileFilter;
-    JFileChooser fileChooser;
-
-    public QuantumCvMgrImportAction(String actionName, CvTableModel pModel, JFrame pParent) {
-        super(actionName);
-        mModel = pModel;
-        mParent = pParent;
-
+    public QuantumCvMgrImportAction(String actionName, CvTableModel pModel, JFrame pParent, JLabel pStatus) {
+        super(actionName, pModel, pParent, pStatus, "Quantum CV Manager files", "qcv", null);
     }
 
-    public void actionPerformed(ActionEvent e) {
-
-        log.debug("start to import QuantumCvMgr file");
-
-        if (fileChooser == null) {
-            fileChooser = jmri.jmrit.XmlFile.userFileChooser("Quantum CV Manager files", "qcv");
-
-        }
-
-        int retVal = fileChooser.showOpenDialog(mParent);
-
-        if (retVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-            log.debug("Import from QuantumCvMgr file: " + file);
-
+    @Override
+    boolean launchImporter(File file, CvTableModel tableModel) {
             try {
                 // ctor launches operation
                 new QuantumCvMgrImporter(file, mModel);
+                return true;
             } catch (IOException ex) {
-            }
+                return false;
         }
     }
 

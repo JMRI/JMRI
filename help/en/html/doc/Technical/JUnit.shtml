@@ -300,6 +300,16 @@ be enclosed within a mode check:
 </PRE></code>
 <p>This will run the myTest suite of tests only when a display is available.
 
+<p>GUI tests should close windows when they're done, and in general clean up after themselves.
+If you want to keep windows around so you can manipulate them, e.g. for manual testing or debugging, 
+you can use the jmri.demo system parameter to control that:
+<p><CODE><PRE>
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br/>
+            myFrame.setVisible(false);<br/>
+            myFrame.dispose();
+        }
+</PRE></code>
+
 <p>
 For many tests, you'll both make testing reliable and improve the structure 
 of your code by separating the GUI (Swing) code from the JMRI logic and
@@ -313,7 +323,7 @@ For more complicated GUI testing, we're starting to use
 
 <p>
 For a very simple example of the use of JFCUnit, see the
-<a href="https://sourceforge.net/apps/trac/jmri/browser/trunk/jmri/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
+<a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
 
 <p>
 To use JFCUnit, you first inherit your class From

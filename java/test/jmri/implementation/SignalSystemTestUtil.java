@@ -46,23 +46,11 @@ public class SignalSystemTestUtil {
                 Path outPath = FileSystems.getDefault().getPath(path + File.separator + "signals" + File.separator + dummy, "appearance-one-searchlight.xml");
                 Files.copy(inPath, outPath);
             }
-            printDir(path + File.separator + "signals" + File.separator + dummy);
         } catch (Exception e) {
             log.error("Exception during createMockSystem", e);
             throw e;
         }
         
-    }
-
-    static public void printDir(String name) {
-        System.err.println("Listing "+name);
-        File dir = new File(name);
-        File[] filesList = dir.listFiles();
-        for (File file : filesList) {
-            if (file.isFile()) {
-                System.err.println("   "+file.getName());
-            }
-        }
     }
 
     static public String getMockUserName() {
