@@ -244,8 +244,17 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
     }
 
     public DataInputStream getInputStream() {
-	log.error("Not Using DataInputStream version anymore!");
-	return(null);
+	//log.error("Not Using DataInputStream version anymore!");
+    	//return(null);
+        if (!opened) {
+            log.error("getInputStream called before load(), stream not available");
+        }
+        try {
+            return new DataInputStream(activeSerialPort.getInputStream());
+        } catch (java.io.IOException e) {
+            log.error("getInputStream exception: " + e.getMessage());
+        }
+        return null;
     }
 
     public DataOutputStream getOutputStream() {
@@ -285,7 +294,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        int flow = SerialPort.FLOWCONTROL_NONE; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }

@@ -253,28 +253,40 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    break;
 
 	case DCCppConstants.TURNOUT_CMD:
-	    log.debug("TURNOUT_CMD detected");
-	    s = msg.toString();
-	    try {
-		p = Pattern.compile(DCCppConstants.TURNOUT_CMD_REGEX);
-		m = p.matcher(s);
-		if (!m.matches()) {
-		    log.error("Malformed Turnout Command: {}", s);
-		    return(null);
-		}
-		r = "H " + m.group(1) + " " + m.group(2);
-		reply = new DCCppReply(r);
-		log.debug("Reply generated = {}", reply.toString());
-	    } catch (PatternSyntaxException e) {
-		log.error("Malformed pattern syntax! ");
-		return(null);
-	    } catch (IllegalStateException e) {
-		log.error("Group called before match operation executed string= " + s);
-		return(null);
-	    } catch (IndexOutOfBoundsException e) {
-		log.error("Index out of bounds string= " + s);
-		return(null);
+	    if (msg.isTurnoutAddMessage()) {
+		log.debug("Add Turnout Message");
+		r = "O";
+	    } else if (msg.isTurnoutDeleteMessage()) {
+		log.debug("Delete Turnout Message");
+		r = "O";
+	    } else if (msg.isListTurnoutsMessage()) {
+		log.debug("List Turnouts Message");
+		r = "H 1 27 3 1";
+	    } else {
+		log.debug("TURNOUT_CMD detected");
+		r = "H" + msg.getTOIDString() + " " + msg.getTOStateString();
 	    }
+	    reply = new DCCppReply(r);
+	    log.debug("Reply generated = {}", reply.toString());
+	    break;
+
+	case DCCppConstants.SENSOR_CMD:
+	    if (msg.isSensorAddMessage()) {
+		log.debug("SENSOR_CMD Add detected");
+		s = msg.toString();
+		r = "O"; // TODO: Randomize?
+	    } else if (msg.isSensorDeleteMessage()) {
+		log.debug("SENSOR_CMD Delete detected");
+		s = msg.toString();
+		r = "O"; // TODO: Randomize?
+	    } else if (msg.isListSensorsMessage()) {
+		r = "Q 1 4 1"; // TODO: DO this for real.
+	    } else {
+		log.debug("Invalid SENSOR_CMD detected");
+		r = "X";
+	    }
+	    reply = new DCCppReply(r);
+	    log.debug("Reply generated = {}", reply.toString());
 	    break;
 
 	case DCCppConstants.PROG_WRITE_CV_BYTE:
@@ -392,7 +404,9 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    generateReadCSStatusReply(); // Handle this special.
 	    break;
 
-	case DCCppConstants.QUERY_SENSOR_STATE:
+        /*
+        case DCCppConstants.QUERY_SENSOR_STATE:
+	    // Obsolete ??
 	    log.debug("QUERY_SENSOR_STATUS detected");
 	    s = msg.toString();
 	    try {
@@ -418,7 +432,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		return(null);
 	    }
 	    break;
-		
+	*/	
 	case DCCppConstants.FUNCTION_CMD:
 	case DCCppConstants.ACCESSORY_CMD:
 	case DCCppConstants.OPS_WRITE_CV_BYTE:
@@ -445,7 +459,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	}
 	*/
 
-	DCCppReply r = new DCCppReply("iDCC++ BASE STATION vUNO_1.0: BUILD 05 Nov 2015 00:09:57");
+	DCCppReply r = new DCCppReply("iDCC++ BASE STATION FOR ARDUINO MEGA / ARDUINO MOTOR SHIELD: BUILD 05 Nov 2015 00:09:57");
 	writeReply(r);
 	if (log.isDebugEnabled()) {
 	    log.debug("Simulator Thread sent Reply" + r.toString());
@@ -461,8 +475,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	Random valueGenerator = new Random();
 	int value = valueGenerator.nextInt(2); // Generate state value betweeon 0 and 1
        
-	String reply = new String("Q " + Integer.toString(sensorNum) + " " +
-				  Integer.toString(value));
+	String reply = new String((value == 1 ? "Q " : "q ")+ Integer.toString(sensorNum));
 	
 	DCCppReply r = new DCCppReply(reply);
 	writeReply(r);

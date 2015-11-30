@@ -19,8 +19,7 @@ import junit.framework.TestSuite;
 public class SignalMastIconTest extends jmri.util.SwingTestCase {
 
     SignalMastIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShowText() {
         // this one is for Layout editor, which for now
@@ -169,6 +168,7 @@ public class SignalMastIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test SignalMastIcon Panel");
     }
 
     protected void tearDown() {

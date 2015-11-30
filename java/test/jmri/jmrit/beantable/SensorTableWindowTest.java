@@ -74,6 +74,9 @@ public class SensorTableWindowTest extends jmri.util.SwingTestCase {
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
 
+        flushAWT();
+        flushAWT();
+        
         // check for existing sensor
         Assert.assertNotNull(jmri.InstanceManager.sensorManagerInstance().getSensor("IS1"));
     }

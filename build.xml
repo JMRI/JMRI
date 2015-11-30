@@ -1009,10 +1009,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
-<!--
-            <sysproperty key="java.awt.headless" value="true"/>
-            <sysproperty key="jmri.headlesstest" value="true"/>
--->
+
             <classpath refid="test.class.path"/>
 
             <test name="apps.tests.AllTest">
@@ -1026,6 +1023,28 @@
         </fail>
     </target>
 
+    <target name="appveyor-ci-test" depends="tests, runtime-library-selection" description="run headless test suite using Appveyor default target">
+        <!-- identical to CI Test except test output is different -->
+        <junit haltonerror="false" haltonfailure="false" printsummary="yes" fork="yes" dir="." errorProperty="test.failed" failureProperty="test.failed">
+            <sysproperty key="java.security.policy" value="${libdir}/security.policy"/>
+            <sysproperty key="apple.laf.useScreenMenuBar" value="true"/>
+            <sysproperty key="log4j.ignoreTCL" path="true/"/>
+            <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
+            <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+
+            <classpath refid="test.class.path"/>
+
+            <test name="apps.tests.AllTest" outfile="junit-results">
+                <formatter type="xml"/>
+                <formatter usefile="no" type="brief"/>
+            </test>
+        </junit>
+        <fail>
+            <condition>
+                <istrue value="${test.failed}" />
+            </condition>
+        </fail>
+    </target>
 
     <!-- Note if modifying the alltest target, please be sure to up date the -->
     <!-- NetBeans IDE alltest target in nbproject/ide-targets.xml -->
@@ -1350,10 +1369,10 @@
 
     <target name="findbugs" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
-                output="html"
-                                                outputFile="${jartarget}/jmri-fb.html"
-                                                jvmargs="-Xmx1024m"
-                                                timeout="12000000">
+                  output="html"
+                  outputFile="${jartarget}/jmri-fb.html"
+                  jvmargs="-Xmx1024m"
+                  timeout="12000000">
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
         </findbugs>
@@ -1361,10 +1380,10 @@
 
     <target name="findbugs-ci" depends="dist-debug" description="generate FindBugs report. Include &quot;-Dfindbugs.home=YourFindBugsInstallDirectory&quot; in command line." >
         <findbugs home="${findbugs.home}"
-                output="xml:withMessages"
-                outputFile="findbugs.xml"
-                jvmargs="-Xmx1024m"
-                timeout="12000000">
+                  output="xml:withMessages"
+                  outputFile="findbugs.xml"
+                  jvmargs="-Xmx1024m"
+                  timeout="12000000">
             <sourcePath path="${source}/"/>
             <class location="${jartarget}/jmri.jar"/>
         </findbugs>
@@ -1640,19 +1659,19 @@
 
 
     <!-- set this next to a standard remote, e.g. "origin", if you don't want to
-         go directly back to the main repo; direct JMRI/JMRI require write access -->
+    go directly back to the main repo; direct JMRI/JMRI require write access -->
     <property name="jmri.repository.url" value="https://github.com/JMRI/JMRI.git"/>
 
     <property name="branch-name" value="release-${release}" />
     
     <!-- several steps are involved in creating a new test release
-         branch from the head of the master branch.  This target intends to manage as
-         many of them as possible -->
+    branch from the head of the master branch.  This target intends to manage as
+    many of them as possible -->
     <target name="make-test-release-branch"
             description="Make a new test release branch in Git from the head of the master branch">
 
         <!-- Create a new branch test release branch from the front of the master
-             branch in our main repository, and push back to main repo -->
+        branch in our main repository, and push back to main repo -->
 
         <exec executable="git" failifexecutionfails="true">
             <arg value="checkout"/>
