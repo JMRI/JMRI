@@ -271,9 +271,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getSensorIDInt() {
@@ -288,9 +289,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getSensorPinInt() {
@@ -313,9 +315,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -330,9 +333,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getAccessoryAddrInt() {
@@ -347,9 +351,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
-	return("0");
+            return("0");
+        }
     }
 
     public int getAccessorySubInt() {
@@ -372,9 +377,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -390,9 +396,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getRegisterInt() {
@@ -407,9 +414,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getAddressInt() {
@@ -424,9 +432,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getSpeedInt() {
@@ -450,9 +459,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return(0);
+        }
     }
 
     //------------------------------------------------------
@@ -466,9 +476,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getFuncAddressInt() {
@@ -483,9 +494,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getFuncByte1Int() {
@@ -500,9 +512,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("");
 	    }
-	} else 
+	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getFuncByte2Int() {
@@ -524,9 +537,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
+        }
     }
 
     public int getTOIDInt() {
@@ -549,9 +563,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -563,9 +578,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
+        }
     }
 
     public int getTOAddressInt() {
@@ -580,9 +596,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
+        }
     }
 
     public int getTOSubAddressInt() {
@@ -799,9 +816,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("PWBit Parser called on non-PWBit message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getBitInt() {
