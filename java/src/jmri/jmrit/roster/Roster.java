@@ -72,7 +72,9 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     protected List<RosterEntry> _list = new ArrayList<>();
     private boolean dirty = false;
     /*
-     * This should only be non-null if explictly set to a non-default location.
+     * This should always be a real path, changes in the UserFiles location are
+     * tracked by listening to FileUtilSupport for those changes and updating
+     * this path as needed.
      */
     private String rosterLocation = FileUtil.getUserFilesPath();
     private String rosterIndexFileName = Roster.DEFAULT_ROSTER_INDEX;
@@ -143,7 +145,7 @@ public class Roster extends XmlFile implements RosterGroupSelector, PropertyChan
     // should be private except that JUnit testing creates multiple Roster objects
     public Roster() {
         super();
-        FileUtilSupport.getDefault().addPropertyChangeListener((PropertyChangeEvent evt) -> {
+        FileUtilSupport.getDefault().addPropertyChangeListener(FileUtil.PREFERENCES, (PropertyChangeEvent evt) -> {
             if (Roster.this.getRosterLocation().equals(evt.getOldValue())) {
                 Roster.this.setRosterLocation((String) evt.getNewValue());
                 Roster.this.reloadRosterFile();
