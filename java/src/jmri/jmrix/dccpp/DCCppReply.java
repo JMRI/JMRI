@@ -157,7 +157,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    return(m);
 
 	} catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ message syntax! ");
+            log.error("Malformed DCC++ reply syntax! s = ", pat);
 	    return(null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string= " + s);

@@ -93,8 +93,8 @@ public final class DCCppConstants {
     public final static String WRITE_TO_EEPROM_REGEX = "E";
     public final static String CLEAR_EEPROM_REGEX = "e";
 
-    public final static String OPS_WRITE_BYTE_REGEX = " "; // TODO
-    public final static String OPS_WRITE_BIT_REGEX = " "; // TODO
+    public final static String OPS_WRITE_BYTE_REGEX = "\\s*w\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // TODO
+    public final static String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
     
     public final static String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public final static String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";

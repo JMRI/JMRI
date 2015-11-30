@@ -195,13 +195,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed {} Command: {} Pattern: {}",name, s, p.toString());
+		log.error("Malformed {} Command: {} Pattern: {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);
 
 	} catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ message syntax! ");
+            log.error("Malformed DCC++ message syntax! s = ", pat);
 	    return(null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string= " + s);
@@ -597,7 +597,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (this.isOpsWriteByteMessage()) {
 	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
 	} else if (this.isOpsWriteBitMessage()) {
-	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
 	} else {
 	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
 	    return("0");
@@ -620,7 +620,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	if (this.isOpsWriteByteMessage()) {
 	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
 	} else if (this.isOpsWriteBitMessage()) {
-	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
 	} else {
 	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
 	    return("0");
@@ -639,7 +639,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public String getOpsWriteBitString() {
 	Matcher m;
         if (this.isOpsWriteBitMessage()) {
-	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
 	} else {
 	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
 	    return("0");
@@ -663,7 +663,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
 	} else if (this.isOpsWriteBitMessage()) {
             idx = 4;
-	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
 	} else {
 	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
 	    return("0");

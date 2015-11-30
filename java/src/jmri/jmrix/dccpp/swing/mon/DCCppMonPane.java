@@ -215,7 +215,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
             text += "\tValue: " + l.getOpsWriteValueString() + "\n";
 	    break;
 	case DCCppConstants.OPS_WRITE_CV_BIT: // <b cab cv bit val>
-	    text = "Ops Write Bit Cmd: ";
+	    text = "Ops Write Bit Cmd: \n";
             text += "\tAddress: " + l.getOpsWriteAddrString() + "\n";
             text += "\tCV: " + l.getOpsWriteCVString() + "\n";
             text += "\tBit: " + l.getOpsWriteBitString() + "\n";
