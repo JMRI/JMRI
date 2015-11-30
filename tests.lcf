@@ -91,6 +91,6 @@ log4j.category.jmri.util.Log4JUtilTest = WARN
 # log4j.category.jmri.jmrit.symbolicprog.LongAddrVariableValueTest=DEBUG
 # log4j.category.jmri.jmrix.nce=DEBUG
 # log4j.category.jmri.jmrix.nce.NceTrafficController=WARN
-# log4j.category.jmri.jmrix.dccpp=DEBUG
+log4j.category.jmri.jmrix.dccpp=DEBUG
 
 
