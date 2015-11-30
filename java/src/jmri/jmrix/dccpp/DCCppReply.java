@@ -151,7 +151,7 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed {} Command: {}",name, s);
+		log.error("Malformed {} Command: {} pattern {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);

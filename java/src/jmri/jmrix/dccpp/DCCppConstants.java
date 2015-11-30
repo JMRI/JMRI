@@ -117,7 +117,8 @@ public final class DCCppConstants {
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)(\\s+(\\d+))?\\s*";
     public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
     public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
-    public final static String SENSOR_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+([0,1])\\s*";
+    //public final static String SENSOR_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+([0,1])\\s*";
+    public final static String SENSOR_REPLY_REGEX = "\\s*[Qq]\\s*(\\d+)\\s*";
     public final static String SENSOR_DEF_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*";
     public final static String SENSOR_ACTIVE_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s*";
     public final static String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+)\\s*";
