@@ -294,7 +294,8 @@ public class DCCppAdapter extends DCCppSerialPortController implements jmri.jmri
         activeSerialPort.setDTR(true);		// pin 1 in DIN8; on main connector, this is DTR
 
         // find and configure flow control
-        int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        //int flow = SerialPort.FLOWCONTROL_RTSCTS_OUT; // default, but also deftaul for getOptionState(option1Name)
+        int flow = SerialPort.FLOWCONTROL_NONE; // default, but also deftaul for getOptionState(option1Name)
         if (!getOptionState(option1Name).equals(validOption1[0])) {
             flow = 0;
         }
