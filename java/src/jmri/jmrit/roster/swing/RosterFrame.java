@@ -176,8 +176,11 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
     JButton prog2Button = new JButton(Bundle.getMessage("BasicProgrammer"));
     ActionListener programModeListener;
     ProgDebugger progDebugger = new ProgDebugger();
-    String programmer1 = Bundle.getMessage("Comprehensive");
-    String programmer2 = Bundle.getMessage("Basic");
+    
+    // These are the names of the programmer _files_, not what should be displayed to the user
+    String programmer1 = "Comprehensive"; // NOI18N
+    String programmer2 = "Basic"; // NOI18N
+    
     java.util.ResourceBundle rb = java.util.ResourceBundle.getBundle("apps.AppsBundle");
     //current selected loco
     RosterEntry re;
@@ -1428,7 +1431,7 @@ public class RosterFrame extends TwoPaneTBWindow implements RosterEntrySelector,
         JLabel programmerStatusLabel = new JLabel(Bundle.getMessage("ProgrammerStatus"));
         statusField.setText(Bundle.getMessage("Idle"));
         addToStatusBox(programmerStatusLabel, statusField);
-        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())));
+        addToStatusBox(new JLabel(Bundle.getMessage("ActiveProfile", ProfileManager.getDefault().getActiveProfile().getName())), null);
     }
 
     protected void systemsMenu() {

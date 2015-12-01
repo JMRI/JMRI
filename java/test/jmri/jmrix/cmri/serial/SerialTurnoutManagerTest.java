@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
  */
 public class SerialTurnoutManagerTest extends jmri.managers.AbstractTurnoutMgrTest {
 
+    @Override
     public void setUp() {
         // replace the SerialTrafficController
         SerialTrafficController t = new SerialTrafficController() {

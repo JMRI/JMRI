@@ -58,16 +58,6 @@ public class DCCppMessageTest extends TestCase {
         Assert.assertEquals("7th byte", '1', m.getElement(7) & 0xFF);
     }
 
-    public void testGetQuerySensorMsg() {
-	DCCppMessage m = DCCppMessage.getQuerySensorMsg(23);
-	log.debug("accessory decoder message = {}", m.toString());
-        Assert.assertEquals("length", 4, m.getNumDataElements());
-        Assert.assertEquals("0th byte", 'q', m.getElement(0) & 0xFF);
-        Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
-        Assert.assertEquals("2nd byte", '2', m.getElement(2) & 0xFF);
-        Assert.assertEquals("3rd byte", '3', m.getElement(3) & 0xFF);
-    }
-
     public void testGetTurnoutCommandMsg() {
 	DCCppMessage m = DCCppMessage.getTurnoutCommandMsg(23, true);
 	log.debug("turnout message = {}", m.toString());

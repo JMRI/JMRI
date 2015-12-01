@@ -1,13 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
 <html lang="en">
 <head>
  <TITLE>
-      JMRI: Block Table Help
+      JMRI: Blocks Table Help
  </TITLE>
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
     <META content="Bob Jacobsen" name=Author>
-    <META name="keywords" content="JMRI help Memory Table">
+    <META name="keywords" content="JMRI help Blocks Table">
 
 <!--#include virtual="/Style" -->
 </head>
@@ -25,7 +24,7 @@ This edit window allows you to edit the following areas.<br>
 <a href="#properties">Properties</a>
 
 <a name="basic"><h2>Basic</h2></a>
-This provides basic information on the details of the block
+This provides basic information on the details of the Block
 <ul>
 <li><p><b>System Name</b> - The system name of the Block. There is no functional 
 requirement for a type letter in the System Name of a Block, but by convention we use 
@@ -58,7 +57,7 @@ the state change of a sensor.</li></ul>
 
 <a name="reporter"><h2>Reporter</h2></a>
 <ul><li><p><b>Reporter</b>
-The Reporter assigned to this block. See the Reporter table. Puts the Reporter Value into 
+The Reporter assigned to this block. See the Reporters table. Puts the Reporter Value into 
 the Block value
 
 <li><p><b>Use Current?</b>
@@ -93,7 +92,7 @@ enter the length of the Block here.  The length is used for automatic running of
 If '0.0' is displayed, the length has not been entered. The entered length should be the 
 actual length of the Block on the model railroad layout. Length is entered and displayed 
 in either inches or centimeters, depending on which unit is requested at the bottom of 
-the Block Table.</p></li>
+the Blocks Table.</p></li>
 
 <li><p><b>Curvature</b> (optional) - Displays the curvature selected for the track in 
 the Block. Curvature is used for automatic running of trains, and need not be entered 
@@ -126,10 +125,8 @@ on a signal mast.</li></ul>
 <a href="../../../../html/tools/tracker/index.shtml">More information on Blocks</a></p>
 <p>
 <a href="../display/LayoutEditor.shtml">More information on using Blocks with Layout Editor</a>
-<br>
 
-
-Located at package/jmri/jmrt/beantable/BlockTable
+Located at package/jmri/jmrt/beantable/BlockEdit
 <!--#include virtual="/Footer" -->
 </body>
 </html>

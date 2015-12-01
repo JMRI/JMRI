@@ -62,7 +62,13 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
      *
      */
     protected void setCommandStationInfo(DCCppReply l) {
-	String syntax = "iDCC\\+\\+\\s+BASE\\s+STATION\\s+v([a-zA-Z0-9_.]+):\\s+BUILD\\s+((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+	// V1.0 Syntax
+	//String syntax = "iDCC\\+\\+\\s+BASE\\s+STATION\\s+v([a-zA-Z0-9_.]+):\\s+BUILD\\s+((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+	// V1.1 Syntax
+	//String syntax = "iDCC\\+\\+BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: BUILD ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
+	// V1.0/V1.1 Simplified
+	//String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
+        String syntax = DCCppConstants.STATUS_REPLY_REGEX;
 	String s = l.toString();
 	try {
 	    Pattern p = Pattern.compile(syntax);
@@ -71,10 +77,13 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
 		log.error("DCC++ Status string does not match pattern. syntax= {} string= {}", syntax, s);
 		return;
 	    }
-	    log.debug("DCC++ Status version = {} build date = {} time = {}",
-		      m.group(1), m.group(2));
+	    //log.debug("DCC++ Status board = {} motor = {} build date = {} time = {}",
+	    //	      m.group(1), m.group(2), m.group(4), m.group(5));
+	    log.debug("DCC++ Status type = {} Build = {}", m.group(1), m.group(2));
 	    baseStationType = m.group(1);
 	    codeBuildDate = m.group(2);
+	    //baseStationType = m.group(1) + " / " + m.group(2) + " MOTOR SHIELD";
+	    //codeBuildDate = m.group(3);
 	} catch (PatternSyntaxException e) {
             log.error("Malformed DCC++ version syntax! " + syntax);
             return;

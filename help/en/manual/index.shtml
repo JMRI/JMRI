@@ -1,7 +1,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<title>Decoder Pro Manual: Index</title>
+<title>JMRI Manual: Index</title>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -18,14 +18,14 @@
 
 <div id="mainContent"><a name="Top"></a>
 
-<h1>JMRI&reg; User's Guides</h1>
+<h1>JMRI&reg; Manuals</h1>
 
 <table border="0">
 <tbody>
 
 <tr>
 <td>Version:<br>&nbsp;</td>
-<td>Modules with online Help:<br>&nbsp;</td>
+<td>Applications with Online Manual:<br>&nbsp;</td>
 <td>PDF Manual:<br>&nbsp;</td>
 </tr>
 
@@ -37,7 +37,7 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="http://jmri.sourceforge.net/help/en/package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
+<td style="font-weight: bold;"><a href="../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade; v4.0</a><br>&nbsp;</td>
 <td></td>
 </tr>
 
@@ -47,13 +47,13 @@
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a target="_blank" href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/3-6_DecoderPro/index.shtml">DecoderPro&reg; v3.6</a></td>
 <td></td>
 </tr>
 
 <tr>
 <td></td>
-<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.6</a></td>
+<td style="font-weight: bold;"><a href="JMRI_OPS_UsersGuide/index.shtml">OperationsPro&trade; v3.6 - v3.10</a></td>
 <td></td>
 </tr>
 
@@ -66,18 +66,18 @@
 <tr>
 <td></td>
 <td style="font-weight: bold;"><a href="http://jmri.org/manual/3-4_DecoderPro3/index.shtml">DecoderPro3 v3.4</a></td>
-<td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf" target="_blank">Printable Guide (pdf 3.9MB)</a></td>
+<td style="font-weight: bold;"><a href="http://jmri.org/manual/pdf/DP3_Man_3-4.pdf">Printable Guide (pdf 3.9MB)</a></td>
 </tr>
 
 <tr>
 <td></td>
 <td><a href="http://jmri.org/manual/3-4_DecoderPro/index.shtml"></a><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_DecoderPro/index.shtml">DecoderPro&reg; v3.4 </a></td>
-<td> <a style="font-weight: bold;" href="http://jmri.org/manual/pdf/DP_man_3-4.pdf" target="_blank">Printable Guide (pdf 6.5MB)</a><br></td>
+<td> <a style="font-weight: bold;" href="http://jmri.org/manual/pdf/DP_man_3-4.pdf">Printable Guide (pdf 6.5MB)</a><br></td>
 </tr>
 
 <tr>
 <td></td>
-<td><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml" target="_blank">JMRI&reg; Operations Program v3.4 </a></td>
+<td><a style="font-weight: bold;" href="http://jmri.org/manual/3-4_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.4 </a></td>
 <td> <br></td>
 </tr>
 
@@ -126,7 +126,7 @@
 <tr>
 <td>&nbsp;</td>
 <td><strong><a href="http://jmri.org/manual/3-0_JMRI_OPS_UsersGuide/index.shtml">JMRI&reg; Operations Program v3.0</a></strong></td>
-<td><strong><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf">Printable Guide (pdf 4.0MB)</a></strong></td>
+<td><strong><a href="pdf/JMRI_3-0%20Operations_Users%20Guide.pdf" target="_blank">Printable Guide (pdf 4.0MB)</a></strong></td>
 </tr>
 
 <tr>
@@ -137,7 +137,7 @@
 
 <tr>
 <td>&nbsp;</td>
-<td><strong><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml" target="_blank">JMRI&reg; v2.14.1</a></strong></td>
+<td><strong><a href="http://jmri.org/manual/JMRI_2-14_manual/index.shtml">JMRI&reg; v2.14.1</a></strong></td>
 <td><strong><a href="http://jmri.org/manual/pdf/DP3_Man_2_14.pdf" target="_blank">Printable Guide (pdf 6.7MB)</a></strong></td>
 </tr>
 
@@ -156,13 +156,13 @@
 </tbody>
 </table>
 
-<p>Updated 11/15/2015</p>
+<p>Updated 11/25/2015</p>
 
 <h2>JMRI&reg; Applications</h2>
 
-<p><strong>JMRI is a Java-based cross-platform application
+<p><strong>JMRI is a Java-based cross-platform program suite
 for model railroaders.</strong><br>
-The program contains modules for:</p>
+It contains modular applications for:</p>
 
 <ul>
 <li>Programming of Digital Command Control (DCC) decoders (<a href="../html/apps/DecoderPro/index.shtml">DecoderPro&reg;</a>)</li>
@@ -172,7 +172,7 @@ The program contains modules for:</p>
 <li>Controlling the signals on the layout (All modules)</li>
 <li>Controlling lighting and sound in the room, and so forth (<a href="../html/tools/Audio.shtml">SoundPro&trade;</a>)</li>
 </ul>
-<p>All this capability is contained in one program (JMRI&reg;) which has several &quot;start-up&quot; modules for the various applications.</p>
+<p>All this capability is contained in one install.</p>
 
 <h2>System Requirements</h2>
 

@@ -37,41 +37,50 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
     public void initialize(Profile profile) {
         if (!this.isInitialized(profile)) {
             log.debug("Initializing...");
+            Element sharedConnections = null;
+            Element perNodeConnections = null;
             try {
-                Element sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
-                Element perNodeConnections = null;
+                sharedConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, true));
+            } catch (NullPointerException ex) {
+                // Normal if this is a new profile
+                log.info("No connections configured.");
+                log.debug("Null pointer thrown reading shared configuration.", ex);
+            }
+            if (sharedConnections != null) {
                 try {
                     perNodeConnections = JDOMUtil.toJDOMElement(ProfileUtils.getAuxiliaryConfiguration(profile).getConfigurationFragment(CONNECTIONS, NAMESPACE, false));
                 } catch (NullPointerException ex) {
+                    // Normal if the profile has not been used on this computer
                     log.info("No local configuration found.");
+                    log.debug("Null pointer thrown reading local configuration.", ex);
                 }
-                if (sharedConnections != null) {
-                    for (Element shared : sharedConnections.getChildren(CONNECTION)) {
-                        Element perNode = null;
-                        String className = shared.getAttributeValue(CLASS);
-                        String userName = shared.getAttributeValue(USER_NAME, "");
-                        String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
-                        String manufacturer = shared.getAttributeValue(MANUFACTURER, "");
-                        log.debug("Read {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                        if (perNodeConnections != null) {
-                            for (Element e : perNodeConnections.getChildren(CONNECTION)) {
-                                if (systemName.equals(e.getAttributeValue(SYSTEM_NAME))) {
-                                    perNode = e;
-                                }
+                for (Element shared : sharedConnections.getChildren(CONNECTION)) {
+                    Element perNode = null;
+                    String className = shared.getAttributeValue(CLASS);
+                    String userName = shared.getAttributeValue(USER_NAME, "");
+                    String systemName = shared.getAttributeValue(SYSTEM_NAME, "");
+                    String manufacturer = shared.getAttributeValue(MANUFACTURER, "");
+                    log.debug("Read shared connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
+                    if (perNodeConnections != null) {
+                        for (Element e : perNodeConnections.getChildren(CONNECTION)) {
+                            if (systemName.equals(e.getAttributeValue(SYSTEM_NAME))) {
+                                perNode = e;
+                                className = perNode.getAttributeValue(CLASS);
+                                userName = perNode.getAttributeValue(USER_NAME, "");
+                                manufacturer = perNode.getAttributeValue(MANUFACTURER, "");
+                                log.debug("Read perNode connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
                             }
                         }
-                        try {
-                            log.debug("Creating {}:{} ({}) class {}", userName, systemName, manufacturer, className);
-                            ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
-                        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
-                            log.error("Unable to create {} for {}", className, shared, ex);
-                        } catch (Exception ex) {
-                            log.error("Unable to load {} into {}", shared, className, ex);
-                        }
+                    }
+                    try {
+                        log.debug("Creating connection {}:{} ({}) class {}", userName, systemName, manufacturer, className);
+                        ((XmlAdapter) Class.forName(className).newInstance()).load(shared, perNode);
+                    } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ex) {
+                        log.error("Unable to create {} for {}", className, shared, ex);
+                    } catch (Exception ex) {
+                        log.error("Unable to load {} into {}", shared, className, ex);
                     }
                 }
-            } catch (NullPointerException ex) {
-                log.info("Unable to read configuration.");
             }
             this.setIsInitialized(profile, true);
             log.debug("Initialized...");
@@ -103,6 +112,7 @@ public class ConnectionConfigManager extends AbstractPreferencesProvider impleme
                 element.addContent(e);
             }
         }
+        // save connections, or save an empty connections element if user removed all connections
         try {
             ProfileUtils.getAuxiliaryConfiguration(profile).putConfigurationFragment(JDOMUtil.toW3CElement(element), shared);
         } catch (JDOMException ex) {

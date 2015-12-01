@@ -201,15 +201,15 @@ to the log.  There are two aspects to making this work:
 and teardown() code to ensure that log4j is properly initiated, and that
 the custom appender is told when a test is beginning and ending.
 <CODE><PRE>
-    // The minimal setup for log4J
-    protected void setUp() throws Exception { 
-        apps.tests.Log4JFixture.setUp(); 
-        super.setUp();
-    }
-    protected void tearDown() throws Exception { 
-        super.tearDown();
-        apps.tests.Log4JFixture.tearDown(); 
-    }
+    // The minimal setup for log4J<br/>
+    protected void setUp() throws Exception { <br/>
+        apps.tests.Log4JFixture.setUp(); <br/>
+        super.setUp();<br/>
+    }<br/>
+    protected void tearDown() throws Exception { <br/>
+        super.tearDown();<br/>
+        apps.tests.Log4JFixture.tearDown(); <br/>
+    }<br/>
 </PRE></code>
 <LI>When a test is deliberately invoking a message, it should then
 use the check to see that the message was created.  
@@ -234,11 +234,11 @@ clear and reset it to ensure you get reproducible results.
 <p>
 Your <code>setUp()</code> implementation should start with:
 <p><CODE><PRE>
-    super.setUp();
-    jmri.util.JUnitUtil.resetInstanceManager();
-    jmri.util.JUnitUtil.initInternalTurnoutManager();
-    jmri.util.JUnitUtil.initInternalLightManager();
-    jmri.util.JUnitUtil.initInternalSensorManager();
+    super.setUp();<br/>
+    jmri.util.JUnitUtil.resetInstanceManager();<br/>
+    jmri.util.JUnitUtil.initInternalTurnoutManager();<br/>
+    jmri.util.JUnitUtil.initInternalLightManager();<br/>
+    jmri.util.JUnitUtil.initInternalSensorManager();<br/>
 </PRE></code>
 <p>
 (You can omit the initialization managers you don't need)
@@ -246,7 +246,7 @@ Your <code>setUp()</code> implementation should start with:
 Your <code>tearDown()</code> should end with:
 <p>
 <CODE><PRE>
-    jmri.util.JUnitUtil.resetInstanceManager();
+    jmri.util.JUnitUtil.resetInstanceManager();<br/>
     super.tearDown();
 </PRE></code>
 
@@ -294,11 +294,21 @@ Because we run tests in "headless" mode during the
 it's important that Swing (and AWT) access in tests
 be enclosed within a mode check:
 <p><CODE><PRE>
-        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {
-            suite.addTest(myTest.suite());
-        }
+        if (!System.getProperty("jmri.headlesstest","false").equals("true")) {<br/>
+            suite.addTest(myTest.suite());<br/>
+        }<br/>
 </PRE></code>
 <p>This will run the myTest suite of tests only when a display is available.
+
+<p>GUI tests should close windows when they're done, and in general clean up after themselves.
+If you want to keep windows around so you can manipulate them, e.g. for manual testing or debugging, 
+you can use the jmri.demo system parameter to control that:
+<p><CODE><PRE>
+        if (!System.getProperty("jmri.demo", "false").equals("false")) {<br/>
+            myFrame.setVisible(false);<br/>
+            myFrame.dispose();
+        }
+</PRE></code>
 
 <p>
 For many tests, you'll both make testing reliable and improve the structure 
@@ -313,7 +323,7 @@ For more complicated GUI testing, we're starting to use
 
 <p>
 For a very simple example of the use of JFCUnit, see the
-<a href="https://sourceforge.net/apps/trac/jmri/browser/trunk/jmri/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
+<a href="https://github.com/JMRI/JMRI/blob/master/java/test/jmri/util/SwingTestCaseTest.java">test/jmri/util/SwingTestCaseTest.java</a> file.
 
 <p>
 To use JFCUnit, you first inherit your class From
@@ -347,11 +357,11 @@ Here are some ideas which can help avoid these types of problems.
         creating files in the directory, and create the directory if necessary.
         An example is shown here:
 <CODE><PRE>
-    String tempDirectoryName = "temp";
-    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {
-        // create the temp directory if it does not exist
-        <strong>FileUtil.createDirectory(tempDirectoryName);</strong>
-    }
+    String tempDirectoryName = "temp";<br/>
+    if ( <strong>! (new File(tempDirectoryName).isDirectory())</strong>) {<br/>
+        // create the temp directory if it does not exist<br/>
+        <strong>FileUtil.createDirectory(tempDirectoryName);</strong><br/>
+    }<br/>
 </PRE></code>
     </li>
     <li>Allow the JRE to define the directory hierarchy separator character 
@@ -366,19 +376,19 @@ Here are some ideas which can help avoid these types of problems.
         necessary, before writing to the file(s).  The following example will 
         delete the previous file if it exists:
 <CODE><PRE>
-    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";
-    File file = new File(filename);
-    <strong>if (file.exists())</strong> {
-        <strong> try {
-            file.delete();
-        } catch (java.lang.Exception e) {
-            Assert.fail("Exception while trying to delete the existing file " + 
-                    filename + 
-                    ".\n Exception reported: " + 
-                    e.toString());
-            // perform some appropriate action in this case
-        }</strong>
-    }
+    String filename = tempDirectoryName + File.separator + "testcaseFile.txt";<br/>
+    File file = new File(filename);<br/>
+    <strong>if (file.exists())</strong> {<br/>
+        <strong> try {<br/>
+            file.delete();<br/>
+        } catch (java.lang.Exception e) {<br/>
+            Assert.fail("Exception while trying to delete the existing file " + <br/>
+                    filename + <br/>
+                    ".\n Exception reported: " + <br/>
+                    e.toString());<br/>
+            // perform some appropriate action in this case<br/>
+        }</strong><br/>
+    }<br/>
 </PRE></code>
     </li>
     <li>Make sure to "close" the temporary file after it has been written.</li>
@@ -388,12 +398,12 @@ Here are some ideas which can help avoid these types of problems.
         (without deleting the temporary file), and to perform the delete only 
         when debug logging is not enabled, such as:
 <CODE><PRE>
-    <strong>if (log.isDebugEnabled()) {</strong>
-        log.debug("Path to written hex file is: "+filename);
-    <strong>}
-    else {
-        file.delete();
-    }</strong>
+    <strong>if (log.isDebugEnabled()) {</strong><br/>
+        log.debug("Path to written hex file is: "+filename);<br/>
+    <strong>}<br/>
+    else {<br/>
+        file.delete();<br/>
+    }</strong><br/>
 </PRE></code>
     </li>
     <li>It is unclear whether native Java library routines which create temporary
@@ -425,10 +435,10 @@ the test/junit/runner/excluded.properties file would fix it.
 As a test you can try setting the "-noloading" option in the
 <code>main</code> of whichever test class you're having trouble with:
 <CODE><PRE>
-    static public void main(String[] args) {
-        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};
-        junit.swingui.TestRunner.main(testCaseName);
-    }
+    static public void main(String[] args) {<br/>
+        String[] testCaseName = {"-noloading", LogixTableActionTest.class.getName()};<br/>
+        junit.swingui.TestRunner.main(testCaseName);<br/>
+    }<br/>
 </PRE></code>
 
 <p>

@@ -15,11 +15,16 @@ session.log
 .ant-targets-build.xml
 /java/classes
 /java/tmp
+/java/doc
 *.class
 /temp
 .pydevproject
 *.swp
 /lib/cachedir
+/xml/XSLT/DTD
+/xml/XSLT/properties
+/xml/XSLT/xml
+/xml/XSLT/pages
 
 # private / per-user configuration files
 /nbproject/private
@@ -31,3 +36,4 @@ local.properties
 # OS junk files
 [Tt]humbs.db
 *.DS_Store
+/jmri-fb.html
