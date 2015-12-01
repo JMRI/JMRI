@@ -498,6 +498,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public String getSensorIDString() {
 //	Matcher m;
 	if (this.isSensorAddMessage()) {
+<<<<<<< HEAD
             return valueList.get(1).toString();
 //	    m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
 //	    if (m != null) {
@@ -513,6 +514,22 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //		return("0");
 //	    }
 	} else { 
+=======
+	    m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else if (this.isSensorDeleteMessage()) {
+	    m = match(this.toString(), DCCppConstants.SENSOR_DELETE_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+	} else {
+>>>>>>> master
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
         }
@@ -530,6 +547,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getSensorPinString() {
 	if (this.isSensorAddMessage()) {
+<<<<<<< HEAD
             return(valueList.get(2).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
 //	    if (m != null) {
@@ -537,6 +555,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
@@ -564,6 +590,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getSensorPullupInt() {
 	if (this.isSensorAddMessage()) {
+<<<<<<< HEAD
             return(((boolean)valueList.get(3)) ? 1 : 0);
 //	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
 //	    if (m != null) {
@@ -571,6 +598,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return(0);
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.SENSOR_ADD_REGEX, "Sensor");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.SENSOR_ON) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
@@ -583,6 +618,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getAccessoryAddrString() {
 	if (this.isAccessoryMessage()) {
+<<<<<<< HEAD
             return(valueList.get(1).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
 //	    if (m != null) {
@@ -590,6 +626,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
 	    return("0");
@@ -608,6 +652,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getAccessorySubString() {
 	if (this.isAccessoryMessage()) {
+<<<<<<< HEAD
             return(valueList.get(2).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
 //	    if (m != null) {
@@ -615,6 +660,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
             return("0");
@@ -641,6 +694,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getAccessoryStateInt() {
 	if (this.isAccessoryMessage()) {
+<<<<<<< HEAD
             return((int)valueList.get(3));
 //	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
 //	    if (m != null) {
@@ -649,8 +703,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //		return(0);
 //	    }
 	} else 
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.ACCESSORY_CMD_REGEX, "Accessory");
+	    if (m != null) {
+		return(m.group(3).equals(DCCppConstants.ACCESSORY_ON) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+	} else {
+>>>>>>> master
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -660,6 +724,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getRegisterString() {
 	if (this.isThrottleMessage()) {
+<<<<<<< HEAD
             return(valueList.get(1).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
 //	    if (m != null) {
@@ -667,6 +732,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
@@ -685,6 +758,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getAddressString() {
 	if (this.isThrottleMessage()) {
+<<<<<<< HEAD
             return(valueList.get(2).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
 //	    if (m != null) {
@@ -692,6 +766,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
@@ -710,6 +792,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getSpeedString() {
 	if (this.isThrottleMessage()) {
+<<<<<<< HEAD
             return(valueList.get(3).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
 //	    if (m != null) {
@@ -717,6 +800,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(3));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
@@ -744,6 +835,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getDirectionInt() {
 	if (this.isThrottleMessage()) {
+<<<<<<< HEAD
             return(((char)valueList.get(4) == DCCppConstants.FORWARD_DIR) ? 1 : 0);
 //	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
 //	    if (m != null) {
@@ -751,6 +843,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return(0);
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.THROTTLE_CMD_REGEX, "Throttle");
+	    if (m != null) {
+		return(m.group(4).equals(DCCppConstants.THROTTLE_FORWARD) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return(0);
@@ -762,6 +862,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getFuncAddressString() {
 	if (this.isFunctionMessage()) {
+<<<<<<< HEAD
             return(valueList.get(1).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
 //	    if (m != null) {
@@ -769,6 +870,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
@@ -787,6 +896,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getFuncByte1String() {
 	if (this.isFunctionMessage()) {
+<<<<<<< HEAD
             return(valueList.get(2).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
 //	    if (m != null) {
@@ -794,6 +904,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
@@ -812,6 +930,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getFuncByte2String() {
 	if (this.isFunctionMessage()) {
+<<<<<<< HEAD
             return(valueList.get(3).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
 //	    if ((m != null) && (m.groupCount() > 2)){
@@ -819,6 +938,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.FUNCTION_CMD_REGEX, "Function");
+	    if ((m != null) && (m.groupCount() > 2)){
+		return(m.group(3));
+	    } else {
+		return("");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
@@ -844,6 +971,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getTOIDString() {
 	if (this.isTurnoutMessage()) {
+<<<<<<< HEAD
             return(valueList.get(1).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
 //	    if (m != null) {
@@ -851,6 +979,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(1));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
@@ -877,6 +1013,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getTOStateInt() {
 	if (this.isTurnoutMessage()) {
+<<<<<<< HEAD
             return((int)valueList.get(2));
 //	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
 //	    if (m != null) {
@@ -884,6 +1021,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return(0);
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_CMD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(2).equals(DCCppConstants.TURNOUT_THROWN) ? 1 : 0);
+	    } else {
+		return(0);
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
@@ -893,6 +1038,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getTOAddressString() {
 	if (this.isTurnoutAddMessage()) {
+<<<<<<< HEAD
             return(valueList.get(2).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "Turnout");
 //	    if (m != null) {
@@ -900,6 +1046,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
@@ -918,6 +1072,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getTOSubAddressString() {
 	if (this.isTurnoutAddMessage()) {
+<<<<<<< HEAD
             return(valueList.get(3).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "Turnout");
 //	    if (m != null) {
@@ -925,6 +1080,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //	    } else {
 //		return("0");
 //	    }
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.TURNOUT_ADD_REGEX, "Turnout");
+	    if (m != null) {
+		return(m.group(3));
+	    } else {
+		return("0");
+	    }
+>>>>>>> master
 	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
@@ -1254,6 +1417,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public String getBitString() {
 	if (this.isProgWriteBitMessage()) {
+<<<<<<< HEAD
             return(valueList.get(2).toString());
 //	    Matcher m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
 //	    if (m != null) {
@@ -1262,8 +1426,18 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 //		return("0");
 //	    }
 	} else 
+=======
+	    Matcher m = match(this.toString(), DCCppConstants.PROG_WRITE_BIT_REGEX, "ProgWriteBit");
+	    if (m != null) {
+		return(m.group(2));
+	    } else {
+		return("0");
+	    }
+	} else {
+>>>>>>> master
 	    log.error("PWBit Parser called on non-PWBit message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getBitInt() {

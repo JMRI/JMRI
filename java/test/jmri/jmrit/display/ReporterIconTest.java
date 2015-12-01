@@ -19,8 +19,7 @@ import junit.framework.TestSuite;
 public class ReporterIconTest extends jmri.util.SwingTestCase {
 
     ReporterIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test ReporterIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShowSysName() {
         JFrame jf = new JFrame();
@@ -102,6 +101,8 @@ public class ReporterIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test ReporterIcon Panel");
     }
 
     protected void tearDown() {
