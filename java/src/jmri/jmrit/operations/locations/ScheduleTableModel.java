@@ -478,12 +478,10 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
         filterDestinations(cb, si.getTypeName());
         cb.setSelectedItem(si.getDestination());
         if (si.getDestination() != null && cb.getSelectedIndex() == -1) {
-            // user deleted destination
-            String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si.getDestination()});
-            Location errorLocation = si.getDestination();
-            errorLocation.setName(notValid);
-            cb.addItem(errorLocation);
-            cb.setSelectedItem(errorLocation);
+            // user deleted destination, this is self correcting, when user restarts program, destination
+            // assignment will be gone.
+            cb.addItem(si.getDestination());
+            cb.setSelectedItem(si.getDestination());
         }
         return cb;
     }
@@ -499,12 +497,8 @@ public class ScheduleTableModel extends javax.swing.table.AbstractTableModel imp
             if (si.getDestinationTrack() != null && cb.getSelectedIndex() == -1) {
                 // user deleted track at destination, this is self correcting, when user restarts program, track
                 // assignment will be gone.
-                String notValid = MessageFormat.format(Bundle.getMessage("NotValid"), new Object[]{si
-                    .getDestinationTrack()});
-                Track errorTrack = si.getDestinationTrack();
-                errorTrack.setName(notValid);
-                cb.addItem(errorTrack);
-                cb.setSelectedItem(errorTrack);
+                cb.addItem(si.getDestinationTrack());
+                cb.setSelectedItem(si.getDestinationTrack());
             }
         }
         return cb;

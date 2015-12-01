@@ -35,9 +35,6 @@ import org.slf4j.LoggerFactory;
 public class IndicatorTrackIcon extends PositionableIcon
         implements java.beans.PropertyChangeListener, IndicatorTrack {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 3651878897031870004L;
     private NamedBeanHandle<Sensor> namedOccSensor = null;
     private NamedBeanHandle<OBlock> namedOccBlock = null;
@@ -206,11 +203,31 @@ public class IndicatorTrackIcon extends PositionableIcon
             log.debug("set \"" + name + "\" icon= " + icon);
         }
         _iconMap.put(name, icon);
-        setIcon(_iconMap.get(_status));
+        if (_status.equals(name)) {
+            setIcon(icon);            
+        }
     }
 
     public String getStatus() {
         return _status;
+    }
+
+    public int maxHeight() {
+        int max = 0;
+        Iterator<NamedIcon> iter = _iconMap.values().iterator();
+        while (iter.hasNext()) {
+            max = Math.max(iter.next().getIconHeight(), max);
+        }
+        return max;
+    }
+
+    public int maxWidth() {
+        int max = 0;
+        Iterator<NamedIcon> iter = _iconMap.values().iterator();
+        while (iter.hasNext()) {
+            max = Math.max(iter.next().getIconWidth(), max);
+        }
+        return max;
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent evt) {
@@ -242,7 +259,7 @@ public class IndicatorTrackIcon extends PositionableIcon
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
-        if ((state & OBlock.OCCUPIED) != 0) {
+        if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
         }
         repaint();
@@ -273,7 +290,7 @@ public class IndicatorTrackIcon extends PositionableIcon
     /**
      * Drive the current state of the display from the state of the turnout.
      */
-    void displayState(String status) {
+    public void displayState(String status) {
         if (log.isDebugEnabled()) {
             log.debug(getNameString() + " displayStatus " + _status);
         }

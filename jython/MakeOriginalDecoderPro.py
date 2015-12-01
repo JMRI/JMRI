@@ -3,11 +3,11 @@
 #
 # Author: Bob Jacobsen, copyright 2015
 # Part of the JMRI distribution
-#
-# The next line is maintained by SVN, please don't change it
-# $Revision$
 
+import jmri
 import javax.swing.JButton
+import java.util.ResourceBundle
+import jmri.Application
 import apps
 
 f = javax.swing.JPanel()

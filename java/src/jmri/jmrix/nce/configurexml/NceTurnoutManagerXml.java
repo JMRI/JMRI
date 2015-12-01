@@ -27,9 +27,10 @@ public class NceTurnoutManagerXml extends jmri.managers.configurexml.AbstractTur
         log.error("Invalid method called");
     }
 
-    public boolean load(Element turnouts) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // load individual turnouts
-        return loadTurnouts(turnouts);
+        return loadTurnouts(shared, perNode);
     }
 
     static Logger log = LoggerFactory.getLogger(NceTurnoutManagerXml.class.getName());

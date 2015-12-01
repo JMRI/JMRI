@@ -1,6 +1,5 @@
 package jmri.jmrix.marklin.networkdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.marklin.networkdriver.ConnectionConfig;
 import jmri.jmrix.marklin.networkdriver.NetworkDriverAdapter;
@@ -31,8 +30,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

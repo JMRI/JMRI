@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -34,6 +28,10 @@
 
 <H1>JMRI: Building with XCode</H1>
 
+<em>This page hasn't been updated to refer to our new Git
+source code repository.  Please don't use the SVN-based instructions
+below.</em>
+
 <H2>Introduction</H2>
 <p>Recent versions of <b>Mac OS X</b> come with <b>Xcode</b>, a software 
 development system developed for the Macintosh by Apple Computer. 
@@ -42,22 +40,33 @@ Xcode can be used to work with JMRI.
 <p>The instructions below assume a fresh checkout of JMRI, along with a recent 
 version of Xcode.
 
-<H2>Procedure to setup JMRI on Xcode 4</H2>
+<H2>Procedure to setup JMRI on Xcode 4, 5 or 6</H2>
 <ol>
 <li><p>Start <b>Xcode</b> and dismiss any previous project window that appears.</p></li>
 <li>File -> New -> New Project.  
 <li>In the new window, on the left, select OS X Other.  On the right, select External Build System.
 Click Next.
-<li>Project name: JMRI.  Build tool: /usr/bin/ant  Click Next.
+<li>Project name: JMRI.  Build tool: /usr/bin/ant  (XCode 6 may require /usr/local/bin/ant  
+so check by saying "which ant" in a Terminal window)
+<li>Click Next.
 <li>Navigate to your JMRI checkout & select the main checked-out directory.  "java" should show in the window as the next level down.
 Click "Create".
 <li>You should get an XCode project window. In the center, it should say
 "External Build Tool Configuration".  (You might have to click around to get there).
 Change Arguments from $(ACTION) to decoderpro (or panelpro if you'd like; case matters)
-<li>Just below that is a Directory field.  CLick the icon at the right end to get a 
+<li>Just below that is a Directory field.  Click the icon at the right end to get a 
 file chooser, and again select your checked-out directory.
 <li>Click the run button, upper left. DecoderPro should start after a compilation cycle.
 </ol>
+
+<p>On XCode 5 and 6, the above runs the code, but doesn't make it easily editable.
+Those XCode versions don't have strong Java edit, compile and debug support.
+You might be better off with 
+<a href="NetBeans.shtml">NetBeans </a>
+or 
+<a href="Eclipse.shtml">Eclipse</a>.
+
+
 <H2>Procedure to setup JMRI on Xcode 3</H2>
 <ol>
 <li><p>Start <b>Xcode,</b> dismiss any window that appears, and uncheck return to 

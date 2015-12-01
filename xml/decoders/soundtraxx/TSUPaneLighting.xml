@@ -37,6 +37,8 @@
         <display item="Headlight F0(f) Grade Crossing Logic"/>
         <display item="Headlight F0(f) Rule 17 Mode"/>
         <display item="Headlight F0(f) Light Type"/>
+        <display item="Headlight F0(f) Forward Directional Control" format="checkbox"/>
+        <display item="Headlight F0(f) Reverse Directional Control" format="checkbox"/>
         <label>
           <text> </text>
         </label>
@@ -45,6 +47,8 @@
         <display item="Backup Light F0(r) Grade Crossing Logic"/>
         <display item="Backup Light F0(r) Rule 17 Mode"/>
         <display item="Backup Light F0(r) Light Type"/>
+        <display item="Backup Light F0(r) Forward Directional Control" format="checkbox"/>
+        <display item="Backup Light F0(r) Reverse Directional Control" format="checkbox"/>
         <label>
           <text> </text>
         </label>
@@ -115,10 +119,29 @@
         <label>
           <text> </text>
         </label>
-        <display item="Hyperlight Flash Rate (0-15)">
-        </display>
-        <display item="Grade Crossing Hold Time (0-15)">
-        </display>
+        <display item="Hyperlight Flash Rate (0-15)"/>
+        <display item="Grade Crossing Hold Time (0-15)"/>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brightness 1" layout="above" label=""/>
+			<display item="Brightness 1" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Brightness 2" layout="above" label=""/>
+			<display item="Brightness 2" layout="above" format="hslider"/>
+		</row>
+        <label>
+          <text> </text>
+        </label>
+		<row>
+			<display item="Dimmer" layout="above" label=""/>
+			<display item="Dimmer" layout="above" format="hslider"/>
+		</row>
         <label>
           <text> </text>
         </label>
@@ -140,6 +163,6 @@
       </column>
     </row>
   </column>
-  <name>Tsunami Lighting</name>
+  <name>Lights</name>
   <name xml:lang="it">Luci</name>
 </pane>

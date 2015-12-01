@@ -1011,267 +1011,300 @@ public class SignalHeadTableAction extends AbstractTableAction {
             return;
         }
         SignalHead s;
-        if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
-            handleSE8cOkPressed();
-        } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
-            String inputusername = userName.getText();
-            String inputsysname = ato1.getText().toUpperCase();
-            int headnumber;
-            //int aspecttype;
+        try {
+            if (se8c4Aspect.equals(typeBox.getSelectedItem())) {
+                handleSE8cOkPressed();
+            } else if (acelaAspect.equals(typeBox.getSelectedItem())) {
+                String inputusername = userName.getText();
+                String inputsysname = ato1.getText().toUpperCase();
+                int headnumber;
+                //int aspecttype;
 
-            if (inputsysname.length() == 0) {
-                log.warn("must supply a signalhead number (i.e. AH23)");
-                return;
-            }
-            if (inputsysname.length() > 2) {
-                if (inputsysname.substring(0, 2).equals("AH")) {
-                    headnumber = Integer.parseInt(inputsysname.substring(2, inputsysname.length()));
-                } else if (checkIntegerOnly(inputsysname)) {
-                    headnumber = Integer.parseInt(inputsysname);
+                if (inputsysname.length() == 0) {
+                    log.warn("must supply a signalhead number (i.e. AH23)");
+                    return;
+                }
+                if (inputsysname.length() > 2) {
+                    if (inputsysname.substring(0, 2).equals("AH")) {
+                        headnumber = Integer.parseInt(inputsysname.substring(2, inputsysname.length()));
+                    } else if (checkIntegerOnly(inputsysname)) {
+                        headnumber = Integer.parseInt(inputsysname);
+                    } else {
+                        String msg = java.text.MessageFormat.format(AbstractTableAction.rb
+                                .getString("acelaSkippingCreation"), new Object[]{ato1.getText()});
+                        JOptionPane.showMessageDialog(addFrame, msg,
+                                AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
+                        return;
+                    }
                 } else {
+                    headnumber = Integer.parseInt(inputsysname);
+                }
+                if (checkBeforeCreating("AH" + headnumber)) {
+                    if (inputusername.length() == 0) {
+                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber);
+                    } else {
+                        s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername);
+                    }
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+
+                int st = signalheadTypeFromBox(stBox);
+                //This bit returns null i think, will need to check through
+                AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber);
+                switch (st) {
+                    case 1:
+                        sh.setOutputSignalHeadType(headnumber, AcelaNode.DOUBLE);
+                        break;
+                    case 2:
+                        sh.setOutputSignalHeadType(headnumber, AcelaNode.TRIPLE);
+                        break;
+                    case 3:
+                        sh.setOutputSignalHeadType(headnumber, AcelaNode.BPOLAR);
+                        break;
+                    case 4:
+                        sh.setOutputSignalHeadType(headnumber, AcelaNode.WIGWAG);
+                        break;
+                    default:
+                        log.warn("Unexpected Acela Aspect type: " + st);
+                        sh.setOutputSignalHeadType(headnumber, AcelaNode.UKNOWN);
+                        break;  // default to triple
+                }
+
+            } else if (grapevine.equals(typeBox.getSelectedItem())) {
+                // the turnout field must hold a GH system name
+                if (systemName.getText().length() == 0) {
+                    log.warn("must supply a signalhead number (i.e. GH23)");
+                    return;
+                }
+                String inputsysname = systemName.getText().toUpperCase();
+                if (!inputsysname.substring(0, 2).equals("GH")) {
+                    log.warn("skipping creation of signal, " + inputsysname + " does not start with GH");
                     String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                            .getString("acelaSkippingCreation"), new Object[]{ato1.getText()});
+                            .getString("GrapevineSkippingCreation"), new Object[]{inputsysname});
                     JOptionPane.showMessageDialog(addFrame, msg,
                             AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                if (checkBeforeCreating(inputsysname)) {
+                    s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userName.getText());
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (quadOutput.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
+                    Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
+                    Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
+                    Turnout t4 = getTurnoutFromPanel(to4, "SignalHead:" + systemName.getText() + ":Lunar");
+
+                    if (t1 == null) {
+                        addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
+                    }
+                    if (t2 == null) {
+                        addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
+                    }
+                    if (t3 == null) {
+                        addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
+                    }
+                    if (t4 == null) {
+                        addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
+                    }
+                    if (t4 == null || t3 == null || t2 == null || t1 == null) {
+                        log.warn("skipping creation of signal " + systemName.getText() + " due to error");
+                        return;
+                    }
+                    s = new jmri.implementation.QuadOutputSignalHead(systemName.getText(), userName.getText(),
+                            nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
+                            nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
+                            nbhm.getNamedBeanHandle(to3.getDisplayName(), t3),
+                            nbhm.getNamedBeanHandle(to4.getDisplayName(), t4));
+                    InstanceManager.signalHeadManagerInstance().register(s);
+
+                }
+            } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
+                    Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
+                    Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
+
+                    if (t1 == null) {
+                        addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
+                    }
+                    if (t2 == null) {
+                        addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
+                    }
+                    if (t3 == null) {
+                        addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
+                    }
+                    if (t3 == null || t2 == null || t1 == null) {
+                        log.warn("skipping creation of signal " + systemName.getText() + " due to error");
+                        return;
+                    }
+
+                    s = new jmri.implementation.TripleTurnoutSignalHead(systemName.getText(), userName.getText(),
+                            nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
+                            nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
+                            nbhm.getNamedBeanHandle(to3.getDisplayName(), t3));
+
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (tripleOutput.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
+                    Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Blue");
+                    Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
+
+                    if (t1 == null) {
+                        addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
+                    }
+                    if (t2 == null) {
+                        addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
+                    }
+                    if (t3 == null) {
+                        addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
+                    }
+                    if (t3 == null || t2 == null || t1 == null) {
+                        log.warn("skipping creation of signal " + systemName.getText() + " due to error");
+                        return;
+                    }
+
+                    s = new jmri.implementation.TripleOutputSignalHead(systemName.getText(), userName.getText(),
+                            nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
+                            nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
+                            nbhm.getNamedBeanHandle(to3.getDisplayName(), t3));
+
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
+                    Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Red");
+
+                    if (t1 == null) {
+                        addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
+                    }
+                    if (t2 == null) {
+                        addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
+                    }
+                    if (t2 == null || t1 == null) {
+                        log.warn("skipping creation of signal " + systemName.getText() + " due to error");
+                        return;
+                    }
+
+                    s = new jmri.implementation.DoubleTurnoutSignalHead(systemName.getText(), userName.getText(),
+                            nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
+                            nbhm.getNamedBeanHandle(to2.getDisplayName(), t2));
+                    s.setUserName(userName.getText());
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":" + (String) s2aBox.getSelectedItem() + ":" + (String) s3aBox.getSelectedItem());
+
+                    int on = signalStateFromBox(s2aBox);
+                    int off = signalStateFromBox(s3aBox);
+                    if (t1 == null) {
+                        addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
+                    }
+                    if (t1 == null) {
+                        log.warn("skipping creation of signal " + systemName.getText() + " due to error");
+                        return;
+                    }
+
+                    s = new jmri.implementation.SingleTurnoutSignalHead(systemName.getText(), userName.getText(),
+                            nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), on, off);
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (virtualHead.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    s = new jmri.implementation.VirtualSignalHead(systemName.getText(), userName.getText());
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (lsDec.equals(typeBox.getSelectedItem())) {
+                if (checkBeforeCreating(systemName.getText())) {
+                    Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
+                    Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
+                    Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
+                    Turnout t4 = getTurnoutFromPanel(to4, "SignalHead:" + systemName.getText() + ":FlashGreen");
+                    Turnout t5 = getTurnoutFromPanel(to5, "SignalHead:" + systemName.getText() + ":FlashYellow");
+                    Turnout t6 = getTurnoutFromPanel(to6, "SignalHead:" + systemName.getText() + ":FlashRed");
+                    Turnout t7 = getTurnoutFromPanel(to7, "SignalHead:" + systemName.getText() + ":Dark");
+
+                    int s1 = turnoutStateFromBox(s1Box);
+                    int s2 = turnoutStateFromBox(s2Box);
+                    int s3 = turnoutStateFromBox(s3Box);
+                    int s4 = turnoutStateFromBox(s4Box);
+                    int s5 = turnoutStateFromBox(s5Box);
+                    int s6 = turnoutStateFromBox(s6Box);
+                    int s7 = turnoutStateFromBox(s7Box);
+
+                    if (t1 == null) {
+                        addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
+                    }
+                    if (t2 == null) {
+                        addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
+                    }
+                    if (t3 == null) {
+                        addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
+                    }
+                    if (t4 == null) {
+                        addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
+                    }
+                    if (t5 == null) {
+                        addTurnoutMessage(v5Border.getTitle(), to5.getDisplayName());
+                    }
+                    if (t6 == null) {
+                        addTurnoutMessage(v6Border.getTitle(), to6.getDisplayName());
+                    }
+                    if (t7 == null) {
+                        addTurnoutMessage(v7Border.getTitle(), to7.getDisplayName());
+                    }
+                    if (t7 == null || t6 == null || t5 == null || t4 == null || t3 == null || t2 == null || t1 == null) {
+                        log.warn("skipping creation of signal " + systemName.getText() + " due to error");
+                        return;
+                    }
+                    s = new jmri.implementation.LsDecSignalHead(systemName.getText(), 
+                            nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), s1, 
+                            nbhm.getNamedBeanHandle(t2.getDisplayName(), t2), s2, 
+                            nbhm.getNamedBeanHandle(t3.getDisplayName(), t3), s3, 
+                            nbhm.getNamedBeanHandle(t4.getDisplayName(), t4), s4, 
+                            nbhm.getNamedBeanHandle(t5.getDisplayName(), t5), s5, 
+                            nbhm.getNamedBeanHandle(t6.getDisplayName(), t6), s6, 
+                            nbhm.getNamedBeanHandle(t7.getDisplayName(), t7), s7);
+                    s.setUserName(userName.getText());
+                    InstanceManager.signalHeadManagerInstance().register(s);
+                }
+            } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
+                handleDCCOkPressed();
+            } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
+                handleMergSignalDriverOkPressed();
             } else {
-                headnumber = Integer.parseInt(inputsysname);
+                log.error("Unexpected type: " + typeBox.getSelectedItem());
             }
-            if (checkBeforeCreating("AH" + headnumber)) {
-                if (inputusername.length() == 0) {
-                    s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber);
-                } else {
-                    s = new jmri.jmrix.acela.AcelaSignalHead("AH" + headnumber, inputusername);
-                }
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
+            
+        } catch (Exception ex) {
+            handleCreateException(ex, systemName.getText());
+            return; // without creating    
+        }
+    }
 
-            int st = signalheadTypeFromBox(stBox);
-            //This bit returns null i think, will need to check through
-            AcelaNode sh = AcelaAddress.getNodeFromSystemName("AH" + headnumber);
-            switch (st) {
-                case 1:
-                    sh.setOutputSignalHeadType(headnumber, AcelaNode.DOUBLE);
-                    break;
-                case 2:
-                    sh.setOutputSignalHeadType(headnumber, AcelaNode.TRIPLE);
-                    break;
-                case 3:
-                    sh.setOutputSignalHeadType(headnumber, AcelaNode.BPOLAR);
-                    break;
-                case 4:
-                    sh.setOutputSignalHeadType(headnumber, AcelaNode.WIGWAG);
-                    break;
-                default:
-                    log.warn("Unexpected Acela Aspect type: " + st);
-                    sh.setOutputSignalHeadType(headnumber, AcelaNode.UKNOWN);
-                    break;  // default to triple
-            }
-
-        } else if (grapevine.equals(typeBox.getSelectedItem())) {
-            // the turnout field must hold a GH system name
-            if (systemName.getText().length() == 0) {
-                log.warn("must supply a signalhead number (i.e. GH23)");
-                return;
-            }
-            String inputsysname = systemName.getText().toUpperCase();
-            if (!inputsysname.substring(0, 2).equals("GH")) {
-                log.warn("skipping creation of signal, " + inputsysname + " does not start with GH");
-                String msg = java.text.MessageFormat.format(AbstractTableAction.rb
-                        .getString("GrapevineSkippingCreation"), new Object[]{inputsysname});
-                JOptionPane.showMessageDialog(addFrame, msg,
-                        AbstractTableAction.rb.getString("WarningTitle"), JOptionPane.ERROR_MESSAGE);
-                return;
-            }
-            if (checkBeforeCreating(inputsysname)) {
-                s = new jmri.jmrix.grapevine.SerialSignalHead(inputsysname, userName.getText());
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (quadOutput.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
-                Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
-                Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
-                Turnout t4 = getTurnoutFromPanel(to4, "SignalHead:" + systemName.getText() + ":Lunar");
-
-                if (t1 == null) {
-                    addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
-                }
-                if (t2 == null) {
-                    addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
-                }
-                if (t3 == null) {
-                    addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
-                }
-                if (t4 == null) {
-                    addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
-                }
-                if (t4 == null || t3 == null || t2 == null || t1 == null) {
-                    log.warn("skipping creation of signal " + systemName.getText() + " due to error");
-                    return;
-                }
-                s = new jmri.implementation.QuadOutputSignalHead(systemName.getText(), userName.getText(),
-                        nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
-                        nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
-                        nbhm.getNamedBeanHandle(to3.getDisplayName(), t3),
-                        nbhm.getNamedBeanHandle(to4.getDisplayName(), t4));
-                InstanceManager.signalHeadManagerInstance().register(s);
-
-            }
-        } else if (tripleTurnout.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
-                Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
-                Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
-
-                if (t1 == null) {
-                    addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
-                }
-                if (t2 == null) {
-                    addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
-                }
-                if (t3 == null) {
-                    addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
-                }
-                if (t3 == null || t2 == null || t1 == null) {
-                    log.warn("skipping creation of signal " + systemName.getText() + " due to error");
-                    return;
-                }
-
-                s = new jmri.implementation.TripleTurnoutSignalHead(systemName.getText(), userName.getText(),
-                        nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
-                        nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
-                        nbhm.getNamedBeanHandle(to3.getDisplayName(), t3));
-
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (tripleOutput.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
-                Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Blue");
-                Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
-
-                if (t1 == null) {
-                    addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
-                }
-                if (t2 == null) {
-                    addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
-                }
-                if (t3 == null) {
-                    addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
-                }
-                if (t3 == null || t2 == null || t1 == null) {
-                    log.warn("skipping creation of signal " + systemName.getText() + " due to error");
-                    return;
-                }
-
-                s = new jmri.implementation.TripleOutputSignalHead(systemName.getText(), userName.getText(),
-                        nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
-                        nbhm.getNamedBeanHandle(to2.getDisplayName(), t2),
-                        nbhm.getNamedBeanHandle(to3.getDisplayName(), t3));
-
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (doubleTurnout.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
-                Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Red");
-
-                if (t1 == null) {
-                    addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
-                }
-                if (t2 == null) {
-                    addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
-                }
-                if (t2 == null || t1 == null) {
-                    log.warn("skipping creation of signal " + systemName.getText() + " due to error");
-                    return;
-                }
-
-                s = new jmri.implementation.DoubleTurnoutSignalHead(systemName.getText(), userName.getText(),
-                        nbhm.getNamedBeanHandle(to1.getDisplayName(), t1),
-                        nbhm.getNamedBeanHandle(to2.getDisplayName(), t2));
-                s.setUserName(userName.getText());
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (singleTurnout.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":" + (String) s2aBox.getSelectedItem() + ":" + (String) s3aBox.getSelectedItem());
-
-                int on = signalStateFromBox(s2aBox);
-                int off = signalStateFromBox(s3aBox);
-                if (t1 == null) {
-                    addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
-                }
-                if (t1 == null) {
-                    log.warn("skipping creation of signal " + systemName.getText() + " due to error");
-                    return;
-                }
-
-                s = new jmri.implementation.SingleTurnoutSignalHead(systemName.getText(), userName.getText(),
-                        nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), on, off);
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (virtualHead.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                s = new jmri.implementation.VirtualSignalHead(systemName.getText(), userName.getText());
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (lsDec.equals(typeBox.getSelectedItem())) {
-            if (checkBeforeCreating(systemName.getText())) {
-                Turnout t1 = getTurnoutFromPanel(to1, "SignalHead:" + systemName.getText() + ":Green");
-                Turnout t2 = getTurnoutFromPanel(to2, "SignalHead:" + systemName.getText() + ":Yellow");
-                Turnout t3 = getTurnoutFromPanel(to3, "SignalHead:" + systemName.getText() + ":Red");
-                Turnout t4 = getTurnoutFromPanel(to4, "SignalHead:" + systemName.getText() + ":FlashGreen");
-                Turnout t5 = getTurnoutFromPanel(to5, "SignalHead:" + systemName.getText() + ":FlashYellow");
-                Turnout t6 = getTurnoutFromPanel(to6, "SignalHead:" + systemName.getText() + ":FlashRed");
-                Turnout t7 = getTurnoutFromPanel(to7, "SignalHead:" + systemName.getText() + ":Dark");
-
-                int s1 = turnoutStateFromBox(s1Box);
-                int s2 = turnoutStateFromBox(s2Box);
-                int s3 = turnoutStateFromBox(s3Box);
-                int s4 = turnoutStateFromBox(s4Box);
-                int s5 = turnoutStateFromBox(s5Box);
-                int s6 = turnoutStateFromBox(s6Box);
-                int s7 = turnoutStateFromBox(s7Box);
-
-                if (t1 == null) {
-                    addTurnoutMessage(v1Border.getTitle(), to1.getDisplayName());
-                }
-                if (t2 == null) {
-                    addTurnoutMessage(v2Border.getTitle(), to2.getDisplayName());
-                }
-                if (t3 == null) {
-                    addTurnoutMessage(v3Border.getTitle(), to3.getDisplayName());
-                }
-                if (t4 == null) {
-                    addTurnoutMessage(v4Border.getTitle(), to4.getDisplayName());
-                }
-                if (t5 == null) {
-                    addTurnoutMessage(v5Border.getTitle(), to5.getDisplayName());
-                }
-                if (t6 == null) {
-                    addTurnoutMessage(v6Border.getTitle(), to6.getDisplayName());
-                }
-                if (t7 == null) {
-                    addTurnoutMessage(v7Border.getTitle(), to7.getDisplayName());
-                }
-                if (t7 == null || t6 == null || t5 == null || t4 == null || t3 == null || t2 == null || t1 == null) {
-                    log.warn("skipping creation of signal " + systemName.getText() + " due to error");
-                    return;
-                }
-
-                s = new jmri.implementation.LsDecSignalHead(systemName.getText(), nbhm.getNamedBeanHandle(t1.getDisplayName(), t1), s1, nbhm.getNamedBeanHandle(t2.getDisplayName(), t2), s2, nbhm.getNamedBeanHandle(t3.getDisplayName(), t3), s3, nbhm.getNamedBeanHandle(t4.getDisplayName(), t4), s4, nbhm.getNamedBeanHandle(t5.getDisplayName(), t5), s5, nbhm.getNamedBeanHandle(t6.getDisplayName(), t6), s6, nbhm.getNamedBeanHandle(t7.getDisplayName(), t7), s7);
-                s.setUserName(userName.getText());
-                InstanceManager.signalHeadManagerInstance().register(s);
-            }
-        } else if (dccSignalDecoder.equals(typeBox.getSelectedItem())) {
-            handleDCCOkPressed();
-        } else if (mergSignalDriver.equals(typeBox.getSelectedItem())) {
-            handleMergSignalDriverOkPressed();
+    void handleCreateException(Exception ex, String sysName) {
+        if (ex.getLocalizedMessage() != null) {
+            javax.swing.JOptionPane.showMessageDialog(addFrame,
+                    ex.getLocalizedMessage(),
+                    rb.getString("ErrorTitle"),
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
+        } else if (ex.getMessage() != null ) {
+            javax.swing.JOptionPane.showMessageDialog(addFrame,
+                    ex.getMessage(),
+                    rb.getString("ErrorTitle"),
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         } else {
-            log.error("Unexpected type: " + typeBox.getSelectedItem());
+            javax.swing.JOptionPane.showMessageDialog(addFrame,
+                    java.text.MessageFormat.format(
+                            rb.getString("ErrorSignalHeadAddFailed"),
+                            new Object[]{sysName}),
+                    rb.getString("ErrorTitle"),
+                    javax.swing.JOptionPane.ERROR_MESSAGE);
         }
     }
 
@@ -1315,10 +1348,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
         // check validity
         if (t1 != null && t2 != null) {
             // OK process
-            s = new jmri.implementation.SE8cSignalHead(
-                    nbhm.getNamedBeanHandle(t1.getSystemName(), t1),
-                    nbhm.getNamedBeanHandle(t2.getSystemName(), t2),
-                    userName.getText());
+            try {
+                s = new jmri.implementation.SE8cSignalHead(
+                        nbhm.getNamedBeanHandle(t1.getSystemName(), t1),
+                        nbhm.getNamedBeanHandle(t2.getSystemName(), t2),
+                        userName.getText());
+            } catch (Exception ex) {
+                // user input no good
+                handleCreate2TurnoutException(t1.getSystemName(),
+                        t2.getSystemName(), userName.getText());
+                return; // without creating any 
+            }
             InstanceManager.signalHeadManagerInstance().register(s);
         } else {
             // couldn't create turnouts, error
@@ -1334,6 +1374,17 @@ public class SignalHeadTableAction extends AbstractTableAction {
         }
     }
 
+    void handleCreate2TurnoutException(String t1, String t2, String uName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                        rb.getString("ErrorSe8cAddFailed"),
+                        new Object[]{t1},
+                        new Object[]{t2},
+                        new Object[]{uName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     void handleSE8cTypeChanged() {
         hideAllOptions();
         userNameLabel.setText(rb.getString("LabelUserName"));

@@ -14,6 +14,7 @@ import javax.swing.JRadioButton;
 import jmri.InstanceManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.managers.ManagerDefaultSelector;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 import jmri.util.javaworld.GridLayout2;
 import jmri.util.swing.JmriPanel;
@@ -41,7 +42,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
 
         matrix = new JPanel();
         add(matrix);
-        ManagerDefaultSelector.instance.addPropertyChangeListener((PropertyChangeEvent e) -> {
+        InstanceManager.getDefault(ManagerDefaultSelector.class).addPropertyChangeListener((PropertyChangeEvent e) -> {
             if (e.getPropertyName().equals("Updated")) {
                 update();
             }
@@ -67,14 +68,15 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
     }
 
     void reloadConnections(List<SystemConnectionMemo> connList) {
-        matrix.setLayout(new GridLayout2(connList.size() + 1, ManagerDefaultSelector.instance.knownManagers.length + 1));
+        ManagerDefaultSelector manager = InstanceManager.getDefault(ManagerDefaultSelector.class);
+        matrix.setLayout(new GridLayout2(connList.size() + 1, manager.knownManagers.length + 1));
         matrix.add(new JLabel(""));
 
-        for (ManagerDefaultSelector.Item item : ManagerDefaultSelector.instance.knownManagers) {
+        for (ManagerDefaultSelector.Item item : manager.knownManagers) {
             matrix.add(new JLabel(item.typeName));
         }
-        groups = new ButtonGroup[ManagerDefaultSelector.instance.knownManagers.length];
-        for (int i = 0; i < ManagerDefaultSelector.instance.knownManagers.length; i++) {
+        groups = new ButtonGroup[manager.knownManagers.length];
+        for (int i = 0; i < manager.knownManagers.length; i++) {
             groups[i] = new ButtonGroup();
         }
         for (int x = 0; x < connList.size(); x++) {
@@ -82,12 +84,12 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             String name = memo.getUserName();
             matrix.add(new JLabel(name));
             int i = 0;
-            for (ManagerDefaultSelector.Item item : ManagerDefaultSelector.instance.knownManagers) {
+            for (ManagerDefaultSelector.Item item : manager.knownManagers) {
                 if (memo.provides(item.managerClass)) {
                     JRadioButton r = new SelectionButton(name, item.managerClass, this);
                     matrix.add(r);
                     groups[i].add(r);
-                    if (x == connList.size() - 1 && ManagerDefaultSelector.instance.getDefault(item.managerClass) == null) {
+                    if (x == connList.size() - 1 && manager.getDefault(item.managerClass) == null) {
                         r.setSelected(true);
                     }
                 } else {
@@ -142,7 +144,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        InstanceManager.getDefault(ManagerDefaultSelector.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
@@ -175,13 +177,13 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
             this.managerClass = managerClass;
             this.name = name;
 
-            if (name.equals(ManagerDefaultSelector.instance.getDefault(managerClass))) {
+            if (name.equals(InstanceManager.getDefault(ManagerDefaultSelector.class).getDefault(managerClass))) {
                 this.setSelected(true);
             }
 
             addActionListener((ActionEvent e) -> {
                 if (isSelected()) {
-                    ManagerDefaultSelector.instance.setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
+                    InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(SelectionButton.this.managerClass, SelectionButton.this.name);
                     pane.dirty = true;
                 }
             });
@@ -194,7 +196,7 @@ public class ManagerDefaultsConfigPane extends JmriPanel implements PreferencesP
         public void setSelected(boolean t) {
             super.setSelected(t);
             if (t) {
-                ManagerDefaultSelector.instance.setDefault(this.managerClass, this.name);
+                InstanceManager.getDefault(ManagerDefaultSelector.class).setDefault(this.managerClass, this.name);
             }
         }
     }

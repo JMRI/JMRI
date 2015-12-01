@@ -256,6 +256,20 @@ public class ScheduleItem implements java.beans.PropertyChangeListener {
     public String getComment() {
         return _comment;
     }
+    
+    public void copyScheduleItem (ScheduleItem si) {
+        setComment(si.getComment());
+        setCount(si.getCount());
+        setDestination(si.getDestination());
+        setDestinationTrack(si.getDestinationTrack());
+        setPickupTrainScheduleId(si.getPickupTrainScheduleId());
+        setRandom(si.getRandom());
+        setReceiveLoadName(si.getReceiveLoadName());
+        setRoadName(si.getRoadName());
+        setSetoutTrainScheduleId(si.getSetoutTrainScheduleId());
+        setShipLoadName(si.getShipLoadName());
+        setWait(si.getWait());
+    }
 
     public void dispose() {
         firePropertyChange(DISPOSE, null, DISPOSE);

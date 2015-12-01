@@ -23,6 +23,7 @@ import jmri.jmrix.rfid.merg.concentrator.ConcentratorReporterManager;
 import jmri.jmrix.rfid.merg.concentrator.ConcentratorSensorManager;
 import jmri.jmrix.rfid.merg.concentrator.ConcentratorTrafficController;
 import jmri.jmrix.rfid.protocol.coreid.CoreIdRfidProtocol;
+import jmri.jmrix.rfid.protocol.em18.Em18RfidProtocol;
 import jmri.jmrix.rfid.protocol.olimex.OlimexRfidProtocol;
 import jmri.jmrix.rfid.protocol.parallax.ParallaxRfidProtocol;
 import jmri.jmrix.rfid.protocol.seeedstudio.SeeedStudioRfidProtocol;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Bob Jacobsen Copyright (C) 2006, 2007, 2008
  * @author Matthew Harris Copyright (C) 2011
+ * @author Oscar A. Pruitt Copyright (C) 2015
  * @version $Revision$
  * @since 2.11.4
  */
@@ -49,7 +51,7 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         option3Name = "Protocol";
         options.put(option1Name, new Option("Adapter:", new String[]{"Generic Stand-alone", "MERG Concentrator"}, false));
         options.put(option2Name, new Option("Concentrator range:", new String[]{"A-H", "I-P"}, false));
-        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio"}, false));
+        options.put(option3Name, new Option("Protocol:", new String[]{"CORE-ID", "Olimex", "Parallax", "SeeedStudio", "EM-18"}, false));
         this.manufacturerName = jmri.jmrix.DCCManufacturerList.RFID;
     }
 
@@ -261,6 +263,9 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
             } else if (opt3.equals("SeeedStudio")) {
                 log.info("set protocol to SeeedStudio");
                 protocol = new SeeedStudioRfidProtocol();
+            } else if (opt3.equals("EM-18")) {
+                log.info("set protocol to EM-18");
+                protocol = new Em18RfidProtocol();
             } else {
                 // no protocol at all - warn
                 log.warn("protocol option " + opt3 + " defaults to CORE-ID");
@@ -270,7 +275,22 @@ public class SerialDriverAdapter extends RfidPortController implements jmri.jmri
         } else {
             // MERG Concentrator only supports CORE-ID
             log.info("set protocol to CORE-ID");
-            protocol = new CoreIdRfidProtocol();
+            String opt2 = getOptionState(option2Name);
+            switch (opt2) {
+                case "A-H" :
+                    log.info("set concentrator range to 'A-H' at position 1");
+                    protocol = new CoreIdRfidProtocol('A', 'H', 1);
+                    break;
+                case "I-P" :
+                    log.info("set concentrator range to 'I-P' at position 1");
+                    protocol = new CoreIdRfidProtocol('I', 'P', 1);
+                    break;
+                default :
+                    // unrecognised concentrator range - warn
+                    log.warn("concentrator range '{}' not supported - default to no concentrator", opt2);
+                    protocol = new CoreIdRfidProtocol();
+                    break;
+            }
         }
         this.getSystemConnectionMemo().setProtocol(protocol);
 

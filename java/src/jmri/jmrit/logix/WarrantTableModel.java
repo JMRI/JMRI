@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import jmri.DccLocoAddress;
 import jmri.InstanceManager;
 import jmri.Manager;
 import jmri.NamedBean;
@@ -443,39 +442,8 @@ class WarrantTableModel extends jmri.jmrit.beantable.BeanTableDataModel // Abstr
             break;
         case ADDRESS_COLUMN:
             String addr = (String) value;
-            if (addr != null && addr.length() != 0) {
-                boolean isLong = false;
-                int dccNum = 0;
-                addr = addr.toUpperCase().trim();
-                Character ch = addr.charAt(addr.length() - 1);
-                try {
-                    if (!Character.isDigit(ch)) {
-                        if (ch != 'S' && ch != 'L' && ch != ')') {
-                            msg = Bundle.getMessage("BadDccAddress", addr);
-                        }
-                        if (ch == ')') {
-                            dccNum = Integer.parseInt(addr.substring(0,
-                                    addr.length() - 3));
-                            ch = addr.charAt(addr.length() - 2);
-                            isLong = (ch == 'L');
-                        } else {
-                            dccNum = Integer.parseInt(addr.substring(0,
-                                    addr.length() - 1));
-                            isLong = (ch == 'L');
-                        }
-                    } else {
-                        dccNum = Integer.parseInt(addr);
-                        ch = addr.charAt(0);
-                        isLong = (ch == '0' || dccNum > 255); // leading zero
-                                                                // means long
-                        addr = addr + (isLong ? "L" : "S");
-                    }
-                    if (msg == null) {
-                        w.setDccAddress(new DccLocoAddress(dccNum, isLong));
-                    }
-                } catch (NumberFormatException nfe) {
-                    msg = Bundle.getMessage("BadDccAddress", addr);
-                }
+            if (!w.setDccAddress(addr)) {
+                msg = Bundle.getMessage("BadDccAddress", addr);                
             }
             break;
         case ALLOCATE_COLUMN:

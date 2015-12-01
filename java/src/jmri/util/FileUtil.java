@@ -292,12 +292,12 @@ public final class FileUtil {
      * @param pName The name string, possibly starting with file:, home:,
      *              profile:, program:, preference:, scripts:, settings, or
      *              resource:
-     * @return Absolute file name to use, or null.
+     * @return Absolute file name to use, or null. This will include system-specific file separators.
      * @since 2.7.2
      */
     static public String getExternalFilename(String pName) {
         String filename = FileUtil.pathFromPortablePath(pName);
-        return (filename != null) ? filename : pName;
+        return (filename != null) ? filename : pName.replace(SEPARATOR, File.separatorChar);
     }
 
     /**
@@ -317,7 +317,7 @@ public final class FileUtil {
      * are not created.
      *
      * @param file File at path to be represented
-     * @return Filename for storage in a portable manner
+     * @return Filename for storage in a portable manner. This will include portable, not system-specific, file separators.
      * @since 2.7.2
      */
     static public String getPortableFilename(File file) {
@@ -527,13 +527,19 @@ public final class FileUtil {
 
     /**
      * Get the preferences directory. This directory is set based on the OS and
-     * is not normally settable by the user. <ul><li>On Microsoft Windows
-     * systems, this is JMRI in the User's home directory.</li> <li>On OS X
+     * is not normally settable by the user. 
+     * <ul>
+     * <li>On Microsoft Windows
+     * systems, this is JMRI in the User's home directory.</li>
+     * <li>On OS X
      * systems, this is Library/Preferences/JMRI in the User's home
-     * directory.</li> <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
-     * the User's home directory.</li> <li>This can be overridden with by
-     * setting the jmri.prefsdir Java property when starting JMRI.</li></ul> Use
-     * {@link #getHomePath()} to get the User's home directory.
+     * directory.</li> 
+     * <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
+     * the User's home directory.</li> 
+     * <li>This can be overridden with by
+     * setting the jmri.prefsdir Java property when starting JMRI.</li>
+     * </ul>
+     * Use {@link #getHomePath()} to get the User's home directory.
      *
      * @see #getHomePath()
      * @return Path to the preferences directory.
@@ -1025,8 +1031,8 @@ public final class FileUtil {
     }
 
     /**
-     * Read a text URL into a String. Would be significantly simpler with Java
-     * 7.
+     * Read a text URL into a String. Would be significantly simpler with Java 7.
+     * File is assumed to be encoded using UTF-8
      *
      * @param url The text URL.
      * @return The contents of the file.
@@ -1035,7 +1041,7 @@ public final class FileUtil {
      */
     public static String readURL(URL url) throws IOException {
         try {
-            InputStreamReader in = new InputStreamReader(url.openStream());
+            InputStreamReader in = new InputStreamReader(url.openStream(), "UTF-8"); // NOI18N
             BufferedReader reader = new BufferedReader(in);
             StringBuilder builder = new StringBuilder();
             String aux;
@@ -1150,7 +1156,7 @@ public final class FileUtil {
                 @Override
                 public FileVisitResult visitFile(final Path file,
                         final BasicFileAttributes attrs) throws IOException {
-                    Files.copy(file, dstPath.resolve(srcPath.relativize(file)));
+                    Files.copy(file, dstPath.resolve(srcPath.relativize(file)), StandardCopyOption.REPLACE_EXISTING);
                     return FileVisitResult.CONTINUE;
                 }
             });
@@ -1173,6 +1179,30 @@ public final class FileUtil {
         pw.close();
     }
 
+    /**
+     * Backup a file.
+     * 
+     * @param file
+     * @throws java.io.IOException 
+     * @see jmri.util.FileUtilSupport#backup(java.io.File) 
+     */
+    public static void backup(File file) throws IOException {
+        FileUtilSupport.getDefault().backup(file);
+    }
+    
+    /**
+     * Rotate a file
+     * @param file
+     * @param max
+     * @param extension 
+     * @throws java.io.IOException 
+     * @see jmri.util.FileUtilSupport#rotate(java.io.File, int, java.lang.String) 
+     * @see backup
+     */
+    public static void rotate(File file, int max, String extension) throws IOException {
+        FileUtilSupport.getDefault().rotate(file, max, extension);
+    }
+    
     /* Private default constructor to ensure it's not documented. */
     private FileUtil() {
     }

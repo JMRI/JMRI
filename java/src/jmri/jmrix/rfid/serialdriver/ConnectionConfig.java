@@ -77,7 +77,7 @@ public class ConnectionConfig extends jmri.jmrix.AbstractSerialConnectionConfig 
 
     @Override
     public String name() {
-        return "RFID Device Connection";
+        return "Direct Serial Connection";
     }
 
     @Override

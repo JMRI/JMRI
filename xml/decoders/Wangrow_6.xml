@@ -35,7 +35,7 @@
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
       <!-- CV 3-4 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <!-- CV=19 -->
      <xi:include href="http://jmri.org/xml/decoders/nmra/consistAddrDirection.xml"/>

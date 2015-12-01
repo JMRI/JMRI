@@ -100,15 +100,10 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
      elem.addContent(nb.getSystemName());
      return elem;
      }*/
-    Element storeNamedBean(String elemName, NamedBeanHandle<?> nb) {
+    static Element storeNamedBean(String elemName, NamedBeanHandle<?> nb) {
         Element elem = new Element(elemName);
         elem.addContent(nb.getName());
         return elem;
-    }
-
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
     }
 
     /**
@@ -147,17 +142,13 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
         Element name = element.getChild("occupancyblock");
         if (name != null) {
             l.setOccBlock(name.getText());
+        } else {        // only write sensor if no OBlock, don't write double sensing
+            name = element.getChild("occupancysensor");
+            if (name != null) {
+                l.setOccSensor(name.getText());
+            }            
         }
-        name = element.getChild("occupancysensor");
-        if (name != null) {
-            l.setOccSensor(name.getText());
-        }
-        /*
-         name = element.getChild("errorsensor");
-         if (name!=null) {
-         l.setErrSensor(name.getText());
-         }
-         */
+
         l.setShowTrain(false);
         name = element.getChild("showTrainName");
         if (name != null) {
@@ -176,6 +167,7 @@ public class IndicatorTrackIconXml extends PositionableLabelXml {
             l.setPaths(paths);
         }
 
+        l.displayState(l.getStatus());
         l.updateSize();
         p.putItem(l);
         // load individual item's option settings after editor has set its global settings

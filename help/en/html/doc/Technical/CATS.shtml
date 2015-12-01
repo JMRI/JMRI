@@ -50,7 +50,7 @@ CATS has two package trees, "cats.*" and "developer.*", roughly
 corresponding to the two CATS applications.
 
 <p>
-CATS development does not use SVN, and the code is not generally
+CATS development does not use a public code repository, and the code is not generally
 available while it's being developed.  
 Rodney Black periodoically mades releases
 available, including source code, as zip-file archives at the
@@ -83,7 +83,8 @@ The Ant compilation rules will then compile CATS every time you
 compile JMRI itself. This will show you errors, deprecation warnings, etc.
 
 <p>
-To simplify SVN work, the two CATS-related directories are ignored when doing SVN operations.
+To simplify JMRI repository work, 
+the two CATS-related directories are ignored when doing repository operations.
 
 <p>
 Note that this does include the CATS source within the build, so any

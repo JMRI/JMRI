@@ -29,8 +29,9 @@ public class ShortAddrVariableValue extends DecVariableValue {
             boolean readOnly, boolean infoOnly, boolean writeOnly, boolean opsOnly,
             String cvNum, String mask,
             HashMap<String, CvValue> v, JLabel status, String stdname) {
-        // specify min, max value explicitly
-        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 1, 127, v, status, stdname);
+        // specify min, max value explicitly.
+        // short address 0 = alternate power source as per S9.2.2.
+        super(name, comment, cvName, readOnly, infoOnly, writeOnly, opsOnly, cvNum, mask, 0, 127, v, status, stdname);
 
         // add default overwrites as per NMRA spec
         firstFreeSpace = 0;

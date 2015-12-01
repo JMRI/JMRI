@@ -14,6 +14,7 @@ import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.Track;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -309,62 +310,71 @@ public class TrainSwitchLists extends TrainCommon {
                 List<RollingStock> rsList = carManager.getByTrainList();
                 List<Car> carList = new ArrayList<Car>();
                 for (RollingStock rs : rsList) {
-                    if (rs.getLocation() == location || rs.getDestination() == location)
+                    if ((rs.getLocation() != null && splitString(rs.getLocation().getName()).equals(splitString(location.getName())))
+                            ||
+                            (rs.getDestination() != null && splitString(rs.getDestination().getName()).equals(splitString(location.getName()))))
                         carList.add((Car) rs);
                 }
                 String trackName = "";
-                for (Track track : location.getTrackByNameList(null)) {
-                    if (trackName.equals(splitString(track.getName())))
+                for (Location loc : locationManager.getLocationsByNameList()) {
+                    if (!splitString(loc.getName()).equals(splitString(location.getName())))
                         continue;
-                    String trainName = "";
-                    trackName = splitString(track.getName());
-                    newLine(fileOut);
-                    newLine(fileOut, trackName);
-                    for (Car car : carList) {
-                        if (splitString(car.getTrackName()).equals(trackName)) {
-                            if (car.getRouteLocation() != null) {
-                                if (splitString(car.getRouteLocation().getLocation().getName()).equals(splitString(location.getName()))) {
+                    for (Track track : loc.getTrackByNameList(null)) {
+                        if (trackName.equals(splitString(track.getName())))
+                            continue;
+                        String trainName = "";
+                        trackName = splitString(track.getName());
+                        newLine(fileOut);
+                        newLine(fileOut, trackName);
+                        for (Car car : carList) {
+                            if (splitString(car.getTrackName()).equals(trackName)) {
+                                if (car.getRouteLocation() != null) {
+                                    if (splitString(car.getRouteLocation().getLocation().getName()).equals(splitString(location.getName()))) {
+                                        if (!trainName.equals(car.getTrainName())) {
+                                            trainName = car.getTrainName();
+                                            newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
+                                                    .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
+                                            printPickupCarHeader(fileOut, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
+                                        }
+                                        if (car.isUtility()) {
+                                            pickupUtilityCars(fileOut, carList, car, !IS_MANIFEST);
+                                        } else {
+                                            pickUpCar(fileOut, car, !IS_MANIFEST);
+                                        }
+                                    }
+                                    // car holds
+                                } else if (car.isUtility()) {
+                                    String s = pickupUtilityCars(carList, car, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
+                                    if (s != null) {
+                                        newLine(fileOut, TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim());
+                                    }
+                                } else {
+                                    newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
+                                            new Object[]{padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
+                                                    padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
+                                                    padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
+                                                    padAndTruncateString(car.getLength() + LENGTHABV, Control.max_len_string_length_name),
+                                                    padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
+                                                    padAndTruncateString(trackName, locationManager.getMaxTrackNameLength()),
+                                                    padAndTruncateString(car.getColor(), CarColors.instance().getMaxNameLength())}));
+                                }
+                            }
+                        }
+                        for (Car car : carList) {
+                            if (splitString(car.getDestinationTrackName()).equals(trackName)) {
+                                if (car.getRouteDestination() != null &&
+                                        splitString(car.getRouteDestination().getLocation().getName()).equals(splitString(location.getName()))) {
                                     if (trainName != car.getTrainName()) {
                                         trainName = car.getTrainName();
                                         newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
                                                 .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
+                                        printDropCarHeader(fileOut, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
                                     }
                                     if (car.isUtility()) {
-                                        pickupUtilityCars(fileOut, carList, car, !IS_MANIFEST);
+                                        setoutUtilityCars(fileOut, carList, car, !IS_MANIFEST);
                                     } else {
-                                        pickUpCar(fileOut, car, !IS_MANIFEST);
+                                        dropCar(fileOut, car, !IS_MANIFEST);
                                     }
-                                }
-                            } else if (car.isUtility()) {
-                                String s = pickupUtilityCars(carList, car, !IS_MANIFEST, !IS_TWO_COLUMN_TRACK);
-                                if (s != null) {
-                                    newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
-                                            new Object[]{s.trim(), "", "", "", "", ""}));
-                                }
-                            } else {
-                                newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText.getStringHoldCar(),
-                                        new Object[]{padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
-                                                padAndTruncateString(car.getNumber(), Control.max_len_string_print_road_number),
-                                                padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
-                                                padAndTruncateString(car.getLength() + LENGTHABV, Control.max_len_string_length_name),
-                                                padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
-                                                padAndTruncateString(trackName, locationManager.getMaxTrackNameLength())}));
-                            }
-                        }
-                    }
-                    for (Car car : carList) {
-                        if (splitString(car.getDestinationTrackName()).equals(trackName)) {
-                            if (car.getRouteDestination() != null &&
-                                    splitString(car.getRouteDestination().getLocation().getName()).equals(splitString(location.getName()))) {
-                                if (trainName != car.getTrainName()) {
-                                    trainName = car.getTrainName();
-                                    newLine(fileOut, MessageFormat.format(messageFormatText = TrainSwitchListText
-                                            .getStringScheduledWork(), new Object[]{car.getTrainName(), car.getTrain().getDescription()}));
-                                }
-                                if (car.isUtility()) {
-                                    setoutUtilityCars(fileOut, carList, car, !IS_MANIFEST);
-                                } else {
-                                    dropCar(fileOut, car, !IS_MANIFEST);
                                 }
                             }
                         }

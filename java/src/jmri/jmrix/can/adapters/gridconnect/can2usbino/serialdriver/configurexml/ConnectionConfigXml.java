@@ -1,6 +1,5 @@
 package jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.ConnectionConfig;
 import jmri.jmrix.can.adapters.gridconnect.can2usbino.serialdriver.SerialDriverAdapter;
 import jmri.jmrix.configurexml.AbstractSerialConnectionConfigXml;
@@ -35,8 +34,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

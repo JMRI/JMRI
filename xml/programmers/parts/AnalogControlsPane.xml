@@ -369,4 +369,66 @@
       <tooltip xml:lang="de">Setzt den Status der Funktion F18(r) wenn die Lok im Analogbetrieb ist</tooltip>
     </display>
   </column>
+  <column>
+    <display item="Analog Mode Function Status - F19" format="checkbox" tooltip="Sets the status of function F19 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F19 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F19 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F19 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F20" format="checkbox" tooltip="Sets the status of function F20 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F20 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F20 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F20 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F21" format="checkbox" tooltip="Sets the status of function F21 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F21 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F21 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F21 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F22" format="checkbox" tooltip="Sets the status of function F22 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F22 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F22 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F22 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F23" format="checkbox" tooltip="Sets the status of function F23 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F23 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F23 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F23 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F24" format="checkbox" tooltip="Sets the status of function F24 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F24 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F24 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F24 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F25" format="checkbox" tooltip="Sets the status of function F25 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F25 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F25 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F25 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F26" format="checkbox" tooltip="Sets the status of function F26 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F26 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F26 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F26 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F27" format="checkbox" tooltip="Sets the status of function F27 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F27 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F27 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F27 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+    <display item="Analog Mode Function Status - F28" format="checkbox" tooltip="Sets the status of function F28 when the unit is operating in analog power mode">
+      <tooltip xml:lang="ca">Estableix si funcionar‡ F28 quan es condueixi en analÚgic</tooltip>
+      <tooltip xml:lang="it">Imposta stato funzione F28 quando si opera in analogico</tooltip>
+      <tooltip xml:lang="de">Setzt den Status der Funktion F28 wenn die Lok im Analogbetrieb ist</tooltip>
+    </display>
+  </column>
+  <column>
+    <display item="Analog Mode Automatic Effects - FWDD" format="checkbox" tooltip="Sets the status of automatic effects when moving in forward direction in analog power mode">
+    </display>
+    <display item="Analog Mode Automatic Effects - REVD" format="checkbox" tooltip="Sets the status of automatic effects when moving in reverse direction in analog power mode">
+    </display>
+    <display item="Analog Mode Automatic Effects - FWDS" format="checkbox" tooltip="Sets the status of automatic effects when stopped in forward direction in analog power mode">
+    </display>
+    <display item="Analog Mode Automatic Effects - REVS" format="checkbox" tooltip="Sets the status of automatic effects when stopped in reverse direction in analog power mode">
+    </display>
+  </column>
 </pane>

@@ -13,9 +13,9 @@
 <!-- for more details.                                                      -->
 <!-- version 1 - new include file for SoundTraxx Tsunami -->
 <enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <enumChoice choice="Manual notching, engine RPM controlled by F10/F9">
-    <choice>Manual notching, engine RPM controlled by F10/F9</choice>
-    <choice xml:lang="it">Regolazione manuale, Giri motore controllati da F10-F9</choice>
+  <enumChoice choice="Manual notching, engine RPM controlled by functions">
+    <choice>Manual notching, engine RPM controlled by functions</choice>
+    <choice xml:lang="it">Regolazione manuale, Giri motore controllati da funzioni</choice>
   </enumChoice>
   <enumChoice choice="Engine RPM increases at each speed step">
     <choice>Engine RPM increases at each speed step</choice>

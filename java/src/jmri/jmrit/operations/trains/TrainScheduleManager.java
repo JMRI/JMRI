@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Manages train schedules.
+ * Manages train schedules.  The default is the days of the week,
+ * but can be anything the user wants when defining when trains will
+ * run.
  *
  * @author Bob Jacobsen Copyright (C) 2003
  * @author Daniel Boudreau Copyright (C) 2010
@@ -267,8 +269,8 @@ public class TrainScheduleManager implements java.beans.PropertyChangeListener {
     }
 
     public void propertyChange(java.beans.PropertyChangeEvent e) {
-        log.debug("ScheduleManager sees property change: " + e.getPropertyName() + " old: " + e.getOldValue() + " new "
-                + e.getNewValue());
+        log.debug("ScheduleManager sees property change: ({}) old: ({}) new ({})",
+                e.getPropertyName(), e.getOldValue(), e.getNewValue());
     }
 
     java.beans.PropertyChangeSupport pcs = new java.beans.PropertyChangeSupport(this);

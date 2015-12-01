@@ -106,11 +106,6 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         return elem;
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a IndicatorTurnoutIcon, then add to a target JLayeredPane
      *
@@ -158,15 +153,12 @@ public class IndicatorTurnoutIconXml extends PositionableLabelXml {
         name = element.getChild("occupancyblock");
         if (name != null) {
             l.setOccBlock(name.getText());
+        } else {        // only write sensor if no OBlock, don't write double sensing
+            name = element.getChild("occupancysensor");
+            if (name != null) {
+                l.setOccSensor(name.getText());
+            }            
         }
-        name = element.getChild("occupancysensor");
-        if (name != null) {
-            l.setOccSensor(name.getText());
-        }
-        /*        name = element.getChild("errorsensor");
-         if (name!=null) {
-         l.setErrSensor(name.getText());
-         }  */
 
         l.setShowTrain(false);
         name = element.getChild("showTrainName");

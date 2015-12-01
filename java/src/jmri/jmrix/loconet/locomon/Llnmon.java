@@ -1,6 +1,7 @@
 // Llnmon.java
 package jmri.jmrix.loconet.locomon;
 
+import java.util.Locale;
 import jmri.jmrix.loconet.LnConstants;
 import jmri.jmrix.loconet.LocoNetMessage;
 import jmri.util.StringUtil;
@@ -40,6 +41,7 @@ import jmri.util.StringUtil;
  * permission.
  * <P>
  * @author Bob Jacobsen Copyright 2001, 2002, 2003
+ * @author B. Milhaupt  Copyright 2015
  * @version $Revision$
  */
 public class Llnmon {
@@ -2031,12 +2033,28 @@ public class Llnmon {
                         }
                         // check for a specific type - SV Programming messages format 2
                         // (New Designs)
-                        if (((pxct1 & 0xF0) == 0x10) && ((pxct2 & 0xF0) == 0x10)) {
-                            // New Designs, SV Programming messages format 2
-                            // We don't know what to do with them yet.
-                            return "SV Programming Protocol v2: " + generic + "\n\t"
-                                    + data;
+                        String svReply = new String("");
+                        jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents svmc = null;
+                        try {
+                            svmc =
+                                    new jmri.jmrix.loconet.lnsvf2.LnSv2MessageContents(l);
+                        } catch (java.lang.IllegalArgumentException e) {
+                            // message is not an SV2 message.  Ignore the exception.
                         }
+                        if (svmc != null) {
+                            Locale defaultLocale = new Locale.Builder().build();
+                            try {
+                                svReply = svmc.toString(defaultLocale);  // attempt to force display of english, instead of user-specified Locale
+                            } catch (java.lang.IllegalArgumentException e) {
+                                // message is not a properly-formatted SV2 message.  Ignore the exception.
+                            }
+
+                            if (svReply.length() > 1) { 
+                                // was able to interpret message as an SV format 2 message, so
+                                // return its interpreted value
+                                return svReply;}
+                        }
+                        
                         if ((src == 0x7F) && (dst_l == 0x0) && (dst_h == 0x0)
                                 && ((pxct1 & 0x3) == 0x00) && ((pxct2 & 0x70) == 0x70)) {
                             // throttle semaphore symbol message

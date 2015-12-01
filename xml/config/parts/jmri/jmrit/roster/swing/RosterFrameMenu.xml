@@ -252,6 +252,13 @@
         <name xml:lang="it">Programma Singola CV</name>
         <adapter>jmri.jmrit.simpleprog.SimpleProgAction</adapter>
     </node>
+    <node name="Multi-Decoder Control">
+        <name xml:lang="it">Controllo Multi-Decoder</name>
+        <name xml:lang="ca">Control de diversos descodificadors</name>
+        <name xml:lang="de">Multi-Decoder Steuerung</name>
+        <name xml:lang="fr">Commandee de plusieurs d\u00e9codeurs</name>
+        <adapter>jmri.jmrit.dualdecoder.DualDecoderToolAction</adapter>
+    </node>
     <node>separator</node><!-- separator -->
     <node name="Start WiThrottle Server">
         <name xml:lang="it">Lancia Server Palmare Wifi</name>

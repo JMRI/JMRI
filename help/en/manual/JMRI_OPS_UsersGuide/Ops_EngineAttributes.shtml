@@ -1,15 +1,16 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html lang="en"><head><!-- Copyright ($Author$) 2009 --><!-- $Id$ -->
+<html lang="en">
+<head>
+<title>JMRI OperationsPro - Edit Locomotive Attributes</title>
 
-
-
-
-
-<title>Comprehensive Programmer - Advanced Features Pane</title><!-- Style --><meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<!-- Style -->
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
 <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
 <link rel="icon" href="/images/jmri.ico" type="image/png">
-<link rel="home" title="Home" href="/"><!-- /Style --></head>
+<link rel="home" title="Home" href="/">
+<!-- /Style -->
+</head>
 
 <body>
 <!--#include virtual="/Header" -->
@@ -19,7 +20,7 @@
 
 <a name="Top"></a>
 <h1>Using JMRI&reg; to Operate Trains</h1>
-<h1>Edit Locomotive Attributes</h1>
+<h2>OperationsPro: Edit Locomotive Attributes</h2>
 
 <div align="right">
 <p><a href="Ops_EditEngines.shtml">Back to Edit Locomotive</a></p><p><a href="Ops_AddEngine.shtml">Back to Add Locomotive</a></p>
@@ -27,50 +28,52 @@
 </div>
 
 <hr>
-<p>To the right of each of the Locomotive attributes (<strong>Road</strong>, <strong>Model, Type</strong>, <strong>Length</strong>, <strong>Horsepower</strong>, <strong>Consist</strong>,<strong> Owner</strong>)
+<p>To the right of each of the Locomotive attributes (<strong>Road</strong>, <strong>Model, Type</strong>, <strong>Length</strong>, <strong>Horsepower</strong>, <strong>Consist</strong>,<strong> Owner</strong>) click on
   <input name="button" id="button" value="Edit" type="submit">
-dialog to allow you to edit the list of attributes available to us for an Locomotive definition. Use this to
+to allow you to edit the list of attributes available to use in a Locomotive definition. Use this to
 <input name="button2" id="button2" value="Add" type="submit">
 ,
 <input name="button3" id="button3" value="Delete" type="submit">
 or
 <input name="button4" id="button4" value="Replace" type="submit">
-the available attributes for an locomotive.</p>
+the available attributes for a Locomotive.</p>
 <p><img src="images/Ops_EditEngineRoad.png" alt="Edit Engine Road" height="162" width="251"></p>
 <p>
   <input name="button5" id="button5" value="Add" type="submit">
-  To add a new locomotive attribute, enter the desired text in the text box and  press
+  To add a new Locomotive attribute, enter the desired text in the text box and press
   <input name="button6" id="button6" value="Add" type="submit">
-. When you first enter a new locomotive attribute it will show up at
+. When you first enter a new Locomotive attribute it will show up at
 the start of the list. Later when your restart the program it will be
 sorted in the correct order.</p>
 <p>
   <input name="button7" id="button7" value="Delete" type="submit">
-  To delete an locomotive attribute, select the attribute you want to delete in  the menu box and press
+  To delete a Locomotive attribute, select the attribute you want to delete in the menu box and press
   <input name="button8" id="button8" value="Delete" type="submit">
   .</p>
 <p>
   <input name="button9" id="button9" value="Replace" type="submit">
-If you need to change a specific locomotive attribute (road, Model,
-type, etc) in your entire locomotive roster, you can use the <input name="button10" id="button10" value="Replace" type="submit">
-  found at the  bottom right of the edit locomotive attribute panel. </p>
+If you need to change a specific Locomotive attribute (Road, Model,
+Type, etc) in your entire Locomotive Roster, you can use the <input name="button10" id="button10" value="Replace" type="submit">
+  found at the  bottom right of the Edit Locomotive Attribute panel.</p>
 <p><img src="images/Ops_Replace.png" alt="Replace" height="119" width="269"></p>
-<p>For example, if you wish  to change the locomotive road name attribute "UP" to "UPS" for all of your  cars. Press
+<p>For example, if you wish  to change the Locomotive Road name attribute "UP" to "UPS" for all of your Cars. Press
   <input name="button11" id="button11" value="Replace" type="submit">
-  for any of your cars in the Cars panel,  and the Replace All? dialog will display with a
+  for any of your Cars in the Cars panel, and the <strong>Replace All?</strong> dialog will display with a
   <input name="button13" id="button13" value="Yes" type="submit">
   or
   <input name="button14" id="button14" value="No" type="submit">
-  option.  Enter the new road "UPS" in the text box, select "UP" in the menu  box, and press
+  option. Enter the new Road "UPS" in the text box, select "UP" in the menu box, and press
   <input name="button12" id="button12" value="Replace" type="submit">
-  . All cars with "UP" as their road will now have  "UPS" as their road name.</p>
-<p></p>
+  . All Cars with "UP" as their road will now have "UPS" as their Road name.</p>
 <hr>
 
 <div align="right">
-<p><a href="Ops_EditEngines.shtml">Back to &nbsp;Edit Locomotives</a></p><p><a href="Ops_AddEngine.shtml">Back to Add Locomotives </a></p>
+<p><a href="Ops_EditEngines.shtml">Back to Edit Locomotives</a></p><p><a href="Ops_AddEngine.shtml">Back to Add Locomotives </a></p>
 <p><a href="index.shtml#Operations">Back to Index</a></p>
 </div>
 
 <!--#include virtual="/Footer" -->
-</div></body></html>
+</div>
+</div>
+</body>
+</html>

@@ -107,8 +107,22 @@
                 </xs:sequence>
               </xs:complexType>
             </xs:element>
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+              Content is the internal name of a supported programmer mode.
+              Having at least one of these (or the 
+              historical direct, paged, et al attributes)
+              is required or programming is not possible.
+              </xs:documentation></xs:annotation>
+            </xs:element>
           </xs:sequence>
-          <xs:attribute name="direct" default="no" >
+          <xs:attribute name="direct" default="yes" >
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports one of the direct 
+            programming modes,  
+            specifically the DIRECTMODE, none, DIRECTBITMODE or DIRECTBYTEMODE
+            respectively.
+            </xs:documentation></xs:annotation>
             <xs:simpleType>
               <xs:restriction base="xs:token">
                 <xs:enumeration value="yes"/>
@@ -118,11 +132,30 @@
               </xs:restriction>
             </xs:simpleType>
           </xs:attribute>
-          <xs:attribute name="paged" type="yesNoType" default="no" />
-          <xs:attribute name="register" type="yesNoType" default="no" />
-          <xs:attribute name="ops" type="yesNoType" default="no" />
-          <xs:attribute name="transpRead" type="yesNoType" default="no" />
-          <xs:attribute name="bidirRead" type="yesNoType" default="no" />
+          <xs:attribute name="paged" type="yesNoType" default="yes">
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports Paged mode, 
+            specifically the PAGEMODE type.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="register" type="yesNoType" default="yes">
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports Register mode, 
+            specifically the REGISTERMODE type.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="ops" type="yesNoType" default="yes">
+            <xs:annotation><xs:documentation>
+            Yes indicates programmer supports Ops mode for locomotive decoders, 
+            specifically the OPSBITMODE type.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="transpRead" type="yesNoType" default="no">
+            <xs:annotation><xs:documentation>
+            Not a programming mode per say, this indicates that the
+            decoder is capable of replying to CV reads via Digitrax Transponding.
+            </xs:documentation></xs:annotation>
+          </xs:attribute>
         </xs:complexType>
       </xs:element>
 
@@ -291,8 +324,12 @@
             <xs:element name="output" minOccurs="0" maxOccurs="unbounded" >
               <xs:complexType>
                 <xs:sequence>
-                  <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded"/>
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
+                  </xs:element>
                 </xs:sequence>
                 <xs:attribute name="name" type="xs:string" use="required"/>
                 <xs:attribute name="label" type="xs:string" />
@@ -312,6 +349,11 @@
                   </xs:simpleType>
                 </xs:attribute>
               </xs:complexType>
+              <xs:unique name="UniqueOutputLabel1">
+                <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+                <xs:selector xpath="label"/>
+                <xs:field xpath="@xml:lang"/>
+              </xs:unique>
             </xs:element>
             <xs:element name="size" minOccurs="0" maxOccurs="1" >
               <xs:complexType>
@@ -361,7 +403,20 @@
           <xs:attribute name="numOuts" type="xs:int" />
           <xs:attribute name="lowVersionID" type="xs:int" />
           <xs:attribute name="highVersionID" type="xs:int" />
-          <xs:attribute name="productID" type="xs:string" />
+          <xs:attribute name="productID" type="xs:string" >
+            <xs:annotation><xs:documentation>For a decoder definition which 
+                describes a device implementing the LocoNet SV2 messaging protocol, 
+                this value is used to match a "discovered" device
+                to an appropriate decoder definition</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
+          <xs:attribute name="developerID" type="xs:int" default="-1" >
+            <xs:annotation><xs:documentation>For a decoder definition which 
+                describes a device implementing the LocoNet SV2 messaging protocol, 
+                this value is used to match a "discovered" device
+                to an appropriate decoder definition</xs:documentation>
+            </xs:annotation>
+          </xs:attribute>
           <xs:attribute name="maxInputVolts" type="xs:string" />
           <xs:attribute name="maxMotorCurrent" type="xs:string" />
           <xs:attribute name="maxTotalCurrent" type="xs:string" />
@@ -499,6 +554,14 @@
 
           <xs:element name="constant" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
+              <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                  <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+                    <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
+                  </xs:element>
+              </xs:sequence>
               <xs:attribute name="label" type="xs:string"/>
               <xs:attribute name="default" type="xs:int"/>
               <xs:attribute name="comment" type="xs:string"/>
@@ -509,28 +572,23 @@
               <xs:attribute name="include" type="xs:string" default=""/>
               <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
-          </xs:element>
-      
-          <xs:element name="iconstant" minOccurs="0" maxOccurs="unbounded" >
-            <xs:complexType>
-              <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-              </xs:sequence>
-              <xs:attribute name="label" type="xs:string"/>
-              <xs:attribute name="default" type="xs:int"/>
-              <xs:attribute name="comment" type="xs:string"/>
-              <xs:attribute name="item" type="xs:string" use="required"/>
-              <xs:attribute name="minFn" type="xs:int"/>
-              <xs:attribute name="minOut" type="xs:int"/>
-              <xs:attribute name="inOptions" type="xs:string"/>
-            </xs:complexType>
+            <xs:unique name="UniqueConstantLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
           </xs:element>
       
           <xs:element name="variable" minOccurs="0" maxOccurs="unbounded" >
             <xs:complexType>
-              <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                <xs:choice>
+              <xs:sequence minOccurs="1" maxOccurs="1">
+                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
+                    <xs:annotation><xs:documentation>
+                    Qualifies whether this variable will appear in the interface, depending
+                    on the value in other variables.
+                    </xs:documentation></xs:annotation>
+                  </xs:element>
+                <xs:choice minOccurs="1" maxOccurs="1">
                   <xs:element name="enumVal" type="EnumValType">
                     <xs:annotation><xs:documentation>
                     A fixed set of choices is defined, each corresponding to a specific value
@@ -541,10 +599,6 @@
                     A decimal value is used, subject to mask and limit requirements
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-                      </xs:sequence>
                       <xs:attribute name="min" type="xs:int" default="0"/>
                       <xs:attribute name="max" type="xs:int" default="255"/>
                       <xs:attribute name="comment" type="xs:string"/>
@@ -555,10 +609,6 @@
                     A hexadecimal value is used, subject to mask and limit requirements
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-                      </xs:sequence>
                       <xs:attribute name="min" type="xs:string" default="0"/>
                       <xs:attribute name="max" type="xs:string" default="ff"/>
                       <xs:attribute name="comment" type="xs:string"/>
@@ -602,10 +652,6 @@
                     NMRA long address, including its unique behaviors
                     </xs:documentation></xs:annotation>
                     <xs:complexType>
-                      <xs:sequence minOccurs="0" maxOccurs="unbounded">
-                        <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-                        <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
-                      </xs:sequence>
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
@@ -663,23 +709,20 @@
                       <xs:attribute name="comment" type="xs:string"/>
                     </xs:complexType>
                   </xs:element>
-                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
+                  <xs:element ref="xi:include" minOccurs="0" maxOccurs="1" />
                 </xs:choice>
                 <xs:sequence minOccurs="0" maxOccurs="unbounded">
                   <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+                    <xs:complexType mixed="true">
+                        <xs:attribute ref="xml:lang" default=""/>
+                    </xs:complexType>
                   </xs:element>
                   <xs:element name="comment" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide internationalized comment text</xs:documentation></xs:annotation>
                   </xs:element>
                   <xs:element name="tooltip" minOccurs="0" maxOccurs="unbounded">
                     <xs:annotation><xs:documentation>Provide internationalized tooltip text</xs:documentation></xs:annotation>
-                  </xs:element>
-                  <xs:element name="qualifier" type="QualifierType" minOccurs="0" maxOccurs="unbounded" >
-                    <xs:annotation><xs:documentation>
-                    Qualifies whether this variable will appear in the interface, depending
-                    on the value in other variables.
-                    </xs:documentation></xs:annotation>
                   </xs:element>
                 </xs:sequence>
               </xs:sequence>
@@ -700,6 +743,11 @@
               <xs:attribute name="include" type="xs:string" default=""/>
               <xs:attribute name="exclude" type="xs:string" default=""/>
             </xs:complexType>
+            <xs:unique name="UniqueVariableLabel1">
+              <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+              <xs:selector xpath="label"/>
+              <xs:field xpath="@xml:lang"/>
+            </xs:unique>
           </xs:element>
       
           <xs:element ref="xi:include" minOccurs="0" maxOccurs="unbounded" />
@@ -712,11 +760,25 @@
 
   <xs:complexType name="ResetsType">
     <xs:sequence>
+      <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+        <xs:annotation><xs:documentation>
+          Specifies programmer mode(s) for use during reset
+        </xs:documentation></xs:annotation>
+      </xs:element>
       <xs:element name="factReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
-            <xs:element name="label" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+                Specifies programmer mode(s) for use during reset
+              </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="label" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+              <xs:complexType mixed="true">
+                <xs:attribute ref="xml:lang" default=""/>
+              </xs:complexType>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CV" type="cvNameType"/>
@@ -725,11 +787,23 @@
           <xs:attribute name="item" type="xs:string"/>
           <xs:attribute ref="xml:base" />
         </xs:complexType>
+        <xs:unique name="UniqueResetLabel1">
+          <xs:annotation><xs:documentation>Insist that there's only one label per language</xs:documentation></xs:annotation>
+          <xs:selector xpath="label"/>
+          <xs:field xpath="@xml:lang"/>
+        </xs:unique>
       </xs:element>
       <xs:element name="ifactReset" minOccurs="0" maxOccurs="unbounded" >
         <xs:complexType>
           <xs:sequence minOccurs="0" maxOccurs="unbounded">
-            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="mode" type="modeType" minOccurs="0" maxOccurs="unbounded">
+              <xs:annotation><xs:documentation>
+                Specifies programmer mode(s) for use during reset
+              </xs:documentation></xs:annotation>
+            </xs:element>
+            <xs:element name="label" type="LabelType" minOccurs="0" maxOccurs="unbounded" >
+              <xs:annotation><xs:documentation>Provide an internationalized label text</xs:documentation></xs:annotation>
+            </xs:element>
           </xs:sequence>
           <xs:attribute name="label" type="xs:string"/>
           <xs:attribute name="CVname" type="cvNameType"/>
@@ -743,6 +817,7 @@
         </xs:complexType>
       </xs:element>
     </xs:sequence>
+    <xs:attribute name="mode" type="modeType"/>
     <xs:attribute ref="xml:base" />
   </xs:complexType>
 
@@ -830,6 +905,31 @@
       <xs:pattern value="(V|X)*"/>
       <xs:minLength value="8"/>
       <xs:maxLength value="16"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="modeType">
+    <xs:annotation>
+      <xs:documentation>
+        Content limited to the the internal name of a supported programmer mode.
+      </xs:documentation>
+    </xs:annotation>
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PAGEMODE"/>
+      <xs:enumeration value="OPSBITMODE"/>
+      <xs:enumeration value="OPSACCEXTBYTEMODE"/>
+      <xs:enumeration value="OPSACCBITMODE"/>
+      <xs:enumeration value="OPSACCEXTBITMODE"/>
+      <xs:enumeration value="OPSACCBYTEMODE"/>
+      <xs:enumeration value="NONE"/>
+      <xs:enumeration value="ADDRESSMODE"/>
+      <xs:enumeration value="OPSBYTEMODE"/>
+      <xs:enumeration value="DIRECTBYTEMODE"/>
+      <xs:enumeration value="REGISTERMODE"/>
+      <xs:enumeration value="DIRECTBITMODE"/>
+      <xs:enumeration value="DIRECTMODE"/>
+      <xs:enumeration value="LOCONETSV1MODE"/>
+      <xs:enumeration value="LOCONETSV2MODE"/>
     </xs:restriction>
   </xs:simpleType>
 

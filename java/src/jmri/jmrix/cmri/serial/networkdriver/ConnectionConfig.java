@@ -1,7 +1,6 @@
 // ConnectionConfig.java
 package jmri.jmrix.cmri.serial.networkdriver;
 
-import java.util.ResourceBundle;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import jmri.jmrix.cmri.serial.nodeconfig.NodeConfigAction;

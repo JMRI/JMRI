@@ -21,7 +21,8 @@ public class LnConnectionTypeList implements jmri.jmrix.ConnectionTypeList {
             "jmri.jmrix.loconet.loconetovertcp.ConnectionConfig",
             "jmri.jmrix.loconet.locobufferii.ConnectionConfig",
             "jmri.jmrix.loconet.locobuffer.ConnectionConfig",
-            "jmri.jmrix.loconet.ms100.ConnectionConfig"
+            "jmri.jmrix.loconet.ms100.ConnectionConfig",
+            "jmri.jmrix.loconet.bluetooth.ConnectionConfig"
         };
     }
 

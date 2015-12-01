@@ -13,6 +13,8 @@
 # Written by Howard Watkins, Matt Harris and Randall Wood 2015
 #
 
+import jmri
+
 #script to disable a sensor
 panelMenu = jmri.jmrit.display.PanelMenu.instance()
 layoutPanels = panelMenu.getLayoutEditorPanelList()

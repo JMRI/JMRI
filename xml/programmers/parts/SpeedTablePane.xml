@@ -5,9 +5,6 @@
   <name xml:lang="it">Tabella Velocità</name>
   <name xml:lang="de">Geschwindigkeitskennlinie</name>
   <column>
-      <grid gridx="0" gridy="NEXT">
-        <griditem gridwidth="REMAINDER">
-          <column>
             <row>
               <column>
                 <display item="Speed Table Definition" format="onradiobutton" layout="above" label="Select this button to use a Speed Table for Speed Control">
@@ -52,41 +49,6 @@
                 </label>
               </column>
             </row>
-          </column>
-        </griditem>
-        <group include="ESU LokSound V4.0,ESU LokSound Select,ESU LokPilot V4.0">
-            <griditem weightx="0" anchor="LINE_START">
-              <display item="Vstart" tooltip="Sets the starting voltage at throttle speed step 1">
-                <tooltip xml:lang="it">Imposta Tensione Motore iniziale a Velocità 1</tooltip>
-                <tooltip xml:lang="ca">Estableix el voltatge inicial al pas 1</tooltip>
-                <tooltip xml:lang="de">Geschwindigkeit bei niedrigster Fahrstufe einstellen</tooltip>
-              </display>
-            </griditem>
-            <griditem gridx="NEXT" gridy="CURRENT" weightx="1" anchor="CENTER">
-              <label>
-                <text>&lt;html&gt;
-                   &lt;h2&gt;&lt;strong&gt;Special Note: Vstart &amp; Vhigh are &lt;em&gt;always&lt;/em&gt; active in these decoders.&lt;/h2&gt;
-                   All the values in the table above are scaled to fit between Vstart and Vhigh.&lt;br/&gt;
-                   The end-points cannot be altered. Keep a smooth curve beween them.&lt;br/&gt;
-                   &lt;br/&gt;
-                   &lt;strong&gt;&lt;em&gt;If speed matching locos, set Vstart &amp; Vhigh before setting any table mid-points.&lt;/em&gt;
-                &lt;/html&gt;</text>
-              </label>
-            </griditem>
-            <griditem gridx="NEXT" gridy="CURRENT" weightx="0" anchor="LINE_END">
-              <display item="Vhigh" tooltip="Sets the maximum voltage at full throttle">
-                <tooltip xml:lang="it">Imposta Tensione Motore a Velocità Massima</tooltip>
-                <tooltip xml:lang="ca">Estableix el voltatge amb el regulador al m‡xim</tooltip>
-                <tooltip xml:lang="de">Geschwindigkeit bei höchster Fahrstufe einstellen</tooltip>
-              </display>
-            </griditem>
-        <griditem gridwidth="REMAINDER">
-          <label>
-              <text> </text>
-          </label>
-        </griditem>
-        </group>
-        <griditem gridwidth="REMAINDER">
           <row>
             <column>
               <label>
@@ -120,7 +82,5 @@
               </label>
             </column>
           </row>
-        </griditem>
-      </grid>
   </column>
 </pane>

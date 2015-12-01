@@ -9,7 +9,10 @@
 #
 # To use this script you must provide the type names for containers and trailers, and the type names for the flatcars to use. 
 # You must also enter the train name that will service them. The train doesn't have to service the flatcars, this script will
-# do the flatcar assignments based on the container or trailer destinations. Run this script after the train is built. 
+# do the flatcar assignments based on the container or trailer destinations. Run this script after the train is built.
+#
+# When there isn't enough flatcars for the containers or trailers, the script will produce a warning message and remove them
+# from the train.
 #
 # Some minor issues with this script:
 # It will never assign two 20 foot containers and one 40 foot container to the same flatcar. It can do one of each.
@@ -37,14 +40,14 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
     self.container40 = [["Flatcar-COFC", 2]]
         
     # flatcar names and the number of trailers that can be carried. This defines the order in which flatcars are allocated.
-    self.trailerUPSS = [["Flatcar-TOFC(X)", 3], ["Flatcar-TOFC", 2], ["Flatcar-TOFC(S)", 1], ["Flatcar-COFC", 2]]
-    self.trailer = [["Flatcar-TOFC", 2], ["Flatcar-TOFC(S)", 1], ["Flatcar-TOFC(X)", 2], ["Flatcar-COFC", 2]]
+    self.trailerPup = [["Flatcar-TOFC-(X)", 3], ["Flatcar-TOFC", 2], ["Flatcar-TOFC-(S)", 1], ["Flatcar-COFC", 2]]
+    self.trailer = [["Flatcar-TOFC", 2], ["Flatcar-TOFC-(S)", 1], ["Flatcar-TOFC-(X)", 2], ["Flatcar-COFC", 2]]
     # Try to place reefer on single flatcars first, as an example of how to change the order flatcars are allocated
-    self.trailerReefer = [["Flatcar-TOFC(S)", 1], ["Flatcar-TOFC", 2], ["Flatcar-TOFC(X)", 2], ["Flatcar-COFC", 2]]
+    self.trailerReefer = [["Flatcar-TOFC-(S)", 1], ["Flatcar-TOFC", 2], ["Flatcar-TOFC-(X)", 2], ["Flatcar-COFC", 2]]
 
     # containers and trailers, which flatcars can carry them, flatcar load name
     self.units = [["Container-20", self.container20, self.loadNameContainers], ["Container-40", self.container40, self.loadNameContainers],
-                     ["Trailer-UPS(S)", self.trailerUPSS, self.loadNameTrailers], ["Trailer-UPS(L)", self.trailer, self.loadNameTrailers],
+                     ["Trailer-Pup", self.trailerPup, self.loadNameTrailers], ["Trailer-UPS", self.trailer, self.loadNameTrailers],
                      ["Trailer-USMail", self.trailer, self.loadNameTrailers], ["Trailer-Reefer", self.trailerReefer, self.loadNameTrailers],
                      ["Trailer", self.trailer, self.loadNameTrailers]]
     
@@ -149,6 +152,7 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
                                     print "    Add (" + unit.toString() + ") to kernel (" + kernel.getName() + ")"
                                     unit.setKernel(kernel)
                                     unit.setBlocking(kernel.getSize())
+                                    train.setModified(True)
                                     break
                                 else:
                                     print "    Flatcar (" + flatcar.toString() + ") full"
@@ -156,11 +160,15 @@ class AssignTrailersToCars(jmri.jmrit.automat.AbstractAutomaton):
                             continue
                         break
                     if unit.getKernel() == None:
-                        title = "Error couldn't find enough flatcars for train (" + self.trainName + ")"
-                        message = "Error (" + unit.toString() + ") not assigned to a flatcar, train (" + self.trainName + ")"
+                        title = "Warning couldn't find enough flatcars for train (" + self.trainName + ")"
+                        message = "Warning (" + unit.toString() + ")  type (" + unit.getTypeName() + ") at (" + unit.getLocationName() + ") not assigned to a flatcar, train (" + self.trainName + ")"
                         print message
                         javax.swing.JOptionPane.showMessageDialog(None, message, title, javax.swing.JOptionPane.WARNING_MESSAGE)
-    print "Done!"
+                        # remove trailer from train
+                        unit.setRouteLocation(None)
+                        unit.setRouteDestination(None)
+                        unit.setTrain(None)
+                        train.setModified(True)
     return False  # all done, don't repeat again
 
 AssignTrailersToCars().start()  # create one of these, and start it running

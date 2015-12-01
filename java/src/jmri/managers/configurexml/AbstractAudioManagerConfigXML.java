@@ -146,8 +146,9 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
                     storeCommon(ab, e);
 
                     // store sub-type specific data
+                    String url = ab.getURL();
                     ce = new Element("url")
-                            .addContent("" + FileUtil.getPortableFilename(ab.getURL()));
+                            .addContent("" + (url.isEmpty() ? "" : FileUtil.getPortableFilename(url)));
                     e.addContent(ce);
 
                     ce = new Element("looppoint");
@@ -282,16 +283,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     public void load(Element element, Object o) {
         log.error("Invalid method called");
     }
-
-    /**
-     * Create a AudioManager object of the correct class, then register and fill
-     * it.
-     *
-     * @param audio Top level Element to unpack.
-     * @return true if successful
-     */
-    @Override
-    abstract public boolean load(Element audio);
 
     /**
      * Utility method to load the individual Audio objects. If there's no

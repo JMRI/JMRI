@@ -2,6 +2,7 @@ package jmri.jmrix.configurexml;
 
 import java.util.List;
 import jmri.configurexml.AbstractXmlAdapter;
+import jmri.jmrix.ConnectionConfig;
 import jmri.jmrix.PortAdapter;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -23,15 +24,14 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
 
     abstract protected void register();
 
-    /**
-     * Default implementation for storing the static contents of the serial port
-     * implementation
-     *
-     * @param o Object to store, of type PositionableLabel
-     * @return Element containing the complete info
-     */
+    protected void register(ConnectionConfig c) {
+        c.register();
+    }
+
     @Override
-    abstract public Element store(Object o);
+    public Element store(Object o, boolean shared) {
+        return this.store(o);
+    }
 
     protected void storeCommon(Element e, PortAdapter adapter) {
         if (adapter.getSystemConnectionMemo() != null) {
@@ -59,53 +59,55 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
     }
 
     /**
-     * Update static data from XML file
      *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     * @throws java.lang.Exception
+     * @param e
+     * @param adapter
+     * @deprecated use {@link #loadCommon(org.jdom2.Element, org.jdom2.Element, jmri.jmrix.PortAdapter)
+     * }
      */
-    @Override
-    abstract public boolean load(Element e) throws Exception;
-
+    @Deprecated
     protected void loadCommon(Element e, PortAdapter adapter) {
-        if (e.getAttribute("option1") != null) {
-            String option1Setting = e.getAttribute("option1").getValue();
+        this.loadCommon(e, null, adapter);
+    }
+
+    protected void loadCommon(Element shared, Element perNode, PortAdapter adapter) {
+        if (shared.getAttribute("option1") != null) {
+            String option1Setting = shared.getAttribute("option1").getValue();
             adapter.configureOption1(option1Setting);
         }
-        if (e.getAttribute("option2") != null) {
-            String option2Setting = e.getAttribute("option2").getValue();
+        if (shared.getAttribute("option2") != null) {
+            String option2Setting = shared.getAttribute("option2").getValue();
             adapter.configureOption2(option2Setting);
         }
-        if (e.getAttribute("option3") != null) {
-            String option3Setting = e.getAttribute("option3").getValue();
+        if (shared.getAttribute("option3") != null) {
+            String option3Setting = shared.getAttribute("option3").getValue();
             adapter.configureOption3(option3Setting);
         }
-        if (e.getAttribute("option4") != null) {
-            String option4Setting = e.getAttribute("option4").getValue();
+        if (shared.getAttribute("option4") != null) {
+            String option4Setting = shared.getAttribute("option4").getValue();
             adapter.configureOption4(option4Setting);
         }
 
-        loadOptions(e.getChild("options"), adapter);
+        loadOptions(shared.getChild("options"), adapter);
 
         try {
-            adapter.setManufacturer(e.getAttribute("manufacturer").getValue());
+            adapter.setManufacturer(shared.getAttribute("manufacturer").getValue());
         } catch (NullPointerException ex) { //Considered normal if not present
 
         }
 
         if (adapter.getSystemConnectionMemo() != null) {
-            if (e.getAttribute("userName") != null) {
-                adapter.getSystemConnectionMemo().setUserName(e.getAttribute("userName").getValue());
+            if (shared.getAttribute("userName") != null) {
+                adapter.getSystemConnectionMemo().setUserName(shared.getAttribute("userName").getValue());
             }
 
-            if (e.getAttribute("systemPrefix") != null) {
-                adapter.getSystemConnectionMemo().setSystemPrefix(e.getAttribute("systemPrefix").getValue());
+            if (shared.getAttribute("systemPrefix") != null) {
+                adapter.getSystemConnectionMemo().setSystemPrefix(shared.getAttribute("systemPrefix").getValue());
             }
         }
 
-        if (e.getAttribute("disabled") != null) {
-            String yesno = e.getAttribute("disabled").getValue();
+        if (shared.getAttribute("disabled") != null) {
+            String yesno = shared.getAttribute("disabled").getValue();
             if ((yesno != null) && (!yesno.isEmpty())) {
                 if (yesno.equals("no")) {
                     adapter.setDisabled(false);
@@ -130,11 +132,23 @@ abstract public class AbstractConnectionConfigXml extends AbstractXmlAdapter {
         e.addContent(element);
     }
 
+    /**
+     *
+     * @param e
+     * @param adapter
+     * @deprecated Use {@link #loadOptions(org.jdom2.Element, org.jdom2.Element, jmri.jmrix.PortAdapter)
+     * }
+     */
+    @Deprecated
     protected void loadOptions(Element e, PortAdapter adapter) {
-        if (e == null) {
+        this.loadOptions(e, null, adapter);
+    }
+
+    protected void loadOptions(Element shared, Element perNode, PortAdapter adapter) {
+        if (shared == null) {
             return;
         }
-        List<Element> optionList = e.getChildren("option");
+        List<Element> optionList = shared.getChildren("option");
         for (Element so : optionList) {
             adapter.setOptionState(so.getChild("name").getText(), so.getChild("value").getText());
         }

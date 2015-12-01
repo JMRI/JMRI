@@ -48,6 +48,7 @@ public class JmriSRCPServer extends JmriServer {
     }
 
     // Advertise the service with ZeroConf
+    @Override
     protected void advertise() {
         service = ZeroConfService.create("_srcp._tcp.local.", portNo);
         service.publish();
@@ -55,6 +56,7 @@ public class JmriSRCPServer extends JmriServer {
 
     // Handle communication to a client through inStream and outStream
     @SuppressWarnings("deprecation")
+    @Override
     public void handleClient(DataInputStream inStream, DataOutputStream outStream) throws IOException {
         // Listen for commands from the client until the connection closes
         SRCPParser parser = null;
@@ -89,10 +91,7 @@ public class JmriSRCPServer extends JmriServer {
                         TimeStampedOutput.writeTimestamp(outStream, v.getOutputString() + "\n\r");
                     }
                 } catch (ParseException pe) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Parse Exception");
-                        pe.printStackTrace();
-                    }
+                    log.debug("Parse Exception", pe);
                     jmri.jmris.srcp.parser.Token t = parser.getNextToken();
                     if (t.kind == jmri.jmris.srcp.parser.SRCPParserConstants.EOF) {
                         // the input ended.  
@@ -126,10 +125,7 @@ public class JmriSRCPServer extends JmriServer {
                         TimeStampedOutput.writeTimestamp(outStream, v.getOutputString() + "\n\r");
                     }
                 } catch (ParseException pe) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Parse Exception");
-                        pe.printStackTrace();
-                    }
+                    log.debug("Parse Exception", pe);
                     jmri.jmris.srcp.parser.Token t = parser.getNextToken();
                     if (t.kind == jmri.jmris.srcp.parser.SRCPParserConstants.EOF) {
                         // the input ended.  The parser may have prepared 
@@ -152,10 +148,7 @@ public class JmriSRCPServer extends JmriServer {
                         t = parser.getNextToken();
                     }
                 } catch (TokenMgrError tme) {
-                    if (log.isDebugEnabled()) {
-                        log.debug("Token Manager Exception");
-                        tme.printStackTrace();
-                    }
+                    log.debug("Token Manager Exception", tme);
                     TimeStampedOutput.writeTimestamp(outStream, "410 ERROR unknown command\n\r");
                 }
             } else if (!sh.isCommandMode()) {

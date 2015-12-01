@@ -10,14 +10,13 @@
 #
 # Author: Matthew Harris, copyright 2010
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
+import jmri
 import jmri.jmrit.roster
 import com.csvreader
 from javax.swing import JFileChooser, JOptionPane
 from jmri.jmrit.symbolicprog import CvTableModel, IndexedCvTableModel
+import java
 
 # Define some default values
 

@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 <!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: Signaling introduction</title>
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-<meta name="Date.Modified" content="20150125"/>
+<meta name="Date.Modified" content="20151102"/>
 
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
@@ -43,7 +42,7 @@ ranging from simple "stoplights" to a complete emulation of a particular prototy
 <a name="terms"><h2>Signaling Vocabulary</h2></a></dt>
 
 <h3>Prototype Railroad Signaling terms:</h3>
-<a href="http://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right"></a>
+<a href="https://commons.wikimedia.org/wiki/File:CSX_River_Sub_Kingston_CP_90.jpg"><img src="images/132px-CSX_River_Sub_Kingston_CP_90.jpg" width="132" height="240" align="right"></a>
 <!-- With some very useful information from the JMRI developers structure site -->
 
 	<ul>
@@ -51,12 +50,12 @@ ranging from simple "stoplights" to a complete emulation of a particular prototy
 <li><b>Light</b> The individual lamp in a signal. A light may indicate multiple <a href="#aspect">Aspects</a> if it changes color like in a Searchlight signal, or it may take multiple lights to indicate a single <a href="#aspect">Aspect</a>, for example in Position Light Signals.</li>
 <li><b>Marker</b> A Signal Head or Arm that does not change color or position.</li>
 		<li><b>Signal</b> The object that conveys an Indication via a specific pattern of its visible parts. It can be as simple as a sign, saying "start CTC"; that conveys a particular indication and invokes a rule. Usually we're referring to lit or movable Signals, though, which can show more than one Indication. The Signal might have one light and use different colors to convey different Indications, or it needs more than one set of lights to display a wider range of Aspects to fit the location.</li>
-		<li><b>Signal Mast</b> The pole that mounts one or more Signal Heads or Arms and (usually) controls one individual track. Also used to refer to an entire signal made up of one or more Signal Heads. Dwarf Signals are also considerd Signal Masts.</li>
+		<li><b>Signal Mast</b> The pole that mounts one or more Signal Heads or Arms and (usually) controls one individual track. Also used to refer to an entire signal made up of one or more Signal Heads. Dwarf Signals are also considered Signal Masts.</li>
 <li><a name="appearance"><b>Appearance</b></a> One of a series of allowed options for a <a href="#head">Signal Head</a> or Signal Arm, e.g. Red, Green, Raised.
 		<li><a name="aspect"><b>Aspect</b></a> One of a series of allowed options for the visual pattern of a Signal Mast using one or more Signal Heads or Arms to convey a speed or route <a href="#indication">Indication</a>. Different Signal Mast types can use different Aspects for a specific Indication, but a particular Signal Mast type always conveys a particular Indication via just one Aspect. For example, to convey "You can run at full speed" - an Indication (Rule 281, "Clear") - one signal might display a single green light, another might show a green over red, and a third might have an upward semaphore. Those are all different Aspects showing the same Indication. As all these different Aspects are assigned the same descriptive name, e.g. "Approach", when you think of these Aspects as "Approach on a triple searchlight signal" and "Approach on a single semaphore" and the difference is evident.
 			<li><a name="indication"><b>Indication</b></a> On (most) western US railroads, "Indication" refers to the message that a Signal is sending. It generally has a name, like "Clear" or "Approach", but officially it's a railroad Rule (like 281 or 285) that the train must obey when governed by that Signal. So Indication is the <em>meaning</em> a signal conveys to the engineer, say the full instruction for a signal Aspect, e.g. "Proceed preparing to stop at next signal. Train exceeding medium speed must at once reduce to that speed." (for the "Approach" Aspect according to the AAR 1946 Rule Book).</li>
 <li><b>Distant Signal</b> The signal you are controlling is called a Distant Signal if it is programmed to show the same or a more restrictive Aspect as the next signal in the direction and route of travel.</li>
-		<li><b>Dark Territory</b> Section of running track not controlled by signals. <a href="http://en.wikipedia.org/wiki/Dark_territory"> Dark Territory</a> is governed by other methods like Timetable and Train Order (TT &amp; TO) Operation, Direct Traffic Control or Track Warrants.</li>
+		<li><b>Dark Territory</b> Section of running track not controlled by signals. <a href="https://en.wikipedia.org/wiki/Dark_territory"> Dark Territory</a> is governed by other methods like Timetable and Train Order (TT &amp; TO) Operation, Direct Traffic Control or Track Warrants.</li>
 	</ul>
 
 	<p>Different railroads have different Rules to operate rail traffic, using different terms. In their respective Rule Books, they use different Aspects for rules of the same name. And some will have different Appearances to make up those Aspects (e.g. semaphore vs. single lamps vs. color-position signals vs. position light signals vs. cab signals vs ...)<br/>
@@ -72,17 +71,17 @@ occupied block without warning.</li>
 <li><b>Protected Signal</b> The next signal after the one you are controlling in the 
 direction and route of travel. The "protection" is to prevent a train from approaching a stop signal without sufficient warning to allow it to be stopped short of reaching the "protected" signal.</li>
 <li><b>Signaling System</b> A set of icons, definition files and rules following either a prototype Rule Book or a simplified set of rules (see <a href="AspectSignaling.shtml#systems">this list</a>).</li>
-	<li><b>System Name</b> The name of a JMRI object identifying either a virtul (Internal) or physical piece of hardware being used, e.g. an output on a decoder to control a signal. The System Name must follow certain <a href="../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted bij JMRI, and the name will vary depending on your hardware so it must match your DCC system.</li>
+	<li><b>System Name</b> The name of a JMRI object identifying either a virtual (Internal) or physical piece of hardware being used, e.g. an output on a decoder to control a signal. The System Name must follow certain <a href="../../doc/Technical/Names.shtml">Naming Rules</a> to be correctly interpreted bij JMRI, and the name will vary depending on your hardware so it must match your DCC system.</li>
 </ul>
 
 <h2><a name="signaling">Prototype Railroad Signaling</a></h2>
 <p>
 Across the world railroads have developed a wide range of signaling hardware such as Flags (not supported in JMRI), Semaphores, Position Light Signals and Color Light Signals. Different physical signals may show the same "Indication" using different combinations of lights, semaphore positions, and/or placards; these patterns of lights are called "Aspects". For example, the "Stop" Aspect will be a single red light on a signal mast with only one lamp, red over red lamps for a signal mast with two lamps, etc. To learn the rules of the railroad you model is part of the hobby but JMRI helps by providing more than 20 prototypical signaling systems from different countries to choose from. Still, it's up to the engineer to interpret the Signal Aspects displayed and adjust the throttle...
 	
-	<p>Much of basic <a href="http://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Automatic Block Signaling</a> (ABS) can be boiled down to "a Signal goes Red when a train
+	<p>Much of basic <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Automatic Block Signaling</a> (ABS) can be boiled down to "a Signal goes Red when a train
 can't safely enter the block it protects; it goes Yellow when the block following 
 the protected block can't be entered". Although that's a simplification, it can serve
-		as a good starting point for understanding signaling logic. More modern signaling systems are <a href="http://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Absolute Permissive Block</a> (APB) signaling used by many western US railroads and <a href="http://en.wikipedia.org/wiki/Centralized_traffic_control">Centralized Traffic Control</a> (CTC) remotely operated from large switchboards. 
+		as a good starting point for understanding signaling logic. More modern signaling systems are <a href="https://en.wikipedia.org/wiki/Automatic_block_signaling#Automatic_traffic_control">Absolute Permissive Block</a> (APB) signaling used by many western US railroads and <a href="https://en.wikipedia.org/wiki/Centralized_traffic_control">Centralized Traffic Control</a> (CTC) remotely operated from large switchboards. 
 
 	<h3>Standard CTC nomenclature</h3>
 	
@@ -106,14 +105,15 @@ Example #2: Dennis Drury's CTC signals get even numbers with a directional modif
 	<h3>Further reading</h3>	
 	<p>There are a lot of excellent sources of information on prototype signaling, including:
 <ul>
-	<li>The <a href="http://en.wikipedia.org/wiki/Railway_signal">Wikipedia Signaling page</a></li>
-	<li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling simply explained</a> by A.A. Krug</li>
-	<li><a href="http://www.lundsten.dk/us_signaling/">North American Signaling</a> is a comprehensive website by Carsten S. Lundsten
-		<li>The <a href="http://www.railway-technical.com/sigind.shtml">Railway Technical Index Signaling chapter</a> provides lots of information from all over the world
-	<li>John Armstrong's book <em>The Railroad: What It Is, What It Does</em>, Simmons-Boardman Books Inc., 1990
-		<li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev 3.0</em> has signaling information in chapter 12.
-<li>US prototype AAR rules section 2 (<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>) provides a starting point for understanding US signaling rules.</li>
-<li>The <a href="http://www.docstoc.com/docs/25141693/Recommended-Circuit-Nomenclature/">AREMA Manual section on Circuit Nomenclature</a> describes prototypical naming of parts of a signaling system.</li>
+  <li>The <a href="https://en.wikipedia.org/wiki/Railway_signal">Wikipedia Signaling page</a></li>
+  <li><a href="http://www.alkrug.vcn.com/rrfacts/signals/signals.htm">Signaling simply explained</a> by A.A. Krug</li>
+  <li><a href="http://www.lundsten.dk/us_signaling/">North American Signaling</a> is a comprehensive website by Carsten S. Lundsten</li>
+  <li>The <a href="http://www.railway-technical.com/sigind.shtml">Railway Technical Index Signaling chapter</a> provides lots of information from all over the world.</li>
+  <li><a href="http://catalog.hathitrust.org/Record/002567896">Railroad operation and railway signaling</a> by Edmund J. Phillips, Jr., Simmons-Boardman Publ., 1942</li>
+  <li>John Armstrong's book <em>The Railroad: What It Is, What It Does</em>, Simmons-Boardman Books Inc., 1990</li>
+  <li>Dr. Bruce Chubb's <em>Computer/Model Railroad Interface (C/MRI) User Manual rev 3.0</em> has signaling information in chapter 12.</li>
+  <li>US prototype AAR rules section 2 (<a href="http://www.rrsignalpix.com/AAR_2_sec.pdf">http://www.rrsignalpix.com/AAR_2_sec.pdf</a>) provides a starting point for understanding US signaling rules.</li>
+  <li><a href="http://www.railroadsignals.us/basics/nomenclature.htm">US Circuit Nomenclature</a> helps in prototypically naming parts of a signaling system.</li>
 </ul>
 
 <a name="tools"><h2>JMRI Signaling Tools</h2></a>

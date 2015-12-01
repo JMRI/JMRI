@@ -42,9 +42,6 @@ import org.slf4j.LoggerFactory;
  */
 public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 7715842501699997420L;
 
     HashMap<String, HashMap<Integer, NamedIcon>> _iconMaps;
@@ -65,7 +62,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     }
 
-    HashMap<String, HashMap<Integer, NamedIcon>> initMaps() {
+    static HashMap<String, HashMap<Integer, NamedIcon>> initMaps() {
         HashMap<String, HashMap<Integer, NamedIcon>> iconMaps = new HashMap<String, HashMap<Integer, NamedIcon>>();
         iconMaps.put("ClearTrack", new HashMap<Integer, NamedIcon>());
         iconMaps.put("OccupiedTrack", new HashMap<Integer, NamedIcon>());
@@ -408,7 +405,7 @@ public class IndicatorTurnoutIcon extends TurnoutIcon implements IndicatorTrack 
 
     private void setStatus(OBlock block, int state) {
         _status = _pathUtil.setStatus(block, state);
-        if ((state & OBlock.OCCUPIED) != 0) {
+        if ((state & (OBlock.OCCUPIED | OBlock.RUNNING)) != 0) {
             _pathUtil.setLocoIcon(block, getLocation(), getSize(), _editor);
             repaint();
         }

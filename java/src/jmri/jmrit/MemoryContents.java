@@ -956,7 +956,7 @@ public class MemoryContents {
         currentPage = location / PAGESIZE;
         if (pageArray[currentPage] == null) {
             log.error("Error in getLocation(0x" // NOI18N
-                    + location
+                    + Integer.toHexString(location)
                     + "): accessed uninitialized page " // NOI18N
                     + currentPage);
             return DEFAULT_MEM_VALUE;
@@ -1497,6 +1497,21 @@ public class MemoryContents {
             super(s);
         }
     }
+    
+    /**
+     * Summarize contents
+     */
+    public String toString() {
+        StringBuffer retval = new StringBuffer("Pages occupied: ");
+        for (int page=0; page<PAGES; page++) {
+            if (isPageInitialized(page)) {
+                retval.append(page);
+                retval.append(" ");
+            }
+        }
+        return new String(retval);
+    }
+    
     static Logger log = LoggerFactory.getLogger(MemoryContents.class.getName());
 }
 

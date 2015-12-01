@@ -68,6 +68,7 @@ public class TrainCsvCommon extends TrainCommon {
     protected final static String END = "END" + DEL + Bundle.getMessage("csvEnd") + DEL; // NOI18N
     protected final static String ETA = "ETA" + DEL + Bundle.getMessage("csvExpectedTimeArrival") + DEL; // NOI18N
     protected final static String ETE = "ETE" + DEL + Bundle.getMessage("csvEstimatedTimeEnroute") + DEL; // NOI18N
+    protected final static String HOLD = "HOLD" + DEL + Bundle.getMessage("csvHoldCar"); // NOI18N
     protected final static String NCPU = "NCPU" + DEL + Bundle.getMessage("csvNoCarPickUp"); // NOI18N
     protected final static String NCSO = "NCSO" + DEL + Bundle.getMessage("csvNoCarSetOut"); // NOI18N
     protected final static String SWL = "SWL" + DEL + Bundle.getMessage("csvSwitchList") + DEL; // NOI18N

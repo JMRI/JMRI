@@ -159,7 +159,7 @@ bring the bug count down to zero.  The <a
 runs FindBugs twice a day, which helps developers see the results of
 their coding without having to set up to run findbugs themselves.</p>
 
-<p>If you are checking code in to the JMRI Subversion repository,
+<p>If you are checking code in to the JMRI repository,
 please check the CI server and make sure that your changes do not
 introduce new errors.</p>
 

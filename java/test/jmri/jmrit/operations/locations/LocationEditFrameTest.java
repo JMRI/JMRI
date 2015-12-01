@@ -20,9 +20,8 @@ public class LocationEditFrameTest extends OperationsSwingTestCase {
     public void testLocationEditFrame() {
         loadLocations();
         
-        LocationEditFrame f = new LocationEditFrame();
+        LocationEditFrame f = new LocationEditFrame(null);
         f.setTitle("Test Add Location Frame");
-        f.initComponents(null);
 
         f.locationNameTextField.setText("New Test Location");
         //f.addLocationButton.doClick();

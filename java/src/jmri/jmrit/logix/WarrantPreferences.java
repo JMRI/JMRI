@@ -318,6 +318,7 @@ public class WarrantPreferences  {
         frame.setTimeInterval(_msIncrTime);
         frame.setRampIncrement(_throttleIncr);
         frame.updatePanel(_interpretation);
+        frame.closeFrame();
     }
     private void setSpeedMap() {
         SignalSpeedMap map = new SignalSpeedMap();

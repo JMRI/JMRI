@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.security.CodeSource;
 import java.util.jar.JarFile;
+import javax.annotation.Nonnull;
 import jmri.beans.Bean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +62,7 @@ public class FileUtilSupport extends Bean {
      * Set the user's files directory.
      *
      * @see #getUserFilesPath()
-     * @param path The path to the user's files directory
+     * @param path The path to the user's files directory using system-specific separators
      */
     public void setUserFilesPath(String path) {
         String old = this.userFilesPath;
@@ -79,7 +80,7 @@ public class FileUtilSupport extends Bean {
      * preferences path.
      *
      * @see #getPreferencesPath()
-     * @return Profile directory as a String
+     * @return Profile directory as a String using system-specific separators
      */
     public String getProfilePath() {
         return (this.profilePath != null) ? this.profilePath : this.getPreferencesPath();
@@ -89,7 +90,7 @@ public class FileUtilSupport extends Bean {
      * Set the profile directory.
      *
      * @see #getProfilePath()
-     * @param path The path to the profile directory
+     * @param path The path to the profile directory using system-specific separators.
      */
     public void setProfilePath(String path) {
         String old = this.profilePath;
@@ -113,12 +114,12 @@ public class FileUtilSupport extends Bean {
      * {@link #getHomePath()} to get the User's home directory.
      *
      * @see #getHomePath()
-     * @return Path to the preferences directory.
+     * @return Path to the preferences directory using system-specific separators.
      */
     public String getPreferencesPath() {
         // return jmri.prefsdir property if present
         String jmriPrefsDir = System.getProperty("jmri.prefsdir", ""); // NOI18N
-        if (!jmriPrefsDir.isEmpty()) {
+        if (!jmriPrefsDir.isEmpty() && !jmriPrefsDir.endsWith(File.separator)) {
             return jmriPrefsDir + File.separator;
         }
         String result;
@@ -170,7 +171,7 @@ public class FileUtilSupport extends Bean {
 
     /**
      * Set the JMRI program directory.
-     *
+     * <p>
      * If set, allows JMRI to be loaded from locations other than the directory
      * containing JMRI resources. This must be set very early in the process of
      * loading JMRI (prior to loading any other JMRI code) to be meaningfully
@@ -194,7 +195,7 @@ public class FileUtilSupport extends Bean {
     /**
      * Get the resources directory within the user's files directory.
      *
-     * @return path to [user's file]/resources/
+     * @return path to [user's file]/resources/  using system-specific separators
      */
     public String getUserResourcePath() {
         return this.getUserFilesPath() + "resources" + File.separator; // NOI18N
@@ -215,7 +216,7 @@ public class FileUtilSupport extends Bean {
     /**
      * Get the path to the scripts directory.
      *
-     * @return the scriptsPath
+     * @return the scriptsPath using system-specific separators
      */
     public String getScriptsPath() {
         if (scriptsPath != null) {
@@ -223,8 +224,8 @@ public class FileUtilSupport extends Bean {
         }
         // scriptsPath not set by user, return default if it exists
         File file = new File(this.getProgramPath() + File.separator + "jython" + File.separator); // NOI18N
-        if (file.exists()) {
-            return file.getPath();
+        if (file.exists() && file.isDirectory()) {
+            return file.getPath() + File.separator;
         }
         // if default does not exist, return user's files directory
         return this.getUserFilesPath();
@@ -271,6 +272,56 @@ public class FileUtilSupport extends Bean {
             log.error("Unable to open jmri.jar", ex);
             return null;
         }
+    }
+
+    /**
+     * Backup a file. The backup is in the same location as the original file,
+     * has the extension <code>.bak</code> appended to the file name, and up to
+     * four revisions are retained. The lowest numbered revision is the most
+     * recent.
+     *
+     * @param file
+     * @throws IOException
+     */
+    public void backup(File file) throws IOException {
+        this.rotate(file, 4, "bak");
+    }
+
+    /**
+     * Rotate a file.
+     *
+     * @param file      The file to rotate
+     * @param max       A positive integer
+     * @param extension The extension to use for the rotations. If null or an
+     *                  empty string, the rotation number is used as the
+     *                  extension.
+     * @throws IOException
+     * @throws IllegalArgumentException if max is less than one
+     * @see #backup(java.io.File) 
+     */
+    public void rotate(@Nonnull File file, int max, String extension) throws IOException {
+        if (max < 1) {
+            throw new IllegalArgumentException();
+        }
+        String name = file.getName();
+        if (extension != null) {
+            if (extension.length() > 0 && !extension.startsWith(".")) {
+                extension = "." + extension;
+            }
+        } else {
+            extension = "";
+        }
+        File dir = file.getParentFile();
+        File source;
+        int i = max;
+        while (i > 1) {
+            source = new File(dir, name + "." + (i - 1) + extension);
+            if (source.exists()) {
+                FileUtil.copy(source, new File(dir, name + "." + i + extension));
+            }
+            i--;
+        }
+        FileUtil.copy(file, new File(dir, name + "." + i + extension));
     }
 
     public static FileUtilSupport getDefault() {

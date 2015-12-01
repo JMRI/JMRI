@@ -128,8 +128,7 @@ public class LocationsTableFrame extends OperationsFrame {
     public void buttonActionPerformed(java.awt.event.ActionEvent ae) {
 //		log.debug("location button activated");
         if (ae.getSource() == addButton) {
-            LocationEditFrame f = new LocationEditFrame();
-            f.initComponents(null);
+            LocationEditFrame f = new LocationEditFrame(null);
             f.setTitle(Bundle.getMessage("TitleLocationAdd"));
         }
 //		if (ae.getSource() == printTableButton){

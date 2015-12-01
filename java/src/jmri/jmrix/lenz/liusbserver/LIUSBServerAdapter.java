@@ -34,7 +34,7 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
     static final int BROADCAST_TCP_PORT = 5551;
     static final String DEFAULT_IP_ADDRESS = "localhost";
 
-    private javax.swing.Timer keepAliveTimer; // Timer used to periodically
+    private java.util.TimerTask keepAliveTimer; // Timer used to periodically
     // send a message to both
     // ports to keep the ports 
     // open
@@ -374,8 +374,8 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
      */
     private void keepAliveTimer() {
         if (keepAliveTimer == null) {
-            keepAliveTimer = new javax.swing.Timer(keepAliveTimeoutValue, new java.awt.event.ActionListener() {
-                public void actionPerformed(java.awt.event.ActionEvent e) {
+            keepAliveTimer = new java.util.TimerTask(){
+                public void run () {
                     /* If the timer times out, just send a character to the
                      *  ports.
                      */
@@ -389,12 +389,12 @@ public class LIUSBServerAdapter extends XNetNetworkPortController {
                         ex.printStackTrace();
                     }
                 }
-            });
+            };
         }
-        keepAliveTimer.stop();
-        keepAliveTimer.setInitialDelay(keepAliveTimeoutValue);
-        keepAliveTimer.setRepeats(true);
-        keepAliveTimer.start();
+        else {
+           keepAliveTimer.cancel();
+        }
+        new java.util.Timer().schedule(keepAliveTimer,keepAliveTimeoutValue,keepAliveTimeoutValue);
     }
 
     static Logger log = LoggerFactory.getLogger(LIUSBServerAdapter.class.getName());

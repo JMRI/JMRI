@@ -29,6 +29,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import jmri.InstanceManager;
 import jmri.NamedBean;
+import jmri.NmraPacket;
 import jmri.SignalAppearanceMap;
 import jmri.SignalHead;
 import jmri.SignalMast;
@@ -354,6 +355,10 @@ public class AddSignalMastPanel extends JPanel {
 
     String extractMastTypeFromMast(String name) {
         String[] parts = name.split(":");
+        if (parts.length > 3) {
+            // See if old format, new format uses () around the signal head names
+            return(parts[2]);
+        }
         return parts[2].substring(0, parts[2].indexOf("("));
     }
 
@@ -1151,7 +1156,7 @@ public class AddSignalMastPanel extends JPanel {
             return false;
         }
 
-        if (address < 1 || address > 2048) {
+        if (address < NmraPacket.accIdLowLimit || address > NmraPacket.accIdAltHighLimit) {
             JOptionPane.showMessageDialog(null, rb.getString("DCCMastAddressOutOfRange"));
             log.error("invalid address " + address);
             return false;

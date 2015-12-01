@@ -3,7 +3,6 @@ package jmri.beans;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-import static junit.framework.Assert.assertEquals;
 import junit.framework.TestCase;
 
 /**
@@ -71,7 +70,6 @@ public class ArbitraryPropertySupportTest extends TestCase {
      * Test of getPropertyNames method, of class UnboundBean.
      */
     public void testGetPropertyNames() {
-        System.out.println("getPropertyNames");
         ArbitraryPropertySupport instance = (new UnboundBeanImpl()).aps();
         Set<String> expResult = new HashSet<>(6);
         expResult.add(CLASS); // defined in Object

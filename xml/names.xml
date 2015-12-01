@@ -200,6 +200,21 @@
 		<definition item="Analog Mode Function Status - F18" />
 		<definition item="Analog Mode Function Status - F18(f)" />
 		<definition item="Analog Mode Function Status - F18(r)" />
+		<definition item="Analog Mode Function Status - F19" />
+		<definition item="Analog Mode Function Status - F20" />
+		<definition item="Analog Mode Function Status - F21" />
+		<definition item="Analog Mode Function Status - F22" />
+		<definition item="Analog Mode Function Status - F23" />
+		<definition item="Analog Mode Function Status - F24" />
+		<definition item="Analog Mode Function Status - F25" />
+		<definition item="Analog Mode Function Status - F26" />
+		<definition item="Analog Mode Function Status - F27" />
+		<definition item="Analog Mode Function Status - F28" />
+
+		<definition item="Analog Mode Automatic Effects - FWDD" />
+		<definition item="Analog Mode Automatic Effects - REVD" />
+		<definition item="Analog Mode Automatic Effects - FWDS" />
+		<definition item="Analog Mode Automatic Effects - REVS" />
 
 	</definitiongroup>
 
@@ -277,6 +292,11 @@
 		<definition item="Consist Option 1"/>
 		<definition item="Consist Option 2"/>
 
+		<definition item="Consist Automatic Effects - FWDD"/>
+		<definition item="Consist Automatic Effects - REVD"/>
+		<definition item="Consist Automatic Effects - FWDS"/>
+		<definition item="Consist Automatic Effects - REVS"/>
+		<definition item="Consist Automatic Effects - ESTP"/>
 
 	</definitiongroup>
 

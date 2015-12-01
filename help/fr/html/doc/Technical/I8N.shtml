@@ -106,7 +106,7 @@ des contr&#244;les d'interface graphique.
 <P>
 Obtenir une copie propre du code source en utlisant SVN.
 (Pour plus d'info sur l'utilisation de SVN, Svp voir la 
-<A HREF="getcode.shtml">page sur l'obtention d'une copie du code</a>.)
+<A HREF="getgitcode.shtml">page sur l'obtention d'une copie du code</a>.)
 <h3> Traduire Fichiers properties </h3>
 Si elles n'existent pas d&#233;j&#224;,
 commencer par faire des copies des fichiers properties avec un suffixe pour votre

@@ -78,14 +78,11 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
     public static final String NAME = Bundle.getMessage("Name");
     public static final String DISPOSE = "dispose"; // NOI18N
 
-    public ScheduleEditFrame() {
+    public ScheduleEditFrame(Schedule schedule, Track track) {
         super();
-    }
-
-    public void initComponents(Schedule schedule, Location location, Track track) {
 
         _schedule = schedule;
-        _location = location;
+        _location = track.getLocation();
         _track = track;
 
         // load managers
@@ -100,8 +97,12 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         if (_schedule != null) {
             scheduleNameTextField.setText(_schedule.getName());
             commentTextField.setText(_schedule.getComment());
+            setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleEdit"),
+                    new Object[]{_track.getName()}));
             enableButtons(true);
         } else {
+            setTitle(MessageFormat.format(Bundle.getMessage("TitleScheduleAdd"),
+                    new Object[]{_track.getName()}));
             enableButtons(false);
         }
 
@@ -198,6 +199,7 @@ public class ScheduleEditFrame extends OperationsFrame implements java.beans.Pro
         JMenuBar menuBar = new JMenuBar();
         JMenu toolMenu = new JMenu("Tools");
         menuBar.add(toolMenu);
+        toolMenu.add(new ScheduleCopyAction(schedule));
         toolMenu.add(new ScheduleOptionsAction(this));
         toolMenu.add(new ScheduleResetHitsAction(schedule));
         toolMenu.add(new SchedulesByLoadAction(Bundle.getMessage("MenuItemShowSchedulesByLoad")));

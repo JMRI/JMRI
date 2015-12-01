@@ -119,9 +119,6 @@ public class TrackerTableAction extends AbstractAction {
      */
     static class TableFrame extends JmriJFrame implements PropertyChangeListener, MouseListener {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -56337259221744388L;
         private TrackerTableModel _model;
         private JmriJFrame _pickFrame;
@@ -233,11 +230,10 @@ public class TrackerTableAction extends AbstractAction {
                     _trainNameBox.setText((String) block.getValue());
                 }
                 return true;
-            } else {
-                if ((block.getState() & OBlock.OCCUPIED) != 0 && block.getValue() != null) {
-                    markNewTracker(block, (String) block.getValue());
-                    return true;
-                }
+            }
+            if ((block.getState() & OBlock.OCCUPIED) != 0 && block.getValue() != null) {
+                markNewTracker(block, (String) block.getValue());
+                return true;
             }
             return false;
         }
@@ -346,19 +342,18 @@ public class TrackerTableAction extends AbstractAction {
                     JOptionPane.showMessageDialog(this, Bundle.getMessage("blockInUse", oldName, block.getDisplayName()),
                             Bundle.getMessage("WarningTitle"), JOptionPane.WARNING_MESSAGE);
                     return null;
-                } else {
-                    Tracker newTracker = new Tracker(block, name);
-                    newTracker.setupCheck();
-                    _trackerList.add(newTracker);
-                    addBlockListeners(newTracker);
-                    _model.fireTableDataChanged();
-                    setStatus(Bundle.getMessage("startTracker", name, block.getDisplayName()));
-                    return newTracker;
                 }
+                Tracker newTracker = new Tracker(block, name);
+                newTracker.setupCheck();
+                _trackerList.add(newTracker);
+                addBlockListeners(newTracker);
+                _model.fireTableDataChanged();
+                setStatus(Bundle.getMessage("startTracker", name, block.getDisplayName()));
+                return newTracker;
             }
         }
 
-        protected String blockInUse(OBlock b) {
+        static protected String blockInUse(OBlock b) {
             Iterator<Tracker> iter = _trackerList.iterator();
             while (iter.hasNext()) {
                 Tracker t = iter.next();
@@ -369,7 +364,7 @@ public class TrackerTableAction extends AbstractAction {
             return null;
         }
 
-        boolean nameInuse(String name) {
+        static boolean nameInuse(String name) {
             Iterator<Tracker> iter = _trackerList.iterator();
             while (iter.hasNext()) {
                 Tracker t = iter.next();
@@ -410,8 +405,8 @@ public class TrackerTableAction extends AbstractAction {
         }
 
         /**
-         * Adds listeners to all blocks in the range of a Tracker Called when a
-         * tracker enters a block. Called when a new tracker is created.
+         * Adds listeners to all blocks in the range of a Tracker.
+         * Called when a new tracker is created.
          *
          * @param newTracker
          */
@@ -427,6 +422,9 @@ public class TrackerTableAction extends AbstractAction {
             }
         }
 
+        /**
+         * Adds listener to a block when a tracker enters.
+         */
         private void addBlockListener(OBlock block, Tracker tracker) {
             List<Tracker> trackers = _blocks.get(block);
             if (trackers == null) {
@@ -465,9 +463,8 @@ public class TrackerTableAction extends AbstractAction {
                 if (oldRange.contains(b)) {
                     oldRange.remove(b);
                     continue;	// held in common. keep listener	    			
-                } else {
-                    addBlockListener(b, tracker);		// new block.  Add Listener
                 }
+                addBlockListener(b, tracker);       // new block.  Add Listener
             }
             // blocks left in oldRange were not found in newRange.  Remove Listeners
             iter = oldRange.iterator();
@@ -509,17 +506,22 @@ public class TrackerTableAction extends AbstractAction {
             if (evt.getPropertyName().equals("state")) {
                 OBlock b = (OBlock) evt.getSource();
                 int state = ((Number) evt.getNewValue()).intValue();
+                int oldState = ((Number) evt.getOldValue()).intValue();
                 if (log.isDebugEnabled()) {
-                    log.debug("propertyChange to block= " + b.getDisplayName() + " state= " + state);
+                    log.debug("propertyChange to block= "+b.getDisplayName()+" state= "+state+" oldstate= "+oldState);
                 }
                 // The "jiggle" (see tracker.showBlockValue() causes some state changes to be duplicated.
                 // The following washes out the extra notifications
-                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (OBlock.UNOCCUPIED | OBlock.RUNNING)) {
+/*                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (OBlock.UNOCCUPIED | OBlock.RUNNING)) {
                     b.setState(state & ~OBlock.RUNNING);
                     return;		// will do the tracker.move() on the next (repeat call
                 } else if ((state & OBlock.RUNNING) != 0) {
                     return;		// repeats previous call that was completed.	            	
-                }
+                }*/
+                if ((state & (OBlock.UNOCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.UNOCCUPIED | OBlock.RUNNING)) &&
+                        (state & (OBlock.OCCUPIED | OBlock.RUNNING)) == (oldState & (OBlock.OCCUPIED | OBlock.RUNNING))) {
+                    return;
+                }                    
                 List<Tracker> trackers = _blocks.get(b);
                 if (trackers == null) {
                     log.error("No Trackers found for block " + b.getDisplayName() + " going to state= " + state);
@@ -534,9 +536,10 @@ public class TrackerTableAction extends AbstractAction {
                             Warrant w = b.getWarrant();
                             if (w != null) {
                                 int idx = w.getCurrentOrderIndex();
-                                // Assume it is a warranted train that entered the block
-                                // is distance of 1 block OK? maybe 2?
-                                if (Math.abs(w.getIndexOfBlock(b, idx) - idx) < 2) {
+                                // Was it a warranted train that entered the block, 
+                                // is distance of 1 block OK?
+                                // Can't tell who got notified first - tracker or warrant?
+                                if (w.getIndexOfBlock(b, idx) - idx < 2) {
                                     return;
                                 }
                             }
@@ -567,7 +570,7 @@ public class TrackerTableAction extends AbstractAction {
                             log.warn("Block " + b.getDisplayName() + " going active with value= "
                                     + b.getValue() + " Wasup wi dat?");
                         }
-                    } else {
+                    } else if ((state & OBlock.UNOCCUPIED) != 0) {
                         // b going unoccupied.
                         // to avoid ConcurrentModificationException if a tracker is deleted, use a copy
                         Tracker[] copy = new Tracker[trackers.size()];
@@ -581,9 +584,9 @@ public class TrackerTableAction extends AbstractAction {
                         }
                     }
                 }
-                if ((state & OBlock.UNOCCUPIED) != 0) {
+ /*               if ((state & OBlock.UNOCCUPIED) != 0) {
                     b.setValue(null);
-                }
+                }*/
             }
             _model.fireTableDataChanged();
         }
@@ -683,9 +686,6 @@ public class TrackerTableAction extends AbstractAction {
 
     static class TrackerTableModel extends AbstractTableModel {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = -8320710926680330134L;
         public static final int NAME_COL = 0;
         public static final int STATUS_COL = 1;

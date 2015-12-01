@@ -32,15 +32,15 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.loconet.LocoNetThrottledTransmitterTest.suite());
 
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
-            suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
-            suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
             suite.addTest(jmri.jmrix.loconet.locostats.PackageTest.suite());
-            suite.addTest(jmri.jmrix.loconet.soundloader.PackageTest.suite());
-            suite.addTest(jmri.jmrix.loconet.spjfile.PackageTest.suite());
-            suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
-            suite.addTest(new TestSuite(SecurityElementTest.class));
         }
 
+        suite.addTest(jmri.jmrix.loconet.sdf.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.locomon.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.soundloader.PackageTest.suite());
+        suite.addTest(jmri.jmrix.loconet.spjfile.PackageTest.suite());
+        suite.addTest(new TestSuite(Se8AlmImplementationTest.class));
+        suite.addTest(new TestSuite(SecurityElementTest.class));
         suite.addTest(new TestSuite(SlotManagerTest.class));
         suite.addTest(new TestSuite(LocoNetSlotTest.class));
         suite.addTest(new TestSuite(LnOpsModeProgrammerTest.class));

@@ -14,9 +14,6 @@
 #
 # Author:  Bob Jacobsen (C) Copyright 2008
 # Part of the JMRI distribution
-#
-# The next line is maintained by CVS, please don't change it
-# $Revision$
 
 import jarray
 import jmri

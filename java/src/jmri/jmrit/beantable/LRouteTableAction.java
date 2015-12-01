@@ -1791,6 +1791,10 @@ public class LRouteTableAction extends AbstractTableAction {
         return false;
     }
 
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList, ArrayList<ConditionalVariable> vetoList,
             Logix logix, String sName, String uName, String type) {
@@ -1843,7 +1847,15 @@ public class LRouteTableAction extends AbstractTableAction {
         }
         String cSystemName = sName + numConds + type;
         String cUserName = CONDITIONAL_USER_PREFIX + numConds + "C " + uName;
-        Conditional c = _conditionalManager.createNewConditional(cSystemName, cUserName);
+        Conditional c = null;
+        try {
+            c = _conditionalManager.createNewConditional(cSystemName, cUserName);
+        } catch (Exception ex) {
+            // user input no good
+            handleCreateException(sName);
+            // throw without creating any 
+            throw new IllegalArgumentException("user input no good");
+        }
         c.setStateVariables(varList);
         //int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
         //c.setAction(cloneActionList(actionList, option));
@@ -1858,6 +1870,19 @@ public class LRouteTableAction extends AbstractTableAction {
         return numConds;
     }
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(_addFrame,
+                java.text.MessageFormat.format(
+                        rb.getString("ErrorLRouteAddFailed"),
+                        new Object[]{sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList,
             Logix logix, String sName, String uName) {
@@ -1866,7 +1891,15 @@ public class LRouteTableAction extends AbstractTableAction {
         }
         String cSystemName = sName + numConds + "A";
         String cUserName = CONDITIONAL_USER_PREFIX + numConds + "A " + uName;
-        Conditional c = _conditionalManager.createNewConditional(cSystemName, cUserName);
+        Conditional c = null;
+        try {
+            c = _conditionalManager.createNewConditional(cSystemName, cUserName);
+        } catch (Exception ex) {
+            // user input no good
+            handleCreateException(sName);
+            // throw without creating any 
+            throw new IllegalArgumentException("user input no good");
+        }
         c.setStateVariables(triggerList);
         //c.setAction(cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE));
         c.setAction(actionList);

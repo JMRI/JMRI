@@ -1,6 +1,7 @@
 // TrainManager.java
 package jmri.jmrit.operations.trains;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.text.MessageFormat;
 import java.util.ArrayList;
@@ -17,6 +18,7 @@ import jmri.jmrit.operations.routes.RouteLocation;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.OperationsSetupXml;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.script.JmriScriptEngineManager;
 import org.jdom2.Attribute;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -244,7 +246,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void runStartUpScripts() {
         for (String scriptPathName : getStartUpScripts()) {
             try {
-                jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
+                JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
             } catch (Exception e) {
                 log.error("Problem with script: {}", scriptPathName);
             }
@@ -278,7 +280,7 @@ public class TrainManager implements java.beans.PropertyChangeListener {
     public void runShutDownScripts() {
         for (String scriptPathName : getShutDownScripts()) {
             try {
-                jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(scriptPathName));
+                JmriScriptEngineManager.getDefault().runScript(new File(jmri.util.FileUtil.getExternalFilename(scriptPathName)));
             } catch (Exception e) {
                 log.error("Problem with script: {}", scriptPathName);
             }

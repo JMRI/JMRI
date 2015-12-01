@@ -56,7 +56,9 @@ public interface Programmer {
      * thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
+     * @deprecated As of 4.1.1, use #writeCV(java.lang.String, int, jmri.ProgListener)
      */
+    @Deprecated
     public void writeCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**
@@ -85,7 +87,9 @@ public interface Programmer {
      * at the start, not during the actual programming sequence. A typical
      * exception would be due to an invalid mode (though that should be
      * prevented earlier)
+     * @deprecated As of 4.1.1, use #readCV(java.lang.String, int, jmri.ProgListener)
      */
+    @Deprecated
     public void readCV(int CV, ProgListener p) throws ProgrammerException;
 
     /**
@@ -114,7 +118,9 @@ public interface Programmer {
      * be thrown at the start, not during the actual programming sequence. A
      * typical exception would be due to an invalid mode (though that should be
      * prevented earlier)
+     * @deprecated As of 4.1.1, use #confirmCV(java.lang.String, int, jmri.ProgListener)
      */
+    @Deprecated
     public void confirmCV(int CV, int val, ProgListener p) throws ProgrammerException;
 
     /**

@@ -21,6 +21,7 @@ public class NceCmdStationMemory {
     public static class CabMemorySerial {
 
         public final static int CS_CAB_MEM_PRO = 0x8800;	// start of NCE CS cab context page for cab 0, PowerHouse/CS2
+        public final static int CS_COMP_CAB_MEM_PRO = 0xED00;	// start of computer cab context page, PowerHouse/CS2
         public final static int CS_CONSIST_MEM = 0xF500; 	// start of NCE CS Consist memory
         public final static int CS_CON_MEM_REAR = 0xF600; 	// start of rear consist locos
         public final static int CS_CON_MEM_MID = 0xF700; 	// start of mid consist locos
@@ -82,12 +83,13 @@ public class NceCmdStationMemory {
         public final static int CAB_FLAGS1 = 70;		// NCE flag 1
     }
 
+    public static final int FLAGS_MASK_CONSIST_REAR = 0x80;      // bit 7 set if CAB_ADDR_x is rear loco
     public static final int FLAGS1_CABTYPE_DISPLAY = 0x00;	// bit 0=0, bit 7=0;
     public static final int FLAGS1_CABTYPE_NODISP = 0x01;	// bit 0=1, bit 7=0;
     public static final int FLAGS1_CABTYPE_USB = 0x80;		// bit 0=0, bit 7=1;
     public static final int FLAGS1_CABTYPE_AIU = 0x81;		// bit 0=1, bit 7=1;
-    public static final int FLAGS1_CABISACTIVE = 0x02;	// if cab is active
-    public static final int FLAGS1_MASK_CABTYPE = 0x81;	// Only bits 0 and 7.
+    public static final int FLAGS1_CABISACTIVE = 0x02;          // if cab is active
+    public static final int FLAGS1_MASK_CABTYPE = 0x81;         // Only bits 0 and 7.
     public static final int FLAGS1_MASK_CABISACTIVE = 0x02;	// if cab is active
 
     public static final int FUNC_L_F0 = 0x10;		// F0 or headlight

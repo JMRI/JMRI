@@ -41,6 +41,7 @@ public class Xml {
     // Setup.java
     static final String OPERATIONS = "operations"; // NOI18N
     static final String RAIL_ROAD = "railRoad"; // NOI18N
+    static final String USE_JMRI_RAILROAD_NAME = "useJmriRailroadName"; // NOI18N
     static final String SETTINGS = "settings"; // NOI18N
     static final String MAIN_MENU = "mainMenu"; // NOI18N
     static final String CLOSE_ON_SAVE = "closeOnSave"; // NOI18N	
@@ -81,6 +82,9 @@ public class Xml {
     static final String PRINT_VALID = "printValid"; // NOI18N
     static final String SORT_BY_TRACK = "sortByTrack"; // NOI18N
     static final String PRINT_HEADERS = "printHeaders"; // NOI18N
+    static final String PRINT_CABOOSE_LOAD = "printCabooseLoad"; // NOI18N
+    static final String PRINT_PASSENGER_LOAD = "printPassengerLoad"; // NOI18N
+    
     static final String LENGTH_UNIT = "lengthUnit"; // NOI18N
     static final String YEAR_MODELED = "yearModeled"; // NOI18N
 

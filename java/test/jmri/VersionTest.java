@@ -56,4 +56,10 @@ public class VersionTest extends TestCase {
         TestSuite suite = new TestSuite(VersionTest.class);
         return suite;
     }
+
+    // Main entry point
+    static public void main(String[] args) {
+        String[] testCaseName = {"-noloading", VersionTest.class.getName()};
+        junit.swingui.TestRunner.main(testCaseName);
+    }
 }

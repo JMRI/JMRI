@@ -29,6 +29,7 @@ public class Control {
     public static final int panelWidth300 = 300;
 
     // Default panel height
+    public static final int panelHeight600 = 600;
     public static final int panelHeight500 = 500;
     public static final int panelHeight400 = 400;
     public static final int panelHeight300 = 300;

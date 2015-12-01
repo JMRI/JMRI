@@ -6,7 +6,7 @@
  	JMRI: Continuous Integration
     </TITLE>
     <META content="Bob Jacobsen" name=Author>
-    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins SVN">
+    <meta name="keywords" content="JMRI technical code Continuous Integration jenkins">
 
     <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
     <!-- are an arbitrary design pattern used by the update.pl script to -->
@@ -37,10 +37,15 @@
 "Continuous Integration" is the process of rebuilding a 
 system every time it changes, so that you rapidly learn of
 new problems and are motivated to remove existing ones.
-<p>
+
+<h2 id="jenkins">Jenkins</h2>
 JMRI uses the 
 <a href="http://jenkins-ci.org/">Jenkins</a>
-continuous integration engine for this.
+continuous integration engine for integration and test builds.
+This includes keeping our 
+<a href="WebSite.shtml">web site</a> up to date as changes are committed,
+building installer packages from development builds, 
+and building final releases.
 <p>
 
 Specific results of interest:
@@ -61,7 +66,7 @@ For more information on JMRI's use of FindBugs, see the
 <a href="FindBugs.shtml">separate FindBugs page</a>.
 </ul>
 
-<h2>Integration with NetBeans</h2>
+<h3>Jenkins Integration with NetBeans</h3>
 <p>If you are developing in the <a href="NetBeans.shtml">NetBeans 7.0</a> environment,
 it is possible to integrate feedback from the Jenkins Continuous Integration (CI) engine.
 <p>Within the NetBeans environment, reference is made to the Hudson CI engine - Jenkins
@@ -85,6 +90,29 @@ of the Hudson code and supports the same <a href="http://en.wikipedia.org/wiki/A
 <p>From now on, the current status of the Jenkins builds can be reviewed in the 'Services'
 window by expanding the 'JMRI' entry under 'Hudson Builders'.
 <p><img src="images/NetBeansJenkinsOverview.png" width="342" height="452" alt="Jenkins Overview">
+
+
+<h2>Travis CI</h2>
+
+We also use
+<a href="https://travis-ci.org/">Travis CI</a>
+to do integration/test builds with every pull into our main 
+<a href="http://github.com/JMRI">GitHub</a> repositories.
+<p>
+Travis will build any branch that contains a .travis.yml file. 
+The build history for the main JMRI repository is at
+<a href="https://travis-ci.org/JMRI/JMRI">https://travis-ci.org/JMRI/JMRI</a>.
+
+<p>
+You can enable Travis CI for your fork (personal GitHub repository) as well. 
+After merging JMRI/master into your own fork, 
+allow Travis CI to monitor your fork, and it will begin testing after your next push to GitHub. 
+Follow the instructions at <a href="https://travis-ci.org/">Travis CI</a> to set up your forks.
+<p>
+You can prevent a Travis CI from running against a specific commit by 
+including &quot;[ci skip]&quot; (including the brackets, but not the quotes) 
+anywhere in the commit message if so desired.
+
 <!--#include virtual="/Footer" -->
 
 	  </div><!-- closes #mainContent-->

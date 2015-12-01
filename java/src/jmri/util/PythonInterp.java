@@ -2,15 +2,15 @@
 package jmri.util;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PipedReader;
 import java.io.PipedWriter;
-import java.util.Properties;
+import javax.script.ScriptEngine;
+import javax.script.ScriptException;
 import javax.swing.JTextArea;
-import org.python.core.PySystemState;
+import jmri.script.JmriScriptEngineManager;
 import org.python.util.PythonInterpreter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +32,9 @@ import org.slf4j.LoggerFactory;
  *
  * @author	Bob Jacobsen Copyright (C) 2004
  * @version $Revision$
+ * @deprecated Since 4.1.2 use {@link jmri.script.JmriScriptEngineManager}
  */
+@Deprecated
 public class PythonInterp {
 
     /**
@@ -49,6 +51,8 @@ public class PythonInterp {
             execFile(filename);
         } catch (FileNotFoundException ex) {
             log.error("File {} not found.", filename);
+        } catch (ScriptException ex) {
+            log.error("Error in script {}.", filename, ex);
         }
     }
 
@@ -61,8 +65,9 @@ public class PythonInterp {
      *
      * @param filename
      * @throws FileNotFoundException if the named file does not exist.
+     * @throws javax.script.ScriptException if there is an error in the script
      */
-    static public void execFile(String filename) throws FileNotFoundException {
+    static public void execFile(String filename) throws FileNotFoundException, ScriptException {
         execFile(new File(filename));
     }
 
@@ -71,11 +76,11 @@ public class PythonInterp {
      *
      * @param file
      * @throws FileNotFoundException if the file does not exist.
+     * @throws javax.script.ScriptException if there is an error in the script
      */
-    static public void execFile(File file) throws FileNotFoundException {
-        // get a Python interpreter context, make sure it's ok
-        getPythonInterpreter();
-        if (interp == null) {
+    static public void execFile(File file) throws FileNotFoundException, ScriptException {
+        ScriptEngine python = JmriScriptEngineManager.getDefault().getEngineByName("python");
+        if (python == null) {
             log.error("Can't contine to execute command, could not create interpreter");
             return;
         }
@@ -83,18 +88,17 @@ public class PythonInterp {
             throw new FileNotFoundException();
         }
 
-        interp.execfile(new FileInputStream(file));
+        python.eval(new FileReader(file));
     }
 
-    static public void execCommand(String command) {
-        // get a Python interpreter context, make sure it's ok
-        getPythonInterpreter();
-        if (interp == null) {
+    static public void execCommand(String command) throws ScriptException {
+        ScriptEngine python = JmriScriptEngineManager.getDefault().getEngineByName("python");
+        if (python == null) {
             log.error("Can't contine to execute command, could not create interpreter");
             return;
         }
 
-        interp.exec(command);
+        python.eval(command);
     }
 
     /**
@@ -122,38 +126,18 @@ public class PythonInterp {
             return interp;
         }
 
-        Properties properties = new Properties();
-        // Get properties for interpreter
-        // Search in user files, the settings directory, and in the program path
-        InputStream is = FileUtil.findInputStream("python.properties", new String[]{
-            FileUtil.getUserFilesPath(),
-            FileUtil.getPreferencesPath(),
-            FileUtil.getProgramPath()
-        });
-        if (is != null) {
-            try {
-                properties = new Properties(System.getProperties());
-                properties.load(is);
-            } catch (IOException ex) {
-                log.error("Found, but unable to read python.properties: {}", ex.getMessage());
-                properties = null;
-            }
-        }
-
         // must create one.
         try {
             log.debug("create interpreter");
-            PySystemState.initialize(null, properties);
+            JmriScriptEngineManager.getDefault().initializePython();
 
             interp = new PythonInterpreter();
 
             // have jython execute the default setup
             log.debug("load defaults from {}", defaultContextFile);
-            execFile(FileUtil.getExternalFilename(defaultContextFile));
+            interp.execfile(FileUtil.getExternalFilename(defaultContextFile));
 
             return interp;
-        } catch (FileNotFoundException ex) {
-            log.error("Python is not using the default JMRI context, since {} could not be found to provide it.", defaultContextFile);
         } catch (Exception e) {
             log.error("Exception creating jython system objects", e);
         }
@@ -179,15 +163,16 @@ public class PythonInterp {
                 // Add the I/O pipes
                 PipedWriter pw = new PipedWriter();
 
-                interp.setErr(pw);
-                interp.setOut(pw);
+                ScriptEngine python = JmriScriptEngineManager.getDefault().getEngineByName("python");
+                python.getContext().setErrorWriter(pw);
+                python.getContext().setWriter(pw);
 
                 // ensure the output pipe is read and stored into a
                 // Swing TextArea data model
                 PipedReader pr = new PipedReader(pw);
                 PipeListener pl = new PipeListener(pr, outputlog);
                 pl.start();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 log.error("Exception creating jython output area", e);
                 return null;
             }

@@ -38,7 +38,6 @@ The JMRI "Debug" menu contains the following items:
 </ul>
 <hr>
 <ul>
-  <li>Check XML file</li>
   <li>Validate XML file</li>
   <li>Check Decoder Names </li>
   <li>Check Programmer Names 

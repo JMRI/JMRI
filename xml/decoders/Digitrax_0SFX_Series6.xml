@@ -16,6 +16,7 @@
   <version author="Alain Le Marchand" version="1" lastUpdated="20140427"/>
   <version author="Alain Le Marchand" version="1.1" lastUpdated="20140615"/>
   <version author="Alain Le Marchand" version="2" lastUpdated="20150614"/>
+  <version author="John McMasters" version="3" lastUpdated="20150919"/>
   <!-- Created from version 7 of the Digitrax_0SFX file -->
   <!--     and from Digitrax_2SFX file (John McMasters  1/26/2014, in JMRI Users file section)  -->
   <!--    Version 1 (Alain Le Marchand)                                             -->
@@ -26,6 +27,8 @@
   <!--    Version 2 (Alain Le Marchand)
                  Updated CV150 with default values from Digitrax documentation SDXH116D dated April 7, 2015
                  Updated Function labels for John McMasters' extended sound projects  -->
+   <!--   Version 3 (John McMasters)
+				 Create Extended Series 6 Steam and Diesel within Family for John McMasters' extended sound projects  -->
   <!-- WARNING :   Low and High Versions of decoders (CV07) unknown (by me) - to be adjusted after users feed back -->
   <decoder>
     <family name="SFX Sound Decoders - Series 6" mfg="Digitrax" lowVersionID="16" highVersionID="16">
@@ -59,7 +62,7 @@
         <output name="3" label="Green" connection="wire"/>
         <size length="1.0" width="0.41" height="0.19" units="inches"/>
       </model>
-      <model model="Extended Series 6" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects by John McMasters">
+      <model model="Extended Series 6" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExt" comment="SDXH166D Extended Sound projects v1 v2 by John McMasters">
         <output name="1" label="White" connection="wire"/>
         <output name="2" label="Yellow" connection="wire"/>
         <output name="3" label="Green" connection="wire"/>
@@ -68,7 +71,7 @@
         <output name="6" label="F4-Yellow" connection="wire"/>
         <size length="1.28" width="0.67" height="0.25" units="inches"/>
         <functionlabels>
-          <functionlabel num="3" lockable="true">Coupler on F3 release</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler on F3 release / Auto Directional Toots</functionlabel>
           <functionlabel num="4" lockable="true">Reserved for light func.</functionlabel>
           <functionlabel num="5" lockable="true">Dyn. Brakes Fans lev.1-3/Steam Waterpump turbine</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
           <functionlabel num="6" lockable="true">Notch UP accel./Steam Safety Blowoff, drier, vol at coast</functionlabel>
@@ -76,7 +79,7 @@
           <functionlabel num="8" lockable="true">Mute (full-half-silent)</functionlabel>
           <functionlabel num="9" lockable="true">Brake squeal (eStop wF8)</functionlabel>
           <functionlabel num="10" lockable="true">Xing Gate Airhorn/Whistle</functionlabel>   <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
-          <functionlabel num="11" lockable="false">UNcoupling</functionlabel>
+          <functionlabel num="11" lockable="true">UNcoupling</functionlabel>
           <functionlabel num="12" lockable="false">Wheel Squeal</functionlabel>
           <functionlabel num="13" lockable="true">Air feat. disabled/Steam Coal Fill</functionlabel>
           <functionlabel num="14" lockable="true">Emerg. Stop Shutdown</functionlabel>
@@ -86,6 +89,82 @@
           <functionlabel num="18" lockable="true">High Fan/Steam Greaser</functionlabel>
           <functionlabel num="19" lockable="true">AUX gen./Steam Coal Grate Shaker</functionlabel>
           <functionlabel num="20" lockable="false">Misc. User Sound/Steam SANDER, Manual Chuff</functionlabel> <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
+          <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
+          <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
+          <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
+          <functionlabel num="24" lockable="false">Select Notch 4</functionlabel>
+          <functionlabel num="25" lockable="false">Select Notch 5</functionlabel>
+          <functionlabel num="26" lockable="false">Select Notch 6</functionlabel>
+          <functionlabel num="27" lockable="false">Select Notch 7</functionlabel>
+          <functionlabel num="28" lockable="false">Select Notch 8</functionlabel>
+        </functionlabels>
+      </model>
+      <model model="Extended Series 6 Steam" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtS" comment="SDXH166D Extended Steam Sound projects v3.5 by John McMasters">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+		  <functionlabel num="2" lockable="false">Whistle</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler on F3 release / Auto Directional Toots</functionlabel>
+          <functionlabel num="4" lockable="true">Open Cylinder Cocks / ( light function (turn on rear light, etc.)</functionlabel>
+          <functionlabel num="5" lockable="true">Steam Waterpump turbine</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+          <functionlabel num="6" lockable="true">Steam Safety Blowoff, drier, vol at coast</functionlabel>
+          <functionlabel num="7" lockable="true">Steam Blowdown, vol at load</functionlabel>
+          <functionlabel num="8" lockable="true">Mute (full-half-silent) [eStop with F9]</functionlabel>
+          <functionlabel num="9" lockable="true">Brakes [eStop wF8]</functionlabel>
+          <functionlabel num="10" lockable="true">Xing Gate Whistle / Bells</functionlabel>   <!-- Xing Gate Whistle wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="11" lockable="true">UNcoupling [disables toots on F3]</functionlabel>
+          <functionlabel num="12" lockable="false">Wheel Squeal [disables bell on F6]</functionlabel>
+          <functionlabel num="13" lockable="true">Coal Fill</functionlabel>
+          <functionlabel num="14" lockable="true">Emerg. Stop Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="15" lockable="true">Water Tank</functionlabel>
+          <functionlabel num="16" lockable="true">Steam Coal Stoker/Coal Shovel</functionlabel>
+          <functionlabel num="17" lockable="true">Boxcar Boom</functionlabel>
+          <functionlabel num="18" lockable="true">Steam Greaser</functionlabel>
+          <functionlabel num="19" lockable="true">Coal Grate Shaker / AshPan Empty</functionlabel>
+          <functionlabel num="20" lockable="false">SANDER / Manual Chuff 0</functionlabel> <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
+          <functionlabel num="21" lockable="false">Manual Chuff 1</functionlabel>
+          <functionlabel num="22" lockable="false">Manual Chuff 2</functionlabel>
+          <functionlabel num="23" lockable="false">Manual Chuff 3</functionlabel>
+          <functionlabel num="24" lockable="false">Manual Chuff 4</functionlabel>
+          <functionlabel num="25" lockable="false">Manual Chuff 5</functionlabel>
+          <functionlabel num="26" lockable="false">Wheel Slip on start-up</functionlabel>
+          <functionlabel num="27" lockable="false">Slow Start Chuffs (Override wheel slip)</functionlabel>
+          <functionlabel num="28" lockable="false">AIR PUMP</functionlabel>
+        </functionlabels>
+      </model> 
+      <model model="Extended Series 6 Diesel" numOuts="6" numFns="10" maxMotorCurrent="1.0A (peak=2A)" formFactor="HO" connector="9pin" productID="SDXH166DExtD" comment="SDXH166D Extended Diesel Sound projects v3.5 by John McMasters">
+        <output name="1" label="White" connection="wire"/>
+        <output name="2" label="Yellow" connection="wire"/>
+        <output name="3" label="Green" connection="wire"/>
+        <output name="4" label="Violet" connection="wire"/>
+        <output name="5" label="F3-Brown" connection="wire"/>
+        <output name="6" label="F4-Yellow" connection="wire"/>
+        <size length="1.28" width="0.67" height="0.25" units="inches"/>
+        <functionlabels>
+		  <functionlabel num="2" lockable="false">Horn</functionlabel>
+          <functionlabel num="3" lockable="true">Coupler on F3 release / Auto Directional Toots</functionlabel>
+          <functionlabel num="4" lockable="true">Reserved for light func.</functionlabel>
+          <functionlabel num="5" lockable="true">Dyn. Brakes Fans lev.1-3 / Handbrake</functionlabel> <!--  Dyn. Brakes Fans level 1-3 (handbrake spd=0) -->
+          <functionlabel num="6" lockable="true">Notch UP accel. /  vol at coast</functionlabel>
+          <functionlabel num="7" lockable="true">Notch DOWN decel. / vol at load</functionlabel>
+          <functionlabel num="8" lockable="true">Mute (full-half-silent) [eStop with F9]</functionlabel>
+          <functionlabel num="9" lockable="true">Brake squeal (eStop wF8)</functionlabel>
+          <functionlabel num="10" lockable="true">Xing Gate Airhorn / Bells</functionlabel>   <!-- Xing Gate Airhorn wBell / Steam Xing Gate Whistle wBell -->
+          <functionlabel num="11" lockable="true">UNcoupling [disables toots on F3]</functionlabel>
+          <functionlabel num="12" lockable="false">Wheel Squeal [disables bell on F6]</functionlabel>
+          <functionlabel num="13" lockable="true">Air feat. disabled</functionlabel>
+          <functionlabel num="14" lockable="true">Emerg. Stop Shutdown [disables motor movement when stopped]</functionlabel>
+          <functionlabel num="15" lockable="true">Sander</functionlabel>
+          <functionlabel num="16" lockable="true">na</functionlabel>
+          <functionlabel num="17" lockable="true">Boxcar Boom</functionlabel>
+          <functionlabel num="18" lockable="true">High Fan</functionlabel>
+          <functionlabel num="19" lockable="true">AUX gen./ HEP mode</functionlabel>
+          <functionlabel num="20" lockable="false">Misc. User Sound</functionlabel> <!-- Steam SANDER, Manual Chuff 0 (0=CylOpn) -->
           <functionlabel num="21" lockable="false">Select Notch 1</functionlabel>
           <functionlabel num="22" lockable="false">Select Notch 2</functionlabel>
           <functionlabel num="23" lockable="false">Select Notch 3</functionlabel>
@@ -116,7 +195,7 @@
     <variables>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/digitrax/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_31.xml"/>
       <variable CV="7" readOnly="yes" item="Decoder Version" default="16">
         <decVal/>
         <label>Version ID</label>
@@ -164,9 +243,27 @@
         <comment>0-15, use about 4-8</comment>
         <comment xml:lang="it">0-15, usabile circa da 4 a 8</comment>
       </variable>
+      <variable CV="60" item="Sound Option 1" include="SDXH166DExtS">
+        <enumVal>
+          <enumChoice choice="Steam">
+            <choice xml:lang="it">Vapore</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Steam/Diesel Option</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
+      </variable>
+      <variable CV="60" item="Sound Option 1" include="SDXH166DExtD">
+        <enumVal>
+          <enumChoice choice="Diesel">
+            <choice xml:lang="it">Diesel</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Steam/Diesel Option</label>
+        <label xml:lang="it">Opzioni Vapore-Diesel</label>
+      </variable>
       <variable CV="60" item="Sound Option 1" include="SDXH166D,SDXN136PS,SDXH166DExt">
         <enumVal>
-          <enumChoice choice="GP38 Diesel"/>
+		  <enumChoice choice="GP38 Diesel"/>
           <enumChoice choice="GE Evo Diesel"/>
           <enumChoice choice="SD70 Diesel"/>
           <enumChoice choice="GP10 Diesel"/>
@@ -242,42 +339,162 @@
         <label>Notch Rate</label>
         <label xml:lang="it">Tasso di Notch</label>
       </variable>
-      <variable CV="133" item="Sound Setting 15" default="63">
+      <variable CV="133" item="Sound Setting 15" tooltip="DRIVER dia in." default="69" include="SDXH166DExtS">
         <decVal max="128"/>
         <label>Steam Chuff/CAM Config</label>
         <label xml:lang="it">Configura Chuff-CAM</label>
       </variable>
-      <variable CV="134" item="Sound Setting 16" default="32">
+      <variable CV="133" item="Sound Setting 15" default="63" include="SDXH166DExtD">
+        <decVal max="128"/>
+        <label>Steam Chuff/CAM Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+      </variable>
+	  <variable CV="133" item="Sound Setting 15" default="63" include="SDXH166D,SDXN136PS,SDXH166DExt"> 
+        <decVal max="128"/>
+        <label>Steam Chuff/CAM Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+      </variable>
+	  <variable CV="133" item="Sound Setting 15" default="63" include="SDH166D,SDN136PS">
+        <decVal max="128"/>
+        <label>Steam Chuff/CAM Config</label>
+        <label xml:lang="it">Configura Chuff-CAM</label>
+      </variable>
+      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="23" include="SDXH166DExtS">
         <decVal max="128"/>
         <label>Steam Gear Ratio Trim</label>
         <label xml:lang="it">Regola rapporto marcia Vapore</label>
       </variable>
-      <variable CV="135" item="Sound Setting 3">
+      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDXH166DExtD">
+        <decVal max="128"/>
+        <label>Steam Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDXH166D,SDXN136PS,SDXH166DExt"> 
+        <decVal max="128"/>
+        <label>Steam Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+      <variable CV="134" item="Sound Setting 16" tooltip="32=100%" default="32" include="SDH166D,SDN136PS">
+        <decVal max="128"/>
+        <label>Steam Gear Ratio Trim</label>
+        <label xml:lang="it">Regola rapporto marcia Vapore</label>
+      </variable>
+      <variable CV="135" item="Sound Setting 3" default="30" include="SDXH166DExtS">
         <decVal/>
         <label>Volume When Muted</label>
         <label xml:lang="it">Volume quando silenziato</label>
       </variable>
-      <variable CV="140" item="Sound Setting 4" default="60">
+      <variable CV="135" item="Sound Setting 3" default="30" include="SDXH166DExtD">
+        <decVal/>
+        <label>Volume When Muted</label>
+        <label xml:lang="it">Volume quando silenziato</label>
+      </variable>
+      <variable CV="135" item="Sound Setting 3" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal/>
+        <label>Volume When Muted</label>
+        <label xml:lang="it">Volume quando silenziato</label>
+      </variable>
+      <variable CV="135" item="Sound Setting 3" include="SDH166D,SDN136PS">
+        <decVal/>
+        <label>Volume When Muted</label>
+        <label xml:lang="it">Volume quando silenziato</label>
+      </variable>
+      <variable CV="140" item="Sound Setting 4" default="59" include="SDXH166DExtS">
+        <decVal max="64"/>
+        <label>Chuff Volume</label>
+        <label xml:lang="it">Volume Chuff</label>
+      </variable>
+      <variable CV="140" item="Sound Setting 4" default="54" include="SDXH166DExtD">
+        <decVal max="64"/>
+        <label>Prime Mover Volume</label>
+        <label xml:lang="it">Volume motore principale</label>
+      </variable>
+      <variable CV="140" item="Sound Setting 4" default="60" include="SDXH166D,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Prime Mover/Chuff Volume</label>
         <label xml:lang="it">Volume motore principale/Chuff</label>
       </variable>
-      <variable CV="141" item="Sound Setting 5" default="25">
+      <variable CV="140" item="Sound Setting 4" default="60" include="SDH166D,SDN136PS">
+        <decVal max="64"/>
+        <label>Prime Mover/Chuff Volume</label>
+        <label xml:lang="it">Volume motore principale/Chuff</label>
+      </variable>
+      <variable CV="141" item="Sound Setting 5" default="40" include="SDXH166DExtS">
         <decVal max="64"/>
         <label>Bell Volume</label>
         <label xml:lang="it">Volume Campana</label>
       </variable>
-      <variable CV="142" item="Sound Setting 6" default="60">
+      <variable CV="141" item="Sound Setting 5" default="36" include="SDXH166DExtD">
+        <decVal max="64"/>
+        <label>Bell Volume</label>
+        <label xml:lang="it">Volume Campana</label>
+      </variable>
+      <variable CV="141" item="Sound Setting 5" default="25" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal max="64"/>
+        <label>Bell Volume</label>
+        <label xml:lang="it">Volume Campana</label>
+      </variable>
+      <variable CV="141" item="Sound Setting 5" default="25" include="SDH166D,SDN136PS">
+        <decVal max="64"/>
+        <label>Bell Volume</label>
+        <label xml:lang="it">Volume Campana</label>
+      </variable>
+      <variable CV="142" item="Sound Setting 6" default="63" include="SDXH166DExtS">
+        <decVal max="64"/>
+        <label>Whistle Volume</label>
+        <label xml:lang="it">Volume Tromba</label>
+      </variable>
+      <variable CV="142" item="Sound Setting 6" default="63" include="SDXH166DExtD">
+        <decVal max="64"/>
+        <label>Horn Volume</label>
+        <label xml:lang="it">Volume Tromba</label>
+      </variable>
+      <variable CV="142" item="Sound Setting 6" default="60" include="SDXH166D,SDXN136PS,SDXH166DExt">
         <decVal max="64"/>
         <label>Horn/Whistle Volume</label>
         <label xml:lang="it">Volume Tromba</label>
       </variable>
-      <variable CV="143" item="Sound Setting 7" default="30">
+      <variable CV="142" item="Sound Setting 6" default="60" include="SDH166D,SDN136PS">
+        <decVal max="64"/>
+        <label>Horn/Whistle Volume</label>
+        <label xml:lang="it">Volume Tromba</label>
+      </variable>
+      <variable CV="143" item="Sound Setting 7" default="42" include="SDXH166DExtS">
         <decVal max="64"/>
         <label>Air Features Volume</label>
-        <label xml:lang="it">Volume Aria Compressa</label>
+        <label xml:lang="it">Volume Aria</label>
       </variable>
-      <variable CV="144" item="Sound Setting 8" default="55" exclude="SDXH166DExt">
+      <variable CV="143" item="Sound Setting 7" default="49" include="SDXH166DExtD">
+        <decVal max="64"/>
+        <label>PopOff Volume</label>
+        <label xml:lang="it">Volume Aria</label>
+      </variable>
+      <variable CV="143" item="Sound Setting 7" default="30" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal max="64"/>
+        <label>Air Features Volume</label>
+        <label xml:lang="it">Volume Aria</label>
+      </variable>
+      <variable CV="143" item="Sound Setting 7" default="30" include="SDH166D,SDN136PS">
+        <decVal max="64"/>
+        <label>Air Features Volume</label>
+        <label xml:lang="it">Volume Aria</label>
+      </variable>
+      <variable CV="144" item="Sound Setting 8" default="48" include="SDXH166DExtS">
+        <decVal max="64"/>
+        <label>Engine Brake Volume</label>
+        <label xml:lang="it">Volume frenata</label>
+      </variable>
+      <variable CV="144" item="Sound Setting 8" default="55" include="SDXH166DExtD">
+        <decVal max="64"/>
+        <label>Engine Brake Volume</label>
+        <label xml:lang="it">Volume frenata</label>
+      </variable>
+      <variable CV="144" item="Sound Setting 8" default="55" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal max="64"/>
+        <label>Engine Brake Volume</label>
+        <label xml:lang="it">Volume frenata</label>
+      </variable>
+      <variable CV="144" item="Sound Setting 8" default="55" include="SDH166D,SDN136PS">
         <decVal max="64"/>
         <label>Dynamic Brake Volume</label>
         <label xml:lang="it">Volume frenata dinamica</label>
@@ -287,31 +504,156 @@
         <label>Misc Volumes</label>
         <label xml:lang="it">Volume vari</label>
       </variable>
-      <variable CV="146" item="Sound Setting 10" tooltip="24msec counts" default="7">
+      <variable CV="146" item="Sound Setting 10" tooltip="delay 24msec counts" default="7">
         <decVal max="100"/>
         <label>Bell Ring Rate</label>
         <label xml:lang="it">Frequenza Campana</label>
         <comment>24msec counts</comment>
         <comment xml:lang="it">in passi da 24msec</comment>
       </variable>
-      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="2">
+      <variable CV="147" item="Sound Setting 11" tooltip="Max auto open speed" default="24" include="SDXH166DExtS">
+        <decVal max="64"/>
+        <label>Steam cock blow down threshold speed</label>
+        <label xml:lang="it">threshold speed</label>
+      </variable>
+      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="27" include="SDXH166DExtD">
         <decVal max="64"/>
         <label>Air Drier Rate</label>
         <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable CV="148" item="Sound Setting 12" default="30">
-        <decVal/>
-        <label>Compressor Run Rate</label>
-        <label xml:lang="it">Frequenza compressore Run/Popoff</label>
-        <tooltip>Time between Compressor cycles (Pop-Off rate)</tooltip>
+      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="22" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal max="64"/>
+        <label>Air Drier Rate</label>
+        <label xml:lang="it">Frequenza Compressore</label>
       </variable>
-      <variable CV="149" item="Sound Setting 13" default="20">
+      <variable CV="147" item="Sound Setting 11" tooltip="1= approx. 2 sec" default="2" include="SDH166D,SDN136PS">
+        <decVal max="64"/>
+        <label>Air Drier Rate</label>
+        <label xml:lang="it">Frequenza Compressore</label>
+      </variable>
+      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Airpump cycles" default="30" include="SDXH166DExtS">
+        <decVal/>
+        <label>Airpump Start Rate</label>
+        <label xml:lang="it">Frequenza air pump Run</label>
+      </variable>
+      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles" default="30" include="SDXH166DExtD">
+        <decVal/>
+        <label>Compressor Start Rate</label>
+        <label xml:lang="it">Frequenza compressore Run</label>
+      </variable>
+      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles/Popoff" default="30" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal/>
+        <label>Compressor Start Rate</label>
+        <label xml:lang="it">Frequenza compressore Run/Popoff</label>
+      </variable>
+      <variable CV="148" item="Sound Setting 12" tooltip="Time ms. between Compressor cycles/Popoff" default="30" include="SDH166D,SDN136PS">
+        <decVal/>
+        <label>Compressor Start Rate</label>
+        <label xml:lang="it">Frequenza compressore Run/Popoff</label>
+      </variable>
+      <variable CV="149" item="Sound Setting 13" default="88" include="SDXH166DExtS">
+        <decVal/>
+        <label>Airpump Run Time</label>
+        <label xml:lang="it">Tempo accensione Compressore</label>
+      </variable>
+      <variable CV="149" item="Sound Setting 13" default="52" include="SDXH166DExtD">
+        <decVal/>
+        <label>Compressor Run Time</label>
+        <label xml:lang="it">Tempo accensione Compressore</label>
+      </variable>
+      <variable CV="149" item="Sound Setting 13" default="20" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal/>
+        <label>Compressor Run Time</label>
+        <label xml:lang="it">Tempo accensione Compressore</label>
+      </variable>
+      <variable CV="149" item="Sound Setting 13" default="20" include="SDH166D,SDN136PS">
         <decVal/>
         <label>Compressor On Time</label>
         <label xml:lang="it">Tempo accensione Compressore</label>
       </variable>
+      <!-- Whistle Selector for Steam -->
+      <variable CV="150" item="Sound Option 2" include="SDXH166DExtS">
+        <enumVal>
+          <enumChoice choice="Default Whistle">
+            <choice>Standard Whistle</choice>
+            <choice xml:lang="it">Tromba Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Whistle 1">
+            <choice>Alternate Whistle 1</choice>
+            <choice xml:lang="it">Tromba alternativa 1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Whistle 2">
+            <choice>Alternate Whistle 2</choice>
+            <choice xml:lang="it">Tromba alternativa 2</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Whistle 3">
+            <choice>Alternate Whistle 3</choice>
+            <choice xml:lang="it">Tromba alternativa 3</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 1" value="128">
+            <choice>Alternate Whistle 128</choice>
+            <choice xml:lang="it">Tromba alternativa 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 2">
+            <choice>Alternate Whistle 129</choice>
+            <choice xml:lang="it">Tromba alternativa 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 3">
+            <choice>Alternate Whistle 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Whistle 4">
+            <choice>Alternate Whistle 131</choice>
+            <choice xml:lang="it">Tromba alternativa 131</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Whistle Selector</label>
+        <label xml:lang="it">Selettore Tromba</label>
+      </variable>
       <!-- Horn Selector for Diesel -->
-      <variable CV="150" item="Sound Option 2">
+      <variable CV="150" item="Sound Option 2" include="SDXH166DExtD">
+        <enumVal>
+          <enumChoice choice="Default Horn">
+            <choice>Standard Horn</choice>
+            <choice xml:lang="it">Tromba Standard</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 1">
+            <choice>Alternate Horn 1</choice>
+            <choice xml:lang="it">Tromba alternativa 1</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 2">
+            <choice>Alternate Horn 2</choice>
+            <choice xml:lang="it">Tromba alternativa 2</choice>
+          </enumChoice>
+          <enumChoice choice="Alternate Horn 3">
+            <choice>Alternate Horn 3</choice>
+            <choice xml:lang="it">Tromba alternativa 3</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 1" value="128">
+            <choice>Alternate Horn 128</choice>
+            <choice xml:lang="it">Tromba alternativa 128</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 2">
+            <choice>Alternate Horn 129</choice>
+            <choice xml:lang="it">Tromba alternativa 129</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 3">
+            <choice>Alternate Horn 130</choice>
+          </enumChoice>
+          <enumChoice choice="Playable Horn 4">
+            <choice>Alternate Horn 131</choice>
+            <choice xml:lang="it">Tromba alternativa 131</choice>
+          </enumChoice>
+        </enumVal>
+        <label>Horn Selector</label>
+        <label xml:lang="it">Selettore Tromba</label>
+      </variable>
+      <!-- Horn Selector for Diesel -->
+      <variable CV="150" item="Sound Option 2" exclude="SDXH166DExtS,SDXH166DExtD">
+        <qualifier>
+          <variableref>Sound Option 1</variableref>
+          <relation>le</relation>
+          <value>5</value>
+        </qualifier>
         <enumVal>
           <enumChoice choice="Default Horn">
             <choice>Horn GP38</choice>
@@ -377,18 +719,14 @@
             <choice>Playable Horn 7</choice>
             <choice xml:lang="it">Tromba alternativa 135</choice>
           </enumChoice>
-        </enumVal>
-        <!-- Diesel only -->
+        </enumVal><label>Horn Selector</label><label xml:lang="it">Selettore Tromba</label></variable>
+      <!-- Whistle Selector for Steam -->
+      <variable CV="150" item="Sound Option 3" exclude="SDXH166DExtS,SDXH166DExtD">
         <qualifier>
           <variableref>Sound Option 1</variableref>
-          <relation>le</relation>
+          <relation>gt</relation>
           <value>5</value>
         </qualifier>
-        <label>Horn Selector</label>
-        <label xml:lang="it">Selettore Tromba</label>
-      </variable>
-      <!-- Whistle Selector for Steam -->
-      <variable CV="150" item="Sound Option 3">
         <enumVal>
           <enumChoice choice="Default Whistle">
             <choice>Whistle UP3985</choice>
@@ -414,22 +752,13 @@
             <choice>Playable Whistle 2</choice>
             <choice xml:lang="it">Fischietto alternativa 130</choice>
           </enumChoice>
-        </enumVal>
-        <!-- Steam only -->
-        <qualifier>
-          <variableref>Sound Option 1</variableref>
-          <relation>gt</relation>
-          <value>5</value>
-        </qualifier>
-        <label>Whistle Selector</label>
-        <label xml:lang="it">Selettore Fischietto</label>
-      </variable>
+        </enumVal><label>Whistle Selector</label><label xml:lang="it">Selettore Fischietto</label></variable>
       <variable CV="151" item="Sound Option 5" default="48">
         <decVal max="64"/>
         <label>Peak Speed for Auto coupler/brake on dir change</label>
         <label xml:lang="it">Velocità picco per freni/aggancio automatico per cambio direzione</label>
       </variable>
-      <variable item="Sound Project Author ID" CV="152" default="221" readOnly="yes" tooltip="0xDD(221) = Digitrax" exclude="SDXH166DExt">
+      <variable item="Sound Project Author ID" CV="152" default="221" readOnly="yes" tooltip="0xDD(221) = Digitrax" exclude="SDXH166DExt,SDXH166DExtS,SDXH166DExtD">
         <decVal/>
         <label>Sound Project Author ID</label>
         <label xml:lang="it">ID autore progetto Suono</label>
@@ -444,7 +773,17 @@
         <label>Sound Project ID</label>
         <label xml:lang="it">ID progetto Suono</label>
       </variable>
-      <variable CV="154" item="Sound Setting 14" default="60">
+      <variable CV="154" item="Sound Setting 14" default="22" include="SDXH166DExtS,SDXH166DExtD">
+        <decVal max="100"/>
+        <label>Delay brake apply</label>
+        <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
+      </variable>
+      <variable CV="154" item="Sound Setting 14" default="60" include="SDXH166D,SDXN136PS,SDXH166DExt">
+        <decVal max="64"/>
+        <label>Steam Blowdown/Safety Volume</label>
+        <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
+      </variable>
+      <variable CV="154" item="Sound Setting 14" default="60" include="SDH166D,SDN136PS">
         <decVal max="64"/>
         <label>Steam Blowdown/Safety Volume</label>
         <label xml:lang="it">Volume Spegnimento/Sicurezza Vapore</label>
@@ -467,12 +806,12 @@
         <label>Notching Mode</label>
         <label xml:lang="it">Modalità Notch</label>
       </variable>
-      <variable CV="156" item="Sound Setting 17" default="20">
+      <variable CV="156" item="Sound Setting 17" default="1">
         <decVal max="21"/>
         <label>Playable Horn/Whistle Delay Rate</label>
         <label xml:lang="it">Tasso Ritardo Tromba</label>
       </variable>
-      <variable CV="157" item="Sound Option 4" include="SDXH166D,SDXN136PS,SDXH166DExt">
+      <variable CV="157" item="Sound Option 4" include="SDXH166D,SDXN136PS,SDXH166DExt,SDXH166DExtS,SDXH166DExtD">
         <enumVal>
           <enumChoice choice="Default Bell">
             <choice>Standard Bell</choice>

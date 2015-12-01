@@ -30,6 +30,7 @@ import jmri.jmrit.operations.rollingstock.cars.CarTypes;
 import jmri.jmrit.operations.rollingstock.engines.EngineTypes;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
+import jmri.jmrit.operations.trains.TrainCommon;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,11 +106,9 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
     public static final int MAX_NAME_LENGTH = Control.max_len_string_location_name;
     public static final String DISPOSE = "dispose"; // NOI18N
 
-    public LocationEditFrame() {
+    public LocationEditFrame(Location location) {
         super(Bundle.getMessage("TitleLocationEdit"));
-    }
 
-    public void initComponents(Location location) {
         _location = location;
 
         // Set up the jtable in a Scroll Pane..
@@ -486,7 +485,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
 
     /**
      *
-     * @return true if name is less than 26 characters
+     * @return true if name OK and is less than the maximum allowed length
      */
     private boolean checkName(String s) {
         if (locationNameTextField.getText().trim().equals("")) {
@@ -494,7 +493,7 @@ public class LocationEditFrame extends OperationsFrame implements java.beans.Pro
                     .getMessage("CanNotLocation"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (locationNameTextField.getText().length() > MAX_NAME_LENGTH) {
+        if (TrainCommon.splitString(locationNameTextField.getText()).length() > MAX_NAME_LENGTH) {
             // log.error("Location name must be less than "+ Integer.toString(MAX_NAME_LENGTH+1) +" characters");
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("LocationNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle

@@ -35,6 +35,7 @@ import jmri.jmrit.operations.routes.RouteManager;
 import jmri.jmrit.operations.setup.Control;
 import jmri.jmrit.operations.setup.Setup;
 import jmri.jmrit.operations.trains.Train;
+import jmri.jmrit.operations.trains.TrainCommon;
 import jmri.jmrit.operations.trains.TrainManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,7 +60,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
     Location _location = null;
     Track _track = null;
-    String trackName = null; // track name for tools menu
+    String _trackName = null; // track name for tools menu
     String _type = "";
     JMenu _toolMenu = null;
 
@@ -130,8 +131,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
     JScrollPane commentScroller = new JScrollPane(commentTextArea, JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,
             JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 
-    // combo box
-//	JComboBox comboBoxTypes = CarTypes.instance().getComboBox();
     // optional panel for spurs, staging, and interchanges
     JPanel dropPanel = new JPanel();
     JPanel pickupPanel = new JPanel();
@@ -152,6 +151,8 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         // tool tips
         autoDropCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrack"));
         autoPickupCheckBox.setToolTipText(Bundle.getMessage("TipAutoTrack"));
+        trackLengthTextField.setToolTipText(MessageFormat.format(Bundle.getMessage("TipTrackLength"), 
+                new Object[]{Setup.getLengthUnit().toLowerCase()}));
 
         // property changes
         _location.addPropertyChangeListener(this);
@@ -164,7 +165,12 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         // the following code sets the frame's initial state
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
-
+        
+        // place all panels in a scroll pane.
+        JPanel panels = new JPanel();
+        panels.setLayout(new BoxLayout(panels, BoxLayout.Y_AXIS));
+        JScrollPane pane = new JScrollPane(panels);
+        
         // Set up the panels
         // Layout the panel by rows
         // row 1
@@ -269,19 +275,21 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         paneCheckBoxes.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("TypesTrack")));
 
-        getContentPane().add(p1Pane);
-        getContentPane().add(paneCheckBoxes);
-        getContentPane().add(panelRoadAndLoadStatus);
-        getContentPane().add(panelOrder);
-        getContentPane().add(dropPanel);
-        getContentPane().add(pickupPanel);
+        panels.add(p1Pane);
+        panels.add(paneCheckBoxes);
+        panels.add(panelRoadAndLoadStatus);
+        panels.add(panelOrder);
+        panels.add(dropPanel);
+        panels.add(pickupPanel);
 
         // add optional panels
-        getContentPane().add(panelOpt3);
-        getContentPane().add(panelOpt4);
+        panels.add(panelOpt3);
+        panels.add(panelOpt4);
 
-        getContentPane().add(panelComment);
-        getContentPane().add(panelButtons);
+        panels.add(panelComment);
+        panels.add(panelButtons);
+        
+        getContentPane().add(pane);
 
         // setup buttons
         addButtonAction(setButton);
@@ -323,7 +331,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
             commentTextArea.setText(_track.getComment());
             trackLengthTextField.setText(Integer.toString(_track.getLength()));
             enableButtons(true);
-            trackName = _track.getName();
+            _trackName = _track.getName();
         } else {
             enableButtons(false);
         }
@@ -350,7 +358,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         updateLoadOption();       
         updateDestinationOption();
 
-        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight500));
+        setMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight600));
     }
 
     // Save, Delete, Add
@@ -614,7 +622,7 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                     .getMessage("CanNotTrack"), new Object[]{s}), JOptionPane.ERROR_MESSAGE);
             return false;
         }
-        if (trackNameTextField.getText().length() > MAX_NAME_LENGTH) {
+        if (TrainCommon.splitString(trackNameTextField.getText()).length() > MAX_NAME_LENGTH) {
             log.error("Track name must be less than " + Integer.toString(MAX_NAME_LENGTH + 1) + " charaters"); // NOI18N
             JOptionPane.showMessageDialog(this, MessageFormat.format(Bundle.getMessage("TrackNameLengthMax"),
                     new Object[]{Integer.toString(MAX_NAME_LENGTH + 1)}), MessageFormat.format(Bundle
@@ -1019,8 +1027,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
 
         panelCheckBoxes.revalidate();
         panelCheckBoxes.repaint();
-//		revalidate();
-//		pack();
     }
 
     int x = 0;
@@ -1122,16 +1128,6 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
         }
     }
 
-//	private void updateTypeComboBoxes() {
-//		CarTypes.instance().updateComboBox(comboBoxTypes);
-//		// remove car types not serviced by this location and track
-//		for (int i = comboBoxTypes.getItemCount() - 1; i >= 0; i--) {
-//			String type = (String) comboBoxTypes.getItemAt(i);
-//			if (_track != null && !_track.acceptsTypeName(type)) {
-//				comboBoxTypes.removeItem(type);
-//			}
-//		}
-//	}
     // set the service order
     private void updateCarOrder() {
         if (_track != null) {
@@ -1183,15 +1179,11 @@ public class TrackEditFrame extends OperationsFrame implements java.beans.Proper
                 || e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.TYPES_CHANGED_PROPERTY)) {
             updateCheckboxes();
-//			updateTypeComboBoxes();
         }
         if (e.getPropertyName().equals(Location.TRAINDIRECTION_CHANGED_PROPERTY)
                 || e.getPropertyName().equals(Track.TRAINDIRECTION_CHANGED_PROPERTY)) {
             updateTrainDir();
         }
-//		if (e.getPropertyName().equals(CarTypes.CARTYPES_CHANGED_PROPERTY)) {
-//			updateTypeComboBoxes();
-//		}
         if (e.getPropertyName().equals(TrainManager.LISTLENGTH_CHANGED_PROPERTY)) {
             updateTrainComboBox();
             updateDropOptions();

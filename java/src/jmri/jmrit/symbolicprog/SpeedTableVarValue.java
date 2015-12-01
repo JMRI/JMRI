@@ -79,9 +79,6 @@ import org.slf4j.LoggerFactory;
  */
 public class SpeedTableVarValue extends VariableValue implements PropertyChangeListener, ChangeListener {
 
-    static final String VSTART_CV = "2";
-    static final String VHIGH_CV = "5";
-
     int nValues;
     int numCvs;
     String[] cvList;
@@ -108,15 +105,8 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         _range = maxVal - minVal;
         mfx = mfxFlag;
 
-        if (false) {
-            numCvs = nValues + 2;
-            cvList = new String[numCvs];
-            cvList[nValues] = VSTART_CV;
-            cvList[nValues + 1] = VHIGH_CV;
-        } else {
-            numCvs = nValues;
-            cvList = new String[numCvs];
-        }
+        numCvs = nValues;
+        cvList = new String[numCvs];
 
         models = new BoundedRangeModel[nValues];
 
@@ -309,20 +299,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
         return;
     }
 
-//     /**
-//      * Enforce mfx bounds conditions. 
-//      *
-//      */
-//     void enforceEndPointsMfx() {
-//         if (mfx) {
-//             if (_cvMap.get(cvList[0]).getValue() != _min) {
-//                 _cvMap.get(cvList[0]).setValue(_min);
-//             }
-//             if (_cvMap.get(cvList[nValues-1]).getValue() != _max) {
-//                 _cvMap.get(cvList[nValues-1]).setValue(_max);
-//             }
-//         }
-//     }
     public int getState() {
         int i;
         for (i = 0; i < numCvs; i++) {
@@ -456,7 +432,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
             g.setConstraints(b, cs);
             j.add(b, cs);
 
-//             enforceEndPointsMfx();
         }
 
         // add control buttons
@@ -512,93 +487,6 @@ public class SpeedTableVarValue extends VariableValue implements PropertyChangeL
 
         // add Vstart & Vhigh if applicable
         JPanel l = new JPanel();
-
-        String ThisCV;
-        CvValue cv;
-        Component v;
-        int currentState;
-        int currentValue;
-        DecVariableValue decVal;
-        JLabel label;
-
-        if (false) {
-            GridBagLayout gx = new GridBagLayout();
-            l.setLayout(gx);
-            GridBagConstraints csx = new GridBagConstraints();
-            csx.gridy = 0;
-            csx.ipadx = 3;
-
-            int gridx = 0;
-
-            csx.gridx = gridx++;
-            csx.anchor = GridBagConstraints.LINE_START;
-            csx.weightx = 0;
-            gx.setConstraints(l, csx);
-
-            ThisCV = VSTART_CV;
-            cv = _cvMap.get(ThisCV);
-            currentState = cv.getState();
-            currentValue = cv.getValue();
-            cv.addPropertyChangeListener(this);
-            decVal = new DecVariableValue("CV" + ThisCV, "", "", false, false, false, false,
-                    ThisCV, "VVVVVVVV", _min, _max,
-                    _cvMap, _status, "");
-            decVal.setValue(currentValue);
-            decVal.setState(currentState);
-            v = decVal.getCommonRep();
-            ((JTextField) v).setToolTipText(PaneProgPane.addCvDescription("Sets the starting voltage at throttle speed step 1", "CV" + ThisCV, null));
-            l.add(v, csx);
-
-            csx.gridx = gridx++;
-            csx.anchor = GridBagConstraints.LINE_START;
-            csx.weightx = 0;
-            gx.setConstraints(l, csx);
-
-            label = new JLabel("Vstart");
-            l.add(label, csx);
-
-            csx.gridx = gridx++;
-            csx.anchor = GridBagConstraints.CENTER;
-            csx.weightx = 1;
-            gx.setConstraints(l, csx);
-
-            label = new JLabel(
-                    "<html>"
-                    + "<h2><strong>Special Note: Vstart &amp; Vhigh are <em>always</em> active in these decoders.</h2>"
-                    + "All the values in the table above are scaled to fit between Vstart and Vhigh.<br/>"
-                    + "The end-points cannot be altered. Keep a smooth curve beween them.<br/>"
-                    + "<br/>"
-                    + "<strong><em>If speed matching locos, set Vstart &amp; Vhigh before setting any table mid-points.</em>"
-                    + "</html>");
-            l.add(label, csx);
-
-            csx.gridx = gridx++;
-            csx.anchor = GridBagConstraints.LINE_END;
-            csx.weightx = 0;
-            gx.setConstraints(l, csx);
-
-            label = new JLabel("Vhigh");
-            l.add(label, csx);
-
-            csx.gridx = gridx++;
-            csx.weightx = 0;
-            csx.anchor = GridBagConstraints.LINE_END;
-            gx.setConstraints(l, csx);
-
-            ThisCV = VHIGH_CV;
-            cv = _cvMap.get(ThisCV);
-            currentState = cv.getState();
-            currentValue = cv.getValue();
-            cv.addPropertyChangeListener(this);
-            decVal = new DecVariableValue("CV" + ThisCV, "", "", false, false, false, false,
-                    ThisCV, "VVVVVVVV", _min, _max,
-                    _cvMap, _status, "");
-            decVal.setValue(currentValue);
-            decVal.setState(currentState);
-            v = decVal.getCommonRep();
-            ((JTextField) v).setToolTipText(PaneProgPane.addCvDescription("Sets the maximum voltage at full throttle", "CV" + ThisCV, null));
-            l.add(v, csx);
-        }
 
         JPanel val = new JPanel();
         val.setLayout(new BorderLayout());

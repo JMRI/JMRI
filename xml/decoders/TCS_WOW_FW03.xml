@@ -18,6 +18,8 @@
 	<version author="Michael Mosher" version="3" lastUpdated="20150412"/>
 	<version author="Michael Mosher" version="4" lastUpdated="20150504"/>
 	<!-- remove BEMF control and dither -->
+	<version author="Michael Mosher" version="5" lastUpdated="20150814"/>
+	<!-- Add 501 model -->
 	<decoder>
 		<family name="WOW Sound Set 3" mfg="Train Control Systems" comment="TCS FW Starting Jan 2012">
 			<model model="WOW Sound 101" numOuts="6" numFns="14" maxMotorCurrent="1.3A (peak=2A)" formFactor="9pin"
@@ -47,6 +49,20 @@
 				<output name="Motor"/>
 				<output name="Brake"/>
 				<size length="1.28" width="0.69" height="0.22" units="inches"/>
+			</model>
+			<model model="WOW Sound 501" numOuts="6" numFns="14" maxMotorCurrent="5A" formFactor="screw"
+				lowVersionID="3" highVersionID="3" productID="132">
+				<output name="1" label="White" connection="solder" maxcurrent="100 mA"/>
+				<output name="2" label="Yellow" connection="solder" maxcurrent="100 mA"/>
+				<output name="3" label="Green" connection="solder" maxcurrent="100 mA"/>
+				<output name="4" label="Purple" connection="solder" maxcurrent="100 mA"/>
+				<output name="5" label="Brown" connection="solder" maxcurrent="100 mA"/>
+				<output name="6" label="Pink" connection="solder" maxcurrent="100 mA"/>
+				<output name="Dim"/>
+				<output name="Ditch"/>
+				<output name="Motor"/>
+				<output name="Brake"/>
+				<size length="3.00" width="1.45" units="inches"/>
 			</model>
 			<functionlabels>
 				<functionlabel num="0" lockable="true">Headlight</functionlabel>
@@ -1706,6 +1722,10 @@
 			<variable item="Sound Group 7 Checkbox 8" CV="T2CV.4.19" default="1" mask="XXXXXXXXVXXXXXXX">
 				<xi:include href="http://jmri.org/xml/decoders/parts/enum-OnOff.xml"/>
 				<label>Function 2 toggle in Audio Assist</label>
+			</variable>
+			<variable item="Sound Setting 12" CV="T2CV.4.23" default="256" mask="VVVVVVVVVVVVVVVV">
+				<decVal max="65535"/>
+				<label>Minimum Chuff Volume</label>
 			</variable>
 			<variable item="Volume Group 1" CV="T3CV.6.0.1" default="40">
 				<decVal max="100"/>

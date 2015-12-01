@@ -15,13 +15,7 @@
     <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
     <!-- or change them to reflect your alternative logo -->
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+    <!--#include virtual="/Style" -->
 </head>
 
 <!--#include virtual="/Header" -->
@@ -140,7 +134,7 @@ to create a new version the schema if you add or change things such that
 existing files will continue to validate.
 <p>
 In that case, just make your schema changes in the current
-schema document, and commit them back to SVN.
+schema document, and commit them back to the JMRI code repository.
 <li>You <em>do</em> need to
 version a schema you make a change to 
 the schema such that previous files will no longer validate
@@ -156,7 +150,7 @@ In this case, the steps to version the schema are:
     <li>If this is a subfile, such as the types/turnouts-2-9-6.xsd,
         that is included in a main schema such as layout-2-9-6.xsd,
         that main file also needs to be copied, have the include
-        changed, and commited to SVN. 
+        changed, and commited. 
         Now you've got 
         a new layout-3-7-3.xsd schema for output files to reference.
     <li>Then, change the Java code that writes the 
@@ -193,7 +187,7 @@ we'll eventually have a lot of back-fitting to do.
 The W3C online 
 <a href="http://www.w3.org/2001/03/webdata/xsv">schema validation tool</a>
 is a very good tool for checking that JMRI schema changes are still technically 
-correct.  You should check your changes with it before commiting them to SVN.
+correct.  You should check your changes with it before commiting them to the repository.
 Unfortunately, it doesn't seem to to check compliance with nested schema elements,
 e.g. from DocBook (see below) or JMRIschema,
 but it's still a very useful check.

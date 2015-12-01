@@ -1,0 +1,45 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<HTML LANG="en">
+<HEAD>
+<TITLE>JMRI: NCE USB Interface Tool</TITLE>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<META CONTENT="Ken Cameron" NAME="Author">
+<META NAME="keywords" CONTENT="JMRI Help NCE Cab Monitor ">
+
+<!-- Style -->
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
+	MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
+	MEDIA="print">
+<LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
+<LINK REL="home" TITLE="Home" HREF="/">
+<!-- /Style -->
+</HEAD>
+
+<BODY>
+<!--#include virtual="/Header" -->
+  <div class="nomenu" id="mBody">
+    <div id="mainContent">
+
+<H1>NCE USB Interface Tool</H1>
+<P>
+	This tool will change options in the NCE USB interface.
+	Currently this only sets the cab id of the USB interface.
+</P>
+<P>
+	The valid range of cab id values for the USB Interface vary depending
+	the command station, software version in the command station, and
+	version of the firmware in the USB interface.
+</P>
+<p>
+	This tool used to (prior to 4.1.1) try to find the current USB cab id, but the method was imperfect
+	and did not allow for resetting the id when the cab id was not vaild for the
+	system it was plugged into.
+<!--#include virtual="/Footer" -->
+	</div>
+  </div>
+</BODY>
+</HTML>
+

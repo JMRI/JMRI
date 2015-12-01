@@ -55,10 +55,6 @@
 	<variable CV="204" item="CV204" default="0">
 		<decVal max="255"/>
 	</variable>
-	<variable item="Sound Option 3" CV="248" default="1" readOnly="yes">
-		<decVal/>
-		<label>Sound Set</label>
-	</variable>
 	<variable item="Sound Setting 21" CV="T2CV.4.2" default="200" tooltip="higher number = higher frequency and higher loop counts if a looping sound">
 		<decVal max="255"/>
 		<label>Random Sound 1 frequency level</label>
@@ -253,6 +249,10 @@
 		<decVal max="65535"/>
 		<label>Audio Auto Shut-off Time</label>
 	</variable>
+	<variable item="Sound Setting 5" CV="T2CV.4.22" default="5" mask="VVVVVVVVVVVVVVVV" tooltip="Time delay when the two prime movers notch up, Delay Time in Seconds = Value/2">
+		<decVal max="9"/>
+		<label>Dual Prime Mover Delay</label>
+	</variable>
 	<variable item="Sound Setting 6" CV="T2CV.4.25" default="9" mask="VVVVVVVVVVVVVVVV" tooltip="controls how loco speed effects current notch The higher the value the higher the notch will be (in prototype mode)">
 		<decVal max="255"/>
 		<label>Prototype mode Speed to Notch ratio adjustment</label>
@@ -292,35 +292,35 @@
 		</enumVal>
 		<label>Crew Alert light function</label>
 	</variable>
-	<variable item="Sound Setting 13" CV="T2CV.4.31" default="1" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 1">
+	<variable item="Sound Setting 13" CV="T2CV.4.31" default="1" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 1 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 1 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 14" CV="T2CV.4.32" default="6" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 2">
+	<variable item="Sound Setting 14" CV="T2CV.4.32" default="6" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 2 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 2 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 15" CV="T2CV.4.33" default="13" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 3">
+	<variable item="Sound Setting 15" CV="T2CV.4.33" default="13" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 3 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 3 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 16" CV="T2CV.4.34" default="20" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 4">
+	<variable item="Sound Setting 16" CV="T2CV.4.34" default="20" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 4 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 4 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 17" CV="T2CV.4.35" default="27" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 5">
+	<variable item="Sound Setting 17" CV="T2CV.4.35" default="27" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 5 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 5 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 18" CV="T2CV.4.36" default="34" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 6">
+	<variable item="Sound Setting 18" CV="T2CV.4.36" default="34" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 6 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 6 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 19" CV="T2CV.4.37" default="41" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 7">
+	<variable item="Sound Setting 19" CV="T2CV.4.37" default="41" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 7 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 7 transition speed step </label>
 	</variable>
-	<variable item="Sound Setting 20" CV="T2CV.4.38" default="48" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 8">
+	<variable item="Sound Setting 20" CV="T2CV.4.38" default="48" mask="VVVVVVVVVVVVVVVV" tooltip="Above this value (and below the next notch setpoint) the prime mover will play notch 8 in traditional throttle mode">
 		<decVal max="126"/>
 		<label>Notch 8 transition speed step </label>
 	</variable>

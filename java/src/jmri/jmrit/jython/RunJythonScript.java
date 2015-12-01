@@ -3,8 +3,12 @@ package jmri.jmrit.jython;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import javax.script.ScriptException;
 import javax.swing.Icon;
 import javax.swing.JFileChooser;
+import jmri.script.JmriScriptEngineManager;
+import jmri.script.ScriptFileChooser;
 import jmri.util.FileUtil;
 import jmri.util.swing.JmriAbstractAction;
 import jmri.util.swing.WindowInterface;
@@ -12,27 +16,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This Action runs a script by invoking a Jython interpreter.
+ * This Action runs a script using an available script engine.
  * <P>
- * A standard JMRI-Jython dialog is defined by invoking the
- * "jython/jmri-defaults.py" file before starting the user code.
+ * The script engine to use is determined by the script's extension.
  * <P>
  * There are two constructors. One, without a script file name, will open a
  * FileDialog to prompt for the file to use. The other, with a File object, will
  * directly invoke that file.
- * <P>
- * Access is via Java reflection so that both users and developers can work
- * without the jython.jar file in the classpath. To make it easier to read the
- * code, the "non-reflection" statements are in the comments.
  *
  * @author	Bob Jacobsen Copyright (C) 2004, 2007
  * @version $Revision$
  */
 public class RunJythonScript extends JmriAbstractAction {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -2957647278966956841L;
 
     public RunJythonScript(String s, WindowInterface wi) {
@@ -59,6 +55,7 @@ public class RunJythonScript extends JmriAbstractAction {
      * File
      *
      * @param name Action name
+     * @param file
      */
     public RunJythonScript(String name, File file) {
         super(name);
@@ -79,6 +76,7 @@ public class RunJythonScript extends JmriAbstractAction {
      *
      * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         File thisFile;
         if (configuredFile != null) {
@@ -97,11 +95,7 @@ public class RunJythonScript extends JmriAbstractAction {
 
     File selectFile() {
         if (fci == null) {
-            //fci = new JFileChooser(System.getProperty("user.dir")+java.io.File.separator+"jython");
-            fci = new JFileChooser(FileUtil.getScriptsPath());
-            jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
-            filt.addExtension("py");
-            fci.setFileFilter(filt);
+            fci = new ScriptFileChooser(FileUtil.getScriptsPath());
             fci.setDialogTitle("Find desired script file");
         } else {
             // when reusing the chooser, make sure new files are included
@@ -119,10 +113,15 @@ public class RunJythonScript extends JmriAbstractAction {
     }
 
     void invoke(File file) {
-        jmri.util.PythonInterp.runScript(jmri.util.FileUtil.getExternalFilename(file.toString()));
+        try {
+            JmriScriptEngineManager.getDefault().eval(file);
+        } catch (ScriptException | FileNotFoundException ex) {
+            log.error("Unable to execute script.", ex);
+        }
     }
 
     // never invoked, because we overrode actionPerformed above
+    @Override
     public jmri.util.swing.JmriPanel makePanel() {
         throw new IllegalArgumentException("Should not be invoked");
     }

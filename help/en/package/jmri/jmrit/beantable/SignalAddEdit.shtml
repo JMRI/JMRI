@@ -1,5 +1,5 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id$ -->
+<!-- $Id: SignalAddEdit.shtml 29368 2015-05-29 03:33:37Z jacobsen $ -->
 <html lang="en">
 <head>
  <TITLE>
@@ -8,47 +8,14 @@
     <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
 <meta name="Author" content="Bob Jacobsen">
 <meta name="Author" content="Egbert Broerse">
-	<meta name="Date.Modified" content="20150102"/>
+	<meta name="Date.Modified" content="20150920"/>
     <META name="keywords" content="JMRI help Signal Heads Add Edit">
 
-<!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
-  <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
-  <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
-  <link rel="icon" href="/images/jmri.ico" type="image/png">
-  <link rel="home" title="Home" href="/">
-<!-- /Style -->
+<!--#include virtual="/Style" -->
 </head>
 
 <body>
-<!-- Header -->
-  <p class="skipLink"><a href="#mainContent" accesskey="2">Skip to main content</a></p>
-
-  <div id="header">
-	<!-- Logo -->
-	<a href="/" title="Return to home page" accesskey="1">
-	    <img src="/images/logo-jmri.gif" width="160" height="135" alt="JMRI Logo"> </a>
-	<!-- /Logo -->
-	<ul id="mainNav"> <!-- Top tool bar -->
-	   <li><a href="/download/index.shtml"  title="Get the latest software">Download</a></li>
-	   <li><a href="/help/en/html/apps/index.shtml"      title="Learn about JMRI applications">Applications</a></li>
-	   <li><a href="/help/en/html/hardware/index.shtml"  title="What hardware does JMRI support">Hardware</a></li>
-	   <li><a href="/help/en/webtoc.shtml"   title="JMRI Help Screens">Help</a></li>
-	   <li><a href="/help/en/manual/index.shtml"   title="DecoderPro Manual">Manual</a></li>
-	   <li><a href="/help/en/html/doc/Technical/index.shtml" title="Developing and extending JMRI">Developers</a></li>
-	   <li><A href="/help/en/Acknowledgements.shtml" title="Who is JMRI">Acknowledgements</a></li>
-	</ul>
-
-	<div id="searchform"> <!--  Search Form -->
-          <form method="get" action="http://www.google.com/search">
-            <label for="q" title="Search JMRI.org">search JMRI: </label>
-            <input type="hidden" name="sitesearch" value="jmri.org">
-            <input type="text" id="q" name="q" accesskey="s" size="30">
-	    <input type="submit" id="submit" value="go">
-          </form>
-    </div> <!--  End #searchform -->
-  </div> <!-- closes #header-->
-<!-- /Header -->
+<!--#include virtual="/Header" -->
 
   <div class="nomenu" id="mBody">
     <div id="mainContent">
@@ -277,15 +244,17 @@ Approach, all three On controls the Restricting, and all three Closed (Off) make
   <a href="../../../../html/tools/signaling/ldt/output.shtml">LDT Examples</a> page.
   </dd>
 
+<a href="SignalHeadAddMERG.png"><IMG SRC="SignalHeadAddMERG.png" ALIGN=RIGHT WIDTH="141" HEIGHT="190" HSPACE="0" VSPACE="0" ALT="Add Signal Head panel MERG"></a>
+
 <dt>MERG Signal Driver</dt>
   <dd>
-  This driver type controls a signal that uses a MERG Signal Driver (SD2). An SD2 is connected to DCC using a steady state accessory decoder. The number of Aspects to be
-  displayed on the Signal Mast, will determine the number of Turnout outputs required, ie.<br>
-  2 Aspects require 1 turnout<br>
-  3 Aspects require 2 turnouts<br>
-  4 Aspects require 3 turnouts
+  This driver type controls a Signal that uses a MERG Signal Driver (SD2). An SD2 is connected to DCC using a steady state accessory decoder. The number of Aspects to be
+  displayed on the Signal Mast, will determine the number of <a href="TurnoutAddEdit.shtml">Turnout</a> outputs required, ie.<br>
+  2 Aspects: require 1 Turnout (pictured at right)<br>
+  3 Aspects: require 2 Turnouts<br>
+  4 Aspects: require 3 Turnouts
   <p>
-  The MERG Signal driver in JMRI has been set up to control the SD2 Aspect output only. It does not control the other features of the SD2 such as "Steam Rules" or "Feather". However these can easily be configured using Logix or Routes.
+  The MERG Signal driver in JMRI has been set up to control the SD2 Aspect output only. It does not control the other features of the SD2 such as "Steam Rules" or "Feather", however these can easily be configured using Logix or Routes.
 	  <br/>
   <b>Notes</b> - The MERG SD2 driver does not support a Flashing yellow Aspect. For Flashing yellow Aspects an additional circuit is required as documented 
   in the MERG Technical Bulletins.<br>

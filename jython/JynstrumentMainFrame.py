@@ -4,6 +4,8 @@
 # This script is intended to be run at JMRI startup (setting in Preferences)
 #
 
+import jmri
+
 import apps.Apps as Apps
 import jmri.util.JmriJFrame as JmriJFrame
 

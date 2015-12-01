@@ -18,6 +18,7 @@ public class DCCManufacturerList {
     public static final String HORNBY = "Hornby";
     public static final String BACHRUS = "Bachrus";
     public static final String ESU = "ESU";
+    public static final String DCCPP = "DCC++";
     public static final String DIGITRAX = "Digitrax";
     public static final String ATLAS = "Atlas";
     public static final String NCE = "NCE";
@@ -61,6 +62,7 @@ public class DCCManufacturerList {
         BACHRUS,
         CMRI,
         CTI,
+	DCCPP,
         DIGITRAX,
         DCCSPEC,
         DCC4PC,
@@ -116,6 +118,9 @@ public class DCCManufacturerList {
         }
         if (System.equals(CTI)) {
             return new jmri.jmrix.acela.AcelaConnectionTypeList().getAvailableProtocolClasses();
+        }
+        if (System.equals(DCCPP)) {
+            return new jmri.jmrix.dccpp.DCCppConnectionTypeList().getAvailableProtocolClasses();
         }
         if (System.equals(DIGITRAX)) {
             return new jmri.jmrix.loconet.LnConnectionTypeList().getAvailableProtocolClasses();
@@ -218,6 +223,8 @@ public class DCCManufacturerList {
         }
         return new jmri.jmrix.internal.InternalConnectionTypeList().getAvailableProtocolClasses();
     }
+
+    // TODO: Add DCC++ to the next two systems (or not)
 
     //Some of these are now redundant if the connection has been converted to SystemConnectionMemo
     public static String getDCCSystemFromType(char a) {

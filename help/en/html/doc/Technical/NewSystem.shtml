@@ -60,16 +60,6 @@
 			to the existing system you want to copy.</p>
 		    </dd>
 
-		    <dt>Clean out the CVS directories</dt>
-		    <dd>
-			<p>It is absolutely <u>critical</u> that you remove the CVS 
-			subdirectories from the duplicate directory tree you just created.
-			If you don't do this, you will have difficult-to-diagnose problems
-			when you try to commit this to CVS.</p>
-			<p>To check that you've done that, use a command like:<br/>
-			<code>find . -name CVS -print</code><br/>
-		    </dd>
-
 		    <dt>Change the package name information</dt>
 		    <dd>
 			<p>Using your favorite editor, change all the package
@@ -88,20 +78,18 @@
 			copyright notices in all the files.</p>
 		    </dd>
 
-		    <dt>Create CVS structure</dt>
+		    <dt>Create SVN structure</dt>
 		    <dd>
-			<p>In this step, we put the basic CVS structure in place.</p>
+			<p>In this step, we put the basic SVN structure in place.</p>
 			<ul>
-			<li>Add all the directories you've created to CVS. In the example,
+			<li>Add all the directories you've created to SVN. In the example,
 			this was:<br/>
-			<code>cvs add powerline powerline/serialdriver powerline/serialmon<br/>
-			cvs add powerline/configurexml powerline/serialdriver/configurexml</code>
+			<code>svn add powerline powerline/serialdriver powerline/serialmon<br/>
+			svn add powerline/configurexml powerline/serialdriver/configurexml</code>
 			<li>Add all the COPYING files:<br/>
-			<code>cvs add powerline/COPYING powerline/*/COPYING powerline/*/*/COPYING</code>
-			<li>Add all the .cvsignore files:<br/>
-			<code>cvs add powerline/.cvsignore powerline/*/.cvsignore powerline/*/*/.cvsignore</code>
+			<code>svn add powerline/COPYING powerline/*/COPYING powerline/*/*/COPYING</code>
             <li>Finally, commmit those files (but only those files):<br/>
-			<code>cvs commit -m"usual file" powerline</code>            
+			<code>svn commit -m"usual file" powerline</code>            
 			</ul>
 		    </dd>
 
@@ -127,10 +115,10 @@
             <p>Following the steps above, duplicate 
             the directory for the previous systems tests, creating
             a new directory in test/jmri/jmrix to contain the 
-            tests.  <u>Remove the CVS subdirectories</u>, 
-            change the package names, 
+            tests.  
+            Change the package names, 
             check the copyright dates, 
-            create the CVS structure,
+            create the SVN structure,
             and migrate the names.</p>
             </dd>
             
@@ -153,7 +141,7 @@
             src/jmri/jmrix/JmrixConfigPane.java (one place) and 
             src/jmri/jmrix/SystemsMenu.java (one place) files to add the new 
             system.</p>
-            <p>Don't commit this to CVS yet!</p>
+            <p>Don't commit this to SVN yet!</p>
             </dd>
 
 		    <P>At this point, make sure you can compile and run DecoderPro, and
@@ -163,7 +151,7 @@
             <dd>
             <p>Edit the test/jmri/jmrix/JmrixTest.java file 
             to invoke your new system tests.</p>
-            <p>Don't commit this to CVS yet!</p>
+            <p>Don't commit this to SVN yet!</p>
             </dd>
 
 		    <P>At this point, when you "ant alltest", your new system's test
@@ -213,7 +201,90 @@
 
     
 		</dl>
-		</div>
+		
+<h2>Adding a TCP/IP connection to an existing system</h2>
+
+These are rough notes from adding a TCP/IP connection to the RFID type,
+by copying the architecture of the C/MRI system.
+
+<ol>
+<li>Create a "networkdriver" directory in parallel to the "serialdriver" directory.
+<br>
+<code>svn cp java/src/jmri/jmrix/cmri/serial/networkdriver/ java/src/jmri/jmrix/rfid/</code>
+
+<li>Edit the package and import statements, all files. ".cmri.serial." to ".rfid.", 
+then ".cmri." to ".rfid.".
+
+<li>Change the "setManufacturer" call in NetworkDriverAdapter.
+
+<li>C/MRI might not have been the best starting point, but it's what we've got.
+Some specific edits needed:
+<ul>
+    <li>Change CMRISystemConnectionMemo to RfidSystemConnectionMemo
+    <li>Remove the reference to NodeConfigAction in ConnectionConfig (or
+        use this as the base for any special configuration you need; it was
+        adding a "Configure Nodes" button)
+    <li>Change the name of SerialSensorManager throughout
+    <li>Remove the SerialTurnoutManager SerialLightManager references (there aren't any in RFID)
+    <li>Add RfidReporterManager   
+</ul>
+
+<li>Needs a network driver:<br>
+<code>svn cp java/src/jmri/jmrix/cmri/serial/SerialNetworkPortController.java java/src/jmri/jmrix/rfid/RfidNetworkPortController.java</code><br>
+and edit as above.
+
+<li>java/src/jmri/jmrix/rfid/networkdriver/configurexml/ConnectionConfigXml.java 
+contains dead code for configuring the C/MRI nodes (again, maybe not the
+right system to copy from).  Leave that for later by 
+commenting out the body of extendElement(Element e) and unpackElement(Element e).
+
+<li>Change references to SerialTrafficController to RfidTrafficController.
+
+<li>Another problem with C/MRI as a prototype is that it still has an 
+instance() call in NetworkDriverAdapter.  Go to the RFID (multi-system capable)
+SerialDriverAdapter and copy the structure there.
+<code><pre>
+        // connect to the traffic controller
+        this.getSystemConnectionMemo().setRfidTrafficController(control);
+        control.setAdapterMemo(this.getSystemConnectionMemo());
+        control.connectPort(this);
+        control.sendInitString();
+
+        // declare up
+        jmri.jmrix.rfid.ActiveFlag.setActive();
+</code></pre>
+(There's also a bunch of stuff before this in the configure() method that should
+just be copied over, because the RFID connections also need some complicated configuration);
+the ctor also needs some parts copied over.
+
+<li>Add jmri.jmrix.rfid.networkdriver.ConnectionConfig to  java/src/jmri/jmrix/rfid//RfidConnectionTypeList.java
+
+<li>Change "RFID Device Connection" to "Direct Serial Connection" in ConnectionConfig.name()
+The network connection will default to "Network Connection".
+
+<li>Check that configure/save/restart brings back all the configuration options.
+It should, you copied the necessary code above, but check.
+
+</ol>		
+
+<h2>Connections with Complicated Setup</h2>
+
+Some connection types need more configuration and/or setup than you can 
+get with the usual option1/option2/option3 mechanism. Tools available are:
+
+<ul>
+<li>loadDetails() in ConnectionConfig.  This is invoked when
+setting up the preferences window, and can be used to add
+additional controls.  C/MRI uses this to add a "Configure Nodes" button.
+RFID uses it to add listeners that control which combinations of options are available.
+
+<li>extendElement(Element e) and unpackElement(Element e) in ConnectionConfigXml
+can be used to store additional information and reload it, respectively.
+C/MRI uses this to store its node information.
+
+</ul>
+
+</div>
 
 <!--#include virtual="/Footer" -->
 

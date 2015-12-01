@@ -674,11 +674,21 @@ public class SectionTableAction extends AbstractTableAction {
         }
 
         // attempt to create the new Section
-        if (_autoSystemName.isSelected()) {
-            curSection = sectionManager.createNewSection(uName);
-        } else {
-            String sName = sysName.getText().toUpperCase();
-            curSection = sectionManager.createNewSection(sName, uName);
+        String sName = sysName.getText().toUpperCase();
+        try {
+            if (_autoSystemName.isSelected()) {
+                curSection = sectionManager.createNewSection(uName);
+            } else {
+                curSection = sectionManager.createNewSection(sName, uName);
+            }
+        } catch (Exception ex) {
+            // user input no good
+            if (_autoSystemName.isSelected()) {
+                handleCreateException(uName);
+            } else {
+                handleCreateException(sName);
+            }
+            return; // without creating any 
         }
         if (curSection == null) {
             javax.swing.JOptionPane.showMessageDialog(addFrame, rbx
@@ -694,6 +704,15 @@ public class SectionTableAction extends AbstractTableAction {
         pref.setSimplePreferenceState(systemNameAuto, _autoSystemName.isSelected());
     }
 
+    void handleCreateException(String sysName) {
+        javax.swing.JOptionPane.showMessageDialog(addFrame,
+                java.text.MessageFormat.format(
+                        rb.getString("ErrorLightAddFailed"),
+                        new Object[]{sysName}),
+                rb.getString("ErrorTitle"),
+                javax.swing.JOptionPane.ERROR_MESSAGE);
+    }
+    
     void cancelPressed(ActionEvent e) {
         addFrame.setVisible(false);
         addFrame.dispose();
@@ -1219,7 +1238,6 @@ public class SectionTableAction extends AbstractTableAction {
 
     LayoutEditor panel = null;
 
-    @SuppressWarnings("null")
     private boolean initializeLayoutEditor(boolean required) {
         // Get a Layout Editor panel. Choose Layout Editor panel if more than one.
         ArrayList<LayoutEditor> layoutEditorList

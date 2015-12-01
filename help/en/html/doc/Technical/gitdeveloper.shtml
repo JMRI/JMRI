@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<!-- $Id$ -->
+<html lang="en">
+<head>
+    <TITLE>
+ 	JMRI: Developing with JMRI Code 
+    </TITLE>
+    <META content="Bob Jacobsen" name=Author>
+    <meta name="keywords" content="JMRI technical code Git download">
+
+    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
+    <!-- are an arbitrary design pattern used by the update.pl script to -->
+    <!-- easily replace the common header/footer code for all the web pages -->
+
+    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
+    <!-- or change them to reflect your alternative logo -->
+
+    <!--#include virtual="/Style" -->
+</head>
+
+<!--#include virtual="/Header" -->
+<!--#include virtual="Sidebar" -->
+
+<div id="mainContent">
+	    <!-- ------------- -->
+	    <!-- Page Contents --> <!-- Required -->
+	    <!-- ------------- -->
+
+  <h1>JMRI: Developing with JMRI Code</h1>
+
+  <h2>Background</h2>
+
+Anybody is welcome to get a copy of the JMRI code and modify it for their
+own purposes.  What makes one a JMRI developer is contributing those
+modifications back for others to use.  This page discusses how to do
+that, assuming that you've gotten a copy of the code 
+following the 
+<a href="getgitcode.shtml">previously described procedures</a>.  
+
+<p>See also the <a href="GitFAQ.shtml">JMRI Git FAQ page</a>.</p>
+
+<p>The basic process is to make your changes, compile/run/test until
+you've finished your intended change, and then to send that 
+change back for inclusion into the main repository.
+<p>
+That's done with a three-step process:
+<ol>
+<li>You periodically &quot;commit&quot; your changes to your local
+    repository.
+<li>You periodically &quot;push&quot; those changes to a
+repository of your own on GitHub.
+<li>When your change is complete, you create a 
+&quot;pull request&quot;
+that allows JMRI to get your change from your GitHub repository
+and merge it into JMRI's main repository.
+</ol>
+  
+<h3>Commit Changes to Your Local Repository</h3>
+You should commit your changes into your local repository often.
+
+<p>
+With SVN, there was one central repository that everybody shared. 
+Git provides everybody with their own local repository, and then
+links them together with "pull", "push" and "pull request" operations.
+When you commit, you're saving a copy of your changes into your local
+repository where they're safe, and can eventually be moved onward.
+
+  <pre><code>
+  git commit -m&quot;useful comment&quot;
+  </code></pre>
+
+<a name="repo" id="repo"></a><h3>Get Your Own GitHub Repository</h3>
+
+  <ul>
+  <li>Get a <a href="https://github.com/join">GitHub account</a> and login
+  <li>Tell GitHub to <a href="https://help.github.com/articles/fork-a-repo/">"fork" JMRI's repository</a> 
+  into one of your own. There's a 
+  <a href="https://help.github.com/articles/fork-a-repo/">good help page</a>,
+  but basically you go to the 
+  <a href="https://github.com/JMRI/JMRI">JMRI repository page</a>
+  and click the "fork" button in the upper right.
+   
+  </ul>
+  <p>
+  This gives you your own repository, which you can then work with freely.
+  
+  <p>
+  If you're using the command line,
+  the next step is to connect it to your local repository.
+  (IDE users will do this next part in their IDE, see
+  those instructions)
+  On the web page for your repository, right side, is a "HTTPS Clone URL".
+  Copy that. In your repository directory on your local computer, do
+  
+  <pre><code>
+  git remote set-url --push origin https://github.com/yourname/JMRI.git
+  </code></pre>
+  (With the appropriate URL)
+  <p>
+  After this, doing a &quot;git push&quot; will push your changes up to
+  your repository. &quot;git pull&quot; will still pull from the main 
+  repository so that you can get the most recent updates from others.  To
+  check this, do a &quot;git remote -v&quot; which should show:
+  
+<code><pre>
+   % git remote -v<br/>
+   origin	https://github.com/JMRI/JMRI.git (fetch)<br/>
+   origin	https://github.com/yourname/JMRI.git (push)
+</pre></code>
+  
+
+ <a name="push" id="push"></a><h3>Push Your Changes to Your GitHub Repository</h3>
+ 
+ Now that you have a consistent set of changes committed locally, 
+ you can move them up to your repository on GitHub. That makes 
+ them visible to everybody else.
+ 
+  <pre><code>
+  git push
+  </code></pre>
+
+
+ <a name="pull" id="pull"></a><h3>Submit a Pull Request</h3>
+
+The last step is to make your changes, visible in your GitHub repository,
+known to the JMRI maintainers so that one of them can pull it into the main 
+JMRI repository.  To do that, you create and submit a "pull request" that
+automatically has all the needed info.
+
+<ul>
+<li>Login to GitHub and go to the page for your JMRI clone repository (yours, not 
+    the main JMRI one)
+<li>There's a "Pull Request" button at the upper right of the file listing.
+    Click it.
+<li>On the next page, click the "Create pull request" button.
+<li>Fill out the forms.  A short title that describes the feature you've written
+    helps other people find it.  A few lines in the comment about what it does, how 
+    you added it, etc is also very helpful.
+<li>Click "Create pull request".  That submits all the info and notifies
+    the JMRI maintainers.  One of them will check it over and either contact you for
+    more info (occasionally), or merge it into the main repository (more often).
+    You can sign up for a notification when that happens.
+</ul>
+
+  <!--#include virtual="/Footer" -->
+
+  </div><!-- closes #mainContent-->
+  </div> <!-- closes #mBody-->
+</body>
+</html>
+

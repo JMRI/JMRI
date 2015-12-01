@@ -75,6 +75,14 @@ public class DecVariableValue extends VariableValue
         oldContents = _value.getText();
     }
 
+    int textToValue(String s) {
+        return (Integer.valueOf(s));
+    }
+
+    String valueToText(int v) {
+        return (Integer.toString(v));
+    }
+
     void exitField() {
         if (_value == null) {
             // There's no value Object yet, so just ignore & exit
@@ -85,8 +93,8 @@ public class DecVariableValue extends VariableValue
             // there may be a lost focus event left in the queue when disposed so protect
             if (!oldContents.equals(_value.getText())) {
                 try {
-                    int newVal = Integer.parseInt(_value.getText());
-                    int oldVal = Integer.parseInt(oldContents);
+                    int newVal = textToValue(_value.getText());
+                    int oldVal = textToValue(oldContents);
                     updatedTextField();
                     prop.firePropertyChange("Value", oldVal, newVal);
                 } catch (java.lang.NumberFormatException ex) {
@@ -116,7 +124,7 @@ public class DecVariableValue extends VariableValue
         int oldCv = cv.getValue();
         int newVal;
         try {
-            newVal = Integer.parseInt(_value.getText());
+            newVal = textToValue(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             newVal = 0;
         }
@@ -134,7 +142,7 @@ public class DecVariableValue extends VariableValue
             log.debug("actionPerformed");
         }
         try {
-            int newVal = Integer.parseInt(_value.getText());
+            int newVal = textToValue(_value.getText());
             updatedTextField();
             prop.firePropertyChange("Value", null, newVal);
         } catch (java.lang.NumberFormatException ex) {
@@ -170,7 +178,7 @@ public class DecVariableValue extends VariableValue
     }
 
     public int getIntValue() {
-        return Integer.parseInt(_value.getText());
+        return textToValue(_value.getText());
     }
 
     public Object getValueObject() {
@@ -264,15 +272,17 @@ public class DecVariableValue extends VariableValue
     public void setValue(int value) {
         int oldVal;
         try {
-            oldVal = Integer.parseInt(_value.getText());
+            oldVal = textToValue(_value.getText());
         } catch (java.lang.NumberFormatException ex) {
             oldVal = -999;
         }
+        if (value < _minVal) value = _minVal;
+        if (value > _maxVal) value = _maxVal;
         if (log.isDebugEnabled()) {
             log.debug("setValue with new value " + value + " old value " + oldVal);
         }
         if (oldVal != value) {
-            _value.setText("" + value);
+            _value.setText(valueToText(value));
             updatedTextField();
             prop.firePropertyChange("Value", Integer.valueOf(oldVal), Integer.valueOf(value));
         }

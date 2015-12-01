@@ -74,7 +74,7 @@ space immediately before the carriage return!</p>
 <p><span style="font-family: monospace">[B0 2D 10 72]  Requesting Switch at LT46 () to Thrown (output On).</span></p>
 <p><span style="font-family: monospace">[BB 10 00 54]  Request data/status for slot 16.</span></p>
 <p>Because there is no Command Station, the last message would not receive a response.
-<!--#include virtual="/Footer" -->
+
 <h1><a name="SeeAlso">See also</a></h1>
 <p>The <a href="../../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">Monitor LocoNet</a> 
     tool captures and interprets messages on LocoNet.</p>
@@ -83,8 +83,8 @@ space immediately before the carriage return!</p>
 <p>LocoNet&reg; is a registered trademark of <a href="http://www.digitrax.com">Digitrax, Inc.</a></p>
 
     </div>
-  </div>
-</div>
+
+<!--#include virtual="/Footer" -->
 </body>
 </html>
 

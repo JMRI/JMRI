@@ -266,8 +266,7 @@ public class LocationsTableModel extends javax.swing.table.AbstractTableModel im
                         break;
                     }
                 }
-                LocationEditFrame lef = new LocationEditFrame();
-                lef.initComponents(loc);
+                LocationEditFrame lef = new LocationEditFrame(loc);
                 frameList.add(lef);
             }
         });

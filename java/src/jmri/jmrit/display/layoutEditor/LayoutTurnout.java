@@ -1767,6 +1767,12 @@ public class LayoutTurnout {
             namedTurnout.getBean().addPropertyChangeListener(mTurnoutListener
                     = new java.beans.PropertyChangeListener() {
                         public void propertyChange(java.beans.PropertyChangeEvent e) {
+                            if(secondNamedTurnout != null){
+                                if(e.getSource().equals(secondNamedTurnout.getBean()) && e.getNewValue().equals(secondNamedTurnout.getBean().getState())
+                                            && e.getOldValue().equals(namedTurnout.getBean().getState())){
+                                    namedTurnout.getBean().setCommandedState((int)e.getNewValue());
+                                }
+                            }
                             layoutEditor.redrawPanel();
                         }
                     }, namedTurnout.getName(), "Layout Editor Turnout");

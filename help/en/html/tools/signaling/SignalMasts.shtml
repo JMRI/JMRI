@@ -6,7 +6,7 @@
 <title>JMRI: Signal Masts documentation</title>
 
 <META name="Author" content="Bob Jacobsen, Egbert Broerse">
-<META name="Date.Modified" content="20140515"/>
+<META name="Date.Modified" content="20151002"/>
 <!-- Style -->
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
 <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -35,7 +35,7 @@
 </a>
 <p>JMRI Signal Mast objects allow you to display prototypical Aspects on 
 	signals. For background information, see the <a href="AspectSignaling.shtml">Aspect Signaling</a> page.</p>
-<a name="add"><h3>The Signal Masts Table</h3></a>
+<h3>The Signal Masts Table</h3>
 <p>Signal Masts are configured through the
 <a href="../../../package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table</a>. You access this tool from the <b>Tools > Tables > Signal Masts</b> menu.
 <p>

@@ -179,7 +179,7 @@
         <label>Speed Table</label>
         <label xml:lang="fr">Tableau de vitesse</label>
         <label xml:lang="it">Tabella Velocità</label>
-        <label xml:lang="it">Geschwindigkeitstabelle</label>
+        <label xml:lang="de">Geschwindigkeitstabelle</label>
       </variable>
       <!-- Function tables for outputs 1-8  -->
       <!-- Code bits from http://jmri.org/xml/nmra/functionmap.xml , added full range of functions for Tams Decoders-->

@@ -19,6 +19,7 @@ import javax.swing.SwingUtilities;
 import jmri.jmrit.operations.CommonConductorYardmasterPanel;
 import jmri.jmrit.operations.rollingstock.RollingStock;
 import jmri.jmrit.operations.rollingstock.cars.Car;
+import jmri.jmrit.operations.rollingstock.cars.CarColors;
 import jmri.jmrit.operations.rollingstock.cars.CarLoads;
 import jmri.jmrit.operations.rollingstock.cars.CarRoads;
 import jmri.jmrit.operations.rollingstock.cars.CarTypes;
@@ -371,8 +372,7 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                     String s = trainCommon.pickupUtilityCars(carList, car, !IS_MANIFEST, !TrainCommon.IS_TWO_COLUMN_TRACK);
                     if (s == null)
                         continue;
-                    text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
-                            new Object[]{s.trim(), "", "", "", "", ""});
+                    text = TrainSwitchListText.getStringHoldCar().split("\\{")[0] + s.trim();
                 } else {
                     text = MessageFormat.format(TrainSwitchListText.getStringHoldCar(),
                             new Object[]{TrainCommon.padAndTruncateString(car.getRoadName(), CarRoads.instance().getMaxNameLength()),
@@ -380,7 +380,8 @@ public class YardmasterByTrackPanel extends CommonConductorYardmasterPanel {
                                     TrainCommon.padAndTruncateString(car.getTypeName().split("-")[0], CarTypes.instance().getMaxNameLength()),
                                     TrainCommon.padAndTruncateString(car.getLength() + TrainCommon.LENGTHABV, Control.max_len_string_length_name),
                                     TrainCommon.padAndTruncateString(car.getLoadName(), CarLoads.instance().getMaxNameLength()),
-                                    TrainCommon.padAndTruncateString(_track.getName(), LocationManager.instance().getMaxTrackNameLength())});
+                                    TrainCommon.padAndTruncateString(_track.getName(), LocationManager.instance().getMaxTrackNameLength()),
+                                    TrainCommon.padAndTruncateString(car.getColor(), CarColors.instance().getMaxNameLength())});
 
                 }
                 JCheckBox checkBox = new JCheckBox(text);

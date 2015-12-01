@@ -90,8 +90,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
      */
     public void testTrainEditFrame() {
 
-        TrainEditFrame trainEditFrame = new TrainEditFrame();
-        trainEditFrame.initComponents(null);
+        TrainEditFrame trainEditFrame = new TrainEditFrame(null);
         trainEditFrame.setTitle("Test Edit Train Frame");
         // fill in name and description fields
         trainEditFrame.trainNameTextField.setText("Test Train Name");
@@ -216,8 +215,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         t.setRequirements(Train.CABOOSE);
         t.setCabooseRoad("CP");
 
-        TrainEditFrame f = new TrainEditFrame();
-        f.initComponents(t);
+        TrainEditFrame f = new TrainEditFrame(t);
         f.setTitle("Test Edit Train Frame");
 
         Assert.assertEquals("train name", "Test Train Name", f.trainNameTextField.getText());
@@ -251,9 +249,8 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         route.addLocation(LocationManager.instance().newLocation("Test Train Location C"));
         t.setRoute(route);
 
-        TrainEditFrame trainEditFrame = new TrainEditFrame();
+        TrainEditFrame trainEditFrame = new TrainEditFrame(t);
         trainEditFrame.setLocation(0, 0); // entire panel must be visible for tests to work properly
-        trainEditFrame.initComponents(t);
         trainEditFrame.setTitle("Test Build Options Train Frame");
 
         TrainEditBuildOptionsFrame f = new TrainEditBuildOptionsFrame();
@@ -609,8 +606,7 @@ public class OperationsTrainsGuiTest extends OperationsSwingTestCase {
         Train t = tmanager.getTrainByName("Test_Train 1");
         Assert.assertNotNull(t);
 
-        TrainEditFrame trainEditFrame = new TrainEditFrame();
-        trainEditFrame.initComponents(t);
+        TrainEditFrame trainEditFrame = new TrainEditFrame(t);
         trainEditFrame.setTitle("Test Delete Train Frame");
 
         enterClickAndLeave(trainEditFrame.deleteTrainButton);

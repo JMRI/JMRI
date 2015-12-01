@@ -20,6 +20,7 @@ package jmri.jmrit.beantable.oblock;
  */
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -38,6 +39,7 @@ import jmri.Sensor;
 import jmri.jmrit.beantable.AbstractTableAction;
 import jmri.jmrit.logix.OBlock;
 import jmri.jmrit.logix.OBlockManager;
+import jmri.util.IntlUtilities;
 import jmri.util.NamedBeanComparator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -254,7 +256,9 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 if (b != null) {
                     int state = b.getState();
                     int num = Integer.numberOfLeadingZeros(state) - 24;
-                    return ZEROS.substring(0, num) + Integer.toBinaryString(state);
+                    if (num>=0) {
+                        return ZEROS.substring(0, num) + Integer.toBinaryString(state);                        
+                    }
                 }
                 return ZEROS;
             case SENSORCOL:
@@ -386,8 +390,8 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     block.setComment(tempRow[COMMENTCOL]);
                     float len = 0.0f;
                     try {
-                        len = Float.valueOf(tempRow[LENGTHCOL]).floatValue();
-                    } catch (java.lang.NumberFormatException nfe) {
+                        len = IntlUtilities.floatValue(tempRow[LENGTHCOL]);
+                    } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                     }
@@ -444,13 +448,13 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                     return;
                 case LENGTHCOL:
                     try {
-                        _tempLen = Float.valueOf((String)value).floatValue();
+                        _tempLen = IntlUtilities.floatValue(value.toString());
                         if (tempRow[UNITSCOL].equals(Bundle.getMessage("cm"))) {
                             _tempLen *= 10f;
                         } else {
                             _tempLen *= 25.4f;                            
                         }
-                    } catch (java.lang.NumberFormatException nfe) {
+                    } catch (ParseException e) {
                         JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", tempRow[LENGTHCOL]),
                                 Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                     }
@@ -520,14 +524,14 @@ public class OBlockTableModel extends jmri.jmrit.beantable.BeanTableDataModel {
                 return;
             case LENGTHCOL:
                 try {
-                    float len = Float.valueOf((String)value).floatValue();
+                    float len = IntlUtilities.floatValue(value.toString());
                     if (block.isMetric()) {
                         block.setLength(len * 10.0f);
                     } else {
                         block.setLength(len * 25.4f);
                     }
                     fireTableRowsUpdated(row, row);                    
-                } catch (java.lang.NumberFormatException nfe) {
+                } catch (ParseException e) {
                     JOptionPane.showMessageDialog(null, Bundle.getMessage("BadNumber", value),
                             Bundle.getMessage("ErrorTitle"), JOptionPane.WARNING_MESSAGE);                    
                 }

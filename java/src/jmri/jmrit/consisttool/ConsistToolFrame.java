@@ -51,6 +51,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     JButton deleteButton = new JButton();
     JButton throttleButton = new JButton();
     JButton reverseButton = new JButton();
+    JButton restoreButton = new JButton();
     JLabel textLocoLabel = new JLabel();
     DccLocoAddressSelector locoSelector = new DccLocoAddressSelector();
     RosterEntryComboBox locoRosterBox;
@@ -170,6 +171,17 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
             }
         });
 
+        restoreButton.setText(rb.getString("RestoreButtonText"));
+        restoreButton.setVisible(true);
+        restoreButton.setToolTipText(rb.getString("RestoreButtonToolTip"));
+        restoreButton.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                restoreButtonActionPerformed(e);
+            }
+        });
+
         // Set up the controls for the First Locomotive in the consist.
         textLocoLabel.setText(rb.getString("LocoLabelText"));
         textLocoLabel.setVisible(true);
@@ -268,6 +280,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         controlPanel.add(deleteButton);
         controlPanel.add(throttleButton);
         controlPanel.add(reverseButton);
+        controlPanel.add(restoreButton);
 
         getContentPane().add(controlPanel);
 
@@ -285,10 +298,9 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
     private void initializeConsistBox() {
         ArrayList<DccLocoAddress> existingConsists = ConsistMan.getConsistList();
         if (!existingConsists.isEmpty()) {
+            java.util.Collections.sort(existingConsists,new jmri.util.LocoAddressComparator()); // sort the consist list.
             consistAdrBox.removeAllItems();
-            for (int i = 0; i < existingConsists.size(); i++) {
-                consistAdrBox.insertItemAt(existingConsists.get(i), i);
-            }
+            existingConsists.forEach((consist)->consistAdrBox.addItem(consist));
             consistAdrBox.setEnabled(true);
             consistAdrBox.insertItemAt("", 0);
             consistAdrBox.setSelectedItem(adrSelector.getAddress());
@@ -333,12 +345,10 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         /*
          * get the list of locomotives to delete
          */
-        ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
-
-        for (int i = (addressList.size() - 1); i >= 0; i--) {
-            DccLocoAddress locoaddress = addressList.get(i);
+        /*ArrayList<DccLocoAddress> addressList = tempConsist.getConsistList();
+        addressList.forEach((locoaddress)->{
             if (log.isDebugEnabled()) {
-                log.debug("Deleting Locomotive: " + address.toString());
+                log.debug("Deleting Locomotive: " + locoaddress.toString());
             }
             try {
                 tempConsist.remove(locoaddress);
@@ -348,7 +358,7 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
                         + " from consist "
                         + address.toString());
             }
-        }
+        });*/
         try {
             ConsistMan.delConsist(address);
         } catch (Exception ex) {
@@ -419,6 +429,24 @@ public class ConsistToolFrame extends jmri.util.JmriJFrame implements jmri.Consi
         Consist tempConsist = ConsistMan.getConsist(address);
         tempConsist.reverse();
     }
+
+    public void restoreButtonActionPerformed(ActionEvent e) {
+        if (adrSelector.getAddress() == null) {
+            JOptionPane.showMessageDialog(this,
+                    rb.getString("NoConsistSelectedError"));
+            return;
+        }
+        // make sure any new locomotives are added to the consist.
+        addLocoButtonActionPerformed(e);
+
+        /*
+         * get the array list of the locomotives in the consist
+         */
+        DccLocoAddress address = adrSelector.getAddress();
+        Consist tempConsist = ConsistMan.getConsist(address);
+        tempConsist.restore();
+    }
+
 
     public void consistSelected() {
         if (log.isDebugEnabled()) {

@@ -171,6 +171,7 @@ import jmri.jmrit.roster.Roster;
 import jmri.jmrit.roster.RosterEntry;
 import jmri.jmrit.roster.rostergroup.RosterGroup;
 import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.jmrix.SystemConnectionMemo;
 import jmri.profile.ProfileManager;
 import jmri.util.ConnectionNameFromSystemName;
@@ -1094,7 +1095,7 @@ public class JsonUtil {
             //state is appearance, plus flags for held and dark statii
             if ((signalMast.getHeld()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.HELD) != null)) {
                 data.put(STATE, ASPECT_HELD);
-            } else if ((signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
+            } else if ((!signalMast.getLit()) && (signalMast.getAppearanceMap().getSpecificAppearance(jmri.SignalAppearanceMap.DARK) != null)) {
                 data.put(STATE, ASPECT_DARK);
             } else {
                 data.put(STATE, aspect);
@@ -1139,8 +1140,7 @@ public class JsonUtil {
     static public JsonNode getSystemConnections(Locale locale) {
         ArrayNode root = mapper.createArrayNode();
         ArrayList<String> prefixes = new ArrayList<String>();
-        for (Object instance : InstanceManager.configureManagerInstance().getInstanceList(ConnectionConfig.class)) {
-            ConnectionConfig config = (ConnectionConfig) instance;
+        for (ConnectionConfig config : InstanceManager.getDefault(ConnectionConfigManager.class)) {
             if (!config.getDisabled()) {
                 ObjectNode connection = mapper.createObjectNode().put(TYPE, SYSTEM_CONNECTION);
                 ObjectNode data = connection.putObject(DATA);

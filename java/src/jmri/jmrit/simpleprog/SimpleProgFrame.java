@@ -22,7 +22,6 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
     /**
      *
      */
-    private static final long serialVersionUID = 7871764415019987802L;
     // GUI member declarations
     javax.swing.JToggleButton readButton = new javax.swing.JToggleButton();
     javax.swing.JToggleButton writeButton = new javax.swing.JToggleButton();
@@ -122,14 +121,10 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
 
         getContentPane().add(resultsField);
 
-        if (modePane.getProgrammer() == null) {
-            readButton.setEnabled(false);
-            // boudreau let system Programmer determine default mode
-//         modePane.setDefaultMode();
-        }
-        // disable read button if non-functional
         if (modePane.getProgrammer() != null) {
             readButton.setEnabled(modePane.getProgrammer().getCanRead());
+        } else {
+            readButton.setEnabled(false);
         }
 
         // add help menu to window
@@ -152,12 +147,12 @@ public class SimpleProgFrame extends jmri.util.JmriJFrame implements jmri.ProgLi
         }
     }
 
-    private int getNewAddr() {
-        try {
-            return Integer.valueOf(addrField.getText()).intValue();
-        } catch (java.lang.NumberFormatException e) {
-            addrField.setText("");
-            return 0;
+    private String getNewAddr() {
+        if (addrField.getText()!=null && !addrField.getText().equals("")) {
+            return addrField.getText();
+        } else {
+            addrField.setText("0");
+            return addrField.getText();
         }
     }
 

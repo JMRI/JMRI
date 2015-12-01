@@ -96,6 +96,13 @@ public class DccSignalHead extends AbstractSignalHead {
                 dccSignalDecoderAddress = Integer.parseInt(sys);
             }
         }
+        // validate the decoder address
+        // now some systems don't support this whole range
+        // also depending on how you view the NRMA spec, 1 - 2044 or 1 - 2048
+        if (dccSignalDecoderAddress < NmraPacket.accIdLowLimit || dccSignalDecoderAddress > NmraPacket.accIdAltHighLimit) {
+            log.error("SignalHead decoder address out of range: " + dccSignalDecoderAddress);
+            throw new IllegalArgumentException("SignalHead decoder address out of range: " + dccSignalDecoderAddress);
+        }
     }
 
     public void setAppearance(int newAppearance) {
@@ -163,10 +170,14 @@ public class DccSignalHead extends AbstractSignalHead {
                  }*/
             }
 
+            byte[] sigPacket;
             if (useAddressOffSet) {
-                c.sendPacket(NmraPacket.accSignalDecoderPkt(dccSignalDecoderAddress, aspect), 3);
+                sigPacket = NmraPacket.accSignalDecoderPkt(dccSignalDecoderAddress, aspect);
             } else {
-                c.sendPacket(NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspect), 3);
+                sigPacket = NmraPacket.altAccSignalDecoderPkt(dccSignalDecoderAddress, aspect);
+            }
+            if (sigPacket != null) {
+                c.sendPacket(sigPacket, 3);
             }
         }
     }

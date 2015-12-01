@@ -138,7 +138,7 @@ public class DefaultProgrammerManager implements ProgrammerManager {
     }
 
     public Programmer getGlobalProgrammer() {
-        log.debug("return default service-mode programmer of type {}", mProgrammer.getClass());
+        log.debug("return default service-mode programmer of type {}", (mProgrammer != null ? mProgrammer.getClass() : "(null)") );
         return mProgrammer;
     }
 
@@ -167,6 +167,15 @@ public class DefaultProgrammerManager implements ProgrammerManager {
      */
     public boolean isAddressedModePossible() {
         return false;
+    }
+
+    /**
+     * Default programmer doesn't depend on address
+     *
+     * @return false if there's no chance of getting one
+     */
+    public boolean isAddressedModePossible(jmri.LocoAddress l) {
+        return isAddressedModePossible();
     }
 
     /**

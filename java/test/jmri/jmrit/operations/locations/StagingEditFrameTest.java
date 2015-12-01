@@ -85,9 +85,8 @@ public class StagingEditFrameTest extends OperationsSwingTestCase {
         Location l2 = lManager.getLocationByName("Test Loc A");
         Assert.assertNotNull("Test Loc A", l2);
 
-        LocationEditFrame fl = new LocationEditFrame();
+        LocationEditFrame fl = new LocationEditFrame(l2);
         fl.setTitle("Test Edit Location Frame Staging");
-        fl.initComponents(l2);
 
         // check location name
         Assert.assertEquals("name", "Test Loc A", fl.locationNameTextField.getText());

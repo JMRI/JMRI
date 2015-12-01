@@ -19,7 +19,7 @@ import org.slf4j.LoggerFactory;
  * @version $Revision$
  * @see PerformActionPanel
  */
-public abstract class AbstractActionModel {
+public abstract class AbstractActionModel implements StartupModel {
 
     public AbstractActionModel() {
         className = "";

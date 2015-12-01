@@ -364,10 +364,9 @@ public class TrainsTableModel extends javax.swing.table.AbstractTableModel imple
         // use invokeLater so new window appears on top
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                tef = new TrainEditFrame();
                 Train train = sysList.get(row);
                 log.debug("Edit train ({})", train.getName());
-                tef.initComponents(train);
+                tef = new TrainEditFrame(train);
             }
         });
     }

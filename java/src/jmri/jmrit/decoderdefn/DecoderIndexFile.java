@@ -66,10 +66,21 @@ public class DecoderIndexFile extends XmlFile {
     /**
      * Get a List of decoders matching some information
      */
-    public List<DecoderFile> matchingDecoderList(String mfg, String family, String decoderMfgID, String decoderVersionID, String decoderProductID, String model) {
+    public List<DecoderFile> matchingDecoderList(String mfg, String family, 
+            String decoderMfgID, String decoderVersionID, String decoderProductID, 
+            String model) {
+        return (matchingDecoderList(mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, null));
+    }
+    
+    /**
+     * Get a List of decoders matching some information
+     */
+    public List<DecoderFile> matchingDecoderList(String mfg, String family, 
+            String decoderMfgID, String decoderVersionID, 
+            String decoderProductID, String model, String developerID) {
         List<DecoderFile> l = new ArrayList<DecoderFile>();
         for (int i = 0; i < numDecoders(); i++) {
-            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model)) {
+            if (checkEntry(i, mfg, family, decoderMfgID, decoderVersionID, decoderProductID, model, developerID)) {
                 l.add(decoderList.get(i));
             }
         }
@@ -125,7 +136,9 @@ public class DecoderIndexFile extends XmlFile {
      * Don't bother asking about the model number...
      *
      */
-    public boolean checkEntry(int i, String mfgName, String family, String mfgID, String decoderVersionID, String decoderProductID, String model) {
+    public boolean checkEntry(int i, String mfgName, String family, String mfgID, 
+            String decoderVersionID, String decoderProductID, String model, 
+            String developerID) {
         DecoderFile r = decoderList.get(i);
         if (mfgName != null && !mfgName.equals(r.getMfg())) {
             return false;
@@ -147,7 +160,14 @@ public class DecoderIndexFile extends XmlFile {
             }
         }
         if (decoderProductID != null && !("," + r.getProductID()+ ",").contains("," + decoderProductID+ ",")) {
-            return false;
+            if ( !("," + r.getModelElement().getAttribute("productID") + ",").contains("," + decoderProductID +",") ) {
+                return false;
+            }
+        }
+        if (developerID != null && !developerID.equals(r.getDeveloperID())) {
+            if ( !("," + r.getModelElement().getAttribute("developerID").getValue() + ",").contains("," + developerID +",") ) {
+                return false;
+            }
         }
         return true;
     }
@@ -422,6 +442,7 @@ public class DecoderIndexFile extends XmlFile {
         String replacementFamilyName = ((attr = family.getAttribute("replacementFamily")) != null ? attr.getValue() : null);
         String familyName = ((attr = family.getAttribute("name")) != null ? attr.getValue() : null);
         String mfg = ((attr = family.getAttribute("mfg")) != null ? attr.getValue() : null);
+        String developer = ((attr = family.getAttribute("developerID")) != null ? attr.getValue() : null);
         String mfgID = null;
         if (mfg != null) {
             mfgID = mfgIdFromName(mfg);
@@ -448,6 +469,7 @@ public class DecoderIndexFile extends XmlFile {
                         parentLowVersID, parentHighVersID,
                         familyName,
                         filename,
+                        (developer != null) ? developer : "-1",
                         -1, -1, modelElement,
                         replacementFamilyName, replacementFamilyName); // numFns, numOuts, XML element equal
         // to the first decoder
@@ -463,9 +485,10 @@ public class DecoderIndexFile extends XmlFile {
             replacementFamilyName = ((attr = decoder.getAttribute("replacementFamily")) != null ? attr.getValue() : replacementFamilyName);
             int numFns = ((attr = decoder.getAttribute("numFns")) != null ? Integer.valueOf(attr.getValue()).intValue() : -1);
             int numOuts = ((attr = decoder.getAttribute("numOuts")) != null ? Integer.valueOf(attr.getValue()).intValue() : -1);
+            String devId = ((attr = decoder.getAttribute("developerId")) != null ? attr.getValue(): "-1");
             DecoderFile df = new DecoderFile(mfg, mfgID,
                     ((attr = decoder.getAttribute("model")) != null ? attr.getValue() : null),
-                    loVersID, hiVersID, familyName, filename, numFns, numOuts, decoder,
+                    loVersID, hiVersID, familyName, filename, devId, numFns, numOuts, decoder,
                     replacementModelName, replacementFamilyName);
             // and store it
             decoderList.add(df);

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2010 All rights reserved -->
+<!--                                                                        -->
+<!-- JMRI is free software; you can redistribute it and/or modify it under  -->
+<!-- the terms of version 2 of the GNU General Public License as published  -->
+<!-- by the Free Software Foundation. See the "COPYING" file for a copy     -->
+<!-- of this license.                                                       -->
+<!--                                                                        -->
+<!-- JMRI is distributed in the hope that it will be useful, but WITHOUT    -->
+<!-- ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or  -->
+<!-- FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License  -->
+<!-- for more details.                                                      -->
+<!-- version 1 - new include file for SoundTraxx Tsunami -->
+<enumVal xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
+  <enumChoice>
+    <choice>On/Off</choice>
+    <choice xml:lang="it">On-Off</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Dimmable headlight</choice>
+    <choice xml:lang="it">Luci Smorzabili</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Mars light</choice>
+    <choice xml:lang="it">Luci tipo Mars</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Pyle Gyralite</choice>
+    <choice xml:lang="it">Luci Pyle Gyralite</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Oscillating headlight</choice>
+    <choice xml:lang="it">Luci Oscillanti</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Single flash strobe</choice>
+    <choice xml:lang="it">Strobe a Flash Singolo</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Double flash strobe</choice>
+    <choice xml:lang="it">Strobe a Flash Doppio</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Western-Cullen D312 rotary beacon</choice>
+    <choice xml:lang="it">Faro Rotante D312</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Prime Stratolite</choice>
+    <choice xml:lang="it">Luci Stratolite</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Type I ditch light</choice>
+    <choice xml:lang="it">Luci ditch tipo 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Type II ditch light</choice>
+    <choice xml:lang="it">Luci ditch tipo 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>FRED (end of train flasher)</choice>
+    <choice xml:lang="it">FRED (lampeggiante fine trenp)</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Engine exhaust flicker</choice>
+    <choice xml:lang="it">Sfarfallio Scarico Motore</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Firebox flicker</choice>
+    <choice xml:lang="it">Sfarfallio caldaia</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Smart firebox flicker</choice>
+    <choice xml:lang="it">Sfarfallio intelligente caldaia</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Dyno-light</choice>
+    <choice xml:lang="it">Luci Dinamo </choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Auto dim forward</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Auto dim reverse</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Brake light</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>On/off - brightness 1</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>On/off - brightness 2</choice>
+  </enumChoice>
+  <enumChoice>
+    <choice>Emergency Gyralite</choice>
+  </enumChoice>
+  <enumChoice value="23">
+    <choice>Ash pan flicker</choice>
+  </enumChoice>
+  <enumChoice value="25">
+    <choice>Single flash strobe 2</choice>
+  </enumChoice>
+</enumVal>

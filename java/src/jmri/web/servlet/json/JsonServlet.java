@@ -9,6 +9,7 @@ import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Locale;
 import java.util.Map;
 import javax.servlet.AsyncContext;
@@ -192,7 +193,7 @@ public class JsonServlet extends WebSocketServlet {
         if (type != null) {
             response.setContentType(UTF8_APPLICATION_JSON);
             ServletUtil.getInstance().setNonCachingHeaders(response);
-            final String name = (rest.length > 2) ? rest[2] : null;
+            final String name = (rest.length > 2) ? URLDecoder.decode(rest[2], StandardCharsets.UTF_8.name()) : null;
             ObjectNode parameters = this.mapper.createObjectNode();
             for (Map.Entry<String, String[]> entry : request.getParameterMap().entrySet()) {
                 parameters.put(entry.getKey(), URLDecoder.decode(entry.getValue()[0], "UTF-8"));

@@ -192,6 +192,8 @@ public class OperationsSetupTest extends OperationsTestCase {
         Assert.assertEquals("Direction North", 4, s.getTrainDirection());
         s.setTrainDirection(Setup.SOUTH);
         Assert.assertEquals("Direction South", 8, s.getTrainDirection());
+        s.setTrainDirection(Setup.EAST + Setup.WEST + Setup.NORTH + Setup.SOUTH);
+        Assert.assertEquals("Direction All", 15, s.getTrainDirection());
 
         s.setMaxTrainLength(520);
         Assert.assertEquals("Train Length", 520, s.getMaxTrainLength());

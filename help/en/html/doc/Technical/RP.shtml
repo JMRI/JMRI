@@ -99,7 +99,7 @@ make it better.
 
 As development proceeds, sometimes old ways of doing things have to be replaced by
 new ways.  
-In many cases, you can just change all the using code in SVN, 
+In many cases, you can just change all the using code in our repository, 
 and move forward.  
 For general interfaces that might be used externally to JMRI, 
 such as in scripts and CATS, 

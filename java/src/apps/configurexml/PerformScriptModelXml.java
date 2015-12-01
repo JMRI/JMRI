@@ -1,6 +1,10 @@
 package apps.configurexml;
 
 import apps.PerformScriptModel;
+import apps.StartupActionsManager;
+import java.io.File;
+import jmri.InstanceManager;
+import jmri.script.JmriScriptEngineManager;
 import jmri.util.FileUtil;
 import org.jdom2.Element;
 import org.slf4j.Logger;
@@ -47,26 +51,22 @@ public class PerformScriptModelXml extends jmri.configurexml.AbstractXmlAdapter 
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) throws Exception {
         boolean result = true;
-        String fileName = e.getAttribute("name").getValue();
+        String fileName = shared.getAttribute("name").getValue();
         fileName = FileUtil.getAbsoluteFilename(fileName);
         log.info("Run file " + fileName);
 
-        // run the script
-        jmri.util.PythonInterp.runScript(fileName);
+            // run the script
+        JmriScriptEngineManager.getDefault().runScript(new File(fileName));
 
         // leave an updated object around
         PerformScriptModel m = new PerformScriptModel();
         m.setFileName(fileName);
         PerformScriptModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.PerformScriptPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.configureManagerInstance().registerPref(new apps.PerformScriptPanel());
         return result;
     }
 

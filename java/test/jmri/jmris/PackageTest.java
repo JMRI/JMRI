@@ -30,6 +30,18 @@ public class PackageTest extends TestCase {
 
         suite.addTest(jmri.jmris.srcp.SRCPTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleServerTest.suite());
+        suite.addTest(jmri.jmris.json.JsonServerTest.suite());
+        suite.addTest(jmri.jmris.JmriServerTest.suite());
+        suite.addTest(jmri.jmris.JmriConnectionTest.suite());
+        suite.addTest(jmri.jmris.ServiceHandlerTest.suite());
+
+        if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {
+            // put any tests that require a UI here.
+            suite.addTest(jmri.jmris.JmriServerFrameTest.suite());
+            suite.addTest(jmri.jmris.JmriServerActionTest.suite());
+        }
+
+
         return suite;
     }
 

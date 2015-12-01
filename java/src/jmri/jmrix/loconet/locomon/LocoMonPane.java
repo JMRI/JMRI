@@ -93,6 +93,23 @@ public class LocoMonPane extends jmri.jmrix.AbstractMonPane implements LocoNetLi
 
     jmri.jmrix.loconet.locomon.Llnmon llnmon = new jmri.jmrix.loconet.locomon.Llnmon();
 
+    protected boolean isFiltered(String raw) {
+        //expects raw to be formatted like "BB 01 00 45", so extract the value of the 1st byte
+        if (raw != null && raw.length() >= 7) {
+            // if first bytes are in the skip list,  exit without adding to the Swing thread
+            String[] filters = filterField.getText().toUpperCase().split(" ");
+            String checkRaw = raw.substring(0, 2);
+
+            for (String s : filters) {
+                if (s.equals(checkRaw)) {
+                    linesBuffer.setLength(0);
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     /**
      * Nested class to create one of these using old-style defaults
      */

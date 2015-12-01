@@ -775,7 +775,7 @@ public class DefaultConditionalAction implements ConditionalAction {
                 case Conditional.ACTION_DELAYED_SENSOR:
                     str = str + rbx.getString("After") + " ";
                     try {
-                        Integer.parseInt(_actionString);
+                        Float.parseFloat(_actionString);
                         str = str + _actionString + " " + rbx.getString("Seconds") + ".";
                     } catch (NumberFormatException nfe) {
                         str = str + _actionString + " " + rbx.getString("ValueInMemory")

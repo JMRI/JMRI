@@ -31,11 +31,12 @@ public class SerialLightManagerXml extends jmri.managers.configurexml.AbstractLi
         log.error("Invalid method called");
     }
 
-    public boolean load(Element lights) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         // create the master object
         SerialLightManager.instance();
         // load individual lights
-        return loadLights(lights);
+        return loadLights(shared);
     }
 
     static Logger log = LoggerFactory.getLogger(SerialLightManagerXml.class.getName());

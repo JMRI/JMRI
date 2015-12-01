@@ -78,6 +78,10 @@
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV100_CV187_wow.xml"/>
 			<xi:include href="http://jmri.org/xml/decoders/tcs/CV249_CV252_FW86.xml" />
 			<xi:include href="http://jmri.org/xml/decoders/tcs/wowDieselCV.xml" />
+			<variable item="Sound Option 3" CV="248" default="1" readOnly="yes">
+				<decVal/>
+				<label>Sound Set</label>
+			</variable>
 			<!-- Sound function mapping -->
 			<variable item="Function 0 Sound" CV="T2CV.1.0" default="65535" mask="VVVVVVVVVVVVVVVV">
 				<xi:include href="http://jmri.org/xml/decoders/tcs/enumEMDV1.xml"/>  
@@ -182,7 +186,7 @@
 			<!-- Individual volume -->
 			<variable item="Volume 0-0" CV="T3CV.2.0.0" default="100">
 				<decVal max="100"/>
-				<label>Air Compressor Air Compressor</label>
+				<label>Air Compressor</label>
 			</variable>
 			<variable item="Volume 0-1" CV="T3CV.2.0.1" default="100">
 				<decVal max="100"/>

@@ -29,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user edit of track loads
  *
- * @author Dan Boudreau Copyright (C) 2013, 2014
+ * @author Dan Boudreau Copyright (C) 2013, 2014, 2015
  * @version $Revision: 22371 $
  */
 public class TrackLoadEditFrame extends OperationsFrame implements java.beans.PropertyChangeListener {
@@ -70,6 +70,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     // check boxes
     JCheckBox loadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
     JCheckBox shipLoadAndTypeCheckBox = new JCheckBox(Bundle.getMessage("TypeAndLoad"));
+    JCheckBox holdCars = new JCheckBox();
 
     // radio buttons
     JRadioButton loadNameAll = new JRadioButton(Bundle.getMessage("AcceptAll"));
@@ -204,6 +205,14 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         shipLoadGroup.add(shipLoadNameAll);
         shipLoadGroup.add(shipLoadNameInclude);
         shipLoadGroup.add(shipLoadNameExclude);
+        
+        JPanel pOptions = new JPanel();
+        pOptions.setLayout(new GridBagLayout());
+        pOptions.setBorder(BorderFactory.createTitledBorder(Bundle.getMessage("Options")));
+        pOptions.setMaximumSize(new Dimension(2000, 400));
+        addItem(pOptions, holdCars, 0, 0);
+        holdCars.setText(Bundle.getMessage("HoldCarsWithCustomLoads"));
+        holdCars.setToolTipText(Bundle.getMessage("HoldCarsWithCustomLoadsTip"));
 
         // row 12
         JPanel panelButtons = new JPanel();
@@ -219,6 +228,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
         getContentPane().add(paneLoads);
         getContentPane().add(paneShipLoadControls);
         getContentPane().add(paneShipLoads);
+        getContentPane().add(pOptions);
         getContentPane().add(panelButtons);
 
         // setup buttons
@@ -245,6 +255,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         paneShipLoadControls.setVisible(false);
         paneShipLoads.setVisible(false);
+        pOptions.setVisible(false);
 
         // load fields and enable buttons
         if (_track != null) {
@@ -253,7 +264,8 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
             // only show ship loads for staging tracks
             paneShipLoadControls.setVisible(_track.getTrackType().equals(Track.STAGING));
             paneShipLoads.setVisible(_track.getTrackType().equals(Track.STAGING));
-
+            pOptions.setVisible(_track.getTrackType().equals(Track.SPUR));
+            holdCars.setSelected(_track.isHoldCarsWithCustomLoadsEnabled());
             updateButtons(true);
         } else {
             updateButtons(false);
@@ -272,6 +284,9 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
 
         loadAndTypeCheckBox.setSelected(loadAndType);
         shipLoadAndTypeCheckBox.setSelected(shipLoadAndType);
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_LoadOptions", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth600, Control.panelHeight400));
     }
@@ -331,6 +346,7 @@ public class TrackLoadEditFrame extends OperationsFrame implements java.beans.Pr
     @edu.umd.cs.findbugs.annotations.SuppressFBWarnings(value = "ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD")
     protected void save() {
         checkForErrors();
+        _track.setHoldCarsWithCustomLoadsEnabled(holdCars.isSelected());
         // save the last state of the "Use car type and load" checkbox
         loadAndType = loadAndTypeCheckBox.isSelected();
         shipLoadAndType = shipLoadAndTypeCheckBox.isSelected();

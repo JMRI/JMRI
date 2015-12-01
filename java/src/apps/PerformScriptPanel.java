@@ -14,6 +14,8 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import jmri.InstanceManager;
+import jmri.profile.ProfileManager;
 import jmri.swing.PreferencesPanel;
 
 /**
@@ -69,6 +71,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
             if (i.model.getFileName() == null) {
                 return;  // cancelled
             }
+            InstanceManager.getDefault(StartupActionsManager.class).addModel(i.model);
             add(i);
             revalidate();
             repaint();
@@ -115,7 +118,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
 
     @Override
     public void savePreferences() {
-        // do nothing - the persistant manager will take care of this
+        InstanceManager.getDefault(StartupActionsManager.class).savePreferences(ProfileManager.getDefault().getActiveProfile());
     }
 
     @Override
@@ -184,6 +187,7 @@ public class PerformScriptPanel extends JPanel implements PreferencesPanel {
                 parent.repaint();
                 // unlink to encourage garbage collection
                 removeButton.removeActionListener(this);
+                InstanceManager.getDefault(StartupActionsManager.class).removeModel(model);
                 model = null;
                 dirty = true;
             }

@@ -62,18 +62,18 @@ public class SimpleSensorServer extends AbstractSensorServer {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor INACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            setSensorInactive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else if (statusString.contains("ACTIVE")) {
             if (log.isDebugEnabled()) {
                 log.debug("Setting Sensor ACTIVE");
             }
-            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)));
-            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)));
+            initSensor(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
+            setSensorActive(statusString.substring(index, statusString.indexOf(" ", index + 1)).toUpperCase());
         } else {
             // default case, return status for this sensor/
-            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index));
-            sendStatus(statusString.substring(index), sensor.getKnownState());
+            Sensor sensor = jmri.InstanceManager.sensorManagerInstance().provideSensor(statusString.substring(index).toUpperCase());
+            sendStatus(statusString.substring(index).toUpperCase(), sensor.getKnownState());
 
         }
     }

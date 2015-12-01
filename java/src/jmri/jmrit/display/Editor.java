@@ -118,9 +118,6 @@ import org.slf4j.LoggerFactory;
 abstract public class Editor extends JmriJFrame implements MouseListener, MouseMotionListener,
         ActionListener, KeyListener, java.beans.VetoableChangeListener {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = -8861685536112059782L;
     final public static int BKG = 1;
     final public static int TEMP = 2;
@@ -2911,9 +2908,6 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
 
     class TextAttrDialog extends JDialog {
 
-        /**
-         *
-         */
         private static final long serialVersionUID = 6801138901620891961L;
         Positionable _pos;
         jmri.jmrit.display.palette.DecoratorPanel _decorator;
@@ -2942,9 +2936,9 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
                     PositionablePopupUtil util = _decorator.getPositionablePopupUtil();
                     _decorator.getText(_pos);
                     if (_selectionGroup == null) {
-                        setAttributes(util, _pos, _decorator.isOpaque());
+                        setAttributes(util, _pos);
                     } else {
-                        setSelectionsAttributes(util, _pos, _decorator.isOpaque());
+                        setSelectionsAttributes(util, _pos);
                     }
                     dispose();
                 }
@@ -2969,40 +2963,39 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
      *
      * @param newUtil
      * @param p
-     * @param isOpaque
      */
-    protected void setAttributes(PositionablePopupUtil newUtil, Positionable p, boolean isOpaque) {
+    protected void setAttributes(PositionablePopupUtil newUtil, Positionable p) {
         p.setPopupUtility(newUtil.clone(p, p.getTextComponent()));
-        p.setOpaque(isOpaque);
+        int mar = newUtil.getMargin();
+        int bor = newUtil.getBorderSize();
+        javax.swing.border.Border outlineBorder;
+        if (bor == 0) {
+            outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
+        } else {
+            outlineBorder = new javax.swing.border.LineBorder(newUtil.getBorderColor(), bor);
+        }
+        javax.swing.border.Border borderMargin;
+        if (newUtil.hasBackground()) {
+            borderMargin = new javax.swing.border.LineBorder(p.getBackground(), mar);
+        } else {
+            borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
+        }
         if (p instanceof PositionableLabel) {
             PositionableLabel pos = (PositionableLabel) p;
-            if (!pos.isText() || (pos.isText() && pos.isIcon())) {
-                return;
-            } else {
+            if (pos.isText() && !pos.isIcon()) {
                 int deg = pos.getDegrees();
-                if (deg != 0) {
-                    pos.setOpaque(false);
-                    pos.saveOpaque(isOpaque);
-                    pos.rotate(0);
-                    int mar = newUtil.getMargin();
-                    int bor = newUtil.getBorderSize();
-                    javax.swing.border.Border outlineBorder;
-                    if (bor == 0) {
-                        outlineBorder = BorderFactory.createEmptyBorder(0, 0, 0, 0);
-                    } else {
-                        outlineBorder = new javax.swing.border.LineBorder(newUtil.getBorderColor(), bor);
-                    }
-                    javax.swing.border.Border borderMargin;
-                    if (isOpaque) {
-                        borderMargin = new javax.swing.border.LineBorder(pos.getBackground(), mar);
-                    } else {
-                        borderMargin = BorderFactory.createEmptyBorder(mar, mar, mar, mar);
-                    }
-                    pos.setBorder(new javax.swing.border.CompoundBorder(outlineBorder, borderMargin));
-                    pos.setOpaque(isOpaque);
-                    pos.rotate(deg);
+                pos.rotate(0);
+                pos.setBorder(new javax.swing.border.CompoundBorder(outlineBorder, borderMargin));
+                if (deg == 0) {
+                    p.setOpaque(newUtil.hasBackground());
+                } else {
+                    pos.rotate(deg);                    
                 }
             }
+        } else if (p instanceof PositionableJPanel) {
+            p.setOpaque(newUtil.hasBackground());
+            p.getTextComponent().setOpaque(newUtil.hasBackground());
+            p.setBorder(new javax.swing.border.CompoundBorder(outlineBorder, borderMargin));
         }
         p.updateSize();
         p.repaint();
@@ -3014,11 +3007,11 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         }
     }
 
-    protected void setSelectionsAttributes(PositionablePopupUtil util, Positionable pos, boolean isOpaque) {
+    protected void setSelectionsAttributes(PositionablePopupUtil util, Positionable pos) {
         if (_selectionGroup != null && _selectionGroup.contains(pos)) {
             for (Positionable p : _selectionGroup) {
                 if (p instanceof PositionableLabel) {
-                    setAttributes(util, p, false);
+                    setAttributes(util, p);
                 }
             }
         }

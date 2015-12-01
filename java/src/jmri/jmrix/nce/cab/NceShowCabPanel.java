@@ -129,9 +129,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private static final int CAB_MIN_USB = 2;			// USB cabs start at 2
     private static final int CAB_MIN_PRO = 2;			// Serial cabs start at 2
     private static final int CAB_MAX_USB = 10;			// There are up to 10 cabs
-    private static final int CAB_MAX_PRO = 64;			// There are up to 64 cabs
+    private static final int CAB_MAX_PRO = 65;			// There are up to 64 cabs plus the serial computer cab
     private static final int CAB_LINE_LEN = 16;			// display line length of 16 bytes	
-    private static final int CAB_MAX_CABDATA = 65;		// Size for arrays. One more than highest cab number
+    private static final int CAB_MAX_CABDATA = 66;		// Size for arrays. One more than highest cab number
 
     Thread NceCabUpdateThread;
 
@@ -142,6 +142,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     private int[] cabLocoArray = new int[CAB_MAX_CABDATA];
     private boolean[] cabLongShortArray = new boolean[CAB_MAX_CABDATA];
     private int[] cabConsistArray = new int[CAB_MAX_CABDATA];
+    private int[] cabConsistPosArray = new int[CAB_MAX_CABDATA];
     private int[] cabF0Array = new int[CAB_MAX_CABDATA];
     private int[] cabF5Array = new int[CAB_MAX_CABDATA];
     private int[] cabF13Array = new int[CAB_MAX_CABDATA];
@@ -160,6 +161,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
     JLabel textAddress = new JLabel(rb.getString("Loco"));
     JLabel textSpeed = new JLabel(rb.getString("Speed"));
     JLabel textConsist = new JLabel(rb.getString("Consist"));
+    JLabel textConsistPos = new JLabel(rb.getString("ConsistPos"));
     JLabel textFunctions = new JLabel(rb.getString("Functions"));
     JLabel textDisplay1 = new JLabel(rb.getString("Display1"));
     JLabel textDisplay2 = new JLabel(rb.getString("Display2"));
@@ -197,6 +199,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         String dir;
         String mode;
         int consist;
+        String consistPos;
         boolean F0;
         boolean F1;
         boolean F2;
@@ -510,7 +513,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     cabsFound++;
                 }
                 int cabType = recChar & NceCmdStationMemory.FLAGS1_MASK_CABTYPE; // mask off don't care bits
-                if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
+                if (currCabId == CAB_MAX_PRO) {
+                    cabData[currCabId].type = rb.getString("TypeSerial");
+                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_DISPLAY) {
                     cabData[currCabId].type = rb.getString("TypeProCab");
                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_NODISP) {
                     cabData[currCabId].type = rb.getString("TypeCab04");	// Cab04 or Cab06
@@ -530,7 +535,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         return;
                     }
                     processAiuData(currCabId, recChars);
-                } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
+//                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                     // I don't have anything to do for the USB at this time
                 } else {
                     // read 16 bytes of memory, we'll use 7 of the 16
@@ -569,7 +574,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     int mode = readChar & 0x02;
                     // USB doesn't use the 28/128 bit
-                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) || (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
+                    cabData[currCabId].mode = "";
+                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) && (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
                         if (mode > 0) {
                             cabData[currCabId].mode = "128";
                         } else {
@@ -583,6 +589,19 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         log.debug("Read address high character " + readChar);
                     }
                     int locoAddress = (readChar & 0x3F) * 256;
+                    boolean aType = ((readChar & 0xC0) == 0xC0) ? true : false;
+                    if (cabLongShortArray[currCabId] != aType) {
+                        foundChange++;
+                        if (log.isDebugEnabled()) {
+                            log.debug(currCabId + ": Long " + aType + "<->" + cabLongShortArray[currCabId]);
+                        }
+                    }
+                    cabLongShortArray[currCabId] = aType;
+                    if (aType) {
+                        cabData[currCabId].longShort = rb.getString("IsLongAddr");
+                    } else {
+                        cabData[currCabId].longShort = rb.getString("IsShortAddr");
+                    }
                     // read the low address byte
                     readChar = recChars[CabMemorySerial.CAB_ADDR_L - CabMemorySerial.CAB_CURR_SPEED];
                     if (log.isDebugEnabled()) {
@@ -608,6 +627,17 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabConsistArray[currCabId] = readChar;
                     cabData[currCabId].consist = readChar;
+
+                    // show consist position if relevant
+                    int pos = cabFlagsArray[currCabId] & NceCmdStationMemory.FLAGS_MASK_CONSIST_REAR;
+                    cabData[currCabId].consistPos = "";
+                    if (cabConsistArray[currCabId] != 0) {
+                        if (pos > 0) {
+                            cabData[currCabId].consistPos = rb.getString("IsRear");
+                        } else {
+                            cabData[currCabId].consistPos = rb.getString("IsLead");
+                        }
+                    }
 
                     // get the functions 0-4 values
                     readChar = recChars[CabMemorySerial.CAB_FUNC_L - CabMemorySerial.CAB_CURR_SPEED];
@@ -821,7 +851,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                         return;
                     }
                     processAiuData(currCabId, recChars);
-                } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
+//                 } else if (cabType == NceCmdStationMemory.FLAGS1_CABTYPE_USB) {
                     // I don't have anything to do for the USB at this time
                 } else {
                     setUsbCabMemoryPointer(currCabId, CabMemoryUsb.CAB_CURR_SPEED);
@@ -909,7 +939,8 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     int mode = readChar & 0x02;
                     // USB doesn't use the 28/128 bit
-                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) || (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
+                    cabData[currCabId].mode = "";
+                    if ((cabType != NceCmdStationMemory.FLAGS1_CABTYPE_USB) && (cabType != NceCmdStationMemory.FLAGS1_CABTYPE_AIU)) {
                         if (mode > 0) {
                             cabData[currCabId].mode = "128";
                         } else {
@@ -967,6 +998,17 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                     }
                     cabConsistArray[currCabId] = readChar;
                     cabData[currCabId].consist = readChar;
+
+                    // show consist position if relevant
+                    int pos = cabFlagsArray[currCabId] & NceCmdStationMemory.FLAGS_MASK_CONSIST_REAR;
+                    cabData[currCabId].consistPos = "";
+                    if (cabConsistArray[currCabId] != 0) {
+                        if (pos > 0) {
+                            cabData[currCabId].consistPos = rb.getString("IsRear");
+                        } else {
+                            cabData[currCabId].consistPos = rb.getString("IsLead");
+                        }
+                    }
 
                     // get the functions 13-20 values
                     setUsbCabMemoryPointer(currCabId, CabMemoryUsb.CAB_FUNC_13_20);
@@ -1543,7 +1585,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // Write 1 byte of NCE cab memory 
     private void writeCabMemory1(int cabNum, int offset, int value) {
-        int nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryWrite1(nceCabAddr);
@@ -1554,7 +1596,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // Reads 1 byte of NCE cab memory 
     private void readCabMemory1(int cabNum, int offset) {
-        int nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_1;			// Expect 1 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead1(nceCabAddr);
@@ -1564,12 +1606,23 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
 
     // Reads 16 bytes of NCE cab memory 
     private void readCabMemory16(int cabNum, int offset) {
-        int nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        int nceCabAddr = getNceCabAddr(cabNum, offset);
         replyLen = NceMessage.REPLY_16;			// Expect 16 byte response
         waiting++;
         byte[] bl = NceBinaryCommand.accMemoryRead(nceCabAddr);
         NceMessage m = NceMessage.createBinaryMessage(tc, bl, NceMessage.REPLY_16);
         tc.sendNceMessage(m, this);
+    }
+
+    // Reads 16 bytes of NCE cab memory 
+    private int getNceCabAddr(int cabNum, int offset) {
+        int nceCabAddr;
+        if (cabNum < CAB_MAX_PRO) {
+            nceCabAddr = (cabNum * CabMemorySerial.CAB_SIZE) + CabMemorySerial.CS_CAB_MEM_PRO + offset;
+        } else {
+            nceCabAddr = CabMemorySerial.CS_COMP_CAB_MEM_PRO + offset;
+        }
+        return nceCabAddr;
     }
 
     // USB set cab memory pointer
@@ -1705,6 +1758,7 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
             rb.getString("ColHeaderDir"),
             rb.getString("ColHeaderMode"),
             rb.getString("ColHeaderConsist"),
+            rb.getString("ColHeaderConsistPos"),
             rb.getString("ColHeaderF0"),
             rb.getString("ColHeaderF1"),
             rb.getString("ColHeaderF2"),
@@ -1822,68 +1876,70 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 case 8:
                     return r.consist;
                 case 9:
-                    return r.F0;
+                    return r.consistPos;
                 case 10:
-                    return r.F1;
+                    return r.F0;
                 case 11:
-                    return r.F2;
+                    return r.F1;
                 case 12:
-                    return r.F3;
+                    return r.F2;
                 case 13:
-                    return r.F4;
+                    return r.F3;
                 case 14:
-                    return r.F5;
+                    return r.F4;
                 case 15:
-                    return r.F6;
+                    return r.F5;
                 case 16:
-                    return r.F7;
+                    return r.F6;
                 case 17:
-                    return r.F8;
+                    return r.F7;
                 case 18:
-                    return r.F9;
+                    return r.F8;
                 case 19:
-                    return r.F10;
+                    return r.F9;
                 case 20:
-                    return r.F11;
+                    return r.F10;
                 case 21:
-                    return r.F12;
+                    return r.F11;
                 case 22:
-                    return r.F13;
+                    return r.F12;
                 case 23:
-                    return r.F14;
+                    return r.F13;
                 case 24:
-                    return r.F15;
+                    return r.F14;
                 case 25:
-                    return r.F16;
+                    return r.F15;
                 case 26:
-                    return r.F17;
+                    return r.F16;
                 case 27:
-                    return r.F18;
+                    return r.F17;
                 case 28:
-                    return r.F19;
+                    return r.F18;
                 case 29:
-                    return r.F20;
+                    return r.F19;
                 case 30:
-                    return r.F21;
+                    return r.F20;
                 case 31:
-                    return r.F22;
+                    return r.F21;
                 case 32:
-                    return r.F23;
+                    return r.F22;
                 case 33:
-                    return r.F24;
+                    return r.F23;
                 case 34:
-                    return r.F25;
+                    return r.F24;
                 case 35:
-                    return r.F26;
+                    return r.F25;
                 case 36:
-                    return r.F27;
+                    return r.F26;
                 case 37:
-                    return r.F28;
+                    return r.F27;
                 case 38:
-                    return r.text1;
+                    return r.F28;
                 case 39:
-                    return r.text2;
+                    return r.text1;
                 case 40:
+                    return r.text2;
+                case 41:
                     return r.lastChange;
             }
             return null;
@@ -1899,9 +1955,9 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
         public Class<?> getColumnClass(int c) {
             if (c == 0 || c == 4 || c == 5 || c == 6 || c == 8) {
                 return Integer.class;
-            } else if (c == 1 || c == 3 || c == 7 || (c >= 38 && c <= 40)) {
+            } else if (c == 1 || c == 3 || c == 7 || c == 9 || (c >= 39 && c <= 41)) {
                 return String.class;
-            } else if (c >= 9 && c <= 37) {
+            } else if (c >= 10 && c <= 38) {
                 return Boolean.class;
             } else if (c == 2) {
                 return JButton.class;
@@ -1924,11 +1980,13 @@ public class NceShowCabPanel extends jmri.jmrix.nce.swing.NcePanel implements jm
                 width = new JTextField(3).getPreferredSize().width;
             } else if (col <= 8) {
                 width = new JTextField(4).getPreferredSize().width;
-            } else if (col <= 37) {
+            } else if (col <= 9) {
+                width = new JTextField(2).getPreferredSize().width;
+            } else if (col <= 38) {
                 width = new JCheckBox().getPreferredSize().width;
-            } else if (col <= 39) {
-                width = new JTextField(10).getPreferredSize().width;
             } else if (col <= 40) {
+                width = new JTextField(10).getPreferredSize().width;
+            } else if (col <= 41) {
                 width = new JTextField(6).getPreferredSize().width;
             } else {
                 width = 0;
