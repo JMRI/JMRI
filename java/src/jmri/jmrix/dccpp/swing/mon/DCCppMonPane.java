@@ -118,10 +118,10 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	case DCCppConstants.CURRENT_REPLY:
 	    text = "Current: " + l.getCurrentString() + " / 1024";
 	    break;
-	case DCCppConstants.LISTPACKET_REPLY:
-	    // TODO: Implement this fully
-	    text = "List Packet Reply...\n";
-	    break;
+//	case DCCppConstants.LISTPACKET_REPLY:
+//	    // TODO: Implement this fully
+//	    text = "List Packet Reply...\n";
+//	    break;
 	case DCCppConstants.MEMORY_REPLY:
 	    // TODO: Implement this fully
 	    text = "Memory Reply...\n";

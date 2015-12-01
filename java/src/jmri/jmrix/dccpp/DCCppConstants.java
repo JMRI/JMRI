@@ -72,10 +72,11 @@ public final class DCCppConstants {
     public final static char POWER_REPLY      = 'p';
     public final static char CURRENT_REPLY    = 'a';
     public final static char MEMORY_REPLY     = 'f';
-    public final static char LISTPACKET_REPLY = 'L';
+//    public final static char LISTPACKET_REPLY = 'M';
     public final static char SENSOR_REPLY     = 'Q';
     public final static char SENSOR_REPLY_H   = 'q';
     public final static char SENSOR_REPLY_L   = 'Q';
+    public final static char WRITE_EEPROM_REPLY = 'e';
     public final static char MADC_FAIL_REPLY  = 'X';
     public final static char MADC_SUCCESS_REPLY = 'O';
 
@@ -125,8 +126,10 @@ public final class DCCppConstants {
     public final static String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+)\\s*";
     public final static String MADC_FAIL_REPLY_REGEX = "\\s*X\\s*";
     public final static String MADC_SUCCESS_REPLY_REGEX = "\\s*O\\s*";
-    public final static String STATUS_REPLY_REGEX = "iDCC\\+\\+(.*): BUILD (.*)";
+//    public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+.*): BUILD (.*)";
+    public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)";
     public final static String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
+    public final static String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
