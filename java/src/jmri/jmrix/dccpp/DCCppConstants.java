@@ -54,7 +54,7 @@ public final class DCCppConstants {
     public final static char TRACK_POWER_OFF        = '0'; // Track power OFF
     public final static char READ_TRACK_CURRENT     = 'c'; // Read current draw on ops track
     public final static char READ_CS_STATUS         = 's'; // Read status from command station
-    public final static char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
+//    public final static char QUERY_SENSOR_STATE     = 'q'; // Query state of sensor
     public final static char WRITE_TO_EEPROM_CMD    = 'E'; // Store settings to eeprom  -- NEW V1.1
     public final static char CLEAR_EEPROM_CMD       = 'e'; // Clear EEPROM settings     -- NEW V1.1
 
@@ -93,8 +93,8 @@ public final class DCCppConstants {
     public final static String WRITE_TO_EEPROM_REGEX = "E";
     public final static String CLEAR_EEPROM_REGEX = "e";
 
-    public final static String OPS_WRITE_BYTE_REGEX = " "; // TODO
-    public final static String OPS_WRITE_BIT_REGEX = " "; // TODO
+    public final static String OPS_WRITE_BYTE_REGEX = "\\s*w\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s*"; // TODO
+    public final static String OPS_WRITE_BIT_REGEX = "\\s*b\\s*(\\d+)\\s+(\\d+)\\s+([0-7])\\s+([01])\\s*"; // TODO
     
     public final static String PROG_WRITE_BYTE_REGEX = "W\\s*(\\d+)\\s(\\d+)\\s(\\d+)\\s(\\d+)";
     public final static String PROG_WRITE_BIT_REGEX = "B\\s*(\\d+)\\s([0-7])\\s([1,0])\\s(\\d+)\\s(\\d+)";
@@ -111,17 +111,22 @@ public final class DCCppConstants {
     // Reply Regexes
     public final static String THROTTLE_REPLY_REGEX = "\\s*T\\s*(\\d+)\\s+([-]*\\d+)\\s+([1,0])\\s*";
     public final static String TURNOUT_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+([1,0])\\s*";
+    public final static String TURNOUT_DEF_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([0|1])\\s*";
     public final static String LIST_TURNOUTS_REPLY_REGEX = "\\s*H\\s*(\\d+)\\s+(\\d+)\\s+(\\d+)\\s+([1,0])\\s*";
     public final static String LIST_SENSORS_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0,1])\\s*";
     public final static String PROGRAM_REPLY_REGEX = "\\s*r\\s*(\\d+)\\|(\\d+)\\|(\\d+)\\s+(\\d+)(\\s+(\\d+))?\\s*";
     public final static String CURRENT_REPLY_REGEX = "\\s*a\\s*(\\d+)";
     public final static String TRACK_POWER_REPLY_REGEX = "\\s*p\\s*([0,1])\\s*";
-    public final static String SENSOR_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+([0,1])\\s*";
+    //public final static String SENSOR_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+([0,1])\\s*";
+    public final static String SENSOR_REPLY_REGEX = "\\s*[Qq]\\s*(\\d+)\\s*";
+    public final static String SENSOR_DEF_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s+(\\d+)\\s+([0|1])\\s*";
     public final static String SENSOR_ACTIVE_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s*";
     public final static String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+)\\s*";
     public final static String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+)\\s*";
     public final static String MADC_FAIL_REPLY_REGEX = "\\s*X\\s*";
     public final static String MADC_SUCCESS_REPLY_REGEX = "\\s*O\\s*";
+    public final static String STATUS_REPLY_REGEX = "iDCC\\+\\+(.*): BUILD (.*)";
+    public final static String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
