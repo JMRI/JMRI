@@ -181,6 +181,9 @@ public class TrainBuilder extends TrainCommon {
             if (Setup.isCarRoutingViaYardsEnabled()) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("RoutingViaYardsEnabled"));
             }
+            if (Setup.isCarRoutingViaStagingEnabled()) {
+                addLine(_buildReport, FIVE, Bundle.getMessage("RoutingViaStagingEnabled"));
+            }
             if (Setup.isOnlyActiveTrainsEnabled()) {
                 addLine(_buildReport, FIVE, Bundle.getMessage("OnlySelectedTrains"));
                 // list the selected trains
