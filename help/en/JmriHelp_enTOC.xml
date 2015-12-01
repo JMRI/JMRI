@@ -166,7 +166,7 @@
 
    <tocitem text="Setting the Internal Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 
-   <tocitem text="The LocoNet lock " target="html.tools.fastclock.LocoNetClock"/>
+   <tocitem text="The LocoNet Clock " target="html.tools.fastclock.LocoNetClock"/>
 
   </tocitem>
   <tocitem text="Lights " target="html.tools.Lights">
