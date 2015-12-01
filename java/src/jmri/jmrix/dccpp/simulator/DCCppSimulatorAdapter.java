@@ -404,7 +404,8 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 	    generateReadCSStatusReply(); // Handle this special.
 	    break;
 
-	case DCCppConstants.QUERY_SENSOR_STATE:
+        /*
+        case DCCppConstants.QUERY_SENSOR_STATE:
 	    // Obsolete ??
 	    log.debug("QUERY_SENSOR_STATUS detected");
 	    s = msg.toString();
@@ -431,7 +432,7 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		return(null);
 	    }
 	    break;
-		
+	*/	
 	case DCCppConstants.FUNCTION_CMD:
 	case DCCppConstants.ACCESSORY_CMD:
 	case DCCppConstants.OPS_WRITE_CV_BYTE:

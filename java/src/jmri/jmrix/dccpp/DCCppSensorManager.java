@@ -46,29 +46,39 @@ public class DCCppSensorManager extends jmri.managers.AbstractSensorManager impl
         tc = controller;
         tc.addDCCppListener(DCCppInterface.FEEDBACK, this);
         this.prefix = prefix;
+        DCCppMessage msg = DCCppMessage.getSensorListMsg();
+        //Then Send the version request to the controller
+        tc.sendDCCppMessage(msg, this);
+
     }
 
     // listen for sensors, creating them as needed
     public void message(DCCppReply l) {
+        int addr = 0;
         if (log.isDebugEnabled()) {
             log.debug("recieved message: " + l);
         }
-	int addr = l.getSensorNumInt();
-	if (l.isSensorReply()) {
-	    if (log.isDebugEnabled()) {
-		log.debug("Message for feedback encoder " + addr);
-	    }
-	    String s = prefix + typeLetter() + (addr);
-	    if (null == getBySystemName(s)) {
-		// The sensor doesn't exist.  We need to create a 
-		// new sensor, and forward this message to it.
-		((DCCppSensor) provideSensor(s)).initmessage(l);
-	    } else {
-		// The sensor exists.  We need to forward this 
-		// message to it.
-		((DCCppSensor) getBySystemName(s)).message(l);
-	    }
-	}
+        if (l.isSensorDefReply()) {
+            addr = l.getSensorDefNumInt();
+            if (log.isDebugEnabled()) {
+                log.debug("SensorDef Reply for Encoder " + Integer.toString(addr));
+            }
+            
+        } else if (l.isSensorReply()) {
+            addr = l.getSensorNumInt();
+            log.debug("Sensor Status Reply for Encoder" + Integer.toString(addr));
+        }
+        String s = prefix + typeLetter() + (addr);
+        if (null == getBySystemName(s)) {
+            // The sensor doesn't exist.  We need to create a 
+            // new sensor, and forward this message to it.
+            ((DCCppSensor) provideSensor(s)).initmessage(l);
+        } else {
+            // The sensor exists.  We need to forward this 
+            // message to it.
+            ((DCCppSensor) getBySystemName(s)).message(l);
+        }
+
     }
 
     // listen for the messages to the LI100/LI101

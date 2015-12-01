@@ -67,7 +67,8 @@ public class DCCppCommandStation implements jmri.jmrix.DccCommandStation, jmri.C
 	// V1.1 Syntax
 	//String syntax = "iDCC\\+\\+BASE STATION FOR ARDUINO \\b(\\w+)\\b \\/ (ARDUINO|POLOLU\\sMC33926) MOTOR SHIELD: BUILD ((\\d+\\s\\w+\\s\\d+)\\s+(\\d+:\\d+:\\d+))";
 	// V1.0/V1.1 Simplified
-	String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
+	//String syntax = "iDCC\\+\\+(.*): BUILD (.*)";
+        String syntax = DCCppConstants.STATUS_REPLY_REGEX;
 	String s = l.toString();
 	try {
 	    Pattern p = Pattern.compile(syntax);

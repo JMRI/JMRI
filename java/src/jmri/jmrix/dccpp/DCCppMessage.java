@@ -174,7 +174,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    (this.match(DCCppConstants.TRACK_POWER_REGEX) != null)  ||
 	    (this.match(DCCppConstants.READ_TRACK_CURRENT_REGEX) != null) ||
 	    (this.match(DCCppConstants.READ_CS_STATUS_REGEX) != null)  ||
-	    (this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null) ||
+	    //(this.match(DCCppConstants.QUERY_SENSOR_REGEX) != null) ||
 	    (this.match(DCCppConstants.WRITE_DCC_PACKET_MAIN_REGEX) != null) ||
 	    (this.match(DCCppConstants.WRITE_DCC_PACKET_PROG_REGEX) != null) ||
 	    (this.match(DCCppConstants.GET_FREE_MEMORY_REGEX) != null)||
@@ -195,13 +195,13 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed {} Command: {} Pattern: {}",name, s, p.toString());
+		log.error("Malformed {} Command: {} Pattern: {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);
 
 	} catch (PatternSyntaxException e) {
-            log.error("Malformed DCC++ message syntax! ");
+            log.error("Malformed DCC++ message syntax! s = ", pat);
 	    return(null);
         } catch (IllegalStateException e) {
             log.error("Group called before match operation executed string= " + s);
@@ -220,10 +220,12 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isSensorMessage() { return(this.getOpCodeChar() == DCCppConstants.SENSOR_CMD); }
     public boolean isEEPROMWriteMessage() { return(this.getOpCodeChar() == DCCppConstants.WRITE_TO_EEPROM_CMD); }
     public boolean isEEPROMClearMessage() { return(this.getOpCodeChar() == DCCppConstants.CLEAR_EEPROM_CMD); }
+    public boolean isOpsWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.OPS_WRITE_CV_BYTE); }
+    public boolean isOpsWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.OPS_WRITE_CV_BIT); }
     public boolean isProgWriteByteMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BYTE); }
     public boolean isProgWriteBitMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_WRITE_CV_BIT); }
     public boolean isProgReadMessage() { return(this.getOpCodeChar() == DCCppConstants.PROG_READ_CV); }
-    public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
+    //public boolean isQuerySensorMessage() { return(this.getOpCodeChar() == DCCppConstants.QUERY_SENSOR_STATE); }
 
     public boolean isTurnoutCmdMessage() { return(this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null); }
     public boolean isTurnoutAddMessage() { return(this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null); }
@@ -233,9 +235,9 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isSensorDeleteMessage() { return(this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null); }
     public boolean isListSensorsMessage() { return(this.match(DCCppConstants.LIST_SENSORS_REGEX) != null); }
 
-
     //------------------------------------------------------
     // Helper methods for Sensor Query Commands
+    /*
     public String getSensorNumString() {
 	if (this.isAccessoryMessage()) {
 	    Matcher m = match(this.toString(), DCCppConstants.QUERY_SENSOR_REGEX, "Sensor");
@@ -252,7 +254,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public int getSensorNumInt() {
 	return(Integer.parseInt(this.getSensorNumString()));
     }
-
+    */
     public String getSensorIDString() {
 	Matcher m;
 	if (this.isSensorAddMessage()) {
@@ -269,9 +271,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getSensorIDInt() {
@@ -286,9 +289,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getSensorPinInt() {
@@ -311,9 +315,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Sensor Parser called on non-Sensor message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -328,9 +333,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getAccessoryAddrInt() {
@@ -345,9 +351,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
-	return("0");
+            return("0");
+        }
     }
 
     public int getAccessorySubInt() {
@@ -370,9 +377,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -388,9 +396,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getRegisterInt() {
@@ -405,9 +414,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getAddressInt() {
@@ -422,9 +432,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getSpeedInt() {
@@ -448,9 +459,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Throttle Parser called on non-Throttle message type {}", this.getOpCodeChar());
 	    return(0);
+        }
     }
 
     //------------------------------------------------------
@@ -464,9 +476,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getFuncAddressInt() {
@@ -481,9 +494,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getFuncByte1Int() {
@@ -498,9 +512,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("");
 	    }
-	} else 
+	} else {
 	    log.error("Function Parser called on non-Function message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getFuncByte2Int() {
@@ -522,9 +537,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
+        }
     }
 
     public int getTOIDInt() {
@@ -547,9 +563,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return(0);
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
+        }
     }
 
 
@@ -561,9 +578,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
+        }
     }
 
     public int getTOAddressInt() {
@@ -578,15 +596,106 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return("0");
+        }
     }
 
     public int getTOSubAddressInt() {
 	return(Integer.parseInt(this.getTOSubAddressString()));
     }
 
+    //------------------------------------------------------
+    // Helper methods for Ops Write Byte Commands
+
+     public String getOpsWriteAddrString() {
+	Matcher m;
+	if (this.isOpsWriteByteMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else if (this.isOpsWriteBitMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(1));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteAddrInt() {
+	return(Integer.parseInt(this.getOpsWriteAddrString()));
+	
+ 
+    }
+
+    public String getOpsWriteCVString() {
+	Matcher m;
+	if (this.isOpsWriteByteMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else if (this.isOpsWriteBitMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(2));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteCVInt() {
+	return(Integer.parseInt(this.getOpsWriteCVString())); 
+    }
+    
+    public String getOpsWriteBitString() {
+	Matcher m;
+        if (this.isOpsWriteBitMessage()) {
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(3));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteBitInt() {
+	return(Integer.parseInt(this.getOpsWriteBitString())); 
+    }
+    
+    public String getOpsWriteValueString() {
+	Matcher m;
+        int idx;
+	if (this.isOpsWriteByteMessage()) {
+            idx = 3;
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BYTE_REGEX, "OpsWriteByte");
+	} else if (this.isOpsWriteBitMessage()) {
+            idx = 4;
+	    m = match(this.toString(), DCCppConstants.OPS_WRITE_BIT_REGEX, "OpsWriteBit");
+	} else {
+	    log.error("Ops Program Parser called on non-OpsProgram message type {}", this.getOpCodeChar());
+	    return("0");
+	}
+	if (m != null) {
+	    return(m.group(idx));
+	} else {
+	    return("0");
+	}
+    }
+
+    public int getOpsWriteValueInt() {
+	return(Integer.parseInt(this.getOpsWriteValueString())); 
+    }
+    
     //------------------------------------------------------
     // Helper methods for Prog Write Byte Commands
 
@@ -707,9 +816,10 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    } else {
 		return("0");
 	    }
-	} else 
+	} else {
 	    log.error("PWBit Parser called on non-PWBit message type {}", this.getOpCodeChar());
 	    return("0");
+        }
     }
 
     public int getBitInt() {
@@ -739,7 +849,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	case DCCppConstants.READ_TRACK_CURRENT:
 	case DCCppConstants.READ_CS_STATUS:
 	case DCCppConstants.GET_FREE_MEMORY:
-	case DCCppConstants.QUERY_SENSOR_STATE:
+	//case DCCppConstants.QUERY_SENSOR_STATE:
 	case DCCppConstants.LIST_REGISTER_CONTENTS:
 	    retv = true;
 	    break;
@@ -823,20 +933,21 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
      *    
      *    returns: <Q NUMBER STATE>
     */
-    public static DCCppMessage getQuerySensorMsg(int address) {
-	// Sanity check inputs
-	if (address < 0 || address > DCCppConstants.MAX_SENSOR_NUMBER)
-	    return(null);
-	
-	// Stationary Decoder Command
-	String s = new String(Character.toString(DCCppConstants.QUERY_SENSOR_STATE));
-	s += Character.toString(DCCppConstants.WHITESPACE);
-	
-	// Add the Address
-	s += Integer.toString(address);
-
-	return(new DCCppMessage(s));
-    }
+    
+//    public static DCCppMessage getQuerySensorMsg(int address) {
+//	// Sanity check inputs
+//	if (address < 0 || address > DCCppConstants.MAX_SENSOR_NUMBER)
+//	    return(null);
+//	
+//	// Stationary Decoder Command
+//	String s = new String(Character.toString(DCCppConstants.QUERY_SENSOR_STATE));
+//	s += Character.toString(DCCppConstants.WHITESPACE);
+//	
+//	// Add the Address
+//	s += Integer.toString(address);
+//
+//	return(new DCCppMessage(s));
+//    }
 
     /**
      * Predefined Turnout Control Message
@@ -917,7 +1028,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	return(new DCCppMessage(s));
     }
 
-    public static DCCppMessage getTurnoutlistMsg() {
+    public static DCCppMessage getTurnoutListMsg() {
 	return(new DCCppMessage(Character.toString(DCCppConstants.TURNOUT_CMD)));
     }
 
@@ -971,7 +1082,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	return(new DCCppMessage(s));
     }
 
-    public static DCCppMessage getSensorlistMsg() {
+    public static DCCppMessage getSensorListMsg() {
 	return(new DCCppMessage(Character.toString(DCCppConstants.SENSOR_CMD)));
     }
 

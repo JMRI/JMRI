@@ -94,10 +94,6 @@ public class ConnectionConfig  extends jmri.jmrix.AbstractConnectionConfig {
     public void setDisabled(boolean disable){
        this.disabled=disable;
     }
-
-   @Override
-   public void dispose(){
-   } 
 }
 
 
