@@ -132,6 +132,9 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text = "Memory Reply...\n";
             text += "\tFree Memory: " + l.getFreeMemoryString() + "\n";
 	    break;
+        case DCCppConstants.COMM_TYPE_REPLY:
+            text = "Comm Port: " + l.getValueString(2) + "\n";
+            break;
 	default:
 	    text += "Unregonized reply: ";
 	}

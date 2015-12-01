@@ -235,8 +235,19 @@ public class DCCppReply extends jmri.jmrix.AbstractMRReply {
             case DCCppConstants.MADC_SUCCESS_REPLY:
                 r.myRegex = DCCppConstants.MADC_SUCCESS_REPLY_REGEX;
                 return(r);
+            case DCCppConstants.COMM_TYPE_REPLY:
+                if ((m = match(s, DCCppConstants.COMM_TYPE_REPLY_REGEX, "ctor")) != null) {
+                    r.valueList.add(Integer.parseInt(m.group(1))); // comm type
+                    r.valueList.add(m.group(2)); // SERIAL or IP address as string
+                    r.myRegex = DCCppConstants.COMM_TYPE_REPLY_REGEX;
+                } else {
+                    return(null);
+                }
+                r._nDataChars = r.toString().length();
+                return(r);
+            default:
+                return(null);
         }
-        return(null);
     }
     
     public int getOpCode() {

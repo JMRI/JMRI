@@ -29,6 +29,11 @@ public final class DCCppConstants {
     
     // DCC++ over TCP Port Number
     public final static int DCCPP_OVER_TCP_PORT = 1235;
+    
+    // Communications Port Info
+    public final static int COMM_TYPE_SERIAL = 0;
+    public final static int COMM_TYPE_ENET = 1;
+    public final static int COMM_TYPE_ENETV2 = 2;
 
     // Command Station Types
     public final static int DCCPP_UNO_1_0 = 1;
@@ -79,6 +84,7 @@ public final class DCCppConstants {
     public final static char WRITE_EEPROM_REPLY = 'e';
     public final static char MADC_FAIL_REPLY  = 'X';
     public final static char MADC_SUCCESS_REPLY = 'O';
+    public final static char COMM_TYPE_REPLY = 'N';
 
     // Message / Reply Regexes
     public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s([-]*\\d+)\\s([1,0])";
@@ -130,6 +136,7 @@ public final class DCCppConstants {
     public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)";
     public final static String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
     public final static String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s*";
+    public final static String COMM_TYPE_REPLY_REGEX = "\\s*N\\s*(\\d+):\\s+(SERIAL|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';
