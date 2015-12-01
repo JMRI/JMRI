@@ -122,7 +122,12 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 //	    // TODO: Implement this fully
 //	    text = "List Packet Reply...\n";
 //	    break;
-	case DCCppConstants.MEMORY_REPLY:
+        case DCCppConstants.WRITE_EEPROM_REPLY:
+            text = "Write EEPROM Reply...\n";
+            // TODO: Don't use getValueString()
+            text += "\tTurnouts: " + l.getValueString(1) + "\n";
+            text += "\tSensors: " + l.getValueString(2) + "\n";
+        case DCCppConstants.MEMORY_REPLY:
 	    // TODO: Implement this fully
 	    text = "Memory Reply...\n";
             text += "\tFree Memory: " + l.getFreeMemoryString() + "\n";
