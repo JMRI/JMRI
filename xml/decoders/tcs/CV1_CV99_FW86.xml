@@ -648,17 +648,19 @@
     <label xml:lang="it">Gruppo Effetti filo Bianco</label>
   </variable>
   <variable CV="49" mask="XXXXVVVV" item="Output 1 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>White Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>White Wire Effect 1</label>
-    <label xml:lang="it">Gruppo Effetti filo Bianco 1</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>White Wire Effect 1</label><label xml:lang="it">Gruppo Effetti filo Bianco 1</label></variable>
   <variable CV="49" mask="XXXXVVVV" item="Output 1 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>White Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -666,15 +668,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>White Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>White Wire Effect 0</label>
-    <label xml:lang="it">Effetti 0 filo Bianco</label>
-  </variable>
+</enumVal><label>White Wire Effect 0</label><label xml:lang="it">Effetti 0 filo Bianco</label></variable>
   <variable CV="49" mask="XXVVXXXX" item="Output 1 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>White Wire Timing</label>
@@ -693,17 +687,19 @@
     <label xml:lang="it">Yellow Wire Effect Group</label>
   </variable>
   <variable CV="50" mask="XXXXVVVV" item="Output 2 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Yellow Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Yellow Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Giallo</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Yellow Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Giallo</label></variable>
   <variable CV="50" mask="XXXXVVVV" item="Output 2 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Yellow Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -711,15 +707,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Yellow Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Yellow Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Giallo</label>
-  </variable>
+</enumVal><label>Yellow Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Giallo</label></variable>
   <variable CV="50" mask="XXVVXXXX" default="1" item="Output 2 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Yellow Wire Timing</label>
@@ -738,17 +726,19 @@
     <label xml:lang="it">Gruppo Effetti filo Verde</label>
   </variable>
   <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Green Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Green Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Verde</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Green Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Verde</label></variable>
   <variable CV="51" mask="XXXXVVVV" minOut="3" item="Output 3 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Green Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -756,15 +746,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Green Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Green Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Verde</label>
-  </variable>
+</enumVal><label>Green Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Verde</label></variable>
   <variable CV="51" mask="XXVVXXXX" minOut="3" default="2" item="Output 3 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Green Wire Timing</label>
@@ -783,17 +765,19 @@
     <label xml:lang="it">Gruppo Effetti filo Porpora</label>
   </variable>
   <variable CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Purple Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Purple Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Porpora</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Purple Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Porpora</label></variable>
   <variable CV="52" mask="XXXXVVVV" minOut="4" item="Output 4 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Purple Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -801,15 +785,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Purple Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Purple Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Porpora</label>
-  </variable>
+</enumVal><label>Purple Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Porpora</label></variable>
   <variable CV="52" mask="XXVVXXXX" minOut="4" default="2" item="Output 4 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Purple Wire Timing</label>
@@ -828,17 +804,19 @@
     <label xml:lang="it">Gruppo Effetti filo Marrone</label>
   </variable>
   <variable CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Brown Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Brown Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Marrone</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Brown Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Marrone</label></variable>
   <variable CV="53" mask="XXXXVVVV" minOut="5" item="Output 5 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Brown Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -846,15 +824,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Brown Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Brown Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Marrone</label>
-  </variable>
+</enumVal><label>Brown Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Marrone</label></variable>
   <variable CV="53" mask="XXVVXXXX" minOut="5" default="2" item="Output 5 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Brown Wire Timing</label>
@@ -873,17 +843,19 @@
     <label xml:lang="it">Gruppo Effetti filo Rosa</label>
   </variable>
   <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Pink Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Pink Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Rosa</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa</label></variable>
   <variable CV="54" mask="XXXXVVVV" minOut="6" item="Output 6 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Pink Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -891,15 +863,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Pink Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Pink Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Rosa</label>
-  </variable>
+</enumVal><label>Pink Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa</label></variable>
   <variable CV="54" mask="XXVVXXXX" minOut="6" default="2" item="Output 6 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Pink Wire Timing</label>
@@ -918,17 +882,19 @@
     <label xml:lang="it">Gruppo Effetti filo Rosa/Porpora</label>
   </variable>
   <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Pink/Purple Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Pink/Purple Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Pink/Purple Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Rosa/Porpora</label></variable>
   <variable CV="55" mask="XXXXVVVV" minOut="7" item="Output 7 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Pink/Purple Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -936,15 +902,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Pink/Purple Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Pink/Purple Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label>
-  </variable>
+</enumVal><label>Pink/Purple Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Rosa/Porpora</label></variable>
   <variable CV="55" mask="XXVVXXXX" minOut="7" default="2" item="Output 7 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Pink/Purple Wire Timing</label>
@@ -975,17 +933,19 @@
     <label xml:lang="it">Gruppo Effetti filo Verde/Marrone</label>
   </variable>
   <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 effect generated">
-    <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/>
-    <qualifier>
+        <qualifier>
       <variableref>Green/Brown Wire Effect Group</variableref>
       <relation>eq</relation>
       <value>1</value>
     </qualifier>
-    <label>Green/Brown Wire Effect 1</label>
-    <label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label>
-  </variable>
+        <xi:include href="http://jmri.org/xml/decoders/tcs/enum-CVX_light_short.xml"/><label>Green/Brown Wire Effect 1</label><label xml:lang="it">Gruppo 1 Effetti filo Verde/Marrone</label></variable>
   <variable CV="58" mask="XXXXVVVV" minOut="8" item="Output 8 behavior">
-<enumVal>
+        <qualifier>
+      <variableref>Green/Brown Wire Effect Group</variableref>
+      <relation>eq</relation>
+      <value>0</value>
+    </qualifier>
+        <enumVal>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constantbright.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_group2.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Momentarypulse.xml"/>
@@ -993,15 +953,7 @@
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_Constdim.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_AutoMarsBrake.xml"/>
     <xi:include href="http://jmri.org/xml/decoders/tcs/Choice_SingleStrobe2.xml"/>
-</enumVal>
-    <qualifier>
-      <variableref>Green/Brown Wire Effect Group</variableref>
-      <relation>eq</relation>
-      <value>0</value>
-    </qualifier>
-    <label>Green/Brown Wire Effect 0</label>
-    <label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label>
-  </variable>
+</enumVal><label>Green/Brown Wire Effect 0</label><label xml:lang="it">Gruppo 0 Effetti filo Verde/Marrone</label></variable>
   <variable CV="58" mask="XXVVXXXX" minOut="8" default="2" item="Output 8 option 1">
     <xi:include href="http://jmri.org/xml/decoders/parts/enum-frw_rev_both.xml"/>
     <label>Green/Brown Wire Timing</label>

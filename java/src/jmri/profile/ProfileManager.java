@@ -452,6 +452,9 @@ public class ProfileManager extends Bean {
     }
 
     private void writeProfiles() throws IOException {
+        if (!(new File(FileUtil.getPreferencesPath()).canWrite())) {
+            return;
+        }
         FileWriter fw = null;
         Document doc = new Document();
         doc.setRootElement(new Element(PROFILECONFIG));

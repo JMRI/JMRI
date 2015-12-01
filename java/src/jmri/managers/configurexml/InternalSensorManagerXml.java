@@ -52,11 +52,12 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
 
     }
 
-    public boolean load(Element sensors) throws jmri.configurexml.JmriConfigureXmlException {
-        // load individual sensors
-        if (sensors.getChild("defaultInitialState") != null) {
+    @Override
+    public boolean load(Element sharedSensors, Element perNodeSensors) throws jmri.configurexml.JmriConfigureXmlException {
+        // load individual sharedSensors
+        if (sharedSensors.getChild("defaultInitialState") != null) {
             int defaultState = jmri.Sensor.UNKNOWN;
-            String state = sensors.getChild("defaultInitialState").getText();
+            String state = sharedSensors.getChild("defaultInitialState").getText();
             if (state.equals("active")) {
                 defaultState = jmri.Sensor.ACTIVE;
             } else if (state.equals("inactive")) {
@@ -66,7 +67,7 @@ public class InternalSensorManagerXml extends jmri.managers.configurexml.Abstrac
             }
             InternalSensorManager.setDefaultStateForNewSensors(defaultState);
         }
-        boolean load = loadSensors(sensors);
+        boolean load = loadSensors(sharedSensors);
 
         return load;
     }

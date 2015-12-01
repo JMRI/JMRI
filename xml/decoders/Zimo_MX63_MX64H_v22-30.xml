@@ -1432,12 +1432,6 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <label>Polarity Dependent DC stopping method</label>
         <label xml:lang="it">Fermata in DC dipendente da polarità</label>
-        <enumVal>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth1.xml"/>
-          <xi:include href="http://jmri.org/xml/decoders/zimo/Choice-Ligth2.xml"/>
-        </enumVal>
-        <label>Light Effects Output 1</label>
-        <label xml:lang="it">Effetti Luci uscita 1</label>
       </variable>
       <variable item="Output 1 behavior" CV="125" mask="XXXXXXVV">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-both_frw_rev.xml"/>

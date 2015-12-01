@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
 <!-- the terms of version 2 of the GNU General Public License as published  -->
@@ -69,7 +70,7 @@
       </variable>
       <xi:include href="http://jmri.org/xml/decoders/nmra/shortAndLongAddress.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/vStartHighMid.xml"/>
-      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+      <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <xi:include href="http://jmri.org/xml/decoders/nmra/mfgVersionId.xml"/>
       <variable item="Packet Time-out Value" CV="11">
         <decVal/>
@@ -318,10 +319,10 @@
       <variable label="Max Sound of Power" CV="51.13" default="65" item="CV51.13" include="3104,3109">
         <decVal/>
       </variable>
-      <variable label="System Balance" CV="51.14" mask="XVVVVVVV" default="0" item="CV51.14 Value">
+      <variable label="System Balance" CV="51.14" mask="XVVVVVVV" default="0" item="CV51.14 Value" exclude="3104">
         <decVal max="127"/>
       </variable>
-      <variable label="System Balance Sign" CV="51.14" mask="VXXXXXXX" default="0" item="CV51.14 Sign">
+      <variable label="System Balance Sign" CV="51.14" mask="VXXXXXXX" default="0" item="CV51.14 Sign" exclude="3104">
         <xi:include href="http://jmri.org/xml/decoders/qsi/enum-Speaker.xml"/>
       </variable>
       <variable label="System Pitch Shift" CV="51.15" mask="XVVVVVVV" default="0" item="CV51.15 Value">
@@ -330,7 +331,7 @@
       <variable label="System Pitch Shift Sign" CV="51.15" mask="VXXXXXXX" default="0" item="CV51.15 Sign">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
-      <variable label="Atmospherics Level" CV="51.16" default="2" item="CV51.16">
+      <variable label="Atmospherics Level" CV="51.16" default="2" item="CV51.16" exclude="3104">
         <enumVal>
           <enumChoice choice="None">
             <choice>None</choice>
@@ -2018,21 +2019,19 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
       </variable>
       <variable label="Chuff Pitch Shift" CV="118.10.0" default="0" item="CV118.10 Value 16" include="3104,3109">
-        <splitVal highCV="118.10.1" min="0" max="1200" upperMask="XVVVVVVV"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>ge</relation>
           <value>2</value>
         </qualifier>
-      </variable>
+        <splitVal highCV="118.10.1" min="0" max="1200" upperMask="XVVVVVVV"/></variable>
       <variable label="Chuff Pitch Shift Sign" CV="118.10.1" mask="VXXXXXXX" default="0" item="CV118.10 Sign 16" include="3104">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>ge</relation>
           <value>2</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/></variable>
       <variable label="Chuff2 Pitch Shift" CV="118.11.0" default="7" item="CV118.11 Value 16" include="4100">
         <splitVal highCV="118.11.1" min="0" max="1200" upperMask="XVVVVVVV"/>
       </variable>
@@ -2041,21 +2040,19 @@
       </variable>
       <!-- CV118.PI.SI pitch shift 8 bit versions, for FW before 1-20-13 -->
       <variable label="Chuff Pitch Shift" CV="118.10" mask="XVVVVVVV" default="0" item="CV118.10 Value" include="3104">
-        <decVal/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>lt</relation>
           <value>2</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Chuff Pitch Shift Sign" CV="118.10" mask="VXXXXXXX" default="0" item="CV118.10 Sign" include="3104">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/>
         <qualifier>
           <variableref>CV56.254.6</variableref>
           <relation>lt</relation>
           <value>2</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-PositiveNegative.xml"/></variable>
       <!-- CV120.PI.SI ready to move -->
       <variable label="Ready to Move Silence 1" CV="120.1.0" default="40" item="CV120.1.0">
         <decVal/>
@@ -2108,7 +2105,7 @@
       <variable label="Ready to Move Silence 6" CV="120.9.0" default="30" item="CV120.9.0">
         <decVal/>
       </variable>
-      <variable label="Ready to Move Bell Hold Time" CV="120.10.0" item="CV120.10.0">
+      <variable label="Ready to Move Bell Hold Time" CV="120.10.0" item="CV120.10.0" exclude="3104">
         <decVal/>
       </variable>
       <!-- Sound component volumes -->
@@ -2337,6 +2334,8 @@
       </variable>
     </variables>
     <resets>
+      <mode>PAGEMODE</mode>
+      <mode>OPSBYTEMODE</mode>
       <ifactReset label="Reset System Sound Control" CVname="56.128.51" CV="56" PI="128" SI="51" default="113" item="CV56.128.51"/>
       <ifactReset label="Reset Individual Sounds" CVname="56.128.52" CV="56" PI="128" SI="52" default="113" item="CV56.128.52"/>
       <ifactReset label="Reset Function Output Mappings" CVname="56.128.53" CV="56" PI="128" SI="53" default="113" item="CV56.128.53"/>

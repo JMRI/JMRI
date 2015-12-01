@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Frame for user edit of setup options
  *
- * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013
+ * @author Dan Boudreau Copyright (C) 2010, 2011, 2012, 2013, 2015
  * @version $Revision$
  */
 public class OptionPanel extends OperationsPreferencesPanel {
@@ -211,9 +211,9 @@ public class OptionPanel extends OperationsPreferencesPanel {
         panel.add(pLogger);
         panel.add(pCustom);
         panel.add(pOption);
-        panel.add(pControl);
 
         add(panelPane);
+        add(pControl);
 
         // setup buttons
         addButtonAction(saveButton);

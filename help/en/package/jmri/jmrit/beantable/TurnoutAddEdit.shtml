@@ -1,5 +1,4 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<!-- $Id: TurnoutAddEdit.shtml 17977 2011-07-18 17:23:46Z zoo $ -->
 <HTML LANG="en">
 <HEAD>
 <TITLE>JMRI: Adding/Editing Turnouts</TITLE>
@@ -22,23 +21,25 @@
 Turnout is attached.</p>
 <img src="AddTurnout.png" >
 <p>Enter a valid Hardware Address for that Turnout and if desired enter a User Name.</p>
-<p>One of the newer options for the System, <a href="../../../../html/hardware/can/cbus/index.shtml">MERG</a>, let's the user optionally use 2 CBUS event values for each Turnout added (either discovered automatically or entered manually as -x;+y).</p>
+<p>One of the newer options for the System, <a href="../../../../html/hardware/can/cbus/index.shtml">MERG</a>, let's the user optionally use 2 CBUS event values for each Turnout added (either discovered automatically or entered manually as <code>-x;+y</code>).</p>
 <img src="AddTurnoutMERG.png" >
 
 <H2>Creating A Number of Turnouts</H2>
-<p>It is also possible to create a number of turnouts in go.<br/>
-Where supported the "Add Range" check box will be enabled.</p>
+<p>It is also possible to create a number of Turnouts in one go.<br/>
+Where supported, the "Add Range" check box will be enabled.</p>
 <img src="AddTurnoutNumber.png">
-<p>When checking the "Add Range" box, this will then enable the "Number To Add" field.  
-Here enter in the number of turnouts that you wish to add, this will then create that 
-number of sequential turnouts.</p>
-If a username has been entered a number will be added to the end of the name to keep 
-each username unique.<br>
-"<a href="../../../../html/doc/Technical/Names.shtml">Names</a>"
+<p>When checking the "Add Range" box, this will enable the "Number To Add" field.  
+Here enter in the number of Turnouts that you wish to add. This will create that 
+number of sequential Turnouts.</p>
+If a User Name has been entered, a number will be added to the end of the name to keep 
+each Turnout User Name unique.<br>
+See <a href="../../../../html/doc/Technical/Names.shtml">Names</a>
 under general help for more information.
 
-<p>Back to the <a href="TurnoutTable.shtml">Turnout Table help page<a>.</p>
+<p>Back to the <a href="TurnoutTable.shtml">Turnouts Table help page<a>.</p>
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </BODY>
 </HTML>
 

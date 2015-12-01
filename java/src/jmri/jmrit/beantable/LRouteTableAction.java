@@ -1791,7 +1791,10 @@ public class LRouteTableAction extends AbstractTableAction {
         return false;
     }
 
-    @SuppressWarnings("null")
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeRouteConditional(int numConds, /*boolean onChange,*/ ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList, ArrayList<ConditionalVariable> vetoList,
             Logix logix, String sName, String uName, String type) {
@@ -1850,7 +1853,8 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            return (Integer)null;
+            // throw without creating any 
+            throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(varList);
         //int option = onChange ? Conditional.ACTION_OPTION_ON_CHANGE : Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE;
@@ -1874,7 +1878,11 @@ public class LRouteTableAction extends AbstractTableAction {
                 rb.getString("ErrorTitle"),
                 javax.swing.JOptionPane.ERROR_MESSAGE);
     }
-    @SuppressWarnings("null")
+
+    /**
+     * @throw IllegalArgumentException if "user input no good"
+     * @return The number of conditionals after the creation.
+     */
     int makeAlignConditional(int numConds, ArrayList<ConditionalAction> actionList,
             ArrayList<ConditionalVariable> triggerList,
             Logix logix, String sName, String uName) {
@@ -1889,7 +1897,8 @@ public class LRouteTableAction extends AbstractTableAction {
         } catch (Exception ex) {
             // user input no good
             handleCreateException(sName);
-            return (Integer) null;
+            // throw without creating any 
+            throw new IllegalArgumentException("user input no good");
         }
         c.setStateVariables(triggerList);
         //c.setAction(cloneActionList(actionList, Conditional.ACTION_OPTION_ON_CHANGE_TO_TRUE));

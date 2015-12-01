@@ -169,12 +169,20 @@ public class SprogProgrammer extends AbstractProgrammer implements SprogListener
             // check for errors
             if (reply.match("No Ack") >= 0) {
                 if (log.isDebugEnabled()) {
-                    log.debug("handle error reply " + reply);
+                    log.debug("handle No Ack reply " + reply);
                 }
                 // perhaps no loco present? Fail back to end of programming
                 progState = NOTPROGRAMMING;
                 controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
                 notifyProgListenerEnd(-1, jmri.ProgListener.NoLocoDetected);
+            } else if (reply.match("!O") >= 0) {
+                if (log.isDebugEnabled()) {
+                    log.debug("handle !O reply " + reply);
+                }
+                // Overload. Fail back to end of programming
+                progState = NOTPROGRAMMING;
+                controller().sendSprogMessage(SprogMessage.getExitProgMode(), this);
+                notifyProgListenerEnd(-1, jmri.ProgListener.ProgrammingShort);
             } else {
                 // see why waiting
                 if (_progRead) {

@@ -13,7 +13,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
-import jmri.jmrit.operations.setup.Setup;
 import jmri.swing.JTitledSeparator;
 import jmri.swing.PreferencesPanel;
 import org.slf4j.Logger;
@@ -94,7 +93,6 @@ public class RailroadNamePreferencesPanel extends JPanel implements PreferencesP
     private boolean setValues() {
         boolean didSet = true;
         preferences.setRailRoadName(railroadName.getText());
-        Setup.setRailroadName(railroadName.getText()); // Also change the railroad name in operations
         return didSet;
     }
 

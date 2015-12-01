@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet href="/xml/XSLT/DecoderID.xsl" type="text/xsl"?>
 <decoderIndex-config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://jmri.org/xml/schema/decoder.xsd">
-  <!--Written by JMRI version 4.1.3ish-R300eb58 on Fri Nov 06 13:45:34 AEDT 2015 $Id$-->
-  <decoderIndex version="674">
+  <!--Written by JMRI version 4.1.3ish-Rc808b1c on Sat Nov 21 12:47:40 PST 2015 $Id$-->
+  <decoderIndex version="676">
     <mfgList nmraListDate="2015-03-06" updated="2015-03-25" lastadd="107,124,126,128,134">
       <manufacturer mfg="NMRA" mfgID="999" />
       <manufacturer mfg="A-Train Electronics" mfgID="137" />

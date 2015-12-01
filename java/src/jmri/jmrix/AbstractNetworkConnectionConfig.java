@@ -557,6 +557,7 @@ abstract public class AbstractNetworkConnectionConfig extends AbstractConnection
 
     @Override
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;

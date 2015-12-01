@@ -41,6 +41,7 @@ public class SimpleServerTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         TestSuite suite = new TestSuite(jmri.jmris.simpleserver.SimpleServerTest.class);
+        suite.addTest(jmri.jmris.simpleserver.parser.JmriServerParserTests.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleTurnoutServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimplePowerServerTest.suite());
         suite.addTest(jmri.jmris.simpleserver.SimpleReporterServerTest.suite());

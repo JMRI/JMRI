@@ -1,8 +1,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright Bob Jacobsen 2008 -->
-<!-- $Id$ -->
 <title>JMRI: PanelPro Frequently Asked Questions</title>
 
 <!-- Style -->
@@ -20,12 +18,10 @@
 <!--#include virtual="Sidebar" -->
 <div id="mainContent">
 
-
 <h1>JMRI: PanelPro Frequently Asked Questions</h1>
 
 <a name="context"><h3>How does JMRI tie into the rest of my layout?</h3></a>
 <p>Jim Betz responded with this on the JMRI User's alias when asked for an overview:</p>
-
 
 <ol>
 	<li> JMRI works like a throttle - it sends and listens to the
@@ -79,7 +75,7 @@ or Digitrax for the layout support (PanelPro).
 
     <li> Because Digitrax and CMRI have published their interfaces
 there are more products available for layout control for
-those two systems than for NCE. Both RR-Cirkits and
+those two systems than for NCE. Both RR-CirKits and
 Team Digital have excellent products out that work for
 Digitrax (for instance). As far as I know there are no
 such products for NCE. I do not know what is/isn't
@@ -103,7 +99,7 @@ decisions. It is possible to implement a system where a
 human being, usually the dispatcher, does all of the
 decisions ... the more complex the layout/signaling system
 the more errors the dispatcher will make. And there is
-also the "workload" issue(s) ... but a computer running
+also the "workload" issue(s)... but a computer running
 PanelPro is usually loafing and has more than enough
 power to keep ahead of the needs of the layout.
 <p>
@@ -126,13 +122,12 @@ may find that you will need to re-wire some or even major portions
 of your layout in order to support them correctly/at all.
 </ol>
 
-
 <a name="store"><h3>How do I save my work?</h3></a>
 
 There are several ways to save your panel.  This is because the program
 has to store both configuration (turnouts, sensors, etc) and layout (the
 details of your specific panel) information.
-<P>
+<p>
 Usually, the easiest way is to use just one file to contain everything. 
 For example, you can store your panel(s) in a file called 
 "MainPanel.xml" (or something like that), and set the preferences to 
@@ -140,8 +135,8 @@ load that file.  Then, all you have to do is save that file again whenever
 you change something.  One caution: Make sure that you still have the 
 panel open when you save the file!  If you close it, then save the file, 
 it will of course write a version of the file that doesn't show the panel.  
-And save this file from the "Panels" menu, using the "Store Panels ..." item.
-<P>
+And save this file from the "Panels" menu, using the "Store Panels..." item.
+<p>
 This works because panels are stored with all the configuration information at 
 that same time (which guarantees they'll work when reloaded)
 
@@ -151,40 +146,39 @@ You can store just the "configuration" information in a file, which
 you can save without worrying about whether your panel(s) are open, etc.
 If you do this, you can also save your panels to their own, separate files.
 
-<P>
+<p>
 To do this:
 
-<UL>
-<LI>Go to one of the table tools (e.g. Route Table) and 
+<ul>
+<li>Go to one of the table tools (e.g. Route Table) and 
 pick "Store configuration..." from the "File" menu. 
-<LI>This will let you 
+<li>This will let you 
 select a file name; make sure it is _NOT_ the same as the panel file 
 name. (e.g. use "MyConfig.xml" instead of "MyPanel.xml") 
-<LI>Remember that name and location, then store.  
-</UL>This puts config info, 
+<li>Remember that name and location, then store.  
+</ul>This puts config info, 
 but not panels, in the file.
 
-<P>
+<p>
 Now, to ensure this configuration information automatically loads when the program starts:  
-<UL>
-<LI>Open the preferences panel, 
-<LI>check the box for "show advanced preferences", and wait a second for 
+<ul>
+<li>Open the preferences panel, 
+<li>check the box for "show advanced preferences", and wait a second for 
 them to appear.  
-<LI>Scroll down to "Load panel file at startup", click "Add", 
-<LI>and select 
+<li>Scroll down to "Load panel file at startup", click "Add", 
+<li>and select 
 the file in which you have stored the configuration.  
-<LI>Click "Save" on the 
+<li>Click "Save" on the 
 preferences pane to make sure this is stored.
-<LI>Quit the program and restart it to test.
-</UL>
-
+<li>Quit the program and restart it to test.
+</ul>
 
 <a name="location">
 <h3>Where should I put my custom icons and other files?</h3></a>
 
 The best place to put your own files is in the program's
 preferences directory. (DecoderPro uses
-<A HREF="../DecoderPro/Files.shtml#location">the same directory<a/>)
+<a href="../DecoderPro/Files.shtml#location">the same directory<a/>)
 You should put any locally-modified
 versions of files here so they don't get overwritten by a new version
 of the program. Any files that the program writes to contain local
@@ -212,36 +206,34 @@ preferences files that store your applications settings:
 <tt>PanelProConfig2.xml</tt>.  You can also search for this
 file to find this directory
 
-<P>
-<IMG SRC="../../../images/IconFileTree.gif" ALT="Screen shot of file tree" ALIGN="RIGHT" WIDTH="288" HEIGHT="327" HSPACE="5" VSPACE="0"/>
+<p>
+<img src="../../../images/IconFileTree.gif" ALT="Screen shot of file tree" ALIGN="RIGHT" WIDTH="288" HEIGHT="327" HSPACE="5" VSPACE="0"/>
 
 If you have created icons that you want to be able from the panel editor,
 put them in a directory called "resources" in the preferences directory.
 They'll then show up in the "files" part of the selection box when you press
 a "Change icon..." button on the panel editor.
 
-<P>For example, if the preferences directory contains the files shown below,
-you'll get the file display shown at the right.
-<CODE>
-<PRE>
+<p>For example, if the preferences directory contains the files shown below,
+you'll get the file display shown at the right.</p>
+<code>
 > ls resources/
 decoderpro.gif  green.gif  icons  red.gif  tester.gif
 > ls resources/icons/
 something  tester.gif
 > ls resources/icons/something/
 tester.gif
-</PRE>
-</CODE>
+</code>
 
-<P>
+<p>
 It's also possible to put your files in the <code>resources</code> directory
 within the JMRI distribution directory that you get when you install the program.
 This is <em>not</em> recommended, because files there will likely be overwritten 
 when you install a future version.  (A newer version of a file, perhaps to fix a problem, 
 will overwrite your copy; the replacement is based on the file's date)
-
     
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>
-

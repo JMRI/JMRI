@@ -54,7 +54,7 @@ public class AnalogClock2DisplayXml
     }
 
     @Override
-    public boolean load(Element element) {
+    public boolean load(Element shared, Element perNode) {
         log.error("Invalid method called");
         return false;
     }

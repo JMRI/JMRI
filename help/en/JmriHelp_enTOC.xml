@@ -19,6 +19,8 @@
 
   <tocitem text="CMRI " target="html.hardware.cmri.CMRI"/>
 
+  <tocitem text="DCC++ " target="html.hardware.dccpp.index"/>
+
   <tocitem text="DCC Specialties " target="html.hardware.misc.DccSpecialties"/>
 
   <tocitem text="EasyDCC " target="html.hardware.easydcc.EasyDCC"/>
@@ -63,75 +65,73 @@
    <tocitem text="Tour " target="html.apps.DecoderPro.Tour"/>
 
   </tocitem>
-  <tocitem text="DecoderPro Manual " target="manual.DecoderPro.index">
-   <tocitem text="Getting Started " target="manual.DecoderPro.Getting_Started">
-    <tocitem text="Setting Preferences " target="manual.Getting_Started_Start"/>
+  <tocitem text="DecoderPro Manual " target="manual.DecoderPro3.index">
+   <tocitem text="Getting Started " target="manual.DecoderPro3.Start_DCC">
+    <tocitem text="Setting Preferences " target="manual.DecoderPro3.Start_Preferences"/>
 
    </tocitem>
-   <tocitem text="Using DecoderPro " target="manual.Basic_Programming">
-    <tocitem text="Set Up " target="manual.Basic_Programming_Setting Up"/>
+   <tocitem text="Using DecoderPro " target="manual.DecoderPro3.Programmer_Setup">
+    <tocitem text="Set Up " target="manual.DecoderPro3.Programmer_Setup_newloco"/>
 
-    <tocitem text="Choose Decoder " target="manual.Basic_Programming_SelectDecoder"/>
+    <tocitem text="Choose Decoder " target="manual.DecoderPro3.Programmer_Setup_newloco"/>
 
-    <tocitem text="Programming Modes " target="manual.Basic_Programming_ProgramModes"/>
+    <tocitem text="Programming Modes " target="manual.DecoderPro3.Programmer_SingleCV"/>
 
    </tocitem>
-   <tocitem text="Basic Programmer " target="manual.Basic_Programming_Basic Programmer">
-    <tocitem text="Using the Roster " target="manual.Basic_Programming_Roster"/>
+   <tocitem text="Basic Programmer ">
+    <tocitem text="Using the Roster " target="manual.DecoderPro3.dp3_rosterTable"/>
 
-    <tocitem text="The Basic Programmer " target="manual.Basic_Programming_Basic 2"/>
+    <tocitem text="The Basic Programmer " target="manual.DecoderPro3.Basic_Start"/>
 
-    <tocitem text="Reading Data " target="manual.Basic_Programming_Read Data"/>
+    <tocitem text="Reading Data " target="manual.DecoderPro.Basic_BasicPane_Read Data"/>
 
-    <tocitem text="Entering and Editing Data " target="manual.Basic_Programming_Enter Edit data"/>
+    <tocitem text="Writing to Decoder " target="manual.DecoderPro.Basic_BasicPane_Write Data"/>
 
-    <tocitem text="Writing to Decoder " target="manual.Basic_Programming_Write Data"/>
+    <tocitem text="Saving to a File " target="manual.DecoderPro.Basic_BasicPane_Save Data"/>
 
-    <tocitem text="Saving to a File " target="manual.Basic_Programming_Save Data"/>
-
-    <tocitem text="What Next? " target="manual.Basic_Programming_Do More"/>
+    <tocitem text="What Next? " target="manual.DecoderPro3.Basic_BasicPane_DoMore"/>
 
    </tocitem>
    <tocitem text="Comprehensive Programmer ">
-    <tocitem text="Setup and Roster Panes " target="manual.Comp_Setup_Roster"/>
+    <tocitem text="Setup and Roster Panes " target="manual.DecoderPro3.Comp_Setup_Roster"/>
 
-    <tocitem text="Basic Pane " target="manual.Comp_Basic"/>
+    <tocitem text="Basic Pane " target="manual.DecoderPro3.Comp_Basic"/>
 
-    <tocitem text="Motor Control Pane " target="manual.Comp_Motor"/>
+    <tocitem text="Motor Control Pane " target="manual.DecoderPro3.Comp_Motor"/>
 
-    <tocitem text="Speed Control Pane " target="manual.Comp_Speed"/>
+    <tocitem text="Speed Control Pane " target="manual.DecoderPro3.Comp_Speed"/>
 
-    <tocitem text="Function Mapping Pane " target="manual.Comp_FMap"/>
+    <tocitem text="Function Mapping Pane " target="manual.DecoderPro3.Comp_FMap"/>
 
-    <tocitem text="Lighting Functions and FX Pane " target="manual.Comp_LightFX"/>
+    <tocitem text="Lighting Functions and FX Pane " target="manual.DecoderPro3.Comp_LightFX"/>
 
-    <tocitem text="Consisting Functions Pane " target="manual.Comp_Consist"/>
+    <tocitem text="Consisting Functions Pane " target="manual.DecoderPro3.Comp_Consist"/>
 
-    <tocitem text="Advanced Features Pane " target="manual.Comp_Advanced"/>
+    <tocitem text="Advanced Features Pane " target="manual.DecoderPro3.Comp_Advanced"/>
 
-    <tocitem text="Sound FX Pane " target="manual.Comp_SoundFX"/>
+    <tocitem text="Sound FX Pane " target="manual.DecoderPro3.Comp_SoundFX"/>
 
-    <tocitem text="Sound Levels Pane " target="manual.Comp_SoundLevels"/>
+    <tocitem text="Sound Levels Pane " target="manual.DecoderPro3.Comp_SoundLevels"/>
 
-    <tocitem text="Global CV Listing Pane " target="manual.Comp_GlobalCVs"/>
+    <tocitem text="Global CV Listing Pane " target="manual.DecoderPro3.Comp_GlobalCVs"/>
 
-    <tocitem text="Manufacturer Specific Data Pane " target="manual.Comp_ManfSpecific"/>
+    <tocitem text="Manufacturer Specific Data Pane " target="manual.DecoderPro3.Comp_ManfSpecific"/>
 
-    <tocitem text="Printing Decoder Data " target="manual.Comp_PrintData"/>
+    <tocitem text="Printing Decoder Data " target="manual.DecoderPro3.Comp_PrintData"/>
 
    </tocitem>
-   <tocitem text="More Information " target="manual.index"/>
+   <tocitem text="All Manuals " target="manual.index"/>
 
    <tocitem text="Getting Started " target="html.apps.DecoderPro.index"/>
 
   </tocitem>
-  <tocitem text="Roster Groups " target="manual.Main_RosterGroup"/>
+  <tocitem text="Roster Groups " target="manual.DecoderPro3.dp3_settings_rosterGroups"/>
 
   <tocitem text="Installing New Decoder Definitions " target="html.apps.DecoderPro.FileUpdate"/>
 
   <tocitem text="Multi-Decoder Control " target="package.jmri.jmrit.dualdecoder.DualDecoderSelectFrame"/>
 
-  <tocitem text="Error Messages " target="html.tools.programmer.messages"/>
+  <tocitem text="Error Messages " target="manual.DecoderPro3.Error"/>
 
  </tocitem>
  <tocitem text="Throttles " target="html.tools.throttle.ThrottleMain">
@@ -159,20 +159,20 @@
  <tocitem text="Tools " target="html.tools.index">
   <tocitem text="Audio " target="html.tools.Audio"/>
 
-  <tocitem text="Consist Tool " target="html.tools.consisttool.ConsistTool"/>
+  <tocitem text="Consisting Tool " target="html.tools.consisttool.ConsistTool"/>
 
-  <tocitem text="Clocks " target="html.tools.fastclock.index">
+  <tocitem text="Fast Clocks " target="html.tools.fastclock.index">
    <tocitem text="Introduction " target="html.tools.fastclock.index"/>
 
    <tocitem text="Setting the Internal Clock " target="package.jmri.jmrit.simpleclock.SimpleClockFrame"/>
 
-   <tocitem text="The LocoNet clock " target="html.tools.fastclock.LocoNetClock"/>
+   <tocitem text="The LocoNet lock " target="html.tools.fastclock.LocoNetClock"/>
 
   </tocitem>
   <tocitem text="Lights " target="html.tools.Lights">
    <tocitem text="Add/Edit Light " target="package.jmri.jmrit.beantable.LightAddEdit"/>
 
-   <tocitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
+   <tocitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
   </tocitem>
   <tocitem text="Light Control " target="package.jmri.jmrit.simplelightctrl.SimpleLightCtrl"/>
@@ -188,7 +188,7 @@
 
   </tocitem>
   <tocitem text="LRoutes " target="html.tools.LRoutes">
-   <tocitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+   <tocitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
    <tocitem text="Adding/Editing LRoutes " target="package.jmri.jmrit.beantable.LRouteAddEdit"/>
 
@@ -213,6 +213,8 @@
 
     <tocitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
 
+    <tocitem text="Schedules " target="package.jmri.jmrit.operations.Operations_Schedules"/>
+
    </tocitem>
    <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
 
@@ -228,19 +230,19 @@
   <tocitem text="Programmers ">
    <tocitem text="Single CV Programmer " target="package.jmri.jmrit.simpleprog.SimpleProgFrame"/>
 
-   <tocitem text="DecoderPro programmer " target="manual.Basic_Programming"/>
+   <tocitem text="DecoderPro programmer " target="manual.DecoderPro3.Basic_BasicPane"/>
 
   </tocitem>
   <tocitem text="Reporters " target="html.tools.Reporters">
    <tocitem text="Add/Edit Reporter " target="package.jmri.jmrit.beantable.ReporterAddEdit"/>
 
-   <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+   <tocitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
   </tocitem>
   <tocitem text="Routes " target="html.tools.Routes">
    <tocitem text="Adding/Editing Routes " target="package.jmri.jmrit.beantable.RouteAddEdit"/>
 
-   <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+   <tocitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
   </tocitem>
   <tocitem text="Scripting " target="html.tools.scripting.index">
@@ -258,7 +260,7 @@
   <tocitem text="Sections ">
    <tocitem text="Section Add/Edit " target="package.jmri.jmrit.beantable.SectionAddEdit"/>
 
-   <tocitem text="Section Table " target="package.jmri.jmrit.beantable.SectionTable"/>
+   <tocitem text="Sections Table " target="package.jmri.jmrit.beantable.SectionTable"/>
 
   </tocitem>
   <tocitem text="Send DCC Packet Tool " target="package.jmri.jmrit.sendpacket.SendPacketFrame"/>
@@ -266,16 +268,16 @@
   <tocitem text="Sensors " target="html.tools.Sensors">
    <tocitem text="Sensor Add/Edit " target="package.jmri.jmrit.beantable.SensorAddEdit"/>
 
-   <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+   <tocitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
   </tocitem>
   <tocitem text="Sensor Groups " target="package.jmri.jmrit.sensorgroup.SensorGroupFrame"/>
 
   <tocitem text="Signaling " target="html.tools.signaling.index">
-   <tocitem text="Signal Heads " target="html.tools.signaling.index">
+   <tocitem text="Signal Heads " target="html.tools.signaling.SignalHeads">
     <tocitem text="Adding Signal Heads " target="package.jmri.jmrit.beantable.SignalAddEdit"/>
 
-    <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+    <tocitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
     <tocitem text="European Examples " target="html.tools.signaling.ldt.output"/>
 
@@ -285,36 +287,36 @@
    <tocitem text="Signal Masts " target="html.tools.signaling.SignalMasts">
     <tocitem text="Adding Signal Masts " target="package.jmri.jmrit.beantable.SignalMastAddEdit"/>
 
-    <tocitem text="Signal Mast Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
+    <tocitem text="Signal Masts Table " target="package.jmri.jmrit.beantable.SignalMastTable"/>
 
    </tocitem>
    <tocitem text="Signal Mast Logic " target="package.jmri.jmrit.beantable.SignalMastLogicTable"/>
 
-  </tocitem>
-  <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
+   <tocitem text="Simple Signal Logic " target="package.jmri.jmrit.blockboss.BlockBossFrame"/>
 
+  </tocitem>
   <tocitem text="Speedometer " target="html.tools.speedometer.index"/>
 
   <tocitem text="Tables ">
-   <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+   <tocitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
-   <tocitem text="Light Table " target="package.jmri.jmrit.beantable.LightTable"/>
+   <tocitem text="Lights Table " target="package.jmri.jmrit.beantable.LightTable"/>
 
-   <tocitem text="Sensor Table " target="package.jmri.jmrit.beantable.SensorTable"/>
+   <tocitem text="Sensors Table " target="package.jmri.jmrit.beantable.SensorTable"/>
 
-   <tocitem text="Signal Head Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
+   <tocitem text="Signal Heads Table " target="package.jmri.jmrit.beantable.SignalHeadTable"/>
 
-   <tocitem text="Route Table " target="package.jmri.jmrit.beantable.RouteTable"/>
+   <tocitem text="Routes Table " target="package.jmri.jmrit.beantable.RouteTable"/>
 
-   <tocitem text="LRoute Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
+   <tocitem text="LRoutes Table " target="package.jmri.jmrit.beantable.LRouteTable"/>
 
    <tocitem text="Logix Table " target="package.jmri.jmrit.beantable.LogixTable"/>
 
-   <tocitem text="Memory Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
+   <tocitem text="Memory Variables Table " target="package.jmri.jmrit.beantable.MemoryTable"/>
 
-   <tocitem text="Reporter Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
+   <tocitem text="Reporters Table " target="package.jmri.jmrit.beantable.ReporterTable"/>
 
-   <tocitem text="Block Table " target="package.jmri.jmrit.beantable.BlockTable"/>
+   <tocitem text="Blocks Table " target="package.jmri.jmrit.beantable.BlockTable"/>
 
   </tocitem>
   <tocitem text="Tracker (Blocks) " target="html.tools.tracker.index"/>
@@ -322,7 +324,7 @@
   <tocitem text="Transits ">
    <tocitem text="Transit Add/Edit " target="package.jmri.jmrit.beantable.TransitAddEdit"/>
 
-   <tocitem text="Transit Table " target="package.jmri.jmrit.beantable.TransitTable"/>
+   <tocitem text="Transits Table " target="package.jmri.jmrit.beantable.TransitTable"/>
 
   </tocitem>
   <tocitem text="Turnout Control " target="package.jmri.jmrit.simpleturnoutctrl.SimpleTurnoutCtrl"/>
@@ -330,7 +332,7 @@
   <tocitem text="Turnouts " target="html.tools.Turnouts">
    <tocitem text="Turnout Add/Edit " target="package.jmri.jmrit.beantable.TurnoutAddEdit"/>
 
-   <tocitem text="Turnout Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
+   <tocitem text="Turnouts Table " target="package.jmri.jmrit.beantable.TurnoutTable"/>
 
   </tocitem>
   <tocitem text="Warrants " target="package.jmri.jmrit.logix.Warrant"/>
@@ -352,13 +354,13 @@
   <tocitem text="Settings " target="package.jmri.jmrit.operations.Operations_Settings"/>
 
   <tocitem text="Locations " target="package.jmri.jmrit.operations.Operations_Locations">
-   <tocitem text="Yards " target="package.jmri.jmrit.operations.Operations_Yards"/>
+   <tocitem text="Yard Tracks " target="package.jmri.jmrit.operations.Operations_Yards"/>
 
-   <tocitem text="Spurs " target="package.jmri.jmrit.operations.Operations_Sidings"/>
+   <tocitem text="Spur Tracks " target="package.jmri.jmrit.operations.Operations_Sidings"/>
 
-   <tocitem text="Interchange " target="package.jmri.jmrit.operations.Operations_Interchange"/>
+   <tocitem text="Interchange Tracks " target="package.jmri.jmrit.operations.Operations_Interchange"/>
 
-   <tocitem text="Staging " target="package.jmri.jmrit.operations.Operations_Staging"/>
+   <tocitem text="Staging Tracks " target="package.jmri.jmrit.operations.Operations_Staging"/>
 
   </tocitem>
   <tocitem text="Cars " target="package.jmri.jmrit.operations.Operations_Cars"/>
@@ -387,7 +389,7 @@
   </tocitem>
   <tocitem text="Options Menu " target="package.jmri.jmrit.dispatcher.Options"/>
 
-  <tocitem text="Allocated Section Window " target="package.jmri.jmrit.dispatcher.AllocatedSections"/>
+  <tocitem text="Allocated Section Window " target="package.jmri.jmrit.dispatcher.AllocatedSectionsTable"/>
 
   <tocitem text="Allocate Extra " target="package.jmri.jmrit.dispatcher.AllocateExtra"/>
 
@@ -417,7 +419,7 @@
    <tocitem text="Signals " target="html.hardware.cmri.Signals"/>
 
   </tocitem>
-  <tocitem text="CBUS " target="html.hardware.rps.index">
+  <tocitem text="CBUS " target="html.hardware.can.index">
    <tocitem text="Console " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
 
    <tocitem text="Config Tool " target="package.jmri.jmrix.can.cbus.swing.console.CbusConsoleFrame"/>
@@ -524,6 +526,10 @@
 
   </tocitem>
   <tocitem text="How We Do Stuff ">
+   <tocitem text="Recommended Practices for Programmers " target="html.doc.Technical.RP"/>
+
+   <tocitem text="JavaHelp HowTo " target="html.doc.Technical.Help"/>
+
    <tocitem text="The Website " target="html.doc.Technical.WebSite"/>
 
   </tocitem>

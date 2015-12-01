@@ -2,9 +2,11 @@ package apps.configurexml;
 
 import apps.Apps;
 import apps.CreateButtonModel;
+import apps.StartupActionsManager;
 import apps.gui3.Apps3;
 import javax.swing.Action;
 import javax.swing.JButton;
+import jmri.InstanceManager;
 import org.jdom2.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,15 +51,10 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         return true;
     }
 
-    /**
-     * Create object from XML file
-     *
-     * @param e Top level Element to unpack.
-     * @return true if successful
-     */
-    public boolean load(Element e) {
+    @Override
+    public boolean load(Element shared, Element perNode) {
         boolean result = true;
-        String className = e.getAttribute("name").getValue();
+        String className = shared.getAttribute("name").getValue();
         log.debug("Invoke Action from" + className);
         try {
             Action action = (Action) Class.forName(className).newInstance();
@@ -85,7 +82,8 @@ public class CreateButtonModelXml extends jmri.configurexml.AbstractXmlAdapter {
         CreateButtonModel m = new CreateButtonModel();
         m.setClassName(className);
         CreateButtonModel.rememberObject(m);
-        jmri.InstanceManager.configureManagerInstance().registerPref(new apps.CreateButtonPanel());
+        InstanceManager.getDefault(StartupActionsManager.class).addModel(m);
+        InstanceManager.configureManagerInstance().registerPref(new apps.CreateButtonPanel());
         return result;
     }
 

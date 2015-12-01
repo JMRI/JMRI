@@ -64,7 +64,7 @@ public class PositionablePopupUtil {
         _self = this;
         debug = log.isDebugEnabled();
         defaultForeground = _textComponent.getForeground();
-        defaultBackground = _textComponent.getBackground();
+//        defaultBackground = _textComponent.getBackground();
         defaultBorderColor = _parent.getBackground();
         _propertiesUtil = new PositionablePropertiesUtil(_parent);
     }
@@ -282,6 +282,7 @@ public class PositionablePopupUtil {
     public void setBackgroundColor(Color color) {
         if (color == null) {
             _hasBackground = false;
+            _textComponent.setBackground(null);
         } else {
             _hasBackground = true;
             _textComponent.setBackground(color);
@@ -299,7 +300,8 @@ public class PositionablePopupUtil {
             _textComponent.setOpaque(_hasBackground);
         }
         if (!_hasBackground) {
-            _parent.setOpaque(false);            
+            _parent.setOpaque(false);
+            _textComponent.setOpaque(false);
         }
     }
 
@@ -309,6 +311,9 @@ public class PositionablePopupUtil {
 
 
     public Color getBackground() {
+        if(!_hasBackground) {
+            return null;
+        }
         return _textComponent.getBackground();            
     }
 
@@ -471,7 +476,7 @@ public class PositionablePopupUtil {
         return c;
     }
 
-    protected void makeColorMenu(JMenu colorMenu, int type) {
+    protected ButtonGroup makeColorMenu(JMenu colorMenu, int type) {
         ButtonGroup buttonGrp = new ButtonGroup();
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Black"), Color.black, type);
         addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("DarkGray"), Color.darkGray, type);
@@ -487,6 +492,7 @@ public class PositionablePopupUtil {
         if (type == BACKGROUND_COLOR) {
             addColorMenuEntry(colorMenu, buttonGrp, Bundle.getMessage("Clear"), null, type);
         }
+        return buttonGrp;
     }
 
     protected void addColorMenuEntry(JMenu menu, ButtonGroup colorButtonGroup,
@@ -501,26 +507,7 @@ public class PositionablePopupUtil {
                         _textComponent.setForeground(desiredColor);
                         break;
                     case BACKGROUND_COLOR:
-                        if (desiredColor == null) {
-                            _self.setHasBackground(false);
-/*                            _textComponent.setOpaque(false);
-                            _parent.setOpaque(false);
-                            //We need to force a redisplay when going to clear as the area
-                            //doesn't always go transparent on the first click.
-                            Point p = _parent.getLocation();
-                            int w = _parent.getWidth();
-                            int h = _parent.getHeight();
-                            Container parent = _parent.getParent();
-                            // force redisplay
-                            if(_hasBackground) {
-                                setMargin(margin);  //This rebuilds margin and clears it color.                                
-                            }
-                            parent.revalidate();
-                            parent.repaint(p.x, p.y, w, h);*/
-                        } else {
-                            setBackgroundColor(desiredColor);
-                            _self.setHasBackground(true);
-                       }
+                        setBackgroundColor(desiredColor);
                         break;
                     case BORDER_COLOR:
                         setBorderColor(desiredColor);

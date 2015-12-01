@@ -35,11 +35,6 @@ public class LayoutReporterIconXml extends PositionableLabelXml {
         return tmp.store(o);
     }
 
-    public boolean load(Element element) {
-        log.error("Invalid method called");
-        return false;
-    }
-
     /**
      * Create a LayoutPositionableLabel, then add to a target JLayeredPane
      *

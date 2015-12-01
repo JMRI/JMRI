@@ -1,7 +1,9 @@
 // SampleMinimalProgram.java
 package apps;
 
+import jmri.ConfigureManager;
 import jmri.InstanceManager;
+import jmri.implementation.JmriConfigurationManager;
 import jmri.util.Log4JUtil;
 import jmri.web.server.WebServerManager;
 import org.slf4j.Logger;
@@ -54,6 +56,7 @@ public class SampleMinimalProgram {
 
     /**
      * Static method to get Log4J working before the rest of JMRI starts up.
+     * In a non-minimal program, invoke jmri.util.Log4JUtil.initLogging
      */
     static protected void initLog4J() {
         // initialize log4j - from logging control file (lcf) only
@@ -106,7 +109,7 @@ public class SampleMinimalProgram {
         adapter.openPort(portName, "JMRI app");
         adapter.configure();
 
-        jmri.configurexml.ConfigXmlManager cm = new jmri.configurexml.ConfigXmlManager();
+        ConfigureManager cm = new JmriConfigurationManager();
 
         // not setting preference file location!
         InstanceManager.setConfigureManager(cm);
