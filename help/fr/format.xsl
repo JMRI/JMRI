@@ -34,7 +34,7 @@
     <HEAD>
     <TITLE>JMRI Help System: Index</TITLE>
     <META NAME="Author" CONTENT="Bob Jacobsen" />
-    <META NAME="keywords" CONTENT="JMRI help Route Add Edit" />
+    <META NAME="keywords" CONTENT="JMRI Help Index" />
     
     <!-- Style -->
     <LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen" />
