@@ -380,19 +380,21 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
             util.setOrientation("horizontal");
         }
 
+        int deg = 0;
         try {
             a = element.getAttribute("degrees");
             if (a != null) {
-                l.rotate(a.getIntValue());
-            } else if (element.getAttribute("hasBackground")==null) {   // pre 4.1.4
-                if (util.hasBackground()) {
-                    l.setOpaque(true);                    
-                }
+                deg = a.getIntValue();
+                l.rotate(deg);
             }
         } catch (DataConversionException ex) {
             log.warn("invalid 'degrees' value (non integer)");
         }
-
+        if (element.getAttribute("hasBackground")==null) {   // pre 4.1.4
+            if (deg == 0 && util.hasBackground()) {
+                l.setOpaque(true);                    
+            }
+        }
     }
 
     public void loadCommonAttributes(Positionable l, int defaultLevel, Element element) {
