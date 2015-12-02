@@ -70,28 +70,23 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // make four windows
         InstanceManager.configureManagerInstance()
                 .load(new java.io.File("java/test/jmri/jmrit/display/configurexml/verify/backgrounds.xml"));
+        flushAWT();
 
         // Find color in label by frame name
-        int color1 = getColor("F Bkg none, label Bkg none");
+        checkColor("F Bkg none, label Bkg none", 0xffffffff); // white background
 
-        int color2 = getColor("F Bkg blue, label Bkg none");
+        checkColor("F Bkg blue, label Bkg none", 0xff0000ff); // white background
 
-        int color3 = getColor("F Bkg none, label Bkg yellow");
+        checkColor("F Bkg none, label Bkg yellow", 0xffffff00); // yellow
 
-        int color4 = getColor("F Bkg blue, label Bkg yellow");
-
-        Assert.assertEquals("F Bkg none, label Bkg none color", "0xffffffff",   // white background
-                            String.format("0x%8s", Integer.toHexString(color1)).replace(' ', '0'));
-        Assert.assertEquals("F Bkg blue, label Bkg none color", "0xff0000ff",   // blue background
-                            String.format("0x%8s", Integer.toHexString(color2)).replace(' ', '0')); // no blue, looking at transparent label
-        Assert.assertEquals("F Bkg none, label Bkg yellow color", "0xffffff00", // yellow
-                            String.format("0x%8s", Integer.toHexString(color3)).replace(' ', '0'));
-        Assert.assertEquals("F Bkg blue, label Bkg yellow color", "0xffffff00", // yellow
-                            String.format("0x%8s", Integer.toHexString(color4)).replace(' ', '0'));
+        checkColor("F Bkg blue, label Bkg yellow", 0xffffff00); // yellow
 
     }
     
-    int getColor(String name) {
+    void checkColor(String name, int value) {
+
+        flushAWT();
+
         // Find window by name
         JmriJFrame ft = JmriJFrame.getFrame(name);
         Assert.assertNotNull("frame: "+name, ft);
@@ -113,10 +108,15 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         int color = image.getRGB(p.x,p.y);
 
         g2.dispose();
+        
+        // test for match
+        Assert.assertEquals(name, String.format("0x%8s", Integer.toHexString(value)).replace(' ', '0'),
+                                  String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
+        
         // Ask to close table window
         ft.setVisible(false);
         //TestHelper.disposeWindow(ft, this);
-        return color;
+        return;
     }
     
     // from here down is testing infrastructure
