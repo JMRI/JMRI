@@ -143,7 +143,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String defaultBuildReportFilename(String name) {
-        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() 
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator
                 + BUILD_STATUS + File.separator + buildReportFileName + name + fileType; // NOI18N
     }
 
