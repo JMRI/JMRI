@@ -14,6 +14,11 @@ public abstract class DCCppNetworkPortController extends jmri.jmrix.AbstractNetw
     // base class. Implementations will provide InputStream and OutputStream
     // objects to LnTrafficController classes, who in turn will deal in messages.
 
+    protected DCCppNetworkPortController() {
+        super(new DCCppSystemConnectionMemo());
+        setManufacturer(jmri.jmrix.DCCManufacturerList.DCCPP);
+    }
+    
     protected DCCppNetworkPortController(DCCppSystemConnectionMemo connectionMemo) {
         super(connectionMemo);
         setManufacturer(jmri.jmrix.DCCManufacturerList.DCCPP);

@@ -260,7 +260,9 @@ abstract public class AbstractStreamConnectionConfig extends AbstractConnectionC
         adapter.setDisabled(disabled);
     }
 
+    @Override
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;

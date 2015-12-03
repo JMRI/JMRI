@@ -351,7 +351,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     _icon = false;
                     _text = true;
                     setText(str);
-                    setIcon(null);
+                    updateIcon(null);
                     if (log.isDebugEnabled()) {
                         log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length()
                                 + ", maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
