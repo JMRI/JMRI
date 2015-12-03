@@ -2906,7 +2906,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
         return true;
     }
 
-    class TextAttrDialog extends JDialog {
+    public class TextAttrDialog extends JDialog {
 
         private static final long serialVersionUID = 6801138901620891961L;
         Positionable _pos;
@@ -2917,7 +2917,7 @@ abstract public class Editor extends JmriJFrame implements MouseListener, MouseM
             _pos = p;
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-            _decorator = new jmri.jmrit.display.palette.DecoratorPanel(_pos.getEditor());
+            _decorator = new jmri.jmrit.display.palette.DecoratorPanel(_pos.getEditor(), this);
             _decorator.initDecoratorPanel(_pos);
             panel.add(_decorator);
             panel.add(makeDoneButtonPanel());

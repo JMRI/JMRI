@@ -40,19 +40,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 29 34 0 87", t.outbound.elementAt(0).toString());
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '7');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '2');
-        mr1.setElement(8, '9');
-        mr1.setElement(9, ' ');
-        mr1.setElement(10, '3');
-        mr1.setElement(11, '4');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|29 34");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -141,19 +129,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("read message contents", "R 29 0 82", t.outbound.elementAt(0).toString());
 
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '2');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '2');
-        mr1.setElement(8, '9');
-        mr1.setElement(9, ' ');
-        mr1.setElement(10, '1');
-        mr1.setElement(11, '2');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|29 12");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -243,20 +219,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("mode message sent", 1, t.outbound.size());
         Assert.assertEquals("write message contents", "W 300 34 0 87", t.outbound.elementAt(0).toString());
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '7');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '3');
-        mr1.setElement(8, '0');
-        mr1.setElement(9, '0');
-        mr1.setElement(10, ' ');
-        mr1.setElement(11, '3');
-        mr1.setElement(12, '4');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|87|300 34");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 
@@ -293,20 +256,7 @@ public class DCCppProgrammerTest extends TestCase {
         Assert.assertEquals("read message contents", "R 300 0 82", t.outbound.elementAt(0).toString());
 
         // send reply
-        DCCppReply mr1 = new DCCppReply();
-        mr1.setElement(0, 'r');
-        mr1.setElement(1, ' ');
-        mr1.setElement(2, '0');
-        mr1.setElement(3, '|');
-        mr1.setElement(4, '8');
-        mr1.setElement(5, '2');
-        mr1.setElement(6, '|');
-        mr1.setElement(7, '3');
-        mr1.setElement(8, '0');
-        mr1.setElement(9, '0');
-        mr1.setElement(10, ' ');
-        mr1.setElement(11, '3');
-        mr1.setElement(12, '4');
+        DCCppReply mr1 = DCCppReply.parseDCCppReply("r 0|82|300 34");
         t.sendTestMessage(mr1);
 
         // At this point, the standard DCC++ programmer 

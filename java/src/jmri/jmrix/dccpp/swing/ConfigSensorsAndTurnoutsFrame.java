@@ -348,26 +348,26 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                     String m = "S " + Integer.toString((int)r.elementAt(0)); // Index
                     m += " " + (Integer.toString((int)r.elementAt(1)));      // Pin
                     m += " " + ((boolean)r.elementAt(2) ? "1" : "0");        // Pullup
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     sensorModel.setNewRow(row, false);
                 //} else if (sensorModel.isMarkedForDelete(row)) {
                 } else if (isdelete) {
                     String m = "S " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     sensorModel.getRowData().remove(r);
                 //} else if (sensorModel.isDirtyRow(row)) {
                 } else if (isdirty) {
                     // Send a Delete, then an Add (for now).
                     String m = "S " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     // WARNING: Conversions here are brittle. Be careful.
                     m = "S " + Integer.toString((int)r.elementAt(0)); // Index
                     m += " " + (Integer.toString((int)r.elementAt(1)));      // Pin
                     m += " " + ((boolean)r.elementAt(2) ? "1" : "0");        // Pullup
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     sensorModel.setNewRow(row, false);
                     sensorModel.setDirtyRow(row, false);
@@ -387,26 +387,26 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                     String m = "T " + Integer.toString((int)r.elementAt(0)); // Index
                     m += " " + (Integer.toString((int)r.elementAt(1)));      // Address
                     m += " " + (Integer.toString((int)r.elementAt(2)));      // Subaddress
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     turnoutModel.setNewRow(row, false);
                 //} else if (sensorModel.isMarkedForDelete(row)) {
                 } else if (isdelete) {
                     String m = "T " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     turnoutModel.getRowData().remove(r);
                 //} else if (sensorModel.isDirtyRow(row)) {
                 } else if (isdirty) {
                     // Send a Delete, then an Add (for now).
                     String m = "T " + Integer.toString((int)r.elementAt(0));
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     // WARNING: Conversions here are brittle. Be careful.
                     m = "S " + Integer.toString((int)r.elementAt(0));   // Index
                     m += " " + (Integer.toString((int)r.elementAt(1))); // Address
                     m += " " + (Integer.toString((int)r.elementAt(2))); // Subaddress
-                    tc.sendDCCppMessage(new DCCppMessage(m), this);
+                    tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage(m), this);
                     log.debug("Sending: " + m);
                     turnoutModel.setNewRow(row, false);
                     turnoutModel.setDirtyRow(row, false);
@@ -444,7 +444,7 @@ public class ConfigSensorsAndTurnoutsFrame extends JmriJFrame implements DCCppLi
                     JOptionPane.YES_NO_OPTION);
 
             if (value == JOptionPane.YES_OPTION) {
-                tc.sendDCCppMessage(new DCCppMessage("E"), this);
+                tc.sendDCCppMessage(DCCppMessage.parseDCCppMessage("E"), this);
                 log.debug("Sending: <E> (Write To EEPROM)");
                 sensorModel.fireTableDataChanged();
             }
