@@ -1,17 +1,17 @@
 package jmri.jmrit.display;
 
-import jmri.*;
-import jmri.util.*;
-
-import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
-
-import javax.swing.*;
-
-import junit.framework.*;
-import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.SwingUtilities;
+import jmri.util.JUnitUtil;
+import jmri.util.JmriJFrame;
+import junit.extensions.jfcunit.finder.ComponentFinder;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * MemoryIconTest.java
@@ -92,7 +92,9 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         int[] colors = getColor("Expect blank","| Expect blank",0,6,10);
-        Assert.assertTrue("Expect gray pixels", (colors[3]==0xffeeeeee)&&(colors[4]==0xffeeeeee)); // gray pixels
+//        Assert.assertTrue("Expect gray pixels", (colors[3]==0xffeeeeee)&&(colors[4]==0xffeeeeee)); // gray pixels
+        Assert.assertTrue("Expect white pixels", (colors[3]==0xffffffff)&&(colors[4]==0xffffffff)); // white pixels
+        Assert.assertTrue("Expect gray pixels", (colors[7]==0xffeeeeee)&&(colors[8]==0xffeeeeee)); // gray pixels
         
         if (!System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
@@ -160,7 +162,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         int[] colors = new int[n];
         for (int i = 0; i<n; i++) {
             int color = image.getRGB(p.x+i,p.y);
-            //System.err.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
+            System.err.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
             colors[i] = color;
         }
 
