@@ -64,7 +64,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         button = (JButton) abfinder.find(fa, 0);
         Assert.assertNotNull(button);
 
-        // Click button to add sensor
+        // Click button to add turnout
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
         
         // Ask to close add window
@@ -76,7 +76,7 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         flushAWT();
         flushAWT();
         
-        // check for existing sensor
+        // check that turnout was created
         Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
     }
 
