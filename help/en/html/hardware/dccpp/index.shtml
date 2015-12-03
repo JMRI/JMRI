@@ -51,7 +51,6 @@
 
     Currently DCC++ Base Stations can be built from either the Arduino Uno
     or Arduino Mega platforms.  JMRI should support either platform via USB or Network connection.
-</div>
 
 <h3>Computer Interfaces</h3>
 
@@ -59,7 +58,7 @@
  <ul>
      <li>Serial/USB: Direct connection to Arduino via a USB cable</li>
      <li>Simulator: Simulated Base Station for off-line operation and testing.</li>
-     <li>Network: TCP/IP connection from JMRI to a Base Station with an Ethernet or WiFi Shield.
+     <li>Network: TCP/IP connection from JMRI to a Base Station with an Ethernet or WiFi Shield.</li>
      <li>DCC++ Over TCP: Remote network connection to a local JMRI instance connected to a Base Station</li>
  </ul>
  
@@ -198,6 +197,8 @@
 
 Additional documentation will be provided on other pages linked here:
 
+    </div>
+  </div>
 <!--#include virtual="/Footer" -->
 </body>
 </html>
