@@ -5,10 +5,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.260" default="0" item="ESU V4 Function Output 1 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.260" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 1 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.261" default="0" item="ESU V4 Function Output 1 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -42,7 +42,7 @@
   <variable label="Special Function CV 1" CV="16.0.263" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 15" mask="XXXVVVVV">
@@ -51,7 +51,7 @@
   <variable label="Position A" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.263" default="0" item="ESU V4 Function Output 1 Check 6" mask="XXXXXXXV">
@@ -75,7 +75,7 @@
   <variable label="Special Function CV 2" CV="16.0.264" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.264" default="0" item="ESU V4 Function Output 1 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.264" default="0" item="ESU V4 Function Output 1 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>Headlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.264" default="0" item="ESU V4 Function Output 1 Slider 16" mask="XXXVVVVV">
@@ -95,10 +95,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.268" default="0" item="ESU V4 Function Output 3 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.268" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 3 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.269" default="0" item="ESU V4 Function Output 3 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -132,7 +132,7 @@
   <variable label="Special Function CV 1" CV="16.0.271" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 15" mask="XXXVVVVV">
@@ -141,7 +141,7 @@
   <variable label="Position A" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.271" default="0" item="ESU V4 Function Output 3 Check 6" mask="XXXXXXXV">
@@ -165,7 +165,7 @@
   <variable label="Special Function CV 2" CV="16.0.272" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.272" default="0" item="ESU V4 Function Output 3 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.272" default="0" item="ESU V4 Function Output 3 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>Rearlight [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.272" default="0" item="ESU V4 Function Output 3 Slider 16" mask="XXXVVVVV">
@@ -185,10 +185,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.276" default="0" item="ESU V4 Function Output 5 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.276" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 5 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.277" default="0" item="ESU V4 Function Output 5 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -222,7 +222,7 @@
   <variable label="Special Function CV 1" CV="16.0.279" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 15" mask="XXXVVVVV">
@@ -231,7 +231,7 @@
   <variable label="Position A" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.279" default="0" item="ESU V4 Function Output 5 Check 6" mask="XXXXXXXV">
@@ -255,7 +255,7 @@
   <variable label="Special Function CV 2" CV="16.0.280" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.280" default="0" item="ESU V4 Function Output 5 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.280" default="0" item="ESU V4 Function Output 5 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX1 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.280" default="0" item="ESU V4 Function Output 5 Slider 16" mask="XXXVVVVV">
@@ -275,10 +275,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.284" default="0" item="ESU V4 Function Output 7 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.284" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 7 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.285" default="0" item="ESU V4 Function Output 7 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -312,7 +312,7 @@
   <variable label="Special Function CV 1" CV="16.0.287" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 15" mask="XXXVVVVV">
@@ -321,7 +321,7 @@
   <variable label="Position A" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.287" default="0" item="ESU V4 Function Output 7 Check 6" mask="XXXXXXXV">
@@ -345,7 +345,7 @@
   <variable label="Special Function CV 2" CV="16.0.288" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.288" default="0" item="ESU V4 Function Output 7 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.288" default="0" item="ESU V4 Function Output 7 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX2 [1] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.288" default="0" item="ESU V4 Function Output 7 Slider 16" mask="XXXVVVVV">
@@ -365,10 +365,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.292" default="0" item="ESU V4 Function Output 9 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.292" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 9 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.293" default="0" item="ESU V4 Function Output 9 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX3 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -402,7 +402,7 @@
   <variable label="Special Function CV 1" CV="16.0.295" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 15" mask="XXXVVVVV">
@@ -411,7 +411,7 @@
   <variable label="Position A" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.295" default="0" item="ESU V4 Function Output 9 Check 6" mask="XXXXXXXV">
@@ -435,7 +435,7 @@
   <variable label="Special Function CV 2" CV="16.0.296" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.296" default="0" item="ESU V4 Function Output 9 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.296" default="0" item="ESU V4 Function Output 9 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX3 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.296" default="0" item="ESU V4 Function Output 9 Slider 16" mask="XXXVVVVV">
@@ -455,10 +455,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.300" default="0" item="ESU V4 Function Output 10 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.300" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 10 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.301" default="0" item="ESU V4 Function Output 10 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX4 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -492,7 +492,7 @@
   <variable label="Special Function CV 1" CV="16.0.303" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 15" mask="XXXVVVVV">
@@ -501,7 +501,7 @@
   <variable label="Position A" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.303" default="0" item="ESU V4 Function Output 10 Check 6" mask="XXXXXXXV">
@@ -525,7 +525,7 @@
   <variable label="Special Function CV 2" CV="16.0.304" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.304" default="0" item="ESU V4 Function Output 10 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.304" default="0" item="ESU V4 Function Output 10 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX4 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.304" default="0" item="ESU V4 Function Output 10 Slider 16" mask="XXXVVVVV">
@@ -546,10 +546,10 @@
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.308" default="0" item="ESU V4 Function Output 11 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX5 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Switch Off Delay" CV="16.0.308" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 11 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX5 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Auto Switch Off" CV="16.0.309" default="0" item="ESU V4 Function Output 11 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX5 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -583,7 +583,7 @@
     <variable label="Special Function CV 1" CV="16.0.311" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 12" mask="XXXXVVVV">
+    <variable label="Fan Acceleration rate" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Minimum driving heat" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 15" mask="XXXVVVVV">
@@ -592,7 +592,7 @@
     <variable label="Position A" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-    <variable label="Fan power" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 9" mask="XXXXVVVV">
+    <variable label="Fan power" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Phase Reverse" CV="16.0.311" default="0" item="ESU V4 Function Output 11 Check 6" mask="XXXXXXXV">
@@ -616,7 +616,7 @@
     <variable label="Special Function CV 2" CV="16.0.312" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.312" default="0" item="ESU V4 Function Output 11 Slider 13" mask="XXXXVVVV">
+    <variable label="Fan Decceleration rate" CV="16.0.312" default="0" item="ESU V4 Function Output 11 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX5 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Maximum driving heat" CV="16.0.312" default="0" item="ESU V4 Function Output 11 Slider 16" mask="XXXVVVVV">
@@ -636,10 +636,10 @@
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.316" default="0" item="ESU V4 Function Output 12 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX6 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Switch Off Delay" CV="16.0.316" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 12 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX6 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Auto Switch Off" CV="16.0.317" default="0" item="ESU V4 Function Output 12 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX6 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -673,7 +673,7 @@
     <variable label="Special Function CV 1" CV="16.0.319" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 12" mask="XXXXVVVV">
+    <variable label="Fan Acceleration rate" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Minimum driving heat" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 15" mask="XXXVVVVV">
@@ -682,7 +682,7 @@
     <variable label="Position A" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-    <variable label="Fan power" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 9" mask="XXXXVVVV">
+    <variable label="Fan power" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Phase Reverse" CV="16.0.319" default="0" item="ESU V4 Function Output 12 Check 6" mask="XXXXXXXV">
@@ -706,7 +706,7 @@
     <variable label="Special Function CV 2" CV="16.0.320" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.320" default="0" item="ESU V4 Function Output 12 Slider 13" mask="XXXXVVVV">
+    <variable label="Fan Decceleration rate" CV="16.0.320" default="0" item="ESU V4 Function Output 12 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX6 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Maximum driving heat" CV="16.0.320" default="0" item="ESU V4 Function Output 12 Slider 16" mask="XXXVVVVV">
@@ -726,10 +726,10 @@
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.324" default="0" item="ESU V4 Function Output 13 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX7 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Switch Off Delay" CV="16.0.324" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 13 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX7 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Auto Switch Off" CV="16.0.325" default="0" item="ESU V4 Function Output 13 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX7 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -763,7 +763,7 @@
     <variable label="Special Function CV 1" CV="16.0.327" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 12" mask="XXXXVVVV">
+    <variable label="Fan Acceleration rate" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Minimum driving heat" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 15" mask="XXXVVVVV">
@@ -772,7 +772,7 @@
     <variable label="Position A" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-    <variable label="Fan power" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 9" mask="XXXXVVVV">
+    <variable label="Fan power" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Phase Reverse" CV="16.0.327" default="0" item="ESU V4 Function Output 13 Check 6" mask="XXXXXXXV">
@@ -796,7 +796,7 @@
     <variable label="Special Function CV 2" CV="16.0.328" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.328" default="0" item="ESU V4 Function Output 13 Slider 13" mask="XXXXVVVV">
+    <variable label="Fan Decceleration rate" CV="16.0.328" default="0" item="ESU V4 Function Output 13 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX7 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Maximum driving heat" CV="16.0.328" default="0" item="ESU V4 Function Output 13 Slider 16" mask="XXXVVVVV">
@@ -816,10 +816,10 @@
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.332" default="0" item="ESU V4 Function Output 14 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX8 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Switch Off Delay" CV="16.0.332" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 14 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX8 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Auto Switch Off" CV="16.0.333" default="0" item="ESU V4 Function Output 14 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX8 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -853,7 +853,7 @@
     <variable label="Special Function CV 1" CV="16.0.335" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 12" mask="XXXXVVVV">
+    <variable label="Fan Acceleration rate" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Minimum driving heat" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 15" mask="XXXVVVVV">
@@ -862,7 +862,7 @@
     <variable label="Position A" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-    <variable label="Fan power" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 9" mask="XXXXVVVV">
+    <variable label="Fan power" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Phase Reverse" CV="16.0.335" default="0" item="ESU V4 Function Output 14 Check 6" mask="XXXXXXXV">
@@ -886,7 +886,7 @@
     <variable label="Special Function CV 2" CV="16.0.336" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.336" default="0" item="ESU V4 Function Output 14 Slider 13" mask="XXXXVVVV">
+    <variable label="Fan Decceleration rate" CV="16.0.336" default="0" item="ESU V4 Function Output 14 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX8 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Maximum driving heat" CV="16.0.336" default="0" item="ESU V4 Function Output 14 Slider 16" mask="XXXVVVVV">
@@ -906,10 +906,10 @@
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.340" default="0" item="ESU V4 Function Output 15 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX9 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Switch Off Delay" CV="16.0.340" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 15 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX9 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Auto Switch Off" CV="16.0.341" default="0" item="ESU V4 Function Output 15 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX9 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -943,7 +943,7 @@
     <variable label="Special Function CV 1" CV="16.0.343" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 12" mask="XXXXVVVV">
+    <variable label="Fan Acceleration rate" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Minimum driving heat" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 15" mask="XXXVVVVV">
@@ -952,7 +952,7 @@
     <variable label="Position A" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-    <variable label="Fan power" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 9" mask="XXXXVVVV">
+    <variable label="Fan power" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Phase Reverse" CV="16.0.343" default="0" item="ESU V4 Function Output 15 Check 6" mask="XXXXXXXV">
@@ -976,7 +976,7 @@
     <variable label="Special Function CV 2" CV="16.0.344" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.344" default="0" item="ESU V4 Function Output 15 Slider 13" mask="XXXXVVVV">
+    <variable label="Fan Decceleration rate" CV="16.0.344" default="0" item="ESU V4 Function Output 15 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX9 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Maximum driving heat" CV="16.0.344" default="0" item="ESU V4 Function Output 15 Slider 16" mask="XXXVVVVV">
@@ -996,10 +996,10 @@
     </variable>
     <variable label="Function Switch On Delay" CV="16.0.348" default="0" item="ESU V4 Function Output 16 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX10 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Switch Off Delay" CV="16.0.348" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 16 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX10 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
     <variable label="Function Auto Switch Off" CV="16.0.349" default="0" item="ESU V4 Function Output 16 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX10 Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -1033,7 +1033,7 @@
     <variable label="Special Function CV 1" CV="16.0.351" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Acceleration rate" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 12" mask="XXXXVVVV">
+    <variable label="Fan Acceleration rate" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Minimum driving heat" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 15" mask="XXXVVVVV">
@@ -1042,7 +1042,7 @@
     <variable label="Position A" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-    <variable label="Fan power" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 9" mask="XXXXVVVV">
+    <variable label="Fan power" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Phase Reverse" CV="16.0.351" default="0" item="ESU V4 Function Output 16 Check 6" mask="XXXXXXXV">
@@ -1066,7 +1066,7 @@
     <variable label="Special Function CV 2" CV="16.0.352" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
       <decVal/>
     </variable>
-    <variable label="Fan Decceleration rate" CV="16.0.352" default="0" item="ESU V4 Function Output 16 Slider 13" mask="XXXXVVVV">
+    <variable label="Fan Decceleration rate" CV="16.0.352" default="0" item="ESU V4 Function Output 16 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX10 Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
     <variable label="Maximum driving heat" CV="16.0.352" default="0" item="ESU V4 Function Output 16 Slider 16" mask="XXXVVVVV">
@@ -1087,10 +1087,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.356" default="0" item="ESU V4 Function Output 2 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.356" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 2 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.357" default="0" item="ESU V4 Function Output 2 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -1124,7 +1124,7 @@
   <variable label="Special Function CV 1" CV="16.0.359" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 15" mask="XXXVVVVV">
@@ -1133,7 +1133,7 @@
   <variable label="Position A" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.359" default="0" item="ESU V4 Function Output 2 Check 6" mask="XXXXXXXV">
@@ -1157,7 +1157,7 @@
   <variable label="Special Function CV 2" CV="16.0.360" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.360" default="0" item="ESU V4 Function Output 2 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.360" default="0" item="ESU V4 Function Output 2 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>Headlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.360" default="0" item="ESU V4 Function Output 2 Slider 16" mask="XXXVVVVV">
@@ -1177,10 +1177,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.364" default="0" item="ESU V4 Function Output 4 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.364" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 4 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.365" default="0" item="ESU V4 Function Output 4 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -1214,7 +1214,7 @@
   <variable label="Special Function CV 1" CV="16.0.367" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 15" mask="XXXVVVVV">
@@ -1223,7 +1223,7 @@
   <variable label="Position A" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.367" default="0" item="ESU V4 Function Output 4 Check 6" mask="XXXXXXXV">
@@ -1247,7 +1247,7 @@
   <variable label="Special Function CV 2" CV="16.0.368" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.368" default="0" item="ESU V4 Function Output 4 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.368" default="0" item="ESU V4 Function Output 4 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>Rearlight [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.368" default="0" item="ESU V4 Function Output 4 Slider 16" mask="XXXVVVVV">
@@ -1267,10 +1267,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.372" default="0" item="ESU V4 Function Output 6 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.372" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 6 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.373" default="0" item="ESU V4 Function Output 6 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -1304,7 +1304,7 @@
   <variable label="Special Function CV 1" CV="16.0.375" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 15" mask="XXXVVVVV">
@@ -1313,7 +1313,7 @@
   <variable label="Position A" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.375" default="0" item="ESU V4 Function Output 6 Check 6" mask="XXXXXXXV">
@@ -1337,7 +1337,7 @@
   <variable label="Special Function CV 2" CV="16.0.376" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.376" default="0" item="ESU V4 Function Output 6 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.376" default="0" item="ESU V4 Function Output 6 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX1 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.376" default="0" item="ESU V4 Function Output 6 Slider 16" mask="XXXVVVVV">
@@ -1357,10 +1357,10 @@
   </variable>
   <variable label="Function Switch On Delay" CV="16.0.380" default="0" item="ESU V4 Function Output 8 Slider 1" tooltip="Units = 0.4 sec" mask="XXXXVVVV">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Switch Off Delay" CV="16.0.380" default="0" mask="VVVVXXXX" item="ESU V4 Function Output 8 Slider 2" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
-        <decVal max="31"/></variable>
+        <decVal max="15"/></variable>
   <variable label="Function Auto Switch Off" CV="16.0.381" default="0" item="ESU V4 Function Output 8 Slider 3" tooltip="Units = 0.4 sec">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>gt</relation><value>0</value></qualifier>
         <decVal/></variable>
@@ -1394,7 +1394,7 @@
   <variable label="Special Function CV 1" CV="16.0.383" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Acceleration rate" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 12" mask="XXXXVVVV">
+  <variable label="Fan Acceleration rate" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 12" mask="XXXVVVVV">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Minimum driving heat" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 15" mask="XXXVVVVV">
@@ -1403,7 +1403,7 @@
   <variable label="Position A" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 18" mask="XXVVVVVV">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>27</value></qualifier>
         <decVal max="63"/></variable>
-  <variable label="Fan power" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 9" mask="XXXXVVVV">
+  <variable label="Fan power" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Slider 9" mask="XXXVVVVV">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>25</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Phase Reverse" CV="16.0.383" default="0" item="ESU V4 Function Output 8 Check 6" mask="XXXXXXXV">
@@ -1427,7 +1427,7 @@
   <variable label="Special Function CV 2" CV="16.0.384" default="0" comment="Dummy to work around sheet operations/qualifiers issue">
     <decVal/>
   </variable>
-  <variable label="Fan Decceleration rate" CV="16.0.384" default="0" item="ESU V4 Function Output 8 Slider 13" mask="XXXXVVVV">
+  <variable label="Fan Decceleration rate" CV="16.0.384" default="0" item="ESU V4 Function Output 8 Slider 13" mask="XXXVVVVV">
         <qualifier><variableref>AUX2 [2] Mode</variableref><relation>eq</relation><value>23</value></qualifier>
         <decVal max="31"/></variable>
   <variable label="Maximum driving heat" CV="16.0.384" default="0" item="ESU V4 Function Output 8 Slider 16" mask="XXXVVVVV">
