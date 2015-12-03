@@ -78,7 +78,7 @@ public final class ClientRxHandler extends Thread implements DCCppListener {
 		    final int trim = sendPrefix.length();
 		    inString = inString.substring(trim);
 		    //  Note: the substring call below also strips off the "< >"
-		    DCCppMessage msg = new DCCppMessage(inString.substring(inString.indexOf("<")+1,
+		    DCCppMessage msg = DCCppMessage.parseDCCppMessage(inString.substring(inString.indexOf("<")+1,
 									   inString.lastIndexOf(">")));
 		    if (!msg.isValidMessageFormat()) {
 			log.warn("Invalid Message Format {}", msg.toString());
