@@ -1217,9 +1217,15 @@
     eventually where they need to be, the train manifest only shows which cars are being removed and
     added to the train.</P>
 
-   <P>The next option is "Sort by Track". The program when creating a train manifest normally
-    lists the cars in the order they need to be placed into the train for proper blocking. If you
-    would rather have the cars listed by the track name, select the option "Sort by Track".</P>
+   <P>
+    The next option is "Sort by Track". The program when creating a train manifest normally lists
+    the cars in the order they need to be placed into the train for proper blocking. The normal
+    format is to list the cars in the order they will be set out as determined by the train's route,
+    and then alphabetically by the track names for each location. You can modify the blocking order
+    for a location by using the tool
+    <A HREF="#TrackBlockingOrder">Track Blocking Order</A>. If you would rather have the cars listed
+    by the track name rather than blocking order, select the option "Sort by Track".
+   </P>
 
    <P>
     The last option is "Print Headers". When this option is selected, the train manifests and switch
