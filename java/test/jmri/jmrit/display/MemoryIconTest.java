@@ -162,7 +162,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         int[] colors = new int[n];
         for (int i = 0; i<n; i++) {
             int color = image.getRGB(p.x+i,p.y);
-            System.err.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
+            //System.err.println(" "+i+" "+String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
             colors[i] = color;
         }
 
