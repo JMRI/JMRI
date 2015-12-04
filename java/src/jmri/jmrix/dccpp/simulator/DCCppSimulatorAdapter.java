@@ -264,11 +264,33 @@ public class DCCppSimulatorAdapter extends DCCppSimulatorPortController implemen
 		r = "H 1 27 3 1";
 	    } else {
 		log.debug("TURNOUT_CMD detected");
-		r = "H" + msg.getTOIDString() + " " + msg.getTOStateString();
+		r = "H" + msg.getTOIDString() + " " + Integer.toString(msg.getTOStateInt());
 	    }
             reply = DCCppReply.parseDCCppReply(r);
 	    log.debug("Reply generated = {}", reply.toString());
 	    break;
+            
+        case DCCppConstants.OUTPUT_CMD:
+            log.debug("Output Command Message: {}", msg.toString());
+            r = "Z" + msg.getOutputIDString() + " " + (msg.getOutputStateBool() ? "1" : "0");
+            reply = DCCppReply.parseDCCppReply(r);
+	    log.debug("Reply generated = {}", reply.toString());
+            break;
+            
+        case DCCppConstants.OUTPUT_DEF_CMD:
+            if (msg.isOutputAddMessage() || msg.isOutputDeleteMessage()) {
+                log.debug("Output Add/Delete Message");
+                r = "O";
+            } else if (msg.isListOutputsMessage()) {
+                log.debug("Output List Message");
+                r = "Z 1 2";
+            } else {
+                log.error("Invalid Output Command: {}{", msg.toString());
+                r = "Z 1 2";
+            }
+            reply = DCCppReply.parseDCCppReply(r);
+	    log.debug("Reply generated = {}", reply.toString());
+            break;  
 
 	case DCCppConstants.SENSOR_CMD:
 	    if (msg.isSensorAddMessage()) {
