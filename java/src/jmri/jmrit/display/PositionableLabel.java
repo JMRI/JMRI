@@ -226,6 +226,9 @@ public class PositionableLabel extends JLabel implements Positionable {
     public String getUnRotatedText() {
         return _unRotatedText;
     }
+    public void setUnRotatedText(String s) {
+        _unRotatedText = s;
+    }
 
     public Positionable finishClone(Positionable p) {
         PositionableLabel pos = (PositionableLabel) p;
@@ -445,7 +448,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     public void updateIcon(NamedIcon s) {
         _namedIcon = s;
-        setIcon(_namedIcon);
+        super.setIcon(_namedIcon);
         updateSize();
     }
 
@@ -483,7 +486,7 @@ public class PositionableLabel extends JLabel implements Positionable {
 
     protected void rotateOrthogonal() {
         _namedIcon.setRotation(_namedIcon.getRotation() + 1, this);
-        setIcon(_namedIcon);
+        super.setIcon(_namedIcon);
         updateSize();
         repaint();
     }
@@ -556,7 +559,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     protected void editIcon() {
         String url = _iconEditor.getIcon("plainIcon").getURL();
         _namedIcon = NamedIcon.getIconByName(url);
-        setIcon(_namedIcon);
+        super.setIcon(_namedIcon);
         updateSize();
         _iconEditorFrame.dispose();
         _iconEditorFrame = null;
@@ -636,7 +639,7 @@ public class PositionableLabel extends JLabel implements Positionable {
     public void setScale(double s) {
         if (_namedIcon != null) {
             _namedIcon.scale(s, this);
-            setIcon(_namedIcon);
+            super.setIcon(_namedIcon);
             updateSize();
         }
     }
@@ -646,6 +649,11 @@ public class PositionableLabel extends JLabel implements Positionable {
             return 1.0;
         }
         return ((NamedIcon) getIcon()).getScale();
+    }
+    
+    public void setIcon(NamedIcon icon) {
+        _namedIcon = icon;
+        super.setIcon(icon);
     }
     
     public void rotate(int deg) {
@@ -663,10 +671,10 @@ public class PositionableLabel extends JLabel implements Positionable {
                         _namedIcon = null;
                         _popupUtil.setBorder(true);
                     }
-                    setIcon(_namedIcon);
+                    super.setIcon(_namedIcon);
                 } else {
                     _namedIcon.rotate(deg, this);
-                    setIcon(_namedIcon);
+                    super.setIcon(_namedIcon);
                 }
             } else {
                 if (_text & _icon) {	// update text over icon
@@ -675,7 +683,7 @@ public class PositionableLabel extends JLabel implements Positionable {
                     _namedIcon = makeTextIcon(_unRotatedText);
                 }
                 _namedIcon.rotate(deg, this);
-                setIcon(_namedIcon);
+                super.setIcon(_namedIcon);
                 setOpaque(false);   // rotations cannot be opaque
             }
         } else {
@@ -692,10 +700,10 @@ public class PositionableLabel extends JLabel implements Positionable {
                     _popupUtil.setBorder(false);
                 }
                 _namedIcon.rotate(deg, this);
-                setIcon(_namedIcon);
+                super.setIcon(_namedIcon);
             } else if (_namedIcon != null) {
                 _namedIcon.rotate(deg, this);
-                setIcon(_namedIcon);
+                super.setIcon(_namedIcon);
             }
         }
         updateSize();

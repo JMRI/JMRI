@@ -1705,8 +1705,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 PositionableLabel pl = (PositionableLabel) p;
                 if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);
+                    if (p instanceof MemoryIcon){                        
+                        popupSet |= p.setTextEditMenu(popup);                
+                    }
                 } else if (p instanceof SensorIcon) {
                     popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
+                    if (pl.isText()) {
+                        popupSet |= setTextAttributes(p, popup);                                        
+                    }
                 } else {
                     popupSet = p.setTextEditMenu(popup);                
                 }

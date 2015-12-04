@@ -200,7 +200,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
         String text = Bundle.getMessage("sample");
         _util = item.getPopupUtility();
 
-        if (pos instanceof SensorIcon) {
+        if (pos instanceof SensorIcon && !((SensorIcon)pos).isIcon()) {
             SensorIcon si = (SensorIcon) pos;
             if (!si.isIcon() && si.isText()) {
                 PositionableLabel sample = new PositionableLabel(si.getActiveText(), _editor);
@@ -529,7 +529,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
     }
 
     public void getText(Positionable pos) {
-        if (pos instanceof SensorIcon && ((SensorIcon) pos).isText()) {
+        if (pos instanceof SensorIcon  && !((SensorIcon)pos).isIcon()) {
             SensorIcon icon = (SensorIcon) pos;
             PositionableLabel sample = _sample.get("Active");
             if (sample.isOpaque()) {

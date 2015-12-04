@@ -138,7 +138,7 @@ public class PositionableIcon extends PositionableLabel {
     public void rotate(int deg) {
         _rotate = deg % 360;
         setDegrees(deg);
-        if (_text && !_icon) {
+        if (_text /*&& !_icon*/) {
             super.rotate(deg);
         }
         if (_iconMap == null) {
