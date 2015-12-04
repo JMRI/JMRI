@@ -100,6 +100,11 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text += "\tState: ACTIVE\n";
             }
 	    break;
+        case DCCppConstants.OUTPUT_REPLY:
+            text = "Output Reply: \n";
+            text += "\tOutput Number: " + l.getOutputNumString() + "\n";
+            text += "\tOutputState: " + l.getOutputCmdStateString() + "\n";
+            break;
 	case DCCppConstants.PROGRAM_REPLY:
 	    text = "Program Reply: \n";
 	    text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
@@ -199,6 +204,24 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 		text += "\n";
 	    }
 	    break;
+        case DCCppConstants.OUTPUT_CMD:
+            text = "Output Cmd: ";
+            text += "\n\tOutput ID: " + l.getOutputIDString();
+            text += "\n\tState: " + l.getOutputStateString();
+            text += "\n";
+        case DCCppConstants.OUTPUT_DEF_CMD:
+            if (l.isOutputAddMessage()) {
+                text = "Add Output: ";
+                text += "\n\tOutput ID: " + l.getOutputIDString();
+                text += "\n\tPin: " + l.getOutputPinString();
+                text += "\n";
+            } else if (l.isOutputDeleteMessage()) {
+                text = "Add Output: ";
+                text += "\n\tOutput ID: " + l.getOutputIDString();
+                text += "\n";
+            } else if (l.isListOutputsMessage()) {
+                text = "List Outputs...\n";
+            }
 	case DCCppConstants.SENSOR_CMD:
 	    if (l.isSensorAddMessage()) {
 		text = "Add Sensor: ";
