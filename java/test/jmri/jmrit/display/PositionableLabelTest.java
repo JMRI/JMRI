@@ -1,17 +1,20 @@
 package jmri.jmrit.display;
 
-import jmri.*;
-import jmri.util.*;
-
-import java.awt.*;
-import java.awt.image.*;
-import java.util.*;
-
-import javax.swing.*;
-
-import junit.framework.*;
-import junit.extensions.jfcunit.*;
-import junit.extensions.jfcunit.finder.*;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
+import java.awt.Point;
+import java.awt.image.BufferedImage;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import jmri.InstanceManager;
+import jmri.util.JmriJFrame;
+import junit.extensions.jfcunit.finder.JLabelFinder;
+import junit.framework.Assert;
+import junit.framework.Test;
+import junit.framework.TestSuite;
 
 /**
  * PositionableLabelTest.java
@@ -73,17 +76,25 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         // Find color in label by frame name
-        checkColor("F Bkg none, label Bkg none", 0xffffffff); // white background
+        int color1 = getColor("F Bkg none, label Bkg none"); // white background
 
-        checkColor("F Bkg blue, label Bkg none", 0xff0000ff); // white background
+        int color2 = getColor("F Bkg blue, label Bkg none"); // blue background
 
-        checkColor("F Bkg none, label Bkg yellow", 0xffffff00); // yellow
+        int color3 = getColor("F Bkg none, label Bkg yellow"); // yellow
 
-        checkColor("F Bkg blue, label Bkg yellow", 0xffffff00); // yellow
+        int color4 = getColor("F Bkg blue, label Bkg yellow");
 
+        Assert.assertEquals("F Bkg none, label Bkg none color", "0xffffffff",   // white background
+                            String.format("0x%8s", Integer.toHexString(color1)).replace(' ', '0'));
+        Assert.assertEquals("F Bkg blue, label Bkg none color", "0xff0000ff",   // blue background
+                            String.format("0x%8s", Integer.toHexString(color2)).replace(' ', '0')); // no blue, looking at transparent label
+        Assert.assertEquals("F Bkg none, label Bkg yellow color", "0xffffff00", // yellow
+                            String.format("0x%8s", Integer.toHexString(color3)).replace(' ', '0'));
+        Assert.assertEquals("F Bkg blue, label Bkg yellow color", "0xffffff00", // yellow
+                            String.format("0x%8s", Integer.toHexString(color4)).replace(' ', '0'));
     }
     
-    void checkColor(String name, int value) {
+    int getColor(String name) {
 
         flushAWT();
 
@@ -109,14 +120,12 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
 
         g2.dispose();
         
-        // test for match
-        Assert.assertEquals(name, String.format("0x%8s", Integer.toHexString(value)).replace(' ', '0'),
-                                  String.format("0x%8s", Integer.toHexString(color)).replace(' ', '0'));
-        
         // Ask to close table window
-        ft.setVisible(false);
+        if (System.getProperty("jmri.demo", "false").equals("false")) {
+            ft.setVisible(false);
+        }
         //TestHelper.disposeWindow(ft, this);
-        return;
+        return color;
     }
     
     // from here down is testing infrastructure
