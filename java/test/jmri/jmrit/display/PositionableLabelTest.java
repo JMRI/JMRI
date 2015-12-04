@@ -78,15 +78,13 @@ public class PositionableLabelTest extends jmri.util.SwingTestCase {
         // Find color in label by frame name
         int color1 = getColor("F Bkg none, label Bkg none"); // white background
 
-        int color2 = getColor("F Bkg blue, label Bkg none"); // white background
+        int color2 = getColor("F Bkg blue, label Bkg none"); // blue background
 
         int color3 = getColor("F Bkg none, label Bkg yellow"); // yellow
 
         int color4 = getColor("F Bkg blue, label Bkg yellow");
 
-//        Assert.assertEquals("F Bkg none, label Bkg none color", "0xffffffff",   // white background pre Java 1.8
-//                            String.format("0x%8s", Integer.toHexString(color1)).replace(' ', '0'));
-        Assert.assertEquals("F Bkg none, label Bkg none color", "0xffeeeeee",   // light grey background
+        Assert.assertEquals("F Bkg none, label Bkg none color", "0xffffffff",   // white background
                             String.format("0x%8s", Integer.toHexString(color1)).replace(' ', '0'));
         Assert.assertEquals("F Bkg blue, label Bkg none color", "0xff0000ff",   // blue background
                             String.format("0x%8s", Integer.toHexString(color2)).replace(' ', '0')); // no blue, looking at transparent label
