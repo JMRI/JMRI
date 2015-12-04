@@ -6,7 +6,7 @@ import javax.swing.JPanel;
 /**
  * Handle configuring a DCC++ layout connection via Ethernet.Port
  * <P>
- * This uses the {@link DCC++EthernetAdapter} class to do the actual connection.
+ * This uses the {@link DCCppEthernetAdapter} class to do the actual connection.
  *
  * @author	Paul Bender Copyright (C) 2011
  * @author      Mark Underwood Copyright (C) 2015
@@ -14,7 +14,7 @@ import javax.swing.JPanel;
  *
  * Adapted from LIUSBEthernetAdapter
  * 
- * @see LIUSBEthernetAdapter
+ * @see jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter
  */
 public class ConnectionConfig extends jmri.jmrix.AbstractNetworkConnectionConfig {
 

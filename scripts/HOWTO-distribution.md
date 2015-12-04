@@ -258,7 +258,7 @@ If anybody wants to add a change from here on in, they should
 ================================================================================
 ## Release-specific Updates
 
-- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via "(Build Now)"[http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/]) update. Confirm visible on web.
+- Change the release note to point to the just-built files (in CI or where you put them), commit, wait (or force via ["Build Now"](http://builds.jmri.org/jenkins/job/Web%20Site/job/Website%20from%20JMRI%20GitHub%20website%20repository/) update). Confirm visible on web.
 
 - Announce the file set to jmri-developers with a download URL like:
 
