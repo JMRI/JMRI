@@ -31,11 +31,11 @@ public class TrainManagerXml extends OperationsXml {
     private String fileTypeCsv = ").csv"; // NOI18N
 
     // the directories under operations
-    private static final String BUILD_STATUS = "buildstatus"; // NOI18N
-    private static final String MANIFESTS = "manifests"; // NOI18N
-    private static final String SWITCH_LISTS = "switchLists"; // NOI18N
-    private static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
-    private static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
+    static final String BUILD_STATUS = "buildstatus"; // NOI18N
+    static final String MANIFESTS = "manifests"; // NOI18N
+    static final String SWITCH_LISTS = "switchLists"; // NOI18N
+    static final String CSV_MANIFESTS = "csvManifests"; // NOI18N
+    static final String CSV_SWITCH_LISTS = "csvSwitchLists"; // NOI18N
 
     public TrainManagerXml() {
     }
@@ -143,7 +143,7 @@ public class TrainManagerXml extends OperationsXml {
     }
 
     public String defaultBuildReportFilename(String name) {
-        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() 
+        return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator
                 + BUILD_STATUS + File.separator + buildReportFileName + name + fileType; // NOI18N
     }
 
@@ -163,7 +163,7 @@ public class TrainManagerXml extends OperationsXml {
         return file;
     }
 
-    private String getDefaultManifestFilename(String name) {
+    public String getDefaultManifestFilename(String name) {
         return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator + MANIFESTS
                 + File.separator + manifestFileName + name + fileType;// NOI18N
     }
@@ -177,7 +177,7 @@ public class TrainManagerXml extends OperationsXml {
         return createFile(getDefaultCsvManifestFilename(name), false); // don't backup
     }
 
-    private String getDefaultCsvManifestFilename(String name) {
+    public String getDefaultCsvManifestFilename(String name) {
         return defaultCsvManifestDirectory + manifestFileName + name + fileTypeCsv; // NOI18N
     }
 
@@ -212,7 +212,7 @@ public class TrainManagerXml extends OperationsXml {
         return file;
     }
 
-    private String getDefaultSwitchListName(String name) {
+    public String getDefaultSwitchListName(String name) {
         return OperationsXml.getFileLocation() + OperationsXml.getOperationsDirectoryName() + File.separator
                 + SWITCH_LISTS + File.separator + switchListFileName + name + fileType; // NOI18N
     }
@@ -229,7 +229,7 @@ public class TrainManagerXml extends OperationsXml {
         return file;
     }
 
-    private String getDefaultCsvSwitchListName(String name) {
+    public String getDefaultCsvSwitchListName(String name) {
         return defaultCsvSwitchListDirectory + switchListFileName + name + fileTypeCsv;// NOI18N
     }
 
