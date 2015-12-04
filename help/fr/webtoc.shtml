@@ -193,7 +193,7 @@
 </li>
   
 <li>
-<a href="">DecoderPro Manuel </a>
+<a href="DecoderProManual/index.shtml">DecoderPro Manuel </a>
 <ul>
    
 <li>
@@ -615,7 +615,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Tableau M&eacute;moires </a>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Tableau des Variables de M&eacute;moire </a>
 <ul></ul>
 </li>
 
@@ -671,7 +671,7 @@
 
    
 <li>
-<a href="">Machines </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locomotives">Machines </a>
 <ul></ul>
 </li>
 
@@ -725,7 +725,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Tableau de Rapports </a>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Tableau des Rapports </a>
 <ul></ul>
 </li>
 
@@ -798,7 +798,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Tableau de Section </a>
+<a href="package/jmri/jmrit/beantable/SectionTable.shtml">Tableau des Sections </a>
 <ul></ul>
 </li>
 
@@ -823,7 +823,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Tableau de Capteurs </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Tableau des Capteurs </a>
 <ul></ul>
 </li>
 
@@ -909,19 +909,19 @@
 <li>Tableaux <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau Aiguillage </a>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau des Aiguillages </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Tableau Lumi&egrave;re </a>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Tableau des Lumi&egrave;res </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Tableau Capteur </a>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Tableau des Capteurs </a>
 <ul></ul>
 </li>
 
@@ -933,13 +933,13 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Tableau Itin&eacute;raire </a>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Tableau des Itin&eacute;raires </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">Tableau LItin&eacute;raire </a>
+<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">Tableau des LItin&eacute;raires </a>
 <ul></ul>
 </li>
 
@@ -951,19 +951,19 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Tableau M&eacute;moire </a>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Tableau des Variables de M&eacute;moire </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Tableau Rapport </a>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Tableau des Rapports </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Tableau Canton </a>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Tableau des Cantons </a>
 <ul></ul>
 </li>
 
@@ -977,7 +977,7 @@
 </li>
 
   
-<li>Ajouter/&Eacute;diter Transits <ul>
+<li>Transits <ul>
    
 <li>
 <a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Ajouter Transit </a>
@@ -1011,7 +1011,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau Aiguillage </a>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Tableau des Aiguillages </a>
 <ul></ul>
 </li>
 
@@ -1113,7 +1113,7 @@
 
   
 <li>
-<a href="">Machines </a>
+<a href="package/jmri/jmrit/operations/Operations.shtml#Locomotives">Machines </a>
 <ul></ul>
 </li>
 
@@ -1187,7 +1187,7 @@
 
   
 <li>
-<a href="">Section de Fen&ecirc;tre Allou&eacute;e </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#allocated">Section de Fen&ecirc;tre Allou&eacute;e </a>
 <ul></ul>
 </li>
 
@@ -1513,7 +1513,7 @@
 
    
 <li>
-<a href="html/apps/PanelPro/ShowPanel.shtml">visualisation des Fchiers Panneau </a>
+<a href="html/apps/PanelPro/ShowPanel.shtml">visualisation des Fichiers Panneau </a>
 <ul></ul>
 </li>
 
