@@ -2,6 +2,7 @@ package jmri.jmrit.display;
 
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -32,9 +33,11 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect \"Data Data\" as text");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
 
         to = new MemoryIcon("MemoryTest1", panel);
         jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect \"Data Data\" text"));
 
@@ -57,10 +60,10 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         int r = ((colors[1]>>16)&0xFF)+((colors[2]>>16)&0xFF)+((colors[3]>>16)&0xFF)+((colors[4]>>16)&0xFF);
         int g = ((colors[1]>>8)&0xFF)+((colors[2]>>8)&0xFF)+((colors[3]>>8)&0xFF)+((colors[4]>>8)&0xFF);
         int b = ((colors[1])&0xFF)+((colors[2])&0xFF)+((colors[3])&0xFF)+((colors[4])&0xFF);
-        Assert.assertTrue("Expect gray/black ", r==g & g==b); // gray pixels
+        Assert.assertTrue("Expect gray/black text", r==g & g==b); // gray pixels
         Assert.assertTrue("Expect blacker than grey", r<4*0xee); // gray pixels
 
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {
+        if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
             jf.dispose();
         }
@@ -70,9 +73,11 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect blank");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
 
         to = new MemoryIcon("MemoryTest2", panel);
         jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect blank: "));
 
@@ -92,11 +97,10 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         flushAWT();
 
         int[] colors = getColor("Expect blank","| Expect blank",0,6,10);
-//        Assert.assertTrue("Expect gray pixels", (colors[3]==0xffeeeeee)&&(colors[4]==0xffeeeeee)); // gray pixels
-        Assert.assertTrue("Expect white pixels", (colors[3]==0xffffffff)&&(colors[4]==0xffffffff)); // white pixels
-        Assert.assertTrue("Expect gray pixels", (colors[7]==0xffeeeeee)&&(colors[8]==0xffeeeeee)); // gray pixels
+        boolean white = (colors[3]==0xffffffff)&&(colors[4]==0xffffffff);
+        Assert.assertTrue("Expect white pixels", white);
         
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {
+        if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
             jf.dispose();
         }
@@ -107,9 +111,11 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         JFrame jf = new JmriJFrame();
         jf.setTitle("Expect empty");
         jf.getContentPane().setLayout(new java.awt.FlowLayout());
+        jf.getContentPane().setBackground(Color.white);
 
         to = new MemoryIcon("MemoryTest3", panel);
         jf.getContentPane().add(to);
+        to.getPopupUtility().setBackgroundColor(Color.white);
 
         jf.getContentPane().add(new javax.swing.JLabel("| Expect red X default icon: "));
 
@@ -131,7 +137,7 @@ public class MemoryIconTest extends jmri.util.SwingTestCase {
         int colors[] = getColor("Expect empty","| Expect empty",0,6,10);
         Assert.assertTrue("Expect red X", (colors[3]==0xff800000)||(colors[4]==0xff800000)||(colors[5]==0xff800000));
 
-        if (!System.getProperty("jmri.demo", "false").equals("false")) {
+        if (System.getProperty("jmri.demo", "false").equals("false")) {
             jf.setVisible(false);
             jf.dispose();
         }
