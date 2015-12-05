@@ -215,8 +215,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                 } else if ((m = match(s, DCCppConstants.SENSOR_DELETE_REGEX, "ctor")) != null) {
                     int id = Integer.parseInt(m.group(1));
                     return(DCCppMessage.getSensorDeleteMessage(id));
-                } else if ((match(s, DCCppConstants.LIST_SENSORS_REGEX, "ctor")) != null) {
-                    return(new DCCppMessage(DCCppConstants.SENSOR_CMD, DCCppConstants.LIST_SENSORS_REGEX));
+                } else if ((match(s, DCCppConstants.SENSOR_LIST_REGEX, "ctor")) != null) {
+                    return(new DCCppMessage(DCCppConstants.SENSOR_CMD, DCCppConstants.SENSOR_LIST_REGEX));
                 } else {
                     return(null);
                 }
@@ -243,8 +243,33 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
                 } else if ((m = match(s, DCCppConstants.TURNOUT_DELETE_REGEX, "ctor")) != null) {
                     int id = Integer.parseInt(m.group(1));
                     return(DCCppMessage.getTurnoutDeleteMsg(id));
-                } else if ((match(s, DCCppConstants.LIST_TURNOUTS_REGEX, "ctor")) != null) {
-                    return(new DCCppMessage(DCCppConstants.TURNOUT_CMD, DCCppConstants.LIST_TURNOUTS_REGEX));
+                } else if ((match(s, DCCppConstants.TURNOUT_LIST_REGEX, "ctor")) != null) {
+                    return(new DCCppMessage(DCCppConstants.TURNOUT_CMD, DCCppConstants.TURNOUT_LIST_REGEX));
+                } else if ((m = match(s, DCCppConstants.TURNOUT_CMD_REGEX, "ctor")) != null) {
+                    int id = Integer.parseInt(m.group(1));
+                    boolean thrown = m.group(2).equals("1");
+                    return(DCCppMessage.getTurnoutCommandMsg(id, thrown));
+                }else {
+                    return(null);
+                }
+            case DCCppConstants.OUTPUT_CMD:
+                if ((m = match(s, DCCppConstants.OUTPUT_CMD_REGEX, "ctor")) != null) {
+                    int id = Integer.parseInt(m.group(1));
+                    boolean state = m.group(2).equals("1");
+                    return(DCCppMessage.getOutputCmdMsg(id, state));
+                } else {
+                    return(null);
+                }
+            case DCCppConstants.OUTPUT_DEF_CMD:
+                if ((m = match(s, DCCppConstants.OUTPUT_ADD_REGEX, "ctor")) != null) {
+                    int id = Integer.parseInt(m.group(1));
+                    int pin = Integer.parseInt(m.group(2));
+                    return(DCCppMessage.getOutputAddMsg(id, pin));
+                } else if ((m = match(s, DCCppConstants.OUTPUT_DELETE_REGEX, "ctor")) != null) {
+                    int id = Integer.parseInt(m.group(1));
+                    return(DCCppMessage.getOutputDeleteMsg(id));
+                } else if ((m = match(s, DCCppConstants.OUTPUT_LIST_REGEX, "ctor")) != null) {
+                    return(DCCppMessage.getOutputListMsg());
                 } else {
                     return(null);
                 }
@@ -409,7 +434,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	    Pattern p = Pattern.compile(pat);
 	    Matcher m = p.matcher(s);
 	    if (!m.matches()) {
-		log.error("Malformed {} Command: {} Pattern: {}",name, s, pat);
+		log.warn("Malformed {} Command: {} Pattern: {}",name, s, pat);
 		return(null);
 	    }
 	    return(m);
@@ -444,19 +469,78 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     public boolean isTurnoutCmdMessage() { return(this.match(DCCppConstants.TURNOUT_CMD_REGEX) != null); }
     public boolean isTurnoutAddMessage() { return(this.match(DCCppConstants.TURNOUT_ADD_REGEX) != null); }
     public boolean isTurnoutDeleteMessage() { return(this.match(DCCppConstants.TURNOUT_DELETE_REGEX) != null); }
-    public boolean isListTurnoutsMessage() { return(this.match(DCCppConstants.LIST_TURNOUTS_REGEX) != null); }
+    public boolean isListTurnoutsMessage() { return(this.match(DCCppConstants.TURNOUT_LIST_REGEX) != null); }
     public boolean isSensorAddMessage() { return(this.match(DCCppConstants.SENSOR_ADD_REGEX) != null); }
     public boolean isSensorDeleteMessage() { return(this.match(DCCppConstants.SENSOR_DELETE_REGEX) != null); }
-    public boolean isListSensorsMessage() { return(this.match(DCCppConstants.LIST_SENSORS_REGEX) != null); }
+    public boolean isListSensorsMessage() { return(this.match(DCCppConstants.SENSOR_LIST_REGEX) != null); }
+    public boolean isOutputCmdMessage() { return(this.getOpCodeChar() == DCCppConstants.OUTPUT_CMD); }
+    public boolean isOutputAddMessage() { return(this.match(DCCppConstants.OUTPUT_ADD_REGEX) != null); }
+    public boolean isOutputDeleteMessage() { return(this.match(DCCppConstants.OUTPUT_DELETE_REGEX) != null); }
+    public boolean isListOutputsMessage() { return(this.match(DCCppConstants.OUTPUT_LIST_REGEX) != null); }
 
     //------------------------------------------------------
     // Helper methods for Sensor Query Commands
 
+    public String getOutputIDString() {
+	if (this.isOutputAddMessage() || this.isOutputDeleteMessage() || this.isOutputCmdMessage()) {
+            return valueList.get(1).toString();
+	} else { 
+	    log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+	    return("0");
+        }
+    }
+
+    public int getOutputIDInt() {
+        if (this.isOutputAddMessage() || this.isOutputDeleteMessage() || this.isOutputCmdMessage()) {
+        return((int)valueList.get(1)); // assumes stored as an int!
+        } else {
+	    log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+	    return(0);
+        }
+    }
+
+    public String getOutputPinString() {
+	if (this.isOutputAddMessage()) {
+            return(valueList.get(2).toString());
+	} else {
+	    log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+	    return("0");
+        }
+    }
+
+    public int getOutputPinInt() {
+        if (this.isOutputAddMessage()) {
+            return((int)valueList.get(2));
+        } else {
+	    log.error("Output Parser called on non-Output message type {}", this.getOpCodeChar());
+            return(0);
+        }
+    }
+
+    public String getOutputStateString() {
+	if (isOutputCmdMessage()) {
+	    return(this.getOutputStateInt() == 1 ? "HIGH" : "LOW");
+	} else {
+	    return("Not a Turnout");
+	}
+    }
+
+    public int getOutputStateInt() {
+        return(this.getOutputStateBool() ? 1 : 0);
+    }
+    
+    public boolean getOutputStateBool() {
+	if (this.isOutputCmdMessage()) {
+            return((boolean)valueList.get(2));
+	} else {
+	    log.error("Output Parser called on non-Output message type {} message {}", this.getOpCodeChar(), this.toString());
+	    return(false);
+        }
+    }
     public String getSensorIDString() {
 	if (this.isSensorAddMessage()) {
             return valueList.get(1).toString();
 	} else { 
-
 	    log.error("Sensor Parser called on non-Sensor message type {}", this.getOpCodeChar());
 	    return("0");
         }
@@ -557,7 +641,14 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getAccessoryStateInt() {
 	if (this.isAccessoryMessage()) {
-            return((int)valueList.get(3));
+            if (valueList.get(3).getClass() == Integer.class) {
+                return((int)valueList.get(3));
+            }
+            else if (valueList.get(3).getClass() == Boolean.class) {
+                return((boolean)valueList.get(3) ? 1 : 0);
+            } else {
+                return(Integer.parseInt(valueList.get(3).toString()));
+            }
         } else {
 	    log.error("Accessory Parser called on non-Accessory message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
@@ -729,7 +820,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 
     public int getTOStateInt() {
 	if (this.isTurnoutMessage()) {
-            return((int)valueList.get(2));
+            return((boolean)valueList.get(2) ? 1 : 0);
 	} else {
 	    log.error("Turnout Parser called on non-Turnout message type {} message {}", this.getOpCodeChar(), this.toString());
 	    return(0);
@@ -987,6 +1078,8 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
 	case DCCppConstants.READ_TRACK_CURRENT:
 	case DCCppConstants.READ_CS_STATUS:
 	case DCCppConstants.GET_FREE_MEMORY:
+        case DCCppConstants.OUTPUT_CMD:
+        case DCCppConstants.OUTPUT_DEF_CMD:
 	//case DCCppConstants.QUERY_SENSOR_STATE:
 	case DCCppConstants.LIST_REGISTER_CONTENTS:
 	    retv = true;
@@ -1093,6 +1186,48 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         return(m);
     }
 
+    public static DCCppMessage getOutputCmdMsg(int id, boolean state) {
+	// Sanity check inputs
+	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_CMD);
+        m.valueList.add(id);
+        m.valueList.add(state);
+        m.myRegex = DCCppConstants.OUTPUT_CMD_REGEX;
+        
+        m._nDataChars = m.toString().length();
+        return(m);
+    }
+
+    public static DCCppMessage getOutputAddMsg(int id, int pin) {
+	// Sanity check inputs
+	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_DEF_CMD);
+        m.valueList.add(id);
+        m.valueList.add(pin);
+        m.myRegex = DCCppConstants.OUTPUT_ADD_REGEX;
+        
+        m._nDataChars = m.toString().length();
+        return(m);
+    }
+
+    public static DCCppMessage getOutputDeleteMsg(int id) {
+	// Sanity check inputs
+	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
+
+        DCCppMessage m = new DCCppMessage(DCCppConstants.OUTPUT_DEF_CMD);
+        m.valueList.add(id);
+        m.myRegex = DCCppConstants.OUTPUT_DELETE_REGEX;
+        
+        m._nDataChars = m.toString().length();
+        return(m);
+    }
+
+    public static DCCppMessage getOutputListMsg() {
+        return(new DCCppMessage(DCCppConstants.OUTPUT_DEF_CMD, DCCppConstants.OUTPUT_LIST_REGEX));
+    }
+
     public static DCCppMessage getTurnoutAddMsg(int id, int addr, int subaddr) {
 	// Sanity check inputs
 	if (id < 0 || id > DCCppConstants.MAX_TURNOUT_ADDRESS) { return(null); }
@@ -1122,7 +1257,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage getTurnoutListMsg() {
-        return(new DCCppMessage(DCCppConstants.TURNOUT_CMD, DCCppConstants.LIST_TURNOUTS_REGEX));
+        return(new DCCppMessage(DCCppConstants.TURNOUT_CMD, DCCppConstants.TURNOUT_LIST_REGEX));
     }
 
     /** Create/Delete/Query Sensor
@@ -1147,7 +1282,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
         DCCppMessage m = new DCCppMessage(DCCppConstants.SENSOR_CMD);
         m.valueList.add(Integer.toString(id));
         m.valueList.add(Integer.toString(pin));
-        m.valueList.add(pullup ? "1" : "0");
+        m.valueList.add(pullup);
         m.myRegex = DCCppConstants.SENSOR_ADD_REGEX;
         
         m._nDataChars = m.toString().length();
@@ -1166,7 +1301,7 @@ public class DCCppMessage extends jmri.jmrix.AbstractMRMessage {
     }
 
     public static DCCppMessage getSensorListMsg() {
-        return(new DCCppMessage(DCCppConstants.SENSOR_CMD, DCCppConstants.LIST_SENSORS_REGEX));
+        return(new DCCppMessage(DCCppConstants.SENSOR_CMD, DCCppConstants.SENSOR_LIST_REGEX));
     }
 
     /**
