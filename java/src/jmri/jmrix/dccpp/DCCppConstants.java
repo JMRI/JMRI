@@ -29,6 +29,11 @@ public final class DCCppConstants {
     
     // DCC++ over TCP Port Number
     public final static int DCCPP_OVER_TCP_PORT = 1235;
+    
+    // Communications Port Info
+    public final static int COMM_TYPE_SERIAL = 0;
+    public final static int COMM_TYPE_ENET = 1;
+    public final static int COMM_TYPE_ENETV2 = 2;
 
     // Command Station Types
     public final static int DCCPP_UNO_1_0 = 1;
@@ -45,6 +50,8 @@ public final class DCCppConstants {
     public final static char ACCESSORY_CMD          = 'a'; // Stationary accessory decoder <a addr subaddr activate>
     public final static char TURNOUT_CMD            = 'T'; // Turnout command <T id throw> -- NEW versions V1.1
     public final static char SENSOR_CMD             = 'S'; // Sensor command -- NEW V1.1
+    public final static char OUTPUT_CMD             = 'z'; // Output command -- NEW V1.2?
+    public final static char OUTPUT_DEF_CMD         = 'Z'; // Output Define command -- NEW V1.2?
     public final static char OPS_WRITE_CV_BYTE      = 'w'; // Write CV byte on ops track
     public final static char OPS_WRITE_CV_BIT       = 'b'; // Set/Clear a single CV bit on ops track
     public final static char PROG_WRITE_CV_BYTE     = 'W'; // Write CV byte on program track
@@ -72,12 +79,15 @@ public final class DCCppConstants {
     public final static char POWER_REPLY      = 'p';
     public final static char CURRENT_REPLY    = 'a';
     public final static char MEMORY_REPLY     = 'f';
-    public final static char LISTPACKET_REPLY = 'L';
+//    public final static char LISTPACKET_REPLY = 'M';
     public final static char SENSOR_REPLY     = 'Q';
     public final static char SENSOR_REPLY_H   = 'q';
     public final static char SENSOR_REPLY_L   = 'Q';
+    public final static char OUTPUT_REPLY     = 'Z';
+    public final static char WRITE_EEPROM_REPLY = 'e';
     public final static char MADC_FAIL_REPLY  = 'X';
     public final static char MADC_SUCCESS_REPLY = 'O';
+    public final static char COMM_TYPE_REPLY = 'N';
 
     // Message / Reply Regexes
     public final static String THROTTLE_CMD_REGEX = "t\\s(\\d+)\\s(\\d+)\\s([-]*\\d+)\\s([1,0])";
@@ -86,10 +96,15 @@ public final class DCCppConstants {
     public final static String TURNOUT_CMD_REGEX = "T\\s(\\d+)\\s([1,0])"; // <T ID THROW>
     public final static String TURNOUT_ADD_REGEX = "T\\s(\\d+)\\s(\\d+)\\s(\\d+)"; // <T ID ADDR SUBADDR>
     public final static String TURNOUT_DELETE_REGEX = "T\\s*(\\d+)"; // <T ID>
-    public final static String LIST_TURNOUTS_REGEX = "T"; // <T>
+    public final static String TURNOUT_LIST_REGEX = "T"; // <T>
     public final static String SENSOR_ADD_REGEX = "S\\s(\\d+)\\s(\\d+)\\s([1,0])";
     public final static String SENSOR_DELETE_REGEX = "S\\s(\\d+)";
-    public final static String LIST_SENSORS_REGEX = "S";
+    public final static String SENSOR_LIST_REGEX = "S";
+    public final static String OUTPUT_CMD_REGEX = "\\s*z\\s*(\\d+)\\s+(\\d+)\\s*";
+    public final static String OUTPUT_ADD_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s*";
+    public final static String OUTPUT_DELETE_REGEX = "\\s*Z\\s*(\\d+)\\s*";
+    public final static String OUTPUT_LIST_REGEX = "\\s*Z\\s*";
+
     public final static String WRITE_TO_EEPROM_REGEX = "E";
     public final static String CLEAR_EEPROM_REGEX = "e";
 
@@ -123,10 +138,14 @@ public final class DCCppConstants {
     public final static String SENSOR_ACTIVE_REPLY_REGEX = "\\s*Q\\s*(\\d+)\\s*";
     public final static String SENSOR_INACTIVE_REPLY_REGEX = "\\s*q\\s*(\\d+)\\s*";
     public final static String BROKEN_SENSOR_REPLY_REGEX = "\\s*(\\d+)\\s*";
+    public final static String OUTPUT_REPLY_REGEX = "\\s*Z\\s*(\\d+)\\s+(\\d+)\\s*";
     public final static String MADC_FAIL_REPLY_REGEX = "\\s*X\\s*";
     public final static String MADC_SUCCESS_REPLY_REGEX = "\\s*O\\s*";
-    public final static String STATUS_REPLY_REGEX = "iDCC\\+\\+(.*): BUILD (.*)";
+//    public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+.*): BUILD (.*)";
+    public final static String STATUS_REPLY_REGEX = "i(DCC\\+\\+[^:]*): BUILD (.*)";
     public final static String FREE_MEMORY_REPLY_REGEX = "\\s*f\\s*(\\d+)\\s*";
+    public final static String WRITE_EEPROM_REPLY_REGEX = "\\s*e\\s*(\\d+)\\s+(\\d+)\\s*";
+    public final static String COMM_TYPE_REPLY_REGEX = "\\s*N\\s*(\\d+):\\s+(SERIAL|(\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})\\s*";
 
     // Misc standard values
     public final static char WHITESPACE = ' ';

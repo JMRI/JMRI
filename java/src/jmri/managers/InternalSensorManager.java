@@ -37,6 +37,7 @@ public class InternalSensorManager extends AbstractSensorManager {
             log.error("An error occured while trying to set initial state for sensor " + sen.getDisplayName());
             log.error(ex.toString());
         }
+        log.debug("Internal Sensor \"{}\", \"{}\" created", systemName, userName);
         return sen;
     }
 

@@ -5,7 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class performs Command Station dependant initilization for DCC++. It
+ * This class performs Command Station dependant initialization for DCC++. It
  * adds the appropriate Managers via the Initialization Manager based on the
  * Command Station Type.
  *
