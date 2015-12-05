@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?><!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
+<?xml-stylesheet type="text/xsl" href="../XSLT/decoder.xsl"?>
+<!-- Copyright (C) JMRI 2005, 2007 All rights reserved -->
 <!-- $Id$ -->
 <!--                                                                        -->
 <!-- JMRI is free software; you can redistribute it and/or modify it under  -->
@@ -100,7 +101,7 @@
         <comment>A value of 255 corresponds to 100%</comment>
       </variable>
       <!-- CV 3-4 -->
-     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel.xml"/>
+     <xi:include href="http://jmri.org/xml/decoders/nmra/accelDecel_255.xml"/>
       <variable CV="5" item="Vhigh" default="1" tooltip="range 2-255, 1 = not used">
         <decVal min="1" max="255"/>
         <label>Max Volts</label>
@@ -774,13 +775,12 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Auto Mute Timeout" CV="51.5" default="0" comment="QSI" item="CV51.5" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>19</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Auto Mute Timeout" CV="51.5" default="0" comment="QSI" item="CV51.5" include="5000,5050">
         <decVal/>
       </variable>
@@ -918,178 +918,162 @@
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceLowNeuV7.xml"/>
       </variable>
       <variable label="Output 15" CV="53.15.0" default="10" item="CV53.15.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 15" CV="53.15.0" default="10" item="CV53.15.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 16" CV="53.16.0" default="10" item="CV53.16.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 16" CV="53.16.0" default="10" item="CV53.16.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 17" CV="53.17.0" default="154" item="CV53.17.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 17" CV="53.17.0" default="10" item="CV53.17.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 18" CV="53.18.0" default="154" item="CV53.18.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 18" CV="53.18.0" default="10" item="CV53.18.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 19" CV="53.19.0" default="10" item="CV53.19.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 19" CV="53.19.0" default="10" item="CV53.19.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 20" CV="53.20.0" default="10" item="CV53.20.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 20" CV="53.20.0" default="10" item="CV53.20.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 21" CV="53.21.0" default="10" item="CV53.21.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 21" CV="53.21.0" default="10" item="CV53.21.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 22" CV="53.22.0" default="10" item="CV53.22.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 22" CV="53.22.0" default="10" item="CV53.22.0" include="55000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 23" CV="53.23.0" default="10" item="CV53.23.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 23" CV="53.23.0" default="10" item="CV53.23.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 24" CV="53.24.0" default="10" item="CV53.24.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 24" CV="53.24.0" default="10" item="CV53.24.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 25" CV="53.25.0" default="10" item="CV53.25.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 25" CV="53.25.0" default="10" item="CV53.25.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 26" CV="53.26.0" default="10" item="CV53.26.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 26" CV="53.26.0" default="10" item="CV53.26.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 27" CV="53.27.0" default="10" item="CV53.27.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 27" CV="53.27.0" default="10" item="CV53.27.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 28" CV="53.28.0" default="10" item="CV53.28.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 28" CV="53.28.0" default="10" item="CV53.28.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 29" CV="53.29.0" default="10" item="CV53.29.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 29" CV="53.29.0" default="10" item="CV53.29.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
       <variable label="Output 30" CV="53.30.0" default="10" item="CV53.30.0" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/></variable>
       <variable label="Output 30" CV="53.30.0" default="10" item="CV53.30.0" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/qsi/ChoiceHighV7.xml"/>
       </variable>
@@ -1100,35 +1084,32 @@
         <decVal/>
       </variable>
       <variable label="Automatic Bell" CV="55.3.5" mask="VXXXXXXX" default="0" item="CV55.3.5 Auto" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/></variable>
       <variable label="Automatic Bell" CV="55.3.5" mask="VXXXXXXX" default="0" item="CV55.3.5 Auto" include="5000,5048,5049,5050">
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-disabledEnabled.xml"/>
       </variable>
       <variable label="Automatic Bell Hold Time" CV="55.3.5" mask="XVVVVVVV" default="5" item="CV55.3.5 Hold" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Automatic Bell Hold Time" CV="55.3.5" mask="XVVVVVVV" default="5" item="CV55.3.5 Hold" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Speed Steps per Notch" CV="55.21.0" default="10" item="CV55.21.0" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Speed Steps per Notch" CV="55.21.0" default="10" item="CV55.21.0" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
@@ -1202,57 +1183,52 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-offDimBrightStrobe.xml"/>
       </variable>
       <variable label="Mars Light Period" CV="55.76.6" default="100" item="CV55.76.6" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Mars Light Period" CV="55.76.6" default="100" item="CV55.76.6" include="5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Mars Light Dim Intensity" CV="55.76.10" default="0" item="CV55.76.10" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>7</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Mars Light Dim Intensity" CV="55.76.10" default="0" item="CV55.76.10" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Mars Light Min Intensity" CV="55.76.11" default="4" item="CV55.76.11" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Mars Light Min Intensity" CV="55.76.11" default="4" item="CV55.76.11" include="5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Mars Light Max Intensity" CV="55.76.12" default="255" item="CV55.76.12" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Mars Light Max Intensity" CV="55.76.12" default="255" item="CV55.76.12" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Mars Light Mid Intensity" CV="55.76.13" default="32" item="CV55.76.13" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Mars Light Mid Intensity" CV="55.76.13" default="32" item="CV55.76.13" include="5048,5049,5050">
         <decVal/>
       </variable>
@@ -1797,21 +1773,19 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Crossing Blast 1" CV="55.154.0" mask="XVVVVVVV" default="30" item="CV55.154.0" include="500">
-        <decVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal max="127"/></variable>
       <variable label="Crossing Blast 1 Hoot/Fancy Ending" CV="55.154.0" mask="VXXXXXXX" default="0" item="CV55.154.0 hoot" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
       <variable label="Crossing Blast 1" CV="55.154.0" mask="XVVVVVVV" default="30" item="CV55.154.0" include="5000,5048,5049,5050">
         <decVal max="127"/>
       </variable>
@@ -1819,32 +1793,29 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Crossing Silence 1" CV="55.154.1" default="15" item="CV55.154.1" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Crossing Silence 1" CV="55.154.1" default="15" item="CV55.154.1" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Crossing Blast 2" CV="55.154.2" mask="XVVVVVVV" default="30" item="CV55.154.2" include="500">
-        <decVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal max="127"/></variable>
       <variable label="Crossing Blast 2 Hoot/Fancy Ending" CV="55.154.2" mask="VXXXXXXX" default="0" item="CV55.154.2 hoot" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
       <variable label="Crossing Blast 2" CV="55.154.2" mask="XVVVVVVV" default="30" item="CV55.154.2" include="5000,5048,5049,5050">
         <decVal max="127"/>
       </variable>
@@ -1852,32 +1823,29 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Crossing Silence 2" CV="55.154.3" default="15" item="CV55.154.3" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Crossing Silence 2" CV="55.154.3" default="15" item="CV55.154.3" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Crossing Blast 3" CV="55.154.4" mask="XVVVVVVV" default="10" item="CV55.154.4" include="500">
-        <decVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal max="127"/></variable>
       <variable label="Crossing Blast 3 Hoot/Fancy Ending" CV="55.154.4" mask="VXXXXXXX" default="0" item="CV55.154.4 hoot" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
       <variable label="Crossing Blast 3" CV="55.154.4" mask="XVVVVVVV" default="10" item="CV55.154.4" include="5000,5048,5049,5050">
         <decVal max="127"/>
       </variable>
@@ -1885,32 +1853,29 @@
         <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
       </variable>
       <variable label="Crossing Silence 3" CV="55.154.5" default="15" item="CV55.154.5" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="Crossing Silence 3" CV="55.154.5" default="15" item="CV55.154.5" include="5000,5048,5049,5050">
         <decVal/>
       </variable>
       <variable label="Crossing Blast 4" CV="55.154.6" mask="XVVVVVVV" default="30" item="CV55.154.6" include="500">
-        <decVal max="127"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal max="127"/></variable>
       <variable label="Crossing Blast 4 Hoot/fFancy Ending" CV="55.154.6" mask="VXXXXXXX" default="0" item="CV55.154.6 hoot" include="500">
-        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <xi:include href="http://jmri.org/xml/decoders/parts/enum-OffOn.xml"/></variable>
       <variable label="Crossing Blast 4" CV="55.154.6" mask="XVVVVVVV" default="30" item="CV55.154.6" include="5000,5048,5049,5050">
         <decVal max="127"/>
       </variable>
@@ -1978,13 +1943,12 @@
         <decVal max="7"/>
       </variable>
       <variable label="BEMF to SMPH trim" CV="56.9" default="128" item="CV56.9" include="500">
-        <decVal/>
         <qualifier>
           <variableref>Minor Version</variableref>
           <relation>ge</relation>
           <value>40</value>
         </qualifier>
-      </variable>
+        <decVal/></variable>
       <variable label="BEMF to SMPH trim" CV="56.9" default="128" item="CV56.9">
         <decVal/>
       </variable>

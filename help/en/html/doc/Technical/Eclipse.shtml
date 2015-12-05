@@ -52,7 +52,7 @@
 	<a name="getwgit"></a>
 	<h2>Getting the JMRI Source using Git</h2>
 
-	To get the source code from SourceForge using Git you need to do the
+	To get the source code from GitHub using Git you need to do the
 	following:
 
 	<OL>

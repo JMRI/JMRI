@@ -18,8 +18,7 @@ import junit.framework.TestSuite;
 public class TurnoutIconTest extends jmri.util.SwingTestCase {
 
     TurnoutIcon to = null;
-    jmri.jmrit.display.panelEditor.PanelEditor panel
-            = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
+    jmri.jmrit.display.panelEditor.PanelEditor panel;
 
     public void testShow() {
         JFrame jf = new JFrame();
@@ -119,6 +118,8 @@ public class TurnoutIconTest extends jmri.util.SwingTestCase {
     // The minimal setup for log4J
     protected void setUp() {
         apps.tests.Log4JFixture.setUp();
+    
+        panel = new jmri.jmrit.display.panelEditor.PanelEditor("Test TurnoutIcon Panel");
     }
 
     protected void tearDown() {

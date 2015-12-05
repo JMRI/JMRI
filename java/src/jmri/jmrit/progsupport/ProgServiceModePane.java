@@ -58,6 +58,7 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
      * Get the selected programmer
      */
     public Programmer getProgrammer() {
+        if (progBox.getSelectedItem() == null) return null;
         return ((GlobalProgrammerManager) progBox.getSelectedItem()).getGlobalProgrammer();
     }
 
@@ -83,8 +84,16 @@ public class ProgServiceModePane extends ProgModeSelector implements PropertyCha
         this(direction, new javax.swing.ButtonGroup());
     }
 
+    /**
+     * Get the list of global managers
+     * @return empty list if none
+     */
     protected List<GlobalProgrammerManager> getMgrList() {
-        return InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+        List<GlobalProgrammerManager> retval;
+        
+        retval = InstanceManager.getList(jmri.GlobalProgrammerManager.class);
+        if (retval!=null) return retval;
+        return new ArrayList<>();
     }
 
     /**

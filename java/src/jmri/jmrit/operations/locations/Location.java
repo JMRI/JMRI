@@ -913,7 +913,7 @@ public class Location implements java.beans.PropertyChangeListener {
         for (Track track : getTrackList()) {
             track.setBlockingOrder(0);
         }
-        resequnceTracksByBlockingOrder();
+        setDirtyAndFirePropertyChange(TRACK_BLOCKING_ORDER_CHANGED_PROPERTY, true, false);
     }
     
     public void resequnceTracksByBlockingOrder() {
@@ -925,28 +925,34 @@ public class Location implements java.beans.PropertyChangeListener {
     }
     
     public void changeTrackBlockingOrderEarlier(Track track) {
-        //first adjust the track being replaced
-        Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() - 1);
-        if (repalceTrack != null) {
-            repalceTrack.setBlockingOrder(track.getBlockingOrder());
+        // if track blocking order is 0, then the blocking table has never been initialized
+        if (track.getBlockingOrder() != 0) {
+            //first adjust the track being replaced
+            Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() - 1);
+            if (repalceTrack != null) {
+                repalceTrack.setBlockingOrder(track.getBlockingOrder());
+            }
+            track.setBlockingOrder(track.getBlockingOrder() - 1);
+            // move the end of order
+            if (track.getBlockingOrder() <= 0)
+                track.setBlockingOrder(_trackHashTable.size() + 1);
         }
-        track.setBlockingOrder(track.getBlockingOrder() - 1);
-        // move the end of order
-        if (track.getBlockingOrder() <= 0)
-            track.setBlockingOrder(_trackHashTable.size() + 1);
         resequnceTracksByBlockingOrder();
     }
     
     public void changeTrackBlockingOrderLater(Track track) {
-        //first adjust the track being replaced
-        Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() + 1);
-        if (repalceTrack != null) {
-            repalceTrack.setBlockingOrder(track.getBlockingOrder());
+        // if track blocking order is 0, then the blocking table has never been initialized
+        if (track.getBlockingOrder() != 0) {
+            //first adjust the track being replaced
+            Track repalceTrack = getTrackByBlockingOrder(track.getBlockingOrder() + 1);
+            if (repalceTrack != null) {
+                repalceTrack.setBlockingOrder(track.getBlockingOrder());
+            }
+            track.setBlockingOrder(track.getBlockingOrder() + 1);
+            // move the start of order
+            if (track.getBlockingOrder() > _trackHashTable.size())
+                track.setBlockingOrder(0);
         }
-        track.setBlockingOrder(track.getBlockingOrder() + 1);
-        // move the start of order
-        if (track.getBlockingOrder() > _trackHashTable.size())
-            track.setBlockingOrder(0);
         resequnceTracksByBlockingOrder();
     }
     

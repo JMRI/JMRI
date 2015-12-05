@@ -2,19 +2,15 @@
 <!-- $Id$ -->
 <html lang="en">
 <head>
-  <TITLE>
+  <title>
  	JMRI: Signaling Documentation
-  </TITLE>
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  </title>
 
-  <META content="Bob Jacobsen" name=Author>
-
-  <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <meta name="keywords"
-        content="turnout model railroad JMRI decoderpro panelpro">
+  <meta content="Bob Jacobsen" name="Author">
+  <meta name="keywords" content="turnout model railroad JMRI decoderpro panelpro">
 
 <!-- Style -->
-  <META http-equiv=Content-Type content="text/html; charset=iso-8859-1">
+  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
   <link rel="stylesheet" type="text/css" href="/css/print.css" media="print">
   <link rel="icon" href="/images/jmri.ico" type="image/png">
@@ -30,9 +26,9 @@
 
       <div id="mainContent">
       <!-- Page Body -->
-        <H1>
+        <h1>
 		JMRI: Signaling Documentation
-        </H1>
+        </h1>
 <p>
 All information about JMRI Signaling is available from the 
 <a href="signaling/index.shtml">JMRI Signaling main help page</a>.
@@ -45,5 +41,3 @@ All information about JMRI Signaling is available from the
   </div> <!-- closes #container -->
 </body>
 </html>
-
-

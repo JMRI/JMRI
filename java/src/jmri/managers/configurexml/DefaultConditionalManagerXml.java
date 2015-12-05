@@ -162,14 +162,16 @@ public class DefaultConditionalManagerXml extends jmri.managers.configurexml.Abs
      * Create a ConditionalManager object of the correct class, then register
      * and fill it.
      *
-     * @param conditionals Top level Element to unpack.
+     * @param sharedConditionals Top level Element to unpack.
+     * @param perNodeConditionals
      * @return true if successful
      */
-    public boolean load(Element conditionals) {
+    @Override
+    public boolean load(Element sharedConditionals, Element perNodeConditionals) {
         // create the master object
         replaceConditionalManager();
         // load individual logixs
-        loadConditionals(conditionals);
+        loadConditionals(sharedConditionals);
         return true;
     }
 

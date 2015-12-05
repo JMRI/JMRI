@@ -1,6 +1,5 @@
 package jmri.jmrix.lenz.liusbethernet.configurexml;
 
-import jmri.InstanceManager;
 import jmri.jmrix.configurexml.AbstractNetworkConnectionConfigXml;
 import jmri.jmrix.lenz.liusbethernet.ConnectionConfig;
 import jmri.jmrix.lenz.liusbethernet.LIUSBEthernetAdapter;
@@ -40,8 +39,9 @@ public class ConnectionConfigXml extends AbstractNetworkConnectionConfigXml {
         adapter = ((ConnectionConfig) object).getAdapter();
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Enumeration;
 import javax.swing.JFrame;
+import jmri.InstanceManager;
+import jmri.jmrix.ConnectionConfig;
+import jmri.jmrix.ConnectionConfigManager;
 import jmri.profile.Profile;
 import jmri.profile.ProfileManager;
 import jmri.util.FileUtil;
@@ -56,10 +59,10 @@ public class ReportContext {
         }
 
         addString("JMRI Application: " + jmri.Application.getApplicationName() + "   ");
-        ArrayList<Object> connList = jmri.InstanceManager.configureManagerInstance().getInstanceList(jmri.jmrix.ConnectionConfig.class);
+        ConnectionConfig[] connList = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections();
         if (connList != null) {
-            for (int x = 0; x < connList.size(); x++) {
-                jmri.jmrix.ConnectionConfig conn = (jmri.jmrix.ConnectionConfig) connList.get(x);
+            for (int x = 0; x < connList.length; x++) {
+                ConnectionConfig conn = connList[x];
                 addString("Connection " + x + ": " + conn.getManufacturer() + " connected via " + conn.name() + " on " + conn.getInfo() + " Disabled " + conn.getDisabled() + "   ");
             }
         }

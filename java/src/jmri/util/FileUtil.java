@@ -292,12 +292,12 @@ public final class FileUtil {
      * @param pName The name string, possibly starting with file:, home:,
      *              profile:, program:, preference:, scripts:, settings, or
      *              resource:
-     * @return Absolute file name to use, or null.
+     * @return Absolute file name to use, or null. This will include system-specific file separators.
      * @since 2.7.2
      */
     static public String getExternalFilename(String pName) {
         String filename = FileUtil.pathFromPortablePath(pName);
-        return (filename != null) ? filename : pName;
+        return (filename != null) ? filename : pName.replace(SEPARATOR, File.separatorChar);
     }
 
     /**
@@ -317,7 +317,7 @@ public final class FileUtil {
      * are not created.
      *
      * @param file File at path to be represented
-     * @return Filename for storage in a portable manner
+     * @return Filename for storage in a portable manner. This will include portable, not system-specific, file separators.
      * @since 2.7.2
      */
     static public String getPortableFilename(File file) {
@@ -527,13 +527,19 @@ public final class FileUtil {
 
     /**
      * Get the preferences directory. This directory is set based on the OS and
-     * is not normally settable by the user. <ul><li>On Microsoft Windows
-     * systems, this is JMRI in the User's home directory.</li> <li>On OS X
+     * is not normally settable by the user. 
+     * <ul>
+     * <li>On Microsoft Windows
+     * systems, this is JMRI in the User's home directory.</li>
+     * <li>On OS X
      * systems, this is Library/Preferences/JMRI in the User's home
-     * directory.</li> <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
-     * the User's home directory.</li> <li>This can be overridden with by
-     * setting the jmri.prefsdir Java property when starting JMRI.</li></ul> Use
-     * {@link #getHomePath()} to get the User's home directory.
+     * directory.</li> 
+     * <li>On Linux, Solaris, and othe UNIXes, this is .jmri in
+     * the User's home directory.</li> 
+     * <li>This can be overridden with by
+     * setting the jmri.prefsdir Java property when starting JMRI.</li>
+     * </ul>
+     * Use {@link #getHomePath()} to get the User's home directory.
      *
      * @see #getHomePath()
      * @return Path to the preferences directory.

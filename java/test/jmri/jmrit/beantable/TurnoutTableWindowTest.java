@@ -26,7 +26,6 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
     public void testShowAndClose() throws Exception {
 
         jmri.InstanceManager.store(jmri.managers.DefaultUserMessagePreferences.getInstance(), jmri.UserPreferencesManager.class);
-        //jmri.util.JUnitAppender.assertWarnMessage("Won't protect preferences at shutdown without registered ShutDownManager");
 
         TurnoutTableAction a = new TurnoutTableAction();
         a.actionPerformed(new java.awt.event.ActionEvent(a, 1, ""));
@@ -58,24 +57,27 @@ public class TurnoutTableWindowTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull(prefixBox);
         // set to "Internal"
         prefixBox.setSelectedItem("Internal");
+        Assert.assertEquals("Selected system item", "Internal", prefixBox.getSelectedItem());
 
         // Find the OK button
         abfinder = new AbstractButtonFinder("OK");
         button = (JButton) abfinder.find(fa, 0);
         Assert.assertNotNull(button);
 
-        // Click button to add sensor
+        // Click button to add turnout
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
-
-        // check for existing sensor
-        Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
-
+        
         // Ask to close add window
         TestHelper.disposeWindow(fa, this);
 
         // Ask to close table window
         TestHelper.disposeWindow(ft, this);
 
+        flushAWT();
+        flushAWT();
+        
+        // check that turnout was created
+        Assert.assertNotNull(jmri.InstanceManager.turnoutManagerInstance().getTurnout("IT1"));
     }
 
     // from here down is testing infrastructure

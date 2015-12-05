@@ -169,14 +169,11 @@ public class TrackRoadEditFrame extends OperationsFrame implements java.beans.Pr
             enableButtons(false);
         }
 
-        // build menu
-        // JMenuBar menuBar = new JMenuBar();
-        // _toolMenu = new JMenu(Bundle.getMessage("Tools"));
-        // menuBar.add(_toolMenu);
-        // setJMenuBar(menuBar);
-        // load
         updateRoadComboBox();
         updateRoadNames();
+        
+        // add help menu to window
+        addHelpMenu("package.jmri.jmrit.operations.Operations_RoadOptions", true); // NOI18N
 
         initMinimumSize(new Dimension(Control.panelWidth500, Control.panelHeight400));
     }

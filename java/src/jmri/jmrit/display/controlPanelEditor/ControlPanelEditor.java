@@ -64,6 +64,7 @@ import jmri.jmrit.display.PositionableJComponent;
 import jmri.jmrit.display.PositionableJPanel;
 import jmri.jmrit.display.PositionableLabel;
 import jmri.jmrit.display.PositionablePopupUtil;
+import jmri.jmrit.display.SensorIcon;
 import jmri.jmrit.display.ToolTip;
 import jmri.jmrit.display.controlPanelEditor.shape.ShapeDrawer;
 import jmri.jmrit.display.palette.ItemPalette;
@@ -99,10 +100,6 @@ import org.slf4j.LoggerFactory;
  *
  */
 public class ControlPanelEditor extends Editor implements DropTargetListener, ClipboardOwner {
-
-    /**
-     *
-     */
     private static final long serialVersionUID = 2767111074938103944L;
     public boolean _debug;
     protected JMenuBar _menuBar;
@@ -1704,11 +1701,14 @@ public class ControlPanelEditor extends Editor implements DropTargetListener, Cl
                 popup.addSeparator();
                 popupSet = false;
             }
-            popupSet = p.setTextEditMenu(popup);
             if (p instanceof PositionableLabel) {
                 PositionableLabel pl = (PositionableLabel) p;
                 if (!pl.isIcon()) {
                     popupSet |= setTextAttributes(pl, popup);
+                } else if (p instanceof SensorIcon) {
+                    popup.add(CoordinateEdit.getTextEditAction(p, "OverlayText"));
+                } else {
+                    popupSet = p.setTextEditMenu(popup);                
                 }
             } else if (p instanceof PositionableJPanel) {
                 popupSet |= setTextAttributes(p, popup);

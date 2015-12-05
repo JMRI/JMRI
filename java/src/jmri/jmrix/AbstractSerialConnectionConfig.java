@@ -537,6 +537,7 @@ abstract public class AbstractSerialConnectionConfig extends AbstractConnectionC
 
     @Override
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;

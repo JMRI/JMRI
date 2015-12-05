@@ -183,6 +183,9 @@ public class HelpUtil {
     }
 
     static public HelpBroker getGlobalHelpBroker() {
+        if (globalHelpBroker == null) {
+            HelpUtil.initOK();
+        }
         return globalHelpBroker;
     }
 

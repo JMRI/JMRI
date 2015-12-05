@@ -285,16 +285,6 @@ public abstract class AbstractAudioManagerConfigXML extends AbstractNamedBeanMan
     }
 
     /**
-     * Create a AudioManager object of the correct class, then register and fill
-     * it.
-     *
-     * @param audio Top level Element to unpack.
-     * @return true if successful
-     */
-    @Override
-    abstract public boolean load(Element audio);
-
-    /**
      * Utility method to load the individual Audio objects. If there's no
      * additional info needed for a specific Audio type, invoke this with the
      * parent of the set of Audio elements.

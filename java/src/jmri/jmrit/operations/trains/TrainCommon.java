@@ -303,7 +303,7 @@ public class TrainCommon {
                     if (car.isUtility()) {
                         setoutUtilityCars(file, carList, car, isManifest);
                     } // use truncated format if there's a switch list
-                    else if (isManifest && Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled()) {
+                    else if (isManifest && Setup.isTruncateManifestEnabled() && rl.getLocation().isSwitchListEnabled() && !train.isLocalSwitcher()) {
                         truncatedDropCar(file, car, isManifest);
                     } else {
                         dropCar(file, car, isManifest);

@@ -2,7 +2,6 @@
 package jmri.jmrix.acela.serialdriver.configurexml;
 
 import java.util.List;
-import jmri.InstanceManager;
 import jmri.jmrix.acela.AcelaNode;
 import jmri.jmrix.acela.AcelaTrafficController;
 import jmri.jmrix.acela.serialdriver.ConnectionConfig;
@@ -356,8 +355,9 @@ public class ConnectionConfigXml extends AbstractSerialConnectionConfigXml {
         return null;
     }
 
+    @Override
     protected void register() {
-        InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(adapter));
+        this.register(new ConnectionConfig(adapter));
     }
 
     // initialize logging

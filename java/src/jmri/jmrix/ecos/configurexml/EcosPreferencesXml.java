@@ -37,7 +37,7 @@ public class EcosPreferencesXml extends jmri.configurexml.AbstractXmlAdapter /*e
      InstanceManager.configureManagerInstance().registerPref(new ConnectionConfig(host, port, mode));
      }*/
 
-    public boolean load(Element e) {
+    public boolean load(Element shared, Element perNode) {
         return true;
     }
 
