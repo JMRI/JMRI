@@ -257,7 +257,7 @@ public class DecoratorPanel extends JPanel implements ChangeListener, ItemListen
                 sample.setText(field.getText());
                 addtextField = false;
             } else if (pos instanceof jmri.jmrit.display.MemoryComboIcon) {
-                JComboBox<String> box = (JComboBox<String>)((jmri.jmrit.display.MemoryComboIcon)pos).getTextComponent();
+                JComboBox<String> box = ((jmri.jmrit.display.MemoryComboIcon)pos).getTextComponent();
                 sample.setText(box.getSelectedItem().toString());
                 addtextField = false;
             } else if (pos instanceof jmri.jmrit.display.MemorySpinnerIcon) {
