@@ -158,6 +158,8 @@ abstract public class AbstractActionPanel extends JPanel implements PreferencesP
                     model.setName((String) selections.getSelectedItem());
                 }
             });
+            // set the model name to the first item in selections
+            model.setName(selections.getItemAt(0));
         }
 
         Item(AbstractActionModel m) {
