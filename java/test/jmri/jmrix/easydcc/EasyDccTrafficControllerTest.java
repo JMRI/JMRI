@@ -180,11 +180,11 @@ public class EasyDccTrafficControllerTest extends TestCase {
             return true;
         }
     }
-    static DataOutputStream ostream;  // Traffic controller writes to this
-    static DataInputStream tostream; // so we can read it from this
+    DataOutputStream ostream;  // Traffic controller writes to this
+    DataInputStream tostream; // so we can read it from this
 
-    static DataOutputStream tistream; // tests write to this
-    static DataInputStream istream;  // so the traffic controller can read from this
+    DataOutputStream tistream; // tests write to this
+    DataInputStream istream;  // so the traffic controller can read from this
 
     // from here down is testing infrastructure
     void waitThread() {
