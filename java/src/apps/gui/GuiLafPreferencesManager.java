@@ -201,7 +201,7 @@ public class GuiLafPreferencesManager extends Bean implements PreferencesProvide
                 Object key = keys.nextElement();
                 Object value = UIManager.get(key);
                 if (value instanceof FontUIResource) {
-                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), (float) this.getFontSize()));
+                    UIManager.put(key, UIManager.getFont(key).deriveFont(((Font) value).getStyle(), this.getFontSize()));
                 }
             }
         }
