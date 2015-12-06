@@ -1176,8 +1176,15 @@
    You can use the same format as your manifest for your switch lists, or you can customize your
    switch lists to your liking. Deselect the "Same as Manifest" if you want a different format for
    your switch lists.
+   
+   <A NAME="ManifestComments"></A>
+   <H3>Manifests and Switch List Options</H3>
 
-   <H3>Switch List Options</H3>
+   OperationsPro&trade; allows you to customize your train manifest to your liking. You can change
+   the manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text"
+   windows found under the <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. 
+   
+   <H4>Switch List Options</H4>
 
    The first option "By Track Summary" lists all car pick ups, set outs, and holds at a location by
    track and train at the end of the switch list. Deselect this option if you don't want this
@@ -1186,29 +1193,21 @@
    <P>You can include in your switch lists the train's
    <A HREF="#EditRoute">route</A> location comments by selecting the "Route Location" checkbox.</P>
    
-   <A NAME="ManifestComments"></A>
-   <H3>Manifests and Switch List Options</H3>
+   <H4>Manifests Options</H4>
 
-   OperationsPro&trade; allows you to customize your train manifest to your liking. You can change
-   the manifest or switch list text by using the "Edit Manifest Text" or "Edit Switch List Text"
-   windows found under the <A HREF="#ManifestPrintOptionsTools">Tools</A> menu. The "Manifest Print Option" window contains
-   ten optional checkboxes and their functions are described next.
-   <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
-    which isn't the same as when the manifest was printed. The print time is always shown at the top
-    right of the manifest.</P>
+   There are four checkboxes that allow you to modify the content of your manifests.
+
+   <P>Each location and the train's route can have an optional comment. The program will print
+    these comments on your manifest if the "Location" and "Route" checkboxes are selected
+    respectively.</P>
+
    <P>
-    Each location and train route can have an optional comment. You can print these comments on your
-    manifest if the "Location" and "Route" checkboxes are selected respectively. If you want the
-    manifest to show how many car loads and empties are in the train, select the "Loads and Empties"
-    checkbox. You can also use a 12 hour rather than a 24 hour clock format on your manifests and
-    switch lists. The manifest normally shows the estimated arrival time for the train at each
-    location worked by the train, selecting the "Departure Time" checkbox changes the format to
-    showing the departure time. You can if you wish, print your manifest without departure and
-    arrival times. See <A HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
-   <P>
-    Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
-    using when building your trains.
+    The manifest normally shows the estimated arrival time for the train at each location worked by
+    the train, selecting the "Departure Time" checkbox changes the format to showing the departure
+    time. You can if you wish, print your manifest without departure and arrival times. See <A
+     HREF="#TrainManifestOptions">Train Manifest Options</A> for details.
    </P>
+
    <P>The next option is "Truncate" and when selected will cause the program to reduce the
     amount of information printed when setting out or picking up a car at a location that also has a
     switch list. The idea here is that you have a location that is staffed by a crew member with a
@@ -1217,14 +1216,34 @@
     eventually where they need to be, the train manifest only shows which cars are being removed and
     added to the train.</P>
 
+   <H4>Manifests and Switch List Options</H4>
+
+   There are six checkboxes that modify both manifests and switch lists and are as follows:
+
+   <P>The "Print Valid" checkbox causes the program to print date and time the train was built,
+    which isn't the same as when the manifest was printed. The print time is always shown at the top
+    right of the manifest or switch list.</P>
+    
+   <P>If you want the manifest and switch list to show how many car loads and empties are in the train, select
+    the "Loads and Empties" checkbox.</P>
+
+   <P>You can use a 12 hour rather than a 24 hour clock format on your manifests and switch
+    lists.
+   
+   <P>
+    Selecting the "Show Timetable" prints which train <A HREF="#Timetable">timetable</A> you are
+    using when building your trains.
+   </P>
+
+
    <P>
     The next option is "Sort by Track". The program when creating a train manifest normally lists
     the cars in the order they need to be placed into the train for proper blocking. The normal
     format is to list the cars in the order they will be set out as determined by the train's route,
     and then alphabetically by the track names for each location. You can modify the blocking order
-    for a location by using the tool
-    <A HREF="#TrackBlockingOrder">Track Blocking Order</A>. If you would rather have the cars listed
-    by the track name rather than blocking order, select the option "Sort by Track".
+    for a location by using the tool <A HREF="#TrackBlockingOrder">Track Blocking Order</A>. If you
+    would rather have the cars listed by the track name rather than blocking order, select the
+    option "Sort by Track".
    </P>
 
    <P>
