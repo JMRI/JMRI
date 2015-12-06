@@ -1,9 +1,11 @@
 //XmlTest.java
 package jmri.jmrit.operations.trains;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import jmri.jmrit.operations.OperationsTestCase;
+import jmri.jmrit.operations.OperationsXml;
 import jmri.jmrit.operations.locations.Location;
 import jmri.jmrit.operations.locations.LocationManager;
 import jmri.jmrit.operations.rollingstock.engines.Engine;
@@ -26,6 +28,68 @@ import org.jdom2.JDOMException;
  * @version $Revision$
  */
 public class XmlTest extends OperationsTestCase {
+    
+    public void testFilePathNames() {
+        // test the build report path name
+        Assert.assertEquals("buildstatus", TrainManagerXml.BUILD_STATUS);
+        Assert.assertEquals(OperationsXml.getFileLocation() +
+                "operations" +
+                File.separator +
+                "JUnitTest" +
+                File.separator +
+                "buildstatus" +
+                File.separator +
+                "train (TestReportName).txt",
+                TrainManagerXml.instance().defaultBuildReportFilename("TestReportName"));
+        
+        // test the manifest path name
+        Assert.assertEquals("manifests", TrainManagerXml.MANIFESTS);
+        Assert.assertEquals(OperationsXml.getFileLocation() +
+                "operations" +
+                File.separator +
+                "JUnitTest" +
+                File.separator +
+                "manifests" +
+                File.separator +
+                "train (TestManifestName).txt",
+                TrainManagerXml.instance().getDefaultManifestFilename("TestManifestName"));
+        
+        // test the manifest CSV path name
+        Assert.assertEquals("csvManifests", TrainManagerXml.CSV_MANIFESTS);
+        Assert.assertEquals(OperationsXml.getFileLocation() +
+                "operations" +
+                File.separator +
+                "JUnitTest" +
+                File.separator +
+                "csvManifests" +
+                File.separator +
+                "train (TestManifestName).csv",
+                TrainManagerXml.instance().getDefaultCsvManifestFilename("TestManifestName"));
+        
+        // test the switch list path name
+        Assert.assertEquals("switchLists", TrainManagerXml.SWITCH_LISTS);
+        Assert.assertEquals(OperationsXml.getFileLocation() +
+                "operations" +
+                File.separator +
+                "JUnitTest" +
+                File.separator +
+                "switchLists" +
+                File.separator +
+                "location (TestSwitchListName).txt",
+                TrainManagerXml.instance().getDefaultSwitchListName("TestSwitchListName"));
+        
+        // test the CSV switch list path name
+        Assert.assertEquals("csvSwitchLists", TrainManagerXml.CSV_SWITCH_LISTS);
+        Assert.assertEquals(OperationsXml.getFileLocation() +
+                "operations" +
+                File.separator +
+                "JUnitTest" +
+                File.separator +
+                "csvSwitchLists" +
+                File.separator +
+                "location (TestSwitchListName).csv",
+                TrainManagerXml.instance().getDefaultCsvSwitchListName("TestSwitchListName"));
+    }
 
 
     /**

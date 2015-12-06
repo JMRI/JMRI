@@ -232,7 +232,7 @@ public class DCCppOverTcpPacketizer extends DCCppPacketizer {
 		    int lastidx = rxLine.lastIndexOf(">");
 		    log.debug("String {} Index1 {} Index 2{}", rxLine, firstidx, lastidx);
 		    //  Note: the substring call below also strips off the "< >"
-		    DCCppReply msg = new DCCppReply(rxLine.substring(rxLine.indexOf("<")+1,
+		    DCCppReply msg = DCCppReply.parseDCCppReply(rxLine.substring(rxLine.indexOf("<")+1,
 							    rxLine.lastIndexOf(">")));
 		    
 		    if (!msg.isValidReplyFormat()) {
