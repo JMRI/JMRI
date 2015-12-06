@@ -21,12 +21,6 @@
 <ul>
  
 <li>
-<a href="html/doc/Technical/Help.shtml">JavaHelp </a>
-<ul></ul>
-</li>
-
- 
-<li>
 <a href="Acknowledgements.shtml">Acknowledgements </a>
 <ul></ul>
 </li>
@@ -569,6 +563,12 @@
 
  
 <li>
+<a href="html/doc/Technical/Help.shtml">JavaHelp </a>
+<ul></ul>
+</li>
+
+ 
+<li>
 <a href="html/doc/Technical/JUnit.shtml">JUnit </a>
 <ul></ul>
 </li>
@@ -745,6 +745,12 @@
  
 </ul>
 </li>
+ 
+<li>
+<a href="manual/index.shtml">Manuals </a>
+<ul></ul>
+</li>
+
  
 <li>
 <a href="html/tools/Memories.shtml">Memory </a>
@@ -1335,12 +1341,6 @@
 
   
 <li>
-<a href="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml">Thread Table </a>
-<ul></ul>
-</li>
-
-  
-<li>
 <a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits Table </a>
 <ul></ul>
 </li>
@@ -1348,6 +1348,17 @@
   
 <li>
 <a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
+ 
+<li>Technical <ul>
+  
+<li>
+<a href="package/jmri/jmrit/automat/monitor/AutomatTableFrame.shtml">Thread Monitor </a>
 <ul></ul>
 </li>
 

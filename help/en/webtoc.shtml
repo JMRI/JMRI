@@ -33,16 +33,51 @@
 
  
 <li>
-<a href="package/apps/InstallTest/InstallTest.shtml">InstallTest </a>
+<a href="glossary/index.shtml">Glossary </a>
 <ul></ul>
 </li>
 
  
 <li>
-<a href="glossary/index.shtml">Glossary </a>
+<a href="manual/index.shtml#Top">Manuals </a>
 <ul></ul>
 </li>
 
+ 
+<li>Setup <ul>
+  
+<li>
+<a href="html/profiles.shtml">Configuration Profiles </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/Errors.shtml">Error Codes </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/apps/InstallTest/InstallTest.shtml">InstallTest </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/doc/Technical/Names.shtml">Names &amp; Naming </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
  
 <li>
 <a href="html/hardware/index.shtml">Hardware Support </a>
@@ -195,431 +230,292 @@
 </ul>
 </li>
  
-<li>DecoderPro <ul>
+<li>Applications <ul>
   
+<li>DecoderPro <ul>
+   
 <li>
 <a href="html/apps/DecoderPro/index.shtml">Introduction </a>
 <ul>
-   
+    
 <li>
 <a href="html/apps/DecoderPro/Tour.shtml">Tour </a>
 <ul></ul>
 </li>
 
-  
+   
 </ul>
 </li>
-  
+   
 <li>
 <a href="manual/DecoderPro3/index.shtml">DecoderPro Manual </a>
 <ul>
-   
+    
 <li>
 <a href="manual/DecoderPro3/Start_DCC.shtml">Getting Started </a>
 <ul>
-    
+     
 <li>
 <a href="manual/DecoderPro3/Start_Preferences.shtml">Setting Preferences </a>
 <ul></ul>
 </li>
 
-   
+    
 </ul>
 </li>
-   
+    
 <li>
 <a href="manual/DecoderPro3/Programmer_Setup.shtml">Using DecoderPro </a>
 <ul>
-    
+     
 <li>
 <a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Set Up </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Programmer_Setup.shtml#newloco">Choose Decoder </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Programmer_SingleCV.shtml">Programming Modes </a>
 <ul></ul>
 </li>
 
-   
+    
 </ul>
 </li>
-   
-<li>Basic Programmer <ul>
     
+<li>Basic Programmer <ul>
+     
 <li>
 <a href="manual/DecoderPro3/dp3_rosterTable.shtml">Using the Roster </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Basic_Start.shtml">The Basic Programmer </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro/Basic_BasicPane.shtml#Read Data">Reading Data </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro/Basic_BasicPane.shtml#Write Data">Writing to Decoder </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro/Basic_BasicPane.shtml#Save Data">Saving to a File </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Basic_BasicPane.shtml#DoMore">What Next? </a>
 <ul></ul>
 </li>
 
-   
+    
 </ul>
 </li>
-   
-<li>Comprehensive Programmer <ul>
     
+<li>Comprehensive Programmer <ul>
+     
 <li>
 <a href="manual/DecoderPro3/Comp_Setup_Roster.shtml">Setup and Roster Panes </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_Basic.shtml">Basic Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_Motor.shtml">Motor Control Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_Speed.shtml">Speed Control Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_FMap.shtml">Function Mapping Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_LightFX.shtml">Lighting Functions and FX Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_Consist.shtml">Consisting Functions Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_Advanced.shtml">Advanced Features Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_SoundFX.shtml">Sound FX Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_SoundLevels.shtml">Sound Levels Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_GlobalCVs.shtml">Global CV Listing Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_ManfSpecific.shtml">Manufacturer Specific Data Pane </a>
 <ul></ul>
 </li>
 
-    
+     
 <li>
 <a href="manual/DecoderPro3/Comp_PrintData.shtml">Printing Decoder Data </a>
 <ul></ul>
 </li>
 
-   
+    
 </ul>
 </li>
-   
+    
 <li>
 <a href="manual/index.shtml">All Manuals </a>
 <ul></ul>
 </li>
 
-   
+    
 <li>
 <a href="html/apps/DecoderPro/index.shtml">Getting Started </a>
 <ul></ul>
 </li>
 
-  
+   
 </ul>
 </li>
-  
+   
 <li>
 <a href="manual/DecoderPro3/dp3_settings_rosterGroups.shtml">Roster Groups </a>
 <ul></ul>
 </li>
 
-  
+   
 <li>
 <a href="html/apps/DecoderPro/FileUpdate.shtml">Installing New Decoder Definitions </a>
 <ul></ul>
 </li>
 
-  
+   
 <li>
 <a href="package/jmri/jmrit/dualdecoder/DualDecoderSelectFrame.shtml">Multi-Decoder Control </a>
 <ul></ul>
 </li>
 
-  
+   
 <li>
 <a href="manual/DecoderPro3/Error.shtml">Error Messages </a>
 <ul></ul>
 </li>
 
- 
-</ul>
-</li>
- 
-<li>
-<a href="html/tools/throttle/ThrottleMain.shtml">Throttles </a>
-<ul>
-  
-<li>
-<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">Android Phone as Throttle </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">iPhone/iPod Touch as Throttle </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/webThrottle/webThrottle.shtml">webThrottle - Web Throttles and Panels </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/inControl/inControl.shtml">inControl - Web Throttles and Panels (older version) </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
-<li>
-<a href="html/apps/PanelPro/PanelPro.shtml">PanelPro </a>
-<ul>
-  
-<li>
-<a href="html/apps/PanelPro/PanelPro.shtml">Intro </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/display/PanelTarget.shtml">Panel Controls </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Files </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
-<li>
-<a href="html/tools/index.shtml">Tools </a>
-<ul>
-  
-<li>
-<a href="html/tools/Audio.shtml">Audio </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/tools/consisttool/ConsistTool.shtml">Consisting Tool </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/tools/fastclock/index.shtml">Fast Clocks </a>
-<ul>
-   
-<li>
-<a href="html/tools/fastclock/index.shtml">Introduction </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Setting the Internal Clock </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="html/tools/fastclock/LocoNetClock.shtml">The LocoNet Clock </a>
-<ul></ul>
-</li>
-
   
 </ul>
 </li>
   
 <li>
-<a href="html/tools/Lights.shtml">Lights </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a>
 <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light </a>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Introduction </a>
+<ul>
+    
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary">Glossary </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#transits">Using Transits and Sections </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window">Dispatcher Window </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains Table </a>
+<ul></ul>
+</li>
+
+    
+<li>
+<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Allocation Requests Table </a>
 <ul></ul>
 </li>
 
    
-<li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
-<ul></ul>
-</li>
-
-  
 </ul>
 </li>
-  
-<li>
-<a href="package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">Light Control </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/tools/speedometer/SpeedMatch.shtml">Locomotive Speed Matching </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/tools/Logix.shtml">Logix </a>
-<ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix Table </a>
+<a href="package/jmri/jmrit/dispatcher/Options.shtml">Options Menu </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add/Edit Logix </a>
+<a href="">Allocated Section Window </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Add/Edit Conditional </a>
-<ul></ul>
-</li>
-
-  
-</ul>
-</li>
-  
-<li>
-<a href="html/tools/LRoutes.shtml">LRoutes </a>
-<ul>
-   
-<li>
-<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes Table </a>
+<a href="package/jmri/jmrit/dispatcher/AllocateExtra.shtml">Allocate Extra </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/LRouteAddEdit.shtml">Adding/Editing LRoutes </a>
-<ul></ul>
-</li>
-
-  
-</ul>
-</li>
-  
-<li>
-<a href="package/jmri/jmrit/MemoryFrameAction.shtml">Memory Monitor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="html/tools/Memories.shtml">Memories </a>
-<ul>
-   
-<li>
-<a href="package/jmri/jmrit/beantable/MemoryAddEdit.shtml">Add/Edit Memories </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Table </a>
+<a href="package/jmri/jmrit/dispatcher/NewTrain.shtml">New Train </a>
 <ul></ul>
 </li>
 
@@ -700,6 +596,290 @@
    
 <li>
 <a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/apps/PanelPro/PanelPro.shtml">PanelPro </a>
+<ul>
+   
+<li>
+<a href="html/apps/PanelPro/PanelPro.shtml">Intro </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/display/PanelTarget.shtml">Panel Controls </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Displaying Panel Files </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/apps/SoundPro/SoundPro.shtml">SoundPro </a>
+<ul>
+   
+<li>
+<a href="html/apps/SoundPro/SoundPro.shtml">Intro </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+ 
+</ul>
+</li>
+ 
+<li>
+<a href="html/apps/PanelPro/Panels.shtml">Panels </a>
+<ul>
+  
+<li>
+<a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
+ 
+<li>Tables <ul>
+  
+<li>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<ul></ul>
+</li>
+
+ 
+</ul>
+</li>
+ 
+<li>
+<a href="html/tools/index.shtml">Tools </a>
+<ul>
+  
+<li>
+<a href="html/tools/Audio.shtml">Audio </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/consisttool/ConsistTool.shtml">Consisting Tool </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/fastclock/index.shtml">Fast Clocks </a>
+<ul>
+   
+<li>
+<a href="html/tools/fastclock/index.shtml">Introduction </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/simpleclock/SimpleClockFrame.shtml">Setting the Internal Clock </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="html/tools/fastclock/LocoNetClock.shtml">The LocoNet Clock </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/tools/Lights.shtml">Lights </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/LightAddEdit.shtml">Add/Edit Light </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/simplelightctrl/SimpleLightCtrl.shtml">Light Control </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/tools/speedometer/SpeedMatch.shtml">Locomotive Speed Matching </a>
+<ul></ul>
+</li>
+
+  
+<li>
+<a href="html/tools/Logix.shtml">Logix </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/LogixAddEdit.shtml">Add/Edit Logix </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/ConditionalAddEdit.shtml">Add/Edit Conditional </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/tools/LRoutes.shtml">LRoutes </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/LRouteAddEdit.shtml">Adding/Editing LRoutes </a>
+<ul></ul>
+</li>
+
+  
+</ul>
+</li>
+  
+<li>
+<a href="html/tools/Memories.shtml">Memories </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/MemoryAddEdit.shtml">Add/Edit Memories </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
+<ul></ul>
+</li>
+
+   
+<li>
+<a href="package/jmri/jmrit/MemoryFrameAction.shtml">Memory Monitor </a>
 <ul></ul>
 </li>
 
@@ -837,15 +1017,15 @@
 <ul></ul>
 </li>
 
-  
-</ul>
-</li>
-  
+   
 <li>
 <a href="package/jmri/jmrit/sensorgroup/SensorGroupFrame.shtml">Sensor Groups </a>
 <ul></ul>
 </li>
 
+  
+</ul>
+</li>
   
 <li>
 <a href="html/tools/signaling/index.shtml">Signaling </a>
@@ -856,13 +1036,13 @@
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signal Heads </a>
+<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
+<a href="package/jmri/jmrit/beantable/SignalAddEdit.shtml">Adding Signal Heads </a>
 <ul></ul>
 </li>
 
@@ -887,13 +1067,13 @@
 <ul>
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">Adding Signal Masts </a>
+<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
 <ul></ul>
 </li>
 
     
 <li>
-<a href="package/jmri/jmrit/beantable/SignalMastTable.shtml">Signal Masts Table </a>
+<a href="package/jmri/jmrit/beantable/SignalMastAddEdit.shtml">Adding Signal Masts </a>
 <ul></ul>
 </li>
 
@@ -922,64 +1102,30 @@
 </li>
 
   
-<li>Tables <ul>
+<li>
+<a href="html/tools/throttle/ThrottleMain.shtml">Throttles </a>
+<ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
+<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">Android Phone as Throttle </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/LightTable.shtml">Lights Table </a>
+<a href="package/jmri/jmrit/withrottle/UserInterface.shtml">iPhone/iPod Touch as Throttle </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table </a>
+<a href="package/jmri/jmrit/webThrottle/webThrottle.shtml">webThrottle - Web Throttles and Panels </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/SignalHeadTable.shtml">Signal Heads Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/RouteTable.shtml">Routes Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/LRouteTable.shtml">LRoutes Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/LogixTable.shtml">Logix Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/MemoryTable.shtml">Memory Variables Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/ReporterTable.shtml">Reporters Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/beantable/BlockTable.shtml">Blocks Table </a>
+<a href="package/jmri/jmrit/inControl/inControl.shtml">inControl - Web Throttles and Panels (older version) </a>
 <ul></ul>
 </li>
 
@@ -996,13 +1142,13 @@
 <li>Transits <ul>
    
 <li>
-<a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Transit Add/Edit </a>
+<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits Table </a>
 <ul></ul>
 </li>
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/TransitTable.shtml">Transits Table </a>
+<a href="package/jmri/jmrit/beantable/TransitAddEdit.shtml">Transit Add/Edit </a>
 <ul></ul>
 </li>
 
@@ -1011,14 +1157,14 @@
 </li>
   
 <li>
-<a href="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml">Turnout Control </a>
+<a href="html/tools/Turnouts.shtml">Turnouts </a>
+<ul>
+   
+<li>
+<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
 <ul></ul>
 </li>
 
-  
-<li>
-<a href="html/tools/Turnouts.shtml">Turnouts </a>
-<ul>
    
 <li>
 <a href="package/jmri/jmrit/beantable/TurnoutAddEdit.shtml">Turnout Add/Edit </a>
@@ -1027,7 +1173,7 @@
 
    
 <li>
-<a href="package/jmri/jmrit/beantable/TurnoutTable.shtml">Turnouts Table </a>
+<a href="package/jmri/jmrit/simpleturnoutctrl/SimpleTurnoutCtrl.shtml">Turnout Control </a>
 <ul></ul>
 </li>
 
@@ -1081,187 +1227,7 @@
 </ul>
 </li>
  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml">OperationsPro </a>
-<ul>
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Settings">Settings </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Locations">Locations </a>
-<ul>
-   
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Yards">Yard Tracks </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Sidings">Spur Tracks </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Interchange">Interchange Tracks </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Staging">Staging Tracks </a>
-<ul></ul>
-</li>
-
-  
-</ul>
-</li>
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Cars">Cars </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Locomotives">Locomotives </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Routes">Routes </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#Trains">Trains </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/operations/Operations.shtml#SwitchList">Switch List </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher </a>
-<ul>
-  
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml">Introduction </a>
-<ul>
-   
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#glossary">Glossary </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#transits">Using Transits and Sections </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#window">Dispatcher Window </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#atrains">Active Trains Table </a>
-<ul></ul>
-</li>
-
-   
-<li>
-<a href="package/jmri/jmrit/dispatcher/Dispatcher.shtml#arequests">Allocation Requests Table </a>
-<ul></ul>
-</li>
-
-  
-</ul>
-</li>
-  
-<li>
-<a href="package/jmri/jmrit/dispatcher/Options.shtml">Options Menu </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="">Allocated Section Window </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/dispatcher/AllocateExtra.shtml">Allocate Extra </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/dispatcher/NewTrain.shtml">New Train </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
-<li>
-<a href="html/Errors.shtml">Error Codes </a>
-<ul></ul>
-</li>
-
- 
-<li>
-<a href="html/apps/SoundPro/SoundPro.shtml">SoundPro </a>
-<ul>
-  
-<li>
-<a href="html/apps/SoundPro/SoundPro.shtml">Intro </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
-<li>
-<a href="html/apps/PanelPro/Panels.shtml">Panels </a>
-<ul>
-  
-<li>
-<a href="package/jmri/jmrit/display/PanelEditor.shtml">Panel Editor </a>
-<ul></ul>
-</li>
-
-  
-<li>
-<a href="package/jmri/jmrit/display/LayoutEditor.shtml">Layout Editor </a>
-<ul></ul>
-</li>
-
- 
-</ul>
-</li>
- 
-<li>System-Specific <ul>
+<li>System-Specific Tools <ul>
   
 <li>C/MRI <ul>
    
@@ -1561,13 +1527,7 @@
 </li>
  
 <li>
-<a href="html/doc/Technical/Names.shtml">Names </a>
-<ul></ul>
-</li>
-
- 
-<li>
-<a href="html/doc/Technical/index.shtml">Technical Info </a>
+<a href="html/doc/Technical/index.shtml">Technical </a>
 <ul>
   
 <li>Getting the Source Code <ul>
@@ -1619,6 +1579,12 @@
 
    
 <li>
+<a href="html/doc/Technical/IntroStructure.shtml">JMRI Program Structure </a>
+<ul></ul>
+</li>
+
+   
+<li>
 <a href="html/doc/Technical/Help.shtml">JavaHelp HowTo </a>
 <ul></ul>
 </li>
@@ -1650,7 +1616,7 @@
 
    
 <li>
-<a href="html/apps/PanelPro/ShowPanel.shtml">Viewing Panel Files </a>
+<a href="html/apps/PanelPro/ShowPanel.shtml">Displaying Panel Files </a>
 <ul></ul>
 </li>
 
@@ -1660,18 +1626,6 @@
  
 </ul>
 </li>
- 
-<li>
-<a href="package/jmri/jmrix/jinput/treemodel/TreeFrame.shtml">USB </a>
-<ul></ul>
-</li>
-
- 
-<li>
-<a href="html/profiles.shtml">Configuration Profiles </a>
-<ul></ul>
-</li>
-
  
 <li>
 <a href="html/web/index.shtml">Web </a>
