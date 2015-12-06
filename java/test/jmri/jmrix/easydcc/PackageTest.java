@@ -32,7 +32,7 @@ public class PackageTest extends TestCase {
     // test suite from all defined tests
     public static Test suite() {
         apps.tests.AllTest.initLogging();
-        TestSuite suite = new TestSuite("jmri.jmrix.easydcc.EasyDccTest");
+        TestSuite suite = new TestSuite("-noloading", "jmri.jmrix.easydcc.EasyDccTest");
 
         suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutTest.suite());
         suite.addTest(jmri.jmrix.easydcc.EasyDccTurnoutManagerTest.suite());

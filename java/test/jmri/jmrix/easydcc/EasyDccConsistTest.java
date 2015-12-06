@@ -35,7 +35,7 @@ public class EasyDccConsistTest extends TestCase {
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite(EasyDccConsistTest.class);
+        TestSuite suite = new TestSuite("-noloading", EasyDccConsistTest.class);
         return suite;
     }
 

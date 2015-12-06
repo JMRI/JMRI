@@ -202,7 +202,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccTrafficControllerTest.class.getName()};
+        String[] testCaseName = {"-noloading", EasyDccTrafficControllerTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
