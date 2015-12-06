@@ -29,13 +29,13 @@ public class EasyDccConsistTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccConsistTest.class.getName()};
+        String[] testCaseName = {"-noloading", EasyDccConsistTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
     // test suite from all defined tests
     public static Test suite() {
-        TestSuite suite = new TestSuite("-noloading", EasyDccConsistTest.class);
+        TestSuite suite = new TestSuite(EasyDccConsistTest.class);
         return suite;
     }
 
