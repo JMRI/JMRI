@@ -355,7 +355,15 @@ git checkout -b temp-master
 git merge (release-n.n.n)
 ```
 
-Note that you're testing the merge of the release branch back onto master.  This should show no changes.  If there are any, do both of:
+Note that you're testing the merge of the release branch back onto master.  This should show no changes, with the possible exception of some auto-generated files:
+```
+xml/decoderIndex.xml
+help/en/webindex.shtml
+help/en/webtoc.shtml
+help/en/Map.jhm
+help/en/JavaHelpSearch/*
+```
+If there are any changes in other files, do both of:
 
 - Make sure they get moved back to the master branch
 
