@@ -95,9 +95,11 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * Forward a preformatted DCCppMessage to the registered DCCppListeners. NOTE:
      * this drops the packet if the checksum is bad.
      *
+     * @param client : Client to send message to
      * @param m Message to send # @param client is the client getting the
      *          message
      */
+    @Override
     public void forwardReply(AbstractMRListener client, AbstractMRReply m) {
         // check parity
 	try {
@@ -262,19 +264,17 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
      * @param istream character source.
      * @throws java.io.IOException when presented by the input source.
      */
-    @Override
-    protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
-        int i;
-	boolean found_start = false;
-        if (log.isDebugEnabled()) {
-            log.debug("loading characters from port");
-        }
-
+        protected void loadChars(AbstractMRReply msg, java.io.DataInputStream istream) throws java.io.IOException {
 	// Spin waiting for start-of-frame '<' character (and toss it)
+	String s = new String();
 	byte char1;
-	found_start = false;
+	boolean found_start = false;
+        
+        log.debug("Calling DCCppTrafficController.loadChars()");
+
 	while (!found_start) {
 	    char1 = readByteProtected(istream);
+	    log.debug("Char1: {}", char1);
 	    if ((char1 & 0xFF) == '<') {
 		found_start = true;
 		log.debug("Found starting < ");
@@ -283,8 +283,9 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 		char1 = readByteProtected(istream);
 	    }
 	}
+	
 	// Now, suck in the rest of the message...
-        for (i = 0; i < msg.maxSize(); i++) {
+        for (int i = 0; i < DCCppConstants.MAX_MESSAGE_SIZE; i++) {
             char1 = readByteProtected(istream);
 	    if (char1 == '>') {
 		log.debug("msg found > ");
@@ -292,11 +293,13 @@ public abstract class DCCppTrafficController extends AbstractMRTrafficController
 		break;
 	    } else {
 		log.debug("msg read byte {}", char1);
-		msg.setElement(i, char1 & 0xFF);
+		char c = (char) (char1 & 0x00FF);
+		s += Character.toString(c);
 	    }
 	}
 	// TODO: Still need to strip leading and trailing whitespace.
-	log.debug("Complete message = {}", msg.toString());
+	log.debug("Complete message = {}", s);
+        ((DCCppReply)msg).parseReply(s);
     }
 
     protected void handleTimeout(AbstractMRMessage msg, AbstractMRListener l) {

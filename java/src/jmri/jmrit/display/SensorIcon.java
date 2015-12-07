@@ -70,8 +70,8 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
         super(s, editor);
         _control = true;
         debug = log.isDebugEnabled();
-        displayState(sensorState());
         setPopupUtility(new SensorPopupUtil(this, this));
+        displayState(sensorState());
     }
 
     @Override
@@ -444,11 +444,11 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
                     getPopupUtility().setForeground(textColorInconsistent);
                     break;
             }
-            int deg = getDegrees();
-            rotate(deg);
-            if (deg==0) {
-                setOpaque(getPopupUtility().hasBackground());
-            }
+        }
+        int deg = getDegrees();
+        rotate(deg);
+        if (deg==0) {
+            setOpaque(getPopupUtility().hasBackground());
         }
 
         updateSize();

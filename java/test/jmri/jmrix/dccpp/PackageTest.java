@@ -49,6 +49,7 @@ public class PackageTest extends TestCase {
         suite.addTest(new TestSuite(DCCppStreamPortControllerTest.class));
         suite.addTest(new TestSuite(DCCppSensorTest.class));
         suite.addTest(new TestSuite(DCCppSensorManagerTest.class));
+        suite.addTest(jmri.jmrix.dccpp.network.DCCppEthernetTest.suite());
 	/*
         suite.addTest(new TestSuite(XNetTurnoutTest.class));
         suite.addTest(new TestSuite(XNetTurnoutManagerTest.class));
@@ -62,7 +63,6 @@ public class PackageTest extends TestCase {
         suite.addTest(jmri.jmrix.lenz.liusb.LIUSBTest.suite());
         suite.addTest(jmri.jmrix.lenz.xntcp.XnTcpTest.suite());
         suite.addTest(jmri.jmrix.lenz.liusbserver.LIUSBServerTest.suite());
-        suite.addTest(jmri.jmrix.lenz.liusbethernet.LIUSBEthernetTest.suite());
         suite.addTest(jmri.jmrix.lenz.xnetsimulator.XNetSimulatorTest.suite());
         suite.addTest(jmri.jmrix.lenz.hornbyelite.EliteTest.suite());
         if (!System.getProperty("jmri.headlesstest", "false").equals("true")) {

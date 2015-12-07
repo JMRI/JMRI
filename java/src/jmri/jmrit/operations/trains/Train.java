@@ -359,6 +359,7 @@ public class Train implements java.beans.PropertyChangeListener {
         _departureTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(hour));
         _departureTime.set(Calendar.MINUTE, Integer.parseInt(minute));
         setDirtyAndFirePropertyChange(DEPARTURETIME_CHANGED_PROPERTY, oldHour + ":" + oldMinute, hour + ":" + minute);
+        setModified(true);
     }
 
     public String getDepartureTimeHour() {

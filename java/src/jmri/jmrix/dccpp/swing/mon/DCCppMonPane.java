@@ -70,7 +70,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	// Beautify and display
 	String text = new String();
 
-	switch(l.getOpCode()) {
+	switch(l.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_REPLY:
 	    text = "Throttle Reply: \n";
 	    text += "\tRegister: " + l.getRegisterString() + "\n";
@@ -100,6 +100,11 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
                 text += "\tState: ACTIVE\n";
             }
 	    break;
+        case DCCppConstants.OUTPUT_REPLY:
+            text = "Output Reply: \n";
+            text += "\tOutput Number: " + l.getOutputNumString() + "\n";
+            text += "\tOutputState: " + l.getOutputCmdStateString() + "\n";
+            break;
 	case DCCppConstants.PROGRAM_REPLY:
 	    text = "Program Reply: \n";
 	    text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
@@ -118,15 +123,23 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	case DCCppConstants.CURRENT_REPLY:
 	    text = "Current: " + l.getCurrentString() + " / 1024";
 	    break;
-	case DCCppConstants.LISTPACKET_REPLY:
-	    // TODO: Implement this fully
-	    text = "List Packet Reply...\n";
-	    break;
-	case DCCppConstants.MEMORY_REPLY:
+//	case DCCppConstants.LISTPACKET_REPLY:
+//	    // TODO: Implement this fully
+//	    text = "List Packet Reply...\n";
+//	    break;
+        case DCCppConstants.WRITE_EEPROM_REPLY:
+            text = "Write EEPROM Reply...\n";
+            // TODO: Don't use getValueString()
+            text += "\tTurnouts: " + l.getValueString(1) + "\n";
+            text += "\tSensors: " + l.getValueString(2) + "\n";
+        case DCCppConstants.MEMORY_REPLY:
 	    // TODO: Implement this fully
 	    text = "Memory Reply...\n";
             text += "\tFree Memory: " + l.getFreeMemoryString() + "\n";
 	    break;
+        case DCCppConstants.COMM_TYPE_REPLY:
+            text = "Comm Port: " + l.getValueString(2) + "\n";
+            break;
 	default:
 	    text += "Unregonized reply: ";
 	}
@@ -149,7 +162,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	// Beautify and display
 	String text = new String();
 
-	switch(l.getOpCode()) {
+	switch(l.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_CMD:
 	    text = "Throttle Cmd: ";
 	    text += "\n\tRegister: " + l.getRegisterString();
@@ -191,6 +204,24 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 		text += "\n";
 	    }
 	    break;
+        case DCCppConstants.OUTPUT_CMD:
+            text = "Output Cmd: ";
+            text += "\n\tOutput ID: " + l.getOutputIDString();
+            text += "\n\tState: " + l.getOutputStateString();
+            text += "\n";
+        case DCCppConstants.OUTPUT_DEF_CMD:
+            if (l.isOutputAddMessage()) {
+                text = "Add Output: ";
+                text += "\n\tOutput ID: " + l.getOutputIDString();
+                text += "\n\tPin: " + l.getOutputPinString();
+                text += "\n";
+            } else if (l.isOutputDeleteMessage()) {
+                text = "Add Output: ";
+                text += "\n\tOutput ID: " + l.getOutputIDString();
+                text += "\n";
+            } else if (l.isListOutputsMessage()) {
+                text = "List Outputs...\n";
+            }
 	case DCCppConstants.SENSOR_CMD:
 	    if (l.isSensorAddMessage()) {
 		text = "Add Sensor: ";

@@ -144,9 +144,8 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             result = false;
         }
         ControlPanelEditor panel = new ControlPanelEditor(name);
+        panel.getTargetFrame().setVisible(false);   // save painting until last
         jmri.jmrit.display.PanelMenu.instance().addEditorPanel(panel);
-        panel.getTargetFrame().setLocation(x, y);
-        panel.getTargetFrame().setSize(width, height);
 
         // Load editor option flags. This has to be done before the content 
         // items are loaded, to preserve the individual item settings
@@ -225,7 +224,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         }
 
         Element icons = shared.getChild("icons");
-        if (icons != null) {
+/*        if (icons != null) {
             HashMap<String, NamedIcon> portalIconMap = new HashMap<String, NamedIcon>();
             portalIconMap.put(PortalIcon.VISIBLE, loadIcon("visible", icons, panel));
             portalIconMap.put(PortalIcon.PATH, loadIcon("path_edit", icons, panel));
@@ -233,7 +232,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
             portalIconMap.put(PortalIcon.TO_ARROW, loadIcon("to_arrow", icons, panel));
             portalIconMap.put(PortalIcon.FROM_ARROW, loadIcon("from_arrow", icons, panel));
             panel.setDefaultPortalIcons(portalIconMap);
-        }
+        }*/
         shared.removeChild("icons");
 
         //set the (global) editor display widgets to their flag settings
@@ -271,11 +270,6 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.pack();
         panel.setAllEditable(panel.isEditable());
 
-        // we don't pack the target frame here, because size was specified
-        // TODO: Work out why, when calling this method, panel size is increased
-        // vertically (at least on MS Windows)
-        panel.getTargetFrame().setVisible(true);    // always show the panel
-
         // register the resulting panel for later configuration
         InstanceManager.configureManagerInstance().registerUser(panel);
 
@@ -283,6 +277,7 @@ public class ControlPanelEditorXml extends AbstractXmlAdapter {
         panel.getTargetFrame().setLocation(x, y);
         panel.getTargetFrame().setSize(width, height);
         panel.setTitle();
+        panel.getTargetFrame().setVisible(true);    // always show the panel
         // do last to set putItem override - unused.
         panel.loadComplete();
 

@@ -25,7 +25,7 @@ public class DCCppReplyTest extends TestCase {
 
     // Test the string constructor.
     public void testStringCtor() {
-        DCCppReply m = new DCCppReply("H 23 1");
+        DCCppReply m = DCCppReply.parseDCCppReply("H 23 1");
         Assert.assertEquals("length", 6, m.getNumDataElements());
         Assert.assertEquals("0th byte", 'H', m.getElement(0) & 0xFF);
         Assert.assertEquals("1st byte", ' ', m.getElement(1) & 0xFF);
@@ -38,11 +38,11 @@ public class DCCppReplyTest extends TestCase {
     // check is direct mode response
     public void testIsDirectModeResponse() {
         // CV 1 in direct mode.
-        DCCppReply r = new DCCppReply("r 1234|87|23 12");
+        DCCppReply r = DCCppReply.parseDCCppReply("r 1234|87|23 12");
         Assert.assertTrue(r.isProgramReply());
-        r = new DCCppReply("r 1234|66|23 4 1");
+        r = DCCppReply.parseDCCppReply("r 1234|66|23 4 1");
         Assert.assertTrue(r.isProgramReply());
-        r = new DCCppReply("r 1234|82|23 4");
+        r = DCCppReply.parseDCCppReply("r 1234|82|23 4");
         Assert.assertTrue(r.isProgramReply());
     }
 
