@@ -5,18 +5,20 @@
     <map/>
     <node name="net">
       <map/>
-      <node name="java">
+      <node name="bobis">
         <map/>
-        <node name="games">
+        <node name="jinput">
           <map/>
-          <node name="input">
+          <node name="hidraw">
             <map/>
-            <node name="HIDDevices">
+            <node name="HidRawDevices">
               <map/>
-              <node name="ReDACIOModule">
+              <node name="ReDAC I/O Module">
                 <map>
                   <entry key="vendor_id" value="1523"/>
                   <entry key="product_id" value="217"/>
+                  <entry key="device_name" value="ReDAC I/O Module"/>
+                  <entry key="udev_device_path" value="/dev/ReDACIOModule"/>
                 </map>
                 <node name="Components">
                   <map>
