@@ -22,6 +22,7 @@ import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 /**
  * Tests for the Warrant creation
  *
@@ -37,6 +38,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
     SensorManager _sensorMgr;
     TurnoutManager _turnoutMgr;
     
+    @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testNXWarrant() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/NXWarrantTest.xml");
@@ -126,6 +128,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         return button;
     }
 
+    @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     private void confirmJOptionPane(java.awt.Container frame, String title, String message, String buttonLabel) {
         ComponentFinder finder = new ComponentFinder(JOptionPane.class);
         JOptionPane pane;
@@ -154,6 +157,7 @@ public class NXWarrantTest extends jmri.util.SwingTestCase {
         Assert.assertNotNull("NceSystemConnectionMemo", memo);        
     }
     
+    @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     private static List<JRadioButton> getRadioButtons(java.awt.Container frame) {
         ComponentFinder finder = new ComponentFinder(JRadioButton.class);
         List<JRadioButton> list = finder.findAll(frame);

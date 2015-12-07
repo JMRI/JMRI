@@ -35,6 +35,7 @@ public class JmriConfigurationManager implements ConfigureManager {
     private final ConfigXmlManager legacy = new ConfigXmlManager();
     private final HashMap<PreferencesProvider, InitializationException> initializationExceptions = new HashMap<>();
 
+    @SuppressWarnings("unchecked") // For types in InstanceManager.store()
     public JmriConfigurationManager() {
         ServiceLoader<PreferencesProvider> sl = ServiceLoader.load(PreferencesProvider.class);
         for (PreferencesProvider pp : sl) {
