@@ -26,43 +26,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
         Assert.assertNotNull("exists", m);
     }
 
-    public void testSendAscii() throws Exception {
-        EasyDccTrafficController c = new EasyDccTrafficController() {
-            // skip timeout message
-            protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
-            }
-
-            public void receiveLoop() {
-            }
-
-            protected void portWarn(Exception e) {
-            }
-        };
-
-        // connect to iostream via port controller
-        EasyDccPortControllerScaffold p = new EasyDccPortControllerScaffold();
-        c.connectPort(p);
-
-        // send a message
-        EasyDccMessage m = new EasyDccMessage(3);
-        m.setOpCode('0');
-        m.setElement(1, '1');
-        m.setElement(2, '2');
-        c.sendEasyDccMessage(m, new EasyDccListenerScaffold());
-        waitThread();
-
-        Assert.assertEquals("total length ", 4, tostream.available());
-        Assert.assertEquals("Char 0", '0', tostream.readByte());
-        Assert.assertEquals("Char 1", '1', tostream.readByte());
-        Assert.assertEquals("Char 2", '2', tostream.readByte());
-        Assert.assertEquals("EOM", 0x0d, tostream.readByte());
-        Assert.assertEquals("remaining ", 0, tostream.available());
-    }
-
-    /**
-     * Test disabled until threading can be resolved
-     */
-    public void xtestRcvReply() throws Exception {
+    public void testSendThenRcvReply() throws Exception {
         EasyDccTrafficController c = new EasyDccTrafficController() {
             // skip timeout message
             protected void handleTimeout(jmri.jmrix.AbstractMRMessage msg, jmri.jmrix.AbstractMRListener l) {
@@ -89,7 +53,16 @@ public class EasyDccTrafficControllerTest extends TestCase {
         m.setElement(1, '1');
         m.setElement(2, '2');
         c.sendEasyDccMessage(m, l);
-		// that's already tested, so don't do here.
+
+        waitThread();
+		// test the result of sending
+
+		Assert.assertEquals("total length ", 4, tostream.available());
+        Assert.assertEquals("Char 0", '0', tostream.readByte());
+        Assert.assertEquals("Char 1", '1', tostream.readByte());
+        Assert.assertEquals("Char 2", '2', tostream.readByte());
+        Assert.assertEquals("EOM", 0x0d, tostream.readByte());
+
 
         // now send reply
         tistream.write('P');
