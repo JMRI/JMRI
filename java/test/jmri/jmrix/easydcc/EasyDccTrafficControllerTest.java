@@ -54,6 +54,7 @@ public class EasyDccTrafficControllerTest extends TestCase {
         m.setElement(2, '2');
         c.sendEasyDccMessage(m, l);
 
+        ostream.flush();
         waitThread();
 		// test the result of sending
 
