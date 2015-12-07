@@ -48,7 +48,7 @@ public class EasyDccTurnoutTest extends AbstractTurnoutTest {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {EasyDccTurnoutTest.class.getName()};
+        String[] testCaseName = {"-noloading", EasyDccTurnoutTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 

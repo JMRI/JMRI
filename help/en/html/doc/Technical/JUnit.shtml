@@ -274,7 +274,14 @@ you colleagues will have to wait that long every time they run the tests.
 Note that this should <b>not</b> be used to synchronize with
 Swing threads.  See the next section for that.
 
-<h4><a name="testSwingCode">Testing Swing Code</a></h4>
+<h4><a id="io" name="io"></a>I/O</h4>
+
+Some test environments don't automatically flush I/O operations such as 
+streams during testing.  If you're testing something that does I/O, for example
+a TrafficController, you'll need to add "flush()" statements on all your output streams.
+(Having to wait a long time to make a test reliable is a clue that this is happening somewhere in your code)
+
+<h4><a id="testSwingCode" name="testSwingCode"></a>Testing Swing Code</h4>
 
 AWT and Swing code runs on a separate thread from JUnit tests.
 Once a Swing or AWT object has been displayed (via
