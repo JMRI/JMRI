@@ -25,7 +25,7 @@ public class SerialAddressTest extends TestCase {
         super.setUp();
 
         // replace the SerialTrafficController
-        SerialTrafficController t = new SerialTrafficController() {
+        new SerialTrafficController() {
             SerialTrafficController test() {
                 setInstance();
                 return this;
