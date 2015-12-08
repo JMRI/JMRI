@@ -1031,6 +1031,7 @@
             <sysproperty key="log4j.ignoreTCL" path="true/"/>
             <sysproperty key="java.library.path" path=".:${libdir}:${arch.lib.path}"/>
             <sysproperty key="jinput.plugins" path="net.bobis.jinput.hidraw.HidRawEnvironmentPlugin"/>
+            <sysproperty key="jmri.skipschematests" path="true/"/>  <!-- skip schema checks to improve speed -->
 
             <classpath refid="test.class.path"/>
 
