@@ -104,6 +104,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
         Assert.assertNotNull(text+" Button not found", button);
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        flushAWT();
         return button;
     }
 

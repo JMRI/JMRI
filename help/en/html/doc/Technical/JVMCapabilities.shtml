@@ -147,7 +147,7 @@ describes the creation of a JComboBox that selects generic (Object) items.
 In Java 1.8, the JComboBox holds and selects objects of a specific type, usually
 String. It's written:
 <pre><code>
-    JComboBox<String> box = new JComboBox<String>();
+    JComboBox&lt;String&gt; box = new JComboBox&lt;&gt;();
 </code></pre>
 The most common code for getting the selected item still includes a cast:
 <pre><code>
