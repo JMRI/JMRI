@@ -76,7 +76,7 @@ type. Both the programming screens and decoder information are
 stored in text files, so you can make up new ones as
 desired.</p>
 
-<h2>How can you change how JMRI does things?</h2>
+<a name="writecode"><h2>How can you change how JMRI does things?</h2></a>
 
 There are several different ways to modify JMRI:
 <ol>
