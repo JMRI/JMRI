@@ -107,7 +107,7 @@ public class OperationsRoutesTest extends OperationsTestCase {
         Assert.assertEquals("RouteLocation Constant PICKUP_CHANGED_PROPERTY", "pickupChange",
                 RouteLocation.PICKUP_CHANGED_PROPERTY);
         Assert.assertEquals("RouteLocation Constant MAXMOVES_CHANGED_PROPERTY", "maxMovesChange",
-                RouteLocation.MAXMOVES_CHANGED_PROPERTY);
+                RouteLocation.MAX_MOVES_CHANGED_PROPERTY);
         Assert.assertEquals("RouteLocation Constant DISPOSE", "routeLocationDispose", RouteLocation.DISPOSE);
     }
 
