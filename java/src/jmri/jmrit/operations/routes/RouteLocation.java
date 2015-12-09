@@ -58,9 +58,10 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
 
     public static final String DROP_CHANGED_PROPERTY = "dropChange"; // NOI18N
     public static final String PICKUP_CHANGED_PROPERTY = "pickupChange"; // NOI18N
-    public static final String MAXMOVES_CHANGED_PROPERTY = "maxMovesChange"; // NOI18N
+    public static final String MAX_MOVES_CHANGED_PROPERTY = "maxMovesChange"; // NOI18N
     public static final String TRAIN_DIRECTION_CHANGED_PROPERTY = "trainDirectionChange"; // NOI18N
     public static final String DEPARTURE_TIME_CHANGED_PROPERTY = "routeDepartureTimeChange"; // NOI18N
+    public static final String MAX_LENGTH_CHANGED_PROPERTY = "maxLengthChange"; // NOI18N
 
     public static final String DISABLED = "Off";
 
@@ -154,7 +155,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         int old = _maxTrainLength;
         _maxTrainLength = length;
         if (old != length) {
-            setDirtyAndFirePropertyChange("maxTrainLength", Integer.toString(old), Integer.toString(length)); // NOI18N
+            setDirtyAndFirePropertyChange(MAX_LENGTH_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(length)); // NOI18N
         }
     }
 
@@ -200,7 +201,7 @@ public class RouteLocation implements java.beans.PropertyChangeListener {
         int old = _maxCarMoves;
         _maxCarMoves = moves;
         if (old != moves) {
-            setDirtyAndFirePropertyChange(MAXMOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
+            setDirtyAndFirePropertyChange(MAX_MOVES_CHANGED_PROPERTY, Integer.toString(old), Integer.toString(moves));
         }
     }
 
