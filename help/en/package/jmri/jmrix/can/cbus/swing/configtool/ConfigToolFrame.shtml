@@ -1,16 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <title>JMRI: CBUS Event Capture Tool</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
@@ -29,8 +25,7 @@ JMRI: CBUS Event Capture Tool
     <img src="../../../../../../../html/hardware/can/images/ConfigTool.jpg"
          width="363" height="336"
          alt="Config Tool Screen" align="right"></a>
-<br>
-
+<p>
 The CBUS event capture tool can simplify
 configuring JMRI to work well with your 
 <A href="../../../../../../../html/hardware/can/cbus/index.html">CBUS</a>
@@ -38,47 +33,47 @@ installation.
 
 <p>
 To 
-<a href="../../../../../../../html/hardware/can/cbus/index.html">configure JMRI sensors and turnouts</a>,
+<a href="../../../../../../../html/hardware/can/cbus/index.html">configure JMRI Sensors and Turnouts</a>,
 you need to identify the associated CBUS events. There are several ways to do this. 
-The rest of this page goes through the alternatives, using configuring a sensor
-as an example.  Similar methods work for turnouts.
+The rest of this page goes through the alternatives, using configuring a Sensor
+as an example.  Similar methods work for Turnouts.
 
 <h3>Provide the Event ID</h3>
     
 You can just type an 
-<A href="../../../../../../../html/hardware/can/cbus/index.html">event ID</a>
+<A href="../../../../../../../html/hardware/can/cbus/index.html">Event ID</a>
 in the field next to
-"Active On", and then press "Create".  A sensor will be created that
-goes active when the event is seen, and inactive when the opposite event (ON vs OFF)
+"Active On", and then press "Create".  A Sensor will be created that
+goes Active when the Event is seen, and Inactive when the opposite Event (ON vs OFF)
 is seen.
 
 <p>
-If you want to associate active and inactive with completely separate events,
-you can enter the event IDs in the two fields and click "Create".
+If you want to associate Active and Inactive with completely separate Events,
+you can enter the Event IDs in the two fields and click "Create".
 
 
 <h3>Capture the Next Event</h3>
     
 If you can make the layout emit the 
-desired event, for example by pressing a fascia switch or
-throwing a turnout, you can capture that event
+desired Event, for example by pressing a fascia switch or
+throwing a turnout, you can capture that Event
 and use it.
 <p>
 If you press the "Capture Next" button next to one of the
-event fields, it will stay down (activated) until the next
-CBUS event (CAN frame) is seen by the program.  
-That event is captured into the neighboring field for later use.
+Event fields, it will stay down (activated) until the next
+CBUS Event (CAN frame) is seen by the program.  
+That Event is captured into the neighboring field for later use.
 
 <p>
 You can separately
-capture the two events for a sensor if desired.
+capture the two Events for a Sensor if desired.
 
 
 <h3>Examine Multiple Events</h3>
     
 The upper part of the screen can capture
-multiple CBUS events, which you can then use to 
-create sensors and turnouts.
+multiple CBUS Events, which you can then use to 
+create Sensors and Turnouts.
 
 <p>
 When a new CBUS message comes it, it will be captured 
@@ -90,7 +85,7 @@ If you check a series of boxes, you can capture
 a series of messages.
 
 <p>
-Once you've captured the event you want, you can 
+Once you've captured the Event you want, you can 
 copy and paste it into the boxes in the lower part of the 
 window.  If your computer allows it, you can 
 also just drag and drop the value into the lower field.
@@ -99,9 +94,9 @@ also just drag and drop the value into the lower field.
 
 Once you've created a sensor or turnout, you can
 use the 
-<a href="../../../../../jmrit/beantable/SensorTable.shtml">Sensor Table</a>
+<a href="../../../../../jmrit/beantable/SensorTable.shtml">Sensors Table</a>
 or
-<a href="../../../../../jmrit/beantable/TurnoutTable.shtml">Turnout Table</a>
+<a href="../../../../../jmrit/beantable/TurnoutTable.shtml">Turnouts Table</a>
 to adjust the details.
 
 <p>

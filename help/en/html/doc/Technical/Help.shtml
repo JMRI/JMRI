@@ -7,13 +7,6 @@
     <meta name="Author" content="Bob Jacobsen">
     <meta name="keywords" content="JMRI technical code Java Help JavaHelp ">
 
-    <!-- The combination of "Define" and {Header,Style, Logo and Footer} comments -->
-    <!-- are an arbitrary design pattern used by the update.pl script to -->
-    <!-- easily replace the common header/footer code for all the web pages -->
-
-    <!-- delete the following 2 Defines if you want to use the default JMRI logo -->
-    <!-- or change them to reflect your alternative logo -->
-
 <!-- Style -->
   <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
   <link rel="stylesheet" type="text/css" href="/css/default.css" media="screen">
@@ -227,8 +220,8 @@ There's more info on how to do that on the
 <a href="http://jhelpdev.sourceforge.net/">JHelpDev web site</a>. Remember to run 
 "ant" after that to include your updates on the web versions.
 
-<a name="site" id="site"></a><h2>Updating the JMRI.ORG site</h2>
-Changes to Help pages which are checked-in should show up automatically on the JMRI.ORG
+<a name="site" id="site"></a><h2>Updating the JMRI.org site</h2>
+Changes to Help pages which are checked-in should show up automatically on the JMRI.org
 site after a short while. 
 There's a 
 <a href="http://builds.jmri.org/jenkins/job/Web%20Site/job/Update%20Static%20Components/">Jenkins job</a>

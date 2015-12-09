@@ -4,6 +4,7 @@ install:
   - choco install ant --limit-output
 #  - echo JAVA_HOME %JAVA_HOME%
   - SET JAVA_HOME=C:\Program Files\Java\jdk1.8.0
+  - SET PATH=%JAVA_HOME%\bin;%PATH%
 #  - echo PATH %PATH%
 #  - echo JAVA_HOME %JAVA_HOME%
 #  - echo ANT_HOME %ANT_HOME%
