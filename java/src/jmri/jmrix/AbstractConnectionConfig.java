@@ -213,10 +213,19 @@ abstract public class AbstractConnectionConfig implements ConnectionConfig {
      */
     @Override
     public void register() {
+        this.setInstance();
         InstanceManager.configureManagerInstance().registerPref(this);
         ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
         if (ccm != null) {
             ccm.add(this);
+        }
+    }
+
+    @Override
+    public void dispose() {
+        ConnectionConfigManager ccm = InstanceManager.getDefault(ConnectionConfigManager.class);
+        if (ccm != null) {
+            ccm.remove(this);
         }
     }
 

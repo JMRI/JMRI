@@ -151,7 +151,7 @@ public final class JmriPreferencesProvider {
                 result.append(c);
             } else {
                 result.append("_");
-                result.append(Integer.toHexString((int) c));
+                result.append(Integer.toHexString(c));
                 result.append("_");
             }
         }

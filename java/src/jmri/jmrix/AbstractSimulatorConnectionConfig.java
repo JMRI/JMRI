@@ -245,7 +245,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     public String getConnectionName() {
-        if (adapter != null && adapter.getSystemConnectionMemo() != null) {
+        if (adapter.getSystemConnectionMemo() != null) {
             return adapter.getSystemConnectionMemo().getUserName();
         } else {
             return null;
@@ -264,6 +264,7 @@ abstract public class AbstractSimulatorConnectionConfig extends AbstractConnecti
     }
 
     public void dispose() {
+        super.dispose();
         if (adapter != null) {
             adapter.dispose();
             adapter = null;

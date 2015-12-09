@@ -70,7 +70,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	// Beautify and display
 	String text = new String();
 
-	switch(l.getOpCode()) {
+	switch(l.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_REPLY:
 	    text = "Throttle Reply: \n";
 	    text += "\tRegister: " + l.getRegisterString() + "\n";
@@ -82,11 +82,6 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\tT/O Number: " + l.getTOIDString()  + "\n";
 	    text += "\tDirection: " + l.getTOStateString() + "\n";
 	    break;
-	    //case DCCppConstants.SENSOR_REPLY:
-	    //text = "Sensor Reply: \n";
-	    //text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
-	    //text += "\tState: " + l.getSensorStateString() + "\n";
-	    //break;
 	case DCCppConstants.SENSOR_REPLY_H:
 	    text = "Sensor Reply (Inactive): \n";
 	    text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
@@ -94,10 +89,22 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    break;
 	case DCCppConstants.SENSOR_REPLY_L:
 	    // Also covers the V1.0 version SENSOR_REPLY
-	    text = "Sensor Reply (Active): \n";
-	    text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
-	    text += "\tState: ACTIVE\n";
+            if (l.isSensorDefReply()) {
+                text = "Sensor Def Reply: \n";
+                text += "\tSensor Number: " + l.getSensorDefNumString() + "\n";
+                text += "\tSensor Pin: " + l.getSensorDefPinString() + "\n";
+                text += "\tSensor Pullup: " + l.getSensorDefPullupString() + "\n";
+            } else {
+                text = "Sensor Reply (Active): \n";
+                text += "\tSensor Number: " + l.getSensorNumString()  + "\n";
+                text += "\tState: ACTIVE\n";
+            }
 	    break;
+        case DCCppConstants.OUTPUT_REPLY:
+            text = "Output Reply: \n";
+            text += "\tOutput Number: " + l.getOutputNumString() + "\n";
+            text += "\tOutputState: " + l.getOutputCmdStateString() + "\n";
+            break;
 	case DCCppConstants.PROGRAM_REPLY:
 	    text = "Program Reply: \n";
 	    text += "\tCallback Num: " + l.getCallbackNumString()  + "\n";
@@ -105,7 +112,9 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\tCV Value: " + l.getCVString()  + "\n";
 	    break;
 	case DCCppConstants.VERSION_REPLY:
-	    text = "Base Station Status: ";
+	    text = "Base Station Status: \n";
+            text += "\tVersion: " + l.getStatusVersionString() + "\n";
+            text += "\tBuild: " + l.getStatusBuildDateString() + "\n";
 	    break;
 	case DCCppConstants.POWER_REPLY:
 	    text = "Power Status: ";
@@ -114,14 +123,23 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	case DCCppConstants.CURRENT_REPLY:
 	    text = "Current: " + l.getCurrentString() + " / 1024";
 	    break;
-	case DCCppConstants.LISTPACKET_REPLY:
-	    // TODO: Implement this fully
-	    text = "List Packet Reply...\n";
-	    break;
-	case DCCppConstants.MEMORY_REPLY:
+//	case DCCppConstants.LISTPACKET_REPLY:
+//	    // TODO: Implement this fully
+//	    text = "List Packet Reply...\n";
+//	    break;
+        case DCCppConstants.WRITE_EEPROM_REPLY:
+            text = "Write EEPROM Reply...\n";
+            // TODO: Don't use getValueString()
+            text += "\tTurnouts: " + l.getValueString(1) + "\n";
+            text += "\tSensors: " + l.getValueString(2) + "\n";
+        case DCCppConstants.MEMORY_REPLY:
 	    // TODO: Implement this fully
 	    text = "Memory Reply...\n";
+            text += "\tFree Memory: " + l.getFreeMemoryString() + "\n";
 	    break;
+        case DCCppConstants.COMM_TYPE_REPLY:
+            text = "Comm Port: " + l.getValueString(2) + "\n";
+            break;
 	default:
 	    text += "Unregonized reply: ";
 	}
@@ -144,7 +162,7 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	// Beautify and display
 	String text = new String();
 
-	switch(l.getOpCode()) {
+	switch(l.getOpCodeChar()) {
 	case DCCppConstants.THROTTLE_CMD:
 	    text = "Throttle Cmd: ";
 	    text += "\n\tRegister: " + l.getRegisterString();
@@ -186,6 +204,24 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 		text += "\n";
 	    }
 	    break;
+        case DCCppConstants.OUTPUT_CMD:
+            text = "Output Cmd: ";
+            text += "\n\tOutput ID: " + l.getOutputIDString();
+            text += "\n\tState: " + l.getOutputStateString();
+            text += "\n";
+        case DCCppConstants.OUTPUT_DEF_CMD:
+            if (l.isOutputAddMessage()) {
+                text = "Add Output: ";
+                text += "\n\tOutput ID: " + l.getOutputIDString();
+                text += "\n\tPin: " + l.getOutputPinString();
+                text += "\n";
+            } else if (l.isOutputDeleteMessage()) {
+                text = "Add Output: ";
+                text += "\n\tOutput ID: " + l.getOutputIDString();
+                text += "\n";
+            } else if (l.isListOutputsMessage()) {
+                text = "List Outputs...\n";
+            }
 	case DCCppConstants.SENSOR_CMD:
 	    if (l.isSensorAddMessage()) {
 		text = "Add Sensor: ";
@@ -204,12 +240,17 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    }
 	    break;
 	case DCCppConstants.OPS_WRITE_CV_BYTE:
-	    text = "Ops Write Byte Cmd: ";
-	    // TODO: Fill this out
+	    text = "Ops Write Byte Cmd: \n"; // <w cab cv val>
+            text += "\tAddress: " + l.getOpsWriteAddrString() + "\n";
+            text += "\tCV: " + l.getOpsWriteCVString() + "\n";
+            text += "\tValue: " + l.getOpsWriteValueString() + "\n";
 	    break;
-	case DCCppConstants.OPS_WRITE_CV_BIT:
-	    text = "Ops Write Bit Cmd: ";
-	    // TODO: Fill thsi out
+	case DCCppConstants.OPS_WRITE_CV_BIT: // <b cab cv bit val>
+	    text = "Ops Write Bit Cmd: \n";
+            text += "\tAddress: " + l.getOpsWriteAddrString() + "\n";
+            text += "\tCV: " + l.getOpsWriteCVString() + "\n";
+            text += "\tBit: " + l.getOpsWriteBitString() + "\n";
+            text += "\tValue: " + l.getOpsWriteValueString() + "\n";
 	    break;
 	case DCCppConstants.PROG_WRITE_CV_BYTE:
 	    text = "Prog Write Byte Cmd: ";
@@ -234,23 +275,20 @@ public class DCCppMonPane extends jmri.jmrix.AbstractMonPane implements DCCppLis
 	    text += "\n\tCallback Sub: " + l.getCallbackSubString() + "\n";
 	    break;
 	case DCCppConstants.TRACK_POWER_ON:
-	    text = "Track Power On Cmd: ";
+	    text = "Track Power ON Cmd ";
 	    break;
 	case DCCppConstants.TRACK_POWER_OFF:
-	    text = "Track Power Off Cmd: ";
+	    text = "Track Power OFF Cmd ";
 	    break;
 	case DCCppConstants.READ_TRACK_CURRENT:
-	    text = "Read Track Current Cmd: ";
+	    text = "Read Track Current Cmd ";
 	    break;
 	case DCCppConstants.READ_CS_STATUS:
-	    text = "Status Cmd: ";
-	    break;
-	case DCCppConstants.QUERY_SENSOR_STATE:
-	    text = "Sensor Status Cmd: ";
+	    text = "Status Cmd ";
 	    break;
 	case DCCppConstants.WRITE_DCC_PACKET_MAIN:
-		text = "Write DCC Packet Main Cmd: ";
-		break;
+            text = "Write DCC Packet Main Cmd: ";
+            break;
 	case DCCppConstants.WRITE_DCC_PACKET_PROG:
 	    text = "Write DCC Packet Prog Cmd: ";
 	    break;

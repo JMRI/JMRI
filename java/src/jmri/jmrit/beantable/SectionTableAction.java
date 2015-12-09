@@ -1263,14 +1263,15 @@ public class SectionTableAction extends AbstractTableAction {
                     panel = null;
                     return false;
                 }
-                if (panelName == null) {
-                    log.error("panelName is null!");
-                }
-                for (int j = 0; j < layoutEditorList.size(); j++) {
-                    if (panelName.equals(choices[j])) {
-                        panel = layoutEditorList.get(j);
-                        return true;
+                if (panelName != null) {
+                    for (int j = 0; j < layoutEditorList.size(); j++) {
+                        if (panelName.equals(choices[j])) {
+                            panel = layoutEditorList.get(j);
+                            return true;
+                        }
                     }
+                } else {
+                    log.error("panelName is null!");
                 }
                 return false;
             } else if (layoutEditorList.size() == 1) {
