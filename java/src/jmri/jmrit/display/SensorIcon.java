@@ -594,6 +594,7 @@ public class SensorIcon extends PositionableIcon implements java.beans.PropertyC
 
     public void setOriginalText(String s) {
         originalText = s;
+        displayState(sensorState());
     }
 
     public String getOriginalText() {

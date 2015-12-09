@@ -377,6 +377,9 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             //if (log.isDebugEnabled()) log.debug("DropJLabel ctor");            
         }
 
+        public boolean isDataFlavorSupported(DataFlavor flavor) {
+            return _dataFlavor.equals(flavor);
+        }
         public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException {
             if (!isDataFlavorSupported(flavor)) {
                 return null;
@@ -392,7 +395,6 @@ public class IconItemPanel extends ItemPanel implements MouseListener {
             } else {
                 l = new LinkingLabel(NamedIcon.getIconByName(url), _editor, link);
             }
-            l.setPopupUtility(null);        // no text 
             l.setLevel(level);
             return l;
         }
