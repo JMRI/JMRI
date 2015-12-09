@@ -360,6 +360,7 @@ public final class JmriScriptEngineManager {
                         path = path.concat(File.pathSeparator);
                     }
                     properties.setProperty("python.path", path.concat(FileUtil.getScriptsPath().concat(File.pathSeparator).concat(FileUtil.getAbsoluteFilename("program:jython"))));
+                    properties.setProperty("python.cachedir", FileUtil.getAbsoluteFilename(properties.getProperty("python.cachedir", "settings:jython/cache"))); // NOI18N
                     execJython = Boolean.valueOf(properties.getProperty("jython.exec", Boolean.toString(false)));
                 } catch (IOException ex) {
                     log.error("Found, but unable to read python.properties: {}", ex.getMessage());

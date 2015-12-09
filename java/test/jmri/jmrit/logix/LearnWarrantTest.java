@@ -20,6 +20,7 @@ import junit.extensions.jfcunit.finder.DialogFinder;
 import junit.framework.Assert;
 import junit.framework.Test;
 import junit.framework.TestSuite;
+
 /**
  * Tests for the Warrant creation
  *
@@ -35,6 +36,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
     SensorManager _sensorMgr;
     TurnoutManager _turnoutMgr;
     
+    @SuppressWarnings("unchecked") // For types from DialogFinder().findAll(..)
     public void testLearnWarrant() throws Exception {
         // load and display
         File f = new File("java/test/jmri/jmrit/logix/valid/LearnWarrantTest.xml");
@@ -102,6 +104,7 @@ public class LearnWarrantTest extends jmri.util.SwingTestCase {
         javax.swing.AbstractButton button = (javax.swing.AbstractButton) buttonFinder.find(frame, 0);
         Assert.assertNotNull(text+" Button not found", button);
         getHelper().enterClickAndLeave(new MouseEventData(this, button));
+        flushAWT();
         return button;
     }
 

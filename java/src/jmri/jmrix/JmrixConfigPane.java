@@ -83,9 +83,9 @@ public class JmrixConfigPane extends JPanel implements PreferencesPanel {
         ConnectionConfig c = null;
         try {
             c = InstanceManager.getDefault(ConnectionConfigManager.class).getConnections(index);
-            log.debug("connection {}", c);
+            log.debug("connection {} is {}", index, c);
         } catch (IndexOutOfBoundsException ex) {
-            log.debug("connection is null, creating new one");
+            log.debug("connection {} is null, creating new one", index);
         }
         retval = new JmrixConfigPane(c);
         configPaneTable.put(index, retval);

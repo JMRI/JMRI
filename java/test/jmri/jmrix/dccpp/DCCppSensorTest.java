@@ -38,11 +38,11 @@ public class DCCppSensorTest extends TestCase {
         Assert.assertTrue(t.getKnownState() == jmri.Sensor.UNKNOWN);
 
         // notify the Sensor that somebody else changed it...
-        m = new DCCppReply("Q 4");
+        m = DCCppReply.parseDCCppReply("Q 4");
         t.message(m);
         Assert.assertEquals("Known state after activate ", jmri.Sensor.ACTIVE, t.getKnownState());
 
-        m = new DCCppReply("q 4");
+        m = DCCppReply.parseDCCppReply("q 4");
         t.message(m);
 
         Assert.assertEquals("Known state after inactivate ", jmri.Sensor.INACTIVE, t.getKnownState());

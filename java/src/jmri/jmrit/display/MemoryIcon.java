@@ -317,9 +317,8 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
      * Drive the current state of the display from the state of the Memory.
      */
     public void displayState() {
-        if (log.isDebugEnabled()) {
-            log.debug("displayState");
-        }
+        log.debug("displayState()");
+
         if (namedMemory == null) {  // use default if not connected yet
             setIcon(defaultIcon);
             updateSize();
@@ -334,6 +333,7 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
     }
 
     protected void displayState(Object key) {
+        log.debug("displayState({})", key);
         if (key != null) {
             if (map == null) {
                 Object val = key;
@@ -351,26 +351,16 @@ public class MemoryIcon extends PositionableLabel implements java.beans.Property
                     _icon = false;
                     _text = true;
                     setText(str);
-                    setIcon(null);
+                    updateIcon(null);
                     if (log.isDebugEnabled()) {
-                        log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length()
-                                + ", maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
-                    }
-                    /*  MemoryIconTest says empty strings should show blank */
-                    if (str.trim().length() == 0) {
-                        if (getBackground().equals(_editor.getTargetPanel().getBackground())) {
-                            _saveColor = getPopupUtility().getBackground();
-                            if (_editor.getTargetPanel().getBackground().equals(Color.white)) {
-                                getPopupUtility().setBackgroundColor(Color.gray);
-                            } else {
-                                getPopupUtility().setBackgroundColor(Color.white);
-                            }
-                        }
-                    } else {
-                        if (_saveColor != null) {
-                            getPopupUtility().setBackgroundColor(_saveColor);
-                            _saveColor = null;
-                        }
+                        log.debug("String str= \"" + str + "\" str.trim().length()= " + str.trim().length());
+                        log.debug("  maxWidth()= " + maxWidth() + ", maxHeight()= " + maxHeight());
+                        log.debug("  getBackground(): {}", getBackground());
+                        log.debug("  _editor.getTargetPanel().getBackground(): {}", _editor.getTargetPanel().getBackground());
+                        log.debug("  setAttributes to getPopupUtility({}) with", getPopupUtility());
+                        log.debug("     hasBackground() {}", getPopupUtility().hasBackground());
+                        log.debug("     getBackground() {}", getPopupUtility().getBackground());
+                        log.debug("    on editor {}", _editor);
                     }
                     _editor.setAttributes(getPopupUtility(), this);
                 } else if (val instanceof javax.swing.ImageIcon) {

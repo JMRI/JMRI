@@ -203,7 +203,7 @@ public class TurnoutIconWindowTest extends jmri.util.SwingTestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {TurnoutIconWindowTest.class.getName()};
+        String[] testCaseName = {"-noloading", TurnoutIconWindowTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
