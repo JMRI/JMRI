@@ -28,19 +28,16 @@ public class PositionableIcon extends PositionableLabel {
     public PositionableIcon(Editor editor) {
         // super ctor call to make sure this is an icon label
         super(new NamedIcon("resources/icons/misc/X-red.gif", "resources/icons/misc/X-red.gif"), editor);
-        setPopupUtility(null);
     }
 
     public PositionableIcon(NamedIcon s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        setPopupUtility(null);
     }
 
     public PositionableIcon(String s, Editor editor) {
         // super ctor call to make sure this is an icon label
         super(s, editor);
-        setPopupUtility(null);
     }
 
     public Positionable finishClone(Positionable p) {
