@@ -8,9 +8,9 @@ install:
 #  - echo PATH %PATH%
 #  - echo JAVA_HOME %JAVA_HOME%
   - echo ANT_HOME %ANT_HOME%
+  - ant -version
   - java -version
 #  - javac -version
-  - ant -version
 build: off
 
 test_script:
