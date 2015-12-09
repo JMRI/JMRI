@@ -1,5 +1,5 @@
 <!-- an ANT build.xml file for JMRI XSLT -->
-<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010 -->
+<!-- Bob Jacobsen, Copyright 2002, 2003, 2004, 2005, 2008, 2010, 2015 -->
 <!-- Revision $Revision: 17977 $ -->
 
 <!-- This file is part of JMRI.                                             -->
@@ -15,7 +15,7 @@
 <!-- for more details.                                                      -->
 
 <project name="JMRI" default="all" basedir=".">
-<!-- basedir="." means all paths are relative to the "java" subdir -->
+<!-- basedir="." means all paths are relative to the "java/help/fr" subdir -->
 <!-- in the project.  We expect that lib et al will be present in -->
 <!-- .. from there -->
 
