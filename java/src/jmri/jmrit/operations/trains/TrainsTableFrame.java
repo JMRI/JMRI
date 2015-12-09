@@ -440,6 +440,8 @@ public class TrainsTableFrame extends OperationsFrame implements java.beans.Prop
             sysList = trainManager.getTrainsByRouteList();
         } else if (sortBy.equals(TrainsTableModel.STATUSCOLUMNNAME)) {
             sysList = trainManager.getTrainsByStatusList();
+        } else if (sortBy.equals(TrainsTableModel.DESCRIPTIONCOLUMNNAME)) {
+            sysList = trainManager.getTrainsByDescriptionList();
         } else {
             sysList = trainManager.getTrainsByNameList();
         }

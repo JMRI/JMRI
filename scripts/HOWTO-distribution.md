@@ -307,7 +307,7 @@ Note: the very first time doing this on a new machine, it will be required to ru
 ====================================================================================
 ## Create GitHub Release
 
-This puts the right tag on the branch, then removes the branch.  If we decide not to use GitHub releases, those steps need to be included in separate instructions.
+This puts the right tag on the branch, then removes the branch.  If we decide not to use GitHub releases, those two steps need to be included in separate instructions.
 
 Note: Unlike releasing files to SourceForge, once a GitHub Release is created it is *not* possible to change it to refer to different contents. Once it's done, you need to move on to the next release number.
 
@@ -345,6 +345,45 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
     
 - Once the tag is in place (confirm that!), manually delete the release-4.1.4 branch via the [GitHub UI](https://github.com/JMRI/JMRI/branches).
 
+### Final Branch Management
+
+It's important that any changes that were made on the branch also get onto master. Normally this happens automatically with the procedure in "Further Changes" above. But we need to check. Start with your Git repository up to date on master and the release branch, and then:
+
+```
+git checkout master
+git checkout -b temp-master
+git merge (release-n.n.n)
+```
+
+Note that you're testing the merge of the release branch back onto master.  This should show no changes, with the possible exception of some auto-generated files:
+```
+xml/decoderIndex.xml
+help/en/webindex.shtml
+help/en/webtoc.shtml
+help/en/Map.jhm
+help/en/JavaHelpSearch/*
+```
+If there are any changes in other files, do both of:
+
+- Make sure they get moved back to the master branch
+
+- Figure out what went wrong and fix it in these instructions
+
+Lastly, if this release is one of the special series at the end of a development cycle that leads to a test release, create the next release branch now.  Those test releases are made cumulatively from each other, rather than each from master. We start the process now so that people can open pull requests for it, and discuss whether changes should be included.
+
+(Maybe we should change their nomenclature to get this across?  E.g. instead of 4.1.5, 4.1.6, 4.1.7, 4.2 where the last two look like regular "from master" test releases, call them 4.1.6, 4.1.6.1, 4.1.6.2, 4.2)
+
+- Create this branch:
+
+```
+git checkout (release-n.n.n)
+git pull
+git checkout -b (release-n.n.n+1)
+git push github
+```
+
+- Create the next [GitHub Issue](https://github.com/JMRI/JMRI/issues) to hold discussion with conventional title "Create release-n.n.n+1". 
+
 ====================================================================================
 ## Associated Documentation
 
@@ -362,10 +401,6 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 
     If you don't, a bunch of Windows users are likely to whine
 
-- For production releases, file copyright registration
-
-    https://eco.copyright.gov/eService_enu/   (Firefox only!)
-
 - Wait for update on JMRI web server (or [ask Jenkins](http://builds.jmri.org/jenkins/job/Web%20Site/) to speed it along; note there are multiple components that need to run)
 
 ====================================================================================
@@ -380,6 +415,10 @@ Note: Unlike releasing files to SourceForge, once a GitHub Release is created it
 - Wait a day for complaints
 
 - If production release, mail announcement to jmri-announce@lists.sourceforge.net
+
+- For production releases, file copyright registration
+
+    https://eco.copyright.gov/eService_enu/   (Firefox only!)
 
 - Decide if worth announcing elsewhere (production version or big system-specific fix/feature):
 
