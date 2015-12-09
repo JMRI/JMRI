@@ -13,7 +13,7 @@ install:
 build: off
 
 test_script:
-- cmd: >-
+- ps: >-
     ant appveyor-ci-test
 
 after_test:
