@@ -47,7 +47,7 @@ public class NamedBeanHandleTest extends TestCase {
 
     // Main entry point
     static public void main(String[] args) {
-        String[] testCaseName = {NamedBeanHandleTest.class.getName()};
+        String[] testCaseName = {"-noloading", NamedBeanHandleTest.class.getName()};
         junit.swingui.TestRunner.main(testCaseName);
     }
 
