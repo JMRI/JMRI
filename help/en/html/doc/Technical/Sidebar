@@ -5,10 +5,10 @@
     <div id="mBody">
 
 	<div id="side"> <!-- Block of text on left side of page -->
-	    <div style="text-align: center">Info on JMRI:</div>
+	    <div style="text-align: center">Software documentation</div>
 	    <dl>
 
-		<dt>Development tools</dt>
+		<dt><h3 style="padding-left: 1em;">Development tools</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="getgitcode.shtml">Getting the code via Git</a>
@@ -21,7 +21,7 @@
 			</ul>
 		</dd>
 
-		<dt>Structure</dt>
+		<dt><h3 style="padding-left: 1em;">Structure</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="IntroStructure.shtml">Introduction</a>
@@ -42,7 +42,7 @@
 			</ul>
 		</dd>
 
-		<dt>Techniques and Standards</dt>
+		<dt><h3 style="padding-left: 1em;">Techniques and Standards</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="RP.shtml">Recommended Practices</a>
@@ -58,7 +58,7 @@
 			</ul>
 		</dd>
 
-		<dt>How To</dt>
+		<dt><h3 style="padding-left: 1em;">How To</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="plugins.shtml">Extend with Plugins</a>
@@ -67,7 +67,7 @@
 			</ul>
 		</dd>
 
-		<dt>Functional Info</dt>
+		<dt><h3 style="padding-left: 1em;">Functional Info</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="TurnoutFeedback.shtml">Turnout Feedback</a>
@@ -76,7 +76,7 @@
 			</ul>
 		</dd>
 
-		<dt>Background Info</dt>
+		<dt><h3 style="padding-left: 1em;">Background Info</h3></dt>
 		<dd>
 			<ul>
 			<li><a href="TechRoadMap.shtml">Technology Roadmap</a>
@@ -86,5 +86,5 @@
 		</dd>
 </dl>
 	    
-</div>  <!-- closes #side -->
+</div> <!-- closes #side -->
 <!-- /Sidebar -->

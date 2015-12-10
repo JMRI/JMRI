@@ -135,30 +135,85 @@
 		<dd>
 		    JMRI audio objects hold information about sounds that can be played-back by the computer. 
 		</dd>
-			
 	
-		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></h3></dt>
+		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher(Pro)</a></h3></dt>
 		<dd>The Dispatcher tool provides functions and organizes information
 		relating to dispatching trains on a model railroad layout. Its main
 		function is the allocation of sections of track to various Trains running
-		around the layout.
+		around the layout. This set of tools has evolved into a full <a href="../apps/DispatcherPro/index.shtml"> DispatcherPro application</a>.
 		</dd>
 		
-		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a></h3></dt>
+		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">Operations(Pro)</a></h3></dt>
 		<dd>
-		The OperationsPro tool has evolved to an advanced OperationsPro application, allowing you to generate Trains and produce computer generated
-		Manifests and Switch Lists for your railroad from a roster of rolling stock, schedules and destinations.
+		The Operations tool has evolved to an advanced OperationsPro application, allowing you to generate Trains and produce computer generated
+		Manifests and Switch Lists for your railroad from a roster of rolling stock, schedules and destinations. This set of tools has evolved into a full <a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro application</a>.
 		</dd>
 	  </dl>
 	  
 <h2><a name="systemSpecificTools">System-specific Tools</a></h2>
 
-<h3><a href="../apps/LocoTools/index.shtml">LocoNet Tools</a></h3>
-<p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.
-<!-- No (doubling/outdated) list here, just a link to the page -->
+<!-- It would be better to let each system-specific toolset land on its own index page, some tools are not so lucky, yet -->
+<h3>C/MRI Tools</h3>
+<p>When JMRI is connected to a layout via this system, a <b>C/MRI</b> menu is shown:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/cmri/serial/assignment/ListFrame.shtml">Check Pin Assignments</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/nodeconfig/NodeConfigFrame.shtml">Configure Nodes</a></li>
+<li><a href="../../package/jmri/jmrix/cmri/serial/diagnostic/DiagnosticFrame.shtml">Diagnostics</a></li>
+<li><a href="../hardware/cmri/Signals.shtml">Signals</a></li>
+</ul>
+  
+<h3><a href="html/hardware/can/index.shtml">MERG CBUS Tools</a></h3>
+<p>When JMRI is connected to a layout via CBUS, the <b>MERG</b> menu is shown:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a></li>
+<li>Event Table</li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a></li>
+<li><a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Node Config Tool</a></li>
+<li>Snd Frame</li>
+</ul>
 
-<h3>MERG Tools</h3>
-<p>When JMRI is connected to a layout via MERG CBUS the <a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>, Send Frame, <a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a>, Event Table and the Node Config Tool are available from the <b>MERG</b> menu.<!-- It would be better to let each system-specific toolset land on its own index page -->
+<h3><a href="../apps/LocoTools/index.shtml">Digitrax/LocoNet Tools</a></h3>
+<p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.<br>
+You may also access them by double clicking the <strong>Loco Tools</strong> icon in the JMRI installation folder. To name just a few:</p>
+<!-- No (doubling/outdated) list here, just a link to the page -->
+<ul>   
+<li><a href="../../package/jmri/jmrix/loconet/ds64/DS64Frame.shtml">DS64 Configuration Tool </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/locomon/LocoMonFrame.shtml">LocoNet Monitor </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/soundloader/LoaderFrame.shtml">Sound Loader </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/se8/SE8Frame.shtml">SE8C Configuration Tool </a></li>
+<li><a href="../../package/jmri/jmrix/loconet/slotmon/SlotMonFrame.shtml">Slot Monitor </a></li>
+
+</ul>
+
+<h3><a href="../hardware/grapevine/index.shtml">Grapevine Tools</a></h3>
+<ul>
+<li><a href="../../package/jmri/jmrix/grapevine/nodetable/NodeTableFrame.shtml">Node Table </a></li>
+</ul>
+  
+<h3>NCE Tools</h3>
+<p>When JMRI is connected to a layout via this system, an <b>NCE</b> menu is shown:</p>
+<ul>   
+<li><a href="../../package/jmri/jmrix/nce/packetgen/NcePacketGenFrame.shtml">Send Command </a></li>
+<li><a href="../../package/jmri/jmrix/nce/macro/NceMacroEditFrame.shtml">Edit Macro </a></li>
+<li><a href="../../package/jmri/jmrix/nce/consist/NceConsistEditFrame.shtml">Edit Consist </a></li>
+<li><a href="../../package/jmri/jmrix/nce/analyzer/NcePacketMonitorFrame.shtml">DCC Packet Analyzer </a></li>
+<li><a href="../../package/jmri/jmrix/nce/clockmon/ClockMonFrame.shtml">Monitor Clock </a></li>
+</ul>
+  
+<h3><a href="../hardware/openlcb/index.shtml">OpenLCB Tools</a></h3>
+<ul>
+<li><a href="../../package/jmri/jmrix/openlcb/swing/networktree/NetworkTreePane.shtml">Configure Nodes </a></li>
+</ul>
+
+<h3><a href="../hardware/rps/index.shtml">RPS Tools</a></h3>
+<p>When JMRI is connected to a layout with <a href="../hardware/rps/sensors.shtml">RPS Sensors </a>, an <b>RPS</b> menu is shown:</p>
+<ul>
+<li><a href="../../package/jmri/jmrix/rps/aligntable/AlignTableFrame.shtml">Receiver Control </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/polling/PollTableFrame.shtml">Polling Control </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/debugger/DebuggerFrame.shtml">Debugger Window </a></li>
+<li><a href="../../package/jmri/jmrix/rps/trackingpanel/RpsTrackingFrame.shtml">Tracking Display </a></li>
+<li><a href="../../package/jmri/jmrix/rps/swing/soundset/SoundSetFrame.shtml">Sound Speed Control </a></li>
+</ul>
 <!-- More system tools go here -->
 
 <h2><a href="scripting/index.shtml">Scripting JMRI</a></h2>
