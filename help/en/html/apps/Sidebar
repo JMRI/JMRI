@@ -8,21 +8,18 @@
 	    <dl>
 		<dt><h3 style="padding-left: 1em;"><a href="DecoderPro/index.shtml">DecoderPro&reg;</a></h3></dt>
 		<dd>
-		    A better tool for programming decoders.
-		    DecoderPro simplifies the job of configuring complicated DCC decoders
-		    by providing screens on which you can select the various options and
-		    values you want.
+		    A better tool for programming decoders, simplifying the job of configuring DCC decoders from your computer
 		</dd>
 
 		<dt><h3><a href="PanelPro/PanelPro.shtml">PanelPro&trade;</a></h3></dt>
 		<dd>
-		    Designing and Operating CRT based CTC control panels that reflect the real-time
-		    state of your railroad <em>and</em> let you control it - almost like
-		    a Prototype dispatcher!
+			Design and Operate CRT based CTC control panels that reflect the real-time
+			state of your railroad <em>and</em> let you control it
 		</dd>
 
  	  <dt><h3 style="padding-left: 1em;"><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
-		<dd>JMRI OperationsPro can generate train manifests and car switch lists for your model railroad.
+		<dd>
+		  Build Trains from your Roster and print Train Manifests that detail the work your train crews will perform
 		</dd>
 
 		<dt><h3><a href="../tools/index.shtml">Tools</a></h3></dt>
@@ -48,7 +45,8 @@
 		</dd>
 
 		<dt><h3 style="padding-left: 1em;"><a href="../tools/automation/">Layout Automation</a></h3></dt>
-		<dd>JMRI can be used to automate parts 
+		<dd>
+		JMRI can be used to automate parts 
 		of your layout, from simply controlling a crossing gate
 		to running trains in the background.
 		    <ul>

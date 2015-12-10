@@ -4,7 +4,7 @@
 	<div id="mBody">
 	  <div id="side"> <!-- Block of text on left side of page -->
 	    <div style="text-align: center">JMRI is...</div>
-	    <dl>
+	    <dl class="toc">
 
 		<dt><h3><a href="index.shtml">General Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
@@ -26,6 +26,18 @@
 		    <li><dfn><a href="IdTags.shtml">Id Tags</a></dfn>
 		    </ul>
 		</dd>
+
+		<dt><h3><a href="index.shtml">System-specific Tools</a></h3></dt>
+		<dd>
+    <ul>
+    <li><dfn>C/MRI</dfn>
+    <li><dfn><a href="html/hardware/can/index.shtml">MERG CBUS</a></dfn>
+    <li><dfn><a href="../apps/LocoTools/index.shtml">Digitrax/LocoNet</a></dfn>
+    <li><dfn><a href="../hardware/grapevine/index.shtml">Grapevine</a></dfn>
+    <li><dfn>NCE</dfn>
+    <li><dfn><a href="../hardware/openlcb/index.shtml">OpenLCB</a></dfn>
+    <li><dfn><a href="../hardware/rps/index.shtml">RPS</a></dfn>
+    </dd>
 
 		<dt><h3><a href="automation/">Layout Automation</a></h3></dt>
 		<dd>JMRI can be used to automate parts 
