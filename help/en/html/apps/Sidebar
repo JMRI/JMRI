@@ -21,7 +21,7 @@
 		    a Prototype dispatcher!
 		</dd>
 
- 	  <dt><h3 style="padding-left: 1em;"><a href="../../package/jmri/jmrit/operations Operations.shtml">OperationsPro&trade;</a></h3></dt>
+ 	  <dt><h3 style="padding-left: 1em;"><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro&trade;</a></h3></dt>
 		<dd>JMRI OperationsPro can generate train manifests and car switch lists for your model railroad.
 		</dd>
 
