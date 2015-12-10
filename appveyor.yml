@@ -15,8 +15,12 @@ install:
 build: off
 
 test_script:
-- ps: >-
+- cmd: >-
     ant appveyor-ci-test
-    (new-object net.webclient).UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit-results.xml))
+
+after_test:
+- ps: >-    
+    $wc = New-Object 'System.Net.WebClient'
+    $wc.UploadFile("https://ci.appveyor.com/api/testresults/junit/$($env:APPVEYOR_JOB_ID)", (Resolve-Path .\junit-results.xml))
 
 deploy: off
