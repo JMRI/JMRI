@@ -15,7 +15,7 @@ install:
 build: off
 
 test_script:
-  - ps: >-
+- ps: >-
     ant appveyor-ci-test
 
     $wc = New-Object 'System.Net.WebClient'
