@@ -1,16 +1,12 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html lang="en">
 <head>
-<!-- Copyright ($Author$) 2008 -->
-<!-- $Id$ -->
 <title>JMRI: CBUS Support</title>
 
 <!-- Style -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=iso-8859-1">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css"
-	MEDIA="screen">
-<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css"
-	MEDIA="print">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/default.css" MEDIA="screen">
+<LINK REL="stylesheet" TYPE="text/css" HREF="/css/print.css" MEDIA="print">
 <LINK REL="icon" HREF="/images/jmri.ico" TYPE="image/png">
 <LINK REL="home" TITLE="Home" HREF="/">
 <!-- /Style -->
@@ -145,11 +141,11 @@ and the OFF event setting INACTIVE.
 <p>
 Because events are not intrinsically associate with specific hardware
 objects, and because people can use event IDs in many ways, this
-doesn't do what's desired.  When it doesn't, you can manually
+doesn't do what's desired. When it doesn't, you can manually
 create the proper Sensors using the 
 <a href="../../../../package/jmri/jmrit/beantable/SensorAddEdit.shtml">Add...</a>
 button on the
-<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensor Table</a>.
+<a href="../../../../package/jmri/jmrit/beantable/SensorTable.shtml">Sensors Table</a>.
 
 <p>
 
@@ -165,5 +161,7 @@ the type letter is "T" instead of "S", e.g. <code>MT-18;+21</code>)
 except the type letter is "L" instead of "T", e.g. <code>ML-18;+21</code>)
 
 <!--#include virtual="/Footer" -->
+</div>
+</div>
 </body>
 </html>

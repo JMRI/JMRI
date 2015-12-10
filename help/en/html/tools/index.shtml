@@ -128,7 +128,7 @@
 		<dd>
 		    A tool for determining the scale speed of your
 		    locomotives. You can use this while setting them up,
-		    to catch speeders, or for whatever you'd like.
+		    to catch speeders, to match the running speeds of two locomotives before running them in a consist or for whatever you'd like.
 		</dd>
 	
 		<dt><h3><a href="Audio.shtml">Audio</a></h3></dt>
@@ -139,45 +139,27 @@
 	
 		<dt><h3><a href="../../package/jmri/jmrit/dispatcher/Dispatcher.shtml">Dispatcher</a></h3></dt>
 		<dd>The Dispatcher tool provides functions and organizes information
-		relating to dispatching trains on a model railroad layout. It's main
+		relating to dispatching trains on a model railroad layout. Its main
 		function is the allocation of sections of track to various Trains running
 		around the layout.
 		</dd>
 		
 		<dt><h3><a href="../../package/jmri/jmrit/operations/Operations.shtml">OperationsPro</a></h3></dt>
 		<dd>
-		The OperationsPro tool allows you to produce computer generated
-		Manifests and Switch Lists for your railroad from a roster of rolling stock, Trains and destinations.
+		The OperationsPro tool has evolved to an advanced OperationsPro application, allowing you to generate Trains and produce computer generated
+		Manifests and Switch Lists for your railroad from a roster of rolling stock, schedules and destinations.
 		</dd>
 	  </dl>
 	  
-<h2>System-specific Tools</a></h2>
+<h2><a name="systemSpecificTools">System-specific Tools</a></h2>
+
 <h3><a href="../apps/LocoTools/index.shtml">LocoNet Tools</a></h3>
-<p>The following tools are available in the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout:
-<!-- As of version 3.7.3 -->
-		    <ul>
-		    <li><dfn>Monitor LocoNet</dfn>
-		    <li><dfn>Monitor Slots</dfn>
-			  <li><dfn>Monitor Clock</dfn>
-		    <li><dfn>Monitor LocoNet Interface Statistics</dfn>
-				<li><dfn>Configuration Tools:</dfn>
-				  <ul><li><dfn>Configure BDL16x</dfn>
-		      <!-- <li><dfn>Configure LocoIO</dfn> no longer supported, use DP3 -->
-			    <li><dfn>Configure PM4x</dfn>
-		      <li><dfn>Configure SE8C</dfn>
-			    <li><dfn>Configure DS64</dfn>
-		      <li><dfn>Configure Command Station</dfn>
-		      <li><dfn>Configure LocoNet ID</dfn>
-		      <li><dfn>Configure Duplex Group</dfn>
-					</ul></li>
-		    <li><dfn>Send LocoNet Packet</dfn>
-		    <li><dfn>Send Throttle Message</dfn>
-		    <li><dfn>Select PR3 Mode</dfn>
-		    <li><dfn>Download Firmware</dfn>
-		    <li><dfn>Download Sounds</dfn>
-		    <li><dfn>Edit Sound Project (SPJ) File</dfn>
-		    <li><dfn>Start LocoNet Server</dfn>
-		    </ul>
+<p>A full range of tools are available from the <b>LocoNet</b> menu when JMRI is connected to a (Digitrax) LocoNet DCC layout.
+<!-- No (doubling/outdated) list here, just a link to the page -->
+
+<h3>MERG Tools</h3>
+<p>When JMRI is connected to a layout via MERG CBUS the <a href="../../package/jmri/jmrix/can/cbus/swing/console/CbusConsoleFrame.shtml">Console</a>, Send Frame, <a href="../../package/jmri/jmrix/can/cbus/swing/configtool/ConfigToolFrame.shtml">Event Capture Tool</a>, Event Table and the Node Config Tool are available from the <b>MERG</b> menu.<!-- It would be better to let each system-specific toolset land on its own index page -->
+<!-- More system tools go here -->
 
 <h2><a href="scripting/index.shtml">Scripting JMRI</a></h2>
     If JMRI lacks a preprogrammed tool to do what you want,

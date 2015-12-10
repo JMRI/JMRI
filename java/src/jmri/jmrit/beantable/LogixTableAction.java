@@ -3161,8 +3161,7 @@ public class LogixTableAction extends AbstractTableAction {
             currentChooser = sndFileChooser;
         } else if (actionType == Conditional.ACTION_RUN_SCRIPT) {
             if (scriptFileChooser == null) {
-                scriptFileChooser = new JFileChooser(System.getProperty("user.dir")
-                        + java.io.File.separator + "jython");
+                scriptFileChooser = new JFileChooser(FileUtil.getScriptsPath());
                 jmri.util.FileChooserFilter filt = new jmri.util.FileChooserFilter("Python script files");
                 filt.addExtension("py");
                 scriptFileChooser.setFileFilter(filt);

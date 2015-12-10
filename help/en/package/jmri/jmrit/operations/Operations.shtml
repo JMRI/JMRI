@@ -765,39 +765,63 @@
    the train's requirements. 
    
    <A NAME="CarRouting"></A>
-   <H3>Car Routing</H3>
+   <H3>Car Routing Options</H3>
+   
+   <H4>Enable Car Routing</H4>
 
    When car routing is enabled, the program will use multiple trains to deliver a car to its final
    destination. It is recommended that you leave this option enabled. With car routing enabled, you
    can use a
-   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location. The car routing
-   algorithm will search for the most efficient route for the car to travel. The algorithm will
-   attempt to use classification/interchange tracks and then yards to move cars. If you don't want
-   the router to use yards, you can deselect the "Enable Car Routing via Yards" checkbox. Routing
-   through staging is disabled by default. The algorithm will try and find a route using a maximum
-   of five trains to complete the car move. Note that the program never gives up trying to route a
-   car. If a car has been assigned a
+   <A HREF="#Schedules">Schedule</A> to deliver a car to a specific location using the car's final
+   destination fields. The car routing algorithm will search for the most efficient route for the
+   car to travel. The router will attempt to use classification/interchange tracks and then yards to
+   move cars. If you don't want the router to use yards, you can deselect the "Enable Car Routing
+   via Yards" checkbox. The program will try and find a route using a maximum of five trains to
+   complete the car move. Note that the program never gives up trying to route a car. If a car has
+   been assigned a
    <A HREF="#CarsSet">Final Destination</A> or <A HREF="#EditCarLoads">Custom Load</A> the program
-   will try and route the car after every move.
+   will try and route the car during every train build that has access to the car.
 
-   <P>The option "Use all Trains when Routing" when selected instructs the program
-    to use all of your trains to route a car. If you only want the router to use the trains that
-    you've selected in the "Build" column of the "Trains" window, then deselect this option.</P>
+   <H4>Enable Car Routing via Yards</H4>
+   
+   The program when routing a car will first try to find classification/interchange tracks to move the
+   car to its final destination.  If you want the program to also consider using yard tracks when routing,
+   select this option.
+   
+   <H4>Enable Car Routing through Staging</H4>
+   
+   Routing through staging is disabled by default. This is considered to be an advanced feature and shouldn't
+   be used until you've become very familiar with the program. When enabled the program will try to route
+   cars through staging if it couldn't find a route using C/I and yard tracks. Enabling this feature can increase
+   train build times.
+   
+   <H4>Use all Trains when Routing</H4>
+
+   <P>The option "Use all Trains when Routing" when selected instructs the program to use all of
+    your trains to route a car. If you only want the router to use the trains that you've selected
+    in the "Build" column of the "Trains" window, then deselect this option.</P>
+
+   <H4>Enable Track Destination Restrictions when Routing</H4>
 
    <P>
-    The last routing option "Enable Track Destination Restrictions when Routing" when selected tells the router
-    to use the <A HREF="#Interchange">classification/interchange</A> track destinations control when
-    routing a car. It is recommended that you leave this feature disabled, even if you've placed
-    destination restrictions on your C/I tracks. When this feature is enabled, you must enter the
-    destination and any interim destination needed to route a car to that destination. For example,
-    say the route for a car looks something like this: New York to Springfield to Worcester
-    to Boston. With the "Enable Track Destination Restrictions when Routing" disabled, you only
-    have to enter "Boston" as the destination for the departure C/I track in New York. The program when
-    routing a car to Boston from New York, will determine that sending the car first to Springfield
-    is okay because that's the route to get the car to Boston. However, if you enable this option,
-    you must add Springfield in addition to Boston as valid destinations. But now cars
-    going to Springfield and not just Boston could be added to the train since there are now two
-    destinations for the C/I track out of New York.
+    The last routing option "Enable Track Destination Restrictions when Routing" is disabled by
+    default, and is recommended that you leave it disabled. This option makes the track destination
+    feature of a classification/interchange track more restrictive. When selected it tells the
+    router to only use <A HREF="#Interchange">classification/interchange</A> tracks that match a
+    car's final destination AND the car's very next destination. Again, it is recommended that you
+    leave this feature disabled, even if you've placed destination restrictions on your C/I tracks.
+    When this feature is enabled, you must enter the destination AND the next destination needed
+    to route a car to its final destination. For example, say the route for a car looks something like
+    this: New York to Springfield to Worcester to Boston with each city hop requiring a separate
+    train. In this case three trains are need to move the car from NY to Boston. With the "Enable
+    Track Destination Restrictions when Routing" disabled, which is the default, you only have to enter
+    "Boston" as the destination for the departure C/I track in New York. The program when routing a
+    car to Boston from New York, will determine that sending the car first to Springfield and then
+    Worcester is okay because that's the route to get the car to Boston. However, if you enable this
+    option, you must add Springfield in addition to Boston as valid destinations out of NY for the
+    C/I track. The C/I track out of Springfield would need to allow destinations of Worcester and
+    Boston. You would only use this feature if you needed to hard sort your cars by the car's next
+    destination and final destination to specific C/I tracks.
    </P>
 
    <A NAME="LoggingOptions"></A>

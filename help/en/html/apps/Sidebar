@@ -25,7 +25,7 @@
 		<dd>JMRI OperationsPro can generate train manifests and car switch lists for your model railroad.
 		</dd>
 
-		<dt><h3><a href="../tools/index.shtml">General Tools</a></h3></dt>
+		<dt><h3><a href="../tools/index.shtml">Tools</a></h3></dt>
 		<dd>JMRI provides powerful tools for working with your
 		layout:
 		    <ul>
@@ -43,8 +43,13 @@
 	    <li><dfn><a href="../tools/scripting/index.shtml">Scripting</a></dfn>
 	    <li><dfn><a href="../tools/Audio.shtml">Audio</a></dfn>
 	    <li><dfn><a href="../tools/IdTags.shtml">Id Tags</a></dfn>
-      <li><dfn><a href="LocoTools/index.shtml">LocoNet tools</a></dfn>
-		    </ul>
+      <li><dfn><a href="../tools/index.shtml#systemSpecificTools">System-specific Tools</a>
+        <ul>
+        <li>LocoNet
+        <li>MERG
+        </ul>
+      </dfn></li>
+      </ul>
 		</dd>
 
 		<dt><h3><a href="../tools/automation/">Layout Automation</a></h3></dt>
