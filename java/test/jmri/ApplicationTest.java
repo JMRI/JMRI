@@ -17,8 +17,6 @@ import org.slf4j.LoggerFactory;
 public class ApplicationTest extends TestCase {
 
     public void testSetName() {
-        // temporary to force failure
-        Assert.fail("Deliberate failure.");
         // test default
         Assert.assertEquals("Default Application name is 'JMRI'", "JMRI", Application.getApplicationName());
 
