@@ -31,7 +31,7 @@
 		page introduces them, describes how to use them, and points you
 		to installation and other information.</p>
 		<dl>
-		    <dt><a href="#locomon"><dfn>LocoNet monitor</dfn></a></dt>
+		    <dt><a href="#locomon"><dfn>LocoNet Monitor</dfn></a></dt>
 		    <dd>
 			Display and log the traffic on the LocoNet, in either
 			hex or human readable form.
