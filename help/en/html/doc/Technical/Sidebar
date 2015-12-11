@@ -13,11 +13,15 @@
 			<ul>
 			<li><a href="getgitcode.shtml">Getting the code via Git</a>
 			<li><a href="GitFAQ.shtml">Git FAQs</a>
-			<li><a href="Ant.shtml">Building with Ant</a>
-			<li><a href="NetBeans.shtml">Building with NetBeans</a>
-			<li><a href="XCode.shtml">Building with XCode</a>
-			<li><a href="Eclipse.shtml">Building with Eclipse</a>
-			<li><a href="JBuilder.shtml">Building with JBuilder</a>
+			<li>Building with:
+				<ul>
+				<li><a href="Ant.shtml">Ant</a>
+				<li><a href="NetBeans.shtml">NetBeans</a>
+				<li><a href="XCode.shtml">XCode</a>
+				<li><a href="Eclipse.shtml">Eclipse</a>
+				<li><a href="JBuilder.shtml">JBuilder</a>
+				</ul>
+			</li>
 			</ul>
 		</dd>
 
