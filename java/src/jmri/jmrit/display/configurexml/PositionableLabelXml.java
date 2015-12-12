@@ -390,10 +390,8 @@ public class PositionableLabelXml extends AbstractXmlAdapter {
         } catch (DataConversionException ex) {
             log.warn("invalid 'degrees' value (non integer)");
         }
-        if (element.getAttribute("hasBackground")==null) {   // pre 4.1.4
-            if (deg == 0 && util.hasBackground()) {
-                l.setOpaque(true);                    
-            }
+        if (deg == 0 && util.hasBackground()) {
+            l.setOpaque(true);
         }
     }
 
